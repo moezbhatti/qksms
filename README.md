@@ -2,6 +2,8 @@
 
 This is a public issue tracker for QKSMS. [View the open issues](https://github.com/qklabs/qksms-tracker/issues).
 
+Also feel free to check out our [Google+ community](https://plus.google.com/communities/104505769539048913485) to watch for announcements and updates.
+
 ### Organization
 
 We accept two kinds of feedback: bug reports and enhancements. Bug reports identify problems in current functionality, and enhancements are new functionality.
