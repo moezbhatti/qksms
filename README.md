@@ -4,11 +4,13 @@ This is a public issue tracker for QKSMS. [View the open issues](https://github.
 
 Also feel free to check out our [Google+ community](https://plus.google.com/communities/104505769539048913485) to watch for announcements and updates.
 
-### Organization
+### How to help
 
-We accept two kinds of feedback: bug reports and enhancements. Bug reports identify problems in current functionality, and enhancements are new functionality.
+1. Report bugs
+2. Help reproduce bugs
+3. Make enhancement requests (it would be great if QKSMS...)
 
-#### Bug reports
+#### Reporting bugs
 A great bug report contains a description of the problem and steps to reproduce the problem. We need to know what we're looking for and where to look for it. If the QKSMS team can't reproduce a bug, we will work with testers to fix the problem.
 
 Bugs are given the red `bug` label. Bugs also may be given extra orange labels:
@@ -38,5 +40,12 @@ The conversation is marked as read.
 The conversation isn't marked as read.
 ```
 
-#### Enhancements
+#### Helping reproduce bugs
+Reproducing a bug is important, since if we can't reproduce an issue then it's hard to figure out what's going wrong, and we can't know that we've fixed it. 
+
+To see bugs that need "repro steps", go to the Issues section and search for `is:open label:needs-repro`. If you see any bugs that you know how to reproduce (see above for example repro steps), then make a comment with the steps and we'll track the bug down!
+
+#### Making enhancement requests
 There are no rules for enhancement requests. Your ideas are all awesome. Although we may not implement every suggestion, we love brainstorming with you and hearing your feedback.
+
+To make an enhancement request, add an "issue" with the "enhancement" label.
