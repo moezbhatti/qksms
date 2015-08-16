@@ -24,7 +24,7 @@ If you'd lke to donate to help support the project, you can donate via [PayPal h
 
 ### Development
 
-We encourage you to make pull requests. Whenever you make one, we'll review the code and test it to make sure that it fits the code style guidelines, and achieves what the pull request intends. We'll discuss any problems or potention improvements, and we'll merge it when we're both (or any number of willing participants) happy with the code
+We encourage you to make pull requests. Whenever you make one, we'll review the code and test it to make sure that it fits the code style guidelines, and achieves what the pull request intends. We'll discuss any problems or potential improvements, and we'll merge it when we're both (or any number of willing participants) happy with the code
 
 If you're new, we recommend that you look through the issues and try to fix some of the more simple sounding bugs to familiarize yourself with the codebase
 
