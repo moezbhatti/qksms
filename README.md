@@ -4,9 +4,9 @@ QKSMS is an open source replacement to the [stock messaging app](https://github.
 
 [![Download](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.moez.QKSMS)
 
-<img src="https://lh3.googleusercontent.com/H5cGsAZKt6wscgWnFMpRZ-JvKt1Yt7uICuSFKV4E4oSdpusPkTfYZHELDj5aqnmCuw=h900-rw" width="216" height="384" />
-<img src="https://lh3.googleusercontent.com/KAdJyicmKspdNblU_Js1GLQat0q5PaXY_oOKma0V_ycIaW4XW915t9sZ_BkpsacgPG8=h900-rw" width="216" height="384" />
-<img src="https://lh3.googleusercontent.com/24Y9Ookd4A2e6y4-sHkiROXf2NzIppRdjT4Fnusl91p9_Z8aUyLfGmqyb5DLHyavyf0=h900-rw" width="216" height="384" />
+<img src="http://i.imgur.com/uwWmDv9.png" width="216" height="384" />
+<img src="http://i.imgur.com/p7063VN.png" width="216" height="384" />
+<img src="http://i.imgur.com/Z8Rqb7A.png" width="216" height="384" />
 
 # Contributing to QKSMS
 
@@ -20,7 +20,7 @@ We use Github issues to keep track of bugs and feature requests, but we communic
 
 ### Funds
 
-If you'd lke to donate to help support the project, you can donate via [PayPal here](http://bit.ly/QKSMSDonation)
+If you'd like to donate to help support the project, you can donate via [PayPal here](http://bit.ly/QKSMSDonation)
 
 ### Development
 
