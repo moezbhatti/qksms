@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_fold"
+        android:icon="@drawable/ic_unfold"
+        android:title="@string/menu_show_all"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_open_thread"
+        android:title="@string/menu_open_thread" />
+
+    <item
+        android:id="@+id/menu_call"
+        android:title="@string/menu_call" />
+
+    <item
+        android:id="@+id/menu_mark_read"
+        android:icon="@drawable/ic_accept"
+        android:title="@string/menu_read"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_delete"
+        android:title="@string/menu_delete" />
+
+    <item
+        android:id="@+id/menu_copy"
+        android:title="@string/menu_copy" />
+
+    <item
+        android:id="@+id/menu_forward"
+        android:title="@string/menu_forward" />
+</menu>

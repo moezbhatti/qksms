@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/prefs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/in_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/message_received_2"
+            android:gravity="center_vertical"
+            android:text="Hey there!"
+            android:textColor="@color/black" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/in_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/message_received_alt_2"
+            android:gravity="center_vertical"
+            android:text="Don't worry, this isn't a real message. We're just showing you how your chats will look!"
+            android:textColor="@color/black" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/out_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/message_sent_2"
+            android:gravity="center_vertical"
+            android:text="Sweet, here's an outgoing message"
+            android:textColor="@color/black" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/out_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/message_sent_alt_2"
+            android:gravity="center_vertical"
+            android:text="And another!"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+</ScrollView>

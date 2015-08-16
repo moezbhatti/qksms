@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/donate_google"
+            app:type="dialog_title" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/donate_google_summary"
+            app:type="tertiary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/donate_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_name_donate_1"
+            app:type="primary" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_description_donate_1"
+            app:type="secondary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/donate_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_name_donate_5"
+            app:type="primary" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_description_donate_5"
+            app:type="secondary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/donate_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_name_donate_10"
+            app:type="primary" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/product_description_donate_10"
+            app:type="secondary" />
+
+    </LinearLayout>
+
+    <com.moez.QKSMS.ui.view.QKTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:text="@string/donate_paypal"
+        app:type="dialog_title" />
+
+    <LinearLayout
+        android:id="@+id/donate_paypal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/donate_paypal_button"
+            app:type="primary" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/donate_paypal_button_summary"
+            app:type="secondary" />
+
+    </LinearLayout>
+
+</LinearLayout>

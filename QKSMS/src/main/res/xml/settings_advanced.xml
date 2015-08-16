@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:layout="@layout/list_item_preference_category"
+        android:title="@string/pref_category_advanced">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_system_bar_flat"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_system_bar_flat_summary"
+            android:title="@string/pref_system_bar_flat"
+            android:widgetLayout="@layout/view_checkbox" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_status_compat"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_status_compat_summary"
+            android:title="@string/pref_status_compat"
+            android:widgetLayout="@layout/view_checkbox" />
+    </PreferenceCategory>
+</PreferenceScreen>

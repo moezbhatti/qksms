@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="hasKitKat">false</bool>
+    <bool name="preKitKat">true</bool>
+    <bool name="hasL">false</bool>
+    <bool name="preL">true</bool>
+</resources>

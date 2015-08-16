@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.moez.QKSMS.ui.view.RobotoTextView
+        android:id="@+id/welcome_quickreply_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:gravity="center"
+        android:text="@string/welcome_theme_title"
+        android:textColor="@color/theme_dark_text_primary"
+        android:textSize="54sp"
+        app:typeface="roboto_thin" />
+
+    <com.moez.QKSMS.ui.view.RobotoTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:gravity="center"
+        android:text="@string/welcome_theme_description"
+        android:textColor="@color/text_primary_dark"
+        android:textSize="18sp"
+        app:typeface="roboto_light" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette
+            android:id="@+id/welcome_themes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/theme_light_text_secondary"
+            android:gravity="center"
+            android:padding="16dp" />
+    </ScrollView>
+
+
+</LinearLayout>

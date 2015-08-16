@@ -1,0 +1,17 @@
+<resources>
+    <dimen name="title_padding">16dp</dimen>
+    <dimen name="avatar_width_height">64dip</dimen>
+    <dimen name="message_item_avatar_on_right_text_indent">50dip</dimen>
+    <dimen name="message_item_text_padding_left_right">12dip</dimen>
+    <dimen name="message_item_text_padding_top">5dip</dimen>
+    <dimen name="mms_inline_attachment_size">224dip</dimen>
+    <dimen name="ab_height">48dp</dimen>
+    <dimen name="shadow_width">8dp</dimen>
+
+    <dimen name="color_swatch_large">64dp</dimen>
+    <dimen name="color_swatch_small">48dp</dimen>
+    <dimen name="color_swatch_margins_large">8dp</dimen>
+    <dimen name="color_swatch_margins_small">4dp</dimen>
+
+    <dimen name="slideshow_padding_top">0dp</dimen>
+</resources>

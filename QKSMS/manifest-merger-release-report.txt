@@ -1,0 +1,822 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	package
+		ADDED from AndroidManifest.xml:3:5
+	android:versionName
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:4:5
+	android:versionCode
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from AndroidManifest.xml:6:5
+	android:name
+		ADDED from AndroidManifest.xml:6:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from AndroidManifest.xml:7:5
+	android:name
+		ADDED from AndroidManifest.xml:7:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:8:5
+MERGED from com.google.android.gms:play-services-analytics:7.5.0:22:5
+	android:name
+		ADDED from AndroidManifest.xml:8:22
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from AndroidManifest.xml:9:5
+	android:name
+		ADDED from AndroidManifest.xml:9:22
+uses-permission#android.permission.CALL_PHONE
+ADDED from AndroidManifest.xml:10:5
+	android:name
+		ADDED from AndroidManifest.xml:10:22
+uses-permission#android.permission.CAMERA
+ADDED from AndroidManifest.xml:11:5
+	android:name
+		ADDED from AndroidManifest.xml:11:22
+uses-permission#android.permission.CHANGE_CONFIGURATION
+ADDED from AndroidManifest.xml:12:5
+	android:name
+		ADDED from AndroidManifest.xml:12:22
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from AndroidManifest.xml:13:5
+	android:name
+		ADDED from AndroidManifest.xml:13:22
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from AndroidManifest.xml:14:5
+	android:name
+		ADDED from AndroidManifest.xml:14:22
+uses-permission#android.permission.FLASHLIGHT
+ADDED from AndroidManifest.xml:15:5
+	android:name
+		ADDED from AndroidManifest.xml:15:22
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from AndroidManifest.xml:16:5
+	android:name
+		ADDED from AndroidManifest.xml:16:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:17:5
+MERGED from com.google.android.gms:play-services-analytics:7.5.0:21:5
+	android:name
+		ADDED from AndroidManifest.xml:17:22
+uses-permission#android.permission.MANAGE_ACCOUNTS
+ADDED from AndroidManifest.xml:18:5
+	android:name
+		ADDED from AndroidManifest.xml:18:22
+uses-permission#android.permission.NFC
+ADDED from AndroidManifest.xml:19:5
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+uses-permission#android.permission.READ_CALL_LOG
+ADDED from AndroidManifest.xml:20:5
+	android:name
+		ADDED from AndroidManifest.xml:20:22
+uses-permission#android.permission.READ_CONTACTS
+ADDED from AndroidManifest.xml:21:5
+	android:name
+		ADDED from AndroidManifest.xml:21:22
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from AndroidManifest.xml:22:5
+	android:name
+		ADDED from AndroidManifest.xml:22:22
+uses-permission#android.permission.READ_PROFILE
+ADDED from AndroidManifest.xml:23:5
+	android:name
+		ADDED from AndroidManifest.xml:23:22
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:24:5
+	android:name
+		ADDED from AndroidManifest.xml:24:22
+uses-permission#android.permission.READ_SMS
+ADDED from AndroidManifest.xml:25:5
+	android:name
+		ADDED from AndroidManifest.xml:25:22
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from AndroidManifest.xml:26:5
+	android:name
+		ADDED from AndroidManifest.xml:26:22
+uses-permission#android.permission.RECEIVE_MMS
+ADDED from AndroidManifest.xml:27:5
+	android:name
+		ADDED from AndroidManifest.xml:27:22
+uses-permission#android.permission.RECEIVE_SMS
+ADDED from AndroidManifest.xml:28:5
+	android:name
+		ADDED from AndroidManifest.xml:28:22
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from AndroidManifest.xml:29:5
+	android:name
+		ADDED from AndroidManifest.xml:29:22
+uses-permission#android.permission.SEND_SMS
+ADDED from AndroidManifest.xml:30:5
+	android:name
+		ADDED from AndroidManifest.xml:30:22
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from AndroidManifest.xml:31:5
+	android:name
+		ADDED from AndroidManifest.xml:31:22
+uses-permission#android.permission.USE_CREDENTIALS
+ADDED from AndroidManifest.xml:32:5
+	android:name
+		ADDED from AndroidManifest.xml:32:22
+uses-permission#android.permission.VIBRATE
+ADDED from AndroidManifest.xml:33:5
+	android:name
+		ADDED from AndroidManifest.xml:33:22
+uses-permission#android.permission.WRITE_CONTACTS
+ADDED from AndroidManifest.xml:34:5
+	android:name
+		ADDED from AndroidManifest.xml:34:22
+uses-permission#android.permission.WAKE_LOCK
+ADDED from AndroidManifest.xml:35:5
+	android:name
+		ADDED from AndroidManifest.xml:35:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:36:5
+	android:name
+		ADDED from AndroidManifest.xml:36:22
+uses-permission#android.permission.WRITE_SMS
+ADDED from AndroidManifest.xml:37:5
+	android:name
+		ADDED from AndroidManifest.xml:37:22
+uses-permission#com.android.vending.BILLING
+ADDED from AndroidManifest.xml:38:5
+	android:name
+		ADDED from AndroidManifest.xml:38:22
+application
+ADDED from AndroidManifest.xml:40:5
+MERGED from com.android.support:appcompat-v7:22.2.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from qksms:qkms:unspecified:9:5
+MERGED from com.github.johnkil.android-robototextview:robototextview:2.1.0:11:5
+MERGED from com.melnykov:floatingactionbutton:1.3.0:12:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.pushbullet:android-extensions:1.0.4:9:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.nispok:snackbar:2.10.6:10:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.android.support:appcompat-v7:22.2.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.android.support:support-v13:22.2.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+MERGED from com.google.android.gms:play-services-analytics:7.5.0:24:5
+MERGED from com.google.android.gms:play-services-base:7.5.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:22:5
+	android:label
+		ADDED from AndroidManifest.xml:44:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:42:9
+	android:icon
+		ADDED from AndroidManifest.xml:43:9
+	android:largeHeap
+		ADDED from AndroidManifest.xml:45:9
+	android:theme
+		ADDED from AndroidManifest.xml:46:9
+	android:name
+		ADDED from AndroidManifest.xml:41:9
+activity#com.moez.QKSMS.ui.popup.QKComposeActivity
+ADDED from AndroidManifest.xml:47:9
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:49:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:52:13
+	android:theme
+		ADDED from AndroidManifest.xml:51:13
+	android:taskAffinity
+		ADDED from AndroidManifest.xml:50:13
+	android:name
+		ADDED from AndroidManifest.xml:48:13
+intent-filter#android.intent.action.SEND+android.intent.action.SENDTO+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:53:13
+action#android.intent.action.SEND
+ADDED from AndroidManifest.xml:54:17
+	android:name
+		ADDED from AndroidManifest.xml:54:25
+action#android.intent.action.SENDTO
+ADDED from AndroidManifest.xml:55:17
+	android:name
+		ADDED from AndroidManifest.xml:55:25
+category#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:57:17
+	android:name
+		ADDED from AndroidManifest.xml:57:27
+category#android.intent.category.BROWSABLE
+ADDED from AndroidManifest.xml:58:17
+	android:name
+		ADDED from AndroidManifest.xml:58:27
+data
+ADDED from AndroidManifest.xml:60:17
+	android:scheme
+		ADDED from AndroidManifest.xml:60:23
+intent-filter#android.intent.action.SEND+android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:65:13
+activity#com.moez.QKSMS.ui.MainActivity
+ADDED from AndroidManifest.xml:80:9
+	android:label
+		ADDED from AndroidManifest.xml:83:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:84:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:86:13
+	android:icon
+		ADDED from AndroidManifest.xml:82:13
+	android:logo
+		ADDED from AndroidManifest.xml:85:13
+	android:name
+		ADDED from AndroidManifest.xml:81:13
+intent-filter#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:87:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:88:17
+	android:name
+		ADDED from AndroidManifest.xml:88:25
+activity-alias#com.moez.QKSMS.ui.MainActivity-Teal
+ADDED from AndroidManifest.xml:92:9
+	android:enabled
+		ADDED from AndroidManifest.xml:94:13
+	android:label
+		ADDED from AndroidManifest.xml:96:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:97:13
+	android:icon
+		ADDED from AndroidManifest.xml:95:13
+	android:name
+		ADDED from AndroidManifest.xml:93:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:98:13
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:101:17
+	android:name
+		ADDED from AndroidManifest.xml:101:27
+activity-alias#com.moez.QKSMS.ui.MainActivity-Red
+ADDED from AndroidManifest.xml:104:9
+	android:enabled
+		ADDED from AndroidManifest.xml:106:13
+	android:label
+		ADDED from AndroidManifest.xml:108:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:109:13
+	android:icon
+		ADDED from AndroidManifest.xml:107:13
+	android:name
+		ADDED from AndroidManifest.xml:105:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Pink
+ADDED from AndroidManifest.xml:116:9
+	android:enabled
+		ADDED from AndroidManifest.xml:118:13
+	android:label
+		ADDED from AndroidManifest.xml:120:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:121:13
+	android:icon
+		ADDED from AndroidManifest.xml:119:13
+	android:name
+		ADDED from AndroidManifest.xml:117:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Purple
+ADDED from AndroidManifest.xml:128:9
+	android:enabled
+		ADDED from AndroidManifest.xml:130:13
+	android:label
+		ADDED from AndroidManifest.xml:132:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:133:13
+	android:icon
+		ADDED from AndroidManifest.xml:131:13
+	android:name
+		ADDED from AndroidManifest.xml:129:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-DeepPurple
+ADDED from AndroidManifest.xml:140:9
+	android:enabled
+		ADDED from AndroidManifest.xml:142:13
+	android:label
+		ADDED from AndroidManifest.xml:144:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:145:13
+	android:icon
+		ADDED from AndroidManifest.xml:143:13
+	android:name
+		ADDED from AndroidManifest.xml:141:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Indigo
+ADDED from AndroidManifest.xml:152:9
+	android:enabled
+		ADDED from AndroidManifest.xml:154:13
+	android:label
+		ADDED from AndroidManifest.xml:156:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:157:13
+	android:icon
+		ADDED from AndroidManifest.xml:155:13
+	android:name
+		ADDED from AndroidManifest.xml:153:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Blue
+ADDED from AndroidManifest.xml:164:9
+	android:enabled
+		ADDED from AndroidManifest.xml:166:13
+	android:label
+		ADDED from AndroidManifest.xml:168:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:169:13
+	android:icon
+		ADDED from AndroidManifest.xml:167:13
+	android:name
+		ADDED from AndroidManifest.xml:165:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-LightBlue
+ADDED from AndroidManifest.xml:176:9
+	android:enabled
+		ADDED from AndroidManifest.xml:178:13
+	android:label
+		ADDED from AndroidManifest.xml:180:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:181:13
+	android:icon
+		ADDED from AndroidManifest.xml:179:13
+	android:name
+		ADDED from AndroidManifest.xml:177:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Cyan
+ADDED from AndroidManifest.xml:188:9
+	android:enabled
+		ADDED from AndroidManifest.xml:190:13
+	android:label
+		ADDED from AndroidManifest.xml:192:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:193:13
+	android:icon
+		ADDED from AndroidManifest.xml:191:13
+	android:name
+		ADDED from AndroidManifest.xml:189:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Green
+ADDED from AndroidManifest.xml:200:9
+	android:enabled
+		ADDED from AndroidManifest.xml:202:13
+	android:label
+		ADDED from AndroidManifest.xml:204:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:205:13
+	android:icon
+		ADDED from AndroidManifest.xml:203:13
+	android:name
+		ADDED from AndroidManifest.xml:201:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-LightGreen
+ADDED from AndroidManifest.xml:212:9
+	android:enabled
+		ADDED from AndroidManifest.xml:214:13
+	android:label
+		ADDED from AndroidManifest.xml:216:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:217:13
+	android:icon
+		ADDED from AndroidManifest.xml:215:13
+	android:name
+		ADDED from AndroidManifest.xml:213:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Lime
+ADDED from AndroidManifest.xml:224:9
+	android:enabled
+		ADDED from AndroidManifest.xml:226:13
+	android:label
+		ADDED from AndroidManifest.xml:228:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:229:13
+	android:icon
+		ADDED from AndroidManifest.xml:227:13
+	android:name
+		ADDED from AndroidManifest.xml:225:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Yellow
+ADDED from AndroidManifest.xml:236:9
+	android:enabled
+		ADDED from AndroidManifest.xml:238:13
+	android:label
+		ADDED from AndroidManifest.xml:240:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:241:13
+	android:icon
+		ADDED from AndroidManifest.xml:239:13
+	android:name
+		ADDED from AndroidManifest.xml:237:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Amber
+ADDED from AndroidManifest.xml:248:9
+	android:enabled
+		ADDED from AndroidManifest.xml:250:13
+	android:label
+		ADDED from AndroidManifest.xml:252:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:253:13
+	android:icon
+		ADDED from AndroidManifest.xml:251:13
+	android:name
+		ADDED from AndroidManifest.xml:249:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Orange
+ADDED from AndroidManifest.xml:260:9
+	android:enabled
+		ADDED from AndroidManifest.xml:262:13
+	android:label
+		ADDED from AndroidManifest.xml:264:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:265:13
+	android:icon
+		ADDED from AndroidManifest.xml:263:13
+	android:name
+		ADDED from AndroidManifest.xml:261:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-DeepOrange
+ADDED from AndroidManifest.xml:272:9
+	android:enabled
+		ADDED from AndroidManifest.xml:274:13
+	android:label
+		ADDED from AndroidManifest.xml:276:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:277:13
+	android:icon
+		ADDED from AndroidManifest.xml:275:13
+	android:name
+		ADDED from AndroidManifest.xml:273:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Brown
+ADDED from AndroidManifest.xml:284:9
+	android:enabled
+		ADDED from AndroidManifest.xml:286:13
+	android:label
+		ADDED from AndroidManifest.xml:288:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:289:13
+	android:icon
+		ADDED from AndroidManifest.xml:287:13
+	android:name
+		ADDED from AndroidManifest.xml:285:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-Grey
+ADDED from AndroidManifest.xml:296:9
+	android:enabled
+		ADDED from AndroidManifest.xml:298:13
+	android:label
+		ADDED from AndroidManifest.xml:300:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:301:13
+	android:icon
+		ADDED from AndroidManifest.xml:299:13
+	android:name
+		ADDED from AndroidManifest.xml:297:13
+activity-alias#com.moez.QKSMS.ui.MainActivity-BlueGrey
+ADDED from AndroidManifest.xml:308:9
+	android:enabled
+		ADDED from AndroidManifest.xml:310:13
+	android:label
+		ADDED from AndroidManifest.xml:312:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:313:13
+	android:icon
+		ADDED from AndroidManifest.xml:311:13
+	android:name
+		ADDED from AndroidManifest.xml:309:13
+activity#com.moez.QKSMS.ui.welcome.WelcomeActivity
+ADDED from AndroidManifest.xml:321:9
+	android:theme
+		ADDED from AndroidManifest.xml:323:13
+	android:name
+		ADDED from AndroidManifest.xml:322:13
+activity#com.moez.QKSMS.ui.popup.QKReplyActivity
+ADDED from AndroidManifest.xml:326:9
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:328:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:331:13
+	android:theme
+		ADDED from AndroidManifest.xml:330:13
+	android:taskAffinity
+		ADDED from AndroidManifest.xml:329:13
+	android:name
+		ADDED from AndroidManifest.xml:327:13
+activity#com.moez.QKSMS.ui.popup.MessagePickerActivity
+ADDED from AndroidManifest.xml:334:9
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:336:13
+	android:noHistory
+		ADDED from AndroidManifest.xml:337:13
+	android:theme
+		ADDED from AndroidManifest.xml:339:13
+	android:taskAffinity
+		ADDED from AndroidManifest.xml:338:13
+	android:name
+		ADDED from AndroidManifest.xml:335:13
+activity#com.moez.QKSMS.ui.mms.SlideshowActivity
+ADDED from AndroidManifest.xml:341:9
+	android:name
+		ADDED from AndroidManifest.xml:341:19
+receiver#com.moez.QKSMS.receiver.WearableIntentReceiver
+ADDED from AndroidManifest.xml:343:9
+	android:exported
+		ADDED from AndroidManifest.xml:345:13
+	android:name
+		ADDED from AndroidManifest.xml:344:13
+intent-filter#com.moez.QKSMS.receiver.WearableIntentReceiver.REPLY
+ADDED from AndroidManifest.xml:346:13
+action#com.moez.QKSMS.receiver.WearableIntentReceiver.REPLY
+ADDED from AndroidManifest.xml:347:17
+	android:name
+		ADDED from AndroidManifest.xml:347:25
+receiver#com.moez.QKSMS.receiver.SmsReceiver
+ADDED from AndroidManifest.xml:352:9
+	android:enabled
+		ADDED from AndroidManifest.xml:354:13
+	android:permission
+		ADDED from AndroidManifest.xml:355:13
+	android:name
+		ADDED from AndroidManifest.xml:353:13
+intent-filter#android.provider.Telephony.SMS_DELIVER
+ADDED from AndroidManifest.xml:356:13
+action#android.provider.Telephony.SMS_DELIVER
+ADDED from AndroidManifest.xml:357:17
+	android:name
+		ADDED from AndroidManifest.xml:357:25
+receiver#com.moez.QKSMS.receiver.IconColorReceiver
+ADDED from AndroidManifest.xml:360:9
+	android:enabled
+		ADDED from AndroidManifest.xml:362:13
+	android:exported
+		ADDED from AndroidManifest.xml:363:13
+	android:name
+		ADDED from AndroidManifest.xml:361:13
+intent-filter#android.intent.action.PACKAGE_CHANGED
+ADDED from AndroidManifest.xml:364:13
+action#android.intent.action.PACKAGE_CHANGED
+ADDED from AndroidManifest.xml:365:17
+	android:name
+		ADDED from AndroidManifest.xml:365:25
+intent-filter#com.moez.QKSMS.action.PENDING_PACKAGE_CHANGE
+ADDED from AndroidManifest.xml:369:13
+action#com.moez.QKSMS.action.PENDING_PACKAGE_CHANGE
+ADDED from AndroidManifest.xml:370:17
+	android:name
+		ADDED from AndroidManifest.xml:370:25
+receiver#com.moez.QKSMS.receiver.SmsReceiverLegacy
+ADDED from AndroidManifest.xml:375:9
+	android:enabled
+		ADDED from AndroidManifest.xml:377:13
+	android:name
+		ADDED from AndroidManifest.xml:376:13
+intent-filter#android.provider.Telephony.SMS_RECEIVED
+ADDED from AndroidManifest.xml:378:13
+	android:priority
+		ADDED from AndroidManifest.xml:378:28
+action#android.provider.Telephony.SMS_RECEIVED
+ADDED from AndroidManifest.xml:379:17
+	android:name
+		ADDED from AndroidManifest.xml:379:25
+receiver#com.moez.QKSMS.receiver.PushReceiver
+ADDED from AndroidManifest.xml:384:9
+	android:permission
+		ADDED from AndroidManifest.xml:386:13
+	android:name
+		ADDED from AndroidManifest.xml:385:13
+intent-filter#android.provider.Telephony.WAP_PUSH_DELIVER+android.provider.Telephony.WAP_PUSH_RECEIVED
+ADDED from AndroidManifest.xml:387:13
+action#android.provider.Telephony.WAP_PUSH_RECEIVED
+ADDED from AndroidManifest.xml:388:17
+	android:name
+		ADDED from AndroidManifest.xml:388:25
+action#android.provider.Telephony.WAP_PUSH_DELIVER
+ADDED from AndroidManifest.xml:389:17
+	android:name
+		ADDED from AndroidManifest.xml:389:25
+receiver#com.moez.QKSMS.analytics.AnalyticsReportReceiver
+ADDED from AndroidManifest.xml:394:9
+	android:name
+		ADDED from AndroidManifest.xml:394:19
+intent-filter#android.intent.action.BOOT_COMPLETED
+ADDED from AndroidManifest.xml:395:13
+action#android.intent.action.BOOT_COMPLETED
+ADDED from AndroidManifest.xml:396:17
+	android:name
+		ADDED from AndroidManifest.xml:396:25
+receiver#com.moez.QKSMS.receiver.BootReceiver
+ADDED from AndroidManifest.xml:399:9
+	android:name
+		ADDED from AndroidManifest.xml:399:19
+receiver#com.klinker.android.send_message.SentReceiver
+ADDED from AndroidManifest.xml:404:9
+	android:name
+		ADDED from AndroidManifest.xml:404:19
+intent-filter#com.moez.QKSMS.SMS_SENT
+ADDED from AndroidManifest.xml:405:13
+action#com.moez.QKSMS.SMS_SENT
+ADDED from AndroidManifest.xml:406:17
+	android:name
+		ADDED from AndroidManifest.xml:406:25
+receiver#com.moez.QKSMS.receiver.DeliveredReceiver
+ADDED from AndroidManifest.xml:409:9
+	android:name
+		ADDED from AndroidManifest.xml:409:19
+intent-filter#com.moez.QKSMS.SMS_DELIVERED
+ADDED from AndroidManifest.xml:410:13
+action#com.moez.QKSMS.SMS_DELIVERED
+ADDED from AndroidManifest.xml:411:17
+	android:name
+		ADDED from AndroidManifest.xml:411:25
+receiver#com.moez.QKSMS.receiver.MessageFailedReceiver
+ADDED from AndroidManifest.xml:414:9
+	android:name
+		ADDED from AndroidManifest.xml:414:19
+intent-filter#com.moez.QKSMS.NOTIFY_SMS_FAILURE
+ADDED from AndroidManifest.xml:415:13
+action#com.moez.QKSMS.NOTIFY_SMS_FAILURE
+ADDED from AndroidManifest.xml:416:17
+	android:name
+		ADDED from AndroidManifest.xml:416:25
+receiver#com.moez.QKSMS.receiver.MarkReadReceiver
+ADDED from AndroidManifest.xml:419:9
+	android:name
+		ADDED from AndroidManifest.xml:419:19
+intent-filter#com.moez.QKSMS.MARK_READ
+ADDED from AndroidManifest.xml:420:13
+action#com.moez.QKSMS.MARK_READ
+ADDED from AndroidManifest.xml:421:17
+	android:name
+		ADDED from AndroidManifest.xml:421:25
+receiver#com.moez.QKSMS.receiver.MarkSeenReceiver
+ADDED from AndroidManifest.xml:424:9
+	android:name
+		ADDED from AndroidManifest.xml:424:19
+intent-filter#com.moez.QKSMS.MARK_SEEN
+ADDED from AndroidManifest.xml:425:13
+action#com.moez.QKSMS.MARK_SEEN
+ADDED from AndroidManifest.xml:426:17
+	android:name
+		ADDED from AndroidManifest.xml:426:25
+receiver#com.moez.QKSMS.ui.widget.WidgetProvider
+ADDED from AndroidManifest.xml:430:9
+	android:name
+		ADDED from AndroidManifest.xml:430:19
+intent-filter#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from AndroidManifest.xml:431:13
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from AndroidManifest.xml:432:17
+	android:name
+		ADDED from AndroidManifest.xml:432:25
+intent-filter#com.moez.QKSMS.intent.action.ACTION_NOTIFY_DATASET_CHANGED
+ADDED from AndroidManifest.xml:434:13
+action#com.moez.QKSMS.intent.action.ACTION_NOTIFY_DATASET_CHANGED
+ADDED from AndroidManifest.xml:435:17
+	android:name
+		ADDED from AndroidManifest.xml:435:25
+meta-data#android.appwidget.provider
+ADDED from AndroidManifest.xml:438:13
+	android:resource
+		ADDED from AndroidManifest.xml:440:17
+	android:name
+		ADDED from AndroidManifest.xml:439:17
+receiver#com.moez.QKSMS.receiver.NightModeAutoReceiver
+ADDED from AndroidManifest.xml:443:9
+	android:name
+		ADDED from AndroidManifest.xml:443:19
+receiver#com.mariussoft.endlessjabber.sdk.EndlessJabberReceiver
+ADDED from AndroidManifest.xml:444:9
+	android:enabled
+		ADDED from AndroidManifest.xml:446:13
+	android:name
+		ADDED from AndroidManifest.xml:445:13
+intent-filter#com.mariussoft.endlessjabber.action.extend
+ADDED from AndroidManifest.xml:447:13
+action#com.mariussoft.endlessjabber.action.extend
+ADDED from AndroidManifest.xml:448:17
+	android:name
+		ADDED from AndroidManifest.xml:448:25
+service#com.mariussoft.endlessjabber.sdk.EndlessJabberWakefulService
+ADDED from AndroidManifest.xml:452:9
+	android:name
+		ADDED from AndroidManifest.xml:452:18
+service#com.moez.QKSMS.receiver.UnreadBadgeService
+ADDED from AndroidManifest.xml:454:9
+	android:exported
+		ADDED from AndroidManifest.xml:456:13
+	android:name
+		ADDED from AndroidManifest.xml:455:13
+service#com.moez.QKSMS.service.HeadlessSmsSendService
+ADDED from AndroidManifest.xml:459:9
+	android:exported
+		ADDED from AndroidManifest.xml:461:13
+	android:permission
+		ADDED from AndroidManifest.xml:462:13
+	android:name
+		ADDED from AndroidManifest.xml:460:13
+intent-filter#android.intent.action.RESPOND_VIA_MESSAGE+android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:463:13
+action#android.intent.action.RESPOND_VIA_MESSAGE
+ADDED from AndroidManifest.xml:464:17
+	android:name
+		ADDED from AndroidManifest.xml:464:25
+service#com.moez.QKSMS.service.PushbulletService
+ADDED from AndroidManifest.xml:474:9
+	android:permission
+		ADDED from AndroidManifest.xml:476:13
+	android:name
+		ADDED from AndroidManifest.xml:475:13
+intent-filter#com.pushbullet.android.extension.MessagingExtension
+ADDED from AndroidManifest.xml:477:13
+action#com.pushbullet.android.extension.MessagingExtension
+ADDED from AndroidManifest.xml:478:17
+	android:name
+		ADDED from AndroidManifest.xml:478:25
+meta-data#protocolVersion
+ADDED from AndroidManifest.xml:481:13
+	android:value
+		ADDED from AndroidManifest.xml:483:17
+	android:name
+		ADDED from AndroidManifest.xml:482:17
+service#com.android.mms.transaction.TransactionService
+ADDED from AndroidManifest.xml:485:9
+	android:name
+		ADDED from AndroidManifest.xml:485:18
+service#com.moez.QKSMS.service.NotificationService
+ADDED from AndroidManifest.xml:486:9
+	android:name
+		ADDED from AndroidManifest.xml:486:18
+service#com.moez.QKSMS.service.MarkReadService
+ADDED from AndroidManifest.xml:487:9
+	android:name
+		ADDED from AndroidManifest.xml:487:18
+service#com.moez.QKSMS.service.MarkSeenService
+ADDED from AndroidManifest.xml:488:9
+	android:name
+		ADDED from AndroidManifest.xml:488:18
+service#com.moez.QKSMS.service.DeleteUnreadMessageService
+ADDED from AndroidManifest.xml:489:9
+	android:name
+		ADDED from AndroidManifest.xml:489:18
+service#com.moez.QKSMS.service.CopyUnreadMessageTextService
+ADDED from AndroidManifest.xml:490:9
+	android:name
+		ADDED from AndroidManifest.xml:490:18
+service#com.moez.QKSMS.ui.widget.WidgetService
+ADDED from AndroidManifest.xml:491:9
+	android:permission
+		ADDED from AndroidManifest.xml:493:13
+	android:name
+		ADDED from AndroidManifest.xml:492:13
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from qksms:slidingMenu:unspecified:7:5
+MERGED from com.android.support:appcompat-v7:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from qksms:colorPicker:unspecified:7:5
+MERGED from qksms:qkms:unspecified:5:5
+MERGED from com.github.johnkil.android-robototextview:robototextview:2.1.0:7:5
+MERGED from com.melnykov:floatingactionbutton:1.3.0:8:5
+MERGED from com.android.support:recyclerview-v7:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.pushbullet:android-extensions:1.0.4:5:5
+MERGED from com.klinkerapps:android-chips:1.0.0:22:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.nispok:snackbar:2.10.6:6:5
+MERGED from com.android.support:recyclerview-v7:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.github.lzyzsd:circleprogress:1.1.0:7:5
+MERGED from me.leolin:ShortcutBadger:1.1.1:7:5
+MERGED from com.android.support:appcompat-v7:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.android.support:support-v13:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.android.support:recyclerview-v7:22.2.0:20:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.google.android.gms:play-services-analytics:7.5.0:18:5
+MERGED from com.google.android.gms:play-services-base:7.5.0:18:5
+MERGED from com.android.support:support-v4:22.2.0:20:5
+MERGED from com.squareup.leakcanary:leakcanary-android-no-op:1.3:20:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#com.sec.android.provider.badge.permission.READ
+ADDED from me.leolin:ShortcutBadger:1.1.1:19:5
+	android:name
+		ADDED from me.leolin:ShortcutBadger:1.1.1:19:22
+uses-permission#com.sec.android.provider.badge.permission.WRITE
+ADDED from me.leolin:ShortcutBadger:1.1.1:20:5
+	android:name
+		ADDED from me.leolin:ShortcutBadger:1.1.1:20:22
+uses-permission#com.htc.launcher.permission.READ_SETTINGS
+ADDED from me.leolin:ShortcutBadger:1.1.1:23:5
+	android:name
+		ADDED from me.leolin:ShortcutBadger:1.1.1:23:22
+uses-permission#com.htc.launcher.permission.UPDATE_SHORTCUT
+ADDED from me.leolin:ShortcutBadger:1.1.1:24:5
+	android:name
+		ADDED from me.leolin:ShortcutBadger:1.1.1:24:22
+uses-permission#com.sonyericsson.home.permission.BROADCAST_BADGE
+ADDED from me.leolin:ShortcutBadger:1.1.1:27:5
+	android:name
+		ADDED from me.leolin:ShortcutBadger:1.1.1:27:22
+uses-permission#com.anddoes.launcher.permission.UPDATE_COUNT
+ADDED from me.leolin:ShortcutBadger:1.1.1:30:5
+	android:name
+		ADDED from me.leolin:ShortcutBadger:1.1.1:30:22
+uses-permission#com.majeur.launcher.permission.UPDATE_BADGE
+ADDED from me.leolin:ShortcutBadger:1.1.1:33:5
+	android:name
+		ADDED from me.leolin:ShortcutBadger:1.1.1:33:22
+meta-data#com.google.android.gms.version
+ADDED from com.google.android.gms:play-services-base:7.5.0:21:9
+	android:value
+		ADDED from com.google.android.gms:play-services-base:7.5.0:23:13
+	android:name
+		ADDED from com.google.android.gms:play-services-base:7.5.0:22:13

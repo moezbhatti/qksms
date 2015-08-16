@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+            android:id="@+id/edittext_background">
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/red_light" />
+            <padding android:bottom="1dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle" >
+            <solid android:color="@color/white_pure"/>
+            <padding android:bottom="4dp"
+                     android:left="4dp"
+                     android:right="4dp"
+                     android:top="4dp" />
+        </shape>
+    </item>
+
+</layer-list>

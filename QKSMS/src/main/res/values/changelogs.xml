@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="versions">
+        <item>2.0.1</item>
+        <item>1.13.1</item>
+        <item>1.13.0</item>
+        <item>1.12.1</item>
+        <item>1.12.0</item>
+        <item>1.11.4</item>
+        <item>1.11.3</item>
+        <item>1.11.2</item>
+        <item>1.11.1</item>
+        <item>1.11.0</item>
+        <item>1.10.4</item>
+        <item>1.10.3</item>
+        <item>1.10.2</item>
+        <item>1.10.1</item>
+        <item>1.10.0</item>
+        <item>1.9.4</item>
+        <item>1.9.3</item>
+        <item>1.9.2</item>
+        <item>1.9.1 Kraken</item>
+        <item>1.9.0</item>
+        <item>1.8.1</item>
+        <item>1.8.0</item>
+        <item>1.7.1</item>
+        <item>1.7.0</item>
+        <item>1.6.0</item>
+        <item>1.5.2</item>
+        <item>1.5.1</item>
+        <item>1.5.0</item>
+        <item>1.4.5</item>
+        <item>1.4.4</item>
+        <item>1.4.3</item>
+        <item>1.4.2</item>
+        <item>1.4.1</item>
+        <item>1.4.0</item>
+        <item>1.3.2</item>
+        <item>1.3.1</item>
+        <item>1.3.0</item>
+        <item>1.2.0</item>
+        <item>1.1.3</item>
+        <item>1.1.2</item>
+        <item>1.1.1</item>
+        <item>1.1.0</item>
+        <item>1.0.6</item>
+        <item>1.0.5</item>
+        <item>1.0.4</item>
+        <item>1.0.3</item>
+        <item>1.0.2</item>
+        <item>1.0.1</item>
+        <item>1.0.0</item>
+        <item>0.14.3</item>
+        <item>0.14.2</item>
+        <item>0.14.1</item>
+        <item>0.14.0</item>
+        <item>0.13.3</item>
+        <item>0.13.2</item>
+        <item>0.13.1</item>
+        <item>0.13.0</item>
+        <item>0.12.1</item>
+        <item>0.12.0</item>
+        <item>0.11.1</item>
+        <item>0.11.0</item>
+        <item>0.10.3</item>
+        <item>0.10.2</item>
+        <item>0.10.1</item>
+        <item>0.10.0</item>
+        <item>0.9.1</item>
+        <item>0.9.0</item>
+        <item>0.8.10</item>
+        <item>0.8.9</item>
+        <item>0.8.8</item>
+        <item>0.8.7</item>
+        <item>0.8.6</item>
+        <item>0.8.5</item>
+        <item>0.8.4</item>
+        <item>0.8.3</item>
+        <item>0.8.2</item>
+        <item>0.8.1</item>
+        <item>0.8.0</item>
+        <item>0.7.2</item>
+        <item>0.7.1</item>
+        <item>0.7.0</item>
+        <item>0.6.2</item>
+        <item>0.6.1</item>
+        <item>0.6.0</item>
+        <item>0.5.0</item>
+        <item>0.4.0</item>
+        <item>0.3.12</item>
+        <item>0.3.11</item>
+        <item>0.3.10</item>
+        <item>0.3.9</item>
+        <item>0.3.8</item>
+        <item>0.3.7</item>
+        <item>0.3.6</item>
+        <item>0.3.5</item>
+        <item>0.3.4</item>
+        <item>0.3.3</item>
+        <item>0.3.2</item>
+        <item>0.3.1</item>
+        <item>0.3.0</item>
+        <item>0.2.4</item>
+        <item>0.2.3</item>
+        <item>0.2.2</item>
+        <item>0.2.1</item>
+        <item>0.2.0</item>
+        <item>0.1.0</item>
+    </string-array>
+
+    <string-array name="dates">
+        <item>August 16, 2015</item>
+        <item>August 16, 2015</item>
+        <item>August 16, 2015</item>
+        <item>August 9, 2015</item>
+        <item>August 9, 2015</item>
+        <item>July 31, 2015</item>
+        <item>July 23, 2015</item>
+        <item>July 22, 2015</item>
+        <item>July 21, 2015</item>
+        <item>July 19, 2015</item>
+        <item>July 17, 2015</item>
+        <item>July 17, 2015</item>
+        <item>July 15, 2015</item>
+        <item>July 12, 2015</item>
+        <item>July 12, 2015</item>
+        <item>June 27, 2015</item>
+        <item>June 15, 2015</item>
+        <item>June 14, 2015</item>
+        <item>June 11, 2015</item>
+        <item>June 10, 2015</item>
+        <item>May 31, 2015</item>
+        <item>May 30, 2015</item>
+        <item>May 20, 2015</item>
+        <item>May 18, 2015</item>
+        <item>May 5, 2015</item>
+        <item>April 22, 2015</item>
+        <item>April 21, 2015</item>
+        <item>April 10, 2015</item>
+        <item>March 30, 2015</item>
+        <item>March 20, 2015</item>
+        <item>March 13, 2015</item>
+        <item>February 28, 2015</item>
+        <item>February 24, 2015</item>
+        <item>February 12, 2015</item>
+        <item>January 28, 2015</item>
+        <item>January 14, 2015</item>
+        <item>January 12, 2015</item>
+        <item>January 9, 2015</item>
+        <item>December 28, 2014</item>
+        <item>December 7, 2014</item>
+        <item>December 2, 2014</item>
+        <item>November 27, 2014</item>
+        <item>November 21, 2014</item>
+        <item>November 16, 2014</item>
+        <item>November 13, 2014</item>
+        <item>November 13, 2014</item>
+        <item>November 8, 2014</item>
+        <item>November 7, 2014</item>
+        <item>November 7, 2014</item>
+        <item>October 31, 2014</item>
+        <item>October 30, 2014</item>
+        <item>October 27, 2014</item>
+        <item>October 26, 2014</item>
+        <item>October 17, 2014</item>
+        <item>October 9, 2014</item>
+        <item>October 7, 2014</item>
+        <item>September 23, 2014</item>
+        <item>August 20, 2014</item>
+        <item>August 18, 2014</item>
+        <item>August 13, 2014</item>
+        <item>August 13, 2014</item>
+        <item>August 7, 2014</item>
+        <item>August 6, 2014</item>
+        <item>August 6, 2014</item>
+        <item>August 4, 2014</item>
+        <item>July 29, 2014</item>
+        <item>July 28, 2014</item>
+        <item>July 27, 2014</item>
+        <item>July 26, 2014</item>
+        <item>July 26, 2014</item>
+        <item>July 19, 2014</item>
+        <item>July 16, 2014</item>
+        <item>July 15, 2014</item>
+        <item>July 12, 2014</item>
+        <item>July 10, 2014</item>
+        <item>July 9, 2014</item>
+        <item>July 8, 2014</item>
+        <item>July 8, 2014</item>
+        <item>June 30, 2014</item>
+        <item>June 29, 2014</item>
+        <item>June 29, 2014</item>
+        <item>June 22, 2014</item>
+        <item>June 22, 2014</item>
+        <item>June 21, 2014</item>
+        <item>June 11, 2014</item>
+        <item>June 7, 2014</item>
+        <item>May 31, 2014</item>
+        <item>May 30, 2014</item>
+        <item>May 29, 2014</item>
+        <item>May 29, 2014</item>
+        <item>May 28, 2014</item>
+        <item>May 24, 2014</item>
+        <item>May 21, 2014</item>
+        <item>May 20, 2014</item>
+        <item>May 20, 2014</item>
+        <item>May 19, 2014</item>
+        <item>May 17, 2014</item>
+        <item>May 15, 2014</item>
+        <item>May 15, 2014</item>
+        <item>May 14, 2014</item>
+        <item>May 13, 2014</item>
+        <item>May 11, 2014</item>
+        <item>May 10, 2014</item>
+        <item>May 10, 2014</item>
+        <item>May 7, 2014</item>
+    </string-array>
+
+    <string-array name="changes">
+        <item>" • QKSMS is now open source. View the source code at https://github.com/qklabs/qksms"</item>
+        <item>" • Multiple crash fixes"</item>
+        <item>" • Updated messaging UI\n • Fixed phone number showing up instead of name for contacts\n • Fixed delete conversation option\n • Crash fixes"</item>
+        <item>" • Fixed donate link"</item>
+        <item>" • 150+ new free colors\n • Automatic night mode now free\n • Per-conversation notification settings now free\n • Android Wear QK Responses now free\n • Added donation option\n • Fixed screen wake feature\n • Organized some preferences\n • Reduced app size to just 4MB\n • Fixed empty contact issue"</item>
+        <item>" • Patched to help remove risk of Stagefright\n • QK Reply improvements\n • Group conversation avatar fixes"</item>
+        <item>" • Added option to send message by pressing enter key on keyboard\n • Fixed compose bar and send button color on QK Reply window"</item>
+        <item>" • Fixed rotation issues\n • Fixed issues with opening conversations"</item>
+        <item>" • Fixed issues with composing messages\n • Improve send message animation"</item>
+        <item>" • Separate notification for each conversation\n • Clicking on notification from group chat will take you to correct conversation\n • Fixed order of messages in notification\n • QK Reply crash fixes\n • Search performance improvements\n • Crash fixes"</item>
+        <item>" • Crash fixes"</item>
+        <item>" • Even more crash fixes\n • Fixed contact avatar background"</item>
+        <item>" • More crash fixes"</item>
+        <item>" • Crash fixes from 1.1.0"</item>
+        <item>" • Rewrote conversation screen from scratch\n • Significant performance improvements\n • Group conversation UI improvements\n • MMS loading improvements\n • Message sending animations"</item>
+        <item>" • Various bug and crash fixes"</item>
+        <item>" • Crash fix"</item>
+        <item>" • Updated app icon for Material Design\n • Welcome screen fixes\n • Notification improvements\n • Bring your phone to your ear to start a phone call (preference)\n • Fixed screen wake feature\n • Fixed issues with per-contact notifications"</item>
+        <item>" • Much better looking compose message view"</item>
+        <item>" • Major performance improvements\n • Fixed group conversation avatars\n • Fixed MMS composition from other apps\n • View members of group chat\n • Multi selection for conversations\n • Added homescreen unread badge support\n • View conversation details\n • Starred contacts on compose screen\n • Improved QK Compose\n • Improved MMS APN detection\n • Added setting to disable automatic data"</item>
+        <item>" • Fixed bug with per-contact notification settings"</item>
+        <item>" • Added ability to save MMS\n • Delayed messaging support for QKSMS+\n • Live search. Updates search results as you type\n • UI Improvements\n • Lock messages (save them, even when deleting the conversation)\n • Delivery report details\n • Automatic Night Mode fixes"</item>
+        <item>" • Fixed issues with automatic Emoji"</item>
+        <item>" • Automatic emojis\n • Redesigned settings\n • White background setting\n • Promo codes support\n • QK Reply bug fixes\n • Fixed attachment glitches\n • Updated translations"</item>
+        <item>" • New animations\n • Updated MMS UI\n • Attach photos from camera\n • Refined light theme\n • Fixed QK Reply not showing up after screen lock\n • Fixed delivery indicator color\n • Sliding menu animation fix\n • Fixed hidden settings\n • Crash fixes"</item>
+        <item>" • Crash fixes\n • Fixed “Mark as read” from notification bug"</item>
+        <item>" • High resolution contact photos\n • Improved introduction experience\n • Reduced app size\n • Fixed various UI glitches\n • Nicer looking scrollbar\n • Crash fixes"</item>
+        <item>" • Empty conversations no longer created from Contacts/Phone apps\n • Fixed issues with messages not being marked read\n • Fixed problem with disappearing app icon\n • Fixed attachements in QK Reply\n • “Mark as read” button in QK Reply\n • “Show full conversation” button in QK Reply\n • Fixed weird behaviour with heads-up notifications and QK Reply\n • Fixed QK Reply crashing\n • Fixed MMS setup options"</item>
+        <item>" • Bug fixes with message composing\n • MMS retrieval improvements\n • MMS auto configuration (APN detection) improvements"</item>
+        <item>" • MMS sending improvements\n • Option to disable starred contacts for QK Reply\n • Attach images in MMS with correct orientation"</item>
+        <item>" • Beautiful new UI for emoji messages\n • App size reduction\n • Added preference for disabling text formatting\n • Droid Turbo fixes"</item>
+        <item>" • New and improved MMS setup experience\n • Fixed MMS subject tags\n • Fixed null conversation issue"</item>
+        <item>" • Fixed issue with notification sometimes not showing up\n • Fixed issue with wrong unread message count in notification"</item>
+        <item>" • MMS photo notifications\n • Group chat notifications\n • Per-contact notification customizations (QKSMS+)\n • The app icon can now change to match your theme\n • Reorganized settings page\n • Commonly used settings are now shown on the main settings page, one click away instead of two\n • Added option to disable toasts for delivered messages"</item>
+        <item>" • Fixed issue with QK Reply showing the wrong conversation\n Reply performance improvements\n translations\n messages from QK Reply will reliably delete the message, including additional messages that are shown"</item>
+        <item>" • Fixed issues with custom QK Responses for Android Wear"</item>
+        <item>" • Full support for Android Wear!\n • You can reply to messages using your voice, directly from the watch\n • You can click on a pre-made response to reply without speaking, and QKSMS+ users may customize the list of QK Responses\n • You can compose messages via Wear\n • SMS notifications will allow you to view a short history of recent messages in the conversation right from the wearable\n • High resolution contact images are sent to the watch</item>
+        <item>" • Crash fixes"</item>
+        <item>" • QKCompose will show your favorite contacts, so you don’t need to keep typing the same names all the time\n • Crash fixes\n • Extra intent supported by QKCompose, now share from even more apps\n • Fixed “smiley face” as self avatar bug"</item>
+        <item>" • Keyboard opens automatically for search and closes when you go to settings\n • Text doesn't disappear in conversations\n • Conversations update correctly with Automatic Night Mode\n • Themes with dark primary color update all icons"</item>
+        <item>" • UI improvements\n • Fixed overly aggressive text color picking\n • Improved padding between messages"</item>
+        <item>" • HUGE performance improvements when opening conversations\n • Fixed disappearing conversations\n • Fixed check boxes not appearing on pre-4.2.0 phones\n • Restored tap to view details, viewing MMS\n • Fixed back button disappearing issue"</item>
+        <item>" • Beautiful new search UI\n • Improved search functionality\n • Battery usage improvements\n • Performance improvements"</item>
+        <item>" • Performance enhancements\n • Updated icon\n • Crash fixes\n • Updated floating action button"</item>
+        <item>" • Closing QuickReply won’t flash the screen black anymore\n • Tap to retry fixed\n • Tap to view details/MMS fixed\n • Crash fixes"</item>
+        <item>" • Opening conversations via notifications is fixed\n • Bug fixes"</item>
+        <item>" • Lots of crash fixes\n • Draft improvements\n • Message deletion fixes\n • Avatar letter issue fixed"</item>
+        <item>" • Crash fixes"</item>
+        <item>" • Crash fixes"</item>
+        <item>" • Fixed notification count error\n • Awesome new welcome screen\n • Added ability to share photos from other apps\n • Added ability to send MMS from QuickReply and Compose screens\n • Added message forwarding\n • Improved performance\n • Fixed wake-screen issue\n • Fixed status/navigation bar gradients (it can be re-enabled in the advanced settings)"</item>
+        <item>" • Updated to Material Design actionbar\n • Added back button in action bar\n • Updated to Material Design night mode colour\n • New preference screen to see app info\n • Added a “thank you” page for all open-source contributors"</item>
+        <item>" • MMS sending is much more reliable!!!!!!\n • Performance fixes for 0.14.0 release"</item>
+        <item>" • Crash fixes"</item>
+        <item>" • MAJOR MMS/GROUP MESSAGE FIXES\n • Tap to resend/edit failed messages working\n • Keyboard will automatically open in the compose screen\n • Clicking someone’s avatar will now display their details\n • Drafts working\n • You’ll have the option to choose photos from gallery now\n • QuickCompose will reliably send messages now\n • Added option to wake screen on new message received"</item>
+        <item>" • Ability to mute converstions\n • Fixed bug where pressing back would just cycle through conversations instead of exiting the app\n • Slightly redesigned icon"</item>
+        <item>" • Added MMS reporting"</item>
+        <item>" • Names will be displayed on group message timestamps\n • Fixed navigation bar issue\n • Added some ripple animations\n • Timestamps will be shown for all delivered messages\n • Fixed crash on opening delivery report\n • iPhone group MMS will be more reliable"</item>
+        <item>" • More L than ever before\n • Reduced app size to 3mb\n • Animated, beautiful checkboxes\n • Flat system bars on KitKat (WHAT?!)\n • Night mode no longer requires restart\n • Fixed Automatic Night Mode issues\n • Desktop QuickReply is now free\n • Fixed issues with persistent notifications\n • Marking conversations unread will work correctly now"</item>
+        <item>" • Fixed issue with old colour scheme still showing up in some parts of the app after picking a new one\n • Fixed overlapping issues in conversation list\n • Fixed timestamp formatting for auto night mode settings\n • Fixed title colour for disabled preferences"</item>
+        <item>" • Implemented colour palette based on Material Design colours\n • Over 190 colours available to choose from for QKSMS+ users\n • Completely redesigned the "default" app configuration to be more beautiful than ever. I actually use the default appearance settings myself now, I don't even feel the need to change them. THAT'S how good they look\n • New app icon\n • Updated all in-app icons to their Material Design equivalents\n • Added animations for changing themes and toggling system bar tints\n • You no longer need to restart the app for changing themes\n • You no longer need to restart the app for toggling system bar tints\n • You no longer need to restart the app for toggling system bar fixes\n • You no longer need to restart the app for changing font family, size, or weight\n • Fixed crash on opening MMS from iPhones\n • Minor UI tweaks"</item>
+        <item>" • Fixed issue with crashing on opening settings if font is Roboto Condensed\n • Fixed back button not working on some screens"</item>
+        <item>" • You can now view and save MMS\n • Removed advertisements from the app (hooray!)\n • Added search functionality\n • Preferences will now look like those in Android L, much better now\n • You can now hide avatars (conversations, sent messages, and received messages)\n • Added multiple font options now (font family / weight)\n • Fixed message deletion\n • Minor performance improvements\n • More AOSP code integration"</item>
+        <item>" • Fixed translations"</item>
+        <item>" • Fixed blank contact view\n • Fixed bug where links wouldn't open inside conversation\n • Fixed translations"</item>
+        <item>" • Crash fixes\n • Fixed letter for blank contacts not showing up inside conversation\n • Fixed appearance of letter for blank contacts\n • Fixed issues with floating action button\n • Slight performance improvements"</item>
+        <item>" • Group messaging support\n • Better MMS support\n • Fixed performance issues on devices running HTC Sense\n • Major performance improvements\n • Deleting conversations will work properly now\n • You will be reminded to set APNs if they aren't set already (it will do it for you, you just need to press okay)\n • Fixed issue where MMS would show up in QuickReply no matter what\n • EndlessJabber support\n • You can now colour sent OR received messages\n • You can display the message count in the conversation list\n • You can now see the time that your message was received\n • No more blinding white on app launch\n • Updated translations"</item>
+        <item>" • Fixed crash when receiving SMS on Samsung and CM devices"</item>
+        <item>" • Added tap to retry for failed SMS\n • Fixed draft saving (for real this time)\n • Added indicator for conversations with failed messages in conversation list\n • Added notification for failed SMS\n • Improved lag when sending messages"</item>
+        <item>" • Added Automatic Night Mode for QKSMS+ users\n • Fixed expanded QuickReply crashing\n • Fixed preference title colours\n • Small performance improvements"</item>
+        <item>" • Fixed donation issue"</item>
+        <item>" • Fixed drafts saving bug\n • A checkmark will be displayed beside the timestamp for delivered messages\n • Phone will vibrate when messages are delivered\n • Material theme will be used now for Android L Developer preview (I'm still not allowed to customize it yet though, so it won't look as good now as it will once L is released)\n • Popups (QuickReply/QuickCompose) will now have a shadow around them to distinguish from white backgrounds, and will have slightly rounded corners (like a card)\n • Fixed notification unread count\n • APNs will be loaded on first startup, so MMS will work better for most people\n • You can now upgrade to QKSMS+ from a new settings category, containing all premium features\n • Updated translations\n • Added translations for Chinese, Czech, Hebrew, and Romanian\n • Changed typeface for title to fit more in line with with Android L"</item>
+        <item>" • Keyboard will open automatically when you press reply in the notification\n • Fixed bug where keyboard wouldn't show suggestions\n • Major crash fixes"</item>
+        <item>" • You can now send messages to multiple people at once (not group MMS, yet)\n • Clicking on contact suggestions will display their name now\n • Crash fixes\n • More crash fixes\n • Added compatibilty mode for TintedStatusBar and Immersive mode\n • Updated translations"</item>
+        <item>" • Significantly reduced stutter when opening conversations\n • You can now manually enter or reload APN settings\n • Major overhaul to preference screen\n • Added option for larger text\n • MMS will show up in QuickReply now\n • Toasts for failed messages\n • You can enable/disable tinted status and navigation bars\n • Fixed notification priority\n • QuickReply will be closed if marked as read from notification"</item>
+        <item>" • Massive improvement in app opening time\n • No more jarring white screen on launch\n • Added translations for German, Norwegian, Polish, and Portuguese\n • Updated translations for all other translated languages\n • Fixed text formatting\n • QuickReply won't show up if you're inside QKSMS now\n • Messages will be automatically marked read if you're inside the conversation\n • Opening a conversation will properly mark it as read now\n • New compose screen inside the app. Very bare-bones right now, still lots of work to do\n • Disabled coloured nav bar for KitKat"</item>
+        <item>" • Fixed Pushbullet issue\n • Coloured navigation bar"</item>
+        <item>" • More crash fixes\n • Fixed issue where hearts wouldn't show up &lt;3"</item>
+        <item>" • Fixed crash on opening app\n • Fixed crash on scrolling through conversations\n • Fixed annoying APN chooser dialog\n • Fixed black background getting stuck after turning off night mode\n • Fixed crash on receiving multiple messages from a contact with no photo\n • Fixed issue where messages from a contact with no photo wouldn’t show up on the desktop QuickReply\n • You can now delete MMS messages"</item>
+        <item>" • Added desktop QuickReply (via PushBullet)\n • Text formatting options\n • Added translations for Dutch, French, Italian, Slovak, Spanish, Tagalog, and Turkish\n • Unicode stripping\n • Fixed blank names in conversation list\n • Floating action button for composing new messages\n • Redesigned changelog\n • Redesigned contact suggestions\n • More consistent UI\n • Fixed message stuck on “sending…”\n • Added option for larger text size\n • Option to split up long messages\n • Pure black background option for AMOLED users\n • Fixed expanded QuickReply view being cut off when keyboard is shown\n • Fixed contact suggestions being hid by keyboard\n • Show Emoji button by default, and added option to switch back to return key\n • Call button in notification is now optional"</item>
+        <item>" • Fixed major unresponsiveness on opening app\n • Fixed persistent “0 new messages” notification bug\n • Added 24-hour time"</item>
+        <item>" • Fixed issues related to contacts with no photo"</item>
+        <item>" • Lots of UI components refreshed for Android L\n • Drastic improvements in conversation list scrolling performance\n • No more repeated notifications\n • Performance improvements on opening and closing conversations\n • Text for “blank” contacts will now render perfectly\n • Details popup will show correct details and not crash any more\n • Added support for Aviate launcher\n • Added option to turn off the sliding tab\n • Restarting the app will clear the stack properly\n • Text fields will match the message text size"</item>
+        <item>" • Fixed crash on app launch\n • Fixed "Conversations" title on app launch"</item>
+        <item>" • Fixed notification crash bug"</item>
+        <item>" • Major improvements to SMS sending\n • New icon\n • Mark as read or Call from notification\n • Popup letting you automatically restart the app on theme change\n • Fixed crash while scrolling through conversation list\n • Tinted status bar\n • Fixed cut-off circle for contact picture\n • Fixed low resolution text for blank contact photos\n • High resolution assets in app\n • New notification icon\n • “Pull tab” in conversation list\n • Option to turn off notification LED\n • Call contact from QuickReply\n • Fixed “Mark read” not working properly from QuickReply"</item>
+        <item>" • Night mode\n • Donate, and pre-purchase permanently removed ads\n • Changeable font size\n • “New Messages” popup is now expandable\n • UI Improvements\n • Crash fixes\n • Keyboard will be closed after dismissing QuickCompose"</item>
+        <item>" • Better looking “blank” contact photo\n • QKSMS will now show up in the Share dialog\n • Added QuickCompose\n • Replaced compose screen with QuickCompose popup\n • Clicking the button to send a new message from your contacts will now open QuickCompose\n • Closing the QuickReply window will now close the keyboard\n  • You will receive a notification on boot for unread messages\n • Fixed details for received messages\n • Improved app launching performance\n • Improved conversation list UI\n • QuickReply will be open when you unlock your device\n • Various bug and crash fixes"</item>
+        <item>" • Fixed bug where new conversation would show wrong contact\n • Fixed crash when scrolling down conversation list\n • Private notifications\n • Pre KitKat devices will now display Emoji\n • Marking conversations as read is now more reliable"</item>
+        <item>" • Fixed bug where incoming messages cause the app to crash and no notification"</item>
+        <item>" • Fixed various crashes from 0.3.9\n • Changed settings icon\n • You can enable or disable SMS delivery confirmations\n • Fixed repeat notifications if you reply from popup\n • Improved font choice in conversation list\n • Marking conversation as unread will update notification"</item>
+        <item>" • Added expandable popups. Click the name to show more messages\n • Popup will show all unread messages from that sender\n • Various crash fixes from 0.3.8\n • Small UI tweaks\n • High resolution avatars\n • Removed triangle from avatar corner\n • Long messages will now show sending status"</item>
+        <item>" • Fixed notification not automatically going away in conversations\n • Fixed contacts showing up in weird oval shape on Samsung devices\n • You can now mark conversations as read or unread\n • Minor performance enhancements"</item>
+        <item>" • Clicking on reply fields and send buttons is now much easier\n • When you compose a new message, you will be taken to the conversation list instead of the wrong conversation (temporary)\n • Added 24 new colours\n • You can now change the LED colour individually\n • Add colour to sent messages"</item>
+        <item>" • Fixed bug where popup saves outgoing messages to drafts"</item>
+        <item>" • Notification will now update when you mark a message as read or delete it from the popup\n • Fixed bug where deleting message from popup would cause conversation to get stuck as unread\n • Fixed crash that occurs when you try to open a message containing a draft. This should also fix the crashing if it has MMS, but I’m not able to test this myself yet\n • Added drafts\n • Added option to disable vibration\n • Fixed “To” and “From” mix-up in details popup\n • Disabled settings that don’t work yet"</item>
+        <item>" • Fixed wrong name showing for app in recent apps menu. Showed Conversations, now says QKSMS\n • Fixed bug where opening a conversation would crash the app if you turn off notifications"</item>
+        <item>" • Option to disable advertisements for alpha testers. It does require you to restart the app to take effect however\n • Expandable notifications when you get multiple messages. Now you can see each of the messages, and you can open the popup for a specific message without having to open the app\n • If you received multiple messages all from the same person, then clicking the notification will take you to that conversation, not the conversation list\n • When you try to delete a conversation, there will now be a popup that asks you to confirm your choice\n • Added menu to QuickReply popup that allows you to jump to the conversation, copy the message text, mark the message as read, or delete the message\n • Fixed bug where disabling QuickReply would also disable notifications\n • Minor performance enhancements﻿"</item>
+        <item>" • Drastic performance improvements in conversation list\n • Made vibration pattern more distinct\n • LED will now correctly match colour chosen as theme</item>
+        <item>" • Fixed crash when selecting contact suggestion in compose screen"</item>
+        <item>" • When you send a message it will instantly show up as "Sending" instead of only show up after it has been sent, giving the appearance of lag\n • Opening conversations should now be much smoother and faster\n • If a message fails to send then it will show up in the conversation as a failed message so you can try to resend it"</item>
+        <item>" • Fixed crash if the phone has no "owner"\n • Fixed text wrapping on messages\n • Notification will be less annoying when you're inside the app"</item>
+        <item>" • Added changelog\n • Loading pictures in conversation should now be more consistent\n • Messages in conversation will now show timestamps, and consecutive messages will only be grouped if they are within one hour of each other\n • Fixed bug where typing multiple lines in the reply field of the conversation would not move the messages up\n • Fixed scrollbar in conversation</item>
+        <item>" • Fixed bug where message would be added twice on pre KitKat devices\n • Made images in conversation messages more consistent</item>
+        <item>" • Fixed KitKat message receive bug"</item>
+        <item>" • Added support for Android versions older than 4.4 KitKat\n • New conversation list\n • You can now delete messages and copy message text\n • Conversations can now be deleted\n • Fixed app randomly crashing when you exit\n • Popups will no longer pop up if you're in the same conversation, or in the conversation list\n • Fixed bug where timestamp in conversation list wouldn't update"</item>
+        <item>" • Initial alpha release"</item>
+    </string-array>
+</resources>

@@ -1,0 +1,53 @@
+<com.moez.QKSMS.ui.view.StarredContactsView
+    android:id="@+id/starred_contacts"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:id="@+id/toggle"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:animateLayoutChanges="true"
+        android:gravity="center_vertical">
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="@string/favorites"
+            app:type="dialog_button" />
+
+        <ImageView
+            android:id="@+id/indicator"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="6dp"
+            android:rotation="0"
+            android:src="@drawable/ic_drop_down" />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
+
+        <LinearLayout
+            android:id="@+id/favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+
+    </HorizontalScrollView>
+
+</com.moez.QKSMS.ui.view.StarredContactsView>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="backgroundColor" format="color" />
+
+    <declare-styleable name="QKLinearLayout">
+        <attr name="backgroundTint" />
+    </declare-styleable>
+
+    <attr name="type">
+        <flag name="primary" value="1" />
+        <flag name="secondary" value="2" />
+        <flag name="tertiary" value="3" />
+        <flag name="pref_category" value="4" />
+        <flag name="dialog_title" value="5" />
+        <flag name="dialog_message" value="6" />
+        <flag name="dialog_button" value="7" />
+        <flag name="toolbar" value="8" />
+    </attr>
+
+    <declare-styleable name="RobotoTextView">
+        <attr name="typeface"/>
+    </declare-styleable>
+
+    <attr name="typeface">
+        <enum name="roboto_thin" value="0" />
+        <enum name="roboto_thin_italic" value="1" />
+        <enum name="roboto_light" value="2" />
+        <enum name="roboto_light_italic" value="3" />
+        <enum name="roboto_regular" value="4" />
+        <enum name="roboto_italic" value="5" />
+        <enum name="roboto_medium" value="6" />
+        <enum name="roboto_medium_italic" value="7" />
+        <enum name="roboto_bold" value="8" />
+        <enum name="roboto_bold_italic" value="9" />
+        <enum name="roboto_black" value="10" />
+        <enum name="roboto_black_italic" value="11" />
+        <enum name="roboto_condensed_light" value="12" />
+        <enum name="roboto_condensed_light_italic" value="13" />
+        <enum name="roboto_condensed_regular" value="14" />
+        <enum name="roboto_condensed_italic" value="15" />
+        <enum name="roboto_condensed_bold" value="16" />
+        <enum name="roboto_condensed_bold_italic" value="17" />
+        <enum name="roboto_slab_thin" value="18" />
+        <enum name="roboto_slab_light" value="19" />
+        <enum name="roboto_slab_regular" value="20" />
+        <enum name="roboto_slab_bold" value="21" />
+    </attr>
+
+    <declare-styleable name="AvatarView">
+        <attr name="initialSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SlidingMenu">
+        <attr name="mode">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+        <attr name="viewAbove" format="reference" />
+        <attr name="viewBehind" format="reference" />
+        <attr name="behindOffset" format="dimension" />
+        <attr name="behindWidth" format="dimension" />
+        <attr name="behindScrollScale" format="float" />
+        <attr name="touchModeAbove">
+            <enum name="margin" value="0" />
+            <enum name="fullscreen" value="1" />
+            <enum name="none" value="2" />
+        </attr>
+        <attr name="touchModeBehind">
+            <enum name="margin" value="0" />
+            <enum name="fullscreen" value="1" />
+            <enum name="none" value="2" />
+        </attr>
+        <attr name="shadowDrawable" format="reference" />
+        <attr name="shadowWidth" format="dimension" />
+        <attr name="fadeEnabled" format="boolean" />
+        <attr name="fadeDegree" format="float" />
+        <attr name="selectorEnabled" format="boolean" />
+        <attr name="selectorDrawable" format="reference" />
+    </declare-styleable>
+</resources>
