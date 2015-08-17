@@ -53,6 +53,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private final int MENU_MARK_UNREAD = 5;
     private final int MENU_DELETE_CONVERSATION = 6;
     private final int MENU_MULTI_SELECT = 7;
+    private final int MENU_DELETE_FAILED = 8;
 
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFab;
@@ -195,6 +196,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
         dialog.addMenuItem(R.string.menu_delete_conversation, MENU_DELETE_CONVERSATION);
 
+        dialog.addMenuItem(R.string.delete_failed, MENU_DELETE_FAILED);
+
         dialog.buildMenu(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -232,6 +235,10 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
                     case MENU_DELETE_CONVERSATION:
                         DialogHelper.showDeleteConversationDialog((MainActivity) mContext, threadId);
+                        break;
+                    case MENU_DELETE_FAILED:
+                        //Deletes all failed messages from all conversations
+                        DialogHelper.showDeleteFailedConversationDialog((MainActivity) mContext, threadId);
                         break;
                 }
             }

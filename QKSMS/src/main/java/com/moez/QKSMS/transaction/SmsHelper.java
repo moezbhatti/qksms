@@ -542,6 +542,33 @@ public class SmsHelper {
         return messages;
     }
 
+    public static List<Message> deleteFailedMessages(Context context) {
+
+        Log.d(TAG, "Deleting all failed messages");
+
+        List<Message> messages = new ArrayList<Message>();
+
+        try {
+            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{COLUMN_ID}, FAILED_SELECTION, null, sortDateDesc);
+            cursor.moveToFirst();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                messages.add(new Message(context, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))));
+                cursor.moveToNext();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cursor.close();
+        }
+
+        for (Message m : messages)
+        {
+            Log.d(TAG,"Deleting failed message to " + m.getName() + "\n Body: " + m.getBody());
+            m.delete();
+        }
+        return messages;
+    }
+
     /**
      * Add an SMS to the given URI.
      *
