@@ -562,7 +562,7 @@ public class SmsHelper {
         }
 
         for (Message m : messages)
-        {C
+        {
             if(m.getThreadId() == threadId) {
                 Log.d(TAG, "Deleting failed message to " + m.getName() + "\n Body: " + m.getBody());
                 m.delete();
