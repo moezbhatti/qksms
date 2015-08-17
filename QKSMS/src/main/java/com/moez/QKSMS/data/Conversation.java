@@ -32,7 +32,6 @@ import com.moez.QKSMS.common.utils.AddressUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -594,7 +593,6 @@ public class Conversation {
      */
     public synchronized boolean hasError() {
         return mHasError;
-
     }
 
     /**

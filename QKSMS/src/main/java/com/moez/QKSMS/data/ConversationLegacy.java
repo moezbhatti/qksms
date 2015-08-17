@@ -239,7 +239,6 @@ public class ConversationLegacy {
         return ids;
     }
 
-
     public void markRead() {
 
         new Thread() {

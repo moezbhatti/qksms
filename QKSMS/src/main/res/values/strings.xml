@@ -334,11 +334,11 @@
     <!--Dialog title for asking if a user wants to delete a conversation-->
     <string name="delete_conversation">Delete conversation</string>
     <!--Dialog title for asking if a user wants to delete all failed messages-->
-    <string name="delete_all_failed">Delete conversation</string>
+    <string name="delete_all_failed">Delete failed messages</string>
     <!--CDialog title for asking if a user wants to delete a conversation-->
     <string name="delete_confirmation">Are you sure you would like to delete the conversation?</string>
     <!--CDialog title for asking if a user wants to delete all failed messages-->
-    <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages? (from all conversations)</string>
+    <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
     <!--(Unused) Dialog title shown if APNs have not been set-->
     <string name="apns_not_set">APNs not set</string>
     <!--(Unused) Dialog description shown if APNs have not been set-->

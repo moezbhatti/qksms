@@ -238,7 +238,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                         break;
                     case MENU_DELETE_FAILED:
                         //Deletes all failed messages from all conversations
-                        DialogHelper.showDeleteFailedConversationDialog((MainActivity) mContext, threadId);
+                        DialogHelper.showDeleteFailedMessagesDialog((MainActivity) mContext, threadId);
                         break;
                 }
             }
