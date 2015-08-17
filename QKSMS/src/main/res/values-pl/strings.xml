@@ -56,7 +56,7 @@
   <string name="details_date_sent">Data wysłania</string>
   <string name="details_date_received">Data doręczenia</string>
   <string name="pref_category_appearance">Wygląd</string>
-  <string name="pref_category_summary_appearance">Schematy kolorów, czcionki, kolory, awatary i więcej</string>
+  <string name="pref_category_summary_appearance">Motywy, czcionki, kolory, awatary i więcej</string>
   <string name="pref_category_general">Ogólne</string>
   <string name="pref_category_summary_general">Dostarczanie, wysyłanie wiadomości, formatowanie</string>
   <string name="pref_category_notifications">Powiadomienia</string>
@@ -73,11 +73,11 @@
   <string name="pref_category_summary_advanced">Zaawansowane modyfikacje interfejsu</string>
   <string name="pref_category_about">O aplikacji</string>
   <string name="pref_category_summary_about">Wersja, lista zmian, autorzy, podziękowania</string>
-  <string name="pref_theme">Schemat kolorów</string>
-  <string name="pref_theme_summary_alt">Dotknij, aby zmienić schemat kolorów</string>
+  <string name="pref_theme">Motyw</string>
+  <string name="pref_theme_summary_alt">Dotknij, aby zmienić motyw</string>
   <string name="pref_theme_summary">Kup QKSMS+, aby odblokować ponad 170 dodatkowych kolorów! Zaufaj nam, są piękne</string>
   <string name="pref_icon">Ikona QKSMS</string>
-  <string name="pref_icon_summary">Zaktualizuj ikonę QKSMS tak, aby pasowała do Twojego schematu kolorów</string>
+  <string name="pref_icon_summary">Zaktualizuj ikonę QKSMS tak, aby pasowała do Twojego motywu</string>
   <string name="pref_status_tint">Kolorowy pasek powiadomień</string>
   <string name="pref_navigation_tint">Kolorowy pasek nawigacyjny</string>
   <string name="pref_background">Kolor tła</string>
@@ -188,7 +188,7 @@
   <string name="pref_about_thanks_summary">Dotknij aby zobaczyć listę współautorów open-source</string>
   <string name="pref_show_all">Pokaż wszystkie ustawienia</string>
   <string name="pref_show_fewer">Pokaż mniej ustawień</string>
-  <string name="pref_subcat_theme">Schemat kolorów</string>
+  <string name="pref_subcat_theme">Motyw</string>
   <string name="pref_subcat_system_bars">Paski systemu</string>
   <string name="pref_subcat_categories">Kategorie</string>
   <string name="pref_subcat_font">Krój czcionki</string>
