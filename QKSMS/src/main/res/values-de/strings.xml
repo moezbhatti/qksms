@@ -396,6 +396,9 @@
   <string name="pref_markdown_enabled">Textformatierung</string>
   <string name="pref_markdown_enabled_summary">Benutze Markdown-Syntax um fett, unterstrichen und kursiv in deinen Nachrichten zu verwenden</string>
   <string name="want_read_indicators">Want read indicators?</string>
+  <string name="date_yesterday">Gestern</string>
+  <string name="date_just_now">Gerade eben</string>
+
   <string-array name="qksms_plus_about_feature_titles">
     <item>Bonus theme colors</item>
     <item>Delayed messaging</item>
