@@ -542,9 +542,9 @@ public class SmsHelper {
         return messages;
     }
 
-    public static List<Message> deleteFailedMessages(Context context) {
+    public static List<Message> deleteFailedMessages(Context context, long threadID) {
 
-        Log.d(TAG, "Deleting all failed messages");
+        Log.d(TAG, "Deleting failed messages");
 
         List<Message> messages = new ArrayList<Message>();
 
@@ -563,8 +563,10 @@ public class SmsHelper {
 
         for (Message m : messages)
         {
-            Log.d(TAG,"Deleting failed message to " + m.getName() + "\n Body: " + m.getBody());
-            m.delete();
+            if(m.getThreadId() == threadID) {
+                Log.d(TAG, "Deleting failed message to " + m.getName() + "\n Body: " + m.getBody());
+                m.delete();
+            }
         }
         return messages;
     }
