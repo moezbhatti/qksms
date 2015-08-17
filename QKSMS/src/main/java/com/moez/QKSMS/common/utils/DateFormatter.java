@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.format.DateUtils;
 
+import com.moez.QKSMS.QKSMSApp;
+import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -47,7 +49,7 @@ public abstract class DateFormatter {
         // Yesterday
         formatter = new SimpleDateFormat("yD");
         if (Integer.parseInt(formatter.format(date)) + 1 == Integer.parseInt(formatter.format(System.currentTimeMillis()))) {
-            return "Yesterday " + new SimpleDateFormat(isUsing24HourTime ? "H:mm" : "h:mm a").format(date);
+            return context.getString(R.string.date_yesterday) +" "+ new SimpleDateFormat(isUsing24HourTime ? "H:mm" : "h:mm a").format(date);
         }
 
         // In the same week
@@ -74,7 +76,7 @@ public abstract class DateFormatter {
     public static String getRelativeTimestamp(long date) {
         String relativeTimestamp = (String) DateUtils.getRelativeTimeSpanString(date);
         if (relativeTimestamp.equals("in 0 minutes") || relativeTimestamp.equals("0 minutes ago"))
-            return "Just now";
+            return QKSMSApp.getApplication().getString(com.moez.QKSMS.R.string.date_just_now);
         return relativeTimestamp;
     }
 
