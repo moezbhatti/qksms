@@ -450,8 +450,9 @@
     <item>Très grande</item>
   </string-array>
   <string-array name="font_families">
-    <item>Régulier</item>
-    <item>Condensé</item>
+    <item>Roboto Régulier</item>
+    <item>Roboto Condensé</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>Léger</item>

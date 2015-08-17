@@ -6,7 +6,7 @@ import android.util.SparseArray;
 /**
  * Stripped down version of https://github.com/johnkil/Android-RobotoTextView/blob/master/robototextview/src/main/java/com/devspark/robototextview/util/RobotoTypefaceManager.java
  */
-public class RobotoTypefaceManager {
+public class TypefaceManager {
 
     private final static SparseArray<android.graphics.Typeface> mTypefaces = new SparseArray<>();
 
@@ -113,6 +113,58 @@ public class RobotoTypefaceManager {
                 throw new IllegalArgumentException("`textWeight` attribute value " + textWeight +
                         " is not supported for this font family " + fontFamily);
             }
+       } else if (fontFamily == FontFamily.LATO) {
+            if (textWeight == TextWeight.NORMAL) {
+                switch (textStyle) {
+                    case TextStyle.NORMAL:
+                        typeface = Typeface.LATO_REGULAR;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
+                                " is not supported for this fontFamily " + fontFamily +
+                                " and textWeight " + textWeight);
+                }
+            } else if (textWeight == TextWeight.THIN) {
+                switch (textStyle) {
+                    case TextStyle.NORMAL:
+                        typeface = Typeface.LATO_THIN;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
+                                " is not supported for this fontFamily " + fontFamily +
+                                " and textWeight " + textWeight);
+                }
+            } else if (textWeight == TextWeight.LIGHT) {
+                switch (textStyle) {
+                    case TextStyle.NORMAL:
+                        typeface = Typeface.LATO_LIGHT;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
+                                " is not supported for this fontFamily " + fontFamily +
+                                " and textWeight " + textWeight);
+                }
+            } else if (textWeight == TextWeight.MEDIUM) {
+                switch (textStyle) {
+                    case TextStyle.NORMAL:
+                        typeface = Typeface.LATO_MEDIUM;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
+                                " is not supported for this fontFamily " + fontFamily +
+                                " and textWeight " + textWeight);
+                }
+            } else if (textWeight == TextWeight.BOLD) {
+                switch (textStyle) {
+                    default:
+                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
+                                " is not supported for this fontFamily " + fontFamily +
+                                " and textWeight " + textWeight);
+                }
+            } else {
+                throw new IllegalArgumentException("`textWeight` attribute value " + textWeight +
+                        " is not supported for this font family " + fontFamily);
+            }
         } else {
             throw new IllegalArgumentException("Unknown `fontFamily` attribute value " + fontFamily);
         }
@@ -143,6 +195,18 @@ public class RobotoTypefaceManager {
             case Typeface.ROBOTO_CONDENSED_BOLD:
                 typefacePath = "fonts/RobotoCondensed-Bold.ttf";
                 break;
+            case Typeface.LATO_THIN:
+                typefacePath = "fonts/Lato-Hairline.ttf";
+                break;
+            case Typeface.LATO_LIGHT:
+                typefacePath = "fonts/Lato-Light.ttf";
+                break;
+            case Typeface.LATO_REGULAR:
+                typefacePath = "fonts/Lato-Regular.ttf";
+                break;
+            case Typeface.LATO_MEDIUM:
+                typefacePath = "fonts/Lato-Bold.ttf";
+                break;
             default:
                 throw new IllegalArgumentException("Unknown `typeface` attribute value " + typefaceValue);
         }
@@ -158,11 +222,16 @@ public class RobotoTypefaceManager {
         public final static int ROBOTO_CONDENSED_LIGHT = 12;
         public final static int ROBOTO_CONDENSED_REGULAR = 14;
         public final static int ROBOTO_CONDENSED_BOLD = 16;
+        public final static int LATO_THIN = 22;
+        public final static int LATO_LIGHT = 24;
+        public final static int LATO_REGULAR = 26;
+        public final static int LATO_MEDIUM = 28;
     }
 
     public class FontFamily {
         public static final int ROBOTO = 0;
         public static final int ROBOTO_CONDENSED = 1;
+        public static final int LATO = 2;
     }
 
     public class TextWeight {

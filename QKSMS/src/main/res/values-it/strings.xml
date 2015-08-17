@@ -452,8 +452,9 @@ Moez Bhatti\Shane Creighton-Young
     <item>Più grande</item>
   </string-array>
   <string-array name="font_families">
-    <item>Regolare</item>
-    <item>Condensato</item>
+    <item>Roboto Regolare</item>
+    <item>Roboto Condensato</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>Sottile</item>

@@ -3,7 +3,7 @@ package com.moez.QKSMS.ui.view;
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import com.moez.QKSMS.common.RobotoTextViewUtils;
+import com.moez.QKSMS.common.TextViewUtils;
 
 public class RobotoTextView extends AppCompatTextView {
 
@@ -15,7 +15,7 @@ public class RobotoTextView extends AppCompatTextView {
         super(context, attrs);
 
         if (!isInEditMode()) {
-            RobotoTextViewUtils.initTypeface(this, context, attrs);
+            TextViewUtils.initTypeface(this, context, attrs);
         }
     }
 
@@ -23,7 +23,7 @@ public class RobotoTextView extends AppCompatTextView {
         super(context, attrs, defStyle);
 
         if (!isInEditMode()) {
-            RobotoTextViewUtils.initTypeface(this, context, attrs);
+            TextViewUtils.initTypeface(this, context, attrs);
         }
     }
 

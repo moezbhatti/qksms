@@ -121,12 +121,12 @@ public class FontManager {
         }
 
         // Otherwise, get the heavy font weight.
-        if (fontWeight == RobotoTypefaceManager.TextWeight.LIGHT) {
-            return RobotoTypefaceManager.TextWeight.NORMAL;
-        } else if (fontFamily == RobotoTypefaceManager.FontFamily.ROBOTO) {
-            return RobotoTypefaceManager.TextWeight.MEDIUM;
+        if (fontWeight == TypefaceManager.TextWeight.LIGHT) {
+            return TypefaceManager.TextWeight.NORMAL;
+        } else if (fontFamily == TypefaceManager.FontFamily.ROBOTO || fontFamily == TypefaceManager.FontFamily.LATO) {
+            return TypefaceManager.TextWeight.MEDIUM;
         } else {
-            return RobotoTypefaceManager.TextWeight.BOLD;
+            return TypefaceManager.TextWeight.BOLD;
         }
     }
 }
