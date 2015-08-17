@@ -22,10 +22,26 @@ public class DialogHelper {
         threadIds.add(threadId);
         showDeleteConversationDialog(context, threadIds);
     }
-    public static void showDeleteFailedConversationDialog(MainActivity context, long threadId) {
-        List<Long> threadIds = new ArrayList<Long>();
-        threadIds.add(threadId);
-        showDeleteFailedConversationDialog(context, threadIds);
+
+    public static void showDeleteFailedMessagesDialog(final MainActivity context, final long threadId) {
+        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
+
+        new QKDialog()
+                .setContext(context)
+                .setTitle(R.string.delete_all_failed)
+                .setMessage(R.string.delete_all_failed_confirmation)
+                .setPositiveButton(R.string.yes, new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        new Thread(new Runnable() {
+                            public void run() {
+                                SmsHelper.deleteFailedMessages(context, threadId);
+                            }
+                        }).start();
+                    }
+                }).setNegativeButton(R.string.cancel, null)
+                .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
     }
 
     public static void showDeleteConversationDialog(final MainActivity context, final List<Long> threadIds) {
@@ -77,26 +93,4 @@ public class DialogHelper {
                 .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
     }
 
-    public static void showDeleteFailedConversationDialog(final MainActivity context, final List<Long> threadIds) {
-
-        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
-
-        new QKDialog()
-                .setContext(context)
-                .setTitle(R.string.delete_all_failed)
-                .setMessage(R.string.delete_all_failed_confirmation)
-                .setPositiveButton(R.string.yes, new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        new Thread(new Runnable() {
-                            public void run() {
-                                SmsHelper.deleteFailedMessages(context);
-                            }
-                        }).start();
-                    }
-                }).setNegativeButton(R.string.cancel, null)
-                .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
-
-    }
 }
