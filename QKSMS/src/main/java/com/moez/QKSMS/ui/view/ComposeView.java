@@ -223,7 +223,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                 } else if (150 <= length && length <= 160) {
                     mLetterCount.setText("" + (160 - length));
                 } else if (160 < length) {
-                    mLetterCount.setText((160 - length % 160) + "/" + (length / 160 + 1));
+                    mLetterCount.setText((160 - length % 160) + "/" + (Utils.getNumPages((SmsHelper.getSendSettings(getContext(), )))););
                 }
             }
         });
