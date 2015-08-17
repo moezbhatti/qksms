@@ -89,7 +89,11 @@ public class DialogHelper {
 
                     @Override
                     public void onClick(View v) {
-                        SmsHelper.deleteFailedMessages(context);
+                        new Thread(new Runnable() {
+                            public void run() {
+                                SmsHelper.deleteFailedMessages(context);
+                            }
+                        }).start();
                     }
                 }).setNegativeButton(R.string.cancel, null)
                 .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
