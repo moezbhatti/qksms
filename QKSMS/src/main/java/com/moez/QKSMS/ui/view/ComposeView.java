@@ -367,19 +367,18 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             float barRotationTarget2 = mButtonState == SendButtonState.ATTACH ? 90 : 135;
             float barTranslationTarget2 = mButtonState == SendButtonState.SEND ? translation : 0;
 
-                ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
-                        .setDuration(ANIMATION_DURATION)
-                        .start();
-                ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
-                        .setDuration(ANIMATION_DURATION)
-                        .start();
-
-                ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
-                        .setDuration(ANIMATION_DURATION)
-                        .start();
-                ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
-                        .setDuration(ANIMATION_DURATION)
-                        .start();
+            ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
+                    .setDuration(ANIMATION_DURATION)
+                    .start();
+            ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
+                    .setDuration(ANIMATION_DURATION)
+                    .start();
+            ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
+                    .setDuration(ANIMATION_DURATION)
+                    .start();
+            ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
+                    .setDuration(ANIMATION_DURATION)
+                    .start();
         }
     }
 
