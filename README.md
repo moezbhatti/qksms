@@ -18,7 +18,7 @@ Quite a bit of old code still needs to be cleaned up and refactored, so keep tha
 
 ### Collaboration
 
-We use Github issues to keep track of bugs and feature requests, but we communicate using [Slack](https://qklabs.slack.com/). To join the Slack group, send an email to team@qklabs.com with the subject `QK Labs Slack Invite` (no need to enter a body, we'll send an invite to your email address). If you plan on contributing at some point, we highly recommend joining the slack group because it gives you a direct way to communicate with the rest of the contributors
+We use GitHub issues to keep track of bugs and feature requests, but we communicate using [Slack](https://qklabs.slack.com/). To join the Slack group, send an email to team@qklabs.com with the subject `QK Labs Slack Invite` (no need to enter a body, we'll send an invite to your email address). If you plan on contributing at some point, we highly recommend joining the slack group because it gives you a direct way to communicate with the rest of the contributors
 
 ### Funds
 
