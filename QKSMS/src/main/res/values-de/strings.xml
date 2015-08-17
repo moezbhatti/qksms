@@ -26,11 +26,11 @@
   <string name="welcome_theme_description">Jede Farbe.</string>
   <string name="welcome_night_description">Angenehm für die Augen.</string>
   <string name="welcome_night_hint">Schalte mich ein</string>
-  <string name="welcome_quickreply_title">QK-Antwort</string>
+  <string name="welcome_quickreply_title">QK Reply</string>
   <string name="welcome_quickreply_description">Antworte auf Nachrichten schneller als je zuvor.</string>
   <string name="welcome_quickreply_hint">Probier es!</string>
   <string name="welcome_quickreply_message_1">Wow! War das nicht genial? Du kannst die gesamte Unterhaltung auf einen Blick sehen. Tippe außerhalb des Popups oder setze den Haken, um es auszublenden.</string>
-  <string name="welcome_quickreply_message_2">Das sind QK-Antworten. Du kannst jetzt von überall auf Nachrichten antworten. Tippe auf den Erweitern-Knopf um zu sehen, was dann passiert :)</string>
+  <string name="welcome_quickreply_message_2">Das ist QK Reply. Du kannst jetzt von überall auf Nachrichten antworten. Tippe auf den Erweitern-Knopf um zu sehen, was dann passiert :)</string>
   <string name="menu_settings">Einstellungen</string>
   <string name="menu_search">Suche</string>
   <string name="menu_show_all">Zeige alle Nachrichten</string>
@@ -145,7 +145,7 @@
   <string name="pref_night_auto_summary">Aktiviere den Nachtmodus automtisch, abhängig von der Uhrzeit</string>
   <string name="pref_day_start">Tageszeit beginnt</string>
   <string name="pref_night_start">Nachtzeit beginnt</string>
-  <string name="pref_qk_responses">QK-Antworten</string>
+  <string name="pref_qk_responses">QK Reply</string>
   <string name="pref_qk_responses_summary">Ändere deine vordefinierten Antworten, die von deinem Android Wear-Gerät verwendet werden</string>
   <string name="pref_quickreply_enabled">Schnellantwort aktiviert</string>
   <string name="pref_quickreply_enabled_summary">Zeige das Fenster für eine Schnellantwort immer, wenn eine neue Nachricht empfangen wurde</string>
@@ -196,7 +196,7 @@
   <string name="title_changelog">Changelog</string>
   <string name="title_picker">Neue Nachrichten</string>
   <string name="title_donate">Spenden</string>
-  <string name="title_qk_responses">QK-Antworten</string>
+  <string name="title_qk_responses">QK Reply</string>
   <string name="menu_add_address_to_contacts"><xliff:g id="contactEmailOrNumber"> %s </xliff:g> zu Kontakten hinzufügen</string>
   <string name="view_slideshow">Diashow ansehen</string>
   <string name="view_message_details">Details anzeigen</string>
