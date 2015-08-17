@@ -196,7 +196,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
         dialog.addMenuItem(R.string.menu_delete_conversation, MENU_DELETE_CONVERSATION);
 
-        dialog.addMenuItem(R.string.delete_failed, MENU_DELETE_FAILED);
+        if(conversation.hasError())
+            dialog.addMenuItem(R.string.delete_failed, MENU_DELETE_FAILED);
 
         dialog.buildMenu(new AdapterView.OnItemClickListener() {
             @Override
