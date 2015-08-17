@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.conversationlist.ConversationListAdapter;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
@@ -20,6 +21,11 @@ public class DialogHelper {
         List<Long> threadIds = new ArrayList<Long>();
         threadIds.add(threadId);
         showDeleteConversationDialog(context, threadIds);
+    }
+    public static void showDeleteFailedConversationDialog(MainActivity context, long threadId) {
+        List<Long> threadIds = new ArrayList<Long>();
+        threadIds.add(threadId);
+        showDeleteFailedConversationDialog(context, threadIds);
     }
 
     public static void showDeleteConversationDialog(final MainActivity context, final List<Long> threadIds) {
@@ -69,5 +75,24 @@ public class DialogHelper {
                     }
                 }).setNegativeButton(R.string.cancel, null)
                 .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
+    }
+
+    public static void showDeleteFailedConversationDialog(final MainActivity context, final List<Long> threadIds) {
+
+        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
+
+        new QKDialog()
+                .setContext(context)
+                .setTitle(R.string.delete_all_failed)
+                .setMessage(R.string.delete_all_failed_confirmation)
+                .setPositiveButton(R.string.yes, new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        SmsHelper.deleteFailedMessages(context);
+                    }
+                }).setNegativeButton(R.string.cancel, null)
+                .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
+
     }
 }
