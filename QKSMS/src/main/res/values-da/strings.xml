@@ -452,6 +452,7 @@
   <string-array name="font_families">
     <item>Almindelig</item>
     <item>Sammentrængt</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>Tynd</item>

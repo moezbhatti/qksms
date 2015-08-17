@@ -17,7 +17,7 @@ import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
-import com.moez.QKSMS.common.RobotoTypefaceManager;
+import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -205,7 +205,7 @@ public class ContactHelper {
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.WHITE);
-        paint.setTypeface(RobotoTypefaceManager.obtainTypeface(context, RobotoTypefaceManager.Typeface.ROBOTO_LIGHT));
+        paint.setTypeface(TypefaceManager.obtainTypeface(context, TypefaceManager.Typeface.ROBOTO_LIGHT));
         paint.setTextSize(length / 2);
 
         Rect bounds = new Rect();
