@@ -450,8 +450,9 @@
     <item>Largest</item>
   </string-array>
   <string-array name="font_families">
-    <item>Regular</item>
-    <item>Condensed</item>
+    <item>Roboto Regular</item>
+    <item>Roboto Condensed</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>Light</item>

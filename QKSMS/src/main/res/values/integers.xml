@@ -11,6 +11,7 @@
     <string-array name="font_family_codes">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string-array name="font_weight_codes">

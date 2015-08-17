@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.RobotoTypefaceManager;
+import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.common.utils.Units;
@@ -77,7 +77,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
             mPaint.setTextSize(Units.dpToPx(context, 32));
             mPaint.setTextAlign(Paint.Align.CENTER);
             mPaint.setAntiAlias(true);
-            mPaint.setTypeface(RobotoTypefaceManager.obtainTypeface(context, RobotoTypefaceManager.Typeface.ROBOTO_LIGHT));
+            mPaint.setTypeface(TypefaceManager.obtainTypeface(context, TypefaceManager.Typeface.ROBOTO_LIGHT));
 
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarView, defStyle, 0);
             for (int i = 0; i < a.getIndexCount(); i++) {
