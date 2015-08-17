@@ -94,6 +94,10 @@ There are no rules for enhancement requests. Your ideas are all awesome. Althoug
 
 To make an enhancement request, add an "issue" with the "enhancement" label.
 
+# Contact
+
+QKSMS is developed and maintained by [Moez Bhatti](https://github.com/moezbhatti). Feel free to reach out to moez@qklabs.com
+
 # License
 
-QKSMS is developed and maintained by [Moez Bhatti](https://github.com/moezbhatti) and released under the **The GNU General Public License v3.0 (GPLv3)**, which can be found in the `LICENSE` file in the root of this project
+QKSMS is released under the **The GNU General Public License v3.0 (GPLv3)**, which can be found in the `LICENSE` file in the root of this project
