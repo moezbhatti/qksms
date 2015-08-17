@@ -357,7 +357,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         if (mButtonState != buttonState) {
             mButtonState = buttonState;
 
-            float translation = Units.dpToPx(mContext, 16) / 3;
+            float translation = Units.dpToPx(mContext, 14) / 3;
             float barRotation1 = mButtonBar1.getRotation();
             float barTranslation1 = mButtonBar1.getTranslationY();
             float barRotation2 = mButtonBar2.getRotation();
@@ -367,23 +367,19 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             float barRotationTarget2 = mButtonState == SendButtonState.ATTACH ? 90 : 135;
             float barTranslationTarget2 = mButtonState == SendButtonState.SEND ? translation : 0;
 
-            if (barRotation1 != barRotationTarget1) {
                 ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
                         .setDuration(ANIMATION_DURATION)
                         .start();
                 ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
                         .setDuration(ANIMATION_DURATION)
                         .start();
-            }
 
-            if (barTranslation1 != barTranslationTarget1) {
                 ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
                         .setDuration(ANIMATION_DURATION)
                         .start();
                 ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
                         .setDuration(ANIMATION_DURATION)
                         .start();
-            }
         }
     }
 
