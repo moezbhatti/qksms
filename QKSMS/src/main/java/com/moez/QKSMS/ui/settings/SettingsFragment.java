@@ -1,12 +1,15 @@
 package com.moez.QKSMS.ui.settings;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.DownloadManager;
 import android.app.Fragment;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -15,12 +18,14 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -54,6 +59,7 @@ import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
 import com.moez.QKSMS.ui.view.QKTextView;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -142,6 +148,7 @@ public class SettingsFragment extends PreferenceFragment implements
     public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
     public static final String SIMPLE_PREFS = "pref_key_simple";
     public static final String DONATE = "pref_key_donate";
+    public static final String ALTERNATE_EMOJI = "pref_key_alternate_emoji";
     /**
      * @deprecated
      */
@@ -443,6 +450,31 @@ public class SettingsFragment extends PreferenceFragment implements
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        } else if (key.equals(ALTERNATE_EMOJI)) {
+            File file = new File(mContext.getExternalFilesDir("emojiFont"), "TwitterEmoji.ttf");
+            if ((Boolean) newValue && !file.exists()) {
+                new AlertDialog.Builder(mContext)
+                        .setTitle(R.string.download_emoji_title)
+                        .setMessage(R.string.download_emoji_message)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String url = "https://dl.dropboxusercontent.com/u/1181440/TwitterEmoji.ttf"; //TODO: put this file on a better server
+                                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                                request.setDescription(getString(R.string.download_emoji_notification_description));
+                                request.setTitle(getString(R.string.download_emoji_notification_title));
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                                    request.allowScanningByMediaScanner();
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                }
+                                request.setDestinationInExternalFilesDir(mContext, "emojiFont", "TwitterEmoji.ttf");
+                                DownloadManager manager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
+                                manager.enqueue(request);
+                            }
+                        })
+                        .setNegativeButton("No", null) //TODO: handle this better
+                        .show();
             }
         } else if (key.equals(QUICKCOMPOSE)) {
             NotificationManager.initQuickCompose(getActivity(), (Boolean) newValue, !(Boolean) newValue);

@@ -149,6 +149,8 @@
     <string name="pref_font_family">Font family</string>
     <string name="pref_font_size">Font size</string>
     <string name="pref_font_weight">Font weight</string>
+    <string name="pref_alternate_emoji">Use alternative emoji</string>
+    <string name="pref_alternate_emoji_summary">Use alternative emoji images in messages</string>
     <string name="pref_message_count">Message count</string>
     <string name="pref_message_count_summary">Show the number of messages for each conversation</string>
     <string name="pref_sliding_tab">Sliding panel tab</string>
@@ -713,6 +715,10 @@
     <string name="date_yesterday">Yesterday</string>
     <string name="date_just_now">Just now</string>
     <string name="compose_loading_attachment">Loading attachment</string>
+    <string name="download_emoji_message">Are you sure you want to download alternate emoji?</string>
+    <string name="download_emoji_title">Download Emoji</string>
+    <string name="download_emoji_notification_description">Twitter emoji for QKSMS</string>
+    <string name="download_emoji_notification_title">Downloading emoji</string>
 
     <string-array name="resend_menu">
         <item>Resend</item>

@@ -91,6 +91,13 @@
             android:key="pref_key_font_weight"
             android:layout="@layout/list_item_preference"
             android:title="@string/pref_font_weight" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_alternate_emoji"
+            android:layout="@layout/list_item_preference"
+            android:title="@string/pref_alternate_emoji"
+            android:summary="@string/pref_alternate_emoji_summary"
+            android:widgetLayout="@layout/view_checkbox" />
     </PreferenceCategory>
 
     <PreferenceCategory
