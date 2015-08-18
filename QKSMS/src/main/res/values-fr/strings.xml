@@ -147,7 +147,7 @@
   <string name="pref_notification_call">Touche d\'appel</string>
   <string name="pref_notification_call_summary">Ajoute une option pour appeler l\'expéditeur à partir de la notification</string>
   <string name="pref_delayed">Message différé</string>
-  <string name="pref_delayed_summary">Attender avant d'envoyer un message, pour avoir le temps de le modifier</string>
+  <string name="pref_delayed_summary">Attender avant d\'envoyer un message, pour avoir le temps de le modifier</string>
   <string name="pref_delayed_duration">Durée (seconde)</string>
   <string name="pref_delayed_duration_summary">Temps à attendre avant d\'envoyer votre message</string>
   <string name="pref_night_auto">Mode nuit automatique</string>
