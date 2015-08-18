@@ -149,7 +149,7 @@
   <string name="pref_upgrade_done_summary">Już zaktualizowałeś! Dziękuję :)</string>
   <string name="pref_redeem_done_summary">You\'ve redeemed a code!</string>
   <string name="pref_delayed">Opóźnione wysyłanie</string>
-  <string name="pref_delayed_summary">Dodaj opóźnienie wysyłania, aby mieć możliwość wglądu do wiadomości przed wysłaniem</string>
+  <string name="pref_delayed_summary">Dodaj opóźnienie, aby mieć możliwość wglądu do wiadomości przed wysłaniem</string>
   <string name="pref_delayed_duration">Czas opóźnienia (sekundy)</string>
   <string name="pref_delayed_duration_summary">Czas oczekiwania przed wysłaniem wiadomości</string>
   <string name="pref_night_auto">Automatyczny tryb nocny</string>
@@ -225,7 +225,7 @@
   <string name="delete_confirmation">Czy na pewno chcesz usunąć rozmowę?</string>
   <string name="apns_not_set">APN-y nie zostały ustawione</string>
   <string name="apns_not_set_description">Wygląda na to, że Twoje APN-y nie zostały ustawione. Oznacza to, że wiadomości MMS nie będą działały prawidłowo. Naciśnij OK, aby QKSMS znalazł je za Ciebie.</string>
-  <string name="set_up_mms_description">Wygląda na to, że MMS nie są jeszcze skonfigurowane w QKSMS. Naciśnij Ok, aby je automatycznie skonfigurować.</string>
+  <string name="set_up_mms_description">Wygląda na to, że MMS nie są jeszcze skonfigurowane w QKSMS. Naciśnij OK, aby je automatycznie skonfigurować.</string>
   <string name="discard_message_reason">Wiadomość nie zostanie wysłana ze względu na brak prawidłowych odbiorców</string>
   <string name="invalid_code">Błędny kod</string>
   <string name="error">Wystąpił błąd</string>
@@ -239,7 +239,7 @@
   <string name="save">Zapisz</string>
   <string name="enable">Włącz</string>
   <string name="upgrade_now">Ustaw</string>
-  <string name="okay">Ok</string>
+  <string name="okay">OK</string>
   <string name="redeem">Wprowadź kod</string>
   <string name="just_once">Tylko raz</string>
   <string name="later">Później</string>
@@ -355,7 +355,7 @@
   <string name="thanks_4">Dzięki za dotację! Jesteś niesamowitą osobą.</string>
   <string name="menu_mute_conversation">Wycisz rozmowę</string>
   <string name="menu_unmute_conversation">Wyłącz wyciszenie rozmowy</string>
-  <string name="failed_message_title">Opcje wiadomości których nie uda się wysłać</string>
+  <string name="failed_message_title">Opcje wiadomości, których nie uda się wysłać</string>
   <string name="attachment_app_not_found">Nie znaleziono aplikacji dodającej załączniki. Spróbuj zainstalować aplikację Galeria!</string>
   <string name="attachment_camera_error">Nie udało się otworzyć Aparatu </string>
   <string name="pref_max_mms_attachment_size">Maksymalny rozmiar załącznika MMS</string>
@@ -369,11 +369,11 @@
   <string name="icon_ready_message">Możesz ją teraz ponownie dodać do ekranu głównego z nowym kolorem.</string>
   <string name="dont_ask_again">Nie pytaj ponownie</string>
   <string name="mms_setup_set_up_mms_title">Skonfigurować MMS?</string>
-  <string name="mms_setup_set_up_mms_body">Wygląda na to, że nie masz skonfigurowanych MMS w QKSMS. Naciśnik Ok, aby automatycznie skonfigurować MMS.</string>
+  <string name="mms_setup_set_up_mms_body">Wygląda na to, że nie masz skonfigurowanych MMS w QKSMS. Naciśnij OK, aby automatycznie skonfigurować MMS.</string>
   <string name="mms_setup_setting_up_later_title">Skonfiguruj ustawienia MMS później.</string>
   <string name="mms_setup_setting_up_later_body">Przejdź do sekcji MMS w Ustawieniach programy, aby spróbować ponownie automatycznej konfiguracji, skontaktuj się ze wsparciem lub wprowadź własne ustawienia.</string>
   <string name="mms_setup_no_configurations_found_title">Nie znaleziono konfiguracji</string>
-  <string name="mms_setup_no_configurations_found_body">Nie byliśmy w stanie znaleźć konfiguracji MMS dla Twojego operatora. Naciśnij Ok, aby skontaktować się ze wsparciem. Pomożemy Ci to naprawić!</string>
+  <string name="mms_setup_no_configurations_found_body">Nie byliśmy w stanie znaleźć konfiguracji MMS dla Twojego operatora. Naciśnij OK, aby skontaktować się ze wsparciem. Pomożemy Ci to naprawić!</string>
   <string name="mms_setup_one_configuration_found_title">Znaleziono konfigurację</string>
   <string name="mms_setup_one_configuration_found_body">Znaleziono konfigurację dla operatora %s. Wygląda w porządku?</string>
   <string name="mms_setup_multiple_configurations_found_title">Znaleziono wiele konfiguracji</string>
