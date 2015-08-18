@@ -453,6 +453,7 @@
   <string-array name="font_families">
     <item>Obișnuit</item>
     <item>Condensat</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>Slab</item>

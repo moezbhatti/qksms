@@ -29,13 +29,13 @@ import com.moez.QKSMS.R;
  *
  * @author Evgeny Shishkin
  */
-public class RobotoTextViewUtils {
+public class TextViewUtils {
 
-    private RobotoTextViewUtils() {
+    private TextViewUtils() {
     }
 
     /**
-     * Typeface initialization using the attributes. Used in RobotoTextView constructor.
+     * Typeface initialization using the attributes. Used in TextView constructor.
      *
      * @param textView The roboto text view
      * @param context  The context the widget is running in, through which it can
@@ -49,15 +49,15 @@ public class RobotoTextViewUtils {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RobotoTextView);
 
             if (a.hasValue(R.styleable.RobotoTextView_typeface)) {
-                int typefaceValue = a.getInt(R.styleable.RobotoTextView_typeface, RobotoTypefaceManager.Typeface.ROBOTO_REGULAR);
-                typeface = RobotoTypefaceManager.obtainTypeface(context, typefaceValue);
+                int typefaceValue = a.getInt(R.styleable.RobotoTextView_typeface, TypefaceManager.Typeface.ROBOTO_REGULAR);
+                typeface = TypefaceManager.obtainTypeface(context, typefaceValue);
             }
 
             a.recycle();
         }
 
         if (typeface == null) {
-            typeface = RobotoTypefaceManager.obtainTypeface(context, RobotoTypefaceManager.Typeface.ROBOTO_REGULAR);
+            typeface = TypefaceManager.obtainTypeface(context, TypefaceManager.Typeface.ROBOTO_REGULAR);
         }
 
         setTypeface(textView, typeface);
