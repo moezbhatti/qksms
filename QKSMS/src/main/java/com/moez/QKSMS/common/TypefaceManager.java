@@ -222,7 +222,7 @@ public class TypefaceManager {
         public final static int ROBOTO_CONDENSED_LIGHT = 12;
         public final static int ROBOTO_CONDENSED_REGULAR = 14;
         public final static int ROBOTO_CONDENSED_BOLD = 16;
-        public final static int	LATO_THIN = 22;
+        public final static int LATO_THIN = 22;
         public final static int LATO_LIGHT = 24;
         public final static int LATO_REGULAR = 26;
         public final static int LATO_MEDIUM = 28;
@@ -231,7 +231,7 @@ public class TypefaceManager {
     public class FontFamily {
         public static final int ROBOTO = 0;
         public static final int ROBOTO_CONDENSED = 1;
-        public static final int	LATO = 2;
+        public static final int LATO = 2;
     }
 
     public class TextWeight {
