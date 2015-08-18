@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.RobotoTypefaceManager;
+import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -162,8 +162,8 @@ public class QKTextView extends TextView implements LiveView {
         // Typeface
         int fontFamily = FontManager.getFontFamily(mContext);
         int fontWeight = FontManager.getFontWeight(mContext, FontManager.getIsFontHeavy(mType));
-        setTypeface(RobotoTypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight,
-                RobotoTypefaceManager.TextStyle.NORMAL));
+        setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight,
+                TypefaceManager.TextStyle.NORMAL));
 
         // Text size and color
         setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, mType));

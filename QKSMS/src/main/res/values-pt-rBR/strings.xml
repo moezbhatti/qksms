@@ -452,8 +452,9 @@ Plural form: Conversas serão excluídas.</item>
     <item>Maior</item>
   </string-array>
   <string-array name="font_families">
-    <item>Regular</item>
-    <item>Condensado</item>
+    <item>Roboto Regular</item>
+    <item>Roboto Condensado</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>Leve</item>

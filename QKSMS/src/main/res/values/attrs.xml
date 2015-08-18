@@ -45,6 +45,18 @@
         <enum name="roboto_slab_light" value="19" />
         <enum name="roboto_slab_regular" value="20" />
         <enum name="roboto_slab_bold" value="21" />
+        <enum name="lato_thin" value="22" />
+        <enum name="lato_thin_italic" value="23" />
+        <enum name="lato_light" value="24" />
+        <enum name="lato_light_italic" value="25" />
+        <enum name="lato_regular" value="26" />
+        <enum name="lato_italic" value="27" />
+        <enum name="lato_medium" value="28" />
+        <enum name="lato_medium_italic" value="29" />
+        <enum name="lato_bold" value="30" />
+        <enum name="lato_bold_italic" value="31" />
+        <enum name="lato_black" value="32" />
+        <enum name="lato_black_italic" value="33" />
     </attr>
 
     <declare-styleable name="AvatarView">
