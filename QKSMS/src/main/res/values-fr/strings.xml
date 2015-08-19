@@ -19,14 +19,10 @@
   <string name="failed_messages_summary">Toucher pour voir</string>
   <string name="quickcompose">QK Compose</string>
   <string name="quickcompose_detail">Appuyez pour envoyer</string>
-  <string name="qksms_plus_about">QKSMS+</string>
-  <string name="qksms_plus_description">Acheter maintenant pour obtenir ces fonctionnalités :</string>
-  <string name="qksms_plus_buy_now">Acheter maintenant</string>
-  <string name="qksms_plus_brings_you">QKSMS+ vous offre :</string>
   <string name="welcome_start">C\'est parti !</string>
   <string name="welcome_skip">PASSER</string>
   <string name="welcome_finish">TERMINÉ</string>
-  <string name="welcome_theme_title">Choisissez une couleur</string>
+  <string name="welcome_theme_title">Choisir une couleur</string>
   <string name="welcome_theme_description">N\'importe quelle couleur.</string>
   <string name="welcome_night_description">Reposant pour les yeux.</string>
   <string name="welcome_night_hint">Appuyez</string>
@@ -44,11 +40,11 @@
   <string name="menu_call">Appeler</string>
   <string name="menu_read">Marquer comme lu</string>
   <string name="menu_delete">Supprimer</string>
-  <string name="menu_billing">QKSMS+</string>
+  <string name="menu_billing">Faire un don</string>
   <string name="menu_copy">Copier le texte</string>
   <string name="menu_changelog">"Nouveautés"</string>
-  <string name="menu_show_all_prefs">Show all</string>
-  <string name="menu_show_fewer_prefs">Show fewer</string>
+  <string name="menu_show_all_prefs">Montrer tout</string>
+  <string name="menu_show_fewer_prefs">Montrer moins</string>
   <string name="details_title">Détails</string>
   <string name="details_to">À</string>
   <string name="details_from">De</string>
@@ -75,20 +71,22 @@
   <string name="pref_category_summary_about">Version, modifications, auteurs, remerciements</string>
   <string name="pref_theme">Couleur de l\'application</string>
   <string name="pref_theme_summary_alt">Appuyez pour modifier le thème</string>
-  <string name="pref_theme_summary">Acheter QKSMS+ pour débloquer plus de 170 couleurs supplémentaires ! Croyez-moi, elles sont magnifiques</string>
   <string name="pref_icon">Mettre à jour la couleur de l\'icône de QKSMS</string>
   <string name="pref_icon_summary">Mettre à jour la couleur de l\'icône de QKSMS pour correspondre à la couleur de l\'application</string>
   <string name="pref_status_tint">Colorier la barre de notifications</string>
   <string name="pref_navigation_tint">Colorier la barre de navigation</string>
-  <string name="pref_background">Background color</string>
-  <string name="pref_background_summary">Tap to change background color</string>
+  <string name="pref_background">Couleur de fond</string>
+  <string name="pref_background_summary">Appuyer pour changer la couleur de fond</string>
+  <string name="pref_bubbles">Bulles de message</string>
+  <string name="pref_bubbles_summary">Appuyer pour changer l\'apparence des bulles de message</string>
   <string name="pref_night">Mode nuit</string>
   <string name="pref_night_summary">Économise la batterie et réduit la fatigue oculaire</string>
   <string name="pref_night_amoled">Fond noir profond</string>
   <string name="pref_night_amoled_summary">Économise de la batterie pour les téléphones à écran AMOLED</string>
-  <string name="pref_color_sent">Colorier les messages envoyés</string>
+  <string name="pref_bubble_style_new">Nouvelle apparence</string>
+  <string name="pref_color_sent">Colorier sms envoyés</string>
   <string name="pref_color_sent_summary">Colore l\'arrière-plan des bulles pour les messages sortants</string>
-  <string name="pref_color_received">Colorier les messages reçus</string>
+  <string name="pref_color_received">Colorier sms reçus</string>
   <string name="pref_color_received_summary">Colore l\'arrière-plan des bulles pour les messages entrants</string>
   <string name="pref_hide_avatar_conversations">Cacher les avatars des discussions</string>
   <string name="pref_hide_avatar_conversations_summary">Cache les avatars dans la liste de conversations</string>
@@ -108,13 +106,17 @@
   <string name="pref_delivery_toast">Afficher le coche</string>
   <string name="pref_delivery_toast_summary">Affiche un coche pour montrer que le message a été délivré</string>
   <string name="pref_delivery_vibrate">Vibrer</string>
-  <string name="pref_delivery_vibrate_summary">Vibrer quand le message est remis</string>
+  <string name="pref_delivery_vibrate_summary">Le téléphone vibre quand le message est remis</string>
   <string name="pref_yappy">Intégration de Yappy</string>
   <string name="pref_endlessjabber_summary">Activer le support complet de Yappy</string>
   <string name="pref_mobile_only">Numéros de mobile</string>
   <string name="pref_mobile_only_summary">Afficher uniquement les numéros de mobile dans les suggestions de contact</string>
-  <string name="pref_auto_emoji">Automatic emoji</string>
-  <string name="pref_auto_emoji_summary">Replace text with image emoji</string>
+  <string name="pref_auto_emoji">Emoji automatique</string>
+  <string name="pref_auto_emoji_summary">Remplacer le texte avec l\'emoji</string>
+  <string name="pref_enter_button">Bouton Entrée</string>
+  <string name="pref_enter_button_summary">Appuyer pour changer le comportement du bouton Entrée du clavier</string>
+  <string name="pref_auto_data">Données mobiles automatique</string>
+  <string name="pref_auto_data_summary">Active automatiquement les données mobiles lors de l\'envoi ou la réception d\'un MMS</string>
   <string name="pref_compose_group">Messagerie de groupe</string>
   <string name="pref_compose_group_summary">Lorsque vous composez un message pour plusieurs personnes, envoyer un message de groupe au lieu de messages individuels</string>
   <string name="pref_split">Diviser les SMS</string>
@@ -144,16 +146,10 @@
   <string name="pref_vibration_summary">Vibre lors de la réception d\'un nouveau message</string>
   <string name="pref_notification_call">Touche d\'appel</string>
   <string name="pref_notification_call_summary">Ajoute une option pour appeler l\'expéditeur à partir de la notification</string>
-  <string name="pref_upgrade">Mettre à jour vers QKSMS+</string>
-  <string name="pref_upgrade_summary">Débloquer quelques fonctionnalités supplémentaires géniales !</string>
-  <string name="pref_upgrade_about">Qu’est-ce que QKSMS+ ?</string>
-  <string name="pref_upgrade_redeem">Redeem code</string>
-  <string name="pref_upgrade_done_summary">Vous avez déjà la version payante ! Merci :)</string>
-  <string name="pref_redeem_done_summary">You\'ve redeemed a code!</string>
-  <string name="pref_delayed">Delayed messaging</string>
-  <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>
-  <string name="pref_delayed_duration">Delay length (seconds)</string>
-  <string name="pref_delayed_duration_summary">Time to wait before sending your message</string>
+  <string name="pref_delayed">Message différé</string>
+  <string name="pref_delayed_summary">Attendre avant d\'envoyer un message, pour avoir le temps de le modifier</string>
+  <string name="pref_delayed_duration">Durée (seconde)</string>
+  <string name="pref_delayed_duration_summary">Temps à attendre avant d\'envoyer votre message</string>
   <string name="pref_night_auto">Mode nuit automatique</string>
   <string name="pref_night_auto_summary">Activer le mode nuit automatiquement selon l\'heure</string>
   <string name="pref_day_start">Heure de début du jour</string>
@@ -185,26 +181,30 @@
   <string name="pref_about_version_title">Version de QKSMS</string>
   <string name="pref_about_authors_title">Auteurs</string>
   <string name="pref_about_authors_summary">Moez Bhatti\nShane Creighton-Young</string>
-  <string name="pref_changelog_summary">Touchez pour voir l\'historique des modifications</string>
+  <string name="pref_changelog_summary">Toucher pour voir l\'historique des modifications</string>
+  <string name="pref_donate_title">Faire un don</string>
+  <string name="pref_donate_summary">QKSMS est gratuit. Aidez-nous en faisant un don !</string>
   <string name="pref_about_thanks_title">Merci</string>
   <string name="pref_about_thanks_summary">Appuyer pour afficher les contributeurs open-source</string>
-  <string name="pref_show_all">Show all preferences</string>
-  <string name="pref_show_fewer">Show fewer preferences</string>
+  <string name="pref_show_all">Montrer tous les paramètres</string>
+  <string name="pref_show_fewer">Montrer moins de paramètres</string>
   <string name="pref_subcat_theme">Thème</string>
   <string name="pref_subcat_system_bars">Barres du système</string>
   <string name="pref_subcat_categories">Catégories</string>
   <string name="pref_subcat_font">Police</string>
   <string name="pref_subcat_messages">Messages</string>
   <string name="pref_subcat_avatars">Avatars</string>
-  <string name="product_name_remove_ads">QKSMS+</string>
+  <string name="donate_google">Donner avec Google</string>
+  <string name="donate_google_summary">Google prend 30% des dons</string>
+  <string name="donate_paypal">Donner avec PayPal</string>
+  <string name="donate_paypal_button">Donner n\'importe quel montant</string>
+  <string name="donate_paypal_button_summary">Achète-moi ce que tu veux !</string>
   <string name="product_name_donate_1">Faire un don de 1 $</string>
   <string name="product_name_donate_5">Faire un don de 5 $</string>
   <string name="product_name_donate_10">Faire un don de 10 $</string>
-  <string name="product_description_remove_ads">Débloquer des fonctionnalités géniales. 50 % de réduction jusqu\'au 14 novembre !</string>
   <string name="product_description_donate_1">Achète-moi un soda</string>
   <string name="product_description_donate_5">Achète-moi un sandwich</string>
   <string name="product_description_donate_10">Achète-moi un repas</string>
-  <string name="bonus_colors_instruction">Appuyez sur une couleur pour voir votre palette bonus QKSMS+ !</string>
   <string name="title_settings">Paramètres</string>
   <string name="title_search">Rechercher</string>
   <string name="title_compose">Écrire</string>
@@ -212,7 +212,7 @@
   <string name="title_changelog">Historique des modifications</string>
   <string name="title_picker">Nouveaux messages</string>
   <string name="title_donate">QKSMS+</string>
-  <string name="title_qk_responses">QK Responses</string>
+  <string name="title_qk_responses">QK Response</string>
   <string name="menu_add_address_to_contacts">Ajouter <xliff:g id="contactEmailOrNumber">%s</xliff:g> aux contacts</string>
   <string name="view_slideshow">Voir le diaporama</string>
   <string name="view_message_details">Voir les détails</string>
@@ -226,12 +226,12 @@
   <string name="delete_conversation">Supprimer la conversation</string>
   <string name="delete_confirmation">Êtes-vous certain de vouloir supprimer cette conversation ?</string>
   <string name="apns_not_set">APN non définis</string>
-  <string name="apns_not_set_description">Il semble que vos APN n\'aient pas été définis. Cela signifie que les MMS ne fonctionneront pas correctement. Appuyez sur Okay afin que QKSMS vous les trouve :)</string>
+  <string name="apns_not_set_description">Il semble que vos APN n\'aient pas été définis. Cela signifie que les MMS ne fonctionneront pas correctement. Appuyez sur Ok afin que QKSMS vous les trouve :)</string>
   <string name="set_up_mms_title">Configurer les MMS ?</string>
   <string name="set_up_mms_description">Il semblerait que les MMS n\'aient pas encore été configurés dans QKSMS. Appuyer sur Accepter les configure automatiquement.</string>
   <string name="discard_message_reason">Votre message va être supprimé car il n\'a pas de destinataire valide.</string>
-  <string name="invalid_code">Invalid code</string>
-  <string name="error">An error has occurred</string>
+  <string name="invalid_code">Code invalide</string>
+  <string name="error">Une erreur est survenue</string>
   <string name="restart">Redémarrer maintenant</string>
   <string name="reply">Répondre</string>
   <string name="reply_qksms">Répondre avec QKSMS</string>
@@ -240,11 +240,11 @@
   <string name="call">Appeler</string>
   <string name="yes">Oui</string>
   <string name="save">Enregistrer</string>
-  <string name="enable">Enable</string>
+  <string name="enable">Activer</string>
   <string name="upgrade_now">Appliquer maintenant</string>
   <string name="okay">OK</string>
   <string name="redeem">Redeem</string>
-  <string name="just_once">Just once</string>
+  <string name="just_once">Juste une fois</string>
   <string name="later">Plus tard</string>
   <string name="cancel">Annuler</string>
   <string name="messagelist_sender_self">Moi</string>
@@ -254,7 +254,7 @@
   <string name="inline_subject">"&lt;Sujet: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
   <string name="download">Télécharger</string>
   <string name="downloading">Téléchargement</string>
-  <string name="compressing">Image trop grande. Compressing\u2026</string>
+  <string name="compressing">Image trop grande. Compression\u2026</string>
   <string name="favorites">Contacts favoris</string>
   <string name="me">Moi</string>
   <string name="menu_edit">Modifier</string>
@@ -294,8 +294,8 @@
   <string name="status_pending">En attente</string>
   <string name="status_read">Lu</string>
   <string name="status_received">Reçu</string>
-  <string name="status_failed">Erreur. Touchez pour voir les options</string>
-  <string name="status_unread">Non-lu</string>
+  <string name="status_failed">Erreur. Toucher pour voir les options</string>
+  <string name="status_unread">Non lu</string>
   <string name="status_rejected">Rejeté</string>
   <string name="recipient_label">Destinataire:\u0020</string>
   <string name="status_label">Statut:\u0020</string>
@@ -316,8 +316,8 @@
   <string name="delete_unlocked">Supprimer les messages verrouillés</string>
   <string name="delete">Supprimer</string>
   <string name="more">Plus</string>
-  <string name="more_summary">Appuyez pour voir plus</string>
-  <string name="select_conversations">Choisissez des conversations</string>
+  <string name="more_summary">Appuyer pour voir plus</string>
+  <string name="select_conversations">Choisir des conversations</string>
   <string name="no_conversations">Aucune conversation.</string>
   <string name="loading_conversations">Chargement des conversations.</string>
   <string name="not_default">QKSMS n\'est pas votre application SMS par défaut</string>
@@ -342,7 +342,7 @@
   <string name="menu_group_participants">Participants</string>
   <string name="toast_draft">Brouillon sauvegardé</string>
   <string name="toast_conversation_deleted">Conversation effacée</string>
-  <string name="toast_low_memory">"La mémoire est saturée. Supprimez des fichiers pour générer de l'espace libre."</string>
+  <string name="toast_low_memory">"La mémoire est saturée. Supprimer des fichiers pour générer de l'espace libre."</string>
   <string name="toast_forward">Cette fonctionnalité n\'est pas encore opérationnelle ! Veuillez utiliser l\'option \"Copier le texte\" et le coller dans la conversation désirée</string>
   <string name="toast_unimplemented">Cette fonctionnalité n\'a pas encore été développée</string>
   <string name="toast_message_failure">Échec de l\'envoi</string>
@@ -352,22 +352,21 @@
   <string name="toast_copy_text">Texte copié dans le presse-papier</string>
   <string name="toast_billing_not_available">Cet achat nécessite Google Play Store ainsi qu\'un moyen de paiement installé sur votre appareil</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber n\'est pas installé, ouverture de Google Play</string>
-  <string name="thanks">Upgrade successful!</string>
   <string name="thanks_1">Merci pour ton don ! Tu es mon nouveau meilleur ami.</string>
   <string name="thanks_2">Merci pour ton don ! Je t\'aime.</string>
-  <string name="thanks_3">Merci pour votre don ! Vous participez à faire de QKSMS la meilleure application SMS faite à ce jour.</string>
+  <string name="thanks_3">Merci pour ton don ! Tu participes à faire de QKSMS la meilleure application SMS faite à ce jour.</string>
   <string name="thanks_4">Merci pour ton don ! Tu es génial.</string>
   <string name="menu_mute_conversation">Désactiver les notifications pour cette conversation</string>
   <string name="menu_unmute_conversation">Réactiver les notifications de la conversation</string>
   <string name="failed_message_title">Failed message options</string>
-  <string name="attachment_app_not_found">Application non trouvée. Essayez d\'installer une application de galerie photo !</string>
+  <string name="attachment_app_not_found">Application non trouvée. Essayer d\'installer une application de galerie photo !</string>
   <string name="attachment_camera_error">L\'appareil photo n\'a pas pu être ouvert</string>
   <string name="pref_max_mms_attachment_size">Taille maximale des pièces jointes MMS</string>
-  <string name="error_no_recipients">Sélectionnez des contacts à qui envoyer ce message !</string>
+  <string name="error_no_recipients">Sélectionner des contacts à qui envoyer ce message !</string>
   <string name="error_file_not_found">QKSMS ne peut pas accéder au fichier que vous essayez de partager !</string>
   <string name="error_no_premium">This feature is only available after upgrading to QKSMS+</string>
   <string name="sending_blocked_welcome_screen_message">Doucement ! Vous pourrez envoyer de vrais messages dans une minute !</string>
-  <string name="notification_colored_icon_ready">Appuyez pour ajouter sur l\'écran d’accueil.</string>
+  <string name="notification_colored_icon_ready">Appuyer pour ajouter sur l\'écran d’accueil.</string>
   <string name="notification_title_colored_icon_ready">L\'icône colorée de QKSMS est prête</string>
   <string name="icon_ready">Votre nouvelle icône est prête !</string>
   <string name="icon_ready_message">Vous pouvez maintenant l\'ajouter à votre écran d\'accueil avec la nouvelle couleur.</string>
@@ -396,6 +395,8 @@
   <string name="pref_markdown_enabled">Formatage du texte</string>
   <string name="pref_markdown_enabled_summary">Utilisez la syntaxe markdown pour disposer du gras, du souligné et de l\'italique dans vos messages</string>
   <string name="want_read_indicators">Want read indicators?</string>
+  <string name="date_yesterday">Hier</string>
+  <string name="date_just_now">A l\'instant</string>
   <string-array name="qksms_plus_about_feature_titles">
     <item>Bonus theme colors</item>
     <item>Delayed messaging</item>
@@ -403,14 +404,6 @@
     <item>Automatic night mode</item>
     <item>Android Wear responses</item>
     <item>And more for free!</item>
-  </string-array>
-  <string-array name="qksms_plus_about_feature_descriptions">
-    <item>Près de 200 couleurs supplémentaires deviendront disponibles.</item>
-    <item>Wait before sending your messages, so you have a chance to review them</item>
-    <item>Set different notification settings for each of your contacts</item>
-    <item>Enable this feature to have the QKSMS night mode turn on automatically at night. You are able to customize the day and night times.</item>
-    <item>Write custom responses for use on your Android Wear watch, so you can reply without having to speak.</item>
-    <item>Get any new QKSMS+ feature for free. We\'re adding new features all the time!</item>
   </string-array>
   <string-array name="conversation_menu">
     <item>Ouvrir la conversation</item>
@@ -432,16 +425,16 @@
     <item>Supprimer le message</item>
   </string-array>
   <string-array name="background_titles">
-    <item>White</item>
-    <item>Off-white</item>
-    <item>Dark grey</item>
-    <item>Black</item>
+    <item>blanc</item>
+    <item>gris clair</item>
+    <item>gris foncé</item>
+    <item>noir</item>
   </string-array>
   <string-array name="background_values">
-    <item>white</item>
-    <item>offwhite</item>
-    <item>grey</item>
-    <item>black</item>
+    <item>blanc</item>
+    <item>gris clair</item>
+    <item>gris</item>
+    <item>noir</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Petite</item>
@@ -475,18 +468,11 @@
     <item>LOL</item>
     <item>C\'est d\'accord</item>
   </string-array>
-  <string-array name="product_names">
-    <item>QKSMS+</item>
-    <item>Faire un don de 1 $</item>
-    <item>Faire un don de 5 $</item>
-    <item>Faire un don de 10 $</item>
-  </string-array>
-  <string-array name="product_descriptions">
-    <item>Débloquer des fonctionnalités géniales. 50 % de réduction jusqu\'au 14 novembre !</item>
-    <item>Achète-moi un soda</item>
-    <item>Achète-moi un sandwich</item>
-    <item>Achète-moi un repas</item>
-  </string-array>
+  <string-array name="enter_button_options">
+        <item>Montrer emoji</item>
+        <item>Nouvelle ligne</item>
+        <item>Envoyer message</item>
+    </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>
     <item>600 KB</item>
@@ -497,7 +483,7 @@
     <item>300kb</item>
     <item>600kb</item>
     <item>1mb</item>
-    <item>unlimited</item>
+    <item>Illimité</item>
   </string-array>
   <string-array name="contributor_names">
     <item>Jeremy Feinstein</item>
