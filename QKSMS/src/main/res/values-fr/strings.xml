@@ -22,7 +22,7 @@
   <string name="welcome_start">C\'est parti !</string>
   <string name="welcome_skip">PASSER</string>
   <string name="welcome_finish">TERMINÉ</string>
-  <string name="welcome_theme_title">Choisissez une couleur</string>
+  <string name="welcome_theme_title">Choisir une couleur</string>
   <string name="welcome_theme_description">N\'importe quelle couleur.</string>
   <string name="welcome_night_description">Reposant pour les yeux.</string>
   <string name="welcome_night_hint">Appuyez</string>
@@ -113,8 +113,8 @@
   <string name="pref_mobile_only_summary">Afficher uniquement les numéros de mobile dans les suggestions de contact</string>
   <string name="pref_auto_emoji">Emoji automatique</string>
   <string name="pref_auto_emoji_summary">Remplacer le texte avec l\'emoji</string>
-  <string name="pref_enter_button">Bouton entrer</string>
-  <string name="pref_enter_button_summary">Appuyer pour changer le comportement du bouton entrer du clavier</string>
+  <string name="pref_enter_button">Bouton Entrée</string>
+  <string name="pref_enter_button_summary">Appuyer pour changer le comportement du bouton Entrée du clavier</string>
   <string name="pref_auto_data">Données mobiles automatique</string>
   <string name="pref_auto_data_summary">Active automatiquement les données mobiles lors de l\'envoi ou la réception d\'un MMS</string>
   <string name="pref_compose_group">Messagerie de groupe</string>
@@ -147,7 +147,7 @@
   <string name="pref_notification_call">Touche d\'appel</string>
   <string name="pref_notification_call_summary">Ajoute une option pour appeler l\'expéditeur à partir de la notification</string>
   <string name="pref_delayed">Message différé</string>
-  <string name="pref_delayed_summary">Attender avant d\'envoyer un message, pour avoir le temps de le modifier</string>
+  <string name="pref_delayed_summary">Attendre avant d\'envoyer un message, pour avoir le temps de le modifier</string>
   <string name="pref_delayed_duration">Durée (seconde)</string>
   <string name="pref_delayed_duration_summary">Temps à attendre avant d\'envoyer votre message</string>
   <string name="pref_night_auto">Mode nuit automatique</string>
@@ -317,7 +317,7 @@
   <string name="delete">Supprimer</string>
   <string name="more">Plus</string>
   <string name="more_summary">Appuyer pour voir plus</string>
-  <string name="select_conversations">Choisisser des conversations</string>
+  <string name="select_conversations">Choisir des conversations</string>
   <string name="no_conversations">Aucune conversation.</string>
   <string name="loading_conversations">Chargement des conversations.</string>
   <string name="not_default">QKSMS n\'est pas votre application SMS par défaut</string>
@@ -354,7 +354,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber n\'est pas installé, ouverture de Google Play</string>
   <string name="thanks_1">Merci pour ton don ! Tu es mon nouveau meilleur ami.</string>
   <string name="thanks_2">Merci pour ton don ! Je t\'aime.</string>
-  <string name="thanks_3">Merci pour ton don ! Vous participez à faire de QKSMS la meilleure application SMS faite à ce jour.</string>
+  <string name="thanks_3">Merci pour ton don ! Tu participes à faire de QKSMS la meilleure application SMS faite à ce jour.</string>
   <string name="thanks_4">Merci pour ton don ! Tu es génial.</string>
   <string name="menu_mute_conversation">Désactiver les notifications pour cette conversation</string>
   <string name="menu_unmute_conversation">Réactiver les notifications de la conversation</string>
