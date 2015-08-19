@@ -9,67 +9,83 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public abstract class DateFormatter {
 
     public static String getConversationTimestamp(Context context, long date) {
-        SharedPreferences prefs = MainActivity.getPrefs(context);
-        SimpleDateFormat formatter = new SimpleDateFormat("D, y");
+        SimpleDateFormat formatter;
 
-        if (formatter.format(date).equals(formatter.format(System.currentTimeMillis()))) {
-            formatter = new SimpleDateFormat(prefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, false) ? "H:mm" : "h:mm a");
+        if (isSameDay(date)) {
+            formatter = accountFor24HourTime(context, new SimpleDateFormat("h:mm a"));
+        } else if (isSameWeek(date)) {
+            formatter = new SimpleDateFormat("EEE");
+        } else if (isSameYear(date)) {
+            formatter = new SimpleDateFormat("MMM d");
         } else {
-            formatter = new SimpleDateFormat("w, y");
-            if (formatter.format(date).equals(formatter.format(System.currentTimeMillis()))) {
-                formatter = new SimpleDateFormat("EEE");
-            } else {
-                formatter = new SimpleDateFormat("y");
-                if (formatter.format(date).equals(formatter.format(System.currentTimeMillis()))) {
-                    formatter = new SimpleDateFormat("MMM d");
-                } else {
-                    formatter = new SimpleDateFormat("MMM d y");
-                }
-            }
+            formatter = new SimpleDateFormat("MMM d y");
         }
 
         return formatter.format(date);
     }
 
-    public static String getMessageTimestamp(Context context, long date) {
+    private static boolean isSameDay(long date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("D, y");
+        return formatter.format(date).equals(formatter.format(System.currentTimeMillis()));
+    }
+
+    private static boolean isSameWeek(long date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("w, y");
+        return formatter.format(date).equals(formatter.format(System.currentTimeMillis()));
+    }
+
+    private static boolean isSameYear(long date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("y");
+        return formatter.format(date).equals(formatter.format(System.currentTimeMillis()));
+    }
+
+    private static boolean isYesterday(long date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yD");
+        return Integer.parseInt(formatter.format(date)) + 1 == Integer.parseInt(formatter.format(System.currentTimeMillis()));
+    }
+
+    public static SimpleDateFormat accountFor24HourTime(Context context, SimpleDateFormat input) { //pass in 12 hour time. If needed, change to 24 hr.
         SharedPreferences prefs = MainActivity.getPrefs(context);
         boolean isUsing24HourTime = prefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, false);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("D, y");
-        if (formatter.format(date).equals(formatter.format(System.currentTimeMillis()))) {
-            return new SimpleDateFormat(isUsing24HourTime ? "H:mm" : "h:mm a").format(date);
+        if (isUsing24HourTime) {
+            return new SimpleDateFormat(input.toPattern().replace('h', 'H').replaceAll(" a", ""));
+        } else return input;
+    }
+
+    public static SimpleDateFormat accountForFlippedDayMonth(SimpleDateFormat input) { //Pass in MMM d, if needed, change to d MMM. fix https://github.com/qklabs/qksms/issues/128.
+        boolean shouldBeFlipped = !(Locale.getDefault().equals(Locale.US) || Locale.getDefault().equals(Locale.CANADA));
+
+        if (shouldBeFlipped) {
+            return new SimpleDateFormat(input.toPattern().replaceAll("MMM", "temp").replaceAll("d", "MMM").replaceAll("temp", "d"));
+        } else return input;
+    }
+
+    public static String getMessageTimestamp(Context context, long date) {
+
+        if (isSameDay(date)) {
+            return accountFor24HourTime(context, new SimpleDateFormat("h:mm a")).format(date);
+        } else if (isYesterday(date)) {
+            return context.getString(R.string.date_yesterday) +" " + accountFor24HourTime(context, new SimpleDateFormat("h:mm a")).format(date);
+        } else if (isSameWeek(date)) {
+            return accountFor24HourTime(context, new SimpleDateFormat("EEE h:mm a")).format(date);
+        } else if (isSameYear(date)) {
+            return accountForFlippedDayMonth(accountFor24HourTime(context, new SimpleDateFormat("MMM d, h:mm a"))).format(date);
         }
 
-        // Yesterday
-        formatter = new SimpleDateFormat("yD");
-        if (Integer.parseInt(formatter.format(date)) + 1 == Integer.parseInt(formatter.format(System.currentTimeMillis()))) {
-            return context.getString(R.string.date_yesterday) +" "+ new SimpleDateFormat(isUsing24HourTime ? "H:mm" : "h:mm a").format(date);
-        }
-
-        // In the same week
-        formatter = new SimpleDateFormat("w, y");
-        if (formatter.format(date).equals(formatter.format(System.currentTimeMillis()))) {
-            return new SimpleDateFormat(isUsing24HourTime ? "EEE H:mm" : "EEE h:mm a").format(date);
-        }
-
-        // In the same year
-        formatter = new SimpleDateFormat("y");
-        if (formatter.format(date).equals(formatter.format(System.currentTimeMillis()))) {
-            return new SimpleDateFormat(isUsing24HourTime ? "MMM d, H:mm" : "MMM d, h:mm a").format(date);
-        }
-
-        return new SimpleDateFormat(isUsing24HourTime ? "MMM d y, H:mm" : "MMM d y, h:mm a").format(date);
+        return accountForFlippedDayMonth(accountFor24HourTime(context, new SimpleDateFormat("MMM d y, h:mm a"))).format(date);
     }
 
     public static String getDate(Context context, long date) {
-        SharedPreferences prefs = MainActivity.getPrefs(context);
-        SimpleDateFormat formatter = new SimpleDateFormat(prefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, false) ? "MMMM d y, H:mm:ss" : "MMMM d y, h:mm:ss a");
+        SimpleDateFormat formatter = accountForFlippedDayMonth(accountFor24HourTime(context, new SimpleDateFormat("MMMM d y, h:mm:ss a")));
         return formatter.format(date);
     }
 
@@ -81,16 +97,14 @@ public abstract class DateFormatter {
     }
 
     public static String getSummaryTimestamp(Context context, String time) {
-        SharedPreferences prefs = MainActivity.getPrefs(context);
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
         Date date;
 
         try {
             date = simpleDateFormat.parse(time);
-            simpleDateFormat = prefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, false) ? new SimpleDateFormat("H:mm") : new SimpleDateFormat("h:mm a");
+            simpleDateFormat = accountFor24HourTime(context, new SimpleDateFormat("H:mm"));
             time = simpleDateFormat.format(date);
-        } catch (Exception e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
