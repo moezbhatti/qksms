@@ -26,10 +26,11 @@
                 android:id="@+id/widget_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="24dp"
-                android:paddingRight="24dp"
                 android:layout_weight="1"
                 android:freezesText="true"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:singleLine="true"
                 android:textSize="20sp" />
 
             <ImageButton
