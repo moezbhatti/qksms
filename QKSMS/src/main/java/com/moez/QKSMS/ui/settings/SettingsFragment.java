@@ -733,7 +733,7 @@ public class SettingsFragment extends PreferenceFragment implements
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
 
-            return new TimePickerDialog(getActivity(), this, hour, minute, false);
+            return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
