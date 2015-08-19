@@ -28,11 +28,12 @@ public class StripAccents {
             "\u0118\u0141\u0143\u015A\u0179\u017B\u00C0\u00C2\u00C3\u00C8\u00CA\u00CC\u00CE\u00D2\u00D5" +
             "\u00D9\u00DB\u00E2\u00E3\u00EA\u00EE\u00F5\u00FA\u00FB\u00E7\u011B\u0161\u010D\u0159\u017E\u010F" +
             "\u0165\u0148\u00E1\u00ED\u00E9\u00F3\u00FD\u016F\u011A\u0160\u010C\u0158\u017D\u010E\u0164\u0147" +
-            "\u00C1\u00C9\u00CD\u00D3\u00DD\u00DA\u016E\u0155\u013A\u013E\u00F4\u0154\u0139\u013D\u00D4\u00CF\u00EF\u00EB\u00CB";
+            "\u00C1\u00C9\u00CD\u00D3\u00DD\u00DA\u016E\u0155\u013A\u013E\u00F4\u0154\u0139\u013D\u00D4\u00CF\u00EF\u00EB\u00CB" +
+            "\u0110\u0111";
 
     public static String gsm = "AB\u0393\u0394EZH\u0398IK\u039BMN\u039EO\u03A0P\u03A3\u03A3TY\u03A6X\u03A8\u03A9AEHIOY" +
             "\u03A9IYIYABEZHIKMNOPTYXAEHIO\u03A9IY\u00DC\u00FC\u00D6\u00F6acelnszzACELNSZZAAAEEIIOOUU" +
-            "aaeiouucescrzdtnaieoyuESCRZDTNAEIOYUUrlloRLLOIIee";
+            "aaeiouucescrzdtnaieoyuESCRZDTNAEIOYUUrlloRLLOIIeeDd";
 
     public static String stripAccents(String s) {
         int[] messageData = SmsMessage.calculateLength(s, false);
