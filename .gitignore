@@ -9,6 +9,7 @@ local.properties
  
 # Gradle generated files
 .gradle/
+build/
  
 # Signing files
 .signing/
@@ -25,5 +26,3 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
-gen/
-module_android-smsmms.xml
