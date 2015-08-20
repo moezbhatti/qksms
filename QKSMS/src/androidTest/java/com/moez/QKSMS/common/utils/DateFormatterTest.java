@@ -22,14 +22,6 @@ public class DateFormatterTest extends AndroidTestCase {
         prefs.edit().putBoolean(SettingsFragment.TIMESTAMPS_24H, false).commit();
     }
 
-    public void testFlippedMonthDay(){
-        Locale.setDefault(Locale.UK);
-        Log.d("TestFlippedMonthDay", DateFormatter.accountForFlippedDayMonth(new SimpleDateFormat("MMM d, h:mm a")).toPattern());
-        assertTrue(DateFormatter.accountForFlippedDayMonth(new SimpleDateFormat("MMM d, h:mm a")).equals(new SimpleDateFormat("d MMM, h:mm a")));
-        Locale.setDefault(Locale.US);
-        assertTrue(DateFormatter.accountForFlippedDayMonth(new SimpleDateFormat("MMM d, h:mm a")).equals(new SimpleDateFormat("MMM d, h:mm a")));
-    }
-
     public void testDateSymbolsAPI(){
         assertEquals(new SimpleDateFormat("H:mm a").toPattern(), "H:mm a");
     }

@@ -12,7 +12,6 @@ import com.moez.QKSMS.ui.settings.SettingsFragment;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public abstract class DateFormatter {
 
@@ -61,32 +60,23 @@ public abstract class DateFormatter {
         } else return input;
     }
 
-    public static SimpleDateFormat accountForFlippedDayMonth(SimpleDateFormat input) { //Pass in MMM d, if needed, change to d MMM. fix https://github.com/qklabs/qksms/issues/128.
-        boolean shouldBeFlipped = !(Locale.getDefault().equals(Locale.US) || Locale.getDefault().equals(Locale.CANADA));
-
-        if (shouldBeFlipped) {
-            return new SimpleDateFormat(input.toPattern().replaceAll("MMM", "temp").replaceAll("d", "MMM").replaceAll("temp", "d"));
-        } else return input;
-    }
-
     public static String getMessageTimestamp(Context context, long date) {
-
+        String time = ", " + accountFor24HourTime(context, new SimpleDateFormat("h:mm a")).format(date);
         if (isSameDay(date)) {
             return accountFor24HourTime(context, new SimpleDateFormat("h:mm a")).format(date);
         } else if (isYesterday(date)) {
-            return context.getString(R.string.date_yesterday) +" " + accountFor24HourTime(context, new SimpleDateFormat("h:mm a")).format(date);
+            return context.getString(R.string.date_yesterday) + time;
         } else if (isSameWeek(date)) {
-            return accountFor24HourTime(context, new SimpleDateFormat("EEE h:mm a")).format(date);
+            return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY) + time;
         } else if (isSameYear(date)) {
-            return accountForFlippedDayMonth(accountFor24HourTime(context, new SimpleDateFormat("MMM d, h:mm a"))).format(date);
+            return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR | DateUtils.FORMAT_ABBREV_MONTH) + time;
         }
 
-        return accountForFlippedDayMonth(accountFor24HourTime(context, new SimpleDateFormat("MMM d y, h:mm a"))).format(date);
+        return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH) + time;
     }
 
     public static String getDate(Context context, long date) {
-        SimpleDateFormat formatter = accountForFlippedDayMonth(accountFor24HourTime(context, new SimpleDateFormat("MMMM d y, h:mm:ss a")));
-        return formatter.format(date);
+        return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE) + accountFor24HourTime(context, new SimpleDateFormat(", h:mm:ss a")).format(date);
     }
 
     public static String getRelativeTimestamp(long date) {
