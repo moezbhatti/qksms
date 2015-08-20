@@ -35,8 +35,6 @@ If you'd like to work on a new feature, please create an issue so we can discuss
 
 To learn about pull requests, please refer to the following guide: https://help.github.com/articles/using-pull-requests/
 
-When creating a pull request, only merge your branch into the `develop` branch. Never attempt to merge directly into `master`. The `master` branch will be used only for stable, production ready releases.
-
 ### Code style
 
 We follow the code style guidelines set by Google for contributors to AOSP: https://source.android.com/source/code-style.html
