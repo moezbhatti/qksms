@@ -5,7 +5,7 @@ QKSMS is an open source replacement to the [stock messaging app](https://github.
 [![Build Status](https://travis-ci.org/qklabs/qksms.svg?branch=master)](https://travis-ci.org/qklabs/qksms)
 
 [![Download](http://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.moez.QKSMS)
-[![Download](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdfilter=qksms&fdid=com.moez.QKSM://f-droid.org/repository/browse/?fdfilter=qksms&fdid=com.moez.QKSMS)
+[![Download](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.moez.QKSMS)
 
 <img src="http://i.imgur.com/uwWmDv9.png" width="216" height="384" />
 <img src="http://i.imgur.com/p7063VN.png" width="216" height="384" />
