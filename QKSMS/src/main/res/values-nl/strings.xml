@@ -437,12 +437,7 @@
     <item>Donkergrijs</item>
     <item>Zwart</item>
   </string-array>
-  <string-array name="background_values">
-    <item>Wit</item>
-    <item>Gebroken wit</item>
-    <item>Donkergrijs</item>
-    <item>Zwart</item>
-  </string-array>
+
   <string-array name="font_sizes">
     <item>Klein</item>
     <item>Normaal</item>
