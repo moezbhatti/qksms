@@ -320,11 +320,11 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         if (requestCode == REQUEST_CODE_IMAGE && resultCode == Activity.RESULT_OK) {
             result = true;
 
-            Toast.makeText(mContext, "Loading attachment", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.compose_loading_attachment, Toast.LENGTH_LONG).show();
             new ImageLoaderTask(mContext, data.getData()).execute();
         } else if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
             result = true;
-            Toast.makeText(mContext, "Loading attachment", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, R.string.compose_loading_attachment, Toast.LENGTH_LONG).show();
             new ImageLoaderFromCameraTask().execute((Void[]) null);
         }
 
@@ -543,7 +543,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                     }
                 })
                 .show(((QKActivity) mContext).getFragmentManager(), "delayed message info");
-        mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, true).apply();
+        mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, true).apply(); //This should be changed, the dialog should be shown each time when delayed messaging is disabled.
     }
 
     private void handleComposeButtonClick() {

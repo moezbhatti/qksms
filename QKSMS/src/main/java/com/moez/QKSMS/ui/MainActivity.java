@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -126,7 +127,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             PackageManager manager = getPackageManager();
             try {
                 ComponentInfo info = manager.getActivityInfo(getComponentName(), 0);
-                imageView.setImageDrawable(getResources().getDrawable(info.getIconResource()));
+                imageView.setImageDrawable(ContextCompat.getDrawable(getBaseContext(), info.getIconResource()));
             } catch (PackageManager.NameNotFoundException ignored) {
             }
 
