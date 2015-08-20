@@ -16,19 +16,15 @@ import java.util.Date;
 public abstract class DateFormatter {
 
     public static String getConversationTimestamp(Context context, long date) {
-        SimpleDateFormat formatter;
-
         if (isSameDay(date)) {
-            formatter = accountFor24HourTime(context, new SimpleDateFormat("h:mm a"));
+            return accountFor24HourTime(context, new SimpleDateFormat("h:mm a")).format(date);
         } else if (isSameWeek(date)) {
-            formatter = new SimpleDateFormat("EEE");
+            return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY);
         } else if (isSameYear(date)) {
-            formatter = new SimpleDateFormat("MMM d");
+            return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR | DateUtils.FORMAT_ABBREV_MONTH);
         } else {
-            formatter = new SimpleDateFormat("MMM d y");
+            return DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH);
         }
-
-        return formatter.format(date);
     }
 
     private static boolean isSameDay(long date) {
