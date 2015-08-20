@@ -755,11 +755,8 @@ public class  MessageUtils {
         // "foo+caf_=6505551212=tmomail.net@gmail.com", which is the 'from' address from a forwarded email
         // message from Gmail. We don't want to treat "foo+caf_=6505551212=tmomail.net@gmail.com" and
         // "6505551212" to be the same.
-        if (number.indexOf('@') >= 0) {
-            return false;
-        }
+        return number.indexOf('@') < 0 && PhoneNumberUtils.compare(number, getLocalNumber());
 
-        return PhoneNumberUtils.compare(number, getLocalNumber());
     }
 
     public static void handleReadReport(final Context context,
@@ -919,7 +916,7 @@ public class  MessageUtils {
 
     public static void viewMmsMessageAttachment(final Activity activity, final Uri msgUri,
             final SlideshowModel slideshow, final int requestCode, AsyncDialog asyncDialog) {
-        boolean isSimple = (slideshow == null) ? false : slideshow.isSimple();
+        boolean isSimple = (slideshow != null) && slideshow.isSimple();
         if (isSimple) {
             // In attachment-editor mode, we only ever have one slide.
             MessageUtils.viewSimpleSlideshow(activity, slideshow);

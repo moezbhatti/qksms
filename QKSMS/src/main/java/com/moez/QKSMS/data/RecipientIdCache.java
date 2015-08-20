@@ -43,7 +43,7 @@ public class RecipientIdCache {
             this.id = id;
             this.number = number;
         }
-    };
+    }
 
     static void init(Context context) {
         sInstance = new RecipientIdCache(context);

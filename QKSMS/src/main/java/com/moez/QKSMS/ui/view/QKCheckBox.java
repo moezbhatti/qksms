@@ -10,7 +10,6 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
-import com.moez.QKSMS.R;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.ui.ThemeManager;

@@ -636,10 +636,7 @@ public class ExifParser {
 
     private boolean checkAllowed(int ifd, int tagId) {
         int info = mInterface.getTagInfo().get(tagId);
-        if (info == ExifInterface.DEFINITION_NULL) {
-            return false;
-        }
-        return ExifInterface.isIfdAllowed(info, ifd);
+        return info != ExifInterface.DEFINITION_NULL && ExifInterface.isIfdAllowed(info, ifd);
     }
 
     protected void readFullTagValue(ExifTag tag) throws IOException {

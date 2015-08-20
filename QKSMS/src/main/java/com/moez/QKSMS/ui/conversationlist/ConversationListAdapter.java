@@ -26,7 +26,6 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         implements LiveView {
 
 
-    private final Resources mRes;
     private final SharedPreferences mPrefs;
 
     private final Drawable mMuted;
@@ -35,7 +34,6 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
     public ConversationListAdapter(Context context) {
         mContext = context;
-        mRes = MainActivity.getRes(mContext);
         mPrefs = MainActivity.getPrefs(mContext);
 
         mMuted = ContextCompat.getDrawable(context, R.drawable.ic_mute);

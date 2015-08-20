@@ -1400,10 +1400,7 @@ public class ExifInterface {
     public boolean isTagCountDefined(int tagId) {
         int info = getTagInfo().get(tagId);
         // No value in info can be zero, as all tags have a non-zero type
-        if (info == 0) {
-            return false;
-        }
-        return getComponentCountFromInfo(info) != ExifTag.SIZE_UNDEFINED;
+        return info != 0 && getComponentCountFromInfo(info) != ExifTag.SIZE_UNDEFINED;
     }
 
     /**
@@ -1550,10 +1547,7 @@ public class ExifInterface {
      */
     public boolean setTagValue(int tagId, int ifdId, Object val) {
         ExifTag t = getTag(tagId, ifdId);
-        if (t == null) {
-            return false;
-        }
-        return t.setValue(val);
+        return t != null && t.setValue(val);
     }
 
     /**
@@ -1829,10 +1823,7 @@ public class ExifInterface {
      */
     public boolean setCompressedThumbnail(Bitmap thumb) {
         ByteArrayOutputStream thumbnail = new ByteArrayOutputStream();
-        if (!thumb.compress(Bitmap.CompressFormat.JPEG, 90, thumbnail)) {
-            return false;
-        }
-        return setCompressedThumbnail(thumbnail.toByteArray());
+        return thumb.compress(Bitmap.CompressFormat.JPEG, 90, thumbnail) && setCompressedThumbnail(thumbnail.toByteArray());
     }
 
     /**

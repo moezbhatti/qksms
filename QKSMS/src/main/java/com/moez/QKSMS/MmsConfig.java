@@ -154,7 +154,7 @@ public class MmsConfig {
     }
 
     public static boolean getMmsEnabled() {
-        return mMmsEnabled == 1 ? true : false;
+        return mMmsEnabled == 1;
     }
 
     public static int getMaxMessageSize() {
@@ -294,7 +294,6 @@ public class MmsConfig {
         int type;
         while ((type=parser.next()) != XmlPullParser.START_TAG
                    && type != XmlPullParser.END_DOCUMENT) {
-            ;
         }
 
         if (type != XmlPullParser.START_TAG) {
@@ -312,7 +311,6 @@ public class MmsConfig {
         int type;
         while ((type=parser.next()) != XmlPullParser.START_TAG
                    && type != XmlPullParser.END_DOCUMENT) {
-            ;
         }
     }
 
