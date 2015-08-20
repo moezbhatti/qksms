@@ -55,5 +55,4 @@ dependencies {
 
     // External services
     compile 'com.crittercism:crittercism-android-agent:5.0.3'
-    compile files('libs/endlessjabbersdk.jar')
 }
