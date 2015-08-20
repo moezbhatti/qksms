@@ -24,7 +24,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'qksms-proguard.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'qksms-proguard.pro'
         }
     }
 }
