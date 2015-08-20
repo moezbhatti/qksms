@@ -450,8 +450,9 @@
     <item>Más grande</item>
   </string-array>
   <string-array name="font_families">
-    <item>Regular</item>
-    <item>Condensada</item>
+    <item>Roboto Regular</item>
+    <item>Roboto Condensada</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>Ligera</item>

@@ -452,6 +452,7 @@
   <string-array name="font_families">
     <item>Normal</item>
     <item>Yakınlaştırılmış</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>İnce</item>

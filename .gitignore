@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Built application files
 build/
  
@@ -10,23 +9,13 @@ local.properties
  
 # Gradle generated files
 .gradle/
+build/
  
 # Signing files
 .signing/
  
 # User-specific configurations
-.idea/libraries/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/.name
-.idea/compiler.xml
-.idea/copyright/profiles_settings.xml
-.idea/encodings.xml
-.idea/inspectionProfiles/Project_Default.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
+.idea/
 *.iml
  
 # OS-specific files
@@ -37,11 +26,3 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
-=======
-.gradle/
-.idea/
-build/
-gen/
-*.iml
-module_android-smsmms.xml
->>>>>>> added android-smsmms

@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui.messagelist;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ClipData;
@@ -218,8 +219,8 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
         // Make sure to notify that this conversation has been opened. This will mark it as read, load new drafts, etc.
         onOpenConversation();

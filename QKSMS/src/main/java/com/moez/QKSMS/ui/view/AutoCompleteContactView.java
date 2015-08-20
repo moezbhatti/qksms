@@ -10,7 +10,7 @@ import com.android.ex.chips.RecipientEditTextView;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.RobotoTypefaceManager;
+import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -57,8 +57,8 @@ public class AutoCompleteContactView extends RecipientEditTextView implements Li
 
     @Override
     public void refresh() {
-        setTypeface(RobotoTypefaceManager.obtainTypeface(mContext, FontManager.getFontFamily(mContext),
-                FontManager.getFontWeight(mContext, false), RobotoTypefaceManager.TextStyle.NORMAL));
+        setTypeface(TypefaceManager.obtainTypeface(mContext, FontManager.getFontFamily(mContext),
+                FontManager.getFontWeight(mContext, false), TypefaceManager.TextStyle.NORMAL));
         setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
 
         setTextColor(ThemeManager.getTextOnBackgroundPrimary());

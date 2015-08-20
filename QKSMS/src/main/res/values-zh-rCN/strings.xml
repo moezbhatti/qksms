@@ -451,6 +451,7 @@
   <string-array name="font_families">
     <item>常规</item>
     <item>紧缩</item>
+    <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
     <item>纤细</item>

@@ -333,8 +333,12 @@
     <string name="restart_message">These changes will take effect the next time QKSMS is opened</string>
     <!--Dialog title for asking if a user wants to delete a conversation-->
     <string name="delete_conversation">Delete conversation</string>
+    <!--Dialog title for asking if a user wants to delete all failed messages-->
+    <string name="delete_all_failed">Delete failed messages</string>
     <!--CDialog title for asking if a user wants to delete a conversation-->
     <string name="delete_confirmation">Are you sure you would like to delete the conversation?</string>
+    <!--CDialog title for asking if a user wants to delete all failed messages-->
+    <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
     <!--(Unused) Dialog title shown if APNs have not been set-->
     <string name="apns_not_set">APNs not set</string>
     <!--(Unused) Dialog description shown if APNs have not been set-->
@@ -706,6 +710,8 @@
 
     <string name="auto_select_failed_title">Automatic configuration failed</string>
     <string name="auto_select_failed">Try searching for your carrier\'s APN settings (MMSC, Port, and Proxy) and entering them in Settings > Advanced.</string>
+    <string name="date_yesterday">Yesterday</string>
+    <string name="date_just_now">Just now</string>
 
     <string-array name="qksms_plus_about_feature_titles">
         <item>Bonus theme colors</item>
@@ -752,8 +758,9 @@
     </string-array>
 
     <string-array name="font_families">
-        <item>Regular</item>
-        <item>Condensed</item>
+        <item>Roboto Regular</item>
+        <item>Roboto Condensed</item>
+        <item>Lato</item>
     </string-array>
 
     <string-array name="font_weights">
