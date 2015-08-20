@@ -810,7 +810,7 @@ public class PduComposer {
         }
 
         // Need at least one of "cc", "bcc" and "to".
-        if (false == recipient) {
+        if (!recipient) {
             return PDU_COMPOSE_CONTENT_ERROR;
         }
 
