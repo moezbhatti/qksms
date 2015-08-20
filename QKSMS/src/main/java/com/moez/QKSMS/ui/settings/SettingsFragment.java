@@ -396,7 +396,7 @@ public class SettingsFragment extends PreferenceFragment implements
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    public boolean onPreferenceChange(final Preference preference, Object newValue) {
 
         String key = preference.getKey();
 
@@ -457,7 +457,7 @@ public class SettingsFragment extends PreferenceFragment implements
                 new AlertDialog.Builder(mContext)
                         .setTitle(R.string.download_emoji_title)
                         .setMessage(R.string.download_emoji_message)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String url = "https://dl.dropboxusercontent.com/u/1181440/TwitterEmoji.ttf"; //TODO: put this file on a better server
@@ -473,7 +473,12 @@ public class SettingsFragment extends PreferenceFragment implements
                                 manager.enqueue(request);
                             }
                         })
-                        .setNegativeButton("No", null) //TODO: handle this better
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ((CheckBoxPreference)preference).setChecked(false);
+                            }
+                        })
                         .show();
             }
         } else if (key.equals(QUICKCOMPOSE)) {
