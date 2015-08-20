@@ -22,6 +22,7 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -732,8 +733,8 @@ public class SettingsFragment extends PreferenceFragment implements
 
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
-
-            return new TimePickerDialog(getActivity(), this, hour, minute, false);
+            boolean isUsing24HourTime = mPrefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, DateFormat.is24HourFormat(getActivity()));
+            return new TimePickerDialog(getActivity(), this, hour, minute, isUsing24HourTime);
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
