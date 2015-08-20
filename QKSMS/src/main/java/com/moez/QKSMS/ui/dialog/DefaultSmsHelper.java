@@ -34,7 +34,10 @@ public class DefaultSmsHelper implements ActionClickListener {
         mListener = listener;
         mMessage = messageRes != 0 ? messageRes : R.string.default_info;
 
-        if (Build.VERSION.SDK_INT < 19 || Telephony.Sms.getDefaultSmsPackage(mContext).equals(mContext.getPackageName())) {
+        //some phones do not defaultSmsPackage, they will be assigned to null
+        String defaultSmsPackage = Telephony.Sms.getDefaultSmsPackage(mContext);
+        if (Build.VERSION.SDK_INT < 19 || (defaultSmsPackage != null && defaultSmsPackage.equals
+                (mContext.getPackageName()))) {
             if (mListener != null) {
                 mListener.onDefaultSmsResult(true);
             }
