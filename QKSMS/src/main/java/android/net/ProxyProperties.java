@@ -149,13 +149,12 @@ public class ProxyProperties implements Parcelable {
         if (!(o instanceof ProxyProperties)) return false;
         ProxyProperties p = (ProxyProperties) o;
         if (mExclusionList != null && !mExclusionList.equals(p.getExclusionList())) return false;
-        if (mHost != null && p.getHost() != null && mHost.equals(p.getHost()) == false) {
+        if (mHost != null && p.getHost() != null && !mHost.equals(p.getHost())) {
             return false;
         }
         if (mHost != null && p.mHost == null) return false;
         if (mHost == null && p.mHost != null) return false;
-        if (mPort != p.mPort) return false;
-        return true;
+        return mPort == p.mPort;
     }
 
     /**

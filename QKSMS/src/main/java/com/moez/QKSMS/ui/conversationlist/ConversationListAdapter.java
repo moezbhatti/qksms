@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,6 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         implements LiveView {
 
 
-    private final Resources mRes;
     private final SharedPreferences mPrefs;
 
     private final Drawable mMuted;
@@ -34,12 +34,11 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
     public ConversationListAdapter(Context context) {
         mContext = context;
-        mRes = MainActivity.getRes(mContext);
         mPrefs = MainActivity.getPrefs(mContext);
 
-        mMuted = mRes.getDrawable(R.drawable.ic_mute);
-        mUnread = mRes.getDrawable(R.drawable.ic_unread);
-        mError = mRes.getDrawable(R.drawable.ic_error);
+        mMuted = ContextCompat.getDrawable(context, R.drawable.ic_mute);
+        mUnread = ContextCompat.getDrawable(context, R.drawable.ic_unread);
+        mError = ContextCompat.getDrawable(context, R.drawable.ic_error);
 
         LiveViewManager.registerView(this);
         LiveViewManager.registerPreference(this, SettingsFragment.THEME);

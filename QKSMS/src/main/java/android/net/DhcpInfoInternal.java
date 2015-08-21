@@ -112,12 +112,12 @@ public class DhcpInfoInternal {
             p.addRoute(route);
         }
         //if empty, connectivity configures default DNS
-        if (TextUtils.isEmpty(dns1) == false) {
+        if (!TextUtils.isEmpty(dns1)) {
             p.addDns(NetworkUtils.numericToInetAddress(dns1));
         } else {
             if (LOCAL_LOGV) Log.v(TAG, "makeLinkProperties with empty dns1!");
         }
-        if (TextUtils.isEmpty(dns2) == false) {
+        if (!TextUtils.isEmpty(dns2)) {
             p.addDns(NetworkUtils.numericToInetAddress(dns2));
         } else {
             if (LOCAL_LOGV) Log.v(TAG, "makeLinkProperties with empty dns2!");
@@ -152,11 +152,7 @@ public class DhcpInfoInternal {
      * metered, and sensitive to heavy data transfers.
      */
     public boolean hasMeteredHint() {
-        if (vendorInfo != null) {
-            return vendorInfo.contains("ANDROID_METERED");
-        } else {
-            return false;
-        }
+        return vendorInfo != null && vendorInfo.contains("ANDROID_METERED");
     }
 
     public String toString() {

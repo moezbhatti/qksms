@@ -2,6 +2,7 @@ package com.moez.QKSMS.ui.view.colorpicker;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -43,7 +44,7 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
 
     protected void setColor(int color) {
         Drawable[] drawables = new Drawable[1];
-        drawables[0] = getContext().getResources().getDrawable(R.drawable.color_picker_swatch);
+        drawables[0] = ContextCompat.getDrawable(getContext(), R.drawable.color_picker_swatch);
         mSwatchImage.setImageDrawable(new ColorStateDrawable(drawables, color));
     }
 

@@ -20,9 +20,6 @@ public class ViewUtils {
         int vw = view.getWidth();
         int vh = view.getHeight();
 
-        if (x < vx || x > vx + vw || y < vy || y > vy + vh) {
-            return false;
-        }
-        return true;
+        return !(x < vx || x > vx + vw || y < vy || y > vy + vh);
     }
 }

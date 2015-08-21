@@ -331,13 +331,8 @@ public class NetworkTemplate implements Parcelable {
      * Check if mobile network with matching IMSI.
      */
     private boolean matchesMobile(NetworkIdentity ident) {
-        if (ident.mType == TYPE_WIMAX) {
-            // TODO: consider matching against WiMAX subscriber identity
-            return true;
-        } else {
-            return ((sForceAllNetworkTypes || contains(DATA_USAGE_NETWORK_TYPES, ident.mType))
-                    && Objects.equal(mSubscriberId, ident.mSubscriberId));
-        }
+        // TODO: consider matching against WiMAX subscriber identity
+        return ident.mType == TYPE_WIMAX || ((sForceAllNetworkTypes || contains(DATA_USAGE_NETWORK_TYPES, ident.mType)) && Objects.equal(mSubscriberId, ident.mSubscriberId));
     }
 
     /**
@@ -391,18 +386,11 @@ public class NetworkTemplate implements Parcelable {
      * Check if matches Ethernet network template.
      */
     private boolean matchesEthernet(NetworkIdentity ident) {
-        if (ident.mType == TYPE_ETHERNET) {
-            return true;
-        }
-        return false;
+        return ident.mType == TYPE_ETHERNET;
     }
 
     private boolean matchesMobileWildcard(NetworkIdentity ident) {
-        if (ident.mType == TYPE_WIMAX) {
-            return true;
-        } else {
-            return sForceAllNetworkTypes || contains(DATA_USAGE_NETWORK_TYPES, ident.mType);
-        }
+        return ident.mType == TYPE_WIMAX || sForceAllNetworkTypes || contains(DATA_USAGE_NETWORK_TYPES, ident.mType);
     }
 
     private boolean matchesWifiWildcard(NetworkIdentity ident) {

@@ -880,10 +880,7 @@ public class ExifTag {
     }
 
     private boolean checkBadComponentCount(int count) {
-        if (mHasDefinedDefaultComponentCount && (mComponentCountActual != count)) {
-            return true;
-        }
-        return false;
+        return mHasDefinedDefaultComponentCount && (mComponentCountActual != count);
     }
 
     private static String convertTypeToString(short type) {
@@ -974,20 +971,11 @@ public class ExifTag {
                 if (tag.mValue == null) {
                     return false;
                 } else if (mValue instanceof long[]) {
-                    if (!(tag.mValue instanceof long[])) {
-                        return false;
-                    }
-                    return Arrays.equals((long[]) mValue, (long[]) tag.mValue);
+                    return tag.mValue instanceof long[] && Arrays.equals((long[]) mValue, (long[]) tag.mValue);
                 } else if (mValue instanceof Rational[]) {
-                    if (!(tag.mValue instanceof Rational[])) {
-                        return false;
-                    }
-                    return Arrays.equals((Rational[]) mValue, (Rational[]) tag.mValue);
+                    return tag.mValue instanceof Rational[] && Arrays.equals((Rational[]) mValue, (Rational[]) tag.mValue);
                 } else if (mValue instanceof byte[]) {
-                    if (!(tag.mValue instanceof byte[])) {
-                        return false;
-                    }
-                    return Arrays.equals((byte[]) mValue, (byte[]) tag.mValue);
+                    return tag.mValue instanceof byte[] && Arrays.equals((byte[]) mValue, (byte[]) tag.mValue);
                 } else {
                     return mValue.equals(tag.mValue);
                 }

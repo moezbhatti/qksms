@@ -712,15 +712,7 @@
     <string name="auto_select_failed">Try searching for your carrier\'s APN settings (MMSC, Port, and Proxy) and entering them in Settings > Advanced.</string>
     <string name="date_yesterday">Yesterday</string>
     <string name="date_just_now">Just now</string>
-
-    <string-array name="qksms_plus_about_feature_titles">
-        <item>Bonus theme colors</item>
-        <item>Delayed messaging</item>
-        <item>Custom notifications</item>
-        <item>Automatic night mode</item>
-        <item>Android Wear responses</item>
-        <item>And more for free!</item>
-    </string-array>
+    <string name="compose_loading_attachment">Loading attachment</string>
 
     <string-array name="resend_menu">
         <item>Resend</item>
@@ -741,7 +733,6 @@
         <item>Dark grey</item>
         <item>Black</item>
     </string-array>
-
 
     <string-array name="background_values">
         <item>white</item>

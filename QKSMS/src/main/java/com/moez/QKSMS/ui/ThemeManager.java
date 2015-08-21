@@ -14,6 +14,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -277,7 +278,7 @@ public class ThemeManager {
             sTintManager.setNavigationBarTintColor(sResources.getColor(R.color.black));
         }
 
-        sStatusBarTintDrawable = sResources.getDrawable(R.drawable.status_bar_background);
+        sStatusBarTintDrawable = ContextCompat.getDrawable(context, R.drawable.status_bar_background);
         if (sStatusBarTintDrawable != null) {
             sStatusBarTintDrawable.setColorFilter(status_tint ? sColor : sResources.getColor(R.color.black), PorterDuff.Mode.MULTIPLY);
         }
