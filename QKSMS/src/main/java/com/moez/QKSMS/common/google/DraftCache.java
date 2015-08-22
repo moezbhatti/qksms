@@ -43,10 +43,9 @@ public class DraftCache {
     // before deleting any empty threads from the db.
     private final Object mSavingDraftLock = new Object();
 
-    private HashSet<Long> mDraftSet = new HashSet<Long>(4);
+    private HashSet<Long> mDraftSet = new HashSet<>(4);
     private final Object mDraftSetLock = new Object();
-    private final HashSet<OnDraftChangedListener> mChangeListeners
-            = new HashSet<OnDraftChangedListener>(1);
+    private final HashSet<OnDraftChangedListener> mChangeListeners = new HashSet<>(1);
     private final Object mChangeListenersLock = new Object();
 
     public interface OnDraftChangedListener {
@@ -95,7 +94,7 @@ public class DraftCache {
             log("rebuildCache");
         }
 
-        HashSet<Long> newDraftSet = new HashSet<Long>();
+        HashSet<Long> newDraftSet = new HashSet<>();
 
         Cursor cursor = SqliteWrapper.query(
                 mContext,

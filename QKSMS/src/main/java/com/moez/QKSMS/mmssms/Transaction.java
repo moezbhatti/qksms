@@ -214,8 +214,8 @@ public class Transaction {
                 PendingIntent deliveredPI = PendingIntent.getBroadcast(context, messageId, new Intent(SMS_DELIVERED)
                         .putExtra("message_uri", messageUri == null ? "" : messageUri.toString()), PendingIntent.FLAG_UPDATE_CURRENT);
 
-                ArrayList<PendingIntent> sPI = new ArrayList<PendingIntent>();
-                ArrayList<PendingIntent> dPI = new ArrayList<PendingIntent>();
+                ArrayList<PendingIntent> sPI = new ArrayList<>();
+                ArrayList<PendingIntent> dPI = new ArrayList<>();
 
                 String body = text;
 
@@ -336,7 +336,7 @@ public class Transaction {
         address = address.trim();
 
         // create the parts to send
-        ArrayList<MMSPart> data = new ArrayList<MMSPart>();
+        ArrayList<MMSPart> data = new ArrayList<>();
 
         for (int i = 0; i < image.length; i++) {
             // turn bitmap into byte array to be stored
@@ -762,7 +762,7 @@ public class Transaction {
 
             @Override
             public void run() {
-                List<APN> apns = new ArrayList<APN>();
+                List<APN> apns = new ArrayList<>();
 
                 try {
                     APN apn = new APN(settings.getMmsc(), settings.getPort(), settings.getProxy());
@@ -1072,7 +1072,7 @@ public class Transaction {
         try {
             Uri destUri = Uri.parse("content://mms");
 
-            Set<String> recipients = new HashSet<String>();
+            Set<String> recipients = new HashSet<>();
             recipients.addAll(Arrays.asList(to));
             long thread_id = Utils.getOrCreateThreadId(context, recipients);
 

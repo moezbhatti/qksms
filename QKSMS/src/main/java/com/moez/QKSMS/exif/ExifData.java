@@ -45,7 +45,7 @@ class ExifData {
 
     private final IfdData[] mIfdDatas = new IfdData[IfdId.TYPE_IFD_COUNT];
     private byte[] mThumbnail;
-    private final ArrayList<byte[]> mStripBytes = new ArrayList<byte[]>();
+    private final ArrayList<byte[]> mStripBytes = new ArrayList<>();
     private final ByteOrder mByteOrder;
 
     ExifData(ByteOrder order) {
@@ -253,7 +253,7 @@ class ExifData {
      * are none.
      */
     protected List<ExifTag> getAllTags() {
-        ArrayList<ExifTag> ret = new ArrayList<ExifTag>();
+        ArrayList<ExifTag> ret = new ArrayList<>();
         for (IfdData d : mIfdDatas) {
             if (d != null) {
                 ExifTag[] tags = d.getAllTags();
@@ -283,7 +283,7 @@ class ExifData {
         if (tags == null) {
             return null;
         }
-        ArrayList<ExifTag> ret = new ArrayList<ExifTag>(tags.length);
+        ArrayList<ExifTag> ret = new ArrayList<>(tags.length);
         for (ExifTag t : tags) {
             ret.add(t);
         }
@@ -298,7 +298,7 @@ class ExifData {
      * are none.
      */
     protected List<ExifTag> getAllTagsForTagId(short tag) {
-        ArrayList<ExifTag> ret = new ArrayList<ExifTag>();
+        ArrayList<ExifTag> ret = new ArrayList<>();
         for (IfdData d : mIfdDatas) {
             if (d != null) {
                 ExifTag t = d.getTag(tag);

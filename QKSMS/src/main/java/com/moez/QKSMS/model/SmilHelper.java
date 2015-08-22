@@ -282,7 +282,7 @@ public class SmilHelper {
 
         // Create REGIONs and append them to LAYOUT
         ArrayList<RegionModel> regions = layouts.getRegions();
-        ArrayList<SMILRegionElement> smilRegions = new ArrayList<SMILRegionElement>();
+        ArrayList<SMILRegionElement> smilRegions = new ArrayList<>();
         for (RegionModel r : regions) {
             SMILRegionElement smilRegion = (SMILRegionElement) document.createElement("region");
             smilRegion.setId(r.getRegionId());

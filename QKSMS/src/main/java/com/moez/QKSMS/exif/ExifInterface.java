@@ -322,7 +322,7 @@ public class ExifInterface {
      * Tags that contain offset markers. These are included in the banned
      * defines.
      */
-    private static HashSet<Short> sOffsetTags = new HashSet<Short>();
+    private static HashSet<Short> sOffsetTags = new HashSet<>();
     static {
         sOffsetTags.add(getTrueTagKey(TAG_GPS_IFD));
         sOffsetTags.add(getTrueTagKey(TAG_EXIF_IFD));
@@ -334,7 +334,7 @@ public class ExifInterface {
     /**
      * Tags with definitions that cannot be overridden (banned defines).
      */
-    protected static HashSet<Short> sBannedDefines = new HashSet<Short>(sOffsetTags);
+    protected static HashSet<Short> sBannedDefines = new HashSet<>(sOffsetTags);
     static {
         sBannedDefines.add(getTrueTagKey(TAG_NULL));
         sBannedDefines.add(getTrueTagKey(TAG_JPEG_INTERCHANGE_FORMAT_LENGTH));
@@ -2341,7 +2341,7 @@ public class ExifInterface {
     protected static int[] getAllowedIfdsFromInfo(int info) {
         int ifdFlags = getAllowedIfdFlagsFromInfo(info);
         int[] ifds = IfdData.getIfds();
-        ArrayList<Integer> l = new ArrayList<Integer>();
+        ArrayList<Integer> l = new ArrayList<>();
         for (int i = 0; i < IfdId.TYPE_IFD_COUNT; i++) {
             int flag = (ifdFlags >> i) & 1;
             if (flag == 1) {

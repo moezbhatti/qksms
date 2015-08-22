@@ -219,7 +219,7 @@ public class SettingsFragment extends PreferenceFragment implements
             // If this is a preference category, make sure to go through all the subpreferences as
             // well.
             if (pref instanceof PreferenceCategory) {
-                Stack<PreferenceCategory> stack = new Stack<PreferenceCategory>();
+                Stack<PreferenceCategory> stack = new Stack<>();
                 stack.push((PreferenceCategory) pref);
 
                 do {
@@ -598,7 +598,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
         Set<String> defaultResponses = new HashSet<>(Arrays.asList(mContext.getResources().getStringArray(R.array.qk_responses)));
         Set<String> responseSet = mPrefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
-        ArrayList<String> responses = new ArrayList<String>();
+        ArrayList<String> responses = new ArrayList<>();
         responses.addAll(responseSet);
         Collections.sort(responses);
         for (int i = responses.size(); i < 12; i++) {

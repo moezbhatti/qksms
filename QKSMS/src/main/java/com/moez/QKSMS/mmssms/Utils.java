@@ -281,7 +281,7 @@ public class Utils {
      * @return the thread_id to use in the database
      */
     public static long getOrCreateThreadId(Context context, String recipient) {
-        Set<String> recipients = new HashSet<String>();
+        Set<String> recipients = new HashSet<>();
 
         recipients.add(recipient);
         return getOrCreateThreadId(context, recipients);

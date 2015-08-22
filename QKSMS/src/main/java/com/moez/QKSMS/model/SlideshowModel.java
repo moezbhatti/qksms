@@ -127,7 +127,7 @@ public class SlideshowModel extends Model
                 null, 0, 0, w, h);
 
         // Create region models.
-        ArrayList<RegionModel> regions = new ArrayList<RegionModel>();
+        ArrayList<RegionModel> regions = new ArrayList<>();
         NodeList nlRegions = sle.getRegions();
         int regionsNum = nlRegions.getLength();
 
@@ -144,7 +144,7 @@ public class SlideshowModel extends Model
         SMILElement docBody = document.getBody();
         NodeList slideNodes = docBody.getChildNodes();
         int slidesNum = slideNodes.getLength();
-        ArrayList<SlideModel> slides = new ArrayList<SlideModel>(slidesNum);
+        ArrayList<SlideModel> slides = new ArrayList<>(slidesNum);
         int totalMessageSize = 0;
 
         for (int i = 0; i < slidesNum; i++) {
@@ -155,9 +155,9 @@ public class SlideshowModel extends Model
             // Create media models for each slide.
             NodeList mediaNodes = par.getChildNodes();
             int mediaNum = mediaNodes.getLength();
-            ArrayList<MediaModel> mediaSet = new ArrayList<MediaModel>(mediaNum);
+            ArrayList<MediaModel> mediaSet = new ArrayList<>(mediaNum);
 
-            ArrayList<String> srcs = new ArrayList<String>(mediaNum);
+            ArrayList<String> srcs = new ArrayList<>(mediaNum);
             for (int j = 0; j < mediaNum; j++) {
                 SMILMediaElement sme = (SMILMediaElement) mediaNodes.item(j);
                 srcs.add(sme.getSrc());

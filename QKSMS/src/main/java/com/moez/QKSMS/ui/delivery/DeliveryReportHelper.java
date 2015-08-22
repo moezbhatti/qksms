@@ -123,7 +123,7 @@ public class DeliveryReportHelper {
                 return null;
             }
 
-            List<DeliveryReportItem> items = new ArrayList<DeliveryReportItem>();
+            List<DeliveryReportItem> items = new ArrayList<>();
             while (c.moveToNext()) {
                 // For sent messages with delivery reports, we stick the delivery time in the
                 // date_sent column (see MessageStatusReceiver).
@@ -236,8 +236,7 @@ public class DeliveryReportHelper {
         }
 
         try {
-            Map<String, MmsReportStatus> statusMap =
-                    new HashMap<String, MmsReportStatus>();
+            Map<String, MmsReportStatus> statusMap = new HashMap<>();
 
             while (c.moveToNext()) {
                 String recipient = c.getString(COLUMN_RECIPIENT);
@@ -270,7 +269,7 @@ public class DeliveryReportHelper {
                 return null;
             }
 
-            List<MmsReportRequest> reqList = new ArrayList<MmsReportRequest>();
+            List<MmsReportRequest> reqList = new ArrayList<>();
             while (c.moveToNext()) {
                 reqList.add(new MmsReportRequest(
                                 c.getString(COLUMN_RECIPIENT),

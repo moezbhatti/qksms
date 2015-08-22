@@ -18,7 +18,7 @@ public class DialogHelper {
     private static final String TAG = "DialogHelper";
 
     public static void showDeleteConversationDialog(MainActivity context, long threadId) {
-        List<Long> threadIds = new ArrayList<Long>();
+        List<Long> threadIds = new ArrayList<>();
         threadIds.add(threadId);
         showDeleteConversationDialog(context, threadIds);
     }

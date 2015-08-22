@@ -93,7 +93,7 @@ public class CustomViewAbove extends ViewGroup {
     private SlidingMenu.OnClosedListener mClosedListener;
     private SlidingMenu.OnOpenedListener mOpenedListener;
 
-    private List<View> mIgnoredViews = new ArrayList<View>();
+    private List<View> mIgnoredViews = new ArrayList<>();
 
     //	private int mScrollState = SCROLL_STATE_IDLE;
 

@@ -125,7 +125,7 @@ public class ContactList extends ArrayList<Contact>  {
     }
 
     public String[] getNumbers(boolean scrubForMmsAddress) {
-        List<String> numbers = new ArrayList<String>();
+        List<String> numbers = new ArrayList<>();
         String number;
         for (Contact c : this) {
             number = c.getNumber();

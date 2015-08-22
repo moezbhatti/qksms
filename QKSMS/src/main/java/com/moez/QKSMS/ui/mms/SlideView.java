@@ -502,7 +502,7 @@ public class SlideView extends AbsoluteLayout implements
         }
         // Layout views to fit the LinearLayout from left to right, then top to
         // bottom.
-        TreeMap<Position, View> viewsByPosition = new TreeMap<Position, View>(new Comparator<Position>() {
+        TreeMap<Position, View> viewsByPosition = new TreeMap<>(new Comparator<Position>() {
             public int compare(Position p1, Position p2) {
                 int l1 = p1.mLeft;
                 int t1 = p1.mTop;

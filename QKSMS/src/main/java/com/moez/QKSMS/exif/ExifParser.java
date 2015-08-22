@@ -176,7 +176,7 @@ public class ExifParser {
     private static final short TAG_STRIP_BYTE_COUNTS = ExifInterface
             .getTrueTagKey(ExifInterface.TAG_STRIP_BYTE_COUNTS);
 
-    private final TreeMap<Integer, Object> mCorrespondingEvent = new TreeMap<Integer, Object>();
+    private final TreeMap<Integer, Object> mCorrespondingEvent = new TreeMap<>();
 
     private boolean isIfdRequested(int ifdType) {
         switch (ifdType) {

@@ -607,7 +607,7 @@ public class Conversation {
     }
 
     private static long getOrCreateThreadId(Context context, ContactList list) {
-        HashSet<String> recipients = new HashSet<String>();
+        HashSet<String> recipients = new HashSet<>();
         Contact cacheContact = null;
         for (Contact c : list) {
             cacheContact = Contact.get(c.getNumber(), false);
@@ -1224,7 +1224,7 @@ public class Conversation {
 
         // Keep track of what threads are now on disk so we
         // can discard anything removed from the cache.
-        HashSet<Long> threadsOnDisk = new HashSet<Long>();
+        HashSet<Long> threadsOnDisk = new HashSet<>();
 
         // Query for all conversations.
         Cursor c = context.getContentResolver().query(sAllThreadsUri,

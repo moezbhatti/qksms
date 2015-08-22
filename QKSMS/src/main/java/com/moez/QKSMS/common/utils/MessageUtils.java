@@ -103,7 +103,7 @@ public class  MessageUtils {
     // anything ever delete from the mmssms.db canonical_addresses
     // table?  Nothing that I could find.
     private static final Map<String, String> sRecipientAddress =
-            new ConcurrentHashMap<String, String>(20 /* initial capacity */);
+            new ConcurrentHashMap<>(20 /* initial capacity */);
 
     // When we pass a video record duration to the video recorder, use one of these values.
     private static final int[] sVideoDuration =
@@ -795,7 +795,7 @@ public class  MessageUtils {
             return;
         }
 
-        final Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<>();
         try {
             if (c.getCount() == 0) {
                 if (callback != null) {
@@ -889,7 +889,7 @@ public class  MessageUtils {
 
     public static ArrayList<String> extractUris(URLSpan[] spans) {
         int size = spans.length;
-        ArrayList<String> accumulator = new ArrayList<String>();
+        ArrayList<String> accumulator = new ArrayList<>();
 
         for (int i = 0; i < size; i++) {
             accumulator.add(spans[i].getURL());
