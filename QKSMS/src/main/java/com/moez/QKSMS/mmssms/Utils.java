@@ -401,9 +401,6 @@ public class Utils {
      * @return true if app is default
      */
     public static boolean isDefaultSmsApp(Context context) {
-        if (hasKitKat()) {
-            return context.getPackageName().equals(Telephony.Sms.getDefaultSmsPackage(context));
-        }
-        return true;
+        return !hasKitKat() || context.getPackageName().equals(Telephony.Sms.getDefaultSmsPackage(context));
     }
 }

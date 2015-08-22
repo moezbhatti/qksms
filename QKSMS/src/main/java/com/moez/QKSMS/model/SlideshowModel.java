@@ -643,10 +643,8 @@ public class SlideshowModel extends Model
             return false;
 
         // No audio allowed.
-        if (slide.hasAudio())
-            return false;
+        return !slide.hasAudio();
 
-        return true;
     }
 
     /**

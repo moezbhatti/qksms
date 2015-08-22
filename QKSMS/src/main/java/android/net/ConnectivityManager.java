@@ -566,11 +566,8 @@ public class ConnectivityManager {
     public boolean requestRouteToHost(int networkType, int hostAddress) {
         InetAddress inetAddress = NetworkUtils.intToInetAddress(hostAddress);
 
-        if (inetAddress == null) {
-            return false;
-        }
+        return inetAddress != null && requestRouteToHostAddress(networkType, inetAddress);
 
-        return requestRouteToHostAddress(networkType, inetAddress);
     }
 
     /**

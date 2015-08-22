@@ -204,8 +204,7 @@ public class LinkProperties implements Parcelable {
      */
     public boolean isIdenticalDnses(LinkProperties target) {
         Collection<InetAddress> targetDnses = target.getDnses();
-        return (mDnses.size() == targetDnses.size()) ?
-                mDnses.containsAll(targetDnses) : false;
+        return (mDnses.size() == targetDnses.size()) && mDnses.containsAll(targetDnses);
     }
 
     /**
@@ -216,8 +215,7 @@ public class LinkProperties implements Parcelable {
      */
     public boolean isIdenticalRoutes(LinkProperties target) {
         Collection<RouteInfo> targetRoutes = target.getRoutes();
-        return (mRoutes.size() == targetRoutes.size()) ?
-                mRoutes.containsAll(targetRoutes) : false;
+        return (mRoutes.size() == targetRoutes.size()) && mRoutes.containsAll(targetRoutes);
     }
 
     /**

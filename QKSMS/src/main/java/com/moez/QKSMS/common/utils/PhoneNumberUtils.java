@@ -313,11 +313,8 @@ public class PhoneNumberUtils extends android.telephony.PhoneNumberUtils {
 
             // if the number of dialable chars in a and b match, but the matched chars < MIN_MATCH,
             // treat them as equal (i.e. 404-04 and 40404)
-            if (effectiveALen == effectiveBLen && effectiveALen == matched) {
-                return true;
-            }
+            return effectiveALen == effectiveBLen && effectiveALen == matched;
 
-            return false;
         }
 
         // At least one string has matched completely;
@@ -346,13 +343,9 @@ public class PhoneNumberUtils extends android.telephony.PhoneNumberUtils {
             return true;
         }
 
-        if (matchTrunkPrefix(b, ib + 1)
-                && matchIntlPrefixAndCC(a, ia +1)
-                ) {
-            return true;
-        }
+        return matchTrunkPrefix(b, ib + 1)
+                && matchIntlPrefixAndCC(a, ia + 1);
 
-        return false;
     }
 
     /** all of 'a' up to len must be a (+|00|011)country code)

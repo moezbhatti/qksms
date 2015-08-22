@@ -1,7 +1,6 @@
 package com.moez.QKSMS.ui.view;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;

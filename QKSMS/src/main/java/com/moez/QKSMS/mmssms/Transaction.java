@@ -322,11 +322,7 @@ public class Transaction {
 
     private boolean checkIfMessageExistsAfterDelay(Uri messageUti) {
         Cursor query = context.getContentResolver().query(messageUti, new String[] {"_id"}, null, null, null);
-        if (query != null && query.moveToFirst()) {
-            return true;
-        } else {
-            return false;
-        }
+        return query != null && query.moveToFirst();
     }
 
     private void sendMmsMessage(String text, String[] addresses, Bitmap[] image, String[] imageNames, byte[] media, String mimeType, String subject) {

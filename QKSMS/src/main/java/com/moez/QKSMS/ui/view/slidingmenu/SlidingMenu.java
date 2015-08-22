@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -768,7 +769,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param resId the resource ID of the new shadow drawable
      */
     public void setShadowDrawable(int resId) {
-        setShadowDrawable(getContext().getResources().getDrawable(resId));
+        setShadowDrawable(ContextCompat.getDrawable(getContext(), resId));
     }
 
     /**
@@ -786,7 +787,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param resId the resource ID of the new shadow drawable
      */
     public void setSecondaryShadowDrawable(int resId) {
-        setSecondaryShadowDrawable(getContext().getResources().getDrawable(resId));
+        setSecondaryShadowDrawable(ContextCompat.getDrawable(getContext(), resId));
     }
 
     /**

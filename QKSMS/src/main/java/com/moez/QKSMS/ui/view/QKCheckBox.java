@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.moez.QKSMS.interfaces.LiveView;
@@ -87,7 +88,7 @@ public class QKCheckBox extends android.widget.CheckBox implements LiveView {
         int id = res.getIdentifier(name, "drawable", getContext().getPackageName());
 
         try {
-            setButtonDrawable(res.getDrawable(id));
+            setButtonDrawable(ContextCompat.getDrawable(getContext(), id));
         } catch (Exception e) {
             e.printStackTrace();
         }
