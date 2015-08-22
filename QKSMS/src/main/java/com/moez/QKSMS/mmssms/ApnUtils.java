@@ -150,16 +150,22 @@ public class ApnUtils {
         for (int i = 0; i < parser.getAttributeCount(); i++) {
             String name = parser.getAttributeName(i);
             String value = parser.getAttributeValue(i);
-            if ("mmsc".equals(name)) {
-                apn.mmsc = value;
-            } else if ("mmsproxy".equals(name)) {
-                apn.proxy = value;
-            } else if ("mmsport".equals(name)) {
-                apn.port = value;
-            } else if ("carrier".equals(name)) {
-                apn.name = value;
-            } else if ("port".equals(name)) {
-                port = value;
+            switch (name) {
+                case "mmsc":
+                    apn.mmsc = value;
+                    break;
+                case "mmsproxy":
+                    apn.proxy = value;
+                    break;
+                case "mmsport":
+                    apn.port = value;
+                    break;
+                case "carrier":
+                    apn.name = value;
+                    break;
+                case "port":
+                    port = value;
+                    break;
             }
         }
 
