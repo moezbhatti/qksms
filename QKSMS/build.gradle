@@ -5,10 +5,6 @@ repositories {
 }
 
 android {
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
 
     compileSdkVersion 22
     buildToolsVersion '23.0.0'
@@ -27,6 +23,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'qksms-proguard.pro'
         }
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+
+        // Translations are crowd-sourced
+        disable 'MissingTranslation'
+    }
+
 }
 
 dependencies {
