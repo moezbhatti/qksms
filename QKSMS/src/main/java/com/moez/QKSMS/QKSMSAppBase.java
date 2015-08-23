@@ -45,13 +45,13 @@ import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Locale;
 
-public class QKSMSApp extends Application {
+public class QKSMSAppBase extends Application {
     public static final String LOG_TAG = "Mms";
 
     private SearchRecentSuggestions mRecentSuggestions;
     private TelephonyManager mTelephonyManager;
     private String mCountryIso;
-    private static QKSMSApp sQKSMSApp = null;
+    private static QKSMSAppBase sQKSMSAppBase = null;
     private PduLoaderManager mPduLoaderManager;
     private ThumbnailManager mThumbnailManager;
     private DrmManagerClient mDrmManagerClient;
@@ -69,7 +69,7 @@ public class QKSMSApp extends Application {
                     new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
         }
 
-        sQKSMSApp = this;
+        sQKSMSAppBase = this;
 
         loadDefaultPreferenceValues();
 
@@ -100,7 +100,7 @@ public class QKSMSApp extends Application {
     }
 
     public static RefWatcher getRefWatcher(Context context) {
-        QKSMSApp application = (QKSMSApp) context.getApplicationContext();
+        QKSMSAppBase application = (QKSMSAppBase) context.getApplicationContext();
         return application.refWatcher;
     }
 
@@ -122,8 +122,8 @@ public class QKSMSApp extends Application {
         //sendBroadcast(new Intent(SmsReceiverService.ACTION_SEND_INACTIVE_MESSAGE, null, this, SmsReceiver.class));
     }
 
-    synchronized public static QKSMSApp getApplication() {
-        return sQKSMSApp;
+    synchronized public static QKSMSAppBase getApplication() {
+        return sQKSMSAppBase;
     }
 
     @Override

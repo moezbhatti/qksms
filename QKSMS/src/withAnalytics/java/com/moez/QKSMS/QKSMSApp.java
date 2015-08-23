@@ -2,7 +2,7 @@ package com.moez.QKSMS;
 
 import com.crittercism.app.Crittercism;
 
-public class QKSMSApp_ extends QKSMSApp {
+public class QKSMSApp extends QKSMSAppBase {
     @Override
     public void onCreate() {
         super.onCreate();

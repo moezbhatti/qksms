@@ -22,6 +22,7 @@ import android.util.Log;
 
 import com.android.mms.transaction.MmsMessageSender;
 import com.google.android.mms.pdu_alt.PduHeaders;
+import com.moez.QKSMS.QKSMSAppBase;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.QKSMSApp;
@@ -802,7 +803,7 @@ public class Conversation {
             sDeletingThreads = true;
             String selection = deleteAll ? null : "locked=0";
 
-            QKSMSApp app = QKSMSApp.getApplication();
+            QKSMSAppBase app = QKSMSApp.getApplication();
             //app.getPduLoaderManager().clear();
             //app.getThumbnailManager().clear();
 
