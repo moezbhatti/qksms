@@ -432,6 +432,7 @@ public class SettingsFragment extends PreferenceFragment implements
             case NIGHT_AUTO:
                 updateAlarmManager(mContext, (Boolean) newValue);
                 break;
+            case DAY_START:
             case NIGHT_START:
                 updateAlarmManager(mContext, true);
                 break;
