@@ -31,7 +31,6 @@ import android.util.Log;
 import com.android.mms.transaction.MmsSystemEventReceiver;
 import com.android.mms.util.DownloadManager;
 import com.android.mms.util.RateController;
-import com.crittercism.app.Crittercism;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.DraftCache;
@@ -77,7 +76,6 @@ public class QKSMSApp extends Application {
         // Initialize analytics, leakcanary, and crittercism
         AnalyticsManager.getInstance().init(this);
         refWatcher = LeakCanary.install(this);
-        Crittercism.initialize(getApplicationContext(), getString(R.string.crtsm_key));
 
         // Figure out the country *before* loading contacts and formatting numbers
         Country country = new Country(Locale.getDefault().getCountry(), Country.COUNTRY_SOURCE_LOCALE);
@@ -155,7 +153,7 @@ public class QKSMSApp extends Application {
      */
     public TelephonyManager getTelephonyManager() {
         if (mTelephonyManager == null) {
-            mTelephonyManager = (TelephonyManager)getApplicationContext()
+            mTelephonyManager = (TelephonyManager) getApplicationContext()
                     .getSystemService(Context.TELEPHONY_SERVICE);
         }
         return mTelephonyManager;
