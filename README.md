@@ -25,6 +25,10 @@ We use GitHub issues to keep track of bugs and feature requests, but we communic
 
 If you'd like to donate to help support the project, you can donate via [PayPal here](http://bit.ly/QKSMSDonation)
 
+### Translations
+
+Please do not perform translations directly on the source files. Pull requests for translations will not be accepted. If you would like to do translations for QKSMS, join the translation project on Crowdin: https://crowdin.com/project/qksms
+
 ### Development
 
 We encourage you to make pull requests. Whenever you make one, we'll review the code and test it to make sure that it fits the code style guidelines, and achieves what the pull request intends. We'll discuss any problems or potential improvements, and we'll merge it when we're both (or any number of willing participants) happy with the code
