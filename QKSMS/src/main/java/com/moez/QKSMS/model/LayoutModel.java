@@ -141,7 +141,7 @@ public class LayoutModel extends Model {
      * Get all regions except root-layout. The result is READ-ONLY.
      */
     public ArrayList<RegionModel> getRegions() {
-        ArrayList<RegionModel> regions = new ArrayList<RegionModel>();
+        ArrayList<RegionModel> regions = new ArrayList<>();
         if (mImageRegion != null) {
             regions.add(mImageRegion);
         }

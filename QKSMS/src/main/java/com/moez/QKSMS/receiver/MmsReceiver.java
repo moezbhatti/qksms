@@ -93,7 +93,7 @@ public class MmsReceiver extends BroadcastReceiver {
 
     private HashSet<String> getRecipients(GenericPdu pdu) {
         PduHeaders header = pdu.getPduHeaders();
-        HashMap<Integer, EncodedStringValue[]> addressMap = new HashMap<Integer, EncodedStringValue[]>(ADDRESS_FIELDS.length);
+        HashMap<Integer, EncodedStringValue[]> addressMap = new HashMap<>(ADDRESS_FIELDS.length);
         for (int addrType : ADDRESS_FIELDS) {
             EncodedStringValue[] array = null;
             if (addrType == PduHeaders.FROM) {
@@ -107,7 +107,7 @@ public class MmsReceiver extends BroadcastReceiver {
             }
             addressMap.put(addrType, array);
         }
-        HashSet<String> recipients = new HashSet<String>();
+        HashSet<String> recipients = new HashSet<>();
         loadRecipients(PduHeaders.FROM, recipients, addressMap, false);
         loadRecipients(PduHeaders.TO, recipients, addressMap, true);
         return recipients;

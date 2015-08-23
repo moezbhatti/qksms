@@ -5,10 +5,6 @@ repositories {
 }
 
 android {
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
 
     compileSdkVersion 22
     buildToolsVersion '23.0.0'
@@ -27,6 +23,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'qksms-proguard.pro'
         }
     }
+
+    compileOptions {
+        compileOptions.encoding = "UTF-8"
+
+        // Use Java 1.7, requires minSdk 8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+
+        // Translations are crowd-sourced
+        disable 'MissingTranslation'
+    }
+
 }
 
 dependencies {

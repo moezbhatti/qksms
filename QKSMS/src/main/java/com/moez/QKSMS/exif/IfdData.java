@@ -28,7 +28,7 @@ import java.util.Map;
 class IfdData {
 
     private final int mIfdId;
-    private final Map<Short, ExifTag> mExifTags = new HashMap<Short, ExifTag>();
+    private final Map<Short, ExifTag> mExifTags = new HashMap<>();
     private int mOffsetToNextIfd = 0;
     private static final int[] sIfds = {
             IfdId.TYPE_IFD_0, IfdId.TYPE_IFD_1, IfdId.TYPE_IFD_EXIF,

@@ -220,7 +220,7 @@ public class SettingsFragment extends PreferenceFragment implements
             // If this is a preference category, make sure to go through all the subpreferences as
             // well.
             if (pref instanceof PreferenceCategory) {
-                Stack<PreferenceCategory> stack = new Stack<PreferenceCategory>();
+                Stack<PreferenceCategory> stack = new Stack<>();
                 stack.push((PreferenceCategory) pref);
 
                 do {
@@ -406,66 +406,86 @@ public class SettingsFragment extends PreferenceFragment implements
                 valueString
         );
 
-        if (key.equals(BACKGROUND)) {
-            ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
-        } else if (key.equals(STATUS_TINT)) {
-            ThemeManager.setStatusBarTintEnabled((Boolean) newValue);
-        } else if (key.equals(FONT_FAMILY)) {
-            preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
-        } else if (key.equals(FONT_SIZE)) {
-            preference.setSummary(mFontSizes[Integer.parseInt("" + newValue)]);
-        } else if (key.equals(FONT_WEIGHT)) {
-            int i = Integer.parseInt("" + newValue);
-            preference.setSummary(mFontWeights[i == 2 ? 0 : 1]);
-        } else if (key.equals(COLOUR_SENT)) {
-            ThemeManager.setSentBubbleColored((Boolean) newValue);
-        } else if (key.equals(COLOUR_RECEIVED)) {
-            ThemeManager.setReceivedBubbleColored((Boolean) newValue);
-        } else if (key.equals(NIGHT_AUTO)) {
-            updateAlarmManager(mContext, (Boolean) newValue);
-        } else if (key.equals(DAY_START) || key.equals(NIGHT_START)) {
-            updateAlarmManager(mContext, true);
-        } else if (key.equals(SLIDING_TAB)) {
-            mContext.setSlidingTabEnabled((Boolean) newValue);
-        } else if (key.equals(YAPPY)) {
-            if ((Boolean) newValue) {
+        switch (key) {
+            case BACKGROUND:
+                ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
+                break;
+            case STATUS_TINT:
+                ThemeManager.setStatusBarTintEnabled((Boolean) newValue);
+                break;
+            case FONT_FAMILY:
+                preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
+                break;
+            case FONT_SIZE:
+                preference.setSummary(mFontSizes[Integer.parseInt("" + newValue)]);
+                break;
+            case FONT_WEIGHT:
+                int i = Integer.parseInt("" + newValue);
+                preference.setSummary(mFontWeights[i == 2 ? 0 : 1]);
+                break;
+            case COLOUR_SENT:
+                ThemeManager.setSentBubbleColored((Boolean) newValue);
+                break;
+            case COLOUR_RECEIVED:
+                ThemeManager.setReceivedBubbleColored((Boolean) newValue);
+                break;
+            case NIGHT_AUTO:
+                updateAlarmManager(mContext, (Boolean) newValue);
+                break;
+            case NIGHT_START:
+                updateAlarmManager(mContext, true);
+                break;
+            case SLIDING_TAB:
+                mContext.setSlidingTabEnabled((Boolean) newValue);
+                break;
+            case YAPPY:
+                if ((Boolean) newValue) {
+                    try {
+                        EndlessJabberInterface.EnableIntegration(mContext, EndlessJabber.class, true, false);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (!EndlessJabberInterface.IsInstalled(mContext)) {
+                        EndlessJabberInterface.OpenGooglePlayLink(mContext);
+                    }
+                } else {
+                    try {
+                        EndlessJabberInterface.DisableIntegration(mContext, EndlessJabber.class);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            case QUICKCOMPOSE:
+                NotificationManager.initQuickCompose(getActivity(), (Boolean) newValue, !(Boolean) newValue);
+                break;
+            case MMSC_URL:
+            case MMS_PROXY:
+            case MMS_PORT:
+                preference.setSummary(newValue.toString());
+                break;
+            case MAX_MMS_ATTACHMENT_SIZE:
+                // Update the summary in the list preference
+                ListPreference listpref = (ListPreference) preference;
+                int index = listpref.findIndexOfValue((String) newValue);
+                preference.setSummary(mMaxMmsAttachmentSizes[index]);
+                // Update the SMS helper static class with the new option
+                SmsHelper.setMaxAttachmentSizeSetting(mContext, (String) newValue);
+                break;
+            case SYSTEM_BAR_FLAT:
+                ThemeManager.setSystemBarFlatEnabled((Boolean) newValue);
+                break;
+            case STATUS_COMPAT:
+                ThemeManager.setStatusBarTintCompat((Boolean) newValue);
+                break;
+            case DELAY_DURATION:
                 try {
-                    EndlessJabberInterface.EnableIntegration(mContext, EndlessJabber.class, true, false);
+                    int duration = Integer.parseInt((String) newValue);
+                    if (duration < 1 || duration > 30) throw new Exception("Duration out of bounds");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Toast.makeText(mContext, R.string.delayed_duration_bounds_error, Toast.LENGTH_SHORT).show();
                 }
-                if (!EndlessJabberInterface.IsInstalled(mContext)) {
-                    EndlessJabberInterface.OpenGooglePlayLink(mContext);
-                }
-            } else {
-                try {
-                    EndlessJabberInterface.DisableIntegration(mContext, EndlessJabber.class);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } else if (key.equals(QUICKCOMPOSE)) {
-            NotificationManager.initQuickCompose(getActivity(), (Boolean) newValue, !(Boolean) newValue);
-        } else if (key.equals(MMSC_URL) || key.equals(MMS_PROXY) || key.equals(MMS_PORT)) {
-            preference.setSummary(newValue.toString());
-        } else if (key.equals(MAX_MMS_ATTACHMENT_SIZE)) {
-            // Update the summary in the list preference
-            ListPreference listpref = (ListPreference) preference;
-            int index = listpref.findIndexOfValue((String) newValue);
-            preference.setSummary(mMaxMmsAttachmentSizes[index]);
-            // Update the SMS helper static class with the new option
-            SmsHelper.setMaxAttachmentSizeSetting(mContext, (String) newValue);
-        } else if (key.equals(SYSTEM_BAR_FLAT)) {
-            ThemeManager.setSystemBarFlatEnabled((Boolean) newValue);
-        } else if (key.equals(STATUS_COMPAT)) {
-            ThemeManager.setStatusBarTintCompat((Boolean) newValue);
-        } else if (key.equals(DELAY_DURATION)) {
-            try {
-                int duration = Integer.parseInt((String) newValue);
-                if (duration < 1 || duration > 30) throw new Exception("Duration out of bounds");
-            } catch (Exception e) {
-                Toast.makeText(mContext, R.string.delayed_duration_bounds_error, Toast.LENGTH_SHORT).show();
-            }
+                break;
         }
 
         return true;
@@ -599,7 +619,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
         Set<String> defaultResponses = new HashSet<>(Arrays.asList(mContext.getResources().getStringArray(R.array.qk_responses)));
         Set<String> responseSet = mPrefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
-        ArrayList<String> responses = new ArrayList<String>();
+        ArrayList<String> responses = new ArrayList<>();
         responses.addAll(responseSet);
         Collections.sort(responses);
         for (int i = responses.size(); i < 12; i++) {

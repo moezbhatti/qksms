@@ -68,7 +68,7 @@ public class Contact {
         }
     };
 
-    private final static HashSet<UpdateListener> mListeners = new HashSet<UpdateListener>();
+    private final static HashSet<UpdateListener> mListeners = new HashSet<>();
 
     private long mContactMethodId;   // Id in phone or email Uri returned by provider of current
     // Contact, -1 is invalid. e.g. contact method id is 20 when
@@ -468,8 +468,7 @@ public class Contact {
 
         private final Context mContext;
 
-        private final HashMap<String, ArrayList<Contact>> mContactsHash =
-                new HashMap<String, ArrayList<Contact>>();
+        private final HashMap<String, ArrayList<Contact>> mContactsHash = new HashMap<>();
 
         private ContactsCache(Context context) {
             mContext = context;
@@ -640,14 +639,14 @@ public class Contact {
                 return null;
             }
 
-            List<Contact> entries = new ArrayList<Contact>();
+            List<Contact> entries = new ArrayList<>();
 
             try {
                 while (cursor.moveToNext()) {
                     Contact entry = new Contact(cursor.getString(PHONE_NUMBER_COLUMN),
                             cursor.getString(CONTACT_NAME_COLUMN));
                     fillPhoneTypeContact(entry, cursor);
-                    ArrayList<Contact> value = new ArrayList<Contact>();
+                    ArrayList<Contact> value = new ArrayList<>();
                     value.add(entry);
                     // Put the result in the cache.
                     mContactsHash.put(key(entry.mNumber, sStaticKeyBuffer), value);

@@ -40,7 +40,7 @@ public class SlideModel extends Model implements List<MediaModel>, EventListener
     private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
     private static final int DEFAULT_SLIDE_DURATION = 5000;
 
-    private final ArrayList<MediaModel> mMedia = new ArrayList<MediaModel>();
+    private final ArrayList<MediaModel> mMedia = new ArrayList<>();
 
     private MediaModel mText;
     private MediaModel mImage;

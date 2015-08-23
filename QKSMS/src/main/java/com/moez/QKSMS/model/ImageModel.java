@@ -60,13 +60,13 @@ public class ImageModel extends RegionMediaModel {
      * into one of these content types before being sent over MMS.
      */
     private static final Set<String> SUPPORTED_MMS_IMAGE_CONTENT_TYPES =
-        new HashSet<String>(Arrays.asList(new String[] {
+        new HashSet<>(Arrays.asList(new String[] {
                 "image/jpeg",
             }));
 
     private int mWidth;
     private int mHeight;
-    private SoftReference<Bitmap> mFullSizeBitmapCache = new SoftReference<Bitmap>(null);
+    private SoftReference<Bitmap> mFullSizeBitmapCache = new SoftReference<>(null);
     private ItemLoadedFuture mItemLoadedFuture;
 
     public ImageModel(Context context, Uri uri, RegionModel region)

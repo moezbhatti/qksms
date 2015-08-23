@@ -461,7 +461,7 @@ public class SmsHelper {
 
     public static List<String> getUnseenMessageNames(Context context) {
         List<Message> messages = getUnseenMessages(context);
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
 
         for (int i = 0; i < messages.size(); i++) {
             if (!names.contains(messages.get(i).getName()))
@@ -485,7 +485,7 @@ public class SmsHelper {
 
     public static List<Message> getUnseenMessages(Context context) {
 
-        List<Message> messages = new ArrayList<Message>();
+        List<Message> messages = new ArrayList<>();
 
         try {
             cursor = context.getContentResolver().query(RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{COLUMN_ID}, UNSEEN_SELECTION + " AND " + UNREAD_SELECTION, null, sortDateDesc);
@@ -524,7 +524,7 @@ public class SmsHelper {
 
     public static List<Message> getFailedMessages(Context context) {
 
-        List<Message> messages = new ArrayList<Message>();
+        List<Message> messages = new ArrayList<>();
 
         try {
             cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{COLUMN_ID}, FAILED_SELECTION, null, sortDateDesc);
@@ -546,7 +546,7 @@ public class SmsHelper {
 
         Log.d(TAG, "Deleting failed messages");
 
-        List<Message> messages = new ArrayList<Message>();
+        List<Message> messages = new ArrayList<>();
 
         try {
             cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{COLUMN_ID}, FAILED_SELECTION, null, sortDateDesc);

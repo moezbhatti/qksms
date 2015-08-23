@@ -89,7 +89,7 @@ public class ContactOperations {
 	public void insertContact(VCard vcard) throws RemoteException, OperationApplicationException {
 		// TODO handle Raw properties - Raw properties include various extension which start with "X-" like X-ASSISTANT, X-AIM, X-SPOUSE
 
-		List<NonEmptyContentValues> contentValues = new ArrayList<NonEmptyContentValues>();
+		List<NonEmptyContentValues> contentValues = new ArrayList<>();
 		contentValues.add(account);
 
 		convertName(contentValues, vcard);
@@ -113,7 +113,7 @@ public class ContactOperations {
 		convertPhotos(contentValues, vcard);
 		convertOrganization(contentValues, vcard);
 
-		ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>(contentValues.size());
+		ArrayList<ContentProviderOperation> operations = new ArrayList<>(contentValues.size());
 		for (NonEmptyContentValues values : contentValues) {
 			ContentValues cv = values.getContentValues();
 			if (cv.size() == 0) {
@@ -488,7 +488,7 @@ public class ContactOperations {
 	 * value is the list of properties that belong to that group
 	 */
 	private <T extends VCardProperty> Map<String, List<T>> orderPropertiesByGroup(List<T> properties) {
-		Map<String, List<T>> groupedProperties = new HashMap<String, List<T>>();
+		Map<String, List<T>> groupedProperties = new HashMap<>();
 
 		for (T property : properties) {
 			String group = property.getGroup();

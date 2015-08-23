@@ -25,8 +25,8 @@ import java.util.Map;
  * An Inventory is returned by such methods as {@link IabHelper#queryInventory}.
  */
 public class Inventory {
-    Map<String,SkuDetails> mSkuMap = new HashMap<String,SkuDetails>();
-    Map<String,Purchase> mPurchaseMap = new HashMap<String,Purchase>();
+    Map<String,SkuDetails> mSkuMap = new HashMap<>();
+    Map<String,Purchase> mPurchaseMap = new HashMap<>();
 
     Inventory() { }
 
@@ -69,7 +69,7 @@ public class Inventory {
 
     /** Returns a list of all owned product IDs of a given type */
     List<String> getAllOwnedSkus(String itemType) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (Purchase p : mPurchaseMap.values()) {
             if (p.getItemType().equals(itemType)) result.add(p.getSku());
         }

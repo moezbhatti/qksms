@@ -30,7 +30,7 @@ class ExifModifier {
     public static final boolean DEBUG = false;
     private final ByteBuffer mByteBuffer;
     private final ExifData mTagToModified;
-    private final List<TagOffset> mTagOffsets = new ArrayList<TagOffset>();
+    private final List<TagOffset> mTagOffsets = new ArrayList<>();
     private final ExifInterface mInterface;
     private int mOffsetBase;
 

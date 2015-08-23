@@ -67,7 +67,7 @@ abstract class BackgroundLoaderManager {
     BackgroundLoaderManager(Context context) {
         mPendingTaskUris = new HashSet<Uri>();
         mCallbacks = new HashMap<Uri, Set<ItemLoadedCallback>>();
-        final LinkedBlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();
+        final LinkedBlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
         final int poolSize = MAX_THREADS;
         mExecutor = new ThreadPoolExecutor(
                 poolSize, poolSize, 5, TimeUnit.SECONDS, queue,

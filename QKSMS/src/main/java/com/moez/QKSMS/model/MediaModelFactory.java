@@ -132,7 +132,7 @@ public class MediaModelFactory {
 
                     if (allContentIDs) {
                         // Now, build a list of long IDs, sort them, and remove the duplicates.
-                        ArrayList<Long> cids = new ArrayList<Long>();
+                        ArrayList<Long> cids = new ArrayList<>();
                         for (String _src : srcs) {
                             cids.add(getContentId(_src));
                         }

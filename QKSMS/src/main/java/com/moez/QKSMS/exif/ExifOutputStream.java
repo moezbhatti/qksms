@@ -241,7 +241,7 @@ class ExifOutputStream extends FilterOutputStream {
     }
 
     private ArrayList<ExifTag> stripNullValueTags(ExifData data) {
-        ArrayList<ExifTag> nullTags = new ArrayList<ExifTag>();
+        ArrayList<ExifTag> nullTags = new ArrayList<>();
         for(ExifTag t : data.getAllTags()) {
             if (t.getValue() == null && !ExifInterface.isOffsetTag(t.getTagId())) {
                 data.removeTag(t.getTagId(), t.getIfd());
