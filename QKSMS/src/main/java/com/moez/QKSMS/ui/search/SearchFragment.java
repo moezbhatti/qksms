@@ -32,7 +32,7 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
 
     // Track which TextView's show which Contact objects so that we can update
     // appropriately when the Contact gets fully loaded.
-    private HashMap<Contact, QKTextView> mContactMap = new HashMap<Contact, QKTextView>();
+    private HashMap<Contact, QKTextView> mContactMap = new HashMap<>();
 
     private Context mContext;
     private SharedPreferences mPrefs;

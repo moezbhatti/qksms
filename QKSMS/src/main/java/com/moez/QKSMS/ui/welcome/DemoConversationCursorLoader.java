@@ -50,10 +50,10 @@ public class DemoConversationCursorLoader extends Loader<Cursor> {
 
         // First, build a list of all results. Then, filter the results using mSelection and return
         // that list.
-        ArrayList<MessageData> candidates = new ArrayList<MessageData>();
+        ArrayList<MessageData> candidates = new ArrayList<>();
 
         if (THREAD_ID_WELCOME_SCREEN == mThreadId) {
-            candidates = new ArrayList<MessageData>();
+            candidates = new ArrayList<>();
             long time = System.currentTimeMillis() - 50000;
             candidates.add(new MessageData(
                     "sms", 0, mThreadId, "QKSMS",
@@ -70,7 +70,7 @@ public class DemoConversationCursorLoader extends Loader<Cursor> {
         }
 
         // Build the actual list based on the selection.
-        ArrayList<MessageData> data = new ArrayList<MessageData>();
+        ArrayList<MessageData> data = new ArrayList<>();
         for (MessageData m : candidates) {
             if (!SmsHelper.UNREAD_SELECTION.equals(mSelection) || m.read == 0) {
                 data.add(m);

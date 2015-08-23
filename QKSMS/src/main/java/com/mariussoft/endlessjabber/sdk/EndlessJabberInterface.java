@@ -64,7 +64,7 @@ public class EndlessJabberInterface {
 		editor.putString("InterfaceClass", concreteImplementation.getName());
 		editor.putBoolean("SendSMS", sendSMS);
 		editor.putBoolean("SendMMS", sendMMS);
-		editor.commit();
+		editor.apply();
 
 		SendInfoToEndlessJabber(context);
 	}
@@ -74,7 +74,7 @@ public class EndlessJabberInterface {
 	public static void DisableIntegration(Context context, Class nameOfImplementation) {
 		SharedPreferences.Editor editor = context.getSharedPreferences("EndlessJabberSDK", Context.MODE_PRIVATE).edit();
 		editor.clear();
-		editor.commit();
+		editor.apply();
 
 		SendInfoToEndlessJabber(context);
 	}

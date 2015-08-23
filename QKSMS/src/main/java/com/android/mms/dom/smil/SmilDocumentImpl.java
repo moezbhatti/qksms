@@ -156,28 +156,29 @@ public class SmilDocumentImpl extends DocumentImpl implements SMILDocument, Docu
     public Element createElement(String tagName) throws DOMException {
         // Find the appropriate class for this element
         tagName = tagName.toLowerCase();
-        if (tagName.equals("text") ||
-                tagName.equals("img") ||
-                tagName.equals("video")) {
-            return new SmilRegionMediaElementImpl(this, tagName);
-        } else if (tagName.equals("audio")) {
-            return new SmilMediaElementImpl(this, tagName);
-        } else if (tagName.equals("layout")) {
-            return new SmilLayoutElementImpl(this, tagName);
-        } else if (tagName.equals("root-layout")) {
-            return new SmilRootLayoutElementImpl(this, tagName);
-        } else if (tagName.equals("region")) {
-            return new SmilRegionElementImpl(this, tagName);
-        } else if (tagName.equals("ref")) {
-            return new SmilRefElementImpl(this, tagName);
-        } else if (tagName.equals("par")) {
-            return new SmilParElementImpl(this, tagName);
-        } else if (tagName.equals("vcard")) {
-            return new SmilRegionMediaElementImpl(this, tagName);
-        } else {
-            // This includes also the structural nodes SMIL,
-            // HEAD, BODY, for which no specific types are defined.
-            return new SmilElementImpl(this, tagName);
+        switch (tagName) {
+            case "text":
+            case "img":
+            case "video":
+                return new SmilRegionMediaElementImpl(this, tagName);
+            case "audio":
+                return new SmilMediaElementImpl(this, tagName);
+            case "layout":
+                return new SmilLayoutElementImpl(this, tagName);
+            case "root-layout":
+                return new SmilRootLayoutElementImpl(this, tagName);
+            case "region":
+                return new SmilRegionElementImpl(this, tagName);
+            case "ref":
+                return new SmilRefElementImpl(this, tagName);
+            case "par":
+                return new SmilParElementImpl(this, tagName);
+            case "vcard":
+                return new SmilRegionMediaElementImpl(this, tagName);
+            default:
+                // This includes also the structural nodes SMIL,
+                // HEAD, BODY, for which no specific types are defined.
+                return new SmilElementImpl(this, tagName);
         }
     }
 

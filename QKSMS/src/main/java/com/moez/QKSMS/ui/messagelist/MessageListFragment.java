@@ -1277,7 +1277,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
             switch (token) {
                 case MainActivity.HAVE_LOCKED_MESSAGES_TOKEN:
-                    if (((MainActivity) mContext).isFinishing()) {
+                    if (mContext.isFinishing()) {
                         Log.w(TAG, "ComposeMessageActivity is finished, do nothing ");
                         if (cursor != null) {
                             cursor.close();
@@ -1316,7 +1316,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                         }
                         // The last message in this converation was just deleted. Send the user
                         // to the conversation list.
-                        ((MainActivity) mContext).showMenu();
+                        mContext.showMenu();
                     }
                     cursor.close();
             }

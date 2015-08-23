@@ -95,7 +95,7 @@ public class DeliveryReportHelper {
     public List<DeliveryReportItem> getListItems() {
         List<DeliveryReportItem> items = getReportItems();
         if (items == null) {
-            items = new ArrayList<DeliveryReportItem>(1);
+            items = new ArrayList<>(1);
             items.add(new DeliveryReportItem("", mContext.getString(R.string.status_none), null));
             Log.w(LOG_TAG, "cursor == null");
         }
@@ -123,7 +123,7 @@ public class DeliveryReportHelper {
                 return null;
             }
 
-            List<DeliveryReportItem> items = new ArrayList<DeliveryReportItem>();
+            List<DeliveryReportItem> items = new ArrayList<>();
             while (c.moveToNext()) {
                 // For sent messages with delivery reports, we stick the delivery time in the
                 // date_sent column (see MessageStatusReceiver).
@@ -191,15 +191,12 @@ public class DeliveryReportHelper {
     private static MmsReportStatus queryStatusByRecipient(
             Map<String, MmsReportStatus> status, String recipient) {
         Set<String> recipientSet = status.keySet();
-        Iterator<String> iterator = recipientSet.iterator();
-        while (iterator.hasNext()) {
-            String r = iterator.next();
+        for (String r : recipientSet) {
             if (SmsHelper.isEmailAddress(recipient)) {
                 if (TextUtils.equals(r, recipient)) {
                     return status.get(r);
                 }
-            }
-            else if (PhoneNumberUtils.compare(r, recipient)) {
+            } else if (PhoneNumberUtils.compare(r, recipient)) {
                 return status.get(r);
             }
         }
@@ -237,7 +234,7 @@ public class DeliveryReportHelper {
 
         try {
             Map<String, MmsReportStatus> statusMap =
-                    new HashMap<String, MmsReportStatus>();
+                    new HashMap<>();
 
             while (c.moveToNext()) {
                 String recipient = c.getString(COLUMN_RECIPIENT);
@@ -270,7 +267,7 @@ public class DeliveryReportHelper {
                 return null;
             }
 
-            List<MmsReportRequest> reqList = new ArrayList<MmsReportRequest>();
+            List<MmsReportRequest> reqList = new ArrayList<>();
             while (c.moveToNext()) {
                 reqList.add(new MmsReportRequest(
                                 c.getString(COLUMN_RECIPIENT),
