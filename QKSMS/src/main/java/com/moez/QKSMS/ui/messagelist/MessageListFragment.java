@@ -79,6 +79,7 @@ import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.SmoothLinearLayoutManager;
+import com.moez.QKSMS.ui.widget.WidgetProvider;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
@@ -106,36 +107,36 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private static final int DELETE_MESSAGE_TOKEN = 9700;
 
     // Menu ID
-    private static final int MENU_ADD_SUBJECT           = 0;
-    private static final int MENU_DELETE_THREAD         = 1;
-    private static final int MENU_ADD_ATTACHMENT        = 2;
-    private static final int MENU_DISCARD               = 3;
-    private static final int MENU_SEND                  = 4;
-    private static final int MENU_CALL_RECIPIENT        = 5;
-    private static final int MENU_CONVERSATION_LIST     = 6;
-    private static final int MENU_DEBUG_DUMP            = 7;
+    private static final int MENU_ADD_SUBJECT = 0;
+    private static final int MENU_DELETE_THREAD = 1;
+    private static final int MENU_ADD_ATTACHMENT = 2;
+    private static final int MENU_DISCARD = 3;
+    private static final int MENU_SEND = 4;
+    private static final int MENU_CALL_RECIPIENT = 5;
+    private static final int MENU_CONVERSATION_LIST = 6;
+    private static final int MENU_DEBUG_DUMP = 7;
 
     // Context menu ID
-    private static final int MENU_VIEW_CONTACT          = 12;
-    private static final int MENU_ADD_TO_CONTACTS       = 13;
+    private static final int MENU_VIEW_CONTACT = 12;
+    private static final int MENU_ADD_TO_CONTACTS = 13;
 
-    private static final int MENU_EDIT_MESSAGE          = 14;
-    private static final int MENU_VIEW_SLIDESHOW        = 16;
-    private static final int MENU_VIEW_MESSAGE_DETAILS  = 17;
-    private static final int MENU_DELETE_MESSAGE        = 18;
-    private static final int MENU_SEARCH                = 19;
-    private static final int MENU_DELIVERY_REPORT       = 20;
-    private static final int MENU_FORWARD_MESSAGE       = 21;
-    private static final int MENU_CALL_BACK             = 22;
-    private static final int MENU_SEND_EMAIL            = 23;
-    private static final int MENU_COPY_MESSAGE_TEXT     = 24;
-    private static final int MENU_COPY_TO_SDCARD        = 25;
+    private static final int MENU_EDIT_MESSAGE = 14;
+    private static final int MENU_VIEW_SLIDESHOW = 16;
+    private static final int MENU_VIEW_MESSAGE_DETAILS = 17;
+    private static final int MENU_DELETE_MESSAGE = 18;
+    private static final int MENU_SEARCH = 19;
+    private static final int MENU_DELIVERY_REPORT = 20;
+    private static final int MENU_FORWARD_MESSAGE = 21;
+    private static final int MENU_CALL_BACK = 22;
+    private static final int MENU_SEND_EMAIL = 23;
+    private static final int MENU_COPY_MESSAGE_TEXT = 24;
+    private static final int MENU_COPY_TO_SDCARD = 25;
     private static final int MENU_ADD_ADDRESS_TO_CONTACTS = 27;
-    private static final int MENU_LOCK_MESSAGE          = 28;
-    private static final int MENU_UNLOCK_MESSAGE        = 29;
-    private static final int MENU_SAVE_RINGTONE         = 30;
-    private static final int MENU_PREFERENCES           = 31;
-    private static final int MENU_GROUP_PARTICIPANTS    = 32;
+    private static final int MENU_LOCK_MESSAGE = 28;
+    private static final int MENU_UNLOCK_MESSAGE = 29;
+    private static final int MENU_SAVE_RINGTONE = 30;
+    private static final int MENU_PREFERENCES = 31;
+    private static final int MENU_GROUP_PARTICIPANTS = 32;
 
     // When the conversation has a lot of messages and a new message is sent, the list is scrolled
     // so the user sees the just sent message. If we have to scroll the list more than 20 items,
@@ -1334,26 +1335,20 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                         // If we just deleted the last message, reset the saved id.
                         mLastMessageId = 0;
                     }
-                    // Update the notification for new messages since they
-                    // may be deleted.
-                    //MessagingNotification.nonBlockingUpdateNewMessageIndicator(ComposeMessageActivity.this, MessagingNotification.THREAD_NONE, false);
+
+                    // Update the notification for new messages since they may be deleted.
                     NotificationManager.update(mContext);
-                    // Update the notification for failed messages since they
-                    // may be deleted.
-                    // TODO
+
+                    // TODO Update the notification for failed messages since they may be deleted.
                     //updateSendFailedNotification();
                     break;
             }
-            // If we're deleting the whole conversation, throw away
-            // our current working message and bail.
+            // If we're deleting the whole conversation, throw away our current working message and bail.
             if (token == MainActivity.DELETE_CONVERSATION_TOKEN) {
                 ContactList recipients = mConversation.getRecipients();
-                //TODO
-                //mWorkingMessage.discard();
 
-                // Remove any recipients referenced by this single thread from the
-                // contacts cache. It's possible for two or more threads to reference
-                // the same contact. That's ok if we remove it. We'll recreate that contact
+                // Remove any recipients referenced by this single thread from the It's possible for two or more
+                // threads to reference the same contact. That's ok if we remove it. We'll recreate that contact
                 // when we init all Conversations below.
                 if (recipients != null) {
                     for (Contact contact : recipients) {
@@ -1363,14 +1358,15 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
                 // Make sure the conversation cache reflects the threads in the DB.
                 Conversation.init(mContext);
+
+                // Go back to the conversation list
                 mContext.showMenu();
-                //finish();
             } else if (token == DELETE_MESSAGE_TOKEN) {
                 // Check to see if we just deleted the last message
                 startMsgListQuery(MESSAGE_LIST_QUERY_AFTER_DELETE_TOKEN);
             }
 
-            //MmsWidgetProvider.notifyDatasetChanged(getApplicationContext());
+            WidgetProvider.notifyDatasetChanged(mContext);
         }
     }
 
@@ -1386,7 +1382,8 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mConversation.blockMarkAsRead(true);
             mConversation.markAsRead();
 
-            while (!mOpened); // Delay the thread until the fragment has finished opening
+            while (!mOpened) {
+            } // Delay the thread until the fragment has finished opening
 
             return null;
         }
