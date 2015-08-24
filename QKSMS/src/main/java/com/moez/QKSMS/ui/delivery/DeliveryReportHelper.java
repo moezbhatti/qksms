@@ -232,12 +232,7 @@ public class DeliveryReportHelper {
         }
 
         try {
-<<<<<<< HEAD
             Map<String, MmsReportStatus> statusMap = new HashMap<>();
-=======
-            Map<String, MmsReportStatus> statusMap =
-                    new HashMap<>();
->>>>>>> origin/develop
 
             while (c.moveToNext()) {
                 String recipient = c.getString(COLUMN_RECIPIENT);
