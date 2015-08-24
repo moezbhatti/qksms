@@ -51,7 +51,7 @@ public class QKSMSAppBase extends Application {
     private SearchRecentSuggestions mRecentSuggestions;
     private TelephonyManager mTelephonyManager;
     private String mCountryIso;
-    private static QKSMSAppBase sQKSMSAppBase = null;
+    private static QKSMSAppBase sQKSMSApp = null;
     private PduLoaderManager mPduLoaderManager;
     private ThumbnailManager mThumbnailManager;
     private DrmManagerClient mDrmManagerClient;
@@ -69,7 +69,7 @@ public class QKSMSAppBase extends Application {
                     new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
         }
 
-        sQKSMSAppBase = this;
+        sQKSMSApp = this;
 
         loadDefaultPreferenceValues();
 
@@ -123,7 +123,7 @@ public class QKSMSAppBase extends Application {
     }
 
     synchronized public static QKSMSAppBase getApplication() {
-        return sQKSMSAppBase;
+        return sQKSMSApp;
     }
 
     @Override
