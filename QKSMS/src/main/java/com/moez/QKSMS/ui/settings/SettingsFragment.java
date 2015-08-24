@@ -583,7 +583,7 @@ public class SettingsFragment extends PreferenceFragment implements
                 new QKDialog()
                         .setContext(mContext)
                         .setTitle(R.string.title_changelog)
-                        .setTripleLineItems(R.array.versions, R.array.dates, R.array.changes, null)
+                        .setTripleLineItems(R.array.changelog_versions, R.array.changelog_dates, R.array.changelog_changes, null)
                         .show(getFragmentManager(), "changelog");
                 break;
             case THANKS:

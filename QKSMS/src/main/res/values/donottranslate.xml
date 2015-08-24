@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="versions">
+
+    <string name="app_name">QKSMS</string>
+
+    <string-array name="background_values">
+        <item>white</item>
+        <item>offwhite</item>
+        <item>grey</item>
+        <item>black</item>
+    </string-array>
+
+    <string-array name="enter_button_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="max_mms_attachment_size_values">
+        <item>300kb</item>
+        <item>600kb</item>
+        <item>1mb</item>
+        <item>unlimited</item>
+    </string-array>
+
+    <string-array name="contributor_names">
+        <item>Jeremy Feinstein</item>
+        <item>Flavien Laurent</item>
+        <item>Evgeny Shishkin</item>
+        <item>Jacob Klinker</item>
+        <item>Jeff Gilfelt</item>
+        <item>Melnykov Oleksandr</item>
+    </string-array>
+
+    <string-array name="contributor_githubs">
+        <item>github.com/jfeinstein10</item>
+        <item>github.com/flavienlaurent</item>
+        <item>github.com/johnkil</item>
+        <item>github.com/klinker41</item>
+        <item>github.com/jgilfelt</item>
+        <item>github.com/makovkastar</item>
+    </string-array>
+
+    <string-array name="contributor_projects">
+        <item>SlidingMenu</item>
+        <item>colorpicker</item>
+        <item>Android-RobotoTextView</item>
+        <item>android-smsmms\nandroid-chips</item>
+        <item>SystemBarTint</item>
+        <item>FloatingActionButton</item>
+    </string-array>
+
+    <string-array name="changelog_versions">
         <item>2.0.1</item>
         <item>1.13.1</item>
         <item>1.13.0</item>
@@ -108,7 +158,7 @@
         <item>0.1.0</item>
     </string-array>
 
-    <string-array name="dates">
+    <string-array name="changelog_dates">
         <item>August 16, 2015</item>
         <item>August 16, 2015</item>
         <item>August 16, 2015</item>
@@ -216,7 +266,7 @@
         <item>May 7, 2014</item>
     </string-array>
 
-    <string-array name="changes">
+    <string-array name="changelog_changes">
         <item>" • QKSMS is now open source. View the source code at https://github.com/qklabs/qksms"</item>
         <item>" • Multiple crash fixes"</item>
         <item>" • Updated messaging UI\n • Fixed phone number showing up instead of name for contacts\n • Fixed delete conversation option\n • Crash fixes"</item>
