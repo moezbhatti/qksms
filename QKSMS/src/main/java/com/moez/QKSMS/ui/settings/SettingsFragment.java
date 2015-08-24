@@ -142,6 +142,7 @@ public class SettingsFragment extends PreferenceFragment implements
     public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
     public static final String SIMPLE_PREFS = "pref_key_simple";
     public static final String DONATE = "pref_key_donate";
+    public static final String DISMISSED_READ = "pref_key_dismiss_read";
     /**
      * @deprecated
      */
