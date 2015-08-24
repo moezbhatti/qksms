@@ -94,7 +94,7 @@ public class DeliveryReportHelper {
     public List<DeliveryReportItem> getListItems() {
         List<DeliveryReportItem> items = getReportItems();
         if (items == null) {
-            items = new ArrayList<DeliveryReportItem>(1);
+            items = new ArrayList<>(1);
             items.add(new DeliveryReportItem("", mContext.getString(R.string.status_none), null));
             Log.w(LOG_TAG, "cursor == null");
         }
@@ -190,15 +190,12 @@ public class DeliveryReportHelper {
     private static MmsReportStatus queryStatusByRecipient(
             Map<String, MmsReportStatus> status, String recipient) {
         Set<String> recipientSet = status.keySet();
-        Iterator<String> iterator = recipientSet.iterator();
-        while (iterator.hasNext()) {
-            String r = iterator.next();
+        for (String r : recipientSet) {
             if (SmsHelper.isEmailAddress(recipient)) {
                 if (TextUtils.equals(r, recipient)) {
                     return status.get(r);
                 }
-            }
-            else if (PhoneNumberUtils.compare(r, recipient)) {
+            } else if (PhoneNumberUtils.compare(r, recipient)) {
                 return status.get(r);
             }
         }
@@ -235,7 +232,12 @@ public class DeliveryReportHelper {
         }
 
         try {
+<<<<<<< HEAD
             Map<String, MmsReportStatus> statusMap = new HashMap<>();
+=======
+            Map<String, MmsReportStatus> statusMap =
+                    new HashMap<>();
+>>>>>>> origin/develop
 
             while (c.moveToNext()) {
                 String recipient = c.getString(COLUMN_RECIPIENT);

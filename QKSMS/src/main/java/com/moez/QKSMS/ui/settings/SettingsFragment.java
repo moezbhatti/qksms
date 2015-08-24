@@ -483,7 +483,10 @@ public class SettingsFragment extends PreferenceFragment implements
             case DELAY_DURATION:
                 try {
                     int duration = Integer.parseInt((String) newValue);
-                    if (duration < 1 || duration > 30) throw new Exception("Duration out of bounds");
+
+                    if (duration < 1 || duration > 30)
+                        throw new Exception("Duration out of bounds");
+
                 } catch (Exception e) {
                     Toast.makeText(mContext, R.string.delayed_duration_bounds_error, Toast.LENGTH_SHORT).show();
                 }

@@ -153,8 +153,7 @@ public class ProxyProperties implements Parcelable {
             return false;
         }
         if (mHost != null && p.mHost == null) return false;
-        if (mHost == null && p.mHost != null) return false;
-        return mPort == p.mPort;
+        return !(mHost == null && p.mHost != null) && mPort == p.mPort;
     }
 
     /**

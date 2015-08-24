@@ -52,14 +52,14 @@ import java.util.Collections;
 public class LinkProperties implements Parcelable {
 
     String mIfaceName;
-    private Collection<LinkAddress> mLinkAddresses = new ArrayList<LinkAddress>();
-    private Collection<InetAddress> mDnses = new ArrayList<InetAddress>();
-    private Collection<RouteInfo> mRoutes = new ArrayList<RouteInfo>();
+    private Collection<LinkAddress> mLinkAddresses = new ArrayList<>();
+    private Collection<InetAddress> mDnses = new ArrayList<>();
+    private Collection<RouteInfo> mRoutes = new ArrayList<>();
     private ProxyProperties mHttpProxy;
 
     public static class CompareResult<T> {
-        public Collection<T> removed = new ArrayList<T>();
-        public Collection<T> added = new ArrayList<T>();
+        public Collection<T> removed = new ArrayList<>();
+        public Collection<T> added = new ArrayList<>();
 
         @Override
         public String toString() {
@@ -97,7 +97,7 @@ public class LinkProperties implements Parcelable {
     }
 
     public Collection<InetAddress> getAddresses() {
-        Collection<InetAddress> addresses = new ArrayList<InetAddress>();
+        Collection<InetAddress> addresses = new ArrayList<>();
         for (LinkAddress linkAddress : mLinkAddresses) {
             addresses.add(linkAddress.getAddress());
         }
@@ -192,8 +192,7 @@ public class LinkProperties implements Parcelable {
     public boolean isIdenticalAddresses(LinkProperties target) {
         Collection<InetAddress> targetAddresses = target.getAddresses();
         Collection<InetAddress> sourceAddresses = getAddresses();
-        return (sourceAddresses.size() == targetAddresses.size()) ?
-                sourceAddresses.containsAll(targetAddresses) : false;
+        return (sourceAddresses.size() == targetAddresses.size()) && sourceAddresses.containsAll(targetAddresses);
     }
 
     /**
@@ -275,8 +274,8 @@ public class LinkProperties implements Parcelable {
          * are in target but not in mLinkAddresses are placed in the
          * addedAddresses.
          */
-        CompareResult<LinkAddress> result = new CompareResult<LinkAddress>();
-        result.removed = new ArrayList<LinkAddress>(mLinkAddresses);
+        CompareResult<LinkAddress> result = new CompareResult<>();
+        result.removed = new ArrayList<>(mLinkAddresses);
         result.added.clear();
         if (target != null) {
             for (LinkAddress newAddress : target.getLinkAddresses()) {
@@ -305,9 +304,9 @@ public class LinkProperties implements Parcelable {
          * are in target but not in mDnses are placed in the
          * addedAddresses.
          */
-        CompareResult<InetAddress> result = new CompareResult<InetAddress>();
+        CompareResult<InetAddress> result = new CompareResult<>();
 
-        result.removed = new ArrayList<InetAddress>(mDnses);
+        result.removed = new ArrayList<>(mDnses);
         result.added.clear();
         if (target != null) {
             for (InetAddress newAddress : target.getDnses()) {
@@ -335,9 +334,9 @@ public class LinkProperties implements Parcelable {
          * leaving the routes that are different. And route address which
          * are in target but not in mRoutes are placed in added.
          */
-        CompareResult<RouteInfo> result = new CompareResult<RouteInfo>();
+        CompareResult<RouteInfo> result = new CompareResult<>();
 
-        result.removed = new ArrayList<RouteInfo>(mRoutes);
+        result.removed = new ArrayList<>(mRoutes);
         result.added.clear();
         if (target != null) {
             for (RouteInfo r : target.getRoutes()) {
