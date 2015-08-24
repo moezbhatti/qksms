@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
-    <!--App name-->
-    <string name="app_name">QKSMS</string>
     <!--Slogan-->
     <string name="slogan">Love texting again.</string>
     <!--Text shown when a phone number cannot be found-->
@@ -734,13 +732,6 @@
         <item>Black</item>
     </string-array>
 
-    <string-array name="background_values">
-        <item>white</item>
-        <item>offwhite</item>
-        <item>grey</item>
-        <item>black</item>
-    </string-array>
-
     <string-array name="font_sizes">
         <item>Small</item>
         <item>Normal</item>
@@ -787,12 +778,6 @@
         <item>Send message</item>
     </string-array>
 
-    <string-array name="enter_button_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <!-- Max MMS attachment sizes. I.e. will compress pictures that are larger than 300 KB down to
          under 300KB. -->
     <string-array name="max_mms_attachment_sizes">
@@ -800,43 +785,5 @@
         <item>600 KB</item>
         <item>1 MB</item>
         <item>Unlimited</item>
-    </string-array>
-
-    <!-- DO NOT TRANSLATE -->
-    <string-array name="max_mms_attachment_size_values">
-        <item>300kb</item>
-        <item>600kb</item>
-        <item>1mb</item>
-        <item>unlimited</item>
-    </string-array>
-
-    <!-- DO NOT TRANSLATE -->
-    <string-array name="contributor_names">
-        <item>Jeremy Feinstein</item>
-        <item>Flavien Laurent</item>
-        <item>Evgeny Shishkin</item>
-        <item>Jacob Klinker</item>
-        <item>Jeff Gilfelt</item>
-        <item>Melnykov Oleksandr</item>
-    </string-array>
-
-    <!-- DO NOT TRANSLATE -->
-    <string-array name="contributor_githubs">
-        <item>github.com/jfeinstein10</item>
-        <item>github.com/flavienlaurent</item>
-        <item>github.com/johnkil</item>
-        <item>github.com/klinker41</item>
-        <item>github.com/jgilfelt</item>
-        <item>github.com/makovkastar</item>
-    </string-array>
-
-    <!-- DO NOT TRANSLATE -->
-    <string-array name="contributor_projects">
-        <item>SlidingMenu</item>
-        <item>colorpicker</item>
-        <item>Android-RobotoTextView</item>
-        <item>android-smsmms\nandroid-chips</item>
-        <item>SystemBarTint</item>
-        <item>FloatingActionButton</item>
     </string-array>
 </resources>

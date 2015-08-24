@@ -272,7 +272,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 new QKDialog()
                         .setContext(this)
                         .setTitle(R.string.title_changelog)
-                        .setTripleLineItems(R.array.versions, R.array.dates, R.array.changes, null)
+                        .setTripleLineItems(R.array.changelog_versions, R.array.changelog_dates, R.array.changelog_changes, null)
                         .show(getFragmentManager(), "Changelog");
                 break;
             case R.id.menu_donate:
