@@ -36,7 +36,6 @@ import com.google.android.mms.pdu_alt.NotificationInd;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
-import com.google.android.mms.pdu_alt.SendReq;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Contact;
@@ -383,7 +382,7 @@ public class MessageItem {
                     // Use constant string for outgoing messages
                     mContact = mAddress =
                             mContext.getString(R.string.messagelist_sender_self);
-                    timestamp = msg == null ? 0 : ((SendReq) msg).getDate() * 1000L;
+                    timestamp = msg == null ? 0 : msg.getDate() * 1000L;
                 }
 
                 SlideModel slide = mSlideshow == null ? null : mSlideshow.get(0);

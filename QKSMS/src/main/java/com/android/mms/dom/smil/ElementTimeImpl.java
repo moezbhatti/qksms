@@ -72,11 +72,11 @@ public abstract class ElementTimeImpl implements ElementTime {
         String[] beginTimeStringList = mSmilElement.getAttribute("begin").split(";");
 
         // TODO: Check other constraints on parsed values, e.g., "single, non-negative offset values
-        ArrayList<Time> beginTimeList = new ArrayList<Time>();
+        ArrayList<Time> beginTimeList = new ArrayList<>();
         // Initialize Time instances and add them to Vector
-        for (int i = 0; i < beginTimeStringList.length; i++) {
+        for (String aBeginTimeStringList : beginTimeStringList) {
             try {
-                beginTimeList.add(new TimeImpl(beginTimeStringList[i], getBeginConstraints()));
+                beginTimeList.add(new TimeImpl(aBeginTimeStringList, getBeginConstraints()));
             } catch (IllegalArgumentException e) {
                 // Ignore badly formatted times
             }
@@ -121,15 +121,15 @@ public abstract class ElementTimeImpl implements ElementTime {
     }
 
     public TimeList getEnd() {
-        ArrayList<Time> endTimeList = new ArrayList<Time>();
+        ArrayList<Time> endTimeList = new ArrayList<>();
 
         String[] endTimeStringList = mSmilElement.getAttribute("end").split(";");
         int len = endTimeStringList.length;
         if (!((len == 1) && (endTimeStringList[0].length() == 0))) {  // Ensure the end field is set.
             // Initialize Time instances and add them to Vector
-            for (int i = 0; i < len; i++) {
+            for (String anEndTimeStringList : endTimeStringList) {
                 try {
-                    endTimeList.add(new TimeImpl(endTimeStringList[i],
+                    endTimeList.add(new TimeImpl(anEndTimeStringList,
                             getEndConstraints()));
                 } catch (IllegalArgumentException e) {
                     // Ignore badly formatted times
@@ -245,7 +245,7 @@ public abstract class ElementTimeImpl implements ElementTime {
                  */
                 return FILL_AUTO;
             } else {
-                return ((ElementTimeImpl) parent).getFillDefault();
+                return parent.getFillDefault();
             }
         }
     }

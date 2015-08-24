@@ -150,7 +150,7 @@ public class SlideshowActivity extends QKActivity implements EventListener {
     @Override
     public void onCreate(Bundle icicle) {
         // Play slide-show in full-screen mode.
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(icicle);
         mHandler = new Handler();
 

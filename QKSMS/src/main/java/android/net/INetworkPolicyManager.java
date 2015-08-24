@@ -439,7 +439,7 @@ public interface INetworkPolicyManager extends android.os.IInterface {
             }
         }
 
-        static final int TRANSACTION_setUidPolicy = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+        static final int TRANSACTION_setUidPolicy = (android.os.IBinder.FIRST_CALL_TRANSACTION);
         static final int TRANSACTION_getUidPolicy = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
         static final int TRANSACTION_getUidsWithPolicy = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
         static final int TRANSACTION_isUidForeground = (android.os.IBinder.FIRST_CALL_TRANSACTION + 3);
