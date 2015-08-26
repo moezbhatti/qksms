@@ -2,40 +2,28 @@ package com.moez.QKSMS.common;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.moez.QKSMS.R;
 
-public enum AnalyticsManager {
-    INSTANCE;
+public class AnalyticsManager implements AnalyticsManagerBase {
+    private AnalyticsManager() {
+    }
 
-    private final static String TAG = "AnalyticsManager";
-    private final static boolean LOCAL_LOGV = false;
+    private static class AnalyticsManagerHolder {
+        private final static AnalyticsManager INSTANCE = new AnalyticsManager();
+    }
 
-    /**
-     * Event categories
-     */
-    public final static String CATEGORY_MESSAGES = "messages";
-    // Note: For preferences events, the action will just be the preference value.
-    public final static String CATEGORY_PREFERENCE_CHANGE = "preference_change";
-    public final static String CATEGORY_PREFERENCE_CLICK = "preference_click";
-    public final static String CATEGORY_REPORT = "report";
-
-    /**
-     * Event actions
-     */
-    public final static String ACTION_SEND_MESSAGE = "send_message";
-    public final static String ACTION_ATTACH_IMAGE = "attach_image";
-    public final static String ACTION_ATTACH_FROM_CAMERA = "attach_from_camera";
+    public static AnalyticsManager getInstance() {
+        return AnalyticsManagerHolder.INSTANCE;
+    }
 
     private boolean mNeedsInit = true;
     private Context mContext;
     private Tracker mTracker;
 
-    public static AnalyticsManager getInstance() {
-        return INSTANCE;
-    }
 
     public void init(Context context) {
         if (LOCAL_LOGV) Log.v(TAG, "init called. mNeedsInit: " + mNeedsInit);
@@ -56,8 +44,8 @@ public enum AnalyticsManager {
 
         HitBuilders.EventBuilder b = new HitBuilders.EventBuilder();
         if (category != null) b.setCategory(category);
-        if (action != null)   b.setAction(action);
-        if (label != null)    b.setLabel(label);
+        if (action != null) b.setAction(action);
+        if (label != null) b.setLabel(label);
 
         mTracker.send(b.build());
     }
@@ -68,8 +56,8 @@ public enum AnalyticsManager {
 
         HitBuilders.EventBuilder b = new HitBuilders.EventBuilder();
         if (category != null) b.setCategory(category);
-        if (action != null)   b.setAction(action);
-        if (label != null)    b.setLabel(label);
+        if (action != null) b.setAction(action);
+        if (label != null) b.setLabel(label);
         b.setValue(value);
 
         mTracker.send(b.build());
