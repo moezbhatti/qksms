@@ -31,7 +31,6 @@ import android.util.Log;
 import com.android.mms.transaction.MmsSystemEventReceiver;
 import com.android.mms.util.DownloadManager;
 import com.android.mms.util.RateController;
-import com.crittercism.app.Crittercism;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.DraftCache;
@@ -46,13 +45,13 @@ import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Locale;
 
-public class QKSMSApp extends Application {
+public class QKSMSAppBase extends Application {
     public static final String LOG_TAG = "Mms";
 
     private SearchRecentSuggestions mRecentSuggestions;
     private TelephonyManager mTelephonyManager;
     private String mCountryIso;
-    private static QKSMSApp sQKSMSApp = null;
+    private static QKSMSAppBase sQKSMSApp = null;
     private PduLoaderManager mPduLoaderManager;
     private ThumbnailManager mThumbnailManager;
     private DrmManagerClient mDrmManagerClient;
@@ -77,7 +76,6 @@ public class QKSMSApp extends Application {
         // Initialize analytics, leakcanary, and crittercism
         AnalyticsManager.getInstance().init(this);
         refWatcher = LeakCanary.install(this);
-        Crittercism.initialize(getApplicationContext(), getString(R.string.crtsm_key));
 
         // Figure out the country *before* loading contacts and formatting numbers
         Country country = new Country(Locale.getDefault().getCountry(), Country.COUNTRY_SOURCE_LOCALE);
@@ -102,7 +100,7 @@ public class QKSMSApp extends Application {
     }
 
     public static RefWatcher getRefWatcher(Context context) {
-        QKSMSApp application = (QKSMSApp) context.getApplicationContext();
+        QKSMSAppBase application = (QKSMSAppBase) context.getApplicationContext();
         return application.refWatcher;
     }
 
@@ -124,7 +122,7 @@ public class QKSMSApp extends Application {
         //sendBroadcast(new Intent(SmsReceiverService.ACTION_SEND_INACTIVE_MESSAGE, null, this, SmsReceiver.class));
     }
 
-    synchronized public static QKSMSApp getApplication() {
+    synchronized public static QKSMSAppBase getApplication() {
         return sQKSMSApp;
     }
 
@@ -155,7 +153,7 @@ public class QKSMSApp extends Application {
      */
     public TelephonyManager getTelephonyManager() {
         if (mTelephonyManager == null) {
-            mTelephonyManager = (TelephonyManager)getApplicationContext()
+            mTelephonyManager = (TelephonyManager) getApplicationContext()
                     .getSystemService(Context.TELEPHONY_SERVICE);
         }
         return mTelephonyManager;

@@ -624,7 +624,7 @@ public class ThemeManager {
 
     public static void setColour(int color) {
 
-        AnalyticsManager.INSTANCE.sendEvent(
+        AnalyticsManager.getInstance().sendEvent(
                 AnalyticsManager.CATEGORY_PREFERENCE_CHANGE,
                 SettingsFragment.CATEGORY_THEME,
                 getColorString(color)
