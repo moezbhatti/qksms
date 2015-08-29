@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
+import android.telephony.PhoneNumberUtils;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,6 +35,7 @@ import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -53,6 +56,7 @@ import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.listeners.ActionClickListener;
 
+import java.net.URLDecoder;
 import java.util.Collection;
 
 public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener,
@@ -429,15 +433,38 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         setIntent(intent);
 
         // This method is called whenever a MainActivity intent is started. Sometimes this is from a
-        // notifications; other times it's from the user clicking on the app icon in the home
-        // screen. If it has a thread id, then we know it's from a notification and we can set the
-        // conversation.
+        // notification; other times it's from the user clicking on the app icon in the home screen
         long threadId = getIntent().getLongExtra(EXTRA_THREAD_ID, -1);
+
+        // The activity can also be launched by clicking on the message button from the contacts app
+        // Check for {sms,mms}{,to}: schemes, in which case we know to open a conversation
+        if (getIntent().getData() != null) {
+            String data = getIntent().getData().toString();
+            String scheme = getIntent().getData().getScheme();
+
+            if (scheme.startsWith("smsto") || scheme.startsWith("mmsto")) {
+                String address = data.replace("smsto:", "").replace("mmsto:", "");
+                threadId = Utils.getThreadId(this, formatPhoneNumber(address));
+            } else if (scheme.startsWith("sms") || (scheme.startsWith("mms"))) {
+                String address = data.replace("sms:", "").replace("mms:", "");
+                threadId = Utils.getThreadId(this, formatPhoneNumber(address));
+            }
+        }
+
+        // If it has a thread id, then we know it's from a notification and we can set the
+        // conversation.
         if (threadId != -1) {
             setConversation(threadId);
         }
 
         // Otherwise we'll just resume what was previously there, which doesn't require any code.
+    }
+
+    private String formatPhoneNumber(String address) {
+        address = URLDecoder.decode(address);
+        address = "" + Html.fromHtml(address);
+        address = PhoneNumberUtils.formatNumber(address);
+        return address;
     }
 
     private void beginMmsSetup() {
