@@ -173,6 +173,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     private long mLastMessageId;
     private BackgroundQueryHandler mBackgroundQueryHandler;
+    private LoadConversationTask mLoadConversationTask;
 
     public static final String ARG_THREAD_ID = "threadId";
     public static final String ARG_ROW_ID = "rowId";
@@ -325,8 +326,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
      * Note: This will have no effect if the context has not been initialized yet.
      */
     private void onOpenConversation() {
-        Log.d(TAG, "onOpenConversation with threadId: " + mThreadId);
-        new LoadConversationTask().execute((Void[]) null);
+        new LoadConversationTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
     }
 
     public void setTitle() {
@@ -1373,6 +1373,10 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     private class LoadConversationTask extends AsyncTask<Void, Void, Void> {
+
+        public LoadConversationTask() {
+            Log.d(TAG, "LoadConversationTask");
+        }
 
         @Override
         protected Void doInBackground(Void... params) {
