@@ -105,7 +105,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
         getPrefs(this);
         getRes(this);
 
@@ -520,12 +519,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         FragmentManager m = getFragmentManager();
-        Log.d(TAG, "-------------------------------");
-        Log.d(TAG, "onSaveInstanceState");
-        Log.d(TAG, "content exists: " + (content != null));
-        Log.d(TAG, "content exists in manager: " + (m.findFragmentById(R.id.content_frame) != null));
-        Log.d(TAG, "menu exists: " + (menuFragment != null));
-        Log.d(TAG, "menu exists in manager: " + (m.findFragmentById(R.id.menu_frame) != null));
 
         // Save whether or not the mms setup fragment was dismissed
         if (m.findFragmentByTag(MMSSetupFragment.TAG) == null) {
