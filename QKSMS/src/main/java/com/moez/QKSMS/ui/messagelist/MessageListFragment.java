@@ -745,7 +745,9 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     @Override
     protected void onContentClosed() {
-        mSensorManager.unregisterListener(this);
+        if (mSensorManager != null) {
+            mSensorManager.unregisterListener(this);
+        }
 
         if (mOpened) {
             if (mConversationLegacy != null) {

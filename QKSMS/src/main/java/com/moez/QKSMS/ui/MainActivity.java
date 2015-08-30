@@ -59,22 +59,26 @@ import com.nispok.snackbar.listeners.ActionClickListener;
 import java.net.URLDecoder;
 import java.util.Collection;
 
-public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener,
-        SlidingMenu.OnCloseListener, SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener,
-        ActionClickListener {
+public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener,
+        SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener, ActionClickListener {
 
     private final String TAG = "MainActivity";
 
     public final static String EXTRA_THREAD_ID = "thread_id";
+
+    private final String KEY_TYPE = "type";
+    private final String KEY_POSITION = "position";
+    private final String KEY_THREADID = "thread_id";
+
+    private final int TYPE_COMPOSE = 0;
+    private final int TYPE_CONVERSATION = 1;
+    private final int TYPE_SETTINGS = 2;
 
     private static final int THREAD_LIST_QUERY_TOKEN = 1701;
     private static final int UNREAD_THREADS_QUERY_TOKEN = 1702;
     public static final int DELETE_CONVERSATION_TOKEN = 1801;
     public static final int HAVE_LOCKED_MESSAGES_TOKEN = 1802;
     private static final int DELETE_OBSOLETE_THREADS_TOKEN = 1803;
-
-    public final static String MENU_FRAGMENT_TAG = "menu";
-    public final static String CONTENT_FRAGMENT_TAG = "content";
 
     public static final String MMS_SETUP_DONT_ASK_AGAIN = "mmsSetupDontAskAgain";
 
@@ -87,7 +91,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     private static SharedPreferences prefs;
 
     private SlidingMenu mSlidingMenu;
-    private Fragment menuFragment;
+    private ConversationListFragment menuFragment;
     private Fragment content;
     private long mWaitingForThreadId = -1;
 
@@ -101,6 +105,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         getPrefs(this);
         getRes(this);
 
@@ -112,7 +117,50 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         mSlidingMenu = (SlidingMenu) findViewById(R.id.sliding_menu);
         setupSlidingMenu();
 
+        setupFragments(savedInstanceState);
+        onNewIntent(getIntent());
+
         showDialogIfNeeded(savedInstanceState);
+    }
+
+    /**
+     * Sets up menu and content fragments
+     * If the fragments are stored in the bundle, use those. Otherwise, instantiate new ones
+     */
+    private void setupFragments(Bundle savedInstanceState) {
+        int type = 0;
+        int position = 0;
+        threadId = 0;
+
+        if (savedInstanceState != null) {
+            type = savedInstanceState.getInt(KEY_TYPE, 0);
+            position = savedInstanceState.getInt(KEY_POSITION, 0);
+            threadId = savedInstanceState.getLong(KEY_THREADID, 0);
+        }
+
+        menuFragment = new ConversationListFragment();
+        menuFragment.setPosition(position);
+        getFragmentManager().beginTransaction()
+                .replace(R.id.menu_frame, menuFragment)
+                .commit();
+
+        switch (type) {
+            case TYPE_COMPOSE:
+                content = new ComposeFragment();
+                break;
+            case TYPE_CONVERSATION:
+                Bundle args = new Bundle();
+                args.putLong(MessageListFragment.ARG_THREAD_ID, threadId);
+                content = MessageListFragment.getInstance(args);
+                break;
+            case TYPE_SETTINGS:
+                content = SettingsFragment.newInstance(R.xml.settings_simple);
+                break;
+        }
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, content)
+                .commit();
     }
 
     /**
@@ -384,33 +432,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         isShowing = true;
         ThemeManager.loadThemeProperties(this);
 
-        if (menuFragment == null || content == null) {
-            menuFragment = new ConversationListFragment();
-
-            if (getIntent().getExtras() != null) {
-                content = getFragmentManager().getFragment(getIntent().getExtras(), "content");
-            }
-
-            threadId = getIntent().getLongExtra(EXTRA_THREAD_ID, -1);
-            if (threadId != -1) {
-                // Open the conversation if a thread ID exists
-                setConversation(threadId);
-            } else {
-                // Otherwise, show the ConversationList and put a compose fragment as the content
-                // fragment.
-                mSlidingMenu.showMenu(false);
-                content = new ComposeFragment();
-            }
-
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, content)
-                    .commitAllowingStateLoss();
-
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.menu_frame, menuFragment)
-                    .commitAllowingStateLoss();
-        }
-
         if (!mSlidingMenu.isMenuShowing()) {
             QKContentFragment.notifyOnContentOpened(content);
         }
@@ -434,13 +455,13 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
         // This method is called whenever a MainActivity intent is started. Sometimes this is from a
         // notification; other times it's from the user clicking on the app icon in the home screen
-        long threadId = getIntent().getLongExtra(EXTRA_THREAD_ID, -1);
+        long threadId = intent.getLongExtra(EXTRA_THREAD_ID, -1);
 
         // The activity can also be launched by clicking on the message button from the contacts app
         // Check for {sms,mms}{,to}: schemes, in which case we know to open a conversation
-        if (getIntent().getData() != null) {
-            String data = getIntent().getData().toString();
-            String scheme = getIntent().getData().getScheme();
+        if (intent.getData() != null) {
+            String data = intent.getData().toString();
+            String scheme = intent.getData().getScheme();
 
             if (scheme.startsWith("smsto") || scheme.startsWith("mmsto")) {
                 String address = data.replace("smsto:", "").replace("mmsto:", "");
@@ -454,7 +475,11 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         // If it has a thread id, then we know it's from a notification and we can set the
         // conversation.
         if (threadId != -1) {
+            Log.v(TAG, "Opening thread: " + threadId);
             setConversation(threadId);
+            mSlidingMenu.showContent();
+        } else {
+            mSlidingMenu.showMenu(false);
         }
 
         // Otherwise we'll just resume what was previously there, which doesn't require any code.
@@ -495,29 +520,22 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         FragmentManager m = getFragmentManager();
+        Log.d(TAG, "-------------------------------");
+        Log.d(TAG, "onSaveInstanceState");
+        Log.d(TAG, "content exists: " + (content != null));
+        Log.d(TAG, "content exists in manager: " + (m.findFragmentById(R.id.content_frame) != null));
+        Log.d(TAG, "menu exists: " + (menuFragment != null));
+        Log.d(TAG, "menu exists in manager: " + (m.findFragmentById(R.id.menu_frame) != null));
 
         // Save whether or not the mms setup fragment was dismissed
-        if (getFragmentManager().findFragmentByTag(MMSSetupFragment.TAG) == null) {
+        if (m.findFragmentByTag(MMSSetupFragment.TAG) == null) {
             outState.putBoolean(KEY_MMS_SETUP_FRAGMENT_DISMISSED, true);
         }
 
-        // Check to make sure that the fragments we're looking to save are actually in the fragment
-        // manager before saving them. This bug is hard to reproduce, but it's one of the most
-        // reported issues on the Play dev console.
-        if (content != null && m.findFragmentById(R.id.content_frame) != null) {
-            m.putFragment(outState, CONTENT_FRAGMENT_TAG, content);
-        }
-        if (menuFragment != null && m.findFragmentById(R.id.menu_frame) != null) {
-            m.putFragment(outState, MENU_FRAGMENT_TAG, menuFragment);
-        }
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        menuFragment = getFragmentManager().getFragment(savedInstanceState, MENU_FRAGMENT_TAG);
-        content = getFragmentManager().getFragment(savedInstanceState, CONTENT_FRAGMENT_TAG);
+        outState.putInt(KEY_TYPE, content instanceof MessageListFragment ? TYPE_CONVERSATION :
+                content instanceof SettingsFragment ? TYPE_SETTINGS : TYPE_COMPOSE);
+        outState.putInt(KEY_POSITION, menuFragment.getPosition());
+        outState.putLong(KEY_THREADID, threadId);
     }
 
     public void switchContent(Fragment fragment, boolean animate) {
@@ -565,7 +583,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         args.putString(MessageListFragment.ARG_HIGHLIGHT, pattern);
         args.putBoolean(MessageListFragment.ARG_SHOW_IMMEDIATE, !animate);
 
-        Fragment contentFragment = getFragmentManager().findFragmentById(R.id.content_frame);
         MessageListFragment fragment = MessageListFragment.getInstance(args);
 
         // Save the thread ID here and switch the content

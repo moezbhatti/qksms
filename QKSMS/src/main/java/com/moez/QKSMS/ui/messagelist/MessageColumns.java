@@ -68,6 +68,9 @@ public class MessageColumns {
     };
 
     public static class ColumnsMap {
+        private final String TAG = "ColumnsMap";
+        private final boolean DEBUG = false;
+
         public int mColumnMsgType;
         public int mColumnMsgId;
         public int mColumnSmsAddress;
@@ -123,121 +126,121 @@ public class MessageColumns {
             try {
                 mColumnMsgType = cursor.getColumnIndexOrThrow(Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMsgId = cursor.getColumnIndexOrThrow(BaseColumns._ID);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsAddress = cursor.getColumnIndexOrThrow(Telephony.Sms.ADDRESS);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsBody = cursor.getColumnIndexOrThrow(Telephony.Sms.BODY);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsDate = cursor.getColumnIndexOrThrow(Telephony.Sms.DATE);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsDateSent = cursor.getColumnIndexOrThrow(Telephony.Sms.DATE_SENT);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsType = cursor.getColumnIndexOrThrow(Telephony.Sms.TYPE);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsStatus = cursor.getColumnIndexOrThrow(Telephony.Sms.STATUS);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsLocked = cursor.getColumnIndexOrThrow(Telephony.Sms.LOCKED);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnSmsErrorCode = cursor.getColumnIndexOrThrow(Telephony.Sms.ERROR_CODE);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsSubject = cursor.getColumnIndexOrThrow(Telephony.Mms.SUBJECT);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsSubjectCharset = cursor.getColumnIndexOrThrow(Telephony.Mms.SUBJECT_CHARSET);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsMessageType = cursor.getColumnIndexOrThrow(Telephony.Mms.MESSAGE_TYPE);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsMessageBox = cursor.getColumnIndexOrThrow(Telephony.Mms.MESSAGE_BOX);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsDeliveryReport = cursor.getColumnIndexOrThrow(Telephony.Mms.DELIVERY_REPORT);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsReadReport = cursor.getColumnIndexOrThrow(Telephony.Mms.READ_REPORT);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsErrorType = cursor.getColumnIndexOrThrow(Telephony.MmsSms.PendingMessages.ERROR_TYPE);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsLocked = cursor.getColumnIndexOrThrow(Telephony.Mms.LOCKED);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsStatus = cursor.getColumnIndexOrThrow(Telephony.Mms.STATUS);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
 
             try {
                 mColumnMmsTextOnly = cursor.getColumnIndexOrThrow(Telephony.Mms.TEXT_ONLY);
             } catch (IllegalArgumentException e) {
-                Log.w("colsMap", e.getMessage());
+                if (DEBUG) Log.w(TAG, e.getMessage());
             }
         }
     }
