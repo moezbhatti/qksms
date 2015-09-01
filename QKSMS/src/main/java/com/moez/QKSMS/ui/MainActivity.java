@@ -73,6 +73,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     private final int TYPE_COMPOSE = 0;
     private final int TYPE_CONVERSATION = 1;
     private final int TYPE_SETTINGS = 2;
+    private final int TYPE_SEARCH = 3;
 
     private static final int THREAD_LIST_QUERY_TOKEN = 1701;
     private static final int UNREAD_THREADS_QUERY_TOKEN = 1702;
@@ -154,6 +155,9 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 break;
             case TYPE_SETTINGS:
                 content = SettingsFragment.newInstance(R.xml.settings_simple);
+                break;
+            case TYPE_SEARCH:
+                content = new SearchFragment();
                 break;
         }
 
@@ -526,7 +530,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         }
 
         outState.putInt(KEY_TYPE, content instanceof MessageListFragment ? TYPE_CONVERSATION :
-                content instanceof SettingsFragment ? TYPE_SETTINGS : TYPE_COMPOSE);
+                content instanceof SettingsFragment ? TYPE_SETTINGS :
+                        content instanceof SearchFragment ? TYPE_SEARCH : TYPE_COMPOSE);
         outState.putInt(KEY_POSITION, menuFragment.getPosition());
         outState.putLong(KEY_THREADID, threadId);
     }
