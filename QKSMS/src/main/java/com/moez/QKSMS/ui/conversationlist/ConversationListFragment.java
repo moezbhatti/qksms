@@ -62,6 +62,9 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private ConversationDetailsDialog mConversationDetailsDialog;
     private QKActivity mContext;
 
+    // This does not hold the current position of the list, rather the position the list is pending being set to
+    private int mPosition;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,7 +247,18 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                         break;
                 }
             }
-        }).show(((MainActivity) mContext).getFragmentManager(), "conversation options");
+        }).show(mContext.getFragmentManager(), "conversation options");
+    }
+
+    public void setPosition(int position) {
+        mPosition = position;
+        if (mLayoutManager != null && mAdapter != null) {
+            mLayoutManager.scrollToPosition(Math.min(mPosition, mAdapter.getCount() - 1));
+        }
+    }
+
+    public int getPosition() {
+        return mLayoutManager.findFirstVisibleItemPosition();
     }
 
     private void initLoaderManager() {
@@ -277,6 +291,10 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         if (mAdapter != null) {
             // Swap the new cursor in.  (The framework will take care of closing the, old cursor once we return.)
             mAdapter.changeCursor(data);
+            if (mPosition != 0) {
+                mRecyclerView.scrollToPosition(Math.min(mPosition, data.getCount() - 1));
+                mPosition = 0;
+            }
         }
     }
 

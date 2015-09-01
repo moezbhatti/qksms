@@ -3,24 +3,18 @@ package com.moez.QKSMS.ui.popup;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.PhoneNumberUtils;
-import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.data.Contact;
-import com.moez.QKSMS.data.ContactHelper;
+import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.interfaces.RecipientProvider;
-import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.ui.base.QKPopupActivity;
 import com.moez.QKSMS.ui.view.AutoCompleteContactView;
 import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.StarredContactsView;
-
-import java.net.URLDecoder;
 
 public class QKComposeActivity extends QKPopupActivity implements ComposeView.OnSendListener, RecipientProvider,
         ActivityLauncher, AdapterView.OnItemClickListener {
@@ -54,52 +48,11 @@ public class QKComposeActivity extends QKPopupActivity implements ComposeView.On
 
         // Apply different attachments based on the type.
         mCompose.loadMessageFromIntent(getIntent());
-
-        // Check for {sms,mms}{,to}: schemes, in which case we can set the recipients.
-        if (getIntent().getData() != null) {
-            String data = getIntent().getData().toString();
-            String scheme = getIntent().getData().getScheme();
-
-            if (scheme.startsWith("smsto") || scheme.startsWith("mmsto")) {
-                String address = data.replace("smsto:", "").replace("mmsto:", "");
-                final Contact contact = Contact.get(formatPhoneNumber(address), true);
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRecipients.submitItem(contact.getName(), contact.getNumber(),
-                                ContactHelper.getPhotoUri(mContext, contact.getUri()));
-                    }
-                }, 100);
-
-            } else if (scheme.startsWith("sms") || (scheme.startsWith("mms"))) {
-                String address = data.replace("sms:", "").replace("mms:", "");
-                final Contact contact = Contact.get(formatPhoneNumber(address), true);
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRecipients.submitItem(contact.getName(), contact.getNumber(),
-                                ContactHelper.getPhotoUri(mContext, contact.getUri()));
-                    }
-                }, 100);
-
-            }
-
-            mCompose.requestReplyTextFocus();
-        }
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_qkcompose;
-    }
-
-    private String formatPhoneNumber(String address) {
-        address = URLDecoder.decode(address);
-        address = "" + Html.fromHtml(address);
-        address = PhoneNumberUtils.formatNumber(address);
-        return address;
     }
 
     @Override
