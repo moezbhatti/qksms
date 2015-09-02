@@ -185,11 +185,17 @@ public class NotificationManager {
                         builder.setLights(getLedColour(conversationPrefs), 1000, 1000);
                     }
 
-                    boolean privateNotifications = conversationPrefs.getPrivateNotificationsEnabled();
+                    Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
 
                     if (conversationPrefs.getTickerEnabled()) {
-                        String messageBody = privateNotifications ? sRes.getString(R.string.new_message) : lastMessage.mBody;
-                        builder.setTicker(String.format("%s: %s", lastMessage.mContact, messageBody));
+                        switch (privateNotifications) {
+                            case 0:
+                                builder.setTicker(String.format("%s: %s", lastMessage.mContact, lastMessage.mBody));
+                            case 1:
+                                builder.setTicker(String.format("%s: %s", lastMessage.mContact, sRes.getString(R.string.new_message)));
+                            case 2:
+                                builder.setTicker(String.format("%s: %s", "QKSMS", sRes.getString(R.string.new_message)));
+                        }
                     }
 
                     if (conversationPrefs.getWakePhoneEnabled()) {
@@ -266,7 +272,7 @@ public class NotificationManager {
                     builder.setLights(getLedColour(conversationPrefs), 1000, 1000);
                 }
 
-                boolean privateNotifications = conversationPrefs.getPrivateNotificationsEnabled();
+                Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
 
                 if (conversations.size() == 1 && lastConversation.size() == 1) {
                     singleMessage(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
@@ -312,11 +318,18 @@ public class NotificationManager {
                     PI = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 }
 
-                boolean privateNotifications = sPrefs.getBoolean(SettingsFragment.NOTIFICATION_PRIVATE, false);
+
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+
                 for (Message message : SmsHelper.getFailedMessages(context)) {
-                    String body = privateNotifications ? sRes.getString(R.string.new_message) : message.getBody();
-                    inboxStyle.addLine(Html.fromHtml("<strong>" + message.getName() + "</strong> " + body));
+                    switch (Integer.parseInt(sPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"))) {
+                        case 0:
+                            inboxStyle.addLine(Html.fromHtml("<strong>" + message.getName() + "</strong> " + message.getBody()));
+                        case 1:
+                            inboxStyle.addLine(Html.fromHtml("<strong>" + message.getName() + "</strong> " + sRes.getString(R.string.new_message)));
+                        case 2:
+                            inboxStyle.addLine(Html.fromHtml("<strong>" + "QKSMS" + "</strong> " + sRes.getString(R.string.new_message)));
+                    }
                 }
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
@@ -411,7 +424,7 @@ public class NotificationManager {
      */
     private static void singleMessage(final Context context, final ArrayList<MessageItem> messages, final long threadId,
                                       final NotificationCompat.Builder builder, final ConversationPrefsHelper conversationPrefs,
-                                      final boolean privateNotifications) {
+                                      final Integer privateNotifications) {
 
         MessageItem message = messages.get(0);
 
@@ -442,7 +455,7 @@ public class NotificationManager {
      */
     private static void buildSingleMessageNotification(final Context context, ArrayList<MessageItem> messages, long threadId,
                                                        final NotificationCompat.Builder builder, ConversationPrefsHelper conversationPrefs,
-                                                       final boolean privateNotifications) {
+                                                       final Integer privateNotifications) {
 
         MessageItem message = messages.get(0);
 
@@ -464,12 +477,35 @@ public class NotificationManager {
         final PendingIntent seenPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 4), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         int unreadMessageCount = SmsHelper.getUnreadMessageCount(context);
-        builder.setContentTitle(message.mContact)
-                .setContentText(privateNotifications ? sRes.getString(R.string.new_message) : message.mBody)
-                .setLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false)))
+        String body;
+        String title;
+        NotificationCompat.Style nstyle = null;
+        switch (privateNotifications){
+            case 0: //Hide nothing
+                body = message.mBody;
+                title = message.mContact;
+                nstyle = new NotificationCompat.BigTextStyle().bigText(message.mBody);
+                break;
+            case 1: //Hide message
+                body = sRes.getString(R.string.new_message);
+                title = message.mContact;
+                break;
+            case 2: //Hide sender & message
+                body = sRes.getString(R.string.new_message);
+                title = "QKSMS";
+                break;
+            default:
+                body = message.mBody;
+                title = message.mContact;
+                nstyle = null;
+        }
+
+        builder.setContentTitle(title)
+                .setContentText(body)
+                .setLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false), privateNotifications))
                 .setContentIntent(threadPI)
                 .setNumber(unreadMessageCount)
-                .setStyle(privateNotifications ? null : new NotificationCompat.BigTextStyle().bigText(message.mBody))
+                .setStyle(nstyle)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
@@ -494,16 +530,15 @@ public class NotificationManager {
                 NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle()
                         .setBigContentTitle(message.mContact)
                         .setSummaryText(message.mBody)
-                        .bigLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false)))
+                        .bigLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false), privateNotifications))
                         .bigPicture(image);
+                if (privateNotifications == 0) builder.setStyle(style);
+                else builder.setStyle(null);
 
-                builder.setStyle(privateNotifications ? null : style);
             } else {
                 Log.d(TAG, "MMS Type: not an image lol");
-                NotificationCompat.BigTextStyle style = privateNotifications ?
-                        null : new NotificationCompat.BigTextStyle().bigText(message.mBody);
-
-                builder.setStyle(style);
+                if (privateNotifications == 0) builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message.mBody));
+                else builder.setStyle(null);
             }
 
         }
@@ -516,7 +551,7 @@ public class NotificationManager {
      */
     private static void singleSender(final Context context, ArrayList<MessageItem> messages, long threadId,
                                      final NotificationCompat.Builder builder, ConversationPrefsHelper conversationPrefs,
-                                     final boolean privateNotifications) {
+                                     final Integer privateNotifications) {
 
         MessageItem message = messages.get(0);
 
@@ -542,13 +577,17 @@ public class NotificationManager {
             inboxStyle.addLine(message1.mBody);
         }
 
+        NotificationCompat.Style stylen;
+        if (privateNotifications == 0) stylen = inboxStyle;
+        else stylen = null;
+
         int unreadMessageCount = SmsHelper.getUnreadMessageCount(context);
         builder.setContentTitle(message.mContact)
                 .setContentText(SmsHelper.getUnseenSMSCount(context, threadId) + " " + sRes.getString(R.string.new_messages))
-                .setLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false)))
+                .setLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false), privateNotifications))
                 .setContentIntent(threadPI)
                 .setNumber(unreadMessageCount)
-                .setStyle(privateNotifications ? null : inboxStyle)
+                .setStyle(stylen)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
@@ -580,9 +619,9 @@ public class NotificationManager {
             if (!oldThreads.contains(threadId)) {
                 ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, threadId);
                 if (conversations.get(threadId).size() == 1) {
-                    singleMessage(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, false);
+                    singleMessage(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, 0);
                 } else {
-                    singleSender(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, false);
+                    singleSender(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, 0);
                 }
             }
         }
@@ -655,17 +694,21 @@ public class NotificationManager {
      * Retreives the avatar to be used for the notification's large icon. If the user is running Lollipop, then let's
      * crop their avatar to a circle
      */
-    private static Bitmap getLargeIcon(Context context, Contact contact) {
+    private static Bitmap getLargeIcon(Context context, Contact contact, Integer privateNotification) {
         Drawable avatarDrawable = contact.getAvatar(context, new BitmapDrawable(sRes, ContactHelper.blankContact(context, contact.getName())));
         int idealIconWidth = sRes.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
         int idealIconHeight = sRes.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
 
         Bitmap bitmap = Bitmap.createScaledBitmap(((BitmapDrawable) avatarDrawable).getBitmap(), idealIconWidth, idealIconHeight, true);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return ImageUtils.getCircleBitmap(bitmap, idealIconWidth);
-        } else {
-            return bitmap;
+        if (privateNotification == 2) {
+            return null;
+        }
+        else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return ImageUtils.getCircleBitmap(bitmap, idealIconWidth);
+            }
+            else return bitmap;
         }
     }
 

@@ -41,8 +41,8 @@ public class ConversationPrefsHelper {
         return getBoolean(SettingsFragment.NOTIFICATION_TICKER, true);
     }
 
-    public boolean getPrivateNotificationsEnabled() {
-        return getBoolean(SettingsFragment.NOTIFICATION_PRIVATE, false);
+    public Integer getPrivateNotificationsSetting(){
+        return Integer.parseInt(mPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"));
     }
 
     public boolean getVibrateEnabled() {

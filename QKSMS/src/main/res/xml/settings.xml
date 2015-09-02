@@ -106,8 +106,8 @@
         android:defaultValue="true"
         android:key="pref_key_ticker" />
     <Preference
-        android:defaultValue="false"
-        android:key="pref_key_notifications_private" />
+        android:defaultValue="0"
+        android:key="pref_key_notification_private" />
     <Preference
         android:defaultValue="true"
         android:key="pref_key_vibration" />

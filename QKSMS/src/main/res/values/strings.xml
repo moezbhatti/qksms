@@ -196,7 +196,7 @@
     <string name="pref_wake">Wake phone</string>
     <string name="pref_wake_summary">Turn your screen on when you receive a new message</string>
     <string name="pref_notifications_private">Private notifications</string>
-    <string name="pref_notifications_private_summary">Hide message text in notifications</string>
+    <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
     <string name="pref_ringtone">Notification sound</string>
     <string name="pref_ringtone_summary">Select a notification sound</string>
     <string name="pref_ticker">Show ticker</string>
@@ -776,6 +776,12 @@
         <item>Show emoji</item>
         <item>New line</item>
         <item>Send message</item>
+    </string-array>
+
+    <string-array name="notification_private_options">
+        <item>Show all</item>
+        <item>Hide message</item>
+        <item>Hide message and sender</item>
     </string-array>
 
     <!-- Max MMS attachment sizes. I.e. will compress pictures that are larger than 300 KB down to
