@@ -53,8 +53,8 @@ public class NotificationService extends Service {
             if (conversationPrefs.getNotificationsEnabled()) {
                 // Only show QuickReply if we're outside of the app, and they have popups and
                 // QuickReply enabled.
-                if (!QKReplyActivity.sIsShowing && !MainActivity.isShowing && intent.getBooleanExtra(EXTRA_POPUP, false) &&
-                        prefs.getBoolean(SettingsFragment.QUICKREPLY, true) && !MainActivity.isShowing) {
+                if (!QKReplyActivity.sIsShowing && !MainActivity.sIsShowing && intent.getBooleanExtra(EXTRA_POPUP, false) &&
+                        prefs.getBoolean(SettingsFragment.QUICKREPLY, true) && !MainActivity.sIsShowing) {
 
                     popupIntent = new Intent(context, QKReplyActivity.class);
                     popupIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

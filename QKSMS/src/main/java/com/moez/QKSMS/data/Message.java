@@ -152,9 +152,9 @@ public class Message {
     }
 
     public boolean isVisible() {
-       return getThreadId() == MainActivity.threadId &&
-               MainActivity.isShowing &&
-               !MainActivity.isContentHidden;
+       return getThreadId() == MainActivity.sThreadId &&
+               MainActivity.sIsShowing &&
+               !MainActivity.sIsContentHidden;
     }
 
     public void markSeen() {

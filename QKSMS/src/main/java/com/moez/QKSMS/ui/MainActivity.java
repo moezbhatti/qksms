@@ -84,16 +84,16 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     public static final String MMS_SETUP_DONT_ASK_AGAIN = "mmsSetupDontAskAgain";
 
     // thread IDs are always nonnegative
-    public static long threadId = 0;
+    public static long sThreadId = 0;
 
-    public static boolean isShowing = false;
-    public static boolean isContentHidden = true;
-    private static Resources res;
-    private static SharedPreferences prefs;
+    public static boolean sIsShowing = false;
+    public static boolean sIsContentHidden = true;
+    private static Resources sRes;
+    private static SharedPreferences sPrefs;
 
     private SlidingMenu mSlidingMenu;
-    private ConversationListFragment menuFragment;
-    private Fragment content;
+    private ConversationListFragment mConversationList;
+    private Fragment mContent;
     private long mWaitingForThreadId = -1;
 
     private boolean mIsDestroyed = false;
@@ -130,39 +130,39 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     private void setupFragments(Bundle savedInstanceState) {
         int type = 0;
         int position = 0;
-        threadId = 0;
+        sThreadId = 0;
 
         if (savedInstanceState != null) {
             type = savedInstanceState.getInt(KEY_TYPE, 0);
             position = savedInstanceState.getInt(KEY_POSITION, 0);
-            threadId = savedInstanceState.getLong(KEY_THREADID, 0);
+            sThreadId = savedInstanceState.getLong(KEY_THREADID, 0);
         }
 
-        menuFragment = new ConversationListFragment();
-        menuFragment.setPosition(position);
+        mConversationList = new ConversationListFragment();
+        mConversationList.setPosition(position);
         getFragmentManager().beginTransaction()
-                .replace(R.id.menu_frame, menuFragment)
+                .replace(R.id.menu_frame, mConversationList)
                 .commit();
 
         switch (type) {
             case TYPE_COMPOSE:
-                content = new ComposeFragment();
+                mContent = new ComposeFragment();
                 break;
             case TYPE_CONVERSATION:
                 Bundle args = new Bundle();
-                args.putLong(MessageListFragment.ARG_THREAD_ID, threadId);
-                content = MessageListFragment.getInstance(args);
+                args.putLong(MessageListFragment.ARG_THREAD_ID, sThreadId);
+                mContent = MessageListFragment.getInstance(args);
                 break;
             case TYPE_SETTINGS:
-                content = SettingsFragment.newInstance(R.xml.settings_simple);
+                mContent = SettingsFragment.newInstance(R.xml.settings_simple);
                 break;
             case TYPE_SEARCH:
-                content = new SearchFragment();
+                mContent = new SearchFragment();
                 break;
         }
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, content)
+                .replace(R.id.content_frame, mContent)
                 .commit();
     }
 
@@ -208,7 +208,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     private void launchWelcomeActivity() {
-        if (prefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
+        if (sPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
             // User has already seen the welcome screen
             return;
         }
@@ -226,7 +226,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     private void setupSlidingMenu() {
-        setSlidingTabEnabled(prefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
+        setSlidingTabEnabled(sPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
         mSlidingMenu.setBehindScrollScale(0.5f);
         mSlidingMenu.setFadeDegree(0.5f);
         mSlidingMenu.setOnOpenListener(this);
@@ -260,7 +260,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
-        if (mSlidingMenu.isMenuShowing() || content == null) {
+        if (mSlidingMenu.isMenuShowing() || mContent == null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
             setTitle(getString(R.string.title_conversation_list));
@@ -269,25 +269,25 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         } else {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            if (content instanceof MessageListFragment) {
+            if (mContent instanceof MessageListFragment) {
                 inflater.inflate(R.menu.conversation, menu);
-                ((MessageListFragment) content).setTitle();
+                ((MessageListFragment) mContent).setTitle();
 
-            } else if (content instanceof SearchFragment) {
+            } else if (mContent instanceof SearchFragment) {
                 setTitle(getString(R.string.title_search));
                 inflater.inflate(R.menu.search, menu);
 
-            } else if (content instanceof SettingsFragment) {
+            } else if (mContent instanceof SettingsFragment) {
                 setTitle(getString(R.string.title_settings));
                 inflater.inflate(R.menu.settings, menu);
                 MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
-                if (prefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
+                if (sPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
                     simplePrefs.setTitle(R.string.menu_show_all_prefs);
                 } else {
                     simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
                 }
 
-            } else if (content instanceof ComposeFragment) {
+            } else if (mContent instanceof ComposeFragment) {
                 setTitle(getString(R.string.title_compose));
                 inflater.inflate(R.menu.compose, menu);
             }
@@ -296,16 +296,16 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         return super.onCreateOptionsMenu(menu);
     }
 
-    public Fragment getMenuFragment() {
-        return menuFragment;
+    public Fragment getConversationList() {
+        return mConversationList;
     }
 
     public Fragment getContent() {
-        return content;
+        return mContent;
     }
 
     public long getThreadId() {
-        return threadId;
+        return sThreadId;
     }
 
     @Override
@@ -315,8 +315,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 onKeyUp(KeyEvent.KEYCODE_BACK, null);
                 break;
             case R.id.simple_settings:
-                prefs.edit().putBoolean(SettingsFragment.SIMPLE_PREFS,
-                        !prefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)).apply();
+                sPrefs.edit().putBoolean(SettingsFragment.SIMPLE_PREFS,
+                        !sPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)).apply();
             case R.id.menu_settings:
                 switchContent(SettingsFragment.newInstance(R.xml.settings_simple), true);
                 break;
@@ -410,9 +410,9 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     protected void onPause() {
         super.onPause();
-        isShowing = false;
+        sIsShowing = false;
         if (!mSlidingMenu.isMenuShowing()) {
-            QKContentFragment.notifyOnContentClosed(content);
+            QKContentFragment.notifyOnContentClosed(mContent);
         }
     }
 
@@ -432,11 +432,11 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     protected void onResume() {
         super.onResume();
-        isShowing = true;
+        sIsShowing = true;
         ThemeManager.loadThemeProperties(this);
 
         if (!mSlidingMenu.isMenuShowing()) {
-            QKContentFragment.notifyOnContentOpened(content);
+            QKContentFragment.notifyOnContentOpened(mContent);
         }
 
         NotificationManager.initQuickCompose(this, false, false);
@@ -496,10 +496,10 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     private void beginMmsSetup() {
-        if (!prefs.getBoolean(MMS_SETUP_DONT_ASK_AGAIN, false) &&
-                TextUtils.isEmpty(prefs.getString(SettingsFragment.MMSC_URL, "")) &&
-                TextUtils.isEmpty(prefs.getString(SettingsFragment.MMS_PROXY, "")) &&
-                TextUtils.isEmpty(prefs.getString(SettingsFragment.MMS_PORT, ""))) {
+        if (!sPrefs.getBoolean(MMS_SETUP_DONT_ASK_AGAIN, false) &&
+                TextUtils.isEmpty(sPrefs.getString(SettingsFragment.MMSC_URL, "")) &&
+                TextUtils.isEmpty(sPrefs.getString(SettingsFragment.MMS_PROXY, "")) &&
+                TextUtils.isEmpty(sPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
 
             // Launch the MMS setup fragment here. This is a series of dialogs that will guide the
             // user through the MMS setup process.
@@ -529,11 +529,11 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             outState.putBoolean(KEY_MMS_SETUP_FRAGMENT_DISMISSED, true);
         }
 
-        outState.putInt(KEY_TYPE, content instanceof MessageListFragment ? TYPE_CONVERSATION :
-                content instanceof SettingsFragment ? TYPE_SETTINGS :
-                        content instanceof SearchFragment ? TYPE_SEARCH : TYPE_COMPOSE);
-        outState.putInt(KEY_POSITION, menuFragment.getPosition());
-        outState.putLong(KEY_THREADID, threadId);
+        outState.putInt(KEY_TYPE, mContent instanceof MessageListFragment ? TYPE_CONVERSATION :
+                mContent instanceof SettingsFragment ? TYPE_SETTINGS :
+                        mContent instanceof SearchFragment ? TYPE_SEARCH : TYPE_COMPOSE);
+        outState.putInt(KEY_POSITION, mConversationList.getPosition());
+        outState.putLong(KEY_THREADID, sThreadId);
     }
 
     public void switchContent(Fragment fragment, boolean animate) {
@@ -541,7 +541,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         if (fragment != null && !mIsDestroyed) {
             KeyboardUtils.hide(this);
 
-            content = fragment;
+            mContent = fragment;
             FragmentManager m = getFragmentManager();
 
             // Only do a replace if it is a different fragment.
@@ -584,18 +584,18 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         MessageListFragment fragment = MessageListFragment.getInstance(args);
 
         // Save the thread ID here and switch the content
-        MainActivity.threadId = threadId;
+        MainActivity.sThreadId = threadId;
         switchContent(fragment, animate);
     }
 
     @Override
     public void onOpen() {
         invalidateOptionsMenu();
-        isContentHidden = true;
+        sIsContentHidden = true;
 
         // Notify the content that it is being closed, since the menu (i.e. conversation list) is
         // being opened.
-        QKContentFragment.notifyOnContentClosing(content);
+        QKContentFragment.notifyOnContentClosing(mContent);
 
         // Hide the soft keyboard
         KeyboardUtils.hide(this, getCurrentFocus());
@@ -610,11 +610,11 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     public void onClose() {
         invalidateOptionsMenu();
-        isContentHidden = false;
+        sIsContentHidden = false;
 
         // Notify the content that it is being opened, since the menu (i.e. conversation list) is
         // being closed.
-        QKContentFragment.notifyOnContentOpening(content);
+        QKContentFragment.notifyOnContentOpening(mContent);
 
         // Hide the soft keyboard
         KeyboardUtils.hide(this, getCurrentFocus());
@@ -626,14 +626,14 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     public void onOpened() {
         // When the menu (i.e. the conversation list) has been opened, the content has been opened.
         // So notify the content fragment.
-        QKContentFragment.notifyOnContentClosed(content);
+        QKContentFragment.notifyOnContentClosed(mContent);
     }
 
     @Override
     public void onClosed() {
         // When the menu (i.e. the conversation list) has been closed, the content has been opened.
         // So notify the content fragment.
-        QKContentFragment.notifyOnContentOpened(content);
+        QKContentFragment.notifyOnContentOpened(mContent);
     }
 
     /**
@@ -683,17 +683,17 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     public static SharedPreferences getPrefs(Context context) {
-        if (prefs == null) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (sPrefs == null) {
+            sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
-        return prefs;
+        return sPrefs;
     }
 
     public static Resources getRes(Context context) {
-        if (res == null) {
-            res = context.getResources();
+        if (sRes == null) {
+            sRes = context.getResources();
         }
-        return res;
+        return sRes;
     }
 
     public static class DeleteThreadListener implements DialogInterface.OnClickListener {
