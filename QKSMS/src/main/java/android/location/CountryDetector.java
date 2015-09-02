@@ -90,7 +90,7 @@ public class CountryDetector {
      */
     public CountryDetector(ICountryDetector service) {
         mService = service;
-        mListeners = new HashMap<CountryListener, ListenerTransport>();
+        mListeners = new HashMap<>();
     }
 
     /**

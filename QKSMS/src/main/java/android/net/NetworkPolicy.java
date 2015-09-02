@@ -168,17 +168,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder("NetworkPolicy");
-        builder.append("[").append(template).append("]:");
-        builder.append(" cycleDay=").append(cycleDay);
-        builder.append(", cycleTimezone=").append(cycleTimezone);
-        builder.append(", warningBytes=").append(warningBytes);
-        builder.append(", limitBytes=").append(limitBytes);
-        builder.append(", lastWarningSnooze=").append(lastWarningSnooze);
-        builder.append(", lastLimitSnooze=").append(lastLimitSnooze);
-        builder.append(", metered=").append(metered);
-        builder.append(", inferred=").append(inferred);
-        return builder.toString();
+        return "NetworkPolicy" + "[" + template + "]:" + " cycleDay=" + cycleDay + ", cycleTimezone=" + cycleTimezone + ", warningBytes=" + warningBytes + ", limitBytes=" + limitBytes + ", lastWarningSnooze=" + lastWarningSnooze + ", lastLimitSnooze=" + lastLimitSnooze + ", metered=" + metered + ", inferred=" + inferred;
     }
 
     public static final Creator<NetworkPolicy> CREATOR = new Creator<NetworkPolicy>() {

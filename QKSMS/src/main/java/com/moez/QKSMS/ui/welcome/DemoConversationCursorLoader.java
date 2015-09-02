@@ -53,7 +53,7 @@ public class DemoConversationCursorLoader extends Loader<Cursor> {
         ArrayList<MessageData> candidates = new ArrayList<>();
 
         if (THREAD_ID_WELCOME_SCREEN == mThreadId) {
-            candidates = new ArrayList<MessageData>();
+            candidates = new ArrayList<>();
             long time = System.currentTimeMillis() - 50000;
             candidates.add(new MessageData(
                     "sms", 0, mThreadId, "QKSMS",

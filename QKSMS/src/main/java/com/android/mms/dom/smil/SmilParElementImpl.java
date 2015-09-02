@@ -44,7 +44,7 @@ public class SmilParElementImpl extends SmilElementImpl implements SMILParElemen
              */
             TimeList beginTimeList = super.getBegin();
             if (beginTimeList.getLength() > 1) {
-                ArrayList<Time> singleTimeContainer = new ArrayList<Time>();
+                ArrayList<Time> singleTimeContainer = new ArrayList<>();
                 singleTimeContainer.add(beginTimeList.item(0));
                 beginTimeList = new TimeListImpl(singleTimeContainer);
             }

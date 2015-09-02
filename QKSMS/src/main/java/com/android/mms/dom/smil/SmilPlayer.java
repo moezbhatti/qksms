@@ -46,7 +46,7 @@ public class SmilPlayer implements Runnable {
     private static final boolean LOCAL_LOGV = false;
     private static final int TIMESLICE = 200;
 
-    private static enum SmilPlayerState {
+    private enum SmilPlayerState {
         INITIALIZED,
         PLAYING,
         PLAYED,
@@ -54,7 +54,7 @@ public class SmilPlayer implements Runnable {
         STOPPED,
     }
 
-    private static enum SmilPlayerAction {
+    private enum SmilPlayerAction {
         NO_ACTIVE_ACTION,
         RELOAD,
         STOP,
@@ -88,7 +88,7 @@ public class SmilPlayer implements Runnable {
 
     private static ArrayList<TimelineEntry> getParTimeline(
             ElementParallelTimeContainer par, double offset, double maxOffset) {
-        ArrayList<TimelineEntry> timeline = new ArrayList<TimelineEntry>();
+        ArrayList<TimelineEntry> timeline = new ArrayList<>();
 
         // Set my begin at first
         TimeList myBeginList = par.getBegin();
@@ -145,7 +145,7 @@ public class SmilPlayer implements Runnable {
 
     private static ArrayList<TimelineEntry> getSeqTimeline(
             ElementSequentialTimeContainer seq, double offset, double maxOffset) {
-        ArrayList<TimelineEntry> timeline = new ArrayList<TimelineEntry>();
+        ArrayList<TimelineEntry> timeline = new ArrayList<>();
         double orgOffset = offset;
 
         // Set my begin at first
@@ -211,7 +211,7 @@ public class SmilPlayer implements Runnable {
             return getSeqTimeline((ElementSequentialTimeContainer) element, offset, maxOffset);
         } else {
             // Not ElementTimeContainer here
-            ArrayList<TimelineEntry> timeline = new ArrayList<TimelineEntry>();
+            ArrayList<TimelineEntry> timeline = new ArrayList<>();
 
             TimeList beginList = element.getBegin();
             for (int i = 0; i < beginList.getLength(); ++i) {
@@ -301,7 +301,7 @@ public class SmilPlayer implements Runnable {
         mAllEntries = getTimeline(mRoot, 0, Long.MAX_VALUE);
         mMediaTimeUpdatedEvent = ((DocumentEvent) mRoot).createEvent("Event");
         mMediaTimeUpdatedEvent.initEvent(MEDIA_TIME_UPDATED_EVENT, false, false);
-        mActiveElements = new ArrayList<ElementTime>();
+        mActiveElements = new ArrayList<>();
     }
 
     public synchronized void play() {
@@ -529,7 +529,7 @@ public class SmilPlayer implements Runnable {
     }
 
     private void stopCurrentSlide() {
-        HashSet<TimelineEntry> skippedEntries = new HashSet<TimelineEntry>();
+        HashSet<TimelineEntry> skippedEntries = new HashSet<>();
         int totalEntries = mAllEntries.size();
         for (int i = mCurrentElement; i < totalEntries; i++) {
             // Stop any started entries, and skip the not started entries until
