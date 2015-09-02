@@ -14,6 +14,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -252,8 +253,8 @@ public class ThemeManager {
      * of each activity that contains fragments that use ThemeManager
      */
     public static void loadThemeProperties(Context context) {
-        sPrefs = MainActivity.getPrefs(context);
-        sResources = MainActivity.getRes(context);
+        sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        sResources = context.getResources();
 
         mContext = context;
 

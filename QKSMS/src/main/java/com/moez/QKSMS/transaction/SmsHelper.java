@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.provider.Telephony.Sms;
 import android.telephony.SmsManager;
@@ -17,14 +18,13 @@ import com.google.android.mms.pdu_alt.CharacterSets;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
 import com.google.android.mms.pdu_alt.PduPersister;
-import com.moez.QKSMS.mmssms.Settings;
 import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.Message;
+import com.moez.QKSMS.mmssms.Settings;
 import com.moez.QKSMS.model.SlideModel;
 import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -210,7 +210,7 @@ public class SmsHelper {
 
     public static Settings getSendSettings(Context context) {
         if (sendSettings == null) {
-            SharedPreferences prefs = MainActivity.getPrefs(context);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
             sendSettings = new Settings();
             sendSettings.setMmsc(prefs.getString(SettingsFragment.MMSC_URL, ""));

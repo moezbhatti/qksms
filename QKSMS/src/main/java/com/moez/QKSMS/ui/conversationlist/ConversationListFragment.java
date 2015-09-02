@@ -31,7 +31,6 @@ import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
@@ -60,7 +59,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private ConversationListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ConversationDetailsDialog mConversationDetailsDialog;
-    private QKActivity mContext;
 
     // This does not hold the current position of the list, rather the position the list is pending being set to
     private int mPosition;
@@ -69,7 +67,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mContext = (QKActivity) getActivity();
         setHasOptionsMenu(true);
 
         mAdapter = new ConversationListAdapter(mContext);

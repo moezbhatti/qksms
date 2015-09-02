@@ -1,7 +1,6 @@
 package com.moez.QKSMS.ui.search;
 
 import android.content.AsyncQueryHandler;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -15,13 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
-import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
+import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.HashMap;
@@ -34,7 +33,6 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     // appropriately when the Contact gets fully loaded.
     private HashMap<Contact, QKTextView> mContactMap = new HashMap<>();
 
-    private Context mContext;
     private SharedPreferences mPrefs;
     private Resources mRes;
     private Cursor mCursor;
@@ -48,9 +46,8 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity();
-        mPrefs = MainActivity.getPrefs(mContext);
-        mRes = MainActivity.getRes(mContext);
+        mPrefs = mContext.getPrefs();
+        mRes = mContext.getResources();
 
         // When the query completes cons up a new adapter and set our list adapter to that.
         mQueryHandler = new AsyncQueryHandler(mContext.getContentResolver()) {

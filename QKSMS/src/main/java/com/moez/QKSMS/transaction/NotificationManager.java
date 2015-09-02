@@ -83,8 +83,8 @@ public class NotificationManager {
     public static void init(final Context context) {
 
         // Initialize the static shared prefs and resources.
-        sPrefs = MainActivity.getPrefs(context);
-        sRes = MainActivity.getRes(context);
+        sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        sRes = context.getResources();
 
         // Listen for MMS events.
         IntentFilter filter = new IntentFilter(TransactionService.TRANSACTION_COMPLETED_ACTION);

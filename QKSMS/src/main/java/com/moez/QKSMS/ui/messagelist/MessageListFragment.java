@@ -205,7 +205,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mShowImmediate = savedInstanceState.getBoolean(ARG_SHOW_IMMEDIATE, false);
         }
 
-        mPrefs = MainActivity.getPrefs(mContext);
+        mPrefs = mContext.getPrefs();
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
         setHasOptionsMenu(true);

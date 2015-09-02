@@ -14,6 +14,7 @@ import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -32,9 +33,9 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
     protected AvatarView mAvatarView;
     protected ImageView mSelected;
 
-    public ConversationListViewHolder(View view) {
-        super(view);
-        mPrefs = MainActivity.getPrefs(context);
+    public ConversationListViewHolder(QKActivity context, View view) {
+        super(context, view);
+        mPrefs = mContext.getPrefs();
 
         root = view;
         fromView = (QKTextView) view.findViewById(R.id.conversation_list_name);
@@ -53,10 +54,10 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
         final Drawable drawable;
         final String name;
 
-        if (data.getRecipients().size() == 1) {
-            Contact contact = data.getRecipients().get(0);
+        if (mData.getRecipients().size() == 1) {
+            Contact contact = mData.getRecipients().get(0);
             if (contact.getNumber().equals(updated.getNumber())) {
-                drawable = contact.getAvatar(context, null);
+                drawable = contact.getAvatar(mContext, null);
                 name = contact.getName();
 
                 if (contact.existsInDatabase()) {
@@ -71,9 +72,9 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
                 name = "";
                 shouldUpdate = false;
             }
-        } else if (data.getRecipients().size() > 1) {
+        } else if (mData.getRecipients().size() > 1) {
             drawable = null;
-            name = "" + data.getRecipients().size();
+            name = "" + mData.getRecipients().size();
             mAvatarView.assignContactUri(null);
         } else {
             drawable = null;
@@ -81,15 +82,15 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
             mAvatarView.assignContactUri(null);
         }
 
-        final ConversationLegacy conversationLegacy = new ConversationLegacy(context, data.getThreadId());
+        final ConversationLegacy conversationLegacy = new ConversationLegacy(mContext, mData.getThreadId());
 
         if (shouldUpdate) {
-            ((MainActivity) context).runOnUiThread(new Runnable() {
+            ((MainActivity) mContext).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mAvatarView.setImageDrawable(drawable);
                     mAvatarView.setContactName(name);
-                    fromView.setText(formatMessage(data, conversationLegacy));
+                    fromView.setText(formatMessage(mData, conversationLegacy));
                 }
             });
         }
@@ -102,13 +103,13 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
 
         if (conversation.getMessageCount() > 1 && mPrefs.getBoolean(SettingsFragment.MESSAGE_COUNT, false)) {
             int before = buf.length();
-            buf.append(context.getResources().getString(R.string.message_count_format, conversation.getMessageCount()));
-            buf.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.grey_light)), before, buf.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            buf.append(mContext.getResources().getString(R.string.message_count_format, conversation.getMessageCount()));
+            buf.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.grey_light)), before, buf.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
         if (conversationLegacy.hasDraft()) {
-            buf.append(context.getResources().getString(R.string.draft_separator));
+            buf.append(mContext.getResources().getString(R.string.draft_separator));
             int before = buf.length();
-            buf.append(context.getResources().getString(R.string.has_draft));
+            buf.append(mContext.getResources().getString(R.string.has_draft));
             buf.setSpan(new ForegroundColorSpan(ThemeManager.getColor()), before, buf.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 

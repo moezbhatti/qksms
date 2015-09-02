@@ -3,9 +3,8 @@ package com.moez.QKSMS.ui.base;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -36,8 +35,6 @@ public class QKContentFragment extends QKFragment implements LiveView {
     public static final int STATE_OPENED = 1;
     public static final int STATE_CLOSING = 2;
     public static final int STATE_CLOSED = 3;
-
-    protected MainActivity mContext;
 
     /**
      * It's not strictly necessary, but subclasses should call through to super() in their
@@ -78,7 +75,6 @@ public class QKContentFragment extends QKFragment implements LiveView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = (MainActivity) getActivity();
         LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
     }
 

@@ -3,6 +3,7 @@ package com.moez.QKSMS.ui.search;
 import android.view.View;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.AvatarView;
 import com.moez.QKSMS.ui.view.QKTextView;
 
@@ -14,8 +15,8 @@ public class SearchViewHolder extends ClickyViewHolder<SearchData> {
     protected QKTextView date;
     protected QKTextView snippet;
 
-    public SearchViewHolder(View view) {
-        super(view);
+    public SearchViewHolder(QKActivity context, View view) {
+        super(context, view);
 
         root = view;
         avatar = (AvatarView) view.findViewById(R.id.search_avatar);

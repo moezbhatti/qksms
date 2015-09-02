@@ -21,6 +21,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -201,8 +202,8 @@ public class SettingsFragment extends PreferenceFragment implements
         Bundle args = getArguments();
 
         mContext = (MainActivity) getActivity();
-        mPrefs = MainActivity.getPrefs(mContext);
-        mRes = MainActivity.getRes(mContext);
+        mPrefs = mContext.getPrefs();
+        mRes = mContext.getResources();
 
         mResource = args.getInt("category", R.xml.settings);
         if (mResource == R.xml.settings_simple || mResource == R.xml.settings_main) {
@@ -655,7 +656,7 @@ public class SettingsFragment extends PreferenceFragment implements
         Calendar dayCalendar = Calendar.getInstance();
         dayCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(MainActivity.getPrefs(context).getString(DAY_START, "6:00")));
+            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(DAY_START, "6:00")));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -667,7 +668,7 @@ public class SettingsFragment extends PreferenceFragment implements
         Calendar nightCalendar = Calendar.getInstance();
         nightCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(MainActivity.getPrefs(context).getString(NIGHT_START, "21:00")));
+            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(NIGHT_START, "21:00")));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -738,7 +739,7 @@ public class SettingsFragment extends PreferenceFragment implements
                 return null;
             }
 
-            mPrefs = MainActivity.getPrefs(getActivity());
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
 

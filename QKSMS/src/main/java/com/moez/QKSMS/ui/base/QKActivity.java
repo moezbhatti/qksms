@@ -1,11 +1,14 @@
 package com.moez.QKSMS.ui.base;
 
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,9 +32,14 @@ public class QKActivity extends ActionBarActivity {
     private ImageView mOverflowButton;
     private Menu mMenu;
 
+    protected Resources mRes;
+    protected SharedPreferences mPrefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRes = getResources();
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     /**
@@ -54,6 +62,10 @@ public class QKActivity extends ActionBarActivity {
         }
 
         ThemeManager.loadThemeProperties(this);
+    }
+
+    public SharedPreferences getPrefs() {
+        return mPrefs;
     }
 
     public void colorMenuIcons(Menu menu, int color) {

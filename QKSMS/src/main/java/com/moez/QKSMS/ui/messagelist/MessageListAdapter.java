@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui.messagelist;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -29,13 +28,13 @@ import com.google.android.mms.ContentType;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.CursorUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
+import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -57,7 +56,6 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
     private ArrayList<Long> mSelectedConversations = new ArrayList<>();
 
-    private Context mContext;
     private MessageItemCache mMessageItemCache;
     private MessageColumns.ColumnsMap mColumnsMap;
 
@@ -72,10 +70,10 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     private Handler mMessageListItemHandler = null; // TODO this isn't quite the same as the others
     private String mSelection = null;
 
-    public MessageListAdapter(Context context) {
-        mContext = context;
-        mRes = MainActivity.getRes(mContext);
-        mPrefs = MainActivity.getPrefs(mContext);
+    public MessageListAdapter(QKActivity context) {
+        super(context);
+        mRes = mContext.getResources();
+        mPrefs = mContext.getPrefs();
     }
 
     protected MessageItem getItem(int position) {
@@ -128,7 +126,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     }
 
     private MessageListViewHolder setupViewHolder(View view, boolean sent) {
-        MessageListViewHolder holder = new MessageListViewHolder(view);
+        MessageListViewHolder holder = new MessageListViewHolder(mContext, view);
 
         if (sent) {
             // set up colors
@@ -166,9 +164,9 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     public void onBindViewHolder(MessageListViewHolder holder, int position) {
         MessageItem messageItem = getItem(position);
 
-        holder.data = messageItem;
-        holder.context = mContext;
-        holder.clickListener = mItemClickListener;
+        holder.mData = messageItem;
+        holder.mContext = mContext;
+        holder.mClickListener = mItemClickListener;
         holder.mRoot.setOnClickListener(holder);
         holder.mRoot.setOnLongClickListener(holder);
         holder.mPresenter = null;

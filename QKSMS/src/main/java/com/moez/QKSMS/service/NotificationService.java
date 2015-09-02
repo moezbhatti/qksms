@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.IBinder;
 
+import android.preference.PreferenceManager;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
@@ -30,7 +31,7 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        prefs = MainActivity.getPrefs(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Uri uri = Uri.parse(intent.getStringExtra(EXTRA_URI));
 

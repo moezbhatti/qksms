@@ -140,8 +140,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         super(context, attrs, defStyle);
 
         mContext = (QKActivity) context;
-        mPrefs = MainActivity.getPrefs(mContext);
-        mRes = MainActivity.getRes(mContext);
+        mPrefs = mContext.getPrefs();
+        mRes = mContext.getResources();
 
         mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
         try {

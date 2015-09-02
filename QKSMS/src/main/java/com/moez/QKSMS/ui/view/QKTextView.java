@@ -3,17 +3,17 @@ package com.moez.QKSMS.ui.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.MessageUtils;
-import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -132,7 +132,7 @@ public class QKTextView extends TextView implements LiveView {
     @Override
     public void setText(CharSequence text, BufferType type) {
 
-        SharedPreferences prefs = MainActivity.getPrefs(getContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         if (mType == FontManager.TEXT_TYPE_DIALOG_BUTTON) {
             text = text.toString().toUpperCase();

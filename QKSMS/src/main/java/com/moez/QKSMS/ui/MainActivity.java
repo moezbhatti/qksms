@@ -13,7 +13,6 @@ import android.content.res.Resources;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneNumberUtils;
@@ -88,8 +87,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
     public static boolean sIsShowing = false;
     public static boolean sIsContentHidden = true;
-    private static Resources sRes;
-    private static SharedPreferences sPrefs;
 
     private SlidingMenu mSlidingMenu;
     private ConversationListFragment mConversationList;
@@ -106,9 +103,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPrefs(this);
-        getRes(this);
-
         launchWelcomeActivity();
 
         setContentView(R.layout.activity_main);
@@ -208,7 +202,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     private void launchWelcomeActivity() {
-        if (sPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
+        if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
             // User has already seen the welcome screen
             return;
         }
@@ -226,7 +220,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     private void setupSlidingMenu() {
-        setSlidingTabEnabled(sPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
+        setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
         mSlidingMenu.setBehindScrollScale(0.5f);
         mSlidingMenu.setFadeDegree(0.5f);
         mSlidingMenu.setOnOpenListener(this);
@@ -281,7 +275,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 setTitle(getString(R.string.title_settings));
                 inflater.inflate(R.menu.settings, menu);
                 MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
-                if (sPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
+                if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
                     simplePrefs.setTitle(R.string.menu_show_all_prefs);
                 } else {
                     simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
@@ -315,8 +309,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 onKeyUp(KeyEvent.KEYCODE_BACK, null);
                 break;
             case R.id.simple_settings:
-                sPrefs.edit().putBoolean(SettingsFragment.SIMPLE_PREFS,
-                        !sPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)).apply();
+                mPrefs.edit().putBoolean(SettingsFragment.SIMPLE_PREFS,
+                        !mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)).apply();
             case R.id.menu_settings:
                 switchContent(SettingsFragment.newInstance(R.xml.settings_simple), true);
                 break;
@@ -496,10 +490,10 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     private void beginMmsSetup() {
-        if (!sPrefs.getBoolean(MMS_SETUP_DONT_ASK_AGAIN, false) &&
-                TextUtils.isEmpty(sPrefs.getString(SettingsFragment.MMSC_URL, "")) &&
-                TextUtils.isEmpty(sPrefs.getString(SettingsFragment.MMS_PROXY, "")) &&
-                TextUtils.isEmpty(sPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
+        if (!mPrefs.getBoolean(MMS_SETUP_DONT_ASK_AGAIN, false) &&
+                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMSC_URL, "")) &&
+                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PROXY, "")) &&
+                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
 
             // Launch the MMS setup fragment here. This is a series of dialogs that will guide the
             // user through the MMS setup process.
@@ -680,20 +674,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 .setNegativeButton(R.string.cancel, null)
                 .setView(contents)
                 .show();
-    }
-
-    public static SharedPreferences getPrefs(Context context) {
-        if (sPrefs == null) {
-            sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        }
-        return sPrefs;
-    }
-
-    public static Resources getRes(Context context) {
-        if (sRes == null) {
-            sRes = context.getResources();
-        }
-        return sRes;
     }
 
     public static class DeleteThreadListener implements DialogInterface.OnClickListener {
