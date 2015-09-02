@@ -196,11 +196,14 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                 break;
             case 1: // new line
                 mReplyText.setInputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES |
                         InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE);
                 mReplyText.setSingleLine(false);
                 break;
             case 2: // send
-                mReplyText.setInputType(InputType.TYPE_CLASS_TEXT);
+                mReplyText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+                mReplyText.setInputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 mReplyText.setSingleLine(false);
                 mReplyText.setOnKeyListener(new OnKeyListener() { //Workaround because ACTION_SEND does not support multiline mode
                     @Override
