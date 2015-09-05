@@ -622,7 +622,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 makeCall();
                 return true;
             case R.id.menu_delete_conversation:
-                DialogHelper.showDeleteConversationDialog(mContext, mThreadId);
+                DialogHelper.showDeleteConversationDialog((MainActivity) mContext, mThreadId);
                 return true;
             case R.id.menu_details:
                 mConversationDetailsDialog.showDetails(mConversation);
@@ -1319,7 +1319,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                         }
                         // The last message in this converation was just deleted. Send the user
                         // to the conversation list.
-                        mContext.showMenu();
+                        ((MainActivity) mContext).showMenu();
                     }
                     cursor.close();
             }
@@ -1362,7 +1362,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 Conversation.init(mContext);
 
                 // Go back to the conversation list
-                mContext.showMenu();
+                ((MainActivity) mContext).showMenu();
             } else if (token == DELETE_MESSAGE_TOKEN) {
                 // Check to see if we just deleted the last message
                 startMsgListQuery(MESSAGE_LIST_QUERY_AFTER_DELETE_TOKEN);
