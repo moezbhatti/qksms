@@ -39,7 +39,7 @@ public class QKActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRes = getResources();
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        getPrefs(); // set the preferences if they haven't been set. this method takes care of that logic for us
     }
 
     /**
@@ -65,6 +65,9 @@ public class QKActivity extends ActionBarActivity {
     }
 
     public SharedPreferences getPrefs() {
+        if (mPrefs == null) {
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        }
         return mPrefs;
     }
 
