@@ -122,6 +122,7 @@ public class Contact {
         mIsStale = true;
         mSendToVoicemail = false;
     }
+
     @Override
     public String toString() {
         return String.format("{ number=%s, name=%s, nameAndNumber=%s, label=%s, person_id=%d, hash=%d method_id=%d }",

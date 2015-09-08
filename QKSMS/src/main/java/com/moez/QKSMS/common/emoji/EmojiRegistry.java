@@ -38,28 +38,29 @@ public class EmojiRegistry {
     public static String parseEmojis(String body) {
         if (TextUtils.isEmpty(body)) {
             return body;
-        } else {
-            // whitespace and punctuation characters
-            String ACCEPTED_CHARS = "[\\s.,?:;'\"!]";
-
-            // explanation: we want to match:
-            // 1) either an accepted char or the beginning of the text (i.e. ^)
-            // 2) the actual emoji code (to be inserted in the loop)
-            // 3) either an accepted char or the end of the text (i.e. $)
-            String REGEX_TEMPLATE = String.format("(^|%s)%s(%s|$)", ACCEPTED_CHARS, "%s", ACCEPTED_CHARS);
-
-            // iterate over all the entries
-            for (Map.Entry<String, String> entry : EmojiRegistry.EMOJIS_MAP.entrySet()) {
-                // quote the emoji code because some characters like ) are protected in regex land
-                String quoted = Pattern.quote(entry.getKey());
-                String regex = String.format(REGEX_TEMPLATE, quoted);
-
-                // the $1 and $2 represent the character* that came before the emoji and the
-                // character* that came after the emoji
-                // * - or beginning / end of text
-                body = body.replaceAll(regex, "$1:" + entry.getValue() + ":$2");
-            }
-            return EmojiParser.parseToUnicode(body);
         }
+
+        // whitespace and punctuation characters
+        String ACCEPTED_CHARS = "[\\s.,?:;'\"!]";
+
+        // explanation: we want to match:
+        // 1) either an accepted char or the beginning of the text (i.e. ^)
+        // 2) the actual emoji code (to be inserted in the loop)
+        // 3) either an accepted char or the end of the text (i.e. $)
+        String REGEX_TEMPLATE = String.format("(^|%s)%s(%s|$)", ACCEPTED_CHARS, "%s", ACCEPTED_CHARS);
+
+        // iterate over all the entries
+        for (Map.Entry<String, String> entry : EmojiRegistry.EMOJIS_MAP.entrySet()) {
+            // quote the emoji code because some characters like ) are protected in regex land
+            String quoted = Pattern.quote(entry.getKey());
+            String regex = String.format(REGEX_TEMPLATE, quoted);
+
+            // the $1 and $2 represent the character* that came before the emoji and the
+            // character* that came after the emoji
+            // * - or beginning / end of text
+            body = body.replaceAll(regex, "$1:" + entry.getValue() + ":$2");
+        }
+
+        return EmojiParser.parseToUnicode(body);
     }
 }

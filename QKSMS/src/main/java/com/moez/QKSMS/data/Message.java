@@ -82,12 +82,12 @@ public class Message {
     }
 
     public boolean isMms() {
-        boolean bool = false;
+        boolean isMms = false;
         Cursor cursor = null;
         try {
             cursor = context.getContentResolver().query(MMS_SMS_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_MMS}, "_id=" + id, null, null);
             cursor.moveToFirst();
-            bool = "application/vnd.wap.multipart.related".equals(cursor.getString(cursor.getColumnIndex(SmsHelper.COLUMN_MMS)));
+            isMms = "application/vnd.wap.multipart.related".equals(cursor.getString(cursor.getColumnIndex(SmsHelper.COLUMN_MMS)));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -95,7 +95,7 @@ public class Message {
                 cursor.close();
             }
         }
-        return bool;
+        return isMms;
     }
 
     public String getAddress() {
