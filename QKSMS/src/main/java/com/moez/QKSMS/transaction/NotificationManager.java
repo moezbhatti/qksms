@@ -618,10 +618,11 @@ public class NotificationManager {
         for (long threadId : threadIds) {
             if (!oldThreads.contains(threadId)) {
                 ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, threadId);
+                Integer privateNotification = conversationPrefs.getPrivateNotificationsSetting();
                 if (conversations.get(threadId).size() == 1) {
-                    singleMessage(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, 0);
+                    singleMessage(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, privateNotification);
                 } else {
-                    singleSender(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, 0);
+                    singleSender(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, privateNotification);
                 }
             }
         }
