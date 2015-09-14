@@ -321,7 +321,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         selection.append(" != 0");
         selection.append(" AND ");
         selection.append(Telephony.Threads._ID);
-        selection.append(" != (");
+        selection.append(" NOT IN (");
 
         Set<String> idStrings = mPrefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
         Object[] idArray = idStrings.toArray();
