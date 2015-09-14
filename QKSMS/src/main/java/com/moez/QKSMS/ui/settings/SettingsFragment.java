@@ -111,6 +111,8 @@ public class SettingsFragment extends PreferenceFragment implements
     public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
     public static final String DELIVERY_VIBRATE = "pref_key_delivery_vibrate";
     public static final String YAPPY = "pref_key_endlessjabber";
+    public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
+    public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
     public static final String MOBILE_ONLY = "pref_key_mobile_only";
     public static final String COMPOSE_GROUP = "pref_key_compose_group";
     public static final String SPLIT_SMS = "pref_key_split";

@@ -91,6 +91,13 @@
         android:title="@string/pref_category_general">
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="pref_key_blocked_enabled"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_blocked_senders_summary"
+            android:title="@string/pref_blocked_senders"
+            android:widgetLayout="@layout/view_checkbox" />
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="pref_key_mobile_only"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_mobile_only_summary"
