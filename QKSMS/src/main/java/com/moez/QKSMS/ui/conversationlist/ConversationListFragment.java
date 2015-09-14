@@ -319,9 +319,24 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         StringBuilder selection = new StringBuilder();
         selection.append(Telephony.Threads.MESSAGE_COUNT);
         selection.append(" != 0");
+        selection.append(" AND ");
+        selection.append(Telephony.Threads._ID);
+        selection.append(" != (");
+
+        Set<String> idStrings = mPrefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
+        Object[] idArray = idStrings.toArray();
+        String[] idStringArray = new String[idStrings.size()];
+        for (int i = 0; i < idStrings.size(); i++) {
+            idStringArray[i] = (String) idArray[i];
+            selection.append("?");
+            if (i < idStrings.size() - 1) {
+                selection.append(",");
+            }
+        }
+        selection.append(")");
 
         return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER,
-                Conversation.ALL_THREADS_PROJECTION, selection.toString(), null, "date DESC");
+                Conversation.ALL_THREADS_PROJECTION, selection.toString(), idStringArray, "date DESC");
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
