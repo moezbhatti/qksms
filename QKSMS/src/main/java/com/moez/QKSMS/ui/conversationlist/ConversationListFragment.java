@@ -139,6 +139,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         } else {
             mAdapter.disableMultiSelectMode(false);
         }
+
+        BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, menu.findItem(R.id.blocked));
     }
 
     @Override
@@ -284,7 +286,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     }
 
     private void initLoaderManager() {
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     private void switchFragment(Fragment fragment) {

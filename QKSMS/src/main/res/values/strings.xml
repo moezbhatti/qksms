@@ -164,8 +164,8 @@
     <string name="pref_delivery_vibrate_summary">Vibrate on message delivery</string>
     <string name="pref_yappy">Yappy integration</string>
     <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
-    <string name="pref_blocked_senders">Blocked senders</string>
-    <string name="pref_blocked_senders_summary">Long-press on a conversation to block messages</string>
+    <string name="pref_blocked_conversations">Blocked conversations</string>
+    <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
     <string name="pref_mobile_only">Mobile numbers</string>
     <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
     <string name="pref_auto_emoji">Automatic emoji</string>
@@ -634,6 +634,7 @@
     <string name="menu_unmute_conversation">Unmute conversation</string>
     <string name="menu_block_conversation">Block conversation</string>
     <string name="menu_unblock_conversation">Unblock conversation</string>
+    <string name="menu_blocked_conversations">Blocked (%s)</string>
     <string name="menu_notification_settings">Notification settings</string>
     <string name="menu_view_details">View details</string>
     <string name="menu_mark_read">Mark read</string>

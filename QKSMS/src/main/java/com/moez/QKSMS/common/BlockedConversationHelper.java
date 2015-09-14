@@ -1,7 +1,10 @@
 package com.moez.QKSMS.common;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.provider.Telephony;
+import android.view.MenuItem;
+import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.HashSet;
@@ -65,5 +68,19 @@ public class BlockedConversationHelper {
         selection.append(")");
 
         return selection.toString();
+    }
+
+    /**
+     * If the user has message blocking enabled, then in the menu of the conversation list, there's an item that says
+     * Blocked (#). This method will find the number of blocked unread messages to show in that menu item and bind it
+     */
+    public static void bindBlockedMenuItem(Context context, SharedPreferences prefs, MenuItem item) {
+        if (item == null) {
+            return;
+        }
+
+        item.setVisible(prefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
+        item.setTitle(context.getString(R.string.menu_blocked_conversations, 4));
+
     }
 }
