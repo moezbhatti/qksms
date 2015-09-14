@@ -10,7 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Telephony;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
@@ -40,9 +40,6 @@ import com.moez.QKSMS.ui.compose.ComposeFragment;
 import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>, LiveView,
@@ -198,12 +195,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         }
 
         if (mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false)) {
-            Set<String> idStrings = mPrefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
-            HashSet<Long> ids = new HashSet<>();
-            for (String s : idStrings) {
-                ids.add(Long.parseLong(s));
-            }
-            if (ids.contains(conversation.getThreadId())) {
+            if (BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId())) {
                 dialog.addMenuItem(R.string.menu_unblock_conversation, MENU_UNBLOCK_CONVERSATION);
             } else {
                 dialog.addMenuItem(R.string.menu_block_conversation, MENU_BLOCK_CONVERSATION);
@@ -249,15 +241,11 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                         break;
 
                     case MENU_BLOCK_CONVERSATION:
-                        Set<String> idStrings = mPrefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
-                        idStrings.add(String.valueOf(conversation.getThreadId()));
-                        mPrefs.edit().putStringSet(SettingsFragment.BLOCKED_SENDERS, idStrings).apply();
+                        BlockedConversationHelper.blockConversation(mPrefs, conversation.getThreadId());
                         break;
 
                     case MENU_UNBLOCK_CONVERSATION:
-                        Set<String> idStrings2 = mPrefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
-                        idStrings2.remove(String.valueOf(conversation.getThreadId()));
-                        mPrefs.edit().putStringSet(SettingsFragment.BLOCKED_SENDERS, idStrings2).apply();
+                        BlockedConversationHelper.unblockConversation(mPrefs, conversation.getThreadId());
                         break;
 
                     case MENU_MARK_READ:
@@ -316,27 +304,10 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        StringBuilder selection = new StringBuilder();
-        selection.append(Telephony.Threads.MESSAGE_COUNT);
-        selection.append(" != 0");
-        selection.append(" AND ");
-        selection.append(Telephony.Threads._ID);
-        selection.append(" NOT IN (");
 
-        Set<String> idStrings = mPrefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
-        Object[] idArray = idStrings.toArray();
-        String[] idStringArray = new String[idStrings.size()];
-        for (int i = 0; i < idStrings.size(); i++) {
-            idStringArray[i] = (String) idArray[i];
-            selection.append("?");
-            if (i < idStrings.size() - 1) {
-                selection.append(",");
-            }
-        }
-        selection.append(")");
-
-        return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER,
-                Conversation.ALL_THREADS_PROJECTION, selection.toString(), idStringArray, "date DESC");
+        return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
+                BlockedConversationHelper.getCursorSelection(mPrefs),
+                BlockedConversationHelper.getBlockedConversationArray(mPrefs), "date DESC");
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
