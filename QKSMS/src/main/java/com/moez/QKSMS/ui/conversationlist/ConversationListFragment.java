@@ -282,9 +282,12 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        final String SELECTION = Telephony.Threads.MESSAGE_COUNT + "!= 0";
+        StringBuilder selection = new StringBuilder();
+        selection.append(Telephony.Threads.MESSAGE_COUNT);
+        selection.append(" != 0");  
+
         return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER,
-                Conversation.ALL_THREADS_PROJECTION, SELECTION, null, "date DESC");
+                Conversation.ALL_THREADS_PROJECTION, selection.toString(), null, "date DESC");
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
