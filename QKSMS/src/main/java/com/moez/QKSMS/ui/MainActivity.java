@@ -31,7 +31,7 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DonationManager;
-import com.moez.QKSMS.common.QksmsRateSnack;
+import com.moez.QKSMS.common.QKRateSnack;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
@@ -128,8 +128,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         showDialogIfNeeded(savedInstanceState);
 
         //Adds a small/non intrusive snackbar that asks the user to rate the app
-        SnackEngage.from(MainActivity.this).withSnack(
-                new QksmsRateSnack().withDuration(BaseSnack.DURATION_LONG)).build().engageWhenAppropriate();
+        SnackEngage.from(this).withSnack(new QKRateSnack().withDuration(BaseSnack.DURATION_LONG))
+                .build().engageWhenAppropriate();
     }
 
     /**

@@ -49,6 +49,8 @@
   <string name="details_body">Inhalt</string>
   <string name="details_date_sent">Gesendet</string>
   <string name="details_date_received">Empfangen</string>
+  <string name="rate_title">Gefällt dir QKSMS?</string>
+  <string name="rate_action">Bewerten</string>
   <string name="pref_category_appearance">Erscheinungsbild</string>
   <string name="pref_category_summary_appearance">Themen, Schriften, Farben, Avatare und mehr</string>
   <string name="pref_category_general">Allgemein</string>
