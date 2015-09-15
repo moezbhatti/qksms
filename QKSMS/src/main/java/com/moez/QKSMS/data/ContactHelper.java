@@ -189,7 +189,6 @@ public class ContactHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return bitmap;
     }
     
