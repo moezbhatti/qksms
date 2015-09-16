@@ -39,6 +39,7 @@ import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.google.android.mms.pdu_alt.SendReq;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.formatter.FormatterFactory;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.model.SlideModel;
 import com.moez.QKSMS.model.SlideshowModel;
@@ -152,6 +153,7 @@ public class MessageItem {
                 mContact = Contact.get(mAddress, canBlock).getName();
             }
             mBody = cursor.getString(columnsMap.mColumnSmsBody);
+            mBody = FormatterFactory.format(mBody);
 
             // Unless the message is currently in the progress of being sent, it gets a time stamp.
             if (!isOutgoingMessage()) {

@@ -260,6 +260,10 @@ public class Contact {
         }
     }
 
+    public synchronized boolean isNamed() {
+        return !TextUtils.isEmpty(mName);
+    }
+
     public synchronized String getNameAndNumber() {
         return mNameAndNumber;
     }
