@@ -32,12 +32,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.data.ContactHelper;
-import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
+import com.moez.QKSMS.data.ContactHelper;
+import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 
@@ -62,6 +63,7 @@ public class WidgetService extends RemoteViewsService {
         private static final int MAX_CONVERSATIONS_COUNT = 25;
         private final Context mContext;
         private final int mAppWidgetId;
+        private final int mSmallWidget;
         private boolean mShouldShowViewMore;
         private Cursor mConversationCursor;
         private int mUnreadConvCount;
@@ -70,6 +72,7 @@ public class WidgetService extends RemoteViewsService {
         public WidgetFactory(Context context, Intent intent) {
             mContext = context;
             mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+            mSmallWidget = intent.getIntExtra("small_widget", 0);
             mAppWidgetManager = AppWidgetManager.getInstance(context);
             Log.v(TAG, "WidgetFactory intent: " + intent + "widget id: " + mAppWidgetId);
         }
@@ -190,8 +193,11 @@ public class WidgetService extends RemoteViewsService {
 
                 Conversation conversation = Conversation.from(mContext, mConversationCursor);
                 RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.list_item_conversation_widget);
-
-                bindAvatar(remoteViews, conversation);
+                if (mSmallWidget == 0) {
+                    remoteViews.setViewVisibility(R.id.avatar, View.VISIBLE);
+                    bindAvatar(remoteViews, conversation);
+                }
+                else remoteViews.setViewVisibility(R.id.avatar, View.GONE);
                 bindIndicators(remoteViews, conversation);
                 bindDate(remoteViews, conversation);
                 bindName(remoteViews, conversation);
