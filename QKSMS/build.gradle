@@ -81,6 +81,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:support-v13:22.2.1'
     compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile group: 'com.google.guava', name: 'guava', version: '18.0'
     withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.5.0'
     // External services
     withAnalyticsCompile 'com.crittercism:crittercism-android-agent:5.0.3'

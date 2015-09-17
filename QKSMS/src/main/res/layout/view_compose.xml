@@ -163,6 +163,14 @@
             android:src="@drawable/ic_camera" />
 
         <ImageButton
+            android:id="@+id/audio"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/button_background_transparent_light"
+            android:padding="16dp"
+            android:src="@drawable/ic_audiotrack" />
+
+        <ImageButton
             android:id="@+id/delay"
             android:layout_width="56dp"
             android:layout_height="56dp"
