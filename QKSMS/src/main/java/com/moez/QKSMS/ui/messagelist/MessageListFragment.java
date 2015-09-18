@@ -292,14 +292,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.conversation, menu);
-        setTitle();
-
-        //super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -763,6 +755,14 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 mComposeView.saveDraft();
             }
         }
+    }
+
+    @Override
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        inflater.inflate(R.menu.conversation, menu);
+        setTitle();
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.moez.QKSMS.ui.search;
 
 import android.content.AsyncQueryHandler;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -101,14 +102,6 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.search, menu);
-        mContext.setTitle(R.string.title_search);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
     private void query() {
         Contact.addListener(mContactListener);
 
@@ -139,6 +132,14 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     public void onContentOpened() {
         // Show the keyboard and focus on the query text when the fragment is opened.
         KeyboardUtils.showAndFocus(mContext, mQuery);
+    }
+
+    @Override
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        inflater.inflate(R.menu.search, menu);
+        mContext.setTitle(R.string.title_search);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

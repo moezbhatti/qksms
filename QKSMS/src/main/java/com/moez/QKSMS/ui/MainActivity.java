@@ -273,7 +273,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             inflater.inflate(R.menu.coversation_list, menu);
         } else {
             showBackButton(true);
-            ((Fragment) mContent).onCreateOptionsMenu(menu, inflater);
+            mContent.inflateToolbar(menu, inflater, this);
         }
 
         return true;

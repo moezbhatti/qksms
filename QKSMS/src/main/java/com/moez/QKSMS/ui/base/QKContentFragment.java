@@ -22,7 +22,7 @@ import com.moez.QKSMS.ui.settings.SettingsFragment;
  * - Manages the current state of the fragment in terms of the animation, i.e. opening, fully
  * opened, etc.
  */
-public class QKContentFragment extends QKFragment implements LiveView, ContentFragment {
+public abstract class QKContentFragment extends QKFragment implements LiveView, ContentFragment {
 
     /**
      * It's not strictly necessary, but subclasses should call through to super() in their

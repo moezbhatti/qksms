@@ -21,12 +21,10 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -683,33 +681,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.settings, menu);
-        mContext.setTitle(R.string.title_settings);
-
-        MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
-        if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
-            simplePrefs.setTitle(R.string.menu_show_all_prefs);
-        } else {
-            simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
-        }
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        mContext.colorMenuIcons(menu, ThemeManager.getTextOnColorPrimary());
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
 
@@ -744,5 +715,23 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     @Override
     public void onContentClosed() {
 
+    }
+
+    @Override
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        if (mContext == null) {
+            mContext = (MainActivity) context;
+            mPrefs = mContext.getPrefs();
+        }
+
+        inflater.inflate(R.menu.settings, menu);
+        mContext.setTitle(R.string.title_settings);
+
+        MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
+        if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
+            simplePrefs.setTitle(R.string.menu_show_all_prefs);
+        } else {
+            simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.moez.QKSMS.ui.compose;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -65,8 +66,8 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
      * Returns a ComposeFragment, configured with the args. If possible, the given fragment
      * is used instead of creating a new ComposeFragment.
      *
-     * @param args A Bundle with options for configuring this fragment. See the ARG_ constants for
-     *             configuration options.
+     * @param args          A Bundle with options for configuring this fragment. See the ARG_ constants for
+     *                      configuration options.
      * @param reuseFragment A fragment that can be used instead of creating a new one.
      * @return the ComposeFragment, which may be recycled
      */
@@ -75,7 +76,7 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
 
         // Check if we can reuse the passed fragment.
         if (reuseFragment != null && reuseFragment instanceof ComposeFragment) {
-            f = (ComposeFragment)reuseFragment;
+            f = (ComposeFragment) reuseFragment;
         } else {
             f = new ComposeFragment();
         }
@@ -111,14 +112,6 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
         mStarredContactsView.setComposeScreenViews(mRecipients, mComposeView);
 
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.compose, menu);
-        mContext.setTitle(R.string.title_compose);
-
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -172,6 +165,14 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
         if (getActivity() != null && getActivity().getCurrentFocus() != null) {
             getActivity().getCurrentFocus().clearFocus();
         }
+    }
+
+    @Override
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        inflater.inflate(R.menu.compose, menu);
+        mContext.setTitle(R.string.title_compose);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**
