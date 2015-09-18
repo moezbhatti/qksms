@@ -23,6 +23,8 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -678,6 +680,21 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             alarmManager.cancel(dayIntent);
             alarmManager.cancel(nightIntent);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.settings, menu);
+        mContext.setTitle(R.string.title_settings);
+
+        MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
+        if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
+            simplePrefs.setTitle(R.string.menu_show_all_prefs);
+        } else {
+            simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
+        }
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

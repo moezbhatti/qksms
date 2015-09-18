@@ -52,6 +52,12 @@ import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.DialogHelper;
+import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.common.utils.DrmUtils;
+import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.common.utils.MessageUtils;
+import com.moez.QKSMS.common.vcard.ContactOperations;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactList;
 import com.moez.QKSMS.data.Conversation;
@@ -59,12 +65,6 @@ import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.common.DialogHelper;
-import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
-import com.moez.QKSMS.common.utils.DrmUtils;
-import com.moez.QKSMS.common.utils.KeyboardUtils;
-import com.moez.QKSMS.common.utils.MessageUtils;
-import com.moez.QKSMS.common.vcard.ContactOperations;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
@@ -293,7 +293,10 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.conversation, menu);
+        setTitle();
+
+        //super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -329,7 +332,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         new LoadConversationTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
     }
 
-    public void setTitle() {
+    private void setTitle() {
         if (mContext != null && mConversation != null) {
             mContext.setTitle(mConversation.getRecipients().formatNames(", "));
         }

@@ -1,21 +1,21 @@
 package com.moez.QKSMS.ui.compose;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
-import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.interfaces.ActivityLauncher;
-import com.moez.QKSMS.interfaces.RecipientProvider;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.interfaces.ActivityLauncher;
+import com.moez.QKSMS.interfaces.RecipientProvider;
+import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.view.AutoCompleteContactView;
@@ -41,8 +41,6 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
     public static final String FOCUS_NOTHING = "nothing";
     public static final String FOCUS_RECIPIENTS = "recipients";
     public static final String FOCUS_REPLY = "reply";
-
-    private Context mContext;
 
     private AutoCompleteContactView mRecipients;
     private ComposeView mComposeView;
@@ -95,12 +93,6 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = getActivity();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_compose, container, false);
@@ -119,6 +111,14 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
         mStarredContactsView.setComposeScreenViews(mRecipients, mComposeView);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.compose, menu);
+        mContext.setTitle(R.string.title_compose);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

@@ -249,42 +249,25 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-
-        if (mSlidingMenu.isMenuShowing() || mContent == null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-            setTitle(getString(R.string.title_conversation_list));
-            inflater.inflate(R.menu.coversation_list, menu);
-
-        } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            if (mContent instanceof MessageListFragment) {
-                inflater.inflate(R.menu.conversation, menu);
-                ((MessageListFragment) mContent).setTitle();
-
-            } else if (mContent instanceof SearchFragment) {
-                setTitle(getString(R.string.title_search));
-                inflater.inflate(R.menu.search, menu);
-
-            } else if (mContent instanceof SettingsFragment) {
-                setTitle(getString(R.string.title_settings));
-                inflater.inflate(R.menu.settings, menu);
-                MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
-                if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
-                    simplePrefs.setTitle(R.string.menu_show_all_prefs);
-                } else {
-                    simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
-                }
-
-            } else if (mContent instanceof ComposeFragment) {
-                setTitle(getString(R.string.title_compose));
-                inflater.inflate(R.menu.compose, menu);
-            }
-        }
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        menu.clear();
+
+        if (mSlidingMenu.isMenuShowing() || mContent == null) {
+            showBackButton(false);
+            setTitle(getString(R.string.title_conversation_list));
+            inflater.inflate(R.menu.coversation_list, menu);
+        } else {
+            showBackButton(true);
+            ((Fragment) mContent).onCreateOptionsMenu(menu, inflater);
+        }
+
+        return true;
     }
 
     public Fragment getConversationList() {
@@ -590,7 +573,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         // Hide the soft keyboard
         KeyboardUtils.hide(this, getCurrentFocus());
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        showBackButton(false);
     }
 
     @Override
@@ -608,7 +591,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         // Hide the soft keyboard
         KeyboardUtils.hide(this, getCurrentFocus());
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        showBackButton(true);
     }
 
     @Override

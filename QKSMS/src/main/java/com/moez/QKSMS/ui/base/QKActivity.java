@@ -64,6 +64,10 @@ public class QKActivity extends ActionBarActivity {
         ThemeManager.loadThemeProperties(this);
     }
 
+    protected void showBackButton(boolean show) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(show);
+    }
+
     public SharedPreferences getPrefs() {
         if (mPrefs == null) {
             mPrefs = PreferenceManager.getDefaultSharedPreferences(this);

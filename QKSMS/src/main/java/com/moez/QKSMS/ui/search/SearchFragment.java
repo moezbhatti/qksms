@@ -10,6 +10,8 @@ import android.provider.Telephony;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -97,6 +99,14 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search, menu);
+        mContext.setTitle(R.string.title_search);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void query() {

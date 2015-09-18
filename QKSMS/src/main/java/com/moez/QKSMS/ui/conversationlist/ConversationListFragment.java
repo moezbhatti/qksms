@@ -217,7 +217,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
                     case MENU_NOTIFICATION_SETTINGS:
                         ConversationNotificationSettingsDialog.newInstance(threadId, name).setContext(mContext)
-                                .show(((MainActivity) mContext).getFragmentManager(), "notification prefs");
+                                .show(getFragmentManager(), "notification prefs");
                         break;
 
                     case MENU_VIEW_DETAILS:
