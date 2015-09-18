@@ -161,10 +161,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                 return true;
 
             case R.id.menu_blocked:
-                mShowBlocked = !mShowBlocked;
-                mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
-                BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
-                initLoaderManager();
+                setShowingBlocked(!mShowBlocked);
                 return true;
         }
 
@@ -173,6 +170,17 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
     public int getTitleId() {
         return mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list;
+    }
+
+    public boolean isShowingBlocked() {
+        return mShowBlocked;
+    }
+
+    public void setShowingBlocked(boolean showBlocked) {
+        mShowBlocked = showBlocked;
+        mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
+        BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
+        initLoaderManager();
     }
 
     @Override
