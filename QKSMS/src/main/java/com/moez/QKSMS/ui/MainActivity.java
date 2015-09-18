@@ -24,10 +24,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DonationManager;
+import com.moez.QKSMS.common.QKRateSnack;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
@@ -51,6 +53,9 @@ import com.moez.QKSMS.ui.view.slidingmenu.SlidingMenu;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.listeners.ActionClickListener;
+
+import org.ligi.snackengage.SnackEngage;
+import org.ligi.snackengage.snacks.BaseSnack;
 
 import java.net.URLDecoder;
 import java.util.Collection;
@@ -112,6 +117,10 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         onNewIntent(getIntent());
 
         showDialogIfNeeded(savedInstanceState);
+
+        //Adds a small/non intrusive snackbar that asks the user to rate the app
+        SnackEngage.from(this).withSnack(new QKRateSnack().withDuration(BaseSnack.DURATION_LONG))
+                .build().engageWhenAppropriate();
     }
 
     /**

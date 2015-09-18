@@ -101,6 +101,10 @@
     <string name="details_date_sent">Date sent</string>
     <!--Title for date received of a message in message details popup-->
     <string name="details_date_received">Date received</string>
+    <!--Title for rate snackbar-->
+    <string name="rate_title">Like QKSMS?</string>
+    <!--Title for rate button-->
+    <string name="rate_action">Rate</string>
 
     <string name="pref_category_appearance">Appearance</string>
     <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>

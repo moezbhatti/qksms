@@ -1,5 +1,8 @@
 package com.moez.QKSMS.common.emoji;
 
+/**
+ * Defines all supported emojis
+ */
 public class Emojis {
     public static final String SMILE = "smile";
     public static final String SMILEY = "smiley";

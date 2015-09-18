@@ -30,6 +30,7 @@
         <item>Jacob Klinker</item>
         <item>Jeff Gilfelt</item>
         <item>Melnykov Oleksandr</item>
+        <item>ligi</item>
     </string-array>
 
     <string-array name="contributor_githubs">
@@ -39,6 +40,7 @@
         <item>github.com/klinker41</item>
         <item>github.com/jgilfelt</item>
         <item>github.com/makovkastar</item>
+        <item>github.com/ligi</item>
     </string-array>
 
     <string-array name="contributor_projects">
@@ -48,6 +50,7 @@
         <item>android-smsmms\nandroid-chips</item>
         <item>SystemBarTint</item>
         <item>FloatingActionButton</item>
+        <item>SnackEngage</item>
     </string-array>
 
     <string-array name="changelog_versions">

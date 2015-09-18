@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
     compile 'com.googlecode.ez-vcard:ez-vcard:0.9.6'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.koushikdutta.ion:ion:1.1.7'
+    compile 'org.ligi:snackengage:0.4'
 
     // Google libraries
     compile 'com.android.support:appcompat-v7:22.2.1'

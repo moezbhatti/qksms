@@ -49,7 +49,7 @@ Any new code written should follow these guidelines
 
 # Bug Reports / Feature Requests
 
-We track issues and pull requests using GitHub issues. You can view existing issues and create your own here: https://github.com/qklabs/qksms/issues
+We track issues and feature requests using GitHub issues. You can view existing issues and create your own here: https://github.com/qklabs/qksms/issues
 
 ### How to help
 
@@ -90,12 +90,12 @@ The conversation isn't marked as read.
 #### Helping reproduce bugs
 Reproducing a bug is important, since if we can't reproduce an issue then it's hard to figure out what's going wrong, and we can't know that we've fixed it. 
 
-To see bugs that need "repro steps", go to the Issues section and search for `is:open label:needs-repro`. If you see any bugs that you know how to reproduce (see above for example repro steps), then make a comment with the steps and we'll track the bug down!
+You can see bugs which need "repro steps" [here](https://github.com/qklabs/qksms/issues?q=is%3Aopen+is%3Aissue+label%3Aneeds-repro). If you see any bugs that you know how to reproduce (see above for example repro steps), then make a comment with the steps and we'll track the bug down!
 
 #### Making enhancement requests
 There are no rules for enhancement requests. Your ideas are all awesome. Although we may not implement every suggestion, we love brainstorming with you and hearing your feedback.
 
-To make an enhancement request, add an "issue" with the "enhancement" label.
+To make an enhancement request, add an "issue".
 
 # Contact
 
