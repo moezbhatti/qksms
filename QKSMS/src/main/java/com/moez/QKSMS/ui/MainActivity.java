@@ -257,12 +257,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         menu.clear();
@@ -276,7 +270,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             mContent.inflateToolbar(menu, inflater, this);
         }
 
-        return true;
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public Fragment getConversationList() {

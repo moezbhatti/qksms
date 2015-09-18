@@ -24,7 +24,7 @@ import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.ArrayList;
 
-public class QKActivity extends ActionBarActivity {
+public abstract class QKActivity extends ActionBarActivity {
     private final String TAG = "QKActivity";
 
     private Toolbar mToolbar;
@@ -151,12 +151,11 @@ public class QKActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         // Save a reference to the menu so that we can quickly access menu icons later.
         mMenu = menu;
         colorMenuIcons(mMenu, ThemeManager.getTextOnColorPrimary());
-
-        return super.onCreateOptionsMenu(mMenu);
+        return true;
     }
 
     @Override
