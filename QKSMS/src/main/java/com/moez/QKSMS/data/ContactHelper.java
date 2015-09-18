@@ -189,10 +189,9 @@ public class ContactHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return bitmap;
     }
-
+    
     public static Bitmap blankContact(Context context, String name) {
         String text = name == null || PhoneNumberUtils.isWellFormedSmsAddress(PhoneNumberUtils.stripSeparators(name)) || name.length() == 0 ? "#" : "" + name.toUpperCase().charAt(0);
 
