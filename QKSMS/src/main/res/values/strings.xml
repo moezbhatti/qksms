@@ -635,6 +635,8 @@
     <string name="menu_unmute_conversation">Unmute conversation</string>
     <string name="menu_block_conversation">Block conversation</string>
     <string name="menu_unblock_conversation">Unblock conversation</string>
+    <string name="menu_messages">Messages</string>
+    <string name="menu_blocked">Blocked</string>
     <string name="menu_blocked_conversations">Blocked (%s new)</string>
     <string name="menu_unblocked_conversations">Messages (%s new)</string>
     <string name="menu_notification_settings">Notification settings</string>

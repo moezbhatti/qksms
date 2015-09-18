@@ -93,9 +93,7 @@ public class BlockedConversationHelper {
      * Blocked (#). This method will find the number of blocked unread messages to show in that menu item and bind it
      */
     public static void bindBlockedMenuItem(final Context context, final SharedPreferences prefs, final MenuItem item, boolean showBlocked) {
-        Log.d("BlockedConversationHelper", "bindBlockedMenuItem");
         if (item == null) {
-            Log.d("BlockedConversationHelper", "item is null");
             return;
         }
 
@@ -120,7 +118,7 @@ public class BlockedConversationHelper {
         protected void onPreExecute() {
             super.onPreExecute();
             mMenuItem.setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
-            mMenuItem.setTitle(mContext.getString(mShowBlocked ? R.string.menu_unblocked_conversations : R.string.menu_blocked_conversations, "..."));
+            mMenuItem.setTitle(mContext.getString(mShowBlocked ? R.string.menu_messages : R.string.menu_blocked));
         }
 
         @Override
