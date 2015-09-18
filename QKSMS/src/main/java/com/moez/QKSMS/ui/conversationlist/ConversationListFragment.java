@@ -66,6 +66,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private ConversationDetailsDialog mConversationDetailsDialog;
     private QKActivity mContext;
     private SharedPreferences mPrefs;
+    private MenuItem mBlockedItem;
+    private boolean mShowBlocked = false;
 
     // This does not hold the current position of the list, rather the position the list is pending being set to
     private int mPosition;
@@ -140,7 +142,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             mAdapter.disableMultiSelectMode(false);
         }
 
-        BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, menu.findItem(R.id.blocked));
+        mBlockedItem = menu.findItem(R.id.menu_blocked);
+        BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
     }
 
     @Override
@@ -149,11 +152,18 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             case R.id.menu_delete:
                 DialogHelper.showDeleteConversationsDialog((MainActivity) mContext, mAdapter);
                 return true;
+
             case R.id.menu_mark_read:
                 for (long threadId : mAdapter.getSelectedItems()) {
                     new ConversationLegacy(mContext, threadId).markRead();
                 }
                 mAdapter.disableMultiSelectMode(true);
+                return true;
+
+            case R.id.menu_blocked:
+                mShowBlocked = !mShowBlocked;
+                BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
+                initLoaderManager();
                 return true;
         }
 
@@ -265,6 +275,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                     case MENU_DELETE_CONVERSATION:
                         DialogHelper.showDeleteConversationDialog((MainActivity) mContext, threadId);
                         break;
+
                     case MENU_DELETE_FAILED:
                         //Deletes all failed messages from all conversations
                         DialogHelper.showDeleteFailedMessagesDialog((MainActivity) mContext, threadId);
@@ -300,15 +311,12 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         LiveViewManager.unregisterView(this);
-
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
         return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
-                BlockedConversationHelper.getCursorSelection(mPrefs),
+                BlockedConversationHelper.getCursorSelection(mPrefs, mShowBlocked),
                 BlockedConversationHelper.getBlockedConversationArray(mPrefs), "date DESC");
     }
 

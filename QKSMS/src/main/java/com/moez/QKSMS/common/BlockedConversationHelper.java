@@ -2,9 +2,17 @@ package com.moez.QKSMS.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.Telephony;
+import android.util.Log;
 import android.view.MenuItem;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.data.Message;
+import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.HashSet;
@@ -50,13 +58,14 @@ public class BlockedConversationHelper {
         return idStringArray;
     }
 
-    public static String getCursorSelection(SharedPreferences prefs) {
+    public static String getCursorSelection(SharedPreferences prefs, boolean blocked) {
         StringBuilder selection = new StringBuilder();
         selection.append(Telephony.Threads.MESSAGE_COUNT);
         selection.append(" != 0");
         selection.append(" AND ");
         selection.append(Telephony.Threads._ID);
-        selection.append(" NOT IN (");
+        if (!blocked) selection.append(" NOT");
+        selection.append(" IN (");
 
         Set<String> idStrings = getBlockedConversations(prefs);
         for (int i = 0; i < idStrings.size(); i++) {
@@ -74,13 +83,65 @@ public class BlockedConversationHelper {
      * If the user has message blocking enabled, then in the menu of the conversation list, there's an item that says
      * Blocked (#). This method will find the number of blocked unread messages to show in that menu item and bind it
      */
-    public static void bindBlockedMenuItem(Context context, SharedPreferences prefs, MenuItem item) {
+    public static void bindBlockedMenuItem(final Context context, final SharedPreferences prefs, final MenuItem item, boolean showBlocked) {
+        Log.d("BlockedConversationHelper", "bindBlockedMenuItem");
         if (item == null) {
+            Log.d("BlockedConversationHelper", "item is null");
             return;
         }
 
-        item.setVisible(prefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
-        item.setTitle(context.getString(R.string.menu_blocked_conversations, 4));
+        new BindMenuItemTask(context, prefs, item, showBlocked).execute((Void[]) null);
+    }
 
+    private static class BindMenuItemTask extends AsyncTask<Void, Void, Integer> {
+
+        private Context mContext;
+        private SharedPreferences mPrefs;
+        private MenuItem mMenuItem;
+        private boolean mShowBlocked;
+
+        private BindMenuItemTask(Context context, SharedPreferences prefs, MenuItem item, boolean showBlocked) {
+            mContext = context;
+            mPrefs = prefs;
+            mMenuItem = item;
+            mShowBlocked = showBlocked;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mMenuItem.setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
+            mMenuItem.setTitle(mContext.getString(mShowBlocked ? R.string.menu_unblocked_conversations : R.string.menu_blocked_conversations, "..."));
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            int unreadCount = 0;
+
+            // Create a cursor for the conversation list
+            Cursor conversationCursor = mContext.getContentResolver().query(
+                    SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
+                    getCursorSelection(mPrefs, !mShowBlocked), getBlockedConversationArray(mPrefs), SmsHelper.sortDateDesc);
+
+            if (conversationCursor.moveToFirst()) {
+                do {
+                    Uri threadUri = Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, conversationCursor.getString(Conversation.ID));
+                    Cursor messageCursor = mContext.getContentResolver().query(threadUri, MessageColumns.PROJECTION,
+                            SmsHelper.UNREAD_SELECTION, null, SmsHelper.sortDateDesc);
+                    unreadCount += messageCursor.getCount();
+                    messageCursor.close();
+                } while (conversationCursor.moveToNext());
+            }
+
+            conversationCursor.close();
+            return unreadCount;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            Log.d("BindMenuItemTask", "onPostExecute: " + integer);
+            mMenuItem.setTitle(mContext.getString(mShowBlocked ? R.string.menu_unblocked_conversations : R.string.menu_blocked_conversations, integer));
+        }
     }
 }
