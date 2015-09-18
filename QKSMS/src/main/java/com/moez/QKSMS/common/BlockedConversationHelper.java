@@ -44,6 +44,15 @@ public class BlockedConversationHelper {
         prefs.edit().putStringSet(SettingsFragment.BLOCKED_SENDERS, idStrings2).apply();
     }
 
+    public static Set<Long> getBlockedConversationIds(SharedPreferences prefs) {
+        Set<String> conversations = getBlockedConversations(prefs);
+        Set<Long> ids = new HashSet<>();
+        for (String id : conversations) {
+            ids.add(Long.parseLong(id));
+        }
+        return ids;
+    }
+
     public static Set<String> getBlockedConversations(SharedPreferences prefs) {
         return prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
     }

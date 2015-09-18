@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.service.NotificationService;
@@ -54,7 +56,8 @@ public class MessagingReceiver extends BroadcastReceiver {
             Message message = new Message(context, uri);
             ConversationPrefsHelper prefs = new ConversationPrefsHelper(context, message.getThreadId());
 
-            if (prefs.getNotificationsEnabled()) {
+            if (prefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
+                    PreferenceManager.getDefaultSharedPreferences(context)).contains(message.getThreadId())) {
                 Intent messageHandlerIntent = new Intent(context, NotificationService.class);
                 messageHandlerIntent.putExtra(NotificationService.EXTRA_POPUP, true);
                 messageHandlerIntent.putExtra(NotificationService.EXTRA_URI, uri.toString());
