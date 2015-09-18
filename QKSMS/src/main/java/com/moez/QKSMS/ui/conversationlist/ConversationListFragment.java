@@ -162,12 +162,17 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
             case R.id.menu_blocked:
                 mShowBlocked = !mShowBlocked;
+                mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
                 BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
                 initLoaderManager();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public int getTitleId() {
+        return mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list;
     }
 
     @Override

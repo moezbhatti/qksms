@@ -263,7 +263,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         if (mSlidingMenu.isMenuShowing() || content == null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
-            setTitle(getString(R.string.title_conversation_list));
+            setTitle(this.menuFragment.getTitleId());
             inflater.inflate(R.menu.coversation_list, menu);
 
         } else {

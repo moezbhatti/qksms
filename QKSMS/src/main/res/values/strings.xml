@@ -295,6 +295,7 @@
     <string name="title_compose">Compose</string>
     <!--Conversations screen title-->
     <string name="title_conversation_list">Conversations</string>
+    <string name="title_blocked">Blocked</string>
     <!--Changelog screen title-->
     <string name="title_changelog">Changelog</string>
     <!--QuickReply picker dialog title (shows up when you press reply from notification, but there are multiple senders)-->
