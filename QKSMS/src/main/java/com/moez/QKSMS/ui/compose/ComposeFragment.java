@@ -142,7 +142,7 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
     }
 
     @Override
-    protected void onContentOpened() {
+    public void onContentOpened() {
         setupInput();
     }
 
@@ -167,7 +167,7 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
     }
 
     @Override
-    protected void onContentClosing() {
+    public void onContentClosing() {
         // Clear the focus from this fragment.
         if (getActivity() != null && getActivity().getCurrentFocus() != null) {
             getActivity().getCurrentFocus().clearFocus();

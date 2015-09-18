@@ -126,7 +126,7 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     }
 
     @Override
-    protected void onContentOpened() {
+    public void onContentOpened() {
         // Show the keyboard and focus on the query text when the fragment is opened.
         KeyboardUtils.showAndFocus(mContext, mQuery);
     }

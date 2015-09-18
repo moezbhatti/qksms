@@ -29,6 +29,7 @@ import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.ui.ContentFragment;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
@@ -262,11 +263,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         getLoaderManager().initLoader(0, null, this);
     }
 
-    private void switchFragment(Fragment fragment) {
-        if (getActivity() == null) {
-            return;
-        }
-        // TODO
+    private void switchFragment(ContentFragment fragment) {
         ((MainActivity) getActivity()).switchContent(fragment, true);
     }
 

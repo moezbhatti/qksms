@@ -31,24 +31,25 @@ import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
-import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
-import com.moez.QKSMS.interfaces.LiveView;
-import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.interfaces.LiveView;
+import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.transaction.EndlessJabber;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.ui.ContentFragment;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
+import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
-import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,8 +61,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-public class SettingsFragment extends PreferenceFragment implements
-        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener, LiveView {
+public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
+        Preference.OnPreferenceClickListener, LiveView, ContentFragment {
     private final String TAG = "PreferenceFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
@@ -159,6 +160,7 @@ public class SettingsFragment extends PreferenceFragment implements
     public static final String CATEGORY_TAG = "settings_category_fragment_tag";
 
     private MainActivity mContext;
+    private PreferenceManager mPreferenceManager;
     private SharedPreferences mPrefs;
     private Resources mRes;
     private ListView mListView;
@@ -707,4 +709,23 @@ public class SettingsFragment extends PreferenceFragment implements
         }
     }
 
+    @Override
+    public void onContentOpening() {
+
+    }
+
+    @Override
+    public void onContentOpened() {
+
+    }
+
+    @Override
+    public void onContentClosing() {
+
+    }
+
+    @Override
+    public void onContentClosed() {
+
+    }
 }

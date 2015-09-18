@@ -6,10 +6,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
@@ -39,7 +38,6 @@ import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
 import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
 import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
@@ -49,7 +47,6 @@ import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.messagelist.MessageListFragment;
 import com.moez.QKSMS.ui.search.SearchFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-import com.moez.QKSMS.ui.view.QKCheckBox;
 import com.moez.QKSMS.ui.view.slidingmenu.SlidingMenu;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 import com.nispok.snackbar.Snackbar;
@@ -90,7 +87,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
     private SlidingMenu mSlidingMenu;
     private ConversationListFragment mConversationList;
-    private Fragment mContent;
+    private ContentFragment mContent;
     private long mWaitingForThreadId = -1;
 
     private boolean mIsDestroyed = false;
@@ -156,7 +153,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         }
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, mContent)
+                .replace(R.id.content_frame, (Fragment) mContent)
                 .commit();
     }
 
@@ -295,7 +292,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     public Fragment getContent() {
-        return mContent;
+        return (Fragment) mContent;
     }
 
     public long getThreadId() {
@@ -406,7 +403,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         super.onPause();
         sIsShowing = false;
         if (!mSlidingMenu.isMenuShowing()) {
-            QKContentFragment.notifyOnContentClosed(mContent);
+            mContent.onContentClosed();
         }
     }
 
@@ -430,7 +427,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         ThemeManager.loadThemeProperties(this);
 
         if (!mSlidingMenu.isMenuShowing()) {
-            QKContentFragment.notifyOnContentOpened(mContent);
+            mContent.onContentOpened();
         }
 
         NotificationManager.initQuickCompose(this, false, false);
@@ -530,7 +527,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         outState.putLong(KEY_THREADID, sThreadId);
     }
 
-    public void switchContent(Fragment fragment, boolean animate) {
+    public void switchContent(ContentFragment fragment, boolean animate) {
         // Make sure that the activity isn't destroyed before making fragment transactions.
         if (fragment != null && !mIsDestroyed) {
             KeyboardUtils.hide(this);
@@ -542,7 +539,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             if (fragment != m.findFragmentById(R.id.content_frame)) {
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.content_frame, fragment)
+                        .replace(R.id.content_frame, (Fragment) fragment)
                         .commitAllowingStateLoss();
             }
 
@@ -587,9 +584,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         invalidateOptionsMenu();
         sIsContentHidden = true;
 
-        // Notify the content that it is being closed, since the menu (i.e. conversation list) is
-        // being opened.
-        QKContentFragment.notifyOnContentClosing(mContent);
+        // Notify the content that it is being closed, since the menu (i.e. conversation list) is being opened.
+        if (mContent != null) mContent.onContentClosing();
 
         // Hide the soft keyboard
         KeyboardUtils.hide(this, getCurrentFocus());
@@ -606,9 +602,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         invalidateOptionsMenu();
         sIsContentHidden = false;
 
-        // Notify the content that it is being opened, since the menu (i.e. conversation list) is
-        // being closed.
-        QKContentFragment.notifyOnContentOpening(mContent);
+        // Notify the content that it is being opened, since the menu (i.e. conversation list) is being closed.
+        if (mContent != null) mContent.onContentOpening();
 
         // Hide the soft keyboard
         KeyboardUtils.hide(this, getCurrentFocus());
@@ -620,14 +615,14 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     public void onOpened() {
         // When the menu (i.e. the conversation list) has been opened, the content has been opened.
         // So notify the content fragment.
-        QKContentFragment.notifyOnContentClosed(mContent);
+        if (mContent != null) mContent.onContentClosed();
     }
 
     @Override
     public void onClosed() {
         // When the menu (i.e. the conversation list) has been closed, the content has been opened.
         // So notify the content fragment.
-        QKContentFragment.notifyOnContentOpened(mContent);
+        if (mContent != null) mContent.onContentOpened();
     }
 
     /**
@@ -653,7 +648,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                     R.plurals.confirm_delete_conversation, cnt, cnt));
         }
 
-        final QKCheckBox checkbox = (QKCheckBox) contents.findViewById(R.id.delete_locked);
+        final CheckBox checkbox = (CheckBox) contents.findViewById(R.id.delete_locked);
         if (!hasLockedMessages) {
             checkbox.setVisibility(View.GONE);
         } else {

@@ -724,13 +724,13 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    protected void onContentOpening() {
+    public void onContentOpening() {
         super.onContentOpening();
         mOpened = false; // We're animating the fragment in, this flag warns us not to do anything heavy
     }
 
     @Override
-    protected void onContentOpened() {
+    public void onContentOpened() {
         super.onContentOpened();
         mOpened = true; // The fragment has finished animating in
 
@@ -740,11 +740,11 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    protected void onContentClosing() {
+    public void onContentClosing() {
     }
 
     @Override
-    protected void onContentClosed() {
+    public void onContentClosed() {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
         }
