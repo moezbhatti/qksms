@@ -1,11 +1,8 @@
 package com.moez.QKSMS.ui.settings;
 
 import android.app.AlarmManager;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +20,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
 import com.moez.QKSMS.R;
@@ -61,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
@@ -498,11 +492,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
         String key = preference.getKey() != null ? preference.getKey() : "";
 
-        AnalyticsManager.getInstance().sendEvent(
-                AnalyticsManager.CATEGORY_PREFERENCE_CLICK,
-                key,
-                null
-        );
+        AnalyticsManager.getInstance().sendEvent(AnalyticsManager.CATEGORY_PREFERENCE_CLICK, key, null);
 
         // Categories
         int resId = 0;
@@ -714,59 +704,6 @@ public class SettingsFragment extends PreferenceFragment implements
         View view = getView();
         if (view != null) {
             view.setBackgroundColor(ThemeManager.getBackgroundColor());
-        }
-    }
-
-    public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-        private final String TAG = "TimePickerPreference";
-
-        private Preference mPreference;
-        private Preference.OnPreferenceChangeListener mListener;
-        private SharedPreferences mPrefs;
-
-        public void setPreference(Preference preference) {
-            mPreference = preference;
-        }
-
-        public void setOnPreferenceChangeListener(Preference.OnPreferenceChangeListener l) {
-            mListener = l;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            if (mPreference == null) {
-                Log.w(TAG, "No preference set");
-                return null;
-            }
-
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
-
-            // Use the current time as the default values for the picker
-            final Calendar c = Calendar.getInstance();
-
-            try {
-                Date date = simpleDateFormat.parse(mPrefs.getString(mPreference.getKey(), "6:00"));
-                c.setTime(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-            boolean isUsing24HourTime = mPrefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, DateFormat.is24HourFormat(getActivity()));
-            return new TimePickerDialog(getActivity(), this, hour, minute, isUsing24HourTime);
-        }
-
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            // Format the minutes with padded zeros so we don't get stuff like "6:2" instead
-            // of 6:02
-            String newValue = String.format("%d:%02d", hourOfDay, minute);
-            mPrefs.edit().putString(mPreference.getKey(), newValue).apply();
-            mPreference.setSummary(DateFormatter.getSummaryTimestamp(getActivity(), newValue));
-            mListener.onPreferenceChange(mPreference, newValue);
-            updateAlarmManager(getActivity(), true);
         }
     }
 
