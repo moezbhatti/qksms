@@ -267,10 +267,12 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
                     case MENU_BLOCK_CONVERSATION:
                         BlockedConversationHelper.blockConversation(mPrefs, conversation.getThreadId());
+                        initLoaderManager();
                         break;
 
                     case MENU_UNBLOCK_CONVERSATION:
                         BlockedConversationHelper.unblockConversation(mPrefs, conversation.getThreadId());
+                        initLoaderManager();
                         break;
 
                     case MENU_MARK_READ:
