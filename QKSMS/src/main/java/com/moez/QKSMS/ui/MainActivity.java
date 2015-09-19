@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
@@ -51,9 +50,6 @@ import com.moez.QKSMS.ui.search.SearchFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.slidingmenu.SlidingMenu;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.listeners.ActionClickListener;
-
 import org.ligi.snackengage.SnackEngage;
 import org.ligi.snackengage.snacks.BaseSnack;
 
@@ -61,7 +57,7 @@ import java.net.URLDecoder;
 import java.util.Collection;
 
 public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener,
-        SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener, ActionClickListener {
+        SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener {
 
     private final String TAG = "MainActivity";
 
@@ -577,10 +573,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         KeyboardUtils.hide(this, getCurrentFocus());
 
         showBackButton(false);
-    }
-
-    @Override
-    public void onActionClicked(Snackbar snackbar) {
     }
 
     @Override
