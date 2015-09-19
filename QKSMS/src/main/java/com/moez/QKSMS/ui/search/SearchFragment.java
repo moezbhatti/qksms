@@ -20,6 +20,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
@@ -137,7 +138,7 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         inflater.inflate(R.menu.search, menu);
-        mContext.setTitle(R.string.title_search);
+        ((QKActivity) context).setTitle(R.string.title_search);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
