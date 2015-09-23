@@ -25,11 +25,7 @@ public class BlockedConversationHelper {
 
     public static boolean isConversationBlocked(SharedPreferences prefs, long threadId) {
         Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
-        HashSet<Long> ids = new HashSet<>();
-        for (String s : idStrings) {
-            ids.add(Long.parseLong(s));
-        }
-        return (ids.contains(threadId));
+        return (idStrings.contains(String.valueOf(threadId)));
     }
 
     public static void blockConversation(SharedPreferences prefs, long threadId) {
@@ -59,12 +55,7 @@ public class BlockedConversationHelper {
 
     public static String[] getBlockedConversationArray(SharedPreferences prefs) {
         Set<String> idStrings = getBlockedConversations(prefs);
-        Object[] idArray = idStrings.toArray();
-        String[] idStringArray = new String[idStrings.size()];
-        for (int i = 0; i < idStrings.size(); i++) {
-            idStringArray[i] = (String) idArray[i];
-        }
-        return idStringArray;
+        return idStrings.toArray(new String[idStrings.size()]);
     }
 
     public static String getCursorSelection(SharedPreferences prefs, boolean blocked) {
