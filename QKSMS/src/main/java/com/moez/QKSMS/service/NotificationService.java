@@ -52,10 +52,9 @@ public class NotificationService extends Service {
             conversationPrefs = new ConversationPrefsHelper(context, message.getThreadId());
 
             if (conversationPrefs.getNotificationsEnabled()) {
-                // Only show QuickReply if we're outside of the app, and they have popups and
-                // QuickReply enabled.
-                if (!QKReplyActivity.sIsShowing && !MainActivity.sIsShowing && intent.getBooleanExtra(EXTRA_POPUP, false) &&
-                        prefs.getBoolean(SettingsFragment.QUICKREPLY, true) && !MainActivity.sIsShowing) {
+                // Only show QuickReply if we're outside of the app, and they have popups and QuickReply enabled.
+                if (!QKReplyActivity.sIsShowing && message.getThreadId() != MainActivity.sThreadShowing &&
+                        intent.getBooleanExtra(EXTRA_POPUP, false) && prefs.getBoolean(SettingsFragment.QUICKREPLY, true)) {
 
                     popupIntent = new Intent(context, QKReplyActivity.class);
                     popupIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -66,8 +65,7 @@ public class NotificationService extends Service {
                 // Get the photo for the PushBullet notification.
                 Bitmap photoBitmap = message.getPhotoBitmap();
                 if (photoBitmap == null) {
-                    ContactHelper helper = new ContactHelper();
-                    photoBitmap = helper.blankContact(context, message.getName());
+                    photoBitmap = ContactHelper.blankContact(context, message.getName());
                 }
 
                 PushbulletService.mirrorMessage(context, "" + message.getThreadId(),

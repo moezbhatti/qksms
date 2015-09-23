@@ -63,6 +63,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
     public final static String EXTRA_THREAD_ID = "thread_id";
 
+    public static long sThreadShowing;
+
     private final String KEY_TYPE = "type";
     private final String KEY_POSITION = "position";
     private final String KEY_THREADID = "thread_id";
@@ -81,10 +83,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     public static final String MMS_SETUP_DONT_ASK_AGAIN = "mmsSetupDontAskAgain";
 
     // thread IDs are always nonnegative
-    public static long sThreadId = 0;
-
-    public static boolean sIsShowing = false;
-    public static boolean sIsContentHidden = true;
+    private long mThreadId = 0;
 
     private SlidingMenu mSlidingMenu;
     private ConversationListFragment mConversationList;
@@ -126,12 +125,12 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     private void setupFragments(Bundle savedInstanceState) {
         int type = 0;
         int position = 0;
-        sThreadId = 0;
+        mThreadId = 0;
 
         if (savedInstanceState != null) {
             type = savedInstanceState.getInt(KEY_TYPE, 0);
             position = savedInstanceState.getInt(KEY_POSITION, 0);
-            sThreadId = savedInstanceState.getLong(KEY_THREADID, 0);
+            mThreadId = savedInstanceState.getLong(KEY_THREADID, 0);
         }
 
         mConversationList = new ConversationListFragment();
@@ -146,7 +145,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 break;
             case TYPE_CONVERSATION:
                 Bundle args = new Bundle();
-                args.putLong(MessageListFragment.ARG_THREAD_ID, sThreadId);
+                args.putLong(MessageListFragment.ARG_THREAD_ID, mThreadId);
                 mContent = MessageListFragment.getInstance(args);
                 break;
             case TYPE_SETTINGS:
@@ -278,7 +277,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     public long getThreadId() {
-        return sThreadId;
+        return mThreadId;
     }
 
     @Override
@@ -383,7 +382,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     protected void onPause() {
         super.onPause();
-        sIsShowing = false;
+        sThreadShowing = 0;
         if (!mSlidingMenu.isMenuShowing()) {
             mContent.onContentClosed();
         }
@@ -405,11 +404,16 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     protected void onResume() {
         super.onResume();
-        sIsShowing = true;
         ThemeManager.loadThemeProperties(this);
 
         if (!mSlidingMenu.isMenuShowing()) {
             mContent.onContentOpened();
+        }
+
+        if (mContent != null && mContent instanceof MessageListFragment) {
+            sThreadShowing = ((MessageListFragment) mContent).getThreadId();
+        } else {
+            sThreadShowing = 0;
         }
 
         NotificationManager.initQuickCompose(this, false, false);
@@ -506,7 +510,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 mContent instanceof SettingsFragment ? TYPE_SETTINGS :
                         mContent instanceof SearchFragment ? TYPE_SEARCH : TYPE_COMPOSE);
         outState.putInt(KEY_POSITION, mConversationList.getPosition());
-        outState.putLong(KEY_THREADID, sThreadId);
+        outState.putLong(KEY_THREADID, mThreadId);
     }
 
     public void switchContent(ContentFragment fragment, boolean animate) {
@@ -557,14 +561,15 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         MessageListFragment fragment = MessageListFragment.getInstance(args);
 
         // Save the thread ID here and switch the content
-        MainActivity.sThreadId = threadId;
+        mThreadId = threadId;
+        sThreadShowing = threadId;
         switchContent(fragment, animate);
     }
 
     @Override
     public void onOpen() {
         invalidateOptionsMenu();
-        sIsContentHidden = true;
+        sThreadShowing = 0;
 
         // Notify the content that it is being closed, since the menu (i.e. conversation list) is being opened.
         if (mContent != null) mContent.onContentClosing();
@@ -578,10 +583,17 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     public void onClose() {
         invalidateOptionsMenu();
-        sIsContentHidden = false;
 
         // Notify the content that it is being opened, since the menu (i.e. conversation list) is being closed.
-        if (mContent != null) mContent.onContentOpening();
+        if (mContent != null) {
+            mContent.onContentOpening();
+        }
+
+        if (mContent != null && mContent instanceof MessageListFragment) {
+            sThreadShowing = ((MessageListFragment) mContent).getThreadId();
+        } else {
+            sThreadShowing = 0;
+        }
 
         // Hide the soft keyboard
         KeyboardUtils.hide(this, getCurrentFocus());

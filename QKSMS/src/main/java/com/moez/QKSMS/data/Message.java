@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 
 public class Message {
@@ -149,12 +148,6 @@ public class Message {
         if (photoBitmap == null)
             photoBitmap = contactHelper.getBitmap(context, getContactId());
         return photoBitmap;
-    }
-
-    public boolean isVisible() {
-       return getThreadId() == MainActivity.sThreadId &&
-               MainActivity.sIsShowing &&
-               !MainActivity.sIsContentHidden;
     }
 
     public void markSeen() {
