@@ -3,6 +3,7 @@ package com.moez.QKSMS.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -54,9 +55,15 @@ public class MessagingReceiver extends BroadcastReceiver {
             uri = SmsHelper.addMessageToInbox(context, address, body, date);
 
             Message message = new Message(context, uri);
-            ConversationPrefsHelper prefs = new ConversationPrefsHelper(context, message.getThreadId());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, message.getThreadId());
 
-            if (prefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
+            if (BlockedConversationHelper.isFutureBlocked(prefs, address)) {
+                BlockedConversationHelper.unblockFutureConversation(prefs, address);
+                BlockedConversationHelper.blockConversation(prefs, message.getThreadId());
+                message.markSeen();
+
+            } else if (conversationPrefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
                     PreferenceManager.getDefaultSharedPreferences(context)).contains(message.getThreadId())) {
                 Intent messageHandlerIntent = new Intent(context, NotificationService.class);
                 messageHandlerIntent.putExtra(NotificationService.EXTRA_POPUP, true);
@@ -69,7 +76,7 @@ public class MessagingReceiver extends BroadcastReceiver {
                 message.markSeen();
             }
 
-            if (prefs.getWakePhoneEnabled()) {
+            if (conversationPrefs.getWakePhoneEnabled()) {
                 PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
                 PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "MessagingReceiver");
                 wakeLock.acquire();

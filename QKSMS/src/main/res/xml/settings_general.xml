@@ -96,6 +96,13 @@
             android:summary="@string/pref_blocked_conversations_summary"
             android:title="@string/pref_blocked_conversations"
             android:widgetLayout="@layout/view_checkbox" />
+        <Preference
+            android:defaultValue="false"
+            android:dependency="pref_key_blocked_enabled"
+            android:key="pref_key_block_future"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_block_future_summary"
+            android:title="@string/pref_block_future" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_mobile_only"

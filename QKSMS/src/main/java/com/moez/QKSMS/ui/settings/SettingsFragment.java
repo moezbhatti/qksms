@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
+import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
 import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
@@ -113,6 +114,7 @@ public class SettingsFragment extends PreferenceFragment implements
     public static final String YAPPY = "pref_key_endlessjabber";
     public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
     public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
+    public static final String BLOCKED_FUTURE = "pref_key_block_future";
     public static final String MOBILE_ONLY = "pref_key_mobile_only";
     public static final String COMPOSE_GROUP = "pref_key_compose_group";
     public static final String SPLIT_SMS = "pref_key_split";
@@ -550,6 +552,9 @@ public class SettingsFragment extends PreferenceFragment implements
                 break;
             case ICON:
                 ThemeManager.setIcon(mContext);
+                break;
+            case BLOCKED_FUTURE:
+                BlockedNumberDialog.showDialog(mContext);
                 break;
             case NOTIFICATION_LED_COLOR:
                 mLedColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");

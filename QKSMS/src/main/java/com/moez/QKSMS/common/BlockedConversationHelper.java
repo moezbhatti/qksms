@@ -9,6 +9,7 @@ import android.provider.Telephony;
 import android.util.Log;
 import android.view.MenuItem;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -51,6 +52,32 @@ public class BlockedConversationHelper {
 
     public static Set<String> getBlockedConversations(SharedPreferences prefs) {
         return prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
+    }
+
+    public static void blockFutureConversation(SharedPreferences prefs, String address) {
+        Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
+        idStrings.add(address);
+        prefs.edit().putStringSet(SettingsFragment.BLOCKED_FUTURE, idStrings).apply();
+    }
+
+    public static void unblockFutureConversation(SharedPreferences prefs, String address) {
+        Set<String> idStrings2 = prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
+        idStrings2.remove(address);
+        prefs.edit().putStringSet(SettingsFragment.BLOCKED_FUTURE, idStrings2).apply();
+    }
+
+    public static Set<String> getFutureBlockedConversations(SharedPreferences prefs) {
+        return prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
+    }
+
+    public static boolean isFutureBlocked(SharedPreferences prefs, String address) {
+        for (String s : getFutureBlockedConversations(prefs)) {
+            if (PhoneNumberUtils.compareLoosely(s, address)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static String[] getBlockedConversationArray(SharedPreferences prefs) {

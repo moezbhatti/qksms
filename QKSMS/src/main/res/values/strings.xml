@@ -166,6 +166,8 @@
     <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
     <string name="pref_blocked_conversations">Blocked conversations</string>
     <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+    <string name="pref_block_future">Block future messages</string>
+    <string name="pref_block_future_summary">Add additional phone numbers to block</string>
     <string name="pref_mobile_only">Mobile numbers</string>
     <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
     <string name="pref_auto_emoji">Automatic emoji</string>
@@ -304,6 +306,8 @@
     <string name="title_donate">Donate</string>
     <!--QK Response dialog title-->
     <string name="title_qk_responses">QK Responses</string>
+    <string name="title_block_address">Block number</string>
+    <string name="title_unblock_address">Unblock number</string>
 
     <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -368,6 +372,7 @@
     <string name="call">Call</string>
     <!--Positive action button-->
     <string name="yes">Yes</string>
+    <string name="add">Add</string>
     <!--Positive action button-->
     <string name="save">Save</string>
     <!--Positive action button-->
