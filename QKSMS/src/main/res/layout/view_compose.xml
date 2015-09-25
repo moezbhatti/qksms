@@ -106,6 +106,14 @@
                 android:rotation="90"
                 android:src="@color/white_pure" />
 
+            <ImageView
+                android:id="@+id/compose_button_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_mic"
+                android:visibility="invisible"/>
+
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/progress"
                 android:layout_width="44dp"

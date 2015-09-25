@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.android.mms.transaction.Transaction;
 import com.android.mms.transaction.TransactionBundle;
 import com.android.mms.transaction.TransactionService;
@@ -29,10 +30,10 @@ import com.google.android.mms.ContentType;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.CursorUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
+import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -40,12 +41,13 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHolder, MessageItem> {
     private final String TAG = "MessageListAdapter";
@@ -317,11 +319,9 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         String body = messageItem.mBody;
 
         if (messageItem.mMessageType == PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND) {
-            String msgSizeText = mContext.getString(R.string.message_size_label)
+            body = mContext.getString(R.string.message_size_label)
                     + String.valueOf((messageItem.mMessageSize + 1023) / 1024)
                     + mContext.getString(R.string.kilobyte);
-
-            body = msgSizeText;
         }
 
         // Cleanse the subject

@@ -38,6 +38,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -90,6 +91,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     enum SendButtonState {
         SEND, // send a messaage
         ATTACH, // open the attachment panel
+        RECORD, // is recording a voice note
         CLOSE, // close the attachment panel
         CANCEL // cancel a message while it's sending
     }
@@ -117,6 +119,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     private ImageView mButtonBackground;
     private ImageView mButtonBar1;
     private ImageView mButtonBar2;
+    private ImageView mButtonVoice;
     private ImageButton mAttach;
     private ImageButton mCamera;
     private ImageButton mDelay;
@@ -131,6 +134,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     private boolean mDelayedMessagingEnabled;
     private boolean mSendingCancelled;
     private boolean mIsSendingBlocked;
+    private boolean mIsRecording;
     private String mSendingBlockedMessage;
 
     private String mCurrentPhotoPath;
@@ -184,6 +188,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         mButtonBackground = (ImageView) findViewById(R.id.compose_button_background);
         mButtonBar1 = (ImageView) findViewById(R.id.compose_button_bar_1);
         mButtonBar2 = (ImageView) findViewById(R.id.compose_button_bar_2);
+        mButtonVoice = (ImageView) findViewById(R.id.compose_button_voice);
         mAttachmentPanel = findViewById(R.id.attachment_panel);
         mAttach = (ImageButton) findViewById(R.id.attach);
         mCamera = (ImageButton) findViewById(R.id.camera);
@@ -219,12 +224,11 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                 }
             };
             @Override public boolean onTouch(View v, MotionEvent event) {
-                String body = mReplyText.getText().toString();
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         then = System.currentTimeMillis();
                         //Start delayed runnable in background which will start the record when it isn't canceled in time
-                        if (body.isEmpty()) handler.postDelayed(mLongPressed, longClickTime);
+                        if (mButtonState == SendButtonState.ATTACH) handler.postDelayed(mLongPressed, longClickTime);
                         // Construct a rect of the view's bounds
                         rect = new Rect(v.getLeft() + 600,
                                 v.getTop() + 50,
@@ -235,7 +239,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                     case MotionEvent.ACTION_UP:
                         long elapsedTime = (System.currentTimeMillis() - then);
 
-                        if (elapsedTime < longClickTime || !body.isEmpty()) { //Short click
+                        if (elapsedTime < longClickTime || mButtonState == SendButtonState.SEND ||
+                                mButtonState == SendButtonState.CLOSE) { //Short click
                             handleComposeButtonClick(); //handle normal compose button click
                             handler.removeCallbacks(mLongPressed); //stop runnable who would otherwise start the record
                         }
@@ -407,7 +412,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             result = true;
             InputStream inputStream;
             try {inputStream = getContext().getContentResolver().openInputStream(data.getData());}
-            catch (FileNotFoundException e){return result;}
+            catch (FileNotFoundException e){return true;}
             new AudioLoaderTask(mContext, inputStream, false).execute();
             updateButtonState();
         }
@@ -430,6 +435,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             buttonState = SendButtonState.CLOSE;
         } else if (length > 0 || mAttachment.hasAttachment() || audioAttachment != null) {
             buttonState = SendButtonState.SEND;
+        } else if (mIsRecording) {
+            buttonState = SendButtonState.RECORD;
         } else {
             buttonState = SendButtonState.ATTACH;
         }
@@ -440,29 +447,38 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     private void updateButtonState(SendButtonState buttonState) {
         if (mButtonState != buttonState) {
             mButtonState = buttonState;
+            if (mIsRecording) {
+                mButtonBar1.setVisibility(INVISIBLE);
+                mButtonBar2.setVisibility(INVISIBLE);
+                mButtonVoice.setVisibility(VISIBLE);
+            }
+            else {
+                mButtonVoice.setVisibility(INVISIBLE);
+                mButtonBar1.setVisibility(VISIBLE);
+                mButtonBar2.setVisibility(VISIBLE);
+                float translation = Units.dpToPx(mContext, 14) / 3;
+                float barRotation1 = mButtonBar1.getRotation();
+                float barTranslation1 = mButtonBar1.getTranslationY();
+                float barRotation2 = mButtonBar2.getRotation();
+                float barTranslation2 = mButtonBar2.getTranslationY();
+                float barRotationTarget1 = mButtonState == SendButtonState.ATTACH ? 0 : 225;
+                float barTranslationTarget1 = mButtonState == SendButtonState.SEND ? -translation : 0;
+                float barRotationTarget2 = mButtonState == SendButtonState.ATTACH ? 90 : 135;
+                float barTranslationTarget2 = mButtonState == SendButtonState.SEND ? translation : 0;
 
-            float translation = Units.dpToPx(mContext, 14) / 3;
-            float barRotation1 = mButtonBar1.getRotation();
-            float barTranslation1 = mButtonBar1.getTranslationY();
-            float barRotation2 = mButtonBar2.getRotation();
-            float barTranslation2 = mButtonBar2.getTranslationY();
-            float barRotationTarget1 = mButtonState == SendButtonState.ATTACH ? 0 : 225;
-            float barTranslationTarget1 = mButtonState == SendButtonState.SEND ? -translation : 0;
-            float barRotationTarget2 = mButtonState == SendButtonState.ATTACH ? 90 : 135;
-            float barTranslationTarget2 = mButtonState == SendButtonState.SEND ? translation : 0;
-
-            ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
+                ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+                ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+                ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+                ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+            }
         }
     }
 
@@ -644,15 +660,19 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         switch(record){
             case 0: //record started
                 recordAudioUtils.onRecord(true);
+                mIsRecording = true;
                 vi.vibrate(mNoteVibrationTime);
-                //TODO Visual effects; wuuuush, buuum (audio effects)
+                //mButton.setLayoutParams(new RelativeLayout.LayoutParams(100, 100));
+
                 break;
             case 1:  // record stopped, delete result
+                mIsRecording = false;
                 recordAudioUtils.onRecord(false);
                 try{boolean deleted = recordAudioUtils.getCurrentFile().delete();} //workaround to delete files
                 catch (NullPointerException e){Log.w(TAG, "Couldn't delete File", e);}
                 break;
             case 2: //record stopped, send result
+                mIsRecording = false;
                 vi.vibrate(mNoteVibrationTime);
                 recordAudioUtils.onRecord(false);
                 FileInputStream file;
@@ -665,6 +685,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                 break;
             default: break;
         }
+        updateButtonState();
     }
 
 

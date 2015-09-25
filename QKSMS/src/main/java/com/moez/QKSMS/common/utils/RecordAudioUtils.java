@@ -28,9 +28,9 @@ public class RecordAudioUtils {
     }
 
     private String getFilePath() throws IOException {
-        String fileName = "AUDIO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());;
+        String fileName = "QKSMS_AUDIO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());;
         File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES); //FIXME
+                Environment.DIRECTORY_RINGTONES); //FIXME change directory?
         mCurrentFile = File.createTempFile(
                 fileName,  /* prefix */
                 ".mp3",     /* suffix */

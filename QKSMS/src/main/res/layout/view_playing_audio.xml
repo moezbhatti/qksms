@@ -30,7 +30,7 @@
         android:id="@+id/audio_icon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_attach_capture_audio_holo_light" />
+        android:src="@drawable/ic_mic" />
 
     <com.moez.QKSMS.ui.view.QKTextView
         android:id="@+id/name"
