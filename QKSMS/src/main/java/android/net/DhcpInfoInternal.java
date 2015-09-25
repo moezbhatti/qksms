@@ -53,7 +53,7 @@ public class DhcpInfoInternal {
     private Collection<RouteInfo> mRoutes;
 
     public DhcpInfoInternal() {
-        mRoutes = new ArrayList<RouteInfo>();
+        mRoutes = new ArrayList<>();
     }
 
     public void addRoute(RouteInfo routeInfo) {

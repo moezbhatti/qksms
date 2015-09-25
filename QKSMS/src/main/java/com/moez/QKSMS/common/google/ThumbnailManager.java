@@ -81,7 +81,7 @@ public class ThumbnailManager extends BackgroundLoaderManager {
     public ThumbnailManager(final Context context) {
         super(context);
 
-        mThumbnailCache = new SimpleCache<Uri, Bitmap>(8, 16, 0.75f, true);
+        mThumbnailCache = new SimpleCache<>(8, 16, 0.75f, true);
         mContext = context;
 
         mEmptyImageBitmap = BitmapFactory.decodeResource(context.getResources(),
