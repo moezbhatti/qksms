@@ -16,12 +16,12 @@ public class EndlessJabberWakefulService extends IntentService {
         Context context = getApplicationContext();
 
         // Get the class to call
-        String implemenationClass = context.getSharedPreferences("EndlessJabberSDK", Context.MODE_PRIVATE).getString("InterfaceClass", null);
+        String implementationClass = context.getSharedPreferences("EndlessJabberSDK", Context.MODE_PRIVATE).getString("InterfaceClass", null);
 
-        if (implemenationClass != null) {
+        if (implementationClass != null) {
             IEndlessJabberImplementation instanceOfMyClass;
             try {
-                instanceOfMyClass = (IEndlessJabberImplementation) Class.forName(implemenationClass).newInstance();
+                instanceOfMyClass = (IEndlessJabberImplementation) Class.forName(implementationClass).newInstance();
 
                 Bundle extras = intent.getExtras();
 
@@ -67,9 +67,9 @@ public class EndlessJabberWakefulService extends IntentService {
                     }
                 }
             } catch (InstantiationException e) {
-                |
+
             } catch (IllegalAccessException e) {
-                |
+
             } catch (ClassNotFoundException e) {
 
             }
