@@ -66,7 +66,11 @@ public class EndlessJabberWakefulService extends IntentService {
                         break;
                     }
                 }
-            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            } catch (InstantiationException e) {
+                |
+            } catch (IllegalAccessException e) {
+                |
+            } catch (ClassNotFoundException e) {
 
             }
         }
