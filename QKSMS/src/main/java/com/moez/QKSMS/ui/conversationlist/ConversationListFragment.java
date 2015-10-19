@@ -2,6 +2,7 @@ package com.moez.QKSMS.ui.conversationlist;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -121,9 +122,9 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        inflater.inflate(R.menu.coversation_list, menu);
+        mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
 
         // Make sure we're only touching the conversation menu
         if (menu.findItem(R.id.menu_search) != null) {
@@ -142,6 +143,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
         mBlockedItem = menu.findItem(R.id.menu_blocked);
         BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -164,10 +167,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public int getTitleId() {
-        return mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list;
     }
 
     public boolean isShowingBlocked() {
