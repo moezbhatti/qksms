@@ -11,7 +11,7 @@
   <string name="hint_reply">Nachricht eingeben</string>
   <string name="hint_redeem">Code eingeben</string>
   <string name="new_message">Neue Nachricht</string>
-  <string name="new_messages">Neue Nachrichten</string>
+  <string name="new_messages">neue Nachrichten</string>
   <string name="failed_message">Nachricht konnte nicht gesendet werden</string>
   <string name="failed_messages">Nachrichten konnten nicht gesendet werden</string>
   <string name="failed_messages_summary">Berühre zum Ansehen</string>

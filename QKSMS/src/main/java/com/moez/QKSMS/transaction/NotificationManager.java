@@ -582,7 +582,7 @@ public class NotificationManager {
         else stylen = null;
 
         int unreadMessageCount = SmsHelper.getUnreadMessageCount(context);
-        builder.setContentTitle(message.mContact)
+        builder.setContentTitle("QKSMS")
                 .setContentText(SmsHelper.getUnseenSMSCount(context, threadId) + " " + sRes.getString(R.string.new_messages))
                 .setLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false), privateNotifications))
                 .setContentIntent(threadPI)
