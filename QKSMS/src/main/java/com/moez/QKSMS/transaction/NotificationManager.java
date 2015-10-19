@@ -577,17 +577,18 @@ public class NotificationManager {
             inboxStyle.addLine(message1.mBody);
         }
 
-        NotificationCompat.Style stylen;
-        if (privateNotifications == 0) stylen = inboxStyle;
-        else stylen = null;
+        String notificationTitle = message.mContact;
+
+        if (!(privateNotifications == 0)) inboxStyle = null;
+        if (privateNotifications == 2) notificationTitle = "QKSMS";
 
         int unreadMessageCount = SmsHelper.getUnreadMessageCount(context);
-        builder.setContentTitle("QKSMS")
+        builder.setContentTitle(notificationTitle)
                 .setContentText(SmsHelper.getUnseenSMSCount(context, threadId) + " " + sRes.getString(R.string.new_messages))
                 .setLargeIcon(getLargeIcon(context, Contact.get(message.mAddress, false), privateNotifications))
                 .setContentIntent(threadPI)
                 .setNumber(unreadMessageCount)
-                .setStyle(stylen)
+                .setStyle(inboxStyle)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
