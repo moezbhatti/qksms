@@ -2,12 +2,11 @@ package com.moez.QKSMS.common.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.format.DateUtils;
+import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
-
+import android.text.format.DateUtils;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.text.ParseException;
@@ -49,7 +48,7 @@ public abstract class DateFormatter {
     }
 
     public static SimpleDateFormat accountFor24HourTime(Context context, SimpleDateFormat input) { //pass in 12 hour time. If needed, change to 24 hr.
-        SharedPreferences prefs = MainActivity.getPrefs(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isUsing24HourTime = prefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, DateFormat.is24HourFormat(context));
 
         if (isUsing24HourTime) {

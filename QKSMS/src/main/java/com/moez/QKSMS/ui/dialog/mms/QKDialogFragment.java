@@ -301,7 +301,7 @@ public class QKDialogFragment extends DialogFragment {
     }
 
     public QKDialogFragment setItems(String[] items) {
-        ArrayAdapter adapter = new ArrayAdapter<String>(mContext, R.layout.list_item_simple, items);
+        ArrayAdapter adapter = new ArrayAdapter<>(mContext, R.layout.list_item_simple, items);
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);

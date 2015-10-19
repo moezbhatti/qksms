@@ -140,8 +140,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         super(context, attrs, defStyle);
 
         mContext = (QKActivity) context;
-        mPrefs = MainActivity.getPrefs(mContext);
-        mRes = MainActivity.getRes(mContext);
+        mPrefs = mContext.getPrefs();
+        mRes = mContext.getResources();
 
         mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
         try {
@@ -194,18 +194,26 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         switch (Integer.parseInt(mPrefs.getString(SettingsFragment.ENTER_BUTTON, "0"))) {
             case 0: // emoji
                 break;
-            case 1: // return
+            case 1: // new line
                 mReplyText.setInputType(InputType.TYPE_CLASS_TEXT |
-                        InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE |
-                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES |
+                        InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE);
                 mReplyText.setSingleLine(false);
                 break;
             case 2: // send
-                mReplyText.setInputType(
+                mReplyText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+                mReplyText.setInputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-                mReplyText.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI |
-                        EditorInfo.IME_ACTION_SEND);
                 mReplyText.setSingleLine(false);
+                mReplyText.setOnKeyListener(new OnKeyListener() { //Workaround because ACTION_SEND does not support multiline mode
+                    @Override
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        if (keyCode == 66) {
+                            sendSms();
+                            return true;
+                        }
+                        return false;
+                    }});
                 break;
         }
 
@@ -225,18 +233,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                 } else if (160 < length) {
                     mLetterCount.setText((160 - length % 160) + "/" + (length / 160 + 1));
                 }
-            }
-        });
-
-        mReplyText.setOnEditorActionListener(new android.widget.TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(android.widget.TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    sendSms();
-                    return true;
-                }
-
-                return false;
             }
         });
 
@@ -460,7 +456,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             }
 
             long threadId = mConversation != null ? mConversation.getThreadId() : 0;
-            sendTransaction.sendNewMessage(message, threadId);
+            if (!message.toString().equals("")) {
+                sendTransaction.sendNewMessage(message, threadId);
+            }
             NotificationManager.update(mContext);
 
             if (mConversationLegacy != null) {

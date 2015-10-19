@@ -2,10 +2,9 @@ package com.moez.QKSMS.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.moez.QKSMS.interfaces.LiveView;
-import com.moez.QKSMS.ui.MainActivity;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -38,7 +37,7 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
     }
 
     public static void init(Context context) {
-        SharedPreferences prefs = MainActivity.getPrefs(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.registerOnSharedPreferenceChangeListener(sInstance);
     }
 
@@ -82,6 +81,8 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
 
     /**
      * Register a LiveView to be notified when this preference is updated.
+     * Note that you must first register the view, otherwise #refresh() will
+     * not be called on it
      *
      * @param v
      * @param pref

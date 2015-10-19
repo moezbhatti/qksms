@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.IBinder;
 
+import android.preference.PreferenceManager;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
@@ -30,7 +31,7 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        prefs = MainActivity.getPrefs(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Uri uri = Uri.parse(intent.getStringExtra(EXTRA_URI));
 
@@ -51,10 +52,9 @@ public class NotificationService extends Service {
             conversationPrefs = new ConversationPrefsHelper(context, message.getThreadId());
 
             if (conversationPrefs.getNotificationsEnabled()) {
-                // Only show QuickReply if we're outside of the app, and they have popups and
-                // QuickReply enabled.
-                if (!QKReplyActivity.sIsShowing && !MainActivity.isShowing && intent.getBooleanExtra(EXTRA_POPUP, false) &&
-                        prefs.getBoolean(SettingsFragment.QUICKREPLY, true) && !MainActivity.isShowing) {
+                // Only show QuickReply if we're outside of the app, and they have popups and QuickReply enabled.
+                if (!QKReplyActivity.sIsShowing && message.getThreadId() != MainActivity.sThreadShowing &&
+                        intent.getBooleanExtra(EXTRA_POPUP, false) && prefs.getBoolean(SettingsFragment.QUICKREPLY, true)) {
 
                     popupIntent = new Intent(context, QKReplyActivity.class);
                     popupIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -65,8 +65,7 @@ public class NotificationService extends Service {
                 // Get the photo for the PushBullet notification.
                 Bitmap photoBitmap = message.getPhotoBitmap();
                 if (photoBitmap == null) {
-                    ContactHelper helper = new ContactHelper();
-                    photoBitmap = helper.blankContact(context, message.getName());
+                    photoBitmap = ContactHelper.blankContact(context, message.getName());
                 }
 
                 PushbulletService.mirrorMessage(context, "" + message.getThreadId(),

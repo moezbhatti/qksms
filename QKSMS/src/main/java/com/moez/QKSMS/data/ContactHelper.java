@@ -19,7 +19,6 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 
 import java.io.BufferedInputStream;
@@ -162,7 +161,7 @@ public class ContactHelper {
     }
 
     public static Drawable getDrawable(Context context, long id) {
-        return new BitmapDrawable(MainActivity.getRes(context), getBitmap(context, id));
+        return new BitmapDrawable(context.getResources(), getBitmap(context, id));
     }
 
     public static Bitmap getOwnerPhoto(Context context) {
@@ -189,10 +188,9 @@ public class ContactHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return bitmap;
     }
-
+    
     public static Bitmap blankContact(Context context, String name) {
         String text = name == null || PhoneNumberUtils.isWellFormedSmsAddress(PhoneNumberUtils.stripSeparators(name)) || name.length() == 0 ? "#" : "" + name.toUpperCase().charAt(0);
 

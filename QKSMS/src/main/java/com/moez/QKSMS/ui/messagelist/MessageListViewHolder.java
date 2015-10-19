@@ -13,6 +13,7 @@ import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ThumbnailManager;
 import com.moez.QKSMS.interfaces.SlideViewInterface;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.mms.Presenter;
 import com.moez.QKSMS.ui.view.AvatarView;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -43,8 +44,8 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
     protected ImageLoadedCallback mImageLoadedCallback;
     protected Presenter mPresenter;
 
-    public MessageListViewHolder(View view) {
-        super(view);
+    public MessageListViewHolder(QKActivity context, View view) {
+        super(context, view);
 
         mRoot = view;
         mBodyTextView = (QKTextView) view.findViewById(R.id.text_view);
@@ -215,16 +216,16 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
         public ImageLoadedCallback(MessageListViewHolder listItem) {
             mListItem = listItem;
             mListItem.setImage(null, null);
-            mMessageId = listItem.data.getMessageId();
+            mMessageId = listItem.mData.getMessageId();
         }
 
         public void reset(MessageListViewHolder listItem) {
-            mMessageId = listItem.data.getMessageId();
+            mMessageId = listItem.mData.getMessageId();
         }
 
         public void onItemLoaded(ThumbnailManager.ImageLoaded imageLoaded, Throwable exception) {
             // Make sure we're still pointing to the same message. The list item could have // been recycled.
-            MessageItem msgItem = mListItem.data;
+            MessageItem msgItem = mListItem.mData;
             if (msgItem != null && msgItem.getMessageId() == mMessageId) {
                 if (imageLoaded.mIsVideo) {
                     mListItem.setVideoThumbnail(null, imageLoaded.mBitmap);

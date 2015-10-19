@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui.base;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,8 +20,12 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
         void onMultiSelectStateChanged(boolean enabled);
     }
 
-    protected Context mContext;
+    protected QKActivity mContext;
     protected Cursor mCursor;
+
+    public RecyclerCursorAdapter(QKActivity context) {
+        mContext = context;
+    }
 
     protected ArrayList<Long> mSelectedItems = new ArrayList<>();
 

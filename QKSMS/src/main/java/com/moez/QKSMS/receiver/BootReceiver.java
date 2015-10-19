@@ -3,8 +3,8 @@ package com.moez.QKSMS.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -14,6 +14,6 @@ public class BootReceiver extends BroadcastReceiver {
         NotificationManager.initQuickCompose(context, false, false);
         NotificationManager.create(context);
 
-        SettingsFragment.updateAlarmManager(context, MainActivity.getPrefs(context).getBoolean(SettingsFragment.NIGHT_AUTO, false));
+        SettingsFragment.updateAlarmManager(context, PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SettingsFragment.NIGHT_AUTO, false));
     }
 }

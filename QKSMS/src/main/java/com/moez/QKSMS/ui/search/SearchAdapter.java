@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui.search;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
@@ -11,17 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.DateFormatter;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 
 import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerCursorAdapter<SearchViewHolder, SearchData> {
 
-    private Context mContext;
     private String mQuery;
 
-    public SearchAdapter(Context context) {
-        mContext = context;
+    public SearchAdapter(QKActivity context) {
+        super(context);
     }
 
     public void setQuery(String query) {
@@ -38,15 +37,15 @@ public class SearchAdapter extends RecyclerCursorAdapter<SearchViewHolder, Searc
     public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.list_item_search, parent, false);
-        return new SearchViewHolder(view);
+        return new SearchViewHolder(mContext, view);
     }
 
     @Override
     public void onBindViewHolder(SearchViewHolder holder, int position) {
         SearchData data = getItem(position);
 
-        holder.data = data;
-        holder.clickListener = mItemClickListener;
+        holder.mData = data;
+        holder.mClickListener = mItemClickListener;
         holder.root.setOnClickListener(holder);
         holder.root.setOnLongClickListener(holder);
 

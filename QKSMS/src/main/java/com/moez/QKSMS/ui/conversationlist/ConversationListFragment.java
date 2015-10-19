@@ -31,9 +31,9 @@ import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.ui.ContentFragment;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
@@ -64,7 +64,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private ConversationListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ConversationDetailsDialog mConversationDetailsDialog;
-    private QKActivity mContext;
     private SharedPreferences mPrefs;
     private MenuItem mBlockedItem;
     private boolean mShowBlocked = false;
@@ -76,7 +75,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mContext = (QKActivity) getActivity();
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         setHasOptionsMenu(true);
 
@@ -258,7 +256,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
                     case MENU_NOTIFICATION_SETTINGS:
                         ConversationNotificationSettingsDialog.newInstance(threadId, name).setContext(mContext)
-                                .show(mContext.getFragmentManager(), "notification prefs");
+                                .show(getFragmentManager(), "notification prefs");
                         break;
 
                     case MENU_VIEW_DETAILS:
@@ -315,11 +313,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         getLoaderManager().restartLoader(0, null, this);
     }
 
-    private void switchFragment(Fragment fragment) {
-        if (getActivity() == null) {
-            return;
-        }
-        // TODO
+    private void switchFragment(ContentFragment fragment) {
         ((MainActivity) getActivity()).switchContent(fragment, true);
     }
 

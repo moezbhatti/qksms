@@ -7,18 +7,18 @@ import android.util.TypedValue;
 import android.widget.MultiAutoCompleteTextView;
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class AutoCompleteContactView extends RecipientEditTextView implements LiveView {
     public static final String TAG = "AutoCompleteContactView";
 
-    private Context mContext;
+    private QKActivity mContext;
     private BaseRecipientAdapter mAdapter;
 
     public AutoCompleteContactView(Context context) {
@@ -32,8 +32,8 @@ public class AutoCompleteContactView extends RecipientEditTextView implements Li
     }
 
     private void init(Context context) {
-        mContext = context;
-        SharedPreferences prefs = MainActivity.getPrefs(context);
+        mContext = (QKActivity) context;
+        SharedPreferences prefs = mContext.getPrefs();
 
         // Setup text size, typeface, etc.
         refresh();
@@ -65,7 +65,7 @@ public class AutoCompleteContactView extends RecipientEditTextView implements Li
         setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
 
         if (mAdapter != null) {
-            SharedPreferences prefs = MainActivity.getPrefs(mContext);
+            SharedPreferences prefs = mContext.getPrefs();
             mAdapter.setShowMobileOnly(prefs.getBoolean(SettingsFragment.MOBILE_ONLY, false));
         }
     }

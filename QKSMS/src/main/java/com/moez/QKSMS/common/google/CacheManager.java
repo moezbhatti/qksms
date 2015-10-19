@@ -73,7 +73,7 @@ public class CacheManager {
             // ignore.
         }
         if (n != 0) return;
-        pref.edit().putInt(KEY_CACHE_UP_TO_DATE, 1).commit();
+        pref.edit().putInt(KEY_CACHE_UP_TO_DATE, 1).apply();
 
         clear(context);
     }

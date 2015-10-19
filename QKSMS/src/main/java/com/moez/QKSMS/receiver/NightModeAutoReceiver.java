@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -20,7 +20,7 @@ public class NightModeAutoReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         ThemeManager.loadThemeProperties(context);
-        SharedPreferences prefs = MainActivity.getPrefs(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         if (prefs.getBoolean(SettingsFragment.NIGHT_AUTO, false)) {
             Calendar calendar = Calendar.getInstance();

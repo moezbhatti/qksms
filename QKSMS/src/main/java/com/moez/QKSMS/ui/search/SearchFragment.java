@@ -11,17 +11,20 @@ import android.provider.Telephony;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
-import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
+import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.HashMap;
@@ -34,7 +37,6 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     // appropriately when the Contact gets fully loaded.
     private HashMap<Contact, QKTextView> mContactMap = new HashMap<>();
 
-    private Context mContext;
     private SharedPreferences mPrefs;
     private Resources mRes;
     private Cursor mCursor;
@@ -48,9 +50,8 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getActivity();
-        mPrefs = MainActivity.getPrefs(mContext);
-        mRes = MainActivity.getRes(mContext);
+        mPrefs = mContext.getPrefs();
+        mRes = mContext.getResources();
 
         // When the query completes cons up a new adapter and set our list adapter to that.
         mQueryHandler = new AsyncQueryHandler(mContext.getContentResolver()) {
@@ -129,9 +130,17 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     }
 
     @Override
-    protected void onContentOpened() {
+    public void onContentOpened() {
         // Show the keyboard and focus on the query text when the fragment is opened.
         KeyboardUtils.showAndFocus(mContext, mQuery);
+    }
+
+    @Override
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        inflater.inflate(R.menu.search, menu);
+        ((QKActivity) context).setTitle(R.string.title_search);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

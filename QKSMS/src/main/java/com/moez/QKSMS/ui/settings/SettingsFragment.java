@@ -1,11 +1,8 @@
 package com.moez.QKSMS.ui.settings;
 
 import android.app.AlarmManager;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,39 +18,39 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
-import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
-import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
-import com.moez.QKSMS.interfaces.LiveView;
-import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.interfaces.LiveView;
+import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.transaction.EndlessJabber;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.ui.ContentFragment;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
+import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
+import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
-import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,13 +58,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-public class SettingsFragment extends PreferenceFragment implements
-        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener, LiveView {
+public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
+        Preference.OnPreferenceClickListener, LiveView, ContentFragment {
     private final String TAG = "PreferenceFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
@@ -146,6 +142,7 @@ public class SettingsFragment extends PreferenceFragment implements
     public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
     public static final String SIMPLE_PREFS = "pref_key_simple";
     public static final String DONATE = "pref_key_donate";
+    public static final String DISMISSED_READ = "pref_key_dismiss_read";
     /**
      * @deprecated
      */
@@ -168,6 +165,7 @@ public class SettingsFragment extends PreferenceFragment implements
     public static final String CATEGORY_TAG = "settings_category_fragment_tag";
 
     private MainActivity mContext;
+    private PreferenceManager mPreferenceManager;
     private SharedPreferences mPrefs;
     private Resources mRes;
     private ListView mListView;
@@ -205,8 +203,8 @@ public class SettingsFragment extends PreferenceFragment implements
         Bundle args = getArguments();
 
         mContext = (MainActivity) getActivity();
-        mPrefs = MainActivity.getPrefs(mContext);
-        mRes = MainActivity.getRes(mContext);
+        mPrefs = mContext.getPrefs();
+        mRes = mContext.getResources();
 
         mResource = args.getInt("category", R.xml.settings);
         if (mResource == R.xml.settings_simple || mResource == R.xml.settings_main) {
@@ -486,7 +484,10 @@ public class SettingsFragment extends PreferenceFragment implements
             case DELAY_DURATION:
                 try {
                     int duration = Integer.parseInt((String) newValue);
-                    if (duration < 1 || duration > 30) throw new Exception("Duration out of bounds");
+
+                    if (duration < 1 || duration > 30)
+                        throw new Exception("Duration out of bounds");
+
                 } catch (Exception e) {
                     Toast.makeText(mContext, R.string.delayed_duration_bounds_error, Toast.LENGTH_SHORT).show();
                 }
@@ -501,11 +502,7 @@ public class SettingsFragment extends PreferenceFragment implements
 
         String key = preference.getKey() != null ? preference.getKey() : "";
 
-        AnalyticsManager.getInstance().sendEvent(
-                AnalyticsManager.CATEGORY_PREFERENCE_CLICK,
-                key,
-                null
-        );
+        AnalyticsManager.getInstance().sendEvent(AnalyticsManager.CATEGORY_PREFERENCE_CLICK, key, null);
 
         // Categories
         int resId = 0;
@@ -662,7 +659,7 @@ public class SettingsFragment extends PreferenceFragment implements
         Calendar dayCalendar = Calendar.getInstance();
         dayCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(MainActivity.getPrefs(context).getString(DAY_START, "6:00")));
+            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(DAY_START, "6:00")));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -674,7 +671,7 @@ public class SettingsFragment extends PreferenceFragment implements
         Calendar nightCalendar = Calendar.getInstance();
         nightCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(MainActivity.getPrefs(context).getString(NIGHT_START, "21:00")));
+            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(NIGHT_START, "21:00")));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -695,18 +692,6 @@ public class SettingsFragment extends PreferenceFragment implements
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        mContext.colorMenuIcons(menu, ThemeManager.getTextOnColorPrimary());
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
 
@@ -723,57 +708,41 @@ public class SettingsFragment extends PreferenceFragment implements
         }
     }
 
-    public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-        private final String TAG = "TimePickerPreference";
+    @Override
+    public void onContentOpening() {
 
-        private Preference mPreference;
-        private Preference.OnPreferenceChangeListener mListener;
-        private SharedPreferences mPrefs;
-
-        public void setPreference(Preference preference) {
-            mPreference = preference;
-        }
-
-        public void setOnPreferenceChangeListener(Preference.OnPreferenceChangeListener l) {
-            mListener = l;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            if (mPreference == null) {
-                Log.w(TAG, "No preference set");
-                return null;
-            }
-
-            mPrefs = MainActivity.getPrefs(getActivity());
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
-
-            // Use the current time as the default values for the picker
-            final Calendar c = Calendar.getInstance();
-
-            try {
-                Date date = simpleDateFormat.parse(mPrefs.getString(mPreference.getKey(), "6:00"));
-                c.setTime(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-            boolean isUsing24HourTime = mPrefs.getBoolean(SettingsFragment.TIMESTAMPS_24H, DateFormat.is24HourFormat(getActivity()));
-            return new TimePickerDialog(getActivity(), this, hour, minute, isUsing24HourTime);
-        }
-
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            // Format the minutes with padded zeros so we don't get stuff like "6:2" instead
-            // of 6:02
-            String newValue = String.format("%d:%02d", hourOfDay, minute);
-            mPrefs.edit().putString(mPreference.getKey(), newValue).apply();
-            mPreference.setSummary(DateFormatter.getSummaryTimestamp(getActivity(), newValue));
-            mListener.onPreferenceChange(mPreference, newValue);
-            updateAlarmManager(getActivity(), true);
-        }
     }
 
+    @Override
+    public void onContentOpened() {
+
+    }
+
+    @Override
+    public void onContentClosing() {
+
+    }
+
+    @Override
+    public void onContentClosed() {
+
+    }
+
+    @Override
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        if (mContext == null) {
+            mContext = (MainActivity) context;
+            mPrefs = mContext.getPrefs();
+        }
+
+        inflater.inflate(R.menu.settings, menu);
+        mContext.setTitle(R.string.title_settings);
+
+        MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
+        if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
+            simplePrefs.setTitle(R.string.menu_show_all_prefs);
+        } else {
+            simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
+        }
+    }
 }

@@ -1,8 +1,6 @@
 package com.moez.QKSMS.ui.conversationlist;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -17,8 +15,8 @@ import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.interfaces.LiveView;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -32,9 +30,9 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
     private final Drawable mUnread;
     private final Drawable mError;
 
-    public ConversationListAdapter(Context context) {
-        mContext = context;
-        mPrefs = MainActivity.getPrefs(mContext);
+    public ConversationListAdapter(QKActivity context) {
+        super(context);
+        mPrefs = mContext.getPrefs();
 
         mMuted = ContextCompat.getDrawable(context, R.drawable.ic_mute);
         mUnread = ContextCompat.getDrawable(context, R.drawable.ic_unread);
@@ -54,16 +52,16 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
     public ConversationListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.list_item_conversation, null);
-        return new ConversationListViewHolder(view);
+        return new ConversationListViewHolder(mContext, view);
     }
 
     @Override
     public void onBindViewHolder(ConversationListViewHolder holder, int position) {
         final Conversation conversation = getItem(position);
 
-        holder.data = conversation;
-        holder.context = mContext;
-        holder.clickListener = mItemClickListener;
+        holder.mData = conversation;
+        holder.mContext = mContext;
+        holder.mClickListener = mItemClickListener;
         holder.root.setOnClickListener(holder);
         holder.root.setOnLongClickListener(holder);
 

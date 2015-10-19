@@ -83,8 +83,8 @@ public class NotificationManager {
     public static void init(final Context context) {
 
         // Initialize the static shared prefs and resources.
-        sPrefs = MainActivity.getPrefs(context);
-        sRes = MainActivity.getRes(context);
+        sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        sRes = context.getResources();
 
         // Listen for MMS events.
         IntentFilter filter = new IntentFilter(TransactionService.TRANSACTION_COMPLETED_ACTION);
@@ -156,7 +156,7 @@ public class NotificationManager {
 
                     // If this message is in the foreground, mark it as read
                     Message message = new Message(context, lastMessage.mMsgId);
-                    if (message.isVisible()) {
+                    if (message.getThreadId() ==MainActivity.sThreadShowing) {
                         message.markRead();
                         return;
                     }
@@ -243,7 +243,7 @@ public class NotificationManager {
                 // If the message is visible (i.e. it is currently showing in the Main Activity),
                 // don't show a notification; just mark it as read and return.
                 Message message = new Message(context, lastMessage.mMsgId);
-                if (message.isVisible()) {
+                if (message.getThreadId() == MainActivity.sThreadShowing) {
                     message.markRead();
                     return;
                 }
@@ -474,6 +474,7 @@ public class NotificationManager {
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
+        if (conversationPrefs.getDimissedReadEnabled()){builder.setDeleteIntent(readPI);}
 
         if (conversationPrefs.getCallButtonEnabled()) {
             Intent callIntent = new Intent(Intent.ACTION_CALL);

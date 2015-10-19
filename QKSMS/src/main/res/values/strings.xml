@@ -101,6 +101,10 @@
     <string name="details_date_sent">Date sent</string>
     <!--Title for date received of a message in message details popup-->
     <string name="details_date_received">Date received</string>
+    <!--Title for rate snackbar-->
+    <string name="rate_title">Like QKSMS?</string>
+    <!--Title for rate button-->
+    <string name="rate_action">Rate</string>
 
     <string name="pref_category_appearance">Appearance</string>
     <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
@@ -209,6 +213,8 @@
     <string name="pref_vibration_summary">Vibrate when new messages are received</string>
     <string name="pref_notification_call">Call button</string>
     <string name="pref_notification_call_summary">Call the sender of a message right from the notification</string>
+    <string name="pref_dimiss_read">Mark as read</string>
+    <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
 
     <string name="pref_delayed">Delayed messaging</string>
     <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>

@@ -52,6 +52,12 @@ import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.DialogHelper;
+import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.common.utils.DrmUtils;
+import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.common.utils.MessageUtils;
+import com.moez.QKSMS.common.vcard.ContactOperations;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactList;
 import com.moez.QKSMS.data.Conversation;
@@ -59,12 +65,6 @@ import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.common.DialogHelper;
-import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
-import com.moez.QKSMS.common.utils.DrmUtils;
-import com.moez.QKSMS.common.utils.KeyboardUtils;
-import com.moez.QKSMS.common.utils.MessageUtils;
-import com.moez.QKSMS.common.vcard.ContactOperations;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
@@ -205,7 +205,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mShowImmediate = savedInstanceState.getBoolean(ARG_SHOW_IMMEDIATE, false);
         }
 
-        mPrefs = MainActivity.getPrefs(mContext);
+        mPrefs = mContext.getPrefs();
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
         setHasOptionsMenu(true);
@@ -292,11 +292,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -329,7 +324,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         new LoadConversationTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
     }
 
-    public void setTitle() {
+    private void setTitle() {
         if (mContext != null && mConversation != null) {
             mContext.setTitle(mConversation.getRecipients().formatNames(", "));
         }
@@ -622,7 +617,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 makeCall();
                 return true;
             case R.id.menu_delete_conversation:
-                DialogHelper.showDeleteConversationDialog(mContext, mThreadId);
+                DialogHelper.showDeleteConversationDialog((MainActivity) mContext, mThreadId);
                 return true;
             case R.id.menu_details:
                 mConversationDetailsDialog.showDetails(mConversation);
@@ -724,13 +719,13 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    protected void onContentOpening() {
+    public void onContentOpening() {
         super.onContentOpening();
         mOpened = false; // We're animating the fragment in, this flag warns us not to do anything heavy
     }
 
     @Override
-    protected void onContentOpened() {
+    public void onContentOpened() {
         super.onContentOpened();
         mOpened = true; // The fragment has finished animating in
 
@@ -740,11 +735,11 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    protected void onContentClosing() {
+    public void onContentClosing() {
     }
 
     @Override
-    protected void onContentClosed() {
+    public void onContentClosed() {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
         }
@@ -760,6 +755,14 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 mComposeView.saveDraft();
             }
         }
+    }
+
+    @Override
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        inflater.inflate(R.menu.conversation, menu);
+        setTitle();
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -1319,7 +1322,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                         }
                         // The last message in this converation was just deleted. Send the user
                         // to the conversation list.
-                        mContext.showMenu();
+                        ((MainActivity) mContext).showMenu();
                     }
                     cursor.close();
             }
@@ -1362,7 +1365,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 Conversation.init(mContext);
 
                 // Go back to the conversation list
-                mContext.showMenu();
+                ((MainActivity) mContext).showMenu();
             } else if (token == DELETE_MESSAGE_TOKEN) {
                 // Check to see if we just deleted the last message
                 startMsgListQuery(MESSAGE_LIST_QUERY_AFTER_DELETE_TOKEN);

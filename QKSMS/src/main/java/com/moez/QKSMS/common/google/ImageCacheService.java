@@ -137,8 +137,8 @@ public class ImageCacheService {
 
     public static final long crc64Long(byte[] buffer) {
         long crc = INITIALCRC;
-        for (int k = 0, n = buffer.length; k < n; ++k) {
-            crc = sCrcTable[(((int) crc) ^ buffer[k]) & 0xff] ^ (crc >> 8);
+        for (byte aBuffer : buffer) {
+            crc = sCrcTable[(((int) crc) ^ aBuffer) & 0xff] ^ (crc >> 8);
         }
         return crc;
     }

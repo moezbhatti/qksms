@@ -1,11 +1,14 @@
 package com.moez.QKSMS.ui.base;
 
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,7 +24,7 @@ import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.ArrayList;
 
-public class QKActivity extends ActionBarActivity {
+public abstract class QKActivity extends ActionBarActivity {
     private final String TAG = "QKActivity";
 
     private Toolbar mToolbar;
@@ -29,9 +32,14 @@ public class QKActivity extends ActionBarActivity {
     private ImageView mOverflowButton;
     private Menu mMenu;
 
+    protected Resources mRes;
+    protected SharedPreferences mPrefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRes = getResources();
+        getPrefs(); // set the preferences if they haven't been set. this method takes care of that logic for us
     }
 
     /**
@@ -54,6 +62,17 @@ public class QKActivity extends ActionBarActivity {
         }
 
         ThemeManager.loadThemeProperties(this);
+    }
+
+    protected void showBackButton(boolean show) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(show);
+    }
+
+    public SharedPreferences getPrefs() {
+        if (mPrefs == null) {
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        }
+        return mPrefs;
     }
 
     public void colorMenuIcons(Menu menu, int color) {
@@ -132,12 +151,11 @@ public class QKActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         // Save a reference to the menu so that we can quickly access menu icons later.
         mMenu = menu;
         colorMenuIcons(mMenu, ThemeManager.getTextOnColorPrimary());
-
-        return super.onCreateOptionsMenu(mMenu);
+        return true;
     }
 
     @Override
