@@ -81,6 +81,8 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
 
     /**
      * Register a LiveView to be notified when this preference is updated.
+     * Note that you must first register the view, otherwise #refresh() will
+     * not be called on it
      *
      * @param v
      * @param pref

@@ -28,12 +28,14 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DonationManager;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKRateSnack;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.transaction.NotificationManager;
@@ -57,7 +59,7 @@ import java.net.URLDecoder;
 import java.util.Collection;
 
 public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener,
-        SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener {
+        SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener, LiveView {
 
     private final String TAG = "MainActivity";
 
@@ -112,6 +114,9 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         onNewIntent(getIntent());
 
         showDialogIfNeeded(savedInstanceState);
+
+        LiveViewManager.registerView(this);
+        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
 
         //Adds a small/non intrusive snackbar that asks the user to rate the app
         SnackEngage.from(this).withSnack(new QKRateSnack().withDuration(BaseSnack.DURATION_LONG))
@@ -205,7 +210,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     private void launchWelcomeActivity() {
         if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
             // User has already seen the welcome screen
-            return;
+            // return;
         }
 
         Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
@@ -625,7 +630,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
      * @param hasLockedMessages whether the thread(s) contain locked messages
      * @param context           used to load the various UI elements
      */
-    public static void confirmDeleteThreadDialog(final DeleteThreadListener listener, Collection<Long> threadIds, boolean hasLockedMessages, Context context) {
+    public static void confirmDeleteThreadDialog(final DeleteThreadListener listener, Collection<Long> threadIds,
+                                                 boolean hasLockedMessages, Context context) {
         View contents = View.inflate(context, R.layout.dialog_delete_thread, null);
         android.widget.TextView msg = (android.widget.TextView) contents.findViewById(R.id.message);
 
@@ -659,6 +665,15 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 .setNegativeButton(R.string.cancel, null)
                 .setView(contents)
                 .show();
+    }
+
+    @Override
+    public void refresh() {
+        // Update the background color. This code is important during the welcome screen setup, when the activity
+        // in the ThemeManager isn't the MainActivity
+        findViewById(R.id.menu_frame).getRootView().setBackgroundColor(ThemeManager.getBackgroundColor());
+        findViewById(R.id.menu_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
+        findViewById(R.id.content_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
     }
 
     public static class DeleteThreadListener implements DialogInterface.OnClickListener {

@@ -92,4 +92,9 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
                     .commit();
         }
     }
+
+    @Override
+    public void refresh() {
+        // Don't let the super class change the background, since we'll handle animations here
+    }
 }
