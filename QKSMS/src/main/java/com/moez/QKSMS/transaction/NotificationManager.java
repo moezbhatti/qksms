@@ -474,6 +474,7 @@ public class NotificationManager {
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
+        if (conversationPrefs.getDimissedReadEnabled()){builder.setDeleteIntent(readPI);}
 
         if (conversationPrefs.getCallButtonEnabled()) {
             Intent callIntent = new Intent(Intent.ACTION_CALL);

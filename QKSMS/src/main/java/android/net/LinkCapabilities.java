@@ -199,7 +199,7 @@ public class LinkCapabilities implements Parcelable {
      * Constructor
      */
     public LinkCapabilities() {
-        mCapabilities = new HashMap<Integer, String>();
+        mCapabilities = new HashMap<>();
     }
 
     /**
@@ -209,9 +209,9 @@ public class LinkCapabilities implements Parcelable {
      */
     public LinkCapabilities(LinkCapabilities source) {
         if (source != null) {
-            mCapabilities = new HashMap<Integer, String>(source.mCapabilities);
+            mCapabilities = new HashMap<>(source.mCapabilities);
         } else {
-            mCapabilities = new HashMap<Integer, String>();
+            mCapabilities = new HashMap<>();
         }
     }
 
@@ -356,7 +356,7 @@ public class LinkCapabilities implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mCapabilities.size());
         for (Entry<Integer, String> entry : mCapabilities.entrySet()) {
-            dest.writeInt(entry.getKey().intValue());
+            dest.writeInt(entry.getKey());
             dest.writeString(entry.getValue());
         }
     }

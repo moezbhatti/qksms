@@ -36,9 +36,9 @@ import com.google.android.mms.pdu_alt.NotificationInd;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
-import com.google.android.mms.pdu_alt.SendReq;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.formatter.FormatterFactory;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.model.SlideModel;
 import com.moez.QKSMS.model.SlideshowModel;
@@ -152,6 +152,7 @@ public class MessageItem {
                 mContact = Contact.get(mAddress, canBlock).getName();
             }
             mBody = cursor.getString(columnsMap.mColumnSmsBody);
+            mBody = FormatterFactory.format(mBody);
 
             // Unless the message is currently in the progress of being sent, it gets a time stamp.
             if (!isOutgoingMessage()) {
@@ -383,7 +384,7 @@ public class MessageItem {
                     // Use constant string for outgoing messages
                     mContact = mAddress =
                             mContext.getString(R.string.messagelist_sender_self);
-                    timestamp = msg == null ? 0 : ((SendReq) msg).getDate() * 1000L;
+                    timestamp = msg == null ? 0 : msg.getDate() * 1000L;
                 }
 
                 SlideModel slide = mSlideshow == null ? null : mSlideshow.get(0);

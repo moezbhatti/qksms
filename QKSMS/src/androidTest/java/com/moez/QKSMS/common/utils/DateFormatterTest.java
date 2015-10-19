@@ -12,11 +12,11 @@ public class DateFormatterTest extends AndroidTestCase {
         super.setUp();
     }
 
-    public void test24Hours(){
+    public void test24Hours() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        prefs.edit().putBoolean(SettingsFragment.TIMESTAMPS_24H, true).commit();
+        prefs.edit().putBoolean(SettingsFragment.TIMESTAMPS_24H, true).apply();
         assertTrue(DateFormatter.accountFor24HourTime(getContext(), new SimpleDateFormat("h:mm a")).equals(new SimpleDateFormat("H:mm")));
-        prefs.edit().putBoolean(SettingsFragment.TIMESTAMPS_24H, false).commit();
+        prefs.edit().putBoolean(SettingsFragment.TIMESTAMPS_24H, false).apply();
     }
 
     public void testDateSymbolsAPI(){

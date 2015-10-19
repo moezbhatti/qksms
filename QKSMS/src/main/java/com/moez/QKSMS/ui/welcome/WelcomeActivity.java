@@ -176,6 +176,6 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
         prefs.putBoolean(SettingsFragment.WELCOME_SEEN, true);
-        prefs.commit();
+        prefs.apply();
     }
 }

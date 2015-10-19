@@ -61,6 +61,10 @@ public class ConversationPrefsHelper {
         return getBoolean(SettingsFragment.NOTIFICATION_CALL_BUTTON, false);
     }
 
+    public boolean getDimissedReadEnabled() {
+        return getBoolean(SettingsFragment.DISMISSED_READ, false);
+    }
+
     public void putString(String key, String value) {
         mConversationPrefs.edit().putString(key, value).apply();
     }

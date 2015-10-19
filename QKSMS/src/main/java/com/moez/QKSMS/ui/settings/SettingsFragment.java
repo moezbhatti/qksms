@@ -138,6 +138,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
     public static final String SIMPLE_PREFS = "pref_key_simple";
     public static final String DONATE = "pref_key_donate";
+    public static final String DISMISSED_READ = "pref_key_dismiss_read";
     /**
      * @deprecated
      */
@@ -479,7 +480,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case DELAY_DURATION:
                 try {
                     int duration = Integer.parseInt((String) newValue);
-                    if (duration < 1 || duration > 30) throw new Exception("Duration out of bounds");
+
+                    if (duration < 1 || duration > 30)
+                        throw new Exception("Duration out of bounds");
+
                 } catch (Exception e) {
                     Toast.makeText(mContext, R.string.delayed_duration_bounds_error, Toast.LENGTH_SHORT).show();
                 }

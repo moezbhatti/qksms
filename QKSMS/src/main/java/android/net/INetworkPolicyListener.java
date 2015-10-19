@@ -125,7 +125,7 @@ public interface INetworkPolicyListener extends android.os.IInterface {
             }
         }
 
-        static final int TRANSACTION_onUidRulesChanged = (android.os.IBinder.FIRST_CALL_TRANSACTION + 0);
+        static final int TRANSACTION_onUidRulesChanged = (android.os.IBinder.FIRST_CALL_TRANSACTION);
         static final int TRANSACTION_onMeteredIfacesChanged = (android.os.IBinder.FIRST_CALL_TRANSACTION + 1);
         static final int TRANSACTION_onRestrictBackgroundChanged = (android.os.IBinder.FIRST_CALL_TRANSACTION + 2);
     }

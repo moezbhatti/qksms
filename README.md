@@ -1,6 +1,6 @@
 # QKSMS
 
-QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the Google Play Store
+QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the Google Play Store.
 
 [![Build Status](https://travis-ci.org/qklabs/qksms.svg?branch=master)](https://travis-ci.org/qklabs/qksms)
 
@@ -13,31 +13,31 @@ QKSMS is an open source replacement to the [stock messaging app](https://github.
 
 # Contributing to QKSMS
 
-We highly encourage contributions to QKSMS; we want to make it as easy and streamlined as possible. If you have any suggestions on how we can improve our workflow, please feel free to contact me
+We highly encourage contributions to QKSMS; we want to make it as easy and streamlined as possible. If you have any suggestions on how we can improve our workflow, please feel free to contact me.
 
-Quite a bit of old code still needs to be cleaned up and refactored, so keep that in mind as you're digging through the source. If you find something that's just really crappy, let me know and I'll put it higher up on my list of stuff to clean up. I'll be focusing on improving code quality of existing code over the next couple weeks
+Quite a bit of old code still needs to be cleaned up and refactored, so keep that in mind as you're digging through the source. If you find something that's just really crappy, let me know and I'll put it higher up on my list of stuff to clean up. I'll be focusing on improving code quality of existing code over the next couple weeks.
 
 ### Collaboration
 
-We use GitHub issues to keep track of bugs and feature requests, but we communicate using [Slack](https://qklabs.slack.com/). To join the Slack group, send an email to team@qklabs.com with the subject `QK Labs Slack Invite` (no need to enter a body, we'll send an invite to your email address). If you plan on contributing at some point, we highly recommend joining the slack group because it gives you a direct way to communicate with the rest of the contributors
+We use GitHub issues to keep track of bugs and feature requests, but we communicate using [Slack](https://qklabs.slack.com/). To join the Slack group, send an email to team@qklabs.com with the subject `QK Labs Slack Invite` (no need to enter a body, we'll send an invite to your email address). If you plan on contributing at some point, we highly recommend joining the slack group because it gives you a direct way to communicate with the rest of the contributors.
 
 ### Funds
 
-If you'd like to donate to help support the project, you can donate via [PayPal here](http://bit.ly/QKSMSDonation)
+If you'd like to donate to help support the project, you can donate via [PayPal here](http://bit.ly/QKSMSDonation).
 
 ### Translations
 
-Please do not perform translations directly on the source files. Pull requests for translations will not be accepted. If you would like to do translations for QKSMS, join the translation project on Crowdin: https://crowdin.com/project/qksms
+Please do not perform translations directly on the source files. Pull requests for translations will not be accepted. If you would like to do translations for QKSMS, join the translation project on Crowdin: https://crowdin.com/project/qksms.
 
 ### Development
 
-We encourage you to make pull requests. Whenever you make one, we'll review the code and test it to make sure that it fits the code style guidelines, and achieves what the pull request intends. We'll discuss any problems or potential improvements, and we'll merge it when we're both (or any number of willing participants) happy with the code
+We encourage you to make pull requests. Whenever you make one, we'll review the code and test it to make sure that it fits the code style guidelines, and achieves what the pull request intends. We'll discuss any problems or potential improvements, and we'll merge it when we're both (or any number of willing participants) happy with the code.
 
-If you're new, we recommend that you look through the issues and try to fix some of the more simple sounding bugs to familiarize yourself with the codebase
+If you're new, we recommend that you look through the issues and try to fix some of the more simple sounding bugs to familiarize yourself with the codebase.
 
 If you'd like to work on a new feature, please create an issue so we can discuss the idea together before implementation begins.
 
-To learn about pull requests, please refer to the following guide: https://help.github.com/articles/using-pull-requests/
+To learn about pull requests, please refer to the following guide: https://help.github.com/articles/using-pull-requests/.
 
 ### Code style
 
@@ -45,7 +45,7 @@ We follow the code style guidelines set by Google for contributors to AOSP: http
 
 The current codebase is far from being 100% at this standard, but updating existing code to follow the unified guidelines can be a good way to introduce yourself to the codebase and start getting familiar with it.
 
-Any new code written should follow these guidelines
+Any new code written should follow these guidelines.
 
 # Bug Reports / Feature Requests
 
@@ -103,4 +103,4 @@ QKSMS is developed and maintained by [Moez Bhatti](https://github.com/moezbhatti
 
 # License
 
-QKSMS is released under the **The GNU General Public License v3.0 (GPLv3)**, which can be found in the `LICENSE` file in the root of this project
+QKSMS is released under the **The GNU General Public License v3.0 (GPLv3)**, which can be found in the `LICENSE` file in the root of this project.
