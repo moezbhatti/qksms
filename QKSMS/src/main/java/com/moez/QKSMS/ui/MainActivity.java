@@ -210,7 +210,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     private void launchWelcomeActivity() {
         if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
             // User has already seen the welcome screen
-            // return;
+            return;
         }
 
         Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
