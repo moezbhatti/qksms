@@ -16,6 +16,7 @@
 
 package com.moez.QKSMS.ui.widget;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -23,8 +24,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -45,7 +48,7 @@ public class WidgetProvider extends AppWidgetProvider {
         ThemeManager.loadThemeProperties(context);
 
         for (int appWidgetId : appWidgetIds) {
-            updateWidget(context, appWidgetId);
+            updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager, appWidgetId));
         }
     }
 
@@ -70,9 +73,39 @@ public class WidgetProvider extends AppWidgetProvider {
     }
 
     /**
+     * Update widget when widget size changes
+     */
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
+                                          int appWidgetId, Bundle newOptions) {
+        Log.v("TAG", "Changed widget dimensions");
+        updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager,appWidgetId));
+
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+    }
+
+    /**
+     * Returns 1 when widget has less than 4 columns, else 0
+     */
+    @TargetApi(16)
+    private static int isSmallWidget(AppWidgetManager appWidgetManager, int appWidgetId) {
+
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        int size = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        int n = 2;
+        while (70 * n - 30 < size) {
+            ++n;
+        }
+        int columns = n - 1;
+
+        if (columns < 4) return 1;
+        else return 0;
+    }
+
+    /**
      * Update the widget appWidgetId
      */
-    private static void updateWidget(Context context, int appWidgetId) {
+    private static void updateWidget(Context context, int appWidgetId, int smallWidget) {
         Log.v(TAG, "updateWidget appWidgetId: " + appWidgetId);
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);
         PendingIntent clickIntent;
@@ -80,8 +113,9 @@ public class WidgetProvider extends AppWidgetProvider {
         // Launch an intent to avoid ANRs
         final Intent intent = new Intent(context, WidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        intent.putExtra("small_widget", smallWidget);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        remoteViews.setRemoteAdapter(appWidgetId, R.id.conversation_list, intent);
+        remoteViews.setRemoteAdapter(R.id.conversation_list, intent);
 
         remoteViews.setTextViewText(R.id.widget_label, context.getString(R.string.title_conversation_list));
         remoteViews.setTextColor(R.id.widget_label, ThemeManager.getTextOnColorPrimary());
@@ -125,7 +159,7 @@ public class WidgetProvider extends AppWidgetProvider {
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
 
             for (int appWidgetId : appWidgetIds) {
-                updateWidget(context, appWidgetId);
+                updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager, appWidgetId));
             }
         }
 
