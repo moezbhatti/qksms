@@ -119,7 +119,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String NOTIFICATION_LED_COLOR = "pref_key_theme_led";
     public static final String WAKE = "pref_key_wake";
     public static final String NOTIFICATION_TICKER = "pref_key_ticker";
-    public static final String NOTIFICATION_PRIVATE = "pref_key_notifications_private";
+    public static final String PRIVATE_NOTIFICATION = "pref_key_notification_private";
     public static final String NOTIFICATION_VIBRATE = "pref_key_vibration";
     public static final String NOTIFICATION_TONE = "pref_key_ringtone";
     public static final String NOTIFICATION_CALL_BUTTON = "pref_key_notification_call";

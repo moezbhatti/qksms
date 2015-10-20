@@ -99,9 +99,6 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
         list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.NOTIFICATION_TICKER,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getTickerEnabled(), R.string.pref_ticker, R.string.pref_ticker_summary).getView());
 
-        list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.NOTIFICATION_PRIVATE,
-                mConversationPrefs.getConversationPrefs(), mConversationPrefs.getPrivateNotificationsEnabled(), R.string.pref_notifications_private, R.string.pref_notifications_private_summary).getView());
-
         list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.NOTIFICATION_VIBRATE,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getVibrateEnabled(), R.string.pref_vibration, R.string.pref_vibration_summary).getView());
 
