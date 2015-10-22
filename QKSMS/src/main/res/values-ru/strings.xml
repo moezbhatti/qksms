@@ -9,39 +9,39 @@
   <string name="hint_contacts">Получатели</string>
   <string name="hint_search">Искать что-то</string>
   <string name="hint_reply">Сообщение</string>
-  <string name="hint_redeem">Enter code</string>
+  <string name="hint_redeem">Введите код</string>
   <string name="new_message">Новое сообщение</string>
   <string name="new_messages">новые сообщения</string>
   <string name="failed_message">Не удалось отправить сообщение</string>
   <string name="failed_messages">сообщений не удалось отправить</string>
   <string name="failed_messages_summary">Нажмите для просмотра</string>
-  <string name="quickcompose">QK Compose</string>
+  <string name="quickcompose">QK Написать</string>
   <string name="quickcompose_detail">Отправить сообщение</string>
-  <string name="welcome_start">Let\'s get started!</string>
-  <string name="welcome_skip">SKIP</string>
-  <string name="welcome_finish">FINISH</string>
-  <string name="welcome_theme_title">Pick a color</string>
-  <string name="welcome_theme_description">Any color.</string>
-  <string name="welcome_night_description">Easy on the eyes.</string>
+  <string name="welcome_start">Давайте начнем!</string>
+  <string name="welcome_skip">ПРОПУСТИТЬ</string>
+  <string name="welcome_finish">ЗАКОНЧИТЬ</string>
+  <string name="welcome_theme_title">Выбрать цвет</string>
+  <string name="welcome_theme_description">Любой цвет.</string>
+  <string name="welcome_night_description">Легче для глаз.</string>
   <string name="welcome_night_hint">Toggle me</string>
-  <string name="welcome_quickreply_title">QK Reply</string>
+  <string name="welcome_quickreply_title">QK Ответ</string>
   <string name="welcome_quickreply_description">Reply to messages faster than ever.</string>
-  <string name="welcome_quickreply_hint">Try it!</string>
+  <string name="welcome_quickreply_hint">Попробуйте это!</string>
   <string name="welcome_quickreply_message_1">Wow! Now wasn\'t that awesome? You can view your entire conversation at a glance. Tap outside the popup or press the checkmark to dismiss it.</string>
   <string name="welcome_quickreply_message_2">This is QK Reply. Now you can reply to messages from anywhere. Tap the expand button to see what happens next :)</string>
   <string name="menu_settings">Настройки</string>
   <string name="menu_search">Поиск</string>
-  <string name="menu_show_all">Show all messages</string>
+  <string name="menu_show_all">Показывать все сообщения</string>
   <string name="menu_show_unread">Show unread messages</string>
   <string name="menu_open_thread">Открыть переписку</string>
   <string name="menu_forward">Переслать сообщение</string>
   <string name="menu_call">Позвонить</string>
   <string name="menu_read">Пометить как прочитанное</string>
-  <string name="menu_delete">Delete</string>
-  <string name="menu_billing">Donate</string>
+  <string name="menu_delete">Удалить</string>
+  <string name="menu_billing">Пожертвовать</string>
   <string name="menu_copy">Скопировать текст</string>
   <string name="menu_changelog">"Новые возможности"</string>
-  <string name="menu_show_all_prefs">Show all</string>
+  <string name="menu_show_all_prefs">Показывать все</string>
   <string name="menu_show_fewer_prefs">Show fewer</string>
   <string name="details_title">Подробности</string>
   <string name="details_to">Кому</string>
@@ -49,31 +49,33 @@
   <string name="details_body">Сообщение</string>
   <string name="details_date_sent">Отправлено</string>
   <string name="details_date_received">Получено</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
   <string name="pref_category_appearance">Внешний вид</string>
   <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
   <string name="pref_category_general">Общие</string>
   <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
   <string name="pref_category_notifications">Уведомления</string>
-  <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
+  <string name="pref_category_summary_notifications">Звуки, индикатор, конфиденциальность</string>
   <string name="pref_category_mms">MMS</string>
   <string name="pref_category_summary_mms">Configure MMS (APNs), max size, group messaging</string>
-  <string name="pref_category_quickreply">QK Reply</string>
+  <string name="pref_category_quickreply">QK Ответ</string>
   <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
-  <string name="pref_category_quickcompose">QK Compose</string>
+  <string name="pref_category_quickcompose">QK Написать</string>
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
   <string name="pref_category_advanced">Расширенные настройки</string>
-  <string name="pref_category_summary_advanced">Advanced UI tweaks</string>
-  <string name="pref_category_about">About</string>
-  <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
-  <string name="pref_theme">Color scheme</string>
-  <string name="pref_theme_summary_alt">Tap to change theme</string>
+  <string name="pref_category_summary_advanced">Расширенные настройки вида</string>
+  <string name="pref_category_about">О приложении</string>
+  <string name="pref_category_summary_about">Версия, список изменений, авторы, благодарности</string>
+  <string name="pref_theme">Цветовая схема</string>
+  <string name="pref_theme_summary_alt">Нажмите, чтобы изменить тему</string>
   <string name="pref_icon">Update QKSMS icon color</string>
   <string name="pref_icon_summary">Update the QKSMS icon to match your color scheme</string>
   <string name="pref_status_tint">Прозрачная строка состояния</string>
   <string name="pref_navigation_tint">Прозрачная строка навигации</string>
-  <string name="pref_background">Background color</string>
-  <string name="pref_background_summary">Tap to change background color</string>
-  <string name="pref_bubbles">Message bubbles</string>
+  <string name="pref_background">Цвет фона</string>
+  <string name="pref_background_summary">Нажмите, чтобы изменить цвет фона</string>
+  <string name="pref_bubbles">Пузыри сообщений</string>
   <string name="pref_bubbles_summary">Tap to change message bubble preferences</string>
   <string name="pref_night">Ночной режим</string>
   <string name="pref_night_summary">Save battery and reduce eye strain</string>
@@ -97,23 +99,27 @@
   <string name="pref_message_count_summary">Show the number of messages for each conversation</string>
   <string name="pref_sliding_tab">Выдвигающаяся панель</string>
   <string name="pref_sliding_tab_summary">Sliding tab that allows you to quickly view your last conversation</string>
-  <string name="pref_compose_favorites">Starred contacts</string>
+  <string name="pref_compose_favorites">Помеченные контакты</string>
   <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
   <string name="pref_prox_sensor_call">Proximity sensor</string>
   <string name="pref_prox_sensor_call_summary">While in a conversation, bring your phone to your ear to start a call</string>
   <string name="pref_delivery">Отчеты о доставке</string>
   <string name="pref_delivery_summary">Запрашивать отчет о доставке для всех отправленных SMS</string>
-  <string name="pref_delivery_toast">Show toast</string>
+  <string name="pref_delivery_toast">Показывать toast-уведомление</string>
   <string name="pref_delivery_toast_summary">Show a short toast to indicate a message being delivered</string>
   <string name="pref_delivery_vibrate">Вибрация</string>
   <string name="pref_delivery_vibrate_summary">Вибрировать при получении сообщения</string>
   <string name="pref_yappy">Yappy integration</string>
   <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
   <string name="pref_mobile_only">Mobile numbers</string>
   <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
   <string name="pref_auto_emoji">Automatic emoji</string>
   <string name="pref_auto_emoji_summary">Replace text with image emoji</string>
-  <string name="pref_enter_button">Enter button</string>
+  <string name="pref_enter_button">Кнопка \"Enter\"</string>
   <string name="pref_enter_button_summary">Tap to change keyboard enter button behavior</string>
   <string name="pref_compose_group">Group messaging</string>
   <string name="pref_compose_group_summary">When composing message to multiple people, send a group message instead of individual messages</string>
@@ -140,7 +146,7 @@
   <string name="pref_wake">Wake phone</string>
   <string name="pref_wake_summary">Turn your screen on when you receive a new message</string>
   <string name="pref_notifications_private">Частные уведомления</string>
-  <string name="pref_notifications_private_summary">Скрыть текст сообщения в уведомлениях</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
   <string name="pref_ringtone">Звук уведомления</string>
   <string name="pref_ringtone_summary">Выберите звук уведомления</string>
   <string name="pref_ticker">Показывать тикер</string>
@@ -149,6 +155,8 @@
   <string name="pref_vibration_summary">Вибрировать при получении новых сообщений</string>
   <string name="pref_notification_call">Кнопка вызова</string>
   <string name="pref_notification_call_summary">Вызов отправителя сообщения прямо из уведомления</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
   <string name="pref_delayed">Delayed messaging</string>
   <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>
   <string name="pref_delayed_duration">Delay length (seconds)</string>
@@ -211,10 +219,13 @@
   <string name="title_search">Поиск</string>
   <string name="title_compose">Написать</string>
   <string name="title_conversation_list">Переписки</string>
+  <string name="title_blocked">Blocked</string>
   <string name="title_changelog">История изменений</string>
   <string name="title_picker">Новые сообщения</string>
   <string name="title_donate">Donate</string>
   <string name="title_qk_responses">QK Responses</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
   <string name="menu_add_address_to_contacts">Добавить <xliff:g id="contactEmailOrNumber"> %s </xliff:g> в контакты</string>
   <string name="view_slideshow">Просмотр слайд-шоу</string>
   <string name="view_message_details">Показать подробности</string>
@@ -242,6 +253,7 @@
   <string name="mark_read">Mark as read</string>
   <string name="call">Позвонить</string>
   <string name="yes">Да</string>
+  <string name="add">Add</string>
   <string name="save">Save</string>
   <string name="enable">Enable</string>
   <string name="upgrade_now">Set now</string>
@@ -368,6 +380,12 @@
   <string name="thanks_4">Спасибо за пожертвование! Ты классный.</string>
   <string name="menu_mute_conversation">Mute conversation</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notification_settings">Notification settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
@@ -488,6 +506,11 @@
     <item>Show emoji</item>
     <item>New line</item>
     <item>Send message</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

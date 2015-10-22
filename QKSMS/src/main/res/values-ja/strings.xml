@@ -15,7 +15,7 @@
   <string name="failed_message">メッセージの送信に失敗しました</string>
   <string name="failed_messages">メッセージの送信に失敗しました</string>
   <string name="failed_messages_summary">タップすると表示します</string>
-  <string name="quickcompose">クイック作成</string>
+  <string name="quickcompose">QK 作成</string>
   <string name="quickcompose_detail">クリックしてメッセージを送信します</string>
   <string name="welcome_start">始めましょう!</string>
   <string name="welcome_skip">スキップ</string>
@@ -24,472 +24,495 @@
   <string name="welcome_theme_description">どんな色でも。</string>
   <string name="welcome_night_description">目に優しい。</string>
   <string name="welcome_night_hint">切り替え</string>
-  <string name="welcome_quickreply_title">クイック返信</string>
-  <string name="welcome_quickreply_description">今までよりもす速くメッセージに返信します。</string>
+  <string name="welcome_quickreply_title">QK 返信</string>
+  <string name="welcome_quickreply_description">今までよりもすばやくメッセージに返信します。</string>
   <string name="welcome_quickreply_hint">お試しください!</string>
-  <string name="welcome_quickreply_message_1">Wow! Now wasn\'t that awesome? You can view your entire conversation at a glance. Tap outside the popup or press the checkmark to dismiss it.</string>
-  <string name="welcome_quickreply_message_2">This is QK Reply. Now you can reply to messages from anywhere. Tap the expand button to see what happens next :)</string>
-  <string name="menu_settings">Settings</string>
-  <string name="menu_search">Search</string>
-  <string name="menu_show_all">Show all messages</string>
-  <string name="menu_show_unread">Show unread messages</string>
-  <string name="menu_open_thread">Open conversation</string>
-  <string name="menu_forward">Forward message</string>
-  <string name="menu_call">Call</string>
-  <string name="menu_read">Mark as read</string>
-  <string name="menu_delete">Delete</string>
-  <string name="menu_billing">Donate</string>
-  <string name="menu_copy">Copy text</string>
-  <string name="menu_changelog">"What's new"</string>
-  <string name="menu_show_all_prefs">Show all</string>
-  <string name="menu_show_fewer_prefs">Show fewer</string>
-  <string name="details_title">Details</string>
-  <string name="details_to">To</string>
-  <string name="details_from">From</string>
-  <string name="details_body">Body</string>
-  <string name="details_date_sent">Date sent</string>
-  <string name="details_date_received">Date received</string>
-  <string name="pref_category_appearance">Appearance</string>
-  <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
-  <string name="pref_category_general">General</string>
-  <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
-  <string name="pref_category_notifications">Notifications</string>
-  <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
+  <string name="welcome_quickreply_message_1">ワオ! 素晴らしくないですか? 一目で会話の全体を見ることができます。ポップアップの外側をタップするか、チェック マークを押して、それを消します。</string>
+  <string name="welcome_quickreply_message_2">これは QK 返信です。どこからでもメッセージに返信することができます。展開ボタンをタップして、次に何が起こるか見てください :)</string>
+  <string name="menu_settings">設定</string>
+  <string name="menu_search">検索</string>
+  <string name="menu_show_all">すべてのメッセージを表示</string>
+  <string name="menu_show_unread">未読メ ッ セージを表示</string>
+  <string name="menu_open_thread">会話を開く</string>
+  <string name="menu_forward">メッセージを転送</string>
+  <string name="menu_call">通話</string>
+  <string name="menu_read">既読としてマーク</string>
+  <string name="menu_delete">削除</string>
+  <string name="menu_billing">寄付</string>
+  <string name="menu_copy">テキストをコピー</string>
+  <string name="menu_changelog">"新着情報"</string>
+  <string name="menu_show_all_prefs">すべて表示</string>
+  <string name="menu_show_fewer_prefs">少し表示</string>
+  <string name="details_title">詳細</string>
+  <string name="details_to">宛先</string>
+  <string name="details_from">差出人</string>
+  <string name="details_body">本文</string>
+  <string name="details_date_sent">送信日</string>
+  <string name="details_date_received">受信日</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
+  <string name="pref_category_appearance">外観</string>
+  <string name="pref_category_summary_appearance">テーマ、フォント、色、アバター、その他</string>
+  <string name="pref_category_general">全般</string>
+  <string name="pref_category_summary_general">配信、メッセージ送信、書式</string>
+  <string name="pref_category_notifications">通知</string>
+  <string name="pref_category_summary_notifications">音、LED、プライバシー</string>
   <string name="pref_category_mms">MMS</string>
-  <string name="pref_category_summary_mms">Configure MMS (APNs), max size, group messaging</string>
-  <string name="pref_category_quickreply">QK Reply</string>
-  <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
-  <string name="pref_category_quickcompose">QK Compose</string>
-  <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
-  <string name="pref_category_advanced">Advanced</string>
-  <string name="pref_category_summary_advanced">Advanced UI tweaks</string>
-  <string name="pref_category_about">About</string>
-  <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
-  <string name="pref_theme">Color scheme</string>
-  <string name="pref_theme_summary_alt">Tap to change theme</string>
-  <string name="pref_icon">Update QKSMS icon color</string>
-  <string name="pref_icon_summary">Update the QKSMS icon to match your color scheme</string>
-  <string name="pref_status_tint">Tinted status bar</string>
-  <string name="pref_navigation_tint">Tinted navigation bar</string>
-  <string name="pref_background">Background color</string>
-  <string name="pref_background_summary">Tap to change background color</string>
-  <string name="pref_bubbles">Message bubbles</string>
-  <string name="pref_bubbles_summary">Tap to change message bubble preferences</string>
-  <string name="pref_night">Night mode</string>
-  <string name="pref_night_summary">Save battery and reduce eye strain</string>
-  <string name="pref_night_amoled">Pure black background</string>
-  <string name="pref_night_amoled_summary">Save extra battery on devices with AMOLED displays</string>
-  <string name="pref_bubble_style_new">Use new bubble style</string>
-  <string name="pref_color_sent">Color sent messages</string>
-  <string name="pref_color_sent_summary">Color the background bubbles for outgoing messages</string>
-  <string name="pref_color_received">Color received messages</string>
-  <string name="pref_color_received_summary">Color the background bubbles for incoming messages</string>
-  <string name="pref_hide_avatar_conversations">Hide conversation avatars</string>
-  <string name="pref_hide_avatar_conversations_summary">Hide avatars for contacts in conversation list</string>
-  <string name="pref_hide_avatar_sent">Hide sent message avatars</string>
-  <string name="pref_hide_avatar_sent_summary">Hide your avatar for outgoing messages</string>
-  <string name="pref_hide_avatar_received">Hide received message avatars</string>
-  <string name="pref_hide_avatar_received_summary">Hide contact avatar for incoming messages</string>
-  <string name="pref_font_family">Font family</string>
-  <string name="pref_font_size">Font size</string>
-  <string name="pref_font_weight">Font weight</string>
-  <string name="pref_message_count">Message count</string>
-  <string name="pref_message_count_summary">Show the number of messages for each conversation</string>
-  <string name="pref_sliding_tab">Sliding panel tab</string>
-  <string name="pref_sliding_tab_summary">Sliding tab that allows you to quickly view your last conversation</string>
-  <string name="pref_compose_favorites">Starred contacts</string>
-  <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
-  <string name="pref_prox_sensor_call">Proximity sensor</string>
-  <string name="pref_prox_sensor_call_summary">While in a conversation, bring your phone to your ear to start a call</string>
-  <string name="pref_delivery">Delivery confirmations</string>
-  <string name="pref_delivery_summary">Confirm that messages were sent successfully</string>
-  <string name="pref_delivery_toast">Show toast</string>
-  <string name="pref_delivery_toast_summary">Show a short toast to indicate a message being delivered</string>
-  <string name="pref_delivery_vibrate">Vibrate</string>
-  <string name="pref_delivery_vibrate_summary">Vibrate on message delivery</string>
-  <string name="pref_yappy">Yappy integration</string>
-  <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
-  <string name="pref_mobile_only">Mobile numbers</string>
-  <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
-  <string name="pref_auto_emoji">Automatic emoji</string>
-  <string name="pref_auto_emoji_summary">Replace text with image emoji</string>
-  <string name="pref_enter_button">Enter button</string>
-  <string name="pref_enter_button_summary">Tap to change keyboard enter button behavior</string>
-  <string name="pref_compose_group">Group messaging</string>
-  <string name="pref_compose_group_summary">When composing message to multiple people, send a group message instead of individual messages</string>
-  <string name="pref_auto_download">Auto download MMS</string>
-  <string name="pref_auto_download_summary">Automatically download MMS messages when they become available</string>
-  <string name="pref_auto_data">Automatic data</string>
-  <string name="pref_auto_data_summary">Turn on data automatically when sending or receiving MMS</string>
-  <string name="pref_split">Split SMS</string>
-  <string name="pref_split_summary">Split long messages into separate messages</string>
-  <string name="pref_split_counter">Split counter</string>
-  <string name="pref_split_counter_summary">Adds a counter to the front of each split message</string>
-  <string name="pref_long_as_mms">Send long as MMS</string>
-  <string name="pref_long_as_mms_summary">Send long messages as MMS instead of splitting them</string>
-  <string name="pref_long_as_mms_after">Send long as MMS after</string>
-  <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
-  <string name="pref_24h">24h time</string>
-  <string name="pref_24h_summary">Display timestamps in 24-hour format</string>
-  <string name="pref_return">Show return button</string>
-  <string name="pref_return_summary">Show return key on keyboard instead of Emoji button</string>
-  <string name="pref_text">Text</string>
-  <string name="pref_notifications">SMS notifications enabled</string>
-  <string name="pref_led">Notification LED</string>
-  <string name="pref_theme_led">Notification LED color</string>
-  <string name="pref_wake">Wake phone</string>
-  <string name="pref_wake_summary">Turn your screen on when you receive a new message</string>
-  <string name="pref_notifications_private">Private notifications</string>
-  <string name="pref_notifications_private_summary">Hide message text in notifications</string>
-  <string name="pref_ringtone">Notification sound</string>
-  <string name="pref_ringtone_summary">Select a notification sound</string>
-  <string name="pref_ticker">Show ticker</string>
-  <string name="pref_ticker_summary">Shows snippet of new message in notification bar</string>
-  <string name="pref_vibration">Vibration</string>
-  <string name="pref_vibration_summary">Vibrate when new messages are received</string>
-  <string name="pref_notification_call">Call button</string>
-  <string name="pref_notification_call_summary">Call the sender of a message right from the notification</string>
-  <string name="pref_delayed">Delayed messaging</string>
-  <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>
-  <string name="pref_delayed_duration">Delay length (seconds)</string>
-  <string name="pref_delayed_duration_summary">Time to wait before sending your message</string>
-  <string name="pref_night_auto">Automatic night mode</string>
-  <string name="pref_night_auto_summary">Enable night mode automatically based on the time</string>
-  <string name="pref_day_start">Day time begins</string>
-  <string name="pref_night_start">Night time begins</string>
-  <string name="pref_qk_responses">QK Responses</string>
-  <string name="pref_qk_responses_summary">Modify your preset responses to be used from your Android Wear device</string>
-  <string name="pref_quickreply_enabled">QK Reply enabled</string>
-  <string name="pref_quickreply_enabled_summary">Show QK Reply window whenever a new message is received</string>
-  <string name="pref_tap_to_quit">Tap to dismiss</string>
-  <string name="pref_tap_to_quit_summary">Tap anywhere outside of the window to close it</string>
-  <string name="pref_quickcompose">QK Compose enabled</string>
-  <string name="pref_quickcompose_summary">Display a notification that allows you to click on to compose a new message</string>
-  <string name="pref_mms_enabled">MMS enabled</string>
-  <string name="pref_mms_enabled_summary">Enable sending and receiving of MMS messages</string>
+  <string name="pref_category_summary_mms">MMS (APN)、最大サイズ、グループ メッセージ送信の設定</string>
+  <string name="pref_category_quickreply">QK 返信</string>
+  <string name="pref_category_summary_quickreply">QK 返信、ポップアップのオプション</string>
+  <string name="pref_category_quickcompose">QK 作成</string>
+  <string name="pref_category_summary_quickcompose">QK 作成、スターを付けた連絡先</string>
+  <string name="pref_category_advanced">詳細</string>
+  <string name="pref_category_summary_advanced">高度な UI の微調整</string>
+  <string name="pref_category_about">アプリについて</string>
+  <string name="pref_category_summary_about">バージョン、変更履歴、作者、謝辞</string>
+  <string name="pref_theme">配色パターン</string>
+  <string name="pref_theme_summary_alt">タップするとテーマを変更します</string>
+  <string name="pref_icon">QKSMS アイコンの色を更新</string>
+  <string name="pref_icon_summary">配色パターンに合わせて QKSMS アイコンを更新します</string>
+  <string name="pref_status_tint">彩色のステータス バー</string>
+  <string name="pref_navigation_tint">彩色のナビゲーション バー</string>
+  <string name="pref_background">背景色</string>
+  <string name="pref_background_summary">タップすると背景色を変更します</string>
+  <string name="pref_bubbles">メッセージ バブル</string>
+  <string name="pref_bubbles_summary">タップするとメッセージ バブルの設定を変更します</string>
+  <string name="pref_night">夜間モード</string>
+  <string name="pref_night_summary">バッテリーを節約し、目の負担を軽減します</string>
+  <string name="pref_night_amoled">純粋な黒の背景</string>
+  <string name="pref_night_amoled_summary">AMOLED ディスプレイのデバイスで余分なバッテリーを節約します</string>
+  <string name="pref_bubble_style_new">新しいバブル スタイルを使用する</string>
+  <string name="pref_color_sent">送信したメッセージを色分け</string>
+  <string name="pref_color_sent_summary">送信メッセージの背景のバブルに色を付けます</string>
+  <string name="pref_color_received">受信したメッセージを色分けする</string>
+  <string name="pref_color_received_summary">受信メッセージの背景のバブルに色を付けます</string>
+  <string name="pref_hide_avatar_conversations">会話のアバターを非表示にする</string>
+  <string name="pref_hide_avatar_conversations_summary">会話リストで連絡先のアバターを非表示にします</string>
+  <string name="pref_hide_avatar_sent">送信メッセージのアバターを非表示にする</string>
+  <string name="pref_hide_avatar_sent_summary">送信メッセージのアバターを非表示にします</string>
+  <string name="pref_hide_avatar_received">受信メッセージのアバターを非表示にする</string>
+  <string name="pref_hide_avatar_received_summary">受信メッセージの連絡先のアバターを非表示にします</string>
+  <string name="pref_font_family">フォント ファミリー</string>
+  <string name="pref_font_size">フォントサイズ</string>
+  <string name="pref_font_weight">フォントの太さ</string>
+  <string name="pref_message_count">メッセージ件数</string>
+  <string name="pref_message_count_summary">会話ごとにメッセージ数を表示します</string>
+  <string name="pref_sliding_tab">スライド パネル タブ</string>
+  <string name="pref_sliding_tab_summary">スライド タブは最後の会話をすばやく表示することができます</string>
+  <string name="pref_compose_favorites">スターを付けた連絡先</string>
+  <string name="pref_compose_summary_favorites">QK 作成ウィンドウにスターを付けた連絡先を表示します。タップすると消えます</string>
+  <string name="pref_prox_sensor_call">近接センサー</string>
+  <string name="pref_prox_sensor_call_summary">会話中に、お使いの電話を耳に持って来ると通話を開始します</string>
+  <string name="pref_delivery">配信確認</string>
+  <string name="pref_delivery_summary">メッセージが正常に送信されたことを確認します</string>
+  <string name="pref_delivery_toast">トーストを表示</string>
+  <string name="pref_delivery_toast_summary">メッセージの配信を示す、短いトーストを表示します</string>
+  <string name="pref_delivery_vibrate">振動</string>
+  <string name="pref_delivery_vibrate_summary">メッセージ配信で振動します</string>
+  <string name="pref_yappy">Yappy 統合</string>
+  <string name="pref_endlessjabber_summary">Yappy の完全なサポートを有効にします</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_mobile_only">携帯電話番号</string>
+  <string name="pref_mobile_only_summary">連絡先の候補で携帯電話番号のみを表示します</string>
+  <string name="pref_auto_emoji">自動絵文字</string>
+  <string name="pref_auto_emoji_summary">画像絵文字で、テキストを置き換えます</string>
+  <string name="pref_enter_button">Enter ボタン</string>
+  <string name="pref_enter_button_summary">タップすると、キーボードの Enter ボタンの動作を変更します</string>
+  <string name="pref_compose_group">グループ メッセージ送信</string>
+  <string name="pref_compose_group_summary">複数の人にメッセージを作成するとき、個々のメッセージの代わりにグループ メッセージを送信します</string>
+  <string name="pref_auto_download">自動ダウンロード MMS</string>
+  <string name="pref_auto_download_summary">使用可能になったとき、自動的に MMS メッセージをダウンロードします</string>
+  <string name="pref_auto_data">自動データ</string>
+  <string name="pref_auto_data_summary">MMS の送受信時に自動的にデータをオンにします</string>
+  <string name="pref_split">SMS の分割</string>
+  <string name="pref_split_summary">長いメッセージを個別のメッセージに分割します</string>
+  <string name="pref_split_counter">分割カウンター</string>
+  <string name="pref_split_counter_summary">それぞれの分割メッセージの前にカウンターを追加します</string>
+  <string name="pref_long_as_mms">長いメッセージを MMS として送信</string>
+  <string name="pref_long_as_mms_summary">長いメッセージを分割ではなく MMS として送信します</string>
+  <string name="pref_long_as_mms_after">MMS として送信する長さ</string>
+  <string name="pref_long_as_mms_after_summary">メッセージの長さを超えた場合、長いメッセージを MMS として送信します</string>
+  <string name="pref_24h">24 時間形式</string>
+  <string name="pref_24h_summary">24 時間形式でタイムスタンプを表示します</string>
+  <string name="pref_return">Return ボタンを表示</string>
+  <string name="pref_return_summary">絵文字ボタンの代わりにキーボードの return キーを表示します</string>
+  <string name="pref_text">テキスト</string>
+  <string name="pref_notifications">SMS 通知を有効にする</string>
+  <string name="pref_led">通知 LED</string>
+  <string name="pref_theme_led">通知 LED 色</string>
+  <string name="pref_wake">携帯電話をウェイク</string>
+  <string name="pref_wake_summary">新しいメッセージを受信したときに画面をオンにします</string>
+  <string name="pref_notifications_private">プライベート通知</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
+  <string name="pref_ringtone">通知音</string>
+  <string name="pref_ringtone_summary">通知音を選択します</string>
+  <string name="pref_ticker">ティッカーを表示</string>
+  <string name="pref_ticker_summary">通知バーに新しいメッセージのスニペットを表示します</string>
+  <string name="pref_vibration">振動</string>
+  <string name="pref_vibration_summary">新しいメッセージを受信したときに振動します</string>
+  <string name="pref_notification_call">通話ボタン</string>
+  <string name="pref_notification_call_summary">通知から、メッセージの送信者に電話します</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
+  <string name="pref_delayed">メッセージ送信遅延</string>
+  <string name="pref_delayed_summary">メッセージを送信する前に待機して、確認する機会を与えます</string>
+  <string name="pref_delayed_duration">遅延時間 (秒)</string>
+  <string name="pref_delayed_duration_summary">メッセージを送信する前に待機する時間</string>
+  <string name="pref_night_auto">自動夜間モード</string>
+  <string name="pref_night_auto_summary">時間に基づいて、自動的に夜間モードを有効にします</string>
+  <string name="pref_day_start">日中の開始時間</string>
+  <string name="pref_night_start">夜間の開始時間</string>
+  <string name="pref_qk_responses">QK 応答</string>
+  <string name="pref_qk_responses_summary">Android ウェアデバイスから使用する、プリセットの応答を変更します</string>
+  <string name="pref_quickreply_enabled">QK 返信を有効にしました</string>
+  <string name="pref_quickreply_enabled_summary">新しいメッセージを受信するたびに、QK 返信ウィンドウを表示します</string>
+  <string name="pref_tap_to_quit">タップして閉じる</string>
+  <string name="pref_tap_to_quit_summary">ウィンドウの外側の任意の場所をタップすると、閉じます</string>
+  <string name="pref_quickcompose">QK 作成を有効にしました</string>
+  <string name="pref_quickcompose_summary">クリックして新しいメッセージを作成できる通知を表示します</string>
+  <string name="pref_mms_enabled">MMS を有効にしました</string>
+  <string name="pref_mms_enabled_summary">MMS メッセージの送信および受信を有効にします</string>
   <string name="pref_mmsc_url">MMSC</string>
-  <string name="pref_mms_proxy">MMS proxy</string>
-  <string name="pref_mms_port">MMS port</string>
-  <string name="pref_apn_chooser">Load default APNs</string>
-  <string name="pref_strip_unicode">Strip unicode</string>
-  <string name="pref_strip_unicode_summary">Swap characters that are not supported in full-length messages for GSM compatible characters</string>
-  <string name="pref_system_bar_flat">Flat system bars</string>
-  <string name="pref_system_bar_flat_summary">Get rid of the gradient shown on the system UI bars on most KitKat devices</string>
-  <string name="pref_status_compat">Status bar fix</string>
-  <string name="pref_status_compat_summary">Fixes issues caused by immersive mode, Tinted Status Bar (Xposed), or custom DPI settings</string>
-  <string name="pref_navigation_compat">Navigation bar fix</string>
-  <string name="pref_navigation_compat_summary">Fixes issues caused by immersive mode, Tinted Status Bar (Xposed), or custom DPI settings</string>
-  <string name="pref_about_version_title">QKSMS version</string>
-  <string name="pref_about_authors_title">Authors</string>
+  <string name="pref_mms_proxy">MMS プロキシ</string>
+  <string name="pref_mms_port">MMS ポート</string>
+  <string name="pref_apn_chooser">デフォルト APN を読み込む</string>
+  <string name="pref_strip_unicode">ユニコードを除去</string>
+  <string name="pref_strip_unicode_summary">GSM 互換文字のフルレングスのメッセージでサポートされていない文字をスワップします</string>
+  <string name="pref_system_bar_flat">フラット システム バー</string>
+  <string name="pref_system_bar_flat_summary">ほとんどの KitKat デバイスで、システム UI バーのグラデーションを取り除きます</string>
+  <string name="pref_status_compat">ステータス バーの修正</string>
+  <string name="pref_status_compat_summary">イマーシブ モード、彩色ステータス バー (Xposed) またはカスタム DPI 設定によって引き起こされる問題を修正します</string>
+  <string name="pref_navigation_compat">ナビゲーション バーの修正</string>
+  <string name="pref_navigation_compat_summary">イマーシブ モード、彩色ステータス バー (Xposed) またはカスタム DPI 設定によって引き起こされる問題を修正します</string>
+  <string name="pref_about_version_title">QKSMS バージョン</string>
+  <string name="pref_about_authors_title">作者</string>
   <string name="pref_about_authors_summary">Moez Bhatti</string>
-  <string name="pref_changelog_summary">Tap to view changelog</string>
-  <string name="pref_about_thanks_title">Thank you</string>
-  <string name="pref_about_thanks_summary">Tap to view open-source contributors</string>
-  <string name="pref_donate_title">Donate</string>
-  <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
-  <string name="pref_show_all">Show all preferences</string>
-  <string name="pref_show_fewer">Show fewer preferences</string>
-  <string name="pref_subcat_theme">Theme</string>
-  <string name="pref_subcat_system_bars">System bars</string>
-  <string name="pref_subcat_categories">Categories</string>
-  <string name="pref_subcat_font">Font</string>
-  <string name="pref_subcat_messages">Messages</string>
-  <string name="pref_subcat_avatars">Avatars</string>
-  <string name="donate_google">Donate with Google</string>
-  <string name="donate_google_summary">Google takes 30% of donations</string>
-  <string name="donate_paypal">Donate with PayPal</string>
-  <string name="donate_paypal_button">Donate any amount</string>
-  <string name="donate_paypal_button_summary">Buy me anything you want!</string>
-  <string name="product_name_donation">Donation</string>
-  <string name="product_name_donate_1">Donate $1 USD</string>
-  <string name="product_name_donate_5">Donate $5 USD</string>
-  <string name="product_name_donate_10">Donate $10 USD</string>
-  <string name="product_description_donate_1">Buy me a Coke</string>
-  <string name="product_description_donate_5">Buy me a sandwich</string>
-  <string name="product_description_donate_10">Buy me lunch</string>
-  <string name="title_settings">Settings</string>
-  <string name="title_search">Search</string>
-  <string name="title_compose">Compose</string>
-  <string name="title_conversation_list">Conversations</string>
-  <string name="title_changelog">Changelog</string>
-  <string name="title_picker">New messages</string>
-  <string name="title_donate">Donate</string>
-  <string name="title_qk_responses">QK Responses</string>
-  <string name="menu_add_address_to_contacts">Add <xliff:g id="contactEmailOrNumber">%s</xliff:g> to People</string>
-  <string name="view_slideshow">View slideshow</string>
-  <string name="view_message_details">View details</string>
-  <string name="view_delivery_report">View report</string>
-  <string name="delete_message">Delete</string>
+  <string name="pref_changelog_summary">タップすると、変更履歴を表示します</string>
+  <string name="pref_about_thanks_title">ありがとうございます</string>
+  <string name="pref_about_thanks_summary">タップすると、オープン ソース貢献者を表示します</string>
+  <string name="pref_donate_title">寄付</string>
+  <string name="pref_donate_summary">QKSMS は無料です。寄付をして私たちをサポートしてください!</string>
+  <string name="pref_show_all">すべての設定を表示</string>
+  <string name="pref_show_fewer">少し設定を表示</string>
+  <string name="pref_subcat_theme">テーマ</string>
+  <string name="pref_subcat_system_bars">システム バー</string>
+  <string name="pref_subcat_categories">カテゴリー</string>
+  <string name="pref_subcat_font">フォント</string>
+  <string name="pref_subcat_messages">メッセージ</string>
+  <string name="pref_subcat_avatars">アバター</string>
+  <string name="donate_google">Google で寄付</string>
+  <string name="donate_google_summary">Google は寄付金の 30% 受け取ります</string>
+  <string name="donate_paypal">PayPal で寄付</string>
+  <string name="donate_paypal_button">任意の金額を寄付</string>
+  <string name="donate_paypal_button_summary">あなたが欲しいものを買いなさい!</string>
+  <string name="product_name_donation">寄付</string>
+  <string name="product_name_donate_1">1 ドル寄付する</string>
+  <string name="product_name_donate_5">5 ドル寄付する</string>
+  <string name="product_name_donate_10">10 ドル寄付する</string>
+  <string name="product_description_donate_1">私にコーラを買ってください</string>
+  <string name="product_description_donate_5">私にサンドイッチを買ってください</string>
+  <string name="product_description_donate_10">私にランチを買ってください</string>
+  <string name="title_settings">設定</string>
+  <string name="title_search">検索</string>
+  <string name="title_compose">作成</string>
+  <string name="title_conversation_list">会話</string>
+  <string name="title_blocked">Blocked</string>
+  <string name="title_changelog">変更履歴</string>
+  <string name="title_picker">新しいメッセージ</string>
+  <string name="title_donate">寄付</string>
+  <string name="title_qk_responses">QK 応答</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
+  <string name="menu_add_address_to_contacts">人に <xliff:g id="contactEmailOrNumber">%s</xliff:g> を追加</string>
+  <string name="view_slideshow">スライド ショーの表示</string>
+  <string name="view_message_details">詳細の表示</string>
+  <string name="view_delivery_report">レポートの表示</string>
+  <string name="delete_message">削除</string>
   <string name="kilobyte">KB</string>
-  <string name="copy_message_text">Copy text</string>
-  <string name="message_options">Message options</string>
-  <string name="delivery_header_title">Report</string>
-  <string name="restart_message">These changes will take effect the next time QKSMS is opened</string>
-  <string name="delete_conversation">Delete conversation</string>
-  <string name="delete_all_failed">Delete failed messages</string>
-  <string name="delete_confirmation">Are you sure you would like to delete the conversation?</string>
-  <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
-  <string name="apns_not_set">APNs not set</string>
-  <string name="apns_not_set_description">It appears that your APNs have not been set. This means that MMS will not work properly. Please press okay to have QKSMS find them for you :)</string>
-  <string name="set_up_mms_title">Set up MMS?</string>
-  <string name="set_up_mms_description">It appears that MMS hasn\'t been configured in QKSMS yet. Press okay automatically configure MMS.</string>
-  <string name="discard_message_reason">Your message will be discarded because it has no valid recipients.</string>
-  <string name="invalid_code">Invalid code</string>
-  <string name="restart">Restart now</string>
-  <string name="reply">Reply</string>
-  <string name="reply_qksms">Reply via QKSMS</string>
-  <string name="read">Read</string>
-  <string name="mark_read">Mark as read</string>
-  <string name="call">Call</string>
-  <string name="yes">Yes</string>
-  <string name="save">Save</string>
-  <string name="enable">Enable</string>
-  <string name="upgrade_now">Set now</string>
-  <string name="okay">Okay</string>
-  <string name="redeem">Redeem</string>
-  <string name="just_once">Just once</string>
-  <string name="later">Later</string>
-  <string name="cancel">Cancel</string>
-  <string name="messagelist_sender_self">Me</string>
-  <string name="hidden_sender_address">Hidden sender address</string>
-  <string name="no_subject_view">(No subject)</string>
+  <string name="copy_message_text">テキストをコピー</string>
+  <string name="message_options">メッセージ オプション</string>
+  <string name="delivery_header_title">レポート</string>
+  <string name="restart_message">この変更は次に QKSMS を開いたときに有効になります</string>
+  <string name="delete_conversation">会話を削除</string>
+  <string name="delete_all_failed">失敗したメッセージを削除</string>
+  <string name="delete_confirmation">会話を削除してもよろしいですか?</string>
+  <string name="delete_all_failed_confirmation">失敗したメッセージをすべて削除してもよろしいですか?</string>
+  <string name="apns_not_set">APN が設定されていません</string>
+  <string name="apns_not_set_description">APN が設定されていないようです。これは MMS が正しく動作しないことを意味します。QKSMS が見つけるために OK を押してください :)</string>
+  <string name="set_up_mms_title">MMS を設定しますか?</string>
+  <string name="set_up_mms_description">QKSMS で MMS が設定されていないようです。MMS を設定するには OK を押してください。</string>
+  <string name="discard_message_reason">受信者が無効なため、メッセージは破棄されます。</string>
+  <string name="invalid_code">無効なコード</string>
+  <string name="restart">今すぐ再起動</string>
+  <string name="reply">返信</string>
+  <string name="reply_qksms">QKSMS 経由で返信</string>
+  <string name="read">読む</string>
+  <string name="mark_read">既読としてマーク</string>
+  <string name="call">通話</string>
+  <string name="yes">はい</string>
+  <string name="add">Add</string>
+  <string name="save">保存</string>
+  <string name="enable">有効</string>
+  <string name="upgrade_now">今すぐ設定</string>
+  <string name="okay">OK</string>
+  <string name="redeem">交換</string>
+  <string name="just_once">一度だけ</string>
+  <string name="later">後で</string>
+  <string name="cancel">キャンセル</string>
+  <string name="messagelist_sender_self">自分</string>
+  <string name="hidden_sender_address">送信者アドレスを非表示</string>
+  <string name="no_subject_view">(件名なし)</string>
   <string name="expire_on">"Expires: <xliff:g id="date">%s</xliff:g>"</string>
   <string name="inline_subject">"&lt;Subject: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
-  <string name="download">Download</string>
-  <string name="downloading">Downloading</string>
-  <string name="compressing">Picture too large. Compressing\u2026</string>
-  <string name="favorites">Starred contacts</string>
-  <string name="me">Me</string>
-  <string name="menu_edit">Edit</string>
-  <string name="menu_delete_messages">Delete messages</string>
-  <string name="menu_lock">Lock</string>
-  <string name="menu_unlock">Unlock</string>
-  <string name="cannot_get_details">Can\'t get details.</string>
-  <string name="message_details_title">Message details</string>
-  <string name="message_type_label">Type\u000A</string>
-  <string name="text_message">Text message</string>
-  <string name="multimedia_message">Multimedia message</string>
-  <string name="multimedia_notification">Multimedia message notification</string>
-  <string name="from_label">From\u000A</string>
-  <string name="to_address_label">To\u000A</string>
+  <string name="download">ダウンロード</string>
+  <string name="downloading">ダウンロード中</string>
+  <string name="compressing">画像が大きすぎます。圧縮中\u2026</string>
+  <string name="favorites">スターを付けた連絡先</string>
+  <string name="me">自分</string>
+  <string name="menu_edit">編集</string>
+  <string name="menu_delete_messages">メッセージを削除</string>
+  <string name="menu_lock">ロック</string>
+  <string name="menu_unlock">ロックを解除</string>
+  <string name="cannot_get_details">詳細を取得できません</string>
+  <string name="message_details_title">メッセージの詳細</string>
+  <string name="message_type_label">種類\u000A</string>
+  <string name="text_message">テキスト メッセージ</string>
+  <string name="multimedia_message">マルチメディア メッセージ</string>
+  <string name="multimedia_notification">マルチメディア メッセージの通知</string>
+  <string name="from_label">差出人\u000A</string>
+  <string name="to_address_label">宛先\u000A</string>
   <string name="bcc_label">Bcc\u000A</string>
-  <string name="sent_label">Sent\u000A</string>
-  <string name="received_label">Received\u000A</string>
-  <string name="saved_label">Saved\u000A</string>
-  <string name="subject_label">Subject\u000A</string>
-  <string name="message_size_label">Message size\u000A</string>
-  <string name="priority_label">Priority\u000A</string>
-  <string name="priority_high">High</string>
-  <string name="priority_normal">Normal</string>
-  <string name="priority_low">Low</string>
-  <string name="message_class_label">Message class\u000A</string>
-  <string name="error_code_label">Error code\u000A</string>
-  <string name="building_slideshow_title">Building slideshow</string>
-  <string name="has_draft">Draft</string>
+  <string name="sent_label">送信\u000A</string>
+  <string name="received_label">受信\u000A</string>
+  <string name="saved_label">保存\u000A</string>
+  <string name="subject_label">件名\u000A</string>
+  <string name="message_size_label">メッセージ サイズ\u000A</string>
+  <string name="priority_label">優先度\u000A</string>
+  <string name="priority_high">高</string>
+  <string name="priority_normal">通常</string>
+  <string name="priority_low">低</string>
+  <string name="message_class_label">メッセージ分類\u000A</string>
+  <string name="error_code_label">エラー コード\u000A</string>
+  <string name="building_slideshow_title">スライド ショーを構築中</string>
+  <string name="has_draft">下書き</string>
   <string name="draft_separator">,\u0020</string>
   <string name="message_count_format">\u00a0<xliff:g id="number" example="1">%1$s</xliff:g></string>
-  <string name="error_state">Inconsistent state</string>
-  <string name="error_state_text">The state of threads and recipients is inconsistent. Please capture a bug report and report it via http://go/droidanizer </string>
-  <string name="select_link_title">Choose action</string>
+  <string name="error_state">矛盾した状態</string>
+  <string name="error_state_text">スレッドと受信者の状態に一貫性がありません。バグレポートを取り込んで http://go/droidanizer で報告してください </string>
+  <string name="select_link_title">アクションを選択</string>
   <string name="message_timestamp_format"><xliff:g id="string" example="Fred Flinstone">%1$s</xliff:g>\u0020-\u0020<xliff:g id="string" example="9:39AM">%2$s</xliff:g></string>
-  <string name="status_sending">Sending&#8230;</string>
-  <string name="status_none">(None)</string>
-  <string name="status_pending">Pending</string>
-  <string name="status_read">Read</string>
-  <string name="status_received">Received</string>
-  <string name="status_failed">Failed. Tap for options</string>
-  <string name="status_unread">Unread</string>
-  <string name="status_rejected">Rejected</string>
-  <string name="recipient_label">Recipient:\u0020</string>
-  <string name="status_label">Status:\u0020</string>
-  <string name="delivered_label">Delivered:\u0020</string>
-  <string name="do_something">Do something</string>
-  <string name="confirm_dialog_title">Delete?</string>
-  <string name="confirm_dialog_locked_title">Delete locked message?</string>
+  <string name="status_sending">送信中&#8230;</string>
+  <string name="status_none">(なし)</string>
+  <string name="status_pending">保留</string>
+  <string name="status_read">既読</string>
+  <string name="status_received">受信</string>
+  <string name="status_failed">失敗しました。タップするとオプション</string>
+  <string name="status_unread">未読</string>
+  <string name="status_rejected">拒否</string>
+  <string name="recipient_label">受信者:\u0020</string>
+  <string name="status_label">ステータス:\u0020</string>
+  <string name="delivered_label">配信:\u0020</string>
+  <string name="do_something">何かを行います</string>
+  <string name="confirm_dialog_title">削除しますか?</string>
+  <string name="confirm_dialog_locked_title">ロックされたメッセージを削除しますか?</string>
   <plurals name="confirm_delete_conversation">
-    <item quantity="other"><xliff:g id="number" example="15">%1$s</xliff:g> conversations will be deleted.</item>
+    <item quantity="other"><xliff:g id="number" example="15">%1$s</xliff:g> の会話が削除されます。</item>
   </plurals>
-  <string name="confirm_delete_conversation">The entire thread will be deleted.</string>
-  <string name="confirm_delete_all_conversations">All threads will be deleted.</string>
-  <string name="confirm_delete_message">The message will be deleted.</string>
-  <string name="confirm_delete_locked_message">Delete this locked message?</string>
-  <string name="confirm_delete_all_SIM_messages">All messages on the SIM card will be deleted.</string>
-  <string name="confirm_delete_SIM_message">This message on the SIM card will be deleted.</string>
-  <string name="delete_unlocked">Delete locked messages</string>
-  <string name="delete">Delete</string>
-  <string name="more">More</string>
-  <string name="more_summary">Tap to see more</string>
-  <string name="select_conversations">Choose conversations</string>
-  <string name="no_conversations">No conversations.</string>
-  <string name="loading_conversations">Loading conversations.</string>
-  <string name="not_default">Default SMS</string>
-  <string name="default_info">QKSMS needs to be your SMS app to do that</string>
-  <string name="not_default_mark_read">QKSMS must be your SMS app to mark messages read</string>
-  <string name="not_default_mark_unread">QKSMS must be your SMS app to mark messages unread</string>
-  <string name="not_default_delete">QKSMS must be your SMS app to delete messages</string>
-  <string name="not_default_send">QKSMS must be your SMS app to send messages</string>
-  <string name="not_default_first">Some things won\'t work until QKSMS is the default SMS app</string>
-  <string name="delayed_messaging_info">Delayed messaging allows you to cancel messages before they send. Change the default behavior and more in Settings</string>
-  <string name="delayed_duration_bounds_error">Duration must be between 1 and 30 seconds</string>
-  <string name="confirm">Confirm</string>
-  <string name="message_send_read_report">A read report will be sent.</string>
-  <string name="update_icon_title">Update icon color</string>
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color. Restart now?</string>
-  <string name="dialog_conversation_details_title">Conversation details</string>
-  <string name="dialog_conversation_details_last_message_date">Last message date</string>
-  <string name="dialog_conversation_details_message_count">Message count</string>
-  <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
-  <string name="select_audio">Choose audio</string>
-  <string name="copy_to_sdcard">Save attachment</string>
-  <string name="copy_to_sdcard_success">Attachment saved.</string>
-  <string name="copy_to_sdcard_fail">Couldn\'t save attachment.</string>
-  <string name="save_ringtone">Save as ringtone</string>
-  <string name="saved_ringtone">Ringtone saved.</string>
-  <string name="saved_ringtone_fail">Couldn\'t save ringtone.</string>
-  <string name="menu_group_participants">Group participants</string>
-  <string name="toast_draft">Saved draft</string>
-  <string name="toast_conversation_deleted">Conversation deleted</string>
-  <string name="toast_low_memory">"Phone storage is full. Delete some files to free space."</string>
-  <string name="toast_forward">This feature has not yet been implemented. For now please use the Copy text option and paste that in the conversation you would like to send it</string>
-  <string name="toast_unimplemented">This feature has not yet been implemented</string>
-  <string name="toast_message_failure">Message failed to send</string>
-  <string name="toast_message_delivered">Message delivered</string>
-  <string name="toast_message_not_delivered">Message not delivered</string>
-  <string name="toast_default_apns_loaded">Loaded default APN settings</string>
-  <string name="toast_copy_text">Copied text to clipboard</string>
-  <string name="toast_billing_not_available">Purchase requires Google Play Store (billing) on your Android</string>
-  <string name="toast_endlessjabber_not_installed">EndlessJabber is not installed, opening Google Play</string>
-  <string name="thanks_1">Thank you for donating! You\'re my new best friend.</string>
-  <string name="thanks_2">Thanks for the donation! I love you.</string>
-  <string name="thanks_3">Thanks for donating! You\'re helping QKSMS become the best texting app ever made.</string>
-  <string name="thanks_4">Thanks for the donation! You\'re awesome.</string>
-  <string name="menu_mute_conversation">Mute conversation</string>
-  <string name="menu_unmute_conversation">Unmute conversation</string>
-  <string name="menu_notification_settings">Notification settings</string>
-  <string name="menu_view_details">View details</string>
-  <string name="menu_mark_read">Mark read</string>
-  <string name="menu_mark_unread">Mark unread</string>
-  <string name="menu_delete_conversation">Delete conversation</string>
-  <string name="menu_multi_select">Select conversation</string>
-  <string name="failed_message_title">Failed message options</string>
-  <string name="attachment_app_not_found">Attachments app not found. Try installing a photo gallery app!</string>
-  <string name="attachment_camera_error">The camera could not be opened</string>
-  <string name="pref_max_mms_attachment_size">Maximum MMS attachment size</string>
-  <string name="error_no_recipients">Select some contacts to send this message to!</string>
-  <string name="error_file_not_found">QKSMS can\'t access the file you\'re trying to share!</string>
-  <string name="sending_blocked_welcome_screen_message">Hold up! You\'ll get to send real messages in a minute!</string>
-  <string name="notification_colored_icon_ready">Touch to add to your launcher from home screen.</string>
-  <string name="notification_title_colored_icon_ready">QKSMS colored icon is ready</string>
-  <string name="icon_ready">Your new icon is ready!</string>
-  <string name="icon_ready_message">You can now add it to your home screen again with the updated color.</string>
-  <string name="dont_ask_again">Don\'t ask again</string>
-  <string name="warning">Stagefright warning</string>
-  <string name="stagefright_warning">Video messages may contain a harmful exploit that can leave your phone vulnerable to attacks. Would you like to continue?</string>
-  <string name="mms_setup_set_up_mms_title">Set up MMS?</string>
-  <string name="mms_setup_set_up_mms_body">It appears that MMS isn\'t set up in QKSMS. Press okay to automatically configure MMS.</string>
-  <string name="mms_setup_setting_up_later_title">Setting up MMS later</string>
-  <string name="mms_setup_setting_up_later_body">Visit the MMS section of Settings to try automatic configuration, contact support, or enter your own configuration.</string>
-  <string name="mms_setup_no_configurations_found_title">No configurations found</string>
-  <string name="mms_setup_no_configurations_found_body">We couldn\'t find an MMS configuration for your carrier automatically. Press okay to contact support. We\'ll help you get set up! </string>
-  <string name="mms_setup_one_configuration_found_title">One configuration found</string>
-  <string name="mms_setup_one_configuration_found_body">We have found an MMS configuration for the %s carrier. Does that sound right?</string>
-  <string name="mms_setup_multiple_configurations_found_title">Multiple configuration found</string>
-  <string name="mms_setup_multiple_configurations_found_body">We have found multiple MMS configurations. Choose your carrier from the list, or press N/A if your carrier isn\'t on the list.</string>
-  <string name="mms_setup_next_steps_title">Next steps</string>
-  <string name="mms_setup_next_steps_body">Visit the MMS section of Settings to try automatic configuration again, contact support, or enter your own configuration.</string>
-  <string name="mms_setup_success_title">Success!</string>
-  <string name="mms_setup_success_body">If you encounter any issues, visit the MMS section of Settings to try automatic configuration again, contact support, or enter your own configuration.</string>
+  <string name="confirm_delete_conversation">スレッド全体が削除されます。</string>
+  <string name="confirm_delete_all_conversations">すべてのスレッドが削除されます。</string>
+  <string name="confirm_delete_message">メッセージが削除されます。</string>
+  <string name="confirm_delete_locked_message">このロックされたメッセージを削除しますか?</string>
+  <string name="confirm_delete_all_SIM_messages">SIM カード上のすべてのメッセージが削除されます。</string>
+  <string name="confirm_delete_SIM_message">SIM カード上のこのメッセージが削除されます。</string>
+  <string name="delete_unlocked">ロックされたメッセージを削除</string>
+  <string name="delete">削除</string>
+  <string name="more">詳細</string>
+  <string name="more_summary">タップすると、詳細を参照</string>
+  <string name="select_conversations">会話を選択</string>
+  <string name="no_conversations">会話はありません</string>
+  <string name="loading_conversations">会話を読み込んでいます。</string>
+  <string name="not_default">デフォルト SMS</string>
+  <string name="default_info">QKSMS は、それを行うために SMS アプリにする必要があります</string>
+  <string name="not_default_mark_read">QKSMS は、メッセージを既読にマークするために SMS アプリにする必要があります</string>
+  <string name="not_default_mark_unread">QKSMS は、メッセージを未読にするために SMS アプリにする必要があります</string>
+  <string name="not_default_delete">QKSMS は、メッセージを削除するために SMS アプリにする必要があります</string>
+  <string name="not_default_send">QKSMS は、メッセージを送信するために SMS アプリにする必要があります</string>
+  <string name="not_default_first">いくつかのものは、QKSMS がデフォルトの SMS アプリになるまで動作しません</string>
+  <string name="delayed_messaging_info">メッセージ送信遅延は、メッセージを送信する前にキャンセルできます。設定でデフォルトの動作および詳細を変更してください。</string>
+  <string name="delayed_duration_bounds_error">期間は 1 ～ 30 秒の間にする必要があります</string>
+  <string name="confirm">確認</string>
+  <string name="message_send_read_report">既読報告が送信されます。</string>
+  <string name="update_icon_title">アイコンの色を更新</string>
+  <string name="update_icon_message">アイコンの色を変更する場合、QKSMS を再起動する必要があります。今すぐ再起動しますか?</string>
+  <string name="dialog_conversation_details_title">会話の詳細</string>
+  <string name="dialog_conversation_details_last_message_date">最新メッセージの日付</string>
+  <string name="dialog_conversation_details_message_count">メッセージ件数</string>
+  <string name="dialog_conversation_details_recipients">受信者 (%s)</string>
+  <string name="select_audio">音を選択</string>
+  <string name="copy_to_sdcard">添付ファイルを保存</string>
+  <string name="copy_to_sdcard_success">添付ファイルを保存しました。</string>
+  <string name="copy_to_sdcard_fail">添付ファイルを保存できませんでした。</string>
+  <string name="save_ringtone">着信音として保存</string>
+  <string name="saved_ringtone">着信音を保存しました。</string>
+  <string name="saved_ringtone_fail">着信音を保存できませんでした。</string>
+  <string name="menu_group_participants">グループの参加者</string>
+  <string name="toast_draft">保存された下書き</string>
+  <string name="toast_conversation_deleted">会話を削除しました</string>
+  <string name="toast_low_memory">"電話のストレージがいっぱいです。いくつかのファイルを削除して、領域を解放してください。"</string>
+  <string name="toast_forward">この機能は実装されていません。今のところ、テキストのコピー オプションを使用して、そして送信したい会話にそれを貼り付けてください。</string>
+  <string name="toast_unimplemented">この機能はまだ実装されていません</string>
+  <string name="toast_message_failure">メッセージの送信に失敗しました</string>
+  <string name="toast_message_delivered">メッセージを配信しました</string>
+  <string name="toast_message_not_delivered">メッセージは配信されていません</string>
+  <string name="toast_default_apns_loaded">デフォルト APN の設定を読み込みました</string>
+  <string name="toast_copy_text">テキストをクリップボードにコピーしました</string>
+  <string name="toast_billing_not_available">購入は、お使いの Android に Google Play ストア (課金) が必要です</string>
+  <string name="toast_endlessjabber_not_installed">EndlessJabber がインストールされていません。Google Play を開きます</string>
+  <string name="thanks_1">寄付をありがとう! あなたは私の新しい親友です。</string>
+  <string name="thanks_2">寄付をありがとう! 大好きです。</string>
+  <string name="thanks_3">寄付をありがとう! あなたは、これまでに作られた最高のテキスト メッセージのアプリになる QKSMS を支援しています。</string>
+  <string name="thanks_4">寄付をありがとう! あなたは素晴らしい人です。</string>
+  <string name="menu_mute_conversation">会話をミュート</string>
+  <string name="menu_unmute_conversation">会話をミュート解除</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_notification_settings">通知の設定</string>
+  <string name="menu_view_details">詳細を表示</string>
+  <string name="menu_mark_read">既読にマーク</string>
+  <string name="menu_mark_unread">未読にマーク</string>
+  <string name="menu_delete_conversation">会話を削除</string>
+  <string name="menu_multi_select">会話を選択</string>
+  <string name="failed_message_title">失敗したメッセージのオプション</string>
+  <string name="attachment_app_not_found">添付ファイルのアプリが見つかりません。フォトギャラリー アプリをインストールしてみてください!</string>
+  <string name="attachment_camera_error">カメラを開くことができませんでした</string>
+  <string name="pref_max_mms_attachment_size">最大 MMS 添付ファイル サイズ</string>
+  <string name="error_no_recipients">このメッセージを送信する連絡先を選択してください!</string>
+  <string name="error_file_not_found">QKSMS は、共有しようとしているファイルにアクセスできません!</string>
+  <string name="sending_blocked_welcome_screen_message">ホールドアップ! 1 分で実際のメッセージを送ることができます!</string>
+  <string name="notification_colored_icon_ready">タップすると、ホーム画面からランチャーに追加します。</string>
+  <string name="notification_title_colored_icon_ready">QKSMS カラー アイコンが用意されています</string>
+  <string name="icon_ready">あなたの新しいアイコンが用意されています!</string>
+  <string name="icon_ready_message">更新された色で再度あなたのホーム画面にそれを追加できます。</string>
+  <string name="dont_ask_again">次回から表示しない</string>
+  <string name="warning">Stagefright 警告</string>
+  <string name="stagefright_warning">ビデオ メッセージは、お使いの携帯電話を攻撃を受けやすくする、有害な悪用コードが含まれることがあります。続行しますか?</string>
+  <string name="mms_setup_set_up_mms_title">MMS を設定しますか?</string>
+  <string name="mms_setup_set_up_mms_body">QKSMS で MMS が設定されていないようです。OK を押すと、MMS を自動的に設定します。</string>
+  <string name="mms_setup_setting_up_later_title">後で MMS を設定する</string>
+  <string name="mms_setup_setting_up_later_body">自動設定、サポートに連絡、または独自の設定を入力する場合は、設定の MMS のセクションをご覧ください。</string>
+  <string name="mms_setup_no_configurations_found_title">設定が見つかりません</string>
+  <string name="mms_setup_no_configurations_found_body">お使いのキャリアの MMS 設定を自動的に見つけることができませんでした。OK を押すと、サポートに連絡します。設定をお手伝いします! </string>
+  <string name="mms_setup_one_configuration_found_title">1 つの設定が見つかりました</string>
+  <string name="mms_setup_one_configuration_found_body">%s キャリアの MMS 設定が見つかりました。これは正しそうですか?</string>
+  <string name="mms_setup_multiple_configurations_found_title">複数の設定が見つかりました</string>
+  <string name="mms_setup_multiple_configurations_found_body">複数の MMS 設定が見つかりました。リストからお使いのキャリアを選択するか、お使いのキャリアが一覧にない場合は N/A を押します。</string>
+  <string name="mms_setup_next_steps_title">次のステップ</string>
+  <string name="mms_setup_next_steps_body">再度自動設定、サポートに連絡、または独自の設定を入力する場合は、設定の MMS のセクションをご覧ください。</string>
+  <string name="mms_setup_success_title">成功!</string>
+  <string name="mms_setup_success_body">再度自動設定、サポートに連絡、または独自の構成を入力する場合、問題が発生した場合、設定の MMS セクションをご覧ください。</string>
   <string name="na">N/A</string>
-  <string name="no">No</string>
-  <string name="pref_automatically_configure_mms">Automatically Configure MMS</string>
-  <string name="pref_mms_contact_support">Contact Support</string>
-  <string name="pref_category_sending_mms">Sending MMS</string>
-  <string name="pref_category_mms_configuration">MMS Configuration</string>
-  <string name="pref_mms_contact_support_summary">Contact the QKSMS team for help setting up MMS</string>
-  <string name="pref_markdown_enabled">Text formatting</string>
-  <string name="pref_markdown_enabled_summary">Use markdown syntax to get bold, underline, and italics in your messages</string>
-  <string name="want_read_indicators">Want read indicators?</string>
-  <string name="color_swatch_description">Color %1$d</string>
-  <string name="color_swatch_description_selected">Color %1$d selected</string>
-  <string name="color_picker_default_title">Select a Color</string>
-  <string name="message_delivered">Message Delivered</string>
-  <string name="message_not_delivered">Message Not Delivered</string>
-  <string name="error">Error</string>
-  <string name="invalid_destination">Invalid destination address.</string>
-  <string name="service_not_activated">Service not activated on network.</string>
-  <string name="service_message_not_found">Message expired or not available.</string>
-  <string name="service_network_problem">Couldn\'t send due to network problem.</string>
-  <string name="message_queued">Currently can\'t send your message. It will be sent when the service becomes available.</string>
-  <string name="download_later">Can\'t download right now. Try again later.</string>
-  <string name="no_apn">No APN specified for the app, you need to set it up in settings!</string>
-  <string name="no_subject">(No subject)</string>
-  <string name="unknown_sender">Unknown sender</string>
-  <string name="dl_failure_notification">Couldn\'t download message <xliff:g id="subject">%1$s</xliff:g> from <xliff:g id="from">%2$s</xliff:g>.</string>
-  <string name="auto_select_multiple_apns">Multiple different configurations have been found. Try one now. If it doesn\'t work, you can try a new one by going to Settings &gt; Advanced &gt; Load default APNs.</string>
-  <string name="auto_select_apn">Automatically Select APNs</string>
-  <string name="auto_select_failed_title">Automatic configuration failed</string>
-  <string name="auto_select_failed">Try searching for your carrier\'s APN settings (MMSC, Port, and Proxy) and entering them in Settings &gt; Advanced.</string>
-  <string name="date_yesterday">Yesterday</string>
-  <string name="date_just_now">Just now</string>
-  <string name="compose_loading_attachment">Loading attachment</string>
+  <string name="no">いいえ</string>
+  <string name="pref_automatically_configure_mms">自動的に MMS を設定</string>
+  <string name="pref_mms_contact_support">サポートに問い合わせ</string>
+  <string name="pref_category_sending_mms">MMS を送信しています</string>
+  <string name="pref_category_mms_configuration">MMS 設定</string>
+  <string name="pref_mms_contact_support_summary">MMS を設定する支援をうけるため、QKSMS チームに連絡します</string>
+  <string name="pref_markdown_enabled">テキストの書式設定</string>
+  <string name="pref_markdown_enabled_summary">メッセージで、太字、下線、および斜体にするため、マークダウンの構文を使用します</string>
+  <string name="want_read_indicators">既読インジケーターが必要ですか?</string>
+  <string name="color_swatch_description">色 %1$d</string>
+  <string name="color_swatch_description_selected">色 %1$d を選択しました</string>
+  <string name="color_picker_default_title">色を選択</string>
+  <string name="message_delivered">メッセージを配信しました</string>
+  <string name="message_not_delivered">メッセージは配信されませんでした</string>
+  <string name="error">エラー</string>
+  <string name="invalid_destination">無効な送信先アドレスです。</string>
+  <string name="service_not_activated">ネットワークでサービスが有効ではありません。</string>
+  <string name="service_message_not_found">メッセージが有効期限切れ、または利用できません。</string>
+  <string name="service_network_problem">ネットワークの問題で、送信できませんでした。</string>
+  <string name="message_queued">現在、メッセージを送信できません。サービスが利用可能になったときに送信されます。</string>
+  <string name="download_later">今は、ダウンロードできません。後でもう一度試してください。</string>
+  <string name="no_apn">アプリの APN が指定されていません。設定で、設定する必要があります!</string>
+  <string name="no_subject">(件名なし)</string>
+  <string name="unknown_sender">不明な送信者</string>
+  <string name="dl_failure_notification"><xliff:g id="from">%2$s</xliff:g> からメッセージ <xliff:g id="subject">%1$s</xliff:g> がダウンロードできませんでした。</string>
+  <string name="auto_select_multiple_apns">複数の異なる設定が見つかりました。1 つ試してください。それが動作しない場合は、設定 &gt; 詳細 &gt; デフォルト APN をロード、に移動して新しいものを試すことができます。</string>
+  <string name="auto_select_apn">自動的に APN を選択</string>
+  <string name="auto_select_failed_title">自動設定に失敗しました</string>
+  <string name="auto_select_failed">お使いのキャリアの APN 設定を探してみてください (MMSC、ポート、およびプロキシ) 設定 &gt; 詳細、でそれを入力してください。</string>
+  <string name="date_yesterday">昨日</string>
+  <string name="date_just_now">ちょうど今</string>
+  <string name="compose_loading_attachment">添付ファイルを読み込んでいます</string>
   <string-array name="resend_menu">
-    <item>Resend</item>
-    <item>Edit</item>
-    <item>Delete</item>
+    <item>再送信</item>
+    <item>編集</item>
+    <item>削除</item>
   </string-array>
   <string-array name="message_menu">
-    <item>Forward message</item>
-    <item>Copy text</item>
-    <item>View details</item>
-    <item>Delete message</item>
+    <item>メッセージを転送</item>
+    <item>テキストをコピー</item>
+    <item>詳細を表示</item>
+    <item>メッセージを削除</item>
   </string-array>
   <string-array name="background_titles">
-    <item>White</item>
-    <item>Off-white</item>
-    <item>Dark grey</item>
-    <item>Black</item>
+    <item>白</item>
+    <item>オフホワイト</item>
+    <item>ダークグレー</item>
+    <item>黒</item>
   </string-array>
   <string-array name="font_sizes">
-    <item>Small</item>
-    <item>Normal</item>
-    <item>Large</item>
-    <item>Largest</item>
+    <item>小</item>
+    <item>通常</item>
+    <item>大</item>
+    <item>最大</item>
   </string-array>
   <string-array name="font_families">
-    <item>Roboto Regular</item>
-    <item>Roboto Condensed</item>
+    <item>Roboto 標準</item>
+    <item>Roboto コンデンス</item>
     <item>Lato</item>
   </string-array>
   <string-array name="font_weights">
-    <item>Light</item>
-    <item>Normal</item>
+    <item>ライト</item>
+    <item>標準</item>
   </string-array>
   <string-array name="empty_subject_strings">
-    <item>no subject</item>
+    <item>件名なし</item>
   </string-array>
   <string-array name="qk_responses">
-    <item>Okay</item>
-    <item>Give me a moment</item>
-    <item>On my way</item>
-    <item>Thanks</item>
-    <item>Sounds good</item>
-    <item>What\'s up?</item>
-    <item>Agreed</item>
-    <item>No</item>
-    <item>Love you</item>
-    <item>Sorry</item>
-    <item>LOL</item>
-    <item>That\'s okay</item>
+    <item>OK</item>
+    <item>しばらくお待ちください</item>
+    <item>今、途中です</item>
+    <item>ありがとう</item>
+    <item>良さそうですね</item>
+    <item>最近どうですか?</item>
+    <item>了解</item>
+    <item>いいえ</item>
+    <item>好き</item>
+    <item>ごめんなさい</item>
+    <item>大爆笑です</item>
+    <item>大丈夫です</item>
   </string-array>
   <string-array name="enter_button_options">
-    <item>Show emoji</item>
-    <item>New line</item>
-    <item>Send message</item>
+    <item>絵文字を表示</item>
+    <item>改行</item>
+    <item>メッセージを送信</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>
     <item>600 KB</item>
     <item>1 MB</item>
-    <item>Unlimited</item>
+    <item>無制限</item>
   </string-array>
 </resources>

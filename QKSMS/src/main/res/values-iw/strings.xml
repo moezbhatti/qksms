@@ -7,9 +7,9 @@
   <string name="loading">טוען&#8230;</string>
   <string name="test">טקסט בדיקה</string>
   <string name="hint_contacts">הכנס נמענים</string>
-  <string name="hint_search">Search something</string>
+  <string name="hint_search">חפש משהו</string>
   <string name="hint_reply">הכנס הודעה</string>
-  <string name="hint_redeem">Enter code</string>
+  <string name="hint_redeem">הכנס קוד</string>
   <string name="new_message">הודעה חדשה</string>
   <string name="new_messages">הודעות חדשות</string>
   <string name="failed_message">שליחת ההודעה נכשלה</string>
@@ -17,45 +17,47 @@
   <string name="failed_messages_summary">הקש לצפיה</string>
   <string name="quickcompose">QK Compose</string>
   <string name="quickcompose_detail">לחץ לשליחת הודעה</string>
-  <string name="welcome_start">Let\'s get started!</string>
-  <string name="welcome_skip">SKIP</string>
-  <string name="welcome_finish">FINISH</string>
-  <string name="welcome_theme_title">Pick a color</string>
-  <string name="welcome_theme_description">Any color.</string>
+  <string name="welcome_start">בואו נתחיל!</string>
+  <string name="welcome_skip">דלג</string>
+  <string name="welcome_finish">סיים</string>
+  <string name="welcome_theme_title">בחר צבע</string>
+  <string name="welcome_theme_description">כל צבע.</string>
   <string name="welcome_night_description">Easy on the eyes.</string>
-  <string name="welcome_night_hint">Toggle me</string>
+  <string name="welcome_night_hint">שנה את מצבי</string>
   <string name="welcome_quickreply_title">QK Reply</string>
-  <string name="welcome_quickreply_description">Reply to messages faster than ever.</string>
-  <string name="welcome_quickreply_hint">Try it!</string>
-  <string name="welcome_quickreply_message_1">Wow! Now wasn\'t that awesome? You can view your entire conversation at a glance. Tap outside the popup or press the checkmark to dismiss it.</string>
+  <string name="welcome_quickreply_description">השב להודעות במהירות.</string>
+  <string name="welcome_quickreply_hint">נסה זאת!</string>
+  <string name="welcome_quickreply_message_1">וואו! נכון שזה היה מדהים? עכשיו אתה יכול לראות את כל ההתכתבות שלך במבט חטוף. לחץ מחוץ לחלון או לחץ על הוי כדי לסגור אותו.</string>
   <string name="welcome_quickreply_message_2">This is QK Reply. Now you can reply to messages from anywhere. Tap the expand button to see what happens next :)</string>
   <string name="menu_settings">הגדרות</string>
-  <string name="menu_search">Search</string>
-  <string name="menu_show_all">Show all messages</string>
-  <string name="menu_show_unread">Show unread messages</string>
+  <string name="menu_search">חיפוש</string>
+  <string name="menu_show_all">הצג את כל ההודעות</string>
+  <string name="menu_show_unread">הצג הודעות שלא נקראו</string>
   <string name="menu_open_thread">פתח את ההתכתבות</string>
   <string name="menu_forward">העבר הלאה את ההודעה</string>
   <string name="menu_call">התקשר</string>
   <string name="menu_read">סמן כהודעה שנקראה</string>
-  <string name="menu_delete">Delete</string>
-  <string name="menu_billing">Donate</string>
+  <string name="menu_delete">מחק</string>
+  <string name="menu_billing">תרום</string>
   <string name="menu_copy">העתק תוכן הודעה</string>
   <string name="menu_changelog">"חידושים באפליקציה"</string>
-  <string name="menu_show_all_prefs">Show all</string>
-  <string name="menu_show_fewer_prefs">Show fewer</string>
+  <string name="menu_show_all_prefs">הצג הכל</string>
+  <string name="menu_show_fewer_prefs">הצג פחות</string>
   <string name="details_title">פרטים</string>
   <string name="details_to">אל</string>
   <string name="details_from">מ</string>
   <string name="details_body">גוף ההודעה</string>
   <string name="details_date_sent">תאריך השליחה</string>
   <string name="details_date_received">תאריך הקבלה</string>
-  <string name="pref_category_appearance">Appearance</string>
-  <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
+  <string name="pref_category_appearance">תצוגה</string>
+  <string name="pref_category_summary_appearance">ערכות נושא, גופנים, צבעים, תמונות פרופיל ועוד</string>
   <string name="pref_category_general">הגדרות כלליות</string>
-  <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
+  <string name="pref_category_summary_general">משלוח, שליחת הודעות, עיצוב</string>
   <string name="pref_category_notifications">התראות</string>
-  <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
-  <string name="pref_category_mms">MMS</string>
+  <string name="pref_category_summary_notifications">צלילים, נורת התראות, פרטיות</string>
+  <string name="pref_category_mms">הודעות מולטימדיה</string>
   <string name="pref_category_summary_mms">Configure MMS (APNs), max size, group messaging</string>
   <string name="pref_category_quickreply">QK Reply</string>
   <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
@@ -63,27 +65,27 @@
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
   <string name="pref_category_advanced">הגדרות מתקדמות</string>
   <string name="pref_category_summary_advanced">Advanced UI tweaks</string>
-  <string name="pref_category_about">About</string>
-  <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
-  <string name="pref_theme">Color scheme</string>
-  <string name="pref_theme_summary_alt">Tap to change theme</string>
-  <string name="pref_icon">Update QKSMS icon color</string>
-  <string name="pref_icon_summary">Update the QKSMS icon to match your color scheme</string>
+  <string name="pref_category_about">אודות</string>
+  <string name="pref_category_summary_about">גירסה, רשימת שינויים, מחברים, תודות</string>
+  <string name="pref_theme">ערכת הצבעים</string>
+  <string name="pref_theme_summary_alt">לחץ כדי לשנות ערכת צבעים</string>
+  <string name="pref_icon">עדכון צבע האייקון</string>
+  <string name="pref_icon_summary">עדכן את האייקון כדי שיתאים לערכת הצבעים שלך</string>
   <string name="pref_status_tint">צביעה של שורת המצב</string>
   <string name="pref_navigation_tint">צביעה של סרגל הניווט בצבעי האפליקציה</string>
-  <string name="pref_background">Background color</string>
-  <string name="pref_background_summary">Tap to change background color</string>
-  <string name="pref_bubbles">Message bubbles</string>
-  <string name="pref_bubbles_summary">Tap to change message bubble preferences</string>
+  <string name="pref_background">צבע הרקע</string>
+  <string name="pref_background_summary">לחץ כדי לשנות את צבע הרקע</string>
+  <string name="pref_bubbles">בועות ההודעות</string>
+  <string name="pref_bubbles_summary">לחץ כדי לשנות את בועות ההודעות</string>
   <string name="pref_night">מצב לילה</string>
-  <string name="pref_night_summary">Save battery and reduce eye strain</string>
+  <string name="pref_night_summary">חסוך סוללה והקל על העיניים</string>
   <string name="pref_night_amoled">רקע שחור לגמרי</string>
   <string name="pref_night_amoled_summary">טוב לחסכון נוסף בסוללה על מסכים מסוג AMOLED</string>
-  <string name="pref_bubble_style_new">Use new bubble style</string>
-  <string name="pref_color_sent">Color sent messages</string>
-  <string name="pref_color_sent_summary">Color the background bubbles for outgoing messages</string>
-  <string name="pref_color_received">Color received messages</string>
-  <string name="pref_color_received_summary">Color the background bubbles for incoming messages</string>
+  <string name="pref_bubble_style_new">השתמש בעיצוב בועות חדש</string>
+  <string name="pref_color_sent">צבע הודעות שנשלחו</string>
+  <string name="pref_color_sent_summary">צבע את הרקע של הבועות להודעות יוצאות</string>
+  <string name="pref_color_received">צבע להודעות שהתקבלו</string>
+  <string name="pref_color_received_summary">צבע את הרקע של בועות להודעות נכנסות</string>
   <string name="pref_hide_avatar_conversations">Hide conversation avatars</string>
   <string name="pref_hide_avatar_conversations_summary">Hide avatars for contacts in conversation list</string>
   <string name="pref_hide_avatar_sent">Hide sent message avatars</string>
@@ -109,6 +111,10 @@
   <string name="pref_delivery_vibrate_summary">רטט בשליחת הודעה</string>
   <string name="pref_yappy">Yappy integration</string>
   <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
   <string name="pref_mobile_only">Mobile numbers</string>
   <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
   <string name="pref_auto_emoji">Automatic emoji</string>
@@ -140,7 +146,7 @@
   <string name="pref_wake">Wake phone</string>
   <string name="pref_wake_summary">Turn your screen on when you receive a new message</string>
   <string name="pref_notifications_private">התראות פרטיות</string>
-  <string name="pref_notifications_private_summary">החבא את תוכן ההודעה בחלון ההתראות</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
   <string name="pref_ringtone">צליל בקבלת הודעה</string>
   <string name="pref_ringtone_summary">בחירת צליל שמושמע בקבלת הודעה</string>
   <string name="pref_ticker">הראה חלק מטקסט ההודעה בחלון ההתראות</string>
@@ -149,6 +155,8 @@
   <string name="pref_vibration_summary">הפעלת רטט כשנכנסת הודעה חדשה</string>
   <string name="pref_notification_call">כפתור התקשרות</string>
   <string name="pref_notification_call_summary">טלפן לשולח ההודעה ישר מההתראה בחלון ההתראות</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
   <string name="pref_delayed">Delayed messaging</string>
   <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>
   <string name="pref_delayed_duration">Delay length (seconds)</string>
@@ -189,7 +197,7 @@
   <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
   <string name="pref_show_all">Show all preferences</string>
   <string name="pref_show_fewer">Show fewer preferences</string>
-  <string name="pref_subcat_theme">Theme</string>
+  <string name="pref_subcat_theme">ערכת נושא</string>
   <string name="pref_subcat_system_bars">System bars</string>
   <string name="pref_subcat_categories">Categories</string>
   <string name="pref_subcat_font">Font</string>
@@ -211,10 +219,13 @@
   <string name="title_search">Search</string>
   <string name="title_compose">כתוב הודעה</string>
   <string name="title_conversation_list">התכתבויות</string>
+  <string name="title_blocked">Blocked</string>
   <string name="title_changelog">שינויים באפליקציה</string>
   <string name="title_picker">הודעות חדשות</string>
   <string name="title_donate">Donate</string>
   <string name="title_qk_responses">QK Responses</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
   <string name="menu_add_address_to_contacts">Add <xliff:g id="contactEmailOrNumber">%s</xliff:g> to People</string>
   <string name="view_slideshow">View slideshow</string>
   <string name="view_message_details">View details</string>
@@ -242,6 +253,7 @@
   <string name="mark_read">Mark as read</string>
   <string name="call">התקשר</string>
   <string name="yes">כן</string>
+  <string name="add">Add</string>
   <string name="save">Save</string>
   <string name="enable">Enable</string>
   <string name="upgrade_now">Set now</string>
@@ -366,6 +378,12 @@
   <string name="thanks_4">תודה על תרומתך! אתה מדהים.</string>
   <string name="menu_mute_conversation">Mute conversation</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notification_settings">Notification settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
@@ -486,6 +504,11 @@
     <item>Show emoji</item>
     <item>New line</item>
     <item>Send message</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

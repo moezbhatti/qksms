@@ -20,8 +20,8 @@
   <string name="welcome_start">Let\'s get started!</string>
   <string name="welcome_skip">SKIP</string>
   <string name="welcome_finish">FINISH</string>
-  <string name="welcome_theme_title">Pick a color</string>
-  <string name="welcome_theme_description">Any color.</string>
+  <string name="welcome_theme_title">Alege o culoare</string>
+  <string name="welcome_theme_description">Orice culoare.</string>
   <string name="welcome_night_description">Easy on the eyes.</string>
   <string name="welcome_night_hint">Toggle me</string>
   <string name="welcome_quickreply_title">QK Reply</string>
@@ -31,24 +31,26 @@
   <string name="welcome_quickreply_message_2">This is QK Reply. Now you can reply to messages from anywhere. Tap the expand button to see what happens next :)</string>
   <string name="menu_settings">Setări</string>
   <string name="menu_search">Caută</string>
-  <string name="menu_show_all">Show all messages</string>
-  <string name="menu_show_unread">Show unread messages</string>
+  <string name="menu_show_all">Arată toate mesajele</string>
+  <string name="menu_show_unread">Arată mesajele necitite</string>
   <string name="menu_open_thread">Conversaţie deschisă</string>
   <string name="menu_forward">Transmite mesaj</string>
   <string name="menu_call">Apel</string>
   <string name="menu_read">Marcați ca citit</string>
-  <string name="menu_delete">Delete</string>
-  <string name="menu_billing">Donate</string>
+  <string name="menu_delete">Ştergeţi</string>
+  <string name="menu_billing">Donați</string>
   <string name="menu_copy">Copiere text</string>
   <string name="menu_changelog">"Ce mai e nou"</string>
-  <string name="menu_show_all_prefs">Show all</string>
-  <string name="menu_show_fewer_prefs">Show fewer</string>
+  <string name="menu_show_all_prefs">Arată toate</string>
+  <string name="menu_show_fewer_prefs">Arată mai puţine</string>
   <string name="details_title">Detalii</string>
   <string name="details_to">Pentru a</string>
   <string name="details_from">La</string>
   <string name="details_body">Conținutul mesajului</string>
   <string name="details_date_sent">Data trimiterii</string>
   <string name="details_date_received">Data primirii</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
   <string name="pref_category_appearance">Aparență</string>
   <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
   <string name="pref_category_general">General</string>
@@ -63,7 +65,7 @@
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
   <string name="pref_category_advanced">Setări avansate</string>
   <string name="pref_category_summary_advanced">Advanced UI tweaks</string>
-  <string name="pref_category_about">About</string>
+  <string name="pref_category_about">Despre</string>
   <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
   <string name="pref_theme">Color scheme</string>
   <string name="pref_theme_summary_alt">Tap to change theme</string>
@@ -80,9 +82,9 @@
   <string name="pref_night_amoled">Fundal negru pur</string>
   <string name="pref_night_amoled_summary">Salvați mai multă baterie pe dispozitivele cu expunere AMOLED</string>
   <string name="pref_bubble_style_new">Use new bubble style</string>
-  <string name="pref_color_sent">Color sent messages</string>
+  <string name="pref_color_sent">Culoarea mesajelor trimise</string>
   <string name="pref_color_sent_summary">Color the background bubbles for outgoing messages</string>
-  <string name="pref_color_received">Color received messages</string>
+  <string name="pref_color_received">Culoarea mesajului primit</string>
   <string name="pref_color_received_summary">Color the background bubbles for incoming messages</string>
   <string name="pref_hide_avatar_conversations">Ascude avatarele conversației</string>
   <string name="pref_hide_avatar_conversations_summary">Ascunde avatarele contactelor din lista de conversație</string>
@@ -109,6 +111,10 @@
   <string name="pref_delivery_vibrate_summary">Vibrează la trimiterea mesajului</string>
   <string name="pref_yappy">Yappy integration</string>
   <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
   <string name="pref_mobile_only">Mobile numbers</string>
   <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
   <string name="pref_auto_emoji">Automatic emoji</string>
@@ -140,7 +146,7 @@
   <string name="pref_wake">Wake phone</string>
   <string name="pref_wake_summary">Turn your screen on when you receive a new message</string>
   <string name="pref_notifications_private">Notificări private</string>
-  <string name="pref_notifications_private_summary">Ascunde textul mesajului în notificări</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
   <string name="pref_ringtone">Sunet notificare</string>
   <string name="pref_ringtone_summary">Selectați un sunet de notificare</string>
   <string name="pref_ticker">Afișeaza bifa</string>
@@ -149,6 +155,8 @@
   <string name="pref_vibration_summary">Vibrează cand sunt primite mesaje noi</string>
   <string name="pref_notification_call">Butonul de apel</string>
   <string name="pref_notification_call_summary">Apelează expeditorul unui mesaj direct de la notificare</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
   <string name="pref_delayed">Delayed messaging</string>
   <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>
   <string name="pref_delayed_duration">Delay length (seconds)</string>
@@ -211,10 +219,13 @@
   <string name="title_search">Caută</string>
   <string name="title_compose">Compune</string>
   <string name="title_conversation_list">Conversaţii</string>
+  <string name="title_blocked">Blocked</string>
   <string name="title_changelog">Istoria schimbărilor</string>
   <string name="title_picker">Mesaje noi</string>
   <string name="title_donate">Donate</string>
   <string name="title_qk_responses">QK Responses</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
   <string name="menu_add_address_to_contacts">Adaugă <xliff:g id="contactEmailOrNumber"> %s </xliff:g> la contacte</string>
   <string name="view_slideshow">Vezi diapozitive</string>
   <string name="view_message_details">Vezi detalii</string>
@@ -242,6 +253,7 @@
   <string name="mark_read">Mark as read</string>
   <string name="call">Apel</string>
   <string name="yes">Da</string>
+  <string name="add">Add</string>
   <string name="save">Save</string>
   <string name="enable">Enable</string>
   <string name="upgrade_now">Set now</string>
@@ -367,6 +379,12 @@
   <string name="thanks_4">Mulțumesc pentru donație! Ești cel mai tare.</string>
   <string name="menu_mute_conversation">Mute conversation</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notification_settings">Notification settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
@@ -487,6 +505,11 @@
     <item>Show emoji</item>
     <item>New line</item>
     <item>Send message</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

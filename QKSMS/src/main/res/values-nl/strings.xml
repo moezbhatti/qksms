@@ -49,6 +49,8 @@
   <string name="details_body">Inhoud bericht</string>
   <string name="details_date_sent">Datum verzonden</string>
   <string name="details_date_received">Datum ontvangen</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
   <string name="pref_category_appearance">Uiterlijk</string>
   <string name="pref_category_summary_appearance">Thema\'s, lettertypes, kleuren, avatars, en meer</string>
   <string name="pref_category_general">Algemeen</string>
@@ -109,6 +111,10 @@
   <string name="pref_delivery_vibrate_summary">Trillen bij ontvangstbevestiging</string>
   <string name="pref_yappy">Yappy integratie</string>
   <string name="pref_endlessjabber_summary">Schakel volledige Yappy integratie in</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
   <string name="pref_mobile_only">Mobiele nummers</string>
   <string name="pref_mobile_only_summary">Toon enkel mobiele nummers bij contactsuggesties</string>
   <string name="pref_auto_emoji">Automatische emoji</string>
@@ -140,7 +146,7 @@
   <string name="pref_wake">Scherm oplichten</string>
   <string name="pref_wake_summary">Laat het scherm oplichten wanneer je een bericht ontvangt</string>
   <string name="pref_notifications_private">Privémeldingen</string>
-  <string name="pref_notifications_private_summary">Verberg tekst bericht in meldingen</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
   <string name="pref_ringtone">Meldinggeluid</string>
   <string name="pref_ringtone_summary">Selecteer een geluid voor meldingen</string>
   <string name="pref_ticker">Toon ticker</string>
@@ -149,6 +155,8 @@
   <string name="pref_vibration_summary">Trillen wanneer nieuwe berichten worden ontvangen</string>
   <string name="pref_notification_call">Belknop</string>
   <string name="pref_notification_call_summary">Toon een belknop rechts op de melding</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
   <string name="pref_delayed">Vertraagd verzenden</string>
   <string name="pref_delayed_summary">Wachten vooraleer een bericht wordt verzonden, zodat je het kan nalezen</string>
   <string name="pref_delayed_duration">Vertragingstijd (in seconden)</string>
@@ -211,10 +219,13 @@
   <string name="title_search">Zoek</string>
   <string name="title_compose">Schrijf</string>
   <string name="title_conversation_list">Gesprekken</string>
+  <string name="title_blocked">Blocked</string>
   <string name="title_changelog">Historiek wijzigingen</string>
   <string name="title_picker">Nieuwe berichten</string>
   <string name="title_donate">QKSMS+</string>
   <string name="title_qk_responses">QK Responses</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
   <string name="menu_add_address_to_contacts">Voeg <xliff:g id="contactEmailOrNumber">%s</xliff:g> toe aan Personen</string>
   <string name="view_slideshow">Bekijk diavoorstelling</string>
   <string name="view_message_details">Bekijk details</string>
@@ -242,6 +253,7 @@
   <string name="mark_read">Markeer als gelezen</string>
   <string name="call">Bel</string>
   <string name="yes">Ja</string>
+  <string name="add">Add</string>
   <string name="save">Opslaan</string>
   <string name="enable">Inschakelen</string>
   <string name="upgrade_now">Set now</string>
@@ -366,6 +378,12 @@
   <string name="thanks_4">Bedankt voor de donatie! Je bent geweldig.</string>
   <string name="menu_mute_conversation">Mute conversation</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notification_settings">Notification settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
@@ -486,6 +504,11 @@
     <item>Show emoji</item>
     <item>New line</item>
     <item>Send message</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

@@ -49,6 +49,8 @@
   <string name="details_body">Brødtekst</string>
   <string name="details_date_sent">Dato sendt</string>
   <string name="details_date_received">Dato modtaget</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
   <string name="pref_category_appearance">Udseende</string>
   <string name="pref_category_summary_appearance">Temaer, skrifttyper, farver, avatars og mere</string>
   <string name="pref_category_general">Generelt</string>
@@ -109,6 +111,10 @@
   <string name="pref_delivery_vibrate_summary">Vibrer ved beskedlevering</string>
   <string name="pref_yappy">Yappy integration</string>
   <string name="pref_endlessjabber_summary">Aktiver fuld understøttelse af Yappy</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
   <string name="pref_mobile_only">Mobilnumre</string>
   <string name="pref_mobile_only_summary">Vis kun mobilnumre i kontakt forslag</string>
   <string name="pref_auto_emoji">Automatisk emoji</string>
@@ -140,7 +146,7 @@
   <string name="pref_wake">Væk telefonen</string>
   <string name="pref_wake_summary">Tænd skærmen når du modtager en ny besked</string>
   <string name="pref_notifications_private">Private notifikationer</string>
-  <string name="pref_notifications_private_summary">Skjul beskedtekst i notifikationer</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
   <string name="pref_ringtone">Notifikations-lyd</string>
   <string name="pref_ringtone_summary">Vælg en notifikations-lyd</string>
   <string name="pref_ticker">Vis uddrag af besked</string>
@@ -149,6 +155,8 @@
   <string name="pref_vibration_summary">Vibrer når der modtages ny besked</string>
   <string name="pref_notification_call">Opkaldsknap</string>
   <string name="pref_notification_call_summary">Ring op til afsenderen af en besked direkte fra notifikationen</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
   <string name="pref_delayed">Forsinkede beskeder</string>
   <string name="pref_delayed_summary">Vent med at sende dine beskeder, så du har en chance for at gennemgå dem</string>
   <string name="pref_delayed_duration">Forsinkelse (sekunder)</string>
@@ -211,10 +219,13 @@
   <string name="title_search">Søg</string>
   <string name="title_compose">Skriv</string>
   <string name="title_conversation_list">Samtaler</string>
+  <string name="title_blocked">Blocked</string>
   <string name="title_changelog">Ændringslog</string>
   <string name="title_picker">Nye beskeder</string>
   <string name="title_donate">Donér</string>
   <string name="title_qk_responses">QK Responses</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
   <string name="menu_add_address_to_contacts">Tilføj <xliff:g id="contactEmailOrNumber">%s</xliff:g> til Personer</string>
   <string name="view_slideshow">Vis slideshow</string>
   <string name="view_message_details">Vis detaljer</string>
@@ -226,9 +237,9 @@
   <string name="delivery_header_title">Rapporter</string>
   <string name="restart_message">Disse indstillinger vil træde i kraft næste gang QKSMS bliver åbnet</string>
   <string name="delete_conversation">Slet samtale</string>
-  <string name="delete_all_failed">Delete failed messages</string>
+  <string name="delete_all_failed">Slet mislykkede beskeder</string>
   <string name="delete_confirmation">Er du sikker på at du vil slette samtalen?</string>
-  <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
+  <string name="delete_all_failed_confirmation">Er du sikker på at du vil slette alle mislykkede beskeder?</string>
   <string name="apns_not_set">APN\'er er ikke valgt</string>
   <string name="apns_not_set_description">Det ser ud til, at dine APN\'er ikke er blevet valgt. Dette betyder, at MMS ikke vil virke optimalt. Tryk venligst \"Okay\" og lad QKSMS finde dem for dig. :)</string>
   <string name="set_up_mms_title">Konfigurer MMS?</string>
@@ -242,6 +253,7 @@
   <string name="mark_read">Marker som læst</string>
   <string name="call">Ring op</string>
   <string name="yes">Ja</string>
+  <string name="add">Add</string>
   <string name="save">Gem</string>
   <string name="enable">Aktiver</string>
   <string name="upgrade_now">Indstil nu</string>
@@ -366,6 +378,12 @@
   <string name="thanks_4">Tak for din donation! Du er awesome.</string>
   <string name="menu_mute_conversation">Dæmp samtale</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notification_settings">Notifikationsindstillinger</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Markér som læst</string>
@@ -430,9 +448,9 @@
   <string name="auto_select_apn">Vælg automatisk APN\'er</string>
   <string name="auto_select_failed_title">Automatisk konfiguration mislykkedes</string>
   <string name="auto_select_failed">Prøv at søge efter din udbyder\'s APN indstillinger (MMSC, Port og Proxy) og indtast dem i Indstillinger &gt; Avanceret.</string>
-  <string name="date_yesterday">Yesterday</string>
-  <string name="date_just_now">Just now</string>
-  <string name="compose_loading_attachment">Loading attachment</string>
+  <string name="date_yesterday">Igår</string>
+  <string name="date_just_now">Lige nu</string>
+  <string name="compose_loading_attachment">Indlæser vedhæftet fil</string>
   <string-array name="resend_menu">
     <item>Gensend</item>
     <item>Rediger</item>
@@ -486,6 +504,11 @@
     <item>Vis emoji</item>
     <item>Ny linie</item>
     <item>Send besked</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

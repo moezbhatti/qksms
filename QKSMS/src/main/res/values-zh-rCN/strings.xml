@@ -15,7 +15,7 @@
   <string name="failed_message">信息发送失败</string>
   <string name="failed_messages">信息发送失败</string>
   <string name="failed_messages_summary">点击以查看</string>
-  <string name="quickcompose">QK Compose</string>
+  <string name="quickcompose">快速发送</string>
   <string name="quickcompose_detail">点击以发送一条信息</string>
   <string name="welcome_start">开始吧！</string>
   <string name="welcome_skip">跳过</string>
@@ -36,9 +36,9 @@
   <string name="menu_open_thread">打开会话</string>
   <string name="menu_forward">转发信息</string>
   <string name="menu_call">拨打</string>
-  <string name="menu_read">标记为已读</string>
+  <string name="menu_read">设为已读</string>
   <string name="menu_delete">删除</string>
-  <string name="menu_billing">Donate</string>
+  <string name="menu_billing">捐赠</string>
   <string name="menu_copy">复制文本</string>
   <string name="menu_changelog">"新特性"</string>
   <string name="menu_show_all_prefs">全部显示</string>
@@ -49,6 +49,8 @@
   <string name="details_body">正文</string>
   <string name="details_date_sent">发送时间</string>
   <string name="details_date_received">接收时间</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
   <string name="pref_category_appearance">外观</string>
   <string name="pref_category_summary_appearance">主题、 字体、 颜色、 头像，和更多</string>
   <string name="pref_category_general">通用</string>
@@ -73,7 +75,7 @@
   <string name="pref_navigation_tint">彩色导航栏</string>
   <string name="pref_background">背景色</string>
   <string name="pref_background_summary">点击以更改背景色</string>
-  <string name="pref_bubbles">Message bubbles</string>
+  <string name="pref_bubbles">消息气泡</string>
   <string name="pref_bubbles_summary">Tap to change message bubble preferences</string>
   <string name="pref_night">夜间模式</string>
   <string name="pref_night_summary">节约电量，减少眼睛疲劳</string>
@@ -97,7 +99,7 @@
   <string name="pref_message_count_summary">显示每个会话的消息数目</string>
   <string name="pref_sliding_tab">侧滑面板</string>
   <string name="pref_sliding_tab_summary">可快速查看最后一个对话的侧滑选项卡</string>
-  <string name="pref_compose_favorites">Starred contacts</string>
+  <string name="pref_compose_favorites">星标联系人</string>
   <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
   <string name="pref_prox_sensor_call">Proximity sensor</string>
   <string name="pref_prox_sensor_call_summary">While in a conversation, bring your phone to your ear to start a call</string>
@@ -109,6 +111,10 @@
   <string name="pref_delivery_vibrate_summary">信息送达后震动</string>
   <string name="pref_yappy">集成Yappy</string>
   <string name="pref_endlessjabber_summary">启用对Yappy的完整支持</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
   <string name="pref_mobile_only">手机号码</string>
   <string name="pref_mobile_only_summary">联系人建议中只显示手机号码</string>
   <string name="pref_auto_emoji">自动Emoji</string>
@@ -117,7 +123,7 @@
   <string name="pref_enter_button_summary">Tap to change keyboard enter button behavior</string>
   <string name="pref_compose_group">群组消息</string>
   <string name="pref_compose_group_summary">当撰写信息给多个人员时，发送一个群组信息而不是分开的信息</string>
-  <string name="pref_auto_download">Auto download MMS</string>
+  <string name="pref_auto_download">自动下载彩信</string>
   <string name="pref_auto_download_summary">Automatically download MMS messages when they become available</string>
   <string name="pref_auto_data">Automatic data</string>
   <string name="pref_auto_data_summary">Turn on data automatically when sending or receiving MMS</string>
@@ -133,14 +139,14 @@
   <string name="pref_24h_summary">以二十四小时制显示时间戳</string>
   <string name="pref_return">显示返回按钮</string>
   <string name="pref_return_summary">在键盘上显示返回键而不是颜文字表情键</string>
-  <string name="pref_text">Text</string>
+  <string name="pref_text">信息</string>
   <string name="pref_notifications">启用来信通知</string>
   <string name="pref_led">通知灯</string>
   <string name="pref_theme_led">通知灯颜色</string>
   <string name="pref_wake">唤醒手机</string>
   <string name="pref_wake_summary">当收到新信息时点亮手机屏幕</string>
   <string name="pref_notifications_private">隐私通知</string>
-  <string name="pref_notifications_private_summary">隐藏通知中的信息文本</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
   <string name="pref_ringtone">通知提示音</string>
   <string name="pref_ringtone_summary">选择通知提示音</string>
   <string name="pref_ticker">显示通知摘要</string>
@@ -149,6 +155,8 @@
   <string name="pref_vibration_summary">在收到新信息后震动</string>
   <string name="pref_notification_call">呼叫按钮</string>
   <string name="pref_notification_call_summary">从通知中直接呼叫信息的发件人</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
   <string name="pref_delayed">延迟消息</string>
   <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>
   <string name="pref_delayed_duration">延迟时间 (秒)</string>
@@ -159,11 +167,11 @@
   <string name="pref_night_start">夜间时间开始于</string>
   <string name="pref_qk_responses">快速响应</string>
   <string name="pref_qk_responses_summary">定制你的预设回复内容，以便在Android Wear设备上使用</string>
-  <string name="pref_quickreply_enabled">QK Reply enabled</string>
+  <string name="pref_quickreply_enabled">启用快捷回复</string>
   <string name="pref_quickreply_enabled_summary">Show QK Reply window whenever a new message is received</string>
   <string name="pref_tap_to_quit">点击忽略</string>
   <string name="pref_tap_to_quit_summary">Tap anywhere outside of the window to close it</string>
-  <string name="pref_quickcompose">QK Compose enabled</string>
+  <string name="pref_quickcompose">启动快捷发送</string>
   <string name="pref_quickcompose_summary">显示一条常驻通知，点击后可以快速撰写信息</string>
   <string name="pref_mms_enabled">已启用彩信</string>
   <string name="pref_mms_enabled_summary">启用发送和接收彩信</string>
@@ -187,12 +195,12 @@
   <string name="pref_about_thanks_summary">点击以查看开源贡献者</string>
   <string name="pref_donate_title">Donate</string>
   <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
-  <string name="pref_show_all">Show all preferences</string>
+  <string name="pref_show_all">显示所有设置</string>
   <string name="pref_show_fewer">Show fewer preferences</string>
-  <string name="pref_subcat_theme">Theme</string>
+  <string name="pref_subcat_theme">主题</string>
   <string name="pref_subcat_system_bars">System bars</string>
-  <string name="pref_subcat_categories">Categories</string>
-  <string name="pref_subcat_font">Font</string>
+  <string name="pref_subcat_categories">类别</string>
+  <string name="pref_subcat_font">字体</string>
   <string name="pref_subcat_messages">Messages</string>
   <string name="pref_subcat_avatars">Avatars</string>
   <string name="donate_google">Donate with Google</string>
@@ -211,10 +219,13 @@
   <string name="title_search">搜索</string>
   <string name="title_compose">撰写</string>
   <string name="title_conversation_list">会话</string>
+  <string name="title_blocked">Blocked</string>
   <string name="title_changelog">更新日志</string>
   <string name="title_picker">新信息</string>
   <string name="title_donate">Donate</string>
   <string name="title_qk_responses">快捷回应</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
   <string name="menu_add_address_to_contacts">将 <xliff:g id="contactEmailOrNumber">%s</xliff:g> 添加到联系人</string>
   <string name="view_slideshow">查看幻灯片</string>
   <string name="view_message_details">查看详情</string>
@@ -226,7 +237,7 @@
   <string name="delivery_header_title">报告</string>
   <string name="restart_message">这些更改会在下次打开 QKSMS 时生效</string>
   <string name="delete_conversation">删除会话</string>
-  <string name="delete_all_failed">Delete failed messages</string>
+  <string name="delete_all_failed">删除发送失败的消息</string>
   <string name="delete_confirmation">确定删除会话？</string>
   <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
   <string name="apns_not_set">尚未设置接入点名称服 (APNs)</string>
@@ -242,12 +253,13 @@
   <string name="mark_read">标记为已读</string>
   <string name="call">回拨</string>
   <string name="yes">是</string>
+  <string name="add">Add</string>
   <string name="save">保存</string>
-  <string name="enable">Enable</string>
+  <string name="enable">启用</string>
   <string name="upgrade_now">Set now</string>
   <string name="okay">确定</string>
   <string name="redeem">Redeem</string>
-  <string name="just_once">Just once</string>
+  <string name="just_once">只此一次</string>
   <string name="later">稍后</string>
   <string name="cancel">取消</string>
   <string name="messagelist_sender_self">我</string>
@@ -276,9 +288,9 @@
   <string name="sent_label">Sent\u000A</string>
   <string name="received_label">Received\u000A</string>
   <string name="saved_label">Saved\u000A</string>
-  <string name="subject_label">Subject\u000A</string>
-  <string name="message_size_label">Message size\u000A</string>
-  <string name="priority_label">Priority\u000A</string>
+  <string name="subject_label">主题\u000A</string>
+  <string name="message_size_label">消息大小\u000A</string>
+  <string name="priority_label">优先级\u000A</string>
   <string name="priority_high">高</string>
   <string name="priority_normal">正常</string>
   <string name="priority_low">低</string>
@@ -318,7 +330,7 @@
   <string name="delete_unlocked">删除锁定的消息</string>
   <string name="delete">删除</string>
   <string name="more">更多</string>
-  <string name="more_summary">Tap to see more</string>
+  <string name="more_summary">点击查看更多</string>
   <string name="select_conversations">选择会话</string>
   <string name="no_conversations">无会话</string>
   <string name="loading_conversations">正在加载会话</string>
@@ -335,9 +347,9 @@
   <string name="message_send_read_report">将发送一份已读报告</string>
   <string name="update_icon_title">Update icon color</string>
   <string name="update_icon_message">QKSMS must be restarted when changing the icon color. Restart now?</string>
-  <string name="dialog_conversation_details_title">Conversation details</string>
+  <string name="dialog_conversation_details_title">会话详情</string>
   <string name="dialog_conversation_details_last_message_date">Last message date</string>
-  <string name="dialog_conversation_details_message_count">Message count</string>
+  <string name="dialog_conversation_details_message_count">消息计数</string>
   <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
   <string name="select_audio">选择音频</string>
   <string name="copy_to_sdcard">保存附件</string>
@@ -363,14 +375,20 @@
   <string name="thanks_2">感谢您的捐赠！我爱你。</string>
   <string name="thanks_3">感谢您的捐赠！你将帮助 QKSMS 成为有史以来最好的短信应用。</string>
   <string name="thanks_4">感谢您的捐赠！您真棒。</string>
-  <string name="menu_mute_conversation">Mute conversation</string>
-  <string name="menu_unmute_conversation">Unmute conversation</string>
+  <string name="menu_mute_conversation">会话静音</string>
+  <string name="menu_unmute_conversation">取消会话静音</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notification_settings">Notification settings</string>
-  <string name="menu_view_details">View details</string>
-  <string name="menu_mark_read">Mark read</string>
-  <string name="menu_mark_unread">Mark unread</string>
-  <string name="menu_delete_conversation">Delete conversation</string>
-  <string name="menu_multi_select">Select conversation</string>
+  <string name="menu_view_details">查看详情</string>
+  <string name="menu_mark_read">标为已读</string>
+  <string name="menu_mark_unread">设为未读</string>
+  <string name="menu_delete_conversation">删除会话</string>
+  <string name="menu_multi_select">选择会话</string>
   <string name="failed_message_title">Failed message options</string>
   <string name="attachment_app_not_found">附件应用程序找不到。请尝试安装一个照片库应用程序 ！</string>
   <string name="attachment_camera_error">The camera could not be opened</string>
@@ -382,7 +400,7 @@
   <string name="notification_title_colored_icon_ready">QKSMS colored icon is ready</string>
   <string name="icon_ready">Your new icon is ready!</string>
   <string name="icon_ready_message">You can now add it to your home screen again with the updated color.</string>
-  <string name="dont_ask_again">Don\'t ask again</string>
+  <string name="dont_ask_again">不再询问</string>
   <string name="warning">Stagefright warning</string>
   <string name="stagefright_warning">Video messages may contain a harmful exploit that can leave your phone vulnerable to attacks. Would you like to continue?</string>
   <string name="mms_setup_set_up_mms_title">Set up MMS?</string>
@@ -395,7 +413,7 @@
   <string name="mms_setup_one_configuration_found_body">We have found an MMS configuration for the %s carrier. Does that sound right?</string>
   <string name="mms_setup_multiple_configurations_found_title">Multiple configuration found</string>
   <string name="mms_setup_multiple_configurations_found_body">We have found multiple MMS configurations. Choose your carrier from the list, or press N/A if your carrier isn\'t on the list.</string>
-  <string name="mms_setup_next_steps_title">Next steps</string>
+  <string name="mms_setup_next_steps_title">下一步</string>
   <string name="mms_setup_next_steps_body">Visit the MMS section of Settings to try automatic configuration again, contact support, or enter your own configuration.</string>
   <string name="mms_setup_success_title">Success!</string>
   <string name="mms_setup_success_body">If you encounter any issues, visit the MMS section of Settings to try automatic configuration again, contact support, or enter your own configuration.</string>
@@ -404,7 +422,7 @@
   <string name="pref_automatically_configure_mms">Automatically Configure MMS</string>
   <string name="pref_mms_contact_support">Contact Support</string>
   <string name="pref_category_sending_mms">Sending MMS</string>
-  <string name="pref_category_mms_configuration">MMS Configuration</string>
+  <string name="pref_category_mms_configuration">彩信设置</string>
   <string name="pref_mms_contact_support_summary">Contact the QKSMS team for help setting up MMS</string>
   <string name="pref_markdown_enabled">Text formatting</string>
   <string name="pref_markdown_enabled_summary">Use markdown syntax to get bold, underline, and italics in your messages</string>
@@ -423,19 +441,19 @@
   <string name="download_later">Can\'t download right now. Try again later.</string>
   <string name="no_apn">No APN specified for the app, you need to set it up in settings!</string>
   <string name="no_subject">(No subject)</string>
-  <string name="unknown_sender">Unknown sender</string>
+  <string name="unknown_sender">未知发件人</string>
   <string name="dl_failure_notification">Couldn\'t download message <xliff:g id="subject">%1$s</xliff:g> from <xliff:g id="from">%2$s</xliff:g>.</string>
   <string name="auto_select_multiple_apns">Multiple different configurations have been found. Try one now. If it doesn\'t work, you can try a new one by going to Settings &gt; Advanced &gt; Load default APNs.</string>
   <string name="auto_select_apn">Automatically Select APNs</string>
   <string name="auto_select_failed_title">Automatic configuration failed</string>
   <string name="auto_select_failed">Try searching for your carrier\'s APN settings (MMSC, Port, and Proxy) and entering them in Settings &gt; Advanced.</string>
-  <string name="date_yesterday">Yesterday</string>
-  <string name="date_just_now">Just now</string>
-  <string name="compose_loading_attachment">Loading attachment</string>
+  <string name="date_yesterday">昨天</string>
+  <string name="date_just_now">刚刚</string>
+  <string name="compose_loading_attachment">加载附件</string>
   <string-array name="resend_menu">
     <item>重新发送</item>
-    <item>Edit</item>
-    <item>Delete</item>
+    <item>编辑</item>
+    <item>删除</item>
   </string-array>
   <string-array name="message_menu">
     <item>转发信息</item>
@@ -444,10 +462,10 @@
     <item>删除信息</item>
   </string-array>
   <string-array name="background_titles">
-    <item>White</item>
+    <item>白</item>
     <item>Off-white</item>
     <item>Dark grey</item>
-    <item>Black</item>
+    <item>黑</item>
   </string-array>
   <string-array name="font_sizes">
     <item>小</item>
@@ -471,7 +489,7 @@
     <item>好的</item>
     <item>请稍等一会儿</item>
     <item>在路上了</item>
-    <item>Thanks</item>
+    <item>谢谢</item>
     <item>Sounds good</item>
     <item>咋了</item>
     <item>同意</item>
@@ -482,9 +500,14 @@
     <item>好的</item>
   </string-array>
   <string-array name="enter_button_options">
-    <item>Show emoji</item>
+    <item>显示表情</item>
     <item>New line</item>
-    <item>Send message</item>
+    <item>发送短信</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

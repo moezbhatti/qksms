@@ -49,6 +49,8 @@
   <string name="details_body">Tekstas</string>
   <string name="details_date_sent">Išsiuntimo data</string>
   <string name="details_date_received">Gavimo data</string>
+  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_action">Rate</string>
   <string name="pref_category_appearance">Išvaizda</string>
   <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
   <string name="pref_category_general">Pagrindiniai</string>
@@ -109,6 +111,10 @@
   <string name="pref_delivery_vibrate_summary">Vibruoja kai pristatoma žinutė</string>
   <string name="pref_yappy">Yappy integration</string>
   <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
+  <string name="pref_blocked_conversations">Blocked conversations</string>
+  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
+  <string name="pref_block_future">Block future messages</string>
+  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
   <string name="pref_mobile_only">Mobile numbers</string>
   <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
   <string name="pref_auto_emoji">Automatic emoji</string>
@@ -140,7 +146,7 @@
   <string name="pref_wake">Wake phone</string>
   <string name="pref_wake_summary">Įjunk savo ekraną, kai gauni naują žinutę</string>
   <string name="pref_notifications_private">Privatūs pranešimai</string>
-  <string name="pref_notifications_private_summary">Paslepia žinučių tekstą pranešimuose</string>
+  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
   <string name="pref_ringtone">Pranešimų garsas</string>
   <string name="pref_ringtone_summary">Pasirinkite pranešimų garsą</string>
   <string name="pref_ticker">Rodyti teksto fragmentą</string>
@@ -149,6 +155,8 @@
   <string name="pref_vibration_summary">Vibruoti, kai gaunamas naujas pranešimas</string>
   <string name="pref_notification_call">Skambinimo mygtukas</string>
   <string name="pref_notification_call_summary">Leidžia skambinti žinutės siuntėjui tiesiai iš pranešimo</string>
+  <string name="pref_dimiss_read">Mark as read</string>
+  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
   <string name="pref_delayed">Delayed messaging</string>
   <string name="pref_delayed_summary">Wait before sending your messages, so you have a chance to review them</string>
   <string name="pref_delayed_duration">Delay length (seconds)</string>
@@ -211,10 +219,13 @@
   <string name="title_search">Ieška</string>
   <string name="title_compose">Rašyti</string>
   <string name="title_conversation_list">Pokalbiai</string>
+  <string name="title_blocked">Blocked</string>
   <string name="title_changelog">Pasikeitimų sąrašas</string>
   <string name="title_picker">Naujos žinutės</string>
   <string name="title_donate">Donate</string>
   <string name="title_qk_responses">QK atsakymai</string>
+  <string name="title_block_address">Block number</string>
+  <string name="title_unblock_address">Unblock number</string>
   <string name="menu_add_address_to_contacts">Pridėti <xliff:g id="contactEmailOrNumber">%s</xliff:g> į telefonų knygą</string>
   <string name="view_slideshow">Žiūrėti skaidres</string>
   <string name="view_message_details">Išsamiau</string>
@@ -242,6 +253,7 @@
   <string name="mark_read">Pažymėti kaip perskaitytą</string>
   <string name="call">Skambinti</string>
   <string name="yes">Taip</string>
+  <string name="add">Add</string>
   <string name="save">Išsaugoti</string>
   <string name="enable">Enable</string>
   <string name="upgrade_now">Nustatyti dabar</string>
@@ -367,6 +379,12 @@
   <string name="thanks_4">Ačiū, kad remiate! Jūs nuostabus.</string>
   <string name="menu_mute_conversation">Mute conversation</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
+  <string name="menu_block_conversation">Block conversation</string>
+  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_messages">Messages</string>
+  <string name="menu_blocked">Blocked</string>
+  <string name="menu_blocked_conversations">Blocked (%s new)</string>
+  <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notification_settings">Notification settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
@@ -487,6 +505,11 @@
     <item>Show emoji</item>
     <item>New line</item>
     <item>Send message</item>
+  </string-array>
+  <string-array name="notification_private_options">
+    <item>Show all</item>
+    <item>Hide message</item>
+    <item>Hide message and sender</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>
