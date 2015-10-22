@@ -36,9 +36,9 @@ public class BlockedConversationHelper {
     }
 
     public static void unblockConversation(SharedPreferences prefs, long threadId) {
-        Set<String> idStrings2 = prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
-        idStrings2.remove(String.valueOf(threadId));
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_SENDERS, idStrings2).apply();
+        Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
+        idStrings.remove(String.valueOf(threadId));
+        prefs.edit().putStringSet(SettingsFragment.BLOCKED_SENDERS, idStrings).apply();
     }
 
     public static Set<Long> getBlockedConversationIds(SharedPreferences prefs) {
