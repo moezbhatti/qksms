@@ -27,7 +27,6 @@ import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKPopupActivity;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.view.ComposeView;
-import com.moez.QKSMS.ui.welcome.DemoConversationCursorLoader;
 
 public class QKReplyActivity extends QKPopupActivity implements DialogInterface.OnDismissListener,
         LoaderManager.LoaderCallbacks<Cursor>, ActivityLauncher, ComposeView.OnSendListener {
@@ -80,12 +79,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         mListView = (ListView) findViewById(R.id.popup_messages);
         mListView.setAdapter(mAdapter);
 
-        // Disable the compose view for the welcome screen (so that they can't send texts to nobody)
-        if (extras.getLong(EXTRA_THREAD_ID) == DemoConversationCursorLoader.THREAD_ID_WELCOME_SCREEN) {
-            String sendingBlockedMessage = getString(R.string.sending_blocked_welcome_screen_message);
-            mComposeView.setSendingBlocked(sendingBlockedMessage);
-        }
-
         // Set the conversation data objects. These are used to save drafts, send sms messages, etc.
         mComposeView.onOpenConversation(mConversation, mConversationLegacy);
 
@@ -108,12 +101,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                // FIXME
-                if (sThreadId == DemoConversationCursorLoader.THREAD_ID_WELCOME_SCREEN) {
-                    setTitle("QKSMS");
-                } else {
-                    setTitle(mConversationLegacy.getName(true));
-                }
+                setTitle(mConversationLegacy.getName(true));
 
                 initLoaderManager();
             }
@@ -248,13 +236,9 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = mShowUnreadOnly ? SmsHelper.UNREAD_SELECTION : null;
-        if (sThreadId == DemoConversationCursorLoader.THREAD_ID_WELCOME_SCREEN) {
-            return new DemoConversationCursorLoader(this, sThreadId, selection);
-        } else {
-            return new CursorLoader(this,
-                    Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, "" + mConversationLegacy.getThreadId()),
-                    MessageColumns.PROJECTION, selection, null, "normalized_date ASC");
-        }
+        return new CursorLoader(this,
+                Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, "" + mConversationLegacy.getThreadId()),
+                MessageColumns.PROJECTION, selection, null, "normalized_date ASC");
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -273,14 +257,14 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
 
     /**
      * Other areas of the app can tell the QK Reply window to close itself if necessary
-     *
+     * <p/>
      * 1. MainActivity. When it's resumed, we don't want any QK Reply windows to open, which may have
-     *  happened while the screen was off.
-     *
+     * happened while the screen was off.
+     * <p/>
      * 2. PushbulletService. If a message is replied to via PB, close the window
-     *
+     * <p/>
      * 3. MarkReadReceiver. A QK Reply window may have opened while the screen was off, so if it's marked
-     *  as read from the lock screen via notification, the QK Reply window should be dismissed
+     * as read from the lock screen via notification, the QK Reply window should be dismissed
      */
     public static void dismiss(long threadId) {
         if (sThreadId == threadId) {

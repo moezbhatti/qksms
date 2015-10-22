@@ -51,14 +51,12 @@ import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-import com.moez.QKSMS.ui.welcome.DemoConversationCursorLoader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -729,8 +727,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     public void saveDraft() {
         // If the conversation_reply view is null, then we won't worry about saving drafts at all. We also don't save
         // drafts if a message is about to be sent (delayed)
-        if (mReplyText != null && mConversation != null && mConversation.getThreadId() != DemoConversationCursorLoader.THREAD_ID_WELCOME_SCREEN &&
-                mButtonState != SendButtonState.CANCEL) {
+        if (mReplyText != null && mConversation != null && mButtonState != SendButtonState.CANCEL) {
             String draft = mReplyText.getText().toString();
 
             if (mConversationLegacy.hasDraft() && TextUtils.isEmpty(draft)) {
