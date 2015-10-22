@@ -48,6 +48,7 @@ import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.messagelist.MessageListFragment;
+import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.search.SearchFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.slidingmenu.SlidingMenu;
@@ -417,6 +418,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
         if (mContent != null && mContent instanceof MessageListFragment) {
             sThreadShowing = ((MessageListFragment) mContent).getThreadId();
+            QKReplyActivity.dismiss(sThreadShowing);
         } else {
             sThreadShowing = 0;
         }

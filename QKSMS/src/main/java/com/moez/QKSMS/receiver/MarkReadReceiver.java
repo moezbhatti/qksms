@@ -19,8 +19,6 @@ public class MarkReadReceiver extends BroadcastReceiver {
         readIntent.putExtra("thread_id", threadId);
         context.startService(readIntent);
 
-        if (QKReplyActivity.sIsShowing && threadId == QKReplyActivity.sThreadId) {
-            QKReplyActivity.close();
-        }
+        QKReplyActivity.dismiss(threadId);
     }
 }

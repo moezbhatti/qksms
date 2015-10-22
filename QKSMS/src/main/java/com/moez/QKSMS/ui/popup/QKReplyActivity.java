@@ -44,7 +44,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
     public static final String EXTRA_SHOW_KEYBOARD = "open_keyboard";
 
     public static boolean sIsShowing = false;
-    public static long sThreadId;
+    private static long sThreadId;
 
     private Conversation mConversation;
     private ConversationLegacy mConversationLegacy;
@@ -69,8 +69,9 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
 
         Bundle extras = getIntent().getExtras();
 
-        mConversation = Conversation.get(this, extras.getLong(EXTRA_THREAD_ID), false);
-        mConversationLegacy = new ConversationLegacy(this, extras.getLong(EXTRA_THREAD_ID));
+        sThreadId = extras.getLong(EXTRA_THREAD_ID);
+        mConversation = Conversation.get(this, sThreadId, false);
+        mConversationLegacy = new ConversationLegacy(this, sThreadId);
 
         // Set up the compose view.
         mComposeView = (ComposeView) findViewById(R.id.compose_view);
@@ -165,7 +166,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         mComposeView.saveDraft();
 
         sIsShowing = false;
-        sThreadId = 0;
 
         // When the home button is pressed, this ensures that the QK Reply is shut down
         // Don't shut it down if it pauses and the screen is off though
@@ -289,8 +289,23 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         mCursor = null;
     }
 
-    public static void close() {
-        System.exit(0);
+    /**
+     * Other areas of the app can tell the QK Reply window to close itself if necessary
+     *
+     * 1. MainActivity. When it's resumed, we don't want any QK Reply windows to open, which may have
+     *  happened while the screen was off.
+     *
+     * 2. PushbulletService. If a message is replied to via PB, close the window
+     *
+     * 3. MarkReadReceiver. A QK Reply window may have opened while the screen was off, so if it's marked
+     *  as read from the lock screen via notification, the QK Reply window should be dismissed
+     */
+    public static void dismiss(long threadId) {
+        if (sThreadId == threadId) {
+            sIsShowing = false;
+            sThreadId = 0;
+            System.exit(0);
+        }
     }
 
     @Override

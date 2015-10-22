@@ -21,9 +21,7 @@ public class PushbulletService extends MessagingExtension {
         message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
         sendTransaction.sendNewMessage(message, conversation.getThreadId());
 
-        if (QKReplyActivity.sIsShowing && conversation.getThreadId() == QKReplyActivity.sThreadId) {
-            QKReplyActivity.close();
-        }
+        QKReplyActivity.dismiss(conversation.getThreadId());
 
         NotificationManager.update(getApplicationContext());
     }
