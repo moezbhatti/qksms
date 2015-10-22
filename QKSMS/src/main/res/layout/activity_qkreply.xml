@@ -23,7 +23,7 @@
         android:clipToPadding="false"
         android:foreground="@drawable/ab_shadow">
 
-        <com.moez.QKSMS.ui.view.MessageListRecyclerView
+        <ListView
             android:id="@+id/popup_messages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

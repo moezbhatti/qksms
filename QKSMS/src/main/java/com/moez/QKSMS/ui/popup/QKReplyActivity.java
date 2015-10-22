@@ -9,28 +9,24 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListView;
+
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.service.CopyUnreadMessageTextService;
 import com.moez.QKSMS.service.DeleteUnreadMessageService;
-import com.moez.QKSMS.common.utils.CursorUtils;
-import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKPopupActivity;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
-import com.moez.QKSMS.ui.messagelist.MessageListAdapter;
 import com.moez.QKSMS.ui.view.ComposeView;
-import com.moez.QKSMS.ui.view.MessageListRecyclerView;
-import com.moez.QKSMS.ui.view.WrappingLinearLayoutManager;
 import com.moez.QKSMS.ui.welcome.DemoConversationCursorLoader;
 
 public class QKReplyActivity extends QKPopupActivity implements DialogInterface.OnDismissListener,
@@ -52,9 +48,8 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
     private Cursor mCursor;
     private boolean mShowUnreadOnly = true;
 
-    private MessageListRecyclerView mRecyclerView;
-    private WrappingLinearLayoutManager mLayoutManager;
-    private MessageListAdapter mAdapter;
+    private ListView mListView;
+    private QKReplyAdapter mAdapter;
     private ComposeView mComposeView;
 
     /**
@@ -80,21 +75,10 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         mComposeView.setLabel("QKReply");
         mComposeView.refresh();
 
-        mLayoutManager = new WrappingLinearLayoutManager(this);
-        mLayoutManager.setStackFromEnd(true);
-        mAdapter = new MessageListAdapter(this);
-        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                LinearLayoutManager manager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                int position = CursorUtils.isValid(mCursor) && mCursor.getCount() > 0 ? mCursor.getCount() - 1 : 0;
-                manager.smoothScrollToPosition(mRecyclerView, null, position);
-            }
-        });
+        mAdapter = new QKReplyAdapter(this);
 
-        mRecyclerView = (MessageListRecyclerView) findViewById(R.id.popup_messages);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        mListView = (ListView) findViewById(R.id.popup_messages);
+        mListView.setAdapter(mAdapter);
 
         // Disable the compose view for the welcome screen (so that they can't send texts to nobody)
         if (extras.getLong(EXTRA_THREAD_ID) == DemoConversationCursorLoader.THREAD_ID_WELCOME_SCREEN) {
@@ -278,8 +262,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
             mAdapter.changeCursor(data);
         }
         mCursor = data;
-
-        mRecyclerView.scrollToPosition(CursorUtils.isValid(mCursor) && mCursor.getCount() > 0 ? mCursor.getCount() - 1 : 0);
     }
 
     public void onLoaderReset(Loader<Cursor> loader) {

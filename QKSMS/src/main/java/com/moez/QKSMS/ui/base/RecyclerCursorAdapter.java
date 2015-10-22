@@ -65,7 +65,7 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
     }
 
     public int getCount() {
-        return mCursor == null ? 0 : mCursor.getColumnCount();
+        return mCursor == null ? 0 : mCursor.getCount();
     }
 
     protected abstract DataType getItem(int position);
