@@ -263,8 +263,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
         if (mSlidingMenu.isMenuShowing() || mContent == null) {
             showBackButton(false);
-            setTitle(getString(R.string.title_conversation_list));
-            inflater.inflate(R.menu.coversation_list, menu);
+            mConversationList.inflateToolbar(menu, inflater, this);
         } else {
             showBackButton(true);
             mContent.inflateToolbar(menu, inflater, this);
@@ -366,18 +365,19 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (!mSlidingMenu.isMenuShowing()) {
-                Fragment category = getFragmentManager()
-                        .findFragmentByTag(SettingsFragment.CATEGORY_TAG);
+                Fragment category = getFragmentManager().findFragmentByTag(SettingsFragment.CATEGORY_TAG);
                 if (category != null) {
-                    getFragmentManager().beginTransaction()
-                            .remove(category)
-                            .commit();
+                    getFragmentManager().beginTransaction().remove(category).commit();
                 } else {
                     mSlidingMenu.showMenu();
                 }
                 return true;
             } else {
-                finish();
+                if (mConversationList.isShowingBlocked()) {
+                    mConversationList.setShowingBlocked(false);
+                } else {
+                    finish();
+                }
             }
         }
 

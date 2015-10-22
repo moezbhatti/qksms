@@ -26,6 +26,11 @@
         android:title="@string/menu_settings" />
 
     <item
+        android:id="@+id/menu_blocked"
+        android:title="@string/pref_blocked_conversations"
+        android:visible="false" />
+
+    <item
         android:id="@+id/menu_changelog"
         android:title="@string/menu_changelog" />
 

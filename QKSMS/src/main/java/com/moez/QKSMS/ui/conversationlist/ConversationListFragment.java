@@ -2,13 +2,15 @@ package com.moez.QKSMS.ui.conversationlist;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.provider.Telephony;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
@@ -54,12 +57,17 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private final int MENU_DELETE_FAILED = 6;
     private final int MENU_DELETE_CONVERSATION = 7;
     private final int MENU_MULTI_SELECT = 8;
+    private final int MENU_BLOCK_CONVERSATION = 9;
+    private final int MENU_UNBLOCK_CONVERSATION = 10;
 
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFab;
     private ConversationListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ConversationDetailsDialog mConversationDetailsDialog;
+    private SharedPreferences mPrefs;
+    private MenuItem mBlockedItem;
+    private boolean mShowBlocked = false;
 
     // This does not hold the current position of the list, rather the position the list is pending being set to
     private int mPosition;
@@ -68,6 +76,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         setHasOptionsMenu(true);
 
         mAdapter = new ConversationListAdapter(mContext);
@@ -113,9 +122,9 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
+        inflater.inflate(R.menu.coversation_list, menu);
+        mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
 
         // Make sure we're only touching the conversation menu
         if (menu.findItem(R.id.menu_search) != null) {
@@ -131,6 +140,11 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         } else {
             mAdapter.disableMultiSelectMode(false);
         }
+
+        mBlockedItem = menu.findItem(R.id.menu_blocked);
+        BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -139,15 +153,31 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             case R.id.menu_delete:
                 DialogHelper.showDeleteConversationsDialog((MainActivity) mContext, mAdapter);
                 return true;
+
             case R.id.menu_mark_read:
                 for (long threadId : mAdapter.getSelectedItems()) {
                     new ConversationLegacy(mContext, threadId).markRead();
                 }
                 mAdapter.disableMultiSelectMode(true);
                 return true;
+
+            case R.id.menu_blocked:
+                setShowingBlocked(!mShowBlocked);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isShowingBlocked() {
+        return mShowBlocked;
+    }
+
+    public void setShowingBlocked(boolean showBlocked) {
+        mShowBlocked = showBlocked;
+        mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
+        BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
+        initLoaderManager();
     }
 
     @Override
@@ -184,6 +214,14 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             dialog.addMenuItem(R.string.menu_unmute_conversation, MENU_UNMUTE_CONVERSATION);
         } else {
             dialog.addMenuItem(R.string.menu_mute_conversation, MENU_MUTE_CONVERSATION);
+        }
+
+        if (mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false)) {
+            if (BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId())) {
+                dialog.addMenuItem(R.string.menu_unblock_conversation, MENU_UNBLOCK_CONVERSATION);
+            } else {
+                dialog.addMenuItem(R.string.menu_block_conversation, MENU_BLOCK_CONVERSATION);
+            }
         }
 
         if (conversation.hasUnreadMessages()) {
@@ -224,6 +262,16 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                         mConversationDetailsDialog.showDetails(conversation);
                         break;
 
+                    case MENU_BLOCK_CONVERSATION:
+                        BlockedConversationHelper.blockConversation(mPrefs, conversation.getThreadId());
+                        initLoaderManager();
+                        break;
+
+                    case MENU_UNBLOCK_CONVERSATION:
+                        BlockedConversationHelper.unblockConversation(mPrefs, conversation.getThreadId());
+                        initLoaderManager();
+                        break;
+
                     case MENU_MARK_READ:
                         new ConversationLegacy(mContext, threadId).markRead();
                         break;
@@ -239,6 +287,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                     case MENU_DELETE_CONVERSATION:
                         DialogHelper.showDeleteConversationDialog((MainActivity) mContext, threadId);
                         break;
+
                     case MENU_DELETE_FAILED:
                         //Deletes all failed messages from all conversations
                         DialogHelper.showDeleteFailedMessagesDialog((MainActivity) mContext, threadId);
@@ -260,7 +309,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     }
 
     private void initLoaderManager() {
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     private void switchFragment(ContentFragment fragment) {
@@ -270,15 +319,13 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         LiveViewManager.unregisterView(this);
-
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        final String SELECTION = Telephony.Threads.MESSAGE_COUNT + "!= 0";
-        return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER,
-                Conversation.ALL_THREADS_PROJECTION, SELECTION, null, "date DESC");
+        return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
+                BlockedConversationHelper.getCursorSelection(mPrefs, mShowBlocked),
+                BlockedConversationHelper.getBlockedConversationArray(mPrefs), "date DESC");
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
