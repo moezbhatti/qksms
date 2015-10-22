@@ -54,6 +54,7 @@
     </string-array>
 
     <string-array name="changelog_versions">
+        <item>2.2.0</item>
         <item>2.1.0</item>
         <item>2.0.1</item>
         <item>1.13.1</item>
@@ -163,6 +164,7 @@
     </string-array>
 
     <string-array name="changelog_dates">
+        <item>October 21, 2015</item>
         <item>August 31, 2015</item>
         <item>August 16, 2015</item>
         <item>August 16, 2015</item>
@@ -272,6 +274,7 @@
     </string-array>
 
     <string-array name="changelog_changes">
+        <item>" • Phone number blacklist\n • Performance improvements\n • Widget sizing improvements\n • Match contact names when a phone number is displayed in your messages\n • Fixed wake lock\n • Option to mark messages read when notification swiped away\n • Fixed night mode issues\n • QK Reply improvements and bug fixes\n • Updated translations"</item>
         <item>" • Added option to delete failed messages\n • Fixed send button animations\n • Improved timestamps\n • New font option\n • Improved unicode stripping\n • Crash fixes\n • Updated translations\n • Improved 24 hour time compatibility\n • Improved sharing functionality\n • Improved rotation support"</item>
         <item>" • QKSMS is now open source. View the source code at https://github.com/qklabs/qksms"</item>
         <item>" • Multiple crash fixes"</item>
