@@ -191,10 +191,13 @@ public class NotificationManager {
                         switch (privateNotifications) {
                             case 0:
                                 builder.setTicker(String.format("%s: %s", lastMessage.mContact, lastMessage.mBody));
+                                break;
                             case 1:
                                 builder.setTicker(String.format("%s: %s", lastMessage.mContact, sRes.getString(R.string.new_message)));
+                                break;
                             case 2:
                                 builder.setTicker(String.format("%s: %s", "QKSMS", sRes.getString(R.string.new_message)));
+                                break;
                         }
                     }
 
@@ -325,10 +328,13 @@ public class NotificationManager {
                     switch (Integer.parseInt(sPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"))) {
                         case 0:
                             inboxStyle.addLine(Html.fromHtml("<strong>" + message.getName() + "</strong> " + message.getBody()));
+                            break;
                         case 1:
                             inboxStyle.addLine(Html.fromHtml("<strong>" + message.getName() + "</strong> " + sRes.getString(R.string.new_message)));
+                            break;
                         case 2:
                             inboxStyle.addLine(Html.fromHtml("<strong>" + "QKSMS" + "</strong> " + sRes.getString(R.string.new_message)));
+                            break;
                     }
                 }
 
