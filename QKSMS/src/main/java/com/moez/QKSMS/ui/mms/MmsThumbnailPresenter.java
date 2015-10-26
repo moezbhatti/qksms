@@ -19,6 +19,9 @@ package com.moez.QKSMS.ui.mms;
 
 import android.content.Context;
 
+import com.moez.QKSMS.common.google.ItemLoadedCallback;
+import com.moez.QKSMS.common.google.ItemLoadedFuture;
+import com.moez.QKSMS.common.google.ThumbnailManager;
 import com.moez.QKSMS.interfaces.SlideViewInterface;
 import com.moez.QKSMS.interfaces.ViewInterface;
 import com.moez.QKSMS.model.AudioModel;
@@ -27,14 +30,37 @@ import com.moez.QKSMS.model.Model;
 import com.moez.QKSMS.model.SlideModel;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.model.VideoModel;
-import com.moez.QKSMS.common.google.ItemLoadedCallback;
-import com.moez.QKSMS.common.google.ItemLoadedFuture;
-import com.moez.QKSMS.common.google.ThumbnailManager;
 
 public class MmsThumbnailPresenter extends Presenter {
     private static final String TAG = "MmsThumbnailPresenter";
     private ItemLoadedCallback mOnLoadedCallback;
     private ItemLoadedFuture mItemLoadedFuture;
+    private ItemLoadedCallback<ThumbnailManager.ImageLoaded> mImageLoadedCallback =
+            new ItemLoadedCallback<ThumbnailManager.ImageLoaded>() {
+                public void onItemLoaded(ThumbnailManager.ImageLoaded imageLoaded, Throwable exception) {
+                    if (exception == null) {
+                        if (mItemLoadedFuture != null) {
+                            synchronized (mItemLoadedFuture) {
+                                mItemLoadedFuture.setIsDone(true);
+                            }
+                        }
+                        if (mOnLoadedCallback != null) {
+                            mOnLoadedCallback.onItemLoaded(imageLoaded, exception);
+                        } else {
+                            // Right now we're only handling image and video loaded callbacks.
+                            SlideModel slide = ((SlideshowModel) mModel).get(0);
+                            if (slide != null) {
+                                if (slide.hasVideo() && imageLoaded.mIsVideo) {
+                                    ((SlideViewInterface) mView).setVideoThumbnail(null,
+                                            imageLoaded.mBitmap);
+                                } else if (slide.hasImage() && !imageLoaded.mIsVideo) {
+                                    ((SlideViewInterface) mView).setImage(null, imageLoaded.mBitmap);
+                                }
+                            }
+                        }
+                    }
+                }
+            };
 
     public MmsThumbnailPresenter(Context context, ViewInterface view, Model model) {
         super(context, view, model);
@@ -60,33 +86,6 @@ public class MmsThumbnailPresenter extends Presenter {
             presentAudioThumbnail(view, slide.getAudio());
         }
     }
-
-    private ItemLoadedCallback<ThumbnailManager.ImageLoaded> mImageLoadedCallback =
-            new ItemLoadedCallback<ThumbnailManager.ImageLoaded>() {
-        public void onItemLoaded(ThumbnailManager.ImageLoaded imageLoaded, Throwable exception) {
-            if (exception == null) {
-                if (mItemLoadedFuture != null) {
-                    synchronized(mItemLoadedFuture) {
-                        mItemLoadedFuture.setIsDone(true);
-                    }
-                }
-                if (mOnLoadedCallback != null) {
-                    mOnLoadedCallback.onItemLoaded(imageLoaded, exception);
-                } else {
-                    // Right now we're only handling image and video loaded callbacks.
-                    SlideModel slide = ((SlideshowModel) mModel).get(0);
-                    if (slide != null) {
-                        if (slide.hasVideo() && imageLoaded.mIsVideo) {
-                            ((SlideViewInterface)mView).setVideoThumbnail(null,
-                                    imageLoaded.mBitmap);
-                        } else if (slide.hasImage() && !imageLoaded.mIsVideo) {
-                            ((SlideViewInterface)mView).setImage(null, imageLoaded.mBitmap);
-                        }
-                    }
-                }
-            }
-        }
-    };
 
     private void presentVideoThumbnail(SlideViewInterface view, VideoModel video) {
         mItemLoadedFuture = video.loadThumbnailBitmap(mImageLoadedCallback);

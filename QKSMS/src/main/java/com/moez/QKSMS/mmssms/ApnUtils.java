@@ -21,7 +21,9 @@ import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.moez.QKSMS.R;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -41,7 +43,7 @@ public class ApnUtils {
         TelephonyManager telephonyManager = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
         String simOperator = telephonyManager.getSimOperator();
-        String[] mccmnc = new String[]{ null, null };
+        String[] mccmnc = new String[]{null, null};
         if (!TextUtils.isEmpty(simOperator)) {
             mccmnc[0] = simOperator.substring(0, 3);
             mccmnc[1] = simOperator.substring(3);
@@ -53,7 +55,7 @@ public class ApnUtils {
         TelephonyManager telephonyManager = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
         String simOperator = telephonyManager.getNetworkOperator();
-        String[] mccmnc = new String[]{ null, null };
+        String[] mccmnc = new String[]{null, null};
         if (!TextUtils.isEmpty(simOperator)) {
             mccmnc[0] = simOperator.substring(0, 3);
             mccmnc[1] = simOperator.substring(3);
@@ -82,8 +84,8 @@ public class ApnUtils {
     /**
      * Query for apns using mcc and mnc codes found on the sim card or in the network settings.
      *
-     * @param mcc mobile country code
-     * @param mnc mobile network code
+     * @param mcc     mobile country code
+     * @param mnc     mobile network code
      * @param context context
      */
     @SuppressWarnings("TryFinallyCanBeTryWithResources")
@@ -110,7 +112,7 @@ public class ApnUtils {
 
                 eventType = parser.next();
             }
-        } catch (XmlPullParserException|IOException e) {
+        } catch (XmlPullParserException | IOException e) {
             Log.e(TAG, "Exception thrown while getting APNs", e);
         } finally {
             parser.close();
@@ -121,7 +123,7 @@ public class ApnUtils {
 
     /**
      * Searches the attributes of this tag to determine if
-     *
+     * <p/>
      * 1) this is an mms apn tag; and
      * 2) the mcc and mnc match
      */
@@ -187,7 +189,7 @@ public class ApnUtils {
      * Saves the APN information to SharedPreferences.
      *
      * @param context context
-     * @param apn the apn to save
+     * @param apn     the apn to save
      */
     public static void persistApn(Context context, Apn apn) {
         PreferenceManager.getDefaultSharedPreferences(context)

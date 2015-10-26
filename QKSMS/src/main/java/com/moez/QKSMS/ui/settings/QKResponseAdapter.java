@@ -13,7 +13,7 @@ import com.moez.QKSMS.ui.view.QKTextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class QKResponseAdapter extends ArrayAdapter<String> {
+public class QKResponseAdapter extends ArrayAdapter<String> {
     private List<String> mResponses = new ArrayList<>();
 
     public QKResponseAdapter(Context context, int resource, List<String> objects) {

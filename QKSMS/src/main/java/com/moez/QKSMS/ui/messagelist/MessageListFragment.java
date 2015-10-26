@@ -44,6 +44,7 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduBody;
@@ -80,8 +81,6 @@ import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.SmoothLinearLayoutManager;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,20 +91,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
+
 public class MessageListFragment extends QKContentFragment implements ActivityLauncher, SensorEventListener,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener,
         RecyclerCursorAdapter.ItemClickListener<MessageItem> {
 
-    private final String TAG = "MessageListFragment";
-
+    public static final String ARG_THREAD_ID = "threadId";
+    public static final String ARG_ROW_ID = "rowId";
+    public static final String ARG_HIGHLIGHT = "highlight";
+    public static final String ARG_SHOW_IMMEDIATE = "showImmediate";
     private final static boolean LOCAL_LOGV = false;
-
-    private final int REQUEST_CODE_IMAGE = 6639;
-
     private static final int MESSAGE_LIST_QUERY_TOKEN = 9527;
     private static final int MESSAGE_LIST_QUERY_AFTER_DELETE_TOKEN = 9528;
     private static final int DELETE_MESSAGE_TOKEN = 9700;
-
     // Menu ID
     private static final int MENU_ADD_SUBJECT = 0;
     private static final int MENU_DELETE_THREAD = 1;
@@ -115,11 +115,9 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private static final int MENU_CALL_RECIPIENT = 5;
     private static final int MENU_CONVERSATION_LIST = 6;
     private static final int MENU_DEBUG_DUMP = 7;
-
     // Context menu ID
     private static final int MENU_VIEW_CONTACT = 12;
     private static final int MENU_ADD_TO_CONTACTS = 13;
-
     private static final int MENU_EDIT_MESSAGE = 14;
     private static final int MENU_VIEW_SLIDESHOW = 16;
     private static final int MENU_VIEW_MESSAGE_DETAILS = 17;
@@ -137,49 +135,38 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private static final int MENU_SAVE_RINGTONE = 30;
     private static final int MENU_PREFERENCES = 31;
     private static final int MENU_GROUP_PARTICIPANTS = 32;
-
     // When the conversation has a lot of messages and a new message is sent, the list is scrolled
     // so the user sees the just sent message. If we have to scroll the list more than 20 items,
     // then a scroll shortcut is invoked to move the list near the end before scrolling.
     private static final int MAX_ITEMS_TO_INVOKE_SCROLL_SHORTCUT = 20;
-
     // Any change in height in the message list view greater than this threshold will not
     // cause a smooth scroll. Instead, we jump the list directly to the desired position.
     private static final int SMOOTH_SCROLL_THRESHOLD = 200;
-
+    private final String TAG = "MessageListFragment";
+    private final int REQUEST_CODE_IMAGE = 6639;
     // Whether or not we are currently enabled for SMS. This field is updated in onStart to make
     // sure we notice if the user has changed the default SMS app.
     private boolean mIsSmsEnabled;
-
     private Cursor mCursor;
     private MessageListAdapter mAdapter;
     private SmoothLinearLayoutManager mLayoutManager;
     private MessageListRecyclerView mRecyclerView;
     private Conversation mConversation;
     private ConversationLegacy mConversationLegacy;
-
     private boolean mOpened;
     private Sensor mProxSensor;
     private SensorManager mSensorManager;
     private AsyncDialog mAsyncDialog;
-    private ComposeView mComposeView;
-    private SharedPreferences mPrefs;
-    private ConversationDetailsDialog mConversationDetailsDialog;
-
-    private int mSavedScrollPosition = -1;  // we save the ListView's scroll position in onPause(),
     // so we can remember it after re-entering the activity.
     // If the value >= 0, then we jump to that line. If the
     // value is maxint, then we jump to the end.
-
+    private ComposeView mComposeView;
+    private SharedPreferences mPrefs;
+    private ConversationDetailsDialog mConversationDetailsDialog;
+    private int mSavedScrollPosition = -1;  // we save the ListView's scroll position in onPause(),
     private long mLastMessageId;
     private BackgroundQueryHandler mBackgroundQueryHandler;
     private LoadConversationTask mLoadConversationTask;
-
-    public static final String ARG_THREAD_ID = "threadId";
-    public static final String ARG_ROW_ID = "rowId";
-    public static final String ARG_HIGHLIGHT = "highlight";
-    public static final String ARG_SHOW_IMMEDIATE = "showImmediate";
-
     private long mThreadId;
     private long mRowId;
     private String mHighlight;
@@ -801,93 +788,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     }
 
-    private class DeleteMessageListener implements DialogInterface.OnClickListener {
-        private final MessageItem mMessageItem;
-
-        public DeleteMessageListener(MessageItem messageItem) {
-            mMessageItem = messageItem;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int whichButton) {
-            dialog.dismiss();
-            deleteMessageItem(mMessageItem);
-        }
-    }
-
-    /**
-     * Context menu handlers for the message list view.
-     */
-    private final class MsgListMenuClickListener implements AdapterView.OnItemClickListener {
-        private MessageItem mMsgItem;
-
-        public MsgListMenuClickListener(MessageItem msgItem) {
-            mMsgItem = msgItem;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (mMsgItem == null) {
-                return;
-            }
-
-            switch ((int) id) {
-                case MENU_EDIT_MESSAGE:
-                    editMessageItem(mMsgItem);
-                    break;
-
-                case MENU_COPY_MESSAGE_TEXT:
-                    copyToClipboard(mMsgItem.mBody);
-                    break;
-
-                case MENU_FORWARD_MESSAGE:
-                    forwardMessage(mMsgItem);
-                    break;
-
-                case MENU_VIEW_SLIDESHOW:
-                    MessageUtils.viewMmsMessageAttachment(getActivity(), ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, mMsgItem.mMsgId), null, getAsyncDialog());
-                    break;
-
-                case MENU_VIEW_MESSAGE_DETAILS:
-                    showMessageDetails(mMsgItem);
-                    break;
-
-                case MENU_DELETE_MESSAGE:
-                    DeleteMessageListener l = new DeleteMessageListener(mMsgItem);
-                    confirmDeleteDialog(l, mMsgItem.mLocked);
-                    break;
-
-                case MENU_DELIVERY_REPORT:
-                    showDeliveryReport(mMsgItem.mMsgId, mMsgItem.mType);
-                    break;
-
-                case MENU_COPY_TO_SDCARD: {
-                    int resId = copyMedia(mMsgItem.mMsgId) ? R.string.copy_to_sdcard_success : R.string.copy_to_sdcard_fail;
-                    Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
-                    break;
-                }
-
-                case MENU_SAVE_RINGTONE: {
-                    int resId = getDrmMimeSavedStringRsrc(mMsgItem.mMsgId, saveRingtone(mMsgItem.mMsgId));
-                    Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
-                    break;
-                }
-
-                case MENU_ADD_ADDRESS_TO_CONTACTS:
-                    addToContacts(mMsgItem);
-                    break;
-
-                case MENU_LOCK_MESSAGE:
-                    lockMessage(mMsgItem, true);
-                    break;
-
-                case MENU_UNLOCK_MESSAGE:
-                    lockMessage(mMsgItem, false);
-                    break;
-            }
-        }
-    }
-
     private void addToContacts(MessageItem msgItem) {
         Intent intent = new Intent(Intent.ACTION_INSERT);
         intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
@@ -1271,6 +1171,93 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                     null, null, null);
         } catch (SQLiteException e) {
             SqliteWrapper.checkSQLiteException(mContext, e);
+        }
+    }
+
+    private class DeleteMessageListener implements DialogInterface.OnClickListener {
+        private final MessageItem mMessageItem;
+
+        public DeleteMessageListener(MessageItem messageItem) {
+            mMessageItem = messageItem;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int whichButton) {
+            dialog.dismiss();
+            deleteMessageItem(mMessageItem);
+        }
+    }
+
+    /**
+     * Context menu handlers for the message list view.
+     */
+    private final class MsgListMenuClickListener implements AdapterView.OnItemClickListener {
+        private MessageItem mMsgItem;
+
+        public MsgListMenuClickListener(MessageItem msgItem) {
+            mMsgItem = msgItem;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            if (mMsgItem == null) {
+                return;
+            }
+
+            switch ((int) id) {
+                case MENU_EDIT_MESSAGE:
+                    editMessageItem(mMsgItem);
+                    break;
+
+                case MENU_COPY_MESSAGE_TEXT:
+                    copyToClipboard(mMsgItem.mBody);
+                    break;
+
+                case MENU_FORWARD_MESSAGE:
+                    forwardMessage(mMsgItem);
+                    break;
+
+                case MENU_VIEW_SLIDESHOW:
+                    MessageUtils.viewMmsMessageAttachment(getActivity(), ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, mMsgItem.mMsgId), null, getAsyncDialog());
+                    break;
+
+                case MENU_VIEW_MESSAGE_DETAILS:
+                    showMessageDetails(mMsgItem);
+                    break;
+
+                case MENU_DELETE_MESSAGE:
+                    DeleteMessageListener l = new DeleteMessageListener(mMsgItem);
+                    confirmDeleteDialog(l, mMsgItem.mLocked);
+                    break;
+
+                case MENU_DELIVERY_REPORT:
+                    showDeliveryReport(mMsgItem.mMsgId, mMsgItem.mType);
+                    break;
+
+                case MENU_COPY_TO_SDCARD: {
+                    int resId = copyMedia(mMsgItem.mMsgId) ? R.string.copy_to_sdcard_success : R.string.copy_to_sdcard_fail;
+                    Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                case MENU_SAVE_RINGTONE: {
+                    int resId = getDrmMimeSavedStringRsrc(mMsgItem.mMsgId, saveRingtone(mMsgItem.mMsgId));
+                    Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                case MENU_ADD_ADDRESS_TO_CONTACTS:
+                    addToContacts(mMsgItem);
+                    break;
+
+                case MENU_LOCK_MESSAGE:
+                    lockMessage(mMsgItem, true);
+                    break;
+
+                case MENU_UNLOCK_MESSAGE:
+                    lockMessage(mMsgItem, false);
+                    break;
+            }
         }
     }
 

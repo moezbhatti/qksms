@@ -21,31 +21,29 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageView;
+
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class AvatarView extends ImageView implements View.OnClickListener, LiveView {
-    private final String TAG = "AvatarView";
-
+    public static final String ME = ":)";
     static final String[] PHONE_LOOKUP_PROJECTION = new String[]{
             ContactsContract.PhoneLookup._ID,
             ContactsContract.PhoneLookup.LOOKUP_KEY,
     };
-
-    public static final String ME = ":)";
-
     static final int PHONE_ID_COLUMN_INDEX = 0;
     static final int PHONE_LOOKUP_STRING_COLUMN_INDEX = 1;
     static final private int TOKEN_PHONE_LOOKUP = 1;
     static final private int TOKEN_PHONE_LOOKUP_AND_TRIGGER = 3;
     static final private String EXTRA_URI_CONTENT = "uri_content";
+    private final String TAG = "AvatarView";
     protected String[] mExcludeMimes = null;
     private Uri mContactUri;
     private String mContactPhone;

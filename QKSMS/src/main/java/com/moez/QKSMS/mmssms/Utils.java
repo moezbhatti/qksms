@@ -50,12 +50,24 @@ import java.util.regex.Pattern;
  * Common methods to be used for data connectivity/sending messages ect
  */
 public class Utils {
-    private static final String TAG = "Utils";
-    private static final boolean LOCAL_LOGV = false;
     /**
      * characters to compare against when checking for 160 character sending compatibility
      */
     public static final String GSM_CHARACTERS_REGEX = "^[A-Za-z0-9 \\r\\n@Ł$ĽčéůěňÇŘřĹĺ\u0394_\u03A6\u0393\u039B\u03A9\u03A0\u03A8\u03A3\u0398\u039EĆćßÉ!\"#$%&'()*+,\\-./:;<=>?ĄÄÖŃÜ§żäöńüŕ^{}\\\\\\[~\\]|\u20AC]*$";
+    private static final String TAG = "Utils";
+    private static final boolean LOCAL_LOGV = false;
+    private static final Pattern EMAIL_ADDRESS_PATTERN
+            = Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
+    );
+    private static final Pattern NAME_ADDR_EMAIL_PATTERN =
+            Pattern.compile("\\s*(\"[^\"]*\"|[^<>\"]+)\\s*<([^<>]+)>\\s*");
 
     /**
      * Gets the current users phone number
@@ -276,7 +288,8 @@ public class Utils {
 
     /**
      * Gets the current thread_id or creates a new one for the given recipient
-     * @param context is the context of the activity or service
+     *
+     * @param context   is the context of the activity or service
      * @param recipient is the person message is being sent to
      * @return the thread_id to use in the database
      */
@@ -288,7 +301,8 @@ public class Utils {
 
     /**
      * Gets the current thread_id or creates a new one for the given recipient
-     * @param context is the context of the activity or service
+     *
+     * @param context    is the context of the activity or service
      * @param recipients is the set of people message is being sent to
      * @return the thread_id to use in the database
      */
@@ -300,7 +314,8 @@ public class Utils {
 
     /**
      * Gets the current thread_id or -1 if none found
-     * @param context is the context of the activity or service
+     *
+     * @param context   is the context of the activity or service
      * @param recipient is the person message is being sent to
      * @return the thread_id to use in the database, -1 if none found
      */
@@ -312,7 +327,8 @@ public class Utils {
 
     /**
      * Gets the current thread_id or -1 if none found
-     * @param context is the context of the activity or service
+     *
+     * @param context    is the context of the activity or service
      * @param recipients is the set of people message is being sent to
      * @return the thread_id to use in the database, -1 if none found
      */
@@ -355,20 +371,6 @@ public class Utils {
         return match.matches();
     }
 
-    private static final Pattern EMAIL_ADDRESS_PATTERN
-            = Pattern.compile(
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-]{1,256}" +
-                    "\\@" +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                    "(" +
-                    "\\." +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                    ")+"
-    );
-
-    private static final Pattern NAME_ADDR_EMAIL_PATTERN =
-            Pattern.compile("\\s*(\"[^\"]*\"|[^<>\"]+)\\s*<([^<>]+)>\\s*");
-
     private static String extractAddrSpec(String address) {
         Matcher match = NAME_ADDR_EMAIL_PATTERN.matcher(address);
 
@@ -380,6 +382,7 @@ public class Utils {
 
     /**
      * Gets the default settings from a shared preferences file associated with your app
+     *
      * @param context is the context of the activity or service
      * @return the settings object to send with
      */
@@ -409,6 +412,7 @@ public class Utils {
 
     /**
      * Determines whether or not the user has Android 4.4 KitKat
+     *
      * @return true if version code on device is >= kitkat
      */
     public static boolean hasKitKat() {
@@ -417,6 +421,7 @@ public class Utils {
 
     /**
      * Determines whether or not the app is the default SMS app on a device
+     *
      * @param context
      * @return true if app is default
      */

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -29,28 +30,24 @@ import com.moez.QKSMS.ui.view.QKTextView;
  * @author Moez Bhatti
  * @author Shane Creighton-Young
  * @since 2015-02-08
- *
+ * <p/>
  * BaseDialogFragment is a backwards-compatible, Material-styled Dialog fragment.
- *
+ * <p/>
  * To listen on results from BaseDialogFragment, launch it from a Fragment that implements
  * DialogFragmentListener. Then, the "onDialogFragmentResult" methods will get called much like
  * "onActivityResult".
  */
 public class QKDialogFragment extends DialogFragment {
-    private final String TAG = "QKDialogFragment";
-
-    private Context mContext;
-    private Resources mResources;
-
-    protected DialogFragmentListener mListener;
-
     // Result codes for this
     public static final int POSITIVE_BUTTON_RESULT = 0;
     public static final int NEUTRAL_BUTTON_RESULT = 1;
     public static final int NEGATIVE_BUTTON_RESULT = 2;
     public static final int LIST_ITEM_CLICK_RESULT = 3;
     public static final int DISMISS_RESULT = 4;
-
+    private final String TAG = "QKDialogFragment";
+    protected DialogFragmentListener mListener;
+    private Context mContext;
+    private Resources mResources;
     // Views
     private boolean mTitleEnabled;
     private String mTitleText;
@@ -82,24 +79,16 @@ public class QKDialogFragment extends DialogFragment {
     private String mNegativeButtonText;
     private QKTextView mNegativeButtonView;
 
-    public interface DialogFragmentListener {
-        // Called when the DialogFragment button is pressed, the DialogFragment is dismissed, etc.
-        public void onDialogFragmentResult(int resultCode, DialogFragment fragment);
-
-        // Called when a list item within the dialog is pressed.
-        public void onDialogFragmentListResult(int resultCode, DialogFragment fragment, int index);
-    }
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Restore the target fragment; this is our listener.
-        mListener = (DialogFragmentListener)getTargetFragment();
+        mListener = (DialogFragmentListener) getTargetFragment();
     }
 
     /**
      * Sets the listener of the the DialogFragment.
-     *
+     * <p/>
      * The generic stuff is just to ensure that the listener is both a Fragment and a
      * DialogFragmentListener.
      */
@@ -355,7 +344,7 @@ public class QKDialogFragment extends DialogFragment {
     }
 
     public QKDialogFragment setTripleLineItems(String[] titles, String[] subtitles,
-                                                 String[] bodies) {
+                                               String[] bodies) {
 
         int size = Math.min(titles.length, Math.min(subtitles.length, bodies.length));
         TripleLineListItem[] tripleLineListItems = new TripleLineListItem[size];
@@ -415,6 +404,14 @@ public class QKDialogFragment extends DialogFragment {
     public void onPause() {
         super.onPause();
         dismiss();
+    }
+
+    public interface DialogFragmentListener {
+        // Called when the DialogFragment button is pressed, the DialogFragment is dismissed, etc.
+        public void onDialogFragmentResult(int resultCode, DialogFragment fragment);
+
+        // Called when a list item within the dialog is pressed.
+        public void onDialogFragmentListResult(int resultCode, DialogFragment fragment, int index);
     }
 
     private class DoubleLineListItem {

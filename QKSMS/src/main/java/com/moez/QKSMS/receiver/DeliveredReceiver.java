@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 

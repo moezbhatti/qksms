@@ -56,15 +56,14 @@ import static com.android.mms.dom.smil.SmilParElementImpl.SMIL_SLIDE_END_EVENT;
 import static com.android.mms.dom.smil.SmilParElementImpl.SMIL_SLIDE_START_EVENT;
 
 public class SmilHelper {
-    private static final String TAG = "Mms/smil";
-    private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
-
     public static final String ELEMENT_TAG_TEXT = "text";
     public static final String ELEMENT_TAG_IMAGE = "img";
     public static final String ELEMENT_TAG_AUDIO = "audio";
     public static final String ELEMENT_TAG_VIDEO = "video";
     public static final String ELEMENT_TAG_REF = "ref";
+    private static final String TAG = "Mms/smil";
+    private static final boolean DEBUG = false;
+    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private SmilHelper() {
         // Never instantiate this class.
@@ -99,10 +98,10 @@ public class SmilHelper {
      */
     private static PduPart findSmilPart(PduBody body) {
         int partNum = body.getPartsNum();
-        for(int i = 0; i < partNum; i++) {
+        for (int i = 0; i < partNum; i++) {
             PduPart part = body.getPart(i);
             if (Arrays.equals(part.getContentType(),
-                            ContentType.APP_SMIL.getBytes())) {
+                    ContentType.APP_SMIL.getBytes())) {
                 // Sure only one SMIL part.
                 return part;
             }
@@ -160,11 +159,11 @@ public class SmilHelper {
     }
 
     static public String escapeXML(String str) {
-        return str.replaceAll("&","&amp;")
-                  .replaceAll("<", "&lt;")
-                  .replaceAll(">", "&gt;")
-                  .replaceAll("\"", "&quot;")
-                  .replaceAll("'", "&apos;");
+        return str.replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll("\"", "&quot;")
+                .replaceAll("'", "&apos;");
     }
 
     private static SMILDocument createSmilDocument(PduBody pb) {
@@ -322,24 +321,24 @@ public class SmilHelper {
                     }
                     sme = SmilHelper.createMediaElement(SmilHelper.ELEMENT_TAG_TEXT, document, src);
                     txtRegionPresentInLayout = setRegion((SMILRegionMediaElement) sme,
-                                                         smilRegions,
-                                                         layoutElement,
-                                                         LayoutModel.TEXT_REGION_ID,
-                                                         txtRegionPresentInLayout);
+                            smilRegions,
+                            layoutElement,
+                            LayoutModel.TEXT_REGION_ID,
+                            txtRegionPresentInLayout);
                 } else if (media instanceof ImageModel) {
                     sme = SmilHelper.createMediaElement(SmilHelper.ELEMENT_TAG_IMAGE, document, src);
                     imgRegionPresentInLayout = setRegion((SMILRegionMediaElement) sme,
-                                                         smilRegions,
-                                                         layoutElement,
-                                                         LayoutModel.IMAGE_REGION_ID,
-                                                         imgRegionPresentInLayout);
+                            smilRegions,
+                            layoutElement,
+                            LayoutModel.IMAGE_REGION_ID,
+                            imgRegionPresentInLayout);
                 } else if (media instanceof VideoModel) {
                     sme = SmilHelper.createMediaElement(SmilHelper.ELEMENT_TAG_VIDEO, document, src);
                     imgRegionPresentInLayout = setRegion((SMILRegionMediaElement) sme,
-                                                         smilRegions,
-                                                         layoutElement,
-                                                         LayoutModel.IMAGE_REGION_ID,
-                                                         imgRegionPresentInLayout);
+                            smilRegions,
+                            layoutElement,
+                            LayoutModel.IMAGE_REGION_ID,
+                            imgRegionPresentInLayout);
                 } else if (media instanceof AudioModel) {
                     sme = SmilHelper.createMediaElement(SmilHelper.ELEMENT_TAG_AUDIO, document, src);
                 } else {

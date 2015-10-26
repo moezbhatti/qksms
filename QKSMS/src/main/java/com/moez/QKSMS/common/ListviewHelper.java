@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ListView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.ThemeManager;
 
@@ -20,9 +21,9 @@ public class ListviewHelper {
             try {
                 Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_scrollbar);
                 drawable.setColorFilter(Color.argb(64,
-                        Color.red(ThemeManager.getTextOnBackgroundSecondary()),
-                        Color.green(ThemeManager.getTextOnBackgroundSecondary()),
-                        Color.blue(ThemeManager.getTextOnBackgroundSecondary())),
+                                Color.red(ThemeManager.getTextOnBackgroundSecondary()),
+                                Color.green(ThemeManager.getTextOnBackgroundSecondary()),
+                                Color.blue(ThemeManager.getTextOnBackgroundSecondary())),
                         PorterDuff.Mode.MULTIPLY);
 
                 Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");

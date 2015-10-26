@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.moez.QKSMS.R;
 
 public class CustomViewBehind extends ViewGroup {
@@ -18,16 +19,28 @@ public class CustomViewBehind extends ViewGroup {
     private static final String TAG = "CustomViewBehind";
 
     private static final int MARGIN_THRESHOLD = 48; // dips
+    private final Paint mFadePaint = new Paint();
     private int mTouchMode = SlidingMenu.TOUCHMODE_MARGIN;
-
     private CustomViewAbove mViewAbove;
-
     private View mContent;
     private View mSecondaryContent;
     private int mMarginThreshold;
     private int mWidthOffset;
     private SlidingMenu.CanvasTransformer mTransformer;
     private boolean mChildrenEnabled;
+    /**
+     * Determines the location of the menu(s): left only, right only, or on both left and right.
+     */
+    private int mMode;
+    private boolean mFadeEnabled;
+    private float mScrollScale;
+    private Drawable mShadowDrawable;
+    private Drawable mSecondaryShadowDrawable;
+    private int mShadowWidth;
+    private float mFadeDegree;
+    private boolean mSelectorEnabled = true;
+    private Bitmap mSelectorDrawable;
+    private View mSelectedView;
 
     public CustomViewBehind(Context context) {
         this(context, null);
@@ -52,16 +65,20 @@ public class CustomViewBehind extends ViewGroup {
         requestLayout();
     }
 
-    public void setMarginThreshold(int marginThreshold) {
-        mMarginThreshold = marginThreshold;
-    }
-
     public int getMarginThreshold() {
         return mMarginThreshold;
     }
 
+    public void setMarginThreshold(int marginThreshold) {
+        mMarginThreshold = marginThreshold;
+    }
+
     public int getBehindWidth() {
         return mContent.getWidth();
+    }
+
+    public View getContent() {
+        return mContent;
     }
 
     public void setContent(View v) {
@@ -71,8 +88,8 @@ public class CustomViewBehind extends ViewGroup {
         addView(mContent);
     }
 
-    public View getContent() {
-        return mContent;
+    public View getSecondaryContent() {
+        return mSecondaryContent;
     }
 
     /**
@@ -85,10 +102,6 @@ public class CustomViewBehind extends ViewGroup {
             removeView(mSecondaryContent);
         mSecondaryContent = v;
         addView(mSecondaryContent);
-    }
-
-    public View getSecondaryContent() {
-        return mSecondaryContent;
     }
 
     public void setChildrenEnabled(boolean enabled) {
@@ -144,17 +157,9 @@ public class CustomViewBehind extends ViewGroup {
             mSecondaryContent.measure(contentWidth, contentHeight);
     }
 
-    /**
-     * Determines the location of the menu(s): left only, right only, or on both left and right.
-     */
-    private int mMode;
-    private boolean mFadeEnabled;
-    private final Paint mFadePaint = new Paint();
-    private float mScrollScale;
-    private Drawable mShadowDrawable;
-    private Drawable mSecondaryShadowDrawable;
-    private int mShadowWidth;
-    private float mFadeDegree;
+    public int getMode() {
+        return mMode;
+    }
 
     public void setMode(int mode) {
         if (mode == SlidingMenu.LEFT || mode == SlidingMenu.RIGHT) {
@@ -166,16 +171,12 @@ public class CustomViewBehind extends ViewGroup {
         mMode = mode;
     }
 
-    public int getMode() {
-        return mMode;
+    public float getScrollScale() {
+        return mScrollScale;
     }
 
     public void setScrollScale(float scrollScale) {
         mScrollScale = scrollScale;
-    }
-
-    public float getScrollScale() {
-        return mScrollScale;
     }
 
     public void setShadowDrawable(Drawable shadow) {
@@ -387,10 +388,6 @@ public class CustomViewBehind extends ViewGroup {
         }
         canvas.drawRect(left, 0, right, getHeight(), mFadePaint);
     }
-
-    private boolean mSelectorEnabled = true;
-    private Bitmap mSelectorDrawable;
-    private View mSelectedView;
 
     public void drawSelector(View content, Canvas canvas, float openPercent) {
         if (!mSelectorEnabled) return;

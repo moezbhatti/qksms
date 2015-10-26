@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
 import com.moez.QKSMS.common.utils.ImageUtils;
 
 public class MmsImageView extends ImageView {

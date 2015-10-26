@@ -28,9 +28,9 @@ public class EmojiRegistry {
 
     /**
      * Replaces emoji codes within the text with unicode emojis.
-     *
+     * <p/>
      * Note that an emoji code must be surrounded on both sides by one of:
-     *
+     * <p/>
      * - whitespace (i.e. ' ' or '\t')
      * - punctuation (one of [.,;:"'?!])
      * - the beginning or end of the string

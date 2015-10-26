@@ -26,11 +26,10 @@ import java.nio.charset.Charset;
 
 class CountedDataInputStream extends FilterInputStream {
 
-    private int mCount = 0;
-
     // allocate a byte buffer for a long value;
     private final byte mByteArray[] = new byte[8];
     private final ByteBuffer mByteBuffer = ByteBuffer.wrap(mByteArray);
+    private int mCount = 0;
 
     protected CountedDataInputStream(InputStream in) {
         super(in);
@@ -75,7 +74,7 @@ class CountedDataInputStream extends FilterInputStream {
     public void skipTo(long target) throws IOException {
         long cur = mCount;
         long diff = target - cur;
-        assert(diff >= 0);
+        assert (diff >= 0);
         skipOrThrow(diff);
     }
 
@@ -88,16 +87,16 @@ class CountedDataInputStream extends FilterInputStream {
         readOrThrow(b, 0, b.length);
     }
 
-    public void setByteOrder(ByteOrder order) {
-        mByteBuffer.order(order);
-    }
-
     public ByteOrder getByteOrder() {
         return mByteBuffer.order();
     }
 
+    public void setByteOrder(ByteOrder order) {
+        mByteBuffer.order(order);
+    }
+
     public short readShort() throws IOException {
-        readOrThrow(mByteArray, 0 ,2);
+        readOrThrow(mByteArray, 0, 2);
         mByteBuffer.rewind();
         return mByteBuffer.getShort();
     }
@@ -107,7 +106,7 @@ class CountedDataInputStream extends FilterInputStream {
     }
 
     public int readInt() throws IOException {
-        readOrThrow(mByteArray, 0 , 4);
+        readOrThrow(mByteArray, 0, 4);
         mByteBuffer.rewind();
         return mByteBuffer.getInt();
     }
@@ -117,7 +116,7 @@ class CountedDataInputStream extends FilterInputStream {
     }
 
     public long readLong() throws IOException {
-        readOrThrow(mByteArray, 0 , 8);
+        readOrThrow(mByteArray, 0, 8);
         mByteBuffer.rewind();
         return mByteBuffer.getLong();
     }

@@ -27,7 +27,22 @@ public class Settings {
     public static final long MAX_ATTACHMENT_SIZE_300KB = 300 * 1024;
     public static final long MAX_ATTACHMENT_SIZE_600KB = 600 * 1024;
     public static final long MAX_ATTACHMENT_SIZE_1MB = 1024 * 1024;
-
+    /**
+     * @deprecated
+     */
+    public WifiInfo currentWifi;
+    /**
+     * @deprecated
+     */
+    public boolean currentWifiState;
+    /**
+     * @deprecated
+     */
+    public DisconnectWifi discon;
+    /**
+     * @deprecated
+     */
+    public boolean currentDataState;
     // MMS options
     private String mmsc;
     private String proxy;
@@ -37,7 +52,6 @@ public class Settings {
     private String uaProfTagName;
     private boolean group;
     private long maxAttachmentSize;
-
     // SMS options
     private boolean deliveryReports;
     private boolean split;
@@ -47,10 +61,13 @@ public class Settings {
     private String preText;
     private boolean sendLongAsMms;
     private int sendLongAsMmsAfter;
-
     // Google Voice settings
     private String account;
     private String rnrSe;
+    /**
+     * @deprecated
+     */
+    private boolean wifiMmsFix;
 
     /**
      * Default constructor to set everything to default values
@@ -61,6 +78,7 @@ public class Settings {
 
     /**
      * Copy constuctor
+     *
      * @param s is the Settings object to copy from
      */
     public Settings(Settings s) {
@@ -147,12 +165,26 @@ public class Settings {
     }
 
     /**
+     * @return MMSC to send through
+     */
+    public String getMmsc() {
+        return this.mmsc;
+    }
+
+    /**
      * Sets MMSC
      *
      * @param mmsc is the mmsc from the apns
      */
     public void setMmsc(String mmsc) {
         this.mmsc = mmsc;
+    }
+
+    /**
+     * @return the proxy to send MMS through
+     */
+    public String getProxy() {
+        return this.proxy;
     }
 
     /**
@@ -165,6 +197,13 @@ public class Settings {
     }
 
     /**
+     * @return the port to send MMS through
+     */
+    public String getPort() {
+        return this.port;
+    }
+
+    /**
      * Sets the Port
      *
      * @param port is the port from the apns
@@ -174,25 +213,59 @@ public class Settings {
     }
 
     /**
+     * @return the user agent to send mms with
+     */
+    public String getAgent() {
+        return this.userAgent;
+    }
+
+    /**
      * Sets the user agent
      *
      * @param agent is the agent to send http request with
      */
-    public void setAgent(String agent) { this.userAgent = agent; }
+    public void setAgent(String agent) {
+        this.userAgent = agent;
+    }
+
+    /**
+     * @return the user agent profile url to send mms with
+     */
+    public String getUserProfileUrl() {
+        return this.uaProfUrl;
+    }
 
     /**
      * Sets the user agent profile url
      *
      * @param userProfileUrl is the user agent profile url
      */
-    public void setUserProfileUrl(String userProfileUrl) { this.uaProfUrl = userProfileUrl; }
+    public void setUserProfileUrl(String userProfileUrl) {
+        this.uaProfUrl = userProfileUrl;
+    }
+
+    /**
+     * @return the user agent profile tag name
+     */
+    public String getUaProfTagName() {
+        return this.uaProfTagName;
+    }
 
     /**
      * Sets the user agent profile tag name
      *
      * @param tagName the tag name to use
      */
-    public void setUaProfTagName(String tagName) { this.uaProfTagName = tagName; }
+    public void setUaProfTagName(String tagName) {
+        this.uaProfTagName = tagName;
+    }
+
+    /**
+     * @return whether or not to send Group MMS or multiple SMS/Voice messages
+     */
+    public boolean getGroup() {
+        return this.group;
+    }
 
     /**
      * Sets group MMS messages
@@ -204,12 +277,26 @@ public class Settings {
     }
 
     /**
+     * @return maxAttachmentSize  is a long specifying the maximum number of bytes that an MMS attachment can be, or -1 if no maximum
+     */
+    public long getMaxAttachmentSize() {
+        return this.maxAttachmentSize;
+    }
+
+    /**
      * Sets the max attachment size
      *
-     * @param maxAttachmentSize  is a long specifying the maximum number of bytes that an MMS attachment can be, or -1 if no maximum
+     * @param maxAttachmentSize is a long specifying the maximum number of bytes that an MMS attachment can be, or -1 if no maximum
      */
     public void setMaxAttachmentSize(long maxAttachmentSize) {
         this.maxAttachmentSize = maxAttachmentSize;
+    }
+
+    /**
+     * @return whether or not to request delivery reports on SMS messages
+     */
+    public boolean getDeliveryReports() {
+        return this.deliveryReports;
     }
 
     /**
@@ -222,12 +309,26 @@ public class Settings {
     }
 
     /**
+     * @return whether or not SMS should be split manually
+     */
+    public boolean getSplit() {
+        return this.split;
+    }
+
+    /**
      * Sets whether to manually split an SMS or not
      *
      * @param split is a boolean to manually split messages (shouldn't be necessary, but some carriers do not split on their own)
      */
     public void setSplit(boolean split) {
         this.split = split;
+    }
+
+    /**
+     * @return whether or not a split counter should be attached to manually split messages
+     */
+    public boolean getSplitCounter() {
+        return this.splitCounter;
     }
 
     /**
@@ -240,12 +341,26 @@ public class Settings {
     }
 
     /**
+     * @return whether or not unicode chars should be substituted with gms characters
+     */
+    public boolean getStripUnicode() {
+        return this.stripUnicode;
+    }
+
+    /**
      * Sets whether or not unicode characters should be sent or converted to their GSM compatible alternative
      *
      * @param stripUnicode replaces many unicode characters with their gsm compatible equivalent to allow for sending 160 characters instead of 70
      */
     public void setStripUnicode(boolean stripUnicode) {
         this.stripUnicode = stripUnicode;
+    }
+
+    /**
+     * @return the signature attached to SMS messages
+     */
+    public String getSignature() {
+        return this.signature;
     }
 
     /**
@@ -258,12 +373,26 @@ public class Settings {
     }
 
     /**
+     * @return the text attached to the beginning of each SMS
+     */
+    public String getPreText() {
+        return this.preText;
+    }
+
+    /**
      * Sets the text to be sent before an SMS message
      *
      * @param preText text to be attached to the beginning of each message
      */
     public void setPreText(String preText) {
         this.preText = preText;
+    }
+
+    /**
+     * @return whether or not to send long SMS or Voice as single MMS
+     */
+    public boolean getSendLongAsMms() {
+        return this.sendLongAsMms;
     }
 
     /**
@@ -276,12 +405,26 @@ public class Settings {
     }
 
     /**
+     * @return number of pages sms must be to send instead as MMS
+     */
+    public int getSendLongAsMmsAfter() {
+        return this.sendLongAsMmsAfter;
+    }
+
+    /**
      * Sets when we should convert SMS or Voice into an MMS message
      *
      * @param sendLongAsMmsAfter is an int of how many pages long an SMS must be before it is split
      */
     public void setSendLongAsMmsAfter(int sendLongAsMmsAfter) {
         this.sendLongAsMmsAfter = sendLongAsMmsAfter;
+    }
+
+    /**
+     * @return Google account to send Voice messages through
+     */
+    public String getAccount() {
+        return this.account;
     }
 
     /**
@@ -294,6 +437,13 @@ public class Settings {
     }
 
     /**
+     * @return auth token to be used for Voice messages
+     */
+    public String getRnrSe() {
+        return this.rnrSe;
+    }
+
+    /**
      * Sets the token to use to authenticate voice messages
      *
      * @param rnrSe is the token to use to send Google Voice messages (nullify if you don't know what this is)
@@ -303,149 +453,12 @@ public class Settings {
     }
 
     /**
-     * @return MMSC to send through
-     */
-    public String getMmsc() {
-        return this.mmsc;
-    }
-
-    /**
-     * @return the proxy to send MMS through
-     */
-    public String getProxy() {
-        return this.proxy;
-    }
-
-    /**
-     * @return the port to send MMS through
-     */
-    public String getPort() {
-        return this.port;
-    }
-
-    /**
-     * @return the user agent to send mms with
-     */
-    public String getAgent() { return this.userAgent; }
-
-    /**
-     * @return the user agent profile url to send mms with
-     */
-    public String getUserProfileUrl() { return this.uaProfUrl; }
-
-    /**
-     * @return the user agent profile tag name
-     */
-    public String getUaProfTagName() { return this.uaProfTagName; }
-
-    /**
-     * @return whether or not to send Group MMS or multiple SMS/Voice messages
-     */
-    public boolean getGroup() {
-        return this.group;
-    }
-
-    /**
-     * @return maxAttachmentSize  is a long specifying the maximum number of bytes that an MMS attachment can be, or -1 if no maximum
-     */
-    public long getMaxAttachmentSize() {
-        return this.maxAttachmentSize;
-    }
-
-    /**
-     * @return whether or not to request delivery reports on SMS messages
-     */
-    public boolean getDeliveryReports() {
-        return this.deliveryReports;
-    }
-
-    /**
-     * @return whether or not SMS should be split manually
-     */
-    public boolean getSplit() {
-        return this.split;
-    }
-
-    /**
-     * @return whether or not a split counter should be attached to manually split messages
-     */
-    public boolean getSplitCounter() {
-        return this.splitCounter;
-    }
-
-    /**
-     * @return whether or not unicode chars should be substituted with gms characters
-     */
-    public boolean getStripUnicode() {
-        return this.stripUnicode;
-    }
-
-    /**
-     * @return the signature attached to SMS messages
-     */
-    public String getSignature() {
-        return this.signature;
-    }
-
-    /**
-     * @return the text attached to the beginning of each SMS
-     */
-    public String getPreText() {
-        return this.preText;
-    }
-
-    /**
-     * @return whether or not to send long SMS or Voice as single MMS
-     */
-    public boolean getSendLongAsMms() {
-        return this.sendLongAsMms;
-    }
-
-    /**
-     * @return number of pages sms must be to send instead as MMS
-     */
-    public int getSendLongAsMmsAfter() {
-        return this.sendLongAsMmsAfter;
-    }
-
-    /**
-     * @return Google account to send Voice messages through
-     */
-    public String getAccount() {
-        return this.account;
-    }
-
-    /**
-     * @return auth token to be used for Voice messages
-     */
-    public String getRnrSe() {
-        return this.rnrSe;
-    }
-
-    /**
+     * @return whether or not to toggle wifi when sending MMS
      * @deprecated
      */
-    private boolean wifiMmsFix;
-
-    /**
-     * @deprecated
-     */
-    public WifiInfo currentWifi;
-
-    /**
-     * @deprecated
-     */
-    public boolean currentWifiState;
-
-    /**
-     * @deprecated
-     */
-    public DisconnectWifi discon;
-
-    /**
-     * @deprecated
-     */
-    public boolean currentDataState;
+    public boolean getWifiMmsFix() {
+        return this.wifiMmsFix;
+    }
 
     /**
      * @param wifiMmsFix is a boolean to toggle on and off wifi when sending MMS
@@ -453,13 +466,5 @@ public class Settings {
      */
     public void setWifiMmsFix(boolean wifiMmsFix) {
         this.wifiMmsFix = wifiMmsFix;
-    }
-
-    /**
-     * @return whether or not to toggle wifi when sending MMS
-     * @deprecated
-     */
-    public boolean getWifiMmsFix() {
-        return this.wifiMmsFix;
     }
 }

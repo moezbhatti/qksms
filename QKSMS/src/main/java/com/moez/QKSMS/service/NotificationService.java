@@ -8,21 +8,20 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.IBinder;
-
 import android.preference.PreferenceManager;
+
+import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class NotificationService extends Service {
-    private final String TAG = "NotificationService";
-
     public static final String EXTRA_POPUP = "popup";
     public static final String EXTRA_URI = "uri";
+    private final String TAG = "NotificationService";
     private Context context = this;
     private Intent popupIntent;
     private SharedPreferences prefs;

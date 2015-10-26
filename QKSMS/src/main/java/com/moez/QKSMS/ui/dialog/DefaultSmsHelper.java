@@ -18,9 +18,9 @@ import java.lang.reflect.Field;
 
 public class DefaultSmsHelper implements ActionClickListener {
 
+    private static long sLastShown;
     private Context mContext;
     private int mMessage;
-    private static long sLastShown;
     private boolean mIsDefault = true;
 
     // Listener is currently useless because we can't listen for response from the system dialog

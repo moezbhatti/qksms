@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
@@ -26,23 +27,19 @@ import com.moez.QKSMS.ui.view.StarredContactsView;
 public class ComposeFragment extends QKContentFragment implements ActivityLauncher, RecipientProvider,
         ComposeView.OnSendListener, AdapterView.OnItemClickListener {
 
-    private final String TAG = "ComposeFragment";
-
     /**
      * Set to true in the bundle if the ComposeFragment should show the keyboard. Defaults to false.
      */
     public static final String ARG_SHOW_KEYBOARD = "showKeyboard";
-
     /**
      * Set a FOCUS string to indicate where the focus should be for the keyboard. Defaults to
      * FOCUS_NOTHING.
      */
     public static final String ARG_FOCUS = "focus";
-
     public static final String FOCUS_NOTHING = "nothing";
     public static final String FOCUS_RECIPIENTS = "recipients";
     public static final String FOCUS_REPLY = "reply";
-
+    private final String TAG = "ComposeFragment";
     private AutoCompleteContactView mRecipients;
     private ComposeView mComposeView;
     private StarredContactsView mStarredContactsView;

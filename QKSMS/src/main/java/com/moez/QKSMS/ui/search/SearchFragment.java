@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Contact;
@@ -36,7 +37,14 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     // Track which TextView's show which Contact objects so that we can update
     // appropriately when the Contact gets fully loaded.
     private HashMap<Contact, QKTextView> mContactMap = new HashMap<>();
-
+    Contact.UpdateListener mContactListener = new Contact.UpdateListener() {
+        public void onUpdate(Contact updated) {
+            QKTextView tv = mContactMap.get(updated);
+            if (tv != null) {
+                tv.setText(updated.getNameAndNumber());
+            }
+        }
+    };
     private SharedPreferences mPrefs;
     private Resources mRes;
     private Cursor mCursor;
@@ -112,16 +120,6 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
         // kick off a query for the threads which match the search string
         mQueryHandler.startQuery(0, null, uri, null, null, null, null);
     }
-
-
-    Contact.UpdateListener mContactListener = new Contact.UpdateListener() {
-        public void onUpdate(Contact updated) {
-            QKTextView tv = mContactMap.get(updated);
-            if (tv != null) {
-                tv.setText(updated.getNameAndNumber());
-            }
-        }
-    };
 
     @Override
     public void onStop() {

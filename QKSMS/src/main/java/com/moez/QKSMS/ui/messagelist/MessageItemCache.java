@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import android.util.LruCache;
+
 import com.google.android.mms.MmsException;
 import com.moez.QKSMS.common.utils.CursorUtils;
 

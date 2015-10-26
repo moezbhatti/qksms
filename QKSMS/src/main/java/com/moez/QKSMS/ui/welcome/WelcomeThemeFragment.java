@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;

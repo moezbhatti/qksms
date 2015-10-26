@@ -44,9 +44,9 @@ class ExifData {
     };
 
     private final IfdData[] mIfdDatas = new IfdData[IfdId.TYPE_IFD_COUNT];
-    private byte[] mThumbnail;
     private final ArrayList<byte[]> mStripBytes = new ArrayList<>();
     private final ByteOrder mByteOrder;
+    private byte[] mThumbnail;
 
     ExifData(ByteOrder order) {
         mByteOrder = order;

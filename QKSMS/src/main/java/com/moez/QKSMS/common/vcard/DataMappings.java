@@ -1,6 +1,11 @@
 package com.moez.QKSMS.common.vcard;
 
 import android.provider.ContactsContract;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import ezvcard.parameter.AddressType;
 import ezvcard.parameter.EmailType;
 import ezvcard.parameter.TelephoneType;
@@ -8,10 +13,6 @@ import ezvcard.property.Address;
 import ezvcard.property.Email;
 import ezvcard.property.Impp;
 import ezvcard.property.Telephone;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  Copyright (c) 2014-2015, Michael Angstadt
@@ -41,16 +42,24 @@ import java.util.Map;
 /**
  * Maps between vCard contact data types and Android {@link ContactsContract}
  * data types.
- * 
+ *
  * @author Pratyush
  * @author Julien Garrigou
  * @author Michael Angstadt
  */
 public class DataMappings {
     private static final Map<TelephoneType, Integer> phoneTypeMappings;
+    private static final Map<String, Integer> websiteTypeMappings;
+    private static final Map<EmailType, Integer> emailTypeMappings;
+    private static final Map<AddressType, Integer> addressTypeMappings;
+    private static final Map<String, Integer> abRelatedNamesMappings;
+    private static final Map<String, Integer> abDateMappings;
+    private static final Map<String, Integer> imPropertyNameMappings;
+    private static final Map<String, Integer> imProtocolMappings;
+
     static {
-    	Map<TelephoneType, Integer> m = new HashMap<>();
-    	m.put(TelephoneType.BBS, ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM);
+        Map<TelephoneType, Integer> m = new HashMap<>();
+        m.put(TelephoneType.BBS, ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM);
         m.put(TelephoneType.CAR, ContactsContract.CommonDataKinds.Phone.TYPE_CAR);
         m.put(TelephoneType.CELL, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
         m.put(TelephoneType.FAX, ContactsContract.CommonDataKinds.Phone.TYPE_FAX_HOME);
@@ -65,68 +74,62 @@ public class DataMappings {
         m.put(TelephoneType.VIDEO, ContactsContract.CommonDataKinds.Phone.TYPE_OTHER);
         m.put(TelephoneType.WORK, ContactsContract.CommonDataKinds.Phone.TYPE_WORK);
         m.put(TelephoneType.VOICE, ContactsContract.CommonDataKinds.Phone.TYPE_OTHER);
-    	phoneTypeMappings = Collections.unmodifiableMap(m);
+        phoneTypeMappings = Collections.unmodifiableMap(m);
     }
-    
-    private static final Map<String, Integer> websiteTypeMappings;
+
     static {
-    	Map<String, Integer> m = new HashMap<>();
-    	m.put("home", ContactsContract.CommonDataKinds.Website.TYPE_HOME);
-    	m.put("work", ContactsContract.CommonDataKinds.Website.TYPE_WORK);
-    	m.put("homepage", ContactsContract.CommonDataKinds.Website.TYPE_HOMEPAGE);
-    	m.put("profile", ContactsContract.CommonDataKinds.Website.TYPE_PROFILE);
-    	websiteTypeMappings = Collections.unmodifiableMap(m);
+        Map<String, Integer> m = new HashMap<>();
+        m.put("home", ContactsContract.CommonDataKinds.Website.TYPE_HOME);
+        m.put("work", ContactsContract.CommonDataKinds.Website.TYPE_WORK);
+        m.put("homepage", ContactsContract.CommonDataKinds.Website.TYPE_HOMEPAGE);
+        m.put("profile", ContactsContract.CommonDataKinds.Website.TYPE_PROFILE);
+        websiteTypeMappings = Collections.unmodifiableMap(m);
     }
-    
-    private static final Map<EmailType, Integer> emailTypeMappings;
+
     static {
-    	Map<EmailType, Integer> m = new HashMap<>();
+        Map<EmailType, Integer> m = new HashMap<>();
         m.put(EmailType.HOME, ContactsContract.CommonDataKinds.Email.TYPE_HOME);
         m.put(EmailType.WORK, ContactsContract.CommonDataKinds.Email.TYPE_WORK);
         emailTypeMappings = Collections.unmodifiableMap(m);
     }
-    
-    private static final Map<AddressType, Integer> addressTypeMappings;
+
     static {
-    	Map<AddressType, Integer> m = new HashMap<>();
+        Map<AddressType, Integer> m = new HashMap<>();
         m.put(AddressType.HOME, ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME);
         m.put(AddressType.get("business"), ContactsContract.CommonDataKinds.StructuredPostal.TYPE_WORK);
         m.put(AddressType.WORK, ContactsContract.CommonDataKinds.StructuredPostal.TYPE_WORK);
         m.put(AddressType.get("other"), ContactsContract.CommonDataKinds.StructuredPostal.TYPE_OTHER);
         addressTypeMappings = Collections.unmodifiableMap(m);
     }
-    
-    private static final Map<String, Integer> abRelatedNamesMappings;
+
     static {
-    	Map<String, Integer> m = new HashMap<>();
-    	m.put("father", ContactsContract.CommonDataKinds.Relation.TYPE_FATHER);
-		m.put("spouse", ContactsContract.CommonDataKinds.Relation.TYPE_SPOUSE);
-		m.put("mother", ContactsContract.CommonDataKinds.Relation.TYPE_MOTHER);
-		m.put("brother", ContactsContract.CommonDataKinds.Relation.TYPE_BROTHER);
-		m.put("parent", ContactsContract.CommonDataKinds.Relation.TYPE_PARENT);
-		m.put("sister", ContactsContract.CommonDataKinds.Relation.TYPE_SISTER);
-		m.put("child", ContactsContract.CommonDataKinds.Relation.TYPE_CHILD);
-		m.put("assistant", ContactsContract.CommonDataKinds.Relation.TYPE_ASSISTANT);
-		m.put("partner", ContactsContract.CommonDataKinds.Relation.TYPE_PARTNER);
-		m.put("manager", ContactsContract.CommonDataKinds.Relation.TYPE_MANAGER);
-    	abRelatedNamesMappings = Collections.unmodifiableMap(m);
+        Map<String, Integer> m = new HashMap<>();
+        m.put("father", ContactsContract.CommonDataKinds.Relation.TYPE_FATHER);
+        m.put("spouse", ContactsContract.CommonDataKinds.Relation.TYPE_SPOUSE);
+        m.put("mother", ContactsContract.CommonDataKinds.Relation.TYPE_MOTHER);
+        m.put("brother", ContactsContract.CommonDataKinds.Relation.TYPE_BROTHER);
+        m.put("parent", ContactsContract.CommonDataKinds.Relation.TYPE_PARENT);
+        m.put("sister", ContactsContract.CommonDataKinds.Relation.TYPE_SISTER);
+        m.put("child", ContactsContract.CommonDataKinds.Relation.TYPE_CHILD);
+        m.put("assistant", ContactsContract.CommonDataKinds.Relation.TYPE_ASSISTANT);
+        m.put("partner", ContactsContract.CommonDataKinds.Relation.TYPE_PARTNER);
+        m.put("manager", ContactsContract.CommonDataKinds.Relation.TYPE_MANAGER);
+        abRelatedNamesMappings = Collections.unmodifiableMap(m);
     }
-    
-    private static final Map<String, Integer> abDateMappings;
+
     static {
-    	Map<String, Integer> m = new HashMap<>();
-    	m.put("anniversary", ContactsContract.CommonDataKinds.Event.TYPE_ANNIVERSARY);
-		m.put("other", ContactsContract.CommonDataKinds.Event.TYPE_OTHER);
-		abDateMappings = Collections.unmodifiableMap(m);
+        Map<String, Integer> m = new HashMap<>();
+        m.put("anniversary", ContactsContract.CommonDataKinds.Event.TYPE_ANNIVERSARY);
+        m.put("other", ContactsContract.CommonDataKinds.Event.TYPE_OTHER);
+        abDateMappings = Collections.unmodifiableMap(m);
     }
-    
-    private static final Map<String, Integer> imPropertyNameMappings;
-    static{
-    	Map<String, Integer> m = new HashMap<>();
-    	m.put("X-AIM", ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM);
-    	m.put("X-ICQ", ContactsContract.CommonDataKinds.Im.PROTOCOL_ICQ);
-    	m.put("X-QQ", ContactsContract.CommonDataKinds.Im.PROTOCOL_ICQ);
-    	m.put("X-GOOGLE-TALK", ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM);
+
+    static {
+        Map<String, Integer> m = new HashMap<>();
+        m.put("X-AIM", ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM);
+        m.put("X-ICQ", ContactsContract.CommonDataKinds.Im.PROTOCOL_ICQ);
+        m.put("X-QQ", ContactsContract.CommonDataKinds.Im.PROTOCOL_ICQ);
+        m.put("X-GOOGLE-TALK", ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM);
         m.put("X-JABBER", ContactsContract.CommonDataKinds.Im.PROTOCOL_JABBER);
         m.put("X-MSN", ContactsContract.CommonDataKinds.Im.PROTOCOL_MSN);
         m.put("X-MS-IMADDRESS", ContactsContract.CommonDataKinds.Im.PROTOCOL_MSN);
@@ -136,152 +139,159 @@ public class DataMappings {
         m.put("X-TWITTER", ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM);
         imPropertyNameMappings = Collections.unmodifiableMap(m);
     }
-    
-    private static final Map<String, Integer> imProtocolMappings;
-    static{
-    	Map<String, Integer> m = new HashMap<>();
-    	m.put("aim", ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM);
-    	m.put("icq", ContactsContract.CommonDataKinds.Im.PROTOCOL_ICQ);
+
+    static {
+        Map<String, Integer> m = new HashMap<>();
+        m.put("aim", ContactsContract.CommonDataKinds.Im.PROTOCOL_AIM);
+        m.put("icq", ContactsContract.CommonDataKinds.Im.PROTOCOL_ICQ);
         m.put("msn", ContactsContract.CommonDataKinds.Im.PROTOCOL_MSN);
         m.put("ymsgr", ContactsContract.CommonDataKinds.Im.PROTOCOL_YAHOO);
         m.put("skype", ContactsContract.CommonDataKinds.Im.PROTOCOL_SKYPE);
         imProtocolMappings = Collections.unmodifiableMap(m);
     }
 
-	/**
-	 * Maps the value of a URL property's TYPE parameter to the appropriate
-	 * Android {@link ContactsContract.CommonDataKinds.Website} value.
-	 * @param type the TYPE parameter value (can be null)
-	 * @return the Android type
-	 */
-    public static int getWebSiteType(String type) {
-    	if (type == null){
-    		return ContactsContract.CommonDataKinds.Website.TYPE_CUSTOM;
-    	}
-
-    	type = type.toLowerCase();
-    	Integer value = websiteTypeMappings.get(type);
-    	return (value == null) ? ContactsContract.CommonDataKinds.Website.TYPE_CUSTOM : value;
+    private DataMappings() {
+        //hide constructor
     }
 
     /**
-	 * Maps the value of a X-ABLABEL property to the appropriate
-	 * Android {@link ContactsContract.CommonDataKinds.Event} value.
-	 * @param type the property value
-	 * @return the Android type
-	 */
+     * Maps the value of a URL property's TYPE parameter to the appropriate
+     * Android {@link ContactsContract.CommonDataKinds.Website} value.
+     *
+     * @param type the TYPE parameter value (can be null)
+     * @return the Android type
+     */
+    public static int getWebSiteType(String type) {
+        if (type == null) {
+            return ContactsContract.CommonDataKinds.Website.TYPE_CUSTOM;
+        }
+
+        type = type.toLowerCase();
+        Integer value = websiteTypeMappings.get(type);
+        return (value == null) ? ContactsContract.CommonDataKinds.Website.TYPE_CUSTOM : value;
+    }
+
+    /**
+     * Maps the value of a X-ABLABEL property to the appropriate
+     * Android {@link ContactsContract.CommonDataKinds.Event} value.
+     *
+     * @param type the property value
+     * @return the Android type
+     */
     public static int getDateType(String type) {
         if (type == null) {
             return ContactsContract.CommonDataKinds.Event.TYPE_OTHER;
         }
-        
+
         type = type.toLowerCase();
-        for (Map.Entry<String, Integer> entry : abDateMappings.entrySet()){
-        	if (type.contains(entry.getKey())){
-        		return entry.getValue();
-        	}
+        for (Map.Entry<String, Integer> entry : abDateMappings.entrySet()) {
+            if (type.contains(entry.getKey())) {
+                return entry.getValue();
+            }
         }
         return ContactsContract.CommonDataKinds.Event.TYPE_OTHER;
     }
 
     /**
-	 * Maps the value of a X-ABLABEL property to the appropriate
-	 * Android {@link ContactsContract.CommonDataKinds.Relation} value.
-	 * @param type the property value
-	 * @return the Android type
-	 */
+     * Maps the value of a X-ABLABEL property to the appropriate
+     * Android {@link ContactsContract.CommonDataKinds.Relation} value.
+     *
+     * @param type the property value
+     * @return the Android type
+     */
     public static int getNameType(String type) {
         if (type == null) {
             return ContactsContract.CommonDataKinds.Relation.TYPE_CUSTOM;
         }
-        
+
         type = type.toLowerCase();
-        for (Map.Entry<String, Integer> entry : abRelatedNamesMappings.entrySet()){
-        	if (type.contains(entry.getKey())){
-        		return entry.getValue();
-        	}
+        for (Map.Entry<String, Integer> entry : abRelatedNamesMappings.entrySet()) {
+            if (type.contains(entry.getKey())) {
+                return entry.getValue();
+            }
         }
         return ContactsContract.CommonDataKinds.Relation.TYPE_CUSTOM;
     }
-    
-	/**
-	 * Gets the mappings that associate an extended property name (e.g. "X-AIM")
-	 * with its appropriate Android {@link ContactsContract.CommonDataKinds.Im}
-	 * value.
-	 * @return the mappings (the key is the property name, the value is the Android value)
-	 */
-    public static Map<String, Integer> getImPropertyNameMappings(){
-    	return imPropertyNameMappings;
+
+    /**
+     * Gets the mappings that associate an extended property name (e.g. "X-AIM")
+     * with its appropriate Android {@link ContactsContract.CommonDataKinds.Im}
+     * value.
+     *
+     * @return the mappings (the key is the property name, the value is the Android value)
+     */
+    public static Map<String, Integer> getImPropertyNameMappings() {
+        return imPropertyNameMappings;
     }
 
-	/**
-	 * Converts an IM protocol from a {@link Impp} property (e.g. "aim") to the
-	 * appropriate Android {@link ContactsContract.CommonDataKinds.Im} value.
-	 * @param protocol the IM protocol (e.g. "aim", can be null)
-	 * @return the Android value
-	 */
+    /**
+     * Converts an IM protocol from a {@link Impp} property (e.g. "aim") to the
+     * appropriate Android {@link ContactsContract.CommonDataKinds.Im} value.
+     *
+     * @param protocol the IM protocol (e.g. "aim", can be null)
+     * @return the Android value
+     */
     public static int getIMTypeFromProtocol(String protocol) {
-    	if (protocol == null){
-    		return ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM;
-    	}
+        if (protocol == null) {
+            return ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM;
+        }
 
-    	protocol = protocol.toLowerCase();
-    	Integer value = imProtocolMappings.get(protocol);
-    	return (value == null) ? ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM : value;
+        protocol = protocol.toLowerCase();
+        Integer value = imProtocolMappings.get(protocol);
+        return (value == null) ? ContactsContract.CommonDataKinds.Im.PROTOCOL_CUSTOM : value;
     }
 
-	/**
-	 * Determines the appropriate Android
-	 * {@link ContactsContract.CommonDataKinds.Phone} value for a
-	 * {@link Telephone} property.
-	 * @param property the property
-	 * @return the Android type value
-	 */
+    /**
+     * Determines the appropriate Android
+     * {@link ContactsContract.CommonDataKinds.Phone} value for a
+     * {@link Telephone} property.
+     *
+     * @param property the property
+     * @return the Android type value
+     */
     public static int getPhoneType(Telephone property) {
-    	for (TelephoneType type : property.getTypes()){
-    		Integer androidType = phoneTypeMappings.get(type);
-    		if (androidType != null){
-    			return androidType;
-    		}
-    	}
-    	return ContactsContract.CommonDataKinds.Phone.TYPE_OTHER;
+        for (TelephoneType type : property.getTypes()) {
+            Integer androidType = phoneTypeMappings.get(type);
+            if (androidType != null) {
+                return androidType;
+            }
+        }
+        return ContactsContract.CommonDataKinds.Phone.TYPE_OTHER;
     }
-    
-	/**
-	 * Determines the appropriate Android
-	 * {@link ContactsContract.CommonDataKinds.Email} value for an {@link Email}
-	 * property.
-	 * @param property the property
-	 * @return the Android type value
-	 */
+
+    /**
+     * Determines the appropriate Android
+     * {@link ContactsContract.CommonDataKinds.Email} value for an {@link Email}
+     * property.
+     *
+     * @param property the property
+     * @return the Android type value
+     */
     public static int getEmailType(Email property) {
-    	for (EmailType type : property.getTypes()){
-    		Integer androidType = emailTypeMappings.get(type);
-    		if (androidType != null){
-    			return androidType;
-    		}
-    	}
-    	return ContactsContract.CommonDataKinds.Email.TYPE_OTHER;
+        for (EmailType type : property.getTypes()) {
+            Integer androidType = emailTypeMappings.get(type);
+            if (androidType != null) {
+                return androidType;
+            }
+        }
+        return ContactsContract.CommonDataKinds.Email.TYPE_OTHER;
     }
-    
-	/**
-	 * Determines the appropriate Android
-	 * {@link ContactsContract.CommonDataKinds.StructuredPostal} value for an
-	 * {@link Address} property.
-	 * @param property the property
-	 * @return the Android type value
-	 */
+
+    /**
+     * Determines the appropriate Android
+     * {@link ContactsContract.CommonDataKinds.StructuredPostal} value for an
+     * {@link Address} property.
+     *
+     * @param property the property
+     * @return the Android type value
+     */
     public static int getAddressType(Address property) {
-    	for (AddressType type : property.getTypes()){
-    		Integer androidType = addressTypeMappings.get(type);
-    		if (androidType != null){
-    			return androidType;
-    		}
-    	}
-    	return ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM;
-    }
-    
-    private DataMappings(){
-    	//hide constructor
+        for (AddressType type : property.getTypes()) {
+            Integer androidType = addressTypeMappings.get(type);
+            if (androidType != null) {
+                return androidType;
+            }
+        }
+        return ContactsContract.CommonDataKinds.StructuredPostal.TYPE_CUSTOM;
     }
 }

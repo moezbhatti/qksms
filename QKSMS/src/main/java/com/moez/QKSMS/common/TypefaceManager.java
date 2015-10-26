@@ -113,7 +113,7 @@ public class TypefaceManager {
                 throw new IllegalArgumentException("`textWeight` attribute value " + textWeight +
                         " is not supported for this font family " + fontFamily);
             }
-       } else if (fontFamily == FontFamily.LATO) {
+        } else if (fontFamily == FontFamily.LATO) {
             if (textWeight == TextWeight.NORMAL) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:

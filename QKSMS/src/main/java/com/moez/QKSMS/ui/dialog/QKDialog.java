@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -31,13 +32,11 @@ import com.moez.QKSMS.ui.view.QKTextView;
 import java.util.ArrayList;
 
 public class QKDialog extends DialogFragment {
-    private final String TAG = "QKDialog";
-
     public static final String LIST_TAG = "list";
     public static final String DETAILS_TAG = "details";
     public static final String RESTART_TAG = "restart";
     public static final String CONFIRMATION_TAG = "confirmation";
-
+    private final String TAG = "QKDialog";
     protected QKActivity mContext;
     protected Resources mResources;
 
@@ -224,7 +223,7 @@ public class QKDialog extends DialogFragment {
     /**
      * Adds a menu style item, allowing for dynamic ids for different items. This is useful when the item order
      * is set dynamically, like in the MessageListItem
-     *
+     * <p/>
      * If you use this method, always make sure to use #buildMenu(OnItemClickListener) to compile the items and add the
      * click listener
      */

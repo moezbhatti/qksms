@@ -8,6 +8,7 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.ui.base.QKActivity;

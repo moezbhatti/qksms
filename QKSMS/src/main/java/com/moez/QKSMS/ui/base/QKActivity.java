@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -26,14 +27,12 @@ import java.util.ArrayList;
 
 public abstract class QKActivity extends ActionBarActivity {
     private final String TAG = "QKActivity";
-
+    protected Resources mRes;
+    protected SharedPreferences mPrefs;
     private Toolbar mToolbar;
     private QKTextView mTitle;
     private ImageView mOverflowButton;
     private Menu mMenu;
-
-    protected Resources mRes;
-    protected SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

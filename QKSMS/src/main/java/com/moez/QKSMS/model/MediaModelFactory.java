@@ -20,12 +20,14 @@ package com.moez.QKSMS.model;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduBody;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.MmsConfig;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.smil.SMILMediaElement;
@@ -47,7 +49,7 @@ public class MediaModelFactory {
      * Returns the media model for the given SMILMediaElement in the PduBody.
      *
      * @param context
-     * @param sme The SMILMediaElement to find
+     * @param sme     The SMILMediaElement to find
      * @param srcs
      * @param layouts
      * @param pb
@@ -79,21 +81,21 @@ public class MediaModelFactory {
     /**
      * This method is meant to identify the part in the given PduBody that corresponds to the given
      * src string.
-     *
+     * <p/>
      * Essentially, a SMIL MMS is formatted as follows:
-     *
+     * <p/>
      * 1. A smil/application part, which contains XML-like formatting for images, text, audio,
-     *    slideshows, videos, etc.
+     * slideshows, videos, etc.
      * 2. One or more parts that correspond to one of the elements that was mentioned in the
-     *    formatting above.
-     *
+     * formatting above.
+     * <p/>
      * In the smil/application part, elements are identified by a "src" attribute in an XML-like
      * element. The challenge of this method lies in the fact that sometimes, the src string isn't
      * located at all in the part that it is meant to identify.
-     *
+     * <p/>
      * We employ several methods of pairing src strings up to parts, using certain patterns we've
      * seen in failed MMS messages. These are described in this method.
-     *
+     * <p/>
      * TODO TODO TODO: Create a testing suite for this!
      */
     private static PduPart findPart(final Context context, PduBody pb, String src,
@@ -347,16 +349,16 @@ public class MediaModelFactory {
     }
 
     private static String unescapeXML(String str) {
-        return str.replaceAll("&lt;","<")
-            .replaceAll("&gt;", ">")
-            .replaceAll("&quot;","\"")
-            .replaceAll("&apos;","'")
-            .replaceAll("&amp;", "&");
+        return str.replaceAll("&lt;", "<")
+                .replaceAll("&gt;", ">")
+                .replaceAll("&quot;", "\"")
+                .replaceAll("&apos;", "'")
+                .replaceAll("&amp;", "&");
     }
 
     private static MediaModel getRegionMediaModel(Context context,
-            String tag, String src, SMILRegionMediaElement srme,
-            LayoutModel layouts, PduPart part) throws IOException, MmsException {
+                                                  String tag, String src, SMILRegionMediaElement srme,
+                                                  LayoutModel layouts, PduPart part) throws IOException, MmsException {
         SMILRegionElement sre = srme.getRegion();
         if (sre != null) {
             RegionModel region = layouts.findRegionById(sre.getId());
@@ -383,14 +385,14 @@ public class MediaModelFactory {
 
     // When we encounter a content type we can't handle, such as "application/vnd.smaf", instead
     // of throwing an exception and crashing, insert an empty TextModel in its place.
-    private static MediaModel createEmptyTextModel(Context context,  RegionModel regionModel)
+    private static MediaModel createEmptyTextModel(Context context, RegionModel regionModel)
             throws IOException {
         return new TextModel(context, ContentType.TEXT_PLAIN, null, regionModel);
     }
 
     private static MediaModel getGenericMediaModel(Context context,
-            String tag, String src, SMILMediaElement sme, PduPart part,
-            RegionModel regionModel) throws IOException, MmsException {
+                                                   String tag, String src, SMILMediaElement sme, PduPart part,
+                                                   RegionModel regionModel) throws IOException, MmsException {
         byte[] bytes = part.getContentType();
         if (bytes == null) {
             throw new IllegalArgumentException(
