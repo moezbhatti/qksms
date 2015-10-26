@@ -90,7 +90,7 @@ public class TextModel extends RegionMediaModel {
     }
 
     public void cloneText() {
-        mText = new String((mText != null ? mText.toString() : ""));
+        mText = (mText != null ? mText.toString() : "");
     }
 
     public int getCharset() {

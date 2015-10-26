@@ -54,20 +54,12 @@ public class PushReceiver extends BroadcastReceiver {
             messageId = new String(((ReadOrigInd) pdu).getMessageId());
         }
 
-        StringBuilder sb = new StringBuilder('(');
-        sb.append("m_id");
-        sb.append('=');
-        sb.append(DatabaseUtils.sqlEscapeString(messageId));
-        sb.append(" AND ");
-        sb.append("m_type");
-        sb.append('=');
-        sb.append(PduHeaders.MESSAGE_TYPE_SEND_REQ);
         // TODO ContentResolver.query() appends closing ')' to the selection argument
         // sb.append(')');
 
         Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
                 Uri.parse("content://mms"), new String[]{"thread_id"},
-                sb.toString(), null, null);
+                '(' + "m_id" + '=' + DatabaseUtils.sqlEscapeString(messageId) + " AND " + "m_type" + '=' + PduHeaders.MESSAGE_TYPE_SEND_REQ, null, null);
         if (cursor != null) {
             try {
                 if ((cursor.getCount() == 1) && cursor.moveToFirst()) {

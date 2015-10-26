@@ -301,9 +301,7 @@ public class Message {
 
         this.addresses = new String[temp.length + 1];
 
-        for (int i = 0; i < temp.length; i++) {
-            this.addresses[i] = temp[i];
-        }
+        System.arraycopy(temp, 0, this.addresses, 0, temp.length);
 
         this.addresses[temp.length] = address;
     }
@@ -322,9 +320,7 @@ public class Message {
 
         this.images = new Bitmap[temp.length + 1];
 
-        for (int i = 0; i < temp.length; i++) {
-            this.images[i] = temp[i];
-        }
+        System.arraycopy(temp, 0, this.images, 0, temp.length);
 
         this.images[temp.length] = image;
     }

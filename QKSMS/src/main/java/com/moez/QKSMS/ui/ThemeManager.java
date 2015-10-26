@@ -363,7 +363,7 @@ public class ThemeManager {
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .show(((MainActivity) context).getFragmentManager(), "icon");
+                .show(context.getFragmentManager(), "icon");
     }
 
     public static int getBackgroundColor() {

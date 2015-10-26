@@ -281,7 +281,7 @@ public class MessageUtils {
 
         if (msg instanceof RetrieveConf) {
             // From: ***
-            String from = extractEncStr(context, ((RetrieveConf) msg).getFrom());
+            String from = extractEncStr(context, msg.getFrom());
             details.append("\n\n");
             details.append(res.getString(R.string.from_label));
             details.append(!TextUtils.isEmpty(from) ? from :
@@ -775,7 +775,7 @@ public class MessageUtils {
             }
             threadIdSelection = buf.toString();
 
-            selectionBuilder.append(" AND (" + threadIdSelection + ")");
+            selectionBuilder.append(" AND (").append(threadIdSelection).append(")");
         }
 
         final Cursor c = SqliteWrapper.query(context, context.getContentResolver(),

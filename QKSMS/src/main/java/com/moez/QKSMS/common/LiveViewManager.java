@@ -145,9 +145,7 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
     public static Set<LiveView> getViews(String... query) {
         // Build a set of the given preferences.
         Set<String> querySet = new HashSet<>();
-        for (String string : query) {
-            querySet.add(string);
-        }
+        Collections.addAll(querySet, query);
 
         // Get all the views that have at least one of the changed preferences.
         Set<LiveView> result = new HashSet<>();

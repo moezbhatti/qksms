@@ -84,7 +84,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
     public void setComposeScreenViews(AutoCompleteContactView recipients, ComposeView composeView) {
         mRecipients = recipients;
         mComposeView = composeView;
-        ((QKActivity) mContext).getLoaderManager().initLoader(0, null, this);
+        mContext.getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
