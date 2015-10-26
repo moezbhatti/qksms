@@ -475,7 +475,7 @@ public class MediaModelFactory {
 
         media.setDuration(duration);
 
-        if (!MmsConfig.getSlideDurationEnabled()) {
+        if (MmsConfig.getSlideDurationDisabled()) {
             /**
              * Because The slide duration is not supported by mmsc,
              * the device has to set fill type as FILL_FREEZE.

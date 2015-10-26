@@ -211,7 +211,7 @@ class ExifOutputStream extends FilterOutputStream {
                     if (marker == JpegHeader.APP1) {
                         mByteToSkip = (mBuffer.getShort() & 0x0000ffff) - 2;
                         mState = STATE_JPEG_DATA;
-                    } else if (!JpegHeader.isSofMarker(marker)) {
+                    } else if (JpegHeader.isNotSofMarker(marker)) {
                         out.write(mBuffer.array(), 0, 4);
                         mByteToCopy = (mBuffer.getShort() & 0x0000ffff) - 2;
                     } else {

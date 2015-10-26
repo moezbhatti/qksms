@@ -215,7 +215,7 @@ public class VideoModel extends RegionMediaModel {
     }
 
     public void cancelThumbnailLoading() {
-        if (mItemLoadedFuture != null && !mItemLoadedFuture.isDone()) {
+        if (mItemLoadedFuture != null && mItemLoadedFuture.isNotDone()) {
             if (Log.isLoggable(LogTag.APP, Log.DEBUG)) {
                 Log.v(TAG, "cancelThumbnailLoading for: " + this);
             }

@@ -27,6 +27,7 @@ public class WrapLayout extends LinearLayout {
     @Override
     public void onFinishInflate() {
         mSpace = findViewById(R.id.space);
+        super.onFinishInflate();
     }
 
     /**

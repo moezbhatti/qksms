@@ -78,7 +78,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
@@ -971,7 +970,7 @@ public class MessageUtils {
     // Nickname must begin with a letter.
     // Only letters a-z, numbers 0-9, or . are allowed in Nickname field.
     public static boolean isAlias(String string) {
-        if (!MmsConfig.isAliasEnabled()) {
+        if (MmsConfig.isAliasDisabled()) {
             return false;
         }
 

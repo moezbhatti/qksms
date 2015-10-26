@@ -241,8 +241,8 @@ public class MmsConfig {
         return mEnableMultipartSMS;
     }
 
-    public static boolean getSlideDurationEnabled() {
-        return mEnableSlideDuration;
+    public static boolean getSlideDurationDisabled() {
+        return !mEnableSlideDuration;
     }
 
     public static boolean getMMSReadReportsEnabled() {
@@ -265,8 +265,8 @@ public class MmsConfig {
         return mMaxSizeScaleForPendingMmsAllowed;
     }
 
-    public static boolean isAliasEnabled() {
-        return mAliasEnabled;
+    public static boolean isAliasDisabled() {
+        return !mAliasEnabled;
     }
 
     public static int getAliasMinChars() {

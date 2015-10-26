@@ -341,7 +341,7 @@ public class MessageItem {
     }
 
     public void cancelPduLoading() {
-        if (mItemLoadedFuture != null && !mItemLoadedFuture.isDone()) {
+        if (mItemLoadedFuture != null && mItemLoadedFuture.isNotDone()) {
             mItemLoadedFuture.cancel(mMessageUri);
             mItemLoadedFuture = null;
         }

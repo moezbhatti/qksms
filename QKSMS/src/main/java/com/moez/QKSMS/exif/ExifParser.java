@@ -745,7 +745,7 @@ public class ExifParser {
 
         short marker = dataStream.readShort();
         while (marker != JpegHeader.EOI
-                && !JpegHeader.isSofMarker(marker)) {
+                && JpegHeader.isNotSofMarker(marker)) {
             int length = dataStream.readUnsignedShort();
             // Some invalid formatted image contains multiple APP1,
             // try to find the one with Exif data.

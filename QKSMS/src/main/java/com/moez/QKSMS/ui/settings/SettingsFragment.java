@@ -60,6 +60,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
 
@@ -194,7 +195,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static void updateAlarmManager(Context context, boolean enabled) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm", Locale.US);
         Calendar calendar = Calendar.getInstance();
 
         Calendar dayCalendar = Calendar.getInstance();

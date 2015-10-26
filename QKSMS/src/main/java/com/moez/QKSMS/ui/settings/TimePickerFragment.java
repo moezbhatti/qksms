@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
     private final String TAG = "TimePickerPreference";
@@ -42,7 +43,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm", Locale.US);
 
         // Use the current time as the default values for the picker
         final Calendar c = Calendar.getInstance();

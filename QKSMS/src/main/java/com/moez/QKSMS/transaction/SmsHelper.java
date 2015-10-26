@@ -708,7 +708,7 @@ public class SmsHelper {
     // Nickname must begin with a letter.
     // Only letters a-z, numbers 0-9, or . are allowed in Nickname field.
     public static boolean isAlias(String string) {
-        if (!MmsConfig.isAliasEnabled()) {
+        if (MmsConfig.isAliasDisabled()) {
             return false;
         }
 

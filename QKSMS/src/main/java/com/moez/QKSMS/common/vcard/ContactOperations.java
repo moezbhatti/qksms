@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import ezvcard.VCard;
@@ -409,7 +410,7 @@ public class ContactOperations {
     }
 
     private void convertBirthdays(List<NonEmptyContentValues> contentValues, VCard vcard) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         for (Birthday birthday : vcard.getBirthdays()) {
             Date date = birthday.getDate();
             if (date == null) {
