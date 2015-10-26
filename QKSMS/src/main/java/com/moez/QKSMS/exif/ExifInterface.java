@@ -1074,7 +1074,7 @@ public class ExifInterface {
         if (l == null || l.length <= 0) {
             return null;
         }
-        return Long.valueOf(l[0]);
+        return l[0];
     }
 
     /**
@@ -1093,7 +1093,7 @@ public class ExifInterface {
         if (l == null || l.length <= 0) {
             return null;
         }
-        return Integer.valueOf(l[0]);
+        return l[0];
     }
 
     /**
@@ -1112,7 +1112,7 @@ public class ExifInterface {
         if (l == null || l.length <= 0) {
             return null;
         }
-        return Byte.valueOf(l[0]);
+        return l[0];
     }
 
     /**

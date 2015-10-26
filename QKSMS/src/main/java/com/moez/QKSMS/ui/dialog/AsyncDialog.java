@@ -123,8 +123,8 @@ public class AsyncDialog {
         protected Void doInBackground(Runnable... params) {
             if (params != null) {
                 try {
-                    for (int i = 0; i < params.length; i++) {
-                        params[i].run();
+                    for (Runnable param : params) {
+                        param.run();
                     }
 
                     // Test code. Uncomment this block to test the progress dialog popping up.

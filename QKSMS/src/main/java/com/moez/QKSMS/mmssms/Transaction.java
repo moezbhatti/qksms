@@ -131,8 +131,8 @@ public class Transaction {
         final SendReq sendRequest = new SendReq();
 
         // create send request addresses
-        for (int i = 0; i < recipients.length; i++) {
-            final EncodedStringValue[] phoneNumbers = EncodedStringValue.extract(recipients[i]);
+        for (String recipient : recipients) {
+            final EncodedStringValue[] phoneNumbers = EncodedStringValue.extract(recipient);
 
             if (phoneNumbers != null && phoneNumbers.length > 0) {
                 sendRequest.addTo(phoneNumbers[0]);
@@ -155,8 +155,7 @@ public class Transaction {
 
         // assign parts to the pdu body which contains sending data
         if (parts != null) {
-            for (int i = 0; i < parts.length; i++) {
-                MMSPart part = parts[i];
+            for (MMSPart part : parts) {
                 if (part != null) {
                     try {
                         PduPart partPdu = new PduPart();
@@ -406,10 +405,10 @@ public class Transaction {
             }
 
             // save the message for each of the addresses
-            for (int i = 0; i < addresses.length; i++) {
+            for (String address : addresses) {
                 Calendar cal = Calendar.getInstance();
                 ContentValues values = new ContentValues();
-                values.put("address", addresses[i]);
+                values.put("address", address);
                 values.put("body", settings.getStripUnicode() ? StripAccents.stripAccents(text) : text);
                 values.put("date", cal.getTimeInMillis() + "");
                 values.put("read", 1);
@@ -417,7 +416,7 @@ public class Transaction {
 
                 // attempt to create correct thread id if one is not supplied
                 if (threadId == NO_THREAD_ID || addresses.length > 1) {
-                    threadId = Utils.getOrCreateThreadId(context, addresses[i]);
+                    threadId = Utils.getOrCreateThreadId(context, address);
                 }
 
                 if (LOCAL_LOGV) Log.v(TAG, "saving message with thread id: " + threadId);
@@ -487,7 +486,7 @@ public class Transaction {
                         }
 
                         if (LOCAL_LOGV) Log.v(TAG, "sending split message");
-                        sendDelayedSms(smsManager, addresses[i], parts, sPI, dPI, delay, messageUri);
+                        sendDelayedSms(smsManager, address, parts, sPI, dPI, delay, messageUri);
                     }
                 } else {
                     if (LOCAL_LOGV) Log.v(TAG, "sending without splitting");
@@ -501,7 +500,7 @@ public class Transaction {
 
                     try {
                         if (LOCAL_LOGV) Log.v(TAG, "sent message");
-                        sendDelayedSms(smsManager, addresses[i], parts, sPI, dPI, delay, messageUri);
+                        sendDelayedSms(smsManager, address, parts, sPI, dPI, delay, messageUri);
                     } catch (Exception e) {
                         // whoops...
                         if (LOCAL_LOGV) Log.v(TAG, "error sending message");
@@ -557,8 +556,8 @@ public class Transaction {
         // merge the string[] of addresses into a single string so they can be inserted into the database easier
         String address = "";
 
-        for (int i = 0; i < addresses.length; i++) {
-            address += addresses[i] + " ";
+        for (String address1 : addresses) {
+            address += address1 + " ";
         }
 
         address = address.trim();
@@ -654,11 +653,11 @@ public class Transaction {
 
     private void sendVoiceMessage(String text, String[] addresses, long threadId) {
         // send a voice message to each recipient based off of koush's voice implementation in Voice+
-        for (int i = 0; i < addresses.length; i++) {
+        for (String address : addresses) {
             if (saveMessage) {
                 Calendar cal = Calendar.getInstance();
                 ContentValues values = new ContentValues();
-                values.put("address", addresses[i]);
+                values.put("address", address);
                 values.put("body", text);
                 values.put("date", cal.getTimeInMillis() + "");
                 values.put("read", 1);
@@ -666,7 +665,7 @@ public class Transaction {
 
                 // attempt to create correct thread id if one is not supplied
                 if (threadId == NO_THREAD_ID || addresses.length > 1) {
-                    threadId = Utils.getOrCreateThreadId(context, addresses[i]);
+                    threadId = Utils.getOrCreateThreadId(context, address);
                 }
 
                 values.put("thread_id", threadId);
@@ -677,7 +676,7 @@ public class Transaction {
                 text += "\n" + settings.getSignature();
             }
 
-            sendVoiceMessage(addresses[i], text);
+            sendVoiceMessage(address, text);
         }
     }
 

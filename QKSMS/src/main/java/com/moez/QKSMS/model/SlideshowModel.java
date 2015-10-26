@@ -78,7 +78,7 @@ public class SlideshowModel extends Model
 
     private SlideshowModel(Context context) {
         mLayout = new LayoutModel();
-        mSlides = new ArrayList<SlideModel>();
+        mSlides = new ArrayList<>();
         mContext = context;
     }
 
@@ -339,7 +339,7 @@ public class SlideshowModel extends Model
                     is = cr.openInputStream(uri);
                     if (is != null) {
                         if (openedFiles == null) {
-                            openedFiles = new HashMap<Uri, InputStream>();
+                            openedFiles = new HashMap<>();
                         }
                         openedFiles.put(uri, is);
                     }

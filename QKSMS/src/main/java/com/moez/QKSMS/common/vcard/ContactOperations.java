@@ -499,7 +499,7 @@ public class ContactOperations {
 
             List<T> groupPropertiesList = groupedProperties.get(group);
             if (groupPropertiesList == null) {
-                groupPropertiesList = new ArrayList<T>();
+                groupPropertiesList = new ArrayList<>();
                 groupedProperties.put(group, groupPropertiesList);
             }
             groupPropertiesList.add(property);

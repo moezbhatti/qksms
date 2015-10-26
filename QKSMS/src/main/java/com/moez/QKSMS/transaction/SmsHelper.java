@@ -608,8 +608,8 @@ public class SmsHelper {
         }
 
         final int len = sNoSubjectStrings.length;
-        for (int i = 0; i < len; i++) {
-            if (subject.equalsIgnoreCase(sNoSubjectStrings[i])) {
+        for (String sNoSubjectString : sNoSubjectStrings) {
+            if (subject.equalsIgnoreCase(sNoSubjectString)) {
                 return null;
             }
         }

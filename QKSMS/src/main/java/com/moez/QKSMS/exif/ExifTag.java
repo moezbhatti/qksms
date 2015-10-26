@@ -478,7 +478,7 @@ public class ExifTag {
         if (obj == null) {
             return false;
         } else if (obj instanceof Short) {
-            return setValue(((Short) obj).shortValue() & 0x0ffff);
+            return setValue((Short) obj & 0x0ffff);
         } else if (obj instanceof String) {
             return setValue((String) obj);
         } else if (obj instanceof int[]) {
@@ -502,7 +502,7 @@ public class ExifTag {
             Short[] arr = (Short[]) obj;
             int[] fin = new int[arr.length];
             for (int i = 0; i < arr.length; i++) {
-                fin[i] = (arr[i] == null) ? 0 : arr[i].shortValue() & 0x0ffff;
+                fin[i] = (arr[i] == null) ? 0 : arr[i] & 0x0ffff;
             }
             return setValue(fin);
         } else if (obj instanceof Integer[]) {
@@ -510,7 +510,7 @@ public class ExifTag {
             Integer[] arr = (Integer[]) obj;
             int[] fin = new int[arr.length];
             for (int i = 0; i < arr.length; i++) {
-                fin[i] = (arr[i] == null) ? 0 : arr[i].intValue();
+                fin[i] = (arr[i] == null) ? 0 : arr[i];
             }
             return setValue(fin);
         } else if (obj instanceof Long[]) {
@@ -518,7 +518,7 @@ public class ExifTag {
             Long[] arr = (Long[]) obj;
             long[] fin = new long[arr.length];
             for (int i = 0; i < arr.length; i++) {
-                fin[i] = (arr[i] == null) ? 0 : arr[i].longValue();
+                fin[i] = (arr[i] == null) ? 0 : arr[i];
             }
             return setValue(fin);
         } else if (obj instanceof Byte[]) {
@@ -526,7 +526,7 @@ public class ExifTag {
             Byte[] arr = (Byte[]) obj;
             byte[] fin = new byte[arr.length];
             for (int i = 0; i < arr.length; i++) {
-                fin[i] = (arr[i] == null) ? 0 : arr[i].byteValue();
+                fin[i] = (arr[i] == null) ? 0 : arr[i];
             }
             return setValue(fin);
         } else {

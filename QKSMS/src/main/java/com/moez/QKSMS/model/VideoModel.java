@@ -167,26 +167,31 @@ public class VideoModel extends RegionMediaModel {
         }
 
         MediaAction action = MediaAction.NO_ACTIVE_ACTION;
-        if (evtType.equals(SmilMediaElementImpl.SMIL_MEDIA_START_EVENT)) {
-            action = MediaAction.START;
+        switch (evtType) {
+            case SmilMediaElementImpl.SMIL_MEDIA_START_EVENT:
+                action = MediaAction.START;
 
-            // if the Music player app is playing audio, we should pause that so it won't
-            // interfere with us playing video here.
-            pauseMusicPlayer();
+                // if the Music player app is playing audio, we should pause that so it won't
+                // interfere with us playing video here.
+                pauseMusicPlayer();
 
-            mVisible = true;
-        } else if (evtType.equals(SmilMediaElementImpl.SMIL_MEDIA_END_EVENT)) {
-            action = MediaAction.STOP;
-            if (mFill != ElementTime.FILL_FREEZE) {
-                mVisible = false;
-            }
-        } else if (evtType.equals(SmilMediaElementImpl.SMIL_MEDIA_PAUSE_EVENT)) {
-            action = MediaAction.PAUSE;
-            mVisible = true;
-        } else if (evtType.equals(SmilMediaElementImpl.SMIL_MEDIA_SEEK_EVENT)) {
-            action = MediaAction.SEEK;
-            mSeekTo = ((EventImpl) evt).getSeekTo();
-            mVisible = true;
+                mVisible = true;
+                break;
+            case SmilMediaElementImpl.SMIL_MEDIA_END_EVENT:
+                action = MediaAction.STOP;
+                if (mFill != ElementTime.FILL_FREEZE) {
+                    mVisible = false;
+                }
+                break;
+            case SmilMediaElementImpl.SMIL_MEDIA_PAUSE_EVENT:
+                action = MediaAction.PAUSE;
+                mVisible = true;
+                break;
+            case SmilMediaElementImpl.SMIL_MEDIA_SEEK_EVENT:
+                action = MediaAction.SEEK;
+                mSeekTo = ((EventImpl) evt).getSeekTo();
+                mVisible = true;
+                break;
         }
 
         appendAction(action);

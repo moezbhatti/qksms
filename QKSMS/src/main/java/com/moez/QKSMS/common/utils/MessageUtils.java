@@ -128,8 +128,8 @@ public class MessageUtils {
     private static HashMap numericSugarMap = new HashMap(NUMERIC_CHARS_SUGAR.length);
 
     static {
-        for (int i = 0; i < NUMERIC_CHARS_SUGAR.length; i++) {
-            numericSugarMap.put(NUMERIC_CHARS_SUGAR[i], NUMERIC_CHARS_SUGAR[i]);
+        for (char aNUMERIC_CHARS_SUGAR : NUMERIC_CHARS_SUGAR) {
+            numericSugarMap.put(aNUMERIC_CHARS_SUGAR, aNUMERIC_CHARS_SUGAR);
         }
     }
 
@@ -473,9 +473,7 @@ public class MessageUtils {
         if (slideshow != null) {
             ThumbnailManager thumbnailManager = QKSMSApp.getApplication().getThumbnailManager();
             boolean removedSomething = false;
-            Iterator<SlideModel> iterator = slideshow.iterator();
-            while (iterator.hasNext()) {
-                SlideModel slideModel = iterator.next();
+            for (SlideModel slideModel : slideshow) {
                 if (slideModel.hasImage()) {
                     thumbnailManager.removeThumbnail(slideModel.getImage().getUri());
                     removedSomething = true;
@@ -882,8 +880,8 @@ public class MessageUtils {
         int size = spans.length;
         ArrayList<String> accumulator = new ArrayList<>();
 
-        for (int i = 0; i < size; i++) {
-            accumulator.add(spans[i].getURL());
+        for (URLSpan span : spans) {
+            accumulator.add(span.getURL());
         }
         return accumulator;
     }

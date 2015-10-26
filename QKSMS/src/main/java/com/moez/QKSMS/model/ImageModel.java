@@ -168,7 +168,7 @@ public class ImageModel extends RegionMediaModel {
             try {
                 bm = createBitmap(Math.max(width, height), getUri());
                 if (bm != null) {
-                    mFullSizeBitmapCache = new SoftReference<Bitmap>(bm);
+                    mFullSizeBitmapCache = new SoftReference<>(bm);
                 }
             } catch (OutOfMemoryError ex) {
                 // fall through and return a null bitmap. The callers can handle a null

@@ -81,7 +81,7 @@ public class WearableIntentReceiver extends BroadcastReceiver {
 
         Set<String> defaultResponses = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.qk_responses)));
         Set<String> responseSet = prefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
-        ArrayList<String> responses = new ArrayList<String>();
+        ArrayList<String> responses = new ArrayList<>();
         responses.addAll(responseSet);
         Collections.sort(responses);
 

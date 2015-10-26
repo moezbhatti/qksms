@@ -63,7 +63,7 @@ public abstract class MediaModel extends Model implements EventListener {
         mSrc = src;
         mUri = uri;
         initMediaSize();
-        mMediaActions = new ArrayList<MediaAction>();
+        mMediaActions = new ArrayList<>();
     }
 
     public MediaModel(Context context, String tag, String contentType,
@@ -78,7 +78,7 @@ public abstract class MediaModel extends Model implements EventListener {
         mSrc = src;
         mData = data;
         mSize = data.length;
-        mMediaActions = new ArrayList<MediaAction>();
+        mMediaActions = new ArrayList<>();
     }
 
     public static boolean isMmsUri(Uri uri) {

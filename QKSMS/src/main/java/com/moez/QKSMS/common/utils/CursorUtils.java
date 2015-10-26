@@ -53,13 +53,13 @@ public class CursorUtils {
                 {"4165254009", "Why are you texting myself?", "1399856640", "" + Message.RECEIVED}, // address, body, date, type
                 {"4166485592", "These popups are so handy!", "1400079840", "" + Message.RECEIVED}};
 
-        for (int i = 0; i < messages.length; i++) {
+        for (String[] message : messages) {
             ContentValues cv = new ContentValues();
-            cv.put("address", messages[i][0]);
-            cv.put("body", messages[i][1]);
-            cv.put("date", messages[i][2]);
-            cv.put("date_sent", messages[i][2]);
-            cv.put("type", messages[i][3]);
+            cv.put("address", message[0]);
+            cv.put("body", message[1]);
+            cv.put("date", message[2]);
+            cv.put("date_sent", message[2]);
+            cv.put("type", message[3]);
             contentResolver.insert(SmsHelper.SMS_CONTENT_PROVIDER, cv);
         }
 

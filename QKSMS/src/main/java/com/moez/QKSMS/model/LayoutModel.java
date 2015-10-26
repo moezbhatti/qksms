@@ -52,19 +52,23 @@ public class LayoutModel extends Model {
     public LayoutModel(RegionModel rootLayout, ArrayList<RegionModel> regions) {
         mLayoutParams = LayoutManager.getInstance().getLayoutParameters();
         mRootLayout = rootLayout;
-        mNonStdRegions = new ArrayList<RegionModel>();
+        mNonStdRegions = new ArrayList<>();
 
         for (RegionModel r : regions) {
             String rId = r.getRegionId();
-            if (rId.equals(IMAGE_REGION_ID)) {
-                mImageRegion = r;
-            } else if (rId.equals(TEXT_REGION_ID)) {
-                mTextRegion = r;
-            } else {
-                if (LOCAL_LOGV) {
-                    Log.v(TAG, "Found non-standard region: " + rId);
-                }
-                mNonStdRegions.add(r);
+            switch (rId) {
+                case IMAGE_REGION_ID:
+                    mImageRegion = r;
+                    break;
+                case TEXT_REGION_ID:
+                    mTextRegion = r;
+                    break;
+                default:
+                    if (LOCAL_LOGV) {
+                        Log.v(TAG, "Found non-standard region: " + rId);
+                    }
+                    mNonStdRegions.add(r);
+                    break;
             }
         }
 

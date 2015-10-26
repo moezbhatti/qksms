@@ -33,7 +33,7 @@ public class RecipientIdCache {
     private final Context mContext;
 
     RecipientIdCache(Context context) {
-        mCache = new HashMap<Long, String>();
+        mCache = new HashMap<>();
         mContext = context;
     }
 

@@ -1323,7 +1323,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                     mConversation.setMessageCount(0);
                     // fall through
                 case DELETE_MESSAGE_TOKEN:
-                    if (cookie instanceof Boolean && ((Boolean) cookie).booleanValue()) {
+                    if (cookie instanceof Boolean && (Boolean) cookie) {
                         // If we just deleted the last message, reset the saved id.
                         mLastMessageId = 0;
                     }

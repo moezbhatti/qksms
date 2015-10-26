@@ -1082,7 +1082,7 @@ public class Contact {
                         }
                     }
                 } else {
-                    candidates = new ArrayList<Contact>();
+                    candidates = new ArrayList<>();
                     // call toString() since it may be the static CharBuffer
                     mContactsHash.put(key, candidates);
                 }
@@ -1146,7 +1146,7 @@ public class Contact {
             Thread mWorkerThread;
 
             public TaskStack() {
-                mThingsToLoad = new ArrayList<Runnable>();
+                mThingsToLoad = new ArrayList<>();
                 mWorkerThread = new Thread(new Runnable() {
                     @Override
                     public void run() {

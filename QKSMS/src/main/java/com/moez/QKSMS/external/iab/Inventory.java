@@ -75,7 +75,7 @@ public class Inventory {
      * Returns a list of all owned product IDs.
      */
     List<String> getAllOwnedSkus() {
-        return new ArrayList<String>(mPurchaseMap.keySet());
+        return new ArrayList<>(mPurchaseMap.keySet());
     }
 
     /**
@@ -93,7 +93,7 @@ public class Inventory {
      * Returns a list of all purchases.
      */
     List<Purchase> getAllPurchases() {
-        return new ArrayList<Purchase>(mPurchaseMap.values());
+        return new ArrayList<>(mPurchaseMap.values());
     }
 
     void addSkuDetails(SkuDetails d) {

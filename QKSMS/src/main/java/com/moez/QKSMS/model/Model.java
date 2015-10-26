@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Model {
     protected CopyOnWriteArrayList<IModelChangedObserver> mModelChangedObservers =
-            new CopyOnWriteArrayList<IModelChangedObserver>();
+            new CopyOnWriteArrayList<>();
 
     public void registerModelChangedObserver(IModelChangedObserver observer) {
         if (!mModelChangedObservers.contains(observer)) {
