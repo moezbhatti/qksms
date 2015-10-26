@@ -17,32 +17,22 @@ import java.lang.reflect.Field;
 
 
 public class DefaultSmsHelper implements ActionClickListener {
-    public interface DefaultSmsResultListener {
-        public void onDefaultSmsResult(boolean success);
-    }
 
     private Context mContext;
     private int mMessage;
-    private DefaultSmsResultListener mListener;
     private static long sLastShown;
     private boolean mIsDefault = true;
 
     // Listener is currently useless because we can't listen for response from the system dialog
-    public DefaultSmsHelper(Context context, DefaultSmsResultListener listener, int messageRes) {
+    public DefaultSmsHelper(Context context, int messageRes) {
         mContext = context;
-        mListener = listener;
         mMessage = messageRes != 0 ? messageRes : R.string.default_info;
 
-        //some phones do not defaultSmsPackage, they will be assigned to null
-        String defaultSmsPackage = Telephony.Sms.getDefaultSmsPackage(mContext);
-        if (Build.VERSION.SDK_INT < 19 || (defaultSmsPackage != null && defaultSmsPackage.equals
-                (mContext.getPackageName()))) {
-            if (mListener != null) {
-                mListener.onDefaultSmsResult(true);
-            }
-            mIsDefault = true;
+        if (Build.VERSION.SDK_INT >= 19) {
+            String defaultSmsPackage = Telephony.Sms.getDefaultSmsPackage(mContext);
+            mIsDefault = defaultSmsPackage != null && defaultSmsPackage.equals(mContext.getPackageName());
         } else {
-            mIsDefault = false;
+            mIsDefault = true;
         }
     }
 
@@ -74,11 +64,6 @@ public class DefaultSmsHelper implements ActionClickListener {
         Intent intent = new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, mContext.getPackageName());
         mContext.startActivity(intent);
-
-        if (mListener != null) {
-            // TODO figure out how to get response from system dialog. Maybe set up BaseActivity and use startActivityForResult?
-            // http://developer.android.com/training/basics/intents/result.html
-        }
     }
 
     private SnackbarType getSnackBarType() {

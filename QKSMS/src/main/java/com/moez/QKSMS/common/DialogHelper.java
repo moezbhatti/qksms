@@ -24,7 +24,7 @@ public class DialogHelper {
     }
 
     public static void showDeleteFailedMessagesDialog(final MainActivity context, final long threadId) {
-        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
+        new DefaultSmsHelper(context, R.string.not_default_delete).showIfNotDefault(null);
 
         new QKDialog()
                 .setContext(context)
@@ -46,7 +46,7 @@ public class DialogHelper {
 
     public static void showDeleteConversationDialog(final MainActivity context, final List<Long> threadIds) {
 
-        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
+        new DefaultSmsHelper(context, R.string.not_default_delete).showIfNotDefault(null);
 
         new QKDialog()
                 .setContext(context)
@@ -70,7 +70,7 @@ public class DialogHelper {
 
     public static void showDeleteConversationsDialog(MainActivity context, final ConversationListAdapter adapter) {
 
-        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
+        new DefaultSmsHelper(context, R.string.not_default_delete).showIfNotDefault(null);
 
 
         final Conversation.ConversationQueryHandler handler = new Conversation.ConversationQueryHandler(context.getContentResolver());

@@ -335,7 +335,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             }
 
         } else if (requestCode == WelcomeActivity.WELCOME_REQUEST_CODE) {
-            new DefaultSmsHelper(this, null, R.string.not_default_first).showIfNotDefault(null);
+            new DefaultSmsHelper(this, R.string.not_default_first).showIfNotDefault(null);
         }
     }
 

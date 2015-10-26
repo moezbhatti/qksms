@@ -573,7 +573,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
                     } else if (!isDefaultSmsApp) {
                         // Ask to become the default SMS app
-                        new DefaultSmsHelper(mContext, null, R.string.not_default_send).showIfNotDefault(this);
+                        new DefaultSmsHelper(mContext, R.string.not_default_send).showIfNotDefault(this);
 
                     } else if (!TextUtils.isEmpty(mReplyText.getText()) || mAttachment.hasAttachment()) {
                         if (mDelayedMessagingEnabled) {

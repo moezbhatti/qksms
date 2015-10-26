@@ -246,7 +246,7 @@ public class ConversationLegacy {
 
                 long[] ids = getUnreadIds();
                 if (ids.length > 0) {
-                    new DefaultSmsHelper(context, null, R.string.not_default_mark_read).showIfNotDefault(null);
+                    new DefaultSmsHelper(context, R.string.not_default_mark_read).showIfNotDefault(null);
 
                     ContentValues cv = new ContentValues();
                     cv.put("read", true);
@@ -265,7 +265,7 @@ public class ConversationLegacy {
     }
 
     public void markUnread() {
-        new DefaultSmsHelper(context, null, R.string.not_default_mark_unread).showIfNotDefault(null);
+        new DefaultSmsHelper(context, R.string.not_default_mark_unread).showIfNotDefault(null);
 
         try {
             cursor = context.getContentResolver().query(getUri(), MessageColumns.PROJECTION, null, null, SmsHelper.sortDateDesc);
@@ -301,7 +301,7 @@ public class ConversationLegacy {
     }
 
     public void delete() { //TODO do this using AsyncQueryHandler
-        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
+        new DefaultSmsHelper(context, R.string.not_default_delete).showIfNotDefault(null);
 
         new AsyncTask<Void, Void, Void>() {
 

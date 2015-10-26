@@ -174,7 +174,7 @@ public class Message {
     }
 
     public void delete() {
-        new DefaultSmsHelper(context, null, R.string.not_default_delete).showIfNotDefault(null);
+        new DefaultSmsHelper(context, R.string.not_default_delete).showIfNotDefault(null);
 
         try {
             if (isMms()) {
