@@ -18,7 +18,7 @@ public class BaseWelcomeFragment extends QKFragment {
     }
 
     public interface WelcomeScrollListener {
-        public void onScrollOffsetChanged(WelcomeActivity activity, float offset);
+        void onScrollOffsetChanged(WelcomeActivity activity, float offset);
     }
 
 }

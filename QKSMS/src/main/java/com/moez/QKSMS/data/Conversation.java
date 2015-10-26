@@ -1131,10 +1131,8 @@ public class Conversation {
      * Returns true if a draft message exists in this conversation.
      */
     public synchronized boolean hasDraft() {
-        if (mThreadId <= 0)
-            return false;
+        return mThreadId > 0 && DraftCache.getInstance().hasDraft(mThreadId);
 
-        return DraftCache.getInstance().hasDraft(mThreadId);
     }
 
     /**

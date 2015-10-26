@@ -76,7 +76,7 @@ public class SlideshowActivity extends QKActivity implements EventListener {
      * @return whether the Smil has MMS conformance layout.
      * Refer to MMS Conformance Document OMA-MMS-CONF-v1_2-20050301-A
      */
-    private static final boolean isMMSConformance(SMILDocument smilDoc) {
+    private static boolean isMMSConformance(SMILDocument smilDoc) {
         SMILElement head = smilDoc.getHead();
         if (head == null) {
             // No 'head' element
@@ -110,7 +110,6 @@ public class SlideshowActivity extends QKActivity implements EventListener {
             }
             String name = layoutChild.getNodeName();
             if ("root-layout".equals(name)) {
-                continue;
             } else if ("region".equals(name)) {
                 NamedNodeMap map = layoutChild.getAttributes();
                 for (int j = 0; j < map.getLength(); j++) {
@@ -123,7 +122,6 @@ public class SlideshowActivity extends QKActivity implements EventListener {
                     if ("left".equals(attrName) || "top".equals(attrName) ||
                             "height".equals(attrName) || "width".equals(attrName) ||
                             "fit".equals(attrName)) {
-                        continue;
                     } else if ("id".equals(attrName)) {
                         String value;
                         if (node instanceof AttrImpl) {
@@ -132,7 +130,6 @@ public class SlideshowActivity extends QKActivity implements EventListener {
                             return false;
                         }
                         if ("Text".equals(value) || "Image".equals(value)) {
-                            continue;
                         } else {
                             // The id attr is not 'Text' or 'Image'
                             return false;

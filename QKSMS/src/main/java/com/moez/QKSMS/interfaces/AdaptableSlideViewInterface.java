@@ -42,7 +42,7 @@ public interface AdaptableSlideViewInterface extends SlideViewInterface {
      */
     void setOnSizeChangedListener(OnSizeChangedListener l);
 
-    public interface OnSizeChangedListener {
+    interface OnSizeChangedListener {
         void onSizeChanged(int width, int height);
     }
 }

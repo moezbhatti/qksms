@@ -372,7 +372,6 @@ public class ContactOperations {
 
                 if (name.equalsIgnoreCase("X-ABLABEL")) {
                     val = property.getValue(); // type of value ..Birthday,anniversary
-                    continue;
                 }
             }
 

@@ -32,7 +32,7 @@ class JpegHeader {
     public static final short JPG = (short) 0xFFC8;
     public static final short DAC = (short) 0xFFCC;
 
-    public static final boolean isSofMarker(short marker) {
+    public static boolean isSofMarker(short marker) {
         return marker >= SOF0 && marker <= SOF15 && marker != DHT && marker != JPG
                 && marker != DAC;
     }

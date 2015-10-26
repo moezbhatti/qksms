@@ -305,7 +305,7 @@ public abstract class MediaModel extends Model implements EventListener {
     protected void resizeMedia(int byteLimit, long messageId) throws MmsException {
     }
 
-    public static enum MediaAction {
+    public enum MediaAction {
         NO_ACTIVE_ACTION,
         START,
         STOP,

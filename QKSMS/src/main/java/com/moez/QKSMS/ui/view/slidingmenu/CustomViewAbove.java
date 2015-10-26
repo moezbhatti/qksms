@@ -983,7 +983,7 @@ public class CustomViewAbove extends ViewGroup {
          * @param positionOffset       Value from [0, 1) indicating the offset from the page at position.
          * @param positionOffsetPixels Value in pixels indicating the offset from position.
          */
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
 
         /**
          * This method will be invoked when a new page becomes selected. Animation is not
@@ -991,7 +991,7 @@ public class CustomViewAbove extends ViewGroup {
          *
          * @param position Position index of the new selected page.
          */
-        public void onPageSelected(int position, boolean anim);
+        void onPageSelected(int position, boolean anim);
 
     }
 

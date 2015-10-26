@@ -329,14 +329,7 @@ public class PhoneNumberUtils extends android.telephony.PhoneNumberUtils {
             return true;
         }
 
-        if (matchTrunkPrefix(a, ia + 1)
-                && matchIntlPrefixAndCC(b, ib + 1)
-                ) {
-            return true;
-        }
-
-        return matchTrunkPrefix(b, ib + 1)
-                && matchIntlPrefixAndCC(a, ia + 1);
+        return matchTrunkPrefix(a, ia + 1) && matchIntlPrefixAndCC(b, ib + 1) || matchTrunkPrefix(b, ib + 1) && matchIntlPrefixAndCC(a, ia + 1);
 
     }
 

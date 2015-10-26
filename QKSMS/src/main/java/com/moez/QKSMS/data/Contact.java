@@ -376,7 +376,7 @@ public class Contact {
     }
 
     public interface UpdateListener {
-        public void onUpdate(Contact updated);
+        void onUpdate(Contact updated);
     }
 
     private static class ContactsCache {

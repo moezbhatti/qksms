@@ -289,7 +289,7 @@ public class MmsConfig {
         return mEnableGroupMms;
     }
 
-    public static final void beginDocument(XmlPullParser parser, String firstElementName) throws XmlPullParserException, IOException {
+    public static void beginDocument(XmlPullParser parser, String firstElementName) throws XmlPullParserException, IOException {
         int type;
         while ((type = parser.next()) != XmlPullParser.START_TAG
                 && type != XmlPullParser.END_DOCUMENT) {
@@ -305,7 +305,7 @@ public class MmsConfig {
         }
     }
 
-    public static final void nextElement(XmlPullParser parser) throws XmlPullParserException, IOException {
+    public static void nextElement(XmlPullParser parser) throws XmlPullParserException, IOException {
         int type;
         while ((type = parser.next()) != XmlPullParser.START_TAG
                 && type != XmlPullParser.END_DOCUMENT) {

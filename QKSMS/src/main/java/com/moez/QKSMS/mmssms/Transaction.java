@@ -736,7 +736,6 @@ public class Transaction {
                     }
 
                     if (!mNetworkInfo.isConnected()) {
-                        return;
                     } else {
                         // ready to send the message now
                         if (LOCAL_LOGV) Log.v(TAG, "sending through broadcast receiver");
@@ -819,7 +818,6 @@ public class Transaction {
                         }
 
                         if (!mNetworkInfo.isConnected()) {
-                            return;
                         } else {
                             alreadySending = true;
 
