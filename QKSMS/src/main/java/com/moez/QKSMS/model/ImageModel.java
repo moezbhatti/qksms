@@ -144,7 +144,7 @@ public class ImageModel extends RegionMediaModel {
     }
 
     public void cancelThumbnailLoading() {
-        if (mItemLoadedFuture != null && mItemLoadedFuture.isNotDone()) {
+        if (mItemLoadedFuture != null && !mItemLoadedFuture.isDone()) {
             if (Log.isLoggable(LogTag.APP, Log.DEBUG)) {
                 Log.v(TAG, "cancelThumbnailLoading for: " + this);
             }

@@ -970,7 +970,7 @@ public class MessageUtils {
     // Nickname must begin with a letter.
     // Only letters a-z, numbers 0-9, or . are allowed in Nickname field.
     public static boolean isAlias(String string) {
-        if (MmsConfig.isAliasDisabled()) {
+        if (!MmsConfig.isAliasEnabled()) {
             return false;
         }
 

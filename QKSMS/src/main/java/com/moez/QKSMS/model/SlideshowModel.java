@@ -170,7 +170,7 @@ public class SlideshowModel extends Model
                     * This is for slide duration value set.
                     * If mms server does not support slide duration.
                     */
-                    if (MmsConfig.getSlideDurationDisabled()) {
+                    if (!MmsConfig.getSlideDurationEnabled()) {
                         int mediadur = media.getDuration();
                         float dur = par.getDur();
                         if (dur == 0) {
