@@ -13,6 +13,7 @@ import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.CharacterSets;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
@@ -91,16 +92,6 @@ public class SmsHelper {
     public static final String FAILED_SELECTION = COLUMN_TYPE + " = " + Message.FAILED;
 
     public static final int ADDRESSES_ADDRESS = 1;
-
-    private static final String TAG = "SMSHelper";
-    private static SmsManager sms;
-
-    private static Settings sendSettings;
-
-    public SmsHelper() {
-
-    }
-
     /**
      * The quality parameter which is used to compress JPEG images.
      */
@@ -109,42 +100,47 @@ public class SmsHelper {
      * The minimum quality parameter which is used to compress JPEG images.
      */
     public static final int MINIMUM_IMAGE_COMPRESSION_QUALITY = 50;
-
     /**
      * Message type: all messages.
      */
     public static final int MESSAGE_TYPE_ALL = 0;
-
     /**
      * Message type: inbox.
      */
     public static final int MESSAGE_TYPE_INBOX = 1;
-
     /**
      * Message type: sent messages.
      */
     public static final int MESSAGE_TYPE_SENT = 2;
-
     /**
      * Message type: drafts.
      */
     public static final int MESSAGE_TYPE_DRAFT = 3;
-
     /**
      * Message type: outbox.
      */
     public static final int MESSAGE_TYPE_OUTBOX = 4;
-
     /**
      * Message type: failed outgoing message.
      */
     public static final int MESSAGE_TYPE_FAILED = 5;
-
     /**
      * Message type: queued to send later.
      */
     public static final int MESSAGE_TYPE_QUEUED = 6;
-
+    /**
+     * Regex pattern for names and email addresses.
+     * <ul>
+     * <li><em>mailbox</em> = {@code name-addr}</li>
+     * <li><em>name-addr</em> = {@code [display-name] angle-addr}</li>
+     * <li><em>angle-addr</em> = {@code [CFWS] "<" addr-spec ">" [CFWS]}</li>
+     * </ul>
+     *
+     * @hide
+     */
+    public static final Pattern NAME_ADDR_EMAIL_PATTERN =
+            Pattern.compile("\\s*(\"[^\"]*\"|[^<>\"]+)\\s*<([^<>]+)>\\s*");
+    private static final String TAG = "SMSHelper";
     /**
      * MMS address parsing data structures
      */
@@ -152,8 +148,14 @@ public class SmsHelper {
     private static final char[] NUMERIC_CHARS_SUGAR = {
             '-', '.', ',', '(', ')', ' ', '/', '\\', '*', '#', '+'
     };
-
+    private static SmsManager sms;
+    private static Settings sendSettings;
     private static String[] sNoSubjectStrings;
+    private static HashMap numericSugarMap = new HashMap(NUMERIC_CHARS_SUGAR.length);
+
+    public SmsHelper() {
+
+    }
 
     public static void markSmsSeen(Context context) {
         Cursor cursor = context.getContentResolver().query(RECEIVED_MESSAGE_CONTENT_PROVIDER,
@@ -606,8 +608,8 @@ public class SmsHelper {
         }
 
         final int len = sNoSubjectStrings.length;
-        for (int i = 0; i < len; i++) {
-            if (subject.equalsIgnoreCase(sNoSubjectStrings[i])) {
+        for (String sNoSubjectString : sNoSubjectStrings) {
+            if (subject.equalsIgnoreCase(sNoSubjectString)) {
                 return null;
             }
         }
@@ -632,19 +634,6 @@ public class SmsHelper {
     }
 
     /**
-     * Regex pattern for names and email addresses.
-     * <ul>
-     * <li><em>mailbox</em> = {@code name-addr}</li>
-     * <li><em>name-addr</em> = {@code [display-name] angle-addr}</li>
-     * <li><em>angle-addr</em> = {@code [CFWS] "<" addr-spec ">" [CFWS]}</li>
-     * </ul>
-     *
-     * @hide
-     */
-    public static final Pattern NAME_ADDR_EMAIL_PATTERN =
-            Pattern.compile("\\s*(\"[^\"]*\"|[^<>\"]+)\\s*<([^<>]+)>\\s*");
-
-    /**
      * Helper method to extract email address from address string.
      *
      * @hide
@@ -657,8 +646,6 @@ public class SmsHelper {
         }
         return address;
     }
-
-    private static HashMap numericSugarMap = new HashMap(NUMERIC_CHARS_SUGAR.length);
 
     /**
      * Given a phone number, return the string without syntactic sugar, meaning parens,

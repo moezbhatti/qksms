@@ -39,52 +39,6 @@ public class WidgetProvider extends AppWidgetProvider {
     private static final String TAG = "WidgetProvider";
 
     /**
-     * Update all widgets in the list
-     */
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-
-        ThemeManager.loadThemeProperties(context);
-
-        for (int appWidgetId : appWidgetIds) {
-            updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager, appWidgetId));
-        }
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Log.v(TAG, "onReceive intent: " + intent);
-        String action = intent.getAction();
-
-        // The base class AppWidgetProvider's onReceive handles the normal widget intents. Here
-        // we're looking for an intent sent by the messaging app when it knows a message has
-        // been sent or received (or a conversation has been read) and is telling the widget it
-        // needs to update.
-        if (ACTION_NOTIFY_DATASET_CHANGED.equals(action)) {
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
-
-            // We need to update all Mms appwidgets on the home screen.
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.conversation_list);
-        } else {
-            super.onReceive(context, intent);
-        }
-    }
-
-    /**
-     * Update widget when widget size changes
-     */
-    @Override
-    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
-                                          int appWidgetId, Bundle newOptions) {
-        Log.v("TAG", "Changed widget dimensions");
-        updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager,appWidgetId));
-
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
-    }
-
-    /**
      * Returns 1 when widget has less than 4 columns, else 0
      */
     @TargetApi(16)
@@ -164,6 +118,52 @@ public class WidgetProvider extends AppWidgetProvider {
         }
 
         notifyDatasetChanged(context);
+    }
+
+    /**
+     * Update all widgets in the list
+     */
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+
+        ThemeManager.loadThemeProperties(context);
+
+        for (int appWidgetId : appWidgetIds) {
+            updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager, appWidgetId));
+        }
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.v(TAG, "onReceive intent: " + intent);
+        String action = intent.getAction();
+
+        // The base class AppWidgetProvider's onReceive handles the normal widget intents. Here
+        // we're looking for an intent sent by the messaging app when it knows a message has
+        // been sent or received (or a conversation has been read) and is telling the widget it
+        // needs to update.
+        if (ACTION_NOTIFY_DATASET_CHANGED.equals(action)) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
+
+            // We need to update all Mms appwidgets on the home screen.
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.conversation_list);
+        } else {
+            super.onReceive(context, intent);
+        }
+    }
+
+    /**
+     * Update widget when widget size changes
+     */
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
+                                          int appWidgetId, Bundle newOptions) {
+        Log.v("TAG", "Changed widget dimensions");
+        updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager, appWidgetId));
+
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
 }

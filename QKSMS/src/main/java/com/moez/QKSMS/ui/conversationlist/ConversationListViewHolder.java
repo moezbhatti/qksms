@@ -7,11 +7,11 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -85,7 +85,7 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
         final ConversationLegacy conversationLegacy = new ConversationLegacy(mContext, mData.getThreadId());
 
         if (shouldUpdate) {
-            ((MainActivity) mContext).runOnUiThread(new Runnable() {
+            mContext.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mAvatarView.setImageDrawable(drawable);

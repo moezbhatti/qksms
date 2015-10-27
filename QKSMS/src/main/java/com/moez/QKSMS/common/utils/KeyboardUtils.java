@@ -11,8 +11,9 @@ public class KeyboardUtils {
 
     /**
      * Hides the keyboard. Note that both the context and the view must be non-null.
+     *
      * @param context
-     * @param view used to get the window token
+     * @param view    used to get the window token
      */
     public static void hide(Context context, View view) {
         if (context != null && view != null) {
@@ -25,8 +26,9 @@ public class KeyboardUtils {
 
     /**
      * Hides the keyboard. Note that both the context and the view must be non-null.
+     *
      * @param context
-     * @param view used to get the window token
+     * @param view    used to get the window token
      */
     public static void hide(Activity context) {
         hide(context, context.getCurrentFocus());
@@ -34,6 +36,7 @@ public class KeyboardUtils {
 
     /**
      * Shows the keyboard.
+     *
      * @param context
      */
     public static void show(Context context) {
@@ -47,6 +50,7 @@ public class KeyboardUtils {
 
     /**
      * Shows the keyboard and attempts to set the focus on the given view.
+     *
      * @param context
      * @param view
      */

@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
@@ -53,6 +54,7 @@ import com.moez.QKSMS.ui.search.SearchFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.slidingmenu.SlidingMenu;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
+
 import org.ligi.snackengage.SnackEngage;
 import org.ligi.snackengage.snacks.BaseSnack;
 
@@ -62,43 +64,96 @@ import java.util.Collection;
 public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener,
         SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener, LiveView {
 
-    private final String TAG = "MainActivity";
-
     public final static String EXTRA_THREAD_ID = "thread_id";
-
+    public static final int DELETE_CONVERSATION_TOKEN = 1801;
+    public static final int HAVE_LOCKED_MESSAGES_TOKEN = 1802;
+    public static final String MMS_SETUP_DONT_ASK_AGAIN = "mmsSetupDontAskAgain";
+    private static final int THREAD_LIST_QUERY_TOKEN = 1701;
+    private static final int UNREAD_THREADS_QUERY_TOKEN = 1702;
+    private static final int DELETE_OBSOLETE_THREADS_TOKEN = 1803;
     public static long sThreadShowing;
-
+    private final String TAG = "MainActivity";
     private final String KEY_TYPE = "type";
     private final String KEY_POSITION = "position";
     private final String KEY_THREADID = "thread_id";
-
     private final int TYPE_COMPOSE = 0;
     private final int TYPE_CONVERSATION = 1;
     private final int TYPE_SETTINGS = 2;
     private final int TYPE_SEARCH = 3;
-
-    private static final int THREAD_LIST_QUERY_TOKEN = 1701;
-    private static final int UNREAD_THREADS_QUERY_TOKEN = 1702;
-    public static final int DELETE_CONVERSATION_TOKEN = 1801;
-    public static final int HAVE_LOCKED_MESSAGES_TOKEN = 1802;
-    private static final int DELETE_OBSOLETE_THREADS_TOKEN = 1803;
-
-    public static final String MMS_SETUP_DONT_ASK_AGAIN = "mmsSetupDontAskAgain";
-
-    // thread IDs are always nonnegative
-    private long mThreadId = 0;
-
-    private SlidingMenu mSlidingMenu;
-    private ConversationListFragment mConversationList;
-    private ContentFragment mContent;
-    private long mWaitingForThreadId = -1;
-
-    private boolean mIsDestroyed = false;
-
     /**
      * True if the mms setup fragment has been dismissed and we shouldn't show it anymore.
      */
     private final String KEY_MMS_SETUP_FRAGMENT_DISMISSED = "mmsSetupFragmentShown";
+    // thread IDs are always nonnegative
+    private long mThreadId = 0;
+    private SlidingMenu mSlidingMenu;
+    private ConversationListFragment mConversationList;
+    private ContentFragment mContent;
+    private long mWaitingForThreadId = -1;
+    private boolean mIsDestroyed = false;
+
+    public static Intent createAddContactIntent(String address) {
+        // address must be a single recipient
+        Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+        intent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+        if (SmsHelper.isEmailAddress(address)) {
+            intent.putExtra(ContactsContract.Intents.Insert.EMAIL, address);
+        } else {
+            intent.putExtra(ContactsContract.Intents.Insert.PHONE, address);
+            intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE,
+                    ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+
+        return intent;
+    }
+
+    /**
+     * Build and show the proper delete thread dialog. The UI is slightly different
+     * depending on whether there are locked messages in the thread(s) and whether we're
+     * deleting single/multiple threads or all threads.
+     *
+     * @param listener          gets called when the delete button is pressed
+     * @param threadIds         the thread IDs to be deleted (pass null for all threads)
+     * @param hasLockedMessages whether the thread(s) contain locked messages
+     * @param context           used to load the various UI elements
+     */
+    public static void confirmDeleteThreadDialog(final DeleteThreadListener listener, Collection<Long> threadIds,
+                                                 boolean hasLockedMessages, Context context) {
+        View contents = View.inflate(context, R.layout.dialog_delete_thread, null);
+        android.widget.TextView msg = (android.widget.TextView) contents.findViewById(R.id.message);
+
+        if (threadIds == null) {
+            msg.setText(R.string.confirm_delete_all_conversations);
+        } else {
+            // Show the number of threads getting deleted in the confirmation dialog.
+            int cnt = threadIds.size();
+            msg.setText(context.getResources().getQuantityString(
+                    R.plurals.confirm_delete_conversation, cnt, cnt));
+        }
+
+        final CheckBox checkbox = (CheckBox) contents.findViewById(R.id.delete_locked);
+        if (!hasLockedMessages) {
+            checkbox.setVisibility(View.GONE);
+        } else {
+            listener.setDeleteLockedMessage(checkbox.isChecked());
+            checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.setDeleteLockedMessage(checkbox.isChecked());
+                }
+            });
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.confirm_dialog_title)
+                .setIconAttribute(android.R.attr.alertDialogIcon)
+                .setCancelable(true)
+                .setPositiveButton(R.string.delete, listener)
+                .setNegativeButton(R.string.cancel, null)
+                .setView(contents)
+                .show();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -337,22 +392,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         } else if (requestCode == WelcomeActivity.WELCOME_REQUEST_CODE) {
             new DefaultSmsHelper(this, R.string.not_default_first).showIfNotDefault(null);
         }
-    }
-
-    public static Intent createAddContactIntent(String address) {
-        // address must be a single recipient
-        Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
-        intent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
-        if (SmsHelper.isEmailAddress(address)) {
-            intent.putExtra(ContactsContract.Intents.Insert.EMAIL, address);
-        } else {
-            intent.putExtra(ContactsContract.Intents.Insert.PHONE, address);
-            intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE,
-                    ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
-        }
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-
-        return intent;
     }
 
     @Override
@@ -620,53 +659,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         // When the menu (i.e. the conversation list) has been closed, the content has been opened.
         // So notify the content fragment.
         if (mContent != null) mContent.onContentOpened();
-    }
-
-    /**
-     * Build and show the proper delete thread dialog. The UI is slightly different
-     * depending on whether there are locked messages in the thread(s) and whether we're
-     * deleting single/multiple threads or all threads.
-     *
-     * @param listener          gets called when the delete button is pressed
-     * @param threadIds         the thread IDs to be deleted (pass null for all threads)
-     * @param hasLockedMessages whether the thread(s) contain locked messages
-     * @param context           used to load the various UI elements
-     */
-    public static void confirmDeleteThreadDialog(final DeleteThreadListener listener, Collection<Long> threadIds,
-                                                 boolean hasLockedMessages, Context context) {
-        View contents = View.inflate(context, R.layout.dialog_delete_thread, null);
-        android.widget.TextView msg = (android.widget.TextView) contents.findViewById(R.id.message);
-
-        if (threadIds == null) {
-            msg.setText(R.string.confirm_delete_all_conversations);
-        } else {
-            // Show the number of threads getting deleted in the confirmation dialog.
-            int cnt = threadIds.size();
-            msg.setText(context.getResources().getQuantityString(
-                    R.plurals.confirm_delete_conversation, cnt, cnt));
-        }
-
-        final CheckBox checkbox = (CheckBox) contents.findViewById(R.id.delete_locked);
-        if (!hasLockedMessages) {
-            checkbox.setVisibility(View.GONE);
-        } else {
-            listener.setDeleteLockedMessage(checkbox.isChecked());
-            checkbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.setDeleteLockedMessage(checkbox.isChecked());
-                }
-            });
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.confirm_dialog_title)
-                .setIconAttribute(android.R.attr.alertDialogIcon)
-                .setCancelable(true)
-                .setPositiveButton(R.string.delete, listener)
-                .setNegativeButton(R.string.cancel, null)
-                .setView(contents)
-                .show();
     }
 
     @Override

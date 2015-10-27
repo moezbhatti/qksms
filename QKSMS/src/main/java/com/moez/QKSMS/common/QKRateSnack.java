@@ -14,11 +14,13 @@ public class QKRateSnack extends RateSnack {
         withConditions(new NeverAgainWhenClickedOnce(), new AfterNumberOfOpportunities(10));
     }
 
-    @Override public String getText(){
+    @Override
+    public String getText() {
         return getString(R.string.rate_title);
     }
 
-    @Override public String getActionText(){
+    @Override
+    public String getActionText() {
         return getString(R.string.rate_action);
     }
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.FontManager;
@@ -18,17 +19,15 @@ import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKCheckBoxPreference;
 import com.moez.QKSMS.ui.view.QKPreference;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
+import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
-import com.moez.QKSMS.ui.view.QKTextView;
 
 public class ConversationNotificationSettingsDialog extends QKDialog implements Preference.OnPreferenceClickListener {
-    private final String TAG = "ConversationNotificationSettingsDialog";
-
     public static final int RINGTONE_REQUEST_CODE = 716;
     public static final String ARG_THREAD_ID = "thread_id";
     private static final String ARG_NAME = "name";
-
+    private final String TAG = "ConversationNotificationSettingsDialog";
     private Resources mRes;
     private ConversationPrefsHelper mConversationPrefs;
 

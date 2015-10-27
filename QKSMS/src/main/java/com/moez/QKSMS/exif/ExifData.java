@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,9 +45,9 @@ class ExifData {
     };
 
     private final IfdData[] mIfdDatas = new IfdData[IfdId.TYPE_IFD_COUNT];
-    private byte[] mThumbnail;
     private final ArrayList<byte[]> mStripBytes = new ArrayList<>();
     private final ByteOrder mByteOrder;
+    private byte[] mThumbnail;
 
     ExifData(ByteOrder order) {
         mByteOrder = order;
@@ -258,9 +259,7 @@ class ExifData {
             if (d != null) {
                 ExifTag[] tags = d.getAllTags();
                 if (tags != null) {
-                    for (ExifTag t : tags) {
-                        ret.add(t);
-                    }
+                    Collections.addAll(ret, tags);
                 }
             }
         }
@@ -284,9 +283,7 @@ class ExifData {
             return null;
         }
         ArrayList<ExifTag> ret = new ArrayList<>(tags.length);
-        for (ExifTag t : tags) {
-            ret.add(t);
-        }
+        Collections.addAll(ret, tags);
         if (ret.size() == 0) {
             return null;
         }

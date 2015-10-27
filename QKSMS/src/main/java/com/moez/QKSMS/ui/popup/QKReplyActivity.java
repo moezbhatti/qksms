@@ -31,16 +31,13 @@ import com.moez.QKSMS.ui.view.ComposeView;
 public class QKReplyActivity extends QKPopupActivity implements DialogInterface.OnDismissListener,
         LoaderManager.LoaderCallbacks<Cursor>, ActivityLauncher, ComposeView.OnSendListener {
 
-    @SuppressWarnings("unused")
-    private String TAG = "QKReplyActivity";
-
     // Intent extras for configuring a QuickReplyActivity intent
     public static final String EXTRA_THREAD_ID = "thread_id";
     public static final String EXTRA_SHOW_KEYBOARD = "open_keyboard";
-
     public static boolean sIsShowing = false;
     private static long sThreadId;
-
+    @SuppressWarnings("unused")
+    private String TAG = "QKReplyActivity";
     private Conversation mConversation;
     private ConversationLegacy mConversationLegacy;
 
@@ -56,6 +53,25 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
      * in onPause().
      */
     private boolean mIsStartingActivity = false;
+
+    /**
+     * Other areas of the app can tell the QK Reply window to close itself if necessary
+     * <p/>
+     * 1. MainActivity. When it's resumed, we don't want any QK Reply windows to open, which may have
+     * happened while the screen was off.
+     * <p/>
+     * 2. PushbulletService. If a message is replied to via PB, close the window
+     * <p/>
+     * 3. MarkReadReceiver. A QK Reply window may have opened while the screen was off, so if it's marked
+     * as read from the lock screen via notification, the QK Reply window should be dismissed
+     */
+    public static void dismiss(long threadId) {
+        if (sThreadId == threadId) {
+            sIsShowing = false;
+            sThreadId = 0;
+            System.exit(0);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -253,25 +269,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
             mAdapter.changeCursor(null);
         }
         mCursor = null;
-    }
-
-    /**
-     * Other areas of the app can tell the QK Reply window to close itself if necessary
-     * <p/>
-     * 1. MainActivity. When it's resumed, we don't want any QK Reply windows to open, which may have
-     * happened while the screen was off.
-     * <p/>
-     * 2. PushbulletService. If a message is replied to via PB, close the window
-     * <p/>
-     * 3. MarkReadReceiver. A QK Reply window may have opened while the screen was off, so if it's marked
-     * as read from the lock screen via notification, the QK Reply window should be dismissed
-     */
-    public static void dismiss(long threadId) {
-        if (sThreadId == threadId) {
-            sIsShowing = false;
-            sThreadId = 0;
-            System.exit(0);
-        }
     }
 
     @Override

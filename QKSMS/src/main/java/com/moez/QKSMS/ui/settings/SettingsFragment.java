@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
@@ -59,13 +60,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener, LiveView, ContentFragment {
-    private final String TAG = "PreferenceFragment";
-
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
     public static final String CATEGORY_THEME = "pref_category_theme";
     public static final String CATEGORY_GENERAL = "pref_key_category_general";
@@ -75,14 +75,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_QUICKCOMPOSE = "pref_key_category_quickcompose";
     public static final String CATEGORY_ADVANCED = "pref_key_category_advanced";
     public static final String CATEGORY_ABOUT = "pref_key_category_about";
-
     // Sub-categories
     public static final String CATEGORY_APPEARANCE_STATUS_BARS = "pref_key_category_appearance_status_bars";
     /**
      * The category which holds the advanced preferences in settings_main.xml
      */
     public static final String CATEGORY_ADVANCED_HOLDER = "pref_key_category_advanced_holder";
-
     public static final String THEME = "pref_key_theme";
     public static final String ICON = "pref_key_icon";
     public static final String STATUS_TINT = "pref_key_status_tint";
@@ -157,13 +155,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String VERSION = "pref_key_version";
     public static final String CHANGELOG = "pref_key_changelog";
     public static final String THANKS = "pref_key_thanks";
-
     public static final String WELCOME_SEEN = "pref_key_welcome_seen";
-
     public static final String DEFAULT_NOTIFICATION_TONE = "content://settings/system/notification_sound";
-
     public static final String CATEGORY_TAG = "settings_category_fragment_tag";
-
+    private final String TAG = "PreferenceFragment";
     private MainActivity mContext;
     private PreferenceManager mPreferenceManager;
     private SharedPreferences mPrefs;
@@ -195,6 +190,47 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    public static void updateAlarmManager(Context context, boolean enabled) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+
+        Calendar dayCalendar = Calendar.getInstance();
+        dayCalendar.setTimeInMillis(System.currentTimeMillis());
+        try {
+            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(DAY_START, "6:00")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dayCalendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+        dayCalendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+        Intent day = new Intent(context, NightModeAutoReceiver.class);
+        PendingIntent dayIntent = PendingIntent.getBroadcast(context, 0, day, 0);
+
+        Calendar nightCalendar = Calendar.getInstance();
+        nightCalendar.setTimeInMillis(System.currentTimeMillis());
+        try {
+            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(NIGHT_START, "21:00")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        nightCalendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+        nightCalendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+        Intent night = new Intent(context, NightModeAutoReceiver.class);
+        PendingIntent nightIntent = PendingIntent.getBroadcast(context, 1, night, 0);
+
+        context.sendBroadcast(night);
+
+        if (enabled) {
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, dayCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, dayIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, nightCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, nightIntent);
+        } else {
+            alarmManager.cancel(dayIntent);
+            alarmManager.cancel(nightIntent);
+        }
     }
 
     @Override
@@ -648,47 +684,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show(getFragmentManager(), "qk_response");
-    }
-
-    public static void updateAlarmManager(Context context, boolean enabled) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
-        Calendar calendar = Calendar.getInstance();
-
-        Calendar dayCalendar = Calendar.getInstance();
-        dayCalendar.setTimeInMillis(System.currentTimeMillis());
-        try {
-            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(DAY_START, "6:00")));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        dayCalendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
-        dayCalendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
-        Intent day = new Intent(context, NightModeAutoReceiver.class);
-        PendingIntent dayIntent = PendingIntent.getBroadcast(context, 0, day, 0);
-
-        Calendar nightCalendar = Calendar.getInstance();
-        nightCalendar.setTimeInMillis(System.currentTimeMillis());
-        try {
-            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(NIGHT_START, "21:00")));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        nightCalendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
-        nightCalendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
-        Intent night = new Intent(context, NightModeAutoReceiver.class);
-        PendingIntent nightIntent = PendingIntent.getBroadcast(context, 1, night, 0);
-
-        context.sendBroadcast(night);
-
-        if (enabled) {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, dayCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, dayIntent);
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, nightCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, nightIntent);
-        } else {
-            alarmManager.cancel(dayIntent);
-            alarmManager.cancel(nightIntent);
-        }
     }
 
     @Override

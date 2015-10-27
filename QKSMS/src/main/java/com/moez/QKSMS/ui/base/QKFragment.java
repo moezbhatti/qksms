@@ -2,6 +2,7 @@ package com.moez.QKSMS.ui.base;
 
 import android.app.Fragment;
 import android.os.Bundle;
+
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.interfaces.LiveView;

@@ -32,8 +32,8 @@ import com.google.android.mms.smil.SmilHelper;
 import com.moez.QKSMS.ContentRestrictionException;
 import com.moez.QKSMS.ExceedMessageSizeException;
 import com.moez.QKSMS.LogTag;
-import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ItemLoadedFuture;
 import com.moez.QKSMS.common.google.ThumbnailManager;
@@ -60,8 +60,8 @@ public class ImageModel extends RegionMediaModel {
      * into one of these content types before being sent over MMS.
      */
     private static final Set<String> SUPPORTED_MMS_IMAGE_CONTENT_TYPES =
-        new HashSet<>(Arrays.asList(new String[] {
-                "image/jpeg",
+            new HashSet<>(Arrays.asList(new String[]{
+                    "image/jpeg",
             }));
 
     private int mWidth;
@@ -77,7 +77,7 @@ public class ImageModel extends RegionMediaModel {
     }
 
     public ImageModel(Context context, String contentType, String src,
-            Uri uri, RegionModel region) throws MmsException {
+                      Uri uri, RegionModel region) throws MmsException {
         super(context, SmilHelper.ELEMENT_TAG_IMAGE,
                 contentType, src, uri, region);
         decodeImageBounds(uri);
@@ -162,13 +162,13 @@ public class ImageModel extends RegionMediaModel {
         return data == null ? null : BitmapFactory.decodeByteArray(data, 0, data.length);
     }
 
-    public Bitmap getBitmap(int width, int height)  {
+    public Bitmap getBitmap(int width, int height) {
         Bitmap bm = mFullSizeBitmapCache.get();
         if (bm == null) {
             try {
                 bm = createBitmap(Math.max(width, height), getUri());
                 if (bm != null) {
-                    mFullSizeBitmapCache = new SoftReference<Bitmap>(bm);
+                    mFullSizeBitmapCache = new SoftReference<>(bm);
                 }
             } catch (OutOfMemoryError ex) {
                 // fall through and return a null bitmap. The callers can handle a null

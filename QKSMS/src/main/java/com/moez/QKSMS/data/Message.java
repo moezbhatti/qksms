@@ -5,25 +5,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 
 public class Message {
-    private final String TAG = "Message";
-
     public static final int RECEIVED = 1;
     public static final int SENT = 2;
     public static final int DRAFT = 3;
     public static final int SENDING = 4;
     public static final int FAILED = 5;
-
     public static final Uri SMS_CONTENT_PROVIDER = Uri.parse("content://sms/");
     public static final Uri MMS_SMS_CONTENT_PROVIDER = Uri.parse("content://mms-sms/conversations/");
     public static final Uri SENT_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/sent");
-
     // ContentResolver columns
     static final Uri RECEIVED_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/inbox");
+    private final String TAG = "Message";
     private Context context;
     private ContactHelper contactHelper;
     private Uri uri;

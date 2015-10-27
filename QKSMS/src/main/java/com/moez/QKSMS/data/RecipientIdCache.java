@@ -29,20 +29,16 @@ public class RecipientIdCache {
             Uri.parse("content://mms-sms/canonical-address");
 
     private static RecipientIdCache sInstance;
-    static RecipientIdCache getInstance() { return sInstance; }
-
     private final Map<Long, String> mCache;
-
     private final Context mContext;
 
-    public static class Entry {
-        public long id;
-        public String number;
+    RecipientIdCache(Context context) {
+        mCache = new HashMap<>();
+        mContext = context;
+    }
 
-        public Entry(long id, String number) {
-            this.id = id;
-            this.number = number;
-        }
+    static RecipientIdCache getInstance() {
+        return sInstance;
     }
 
     static void init(Context context) {
@@ -52,11 +48,6 @@ public class RecipientIdCache {
                 fill();
             }
         }, "RecipientIdCache.init").start();
-    }
-
-    RecipientIdCache(Context context) {
-        mCache = new HashMap<Long, String>();
-        mContext = context;
     }
 
     public static void fill() {
@@ -172,30 +163,6 @@ public class RecipientIdCache {
         }
     }
 
-    private void updateCanonicalAddressInDb(long id, String number) {
-        if (LogTag.VERBOSE || Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
-            Log.d(TAG, "[RecipientIdCache] updateCanonicalAddressInDb: id=" + id +
-                    ", number=" + number);
-        }
-
-        final ContentValues values = new ContentValues();
-        values.put(Telephony.CanonicalAddressesColumns.ADDRESS, number);
-
-        final StringBuilder buf = new StringBuilder(Telephony.CanonicalAddressesColumns._ID);
-        buf.append('=').append(id);
-
-        final Uri uri = ContentUris.withAppendedId(sSingleCanonicalAddressUri, id);
-        final ContentResolver cr = mContext.getContentResolver();
-
-        // We're running on the UI thread so just fire & forget, hope for the best.
-        // (We were ignoring the return value anyway...)
-        new Thread("updateCanonicalAddressInDb") {
-            public void run() {
-                cr.update(uri, values, buf.toString(), null);
-            }
-        }.start();
-    }
-
     public static void dump() {
         // Only dump user private data if we're in special debug mode
         synchronized (sInstance) {
@@ -229,7 +196,8 @@ public class RecipientIdCache {
     /**
      * getSingleNumberFromCanonicalAddresses looks up the recipientId in the canonical_addresses
      * table and returns the associated number or email address.
-     * @param context needed for the ContentResolver
+     *
+     * @param context     needed for the ContentResolver
      * @param recipientId of the contact to look up
      * @return phone number or email address of the recipientId
      */
@@ -271,6 +239,40 @@ public class RecipientIdCache {
                 cr.insert(sAllCanonical, values);
             }
         }.start();
+    }
+
+    private void updateCanonicalAddressInDb(long id, String number) {
+        if (LogTag.VERBOSE || Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
+            Log.d(TAG, "[RecipientIdCache] updateCanonicalAddressInDb: id=" + id +
+                    ", number=" + number);
+        }
+
+        final ContentValues values = new ContentValues();
+        values.put(Telephony.CanonicalAddressesColumns.ADDRESS, number);
+
+        final StringBuilder buf = new StringBuilder(Telephony.CanonicalAddressesColumns._ID);
+        buf.append('=').append(id);
+
+        final Uri uri = ContentUris.withAppendedId(sSingleCanonicalAddressUri, id);
+        final ContentResolver cr = mContext.getContentResolver();
+
+        // We're running on the UI thread so just fire & forget, hope for the best.
+        // (We were ignoring the return value anyway...)
+        new Thread("updateCanonicalAddressInDb") {
+            public void run() {
+                cr.update(uri, values, buf.toString(), null);
+            }
+        }.start();
+    }
+
+    public static class Entry {
+        public long id;
+        public String number;
+
+        public Entry(long id, String number) {
+            this.id = id;
+            this.number = number;
+        }
     }
 
 }

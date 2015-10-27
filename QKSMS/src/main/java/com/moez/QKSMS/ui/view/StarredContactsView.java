@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.data.Contact;
@@ -83,7 +84,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
     public void setComposeScreenViews(AutoCompleteContactView recipients, ComposeView composeView) {
         mRecipients = recipients;
         mComposeView = composeView;
-        ((QKActivity) mContext).getLoaderManager().initLoader(0, null, this);
+        mContext.getLoaderManager().initLoader(0, null, this);
     }
 
     @Override

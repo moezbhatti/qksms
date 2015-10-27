@@ -22,10 +22,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+
 import com.android.mms.MmsConfig;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.smil.SmilHelper;
 import com.moez.QKSMS.LogTag;
+
 import org.w3c.dom.events.EventListener;
 
 import java.io.FileInputStream;
@@ -39,42 +41,33 @@ public abstract class MediaModel extends Model implements EventListener {
     protected static final String TAG = "Mms/media";
 
     private final static String MUSIC_SERVICE_ACTION = "com.android.music.musicservicecommand";
-
+    private final ArrayList<MediaAction> mMediaActions;
     protected Context mContext;
     protected int mBegin;
     protected int mDuration;
     protected String mTag;
     protected String mSrc;
     protected String mContentType;
-    private Uri mUri;
-    private byte[] mData;
     protected short mFill;
     protected int mSize;
     protected int mSeekTo;
     protected boolean mMediaResizeable;
-
-    private final ArrayList<MediaAction> mMediaActions;
-    public static enum MediaAction {
-        NO_ACTIVE_ACTION,
-        START,
-        STOP,
-        PAUSE,
-        SEEK,
-    }
+    private Uri mUri;
+    private byte[] mData;
 
     public MediaModel(Context context, String tag, String contentType,
-            String src, Uri uri) throws MmsException {
+                      String src, Uri uri) throws MmsException {
         mContext = context;
         mTag = tag;
         mContentType = contentType;
         mSrc = src;
         mUri = uri;
         initMediaSize();
-        mMediaActions = new ArrayList<MediaAction>();
+        mMediaActions = new ArrayList<>();
     }
 
     public MediaModel(Context context, String tag, String contentType,
-            String src, byte[] data) {
+                      String src, byte[] data) {
         if (data == null) {
             throw new IllegalArgumentException("data may not be null.");
         }
@@ -85,7 +78,11 @@ public abstract class MediaModel extends Model implements EventListener {
         mSrc = src;
         mData = data;
         mSize = data.length;
-        mMediaActions = new ArrayList<MediaAction>();
+        mMediaActions = new ArrayList<>();
+    }
+
+    public static boolean isMmsUri(Uri uri) {
+        return uri.getAuthority().startsWith("mms");
     }
 
     public int getBegin() {
@@ -134,6 +131,13 @@ public abstract class MediaModel extends Model implements EventListener {
         return mUri;
     }
 
+    /**
+     * @param uri the mUri to set
+     */
+    void setUri(Uri uri) {
+        mUri = uri;
+    }
+
     public byte[] getData() {
         if (mData != null) {
             byte[] data = new byte[mData.length];
@@ -141,13 +145,6 @@ public abstract class MediaModel extends Model implements EventListener {
             return data;
         }
         return null;
-    }
-
-    /**
-     * @param uri the mUri to set
-     */
-    void setUri(Uri uri) {
-        mUri = uri;
     }
 
     /**
@@ -269,10 +266,6 @@ public abstract class MediaModel extends Model implements EventListener {
         }
     }
 
-    public static boolean isMmsUri(Uri uri) {
-        return uri.getAuthority().startsWith("mms");
-    }
-
     public int getSeekTo() {
         return mSeekTo;
     }
@@ -305,9 +298,18 @@ public abstract class MediaModel extends Model implements EventListener {
     /**
      * If the attached media is resizeable, resize it to fit within the byteLimit. Save the
      * new part in the pdu.
+     *
      * @param byteLimit the max size of the media attachment
      * @throws com.google.android.mms.MmsException
      */
     protected void resizeMedia(int byteLimit, long messageId) throws MmsException {
+    }
+
+    public enum MediaAction {
+        NO_ACTIVE_ACTION,
+        START,
+        STOP,
+        PAUSE,
+        SEEK,
     }
 }

@@ -48,22 +48,22 @@ public class CarrierContentRestriction implements ContentRestriction {
             throws ContentRestrictionException {
         if (DEBUG) {
             Log.d(LogTag.APP, "CarrierContentRestriction.checkMessageSize messageSize: " +
-                        messageSize + " increaseSize: " + increaseSize +
-                        " MmsConfig.getMaxMessageSize: " + MmsConfig.getMaxMessageSize());
+                    messageSize + " increaseSize: " + increaseSize +
+                    " MmsConfig.getMaxMessageSize: " + MmsConfig.getMaxMessageSize());
         }
-        if ( (messageSize < 0) || (increaseSize < 0) ) {
+        if ((messageSize < 0) || (increaseSize < 0)) {
             throw new ContentRestrictionException("Negative message size"
                     + " or increase size");
         }
         int newSize = messageSize + increaseSize;
 
-        if ( (newSize < 0) || (newSize > MmsConfig.getMaxMessageSize()) ) {
+        if ((newSize < 0) || (newSize > MmsConfig.getMaxMessageSize())) {
             throw new ExceedMessageSizeException("Exceed message size limitation");
         }
     }
 
     public void checkResolution(int width, int height) throws ContentRestrictionException {
-        if ( (width > MmsConfig.getMaxImageWidth()) || (height > MmsConfig.getMaxImageHeight()) ) {
+        if ((width > MmsConfig.getMaxImageWidth()) || (height > MmsConfig.getMaxImageHeight())) {
             throw new ResolutionException("content resolution exceeds restriction.");
         }
     }

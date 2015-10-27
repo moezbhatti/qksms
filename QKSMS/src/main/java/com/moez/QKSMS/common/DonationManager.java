@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.external.iab.IabHelper;
 import com.moez.QKSMS.external.iab.IabResult;
@@ -32,15 +33,30 @@ public class DonationManager {
     private IabHelper mHelper;
     private boolean mBillingServiceReady = false;
     private QKActivity mContext;
+    // Callback for when a purchase is finished
+    private final IabHelper.OnIabPurchaseFinishedListener sPurchaseFinishedListener =
+            new IabHelper.OnIabPurchaseFinishedListener() {
+                @Override
+                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+                    if (mHelper == null || mContext == null) {
+                        return;
+                    }
+
+                    // Don't complain if cancelling
+                    if (result.getResponse() == IabHelper.IABHELPER_USER_CANCELLED) {
+                        return;
+                    }
+
+                    if (!result.isSuccess()) {
+                        Toast.makeText(mContext, result.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.w(TAG, "Error purchasing: " + result.getMessage());
+                        return;
+                    }
+
+                    Log.d(TAG, "Purchase complete: " + purchase.getSku());
+                }
+            };
     private Resources mRes;
-
-    public static DonationManager getInstance(QKActivity context) {
-        if (sInstance == null) {
-            sInstance = new DonationManager(context);
-        }
-
-        return sInstance;
-    }
 
     private DonationManager(QKActivity context) {
         mContext = context;
@@ -73,36 +89,19 @@ public class DonationManager {
         });
     }
 
+    public static DonationManager getInstance(QKActivity context) {
+        if (sInstance == null) {
+            sInstance = new DonationManager(context);
+        }
+
+        return sInstance;
+    }
+
     public void destroy() {
         if (mHelper != null) {
             mHelper.dispose();
         }
     }
-
-    // Callback for when a purchase is finished
-    private final IabHelper.OnIabPurchaseFinishedListener sPurchaseFinishedListener =
-            new IabHelper.OnIabPurchaseFinishedListener() {
-                @Override
-                public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-                    if (mHelper == null || mContext == null) {
-                        return;
-                    }
-
-                    // Don't complain if cancelling
-                    if (result.getResponse() == IabHelper.IABHELPER_USER_CANCELLED) {
-                        return;
-                    }
-
-                    if (!result.isSuccess()) {
-                        Toast.makeText(mContext, result.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.w(TAG, "Error purchasing: " + result.getMessage());
-                        return;
-                    }
-
-                    Log.d(TAG, "Purchase complete: " + purchase.getSku());
-                }
-            };
-
 
     /**
      * Listener that's called when we finish querying the items and subscriptions we own

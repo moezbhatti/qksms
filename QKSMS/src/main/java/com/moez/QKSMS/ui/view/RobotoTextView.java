@@ -3,6 +3,7 @@ package com.moez.QKSMS.ui.view;
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+
 import com.moez.QKSMS.common.TextViewUtils;
 
 public class RobotoTextView extends AppCompatTextView {

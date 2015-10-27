@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
@@ -38,67 +39,9 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import java.util.Set;
 
 public class ThemeManager {
-    private final static String TAG = "ThemeManager";
-
     public static final int DEFAULT_COLOR = 0xff009688;
     public static final int TRANSITION_LENGTH = 500;
-
-    public enum Theme {
-        WHITE,
-        OFFWHITE,
-        GREY,
-        BLACK;
-
-        public static final String PREF_WHITE = "white";
-        public static final String PREF_OFFWHITE = "offwhite";
-        public static final String PREF_GREY = "grey";
-        public static final String PREF_BLACK = "black";
-
-        public static Theme fromString(String color) {
-            switch (color) {
-                case PREF_WHITE:
-                    return WHITE;
-                case PREF_OFFWHITE:
-                    return OFFWHITE;
-                case PREF_GREY:
-                    return GREY;
-                case PREF_BLACK:
-                    return BLACK;
-                default:
-                    Log.w(TAG, "Tried to set theme with invalid string: " + color);
-                    return OFFWHITE;
-            }
-        }
-    }
-
-    private static int sColor;
-    private static int sBackgroundColor;
-    private static Theme sTheme;
-
-    private static int sTextOnColorPrimary;
-    private static int sTextOnColorSecondary;
-    private static int sTextOnBackgroundPrimary;
-    private static int sTextOnBackgroundSecondary;
-    private static int sSentBubbleRes;
-    private static int sSentBubbleAltRes;
-    private static int sSentBubbleColor;
-    private static int sReceivedBubbleRes;
-    private static int sReceivedBubbleAltRes;
-    private static int sReceivedBubbleColor;
-    private static Drawable sRippleBackground;
-
-    private static SystemBarTintManager sTintManager;
-    private static Drawable sStatusBarTintDrawable;
-    private static Resources sResources;
-    private static SharedPreferences sPrefs;
-
-    private static boolean status_tint = false;
-    private static boolean status_compat = true;
-    private static boolean system_flat = false;
-
-    private static QKActivity mActivity;
-    private static Context mContext;
-
+    private final static String TAG = "ThemeManager";
     // Colours copied from http://www.google.com/design/spec/style/color.html#color-ui-color-palette
     private static final int[][] COLOURS = {{
             // Red
@@ -178,7 +121,6 @@ public class ThemeManager {
             0xff78909c, 0xff607d8b, 0xff546e7a, 0xff455a64,
             0xff37474f, 0xff263238
     }};
-
     /**
      * These are the colors that go in the initial palette.
      */
@@ -203,7 +145,6 @@ public class ThemeManager {
             COLOURS[17][5], // Grey
             COLOURS[18][5] // Blue Grey
     };
-
     /**
      * This configures whether the text is black (0) or white (1) for each color above.
      */
@@ -247,6 +188,29 @@ public class ThemeManager {
     }, {    // Blue Grey
             0, 0, 0, 1, 1, 1, 1, 1, 1, 1
     }};
+    private static int sColor;
+    private static int sBackgroundColor;
+    private static Theme sTheme;
+    private static int sTextOnColorPrimary;
+    private static int sTextOnColorSecondary;
+    private static int sTextOnBackgroundPrimary;
+    private static int sTextOnBackgroundSecondary;
+    private static int sSentBubbleRes;
+    private static int sSentBubbleAltRes;
+    private static int sSentBubbleColor;
+    private static int sReceivedBubbleRes;
+    private static int sReceivedBubbleAltRes;
+    private static int sReceivedBubbleColor;
+    private static Drawable sRippleBackground;
+    private static SystemBarTintManager sTintManager;
+    private static Drawable sStatusBarTintDrawable;
+    private static Resources sResources;
+    private static SharedPreferences sPrefs;
+    private static boolean status_tint = false;
+    private static boolean status_compat = true;
+    private static boolean system_flat = false;
+    private static QKActivity mActivity;
+    private static Context mContext;
 
     /**
      * Loads all theme properties. Should be called during onCreate
@@ -286,56 +250,6 @@ public class ThemeManager {
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && system_flat) {
             sTintManager.setStatusBarTintDrawable(sStatusBarTintDrawable);
-        }
-    }
-
-    public static void setTheme(Theme theme) {
-        int startColor = sBackgroundColor;
-        initializeTheme(theme);
-        int endColor = sBackgroundColor;
-
-        if (mActivity instanceof MainActivity) {
-            final View background = mActivity.findViewById(R.id.menu_frame).getRootView();
-            final View menu = mActivity.findViewById(R.id.menu_frame);
-            final View content = mActivity.findViewById(R.id.content_frame);
-            final View fragment = ((MainActivity) mActivity).getContent().getView();
-
-            if (startColor != endColor) {
-                ValueAnimator backgroundAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
-                backgroundAnimation.setDuration(TRANSITION_LENGTH);
-                backgroundAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int color = (Integer) animation.getAnimatedValue();
-                        if (fragment != null) {
-                            fragment.setBackgroundColor(color);
-                        }
-                        background.setBackgroundColor(color);
-                        menu.setBackgroundColor(color);
-                        content.setBackgroundColor(color);
-                    }
-                });
-                backgroundAnimation.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        // This updates the colors and fonts of all the views.
-                        LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
-                        WidgetProvider.notifyThemeChanged(mContext);
-                    }
-                });
-                backgroundAnimation.start();
-            } else {
-                // This updates the colors and fonts of all the views.
-                LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
-                background.setBackgroundColor(endColor);
-                menu.setBackgroundColor(endColor);
-                content.setBackgroundColor(endColor);
-                WidgetProvider.notifyThemeChanged(mContext);
-            }
-        } else {
-            // This updates the colors and fonts of all the views.
-            LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
-            WidgetProvider.notifyThemeChanged(mContext);
         }
     }
 
@@ -449,7 +363,7 @@ public class ThemeManager {
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .show(((MainActivity) context).getFragmentManager(), "icon");
+                .show(context.getFragmentManager(), "icon");
     }
 
     public static int getBackgroundColor() {
@@ -536,6 +450,56 @@ public class ThemeManager {
 
     public static Theme getTheme() {
         return sTheme;
+    }
+
+    public static void setTheme(Theme theme) {
+        int startColor = sBackgroundColor;
+        initializeTheme(theme);
+        int endColor = sBackgroundColor;
+
+        if (mActivity instanceof MainActivity) {
+            final View background = mActivity.findViewById(R.id.menu_frame).getRootView();
+            final View menu = mActivity.findViewById(R.id.menu_frame);
+            final View content = mActivity.findViewById(R.id.content_frame);
+            final View fragment = ((MainActivity) mActivity).getContent().getView();
+
+            if (startColor != endColor) {
+                ValueAnimator backgroundAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+                backgroundAnimation.setDuration(TRANSITION_LENGTH);
+                backgroundAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        int color = (Integer) animation.getAnimatedValue();
+                        if (fragment != null) {
+                            fragment.setBackgroundColor(color);
+                        }
+                        background.setBackgroundColor(color);
+                        menu.setBackgroundColor(color);
+                        content.setBackgroundColor(color);
+                    }
+                });
+                backgroundAnimation.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        // This updates the colors and fonts of all the views.
+                        LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
+                        WidgetProvider.notifyThemeChanged(mContext);
+                    }
+                });
+                backgroundAnimation.start();
+            } else {
+                // This updates the colors and fonts of all the views.
+                LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
+                background.setBackgroundColor(endColor);
+                menu.setBackgroundColor(endColor);
+                content.setBackgroundColor(endColor);
+                WidgetProvider.notifyThemeChanged(mContext);
+            }
+        } else {
+            // This updates the colors and fonts of all the views.
+            LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
+            WidgetProvider.notifyThemeChanged(mContext);
+        }
     }
 
     public static void showColourSwatchesDialog(final QKActivity context) {
@@ -741,5 +705,33 @@ public class ThemeManager {
         }
 
         return PALETTE;
+    }
+
+    public enum Theme {
+        WHITE,
+        OFFWHITE,
+        GREY,
+        BLACK;
+
+        public static final String PREF_WHITE = "white";
+        public static final String PREF_OFFWHITE = "offwhite";
+        public static final String PREF_GREY = "grey";
+        public static final String PREF_BLACK = "black";
+
+        public static Theme fromString(String color) {
+            switch (color) {
+                case PREF_WHITE:
+                    return WHITE;
+                case PREF_OFFWHITE:
+                    return OFFWHITE;
+                case PREF_GREY:
+                    return GREY;
+                case PREF_BLACK:
+                    return BLACK;
+                default:
+                    Log.w(TAG, "Tried to set theme with invalid string: " + color);
+                    return OFFWHITE;
+            }
+        }
     }
 }

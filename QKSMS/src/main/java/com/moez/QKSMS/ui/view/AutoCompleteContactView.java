@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.MultiAutoCompleteTextView;
+
 import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.moez.QKSMS.common.FontManager;

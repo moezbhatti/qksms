@@ -45,8 +45,94 @@ public class PushReceiver extends BroadcastReceiver {
     private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
-    private class ReceivePushTask extends AsyncTask<Intent,Void,Void> {
+    private static long findThreadId(Context context, GenericPdu pdu, int type) {
+        String messageId;
+
+        if (type == MESSAGE_TYPE_DELIVERY_IND) {
+            messageId = new String(((DeliveryInd) pdu).getMessageId());
+        } else {
+            messageId = new String(((ReadOrigInd) pdu).getMessageId());
+        }
+
+        // TODO ContentResolver.query() appends closing ')' to the selection argument
+        // sb.append(')');
+
+        Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
+                Uri.parse("content://mms"), new String[]{"thread_id"},
+                '(' + "m_id" + '=' + DatabaseUtils.sqlEscapeString(messageId) + " AND " + "m_type" + '=' + PduHeaders.MESSAGE_TYPE_SEND_REQ, null, null);
+        if (cursor != null) {
+            try {
+                if ((cursor.getCount() == 1) && cursor.moveToFirst()) {
+                    return cursor.getLong(0);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+
+        return -1;
+    }
+
+    private static boolean isDuplicateNotification(
+            Context context, NotificationInd nInd) {
+        byte[] rawLocation = nInd.getContentLocation();
+        if (rawLocation != null) {
+            String location = new String(rawLocation);
+            // TODO do not use the sdk > 19 sms apis for this
+            String selection = "ct_l = ?";
+            String[] selectionArgs = new String[]{location};
+            Cursor cursor = SqliteWrapper.query(
+                    context, context.getContentResolver(),
+                    Uri.parse("content://mms"), new String[]{"_id"},
+                    selection, selectionArgs, null);
+            if (cursor != null) {
+                try {
+                    if (cursor.getCount() > 0) {
+                        // We already received the same notification before.
+                        return true;
+                    }
+                } finally {
+                    cursor.close();
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if ((intent.getAction().equals("android.provider.Telephony.WAP_PUSH_DELIVER") || intent.getAction().equals("android.provider.Telephony.WAP_PUSH_RECEIVED"))
+                && ContentType.MMS_MESSAGE.equals(intent.getType())) {
+            if (LOCAL_LOGV) Log.v(TAG, "Received PUSH Intent: " + intent);
+
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            if ((!sharedPrefs.getBoolean("receive_with_stock", false) && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && sharedPrefs.getBoolean("override", true))
+                    || Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                // Hold a wake lock for 5 seconds, enough to give any
+                // services we start time to take their own wake locks.
+                PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                        "MMS PushReceiver");
+                wl.acquire(5000);
+                new ReceivePushTask(context).execute(intent);
+
+                Log.v("mms_receiver", context.getPackageName() + " received and aborted");
+
+                abortBroadcast();
+            } else {
+                clearAbortBroadcast();
+                Intent notificationBroadcast = new Intent(com.moez.QKSMS.mmssms.Transaction.NOTIFY_OF_MMS);
+                notificationBroadcast.putExtra("receive_through_stock", true);
+                context.sendBroadcast(notificationBroadcast);
+
+                Log.v("mms_receiver", context.getPackageName() + " received and not aborted");
+            }
+        }
+    }
+
+    private class ReceivePushTask extends AsyncTask<Intent, Void, Void> {
         private Context mContext;
+
         public ReceivePushTask(Context context) {
             mContext = context;
         }
@@ -103,10 +189,10 @@ public class PushReceiver extends BroadcastReceiver {
                         NotificationInd nInd = (NotificationInd) pdu;
 
                         if (MmsConfig.getTransIdEnabled()) {
-                            byte [] contentLocation = nInd.getContentLocation();
+                            byte[] contentLocation = nInd.getContentLocation();
                             if ('=' == contentLocation[contentLocation.length - 1]) {
-                                byte [] transactionId = nInd.getTransactionId();
-                                byte [] contentLocationWithId = new byte [contentLocation.length
+                                byte[] transactionId = nInd.getTransactionId();
+                                byte[] contentLocationWithId = new byte[contentLocation.length
                                         + transactionId.length];
                                 System.arraycopy(contentLocation, 0, contentLocationWithId,
                                         0, contentLocation.length);
@@ -161,98 +247,5 @@ public class PushReceiver extends BroadcastReceiver {
 
             return null;
         }
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        if ((intent.getAction().equals("android.provider.Telephony.WAP_PUSH_DELIVER") || intent.getAction().equals("android.provider.Telephony.WAP_PUSH_RECEIVED"))
-                && ContentType.MMS_MESSAGE.equals(intent.getType())) {
-            if (LOCAL_LOGV) Log.v(TAG, "Received PUSH Intent: " + intent);
-
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-            if ((!sharedPrefs.getBoolean("receive_with_stock", false) && Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT && sharedPrefs.getBoolean("override", true))
-                    || Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                // Hold a wake lock for 5 seconds, enough to give any
-                // services we start time to take their own wake locks.
-                PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                        "MMS PushReceiver");
-                wl.acquire(5000);
-                new ReceivePushTask(context).execute(intent);
-
-                Log.v("mms_receiver", context.getPackageName() + " received and aborted");
-
-                abortBroadcast();
-            } else {
-                clearAbortBroadcast();
-                Intent notificationBroadcast = new Intent(com.moez.QKSMS.mmssms.Transaction.NOTIFY_OF_MMS);
-                notificationBroadcast.putExtra("receive_through_stock", true);
-                context.sendBroadcast(notificationBroadcast);
-
-                Log.v("mms_receiver", context.getPackageName() + " received and not aborted");
-            }
-        }
-    }
-
-    private static long findThreadId(Context context, GenericPdu pdu, int type) {
-        String messageId;
-
-        if (type == MESSAGE_TYPE_DELIVERY_IND) {
-            messageId = new String(((DeliveryInd) pdu).getMessageId());
-        } else {
-            messageId = new String(((ReadOrigInd) pdu).getMessageId());
-        }
-
-        StringBuilder sb = new StringBuilder('(');
-        sb.append("m_id");
-        sb.append('=');
-        sb.append(DatabaseUtils.sqlEscapeString(messageId));
-        sb.append(" AND ");
-        sb.append("m_type");
-        sb.append('=');
-        sb.append(PduHeaders.MESSAGE_TYPE_SEND_REQ);
-        // TODO ContentResolver.query() appends closing ')' to the selection argument
-        // sb.append(')');
-
-        Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
-                Uri.parse("content://mms"), new String[] { "thread_id" },
-                sb.toString(), null, null);
-        if (cursor != null) {
-            try {
-                if ((cursor.getCount() == 1) && cursor.moveToFirst()) {
-                    return cursor.getLong(0);
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-
-        return -1;
-    }
-
-    private static boolean isDuplicateNotification(
-            Context context, NotificationInd nInd) {
-        byte[] rawLocation = nInd.getContentLocation();
-        if (rawLocation != null) {
-            String location = new String(rawLocation);
-            // TODO do not use the sdk > 19 sms apis for this
-            String selection = "ct_l = ?";
-            String[] selectionArgs = new String[] { location };
-            Cursor cursor = SqliteWrapper.query(
-                    context, context.getContentResolver(),
-                    Uri.parse("content://mms"), new String[] { "_id" },
-                    selection, selectionArgs, null);
-            if (cursor != null) {
-                try {
-                    if (cursor.getCount() > 0) {
-                        // We already received the same notification before.
-                        return true;
-                    }
-                } finally {
-                    cursor.close();
-                }
-            }
-        }
-        return false;
     }
 }

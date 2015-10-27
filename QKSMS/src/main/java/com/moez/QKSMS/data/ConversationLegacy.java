@@ -9,9 +9,10 @@ import android.os.AsyncTask;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.receiver.UnreadBadgeService;
 import com.moez.QKSMS.common.google.DraftCache;
+import com.moez.QKSMS.receiver.UnreadBadgeService;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.transaction.SqliteWrapper;
@@ -23,13 +24,10 @@ import com.moez.QKSMS.ui.messagelist.MessageItem;
  * Use this class (rather than Conversation) for marking conversations as read, and managing drafts.
  */
 public class ConversationLegacy {
-    private final String TAG = "ConversationLegacy";
-
     public static final Uri CONVERSATIONS_CONTENT_PROVIDER = Uri.parse("content://mms-sms/conversations?simple=true");
     public static final Uri ADDRESSES_CONTENT_PROVIDER = Uri.parse("content://mms-sms/canonical-addresses");
-
     public static final int COLUMN_ADDRESSES_ADDRESS = 1;
-
+    private final String TAG = "ConversationLegacy";
     private ContactHelper contactHelper;
     private Context context;
 

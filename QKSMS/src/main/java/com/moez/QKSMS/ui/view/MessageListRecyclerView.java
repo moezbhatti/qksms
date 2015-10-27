@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ContextMenu;
 import android.view.View;
+
 import com.moez.QKSMS.common.utils.Units;
 
 /**
@@ -17,6 +18,7 @@ public class MessageListRecyclerView extends RecyclerView {
 
     private View mComposeView;
     private int mComposeViewHeight;
+    private ContextMenu.ContextMenuInfo mContextMenuInfo = null;
 
     public MessageListRecyclerView(Context context) {
         super(context);
@@ -53,6 +55,11 @@ public class MessageListRecyclerView extends RecyclerView {
         }
     }
 
+    @Override
+    protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
+        return mContextMenuInfo;
+    }
+
     private class RecyclerScrollListener extends OnScrollListener {
 
         @Override
@@ -68,13 +75,6 @@ public class MessageListRecyclerView extends RecyclerView {
 
             mComposeView.setTranslationY(translation);
         }
-    }
-
-    private ContextMenu.ContextMenuInfo mContextMenuInfo = null;
-
-    @Override
-    protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
-        return mContextMenuInfo;
     }
 
 }

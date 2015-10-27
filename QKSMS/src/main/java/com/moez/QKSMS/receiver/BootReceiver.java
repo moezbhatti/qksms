@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 

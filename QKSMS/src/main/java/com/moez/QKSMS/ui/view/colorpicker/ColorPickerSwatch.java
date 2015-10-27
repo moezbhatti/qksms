@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import com.moez.QKSMS.R;
 
 public class ColorPickerSwatch extends FrameLayout implements View.OnClickListener {

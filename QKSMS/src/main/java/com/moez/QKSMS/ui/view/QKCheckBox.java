@@ -10,8 +10,8 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -28,8 +28,14 @@ public class QKCheckBox extends android.widget.CheckBox implements LiveView {
 
     private Drawable mButtonDrawable;
 
-    public QKCheckBox(Context context) { this(context, null); }
-    public QKCheckBox(Context context, AttributeSet attrs) { this(context, attrs, android.R.attr.checkboxStyle); }
+    public QKCheckBox(Context context) {
+        this(context, null);
+    }
+
+    public QKCheckBox(Context context, AttributeSet attrs) {
+        this(context, attrs, android.R.attr.checkboxStyle);
+    }
+
     public QKCheckBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setDrawable(ANIMATION_FRAME_COMPLETE);
@@ -48,6 +54,7 @@ public class QKCheckBox extends android.widget.CheckBox implements LiveView {
 
     /**
      * Sets the button drawable, updating the color of it according to the theme color.
+     *
      * @param drawable
      */
     @Override

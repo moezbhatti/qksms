@@ -1,6 +1,7 @@
 package com.moez.QKSMS.ui.search;
 
 import android.view.View;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
 import com.moez.QKSMS.ui.base.QKActivity;

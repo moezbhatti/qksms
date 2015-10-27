@@ -65,7 +65,7 @@ public class MmsConfig {
     private static int mDefaultMMSMessagesPerThread = 1000;     // default value
     private static int mMinMessageCountPerThread = 2;           // default value
     private static int mMaxMessageCountPerThread = 5000;        // default value
-    private static int mHttpSocketTimeout = 60*1000;            // default to 1 min
+    private static int mHttpSocketTimeout = 60 * 1000;            // default to 1 min
     private static int mMinimumSlideElementDuration = 7;        // default to 7 sec
     private static boolean mNotifyWapMMSC = false;
     private static boolean mAllowAttachAudio = true;
@@ -100,7 +100,7 @@ public class MmsConfig {
     private static int mAliasRuleMaxChars = 48;
 
     private static int mMaxSubjectLength = 40;  // maximum number of characters allowed for mms
-                                                // subject
+    // subject
 
     // If mEnableGroupMms is true, a message with multiple recipients, regardless of contents,
     // will be sent as a single MMS message with multiple "TO" fields set for each recipient.
@@ -120,7 +120,7 @@ public class MmsConfig {
 
     public static boolean isSmsEnabled(Context context) {
         if (Build.VERSION.SDK_INT < 19) {
-          return true;
+            return true;
         } else if (Build.VERSION.SDK_INT >= 19) {
             String defaultSmsApplication = Telephony.Sms.getDefaultSmsPackage(context);
 
@@ -161,7 +161,7 @@ public class MmsConfig {
         if (LOCAL_LOGV) {
             Log.v(TAG, "MmsConfig.getMaxMessageSize(): " + mMaxMessageSize);
         }
-       return mMaxMessageSize;
+        return mMaxMessageSize;
     }
 
     /**
@@ -289,11 +289,10 @@ public class MmsConfig {
         return mEnableGroupMms;
     }
 
-    public static final void beginDocument(XmlPullParser parser, String firstElementName) throws XmlPullParserException, IOException
-    {
+    public static void beginDocument(XmlPullParser parser, String firstElementName) throws XmlPullParserException, IOException {
         int type;
-        while ((type=parser.next()) != XmlPullParser.START_TAG
-                   && type != XmlPullParser.END_DOCUMENT) {
+        while ((type = parser.next()) != XmlPullParser.START_TAG
+                && type != XmlPullParser.END_DOCUMENT) {
         }
 
         if (type != XmlPullParser.START_TAG) {
@@ -306,11 +305,10 @@ public class MmsConfig {
         }
     }
 
-    public static final void nextElement(XmlPullParser parser) throws XmlPullParserException, IOException
-    {
+    public static void nextElement(XmlPullParser parser) throws XmlPullParserException, IOException {
         int type;
-        while ((type=parser.next()) != XmlPullParser.START_TAG
-                   && type != XmlPullParser.END_DOCUMENT) {
+        while ((type = parser.next()) != XmlPullParser.START_TAG
+                && type != XmlPullParser.END_DOCUMENT) {
         }
     }
 
@@ -437,8 +435,8 @@ public class MmsConfig {
 
         if (errorStr != null) {
             String err =
-                String.format("MmsConfig.loadMmsSettings mms_config.xml missing %s setting",
-                        errorStr);
+                    String.format("MmsConfig.loadMmsSettings mms_config.xml missing %s setting",
+                            errorStr);
             Log.e(TAG, err);
         }
     }

@@ -17,6 +17,7 @@ import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+
 import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -33,24 +34,6 @@ public class ContactHelper {
     private static final String TAG = "ContactHelper";
 
     public static Uri CONTACTS_URI = ContactsContract.Contacts.CONTENT_URI;
-
-    public static class Favorites {
-
-        public static String SELECTION = ContactsContract.Contacts.STARRED + "='1'";
-
-        public static String[] PROJECTION = new String[]{
-                ContactsContract.Contacts._ID,
-                ContactsContract.Contacts.DISPLAY_NAME,
-                ContactsContract.Contacts.STARRED,
-                ContactsContract.Contacts.HAS_PHONE_NUMBER,
-                ContactsContract.Contacts.PHOTO_THUMBNAIL_URI};
-
-        public static final int ID = 0;
-        public static final int DISPLAY_NAME = 1;
-        public static final int STARRED = 2;
-        public static final int HAS_PHONE_NUMBER = 3;
-        public static final int PHOTO_THUMBNAIL_URI = 4;
-    }
 
     public static String getName(Context context, String address) {
 
@@ -190,7 +173,7 @@ public class ContactHelper {
         }
         return bitmap;
     }
-    
+
     public static Bitmap blankContact(Context context, String name) {
         String text = name == null || PhoneNumberUtils.isWellFormedSmsAddress(PhoneNumberUtils.stripSeparators(name)) || name.length() == 0 ? "#" : "" + name.toUpperCase().charAt(0);
 
@@ -214,5 +197,21 @@ public class ContactHelper {
         canvas.drawText(text, x, y, paint);
 
         return bitmap;
+    }
+
+    public static class Favorites {
+
+        public static final int ID = 0;
+        public static final int DISPLAY_NAME = 1;
+        public static final int STARRED = 2;
+        public static final int HAS_PHONE_NUMBER = 3;
+        public static final int PHOTO_THUMBNAIL_URI = 4;
+        public static String SELECTION = ContactsContract.Contacts.STARRED + "='1'";
+        public static String[] PROJECTION = new String[]{
+                ContactsContract.Contacts._ID,
+                ContactsContract.Contacts.DISPLAY_NAME,
+                ContactsContract.Contacts.STARRED,
+                ContactsContract.Contacts.HAS_PHONE_NUMBER,
+                ContactsContract.Contacts.PHOTO_THUMBNAIL_URI};
     }
 }

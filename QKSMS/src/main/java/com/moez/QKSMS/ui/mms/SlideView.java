@@ -67,14 +67,8 @@ public class SlideView extends AbsoluteLayout implements
     private MediaPlayer mAudioPlayer;
     private boolean mIsPrepared;
     private boolean mStartWhenPrepared;
-    private int     mSeekWhenPrepared;
+    private int mSeekWhenPrepared;
     private boolean mStopWhenPrepared;
-    private ScrollView mScrollViewPort;
-    private LinearLayout mViewPort;
-    // Indicates whether the view is in MMS conformance mode.
-    private boolean mConformanceMode;
-    private MediaController mMediaController;
-
     MediaPlayer.OnPreparedListener mPreparedListener = new MediaPlayer.OnPreparedListener() {
         public void onPrepared(MediaPlayer mp) {
             mIsPrepared = true;
@@ -96,6 +90,11 @@ public class SlideView extends AbsoluteLayout implements
             }
         }
     };
+    private ScrollView mScrollViewPort;
+    private LinearLayout mViewPort;
+    // Indicates whether the view is in MMS conformance mode.
+    private boolean mConformanceMode;
+    private MediaController mMediaController;
 
     public SlideView(Context context) {
         super(context);
@@ -422,49 +421,41 @@ public class SlideView extends AbsoluteLayout implements
         mSizeChangedListener = l;
     }
 
-    private class Position {
-        public Position(int left, int top) {
-            mTop = top;
-            mLeft = left;
-        }
-        public int mTop;
-        public int mLeft;
-    }
-
     /**
      * Makes the SlideView working on  MMSConformance Mode. The view will be
      * re-layout to the linear view.
-     * <p>
+     * <p/>
      * This is Chinese requirement about mms conformance.
      * The most popular Mms service in China is newspaper which is MMS conformance,
      * normally it mixes the image and text and has a number of slides. The
      * AbsoluteLayout doesn't have good user experience for this kind of message,
      * for example,
-     *
+     * <p/>
      * 1. AbsoluteLayout exactly follows the smil's layout which is not optimized,
      * and actually, no other MMS applications follow the smil's layout, they adjust
      * the layout according their screen size. MMS conformance doc also allows the
      * implementation to adjust the layout.
-     *
+     * <p/>
      * 2. The TextView is fixed in the small area of screen, and other part of screen
      * is empty once there is no image in the current slide.
-     *
+     * <p/>
      * 3. The TextView is scrollable in a small area of screen and the font size is
      * small which make the user experience bad.
-     *
+     * <p/>
      * The better UI for the MMS conformance message could be putting the image/video
      * and text in a linear layout view and making them scrollable together.
-     *
+     * <p/>
      * Another reason for only applying the LinearLayout to the MMS conformance message
      * is that the AbsoluteLayout has ability to play image and video in a same screen.
      * which shouldn't be broken.
      */
     public void enableMMSConformanceMode(int textLeft, int textTop,
-            int imageLeft, int imageTop) {
+                                         int imageLeft, int imageTop) {
         mConformanceMode = true;
         if (mScrollViewPort == null) {
             mScrollViewPort = new ScrollView(mContext) {
                 private int mBottomY;
+
                 @Override
                 protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
                     super.onLayout(changed, left, top, right, bottom);
@@ -474,10 +465,11 @@ public class SlideView extends AbsoluteLayout implements
                         mBottomY = height < childHeight ? childHeight - height : 0;
                     }
                 }
+
                 @Override
                 protected void onScrollChanged(int l, int t, int oldl, int oldt) {
                     // Shows MediaController when the view is scrolled to the top/bottom of itself.
-                    if (t == 0 || t >= mBottomY){
+                    if (t == 0 || t >= mBottomY) {
                         if (mMediaController != null
                                 && !((SlideshowActivity) mContext).isFinishing()) {
                             mMediaController.show();
@@ -519,7 +511,7 @@ public class SlideView extends AbsoluteLayout implements
                 return res;
             }
         });
-        if (textLeft >=0 && textTop >=0) {
+        if (textLeft >= 0 && textTop >= 0) {
             mTextView = new TextView(mContext);
             mTextView.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             mTextView.setTextSize(18);
@@ -527,7 +519,7 @@ public class SlideView extends AbsoluteLayout implements
             viewsByPosition.put(new Position(textLeft, textTop), mTextView);
         }
 
-        if (imageLeft >=0 && imageTop >=0) {
+        if (imageLeft >= 0 && imageTop >= 0) {
             mImageView = new ImageView(mContext);
             mImageView.setPadding(0, 5, 0, 5);
             viewsByPosition.put(new Position(imageLeft, imageTop), mImageView);
@@ -549,5 +541,14 @@ public class SlideView extends AbsoluteLayout implements
     }
 
     public void setVideoThumbnail(String name, Bitmap bitmap) {
+    }
+
+    private class Position {
+        public int mTop;
+        public int mLeft;
+        public Position(int left, int top) {
+            mTop = top;
+            mLeft = left;
+        }
     }
 }

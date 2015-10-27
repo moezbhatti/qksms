@@ -11,7 +11,7 @@ import com.moez.QKSMS.transaction.SmsHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactList extends ArrayList<Contact>  {
+public class ContactList extends ArrayList<Contact> {
     private static final long serialVersionUID = 1L;
 
     public static ContactList getByNumbers(Iterable<String> numbers, boolean canBlock) {
@@ -152,7 +152,7 @@ public class ContactList extends ArrayList<Contact>  {
     @Override
     public boolean equals(Object obj) {
         try {
-            ContactList other = (ContactList)obj;
+            ContactList other = (ContactList) obj;
             // If they're different sizes, the contact
             // set is obviously different.
             if (size() != other.size()) {

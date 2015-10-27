@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
+
 import com.moez.QKSMS.R;
 
 public class ColorPickerDialog extends DialogFragment implements ColorPickerSwatch.OnColorSelectedListener {
@@ -14,11 +15,11 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     protected int[] mColors = null;
     protected int mColumns;
     protected ColorPickerSwatch.OnColorSelectedListener mListener;
-    private ColorPickerPalette mPalette;
-    private ProgressBar mProgress;
     protected int mSelectedColor;
     protected int mSize;
     protected int mTitleResId = R.string.color_picker_default_title;
+    private ColorPickerPalette mPalette;
+    private ProgressBar mProgress;
 
     private void refreshPalette() {
         if (mPalette != null && mColors != null) {
@@ -58,7 +59,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
 
         if (bundle != null) {
             mColors = bundle.getIntArray("colors");
-            mSelectedColor = ((Integer) bundle.getSerializable("selected_color")).intValue();
+            mSelectedColor = (Integer) bundle.getSerializable("selected_color");
         }
     }
 
@@ -79,7 +80,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
         bundle.putIntArray("colors", mColors);
-        bundle.putSerializable("selected_color", Integer.valueOf(mSelectedColor));
+        bundle.putSerializable("selected_color", mSelectedColor);
     }
 
     public void setArguments(int titleId, int columns, int size) {

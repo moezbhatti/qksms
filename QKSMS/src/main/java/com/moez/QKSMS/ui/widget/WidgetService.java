@@ -64,10 +64,10 @@ public class WidgetService extends RemoteViewsService {
         private final Context mContext;
         private final int mAppWidgetId;
         private final int mSmallWidget;
+        private final AppWidgetManager mAppWidgetManager;
         private boolean mShouldShowViewMore;
         private Cursor mConversationCursor;
         private int mUnreadConvCount;
-        private final AppWidgetManager mAppWidgetManager;
 
         public WidgetFactory(Context context, Intent intent) {
             mContext = context;
@@ -196,8 +196,7 @@ public class WidgetService extends RemoteViewsService {
                 if (mSmallWidget == 0) {
                     remoteViews.setViewVisibility(R.id.avatar, View.VISIBLE);
                     bindAvatar(remoteViews, conversation);
-                }
-                else remoteViews.setViewVisibility(R.id.avatar, View.GONE);
+                } else remoteViews.setViewVisibility(R.id.avatar, View.GONE);
                 bindIndicators(remoteViews, conversation);
                 bindDate(remoteViews, conversation);
                 bindName(remoteViews, conversation);

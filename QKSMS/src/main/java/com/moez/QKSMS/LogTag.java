@@ -45,10 +45,10 @@ public class LogTag {
     public static final String STRICT_MODE_TAG = "Mms:strictmode";
     public static final boolean VERBOSE = false;
     public static final boolean SEVERE_WARNING = true;                  // Leave this true
-    private static final boolean SHOW_SEVERE_WARNING_DIALOG = false;    // Set to false before ship
     public static final boolean DEBUG_SEND = false;    // Set to false before ship
     public static final boolean DEBUG_DUMP = false;    // Set to false before ship
     public static final boolean ALLOW_DUMP_IN_LOGS = false;  // Set to false before ship
+    private static final boolean SHOW_SEVERE_WARNING_DIALOG = false;    // Set to false before ship
 
     private static String prettyArray(String[] array) {
         if (array.length == 0) {
@@ -56,7 +56,7 @@ public class LogTag {
         }
 
         StringBuilder sb = new StringBuilder("[");
-        int len = array.length-1;
+        int len = array.length - 1;
         for (int i = 0; i < len; i++) {
             sb.append(array[i]);
             sb.append(", ");
@@ -70,7 +70,7 @@ public class LogTag {
     private static String logFormat(String format, Object... args) {
         for (int i = 0; i < args.length; i++) {
             if (args[i] instanceof String[]) {
-                args[i] = prettyArray((String[])args[i]);
+                args[i] = prettyArray((String[]) args[i]);
             }
         }
         String s = String.format(format, args);
@@ -114,15 +114,15 @@ public class LogTag {
             activity.runOnUiThread(new Runnable() {
                 public void run() {
                     new AlertDialog.Builder(activity)
-                        .setIconAttribute(android.R.attr.alertDialogIcon)
-                        .setTitle(R.string.error_state)
-                        .setMessage(msg + "\n\n" + activity.getString(R.string.error_state_text))
-                        .setPositiveButton(R.string.yes, new OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                            .setIconAttribute(android.R.attr.alertDialogIcon)
+                            .setTitle(R.string.error_state)
+                            .setMessage(msg + "\n\n" + activity.getString(R.string.error_state_text))
+                            .setPositiveButton(R.string.yes, new OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
                 }
             });
         }

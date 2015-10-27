@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.MediaController;
 import android.widget.MediaController.MediaPlayerControl;
+
 import com.android.mms.dom.AttrImpl;
 import com.android.mms.dom.smil.SmilDocumentImpl;
 import com.android.mms.dom.smil.SmilPlayer;
@@ -41,6 +42,7 @@ import com.moez.QKSMS.model.RegionModel;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.model.SmilHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -74,7 +76,7 @@ public class SlideshowActivity extends QKActivity implements EventListener {
      * @return whether the Smil has MMS conformance layout.
      * Refer to MMS Conformance Document OMA-MMS-CONF-v1_2-20050301-A
      */
-    private static final boolean isMMSConformance(SMILDocument smilDoc) {
+    private static boolean isMMSConformance(SMILDocument smilDoc) {
         SMILElement head = smilDoc.getHead();
         if (head == null) {
             // No 'head' element
@@ -108,7 +110,6 @@ public class SlideshowActivity extends QKActivity implements EventListener {
             }
             String name = layoutChild.getNodeName();
             if ("root-layout".equals(name)) {
-                continue;
             } else if ("region".equals(name)) {
                 NamedNodeMap map = layoutChild.getAttributes();
                 for (int j = 0; j < map.getLength(); j++) {
@@ -121,16 +122,14 @@ public class SlideshowActivity extends QKActivity implements EventListener {
                     if ("left".equals(attrName) || "top".equals(attrName) ||
                             "height".equals(attrName) || "width".equals(attrName) ||
                             "fit".equals(attrName)) {
-                        continue;
                     } else if ("id".equals(attrName)) {
                         String value;
                         if (node instanceof AttrImpl) {
-                            value = ((AttrImpl)node).getValue();
+                            value = ((AttrImpl) node).getValue();
                         } else {
                             return false;
                         }
                         if ("Text".equals(value) || "Image".equals(value)) {
-                            continue;
                         } else {
                             // The id attr is not 'Text' or 'Image'
                             return false;
@@ -240,16 +239,16 @@ public class SlideshowActivity extends QKActivity implements EventListener {
         mMediaController.setMediaPlayer(new SmilPlayerController(mSmilPlayer));
         mMediaController.setAnchorView(findViewById(R.id.slide_view));
         mMediaController.setPrevNextListeners(
-            new OnClickListener() {
-              public void onClick(View v) {
-                  mSmilPlayer.next();
-              }
-            },
-            new OnClickListener() {
-              public void onClick(View v) {
-                  mSmilPlayer.prev();
-              }
-            });
+                new OnClickListener() {
+                    public void onClick(View v) {
+                        mSmilPlayer.next();
+                    }
+                },
+                new OnClickListener() {
+                    public void onClick(View v) {
+                        mSmilPlayer.prev();
+                    }
+                });
     }
 
     @Override
@@ -317,8 +316,8 @@ public class SlideshowActivity extends QKActivity implements EventListener {
             case KeyEvent.KEYCODE_MENU:
                 if ((mSmilPlayer != null) &&
                         (mSmilPlayer.isPausedState()
-                        || mSmilPlayer.isPlayingState()
-                        || mSmilPlayer.isPlayedState())) {
+                                || mSmilPlayer.isPlayingState()
+                                || mSmilPlayer.isPlayedState())) {
                     mSmilPlayer.stop();
                 }
                 break;
@@ -330,6 +329,18 @@ public class SlideshowActivity extends QKActivity implements EventListener {
         return super.onKeyDown(keyCode, event);
     }
 
+    public void handleEvent(Event evt) {
+        final Event event = evt;
+        mHandler.post(new Runnable() {
+            public void run() {
+                String type = event.getType();
+                if (type.equals(SmilDocumentImpl.SMIL_DOCUMENT_END_EVENT)) {
+                    finish();
+                }
+            }
+        });
+    }
+
     private class SmilPlayerController implements MediaPlayerControl {
         private final SmilPlayer mPlayer;
         /**
@@ -338,7 +349,7 @@ public class SlideshowActivity extends QKActivity implements EventListener {
          * value immediately. However, the SmilPlayer executes play and pause asynchronously, so
          * {@link #isPlaying()} will return the wrong value for some time. That's why we keep our
          * own version of the state of whether the player is playing.
-         *
+         * <p/>
          * Initialized to true because we always programatically start the SmilPlayer upon creation
          */
         private boolean mCachedIsPlaying = true;
@@ -394,17 +405,5 @@ public class SlideshowActivity extends QKActivity implements EventListener {
         public int getAudioSessionId() {
             return 0;
         }
-    }
-
-    public void handleEvent(Event evt) {
-        final Event event = evt;
-        mHandler.post(new Runnable() {
-            public void run() {
-                String type = event.getType();
-                if(type.equals(SmilDocumentImpl.SMIL_DOCUMENT_END_EVENT)) {
-                    finish();
-                }
-            }
-        });
     }
 }

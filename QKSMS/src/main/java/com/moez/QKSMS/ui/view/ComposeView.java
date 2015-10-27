@@ -35,20 +35,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.github.lzyzsd.circleprogress.DonutProgress;
-import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
+import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.utils.ImageUtils;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.interfaces.RecipientProvider;
-import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.utils.ImageUtils;
-import com.moez.QKSMS.common.utils.PhoneNumberUtils;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.mmssms.Transaction;
+import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -64,25 +65,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ComposeView extends LinearLayout implements View.OnClickListener, LiveView {
     public final static String TAG = "ComposeView";
-
+    private static final int REQUEST_CODE_IMAGE = 0x00F1;
+    private static final int REQUEST_CODE_CAMERA = 0x00F2;
     private final String KEY_DELAYED_INFO_DIALOG_SHOWN = "delayed_info_dialog_shown";
-
     private final int ANIMATION_DURATION = 300;
-
-    public interface OnSendListener {
-        void onSend(String[] addresses, String body);
-    }
-
-    enum SendButtonState {
-        SEND, // send a messaage
-        ATTACH, // open the attachment panel
-        CLOSE, // close the attachment panel
-        CANCEL // cancel a message while it's sending
-    }
-
     private QKActivity mContext;
     private SharedPreferences mPrefs;
     private Resources mRes;
@@ -127,13 +117,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
     private SendButtonState mButtonState = SendButtonState.ATTACH;
 
-    private static final int REQUEST_CODE_IMAGE = 0x00F1;
-    private static final int REQUEST_CODE_CAMERA = 0x00F2;
-
     public ComposeView(Context context, AttributeSet attributeSet) {
         this(context, attributeSet, 0);
     }
-
     public ComposeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
@@ -211,7 +197,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                             return true;
                         }
                         return false;
-                    }});
+                    }
+                });
                 break;
         }
 
@@ -538,7 +525,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                         toggleDelayedMessaging();
                     }
                 })
-                .show(((QKActivity) mContext).getFragmentManager(), "delayed message info");
+                .show(mContext.getFragmentManager(), "delayed message info");
         mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, true).apply(); //This should be changed, the dialog should be shown each time when delayed messaging is disabled.
     }
 
@@ -609,7 +596,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             args.putBoolean(MMSSetupFragment.ARG_ASK_FIRST, true);
             f.setArguments(args);
 
-            ((Activity) mContext).getFragmentManager()
+            mContext.getFragmentManager()
                     .beginTransaction()
                     .add(f, MMSSetupFragment.TAG)
                     .commit();
@@ -674,7 +661,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
@@ -845,6 +832,41 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         mLabel = label;
     }
 
+    @Override
+    public void refresh() {
+        mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
+        mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
+        mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
+        mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
+        mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
+        mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
+        updateDelayButton();
+        mProgress.setUnfinishedStrokeColor(ThemeManager.getTextOnColorSecondary());
+        mProgress.setFinishedStrokeColor(ThemeManager.getTextOnColorPrimary());
+        if (ThemeManager.getSentBubbleRes() != 0)
+            mReplyText.setBackgroundResource(ThemeManager.getSentBubbleRes());
+        mReplyText.getBackground().setColorFilter(ThemeManager.getNeutralBubbleColor(), PorterDuff.Mode.MULTIPLY);
+        mReplyText.refresh();
+        getBackground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.MULTIPLY);
+    }
+
+    private void updateDelayButton() {
+        mDelay.setColorFilter(mDelayedMessagingEnabled ?
+                        ThemeManager.getTextOnColorPrimary() : ThemeManager.getTextOnColorSecondary(),
+                PorterDuff.Mode.MULTIPLY);
+    }
+
+    enum SendButtonState {
+        SEND, // send a messaage
+        ATTACH, // open the attachment panel
+        CLOSE, // close the attachment panel
+        CANCEL // cancel a message while it's sending
+    }
+
+    public interface OnSendListener {
+        void onSend(String[] addresses, String body);
+    }
+
     private class ImageLoaderFromCameraTask extends AsyncTask<Void, Void, Bitmap> {
 
         @Override
@@ -946,28 +968,5 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             }
             return null;
         }
-    }
-
-    @Override
-    public void refresh() {
-        mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
-        mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
-        mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
-        mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
-        mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
-        mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
-        updateDelayButton();
-        mProgress.setUnfinishedStrokeColor(ThemeManager.getTextOnColorSecondary());
-        mProgress.setFinishedStrokeColor(ThemeManager.getTextOnColorPrimary());
-        if (ThemeManager.getSentBubbleRes() != 0) mReplyText.setBackgroundResource(ThemeManager.getSentBubbleRes());
-        mReplyText.getBackground().setColorFilter(ThemeManager.getNeutralBubbleColor(), PorterDuff.Mode.MULTIPLY);
-        mReplyText.refresh();
-        getBackground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.MULTIPLY);
-    }
-
-    private void updateDelayButton() {
-        mDelay.setColorFilter(mDelayedMessagingEnabled ?
-                        ThemeManager.getTextOnColorPrimary() : ThemeManager.getTextOnColorSecondary(),
-                PorterDuff.Mode.MULTIPLY);
     }
 }

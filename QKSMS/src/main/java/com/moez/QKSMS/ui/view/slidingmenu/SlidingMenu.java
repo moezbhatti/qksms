@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.view.slidingmenu.CustomViewAbove.OnPageChangeListener;
 
@@ -33,45 +34,37 @@ import java.lang.reflect.Method;
  */
 public class SlidingMenu extends RelativeLayout {
 
-    private static final String TAG = "SlidingMenu";
-
     public static final int SLIDING_WINDOW = 0;
     public static final int SLIDING_CONTENT = 1;
-    private boolean mActionbarOverlay = false;
-
     /**
      * Constant value for use with setTouchModeAbove(). Allows the SlidingMenu to be opened with a swipe
      * gesture on the screen's margin
      */
     public static final int TOUCHMODE_MARGIN = 0;
-
     /**
      * Constant value for use with setTouchModeAbove(). Allows the SlidingMenu to be opened with a swipe
      * gesture anywhere on the screen
      */
     public static final int TOUCHMODE_FULLSCREEN = 1;
-
     /**
      * Constant value for use with setTouchModeAbove(). Denies the SlidingMenu to be opened with a swipe
      * gesture
      */
     public static final int TOUCHMODE_NONE = 2;
-
     /**
      * Constant value for use with setMode(). Puts the menu to the left of the content.
      */
     public static final int LEFT = 0;
-
     /**
      * Constant value for use with setMode(). Puts the menu to the right of the content.
      */
     public static final int RIGHT = 1;
-
     /**
      * Constant value for use with setMode(). Puts menus to the left and right of the content.
      */
     public static final int LEFT_RIGHT = 2;
-
+    private static final String TAG = "SlidingMenu";
+    private boolean mActionbarOverlay = false;
     private CustomViewAbove mViewAbove;
 
     private CustomViewBehind mViewBehind;
@@ -82,94 +75,6 @@ public class SlidingMenu extends RelativeLayout {
     private OnOpenedListener mSecondaryOpenedListener;
     private OnCloseListener mCloseListener;
     private OnClosedListener mClosedListener;
-
-    /**
-     * The listener interface for receiving onOpen events.
-     * The class that is interested in processing a onOpen
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnOpenListener<code> method. When
-     * the onOpen event occurs, that object's appropriate
-     * method is invoked
-     */
-    public interface OnOpenListener {
-
-        /**
-         * On open.
-         */
-        public void onOpen();
-    }
-
-    /**
-     * The listener interface for receiving onOpened events.
-     * The class that is interested in processing a onOpened
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnOpenedListener<code> method. When
-     * the onOpened event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see OnOpenedEvent
-     */
-    public interface OnOpenedListener {
-
-        /**
-         * On opened.
-         */
-        public void onOpened();
-    }
-
-    /**
-     * The listener interface for receiving onClose events.
-     * The class that is interested in processing a onClose
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnCloseListener<code> method. When
-     * the onClose event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see OnCloseEvent
-     */
-    public interface OnCloseListener {
-
-        /**
-         * On close.
-         */
-        public void onClose();
-    }
-
-    /**
-     * The listener interface for receiving onClosed events.
-     * The class that is interested in processing a onClosed
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnClosedListener<code> method. When
-     * the onClosed event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see OnClosedEvent
-     */
-    public interface OnClosedListener {
-
-        /**
-         * On closed.
-         */
-        public void onClosed();
-    }
-
-    /**
-     * The Interface CanvasTransformer.
-     */
-    public interface CanvasTransformer {
-
-        /**
-         * Transform canvas.
-         *
-         * @param canvas      the canvas
-         * @param percentOpen the percent open
-         */
-        public void transformCanvas(Canvas canvas, float percentOpen);
-    }
 
     /**
      * Instantiates a new SlidingMenu.
@@ -365,6 +270,15 @@ public class SlidingMenu extends RelativeLayout {
     }
 
     /**
+     * Retrieves the current content.
+     *
+     * @return the current content
+     */
+    public View getContent() {
+        return mViewAbove.getContent();
+    }
+
+    /**
      * Set the above view content to the given View.
      *
      * @param view The desired content to display.
@@ -372,15 +286,6 @@ public class SlidingMenu extends RelativeLayout {
     public void setContent(View view) {
         mViewAbove.setContent(view);
         showContent();
-    }
-
-    /**
-     * Retrieves the current content.
-     *
-     * @return the current content
-     */
-    public View getContent() {
-        return mViewAbove.getContent();
     }
 
     /**
@@ -394,21 +299,21 @@ public class SlidingMenu extends RelativeLayout {
     }
 
     /**
-     * Set the behind view (menu) content to the given View.
-     *
-     * @param view The desired content to display.
-     */
-    public void setMenu(View v) {
-        mViewBehind.setContent(v);
-    }
-
-    /**
      * Retrieves the main menu.
      *
      * @return the main menu
      */
     public View getMenu() {
         return mViewBehind.getContent();
+    }
+
+    /**
+     * Set the behind view (menu) content to the given View.
+     *
+     * @param view The desired content to display.
+     */
+    public void setMenu(View v) {
+        mViewBehind.setContent(v);
     }
 
     /**
@@ -422,16 +327,6 @@ public class SlidingMenu extends RelativeLayout {
     }
 
     /**
-     * Set the secondary behind view (right menu) content to the given View.
-     *
-     * @param view The desired content to display.
-     */
-    public void setSecondaryMenu(View v) {
-        mViewBehind.setSecondaryContent(v);
-        //		mViewBehind.invalidate();
-    }
-
-    /**
      * Retrieves the current secondary menu (right).
      *
      * @return the current menu
@@ -440,14 +335,14 @@ public class SlidingMenu extends RelativeLayout {
         return mViewBehind.getSecondaryContent();
     }
 
-
     /**
-     * Sets the sliding enabled.
+     * Set the secondary behind view (right menu) content to the given View.
      *
-     * @param b true to enable sliding, false to disable it.
+     * @param view The desired content to display.
      */
-    public void setSlidingEnabled(boolean b) {
-        mViewAbove.setSlidingEnabled(b);
+    public void setSecondaryMenu(View v) {
+        mViewBehind.setSecondaryContent(v);
+        //		mViewBehind.invalidate();
     }
 
     /**
@@ -460,15 +355,12 @@ public class SlidingMenu extends RelativeLayout {
     }
 
     /**
-     * Sets which side the SlidingMenu should appear on.
+     * Sets the sliding enabled.
      *
-     * @param mode must be either SlidingMenu.LEFT or SlidingMenu.RIGHT
+     * @param b true to enable sliding, false to disable it.
      */
-    public void setMode(int mode) {
-        if (mode != LEFT && mode != RIGHT && mode != LEFT_RIGHT) {
-            throw new IllegalStateException("SlidingMenu mode must be LEFT, RIGHT, or LEFT_RIGHT");
-        }
-        mViewBehind.setMode(mode);
+    public void setSlidingEnabled(boolean b) {
+        mViewAbove.setSlidingEnabled(b);
     }
 
     /**
@@ -478,6 +370,18 @@ public class SlidingMenu extends RelativeLayout {
      */
     public int getMode() {
         return mViewBehind.getMode();
+    }
+
+    /**
+     * Sets which side the SlidingMenu should appear on.
+     *
+     * @param mode must be either SlidingMenu.LEFT or SlidingMenu.RIGHT
+     */
+    public void setMode(int mode) {
+        if (mode != LEFT && mode != RIGHT && mode != LEFT_RIGHT) {
+            throw new IllegalStateException("SlidingMenu mode must be LEFT, RIGHT, or LEFT_RIGHT");
+        }
+        mViewBehind.setMode(mode);
     }
 
     /**
@@ -684,6 +588,18 @@ public class SlidingMenu extends RelativeLayout {
     }
 
     /**
+     * Sets the behind scroll scale.
+     *
+     * @param f The scale of the parallax scroll (i.e. 1.0f scrolls 1 pixel for every
+     *          1 pixel that the above view scrolls and 0.0f scrolls 0 pixels)
+     */
+    public void setBehindScrollScale(float f) {
+        if (f < 0 && f > 1)
+            throw new IllegalStateException("ScrollScale must be between 0 and 1");
+        mViewBehind.setScrollScale(f);
+    }
+
+    /**
      * Gets the touch mode margin threshold
      *
      * @return the touch mode margin threshold
@@ -699,18 +615,6 @@ public class SlidingMenu extends RelativeLayout {
      */
     public void setTouchmodeMarginThreshold(int touchmodeMarginThreshold) {
         mViewBehind.setMarginThreshold(touchmodeMarginThreshold);
-    }
-
-    /**
-     * Sets the behind scroll scale.
-     *
-     * @param f The scale of the parallax scroll (i.e. 1.0f scrolls 1 pixel for every
-     *          1 pixel that the above view scrolls and 0.0f scrolls 0 pixels)
-     */
-    public void setBehindScrollScale(float f) {
-        if (f < 0 && f > 1)
-            throw new IllegalStateException("ScrollScale must be between 0 and 1");
-        mViewBehind.setScrollScale(f);
     }
 
     /**
@@ -907,7 +811,6 @@ public class SlidingMenu extends RelativeLayout {
         mOpenListener = listener;
     }
 
-
     /**
      * Sets the OnOpenListener for secondary menu  {@link OnOpenListener#onOpen() OnOpenListener.onOpen()} will be called when the secondary SlidingMenu is opened
      *
@@ -956,45 +859,6 @@ public class SlidingMenu extends RelativeLayout {
     public void setOnClosedListener(OnClosedListener listener) {
         mClosedListener = listener;
         mViewAbove.setOnClosedListener(listener);
-    }
-
-    public static class SavedState extends BaseSavedState {
-
-        private final int mItem;
-
-        public SavedState(Parcelable superState, int item) {
-            super(superState);
-            mItem = item;
-        }
-
-        private SavedState(Parcel in) {
-            super(in);
-            mItem = in.readInt();
-        }
-
-        public int getItem() {
-            return mItem;
-        }
-
-        /* (non-Javadoc)
-         * @see android.view.AbsSavedState#writeToParcel(android.os.Parcel, int)
-         */
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeInt(mItem);
-        }
-
-        public static final Creator<SavedState> CREATOR =
-                new Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
-
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
-
     }
 
     /* (non-Javadoc)
@@ -1051,6 +915,132 @@ public class SlidingMenu extends RelativeLayout {
                 }
             });
         }
+    }
+
+    /**
+     * The listener interface for receiving onOpen events.
+     * The class that is interested in processing a onOpen
+     * event implements this interface, and the object created
+     * with that class is registered with a component using the
+     * component's <code>addOnOpenListener<code> method. When
+     * the onOpen event occurs, that object's appropriate
+     * method is invoked
+     */
+    public interface OnOpenListener {
+
+        /**
+         * On open.
+         */
+        void onOpen();
+    }
+
+    /**
+     * The listener interface for receiving onOpened events.
+     * The class that is interested in processing a onOpened
+     * event implements this interface, and the object created
+     * with that class is registered with a component using the
+     * component's <code>addOnOpenedListener<code> method. When
+     * the onOpened event occurs, that object's appropriate
+     * method is invoked.
+     *
+     * @see OnOpenedEvent
+     */
+    public interface OnOpenedListener {
+
+        /**
+         * On opened.
+         */
+        void onOpened();
+    }
+
+    /**
+     * The listener interface for receiving onClose events.
+     * The class that is interested in processing a onClose
+     * event implements this interface, and the object created
+     * with that class is registered with a component using the
+     * component's <code>addOnCloseListener<code> method. When
+     * the onClose event occurs, that object's appropriate
+     * method is invoked.
+     *
+     * @see OnCloseEvent
+     */
+    public interface OnCloseListener {
+
+        /**
+         * On close.
+         */
+        void onClose();
+    }
+
+    /**
+     * The listener interface for receiving onClosed events.
+     * The class that is interested in processing a onClosed
+     * event implements this interface, and the object created
+     * with that class is registered with a component using the
+     * component's <code>addOnClosedListener<code> method. When
+     * the onClosed event occurs, that object's appropriate
+     * method is invoked.
+     *
+     * @see OnClosedEvent
+     */
+    public interface OnClosedListener {
+
+        /**
+         * On closed.
+         */
+        void onClosed();
+    }
+
+    /**
+     * The Interface CanvasTransformer.
+     */
+    public interface CanvasTransformer {
+
+        /**
+         * Transform canvas.
+         *
+         * @param canvas      the canvas
+         * @param percentOpen the percent open
+         */
+        void transformCanvas(Canvas canvas, float percentOpen);
+    }
+
+    public static class SavedState extends BaseSavedState {
+
+        public static final Creator<SavedState> CREATOR =
+                new Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
+        private final int mItem;
+
+        public SavedState(Parcelable superState, int item) {
+            super(superState);
+            mItem = item;
+        }
+
+        private SavedState(Parcel in) {
+            super(in);
+            mItem = in.readInt();
+        }
+
+        public int getItem() {
+            return mItem;
+        }
+
+        /* (non-Javadoc)
+         * @see android.view.AbsSavedState#writeToParcel(android.os.Parcel, int)
+         */
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(mItem);
+        }
+
     }
 
 }

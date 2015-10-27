@@ -25,21 +25,24 @@ public interface AdaptableSlideViewInterface extends SlideViewInterface {
      * Set the display region of the text view.
      */
     void setTextRegion(int left, int top, int width, int height);
+
     /**
      * Set the display region of the image view.
      */
     void setImageRegion(int left, int top, int width, int height);
+
     /**
      * Set the display region of the video view.
      */
     void setVideoRegion(int left, int top, int width, int height);
+
     /**
      * Set the listener which will be triggered when the size of
      * the view is changed.
      */
     void setOnSizeChangedListener(OnSizeChangedListener l);
 
-    public interface OnSizeChangedListener {
+    interface OnSizeChangedListener {
         void onSizeChanged(int width, int height);
     }
 }

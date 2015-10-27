@@ -19,9 +19,9 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import java.io.ByteArrayOutputStream;
 
 public class ImageUtils {
-    public static Bitmap drawableToBitmap (Drawable drawable) {
+    public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable)drawable).getBitmap();
+            return ((BitmapDrawable) drawable).getBitmap();
         }
 
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -81,9 +81,9 @@ public class ImageUtils {
      * Shrinks a bitmap so that, when it is encoded to a jpg with the given compression level, its
      * size is less than the given number of bytes.
      *
-     * @param src The bitmap to shrink
+     * @param src            The bitmap to shrink
      * @param jpgCompression The JPEG compression level to use when judging the size of the file
-     * @param maxSize The maximum size that the compressed JPEG should be
+     * @param maxSize        The maximum size that the compressed JPEG should be
      * @return The shrinked bitmap
      */
     public static Bitmap shrink(Bitmap src, int jpgCompression, long maxSize) {

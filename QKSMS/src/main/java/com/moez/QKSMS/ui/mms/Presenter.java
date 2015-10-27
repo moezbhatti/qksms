@@ -19,10 +19,10 @@ package com.moez.QKSMS.ui.mms;
 
 import android.content.Context;
 
+import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.interfaces.ViewInterface;
 import com.moez.QKSMS.model.IModelChangedObserver;
 import com.moez.QKSMS.model.Model;
-import com.moez.QKSMS.common.google.ItemLoadedCallback;
 
 /**
  * An abstract message presenter.

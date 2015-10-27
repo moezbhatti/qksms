@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.preference.PreferenceManager;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -90,7 +91,7 @@ public class FontManager {
         switch (type) {
             case FontManager.TEXT_TYPE_PRIMARY:
                 boolean isNight = ThemeManager.getTheme() == ThemeManager.Theme.GREY ||
-                                  ThemeManager.getTheme() == ThemeManager.Theme.BLACK;
+                        ThemeManager.getTheme() == ThemeManager.Theme.BLACK;
                 int id = isNight ? R.color.text_primary_dark : R.color.text_primary_light;
                 return context.getResources().getColorStateList(id);
             case FontManager.TEXT_TYPE_SECONDARY:
