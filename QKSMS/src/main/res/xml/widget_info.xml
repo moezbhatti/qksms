@@ -3,7 +3,7 @@
     android:initialLayout="@layout/widget"
     android:minHeight="110dp"
     android:minWidth="180dp"
-    android:previewImage="@mipmap/ic_launcher_teal"
+    android:previewImage="@drawable/widget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen|keyguard" />
