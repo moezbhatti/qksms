@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ThumbnailManager;
@@ -210,8 +211,8 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
     }
 
     static protected class ImageLoadedCallback implements ItemLoadedCallback<ThumbnailManager.ImageLoaded> {
-        private long mMessageId;
         private final MessageListViewHolder mListItem;
+        private long mMessageId;
 
         public ImageLoadedCallback(MessageListViewHolder listItem) {
             mListItem = listItem;

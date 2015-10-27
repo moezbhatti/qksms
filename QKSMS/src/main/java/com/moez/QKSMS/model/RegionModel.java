@@ -28,17 +28,17 @@ public class RegionModel extends Model {
     private String mBackgroundColor;
 
     public RegionModel(String regionId, int left, int top,
-            int width, int height) {
+                       int width, int height) {
         this(regionId, DEFAULT_FIT, left, top, width, height);
     }
 
     public RegionModel(String regionId, String fit, int left, int top,
-            int width, int height) {
+                       int width, int height) {
         this(regionId, fit, left, top, width, height, null);
     }
 
     public RegionModel(String regionId, String fit, int left, int top,
-            int width, int height, String bgColor) {
+                       int width, int height, String bgColor) {
         mRegionId = regionId;
         mFit = fit;
         mLeft = left;

@@ -6,13 +6,11 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.util.Log;
 
 public class WelcomePagerAdapter extends FragmentPagerAdapter {
-    private final String TAG = "WelcomePagerAdapter";
-
-    private Fragment[] mFragments = new Fragment[3];
-
     public final int PAGE_INTRO = 0;
     public final int PAGE_THEME = 1;
     public final int PAGE_NIGHT = 2;
+    private final String TAG = "WelcomePagerAdapter";
+    private Fragment[] mFragments = new Fragment[3];
 
     public WelcomePagerAdapter(FragmentManager fm) {
         super(fm);

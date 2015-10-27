@@ -39,43 +39,37 @@ import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.formatter.FormatterFactory;
-import com.moez.QKSMS.data.Contact;
-import com.moez.QKSMS.model.SlideModel;
-import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.model.TextModel;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ItemLoadedFuture;
 import com.moez.QKSMS.common.google.PduLoaderManager;
 import com.moez.QKSMS.common.utils.AddressUtils;
 import com.moez.QKSMS.common.utils.DateFormatter;
+import com.moez.QKSMS.data.Contact;
+import com.moez.QKSMS.model.SlideModel;
+import com.moez.QKSMS.model.SlideshowModel;
+import com.moez.QKSMS.model.TextModel;
 import com.moez.QKSMS.transaction.SmsHelper;
 
 import java.util.regex.Pattern;
 
 /**
  * Mostly immutable model for an SMS/MMS message.
- *
+ * <p/>
  * <p>The only mutable field is the cached formatted message member,
  * the formatting of which is done outside this model in MessageListItem.
  */
 public class MessageItem {
-    private static String TAG = "MessageItem";
-
-    public enum DeliveryStatus  { NONE, INFO, FAILED, PENDING, RECEIVED }
-
     public static int ATTACHMENT_TYPE_NOT_LOADED = -1;
-
-    final Context mContext;
+    private static String TAG = "MessageItem";
     public final String mType;
     public final long mMsgId;
     public final int mBoxId;
-
+    final Context mContext;
     public String mDeliveryStatusString;
     public DeliveryStatus mDeliveryStatus;
     public String mReadReportString;
     public boolean mReadReport;
     public boolean mLocked;            // locked to prevent auto-deletion
-
     public long mDate;
     public String mTimestamp;
     public String mAddress;
@@ -83,19 +77,16 @@ public class MessageItem {
     public String mBody; // Body of SMS, first text of MMS.
     public String mTextContentType; // ContentType of text of MMS.
     public Pattern mHighlight; // portion of message to highlight (from search)
-
     // The only non-immutable field.  Not synchronized, as access will
     // only be from the main GUI thread.  Worst case if accessed from
     // another thread is it'll return null and be set again from that
     // thread.
     public CharSequence mCachedFormattedMessage;
-
     // The last message is cached above in mCachedFormattedMessage. In the latest design, we
     // show "Sending..." in place of the timestamp when a message is being sent. mLastSendingState
     // is used to keep track of the last sending state so that if the current sending state is
     // different, we can clear the message cache so it will get rebuilt and recached.
     public boolean mLastSendingState;
-
     // Fields for MMS only.
     public Uri mMessageUri;
     public int mMessageType;
@@ -109,11 +100,10 @@ public class MessageItem {
     public MessageColumns.ColumnsMap mColumnsMap;
     private PduLoadedCallback mPduLoadedCallback;
     private ItemLoadedFuture mItemLoadedFuture;
-
     @SuppressLint("NewApi")
     public MessageItem(Context context, String type, final Cursor cursor,
-            final MessageColumns.ColumnsMap columnsMap, Pattern highlight,
-            boolean canBlock) throws MmsException {
+                       final MessageColumns.ColumnsMap columnsMap, Pattern highlight,
+                       boolean canBlock) throws MmsException {
         mContext = context;
         mMsgId = cursor.getLong(columnsMap.mColumnMsgId);
         mHighlight = highlight;
@@ -198,7 +188,7 @@ public class MessageItem {
 
             mItemLoadedFuture = QKSMSApp.getApplication().getPduLoaderManager()
                     .getPdu(mMessageUri, loadSlideshow,
-                    new PduLoadedMessageItemCallback());
+                            new PduLoadedMessageItemCallback());
 
         } else {
             throw new MmsException("Unknown type of the message: " + type);
@@ -275,20 +265,20 @@ public class MessageItem {
         // type of MessageListItem to create: a left or right justified item depending on whether
         // the message is incoming or outgoing.
         boolean isIncomingMms = isMms()
-                                    && (mBoxId == Mms.MESSAGE_BOX_INBOX
-                                            || mBoxId == Mms.MESSAGE_BOX_ALL);
+                && (mBoxId == Mms.MESSAGE_BOX_INBOX
+                || mBoxId == Mms.MESSAGE_BOX_ALL);
         boolean isIncomingSms = isSms()
-                                    && (mBoxId == Sms.MESSAGE_TYPE_INBOX
-                                            || mBoxId == Sms.MESSAGE_TYPE_ALL);
+                && (mBoxId == Sms.MESSAGE_TYPE_INBOX
+                || mBoxId == Sms.MESSAGE_TYPE_ALL);
         return !(isIncomingMms || isIncomingSms);
     }
 
     public boolean isOutgoingMessage() {
         boolean isOutgoingMms = isMms() && (mBoxId == Mms.MESSAGE_BOX_OUTBOX);
         boolean isOutgoingSms = isSms()
-                                    && ((mBoxId == Sms.MESSAGE_TYPE_FAILED)
-                                            || (mBoxId == Sms.MESSAGE_TYPE_OUTBOX)
-                                            || (mBoxId == Sms.MESSAGE_TYPE_QUEUED));
+                && ((mBoxId == Sms.MESSAGE_TYPE_FAILED)
+                || (mBoxId == Sms.MESSAGE_TYPE_OUTBOX)
+                || (mBoxId == Sms.MESSAGE_TYPE_QUEUED));
         return isOutgoingMms || isOutgoingSms;
     }
 
@@ -298,10 +288,20 @@ public class MessageItem {
 
     public boolean isFailedMessage() {
         boolean isFailedMms = isMms()
-                            && (mErrorType >= MmsSms.ERR_TYPE_GENERIC_PERMANENT);
+                && (mErrorType >= MmsSms.ERR_TYPE_GENERIC_PERMANENT);
         boolean isFailedSms = isSms()
-                            && (mBoxId == Sms.MESSAGE_TYPE_FAILED);
+                && (mBoxId == Sms.MESSAGE_TYPE_FAILED);
         return isFailedMms || isFailedSms;
+    }
+
+    public CharSequence getCachedFormattedMessage() {
+        boolean isSending = isSending();
+        if (isSending != mLastSendingState) {
+            mLastSendingState = isSending;
+            mCachedFormattedMessage = null;         // clear cache so we'll rebuild the message
+            // to show "Sending..." or the sent date.
+        }
+        return mCachedFormattedMessage;
     }
 
     // Note: This is the only mutable field in this class.  Think of
@@ -311,16 +311,6 @@ public class MessageItem {
     // case, please keep this class conceptually immutable.
     public void setCachedFormattedMessage(CharSequence formattedMessage) {
         mCachedFormattedMessage = formattedMessage;
-    }
-
-    public CharSequence getCachedFormattedMessage() {
-        boolean isSending = isSending();
-        if (isSending != mLastSendingState) {
-            mLastSendingState = isSending;
-            mCachedFormattedMessage = null;         // clear cache so we'll rebuild the message
-                                                    // to show "Sending..." or the sent date.
-        }
-        return mCachedFormattedMessage;
     }
 
     public int getBoxId() {
@@ -338,12 +328,38 @@ public class MessageItem {
     @Override
     public String toString() {
         return "type: " + mType +
-            " box: " + mBoxId +
-            " uri: " + mMessageUri +
-            " address: " + mAddress +
-            " contact: " + mContact +
-            " read: " + mReadReport +
-            " delivery status: " + mDeliveryStatus;
+                " box: " + mBoxId +
+                " uri: " + mMessageUri +
+                " address: " + mAddress +
+                " contact: " + mContact +
+                " read: " + mReadReport +
+                " delivery status: " + mDeliveryStatus;
+    }
+
+    public void setOnPduLoaded(PduLoadedCallback pduLoadedCallback) {
+        mPduLoadedCallback = pduLoadedCallback;
+    }
+
+    public void cancelPduLoading() {
+        if (mItemLoadedFuture != null && !mItemLoadedFuture.isDone()) {
+            mItemLoadedFuture.cancel(mMessageUri);
+            mItemLoadedFuture = null;
+        }
+    }
+
+    public SlideshowModel getSlideshow() {
+        return mSlideshow;
+    }
+
+    public enum DeliveryStatus {NONE, INFO, FAILED, PENDING, RECEIVED}
+
+    public interface PduLoadedCallback {
+        /**
+         * Called when this item's pdu and slideshow are finished loading.
+         *
+         * @param messageItem the MessageItem that finished loading.
+         */
+        void onPduLoaded(MessageItem messageItem);
     }
 
     public class PduLoadedMessageItemCallback implements ItemLoadedCallback {
@@ -353,22 +369,22 @@ public class MessageItem {
                 return;
             }
             if (mItemLoadedFuture != null) {
-                synchronized(mItemLoadedFuture) {
+                synchronized (mItemLoadedFuture) {
                     mItemLoadedFuture.setIsDone(true);
                 }
             }
-            PduLoaderManager.PduLoaded pduLoaded = (PduLoaderManager.PduLoaded)result;
+            PduLoaderManager.PduLoaded pduLoaded = (PduLoaderManager.PduLoaded) result;
             long timestamp = 0L;
             if (PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND == mMessageType) {
                 mDeliveryStatus = DeliveryStatus.NONE;
-                NotificationInd notifInd = (NotificationInd)pduLoaded.mPdu;
+                NotificationInd notifInd = (NotificationInd) pduLoaded.mPdu;
                 interpretFrom(notifInd.getFrom(), mMessageUri);
                 // Borrow the mBody to hold the URL of the message.
                 mBody = new String(notifInd.getContentLocation());
                 mMessageSize = (int) notifInd.getMessageSize();
                 timestamp = notifInd.getExpiry() * 1000L;
             } else {
-                MultimediaMessagePdu msg = (MultimediaMessagePdu)pduLoaded.mPdu;
+                MultimediaMessagePdu msg = (MultimediaMessagePdu) pduLoaded.mPdu;
                 mSlideshow = pduLoaded.mSlideshow;
                 mAttachmentType = SmsHelper.getAttachmentType(mSlideshow, msg);
 
@@ -410,29 +426,5 @@ public class MessageItem {
                 mPduLoadedCallback.onPduLoaded(MessageItem.this);
             }
         }
-    }
-
-    public void setOnPduLoaded(PduLoadedCallback pduLoadedCallback) {
-        mPduLoadedCallback = pduLoadedCallback;
-    }
-
-    public void cancelPduLoading() {
-        if (mItemLoadedFuture != null && !mItemLoadedFuture.isDone()) {
-            mItemLoadedFuture.cancel(mMessageUri);
-            mItemLoadedFuture = null;
-        }
-    }
-
-    public interface PduLoadedCallback {
-        /**
-         * Called when this item's pdu and slideshow are finished loading.
-         *
-         * @param messageItem the MessageItem that finished loading.
-         */
-        void onPduLoaded(MessageItem messageItem);
-    }
-
-    public SlideshowModel getSlideshow() {
-        return mSlideshow;
     }
 }

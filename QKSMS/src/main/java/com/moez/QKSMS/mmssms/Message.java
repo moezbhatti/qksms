@@ -25,9 +25,16 @@ import java.io.ByteArrayOutputStream;
  * Class to hold all relevant message information to send
  */
 public class Message {
+    /**
+     * Default send type, to be sent through SMS or MMS depending on contents
+     */
+    public static final int TYPE_SMSMMS = 0;
+    /**
+     * Google Voice send type
+     */
+    public static final int TYPE_VOICE = 1;
     private static final String TAG = "Message";
     private static final boolean LOCAL_LOGV = false;
-
     private String text;
     private String subject;
     private String[] addresses;
@@ -38,16 +45,6 @@ public class Message {
     private boolean save;
     private int type;
     private int delay;
-
-    /**
-     * Default send type, to be sent through SMS or MMS depending on contents
-     */
-    public static final int TYPE_SMSMMS = 0;
-
-    /**
-     * Google Voice send type
-     */
-    public static final int TYPE_VOICE = 1;
 
     /**
      * Default constructor
@@ -223,21 +220,20 @@ public class Message {
     }
 
     /**
-     * Sets the message
+     * Static method to convert a bitmap into a byte array to easily send it over http
      *
-     * @param text is the string to set message to
+     * @param image is the image to convert
+     * @return a byte array of the image data
      */
-    public void setText(String text) {
-        this.text = text;
-    }
+    public static byte[] bitmapToByteArray(Bitmap image) {
+        if (image == null) {
+            if (LOCAL_LOGV) Log.v(TAG, "image is null, returning byte array of size 0");
+            return new byte[0];
+        }
 
-    /**
-     * Sets recipients
-     *
-     * @param addresses is the array of recipients to send to
-     */
-    public void setAddresses(String[] addresses) {
-        this.addresses = addresses;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+        return stream.toByteArray();
     }
 
     /**
@@ -251,24 +247,6 @@ public class Message {
     }
 
     /**
-     * Sets images
-     *
-     * @param images is the array of images to send to recipient
-     */
-    public void setImages(Bitmap[] images) {
-        this.images = images;
-    }
-
-    /**
-     * Sets image names
-     *
-     * @param names
-     */
-    public void setImageNames(String[] names) {
-        this.imageNames = names;
-    }
-
-    /**
      * Sets image
      *
      * @param image is the single image to send to recipient
@@ -277,7 +255,7 @@ public class Message {
         this.images = new Bitmap[1];
         this.images[0] = image;
     }
-    
+
     /**
      * Sets audio file
      *
@@ -301,40 +279,12 @@ public class Message {
     /**
      * Sets other media
      *
-     * @param media is the media you want to send
+     * @param media    is the media you want to send
      * @param mimeType is the mimeType of the media
      */
     public void setMedia(byte[] media, String mimeType) {
         this.media = media;
         this.mediaMimeType = mimeType;
-    }
-
-    /**
-     * Sets the subject
-     *
-     * @param subject is the subject of the mms message
-     */
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    /**
-     * Sets whether or not to save a message to the database
-     *
-     * @param save is whether or not to save the message
-     */
-    public void setSave(boolean save) {
-        this.save = save;
-    }
-
-    /**
-     * Sets the time delay before sending a message
-     * NOTE: this is only applicable for SMS messages
-     *
-     * @param delay the time delay in milliseconds
-     */
-    public void setDelay(int delay) {
-        this.delay = delay;
     }
 
     /**
@@ -380,22 +330,21 @@ public class Message {
     }
 
     /**
-     * Sets the type of the message, could be any type definied in Message, for example
-     * Message.TYPE_SMSMMS, Message.TYPE_VOICE, or Message.TYPE_FACEBOOK
-     *
-     * @param type the type of message to send
-     */
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    /**
      * Gets the text of the message to send
      *
      * @return the string of the message to send
      */
     public String getText() {
         return this.text;
+    }
+
+    /**
+     * Sets the message
+     *
+     * @param text is the string to set message to
+     */
+    public void setText(String text) {
+        this.text = text;
     }
 
     /**
@@ -408,12 +357,30 @@ public class Message {
     }
 
     /**
+     * Sets recipients
+     *
+     * @param addresses is the array of recipients to send to
+     */
+    public void setAddresses(String[] addresses) {
+        this.addresses = addresses;
+    }
+
+    /**
      * Gets the images in the message
      *
      * @return an array of bitmaps with all of the images
      */
     public Bitmap[] getImages() {
         return this.images;
+    }
+
+    /**
+     * Sets images
+     *
+     * @param images is the array of images to send to recipient
+     */
+    public void setImages(Bitmap[] images) {
+        this.images = images;
     }
 
     /**
@@ -424,7 +391,16 @@ public class Message {
     public String[] getImageNames() {
         return this.imageNames;
     }
-    
+
+    /**
+     * Sets image names
+     *
+     * @param names
+     */
+    public void setImageNames(String[] names) {
+        this.imageNames = names;
+    }
+
     /**
      * Gets the audio sample in the message
      *
@@ -453,12 +429,30 @@ public class Message {
     }
 
     /**
+     * Sets the subject
+     *
+     * @param subject is the subject of the mms message
+     */
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    /**
      * Gets whether or not to save the message to the database
      *
      * @return a boolean of whether or not to save
      */
     public boolean getSave() {
         return this.save;
+    }
+
+    /**
+     * Sets whether or not to save a message to the database
+     *
+     * @param save is whether or not to save the message
+     */
+    public void setSave(boolean save) {
+        this.save = save;
     }
 
     /**
@@ -471,26 +465,31 @@ public class Message {
     }
 
     /**
+     * Sets the time delay before sending a message
+     * NOTE: this is only applicable for SMS messages
+     *
+     * @param delay the time delay in milliseconds
+     */
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    /**
      * Gets the type of message to be sent, see Message.TYPE_SMSMMS, Message.TYPE_FACEBOOK, or Message.TYPE_VOICE
      *
      * @return the type of the message
      */
-    public int getType() { return this.type; }
+    public int getType() {
+        return this.type;
+    }
 
     /**
-     * Static method to convert a bitmap into a byte array to easily send it over http
+     * Sets the type of the message, could be any type definied in Message, for example
+     * Message.TYPE_SMSMMS, Message.TYPE_VOICE, or Message.TYPE_FACEBOOK
      *
-     * @param image is the image to convert
-     * @return a byte array of the image data
+     * @param type the type of message to send
      */
-    public static byte[] bitmapToByteArray(Bitmap image) {
-        if (image == null) {
-            if (LOCAL_LOGV) Log.v(TAG, "image is null, returning byte array of size 0");
-            return new byte[0];
-        }
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 90, stream);
-        return stream.toByteArray();
+    public void setType(int type) {
+        this.type = type;
     }
 }

@@ -16,6 +16,7 @@ public class CursorUtils {
 
     /**
      * Returns true if the cursor is non-null and not closed.
+     *
      * @param cursor
      * @return
      */
@@ -48,7 +49,7 @@ public class CursorUtils {
 
         ContentResolver contentResolver = context.getContentResolver();
 
-        String[][]messages = new String[][] {
+        String[][] messages = new String[][]{
                 {"4165254009", "Why are you texting myself?", "1399856640", "" + Message.RECEIVED}, // address, body, date, type
                 {"4166485592", "These popups are so handy!", "1400079840", "" + Message.RECEIVED}};
 

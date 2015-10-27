@@ -13,29 +13,23 @@ import android.util.Log;
  * Receiver received the system broadcast that a package has changed, and re-launches QKSMS.
  */
 public class IconColorReceiver extends BroadcastReceiver {
-    private static final String TAG = "IconColorReceiver";
-    private static final boolean LOCAL_LOGV = false;
-
     /**
      * Broadcast this intent when the user has changed the icon.
      */
     public static final String ACTION_ICON_COLOR_CHANGED =
             "com.moez.QKSMS.action.PENDING_PACKAGE_CHANGE";
-
     /**
      * When ACTION_ICON_COLOR_CHANGED is broadcast, make sure to add the component name to the
      * intent so that we can restart the app here.
      */
     public static final String EXTRA_COMPONENT_NAME =
             "com.moez.QKSMS.extra.EXTRA_COMPONENT_NAME";
-
     /**
      * Non-null to specify the activity we need to start when we next receive an
      * ACTION_PACKAGE_CHANGED broadcast.
      */
     public static final String PREF_PENDING_COMPONENT =
             "ColorIconReceiver:pending_activity_start";
-
     /**
      * This action is also used as the action to start the component specified in
      * EXTRA_COMPONENT_NAME, so that it knows it was started in the context of "the icon has just
@@ -44,6 +38,8 @@ public class IconColorReceiver extends BroadcastReceiver {
      */
     public static final String EXTRA_ICON_COLOR_CHANGED =
             "com.moez.QKSMS.extra.EXTRA_ICON_COLOR_CHANGED";
+    private static final String TAG = "IconColorReceiver";
+    private static final boolean LOCAL_LOGV = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {

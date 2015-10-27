@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
@@ -297,15 +298,15 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         }).show(mContext.getFragmentManager(), "conversation options");
     }
 
+    public int getPosition() {
+        return mLayoutManager.findFirstVisibleItemPosition();
+    }
+
     public void setPosition(int position) {
         mPosition = position;
         if (mLayoutManager != null && mAdapter != null) {
             mLayoutManager.scrollToPosition(Math.min(mPosition, mAdapter.getCount() - 1));
         }
-    }
-
-    public int getPosition() {
-        return mLayoutManager.findFirstVisibleItemPosition();
     }
 
     private void initLoaderManager() {

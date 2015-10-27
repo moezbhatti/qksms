@@ -31,16 +31,15 @@ import java.io.UnsupportedEncodingException;
 
 public class TextModel extends RegionMediaModel {
     private static final String TAG = "Mms/text";
-
-    private CharSequence mText;
     private final int mCharset;
+    private CharSequence mText;
 
     public TextModel(Context context, String contentType, String src, RegionModel region) {
         this(context, contentType, src, CharacterSets.UTF_8, new byte[0], region);
     }
 
     public TextModel(Context context, String contentType, String src,
-            int charset, byte[] data, RegionModel region) {
+                     int charset, byte[] data, RegionModel region) {
         super(context, SmilHelper.ELEMENT_TAG_TEXT, contentType, src,
                 data != null ? data : new byte[0], region);
 

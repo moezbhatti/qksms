@@ -70,6 +70,7 @@ public final class SqliteWrapper {
             return false;
         }
     }
+
     public static int update(Context context, ContentResolver resolver, Uri uri,
                              ContentValues values, String where, String[] selectionArgs) {
         try {

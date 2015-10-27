@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.settings.SettingsFragment;

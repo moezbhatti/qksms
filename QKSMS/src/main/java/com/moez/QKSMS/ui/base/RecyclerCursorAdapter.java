@@ -3,6 +3,7 @@ package com.moez.QKSMS.ui.base;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.moez.QKSMS.common.utils.CursorUtils;
 
 import java.util.ArrayList;
@@ -10,27 +11,15 @@ import java.util.ArrayList;
 public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, DataType>
         extends RecyclerView.Adapter<VH> {
 
-    public interface ItemClickListener<DataType> {
-        void onItemClick(DataType object, View view);
-
-        void onItemLongClick(DataType object, View view);
-    }
-
-    public interface MultiSelectListener {
-        void onMultiSelectStateChanged(boolean enabled);
-    }
-
     protected QKActivity mContext;
     protected Cursor mCursor;
+    protected ArrayList<Long> mSelectedItems = new ArrayList<>();
+    protected ItemClickListener<DataType> mItemClickListener;
+    protected RecyclerCursorAdapter.MultiSelectListener mMultiSelectListener;
 
     public RecyclerCursorAdapter(QKActivity context) {
         mContext = context;
     }
-
-    protected ArrayList<Long> mSelectedItems = new ArrayList<>();
-
-    protected ItemClickListener<DataType> mItemClickListener;
-    protected RecyclerCursorAdapter.MultiSelectListener mMultiSelectListener;
 
     public void setItemClickListener(ItemClickListener<DataType> conversationClickListener) {
         mItemClickListener = conversationClickListener;
@@ -126,5 +115,15 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
     @Override
     public int getItemCount() {
         return CursorUtils.isValid(mCursor) ? mCursor.getCount() : 0;
+    }
+
+    public interface ItemClickListener<DataType> {
+        void onItemClick(DataType object, View view);
+
+        void onItemLongClick(DataType object, View view);
+    }
+
+    public interface MultiSelectListener {
+        void onMultiSelectStateChanged(boolean enabled);
     }
 }

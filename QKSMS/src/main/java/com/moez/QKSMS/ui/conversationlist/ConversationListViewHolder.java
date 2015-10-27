@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;

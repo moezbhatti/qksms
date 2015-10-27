@@ -5,7 +5,7 @@ import android.util.SparseIntArray;
 
 /**
  * Helper class for all things Emoji
- *
+ * <p/>
  * Modified from https://github.com/rockerhieu/emojicon/blob/master/library/src/main/java/com/rockerhieu/emojicon/EmojiconHandler.java
  */
 public class EmojiUtils {

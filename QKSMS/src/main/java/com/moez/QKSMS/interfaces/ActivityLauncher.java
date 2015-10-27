@@ -7,5 +7,6 @@ import android.content.Intent;
  */
 public interface ActivityLauncher {
     public void startActivityForResult(Intent request, int requestCode);
+
     public void onActivityResult(int requestCode, int resultCode, Intent data);
 }

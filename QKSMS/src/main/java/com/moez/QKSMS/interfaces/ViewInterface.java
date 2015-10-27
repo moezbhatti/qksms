@@ -25,14 +25,17 @@ public interface ViewInterface {
      * Get the width of the View object.
      */
     int getWidth();
+
     /**
      * Get the height of the View object.
      */
     int getHeight();
+
     /**
      * Reset the view (for next presentation).
      */
     void reset();
+
     /**
      * Set the visibility of the View object.
      */

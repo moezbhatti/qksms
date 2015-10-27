@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.moez.QKSMS.interfaces.LiveView;
 
 import java.util.Collections;
@@ -18,16 +19,9 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
 
     private static final String TAG = "LiveViewManager";
     private static final boolean LOCAL_LOGV = false;
-
-    private static LiveViewManager sInstance;
-
     private static final Set<LiveView> sSet = Collections.newSetFromMap(new WeakHashMap<LiveView, Boolean>());
     private static final WeakHashMap<LiveView, Set<String>> sPrefsMap = new WeakHashMap<>();
-
-    /**
-     * Private constructor.
-     */
-    private LiveViewManager() {}
+    private static LiveViewManager sInstance;
 
     /**
      * Initialize a static instance so that we can listen for views.
@@ -36,19 +30,21 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
         sInstance = new LiveViewManager();
     }
 
+    /**
+     * Private constructor.
+     */
+    private LiveViewManager() {
+    }
+
     public static void init(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.registerOnSharedPreferenceChangeListener(sInstance);
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        LiveViewManager.refreshViews(key);
-    }
-
     /**
      * Registers a LiveView for global updates. To get updates for specific preferences, use
      * registerPreference.
+     *
      * @param v
      */
     public static void registerView(LiveView v) {
@@ -56,7 +52,7 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
             sSet.add(v);
         }
 
-        synchronized(sPrefsMap) {
+        synchronized (sPrefsMap) {
             // Don't add the view to the prefs map more than once, in case the LiveView has already
             // been initalized.
             if (!sPrefsMap.containsKey(v)) {
@@ -67,6 +63,7 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
 
     /**
      * Unregisters a LiveView for any updates: global, or preference-specific.
+     *
      * @param v
      */
     public static void unregisterView(LiveView v) {
@@ -126,6 +123,7 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
 
     /**
      * Refreshes only the views that are listening for any of the given preferences.
+     *
      * @param query
      */
     public static void refreshViews(String... query) {
@@ -162,7 +160,13 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
             }
         }
 
-        if (LOCAL_LOGV) Log.v(TAG, "getViews returned:" + result.size() + " for preferences:" + querySet);
+        if (LOCAL_LOGV)
+            Log.v(TAG, "getViews returned:" + result.size() + " for preferences:" + querySet);
         return result;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        LiveViewManager.refreshViews(key);
     }
 }

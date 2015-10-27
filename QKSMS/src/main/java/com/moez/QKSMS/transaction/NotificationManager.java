@@ -23,18 +23,19 @@ import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.util.Log;
+
 import com.android.mms.transaction.TransactionService;
 import com.android.mms.transaction.TransactionState;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.model.ImageModel;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.receiver.WearableIntentReceiver;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
-import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
@@ -48,14 +49,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class NotificationManager {
-    private static final String TAG = "NotificationManager";
-
-    private static final int NOTIFICATION_ID_QUICKCOMPOSE = 4516;
-    private static final int NOTIFICATION_ID_FAILED = 4295;
-
     public static final String ACTION_MARK_READ = "com.moez.QKSMS.MARK_READ";
     public static final String ACTION_MARK_SEEN = "com.moez.QKSMS.MARK_SEEN";
-
+    private static final String TAG = "NotificationManager";
+    private static final int NOTIFICATION_ID_QUICKCOMPOSE = 4516;
+    private static final int NOTIFICATION_ID_FAILED = 4295;
     private static final String DEFAULT_RINGTONE = "content://settings/system/notification_sound";
 
     private static final String PREV_NOTIFICATIONS = "key_prev_notifications";
@@ -69,28 +67,6 @@ public class NotificationManager {
 
     private static SharedPreferences sPrefs;
     private static Resources sRes;
-
-    static {
-        // Start a new thread for showing notifications on with minimum priority
-        sThread = new HandlerThread("NotificationManager");
-        sThread.start();
-        sThread.setPriority(HandlerThread.MIN_PRIORITY);
-
-        sLooper = sThread.getLooper();
-        sHandler = new Handler(sLooper);
-    }
-
-    public static void init(final Context context) {
-
-        // Initialize the static shared prefs and resources.
-        sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        sRes = context.getResources();
-
-        // Listen for MMS events.
-        IntentFilter filter = new IntentFilter(TransactionService.TRANSACTION_COMPLETED_ACTION);
-        context.registerReceiver(sBroadcastReceiver, filter);
-    }
-
     private static BroadcastReceiver sBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -122,6 +98,27 @@ public class NotificationManager {
             }
         }
     };
+
+    static {
+        // Start a new thread for showing notifications on with minimum priority
+        sThread = new HandlerThread("NotificationManager");
+        sThread.start();
+        sThread.setPriority(HandlerThread.MIN_PRIORITY);
+
+        sLooper = sThread.getLooper();
+        sHandler = new Handler(sLooper);
+    }
+
+    public static void init(final Context context) {
+
+        // Initialize the static shared prefs and resources.
+        sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        sRes = context.getResources();
+
+        // Listen for MMS events.
+        IntentFilter filter = new IntentFilter(TransactionService.TRANSACTION_COMPLETED_ACTION);
+        context.registerReceiver(sBroadcastReceiver, filter);
+    }
 
     /**
      * Creates a new notification, called when a new message is received. This notification will have sound and
@@ -156,7 +153,7 @@ public class NotificationManager {
 
                     // If this message is in the foreground, mark it as read
                     Message message = new Message(context, lastMessage.mMsgId);
-                    if (message.getThreadId() ==MainActivity.sThreadShowing) {
+                    if (message.getThreadId() == MainActivity.sThreadShowing) {
                         message.markRead();
                         return;
                     }
@@ -486,7 +483,7 @@ public class NotificationManager {
         String body;
         String title;
         NotificationCompat.Style nstyle = null;
-        switch (privateNotifications){
+        switch (privateNotifications) {
             case 0: //Hide nothing
                 body = message.mBody;
                 title = message.mContact;
@@ -516,7 +513,9 @@ public class NotificationManager {
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
-        if (conversationPrefs.getDimissedReadEnabled()){builder.setDeleteIntent(readPI);}
+        if (conversationPrefs.getDimissedReadEnabled()) {
+            builder.setDeleteIntent(readPI);
+        }
 
         if (conversationPrefs.getCallButtonEnabled()) {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -544,7 +543,8 @@ public class NotificationManager {
 
             } else {
                 Log.d(TAG, "MMS Type: not an image lol");
-                if (privateNotifications == 0) builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message.mBody));
+                if (privateNotifications == 0)
+                    builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message.mBody));
                 else builder.setStyle(null);
             }
 
@@ -712,12 +712,10 @@ public class NotificationManager {
 
         if (privateNotification == 2) {
             return null;
-        }
-        else {
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 return ImageUtils.getCircleBitmap(bitmap, idealIconWidth);
-            }
-            else return bitmap;
+            } else return bitmap;
         }
     }
 

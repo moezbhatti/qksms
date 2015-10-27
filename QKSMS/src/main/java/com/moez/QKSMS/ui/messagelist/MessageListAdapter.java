@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.android.mms.transaction.Transaction;
 import com.android.mms.transaction.TransactionBundle;
 import com.android.mms.transaction.TransactionService;
@@ -39,29 +40,25 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHolder, MessageItem> {
-    private final String TAG = "MessageListAdapter";
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
+public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHolder, MessageItem> {
     public static final int INCOMING_ITEM_TYPE_SMS = 0;
     public static final int OUTGOING_ITEM_TYPE_SMS = 1;
     public static final int INCOMING_ITEM_TYPE_MMS = 2;
     public static final int OUTGOING_ITEM_TYPE_MMS = 3;
-
-    private ArrayList<Long> mSelectedConversations = new ArrayList<>();
-
-    private MessageItemCache mMessageItemCache;
-    private MessageColumns.ColumnsMap mColumnsMap;
-
+    private final String TAG = "MessageListAdapter";
     private final Resources mRes;
     private final SharedPreferences mPrefs;
-
+    private ArrayList<Long> mSelectedConversations = new ArrayList<>();
+    private MessageItemCache mMessageItemCache;
+    private MessageColumns.ColumnsMap mColumnsMap;
     // Configuration options.
     private long mThreadId = -1;
     private long mRowId = -1;
@@ -290,7 +287,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             showAvatar = messageItem.getBoxId() != messageItem2.getBoxId() || messageItem.mDate - messageItem2.mDate >= MAX_DURATION;
         }
 
-        holder.mDateView.setVisibility(showTimestamp? View.VISIBLE : View.GONE);
+        holder.mDateView.setVisibility(showTimestamp ? View.VISIBLE : View.GONE);
         holder.mSpace.setVisibility(showAvatar ? View.VISIBLE : View.GONE);
         holder.mBodyTextView.setBackgroundResource(showAvatar ? (messageItem.isMe() ? ThemeManager.getSentBubbleRes() :
                 ThemeManager.getReceivedBubbleRes()) : (messageItem.isMe() ?

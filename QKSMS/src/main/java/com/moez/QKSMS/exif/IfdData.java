@@ -27,13 +27,14 @@ import java.util.Map;
  */
 class IfdData {
 
-    private final int mIfdId;
-    private final Map<Short, ExifTag> mExifTags = new HashMap<>();
-    private int mOffsetToNextIfd = 0;
     private static final int[] sIfds = {
             IfdId.TYPE_IFD_0, IfdId.TYPE_IFD_1, IfdId.TYPE_IFD_EXIF,
             IfdId.TYPE_IFD_INTEROPERABILITY, IfdId.TYPE_IFD_GPS
     };
+    private final int mIfdId;
+    private final Map<Short, ExifTag> mExifTags = new HashMap<>();
+    private int mOffsetToNextIfd = 0;
+
     /**
      * Creates an IfdData with given IFD ID.
      *
@@ -106,17 +107,17 @@ class IfdData {
     }
 
     /**
-     * Sets the offset of next IFD.
-     */
-    protected void setOffsetToNextIfd(int offset) {
-        mOffsetToNextIfd = offset;
-    }
-
-    /**
      * Gets the offset of next IFD.
      */
     protected int getOffsetToNextIfd() {
         return mOffsetToNextIfd;
+    }
+
+    /**
+     * Sets the offset of next IFD.
+     */
+    protected void setOffsetToNextIfd(int offset) {
+        mOffsetToNextIfd = offset;
     }
 
     /**

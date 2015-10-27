@@ -2,6 +2,7 @@ package com.moez.QKSMS.common;
 
 import android.util.Log;
 import android.view.View;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.transaction.SmsHelper;

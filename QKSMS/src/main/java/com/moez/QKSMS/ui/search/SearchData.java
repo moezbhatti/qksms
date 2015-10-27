@@ -1,6 +1,7 @@
 package com.moez.QKSMS.ui.search;
 
 import android.database.Cursor;
+
 import com.moez.QKSMS.data.Contact;
 
 public class SearchData {

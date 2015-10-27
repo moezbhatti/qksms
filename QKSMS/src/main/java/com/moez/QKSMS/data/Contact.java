@@ -45,8 +45,8 @@ public class Contact {
     public static final String CONTENT_SCHEME = "content";
     private static final int CONTACT_METHOD_ID_UNKNOWN = -1;
     private static final String TAG = "Contact";
-    private static ContactsCache sContactCache;
     private static final String SELF_ITEM_KEY = "Self_Item_Key";
+    private final static HashSet<UpdateListener> mListeners = new HashSet<>();
 
 //    private static final ContentObserver sContactsObserver = new ContentObserver(new Handler()) {
 //        @Override
@@ -57,19 +57,7 @@ public class Contact {
 //            invalidateCache();
 //        }
 //    };
-
-    private static final ContentObserver sPresenceObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfUpdate) {
-            if (Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
-                log("presence changed, invalidate cache");
-            }
-            invalidateCache();
-        }
-    };
-
-    private final static HashSet<UpdateListener> mListeners = new HashSet<>();
-
+    private static ContactsCache sContactCache;
     private long mContactMethodId;   // Id in phone or email Uri returned by provider of current
     // Contact, -1 is invalid. e.g. contact method id is 20 when
     // current contact has phone content://.../phones/20.
@@ -79,26 +67,31 @@ public class Contact {
     private String mName;
     private String mNameAndNumber;   // for display, e.g. Fred Flintstone <670-782-1123>
     private boolean mNumberIsModified; // true if the number is modified
-
     private long mRecipientId;       // used to find the Recipient cache entry
     private String mLabel;
     private long mPersonId;
     private int mPresenceResId;      // TODO: make this a state instead of a res ID
     private String mPresenceText;
     private BitmapDrawable mAvatar;
-    private byte [] mAvatarData;
+    private byte[] mAvatarData;
     private boolean mIsStale;
+    private static final ContentObserver sPresenceObserver = new ContentObserver(new Handler()) {
+        @Override
+        public void onChange(boolean selfUpdate) {
+            if (Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
+                log("presence changed, invalidate cache");
+            }
+            invalidateCache();
+        }
+    };
     private boolean mQueryPending;
     private boolean mIsMe;          // true if this contact is me!
     private boolean mSendToVoicemail;   // true if this contact should not put up notification
 
-    public interface UpdateListener {
-        public void onUpdate(Contact updated);
-    }
-
     private Contact(String number, String name) {
         init(number, name);
     }
+
     /*
      * Make a basic contact object with a phone number.
      */
@@ -109,6 +102,134 @@ public class Contact {
     private Contact(boolean isMe) {
         init(SELF_ITEM_KEY, "");
         mIsMe = isMe;
+    }
+
+    public static void logWithTrace(String tag, String msg, Object... format) {
+        Thread current = Thread.currentThread();
+        StackTraceElement[] stack = current.getStackTrace();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append(current.getId());
+        sb.append("] ");
+        sb.append(String.format(msg, format));
+
+        sb.append(" <- ");
+        int stop = stack.length > 7 ? 7 : stack.length;
+        for (int i = 3; i < stop; i++) {
+            String methodName = stack[i].getMethodName();
+            sb.append(methodName);
+            if ((i + 1) != stop) {
+                sb.append(" <- ");
+            }
+        }
+
+        Log.d(tag, sb.toString());
+    }
+
+    public static Contact get(String number, boolean canBlock) {
+        return sContactCache.get(number, canBlock);
+    }
+
+    public static Contact getMe(boolean canBlock) {
+        return sContactCache.getMe(canBlock);
+    }
+
+    public static List<Contact> getByPhoneUris(Parcelable[] uris) {
+        return sContactCache.getContactInfoForPhoneUris(uris);
+    }
+
+    public static void invalidateCache() {
+        if (Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
+            log("invalidateCache");
+        }
+
+        // While invalidating our local Cache doesn't remove the contacts, it will mark them
+        // stale so the next time we're asked for a particular contact, we'll return that
+        // stale contact and at the same time, fire off an asyncUpdateContact to update
+        // that contact's info in the background. UI elements using the contact typically
+        // call addListener() so they immediately get notified when the contact has been
+        // updated with the latest info. They redraw themselves when we call the
+        // listener's onUpdate().
+        sContactCache.invalidate();
+    }
+
+    private static String emptyIfNull(String s) {
+        return (s != null ? s : "");
+    }
+
+    /**
+     * Fomat the name and number.
+     *
+     * @param name
+     * @param number
+     * @param numberE164 the number's E.164 representation, is used to get the
+     *                   country the number belongs to.
+     * @return the formatted name and number
+     */
+    public static String formatNameAndNumber(String name, String number, String numberE164) {
+        // Format like this: Mike Cleron <(650) 555-1234>
+        //                   Erick Tseng <(650) 555-1212>
+        //                   Tutankhamun <tutank1341@gmail.com>
+        //                   (408) 555-1289
+        String formattedNumber = number;
+        if (!SmsHelper.isEmailAddress(number)) {
+            formattedNumber = PhoneNumberUtils.formatNumber(number, numberE164, QKSMSApp.getApplication().getCurrentCountryIso());
+        }
+
+        if (!TextUtils.isEmpty(name) && !name.equals(number)) {
+            return name + " <" + formattedNumber + ">";
+        } else {
+            return formattedNumber;
+        }
+    }
+
+    public static void addListener(UpdateListener l) {
+        synchronized (mListeners) {
+            mListeners.add(l);
+        }
+    }
+
+    public static void removeListener(UpdateListener l) {
+        synchronized (mListeners) {
+            mListeners.remove(l);
+        }
+    }
+
+    public static void dumpListeners() {
+        synchronized (mListeners) {
+            int i = 0;
+            Log.i(TAG, "[Contact] dumpListeners; size=" + mListeners.size());
+            for (UpdateListener listener : mListeners) {
+                Log.i(TAG, "[" + (i++) + "]" + listener);
+            }
+        }
+    }
+
+    public static void init(final Context context) {
+        if (sContactCache != null) { // Stop previous Runnable
+            sContactCache.mTaskQueue.mWorkerThread.interrupt();
+        }
+        sContactCache = new ContactsCache(context);
+
+        RecipientIdCache.init(context);
+
+        // it maybe too aggressive to listen for *any* contact changes, and rebuild MMS contact
+        // cache each time that occurs. Unless we can get targeted updates for the contacts we
+        // care about(which probably won't happen for a long time), we probably should just
+        // invalidate cache peoridically, or surgically.
+        /*
+        context.getContentResolver().registerContentObserver(
+                Contacts.CONTENT_URI, true, sContactsObserver);
+        */
+    }
+
+    public static void dump() {
+        sContactCache.dump();
+    }
+
+    private static void log(String msg) {
+        Log.d(TAG, msg);
     }
 
     private void init(String number, String name) {
@@ -134,92 +255,12 @@ public class Contact {
                 mContactMethodId);
     }
 
-    public static void logWithTrace(String tag, String msg, Object... format) {
-        Thread current = Thread.currentThread();
-        StackTraceElement[] stack = current.getStackTrace();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        sb.append(current.getId());
-        sb.append("] ");
-        sb.append(String.format(msg, format));
-
-        sb.append(" <- ");
-        int stop = stack.length > 7 ? 7 : stack.length;
-        for (int i = 3; i < stop; i++) {
-            String methodName = stack[i].getMethodName();
-            sb.append(methodName);
-            if ((i+1) != stop) {
-                sb.append(" <- ");
-            }
-        }
-
-        Log.d(tag, sb.toString());
-    }
-
-    public static Contact get(String number, boolean canBlock) {
-        return sContactCache.get(number, canBlock);
-    }
-
-    public static Contact getMe(boolean canBlock) {
-        return sContactCache.getMe(canBlock);
-    }
-
     public void removeFromCache() {
         sContactCache.remove(this);
     }
 
-    public static List<Contact> getByPhoneUris(Parcelable[] uris) {
-        return sContactCache.getContactInfoForPhoneUris(uris);
-    }
-
-    public static void invalidateCache() {
-        if (Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
-            log("invalidateCache");
-        }
-
-        // While invalidating our local Cache doesn't remove the contacts, it will mark them
-        // stale so the next time we're asked for a particular contact, we'll return that
-        // stale contact and at the same time, fire off an asyncUpdateContact to update
-        // that contact's info in the background. UI elements using the contact typically
-        // call addListener() so they immediately get notified when the contact has been
-        // updated with the latest info. They redraw themselves when we call the
-        // listener's onUpdate().
-        sContactCache.invalidate();
-    }
-
     public boolean isMe() {
         return mIsMe;
-    }
-
-    private static String emptyIfNull(String s) {
-        return (s != null ? s : "");
-    }
-
-    /**
-     * Fomat the name and number.
-     *
-     * @param name
-     * @param number
-     * @param numberE164 the number's E.164 representation, is used to get the
-     *        country the number belongs to.
-     * @return the formatted name and number
-     */
-    public static String formatNameAndNumber(String name, String number, String numberE164) {
-        // Format like this: Mike Cleron <(650) 555-1234>
-        //                   Erick Tseng <(650) 555-1212>
-        //                   Tutankhamun <tutank1341@gmail.com>
-        //                   (408) 555-1289
-        String formattedNumber = number;
-        if (!SmsHelper.isEmailAddress(number)) {
-            formattedNumber = PhoneNumberUtils.formatNumber(number, numberE164, QKSMSApp.getApplication().getCurrentCountryIso());
-        }
-
-        if (!TextUtils.isEmpty(name) && !name.equals(number)) {
-            return name + " <" + formattedNumber + ">";
-        } else {
-            return formattedNumber;
-        }
     }
 
     public synchronized void reload() {
@@ -297,28 +338,6 @@ public class Contact {
         return (mPersonId > 0);
     }
 
-    public static void addListener(UpdateListener l) {
-        synchronized (mListeners) {
-            mListeners.add(l);
-        }
-    }
-
-    public static void removeListener(UpdateListener l) {
-        synchronized (mListeners) {
-            mListeners.remove(l);
-        }
-    }
-
-    public static void dumpListeners() {
-        synchronized (mListeners) {
-            int i = 0;
-            Log.i(TAG, "[Contact] dumpListeners; size=" + mListeners.size());
-            for (UpdateListener listener : mListeners) {
-                Log.i(TAG, "["+ (i++) + "]" + listener);
-            }
-        }
-    }
-
     public synchronized boolean isEmail() {
         return SmsHelper.isEmailAddress(mNumber);
     }
@@ -356,30 +375,14 @@ public class Contact {
         return mAvatar != null ? mAvatar : defaultValue;
     }
 
-    public static void init(final Context context) {
-        if (sContactCache != null) { // Stop previous Runnable
-            sContactCache.mTaskQueue.mWorkerThread.interrupt();
-        }
-        sContactCache = new ContactsCache(context);
-
-        RecipientIdCache.init(context);
-
-        // it maybe too aggressive to listen for *any* contact changes, and rebuild MMS contact
-        // cache each time that occurs. Unless we can get targeted updates for the contacts we
-        // care about(which probably won't happen for a long time), we probably should just
-        // invalidate cache peoridically, or surgically.
-        /*
-        context.getContentResolver().registerContentObserver(
-                Contacts.CONTENT_URI, true, sContactsObserver);
-        */
-    }
-
-    public static void dump() {
-        sContactCache.dump();
+    public interface UpdateListener {
+        public void onUpdate(Contact updated);
     }
 
     private static class ContactsCache {
-        private final TaskStack mTaskQueue = new TaskStack();
+        // Reuse this so we don't have to allocate each time we go through this
+        // "get" function.
+        static final int STATIC_KEY_BUFFER_MAXIMUM_LENGTH = 5;
         private static final String SEPARATOR = ";";
 
         /**
@@ -388,11 +391,11 @@ public class Contact {
          * one's normalized format. If the phone number's normalized format in
          * the lookup table is the suffix of the given number's one, it is
          * treated as matched CallerId. E164 format number must fully equal.
-         *
+         * <p/>
          * For example: Both 650-123-4567 and +1 (650) 123-4567 will match the
          * normalized number 6501234567 in the phone lookup.
-         *
-         *  The min_match is used to narrow down the candidates for the final
+         * <p/>
+         * The min_match is used to narrow down the candidates for the final
          * comparison.
          */
         // query params for caller id lookup
@@ -407,7 +410,7 @@ public class Contact {
                 + " substr(?, ? - lookup.len + 1) = lookup.normalized_number))";
 
         // query params for caller id lookup without E164 number as param
-        private static final String CALLER_ID_SELECTION_WITHOUT_E164 =  " Data._ID IN "
+        private static final String CALLER_ID_SELECTION_WITHOUT_E164 = " Data._ID IN "
                 + " (SELECT DISTINCT lookup.data_id "
                 + " FROM "
                 + " (SELECT data_id, normalized_number, length(normalized_number) as len "
@@ -420,7 +423,7 @@ public class Contact {
         // Utilizing private API
         private static final Uri PHONES_WITH_PRESENCE_URI = Data.CONTENT_URI;
 
-        private static final String[] CALLER_ID_PROJECTION = new String[] {
+        private static final String[] CALLER_ID_PROJECTION = new String[]{
                 Phone._ID,                      // 0
                 Phone.NUMBER,                   // 1
                 Phone.LABEL,                    // 2
@@ -442,7 +445,7 @@ public class Contact {
         private static final int PHONE_NORMALIZED_NUMBER = 7;
         private static final int SEND_TO_VOICEMAIL = 8;
 
-        private static final String[] SELF_PROJECTION = new String[] {
+        private static final String[] SELF_PROJECTION = new String[]{
                 Phone._ID,                      // 0
                 Phone.DISPLAY_NAME,             // 1
         };
@@ -456,7 +459,7 @@ public class Contact {
         private static final String EMAIL_SELECTION = "UPPER(" + Email.DATA + ")=UPPER(?) AND "
                 + Data.MIMETYPE + "='" + Email.CONTENT_ITEM_TYPE + "'";
 
-        private static final String[] EMAIL_PROJECTION = new String[] {
+        private static final String[] EMAIL_PROJECTION = new String[]{
                 Email._ID,                    // 0
                 Email.DISPLAY_NAME,           // 1
                 Email.CONTACT_PRESENCE,       // 2
@@ -470,9 +473,9 @@ public class Contact {
         private static final int EMAIL_CONTACT_ID_COLUMN = 3;
         private static final int EMAIL_CONTACT_NAME_COLUMN = 4;
         private static final int EMAIL_SEND_TO_VOICEMAIL_COLUMN = 5;
-
+        static CharBuffer sStaticKeyBuffer = CharBuffer.allocate(STATIC_KEY_BUFFER_MAXIMUM_LENGTH);
+        private final TaskStack mTaskQueue = new TaskStack();
         private final Context mContext;
-
         private final HashMap<String, ArrayList<Contact>> mContactsHash = new HashMap<>();
 
         private ContactsCache(Context context) {
@@ -487,47 +490,6 @@ public class Contact {
                     for (Contact c : alc) {
                         Log.d(TAG, key + " ==> " + c.toString());
                     }
-                }
-            }
-        }
-
-        private static class TaskStack {
-            Thread mWorkerThread;
-            private final ArrayList<Runnable> mThingsToLoad;
-
-            public TaskStack() {
-                mThingsToLoad = new ArrayList<Runnable>();
-                mWorkerThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            Runnable r = null;
-                            synchronized (mThingsToLoad) {
-                                if (mThingsToLoad.size() == 0) {
-                                    try {
-                                        mThingsToLoad.wait();
-                                    } catch (InterruptedException ex) {
-                                        break;  // Exception sent by Contact.init() to stop Runnable
-                                    }
-                                }
-                                if (mThingsToLoad.size() > 0) {
-                                    r = mThingsToLoad.remove(0);
-                                }
-                            }
-                            if (r != null) {
-                                r.run();
-                            }
-                        }
-                    }
-                }, "Contact.ContactsCache.TaskStack worker thread");
-                mWorkerThread.setPriority(Thread.MIN_PRIORITY);
-                mWorkerThread.start();
-            }
-
-            public void push(Runnable r) {
-                synchronized (mThingsToLoad) {
-                    mThingsToLoad.add(r);
-                    mThingsToLoad.notify();
                 }
             }
         }
@@ -761,7 +723,7 @@ public class Contact {
                         // access to mListeners is synchronized on ContactsCache
                         HashSet<UpdateListener> iterator;
                         synchronized (mListeners) {
-                            iterator = (HashSet<UpdateListener>)Contact.mListeners.clone();
+                            iterator = (HashSet<UpdateListener>) Contact.mListeners.clone();
                         }
                         for (UpdateListener l : iterator) {
                             if (Log.isLoggable(LogTag.CONTACT, Log.DEBUG)) {
@@ -838,6 +800,7 @@ public class Contact {
 
         /**
          * Queries the caller id info with the phone number.
+         *
          * @return a Contact containing the caller id info corresponding to the number.
          */
         private Contact getContactInfoForPhoneNumber(String number) {
@@ -858,10 +821,10 @@ public class Contact {
                 String[] args;
                 if (TextUtils.isEmpty(numberE164)) {
                     selection = CALLER_ID_SELECTION_WITHOUT_E164;
-                    args = new String[] {minMatch, numberLen, normalizedNumber, numberLen};
+                    args = new String[]{minMatch, numberLen, normalizedNumber, numberLen};
                 } else {
                     selection = CALLER_ID_SELECTION;
-                    args = new String[] {
+                    args = new String[]{
                             minMatch, numberE164, numberLen, normalizedNumber, numberLen};
                 }
 
@@ -954,6 +917,7 @@ public class Contact {
                 contact.mAvatarData = data;
             }
         }
+
         /*
          * Load the avatar data from the cursor into memory.  Don't decode the data
          * until someone calls for it (see getAvatar).  Hang onto the raw data so that
@@ -962,7 +926,7 @@ public class Contact {
          * the raw bytes after the image is decoded.
          */
         private byte[] loadAvatarData(Contact entry) {
-            byte [] data = null;
+            byte[] data = null;
 
             if ((!entry.mIsMe && entry.mPersonId == 0) || entry.mAvatar != null) {
                 return null;
@@ -1020,7 +984,7 @@ public class Contact {
                     EMAIL_WITH_PRESENCE_URI,
                     EMAIL_PROJECTION,
                     EMAIL_SELECTION,
-                    new String[] { email },
+                    new String[]{email},
                     null);
 
             if (cursor != null) {
@@ -1093,11 +1057,6 @@ public class Contact {
             }
         }
 
-        // Reuse this so we don't have to allocate each time we go through this
-        // "get" function.
-        static final int STATIC_KEY_BUFFER_MAXIMUM_LENGTH = 5;
-        static CharBuffer sStaticKeyBuffer = CharBuffer.allocate(STATIC_KEY_BUFFER_MAXIMUM_LENGTH);
-
         private Contact internalGet(String numberOrEmail, boolean isMe) {
             synchronized (ContactsCache.this) {
                 // See if we can find "number" in the hashtable.
@@ -1111,7 +1070,7 @@ public class Contact {
                 if (candidates != null) {
                     int length = candidates.size();
                     for (int i = 0; i < length; i++) {
-                        Contact c= candidates.get(i);
+                        Contact c = candidates.get(i);
                         if (isNotRegularPhoneNumber) {
                             if (numberOrEmail.equals(c.mNumber)) {
                                 return c;
@@ -1181,9 +1140,46 @@ public class Contact {
                 }
             }
         }
-    }
 
-    private static void log(String msg) {
-        Log.d(TAG, msg);
+        private static class TaskStack {
+            private final ArrayList<Runnable> mThingsToLoad;
+            Thread mWorkerThread;
+
+            public TaskStack() {
+                mThingsToLoad = new ArrayList<Runnable>();
+                mWorkerThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (true) {
+                            Runnable r = null;
+                            synchronized (mThingsToLoad) {
+                                if (mThingsToLoad.size() == 0) {
+                                    try {
+                                        mThingsToLoad.wait();
+                                    } catch (InterruptedException ex) {
+                                        break;  // Exception sent by Contact.init() to stop Runnable
+                                    }
+                                }
+                                if (mThingsToLoad.size() > 0) {
+                                    r = mThingsToLoad.remove(0);
+                                }
+                            }
+                            if (r != null) {
+                                r.run();
+                            }
+                        }
+                    }
+                }, "Contact.ContactsCache.TaskStack worker thread");
+                mWorkerThread.setPriority(Thread.MIN_PRIORITY);
+                mWorkerThread.start();
+            }
+
+            public void push(Runnable r) {
+                synchronized (mThingsToLoad) {
+                    mThingsToLoad.add(r);
+                    mThingsToLoad.notify();
+                }
+            }
+        }
     }
 }

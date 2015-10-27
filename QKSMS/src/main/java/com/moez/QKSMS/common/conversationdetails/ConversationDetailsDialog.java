@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Conversation;

@@ -28,6 +28,7 @@ import android.preference.PreferenceManager;
 import android.provider.SearchRecentSuggestions;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
 import com.android.mms.transaction.MmsSystemEventReceiver;
 import com.android.mms.util.DownloadManager;
 import com.android.mms.util.RateController;
@@ -47,15 +48,23 @@ import java.util.Locale;
 
 public class QKSMSAppBase extends Application {
     public static final String LOG_TAG = "Mms";
-
+    private static QKSMSAppBase sQKSMSApp = null;
     private SearchRecentSuggestions mRecentSuggestions;
     private TelephonyManager mTelephonyManager;
     private String mCountryIso;
-    private static QKSMSAppBase sQKSMSApp = null;
     private PduLoaderManager mPduLoaderManager;
     private ThumbnailManager mThumbnailManager;
     private DrmManagerClient mDrmManagerClient;
     private RefWatcher refWatcher;
+
+    public static RefWatcher getRefWatcher(Context context) {
+        QKSMSAppBase application = (QKSMSAppBase) context.getApplicationContext();
+        return application.refWatcher;
+    }
+
+    synchronized public static QKSMSAppBase getApplication() {
+        return sQKSMSApp;
+    }
 
     @Override
     public void onCreate() {
@@ -99,11 +108,6 @@ public class QKSMSAppBase extends Application {
         activePendingMessages();
     }
 
-    public static RefWatcher getRefWatcher(Context context) {
-        QKSMSAppBase application = (QKSMSAppBase) context.getApplicationContext();
-        return application.refWatcher;
-    }
-
     @SuppressLint("CommitPrefEdits")
     private void loadDefaultPreferenceValues() {
         // Load the default values
@@ -120,10 +124,6 @@ public class QKSMSAppBase extends Application {
 
         // For Sms: retry to send smses in outbox and queued box
         //sendBroadcast(new Intent(SmsReceiverService.ACTION_SEND_INACTIVE_MESSAGE, null, this, SmsReceiver.class));
-    }
-
-    synchronized public static QKSMSAppBase getApplication() {
-        return sQKSMSApp;
     }
 
     @Override
@@ -161,6 +161,7 @@ public class QKSMSAppBase extends Application {
 
     /**
      * Returns the content provider wrapper that allows access to recent searches.
+     *
      * @return Returns the content provider wrapper that allows access to recent searches.
      */
     public SearchRecentSuggestions getRecentSuggestions() {

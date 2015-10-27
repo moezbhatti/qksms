@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.mmssms.Apn;
 import com.moez.QKSMS.mmssms.ApnUtils;
@@ -31,8 +32,6 @@ import static com.moez.QKSMS.ui.dialog.mms.QKDialogFragment.POSITIVE_BUTTON_RESU
  */
 public class MMSSetupFragment extends QKFragment implements DialogFragmentListener {
     public static final String TAG = "MMSSetupFragment";
-    private static final boolean LOCAL_LOGV = true;
-
     public static final String SET_UP_MMS = "set_up_mms";
     public static final String NO_CONFIGURATIONS_FOUND = "no_configurations_found";
     public static final String ONE_CONFIGURATION_FOUND = "one_configuration_found";
@@ -40,37 +39,95 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
     public static final String SUCCESS = "success";
     public static final String NEXT_STEPS = "next_steps";
     public static final String SETTING_UP_MMS_LATER = "setting_up_mms_later";
-
     /**
      * Key for savedInstanceState to restore the dialogs on rotation.
      */
     public static final String STATE_DIALOG_TAG = "dialogTag";
-    private String mDialogTag = SET_UP_MMS;
-
     /**
      * If true, the user will see a dialog asking them if they want to automatically configure MMS.
      * Defaults to true.
      */
     public static final String ARG_ASK_FIRST = "argAskFirst";
-    private static final boolean ARG_ASK_FIRST_DEFAULT = true;
-
     /**
      * If non-null, the dialog will not be shown if the pref given is "true".
-     *
+     * <p/>
      * Additionally, if ARG_ASK_FIRST is true, a DON'T ASK AGAIN button will be shown when asking
      * the user if they want to configure MMS.
      */
     public static final String ARG_DONT_ASK_AGAIN_PREF = "dontAskAgainPref";
+    private static final boolean LOCAL_LOGV = true;
+    private static final boolean ARG_ASK_FIRST_DEFAULT = true;
     private static final String ARG_DONT_ASK_AGAIN_PREF_DEFAULT = null;
-
     /**
      * Contains the APNs from the last time the `query` was called.
      */
     List<Apn> mAPNs;
-
+    private String mDialogTag = SET_UP_MMS;
     // Arguments
     private boolean mArgAskFirst = ARG_ASK_FIRST_DEFAULT;
     private String mArgDontAskAgainPref = ARG_DONT_ASK_AGAIN_PREF_DEFAULT;
+
+    /**
+     * Sends an email to mms-support@qklabs.com with a bunch of MMS-related debugging information.
+     *
+     * @param context current context
+     */
+    public static void contactSupport(Context context) {
+        if (context != null) {
+            Intent intent = new Intent(
+                    Intent.ACTION_SENDTO,
+                    Uri.fromParts("mailto", "mms-support@qklabs.com", null)
+            );
+            intent.putExtra(Intent.EXTRA_EMAIL, "mms-support@qklabs.com");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "MMS Support Request");
+            intent.putExtra(Intent.EXTRA_TEXT, getSupportEmailBody(context));
+            context.startActivity(intent);
+        }
+    }
+
+    private static String getSupportEmailBody(Context context) {
+        if (context != null) {
+            TelephonyManager manager = (TelephonyManager)
+                    context.getSystemService(Context.TELEPHONY_SERVICE);
+            Settings settings = SmsHelper.getSendSettings(context);
+
+            // Build the message body
+            StringBuilder body = new StringBuilder();
+            body.append("Press send, and the QKSMS team will find the correct MMS settings for you!\n\n");
+            body.append("------------- DO NOT MODIFY -------------\n");
+            body.append("Data activity: ").append(manager.getDataActivity()).append("\n");
+            if (Build.VERSION.SDK_INT >= 19) {
+                body.append("MMS UAProfUrl: ").append(manager.getMmsUAProfUrl()).append("\n");
+                body.append("MMS User Agent: ").append(manager.getMmsUserAgent()).append("\n");
+            }
+            body.append("Network operator: ").append(manager.getNetworkOperator()).append("\n");
+            body.append("Network name: ").append(manager.getNetworkOperatorName()).append("\n");
+            body.append("Radio type: ").append(manager.getPhoneType()).append("\n");
+            body.append("Sim operator: ").append(manager.getSimOperator()).append("\n");
+            body.append("Sim operator name: ").append(manager.getSimOperatorName()).append("\n");
+            body.append("Subscriber ID: ").append(manager.getSubscriberId()).append("\n");
+            body.append("\n");
+            body.append("Automatically configured APNs:\n");
+
+            List<Apn> apns = ApnUtils.query(context);
+            if (apns != null) {
+                for (Apn apn : apns) {
+                    body.append(apn.toString()).append("\n");
+                }
+            }
+            body.append("\n");
+            body.append("Selected APN settings:\n");
+            body.append(String.format("{name:%s, mmsc:%s, proxy:%s, port:%s}",
+                    settings.getUaProfTagName(),
+                    settings.getMmsc(),
+                    settings.getProxy(),
+                    settings.getPort()));
+
+            return body.toString();
+        } else {
+            return null;
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -178,7 +235,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
                 launchDialog(NEXT_STEPS);
             }
 
-        // Configuration dialog that the single MMS configuration found worked well
+            // Configuration dialog that the single MMS configuration found worked well
         } else if (ONE_CONFIGURATION_FOUND.equals(dialogTag)) {
             if (resultCode == POSITIVE_BUTTON_RESULT) {
                 // Success! Save the APN settings and show them instructions for how to change
@@ -195,7 +252,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
                 launchDialog(NO_CONFIGURATIONS_FOUND);
             }
 
-        // Multiple configurations were found and the user said that none of them looked right.
+            // Multiple configurations were found and the user said that none of them looked right.
         } else if (MULTIPLE_CONFIGURATIONS_FOUND.equals(dialogTag)) {
             if (resultCode == NEGATIVE_BUTTON_RESULT) {
 
@@ -220,23 +277,6 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
             // We'll show the user all the APN names, as well as an "N/A" option in case
             // they all look wrong.
             launchDialog(MULTIPLE_CONFIGURATIONS_FOUND);
-        }
-    }
-
-    /**
-     * Sends an email to mms-support@qklabs.com with a bunch of MMS-related debugging information.
-     * @param context current context
-     */
-    public static void contactSupport(Context context) {
-        if (context != null) {
-            Intent intent = new Intent(
-                    Intent.ACTION_SENDTO,
-                    Uri.fromParts("mailto", "mms-support@qklabs.com", null)
-            );
-            intent.putExtra(Intent.EXTRA_EMAIL, "mms-support@qklabs.com");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "MMS Support Request");
-            intent.putExtra(Intent.EXTRA_TEXT, getSupportEmailBody(context));
-            context.startActivity(intent);
         }
     }
 
@@ -353,50 +393,6 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
                     .setPositiveButton(R.string.okay)
                     .show(getFragmentManager(), SUCCESS);
 
-        }
-    }
-
-    private static String getSupportEmailBody(Context context) {
-        if (context != null) {
-            TelephonyManager manager = (TelephonyManager)
-                    context.getSystemService(Context.TELEPHONY_SERVICE);
-            Settings settings = SmsHelper.getSendSettings(context);
-
-            // Build the message body
-            StringBuilder body = new StringBuilder();
-            body.append("Press send, and the QKSMS team will find the correct MMS settings for you!\n\n");
-            body.append("------------- DO NOT MODIFY -------------\n");
-            body.append("Data activity: ").append(manager.getDataActivity()).append("\n");
-            if (Build.VERSION.SDK_INT >= 19) {
-                body.append("MMS UAProfUrl: ").append(manager.getMmsUAProfUrl()).append("\n");
-                body.append("MMS User Agent: ").append(manager.getMmsUserAgent()).append("\n");
-            }
-            body.append("Network operator: ").append(manager.getNetworkOperator()).append("\n");
-            body.append("Network name: ").append(manager.getNetworkOperatorName()).append("\n");
-            body.append("Radio type: ").append(manager.getPhoneType()).append("\n");
-            body.append("Sim operator: ").append(manager.getSimOperator()).append("\n");
-            body.append("Sim operator name: ").append(manager.getSimOperatorName()).append("\n");
-            body.append("Subscriber ID: ").append(manager.getSubscriberId()).append("\n");
-            body.append("\n");
-            body.append("Automatically configured APNs:\n");
-
-            List<Apn> apns = ApnUtils.query(context);
-            if (apns != null) {
-                for (Apn apn : apns) {
-                    body.append(apn.toString()).append("\n");
-                }
-            }
-            body.append("\n");
-            body.append("Selected APN settings:\n");
-            body.append(String.format("{name:%s, mmsc:%s, proxy:%s, port:%s}",
-                    settings.getUaProfTagName(),
-                    settings.getMmsc(),
-                    settings.getProxy(),
-                    settings.getPort()));
-
-            return body.toString();
-        } else {
-            return null;
         }
     }
 }

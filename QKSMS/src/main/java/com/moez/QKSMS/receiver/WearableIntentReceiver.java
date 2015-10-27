@@ -14,10 +14,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.RemoteInput;
 import android.view.Gravity;
 
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.ContactHelper;
+import com.moez.QKSMS.mmssms.Message;
+import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.service.MarkReadService;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -34,13 +34,11 @@ import static android.support.v4.app.NotificationCompat.BigTextStyle;
 import static android.support.v4.app.NotificationCompat.WearableExtender;
 
 public class WearableIntentReceiver extends BroadcastReceiver {
-    private static final String TAG = "WearableIntentActivity";
-
     public static final String ACTION_REPLY = "com.moez.QKSMS.receiver.WearableIntentReceiver.REPLY";
-
     public static final String EXTRA_ADDRESS = "address";
     public static final String EXTRA_THREAD_ID = "thread_id";
     public static final String EXTRA_VOICE_REPLY = "voice_reply";
+    private static final String TAG = "WearableIntentActivity";
 
     public static WearableExtender getSingleConversationExtender(Context context, String name, String address, long threadId) {
 
@@ -75,7 +73,6 @@ public class WearableIntentReceiver extends BroadcastReceiver {
 
             wearableExtender.addPage(chatPage);
         }
-
 
 
         Intent replyIntent = new Intent(ACTION_REPLY).setClass(context, WearableIntentReceiver.class);

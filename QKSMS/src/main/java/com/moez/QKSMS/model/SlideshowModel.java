@@ -64,19 +64,17 @@ import java.util.ListIterator;
 
 public class SlideshowModel extends Model
         implements List<SlideModel>, IModelChangedObserver {
+    // amount of space to leave in a slideshow for text and overhead.
+    public static final int SLIDESHOW_SLOP = 1024;
     private static final String TAG = "SlideshowModel";
-
     private final LayoutModel mLayout;
     private final ArrayList<SlideModel> mSlides;
     private SMILDocument mDocumentCache;
     private PduBody mPduBodyCache;
     private int mCurrentMessageSize;    // This is the current message size, not including
-                                        // attachments that can be resized (such as photos)
+    // attachments that can be resized (such as photos)
     private int mTotalMessageSize;      // This is the computed total message size
     private Context mContext;
-
-    // amount of space to leave in a slideshow for text and overhead.
-    public static final int SLIDESHOW_SLOP = 1024;
 
     private SlideshowModel(Context context) {
         mLayout = new LayoutModel();
@@ -84,7 +82,7 @@ public class SlideshowModel extends Model
         mContext = context;
     }
 
-    private SlideshowModel (
+    private SlideshowModel(
             LayoutModel layouts, ArrayList<SlideModel> slides,
             SMILDocument documentCache, PduBody pbCache,
             Context context) {
@@ -180,19 +178,19 @@ public class SlideshowModel extends Model
                             media.setDuration(mediadur);
                         }
 
-                        if ((int)mediadur / 1000 != dur) {
+                        if ((int) mediadur / 1000 != dur) {
                             String tag = sme.getTagName();
 
                             if (ContentType.isVideoType(media.mContentType)
-                              || tag.equals(SmilHelper.ELEMENT_TAG_VIDEO)
-                              || ContentType.isAudioType(media.mContentType)
-                              || tag.equals(SmilHelper.ELEMENT_TAG_AUDIO)) {
+                                    || tag.equals(SmilHelper.ELEMENT_TAG_VIDEO)
+                                    || ContentType.isAudioType(media.mContentType)
+                                    || tag.equals(SmilHelper.ELEMENT_TAG_AUDIO)) {
                                 /*
                                 * add 1 sec to release and close audio/video
                                 * for guaranteeing the audio/video playing.
                                 * because the mmsc does not support the slide duration.
                                 */
-                                par.setDur((float)mediadur / 1000 + 1);
+                                par.setDur((float) mediadur / 1000 + 1);
                             } else {
                                 /*
                                 * If a slide has an image and an audio/video element
@@ -200,13 +198,13 @@ public class SlideshowModel extends Model
                                 * The Image disappear before the slide play done. so have to match
                                 * an image duration to the slide duration.
                                 */
-                                if ((int)mediadur / 1000 < dur) {
-                                    media.setDuration((int)dur * 1000);
+                                if ((int) mediadur / 1000 < dur) {
+                                    media.setDuration((int) dur * 1000);
                                 } else {
-                                    if ((int)dur != 0) {
-                                        media.setDuration((int)dur * 1000);
+                                    if ((int) dur != 0) {
+                                        media.setDuration((int) dur * 1000);
                                     } else {
-                                        par.setDur((float)mediadur / 1000);
+                                        par.setDur((float) mediadur / 1000);
                                     }
                                 }
                             }
@@ -235,6 +233,19 @@ public class SlideshowModel extends Model
         slideshow.mTotalMessageSize = totalMessageSize;
         slideshow.registerModelChangedObserver(slideshow);
         return slideshow;
+    }
+
+    public static PduBody getPduBody(Context context, Uri msg) throws MmsException {
+        PduPersister p = PduPersister.getPduPersister(context);
+        GenericPdu pdu = p.load(msg);
+
+        int msgType = pdu.getMessageType();
+        if ((msgType == PduHeaders.MESSAGE_TYPE_SEND_REQ)
+                || (msgType == PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF)) {
+            return ((MultimediaMessagePdu) pdu).getBody();
+        } else {
+            throw new MmsException();
+        }
     }
 
     public PduBody toPduBody() {
@@ -282,8 +293,7 @@ public class SlideshowModel extends Model
                 if (startWithContentId) {
                     //Keep the original Content-Id.
                     part.setContentId(location.getBytes());
-                }
-                else {
+                } else {
                     int index = location.lastIndexOf(".");
                     String contentId = (index == -1) ? location
                             : location.substring(0, index);
@@ -352,23 +362,6 @@ public class SlideshowModel extends Model
         return mDocumentCache;
     }
 
-    public static PduBody getPduBody(Context context, Uri msg) throws MmsException {
-        PduPersister p = PduPersister.getPduPersister(context);
-        GenericPdu pdu = p.load(msg);
-
-        int msgType = pdu.getMessageType();
-        if ((msgType == PduHeaders.MESSAGE_TYPE_SEND_REQ)
-                || (msgType == PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF)) {
-            return ((MultimediaMessagePdu) pdu).getBody();
-        } else {
-            throw new MmsException();
-        }
-    }
-
-    public void setCurrentMessageSize(int size) {
-        mCurrentMessageSize = size;
-    }
-
     // getCurrentMessageSize returns the size of the message, not including resizable attachments
     // such as photos. mCurrentMessageSize is used when adding/deleting/replacing non-resizable
     // attachments (movies, sounds, etc) in order to compute how much size is left in the message.
@@ -378,6 +371,10 @@ public class SlideshowModel extends Model
     // size of a MMS message, it should call getTotalMessageSize() instead.
     public int getCurrentMessageSize() {
         return mCurrentMessageSize;
+    }
+
+    public void setCurrentMessageSize(int size) {
+        mCurrentMessageSize = size;
     }
 
     // getTotalMessageSize returns the total size of the message, including resizable attachments
@@ -503,7 +500,7 @@ public class SlideshowModel extends Model
     }
 
     public boolean addAll(int location,
-            Collection<? extends SlideModel> collection) {
+                          Collection<? extends SlideModel> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
@@ -553,7 +550,7 @@ public class SlideshowModel extends Model
             }
         }
 
-        slide =  mSlides.set(location, object);
+        slide = mSlides.set(location, object);
         if (slide != null) {
             slide.unregisterAllModelChangedObservers();
         }
@@ -631,7 +628,7 @@ public class SlideshowModel extends Model
      * - Exactly one slide
      * - Exactly one multimedia attachment, but no audio
      * - It can optionally have a caption
-    */
+     */
     public boolean isSimple() {
         // There must be one (and only one) slide.
         if (size() != 1)

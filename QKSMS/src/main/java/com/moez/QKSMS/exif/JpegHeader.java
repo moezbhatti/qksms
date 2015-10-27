@@ -17,14 +17,14 @@
 package com.moez.QKSMS.exif;
 
 class JpegHeader {
-    public static final short SOI =  (short) 0xFFD8;
+    public static final short SOI = (short) 0xFFD8;
     public static final short APP1 = (short) 0xFFE1;
     public static final short APP0 = (short) 0xFFE0;
     public static final short EOI = (short) 0xFFD9;
 
     /**
-     *  SOF (start of frame). All value between SOF0 and SOF15 is SOF marker except for DHT, JPG,
-     *  and DAC marker.
+     * SOF (start of frame). All value between SOF0 and SOF15 is SOF marker except for DHT, JPG,
+     * and DAC marker.
      */
     public static final short SOF0 = (short) 0xFFC0;
     public static final short SOF15 = (short) 0xFFCF;

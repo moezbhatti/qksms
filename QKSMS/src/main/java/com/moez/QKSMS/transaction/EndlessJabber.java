@@ -3,11 +3,11 @@ package com.moez.QKSMS.transaction;
 import android.content.Context;
 import android.util.Log;
 
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
 import com.mariussoft.endlessjabber.sdk.IEndlessJabberImplementation;
 import com.mariussoft.endlessjabber.sdk.MMSPart;
 import com.moez.QKSMS.data.ConversationLegacy;
+import com.moez.QKSMS.mmssms.Message;
+import com.moez.QKSMS.mmssms.Transaction;
 
 public class EndlessJabber implements IEndlessJabberImplementation {
     private final String TAG = "EndlessJabber";

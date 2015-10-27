@@ -8,20 +8,16 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import com.moez.QKSMS.interfaces.LiveView;
+
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class QKEditText extends android.widget.EditText implements LiveView {
     public static final String TAG = "QKEditText";
-
-    public interface TextChangedListener {
-        void onTextChanged(CharSequence s);
-    }
-
     private Context mContext;
 
     public QKEditText(Context context) {
@@ -105,5 +101,9 @@ public class QKEditText extends android.widget.EditText implements LiveView {
         // Text size
         int sp = FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY);
         setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
+    }
+
+    public interface TextChangedListener {
+        void onTextChanged(CharSequence s);
     }
 }
