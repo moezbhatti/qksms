@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 repositories {
     mavenCentral()
@@ -44,8 +45,8 @@ android {
         compileOptions.encoding = "UTF-8"
 
         // Use Java 1.7, requires minSdk 8
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -56,6 +57,16 @@ android {
         disable 'MissingTranslation'
     }
 
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.2'
+    }
 }
 
 dependencies {
