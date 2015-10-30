@@ -731,6 +731,7 @@
     <string name="date_yesterday">Yesterday</string>
     <string name="date_just_now">Just now</string>
     <string name="compose_loading_attachment">Loading attachment</string>
+    <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
 
     <string-array name="resend_menu">
         <item>Resend</item>
