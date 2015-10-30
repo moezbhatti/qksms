@@ -349,6 +349,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                 mPosition = 0;
             }
         }
+
+        mEmptyState.setVisibility(data != null && data.getCount() > 0 ? View.GONE : View.VISIBLE);
     }
 
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -366,7 +368,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mFab.setColorNormal(ThemeManager.getColor());
         mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
         mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
-        
+
         mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
 
         //TODO ListviewHelper.applyCustomScrollbar(mContext, mListView);

@@ -12,7 +12,8 @@
         android:alpha="0.5"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingBottom="32dp">
+        android:paddingBottom="32dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/empty_state_icon"
