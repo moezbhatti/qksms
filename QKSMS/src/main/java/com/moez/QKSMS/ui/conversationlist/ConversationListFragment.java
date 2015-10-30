@@ -19,7 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -115,17 +114,14 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
         mFab.attachToRecyclerView(mRecyclerView);
         mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Show the compose fragment, showing the keyboard and focusing on the recipients edittext.
-                Bundle args = new Bundle();
-                args.putBoolean(ComposeFragment.ARG_SHOW_KEYBOARD, true);
-                args.putString(ComposeFragment.ARG_FOCUS, ComposeFragment.FOCUS_RECIPIENTS);
+        mFab.setOnClickListener(v -> {
+            // Show the compose fragment, showing the keyboard and focusing on the recipients edittext.
+            Bundle args = new Bundle();
+            args.putBoolean(ComposeFragment.ARG_SHOW_KEYBOARD, true);
+            args.putString(ComposeFragment.ARG_FOCUS, ComposeFragment.FOCUS_RECIPIENTS);
 
-                Fragment content = getFragmentManager().findFragmentById(R.id.content_frame);
-                switchFragment(ComposeFragment.getInstance(args, content));
-            }
+            Fragment content = getFragmentManager().findFragmentById(R.id.content_frame);
+            switchFragment(ComposeFragment.getInstance(args, content));
         });
 
         mViewHasLoaded = true;
@@ -252,60 +248,57 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
         dialog.addMenuItem(R.string.menu_delete_conversation, MENU_DELETE_CONVERSATION);
 
-        dialog.buildMenu(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch ((int) id) {
-                    case MENU_MUTE_CONVERSATION:
-                        conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, false);
-                        mAdapter.notifyDataSetChanged();
-                        break;
+        dialog.buildMenu((parent, view1, position, id) -> {
+            switch ((int) id) {
+                case MENU_MUTE_CONVERSATION:
+                    conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, false);
+                    mAdapter.notifyDataSetChanged();
+                    break;
 
-                    case MENU_UNMUTE_CONVERSATION:
-                        conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, true);
-                        mAdapter.notifyDataSetChanged();
-                        break;
+                case MENU_UNMUTE_CONVERSATION:
+                    conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, true);
+                    mAdapter.notifyDataSetChanged();
+                    break;
 
-                    case MENU_NOTIFICATION_SETTINGS:
-                        ConversationNotificationSettingsDialog.newInstance(threadId, name).setContext(mContext)
-                                .show(getFragmentManager(), "notification prefs");
-                        break;
+                case MENU_NOTIFICATION_SETTINGS:
+                    ConversationNotificationSettingsDialog.newInstance(threadId, name).setContext(mContext)
+                            .show(getFragmentManager(), "notification prefs");
+                    break;
 
-                    case MENU_VIEW_DETAILS:
-                        mConversationDetailsDialog.showDetails(conversation);
-                        break;
+                case MENU_VIEW_DETAILS:
+                    mConversationDetailsDialog.showDetails(conversation);
+                    break;
 
-                    case MENU_BLOCK_CONVERSATION:
-                        BlockedConversationHelper.blockConversation(mPrefs, conversation.getThreadId());
-                        initLoaderManager();
-                        break;
+                case MENU_BLOCK_CONVERSATION:
+                    BlockedConversationHelper.blockConversation(mPrefs, conversation.getThreadId());
+                    initLoaderManager();
+                    break;
 
-                    case MENU_UNBLOCK_CONVERSATION:
-                        BlockedConversationHelper.unblockConversation(mPrefs, conversation.getThreadId());
-                        initLoaderManager();
-                        break;
+                case MENU_UNBLOCK_CONVERSATION:
+                    BlockedConversationHelper.unblockConversation(mPrefs, conversation.getThreadId());
+                    initLoaderManager();
+                    break;
 
-                    case MENU_MARK_READ:
-                        new ConversationLegacy(mContext, threadId).markRead();
-                        break;
+                case MENU_MARK_READ:
+                    new ConversationLegacy(mContext, threadId).markRead();
+                    break;
 
-                    case MENU_MARK_UNREAD:
-                        new ConversationLegacy(mContext, threadId).markUnread();
-                        break;
+                case MENU_MARK_UNREAD:
+                    new ConversationLegacy(mContext, threadId).markUnread();
+                    break;
 
-                    case MENU_MULTI_SELECT:
-                        mAdapter.setSelected(threadId);
-                        break;
+                case MENU_MULTI_SELECT:
+                    mAdapter.setSelected(threadId);
+                    break;
 
-                    case MENU_DELETE_CONVERSATION:
-                        DialogHelper.showDeleteConversationDialog((MainActivity) mContext, threadId);
-                        break;
+                case MENU_DELETE_CONVERSATION:
+                    DialogHelper.showDeleteConversationDialog((MainActivity) mContext, threadId);
+                    break;
 
-                    case MENU_DELETE_FAILED:
-                        //Deletes all failed messages from all conversations
-                        DialogHelper.showDeleteFailedMessagesDialog((MainActivity) mContext, threadId);
-                        break;
-                }
+                case MENU_DELETE_FAILED:
+                    //Deletes all failed messages from all conversations
+                    DialogHelper.showDeleteFailedMessagesDialog((MainActivity) mContext, threadId);
+                    break;
             }
         }).show(mContext.getFragmentManager(), "conversation options");
     }
