@@ -44,6 +44,9 @@ import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>, LiveView,
         RecyclerCursorAdapter.ItemClickListener<Conversation>, RecyclerCursorAdapter.MultiSelectListener {
@@ -62,10 +65,11 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private final int MENU_BLOCK_CONVERSATION = 9;
     private final int MENU_UNBLOCK_CONVERSATION = 10;
 
-    private View mEmptyState;
-    private ImageView mEmptyStateIcon;
-    private RecyclerView mRecyclerView;
-    private FloatingActionButton mFab;
+    @Bind(R.id.empty_state) View mEmptyState;
+    @Bind(R.id.empty_state_icon) ImageView mEmptyStateIcon;
+    @Bind(R.id.conversations_list) RecyclerView mRecyclerView;
+    @Bind(R.id.fab) FloatingActionButton mFab;
+
     private ConversationListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ConversationDetailsDialog mConversationDetailsDialog;
@@ -98,18 +102,15 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_conversations, null);
+        ButterKnife.bind(this, view);
 
-        mEmptyState = view.findViewById(R.id.empty_state);
-        mEmptyStateIcon = (ImageView) view.findViewById(R.id.empty_state_icon);
         mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.conversations_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         //TODO ListviewHelper.applyCustomScrollbar(mContext, mRecyclerView);
 
-        mFab = (FloatingActionButton) view.findViewById(R.id.fab);
         mFab.setColorNormal(ThemeManager.getColor());
         mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
         mFab.attachToRecyclerView(mRecyclerView);
