@@ -151,7 +151,7 @@ public class Transaction {
         //
         // then, send as MMS, else send as Voice or SMS
         if (checkMMS(message)) {
-            try { Looper.prepare(); } catch (Exception e) { }
+            try { Looper.prepare(); } catch (Exception e) { Log.e(TAG, "Cannot prepare Looper"); }
             RateController.init(context);
             DownloadManager.init(context);
             sendMmsMessage(message.getText(), message.getAddresses(), message.getImages(), message.getImageNames(), message.getMedia(), message.getMediaMimeType(), message.getSubject());

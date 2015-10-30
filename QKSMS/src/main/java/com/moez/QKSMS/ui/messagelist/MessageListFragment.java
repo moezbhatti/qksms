@@ -44,6 +44,7 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduBody;
@@ -80,8 +81,6 @@ import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.SmoothLinearLayoutManager;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -91,6 +90,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 public class MessageListFragment extends QKContentFragment implements ActivityLauncher, SensorEventListener,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener,
@@ -338,7 +340,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             if (view.getId() == R.id.image_view || view.getId() == R.id.play_slideshow_button) {
                 switch (messageItem.mAttachmentType) {
                     case SmsHelper.IMAGE:
-                    case SmsHelper.AUDIO:
+                    case SmsHelper.AUDIO:  //TODO Play audio files in app
                     case SmsHelper.SLIDESHOW:
                         MessageUtils.viewMmsMessageAttachment(getActivity(), messageItem.mMessageUri, messageItem.mSlideshow, getAsyncDialog());
                         break;

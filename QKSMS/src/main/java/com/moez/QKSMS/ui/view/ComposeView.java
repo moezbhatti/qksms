@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -21,12 +23,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
@@ -34,21 +38,25 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.github.lzyzsd.circleprogress.DonutProgress;
-import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.mmssms.Utils;
+import com.google.common.io.ByteStreams;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
+import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.utils.ImageUtils;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.common.utils.RecordAudioUtils;
+import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.interfaces.RecipientProvider;
-import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.utils.ImageUtils;
-import com.moez.QKSMS.common.utils.PhoneNumberUtils;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.mmssms.Transaction;
+import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -59,11 +67,13 @@ import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ComposeView extends LinearLayout implements View.OnClickListener, LiveView {
     public final static String TAG = "ComposeView";
@@ -79,6 +89,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     enum SendButtonState {
         SEND, // send a messaage
         ATTACH, // open the attachment panel
+        RECORD, // is recording a voice note
         CLOSE, // close the attachment panel
         CANCEL // cancel a message while it's sending
     }
@@ -106,9 +117,11 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     private ImageView mButtonBackground;
     private ImageView mButtonBar1;
     private ImageView mButtonBar2;
+    private ImageView mButtonVoice;
     private ImageButton mAttach;
     private ImageButton mCamera;
     private ImageButton mDelay;
+    private ImageButton mAudio;
     private View mAttachmentPanel;
     private QKTextView mLetterCount;
     private FrameLayout mAttachmentLayout;
@@ -119,16 +132,23 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     private boolean mDelayedMessagingEnabled;
     private boolean mSendingCancelled;
     private boolean mIsSendingBlocked;
+    private boolean mIsRecording;
     private String mSendingBlockedMessage;
 
     private String mCurrentPhotoPath;
     private ValueAnimator mProgressAnimator;
     private int mDelayDuration = 3000;
+    private int mNoteVibrationTime = 30;
+
+    private byte[] audioAttachment;
 
     private SendButtonState mButtonState = SendButtonState.ATTACH;
 
     private static final int REQUEST_CODE_IMAGE = 0x00F1;
     private static final int REQUEST_CODE_CAMERA = 0x00F2;
+    private static final int REQUEST_CODE_AUDIO = 0x00F3;
+
+    private Vibrator vi = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
     public ComposeView(Context context, AttributeSet attributeSet) {
         this(context, attributeSet, 0);
@@ -166,20 +186,80 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         mButtonBackground = (ImageView) findViewById(R.id.compose_button_background);
         mButtonBar1 = (ImageView) findViewById(R.id.compose_button_bar_1);
         mButtonBar2 = (ImageView) findViewById(R.id.compose_button_bar_2);
+        mButtonVoice = (ImageView) findViewById(R.id.compose_button_voice);
         mAttachmentPanel = findViewById(R.id.attachment_panel);
         mAttach = (ImageButton) findViewById(R.id.attach);
         mCamera = (ImageButton) findViewById(R.id.camera);
         mDelay = (ImageButton) findViewById(R.id.delay);
+        mAudio = (ImageButton) findViewById(R.id.audio);
         mLetterCount = (QKTextView) findViewById(R.id.compose_letter_count);
         mAttachmentLayout = (FrameLayout) findViewById(R.id.attachment);
         mAttachment = (AttachmentImageView) findViewById(R.id.compose_attachment);
         mCancel = (ImageButton) findViewById(R.id.cancel);
 
-        mButton.setOnClickListener(this);
         mAttach.setOnClickListener(this);
         mCamera.setOnClickListener(this);
         mCancel.setOnClickListener(this);
         mDelay.setOnClickListener(this);
+        mAudio.setOnClickListener(this);
+
+        mButton.setOnTouchListener(new OnTouchListener() { //Set OnTouchListener to differentiate between long & short click
+            private RecordAudioUtils recordAudioUtils = new RecordAudioUtils();
+            private long then;
+            private int longClickTime = 260; // set time for a long click in ms
+            private int minRecordTime = 400; // set min record time
+            private Rect rect;
+            private boolean outside = false;
+            private final Handler handler = new Handler();
+            private Runnable mLongPressed = new Runnable() {
+                public void run() { //Start record
+                    handleAudioRecord(0, recordAudioUtils);
+                }
+            };
+            private Runnable mRecordCanceled = new Runnable() {
+                public void run() { //cancel record
+                    handleAudioRecord(1, recordAudioUtils);
+                }
+            };
+            @Override public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        then = System.currentTimeMillis();
+                        //Start delayed runnable in background which will start the record when it isn't canceled in time
+                        if (mButtonState == SendButtonState.ATTACH) handler.postDelayed(mLongPressed, longClickTime);
+                        // Construct a rect of the view's bounds
+                        rect = new Rect(v.getLeft() + 600,
+                                v.getTop() + 50,
+                                v.getRight() + 50,
+                                v.getBottom() + 50);
+                        return true;
+
+                    case MotionEvent.ACTION_UP:
+                        long elapsedTime = (System.currentTimeMillis() - then);
+
+                        if (elapsedTime < longClickTime || mButtonState == SendButtonState.SEND ||
+                                mButtonState == SendButtonState.CLOSE) { //Short click
+                            handleComposeButtonClick(); //handle normal compose button click
+                            handler.removeCallbacks(mLongPressed); //stop runnable who would otherwise start the record
+                        }
+                        else if (elapsedTime < (longClickTime + minRecordTime) || outside) { //Outside of rect or too short
+                            vi.vibrate(mNoteVibrationTime);
+                            //Prevent crash when record isn't completely started
+                            handler.postDelayed(mRecordCanceled, 400); //stop & delete record
+                        }
+                        else handleAudioRecord(2, recordAudioUtils); //record stopped, send record
+                        return true;
+
+                    case MotionEvent.ACTION_MOVE:
+                        /* Reference http://stackoverflow.com/a/26423204/4026792
+                           Check if moved out of rect */
+                        v.getHitRect(rect);
+                        outside = !rect.contains(Math.round(v.getX() + event.getX()), Math.round(v.getY() + event.getY()));
+                        return true;
+                }
+                return false;
+            }
+        });
 
         LiveViewManager.registerView(this);
         LiveViewManager.registerPreference(this, SettingsFragment.THEME);
@@ -306,7 +386,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
      *
      * @param requestCode
      * @param resultCode
-     * @param data
+     * @param data Uri for file
      */
     public boolean onActivityResult(int requestCode, int resultCode, final Intent data) {
         boolean result = false;
@@ -316,10 +396,19 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
             Toast.makeText(mContext, R.string.compose_loading_attachment, Toast.LENGTH_LONG).show();
             new ImageLoaderTask(mContext, data.getData()).execute();
-        } else if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
+        }
+        else if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
             result = true;
             Toast.makeText(mContext, R.string.compose_loading_attachment, Toast.LENGTH_LONG).show();
             new ImageLoaderFromCameraTask().execute((Void[]) null);
+        }
+        else if (requestCode == REQUEST_CODE_AUDIO && resultCode == Activity.RESULT_OK) {
+            result = true;
+            InputStream inputStream;
+            try {inputStream = getContext().getContentResolver().openInputStream(data.getData());}
+            catch (FileNotFoundException e){return true;}
+            new AudioLoaderTask(mContext, inputStream, false).execute();
+            updateButtonState();
         }
 
         return result;
@@ -338,8 +427,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
         if (mAttachmentPanel.getVisibility() == View.VISIBLE) {
             buttonState = SendButtonState.CLOSE;
-        } else if (length > 0 || mAttachment.hasAttachment()) {
+        } else if (length > 0 || mAttachment.hasAttachment() || audioAttachment != null) {
             buttonState = SendButtonState.SEND;
+        } else if (mIsRecording) {
+            buttonState = SendButtonState.RECORD;
         } else {
             buttonState = SendButtonState.ATTACH;
         }
@@ -350,29 +441,38 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     private void updateButtonState(SendButtonState buttonState) {
         if (mButtonState != buttonState) {
             mButtonState = buttonState;
+            if (mIsRecording) {
+                mButtonBar1.setVisibility(INVISIBLE);
+                mButtonBar2.setVisibility(INVISIBLE);
+                mButtonVoice.setVisibility(VISIBLE);
+            }
+            else {
+                mButtonVoice.setVisibility(INVISIBLE);
+                mButtonBar1.setVisibility(VISIBLE);
+                mButtonBar2.setVisibility(VISIBLE);
+                float translation = Units.dpToPx(mContext, 14) / 3;
+                float barRotation1 = mButtonBar1.getRotation();
+                float barTranslation1 = mButtonBar1.getTranslationY();
+                float barRotation2 = mButtonBar2.getRotation();
+                float barTranslation2 = mButtonBar2.getTranslationY();
+                float barRotationTarget1 = mButtonState == SendButtonState.ATTACH ? 0 : 225;
+                float barTranslationTarget1 = mButtonState == SendButtonState.SEND ? -translation : 0;
+                float barRotationTarget2 = mButtonState == SendButtonState.ATTACH ? 90 : 135;
+                float barTranslationTarget2 = mButtonState == SendButtonState.SEND ? translation : 0;
 
-            float translation = Units.dpToPx(mContext, 14) / 3;
-            float barRotation1 = mButtonBar1.getRotation();
-            float barTranslation1 = mButtonBar1.getTranslationY();
-            float barRotation2 = mButtonBar2.getRotation();
-            float barTranslation2 = mButtonBar2.getTranslationY();
-            float barRotationTarget1 = mButtonState == SendButtonState.ATTACH ? 0 : 225;
-            float barTranslationTarget1 = mButtonState == SendButtonState.SEND ? -translation : 0;
-            float barRotationTarget2 = mButtonState == SendButtonState.ATTACH ? 90 : 135;
-            float barTranslationTarget2 = mButtonState == SendButtonState.SEND ? translation : 0;
-
-            ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
+                ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+                ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+                ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+                ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
+                        .setDuration(ANIMATION_DURATION)
+                        .start();
+            }
         }
     }
 
@@ -408,8 +508,11 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         updateButtonState(SendButtonState.CANCEL);
         mProgressAnimator.start();
     }
-
     public void sendSms() {
+        sendSms(null);
+    }
+
+    public void sendSms(byte[] audio) {
         String body = mReplyText.getText().toString();
 
         final Drawable attachment;
@@ -444,7 +547,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
             com.moez.QKSMS.mmssms.Message message = new com.moez.QKSMS.mmssms.Message(body, recipients);
             message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
-            if (attachment != null) {
+            if (audio != null){
+                message.setAudio(audio);
+            }
+            else if (attachment != null) {
                 message.setImage(ImageUtils.drawableToBitmap(attachment));
             }
 
@@ -479,10 +585,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.compose_button:
-                handleComposeButtonClick();
-                break;
-
             case R.id.cancel:
                 clearAttachment();
                 break;
@@ -508,6 +610,14 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                     showDelayedMessagingInfo();
                 } else {
                     toggleDelayedMessaging();
+                }
+                break;
+
+            case R.id.audio:
+                if (hasSetupMms()) {
+                    mAttachmentPanel.setVisibility(GONE);
+                    updateButtonState();
+                    chooseAudioAttachment();
                 }
                 break;
         }
@@ -538,11 +648,45 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                         toggleDelayedMessaging();
                     }
                 })
-                .show(((QKActivity) mContext).getFragmentManager(), "delayed message info");
-        mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, true).apply(); //This should be changed, the dialog should be shown each time when delayed messaging is disabled.
+                .show((mContext).getFragmentManager(), "delayed message info");
+        mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, false).apply(); //Fixme
     }
 
+    private void handleAudioRecord(int record, RecordAudioUtils recordAudioUtils) {
+        switch(record){
+            case 0: //record started
+                recordAudioUtils.onRecord(true);
+                mIsRecording = true;
+                vi.vibrate(mNoteVibrationTime);
+                //mButton.setLayoutParams(new RelativeLayout.LayoutParams(100, 100));
+
+                break;
+            case 1:  // record stopped, delete result
+                mIsRecording = false;
+                recordAudioUtils.onRecord(false);
+                try{boolean deleted = recordAudioUtils.getCurrentFile().delete();} //workaround to delete files
+                catch (NullPointerException e){Log.w(TAG, "Couldn't delete File", e);}
+                break;
+            case 2: //record stopped, send result
+                mIsRecording = false;
+                vi.vibrate(mNoteVibrationTime);
+                recordAudioUtils.onRecord(false);
+                FileInputStream file;
+                try{file = new FileInputStream(recordAudioUtils.getCurrentFile());}
+                catch (FileNotFoundException | NullPointerException e){
+                    Log.e(TAG, "File not found:" + e);
+                    break;
+                }
+                new AudioLoaderTask(mContext, file, true).execute();
+                break;
+            default: break;
+        }
+        updateButtonState();
+    }
+
+
     private void handleComposeButtonClick() {
+
         switch (mButtonState) {
             case ATTACH:
                 mAttachmentPanel.setVisibility(VISIBLE);
@@ -574,13 +718,15 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                     } else if (!isDefaultSmsApp) {
                         // Ask to become the default SMS app
                         new DefaultSmsHelper(mContext, null, R.string.not_default_send).showIfNotDefault(this);
-
-                    } else if (!TextUtils.isEmpty(mReplyText.getText()) || mAttachment.hasAttachment()) {
-                        if (mDelayedMessagingEnabled) {
-                            sendDelayedSms();
-                        } else {
-                            sendSms();
-                        }
+                    }
+                    else if (audioAttachment != null) {
+                        if (mDelayedMessagingEnabled) sendSms(audioAttachment); //FIXME should be delayed
+                        else sendSms(audioAttachment);
+                        audioAttachment = null;
+                    }
+                    else if (!TextUtils.isEmpty(mReplyText.getText()) || mAttachment.hasAttachment()) {
+                        if (mDelayedMessagingEnabled) sendDelayedSms();
+                        else sendSms();
                     }
                 }
                 break;
@@ -609,7 +755,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             args.putBoolean(MMSSetupFragment.ARG_ASK_FIRST, true);
             f.setArguments(args);
 
-            ((Activity) mContext).getFragmentManager()
+            (mContext).getFragmentManager()
                     .beginTransaction()
                     .add(f, MMSSetupFragment.TAG)
                     .commit();
@@ -672,9 +818,26 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         }
     }
 
+    private void chooseAudioAttachment() {
+
+        try {
+            //Intent audioPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+            Intent audioPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            audioPickerIntent.setType("audio/*");
+            Intent c = Intent.createChooser(audioPickerIntent, "Select soundfile");
+            mActivityLauncher.startActivityForResult(c, REQUEST_CODE_AUDIO);
+        } catch (ActivityNotFoundException e) {
+            // Send a toast saying no picture (audio) apps FIXME new string needed
+            if (mContext != null) {
+                String message = mContext.getResources().getString(R.string.attachment_app_not_found);
+                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
@@ -840,6 +1003,19 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             updateButtonState();
         }
     }
+/**
+     * Sets the audio of the attachment view.
+     *
+     * @param audioByte the audio file
+     */
+    public void setAttachment(byte[] audioByte) {
+        if (audioByte == null) clearAttachment();
+        else {
+            audioAttachment = audioByte;
+            mAttachmentLayout.setVisibility(View.GONE);
+            updateButtonState();
+        }
+    }
 
     public void setLabel(String label) {
         mLabel = label;
@@ -847,6 +1023,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
     private class ImageLoaderFromCameraTask extends AsyncTask<Void, Void, Bitmap> {
 
+        @TargetApi(16)
         @Override
         protected Bitmap doInBackground(Void... params) {// Get the dimensions of the View
             int targetW = mAttachment.getMaxWidth();
@@ -944,6 +1121,62 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                     }
                 });
             }
+            return null;
+        }
+    }
+
+    private class AudioLoaderTask extends AsyncTask<InputStream, Void, Void> {
+        final Context mContext;
+        final InputStream mFile;
+        final Handler mHandler;
+        final Boolean mSendDirectly;
+
+        public AudioLoaderTask(final Context context, final InputStream file, Boolean sendDirectly) {
+            mContext = context;
+            mFile = file;
+            mHandler = new Handler();
+            mSendDirectly = sendDirectly;
+        }
+
+        public void execute() {
+            execute(mFile);
+        }
+
+        @Override
+        protected Void doInBackground(InputStream... params) {
+
+            if (params.length < 1) {
+                Log.e(TAG, "AudioLoaderTask called with no File");
+                return null;
+            }
+            InputStream file = params[0];
+            if (file == null) {
+                Log.e(TAG, "No such audio-file");
+                //fixme feedback for user
+                return null;
+            }
+
+            byte[] byteArray;
+            try {byteArray = ByteStreams.toByteArray(file);}
+            catch (IOException e) {
+                Log.e(TAG, "Could not convert file to ByteArray: " + e);
+                //todo Toast for user
+                return null;
+            }
+
+            long maxAttachmentSize = SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+            if (byteArray != null && byteArray.length < maxAttachmentSize) {
+                // Can't post UI updates on a background thread.
+                final byte[] audioByte = byteArray;
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mSendDirectly) sendSms(audioByte);
+                        else setAttachment(audioByte);
+                    }
+                });
+            } else Log.i(TAG, "Audio-file is too big"); //fixme feedback for user
+
             return null;
         }
     }

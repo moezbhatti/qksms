@@ -937,7 +937,6 @@ public class  MessageUtils {
                             slideshow.sync(pb);
                         } catch (MmsException e) {
                             Log.e(TAG, "Unable to save message for preview");
-                            return;
                         }
                     }
                 }
