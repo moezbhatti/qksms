@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
@@ -60,6 +62,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private final int MENU_BLOCK_CONVERSATION = 9;
     private final int MENU_UNBLOCK_CONVERSATION = 10;
 
+    private View mEmptyState;
+    private ImageView mEmptyStateIcon;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFab;
     private ConversationListAdapter mAdapter;
@@ -68,6 +72,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private SharedPreferences mPrefs;
     private MenuItem mBlockedItem;
     private boolean mShowBlocked = false;
+
+    private boolean mViewHasLoaded = false;
 
     // This does not hold the current position of the list, rather the position the list is pending being set to
     private int mPosition;
@@ -93,6 +99,10 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_conversations, null);
 
+        mEmptyState = view.findViewById(R.id.empty_state);
+        mEmptyStateIcon = (ImageView) view.findViewById(R.id.empty_state_icon);
+        mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.conversations_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -116,6 +126,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                 switchFragment(ComposeFragment.getInstance(args, content));
             }
         });
+
+        mViewHasLoaded = true;
 
         initLoaderManager();
 
@@ -347,11 +359,15 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
     @Override
     public void refresh() {
-        if (mFab != null) {
-            mFab.setColorNormal(ThemeManager.getColor());
-            mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
-            mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
+        if (!mViewHasLoaded) {
+            return;
         }
+
+        mFab.setColorNormal(ThemeManager.getColor());
+        mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
+        mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
+        
+        mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
 
         //TODO ListviewHelper.applyCustomScrollbar(mContext, mListView);
     }

@@ -9,11 +9,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:alpha="0.5"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
-        <com.moez.QKSMS.ui.view.QKImageView
+        <ImageView
+            android:id="@+id/empty_state_icon"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/ic_chat" />
