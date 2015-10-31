@@ -20,7 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
@@ -38,25 +39,13 @@ import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
-import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>, LiveView,
         RecyclerCursorAdapter.ItemClickListener<Conversation>, RecyclerCursorAdapter.MultiSelectListener {
 
     private final String TAG = "ConversationList";
-
-    private final int MENU_MARK_READ = 1;
-    private final int MENU_MARK_UNREAD = 2;
-    private final int MENU_DELETE_FAILED = 3;
-    private final int MENU_DELETE_CONVERSATION = 4;
-    private final int MENU_MULTI_SELECT = 5;
-    private final int MENU_BLOCK_CONVERSATION = 6;
-    private final int MENU_UNBLOCK_CONVERSATION = 7;
 
     @Bind(R.id.empty_state) View mEmptyState;
     @Bind(R.id.empty_state_icon) ImageView mEmptyStateIcon;
@@ -128,6 +117,25 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         if (mAdapter.isInMultiSelectMode()) {
             inflater.inflate(R.menu.conversations_selection, menu);
             mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
+
+            menu.findItem(R.id.menu_block).setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
+
+            int unreadWeight = 0;
+            int blockedWeight = 0;
+            boolean someHaveErrors = false;
+            for (Conversation conversation : mAdapter.getSelectedItems().values()) {
+                unreadWeight += conversation.hasUnreadMessages() ? 1 : -1;
+                blockedWeight += BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId()) ? 1 : -1;
+
+                if (conversation.hasError()) {
+                    someHaveErrors = true;
+                }
+            }
+
+            menu.findItem(R.id.menu_mark_read).setIcon(unreadWeight >= 0 ? R.drawable.ic_read : R.drawable.ic_unread);
+            menu.findItem(R.id.menu_mark_read).setTitle(unreadWeight >= 0 ? R.string.menu_mark_read : R.string.menu_mark_unread);
+            menu.findItem(R.id.menu_block).setTitle(blockedWeight > 0 ? R.string.menu_unblock_conversations : R.string.menu_block_conversations);
+            menu.findItem(R.id.menu_delete_failed).setVisible(someHaveErrors);
         } else {
             inflater.inflate(R.menu.conversations, menu);
             mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
@@ -142,19 +150,58 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_blocked:
+                setShowingBlocked(!mShowBlocked);
+                return true;
+
             case R.id.menu_delete:
-                DialogHelper.showDeleteConversationsDialog((MainActivity) mContext, mAdapter);
+                DialogHelper.showDeleteConversationsDialog((MainActivity) mContext, mAdapter.getSelectedItems().keySet());
                 return true;
 
             case R.id.menu_mark_read:
-                for (long threadId : mAdapter.getSelectedItems()) {
-                    new ConversationLegacy(mContext, threadId).markRead();
+                int unreadWeight = 0;
+                for (Conversation conversation : mAdapter.getSelectedItems().values()) {
+                    unreadWeight += conversation.hasUnreadMessages() ? 1 : -1;
+                }
+                for (long threadId : mAdapter.getSelectedItems().keySet()) {
+                    if (unreadWeight >= 0) {
+                        new ConversationLegacy(mContext, threadId).markRead();
+                    } else {
+                        new ConversationLegacy(mContext, threadId).markUnread();
+                    }
                 }
                 mAdapter.disableMultiSelectMode(true);
                 return true;
 
-            case R.id.menu_blocked:
-                setShowingBlocked(!mShowBlocked);
+            case R.id.menu_block:
+                int blockedWeight = 0;
+                for (Conversation conversation : mAdapter.getSelectedItems().values()) {
+                    blockedWeight += BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId()) ? 1 : -1;
+                }
+                for (long threadId : mAdapter.getSelectedItems().keySet()) {
+                    if (blockedWeight > 0) {
+                        BlockedConversationHelper.unblockConversation(mPrefs, threadId);
+                    } else {
+                        BlockedConversationHelper.blockConversation(mPrefs, threadId);
+                    }
+                }
+                mAdapter.disableMultiSelectMode(true);
+                initLoaderManager();
+                return true;
+
+            case R.id.menu_delete_failed:
+                DialogHelper.showDeleteFailedMessagesDialog((MainActivity) mContext, mAdapter.getSelectedItems().keySet());
+                mAdapter.disableMultiSelectMode(true);
+                return true;
+
+            case R.id.menu_select_all:
+                return true;
+
+            case R.id.menu_deselect_all:
+                return true;
+
+            case R.id.menu_done:
+                mAdapter.disableMultiSelectMode(true);
                 return true;
         }
 
@@ -175,7 +222,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public void onItemClick(Conversation conversation, View view) {
         if (mAdapter.isInMultiSelectMode()) {
-            mAdapter.toggleSelection(conversation.getThreadId());
+            mAdapter.toggleSelection(conversation.getThreadId(), conversation);
         } else {
             ((MainActivity) mContext).setConversation(conversation.getThreadId(), -1, null, true);
         }
@@ -183,76 +230,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
     @Override
     public void onItemLongClick(final Conversation conversation, View view) {
-        if (mAdapter.isInMultiSelectMode()) {
-            mAdapter.toggleSelection(conversation.getThreadId());
-            return;
-        }
-
-        final long threadId = conversation.getThreadId();
-        final String name = conversation.getRecipients().formatNames(", ");
-
-        final QKDialog dialog = new QKDialog()
-                .setContext(mContext)
-                .setTitle(name);
-
-        if (!mAdapter.isInMultiSelectMode()) {
-            dialog.addMenuItem(R.string.menu_multi_select, MENU_MULTI_SELECT);
-        }
-
-        if (mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false)) {
-            if (BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId())) {
-                dialog.addMenuItem(R.string.menu_unblock_conversation, MENU_UNBLOCK_CONVERSATION);
-            } else {
-                dialog.addMenuItem(R.string.menu_block_conversation, MENU_BLOCK_CONVERSATION);
-            }
-        }
-
-        if (conversation.hasUnreadMessages()) {
-            dialog.addMenuItem(R.string.menu_mark_read, MENU_MARK_READ);
-        } else {
-            dialog.addMenuItem(R.string.menu_mark_unread, MENU_MARK_UNREAD);
-        }
-
-        if (conversation.hasError()) {
-            dialog.addMenuItem(R.string.delete_all_failed, MENU_DELETE_FAILED);
-        }
-
-        dialog.addMenuItem(R.string.menu_delete_conversation, MENU_DELETE_CONVERSATION);
-
-        dialog.buildMenu((parent, view1, position, id) -> {
-            switch ((int) id) {
-                case MENU_BLOCK_CONVERSATION:
-                    BlockedConversationHelper.blockConversation(mPrefs, conversation.getThreadId());
-                    initLoaderManager();
-                    break;
-
-                case MENU_UNBLOCK_CONVERSATION:
-                    BlockedConversationHelper.unblockConversation(mPrefs, conversation.getThreadId());
-                    initLoaderManager();
-                    break;
-
-                case MENU_MARK_READ:
-                    new ConversationLegacy(mContext, threadId).markRead();
-                    break;
-
-                case MENU_MARK_UNREAD:
-                    new ConversationLegacy(mContext, threadId).markUnread();
-                    break;
-
-                case MENU_MULTI_SELECT:
-                    mAdapter.setSelected(threadId);
-                    break;
-
-                case MENU_DELETE_CONVERSATION:
-                    DialogHelper.showDeleteConversationDialog((MainActivity) mContext, threadId);
-                    break;
-
-                case MENU_DELETE_FAILED:
-                    //Deletes all failed messages from all conversations
-                    DialogHelper.showDeleteFailedMessagesDialog((MainActivity) mContext, threadId);
-                    break;
-            }
-        }).show(mContext.getFragmentManager(), "conversation options");
+        mAdapter.toggleSelection(conversation.getThreadId(), conversation);
     }
 
     public void setPosition(int position) {
@@ -325,11 +303,12 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
     @Override
     public void onItemAdded(long id) {
-        mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
+        mContext.invalidateOptionsMenu();
     }
 
     @Override
     public void onItemRemoved(long id) {
-        mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
+        mContext.invalidateOptionsMenu();
     }
+
 }

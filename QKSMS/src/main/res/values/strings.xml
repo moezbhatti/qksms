@@ -417,14 +417,10 @@
     <!-- Word represents 'self' in a conversation -->
     <string name="me">Me</string>
 
-    <!-- Menu title for editing a message -->
     <string name="menu_edit">Edit</string>
-    <!-- Menu title for deleting undelivered messages or messages on
-         the SIM card. -->
     <string name="menu_delete_messages">Delete messages</string>
-    <!-- Menu title for locking a message -->
+    <string name="menu_delete_failed">Delete failed messages</string>
     <string name="menu_lock">Lock</string>
-    <!-- Menu title for unlocking a message -->
     <string name="menu_unlock">Unlock</string>
 
     <!-- When the user tries to view message details and some error occurs while
@@ -645,8 +641,8 @@
     <string name="menu_mute_conversation">Mute conversation</string>
     <!--Menu option to mute conversation-->
     <string name="menu_unmute_conversation">Unmute conversation</string>
-    <string name="menu_block_conversation">Block conversation</string>
-    <string name="menu_unblock_conversation">Unblock conversation</string>
+    <string name="menu_block_conversations">Block conversations</string>
+    <string name="menu_unblock_conversations">Unblock conversations</string>
     <string name="menu_messages">Messages</string>
     <string name="menu_blocked">Blocked</string>
     <string name="menu_blocked_conversations">Blocked (%s new)</string>
@@ -659,6 +655,9 @@
     <string name="menu_mark_unread">Mark unread</string>
     <string name="menu_delete_conversation">Delete conversation</string>
     <string name="menu_multi_select">Select conversation</string>
+    <string name="menu_select_all">Select all</string>
+    <string name="menu_deselect_all">Deselect all</string>
+    <string name="menu_done">Done</string>
     <string name="failed_message_title">Failed message options</string>
     <!--Toast shown to tell the user that they don't have a photo attachments app, and suggests that they download one-->
     <string name="attachment_app_not_found">Attachments app not found. Try installing a photo gallery app!</string>

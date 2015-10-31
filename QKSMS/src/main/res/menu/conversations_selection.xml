@@ -14,4 +14,24 @@
         android:title="@string/menu_mark_read"
         android:visible="true"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_block"
+        android:title="@string/menu_block_conversation" />
+
+    <item
+        android:id="@+id/menu_delete_failed"
+        android:title="@string/menu_delete_failed" />
+
+    <item
+        android:id="@+id/menu_select_all"
+        android:title="@string/menu_select_all" />
+
+    <item
+        android:id="@+id/menu_deselect_all"
+        android:title="@string/menu_deselect_all" />
+
+    <item
+        android:id="@+id/menu_done"
+        android:title="@string/menu_done" />
 </menu>

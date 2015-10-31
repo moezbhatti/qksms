@@ -35,7 +35,7 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         mPrefs = mContext.getPrefs();
 
         mMuted = ContextCompat.getDrawable(context, R.drawable.ic_mute);
-        mUnread = ContextCompat.getDrawable(context, R.drawable.ic_unread);
+        mUnread = ContextCompat.getDrawable(context, R.drawable.ic_unread_indicator);
         mError = ContextCompat.getDrawable(context, R.drawable.ic_error);
 
         LiveViewManager.registerView(this);

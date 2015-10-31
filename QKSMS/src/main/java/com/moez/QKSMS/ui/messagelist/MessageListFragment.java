@@ -337,7 +337,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     @Override
     public void onItemClick(final MessageItem messageItem, View view) {
         if (mAdapter.isInMultiSelectMode()) {
-            mAdapter.toggleSelection(messageItem.getMessageId());
+            mAdapter.toggleSelection(messageItem.getMessageId(), messageItem);
         } else {
             if (view.getId() == R.id.image_view || view.getId() == R.id.play_slideshow_button) {
                 switch (messageItem.mAttachmentType) {

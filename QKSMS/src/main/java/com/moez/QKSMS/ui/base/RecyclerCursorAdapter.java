@@ -3,10 +3,9 @@ package com.moez.QKSMS.ui.base;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.moez.QKSMS.common.utils.CursorUtils;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, DataType>
         extends RecyclerView.Adapter<VH> {
@@ -32,7 +31,7 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
         mContext = context;
     }
 
-    protected ArrayList<Long> mSelectedItems = new ArrayList<>();
+    protected HashMap<Long, DataType> mSelectedItems = new HashMap<>();
 
     protected ItemClickListener<DataType> mItemClickListener;
     protected RecyclerCursorAdapter.MultiSelectListener mMultiSelectListener;
@@ -79,7 +78,7 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
         return mSelectedItems.size() > 0;
     }
 
-    public ArrayList<Long> getSelectedItems() {
+    public HashMap<Long, DataType> getSelectedItems() {
         return mSelectedItems;
     }
 
@@ -95,12 +94,12 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
     }
 
     public boolean isSelected(long threadId) {
-        return mSelectedItems.contains(threadId);
+        return mSelectedItems.containsKey(threadId);
     }
 
-    public void setSelected(long threadId) {
-        if (!mSelectedItems.contains(threadId)) {
-            mSelectedItems.add(threadId);
+    public void setSelected(long threadId, DataType object) {
+        if (!mSelectedItems.containsKey(threadId)) {
+            mSelectedItems.put(threadId, object);
             notifyDataSetChanged();
 
             if (mMultiSelectListener != null) {
@@ -114,7 +113,7 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
     }
 
     public void setUnselected(long threadId) {
-        if (mSelectedItems.contains(threadId)) {
+        if (mSelectedItems.containsKey(threadId)) {
             mSelectedItems.remove(threadId);
             notifyDataSetChanged();
 
@@ -128,11 +127,11 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
         }
     }
 
-    public void toggleSelection(long threadId) {
+    public void toggleSelection(long threadId, DataType object) {
         if (isSelected(threadId)) {
             setUnselected(threadId);
         } else {
-            setSelected(threadId);
+            setSelected(threadId, object);
         }
     }
 

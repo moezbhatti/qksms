@@ -82,7 +82,7 @@
                 android:id="@+id/unread"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/ic_unread"
+                android:src="@drawable/ic_unread_indicator"
                 android:visibility="gone" />
         </LinearLayout>
 
