@@ -14,6 +14,13 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
+    <ImageView
+        android:id="@+id/selected"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="16dp"
+        android:visibility="gone" />
+
     <com.moez.QKSMS.ui.view.AvatarView
         android:id="@+id/conversation_list_avatar"
         android:layout_width="48dp"
@@ -87,12 +94,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/selected"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="16dp"
-        android:visibility="gone" />
 
 </LinearLayout>
