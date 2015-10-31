@@ -8,20 +8,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_delete"
-        android:icon="@drawable/ic_delete"
-        android:title="@string/menu_delete"
-        android:visible="false"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/menu_mark_read"
-        android:icon="@drawable/ic_accept"
-        android:title="@string/menu_mark_read"
-        android:visible="false"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings" />
 

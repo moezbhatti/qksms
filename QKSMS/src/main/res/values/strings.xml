@@ -314,6 +314,7 @@
     <string name="title_qk_responses">QK Responses</string>
     <string name="title_block_address">Block number</string>
     <string name="title_unblock_address">Unblock number</string>
+    <string name="title_conversations_selected">(%s) Conversations</string>
 
     <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to

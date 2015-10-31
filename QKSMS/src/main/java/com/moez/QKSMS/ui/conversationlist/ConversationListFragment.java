@@ -125,26 +125,16 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     }
 
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
-        inflater.inflate(R.menu.coversation_list, menu);
-        mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
-
-        // Make sure we're only touching the conversation menu
-        if (menu.findItem(R.id.menu_search) != null) {
-            if (mAdapter.isInMultiSelectMode()) {
-                menu.findItem(R.id.menu_search).setVisible(false);
-                menu.findItem(R.id.menu_delete).setVisible(true);
-                menu.findItem(R.id.menu_mark_read).setVisible(true);
-            } else {
-                menu.findItem(R.id.menu_search).setVisible(true);
-                menu.findItem(R.id.menu_delete).setVisible(false);
-                menu.findItem(R.id.menu_mark_read).setVisible(false);
-            }
+        if (mAdapter.isInMultiSelectMode()) {
+            inflater.inflate(R.menu.conversations_selection, menu);
+            mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
         } else {
-            mAdapter.disableMultiSelectMode(false);
-        }
+            inflater.inflate(R.menu.conversations, menu);
+            mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
 
-        mBlockedItem = menu.findItem(R.id.menu_blocked);
-        BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
+            mBlockedItem = menu.findItem(R.id.menu_blocked);
+            BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);
+        }
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -330,6 +320,16 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
     @Override
     public void onMultiSelectStateChanged(boolean enabled) {
-        getActivity().invalidateOptionsMenu();
+        mContext.invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onItemAdded(long id) {
+        mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
+    }
+
+    @Override
+    public void onItemRemoved(long id) {
+        mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
     }
 }

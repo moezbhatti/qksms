@@ -825,6 +825,16 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     }
 
+    @Override
+    public void onItemAdded(long id) {
+
+    }
+
+    @Override
+    public void onItemRemoved(long id) {
+
+    }
+
     private class DeleteMessageListener implements DialogInterface.OnClickListener {
         private final MessageItem mMessageItem;
 

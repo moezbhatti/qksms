@@ -3,6 +3,7 @@ package com.moez.QKSMS.ui.base;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.moez.QKSMS.common.utils.CursorUtils;
 
 import java.util.ArrayList;
@@ -18,6 +19,10 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
 
     public interface MultiSelectListener {
         void onMultiSelectStateChanged(boolean enabled);
+
+        void onItemAdded(long id);
+
+        void onItemRemoved(long id);
     }
 
     protected QKActivity mContext;
@@ -98,8 +103,12 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
             mSelectedItems.add(threadId);
             notifyDataSetChanged();
 
-            if (mSelectedItems.size() == 1 && mMultiSelectListener != null) {
-                mMultiSelectListener.onMultiSelectStateChanged(true);
+            if (mMultiSelectListener != null) {
+                mMultiSelectListener.onItemAdded(threadId);
+
+                if (mSelectedItems.size() == 1) {
+                    mMultiSelectListener.onMultiSelectStateChanged(true);
+                }
             }
         }
     }
@@ -109,8 +118,12 @@ public abstract class RecyclerCursorAdapter<VH extends RecyclerView.ViewHolder, 
             mSelectedItems.remove(threadId);
             notifyDataSetChanged();
 
-            if (mSelectedItems.size() == 0 && mMultiSelectListener != null) {
-                mMultiSelectListener.onMultiSelectStateChanged(false);
+            if (mMultiSelectListener != null) {
+                mMultiSelectListener.onItemRemoved(threadId);
+
+                if (mSelectedItems.size() == 0) {
+                    mMultiSelectListener.onMultiSelectStateChanged(false);
+                }
             }
         }
     }

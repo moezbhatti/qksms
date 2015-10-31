@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/menu_delete"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_mark_read"
+        android:icon="@drawable/ic_accept"
+        android:title="@string/menu_mark_read"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+</menu>
