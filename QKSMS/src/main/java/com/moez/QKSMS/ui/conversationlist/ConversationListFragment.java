@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
@@ -39,7 +38,6 @@ import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
-import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -52,17 +50,13 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
     private final String TAG = "ConversationList";
 
-    private final int MENU_MUTE_CONVERSATION = 0;
-    private final int MENU_UNMUTE_CONVERSATION = 1;
-    private final int MENU_NOTIFICATION_SETTINGS = 2;
-    private final int MENU_VIEW_DETAILS = 3;
-    private final int MENU_MARK_READ = 4;
-    private final int MENU_MARK_UNREAD = 5;
-    private final int MENU_DELETE_FAILED = 6;
-    private final int MENU_DELETE_CONVERSATION = 7;
-    private final int MENU_MULTI_SELECT = 8;
-    private final int MENU_BLOCK_CONVERSATION = 9;
-    private final int MENU_UNBLOCK_CONVERSATION = 10;
+    private final int MENU_MARK_READ = 1;
+    private final int MENU_MARK_UNREAD = 2;
+    private final int MENU_DELETE_FAILED = 3;
+    private final int MENU_DELETE_CONVERSATION = 4;
+    private final int MENU_MULTI_SELECT = 5;
+    private final int MENU_BLOCK_CONVERSATION = 6;
+    private final int MENU_UNBLOCK_CONVERSATION = 7;
 
     @Bind(R.id.empty_state) View mEmptyState;
     @Bind(R.id.empty_state_icon) ImageView mEmptyStateIcon;
@@ -207,21 +201,12 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         final long threadId = conversation.getThreadId();
         final String name = conversation.getRecipients().formatNames(", ");
 
-        final ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, threadId);
-        final boolean muted = !conversationPrefs.getNotificationsEnabled();
-
         final QKDialog dialog = new QKDialog()
                 .setContext(mContext)
                 .setTitle(name);
 
         if (!mAdapter.isInMultiSelectMode()) {
             dialog.addMenuItem(R.string.menu_multi_select, MENU_MULTI_SELECT);
-        }
-
-        if (muted) {
-            dialog.addMenuItem(R.string.menu_unmute_conversation, MENU_UNMUTE_CONVERSATION);
-        } else {
-            dialog.addMenuItem(R.string.menu_mute_conversation, MENU_MUTE_CONVERSATION);
         }
 
         if (mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false)) {
@@ -238,9 +223,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             dialog.addMenuItem(R.string.menu_mark_unread, MENU_MARK_UNREAD);
         }
 
-        dialog.addMenuItem(R.string.menu_notification_settings, MENU_NOTIFICATION_SETTINGS);
-        dialog.addMenuItem(R.string.menu_view_details, MENU_VIEW_DETAILS);
-
         if (conversation.hasError()) {
             dialog.addMenuItem(R.string.delete_all_failed, MENU_DELETE_FAILED);
         }
@@ -249,25 +231,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
         dialog.buildMenu((parent, view1, position, id) -> {
             switch ((int) id) {
-                case MENU_MUTE_CONVERSATION:
-                    conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, false);
-                    mAdapter.notifyDataSetChanged();
-                    break;
-
-                case MENU_UNMUTE_CONVERSATION:
-                    conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, true);
-                    mAdapter.notifyDataSetChanged();
-                    break;
-
-                case MENU_NOTIFICATION_SETTINGS:
-                    ConversationNotificationSettingsDialog.newInstance(threadId, name).setContext(mContext)
-                            .show(getFragmentManager(), "notification prefs");
-                    break;
-
-                case MENU_VIEW_DETAILS:
-                    mConversationDetailsDialog.showDetails(conversation);
-                    break;
-
                 case MENU_BLOCK_CONVERSATION:
                     BlockedConversationHelper.blockConversation(mPrefs, conversation.getThreadId());
                     initLoaderManager();
