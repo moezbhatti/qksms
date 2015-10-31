@@ -44,6 +44,7 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduBody;
@@ -73,6 +74,7 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
 import com.moez.QKSMS.ui.delivery.DeliveryReportItem;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
+import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -80,8 +82,6 @@ import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.SmoothLinearLayoutManager;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -91,6 +91,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 public class MessageListFragment extends QKContentFragment implements ActivityLauncher, SensorEventListener,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener,
@@ -616,11 +619,19 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             case R.id.menu_call:
                 makeCall();
                 return true;
-            case R.id.menu_delete_conversation:
-                DialogHelper.showDeleteConversationDialog((MainActivity) mContext, mThreadId);
-                return true;
+
             case R.id.menu_details:
                 mConversationDetailsDialog.showDetails(mConversation);
+                return true;
+
+            case R.id.menu_notification_settings:
+                ConversationNotificationSettingsDialog.newInstance(mThreadId, mConversation.getRecipients().formatNames(", "))
+                        .setContext(mContext)
+                        .show(getFragmentManager(), "notification prefs");
+                return true;
+
+            case R.id.menu_delete_conversation:
+                DialogHelper.showDeleteConversationDialog((MainActivity) mContext, mThreadId);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -14,6 +14,10 @@
         android:title="@string/menu_view_details" />
 
     <item
+        android:id="@+id/menu_notification_settings"
+        android:title="@string/menu_notification_settings" />
+
+    <item
         android:id="@+id/menu_delete_conversation"
         android:title="@string/delete_conversation" />
 
