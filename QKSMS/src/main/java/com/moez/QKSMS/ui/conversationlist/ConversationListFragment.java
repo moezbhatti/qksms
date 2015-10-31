@@ -108,7 +108,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        //TODO ListviewHelper.applyCustomScrollbar(mContext, mRecyclerView);
 
         mFab.setColorNormal(ThemeManager.getColor());
         mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
@@ -364,8 +363,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
 
         mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
-
-        //TODO ListviewHelper.applyCustomScrollbar(mContext, mListView);
     }
 
     @Override
