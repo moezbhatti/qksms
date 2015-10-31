@@ -91,11 +91,13 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         if (isInMultiSelectMode()) {
             holder.mSelected.setVisibility(View.VISIBLE);
             if (isSelected(conversation.getThreadId())) {
-                holder.mSelected.setImageResource(R.drawable.btn_radio_on);
+                holder.mSelected.setImageResource(R.drawable.ic_selected);
                 holder.mSelected.setColorFilter(ThemeManager.getColor());
+                holder.mSelected.setAlpha(1f);
             } else {
-                holder.mSelected.setImageResource(R.drawable.btn_radio_off);
+                holder.mSelected.setImageResource(R.drawable.ic_unselected);
                 holder.mSelected.setColorFilter(ThemeManager.getTextOnBackgroundSecondary());
+                holder.mSelected.setAlpha(0.5f);
             }
         } else {
             holder.mSelected.setVisibility(View.GONE);
