@@ -10,18 +10,14 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_settings"
-        android:title="@string/menu_settings" />
-
-    <item
-        android:id="@+id/menu_donate"
-        android:title="@string/menu_billing" />
+        android:id="@+id/menu_details"
+        android:title="@string/menu_view_details" />
 
     <item
         android:id="@+id/menu_delete_conversation"
         android:title="@string/delete_conversation" />
 
     <item
-        android:id="@+id/menu_details"
-        android:title="@string/menu_view_details" />
+        android:id="@+id/menu_donate"
+        android:title="@string/menu_billing" />
 </menu>
