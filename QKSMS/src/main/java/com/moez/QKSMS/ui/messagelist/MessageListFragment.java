@@ -780,7 +780,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         inflater.inflate(R.menu.conversation, menu);
         setTitle();
 
-        ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
+        ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, mThreadId);
         menu.findItem(R.id.menu_notifications).setTitle(conversationPrefs.getNotificationsEnabled() ?
                 R.string.menu_notifications : R.string.menu_notifications_off);
         menu.findItem(R.id.menu_notifications).setIcon(conversationPrefs.getNotificationsEnabled() ?
