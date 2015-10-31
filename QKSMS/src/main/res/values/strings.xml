@@ -344,13 +344,13 @@
     <!--Text for app restart confirmation dialog-->
     <string name="restart_message">These changes will take effect the next time QKSMS is opened</string>
     <!--Dialog title for asking if a user wants to delete a conversation-->
-    <string name="delete_conversation">Delete conversation</string>
+    <string name="delete_conversation">Delete conversations</string>
     <!--Dialog title for asking if a user wants to delete all failed messages-->
     <string name="delete_all_failed">Delete failed messages</string>
     <!--CDialog title for asking if a user wants to delete a conversation-->
-    <string name="delete_confirmation">Are you sure you would like to delete the conversation?</string>
+    <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
     <!--CDialog title for asking if a user wants to delete all failed messages-->
-    <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
+    <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
     <!--(Unused) Dialog title shown if APNs have not been set-->
     <string name="apns_not_set">APNs not set</string>
     <!--(Unused) Dialog description shown if APNs have not been set-->
