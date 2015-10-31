@@ -113,6 +113,40 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         return view;
     }
 
+    /**
+     * Returns the weighting for unread vs. read conversations that are selected
+     */
+    private int getUnreadWeight() {
+        int unreadWeight = 0;
+        for (Conversation conversation : mAdapter.getSelectedItems().values()) {
+            unreadWeight += conversation.hasUnreadMessages() ? 1 : -1;
+        }
+        return unreadWeight;
+    }
+
+    /**
+     * Returns the weighting for blocked vs. unblocked conversations that are selected
+     */
+    private int getBlockedWeight() {
+        int blockedWeight = 0;
+        for (Conversation conversation : mAdapter.getSelectedItems().values()) {
+            blockedWeight += BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId()) ? 1 : -1;
+        }
+        return blockedWeight;
+    }
+
+    /**
+     * Returns whether or not any of the selected conversations have errors
+     */
+    private boolean doSomeHaveErrors() {
+        for (Conversation conversation : mAdapter.getSelectedItems().values()) {
+            if (conversation.hasError()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         if (mAdapter.isInMultiSelectMode()) {
             inflater.inflate(R.menu.conversations_selection, menu);
@@ -120,22 +154,10 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
             menu.findItem(R.id.menu_block).setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
 
-            int unreadWeight = 0;
-            int blockedWeight = 0;
-            boolean someHaveErrors = false;
-            for (Conversation conversation : mAdapter.getSelectedItems().values()) {
-                unreadWeight += conversation.hasUnreadMessages() ? 1 : -1;
-                blockedWeight += BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId()) ? 1 : -1;
-
-                if (conversation.hasError()) {
-                    someHaveErrors = true;
-                }
-            }
-
-            menu.findItem(R.id.menu_mark_read).setIcon(unreadWeight >= 0 ? R.drawable.ic_read : R.drawable.ic_unread);
-            menu.findItem(R.id.menu_mark_read).setTitle(unreadWeight >= 0 ? R.string.menu_mark_read : R.string.menu_mark_unread);
-            menu.findItem(R.id.menu_block).setTitle(blockedWeight > 0 ? R.string.menu_unblock_conversations : R.string.menu_block_conversations);
-            menu.findItem(R.id.menu_delete_failed).setVisible(someHaveErrors);
+            menu.findItem(R.id.menu_mark_read).setIcon(getUnreadWeight() >= 0 ? R.drawable.ic_read : R.drawable.ic_unread);
+            menu.findItem(R.id.menu_mark_read).setTitle(getUnreadWeight() >= 0 ? R.string.menu_mark_read : R.string.menu_mark_unread);
+            menu.findItem(R.id.menu_block).setTitle(getBlockedWeight() > 0 ? R.string.menu_unblock_conversations : R.string.menu_block_conversations);
+            menu.findItem(R.id.menu_delete_failed).setVisible(doSomeHaveErrors());
         } else {
             inflater.inflate(R.menu.conversations, menu);
             mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
@@ -160,12 +182,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                 return true;
 
             case R.id.menu_mark_read:
-                int unreadWeight = 0;
-                for (Conversation conversation : mAdapter.getSelectedItems().values()) {
-                    unreadWeight += conversation.hasUnreadMessages() ? 1 : -1;
-                }
                 for (long threadId : mAdapter.getSelectedItems().keySet()) {
-                    if (unreadWeight >= 0) {
+                    if (getUnreadWeight() >= 0) {
                         new ConversationLegacy(mContext, threadId).markRead();
                     } else {
                         new ConversationLegacy(mContext, threadId).markUnread();
@@ -175,12 +193,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                 return true;
 
             case R.id.menu_block:
-                int blockedWeight = 0;
-                for (Conversation conversation : mAdapter.getSelectedItems().values()) {
-                    blockedWeight += BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId()) ? 1 : -1;
-                }
                 for (long threadId : mAdapter.getSelectedItems().keySet()) {
-                    if (blockedWeight > 0) {
+                    if (getBlockedWeight() > 0) {
                         BlockedConversationHelper.unblockConversation(mPrefs, threadId);
                     } else {
                         BlockedConversationHelper.blockConversation(mPrefs, threadId);
