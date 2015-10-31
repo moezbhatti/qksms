@@ -53,6 +53,7 @@ import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
 import com.moez.QKSMS.common.utils.DrmUtils;
@@ -620,6 +621,12 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 makeCall();
                 return true;
 
+            case R.id.menu_notifications:
+                ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
+                conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, !conversationPrefs.getNotificationsEnabled());
+                mContext.invalidateOptionsMenu();
+                return true;
+
             case R.id.menu_details:
                 mConversationDetailsDialog.showDetails(mConversation);
                 return true;
@@ -772,6 +779,12 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         inflater.inflate(R.menu.conversation, menu);
         setTitle();
+
+        ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
+        menu.findItem(R.id.menu_notifications).setTitle(conversationPrefs.getNotificationsEnabled() ?
+                R.string.menu_notifications : R.string.menu_notifications_off);
+        menu.findItem(R.id.menu_notifications).setIcon(conversationPrefs.getNotificationsEnabled() ?
+                R.drawable.ic_notifications : R.drawable.ic_notifications_off);
 
         super.onCreateOptionsMenu(menu, inflater);
     }

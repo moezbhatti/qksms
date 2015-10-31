@@ -102,7 +102,7 @@ public abstract class QKActivity extends ActionBarActivity {
             MenuItem menuItem = menu.getItem(i);
             Drawable newIcon = menuItem.getIcon();
             if (newIcon != null) {
-                newIcon.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+                newIcon.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
                 menuItem.setIcon(newIcon);
             }
         }

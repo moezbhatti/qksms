@@ -10,6 +10,12 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menu_notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/menu_notifications"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menu_details"
         android:title="@string/menu_view_details" />
 
