@@ -655,8 +655,6 @@
     <string name="menu_mark_unread">Mark unread</string>
     <string name="menu_delete_conversation">Delete conversation</string>
     <string name="menu_multi_select">Select conversation</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_deselect_all">Deselect all</string>
     <string name="menu_done">Done</string>
     <string name="failed_message_title">Failed message options</string>
     <!--Toast shown to tell the user that they don't have a photo attachments app, and suggests that they download one-->
