@@ -295,26 +295,18 @@
     <!--$10 donaion product description-->
     <string name="product_description_donate_10">Buy me lunch</string>
 
-    <!--Settings screen title-->
     <string name="title_settings">Settings</string>
-    <!--Settings screen title-->
     <string name="title_search">Search</string>
-    <!--Compose screen title-->
     <string name="title_compose">Compose</string>
-    <!--Conversations screen title-->
     <string name="title_conversation_list">Conversations</string>
     <string name="title_blocked">Blocked</string>
-    <!--Changelog screen title-->
     <string name="title_changelog">Changelog</string>
-    <!--QuickReply picker dialog title (shows up when you press reply from notification, but there are multiple senders)-->
     <string name="title_picker">New messages</string>
-    <!--Donate dialog title-->
     <string name="title_donate">Donate</string>
-    <!--QK Response dialog title-->
     <string name="title_qk_responses">QK Responses</string>
     <string name="title_block_address">Block number</string>
     <string name="title_unblock_address">Unblock number</string>
-    <string name="title_conversations_selected">(%s) Conversations</string>
+    <string name="title_conversations_selected">%s selected</string>
 
     <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to

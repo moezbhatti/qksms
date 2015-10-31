@@ -20,8 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
@@ -40,6 +39,9 @@ import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>, LiveView,
@@ -97,13 +99,17 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mFab.attachToRecyclerView(mRecyclerView);
         mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
         mFab.setOnClickListener(v -> {
-            // Show the compose fragment, showing the keyboard and focusing on the recipients edittext.
-            Bundle args = new Bundle();
-            args.putBoolean(ComposeFragment.ARG_SHOW_KEYBOARD, true);
-            args.putString(ComposeFragment.ARG_FOCUS, ComposeFragment.FOCUS_RECIPIENTS);
+            if (mAdapter.isInMultiSelectMode()) {
+                mAdapter.disableMultiSelectMode(true);
+            } else {
+                // Show the compose fragment, showing the keyboard and focusing on the recipients edittext.
+                Bundle args = new Bundle();
+                args.putBoolean(ComposeFragment.ARG_SHOW_KEYBOARD, true);
+                args.putString(ComposeFragment.ARG_FOCUS, ComposeFragment.FOCUS_RECIPIENTS);
 
-            Fragment content = getFragmentManager().findFragmentById(R.id.content_frame);
-            switchFragment(ComposeFragment.getInstance(args, content));
+                Fragment content = getFragmentManager().findFragmentById(R.id.content_frame);
+                switchFragment(ComposeFragment.getInstance(args, content));
+            }
         });
 
         mViewHasLoaded = true;
@@ -308,6 +314,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public void onMultiSelectStateChanged(boolean enabled) {
         mContext.invalidateOptionsMenu();
+        mFab.setImageResource(enabled ? R.drawable.ic_accept : R.drawable.ic_add);
     }
 
     @Override
