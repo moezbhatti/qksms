@@ -79,3 +79,21 @@
 -dontwarn org.jsoup.**				# jsoup library (for hCard parsing) not used
 -dontwarn sun.misc.Perf
 -keep class ezvcard.property.** { *; }		# keep all VCard properties (created at runtime)
+
+# ButterKnife
+# http://jakewharton.github.io/butterknife/
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+# RetroLambda
+# https://github.com/evant/gradle-retrolambda
+-dontwarn java.lang.invoke.*
