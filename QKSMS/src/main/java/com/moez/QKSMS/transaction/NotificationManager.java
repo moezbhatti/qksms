@@ -205,6 +205,7 @@ public class NotificationManager {
                         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
                         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "FlashActivity");
                         wl.acquire();
+                        wl.release();
                     }
 
                     if (conversations.size() == 1 && lastConversation.size() == 1) {
