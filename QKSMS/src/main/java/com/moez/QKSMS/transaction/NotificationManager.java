@@ -23,19 +23,21 @@ import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.util.Log;
+
 import com.android.mms.transaction.TransactionService;
 import com.android.mms.transaction.TransactionState;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.model.ImageModel;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.receiver.WearableIntentReceiver;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
-import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
@@ -156,7 +158,7 @@ public class NotificationManager {
 
                     // If this message is in the foreground, mark it as read
                     Message message = new Message(context, lastMessage.mMsgId);
-                    if (message.getThreadId() ==MainActivity.sThreadShowing) {
+                    if (message.getThreadId() == MainActivity.sThreadShowing) {
                         message.markRead();
                         return;
                     }
@@ -391,7 +393,7 @@ public class NotificationManager {
      * Dismisses all old notifications. The purpose of this is to clear notifications that don't need to show up,
      * without making the remaining ones dissapear and pop up again like how NotificationMangager.cancelAll and then
      * rebuilding them would do
-     * <p/>
+     * <p>
      * This should stay private, because it assumes that the preferences have already been initialized
      */
     private static void dismissOld(Context context, HashMap<Long, ArrayList<MessageItem>> newMessages) {
@@ -487,7 +489,7 @@ public class NotificationManager {
         String body;
         String title;
         NotificationCompat.Style nstyle = null;
-        switch (privateNotifications){
+        switch (privateNotifications) {
             case 0: //Hide nothing
                 body = message.mBody;
                 title = message.mContact;
@@ -517,7 +519,9 @@ public class NotificationManager {
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
-        if (conversationPrefs.getDimissedReadEnabled()){builder.setDeleteIntent(readPI);}
+        if (conversationPrefs.getDimissedReadEnabled()) {
+            builder.setDeleteIntent(readPI);
+        }
 
         if (conversationPrefs.getCallButtonEnabled()) {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -545,7 +549,8 @@ public class NotificationManager {
 
             } else {
                 Log.d(TAG, "MMS Type: not an image lol");
-                if (privateNotifications == 0) builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message.mBody));
+                if (privateNotifications == 0)
+                    builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message.mBody));
                 else builder.setStyle(null);
             }
 
@@ -669,9 +674,9 @@ public class NotificationManager {
                     .setContentText(sRes.getString(R.string.quickcompose_detail))
                     .setOngoing(true)
                     .setContentIntent(composePI)
-                    .setSmallIcon(R.drawable.blank)
+                    .setSmallIcon(R.drawable.ic_compose)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
-                    .setLargeIcon(BitmapFactory.decodeResource(sRes, R.drawable.ic_compose));
+                    .setColor(ThemeManager.getColor());
 
             NotificationManager.notify(context, NOTIFICATION_ID_QUICKCOMPOSE, builder.build());
         } else {
@@ -713,12 +718,12 @@ public class NotificationManager {
 
         if (privateNotification == 2) {
             return null;
-        }
-        else {
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 return ImageUtils.getCircleBitmap(bitmap, idealIconWidth);
+            } else {
+                return bitmap;
             }
-            else return bitmap;
         }
     }
 
