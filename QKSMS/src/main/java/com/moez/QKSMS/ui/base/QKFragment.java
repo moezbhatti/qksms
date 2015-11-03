@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui.base;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import com.moez.QKSMS.QKSMSApp;
@@ -14,10 +15,14 @@ public class QKFragment extends Fragment implements LiveView {
     protected QKActivity mContext;
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = (QKActivity) activity;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = (QKActivity) getActivity();
-
         LiveViewManager.registerView(this);
         LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
     }
