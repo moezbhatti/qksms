@@ -18,6 +18,7 @@ import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.interfaces.RecipientProvider;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.view.AutoCompleteContactView;
 import com.moez.QKSMS.ui.view.ComposeView;
@@ -170,7 +171,7 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
     @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         inflater.inflate(R.menu.compose, menu);
-        mContext.setTitle(R.string.title_compose);
+        ((QKActivity) context).setTitle(R.string.title_compose);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
