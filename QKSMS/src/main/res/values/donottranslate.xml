@@ -54,6 +54,7 @@
     </string-array>
 
     <string-array name="changelog_versions">
+        <item>2.2.4</item>
         <item>2.2.3</item>
         <item>2.2.2</item>
         <item>2.2.1</item>
@@ -168,6 +169,7 @@
 
     <string-array name="changelog_dates">
         <item>November 5, 2015</item>
+        <item>November 5, 2015</item>
         <item>November 2, 2015</item>
         <item>October 25, 2015</item>
         <item>October 21, 2015</item>
@@ -280,6 +282,7 @@
     </string-array>
 
     <string-array name="changelog_changes">
+        <item>" • Crash fix"</item>
         <item>" • Fixed battery drain\n • Crash fixes"</item>
         <item>" • Fixed wake lock\n • Improved multi-selection for conversations\n • Crash fixes\n • Added widget preview\n • Added screen to show when you have no messages\n • Minor performance improvements\n • Rating bar improvements"</item>
         <item>" • Fixed major crashing issue for phones running a version of Android older than 4.4\n • Fixed notification ticker"</item>
