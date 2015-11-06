@@ -1432,6 +1432,11 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             // QKSMS battery drain of 2015
             long time = System.currentTimeMillis();
             while (!mOpened) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 if (System.currentTimeMillis() - time > 10000) {
                     Log.w(TAG, "Task running for over 10 seconds, something is wrong");
                     cancel(true);
