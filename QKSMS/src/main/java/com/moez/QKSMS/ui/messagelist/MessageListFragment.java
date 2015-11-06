@@ -1425,8 +1425,19 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mConversation.blockMarkAsRead(true);
             mConversation.markAsRead();
 
+            // Delay the thread until the fragment has finished opening. If it waits longer than
+            // 10 seconds, then something is wrong, so cancel it. This happens when the fragment is closed before
+            // it opens, or the screen is rotated, and then "mOpened" never gets changed to true,
+            // leaving this thread running forever. This issue is actually what caused the great
+            // QKSMS battery drain of 2015
+            long time = System.currentTimeMillis();
             while (!mOpened) {
-            } // Delay the thread until the fragment has finished opening
+                if (System.currentTimeMillis() - time > 10000) {
+                    Log.w(TAG, "Task running for over 10 seconds, something is wrong");
+                    cancel(true);
+                    break;
+                }
+            }
 
             return null;
         }
