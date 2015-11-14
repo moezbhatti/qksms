@@ -57,7 +57,7 @@ public class AutoCompleteContactView extends RecipientEditTextView implements Li
 
     @Override
     public void refresh() {
-        setTypeface(TypefaceManager.obtainTypeface(mContext, FontManager.getFontFamily(mContext),
+        setTypeface(TypefaceManager.obtainTypeface(FontManager.getFontFamily(mContext),
                 FontManager.getFontWeight(mContext, false), TypefaceManager.TextStyle.NORMAL));
         setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
 

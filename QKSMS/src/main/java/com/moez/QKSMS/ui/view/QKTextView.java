@@ -162,7 +162,7 @@ public class QKTextView extends TextView implements LiveView {
         // Typeface
         int fontFamily = FontManager.getFontFamily(mContext);
         int fontWeight = FontManager.getFontWeight(mContext, FontManager.getIsFontHeavy(mType));
-        setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight,
+        setTypeface(TypefaceManager.obtainTypeface(fontFamily, fontWeight,
                 TypefaceManager.TextStyle.NORMAL));
 
         // Text size and color

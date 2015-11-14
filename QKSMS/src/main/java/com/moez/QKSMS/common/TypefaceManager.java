@@ -1,6 +1,5 @@
 package com.moez.QKSMS.common;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.util.SparseArray;
@@ -12,7 +11,7 @@ public class TypefaceManager {
 
     private final static SparseArray<android.graphics.Typeface> mTypefaces = new SparseArray<>();
 
-    public static android.graphics.Typeface obtainTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
+    public static android.graphics.Typeface obtainTypeface(int typefaceValue) throws IllegalArgumentException {
         android.graphics.Typeface typeface = mTypefaces.get(typefaceValue);
         if (typeface == null) {
             typeface = createTypeface(typefaceValue);
@@ -21,12 +20,7 @@ public class TypefaceManager {
         return typeface;
     }
 
-    public static android.graphics.Typeface obtainTypeface(Context context, int fontFamily, int textWeight, int textStyle) throws IllegalArgumentException {
-        int typefaceValue = getTypefaceValue(fontFamily, textWeight, textStyle);
-        return obtainTypeface(context, typefaceValue);
-    }
-
-    private static int getTypefaceValue(int fontFamily, int textWeight, int textStyle) {
+    public static android.graphics.Typeface obtainTypeface(int fontFamily, int textWeight, int textStyle) throws IllegalArgumentException {
         int typeface;
         if (fontFamily == FontFamily.ROBOTO) {
             if (textWeight == TextWeight.NORMAL) {
@@ -115,7 +109,7 @@ public class TypefaceManager {
                 throw new IllegalArgumentException("`textWeight` attribute value " + textWeight +
                         " is not supported for this font family " + fontFamily);
             }
-       } else if (fontFamily == FontFamily.LATO) {
+        } else if (fontFamily == FontFamily.LATO) {
             if (textWeight == TextWeight.NORMAL) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
@@ -170,7 +164,7 @@ public class TypefaceManager {
         } else {
             throw new IllegalArgumentException("Unknown `fontFamily` attribute value " + fontFamily);
         }
-        return typeface;
+        return obtainTypeface(typeface);
     }
 
     private static Typeface createTypeface(int typefaceValue) throws IllegalArgumentException {
