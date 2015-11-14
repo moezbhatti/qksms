@@ -84,10 +84,6 @@ public class TypefaceManager {
         }
     }
 
-    // The deprecated typefaces are no longer supported. Previously the fonts were stored as assets, but were
-    // removed to reduce app size. Android does not have these deprecated fonts built in, but we still need
-    // to keep these cases so that people with older versions of the app that did support these fonts had them
-    // selected won't experience a crash when they upgrade to the new version that doesn't support them
     public class Typefaces {
         public final static int ROBOTO_THIN = 0;
         public final static int ROBOTO_LIGHT = 2;
