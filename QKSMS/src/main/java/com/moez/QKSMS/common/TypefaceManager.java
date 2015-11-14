@@ -2,6 +2,7 @@ package com.moez.QKSMS.common;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.SparseArray;
 
 /**
@@ -174,56 +175,52 @@ public class TypefaceManager {
 
     private static Typeface createTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
         switch (typefaceValue) {
-            case Typefaces.ROBOTO_THIN:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Thin.ttf");
-
-            case Typefaces.ROBOTO_LIGHT:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
-
-            case Typefaces.ROBOTO_REGULAR:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
-
-            case Typefaces.ROBOTO_MEDIUM:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
-
-            case Typefaces.ROBOTO_CONDENSED_LIGHT:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Light.ttf");
-
-            case Typefaces.ROBOTO_CONDENSED_REGULAR:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Regular.ttf");
-
-            case Typefaces.ROBOTO_CONDENSED_BOLD:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Bold.ttf");
-
             case Typefaces.LATO_THIN:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Hairline.ttf");
+            case Typefaces.ROBOTO_THIN:
+                return Typeface.create("sans-serif-thin", Typeface.NORMAL);
 
             case Typefaces.LATO_LIGHT:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Light.ttf");
+            case Typefaces.ROBOTO_LIGHT:
+                return Typeface.create("sans-serif-light", Typeface.NORMAL);
 
             case Typefaces.LATO_REGULAR:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Regular.ttf");
+            case Typefaces.ROBOTO_REGULAR:
+                return Typeface.create("sans-serif", Typeface.NORMAL);
 
             case Typefaces.LATO_MEDIUM:
-                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Bold.ttf");
+            case Typefaces.ROBOTO_MEDIUM:
+                String name = Build.VERSION.SDK_INT >= 21 ? "sans-serif-medium" : "sans-serif";
+                int style = Build.VERSION.SDK_INT >= 21 ? Typeface.NORMAL : Typeface.BOLD;
+                return Typeface.create(name, style);
+
+            case Typefaces.ROBOTO_CONDENSED_LIGHT:
+            case Typefaces.ROBOTO_CONDENSED_REGULAR:
+                return Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+
+            case Typefaces.ROBOTO_CONDENSED_BOLD:
+                return Typeface.create("sans-serif-condensed", Typeface.BOLD);
 
             default:
                 throw new IllegalArgumentException("Unknown `typeface` attribute value " + typefaceValue);
         }
     }
 
+    // The deprecated typefaces are no longer supported. Previously the fonts were stored as assets, but were
+    // removed to reduce app size. Android does not have these deprecated fonts built in, but we still need
+    // to keep these cases so that people with older versions of the app that did support these fonts had them
+    // selected won't experience a crash when they upgrade to the new version that doesn't support them
     public class Typefaces {
         public final static int ROBOTO_THIN = 0;
         public final static int ROBOTO_LIGHT = 2;
         public final static int ROBOTO_REGULAR = 4;
         public final static int ROBOTO_MEDIUM = 6;
-        public final static int ROBOTO_CONDENSED_LIGHT = 12;
+        @Deprecated public final static int ROBOTO_CONDENSED_LIGHT = 12;
         public final static int ROBOTO_CONDENSED_REGULAR = 14;
         public final static int ROBOTO_CONDENSED_BOLD = 16;
-        public final static int LATO_THIN = 22;
-        public final static int LATO_LIGHT = 24;
-        public final static int LATO_REGULAR = 26;
-        public final static int LATO_MEDIUM = 28;
+        @Deprecated public final static int LATO_THIN = 22;
+        @Deprecated public final static int LATO_LIGHT = 24;
+        @Deprecated public final static int LATO_REGULAR = 26;
+        @Deprecated public final static int LATO_MEDIUM = 28;
     }
 
     public class FontFamily {
