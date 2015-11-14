@@ -23,8 +23,10 @@ public class TypefaceManager {
     public static android.graphics.Typeface obtainTypeface(int fontFamily, int textWeight) throws IllegalArgumentException {
         int typeface = Typefaces.ROBOTO_REGULAR;
         switch (fontFamily) {
+            case FontFamily.SYSTEM_FONT:
+                break;
+
             case FontFamily.ROBOTO:
-            case FontFamily.LATO:
                 switch (textWeight) {
                     case TextWeight.NORMAL:
                         typeface = Typefaces.ROBOTO_REGULAR;
@@ -94,9 +96,9 @@ public class TypefaceManager {
     }
 
     public class FontFamily {
-        public static final int ROBOTO = 0;
-        public static final int ROBOTO_CONDENSED = 1;
-        public static final int LATO = 2;
+        public static final int SYSTEM_FONT = 0;
+        public static final int ROBOTO = 1;
+        public static final int ROBOTO_CONDENSED = 2;
     }
 
     public class TextWeight {

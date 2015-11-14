@@ -123,7 +123,7 @@ public class FontManager {
         // Otherwise, get the heavy font weight.
         if (fontWeight == TypefaceManager.TextWeight.LIGHT) {
             return TypefaceManager.TextWeight.NORMAL;
-        } else if (fontFamily == TypefaceManager.FontFamily.ROBOTO || fontFamily == TypefaceManager.FontFamily.LATO) {
+        } else if (fontFamily == TypefaceManager.FontFamily.ROBOTO) {
             return TypefaceManager.TextWeight.MEDIUM;
         } else {
             return TypefaceManager.TextWeight.BOLD;
