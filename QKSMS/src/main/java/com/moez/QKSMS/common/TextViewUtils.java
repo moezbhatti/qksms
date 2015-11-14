@@ -49,7 +49,7 @@ public class TextViewUtils {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RobotoTextView);
 
             if (a.hasValue(R.styleable.RobotoTextView_typeface)) {
-                int typefaceValue = a.getInt(R.styleable.RobotoTextView_typeface, TypefaceManager.Typeface.ROBOTO_REGULAR);
+                int typefaceValue = a.getInt(R.styleable.RobotoTextView_typeface, TypefaceManager.Typefaces.ROBOTO_REGULAR);
                 typeface = TypefaceManager.obtainTypeface(context, typefaceValue);
             }
 
@@ -57,7 +57,7 @@ public class TextViewUtils {
         }
 
         if (typeface == null) {
-            typeface = TypefaceManager.obtainTypeface(context, TypefaceManager.Typeface.ROBOTO_REGULAR);
+            typeface = TypefaceManager.obtainTypeface(context, TypefaceManager.Typefaces.ROBOTO_REGULAR);
         }
 
         setTypeface(textView, typeface);

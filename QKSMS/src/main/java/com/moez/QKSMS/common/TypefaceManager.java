@@ -1,6 +1,7 @@
 package com.moez.QKSMS.common;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.SparseArray;
 
 /**
@@ -30,7 +31,7 @@ public class TypefaceManager {
             if (textWeight == TextWeight.NORMAL) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.ROBOTO_REGULAR;
+                        typeface = Typefaces.ROBOTO_REGULAR;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -40,7 +41,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.THIN) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.ROBOTO_THIN;
+                        typeface = Typefaces.ROBOTO_THIN;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -50,7 +51,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.LIGHT) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.ROBOTO_LIGHT;
+                        typeface = Typefaces.ROBOTO_LIGHT;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -60,7 +61,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.MEDIUM) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.ROBOTO_MEDIUM;
+                        typeface = Typefaces.ROBOTO_MEDIUM;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -82,7 +83,7 @@ public class TypefaceManager {
             if (textWeight == TextWeight.NORMAL) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.ROBOTO_CONDENSED_REGULAR;
+                        typeface = Typefaces.ROBOTO_CONDENSED_REGULAR;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -92,7 +93,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.LIGHT) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.ROBOTO_CONDENSED_LIGHT;
+                        typeface = Typefaces.ROBOTO_CONDENSED_LIGHT;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -102,7 +103,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.BOLD) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.ROBOTO_CONDENSED_BOLD;
+                        typeface = Typefaces.ROBOTO_CONDENSED_BOLD;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -117,7 +118,7 @@ public class TypefaceManager {
             if (textWeight == TextWeight.NORMAL) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.LATO_REGULAR;
+                        typeface = Typefaces.LATO_REGULAR;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -127,7 +128,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.THIN) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.LATO_THIN;
+                        typeface = Typefaces.LATO_THIN;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -137,7 +138,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.LIGHT) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.LATO_LIGHT;
+                        typeface = Typefaces.LATO_LIGHT;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -147,7 +148,7 @@ public class TypefaceManager {
             } else if (textWeight == TextWeight.MEDIUM) {
                 switch (textStyle) {
                     case TextStyle.NORMAL:
-                        typeface = Typeface.LATO_MEDIUM;
+                        typeface = Typefaces.LATO_MEDIUM;
                         break;
                     default:
                         throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
@@ -171,50 +172,47 @@ public class TypefaceManager {
         return typeface;
     }
 
-    private static android.graphics.Typeface createTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
-        String typefacePath;
+    private static Typeface createTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
         switch (typefaceValue) {
-            case Typeface.ROBOTO_THIN:
-                typefacePath = "fonts/Roboto-Thin.ttf";
-                break;
-            case Typeface.ROBOTO_LIGHT:
-                typefacePath = "fonts/Roboto-Light.ttf";
-                break;
-            case Typeface.ROBOTO_REGULAR:
-                typefacePath = "fonts/Roboto-Regular.ttf";
-                break;
-            case Typeface.ROBOTO_MEDIUM:
-                typefacePath = "fonts/Roboto-Medium.ttf";
-                break;
-            case Typeface.ROBOTO_CONDENSED_LIGHT:
-                typefacePath = "fonts/RobotoCondensed-Light.ttf";
-                break;
-            case Typeface.ROBOTO_CONDENSED_REGULAR:
-                typefacePath = "fonts/RobotoCondensed-Regular.ttf";
-                break;
-            case Typeface.ROBOTO_CONDENSED_BOLD:
-                typefacePath = "fonts/RobotoCondensed-Bold.ttf";
-                break;
-            case Typeface.LATO_THIN:
-                typefacePath = "fonts/Lato-Hairline.ttf";
-                break;
-            case Typeface.LATO_LIGHT:
-                typefacePath = "fonts/Lato-Light.ttf";
-                break;
-            case Typeface.LATO_REGULAR:
-                typefacePath = "fonts/Lato-Regular.ttf";
-                break;
-            case Typeface.LATO_MEDIUM:
-                typefacePath = "fonts/Lato-Bold.ttf";
-                break;
+            case Typefaces.ROBOTO_THIN:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Thin.ttf");
+
+            case Typefaces.ROBOTO_LIGHT:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+
+            case Typefaces.ROBOTO_REGULAR:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+
+            case Typefaces.ROBOTO_MEDIUM:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+
+            case Typefaces.ROBOTO_CONDENSED_LIGHT:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Light.ttf");
+
+            case Typefaces.ROBOTO_CONDENSED_REGULAR:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Regular.ttf");
+
+            case Typefaces.ROBOTO_CONDENSED_BOLD:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Bold.ttf");
+
+            case Typefaces.LATO_THIN:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Hairline.ttf");
+
+            case Typefaces.LATO_LIGHT:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Light.ttf");
+
+            case Typefaces.LATO_REGULAR:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Regular.ttf");
+
+            case Typefaces.LATO_MEDIUM:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Lato-Bold.ttf");
+
             default:
                 throw new IllegalArgumentException("Unknown `typeface` attribute value " + typefaceValue);
         }
-
-        return android.graphics.Typeface.createFromAsset(context.getAssets(), typefacePath);
     }
 
-    public class Typeface {
+    public class Typefaces {
         public final static int ROBOTO_THIN = 0;
         public final static int ROBOTO_LIGHT = 2;
         public final static int ROBOTO_REGULAR = 4;
