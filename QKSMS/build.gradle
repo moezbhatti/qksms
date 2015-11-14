@@ -25,7 +25,7 @@ android {
     }
 
     compileSdkVersion 22
-    buildToolsVersion '23.0.0'
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         versionCode 116
