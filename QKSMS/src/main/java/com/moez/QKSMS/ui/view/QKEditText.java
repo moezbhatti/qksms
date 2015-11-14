@@ -97,8 +97,8 @@ public class QKEditText extends android.widget.EditText implements LiveView {
         // Typeface and colors
         int fontFamily = FontManager.getFontFamily(mContext);
         int fontWeight = FontManager.getFontWeight(mContext, false);
-        setTypeface(TypefaceManager.obtainTypeface(fontFamily, fontWeight,
-                TypefaceManager.TextStyle.NORMAL));
+        setTypeface(TypefaceManager.obtainTypeface(fontFamily, fontWeight
+        ));
         setTextColor(ThemeManager.getTextOnBackgroundPrimary());
         setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
 

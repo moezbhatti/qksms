@@ -20,174 +20,59 @@ public class TypefaceManager {
         return typeface;
     }
 
-    public static android.graphics.Typeface obtainTypeface(int fontFamily, int textWeight, int textStyle) throws IllegalArgumentException {
-        int typeface;
-        if (fontFamily == FontFamily.ROBOTO) {
-            if (textWeight == TextWeight.NORMAL) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
+    public static android.graphics.Typeface obtainTypeface(int fontFamily, int textWeight) throws IllegalArgumentException {
+        int typeface = Typefaces.ROBOTO_REGULAR;
+        switch (fontFamily) {
+            case FontFamily.ROBOTO:
+            case FontFamily.LATO:
+                switch (textWeight) {
+                    case TextWeight.NORMAL:
                         typeface = Typefaces.ROBOTO_REGULAR;
                         break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.THIN) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
+                    case TextWeight.THIN:
                         typeface = Typefaces.ROBOTO_THIN;
                         break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.LIGHT) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
+                    case TextWeight.LIGHT:
                         typeface = Typefaces.ROBOTO_LIGHT;
                         break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.MEDIUM) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
+                    case TextWeight.MEDIUM:
                         typeface = Typefaces.ROBOTO_MEDIUM;
                         break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
                 }
-            } else if (textWeight == TextWeight.BOLD) {
-                switch (textStyle) {
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else {
-                throw new IllegalArgumentException("`textWeight` attribute value " + textWeight +
-                        " is not supported for this font family " + fontFamily);
-            }
-        } else if (fontFamily == FontFamily.ROBOTO_CONDENSED) {
-            if (textWeight == TextWeight.NORMAL) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
+                break;
+
+            case FontFamily.ROBOTO_CONDENSED:
+                switch (textWeight) {
+                    case TextWeight.LIGHT: // Condensed light is no longer supported
+                    case TextWeight.NORMAL:
                         typeface = Typefaces.ROBOTO_CONDENSED_REGULAR;
                         break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.LIGHT) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
-                        typeface = Typefaces.ROBOTO_CONDENSED_LIGHT;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.BOLD) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
+                    case TextWeight.BOLD:
                         typeface = Typefaces.ROBOTO_CONDENSED_BOLD;
                         break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
                 }
-            } else {
-                throw new IllegalArgumentException("`textWeight` attribute value " + textWeight +
-                        " is not supported for this font family " + fontFamily);
-            }
-        } else if (fontFamily == FontFamily.LATO) {
-            if (textWeight == TextWeight.NORMAL) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
-                        typeface = Typefaces.LATO_REGULAR;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.THIN) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
-                        typeface = Typefaces.LATO_THIN;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.LIGHT) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
-                        typeface = Typefaces.LATO_LIGHT;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.MEDIUM) {
-                switch (textStyle) {
-                    case TextStyle.NORMAL:
-                        typeface = Typefaces.LATO_MEDIUM;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else if (textWeight == TextWeight.BOLD) {
-                switch (textStyle) {
-                    default:
-                        throw new IllegalArgumentException("`textStyle` attribute value " + textStyle +
-                                " is not supported for this fontFamily " + fontFamily +
-                                " and textWeight " + textWeight);
-                }
-            } else {
-                throw new IllegalArgumentException("`textWeight` attribute value " + textWeight +
-                        " is not supported for this font family " + fontFamily);
-            }
-        } else {
-            throw new IllegalArgumentException("Unknown `fontFamily` attribute value " + fontFamily);
+                break;
         }
+
         return obtainTypeface(typeface);
     }
 
     private static Typeface createTypeface(int typefaceValue) throws IllegalArgumentException {
         switch (typefaceValue) {
-            case Typefaces.LATO_THIN:
             case Typefaces.ROBOTO_THIN:
                 return Typeface.create("sans-serif-thin", Typeface.NORMAL);
 
-            case Typefaces.LATO_LIGHT:
             case Typefaces.ROBOTO_LIGHT:
                 return Typeface.create("sans-serif-light", Typeface.NORMAL);
 
-            case Typefaces.LATO_REGULAR:
             case Typefaces.ROBOTO_REGULAR:
                 return Typeface.create("sans-serif", Typeface.NORMAL);
 
-            case Typefaces.LATO_MEDIUM:
             case Typefaces.ROBOTO_MEDIUM:
                 String name = Build.VERSION.SDK_INT >= 21 ? "sans-serif-medium" : "sans-serif";
                 int style = Build.VERSION.SDK_INT >= 21 ? Typeface.NORMAL : Typeface.BOLD;
                 return Typeface.create(name, style);
 
-            case Typefaces.ROBOTO_CONDENSED_LIGHT:
             case Typefaces.ROBOTO_CONDENSED_REGULAR:
                 return Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
@@ -208,13 +93,8 @@ public class TypefaceManager {
         public final static int ROBOTO_LIGHT = 2;
         public final static int ROBOTO_REGULAR = 4;
         public final static int ROBOTO_MEDIUM = 6;
-        @Deprecated public final static int ROBOTO_CONDENSED_LIGHT = 12;
         public final static int ROBOTO_CONDENSED_REGULAR = 14;
         public final static int ROBOTO_CONDENSED_BOLD = 16;
-        @Deprecated public final static int LATO_THIN = 22;
-        @Deprecated public final static int LATO_LIGHT = 24;
-        @Deprecated public final static int LATO_REGULAR = 26;
-        @Deprecated public final static int LATO_MEDIUM = 28;
     }
 
     public class FontFamily {
@@ -229,10 +109,6 @@ public class TypefaceManager {
         public static final int LIGHT = 2;
         public static final int MEDIUM = 3;
         public static final int BOLD = 4;
-    }
-
-    public class TextStyle {
-        public static final int NORMAL = 0;
     }
 
 }
