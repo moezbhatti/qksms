@@ -15,7 +15,7 @@ public class TypefaceManager {
     public static android.graphics.Typeface obtainTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
         android.graphics.Typeface typeface = mTypefaces.get(typefaceValue);
         if (typeface == null) {
-            typeface = createTypeface(context, typefaceValue);
+            typeface = createTypeface(typefaceValue);
             mTypefaces.put(typefaceValue, typeface);
         }
         return typeface;
@@ -173,7 +173,7 @@ public class TypefaceManager {
         return typeface;
     }
 
-    private static Typeface createTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
+    private static Typeface createTypeface(int typefaceValue) throws IllegalArgumentException {
         switch (typefaceValue) {
             case Typefaces.LATO_THIN:
             case Typefaces.ROBOTO_THIN:
