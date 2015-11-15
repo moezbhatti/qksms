@@ -16,14 +16,14 @@ public class TypefaceManager {
         switch (fontFamily) {
             case FontFamily.ROBOTO:
                 switch (textWeight) {
-                    case TextWeight.NORMAL:
-                        typefaceValue = Typefaces.ROBOTO_REGULAR;
-                        break;
                     case TextWeight.THIN:
                         typefaceValue = Typefaces.ROBOTO_THIN;
                         break;
                     case TextWeight.LIGHT:
                         typefaceValue = Typefaces.ROBOTO_LIGHT;
+                        break;
+                    case TextWeight.NORMAL:
+                        typefaceValue = Typefaces.ROBOTO_REGULAR;
                         break;
                     case TextWeight.MEDIUM:
                     case TextWeight.BOLD:
@@ -45,7 +45,7 @@ public class TypefaceManager {
                         break;
                 }
                 break;
-            
+
             case FontFamily.SYSTEM_FONT:
                 switch (textWeight) {
                     case TextWeight.THIN:
