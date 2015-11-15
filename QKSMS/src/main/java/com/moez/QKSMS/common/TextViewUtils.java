@@ -50,14 +50,14 @@ public class TextViewUtils {
 
             if (a.hasValue(R.styleable.RobotoTextView_typeface)) {
                 int typefaceValue = a.getInt(R.styleable.RobotoTextView_typeface, TypefaceManager.Typefaces.ROBOTO_REGULAR);
-                typeface = TypefaceManager.obtainTypeface(typefaceValue);
+                typeface = TypefaceManager.obtainTypeface(context, typefaceValue);
             }
 
             a.recycle();
         }
 
         if (typeface == null) {
-            typeface = TypefaceManager.obtainTypeface(TypefaceManager.Typefaces.ROBOTO_REGULAR);
+            typeface = TypefaceManager.obtainTypeface(context, TypefaceManager.Typefaces.ROBOTO_REGULAR);
         }
 
         setTypeface(textView, typeface);

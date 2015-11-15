@@ -1,7 +1,7 @@
 package com.moez.QKSMS.common;
 
+import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.util.SparseArray;
 
 /**
@@ -11,7 +11,7 @@ public class TypefaceManager {
 
     private final static SparseArray<android.graphics.Typeface> mTypefaces = new SparseArray<>();
 
-    public static Typeface obtainTypeface(int fontFamily, int textWeight) throws IllegalArgumentException {
+    public static Typeface obtainTypeface(Context context, int fontFamily, int textWeight) throws IllegalArgumentException {
         int typefaceValue = Typefaces.ROBOTO_REGULAR;
         switch (fontFamily) {
             case FontFamily.ROBOTO:
@@ -36,6 +36,8 @@ public class TypefaceManager {
                 switch (textWeight) {
                     case TextWeight.THIN:
                     case TextWeight.LIGHT:
+                        typefaceValue = Typefaces.ROBOTO_CONDENSED_LIGHT;
+                        break;
                     case TextWeight.NORMAL:
                         typefaceValue = Typefaces.ROBOTO_CONDENSED_REGULAR;
                         break;
@@ -61,39 +63,40 @@ public class TypefaceManager {
                 break;
         }
 
-        return obtainTypeface(typefaceValue);
+        return obtainTypeface(context, typefaceValue);
     }
 
-    public static Typeface obtainTypeface(int typefaceValue) throws IllegalArgumentException {
+    public static Typeface obtainTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
         android.graphics.Typeface typeface = mTypefaces.get(typefaceValue);
         if (typeface == null) {
-            typeface = createTypeface(typefaceValue);
+            typeface = createTypeface(context, typefaceValue);
             mTypefaces.put(typefaceValue, typeface);
         }
         return typeface;
     }
 
-    private static Typeface createTypeface(int typefaceValue) throws IllegalArgumentException {
+    private static Typeface createTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
         switch (typefaceValue) {
             case Typefaces.ROBOTO_THIN:
-                return Typeface.create("sans-serif-thin", Typeface.NORMAL);
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Thin.ttf");
 
             case Typefaces.ROBOTO_LIGHT:
-                return Typeface.create("sans-serif-light", Typeface.NORMAL);
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
 
             case Typefaces.ROBOTO_REGULAR:
-                return Typeface.create("sans-serif", Typeface.NORMAL);
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
 
             case Typefaces.ROBOTO_MEDIUM:
-                String name = Build.VERSION.SDK_INT >= 21 ? "sans-serif-medium" : "sans-serif";
-                int style = Build.VERSION.SDK_INT >= 21 ? Typeface.NORMAL : Typeface.BOLD;
-                return Typeface.create(name, style);
+                return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+
+            case Typefaces.ROBOTO_CONDENSED_LIGHT:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Light.ttf");
 
             case Typefaces.ROBOTO_CONDENSED_REGULAR:
-                return Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Regular.ttf");
 
             case Typefaces.ROBOTO_CONDENSED_BOLD:
-                return Typeface.create("sans-serif-condensed", Typeface.BOLD);
+                return Typeface.createFromAsset(context.getAssets(), "fonts/RobotoCondensed-Bold.ttf");
 
             case Typefaces.DEFAULT_REGULAR:
                 return Typeface.DEFAULT;
@@ -111,10 +114,13 @@ public class TypefaceManager {
         public final static int ROBOTO_LIGHT = 1;
         public final static int ROBOTO_REGULAR = 2;
         public final static int ROBOTO_MEDIUM = 3;
+
         public final static int ROBOTO_CONDENSED_REGULAR = 4;
         public final static int ROBOTO_CONDENSED_BOLD = 5;
-        public final static int DEFAULT_REGULAR = 6;
-        public final static int DEFAULT_BOLD = 7;
+        public final static int ROBOTO_CONDENSED_LIGHT = 6;
+
+        public final static int DEFAULT_REGULAR = 7;
+        public final static int DEFAULT_BOLD = 8;
     }
 
     public class FontFamily {

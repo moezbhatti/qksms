@@ -77,7 +77,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
             mPaint.setTextSize(Units.dpToPx(context, 32));
             mPaint.setTextAlign(Paint.Align.CENTER);
             mPaint.setAntiAlias(true);
-            mPaint.setTypeface(TypefaceManager.obtainTypeface(TypefaceManager.Typefaces.ROBOTO_LIGHT));
+            mPaint.setTypeface(TypefaceManager.obtainTypeface(getContext(), TypefaceManager.Typefaces.ROBOTO_LIGHT));
 
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarView, defStyle, 0);
             for (int i = 0; i < a.getIndexCount(); i++) {
