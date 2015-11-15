@@ -11,52 +11,66 @@ public class TypefaceManager {
 
     private final static SparseArray<android.graphics.Typeface> mTypefaces = new SparseArray<>();
 
-    public static android.graphics.Typeface obtainTypeface(int typefaceValue) throws IllegalArgumentException {
-        android.graphics.Typeface typeface = mTypefaces.get(typefaceValue);
-        if (typeface == null) {
-            typeface = createTypeface(typefaceValue);
-            mTypefaces.put(typefaceValue, typeface);
-        }
-        return typeface;
-    }
-
-    public static android.graphics.Typeface obtainTypeface(int fontFamily, int textWeight) throws IllegalArgumentException {
-        int typeface = Typefaces.ROBOTO_REGULAR;
+    public static Typeface obtainTypeface(int fontFamily, int textWeight) throws IllegalArgumentException {
+        int typefaceValue = Typefaces.ROBOTO_REGULAR;
         switch (fontFamily) {
-            case FontFamily.SYSTEM_FONT:
-                break;
-
             case FontFamily.ROBOTO:
                 switch (textWeight) {
                     case TextWeight.NORMAL:
-                        typeface = Typefaces.ROBOTO_REGULAR;
+                        typefaceValue = Typefaces.ROBOTO_REGULAR;
                         break;
                     case TextWeight.THIN:
-                        typeface = Typefaces.ROBOTO_THIN;
+                        typefaceValue = Typefaces.ROBOTO_THIN;
                         break;
                     case TextWeight.LIGHT:
-                        typeface = Typefaces.ROBOTO_LIGHT;
+                        typefaceValue = Typefaces.ROBOTO_LIGHT;
                         break;
                     case TextWeight.MEDIUM:
-                        typeface = Typefaces.ROBOTO_MEDIUM;
+                    case TextWeight.BOLD:
+                        typefaceValue = Typefaces.ROBOTO_MEDIUM;
                         break;
                 }
                 break;
 
             case FontFamily.ROBOTO_CONDENSED:
                 switch (textWeight) {
-                    case TextWeight.LIGHT: // Condensed light is no longer supported
+                    case TextWeight.THIN:
+                    case TextWeight.LIGHT:
                     case TextWeight.NORMAL:
-                        typeface = Typefaces.ROBOTO_CONDENSED_REGULAR;
+                        typefaceValue = Typefaces.ROBOTO_CONDENSED_REGULAR;
                         break;
+                    case TextWeight.MEDIUM:
                     case TextWeight.BOLD:
-                        typeface = Typefaces.ROBOTO_CONDENSED_BOLD;
+                        typefaceValue = Typefaces.ROBOTO_CONDENSED_BOLD;
+                        break;
+                }
+                break;
+            
+            case FontFamily.SYSTEM_FONT:
+                switch (textWeight) {
+                    case TextWeight.THIN:
+                    case TextWeight.LIGHT:
+                    case TextWeight.NORMAL:
+                        typefaceValue = Typefaces.DEFAULT_REGULAR;
+                        break;
+                    case TextWeight.MEDIUM:
+                    case TextWeight.BOLD:
+                        typefaceValue = Typefaces.DEFAULT_BOLD;
                         break;
                 }
                 break;
         }
 
-        return obtainTypeface(typeface);
+        return obtainTypeface(typefaceValue);
+    }
+
+    public static Typeface obtainTypeface(int typefaceValue) throws IllegalArgumentException {
+        android.graphics.Typeface typeface = mTypefaces.get(typefaceValue);
+        if (typeface == null) {
+            typeface = createTypeface(typefaceValue);
+            mTypefaces.put(typefaceValue, typeface);
+        }
+        return typeface;
     }
 
     private static Typeface createTypeface(int typefaceValue) throws IllegalArgumentException {
@@ -81,6 +95,12 @@ public class TypefaceManager {
             case Typefaces.ROBOTO_CONDENSED_BOLD:
                 return Typeface.create("sans-serif-condensed", Typeface.BOLD);
 
+            case Typefaces.DEFAULT_REGULAR:
+                return Typeface.DEFAULT;
+
+            case Typefaces.DEFAULT_BOLD:
+                return Typeface.DEFAULT_BOLD;
+
             default:
                 throw new IllegalArgumentException("Unknown `typeface` attribute value " + typefaceValue);
         }
@@ -88,17 +108,19 @@ public class TypefaceManager {
 
     public class Typefaces {
         public final static int ROBOTO_THIN = 0;
-        public final static int ROBOTO_LIGHT = 2;
-        public final static int ROBOTO_REGULAR = 4;
-        public final static int ROBOTO_MEDIUM = 6;
-        public final static int ROBOTO_CONDENSED_REGULAR = 14;
-        public final static int ROBOTO_CONDENSED_BOLD = 16;
+        public final static int ROBOTO_LIGHT = 1;
+        public final static int ROBOTO_REGULAR = 2;
+        public final static int ROBOTO_MEDIUM = 3;
+        public final static int ROBOTO_CONDENSED_REGULAR = 4;
+        public final static int ROBOTO_CONDENSED_BOLD = 5;
+        public final static int DEFAULT_REGULAR = 6;
+        public final static int DEFAULT_BOLD = 7;
     }
 
     public class FontFamily {
-        public static final int SYSTEM_FONT = 0;
-        public static final int ROBOTO = 1;
-        public static final int ROBOTO_CONDENSED = 2;
+        public static final int ROBOTO = 0;
+        public static final int ROBOTO_CONDENSED = 1;
+        public static final int SYSTEM_FONT = 2;
     }
 
     public class TextWeight {
