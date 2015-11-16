@@ -19,7 +19,11 @@
     </attr>
 
     <declare-styleable name="RobotoTextView">
-        <attr name="typeface"/>
+        <attr name="typeface" />
+    </declare-styleable>
+
+    <declare-styleable name="QKTextView">
+        <attr name="type" />
     </declare-styleable>
 
     <attr name="typeface">

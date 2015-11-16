@@ -2,6 +2,7 @@ package com.moez.QKSMS.ui.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.Layout;
@@ -9,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
+import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
@@ -51,13 +53,11 @@ public class QKTextView extends TextView implements LiveView {
     private void init(Context context, AttributeSet attrs) {
         mContext = context;
 
+
         if (attrs != null) {
-            for (int i = 0; i < attrs.getAttributeCount(); i++) {
-                if (attrs.getAttributeName(i).equals("type")) {
-                    mType = Integer.decode(attrs.getAttributeValue(i));
-                    break;
-                }
-            }
+            final TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.QKTextView);
+            mType = array.getInt(R.styleable.QKTextView_type, FontManager.TEXT_TYPE_PRIMARY);
+            array.recycle();
         }
 
         refresh();
