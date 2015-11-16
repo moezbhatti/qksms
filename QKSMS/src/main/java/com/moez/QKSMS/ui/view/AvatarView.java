@@ -254,6 +254,10 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
     }
 
     private void setImageWhenReady() {
+        if (isInEditMode()) {
+            return;
+        }
+
         if (getWidth() > 0 && getHeight() > 0) {
             // If our size is initialized correctly, then set up the drawable here.
             if (mOriginalDrawable != null) {
@@ -277,7 +281,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (getDrawable() == null) {
+        if (getDrawable() == null && !isInEditMode()) {
             int xPos = (getWidth() / 2);
             int yPos = (int) ((getHeight() / 2) - ((mPaint.descent() + mPaint.ascent()) / 2));
             canvas.drawText("" + mInitial, xPos, yPos, mPaint);
