@@ -29,75 +29,90 @@
         android:src="@drawable/tools_avatar"
         app:initialSize="32dp" />
 
-    <RelativeLayout
-        android:id="@+id/conversation_list_block"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_weight="1"
-        android:animateLayoutChanges="true">
-
-        <com.moez.QKSMS.ui.view.QKTextView
-            android:id="@+id/conversation_list_name"
-            style="@style/TextPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/conversation_list_date"
-            android:singleLine="true"
-            tools:text="Moez Bhatti" />
-
-        <com.moez.QKSMS.ui.view.QKTextView
-            android:id="@+id/conversation_list_date"
-            style="@style/TextTertiary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:paddingLeft="16dp"
-            tools:text="4:41PM" />
-
-        <com.moez.QKSMS.ui.view.QKTextView
-            android:id="@+id/conversation_list_snippet"
-            style="@style/TextSecondary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/conversation_list_name"
-            android:layout_toLeftOf="@+id/conversation_list_badges"
-            android:lines="1"
-            android:singleLine="true"
-            tools:text="Hey! This is a test message. I'm just making this longer now" />
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/conversation_list_badges"
-            android:layout_width="wrap_content"
-            android:layout_height="16dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/conversation_list_date"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
-            <ImageView
-                android:id="@+id/conversation_list_muted"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:visibility="gone" />
+            <com.moez.QKSMS.ui.view.QKTextView
+                android:id="@+id/conversation_list_name"
+                style="@style/TextPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                tools:text="Moez Bhatti" />
 
-            <ImageView
-                android:id="@+id/conversation_list_error"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:visibility="gone" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:minWidth="16dp" />
 
-            <ImageView
-                android:id="@+id/conversation_list_unread"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:visibility="gone" />
+            <com.moez.QKSMS.ui.view.QKTextView
+                android:id="@+id/conversation_list_date"
+                style="@style/TextTertiary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="4:41PM" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:gravity="bottom">
+
+            <com.moez.QKSMS.ui.view.QKTextView
+                android:id="@+id/conversation_list_snippet"
+                style="@style/TextSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:singleLine="true"
+                tools:text="Hey! This is a test message. I'm just making this longer now" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:minWidth="16dp" />
+
+            <LinearLayout
+                android:id="@+id/conversation_list_badges"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/conversation_list_muted"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/conversation_list_error"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/conversation_list_unread"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
