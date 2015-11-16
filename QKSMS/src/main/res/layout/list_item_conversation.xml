@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     android:id="@+id/conversation_list_row"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="72dp"
     android:animateLayoutChanges="true"
@@ -26,6 +26,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginRight="16dp"
+        android:src="@drawable/tools_avatar"
         app:initialSize="32dp" />
 
     <RelativeLayout
@@ -43,7 +44,8 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/conversation_list_date"
             android:singleLine="true"
-            app:type="primary" />
+            app:type="primary"
+            tools:text="Moez Bhatti" />
 
         <com.moez.QKSMS.ui.view.QKTextView
             android:id="@+id/conversation_list_date"
@@ -52,7 +54,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:paddingLeft="16dp"
-            app:type="tertiary" />
+            app:type="tertiary"
+            tools:text="4:41PM" />
 
         <com.moez.QKSMS.ui.view.QKTextView
             android:id="@+id/conversation_list_snippet"
@@ -63,7 +66,8 @@
             android:layout_toLeftOf="@+id/conversation_list_badges"
             android:lines="1"
             android:singleLine="true"
-            app:type="secondary" />
+            app:type="secondary"
+            tools:text="Hey! This is a test message. I'm just making this longer now" />
 
         <LinearLayout
             android:id="@+id/conversation_list_badges"
@@ -91,6 +95,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:visibility="gone" />
+
         </LinearLayout>
 
     </RelativeLayout>

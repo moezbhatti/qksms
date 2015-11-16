@@ -255,6 +255,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
 
     private void setImageWhenReady() {
         if (isInEditMode()) {
+            super.setImageDrawable(mOriginalDrawable);
             return;
         }
 
