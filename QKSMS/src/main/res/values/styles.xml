@@ -1,71 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppThemeWhite" parent="AppBaseThemeLight">
-        <item name="android:windowBackground">@color/white_pure</item>
-        <item name="backgroundColor">@color/grey_light_mega_ultra</item>
+    <style name="TextPrimary">
+        <item name="android:textColor">@color/theme_light_text_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="type">primary</item>
     </style>
 
-    <style name="AppThemeWhiteDialog" parent="AppThemeLightDialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="backgroundColor">@color/white_pure</item>
+    <style name="TextSecondary">
+        <item name="android:textColor">@color/theme_light_text_secondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="type">secondary</item>
     </style>
 
-    <style name="AppThemeLight" parent="AppBaseThemeLight" />
-
-    <style name="AppThemeLightDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="backgroundColor">@color/grey_light_mega_ultra</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="toolbarStyle">@style/ActionBarTheme</item>
-    </style>
-
-    <style name="AppThemeDark" parent="AppBaseThemeDark" />
-
-    <style name="AppThemeDarkDialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:activatedBackgroundIndicator">@color/grey_dark</item>
-        <item name="backgroundColor">@color/grey_material</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="toolbarStyle">@style/ActionBarTheme</item>
-    </style>
-
-    <style name="AppThemeDarkAmoled" parent="AppThemeDark">
-        <item name="android:windowBackground">@color/black</item>
-        <item name="backgroundColor">@color/black</item>
-    </style>
-
-    <style name="AppThemeDarkAmoledDialog" parent="AppThemeDarkDialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="backgroundColor">@color/black</item>
-    </style>
-
-    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="toolbarStyle">@style/ActionBarTheme</item>
-        <item name="android:displayOptions">showCustom</item>
-        <item name="android:windowBackground">@color/grey_light_mega_ultra</item>
-        <item name="colorPrimary">@color/grey_material</item>
-        <item name="backgroundColor">@color/grey_light_mega_ultra</item>
-    </style>
-
-    <style name="AppBaseThemeDark" parent="Theme.AppCompat">
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="actionBarStyle">@style/ActionBarTheme</item>
-        <item name="android:displayOptions">showCustom</item>
-        <item name="android:windowBackground">@color/grey_material</item>
-        <item name="colorPrimary">@color/grey_material</item>
-        <item name="backgroundColor">@color/grey_material</item>
-    </style>
-
-    <style name="ActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionMenuTextColor">@color/text_primary_dark</item>
+    <style name="TextTertiary">
+        <item name="android:textColor">@color/theme_light_text_secondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="type">tertiary</item>
     </style>
 
     <style name="ButtonStyle">
