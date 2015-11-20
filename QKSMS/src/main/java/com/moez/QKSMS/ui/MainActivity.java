@@ -426,16 +426,21 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         NotificationManager.initQuickCompose(this, false, false);
     }
 
+    /**
+     * MainActivity has a "singleTask" launch mode, which means that if it is currently running
+     * and another intent is launched to open it, instead of creating a new MainActivity it
+     * just opens the current MainActivity. We use this so that when you click on notifications,
+     * only one main activity is ever used.
+     * <p>
+     * onNewIntent() is called every time the homescreen shortcut is tapped, even if the app
+     * is already running in the background. It's also called when the app is launched via other
+     * intents
+     * <p>
+     * Docs:
+     * http://developer.android.com/guide/components/tasks-and-back-stack.html#TaskLaunchModes
+     */
     @Override
     public void onNewIntent(Intent intent) {
-        // MainActivity has a "singleTask" launch mode, which means that if it is currently running
-        // and another intent is launched to open it, instead of creating a new MainActivity it
-        // just opens the current MainActivity. We use this so that when you click on notifications,
-        // only one main activity is ever used.
-        //
-        // Docs:
-        // http://developer.android.com/guide/components/tasks-and-back-stack.html#TaskLaunchModes
-
         // onNewIntent doesn't change the result of getIntent() by default, so here we set it since
         // that makes the most sense.
         setIntent(intent);
