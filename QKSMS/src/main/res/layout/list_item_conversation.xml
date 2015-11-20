@@ -73,17 +73,13 @@
             <com.moez.QKSMS.ui.view.QKTextView
                 android:id="@+id/conversation_list_snippet"
                 style="@style/TextSecondary"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
                 android:lines="1"
                 android:singleLine="true"
                 tools:text="Hey! This is a test message. I'm just making this longer now" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:minWidth="16dp" />
 
             <LinearLayout
                 android:id="@+id/conversation_list_badges"
