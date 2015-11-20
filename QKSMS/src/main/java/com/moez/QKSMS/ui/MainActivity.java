@@ -239,6 +239,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         mSlidingMenu.setContent(R.layout.content_frame);
         mSlidingMenu.setMenu(R.layout.menu_frame);
+        mSlidingMenu.showMenu(false);
     }
 
     /**
@@ -470,8 +471,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             Log.v(TAG, "Opening thread: " + threadId);
             setConversation(threadId);
             mSlidingMenu.showContent();
-        } else {
-            mSlidingMenu.showMenu(false);
         }
 
         // Otherwise we'll just resume what was previously there, which doesn't require any code.
