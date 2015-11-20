@@ -120,7 +120,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     }
 
     /**
-     * Returns the weighting for unread vs. read conversations that are selected
+     * Returns the weighting for unread vs. read conversations that are selected, to decide
+     * which options we should show in the multi selction toolbar
      */
     private int getUnreadWeight() {
         int unreadWeight = 0;

@@ -757,12 +757,10 @@ public class Conversation {
      * @param deleteAll Delete the whole thread including locked messages
      * @param threadIds Collection of thread IDs of the conversations to be deleted
      */
-    public static void startDelete(ConversationQueryHandler handler, int token, boolean deleteAll,
-                                   Collection<Long> threadIds) {
+    public static void startDelete(ConversationQueryHandler handler, int token, boolean deleteAll, Collection<Long> threadIds) {
         synchronized (sDeletingThreadsLock) {
             if (DELETEDEBUG) {
-                Log.v(TAG, "Conversation startDelete sDeletingThreads: " +
-                        sDeletingThreads);
+                Log.v(TAG, "Conversation startDelete sDeletingThreads: " + sDeletingThreads);
             }
             if (sDeletingThreads) {
                 Log.e(TAG, "startDeleteAll already in the middle of a delete", new Exception());
@@ -829,18 +827,11 @@ public class Conversation {
         @Override
         protected void onDeleteComplete(int token, Object cookie, int result) {
             if (token == mDeleteToken) {
-                // Test code
-//                try {
-//                    Thread.sleep(10000);
-//                } catch (InterruptedException e) {
-//                }
-
                 // release lock
                 synchronized (sDeletingThreadsLock) {
                     sDeletingThreads = false;
                     if (DELETEDEBUG) {
-                        Log.v(TAG, "Conversation onDeleteComplete sDeletingThreads: " +
-                                sDeletingThreads);
+                        Log.v(TAG, "Conversation onDeleteComplete sDeletingThreads: " + sDeletingThreads);
                     }
                     sDeletingThreadsLock.notifyAll();
                 }

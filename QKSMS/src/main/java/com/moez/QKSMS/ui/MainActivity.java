@@ -697,16 +697,13 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         @Override
         public void onClick(DialogInterface dialog, final int whichButton) {
             MessageUtils.handleReadReport(mContext, mThreadIds,
-                    PduHeaders.READ_STATUS__DELETED_WITHOUT_BEING_READ, new Runnable() {
-                        @Override
-                        public void run() {
-                            int token = DELETE_CONVERSATION_TOKEN;
-                            if (mThreadIds == null) {
-                                Conversation.startDeleteAll(mHandler, token, mDeleteLockedMessages);
-                                DraftCache.getInstance().refresh();
-                            } else {
-                                Conversation.startDelete(mHandler, token, mDeleteLockedMessages, mThreadIds);
-                            }
+                    PduHeaders.READ_STATUS__DELETED_WITHOUT_BEING_READ, () -> {
+                        int token = DELETE_CONVERSATION_TOKEN;
+                        if (mThreadIds == null) {
+                            Conversation.startDeleteAll(mHandler, token, mDeleteLockedMessages);
+                            DraftCache.getInstance().refresh();
+                        } else {
+                            Conversation.startDelete(mHandler, token, mDeleteLockedMessages, mThreadIds);
                         }
                     }
             );
