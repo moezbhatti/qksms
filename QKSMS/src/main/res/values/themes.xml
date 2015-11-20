@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- WHITE THEME -->
+
     <style name="AppThemeWhite" parent="AppBaseThemeLight">
         <item name="android:windowBackground">@color/white_pure</item>
         <item name="backgroundColor">@color/grey_light_mega_ultra</item>
@@ -11,6 +13,8 @@
         <item name="backgroundColor">@color/white_pure</item>
     </style>
 
+    <!-- LIGHT THEME -->
+
     <style name="AppThemeLight" parent="AppBaseThemeLight" />
 
     <style name="AppThemeLightDialog" parent="Theme.AppCompat.Light.Dialog">
@@ -20,6 +24,8 @@
         <item name="windowActionBar">false</item>
         <item name="toolbarStyle">@style/ActionBarTheme</item>
     </style>
+
+    <!-- DARK THEME -->
 
     <style name="AppThemeDark" parent="AppBaseThemeDark" />
 
@@ -32,6 +38,8 @@
         <item name="toolbarStyle">@style/ActionBarTheme</item>
     </style>
 
+    <!-- LIGHT AMOLED THEME -->
+
     <style name="AppThemeDarkAmoled" parent="AppThemeDark">
         <item name="android:windowBackground">@color/black</item>
         <item name="backgroundColor">@color/black</item>
@@ -42,6 +50,8 @@
         <item name="backgroundColor">@color/black</item>
     </style>
 
+    <!-- BASE THEMES -->
+    
     <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -63,6 +73,8 @@
         <item name="colorPrimary">@color/grey_material</item>
         <item name="backgroundColor">@color/grey_material</item>
     </style>
+
+    <!-- OTHER THEMES -->
 
     <style name="ActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="actionMenuTextColor">@color/text_primary_dark</item>
