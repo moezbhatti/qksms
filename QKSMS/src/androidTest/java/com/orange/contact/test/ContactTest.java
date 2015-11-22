@@ -7,7 +7,8 @@ public class ContactTest extends AndroidTestCase {
         super.setUp();
     }
 
-    public void testGetNumber() throws Exception {
+    public void testGetName() throws Exception {
+
     }
 
     protected void tearDown() throws Exception {
