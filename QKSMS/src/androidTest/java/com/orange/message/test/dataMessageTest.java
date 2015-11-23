@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.test.AndroidTestCase;
 
 import com.moez.QKSMS.data.Contact;
+import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
 
 
@@ -21,29 +22,31 @@ public class dataMessageTest extends AndroidTestCase {
 
     }
 
-    public void tearDown() throws Exception {
-
-    }
-
     public void testGetNameNull() throws Exception {
         Context context = getContext();
-        long id = 2;
+        long id = 0;
         Message message = new Message(context, id);
-        String name = Contact.getName(context, message.getAddress());
+        String name = ContactHelper.getName(context, message.getAddress());
         assertEquals(message.getName(), name);
     }
 
     public void testGetContactId() throws Exception {
         Context context = getContext();
-        Message message = new Message(context, 0);
-        long testId = Contact.getId(context, message.getAddress());
-        assertEquals(0, testId);
+        long id = 0;
+        Message message = new Message(context, id);
+        long testId = ContactHelper.getId(context, message.getAddress());
+        assertEquals(message.getContactId(), testId);
     }
 
     public void testGetPhotoBitmap() throws Exception {
         Context context = getContext();
-        Message message = new Message(context, 0);
-        Bitmap bitmap = Contact.getBitmap(context, message.getContactId());
-        assertEquals(null, bitmap);
+        long id = 0;
+        Message message = new Message(context, id);
+        Bitmap bitmap = ContactHelper.getBitmap(context, message.getContactId());
+        assertEquals(message.getPhotoBitmap(), bitmap);
+    }
+
+    public void tearDown() throws Exception {
+
     }
 }
