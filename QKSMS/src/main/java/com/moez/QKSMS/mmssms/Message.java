@@ -99,7 +99,7 @@ public class Message {
     public Message(String text, String address) {
         this(new Message.Builder()
                 .text(text)
-                .stringAddress(address)
+                .address(address)
                 .build());
     }
 
@@ -113,7 +113,7 @@ public class Message {
     public Message(String text, String address, String subject) {
         this(new Message.Builder()
                 .text(text)
-                .stringAddress(address)
+                .address(address)
                 .subject(subject)
                 .build());
     }
@@ -156,8 +156,8 @@ public class Message {
     public Message(String text, String address, Bitmap image) {
         this(new Message.Builder()
                 .text(text)
-                .stringAddress(address)
-                .images(new Bitmap[]{image})
+                .address(address)
+                .image(image)
                 .build());
     }
 
@@ -172,8 +172,8 @@ public class Message {
     public Message(String text, String address, Bitmap image, String subject) {
         this(new Message.Builder()
                 .text(text)
-                .stringAddress(address)
-                .images(new Bitmap[]{image})
+                .address(address)
+                .image(image)
                 .subject(subject)
                 .build());
     }
@@ -189,7 +189,7 @@ public class Message {
         this(new Message.Builder()
                 .text(text)
                 .addresses(addresses)
-                .images(new Bitmap[]{image})
+                .image(image)
                 .build());
     }
 
@@ -205,7 +205,7 @@ public class Message {
         this(new Message.Builder()
                 .text(text)
                 .addresses(addresses)
-                .images(new Bitmap[]{image})
+                .image(image)
                 .subject(subject)
                 .build());
     }
@@ -220,7 +220,7 @@ public class Message {
     public Message(String text, String address, Bitmap[] images) {
         this(new Message.Builder()
                 .text(text)
-                .stringAddress(address)
+                .address(address)
                 .images(images)
                 .build());
     }
@@ -236,7 +236,7 @@ public class Message {
     public Message(String text, String address, Bitmap[] images, String subject) {
         this(new Message.Builder()
                 .text(text)
-                .stringAddress(address)
+                .address(address)
                 .images(images)
                 .subject(subject)
                 .build());
@@ -558,6 +558,11 @@ public class Message {
             return this;
         }
 
+        public Builder address(String address){
+            message.addresses = address.trim().split(" ");
+            return this;
+        }
+
         public Builder addresses(String[] addresses){
             message.addresses = addresses;
             return this;
@@ -568,8 +573,8 @@ public class Message {
             return this;
         }
 
-        public Builder stringAddress(String address){
-            message.addresses = address.trim().split(" ");
+        public Builder image(Bitmap bitmap) {
+            message.images = new Bitmap[] {bitmap};
             return this;
         }
 
@@ -599,7 +604,7 @@ public class Message {
         }
 
         public Builder delay(int delay){
-            message.delay=delay;
+            message.delay = delay;
             return this;
         }
 
