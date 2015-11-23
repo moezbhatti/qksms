@@ -50,10 +50,44 @@ public class Message {
     public static final int TYPE_VOICE = 1;
 
     /**
+     * Default delay
+     */
+    public static final int DEFAULT_DELAY = 0;
+
+    /**
      * Default constructor
      */
-    public Message() {
-        this("", new String[]{""});
+    public Message()
+    {
+        this.text = "";
+        this.subject = null;
+        this.addresses = new String[]{""};
+        this.images = new Bitmap[0];
+        this.imageNames = null;
+        this.media = new byte[0];
+        this.mediaMimeType = null;
+        this.save = true;
+        this.type = TYPE_SMSMMS;
+        this.delay = DEFAULT_DELAY;
+    }
+
+    /**
+     * Constructor
+     *
+     * Copy constructor for Builder pattern delegation
+     */
+    public Message(Message m)
+    {
+        this.text = m.text;
+        this.subject = m.subject;
+        this.addresses = m.addresses;
+        this.images = m.images;
+        this.imageNames = m.imageNames;
+        this.media = m.media;
+        this.mediaMimeType = m.mediaMimeType;
+        this.save = m.save;
+        this.type = m.type;
+        this.delay = m.delay;
     }
 
     /**
@@ -63,7 +97,10 @@ public class Message {
      * @param address is the phone number to send to
      */
     public Message(String text, String address) {
-        this(text, address.trim().split(" "));
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .build());
     }
 
     /**
@@ -74,7 +111,11 @@ public class Message {
      * @param subject is the subject of the mms message
      */
     public Message(String text, String address, String subject) {
-        this(text, address.trim().split(" "), subject);
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -84,15 +125,10 @@ public class Message {
      * @param addresses is an array of phone numbers to send to
      */
     public Message(String text, String[] addresses) {
-        this.text = text;
-        this.addresses = addresses;
-        this.images = new Bitmap[0];
-        this.subject = null;
-        this.media = new byte[0];
-        this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
-        this.delay = 0;
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .build());
     }
 
     /**
@@ -103,15 +139,11 @@ public class Message {
      * @param subject   is the subject of the mms message
      */
     public Message(String text, String[] addresses, String subject) {
-        this.text = text;
-        this.addresses = addresses;
-        this.images = new Bitmap[0];
-        this.subject = subject;
-        this.media = new byte[0];
-        this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
-        this.delay = 0;
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -122,7 +154,11 @@ public class Message {
      * @param image   is the image that you want to send
      */
     public Message(String text, String address, Bitmap image) {
-        this(text, address.trim().split(" "), new Bitmap[]{image});
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(new Bitmap[]{image})
+                .build());
     }
 
     /**
@@ -134,7 +170,12 @@ public class Message {
      * @param subject is the subject of the mms message
      */
     public Message(String text, String address, Bitmap image, String subject) {
-        this(text, address.trim().split(" "), new Bitmap[]{image}, subject);
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(new Bitmap[]{image})
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -145,7 +186,11 @@ public class Message {
      * @param image     is the image that you want to send
      */
     public Message(String text, String[] addresses, Bitmap image) {
-        this(text, addresses, new Bitmap[]{image});
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(new Bitmap[]{image})
+                .build());
     }
 
     /**
@@ -157,7 +202,12 @@ public class Message {
      * @param subject   is the subject of the mms message
      */
     public Message(String text, String[] addresses, Bitmap image, String subject) {
-        this(text, addresses, new Bitmap[]{image}, subject);
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(new Bitmap[]{image})
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -168,7 +218,11 @@ public class Message {
      * @param images  is an array of images that you want to send
      */
     public Message(String text, String address, Bitmap[] images) {
-        this(text, address.trim().split(" "), images);
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(images)
+                .build());
     }
 
     /**
@@ -180,7 +234,12 @@ public class Message {
      * @param subject is the subject of the mms message
      */
     public Message(String text, String address, Bitmap[] images, String subject) {
-        this(text, address.trim().split(" "), images, subject);
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(images)
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -191,15 +250,11 @@ public class Message {
      * @param images    is an array of images that you want to send
      */
     public Message(String text, String[] addresses, Bitmap[] images) {
-        this.text = text;
-        this.addresses = addresses;
-        this.images = images;
-        this.subject = null;
-        this.media = new byte[0];
-        this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
-        this.delay = 0;
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(images)
+                .build());
     }
 
     /**
@@ -211,15 +266,12 @@ public class Message {
      * @param subject   is the subject of the mms message
      */
     public Message(String text, String[] addresses, Bitmap[] images, String subject) {
-        this.text = text;
-        this.addresses = addresses;
-        this.images = images;
-        this.subject = subject;
-        this.media = new byte[0];
-        this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
-        this.delay = 0;
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(images)
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -492,5 +544,67 @@ public class Message {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 90, stream);
         return stream.toByteArray();
+    }
+
+    public static class Builder {
+        private Message message;
+
+        public Builder(){
+            message = new Message();
+        }
+
+        public Builder text(String text){
+            message.text = text;
+            return this;
+        }
+
+        public Builder addresses(String[] addresses){
+            message.addresses = addresses;
+            return this;
+        }
+
+        public Builder subject(String subject){
+            message.subject = subject;
+            return this;
+        }
+
+        public Builder stringAddress(String address){
+            message.addresses = address.trim().split(" ");
+            return this;
+        }
+
+        public Builder images(Bitmap[] bitmap){
+            message.images = bitmap;
+            return this;
+        }
+
+        public Builder media(byte[] media){
+            message.media = media;
+            return this;
+        }
+
+        public Builder mediaMimeType(String mediaMimeType){
+            message.mediaMimeType = mediaMimeType;
+            return this;
+        }
+
+        public Builder save(boolean save){
+            message.save = save;
+            return this;
+        }
+
+        public Builder type(int type){
+            message.type = type;
+            return this;
+        }
+
+        public Builder delay(int delay){
+            message.delay=delay;
+            return this;
+        }
+
+        public Message build(){
+            return message;
+        }
     }
 }
