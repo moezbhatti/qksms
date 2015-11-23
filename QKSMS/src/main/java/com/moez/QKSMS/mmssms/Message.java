@@ -97,7 +97,10 @@ public class Message {
      * @param address is the phone number to send to
      */
     public Message(String text, String address) {
-        this(new Message.Builder().text(text).stringAddress(address).build());
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .build());
     }
 
     /**
@@ -108,7 +111,11 @@ public class Message {
      * @param subject is the subject of the mms message
      */
     public Message(String text, String address, String subject) {
-        this(new Message.Builder().text(text).stringAddress(address).subject(subject).build());
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -118,7 +125,10 @@ public class Message {
      * @param addresses is an array of phone numbers to send to
      */
     public Message(String text, String[] addresses) {
-        this(new Message.Builder().text(text).addresses(addresses).build());
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .build());
     }
 
     /**
@@ -129,7 +139,11 @@ public class Message {
      * @param subject   is the subject of the mms message
      */
     public Message(String text, String[] addresses, String subject) {
-        this(new Message.Builder().text(text).addresses(addresses).subject(subject).build());
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -140,7 +154,11 @@ public class Message {
      * @param image   is the image that you want to send
      */
     public Message(String text, String address, Bitmap image) {
-        this(new Message.Builder().text(text).stringAddress(address).images(new Bitmap[]{image}).build());
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(new Bitmap[]{image})
+                .build());
     }
 
     /**
@@ -152,7 +170,12 @@ public class Message {
      * @param subject is the subject of the mms message
      */
     public Message(String text, String address, Bitmap image, String subject) {
-        this(new Message.Builder().text(text).stringAddress(address).images(new Bitmap[]{image}).subject(subject).build());
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(new Bitmap[]{image})
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -163,7 +186,11 @@ public class Message {
      * @param image     is the image that you want to send
      */
     public Message(String text, String[] addresses, Bitmap image) {
-        this(new Message.Builder().text(text).addresses(addresses).images(new Bitmap[]{image}).build());
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(new Bitmap[]{image})
+                .build());
     }
 
     /**
@@ -175,7 +202,12 @@ public class Message {
      * @param subject   is the subject of the mms message
      */
     public Message(String text, String[] addresses, Bitmap image, String subject) {
-        this(new Message.Builder().text(text).addresses(addresses).images(new Bitmap[]{image}).subject(subject).build());
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(new Bitmap[]{image})
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -186,7 +218,11 @@ public class Message {
      * @param images  is an array of images that you want to send
      */
     public Message(String text, String address, Bitmap[] images) {
-        this(new Message.Builder().text(text).stringAddress(address).images(images).build());
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(images)
+                .build());
     }
 
     /**
@@ -198,7 +234,12 @@ public class Message {
      * @param subject is the subject of the mms message
      */
     public Message(String text, String address, Bitmap[] images, String subject) {
-        this(new Message.Builder().text(text).stringAddress(address).images(images).subject(subject).build());
+        this(new Message.Builder()
+                .text(text)
+                .stringAddress(address)
+                .images(images)
+                .subject(subject)
+                .build());
     }
 
     /**
@@ -209,7 +250,11 @@ public class Message {
      * @param images    is an array of images that you want to send
      */
     public Message(String text, String[] addresses, Bitmap[] images) {
-        this(new Message.Builder().text(text).addresses(addresses).images(images).build());
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(images)
+                .build());
     }
 
     /**
@@ -221,7 +266,12 @@ public class Message {
      * @param subject   is the subject of the mms message
      */
     public Message(String text, String[] addresses, Bitmap[] images, String subject) {
-        this(new Message.Builder().text(text).addresses(addresses).images(images).subject(subject).build());
+        this(new Message.Builder()
+                .text(text)
+                .addresses(addresses)
+                .images(images)
+                .subject(subject)
+                .build());
     }
 
     /**
