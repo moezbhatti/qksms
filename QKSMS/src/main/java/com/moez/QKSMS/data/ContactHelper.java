@@ -52,6 +52,11 @@ public class ContactHelper {
         public static final int PHOTO_THUMBNAIL_URI = 4;
     }
 
+    public static String getTag()
+    {
+        return  TAG;
+    }
+
     public static String getName(Context context, String address) {
 
         if (address == null || address.isEmpty() || validateEmail(address))

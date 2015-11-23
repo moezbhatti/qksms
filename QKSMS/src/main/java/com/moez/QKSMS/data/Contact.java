@@ -114,7 +114,7 @@ public class Contact {
                 name = cursor.getString(cursor.getColumnIndex(Data.DISPLAY_NAME));
             cursor.close();
         } catch (Exception e) {
-            Log.d(ContactHelper.TAG, "Failed to find name for address " + address);
+            Log.d(ContactHelper.getTag(), "Failed to find name for address " + address);
             e.printStackTrace();
         }
 
@@ -139,7 +139,7 @@ public class Contact {
                 id = cursor.getLong(cursor.getColumnIndex(Data._ID));
             cursor.close();
         } catch (Exception e) {
-            Log.d(ContactHelper.TAG, "Failed to find ID for address " + address);
+            Log.d(ContactHelper.getTag(), "Failed to find ID for address " + address);
             e.printStackTrace();
         }
 
