@@ -1,4 +1,4 @@
-package com.orange.message.test;
+/*package com.orange.message.test;
 
 import android.graphics.Bitmap;
 import android.test.AndroidTestCase;
@@ -257,3 +257,4 @@ public class mmssmsMessageTest extends AndroidTestCase {
         super.tearDown();
     }
 }
+*/

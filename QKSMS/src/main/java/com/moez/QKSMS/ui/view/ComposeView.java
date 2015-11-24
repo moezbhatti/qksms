@@ -442,7 +442,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
             Transaction sendTransaction = new Transaction(mContext, SmsHelper.getSendSettings(mContext));
 
-            com.moez.QKSMS.mmssms.Message message = new com.moez.QKSMS.mmssms.Message(body, recipients);
+            com.moez.QKSMS.mmssms.Message message = new com.moez.QKSMS.mmssms.Message.Builder().text(body).addresses(recipients).build();
             message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
             if (attachment != null) {
                 message.setImage(ImageUtils.drawableToBitmap(attachment));
