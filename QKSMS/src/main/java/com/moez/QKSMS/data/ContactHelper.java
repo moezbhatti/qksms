@@ -52,29 +52,13 @@ public class ContactHelper {
         public static final int PHOTO_THUMBNAIL_URI = 4;
     }
 
+    public static String getTag()
+    {
+        return  TAG;
+    }
+
     public static String getName(Context context, String address) {
-
-        if (address == null || address.isEmpty() || validateEmail(address))
-            return address;
-
-        Cursor cursor;
-
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address));
-        ContentResolver contentResolver = context.getContentResolver();
-
-        String name = address;
-
-        try {
-            cursor = contentResolver.query(uri, new String[]{BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
-            if (cursor.moveToNext())
-                name = cursor.getString(cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
-            cursor.close();
-        } catch (Exception e) {
-            Log.d(TAG, "Failed to find name for address " + address);
-            e.printStackTrace();
-        }
-
-        return name;
+        return Contact.getName(context, address);
     }
 
     /**
@@ -125,28 +109,7 @@ public class ContactHelper {
     }
 
     public static long getId(Context context, String address) {
-
-        if (address == null || address.isEmpty() || validateEmail(address))
-            return 0;
-
-        Cursor cursor;
-
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address));
-        ContentResolver contentResolver = context.getContentResolver();
-
-        long id = 0;
-
-        try {
-            cursor = contentResolver.query(uri, new String[]{BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
-            if (cursor.moveToNext())
-                id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Data._ID));
-            cursor.close();
-        } catch (Exception e) {
-            Log.d(TAG, "Failed to find ID for address " + address);
-            e.printStackTrace();
-        }
-
-        return id;
+        return Contact.getId(context, address);
     }
 
     public static Uri getPhotoUri(Context context, Uri contactUri) {
@@ -175,20 +138,7 @@ public class ContactHelper {
     }
 
     public static Bitmap getBitmap(Context context, long id) {
-        Bitmap bitmap = null;
-        try {
-            Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(id));
-            InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), contactUri, true);
-            if (input == null) {
-                return null;
-            }
-            BufferedInputStream buf = new BufferedInputStream(input);
-            bitmap = BitmapFactory.decodeStream(buf);
-            buf.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
+        return Contact.getBitmap(context, id);
     }
     
     public static Bitmap blankContact(Context context, String name) {

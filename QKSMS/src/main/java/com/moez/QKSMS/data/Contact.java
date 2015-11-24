@@ -1,5 +1,6 @@
 package com.moez.QKSMS.data;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -12,6 +13,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.provider.BaseColumns;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
@@ -27,6 +30,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.transaction.SmsHelper;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.CharBuffer;
@@ -45,7 +49,7 @@ public class Contact {
     public static final String CONTENT_SCHEME = "content";
     private static final int CONTACT_METHOD_ID_UNKNOWN = -1;
     private static final String TAG = "Contact";
-    private static ContactsCache sContactCache;
+    private static ContactDatabaseManager sContactCache;
     private static final String SELF_ITEM_KEY = "Self_Item_Key";
 
 //    private static final ContentObserver sContactsObserver = new ContentObserver(new Handler()) {
@@ -91,6 +95,73 @@ public class Contact {
     private boolean mQueryPending;
     private boolean mIsMe;          // true if this contact is me!
     private boolean mSendToVoicemail;   // true if this contact should not put up notification
+
+    public static String getName(Context context, String address) {
+
+        if (address == null || address.isEmpty() || ContactHelper.validateEmail(address))
+            return address;
+
+        Cursor cursor;
+
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address));
+        ContentResolver contentResolver = context.getContentResolver();
+
+        String name = address;
+
+        try {
+            cursor = contentResolver.query(uri, new String[]{BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+            if (cursor.moveToNext())
+                name = cursor.getString(cursor.getColumnIndex(Data.DISPLAY_NAME));
+            cursor.close();
+        } catch (Exception e) {
+            Log.d(ContactHelper.getTag(), "Failed to find name for address " + address);
+            e.printStackTrace();
+        }
+
+        return name;
+    }
+
+    public static long getId(Context context, String address) {
+
+        if (address == null || address.isEmpty() || ContactHelper.validateEmail(address))
+            return 0;
+
+        Cursor cursor;
+
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address));
+        ContentResolver contentResolver = context.getContentResolver();
+
+        long id = 0;
+
+        try {
+            cursor = contentResolver.query(uri, new String[]{BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+            if (cursor.moveToNext())
+                id = cursor.getLong(cursor.getColumnIndex(Data._ID));
+            cursor.close();
+        } catch (Exception e) {
+            Log.d(ContactHelper.getTag(), "Failed to find ID for address " + address);
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
+    public static Bitmap getBitmap(Context context, long id) {
+        Bitmap bitmap = null;
+        try {
+            Uri contactUri = Uri.withAppendedPath(Contacts.CONTENT_URI, String.valueOf(id));
+            InputStream input = Contacts.openContactPhotoInputStream(context.getContentResolver(), contactUri, true);
+            if (input == null) {
+                return null;
+            }
+            BufferedInputStream buf = new BufferedInputStream(input);
+            bitmap = BitmapFactory.decodeStream(buf);
+            buf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
 
     public interface UpdateListener {
         public void onUpdate(Contact updated);
@@ -360,7 +431,7 @@ public class Contact {
         if (sContactCache != null) { // Stop previous Runnable
             sContactCache.mTaskQueue.mWorkerThread.interrupt();
         }
-        sContactCache = new ContactsCache(context);
+        sContactCache = new ContactDatabaseManager(context);
 
         RecipientIdCache.init(context);
 
@@ -378,7 +449,7 @@ public class Contact {
         sContactCache.dump();
     }
 
-    private static class ContactsCache {
+    private static class ContactDatabaseManager {
         private final TaskStack mTaskQueue = new TaskStack();
         private static final String SEPARATOR = ";";
 
@@ -475,12 +546,12 @@ public class Contact {
 
         private final HashMap<String, ArrayList<Contact>> mContactsHash = new HashMap<>();
 
-        private ContactsCache(Context context) {
+        private ContactDatabaseManager(Context context) {
             mContext = context;
         }
 
         void dump() {
-            synchronized (ContactsCache.this) {
+            synchronized (ContactDatabaseManager.this) {
                 Log.d(TAG, "**** Contact cache dump ****");
                 for (String key : mContactsHash.keySet()) {
                     ArrayList<Contact> alc = mContactsHash.get(key);
@@ -519,7 +590,7 @@ public class Contact {
                             }
                         }
                     }
-                }, "Contact.ContactsCache.TaskStack worker thread");
+                }, "Contact.ContactDatabaseManager.TaskStack worker thread");
                 mWorkerThread.setPriority(Thread.MIN_PRIORITY);
                 mWorkerThread.start();
             }
@@ -758,7 +829,7 @@ public class Contact {
                     if (!TextUtils.isEmpty(c.mNumber)) {
                         // clone the list of listeners in case the onUpdate call turns around and
                         // modifies the list of listeners
-                        // access to mListeners is synchronized on ContactsCache
+                        // access to mListeners is synchronized on ContactDatabaseManager
                         HashSet<UpdateListener> iterator;
                         synchronized (mListeners) {
                             iterator = (HashSet<UpdateListener>)Contact.mListeners.clone();
@@ -1099,7 +1170,7 @@ public class Contact {
         static CharBuffer sStaticKeyBuffer = CharBuffer.allocate(STATIC_KEY_BUFFER_MAXIMUM_LENGTH);
 
         private Contact internalGet(String numberOrEmail, boolean isMe) {
-            synchronized (ContactsCache.this) {
+            synchronized (ContactDatabaseManager.this) {
                 // See if we can find "number" in the hashtable.
                 // If so, just return the result.
                 final boolean isNotRegularPhoneNumber = isMe || SmsHelper.isEmailAddress(numberOrEmail) ||
@@ -1138,7 +1209,7 @@ public class Contact {
         void invalidate() {
             // Don't remove the contacts. Just mark them stale so we'll update their
             // info, particularly their presence.
-            synchronized (ContactsCache.this) {
+            synchronized (ContactDatabaseManager.this) {
                 for (ArrayList<Contact> alc : mContactsHash.values()) {
                     for (Contact c : alc) {
                         synchronized (c) {
@@ -1149,9 +1220,9 @@ public class Contact {
             }
         }
 
-        // Remove a contact from the ContactsCache based on the number or email address
+        // Remove a contact from the ContactDatabaseManager based on the number or email address
         private void remove(Contact contact) {
-            synchronized (ContactsCache.this) {
+            synchronized (ContactDatabaseManager.this) {
                 String number = contact.getNumber();
                 final boolean isNotRegularPhoneNumber = contact.isMe() ||
                         SmsHelper.isEmailAddress(number) ||
