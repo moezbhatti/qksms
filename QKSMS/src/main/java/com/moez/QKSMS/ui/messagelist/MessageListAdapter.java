@@ -288,9 +288,16 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             int MAX_DURATION = 60 * 60 * 1000;
             MessageItem messageItem2 = getItem(position - 1);
             showAvatar = messageItem.getBoxId() != messageItem2.getBoxId() || messageItem.mDate - messageItem2.mDate >= MAX_DURATION;
+
+            // If the messages are from different people, then we don't care about any of the other checks,
+            // we need to show the avatar/timestamp
+            if (messageItem.mAddress != null && messageItem2.mAddress != null && !messageItem.mAddress.equals(messageItem2.mAddress)) {
+                showAvatar = true;
+                showTimestamp = true;
+            }
         }
 
-        holder.mDateView.setVisibility(showTimestamp? View.VISIBLE : View.GONE);
+        holder.mDateView.setVisibility(showTimestamp ? View.VISIBLE : View.GONE);
         holder.mSpace.setVisibility(showAvatar ? View.VISIBLE : View.GONE);
         holder.mBodyTextView.setBackgroundResource(showAvatar ? (messageItem.isMe() ? ThemeManager.getSentBubbleRes() :
                 ThemeManager.getReceivedBubbleRes()) : (messageItem.isMe() ?
@@ -401,15 +408,16 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             }
 
             if (messageItem.mSlideshow == null) {
-                messageItem.setOnPduLoaded(new MessageItem.PduLoadedCallback() {
-                    public void onPduLoaded(MessageItem messageItem) {
-                        if (messageItem != null && messageItem.getMessageId() == messageItem.getMessageId()) {
-                            messageItem.setCachedFormattedMessage(null);
-                            bindBody(holder, messageItem);
-                            bindTimestamp(holder, messageItem);
-                            bindMmsView(holder, messageItem);
-                            bindAvatar(holder, messageItem);
-                        }
+                messageItem.setOnPduLoaded(messageItem1 -> {
+                    if (messageItem1 != null && messageItem1.getMessageId() == messageItem1.getMessageId()) {
+                        messageItem1.setCachedFormattedMessage(null);
+                        bindGrouping(holder, messageItem);
+                        bindBody(holder, messageItem);
+                        bindTimestamp(holder, messageItem);
+                        bindAvatar(holder, messageItem);
+                        bindMmsView(holder, messageItem);
+                        bindIndicators(holder, messageItem);
+                        bindVcard(holder, messageItem);
                     }
                 });
             } else {
