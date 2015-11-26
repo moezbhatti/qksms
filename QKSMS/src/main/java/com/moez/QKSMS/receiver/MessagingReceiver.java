@@ -62,6 +62,7 @@ public class MessagingReceiver extends BroadcastReceiver {
                 BlockedConversationHelper.unblockFutureConversation(prefs, address);
                 BlockedConversationHelper.blockConversation(prefs, message.getThreadId());
                 message.markSeen();
+                BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().futureBlockedConversationReceived();
 
             } else if (conversationPrefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
                     PreferenceManager.getDefaultSharedPreferences(context)).contains(message.getThreadId())) {
