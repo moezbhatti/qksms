@@ -140,9 +140,9 @@ public class Conversation {
     /**
      * Find the conversation matching the provided thread ID.
      */
-    public static Conversation get(Context context, long threadId, boolean allowQuery) {
+    public static Conversation getConversation(Context context, long threadId, boolean allowQuery) {
         if (DEBUG) {
-            Log.v(TAG, "Conversation get by threadId: " + threadId);
+            Log.v(TAG, "Conversation getConversation by threadId: " + threadId);
         }
         Conversation conv = Cache.get(threadId);
         if (conv != null)
@@ -154,7 +154,7 @@ public class Conversation {
         } catch (IllegalStateException e) {
             LogTag.error("Tried to add duplicate Conversation to Cache (from threadId): " + conv);
             if (!Cache.replace(conv)) {
-                LogTag.error("get by threadId cache.replace failed on " + conv);
+                LogTag.error("getConversation by threadId cache.replace failed on " + conv);
             }
         }
         return conv;
@@ -164,9 +164,9 @@ public class Conversation {
      * Find the conversation matching the provided recipient set.
      * When called with an empty recipient list, equivalent to {@link #createNew}.
      */
-    public static Conversation get(Context context, ContactList recipients, boolean allowQuery) {
+    public static Conversation getConversation(Context context, ContactList recipients, boolean allowQuery) {
         if (DEBUG) {
-            Log.v(TAG, "Conversation get by recipients: " + recipients.serialize());
+            Log.v(TAG, "Conversation getConversation by recipients: " + recipients.serialize());
         }
         // If there are no recipients in the list, make a new conversation.
         if (recipients.size() < 1) {
@@ -178,11 +178,12 @@ public class Conversation {
             return conv;
 
         long threadId = getOrCreateThreadId(context, recipients);
+        conv = getConversation(context, threadId, allowQuery);
         conv = new Conversation(context, threadId, allowQuery);
-        Log.d(TAG, "Conversation.get: created new conversation " + /*conv.toString()*/ "xxxxxxx");
+        Log.d(TAG, "Conversation.getConversation: created new conversation " + /*conv.toString()*/ "xxxxxxx");
 
         if (!conv.getRecipients().equals(recipients)) {
-            LogTag.error(TAG, "Conversation.get: new conv's recipients don't match input recpients "
+            LogTag.error(TAG, "Conversation.getConversation: new conv's recipients don't match input recpients "
                     + /*recipients*/ "xxxxxxx");
         }
 
@@ -191,7 +192,7 @@ public class Conversation {
         } catch (IllegalStateException e) {
             LogTag.error("Tried to add duplicate Conversation to Cache (from recipients): " + conv);
             if (!Cache.replace(conv)) {
-                LogTag.error("get by recipients cache.replace failed on " + conv);
+               LogTag.error("getConversation by recipients cache.replace failed on " + conv);
             }
         }
 
@@ -202,24 +203,24 @@ public class Conversation {
      * Find the conversation matching in the specified Uri.
      * When called with a null Uri, equivalent to {@link #createNew}.
      */
-    public static Conversation get(Context context, Uri uri, boolean allowQuery) {
+    public static Conversation getConversation(Context context, Uri uri, boolean allowQuery) {
         if (DEBUG) {
-            Log.v(TAG, "Conversation get by uri: " + uri);
+            Log.v(TAG, "Conversation getConversation by uri: " + uri);
         }
         if (uri == null) {
             return createNew(context);
         }
 
-        if (DEBUG) Log.v(TAG, "Conversation get URI: " + uri);
+        if (DEBUG) Log.v(TAG, "Conversation getConversation URI: " + uri);
 
         // Handle a conversation URI
         if (uri.getPathSegments().size() >= 2) {
             try {
                 long threadId = Long.parseLong(uri.getPathSegments().get(1));
                 if (DEBUG) {
-                    Log.v(TAG, "Conversation get threadId: " + threadId);
+                    Log.v(TAG, "Conversation getConversation threadId: " + threadId);
                 }
-                return get(context, threadId, allowQuery);
+                return getConversation(context, threadId, allowQuery);
             } catch (NumberFormatException exception) {
                 LogTag.error("Invalid URI: " + uri);
             }
@@ -227,7 +228,7 @@ public class Conversation {
 
         String recipients = PhoneNumberUtils.replaceUnicodeDigits(getRecipients(uri))
                 .replace(',', ';');
-        return get(context, ContactList.getByNumbers(recipients,
+        return getConversation(context, ContactList.getByNumbers(recipients,
                 allowQuery /* don't block */, true /* replace number */), allowQuery);
     }
 
@@ -246,7 +247,7 @@ public class Conversation {
         ContactList incomingRecipient = null;
         if (uri.getPathSegments().size() >= 2) {
             // it's a thread id for a conversation
-            Conversation otherConv = get(context, uri, false);
+            Conversation otherConv = getConversation(context, uri, false);
             if (otherConv == null) {
                 return false;
             }
@@ -270,7 +271,7 @@ public class Conversation {
      */
     public static Conversation from(Context context, Cursor cursor) {
         // First look in the cache for the Conversation and return that one. That way, all the
-        // people that are looking at the cached copy will get updated when fillFromCursor() is
+        // people that are looking at the cached copy will getConversation updated when fillFromCursor() is
         // called with this cursor.
         long threadId = cursor.getLong(ID);
         if (threadId > 0) {
@@ -354,7 +355,7 @@ public class Conversation {
         }
         if (mMarkAsReadBlocked) {
             // We're blocked so record the fact that we want to mark the messages as read
-            // when we get unblocked.
+            // when we getConversation unblocked.
             mMarkAsReadWaiting = true;
             return;
         }
@@ -930,7 +931,7 @@ public class Conversation {
     }
 
     /**
-     * Private cache for the use of the various forms of Conversation.get.
+     * Private cache for the use of the various forms of Conversation.getConversation.
      */
     private static class Cache {
         private static Cache sInstance = new Cache();
@@ -952,11 +953,11 @@ public class Conversation {
         static Conversation get(long threadId) {
             synchronized (sInstance) {
                 if (Log.isLoggable(LogTag.THREAD_CACHE, Log.VERBOSE)) {
-                    LogTag.debug("Conversation get with threadId: " + threadId);
+                    LogTag.debug("Conversation getConversation with threadId: " + threadId);
                 }
                 for (Conversation c : sInstance.mCache) {
                     if (DEBUG) {
-                        LogTag.debug("Conversation get() threadId: " + threadId +
+                        LogTag.debug("Conversation getConversation() threadId: " + threadId +
                                 " c.getThreadId(): " + c.getThreadId());
                     }
                     if (c.getThreadId() == threadId) {
@@ -974,7 +975,7 @@ public class Conversation {
         static Conversation get(ContactList list) {
             synchronized (sInstance) {
                 if (Log.isLoggable(LogTag.THREAD_CACHE, Log.VERBOSE)) {
-                    LogTag.debug("Conversation get with ContactList: " + list);
+                    LogTag.debug("Conversation getConversation with ContactList: " + list);
                 }
                 for (Conversation c : sInstance.mCache) {
                     if (c.getRecipients().equals(list)) {
@@ -993,7 +994,7 @@ public class Conversation {
         static void put(Conversation c) {
             synchronized (sInstance) {
                 // We update cache entries in place so people with long-
-                // held references get updated.
+                // held references getConversation updated.
                 if (Log.isLoggable(LogTag.THREAD_CACHE, Log.VERBOSE)) {
                     Log.d(TAG, "Conversation.Cache.put: conv= " + c + ", hash: " + c.hashCode());
                 }
@@ -1250,7 +1251,7 @@ public class Conversation {
                         }
                     } else {
                         // Or update in place so people with references
-                        // to conversations get updated too.
+                        // to conversations getConversation updated too.
                         fillFromCursor(context, conv, c, true);
                     }
                 }
