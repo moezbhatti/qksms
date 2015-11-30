@@ -43,9 +43,12 @@ import com.moez.QKSMS.ui.settings.SettingsFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import java.util.Observable;
+import java.util.Observer;
+
 
 public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>, LiveView,
-        RecyclerCursorAdapter.ItemClickListener<Conversation>, RecyclerCursorAdapter.MultiSelectListener {
+        RecyclerCursorAdapter.ItemClickListener<Conversation>, RecyclerCursorAdapter.MultiSelectListener, Observer {
 
     private final String TAG = "ConversationList";
 
@@ -115,6 +118,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mViewHasLoaded = true;
 
         initLoaderManager();
+        BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().addObserver(this);
 
         return view;
     }
@@ -272,6 +276,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public void onDestroy() {
         super.onDestroy();
         LiveViewManager.unregisterView(this);
+        BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().deleteObserver(this);
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -328,4 +333,11 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mContext.invalidateOptionsMenu();
     }
 
+    /**
+     * This should be called when there's a future blocked conversation, and it's received
+     */
+    @Override
+    public void update(Observable observable, Object data) {
+        initLoaderManager();
+    }
 }

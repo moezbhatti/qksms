@@ -17,6 +17,7 @@ import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Set;
 
 /**
@@ -167,6 +168,21 @@ public class BlockedConversationHelper {
             super.onPostExecute(integer);
             Log.d("BindMenuItemTask", "onPostExecute: " + integer);
             mMenuItem.setTitle(mContext.getString(mShowBlocked ? R.string.menu_unblocked_conversations : R.string.menu_blocked_conversations, integer));
+        }
+    }
+
+    public static class FutureBlockedConversationObservable extends Observable {
+        private static FutureBlockedConversationObservable sInstance = new FutureBlockedConversationObservable();
+
+        public static FutureBlockedConversationObservable getInstance() {
+            return sInstance;
+        }
+
+        public void futureBlockedConversationReceived() {
+            synchronized (this) {
+                setChanged();
+                notifyObservers();
+            }
         }
     }
 }
