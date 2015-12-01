@@ -57,9 +57,9 @@ public class Message {
     /**
      * Default constructor
      */
-    private Message()
+    private Message(String text)
     {
-        this.text = "";
+        this.text = text;
         this.subject = null;
         this.addresses = new String[]{""};
         this.images = new Bitmap[0];
@@ -346,13 +346,8 @@ public class Message {
     public static class Builder {
         private Message message;
 
-        public Builder(){
-            message = new Message();
-        }
-
-        public Builder text(String text){
-            message.text = text;
-            return this;
+        public Builder(String text){
+            message = new Message(text);
         }
 
         public Builder address(String address){
