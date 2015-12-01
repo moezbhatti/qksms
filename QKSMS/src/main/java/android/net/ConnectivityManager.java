@@ -94,7 +94,7 @@ public class ConnectivityManager {
 
     /**
      * Network type which triggered a {@link #CONNECTIVITY_ACTION} broadcast.
-     * Can be used with {@link #getNetworkInfo(int)} to get {@link NetworkInfo}
+     * Can be used with {@link #getNetworkInfo(int)} to getConversation {@link NetworkInfo}
      * state based on the calling application.
      *
      * @see android.content.Intent#getIntExtra(String, int)
@@ -168,7 +168,7 @@ public class ConnectivityManager {
 
     /**
      * Broadcast Action: The setting for background data usage has changed
-     * values. Use {@link #getBackgroundDataSetting()} to get the current value.
+     * values. Use {@link #getBackgroundDataSetting()} to getConversation the current value.
      * <p/>
      * If an application uses the network in the background, it should listen
      * for this broadcast and stop using the background data if the value is

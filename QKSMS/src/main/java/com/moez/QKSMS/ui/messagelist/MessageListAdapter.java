@@ -173,7 +173,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         // Here we're avoiding reseting the avatar to the empty avatar when we're rebinding
         // to the same item. This happens when there's a DB change which causes the message item
-        // cache in the MessageListAdapter to get cleared. When an mms MessageItem is newly
+        // cache in the MessageListAdapter to getConversation cleared. When an mms MessageItem is newly
         // created, it has no info in it except the message id. The info is eventually loaded
         // and bindCommonMessage is called again (see onPduLoaded below). When we haven't loaded
         // the pdu, we don't want to call updateContactView because it

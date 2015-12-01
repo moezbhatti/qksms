@@ -3,6 +3,7 @@ package com.moez.QKSMS.common;
 import android.util.Log;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.data.ConversationQueryHandler;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
@@ -31,7 +32,7 @@ public class DialogHelper {
                 .setMessage(context.getString(R.string.delete_confirmation, threads.size()))
                 .setPositiveButton(R.string.yes, v -> {
                     Log.d(TAG, "Deleting threads: " + Arrays.toString(threads.toArray()));
-                    Conversation.ConversationQueryHandler handler = new Conversation.ConversationQueryHandler(context.getContentResolver());
+                    ConversationQueryHandler handler = new ConversationQueryHandler(context.getContentResolver());
                     Conversation.startDelete(handler, 0, false, threads);
                     Conversation.asyncDeleteObsoleteThreads(handler, 0);
                     context.showMenu();

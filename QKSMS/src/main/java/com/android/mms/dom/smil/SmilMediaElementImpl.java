@@ -95,11 +95,11 @@ public class SmilMediaElementImpl extends SmilElementImpl implements
             public float getDur() {
                 float dur = super.getDur();
                 if (dur == 0) {
-                    // Duration is not specified, So get the implicit duration.
+                    // Duration is not specified, So getConversation the implicit duration.
                     String tag = getTagName();
                     if (tag.equals("video") || tag.equals("audio")) {
                         // Continuous media
-                        // FIXME Should get the duration of the media. "indefinite" instead here.
+                        // FIXME Should getConversation the duration of the media. "indefinite" instead here.
                         dur = -1.0F;
                     } else if (tag.equals("text") || tag.equals("img")) {
                         // Discrete media

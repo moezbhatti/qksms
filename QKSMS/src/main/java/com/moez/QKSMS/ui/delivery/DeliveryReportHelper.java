@@ -43,7 +43,7 @@ import java.util.Set;
  * This activity can handle the following parameters from the intent
  * by which it is launched:
  *
- * thread_id long The id of the conversation from which to get the recipients
+ * thread_id long The id of the conversation from which to getConversation the recipients
  *      for the report.
  * message_id long The id of the message about which a report should be displayed.
  * message_type String The type of message (Sms or Mms).  This is used in

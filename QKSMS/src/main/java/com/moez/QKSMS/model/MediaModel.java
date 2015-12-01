@@ -221,7 +221,7 @@ public abstract class MediaModel extends Model implements EventListener {
             }
             mDuration = duration;
         } catch (Exception ex) {
-            Log.e(TAG, "MediaMetadataRetriever failed to get duration for " + mUri.getPath(), ex);
+            Log.e(TAG, "MediaMetadataRetriever failed to getConversation duration for " + mUri.getPath(), ex);
             throw new MmsException(ex);
         } finally {
             retriever.release();
@@ -234,7 +234,7 @@ public abstract class MediaModel extends Model implements EventListener {
         try {
             input = cr.openInputStream(mUri);
             if (input instanceof FileInputStream) {
-                // avoid reading the whole stream to get its length
+                // avoid reading the whole stream to getConversation its length
                 FileInputStream f = (FileInputStream) input;
                 mSize = (int) f.getChannel().size();
                 // sometimes mSize will be zero here. It's tempting to count the bytes as the code

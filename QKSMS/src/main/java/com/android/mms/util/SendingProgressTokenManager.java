@@ -36,7 +36,7 @@ public class SendingProgressTokenManager {
 
     synchronized public static long get(Object key) {
         Long token = TOKEN_POOL.get(key);
-        if (LOCAL_LOGV) Log.v(TAG, "TokenManager.get(" + key + ") -> " + token);
+        if (LOCAL_LOGV) Log.v(TAG, "TokenManager.getConversation(" + key + ") -> " + token);
         return token != null ? token : NO_TOKEN;
     }
 

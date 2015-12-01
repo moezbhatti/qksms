@@ -89,7 +89,7 @@ public class Utils {
     /**
      * Function for getting the weird auth token used to send or receive google voice messages
      *
-     * @param account is the string of the account name to get the auth token for
+     * @param account is the string of the account name to getConversation the auth token for
      * @param context is the context of the activity or service
      * @return a string of the auth token to be saved for later
      * @throws java.io.IOException
@@ -226,7 +226,7 @@ public class Utils {
             return (Boolean) m.invoke(cm);
         } catch (Exception e) {
             Log.e(TAG, "exception thrown", e);
-            // Make sure to return FALSE instead of null, or else you will get a NPE when you try
+            // Make sure to return FALSE instead of null, or else you will getConversation a NPE when you try
             // to access the boolean value of this.
             return Boolean.FALSE;
         }

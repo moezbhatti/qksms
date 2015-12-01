@@ -67,7 +67,7 @@ public class DonationManager {
                 // IAB is fully set up.
                 mBillingServiceReady = true;
 
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
+                // IAB is fully set up. Now, let's getConversation an inventory of stuff we own.
                 mHelper.queryInventoryAsync(iabInventoryListener());
             }
         });

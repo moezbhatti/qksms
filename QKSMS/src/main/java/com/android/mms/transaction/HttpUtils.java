@@ -160,7 +160,7 @@ public class HttpUtils {
                 }
             }
 
-            // Extra http parameters. Split by '|' to get a list of value pairs.
+            // Extra http parameters. Split by '|' to getConversation a list of value pairs.
             // Separate each pair by the first occurrence of ':' to obtain a name and
             // value. Replace the occurrence of the string returned by
             // MmsConfig.getHttpParamsLine1Key() with the users telephone number inside

@@ -75,14 +75,14 @@ public class ExifParser {
      */
     public static final int EVENT_START_OF_IFD = 0;
     /**
-     * When the parser reaches a new tag. Call {@link #getTag()}to get the
+     * When the parser reaches a new tag. Call {@link #getTag()}to getConversation the
      * corresponding tag.
      */
     public static final int EVENT_NEW_TAG = 1;
     /**
      * When the parser reaches the value area of tag that is registered by
      * {@link #registerForTagValue(ExifTag)} previously. Call {@link #getTag()}
-     * to get the corresponding tag.
+     * to getConversation the corresponding tag.
      */
     public static final int EVENT_VALUE_OF_REGISTERED_TAG = 2;
 
@@ -92,7 +92,7 @@ public class ExifParser {
     public static final int EVENT_COMPRESSED_IMAGE = 3;
     /**
      * When the parser reaches the uncompressed image strip. Call
-     * {@link #getStripIndex()} to get the index of the strip.
+     * {@link #getStripIndex()} to getConversation the index of the strip.
      *
      * @see #getStripIndex()
      * @see #getStripCount()
@@ -406,7 +406,7 @@ public class ExifParser {
 
     /**
      * If {@link #next()} return {@link #EVENT_NEW_TAG} or
-     * {@link #EVENT_VALUE_OF_REGISTERED_TAG}, call this function to get the
+     * {@link #EVENT_VALUE_OF_REGISTERED_TAG}, call this function to getConversation the
      * corresponding tag.
      * <p>
      * For {@link #EVENT_NEW_TAG}, the tag may not contain the value if the size
@@ -418,7 +418,7 @@ public class ExifParser {
      * <p>
      * When {@link #EVENT_VALUE_OF_REGISTERED_TAG} is emitted, the value of the
      * tag will have already been read except for tags of undefined type. For
-     * tags of undefined type, call one of the read methods to get the value.
+     * tags of undefined type, call one of the read methods to getConversation the value.
      *
      * @see #registerForTagValue(ExifTag)
      * @see #read(byte[])
@@ -454,7 +454,7 @@ public class ExifParser {
 
     /**
      * When receiving {@link #EVENT_UNCOMPRESSED_STRIP}, call this function to
-     * get the index of this strip.
+     * getConversation the index of this strip.
      *
      * @see #getStripCount()
      */
@@ -464,7 +464,7 @@ public class ExifParser {
 
     /**
      * When receiving {@link #EVENT_UNCOMPRESSED_STRIP}, call this function to
-     * get the number of strip data.
+     * getConversation the number of strip data.
      *
      * @see #getStripIndex()
      */
@@ -474,7 +474,7 @@ public class ExifParser {
 
     /**
      * When receiving {@link #EVENT_UNCOMPRESSED_STRIP}, call this function to
-     * get the strip size.
+     * getConversation the strip size.
      */
     protected int getStripSize() {
         if (mStripSizeTag == null)
@@ -483,7 +483,7 @@ public class ExifParser {
     }
 
     /**
-     * When receiving {@link #EVENT_COMPRESSED_IMAGE}, call this function to get
+     * When receiving {@link #EVENT_COMPRESSED_IMAGE}, call this function to getConversation
      * the image data size.
      */
     protected int getCompressedImageSize() {

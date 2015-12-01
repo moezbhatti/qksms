@@ -31,7 +31,7 @@ public interface ElementExclusiveTimeContainer extends ElementTimeContainer {
                                      throws DOMException;
 
     /**
-     *  This should support another method to get the ordered collection of 
+     *  This should support another method to getConversation the ordered collection of
      * paused elements (the paused stack) at a given point in time. 
      * @return  All paused elements at the current time. 
      */

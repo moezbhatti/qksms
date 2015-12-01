@@ -19,7 +19,7 @@ package com.google.android.mms.pdu_alt;
 
 public class Base64 {
     /**
-     * Used to get the number of Quadruples.
+     * Used to getConversation the number of Quadruples.
      */
     static final int FOURBYTE = 4;
 

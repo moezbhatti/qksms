@@ -69,7 +69,7 @@
     *;
 }
 
-# To get line numbers, source files from Crittercism:
+# To getConversation line numbers, source files from Crittercism:
 -keepattributes SourceFile, LineNumberTable
 
 # ez-vcard

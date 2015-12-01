@@ -33,11 +33,12 @@ public class EndlessJabber implements IEndlessJabberImplementation {
         Log.d(TAG, "SendMMS");
         Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
 
-        Message message = new Message();
-        message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
-        message.setAddresses(recipients);
-        message.setSubject(subject);
-        message.setSave(save);
+        Message message = new Message.Builder("")
+                .type(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS)
+                .addresses(recipients)
+                .subject(subject)
+                .save(save)
+                .build();
 
         sendTransaction.sendNewMessage(message, 0);
     }
@@ -47,10 +48,10 @@ public class EndlessJabber implements IEndlessJabberImplementation {
         Log.d(TAG, "SendSMS");
         Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
 
-        Message message = new Message();
-        message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
-        message.setAddresses(recipients);
-        message.setText(body);
+        Message message = new Message.Builder(body)
+                .type(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS)
+                .addresses(recipients)
+                .build();
 
         sendTransaction.sendNewMessage(message, 0);
     }
