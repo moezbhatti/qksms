@@ -60,7 +60,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        // Format the minutes with padded zeros so we don't get stuff like "6:2" instead
+        // Format the minutes with padded zeros so we don't getConversation stuff like "6:2" instead
         // of 6:02
         String newValue = String.format("%d:%02d", hourOfDay, minute);
         mPrefs.edit().putString(mPreference.getKey(), newValue).apply();

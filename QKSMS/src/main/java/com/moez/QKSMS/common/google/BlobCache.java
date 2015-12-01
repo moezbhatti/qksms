@@ -427,7 +427,7 @@ public class BlobCache implements Closeable {
     // will allocate a new buffer and assign it to req.buffer.
     //
     // This method tries not to throw IOException even if the data file is
-    // corrupted, but it can still throw IOException if things get strange.
+    // corrupted, but it can still throw IOException if things getConversation strange.
     public boolean lookup(LookupRequest req) throws IOException {
         // Look up in the active region first.
         if (lookupInternal(req.key, mActiveHashStart)) {

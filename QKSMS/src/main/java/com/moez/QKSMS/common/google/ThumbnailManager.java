@@ -128,7 +128,7 @@ public class ThumbnailManager extends BackgroundLoaderManager {
         final boolean callbackRequired = (callback != null);
 
         if (Log.isLoggable(LogTag.THUMBNAIL_CACHE, Log.DEBUG)) {
-            Log.v(TAG, "getThumbnail mThumbnailCache.get for uri: " + uri + " thumbnail: " +
+            Log.v(TAG, "getThumbnail mThumbnailCache.getConversation for uri: " + uri + " thumbnail: " +
                     thumbnail + " callback: " + callback + " thumbnailExists: " +
                     thumbnailExists + " taskExists: " + taskExists +
                     " newTaskRequired: " + newTaskRequired +

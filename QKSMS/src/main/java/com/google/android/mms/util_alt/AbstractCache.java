@@ -57,7 +57,7 @@ public abstract class AbstractCache<K, V> {
     }
 
     public V get(K key) {
-        if (LOCAL_LOGV) Log.v(TAG, "Trying to get " + key + " from cache.");
+        if (LOCAL_LOGV) Log.v(TAG, "Trying to getConversation " + key + " from cache.");
 
         if (key != null) {
             CacheEntry<V> cacheEntry = mCacheMap.get(key);

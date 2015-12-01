@@ -39,23 +39,6 @@ public class ConversationTest extends AndroidTestCase {
 
     }
 
-
-    public void testGetWithContactListNormalExecution() throws Exception {
-        Context context = getContext();
-
-        boolean allowQuery = true;
-        long threadId = 0;
-        ContactList testList  = new ContactList();
-
-
-        testList.add(Contact.get("tet", true));
-
-        // The threadId passed within Cache.getConversation(threadId) is set to null
-        // Cache is a private inner class
-        Conversation conv = Conversation.getConversation(context, testList, allowQuery);
-        assertEquals(0,conv.getThreadId());
-    }
-
     public void testStartDeleteWithConversationHandler() throws Exception {
         Context context = getContext();
         ContentResolver cr = context.getContentResolver();

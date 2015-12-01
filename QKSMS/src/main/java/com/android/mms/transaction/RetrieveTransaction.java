@@ -109,7 +109,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
             }
         }
 
-        throw new MmsException("Cannot get X-Mms-Content-Location from: " + uri);
+        throw new MmsException("Cannot getConversation X-Mms-Content-Location from: " + uri);
     }
 
     /*

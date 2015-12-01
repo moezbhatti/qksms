@@ -47,7 +47,7 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
     }
 
     /**
-     * Registers a LiveView for global updates. To get updates for specific preferences, use
+     * Registers a LiveView for global updates. To getConversation updates for specific preferences, use
      * registerPreference.
      * @param v
      */

@@ -33,7 +33,7 @@ import com.moez.QKSMS.ui.view.QKTextView;
  * BaseDialogFragment is a backwards-compatible, Material-styled Dialog fragment.
  *
  * To listen on results from BaseDialogFragment, launch it from a Fragment that implements
- * DialogFragmentListener. Then, the "onDialogFragmentResult" methods will get called much like
+ * DialogFragmentListener. Then, the "onDialogFragmentResult" methods will getConversation called much like
  * "onActivityResult".
  */
 public class QKDialogFragment extends DialogFragment {

@@ -195,7 +195,7 @@ public abstract class Recycler {
                         ContentUris.withAppendedId(Conversations.CONTENT_URI, threadId),
                         SMS_MESSAGE_PROJECTION,
                         "locked=0",
-                        null, "date DESC");     // get in newest to oldest order
+                        null, "date DESC");     // getConversation in newest to oldest order
                 if (cursor == null) {
                     Log.e(TAG, "SMS: deleteMessagesForThread got back null cursor");
                     return;
@@ -256,7 +256,7 @@ public abstract class Recycler {
                             ContentUris.withAppendedId(Conversations.CONTENT_URI, threadId),
                             SMS_MESSAGE_PROJECTION,
                             "locked=0",
-                            null, "date DESC");     // get in newest to oldest order
+                            null, "date DESC");     // getConversation in newest to oldest order
                     if (msgs == null) {
                         return false;
                     }
@@ -342,7 +342,7 @@ public abstract class Recycler {
                         MMS_MESSAGE_PROJECTION,
                         "thread_id in (select thread_id from pdu where _id=" + msgId +
                             ") AND locked=0",
-                        null, "date DESC");     // get in newest to oldest order
+                        null, "date DESC");     // getConversation in newest to oldest order
                 if (cursor == null) {
                     Log.e(TAG, "MMS: deleteOldMessagesInSameThreadAsMessage got back null cursor");
                     return;
@@ -388,7 +388,7 @@ public abstract class Recycler {
                         Mms.CONTENT_URI,
                         MMS_MESSAGE_PROJECTION,
                         "thread_id=" + threadId + " AND locked=0",
-                        null, "date DESC");     // get in newest to oldest order
+                        null, "date DESC");     // getConversation in newest to oldest order
                 if (cursor == null) {
                     Log.e(TAG, "MMS: deleteMessagesForThread got back null cursor");
                     return;
@@ -450,7 +450,7 @@ public abstract class Recycler {
                             Mms.CONTENT_URI,
                             MMS_MESSAGE_PROJECTION,
                             "thread_id=" + threadId + " AND locked=0",
-                            null, "date DESC");     // get in newest to oldest order
+                            null, "date DESC");     // getConversation in newest to oldest order
 
                     if (msgs == null) {
                         return false;

@@ -791,7 +791,7 @@ public class ExifTag {
         } else if (mValue instanceof byte[]) {
             return ((byte[]) mValue)[index];
         }
-        throw new IllegalArgumentException("Cannot get integer value from "
+        throw new IllegalArgumentException("Cannot getConversation integer value from "
                 + convertTypeToString(mDataType));
     }
 
@@ -803,7 +803,7 @@ public class ExifTag {
      */
     protected String getString() {
         if (mDataType != TYPE_ASCII) {
-            throw new IllegalArgumentException("Cannot get ASCII value from "
+            throw new IllegalArgumentException("Cannot getConversation ASCII value from "
                     + convertTypeToString(mDataType));
         }
         return new String((byte[]) mValue, US_ASCII);
@@ -824,7 +824,7 @@ public class ExifTag {
      */
     protected Rational getRational(int index) {
         if ((mDataType != TYPE_RATIONAL) && (mDataType != TYPE_UNSIGNED_RATIONAL)) {
-            throw new IllegalArgumentException("Cannot get RATIONAL value from "
+            throw new IllegalArgumentException("Cannot getConversation RATIONAL value from "
                     + convertTypeToString(mDataType));
         }
         return ((Rational[]) mValue)[index];
@@ -849,7 +849,7 @@ public class ExifTag {
      */
     protected void getBytes(byte[] buf, int offset, int length) {
         if ((mDataType != TYPE_UNDEFINED) && (mDataType != TYPE_UNSIGNED_BYTE)) {
-            throw new IllegalArgumentException("Cannot get BYTE value from "
+            throw new IllegalArgumentException("Cannot getConversation BYTE value from "
                     + convertTypeToString(mDataType));
         }
         System.arraycopy(mValue, 0, buf, offset,

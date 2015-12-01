@@ -267,7 +267,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
     /**
      * Sets the ActivityLauncher. This can be an Activity, a Fragment, or in general something that
      * implements startActivityForResult(Intent, int), and onActivityResult(int, int, Intent); this
-     * instance must be able to launch and get results for activties.
+     * instance must be able to launch and getConversation results for activties.
      * <p/>
      * Additionally, in the onActivityResult(int, int, Intent) method, the ActivityLauncher instance
      * should pass along that result value to this ComposeFragment, using its own onActivityResult
@@ -292,7 +292,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
      * Sets a RecipientProvider. The RecipientProvider provides one method, getRecipientAddresses,
      * which returns a String[] of recipient addresses. This method will be called when we're trying
      * to send an SMS/MMS message, and onOpenConversation has NOT been called with a non-null
-     * Conversation object, i.e. we cannot use the Conversation object to get recipient addresses.
+     * Conversation object, i.e. we cannot use the Conversation object to getConversation recipient addresses.
      *
      * @param p
      */

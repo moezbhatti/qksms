@@ -264,7 +264,7 @@ public class RouteInfo implements Parcelable {
      * May return null if no routes are applicable.
      *
      * @param routes a Collection of RouteInfos to chose from
-     * @param dest   the InetAddress your trying to get to
+     * @param dest   the InetAddress your trying to getConversation to
      * @return the RouteInfo from the Collection that best fits the given address
      */
     public static RouteInfo selectBestRoute(Collection<RouteInfo> routes, InetAddress dest) {

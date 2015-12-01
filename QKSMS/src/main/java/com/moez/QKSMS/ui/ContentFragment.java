@@ -6,7 +6,7 @@ import android.view.MenuInflater;
 
 /**
  * This interface is for fragments that must extend something other than a vanilla Fragment. It
- * allows the fragment to get content animation callbacks without the developer having to
+ * allows the fragment to getConversation content animation callbacks without the developer having to
  * rewrite the base class to extend BaseContentFragment.
  */
 public interface ContentFragment {

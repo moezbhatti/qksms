@@ -59,7 +59,7 @@ public abstract class ElementTimeImpl implements ElementTime {
     }
 
     /**
-     * To get the parent node on the ElementTime tree. It is in opposition to getTimeChildren.
+     * To getConversation the parent node on the ElementTime tree. It is in opposition to getTimeChildren.
      * @return the parent ElementTime. Returns <code>null</code> if there is no parent.
      */
     abstract ElementTime getParentElementTime();

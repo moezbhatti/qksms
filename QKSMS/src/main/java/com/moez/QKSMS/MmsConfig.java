@@ -113,7 +113,7 @@ public class MmsConfig {
             Log.v(TAG, "MmsConfig.init()");
         }
         // Always put the mnc/mcc in the log so we can tell which mms_config.xml was loaded.
-        //Log.v(TAG, "mnc/mcc: " + android.os.SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC));
+        //Log.v(TAG, "mnc/mcc: " + android.os.SystemProperties.getConversation(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC));
 
         loadMmsSettings(context);
     }

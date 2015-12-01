@@ -923,7 +923,7 @@ public class  MessageUtils {
         } else {
             // The user wants to view the slideshow. We have to persist the slideshow parts
             // in a background task. If the task takes longer than a half second, a progress dialog
-            // is displayed. Once the PDU persisting is done, another runnable on the UI thread get
+            // is displayed. Once the PDU persisting is done, another runnable on the UI thread getConversation
             // executed to start the SlideshowActivity.
             asyncDialog.runAsync(new Runnable() {
                 @Override
