@@ -44,9 +44,12 @@ import java.util.Set;
  * An interface for finding information about conversations and/or creating new ones.
  */
 public class Conversation {
+
     private static final String TAG = "Mms/conv";
     private static final boolean DEBUG = false;
     private static final boolean DELETEDEBUG = false;
+
+
 
     public static final Uri sAllThreadsUri =
             Threads.CONTENT_URI.buildUpon().appendQueryParameter("simple", "true").build();
@@ -102,6 +105,26 @@ public class Conversation {
     private static Object sDeletingThreadsLock = new Object();
     private boolean mMarkAsReadBlocked;
     private boolean mMarkAsReadWaiting;
+
+    public static boolean issDeletingThreads() {
+        return sDeletingThreads;
+    }
+
+    public static String getTAG() {
+        return TAG;
+    }
+
+    public static boolean isDEBUG() {
+        return DEBUG;
+    }
+
+    public static boolean isDELETEDEBUG() {
+        return DELETEDEBUG;
+    }
+
+    public static Object getsDeletingThreadsLock() {
+        return sDeletingThreadsLock;
+    }
 
     private Conversation(Context context) {
         mContext = context;
@@ -808,35 +831,6 @@ public class Conversation {
 
             handler.setDeleteToken(token);
             handler.startDelete(token, new Long(-1), Threads.CONTENT_URI, selection, null);
-        }
-    }
-
-    public static class ConversationQueryHandler extends AsyncQueryHandler {
-        private int mDeleteToken;
-
-        public ConversationQueryHandler(ContentResolver cr) {
-            super(cr);
-        }
-
-        public void setDeleteToken(int token) {
-            mDeleteToken = token;
-        }
-
-        /**
-         * Always call this super method from your overridden onDeleteComplete function.
-         */
-        @Override
-        protected void onDeleteComplete(int token, Object cookie, int result) {
-            if (token == mDeleteToken) {
-                // release lock
-                synchronized (sDeletingThreadsLock) {
-                    sDeletingThreads = false;
-                    if (DELETEDEBUG) {
-                        Log.v(TAG, "Conversation onDeleteComplete sDeletingThreads: " + sDeletingThreads);
-                    }
-                    sDeletingThreadsLock.notifyAll();
-                }
-            }
         }
     }
 
