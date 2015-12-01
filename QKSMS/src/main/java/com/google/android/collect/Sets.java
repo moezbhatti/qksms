@@ -52,7 +52,7 @@ public class Sets {
      * <p>{@code Set<Base> set = Sets.newHashSet(sub1, sub2);}
      * <p/>
      * <p>where {@code sub1} and {@code sub2} are references to subtypes of {@code
-     * Base}, not of {@code Base} itself. To get around this, you must use:
+     * Base}, not of {@code Base} itself. To getConversation around this, you must use:
      * <p/>
      * <p>{@code Set<Base> set = Sets.<Base>newHashSet(sub1, sub2);}
      *

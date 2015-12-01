@@ -93,7 +93,7 @@ public class MessageItem {
     // The last message is cached above in mCachedFormattedMessage. In the latest design, we
     // show "Sending..." in place of the timestamp when a message is being sent. mLastSendingState
     // is used to keep track of the last sending state so that if the current sending state is
-    // different, we can clear the message cache so it will get rebuilt and recached.
+    // different, we can clear the message cache so it will getConversation rebuilt and recached.
     public boolean mLastSendingState;
 
     // Fields for MMS only.
@@ -166,7 +166,7 @@ public class MessageItem {
         } else if ("mms".equals(type)) {
             mMessageUri = ContentUris.withAppendedId(Mms.CONTENT_URI, mMsgId);
             mBoxId = cursor.getInt(columnsMap.mColumnMmsMessageBox);
-            // If we can block, get the address immediately from the "addr" table.
+            // If we can block, getConversation the address immediately from the "addr" table.
             if (canBlock) {
                 mAddress = AddressUtils.getFrom(mContext, mMessageUri);
             }
@@ -193,7 +193,7 @@ public class MessageItem {
                     SmsHelper.TEXT : ATTACHMENT_TYPE_NOT_LOADED;
 
             // Start an async load of the pdu. If the pdu is already loaded, the callback
-            // will get called immediately
+            // will getConversation called immediately
             boolean loadSlideshow = mMessageType != PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND;
 
             mItemLoadedFuture = QKSMSApp.getApplication().getPduLoaderManager()

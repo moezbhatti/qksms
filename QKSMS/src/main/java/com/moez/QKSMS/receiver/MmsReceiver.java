@@ -114,7 +114,7 @@ public class MmsReceiver extends BroadcastReceiver {
     }
 
     private void loadRecipients(int addressType, HashSet<String> recipients, HashMap<Integer, EncodedStringValue[]> addressMap, boolean excludeMyNumber) {
-        EncodedStringValue[] array = addressMap.get(addressType);
+        EncodedStringValue[] array = addressMap.getConversation(addressType);
         if (array == null) {
             return;
         }

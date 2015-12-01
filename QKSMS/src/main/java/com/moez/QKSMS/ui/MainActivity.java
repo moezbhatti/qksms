@@ -35,6 +35,7 @@ import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.data.ConversationQueryHandler;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.receiver.IconColorReceiver;
@@ -684,11 +685,11 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
     public static class DeleteThreadListener implements DialogInterface.OnClickListener {
         private final Collection<Long> mThreadIds;
-        private final Conversation.ConversationQueryHandler mHandler;
+        private final ConversationQueryHandler mHandler;
         private final Context mContext;
         private boolean mDeleteLockedMessages;
 
-        public DeleteThreadListener(Collection<Long> threadIds, Conversation.ConversationQueryHandler handler, Context context) {
+        public DeleteThreadListener(Collection<Long> threadIds, ConversationQueryHandler handler, Context context) {
             mThreadIds = threadIds;
             mHandler = handler;
             mContext = context;

@@ -17,9 +17,9 @@
 package com.android.internal.telephony;
 
 /**
- * Contains a list of string constants used to get or set telephone properties
+ * Contains a list of string constants used to getConversation or set telephone properties
  * in the system. You can use {@link android.os.SystemProperties os.SystemProperties}
- * to get and set these values.
+ * to getConversation and set these values.
  *
  * @hide
  */

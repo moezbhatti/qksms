@@ -201,25 +201,8 @@ public class Conversation {
             return conv;
 
         long threadId = getOrCreateThreadId(context, recipients);
-        conv = getConversation(context, threadId, allowQuery);
-        conv = new Conversation(context, threadId, allowQuery);
-        Log.d(TAG, "Conversation.getConversation: created new conversation " + /*conv.toString()*/ "xxxxxxx");
+        return getConversation(context, threadId, allowQuery);
 
-        if (!conv.getRecipients().equals(recipients)) {
-            LogTag.error(TAG, "Conversation.getConversation: new conv's recipients don't match input recpients "
-                    + /*recipients*/ "xxxxxxx");
-        }
-
-        try {
-            Cache.put(conv);
-        } catch (IllegalStateException e) {
-            LogTag.error("Tried to add duplicate Conversation to Cache (from recipients): " + conv);
-            if (!Cache.replace(conv)) {
-               LogTag.error("getConversation by recipients cache.replace failed on " + conv);
-            }
-        }
-
-        return conv;
     }
 
     /**

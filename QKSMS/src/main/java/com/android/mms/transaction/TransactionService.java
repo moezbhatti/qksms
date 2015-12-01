@@ -256,7 +256,7 @@ public class TransactionService extends Service implements Observer {
                 Log.e(TAG, "Asked to process an MMS message when not the default SMS app");
             }
 
-            // HANDLE_PENDING_TRANSACTIONS_ACTION will get sent as part of the framework, so we
+            // HANDLE_PENDING_TRANSACTIONS_ACTION will getConversation sent as part of the framework, so we
             // don't need to issue any warnings.
             if (LOCAL_LOGV) Log.v(TAG, "Stopping TransactionService due to not being the default" +
                                        "SMS app");

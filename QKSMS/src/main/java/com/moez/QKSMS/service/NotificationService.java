@@ -35,7 +35,7 @@ public class NotificationService extends Service {
 
         Uri uri = Uri.parse(intent.getStringExtra(EXTRA_URI));
 
-        // Try to get the message's ID, in case the given Uri is bad.
+        // Try to getConversation the message's ID, in case the given Uri is bad.
         long messageId = -1;
         Cursor cursor = context.getContentResolver().query(uri, new String[]{SmsHelper.COLUMN_ID},
                 null, null, null);

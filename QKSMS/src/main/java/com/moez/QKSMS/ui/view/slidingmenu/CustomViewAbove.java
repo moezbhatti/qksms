@@ -945,7 +945,7 @@ public class CustomViewAbove extends ViewGroup {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        // Let the focused view and/or our descendants get the key first
+        // Let the focused view and/or our descendants getConversation the key first
         return super.dispatchKeyEvent(event) || executeKeyEvent(event);
     }
 

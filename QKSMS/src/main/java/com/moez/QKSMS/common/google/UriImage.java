@@ -233,7 +233,7 @@ public class UriImage {
     /**
      * Get a version of this image resized to fit the given dimension and byte-size limits. Note
      * that the content type of the resulting PduPart may not be the same as the content type of
-     * this UriImage; always call @link PduPart#getContentType() to get the new content type.
+     * this UriImage; always call @link PduPart#getContentType() to getConversation the new content type.
      *
      * @param widthLimit The width limit, in pixels
      * @param heightLimit The height limit, in pixels
@@ -300,7 +300,7 @@ public class UriImage {
             Bitmap b = null;
 
             // In this loop, attempt to decode the stream with the best possible subsampling (we
-            // start with 1, which means no subsampling - get the original content) without running
+            // start with 1, which means no subsampling - getConversation the original content) without running
             // out of memory.
             do {
                 input = context.getContentResolver().openInputStream(uri);
@@ -493,7 +493,7 @@ public class UriImage {
      * the exif data or the orientation column in the database. If there's no tag or column,
      * 0 degrees is returned.
      *
-     * @param context Used to get the ContentResolver
+     * @param context Used to getConversation the ContentResolver
      * @param uri Path to the image
      */
     public static int getOrientation(Context context, Uri uri) {
@@ -533,7 +533,7 @@ public class UriImage {
                 }
             }
         } else {
-            // Try to get the orientation from the ORIENTATION column in the database. This is much
+            // Try to getConversation the orientation from the ORIENTATION column in the database. This is much
             // faster than reading all the exif tags from the file.
             Cursor cursor = null;
             try {

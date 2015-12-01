@@ -322,7 +322,7 @@ public class SlidingMenu extends RelativeLayout {
         if (getParent() != null)
             throw new IllegalStateException("This SlidingMenu appears to already be attached");
 
-        // get the window background
+        // getConversation the window background
         TypedArray a = activity.getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowBackground});
         int background = a.getResourceId(0, 0);
         a.recycle();

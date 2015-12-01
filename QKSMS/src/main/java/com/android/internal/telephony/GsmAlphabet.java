@@ -1042,7 +1042,7 @@ public class GsmAlphabet {
     /**
      * Enable country-specific language tables from MCC-specific overlays.
      *
-     * @context the context to use to get the TelephonyManager
+     * @context the context to use to getConversation the TelephonyManager
      */
     private static void enableCountrySpecificEncodings() {
         // See comments in frameworks/base/core/res/res/values/config.xml for allowed values

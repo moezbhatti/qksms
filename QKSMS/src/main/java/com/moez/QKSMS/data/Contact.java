@@ -253,7 +253,7 @@ public class Contact {
         // stale so the next time we're asked for a particular contact, we'll return that
         // stale contact and at the same time, fire off an asyncUpdateContact to update
         // that contact's info in the background. UI elements using the contact typically
-        // call addListener() so they immediately get notified when the contact has been
+        // call addListener() so they immediately getConversation notified when the contact has been
         // updated with the latest info. They redraw themselves when we call the
         // listener's onUpdate().
         sContactCache.invalidate();
@@ -272,7 +272,7 @@ public class Contact {
      *
      * @param name
      * @param number
-     * @param numberE164 the number's E.164 representation, is used to get the
+     * @param numberE164 the number's E.164 representation, is used to getConversation the
      *        country the number belongs to.
      * @return the formatted name and number
      */
@@ -436,7 +436,7 @@ public class Contact {
         RecipientIdCache.init(context);
 
         // it maybe too aggressive to listen for *any* contact changes, and rebuild MMS contact
-        // cache each time that occurs. Unless we can get targeted updates for the contacts we
+        // cache each time that occurs. Unless we can getConversation targeted updates for the contacts we
         // care about(which probably won't happen for a long time), we probably should just
         // invalidate cache peoridically, or surgically.
         /*
@@ -617,13 +617,13 @@ public class Contact {
 
         private Contact get(String number, boolean isMe, boolean canBlock) {
             if (Log.isLoggable(LogTag.CONTACT, Log.DEBUG)) {
-                logWithTrace(TAG, "get(%s, %s, %s)", number, isMe, canBlock);
+                logWithTrace(TAG, "getConversation(%s, %s, %s)", number, isMe, canBlock);
             }
 
             if (TextUtils.isEmpty(number)) {
                 number = "";        // In some places (such as Korea), it's possible to receive
                 // a message without the sender's address. In this case,
-                // all such anonymous messages will get added to the same
+                // all such anonymous messages will getConversation added to the same
                 // thread.
             }
 
@@ -663,13 +663,13 @@ public class Contact {
 
                     // set this to true while we have the lock on contact since we will
                     // either run the query directly (canBlock case) or push the query
-                    // onto the queue.  In either case the mQueryPending will get set
+                    // onto the queue.  In either case the mQueryPending will getConversation set
                     // to false via updateContact.
                     contact.mQueryPending = true;
                 }
             }
             // do this outside of the synchronized so we don't hold up any
-            // subsequent calls to "get" on other threads
+            // subsequent calls to "getConversation" on other threads
             if (r != null) {
                 if (canBlock) {
                     r.run();
@@ -682,7 +682,7 @@ public class Contact {
 
         /**
          * Get CacheEntry list for given phone URIs. This method will do single one query to
-         * get expected contacts from provider. Be sure passed in URIs are not null and contains
+         * getConversation expected contacts from provider. Be sure passed in URIs are not null and contains
          * only valid URIs.
          */
         public List<Contact> getContactInfoForPhoneUris(Parcelable[] uris) {
@@ -1044,7 +1044,7 @@ public class Contact {
             }
 
             // If the contact is "me", then use my local profile photo. Otherwise, build a
-            // uri to get the avatar of the contact.
+            // uri to getConversation the avatar of the contact.
             Uri contactUri = entry.mIsMe ?
                     Profile.CONTENT_URI :
                     ContentUris.withAppendedId(Contacts.CONTENT_URI, entry.mPersonId);
@@ -1081,7 +1081,7 @@ public class Contact {
         }
 
         /**
-         * Query the contact email table to get the name of an email address.
+         * Query the contact email table to getConversation the name of an email address.
          */
         private Contact getContactInfoForEmailAddress(String email) {
             Contact entry = new Contact(email);
@@ -1165,7 +1165,7 @@ public class Contact {
         }
 
         // Reuse this so we don't have to allocate each time we go through this
-        // "get" function.
+        // "getConversation" function.
         static final int STATIC_KEY_BUFFER_MAXIMUM_LENGTH = 5;
         static CharBuffer sStaticKeyBuffer = CharBuffer.allocate(STATIC_KEY_BUFFER_MAXIMUM_LENGTH);
 

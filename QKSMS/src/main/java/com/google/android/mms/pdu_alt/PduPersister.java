@@ -801,7 +801,7 @@ public class PduPersister {
                                 return;
                             }
                         } catch (Exception e) {
-                            Log.e(TAG, "Can't get file info for: " + part.getDataUri(), e);
+                            Log.e(TAG, "Can't getConversation file info for: " + part.getDataUri(), e);
                         }
                     }
                     // We haven't converted the file yet, start the conversion

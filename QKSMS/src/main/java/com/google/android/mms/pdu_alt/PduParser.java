@@ -113,7 +113,7 @@ public class PduParser {
             return null;
         }
 
-        /* get the message type */
+        /* getConversation the message type */
         int messageType = mHeaders.getOctet(PduHeaders.MESSAGE_TYPE);
 
         /* check mandatory header fields */
@@ -765,10 +765,10 @@ public class PduParser {
                         }
                     }
 
-                    /* get start parameter */
+                    /* getConversation start parameter */
                     mStartParam = (byte[]) map.get(PduPart.P_START);
 
-                    /* get charset parameter */
+                    /* getConversation charset parameter */
                     mTypeParam= (byte[]) map.get(PduPart.P_TYPE);
 
                     keepParsing = false;
@@ -799,7 +799,7 @@ public class PduParser {
             return null;
         }
 
-        int count = parseUnsignedInt(pduDataStream); // get the number of parts
+        int count = parseUnsignedInt(pduDataStream); // getConversation the number of parts
         PduBody body = new PduBody();
 
         for (int i = 0 ; i < count ; i++) {
@@ -821,13 +821,13 @@ public class PduParser {
                 part.setContentType((PduContentTypes.contentTypes[0]).getBytes()); //"*/*"
             }
 
-            /* get name parameter */
+            /* getConversation name parameter */
             byte[] name = (byte[]) map.get(PduPart.P_NAME);
             if (null != name) {
                 part.setName(name);
             }
 
-            /* get charset parameter */
+            /* getConversation charset parameter */
             Integer charset = (Integer) map.get(PduPart.P_CHARSET);
             if (null != charset) {
                 part.setCharset(charset);
@@ -857,7 +857,7 @@ public class PduParser {
                         System.currentTimeMillis()).getBytes());
             }
 
-            /* get part's data */
+            /* getConversation part's data */
             if (dataLength > 0) {
                 byte[] partData = new byte[dataLength];
                 String partContentType = new String(part.getContentType());
@@ -1001,7 +1001,7 @@ public class PduParser {
         if (first < TEXT_MIN) {
             parseValueLength(pduDataStream);
 
-            charset = parseShortInteger(pduDataStream); //get the "Charset"
+            charset = parseShortInteger(pduDataStream); //getConversation the "Charset"
         }
 
         byte[] textString = parseWapString(pduDataStream, TYPE_TEXT_STRING);
@@ -1623,7 +1623,7 @@ public class PduParser {
                          * some carrier mmsc servers do not support content_disposition
                          * field correctly
                          */
-                        // TODO this should be dependant on the system but I don't know how to get that value
+                        // TODO this should be dependant on the system but I don't know how to getConversation that value
 //                        boolean contentDisposition = Resources.getSystem().getBoolean(com
 //                                .android.internal.R.bool.config_mms_content_disposition_support);
                         boolean contentDisposition = false;
@@ -1648,7 +1648,7 @@ public class PduParser {
                                         , TYPE_TEXT_STRING));
                             }
 
-                            /* get filename parameter and skip other parameters */
+                            /* getConversation filename parameter and skip other parameters */
                             thisEndPos = pduDataStream.available();
                             if (thisStartPos - thisEndPos < len) {
                                 value = pduDataStream.read();
@@ -1759,7 +1759,7 @@ public class PduParser {
             return false;
         }
 
-        /* get message type */
+        /* getConversation message type */
         int messageType = headers.getOctet(PduHeaders.MESSAGE_TYPE);
 
         /* check Mms-Version field */
