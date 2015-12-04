@@ -174,7 +174,7 @@ public class DownloadManager {
         String subject = (v != null) ? v.getString()
                 : mContext.getString(R.string.no_subject);
 
-        // TODO: Actually get the sender, or at least the phone number here
+        // TODO: Actually getConversation the sender, or at least the phone number here
         String from = mContext.getString(R.string.unknown_sender);
 
         return mContext.getString(R.string.dl_failure_notification, subject, from);

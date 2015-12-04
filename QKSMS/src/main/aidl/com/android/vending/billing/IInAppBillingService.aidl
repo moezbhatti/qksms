@@ -21,7 +21,7 @@ import android.os.Bundle;
 /**
  * InAppBillingService is the service that provides in-app billing version 3 and beyond.
  * This service provides the following features:
- * 1. Provides a new API to get details of in-app items published for the app including
+ * 1. Provides a new API to getConversation details of in-app items published for the app including
  *    price, type, title and description.
  * 2. The purchase flow is synchronous and purchase information is available immediately
  *    after it completes.
@@ -29,7 +29,7 @@ import android.os.Bundle;
  *    till the purchase is consumed.
  * 4. An API to consume a purchase of an inapp item. All purchases of one-time
  *    in-app items are consumable and thereafter can be purchased again.
- * 5. An API to get current purchases of the user immediately. This will not contain any
+ * 5. An API to getConversation current purchases of the user immediately. This will not contain any
  *    consumed purchases.
  *
  * All calls will give a response code with the following possible values
@@ -116,7 +116,7 @@ interface IInAppBillingService {
      *        ("inapp" for one-time purchases and "subs" for subscription).
      * @param continuationToken to be set as null for the first call, if the number of owned
      *        skus are too many, a continuationToken is returned in the response bundle.
-     *        This method can be called again with the continuation token to get the next set of
+     *        This method can be called again with the continuation token to getConversation the next set of
      *        owned skus.
      * @return Bundle containing the following key-value pairs
      *         "RESPONSE_CODE" with int value, RESULT_OK(0) if success, other response codes on

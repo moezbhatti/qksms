@@ -64,7 +64,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         Bundle extras = getIntent().getExtras();
 
         sThreadId = extras.getLong(EXTRA_THREAD_ID);
-        mConversation = Conversation.get(this, sThreadId, false);
+        mConversation = Conversation.getConversation(this, sThreadId, false);
         mConversationLegacy = new ConversationLegacy(this, sThreadId);
 
         // Set up the compose view.

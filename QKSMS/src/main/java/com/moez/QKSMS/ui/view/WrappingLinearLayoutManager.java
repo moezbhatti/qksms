@@ -81,7 +81,7 @@ public class WrappingLinearLayoutManager extends android.support.v7.widget.Linea
 
         int height = 0;
 
-        // it's possible to get scrap views in recycler which are bound to old (invalid) adapter entities. This
+        // it's possible to getConversation scrap views in recycler which are bound to old (invalid) adapter entities. This
         // happens because their invalidation happens after "onMeasure" method. As a workaround let's clear the
         // recycler now (it should not cause any performance issues while scrolling as "onMeasure" is never
         // called whiles scrolling)
@@ -94,7 +94,7 @@ public class WrappingLinearLayoutManager extends android.support.v7.widget.Linea
         // state
         for (int i = 0; i < adapterItemCount; i++) {
             if (i < stateItemCount) {
-                // we should not exceed state count, otherwise we'll get IndexOutOfBoundsException. For such items
+                // we should not exceed state count, otherwise we'll getConversation IndexOutOfBoundsException. For such items
                 // we will use previously calculated dimensions
                 measureChild(recycler, i, widthSpec, unspecified, childDimensions);
             } else {

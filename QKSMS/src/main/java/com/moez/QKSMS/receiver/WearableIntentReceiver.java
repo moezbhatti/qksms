@@ -126,11 +126,9 @@ public class WearableIntentReceiver extends BroadcastReceiver {
         if (remoteInput != null && bundle != null) {
             if (intent.getAction().equals(ACTION_REPLY)) {
 
-                Message message = new Message(
-                        remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString(),
-                        new String[]{bundle.getString(EXTRA_ADDRESS)}
-                );
-
+                Message message = new Message.Builder(remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString())
+                        .addresses(new String[]{bundle.getString(EXTRA_ADDRESS)})
+                        .build();
                 Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
                 sendTransaction.sendNewMessage(message, bundle.getLong(EXTRA_THREAD_ID));
 
@@ -141,3 +139,4 @@ public class WearableIntentReceiver extends BroadcastReceiver {
         }
     }
 }
+

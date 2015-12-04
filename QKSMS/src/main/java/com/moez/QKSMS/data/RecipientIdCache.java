@@ -155,7 +155,7 @@ public class RecipientIdCache {
                     Log.d(TAG, "[RecipientIdCache] updateNumbers: contact=" + contact +
                             ", wasModified=true, recipientId=" + recipientId);
                     Log.d(TAG, "   contact.getNumber=" + number1 +
-                            ", sInstance.mCache.get(recipientId)=" + number2);
+                            ", sInstance.mCache.getConversation(recipientId)=" + number2);
                 }
 
                 // if the numbers don't match, let's update the RecipientIdCache's number

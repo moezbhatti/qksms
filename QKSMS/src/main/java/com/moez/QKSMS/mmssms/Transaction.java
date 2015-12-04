@@ -236,9 +236,9 @@ public class Transaction {
                     // figure out the length of supported message
                     int[] splitData = SmsMessage.calculateLength(body, false);
 
-                    // we take the current length + the remaining length to get the total number of characters
+                    // we take the current length + the remaining length to getConversation the total number of characters
                     // that message set can support, and then divide by the number of message that will require
-                    // to get the length supported by a single message
+                    // to getConversation the length supported by a single message
                     int length = (body.length() + splitData[2]) / splitData[0];
                     if (LOCAL_LOGV) Log.v(TAG, "length: " + length);
 
@@ -248,7 +248,7 @@ public class Transaction {
                         length -= 6;
                     }
 
-                    // get the split messages
+                    // getConversation the split messages
                     String[] textToSend = splitByLength(body, length, counter);
 
                     // send each message part to each recipient attached to message
@@ -405,7 +405,7 @@ public class Transaction {
                             // receiver is not registered force close error... hmm.
                         }
                     } else if (progress == ProgressCallbackEntity.PROGRESS_ABORT) {
-                        // This seems to get called only after the progress has reached 100 and then something else goes wrong, so here we will try and send again and see if it works
+                        // This seems to getConversation called only after the progress has reached 100 and then something else goes wrong, so here we will try and send again and see if it works
                         if (LOCAL_LOGV) Log.v(TAG, "sending aborted for some reason...");
                     }
                 }
@@ -772,7 +772,7 @@ public class Transaction {
                     apns.get(0).MMSCenterUrl = mmscUrl;
 
                     if (apns.get(0).MMSCenterUrl.equals("")) {
-                        // attempt to get apns from internal databases, most likely will fail due to insignificant permissions
+                        // attempt to getConversation apns from internal databases, most likely will fail due to insignificant permissions
                         APNHelper helper = new APNHelper(context);
                         apns = helper.getMMSApns();
                     }
@@ -847,7 +847,7 @@ public class Transaction {
                             }
                         }, 1000);
                     } else if (progress == ProgressCallbackEntity.PROGRESS_ABORT) {
-                        // This seems to get called only after the progress has reached 100 and then something else goes wrong, so here we will try and send again and see if it works
+                        // This seems to getConversation called only after the progress has reached 100 and then something else goes wrong, so here we will try and send again and see if it works
                         if (LOCAL_LOGV) Log.v(TAG, "sending aborted for some reason...");
                         context.unregisterReceiver(this);
 

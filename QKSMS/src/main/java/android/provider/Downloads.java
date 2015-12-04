@@ -443,7 +443,7 @@ public final class Downloads {
          * This download will be saved to the download manager's private
          * partition. This is the behavior used by applications that want to
          * download private files that are used and deleted soon after they
-         * get downloaded. All file types are allowed, and only the initiating
+         * getConversation downloaded. All file types are allowed, and only the initiating
          * application can access the file (indirectly through a content
          * provider). This requires the
          * android.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED permission.

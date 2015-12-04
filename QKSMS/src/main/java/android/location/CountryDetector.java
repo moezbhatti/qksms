@@ -33,7 +33,7 @@ import java.util.HashMap;
  * <li>Phone's locale</li>
  * </ul>
  * <p>
- * Call the {@link #detectCountry()} to get the available country immediately.
+ * Call the {@link #detectCountry()} to getConversation the available country immediately.
  * <p>
  * To be notified of the future country change, use the
  * {@link #addCountryListener}

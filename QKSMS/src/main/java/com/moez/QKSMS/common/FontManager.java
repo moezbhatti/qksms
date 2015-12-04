@@ -120,7 +120,7 @@ public class FontManager {
             return fontWeight;
         }
 
-        // Otherwise, get the heavy font weight.
+        // Otherwise, getConversation the heavy font weight.
         if (fontWeight == TypefaceManager.TextWeight.LIGHT) {
             return TypefaceManager.TextWeight.NORMAL;
         } else if (fontFamily == TypefaceManager.FontFamily.ROBOTO) {

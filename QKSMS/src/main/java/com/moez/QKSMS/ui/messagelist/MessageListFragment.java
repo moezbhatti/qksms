@@ -64,6 +64,7 @@ import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactList;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
+import com.moez.QKSMS.data.ConversationQueryHandler;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.model.SlideshowModel;
@@ -462,7 +463,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         Linkify.addLinks(msg, Linkify.ALL);
         ArrayList<String> uris = MessageUtils.extractUris(msg.getSpans(0, msg.length(), URLSpan.class));
 
-        // Remove any dupes so they don't get added to the menu multiple times
+        // Remove any dupes so they don't getConversation added to the menu multiple times
         HashSet<String> collapsedUris = new HashSet<>();
         for (String uri : uris) {
             collapsedUris.add(uri.toLowerCase());
@@ -1308,7 +1309,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         }
     }
 
-    private final class BackgroundQueryHandler extends Conversation.ConversationQueryHandler {
+    private final class BackgroundQueryHandler extends ConversationQueryHandler {
         public BackgroundQueryHandler(ContentResolver contentResolver) {
             super(contentResolver);
         }
@@ -1345,11 +1346,11 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                         return;
                     }
                     if (tid > 0 && cursor.getCount() == 0) {
-                        // We just deleted the last message and the thread will get deleted
+                        // We just deleted the last message and the thread will getConversation deleted
                         // by a trigger in the database. Clear the threadId so next time we
-                        // need the threadId a new thread will get created.
+                        // need the threadId a new thread will getConversation created.
                         Log.v(TAG, "##### MESSAGE_LIST_QUERY_AFTER_DELETE_TOKEN clearing thread id: " + tid);
-                        Conversation conv = Conversation.get(mContext, tid, false);
+                        Conversation conv = Conversation.getConversation(mContext, tid, false);
                         if (conv != null) {
                             conv.clearThreadId();
                             conv.setDraftState(false);
@@ -1418,7 +1419,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         @Override
         protected Void doInBackground(Void... params) {
             Log.d(TAG, "Loading conversation");
-            mConversation = Conversation.get(mContext, mThreadId, true);
+            mConversation = Conversation.getConversation(mContext, mThreadId, true);
             mConversationLegacy = new ConversationLegacy(mContext, mThreadId);
 
             mConversationLegacy.markRead();

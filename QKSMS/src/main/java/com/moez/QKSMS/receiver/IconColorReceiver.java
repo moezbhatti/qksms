@@ -72,7 +72,7 @@ public class IconColorReceiver extends BroadcastReceiver {
         } else if (ACTION_ICON_COLOR_CHANGED.equals(intent.getAction())) {
             String component = intent.getStringExtra(EXTRA_COMPONENT_NAME);
 
-            // Save the component class name for starting when we get the PACKAGE_CHANGED_ACTION
+            // Save the component class name for starting when we getConversation the PACKAGE_CHANGED_ACTION
             // broadcast.
             PreferenceManager.getDefaultSharedPreferences(context)
                     .edit()

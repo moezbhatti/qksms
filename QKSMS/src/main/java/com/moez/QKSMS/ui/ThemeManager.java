@@ -643,7 +643,7 @@ public class ThemeManager {
         sTextOnColorSecondary = sResources.getColor(isColorDarkEnough(sColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
-        // Some views are updated every frame of the animation; get these views here. We
+        // Some views are updated every frame of the animation; getConversation these views here. We
         // build this list once beforehand since it's a slightly expensive operation.
         final Set<LiveView> views = LiveViewManager.getViews(SettingsFragment.THEME);
 

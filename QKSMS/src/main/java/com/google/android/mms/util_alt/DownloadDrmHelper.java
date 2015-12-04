@@ -103,7 +103,7 @@ public class DownloadDrmHelper {
             }
         } catch (IllegalArgumentException ex) {
             Log.w(TAG,
-                    "Can't get original mime type since path is null or empty string.");
+                    "Can't getConversation original mime type since path is null or empty string.");
         } catch (IllegalStateException ex) {
             Log.w(TAG, "DrmManagerClient didn't initialize properly.");
         }
