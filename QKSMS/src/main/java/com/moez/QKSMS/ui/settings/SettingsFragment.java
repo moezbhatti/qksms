@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
+import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
@@ -584,11 +585,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 MMSSetupFragment.contactSupport(getActivity());
                 break;
             case CHANGELOG:
-                new QKDialog()
-                        .setContext(mContext)
-                        .setTitle(R.string.title_changelog)
-                        .setTripleLineItems(R.array.changelog_versions, R.array.changelog_dates, R.array.changelog_changes, null)
-                        .show(getFragmentManager(), "changelog");
+                DialogHelper.showChangelog(mContext);
                 break;
             case THANKS:
                 new QKDialog()
