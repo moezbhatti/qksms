@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import com.android.volley.RequestQueue;
+import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -209,5 +211,9 @@ public abstract class QKActivity extends ActionBarActivity {
         } else {
             return powerManager.isScreenOn();
         }
+    }
+
+    public RequestQueue getRequestQueue() {
+        return ((QKSMSApp) getApplication()).getRequestQueue();
     }
 }

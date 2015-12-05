@@ -1,10 +1,12 @@
 package com.moez.QKSMS.common;
 
 import android.util.Log;
+import com.android.volley.toolbox.StringRequest;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 
@@ -58,6 +60,19 @@ public class DialogHelper {
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
+    }
+
+    public static void showChangelog(QKActivity context) {
+        String url = "https://qksms-changelog.firebaseio.com/changes.json";
+
+        StringRequest request = new StringRequest(url, response -> {
+            Log.d(TAG, "onComplete: " + response);
+        }, error -> {
+            Log.d(TAG, "onError: " + error.getMessage());
+
+        });
+
+        context.getRequestQueue().add(request);
     }
 
 }

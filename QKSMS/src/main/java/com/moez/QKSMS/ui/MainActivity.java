@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKRateSnack;
@@ -302,11 +303,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 switchContent(new SearchFragment(), true);
                 break;
             case R.id.menu_changelog:
-                new QKDialog()
-                        .setContext(this)
-                        .setTitle(R.string.title_changelog)
-                        .setTripleLineItems(R.array.changelog_versions, R.array.changelog_dates, R.array.changelog_changes, null)
-                        .show(getFragmentManager(), "Changelog");
+                DialogHelper.showChangelog(this);
                 break;
             case R.id.menu_donate:
                 DonationManager.getInstance(this).showDonateDialog();

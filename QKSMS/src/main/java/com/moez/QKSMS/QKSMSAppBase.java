@@ -31,6 +31,8 @@ import android.util.Log;
 import com.android.mms.transaction.MmsSystemEventReceiver;
 import com.android.mms.util.DownloadManager;
 import com.android.mms.util.RateController;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.DraftCache;
@@ -52,6 +54,7 @@ public class QKSMSAppBase extends Application {
     private TelephonyManager mTelephonyManager;
     private String mCountryIso;
     private static QKSMSAppBase sQKSMSApp = null;
+    private static RequestQueue sRequestQueue;
     private PduLoaderManager mPduLoaderManager;
     private ThumbnailManager mThumbnailManager;
     private DrmManagerClient mDrmManagerClient;
@@ -126,6 +129,15 @@ public class QKSMSAppBase extends Application {
         return sQKSMSApp;
     }
 
+    public RequestQueue getRequestQueue() {
+        if (sRequestQueue == null) {
+            sRequestQueue = Volley.newRequestQueue(this);
+        }
+
+        return sRequestQueue;
+    }
+
+
     @Override
     public void onLowMemory() {
         super.onLowMemory();
@@ -161,6 +173,7 @@ public class QKSMSAppBase extends Application {
 
     /**
      * Returns the content provider wrapper that allows access to recent searches.
+     *
      * @return Returns the content provider wrapper that allows access to recent searches.
      */
     public SearchRecentSuggestions getRecentSuggestions() {
