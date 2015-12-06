@@ -18,12 +18,12 @@ import com.moez.QKSMS.ui.base.QKFragment;
 
 import java.util.List;
 
-import static com.moez.QKSMS.ui.dialog.mms.QKDialogFragment.DISMISS_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.QKDialogFragment.DialogFragmentListener;
-import static com.moez.QKSMS.ui.dialog.mms.QKDialogFragment.LIST_ITEM_CLICK_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.QKDialogFragment.NEGATIVE_BUTTON_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.QKDialogFragment.NEUTRAL_BUTTON_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.QKDialogFragment.POSITIVE_BUTTON_RESULT;
+import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.DISMISS_RESULT;
+import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.DialogFragmentListener;
+import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.LIST_ITEM_CLICK_RESULT;
+import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.NEGATIVE_BUTTON_RESULT;
+import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.NEUTRAL_BUTTON_RESULT;
+import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.POSITIVE_BUTTON_RESULT;
 
 /**
  * @author Shane Creighton-Young
@@ -270,7 +270,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
         mDialogTag = dialogTag;
 
         if (SET_UP_MMS.equals(dialogTag)) {
-            QKDialogFragment f = new QKDialogFragment()
+            MMSDialogFragment f = new MMSDialogFragment()
                     .setContext(mContext)
                     .setTitle(R.string.set_up_mms_title)
                     .setMessage(R.string.set_up_mms_description)
@@ -288,7 +288,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
             f.show(getFragmentManager(), SET_UP_MMS);
 
         } else if (NO_CONFIGURATIONS_FOUND.equals(dialogTag)) {
-            new QKDialogFragment()
+            new MMSDialogFragment()
                     .setContext(mContext)
                     .setTitle(R.string.mms_setup_no_configurations_found_title)
                     .setMessage(R.string.mms_setup_no_configurations_found_body)
@@ -302,7 +302,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
             String message = getString(R.string.mms_setup_one_configuration_found_body,
                     carrier);
 
-            new QKDialogFragment()
+            new MMSDialogFragment()
                     .setContext(mContext)
                     .setTitle(R.string.mms_setup_one_configuration_found_title)
                     .setMessage(message)
@@ -317,7 +317,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
                 items[i] = mAPNs.get(i).name;
             }
 
-            new QKDialogFragment()
+            new MMSDialogFragment()
                     .setContext(mContext)
                     .setTitle(R.string.mms_setup_multiple_configurations_found_title)
                     .setMessage(R.string.mms_setup_multiple_configurations_found_body)
@@ -327,7 +327,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
                     .show(getFragmentManager(), MULTIPLE_CONFIGURATIONS_FOUND);
 
         } else if (SETTING_UP_MMS_LATER.equals(dialogTag)) {
-            new QKDialogFragment()
+            new MMSDialogFragment()
                     .setContext(mContext)
                     .setTitle(R.string.mms_setup_setting_up_later_title)
                     .setMessage(R.string.mms_setup_setting_up_later_body)
@@ -336,7 +336,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
                     .show(getFragmentManager(), SETTING_UP_MMS_LATER);
 
         } else if (NEXT_STEPS.equals(dialogTag)) {
-            new QKDialogFragment()
+            new MMSDialogFragment()
                     .setContext(mContext)
                     .setTitle(R.string.mms_setup_next_steps_title)
                     .setMessage(R.string.mms_setup_next_steps_body)
@@ -345,7 +345,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
                     .show(getFragmentManager(), NEXT_STEPS);
 
         } else if (SUCCESS.equals(dialogTag)) {
-            new QKDialogFragment()
+            new MMSDialogFragment()
                     .setContext(mContext)
                     .setTitle(R.string.mms_setup_success_title)
                     .setMessage(R.string.mms_setup_success_body)

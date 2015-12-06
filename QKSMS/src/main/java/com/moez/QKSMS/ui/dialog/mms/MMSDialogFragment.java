@@ -36,7 +36,7 @@ import com.moez.QKSMS.ui.view.QKTextView;
  * DialogFragmentListener. Then, the "onDialogFragmentResult" methods will get called much like
  * "onActivityResult".
  */
-public class QKDialogFragment extends DialogFragment {
+public class MMSDialogFragment extends DialogFragment {
     private final String TAG = "QKDialogFragment";
 
     private Context mContext;
@@ -104,7 +104,7 @@ public class QKDialogFragment extends DialogFragment {
      * DialogFragmentListener.
      */
     public <T extends Fragment & DialogFragmentListener>
-    QKDialogFragment setListener(T l) {
+    MMSDialogFragment setListener(T l) {
         mListener = l;
         setTargetFragment(l, 0);
         return this;
@@ -253,54 +253,54 @@ public class QKDialogFragment extends DialogFragment {
         onResult(DISMISS_RESULT);
     }
 
-    public QKDialogFragment setContext(Context context) {
+    public MMSDialogFragment setContext(Context context) {
         mContext = context;
         mResources = context.getResources();
         return this;
     }
 
-    public QKDialogFragment setTitle(int resource) {
+    public MMSDialogFragment setTitle(int resource) {
         return setTitle(mResources.getString(resource));
     }
 
-    public QKDialogFragment setTitle(String title) {
+    public MMSDialogFragment setTitle(String title) {
         mTitleEnabled = true;
         mTitleText = title;
         return this;
     }
 
-    public QKDialogFragment setMessage(int resource) {
+    public MMSDialogFragment setMessage(int resource) {
         return setMessage(mResources.getString(resource));
     }
 
-    public QKDialogFragment setMessage(String message) {
+    public MMSDialogFragment setMessage(String message) {
         mMessageEnabled = true;
         mMessageText = message;
         return this;
     }
 
-    public QKDialogFragment setCancelOnTouchOutside(boolean cancelable) {
+    public MMSDialogFragment setCancelOnTouchOutside(boolean cancelable) {
         setCancelable(cancelable);
         return this;
     }
 
     // TODO fix stack from bottom issue
-    public QKDialogFragment setButtonBarOrientation(int orientation) {
+    public MMSDialogFragment setButtonBarOrientation(int orientation) {
         mButtonBarOrientation = orientation;
         return this;
     }
 
-    public QKDialogFragment setCustomView(View view) {
+    public MMSDialogFragment setCustomView(View view) {
         mCustomViewEnabled = true;
         mCustomView = view;
         return this;
     }
 
-    public QKDialogFragment setItems(int resource, final int resultCode) {
+    public MMSDialogFragment setItems(int resource, final int resultCode) {
         return setItems(mResources.getStringArray(resource));
     }
 
-    public QKDialogFragment setItems(String[] items) {
+    public MMSDialogFragment setItems(String[] items) {
         ArrayAdapter adapter = new ArrayAdapter<>(mContext, R.layout.list_item_simple, items);
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
@@ -316,13 +316,13 @@ public class QKDialogFragment extends DialogFragment {
         return setCustomView(listView);
     }
 
-    public QKDialogFragment setDoubleLineItems(int titles, int bodies) {
+    public MMSDialogFragment setDoubleLineItems(int titles, int bodies) {
         return setDoubleLineItems(
                 mResources.getStringArray(titles), mResources.getStringArray(bodies)
         );
     }
 
-    public QKDialogFragment setDoubleLineItems(String[] titles, String[] bodies) {
+    public MMSDialogFragment setDoubleLineItems(String[] titles, String[] bodies) {
 
         int size = Math.min(titles.length, bodies.length);
         DoubleLineListItem[] doubleLineListItems = new DoubleLineListItem[size];
@@ -347,15 +347,15 @@ public class QKDialogFragment extends DialogFragment {
         return setCustomView(listView);
     }
 
-    public QKDialogFragment setTripleLineItems(int titles, int subtitles, int bodies) {
+    public MMSDialogFragment setTripleLineItems(int titles, int subtitles, int bodies) {
         return setTripleLineItems(
                 mResources.getStringArray(titles), mResources.getStringArray(subtitles),
                 mResources.getStringArray(bodies)
         );
     }
 
-    public QKDialogFragment setTripleLineItems(String[] titles, String[] subtitles,
-                                                 String[] bodies) {
+    public MMSDialogFragment setTripleLineItems(String[] titles, String[] subtitles,
+                                                String[] bodies) {
 
         int size = Math.min(titles.length, Math.min(subtitles.length, bodies.length));
         TripleLineListItem[] tripleLineListItems = new TripleLineListItem[size];
@@ -381,31 +381,31 @@ public class QKDialogFragment extends DialogFragment {
         return setCustomView(listView);
     }
 
-    public QKDialogFragment setPositiveButton(int resource) {
+    public MMSDialogFragment setPositiveButton(int resource) {
         return setPositiveButton(mResources.getString(resource));
     }
 
-    public QKDialogFragment setPositiveButton(String text) {
+    public MMSDialogFragment setPositiveButton(String text) {
         mPositiveButtonEnabled = true;
         mPositiveButtonText = text;
         return this;
     }
 
-    public QKDialogFragment setNeutralButton(int resource) {
+    public MMSDialogFragment setNeutralButton(int resource) {
         return setNeutralButton(mResources.getString(resource));
     }
 
-    public QKDialogFragment setNeutralButton(String text) {
+    public MMSDialogFragment setNeutralButton(String text) {
         mNeutralButtonEnabled = true;
         mNeutralButtonText = text;
         return this;
     }
 
-    public QKDialogFragment setNegativeButton(int resource) {
+    public MMSDialogFragment setNegativeButton(int resource) {
         return setNegativeButton(mResources.getString(resource));
     }
 
-    public QKDialogFragment setNegativeButton(String text) {
+    public MMSDialogFragment setNegativeButton(String text) {
         mNegativeButtonEnabled = true;
         mNegativeButtonText = text;
         return this;
