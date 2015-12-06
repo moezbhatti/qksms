@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -77,15 +78,20 @@ public class DialogHelper {
             Gson gson = new Gson();
             Change[] changes = gson.fromJson(response, Change[].class);
 
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat formatWithRevision = new SimpleDateFormat("yyyy-MM-dd-'r'H"); // For multiple updates in a day
+            SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateRevisionParser = new SimpleDateFormat("yyyy-MM-dd-'r'H"); // For multiple updates in a day
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM d, yyyy");
             for (Change change : changes) {
                 try {
+                    Date date;
                     if (change.date.length() > 11) {
-                        change.dateLong = formatWithRevision.parse(change.date).getTime();
+                        date = dateRevisionParser.parse(change.date);
                     } else {
-                        change.dateLong = format.parse(change.date).getTime();
+                        date = dateParser.parse(change.date);
                     }
+
+                    change.date = dateFormatter.format(date);
+                    change.dateLong = date.getTime();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -93,7 +99,32 @@ public class DialogHelper {
 
             Arrays.sort(changes, (lhs, rhs) -> Long.valueOf(rhs.dateLong).compareTo(lhs.dateLong));
 
+            String[] versions = new String[changes.length];
+            String[] dates = new String[changes.length];
+            String[] changelists = new String[changes.length];
+            for (int i = 0; i < changes.length; i++) {
+                Change change = changes[i];
+                versions[i] = change.version;
+                dates[i] = change.date;
+
+                changelists[i] = "";
+                for (int j = 0; j < change.changes.size(); j++) {
+                    String changeItem = change.changes.get(j);
+                    changelists[i] += " • ";
+                    changelists[i] += changeItem;
+                    if (j < change.changes.size() - 1) {
+                        changelists[i] += "\n";
+                    }
+                }
+            }
+
             context.hideProgressDialog();
+
+            new QKDialog()
+                    .setContext(context)
+                    .setTitle(R.string.title_changelog)
+                    .setTripleLineItems(versions, dates, changelists, null)
+                    .show();
         }, error -> {
             context.hideProgressDialog();
             context.makeToast(R.string.toast_changelog_error);
@@ -103,9 +134,9 @@ public class DialogHelper {
     }
 
     private class Change implements Comparator<Long> {
-        @SerializedName("changes") ArrayList<String> changes;
-        @SerializedName("release_date") String date;
         @SerializedName("version_name") String version;
+        @SerializedName("release_date") String date;
+        @SerializedName("changes") ArrayList<String> changes;
 
         long dateLong = 0;
 
