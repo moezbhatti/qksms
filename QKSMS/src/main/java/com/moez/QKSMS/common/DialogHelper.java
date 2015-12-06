@@ -3,10 +3,10 @@ package com.moez.QKSMS.common;
 import android.util.Log;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 import com.moez.QKSMS.BuildConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.model.ChangeModel;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -17,7 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -77,48 +76,50 @@ public class DialogHelper {
 
         StringRequest request = new StringRequest(url, response -> {
             Gson gson = new Gson();
-            Change[] changes = gson.fromJson(response, Change[].class);
+            ChangeModel[] changes = gson.fromJson(response, ChangeModel[].class);
 
+            // Fill in the localized date strings, and the `Long` time so that we can sort them
             SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat dateRevisionParser = new SimpleDateFormat("yyyy-MM-dd-'r'H"); // For multiple updates in a day
             SimpleDateFormat dateFormatter = new SimpleDateFormat("MMMM d, yyyy");
-            for (Change change : changes) {
+            for (ChangeModel change : changes) {
                 try {
                     Date date;
-                    if (change.date.length() > 11) {
-                        date = dateRevisionParser.parse(change.date);
+                    if (change.getDate().length() > 11) {
+                        date = dateRevisionParser.parse(change.getDate());
                     } else {
-                        date = dateParser.parse(change.date);
+                        date = dateParser.parse(change.getDate());
                     }
 
-                    change.date = dateFormatter.format(date);
-                    change.dateLong = date.getTime();
+                    change.setDate(dateFormatter.format(date));
+                    change.setDateLong(date.getTime());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
 
-            Arrays.sort(changes, (lhs, rhs) -> Long.valueOf(rhs.dateLong).compareTo(lhs.dateLong));
+            Arrays.sort(changes, (lhs, rhs) -> Long.valueOf(rhs.getDateLong()).compareTo(lhs.getDateLong()));
 
+            // Only show changelogs for current and past versions
             boolean currentVersionReached = false;
             ArrayList<String> versions = new ArrayList<>();
             ArrayList<String> dates = new ArrayList<>();
             ArrayList<String> changelists = new ArrayList<>();
-            for (Change change : changes) {
-                if (change.version.equals(BuildConfig.VERSION_NAME)) {
+            for (ChangeModel change : changes) {
+                if (change.getVersion().equals(BuildConfig.VERSION_NAME)) {
                     currentVersionReached = true;
                 }
 
                 if (currentVersionReached) {
-                    versions.add(change.version);
-                    dates.add(change.date);
+                    versions.add(change.getVersion());
+                    dates.add(change.getDate());
 
                     String changelist = "";
-                    for (int i = 0; i < change.changes.size(); i++) {
-                        String changeItem = change.changes.get(i);
+                    for (int i = 0; i < change.getChanges().size(); i++) {
+                        String changeItem = change.getChanges().get(i);
                         changelist += " • ";
                         changelist += changeItem;
-                        if (i < change.changes.size() - 1) {
+                        if (i < change.getChanges().size() - 1) {
                             changelist += "\n";
                         }
                     }
@@ -142,19 +143,6 @@ public class DialogHelper {
         });
 
         context.getRequestQueue().add(request);
-    }
-
-    private class Change implements Comparator<Long> {
-        @SerializedName("version_name") String version;
-        @SerializedName("release_date") String date;
-        @SerializedName("changes") ArrayList<String> changes;
-
-        long dateLong = 0;
-
-        @Override
-        public int compare(Long lhs, Long rhs) {
-            return lhs.compareTo(rhs);
-        }
     }
 
 }
