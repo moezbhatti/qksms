@@ -73,7 +73,7 @@ public class DialogHelper {
         }, error -> {
             Log.d(TAG, "onError: " + error.getMessage());
             context.hideProgressDialog();
-
+            context.makeToast(R.string.toast_changelog_error);
         });
 
         context.getRequestQueue().add(request);

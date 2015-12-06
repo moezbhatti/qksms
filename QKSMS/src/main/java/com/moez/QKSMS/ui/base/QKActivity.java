@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
@@ -225,6 +227,10 @@ public abstract class QKActivity extends ActionBarActivity {
         } else {
             return powerManager.isScreenOn();
         }
+    }
+
+    public void makeToast(@StringRes int message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     public RequestQueue getRequestQueue() {

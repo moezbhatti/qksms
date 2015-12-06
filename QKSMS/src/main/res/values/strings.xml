@@ -620,6 +620,8 @@
     <string name="toast_billing_not_available">Purchase requires Google Play Store (billing) on your Android</string>
     <!--Toast shown when Google Play Services is not available for purchasing a product-->
     <string name="toast_endlessjabber_not_installed">EndlessJabber is not installed, opening Google Play</string>
+    <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+
     <!--Toast shown to thank user for donating-->
     <string name="thanks_1">Thank you for donating! You\'re my new best friend.</string>
     <!--Toast shown to thank user for donating-->
