@@ -4,6 +4,7 @@ import android.util.Log;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.moez.QKSMS.BuildConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -99,22 +100,29 @@ public class DialogHelper {
 
             Arrays.sort(changes, (lhs, rhs) -> Long.valueOf(rhs.dateLong).compareTo(lhs.dateLong));
 
-            String[] versions = new String[changes.length];
-            String[] dates = new String[changes.length];
-            String[] changelists = new String[changes.length];
-            for (int i = 0; i < changes.length; i++) {
-                Change change = changes[i];
-                versions[i] = change.version;
-                dates[i] = change.date;
+            boolean currentVersionReached = false;
+            ArrayList<String> versions = new ArrayList<>();
+            ArrayList<String> dates = new ArrayList<>();
+            ArrayList<String> changelists = new ArrayList<>();
+            for (Change change : changes) {
+                if (change.version.equals(BuildConfig.VERSION_NAME)) {
+                    currentVersionReached = true;
+                }
 
-                changelists[i] = "";
-                for (int j = 0; j < change.changes.size(); j++) {
-                    String changeItem = change.changes.get(j);
-                    changelists[i] += " • ";
-                    changelists[i] += changeItem;
-                    if (j < change.changes.size() - 1) {
-                        changelists[i] += "\n";
+                if (currentVersionReached) {
+                    versions.add(change.version);
+                    dates.add(change.date);
+
+                    String changelist = "";
+                    for (int i = 0; i < change.changes.size(); i++) {
+                        String changeItem = change.changes.get(i);
+                        changelist += " • ";
+                        changelist += changeItem;
+                        if (i < change.changes.size() - 1) {
+                            changelist += "\n";
+                        }
                     }
+                    changelists.add(changelist);
                 }
             }
 
@@ -123,7 +131,10 @@ public class DialogHelper {
             new QKDialog()
                     .setContext(context)
                     .setTitle(R.string.title_changelog)
-                    .setTripleLineItems(versions, dates, changelists, null)
+                    .setTripleLineItems(
+                            versions.toArray(new String[versions.size()]),
+                            dates.toArray(new String[versions.size()]),
+                            changelists.toArray(new String[versions.size()]), null)
                     .show();
         }, error -> {
             context.hideProgressDialog();
