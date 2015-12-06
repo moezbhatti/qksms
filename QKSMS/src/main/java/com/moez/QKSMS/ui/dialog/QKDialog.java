@@ -2,6 +2,7 @@ package com.moez.QKSMS.ui.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -32,11 +33,6 @@ import java.util.ArrayList;
 
 public class QKDialog extends DialogFragment {
     private final String TAG = "QKDialog";
-
-    public static final String LIST_TAG = "list";
-    public static final String DETAILS_TAG = "details";
-    public static final String RESTART_TAG = "restart";
-    public static final String CONFIRMATION_TAG = "confirmation";
 
     protected QKActivity mContext;
     protected Resources mResources;
@@ -461,4 +457,13 @@ public class QKDialog extends DialogFragment {
         }
     }
 
+    public void show() {
+        super.show(mContext.getFragmentManager(), null);
+    }
+
+    @Deprecated
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        super.show(manager, tag);
+    }
 }

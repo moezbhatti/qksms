@@ -46,7 +46,7 @@ public class ConversationDetailsDialog implements ConversationDetails {
                 .setTitle(R.string.dialog_conversation_details_title)
                 .setCustomView(listView)
                 .setPositiveButton(R.string.okay, null)
-                .show(mFragmentManager, "conversation details");
+                .show();
     }
 
 }

@@ -39,7 +39,7 @@ public class DialogHelper {
                     context.showMenu();
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
+                .show();
 
     }
 
@@ -59,7 +59,7 @@ public class DialogHelper {
                     }).start();
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .show(context.getFragmentManager(), QKDialog.CONFIRMATION_TAG);
+                .show();
     }
 
     public static void showChangelog(QKActivity context) {

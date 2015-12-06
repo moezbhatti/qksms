@@ -546,7 +546,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 ThemeManager.showColourSwatchesDialog(mContext);
                 break;
             case BUBBLES:
-                new BubblePreferenceDialog().setContext(mContext).show(mContext.getFragmentManager(), "bubbles");
+                new BubblePreferenceDialog().setContext(mContext).show();
                 break;
             case ICON:
                 ThemeManager.setIcon(mContext);
@@ -600,7 +600,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                         startActivity(browserIntent);
                                     }
                                 })
-                        .show(getFragmentManager(), "thanks");
+                        .show();
                 break;
             case SIMPLE_PREFS:
                 mContext.onOptionsItemSelected(mContext.getMenu().findItem(R.id.simple_settings));

@@ -199,7 +199,7 @@ public class DonationManager {
                 .setContext(mContext)
                 .setCustomView(view);
 
-        dialog.show(mContext.getFragmentManager(), "donate dialog");
+        dialog.show();
     }
 
     public void donatePaypal() {

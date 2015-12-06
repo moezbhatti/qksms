@@ -194,7 +194,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                     .setMessage(R.string.icon_ready_message)
                     .setCustomView(imageView)
                     .setPositiveButton(R.string.okay, null)
-                    .show(getFragmentManager(), null);
+                    .show();
 
             // Only show the MMS setup fragment if it hasn't already been dismissed
         } else if (!wasMmsSetupFragmentDismissed(savedInstanceState)) {

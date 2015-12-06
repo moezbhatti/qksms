@@ -35,7 +35,7 @@ public class BlockedNumberDialog {
                                     }
                                 })
                                 .setNegativeButton(R.string.cancel, null)
-                                .show(context.getFragmentManager(), "remove from future blocked");
+                                .show();
                     }
                 })
                 .setPositiveButton(R.string.add, new View.OnClickListener() {
@@ -55,10 +55,10 @@ public class BlockedNumberDialog {
                                     }
                                 })
                                 .setNegativeButton(R.string.cancel, null)
-                                .show(context.getFragmentManager(), "add to future blocked");
+                                .show();
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .show(context.getFragmentManager(), "future blocked conversations");
+                .show();
     }
 }

@@ -44,7 +44,6 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.Toast;
-
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduBody;
@@ -83,6 +82,8 @@ import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.SmoothLinearLayoutManager;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -92,9 +93,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 public class MessageListFragment extends QKContentFragment implements ActivityLauncher, SensorEventListener,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener,
@@ -358,7 +356,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                                         MessageUtils.viewMmsMessageAttachment(getActivity(), messageItem.mMessageUri, messageItem.mSlideshow, getAsyncDialog());
                                     }
                                 })
-                                .show(getFragmentManager(), null);
+                                .show();
                         break;
                 }
             } else if (messageItem != null && messageItem.isOutgoingMessage() && messageItem.isFailedMessage()) {
@@ -451,7 +449,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         }
 
         dialog.buildMenu(l);
-        dialog.show(getFragmentManager(), "messagelistitem options");
+        dialog.show();
     }
 
     private void addCallAndContactMenuItems(QKDialog dialog, MessageItem msgItem) {
@@ -634,7 +632,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             case R.id.menu_notification_settings:
                 ConversationNotificationSettingsDialog.newInstance(mThreadId, mConversation.getRecipients().formatNames(", "))
                         .setContext(mContext)
-                        .show(getFragmentManager(), "notification prefs");
+                        .show();
                 return true;
 
             case R.id.menu_delete_conversation:
@@ -989,7 +987,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                                 break;
                         }
                     }
-                }).show(getFragmentManager(), QKDialog.LIST_TAG);
+                }).show();
         return true;
     }
 
@@ -1017,7 +1015,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 .setTitle(R.string.message_details_title)
                 .setMessage(messageDetails)
                 .setCancelOnTouchOutside(true)
-                .show(getFragmentManager(), QKDialog.DETAILS_TAG);
+                .show();
         return true;
     }
 
@@ -1054,7 +1052,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 .setTitle(R.string.delivery_header_title)
                 .setItems(items, null)
                 .setPositiveButton(R.string.okay, null)
-                .show(getFragmentManager(), "delivery report");
+                .show();
     }
 
     /**

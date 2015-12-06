@@ -449,7 +449,7 @@ public class ThemeManager {
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .show(((MainActivity) context).getFragmentManager(), "icon");
+                .show();
     }
 
     public static int getBackgroundColor() {
@@ -558,7 +558,7 @@ public class ThemeManager {
                 .setCustomView(palette)
                 .setNegativeButton(R.string.cancel, null);
 
-        dialog.show(context.getFragmentManager(), "colorpicker");
+        dialog.show();
     }
 
     private static void showColourPickerDialog(final QKActivity context, int swatchColour) {
@@ -580,7 +580,7 @@ public class ThemeManager {
                 .setTitle(R.string.pref_theme)
                 .setCustomView(palette)
                 .setNegativeButton(R.string.cancel, null)
-                .show(context.getFragmentManager(), "colorpicker");
+                .show();
     }
 
     public static void setStatusBarTintEnabled(boolean enabled) {

@@ -538,7 +538,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
                         toggleDelayedMessaging();
                     }
                 })
-                .show(((QKActivity) mContext).getFragmentManager(), "delayed message info");
+                .show();
         mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, true).apply(); //This should be changed, the dialog should be shown each time when delayed messaging is disabled.
     }
 
