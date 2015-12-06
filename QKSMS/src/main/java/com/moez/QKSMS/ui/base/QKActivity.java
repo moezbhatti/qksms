@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui.base;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -33,6 +34,7 @@ public abstract class QKActivity extends ActionBarActivity {
     private QKTextView mTitle;
     private ImageView mOverflowButton;
     private Menu mMenu;
+    private ProgressDialog mProgressDialog;
 
     protected Resources mRes;
     protected SharedPreferences mPrefs;
@@ -42,6 +44,10 @@ public abstract class QKActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         mRes = getResources();
         getPrefs(); // set the preferences if they haven't been set. this method takes care of that logic for us
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setCancelable(false);
     }
 
     /**
@@ -68,6 +74,14 @@ public abstract class QKActivity extends ActionBarActivity {
 
     protected void showBackButton(boolean show) {
         getSupportActionBar().setDisplayHomeAsUpEnabled(show);
+    }
+
+    public void showProgressDialog() {
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        mProgressDialog.hide();
     }
 
     public SharedPreferences getPrefs() {

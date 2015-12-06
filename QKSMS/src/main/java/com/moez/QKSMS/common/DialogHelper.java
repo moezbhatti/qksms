@@ -63,12 +63,16 @@ public class DialogHelper {
     }
 
     public static void showChangelog(QKActivity context) {
+        context.showProgressDialog();
+
         String url = "https://qksms-changelog.firebaseio.com/changes.json";
 
         StringRequest request = new StringRequest(url, response -> {
             Log.d(TAG, "onComplete: " + response);
+            context.hideProgressDialog();
         }, error -> {
             Log.d(TAG, "onError: " + error.getMessage());
+            context.hideProgressDialog();
 
         });
 
