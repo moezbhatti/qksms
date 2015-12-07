@@ -67,6 +67,7 @@ public abstract class QKActivity extends ActionBarActivity {
         if (mToolbar == null) {
             throw new RuntimeException("Toolbar not found in BaseActivity layout.");
         } else {
+            mToolbar.setPopupTheme(R.style.PopupTheme);
             mTitle = (QKTextView) mToolbar.findViewById(R.id.toolbar_title);
             setSupportActionBar(mToolbar);
         }
@@ -216,7 +217,7 @@ public abstract class QKActivity extends ActionBarActivity {
      *
      * @return
      */
-    protected Toolbar getToolbar() {
+    public Toolbar getToolbar() {
         return mToolbar;
     }
 

@@ -358,12 +358,18 @@ public class ThemeManager {
                 sTextOnBackgroundPrimary = sResources.getColor(R.color.theme_light_text_primary);
                 sTextOnBackgroundSecondary = sResources.getColor(R.color.theme_light_text_secondary);
                 sRippleBackground = sResources.getDrawable(R.drawable.button_background_transparent);
+                if (mActivity != null) {
+                    mActivity.getToolbar().setPopupTheme(R.style.PopupThemeLight);
+                }
                 break;
             case GREY:
             case BLACK:
                 sTextOnBackgroundPrimary = sResources.getColor(R.color.theme_dark_text_primary);
                 sTextOnBackgroundSecondary = sResources.getColor(R.color.theme_dark_text_secondary);
                 sRippleBackground = sResources.getDrawable(R.drawable.button_background_transparent_light);
+                if (mActivity != null) {
+                    mActivity.getToolbar().setPopupTheme(R.style.PopupTheme);
+                }
                 break;
         }
 

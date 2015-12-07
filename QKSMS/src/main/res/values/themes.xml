@@ -53,6 +53,7 @@
     <!-- BASE THEMES -->
     
     <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -64,6 +65,7 @@
     </style>
 
     <style name="AppBaseThemeDark" parent="Theme.AppCompat">
+        <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -78,6 +80,16 @@
 
     <style name="ActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="actionMenuTextColor">@color/text_primary_dark</item>
+    </style>
+
+    <style name="PopupTheme" parent="ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">@color/grey_material</item>
+        <item name="android:textColor">@color/text_primary_dark</item>
+    </style>
+
+    <style name="PopupThemeLight" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/grey_light_mega_ultra</item>
+        <item name="android:textColor">@color/text_primary_light</item>
     </style>
 
 </resources>
