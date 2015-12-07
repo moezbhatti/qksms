@@ -533,6 +533,10 @@ public class ThemeManager {
         return sTheme;
     }
 
+    public static boolean isNightMode() {
+        return sTheme == Theme.GREY || sTheme == Theme.BLACK;
+    }
+
     public static void showColourSwatchesDialog(final QKActivity context) {
         final QKDialog dialog = new QKDialog();
 

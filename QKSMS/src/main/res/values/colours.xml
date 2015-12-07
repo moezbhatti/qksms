@@ -26,4 +26,14 @@
     <color name="theme_light_text_secondary">#8A000000</color>
     <color name="theme_dark_text_primary">#FFFFFFFF</color>
     <color name="theme_dark_text_secondary">#B3FFFFFF</color>
+
+    <!-- Color states for `SwitchCompat` views -->
+    <color name="switch_thumb_enabled_light">#ECECEC</color>
+    <color name="switch_track_enabled_light">#A6A6A6</color>
+    <color name="switch_thumb_disabled_light">#B9B9B9</color>
+    <color name="switch_track_disabled_light">#D6D6D6</color>
+    <color name="switch_thumb_enabled_dark">#B9B9B9</color>
+    <color name="switch_track_enabled_dark">#646464</color>
+    <color name="switch_thumb_disabled_dark">#595959</color>
+    <color name="switch_track_disabled_dark">#383838</color>
 </resources>
