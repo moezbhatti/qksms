@@ -74,15 +74,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_MMS = "pref_key_category_mms";
     public static final String CATEGORY_QUICKREPLY = "pref_key_category_quickreply";
     public static final String CATEGORY_QUICKCOMPOSE = "pref_key_category_quickcompose";
-    public static final String CATEGORY_ADVANCED = "pref_key_category_advanced";
     public static final String CATEGORY_ABOUT = "pref_key_category_about";
 
     // Sub-categories
     public static final String CATEGORY_APPEARANCE_STATUS_BARS = "pref_key_category_appearance_status_bars";
-    /**
-     * The category which holds the advanced preferences in settings_main.xml
-     */
-    public static final String CATEGORY_ADVANCED_HOLDER = "pref_key_category_advanced_holder";
 
     public static final String THEME = "pref_key_theme";
     public static final String ICON = "pref_key_icon";
@@ -153,8 +148,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String QUICKREPLY_TAP_DISMISS = "pref_key_quickreply_dismiss";
     public static final String QUICKCOMPOSE = "pref_key_quickcompose";
     public static final String STRIP_UNICODE = "pref_key_strip_unicode";
-    public static final String SYSTEM_BAR_FLAT = "pref_key_system_bar_flat";
-    public static final String STATUS_COMPAT = "pref_key_status_compat";
     public static final String VERSION = "pref_key_version";
     public static final String CHANGELOG = "pref_key_changelog";
     public static final String THANKS = "pref_key_thanks";
@@ -338,15 +331,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
 
         // Status and nav bar tinting are only supported on kit kat or above.
-        if (!hasKitKat()) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             removePreference(CATEGORY_APPEARANCE_STATUS_BARS);
-            removePreference(CATEGORY_ADVANCED_HOLDER);
         }
-
-    }
-
-    private boolean hasKitKat() {
-        return Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT;
     }
 
     /**
@@ -476,12 +463,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 // Update the SMS helper static class with the new option
                 SmsHelper.setMaxAttachmentSizeSetting(mContext, (String) newValue);
                 break;
-            case SYSTEM_BAR_FLAT:
-                ThemeManager.setSystemBarFlatEnabled((Boolean) newValue);
-                break;
-            case STATUS_COMPAT:
-                ThemeManager.setStatusBarTintCompat((Boolean) newValue);
-                break;
             case DELAY_DURATION:
                 try {
                     int duration = Integer.parseInt((String) newValue);
@@ -525,9 +506,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
             case CATEGORY_QUICKCOMPOSE:
                 resId = R.xml.settings_quickcompose;
-                break;
-            case CATEGORY_ADVANCED:
-                resId = R.xml.settings_advanced;
                 break;
             case CATEGORY_ABOUT:
                 resId = R.xml.settings_about;

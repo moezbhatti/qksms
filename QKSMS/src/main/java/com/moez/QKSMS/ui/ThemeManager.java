@@ -10,15 +10,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
@@ -33,7 +32,6 @@ import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.Set;
 
@@ -87,17 +85,14 @@ public class ThemeManager {
     private static int sReceivedBubbleColor;
     private static Drawable sRippleBackground;
 
-    private static SystemBarTintManager sTintManager;
-    private static Drawable sStatusBarTintDrawable;
     private static Resources sResources;
     private static SharedPreferences sPrefs;
 
     private static boolean status_tint = false;
-    private static boolean status_compat = true;
-    private static boolean system_flat = false;
 
     private static QKActivity mActivity;
     private static Context mContext;
+    private static Window mWindow;
 
     // Colours copied from http://www.google.com/design/spec/style/color.html#color-ui-color-palette
     private static final int[][] COLOURS = {{
@@ -263,30 +258,17 @@ public class ThemeManager {
         if (context instanceof QKActivity) {
             mActivity = (QKActivity) context;
             mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(sColor));
+            mWindow = mActivity.getWindow();
         }
 
         initializeTheme(Theme.fromString(sPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
 
         status_tint = sPrefs.getBoolean(SettingsFragment.STATUS_TINT, Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-        status_compat = sPrefs.getBoolean(SettingsFragment.STATUS_COMPAT, false);
-        system_flat = sPrefs.getBoolean(SettingsFragment.SYSTEM_BAR_FLAT, false);
 
         if (mActivity != null) {
-            sTintManager = new SystemBarTintManager(mActivity);
-            sTintManager.setStatusBarTintEnabled(!status_compat);
-            sTintManager.setNavigationBarTintEnabled(false);
-            sTintManager.setStatusBarTintColor(status_tint ? sColor : sResources.getColor(R.color.black));
-            sTintManager.setNavigationBarTintColor(sResources.getColor(R.color.black));
+            mWindow.setStatusBarColor(status_tint ? sColor : sResources.getColor(R.color.black));
         }
 
-        sStatusBarTintDrawable = ContextCompat.getDrawable(context, R.drawable.status_bar_background);
-        if (sStatusBarTintDrawable != null) {
-            sStatusBarTintDrawable.setColorFilter(status_tint ? sColor : sResources.getColor(R.color.black), PorterDuff.Mode.MULTIPLY);
-        }
-
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && system_flat) {
-            sTintManager.setStatusBarTintDrawable(sStatusBarTintDrawable);
-        }
     }
 
     public static void setTheme(Theme theme) {
@@ -599,29 +581,11 @@ public class ThemeManager {
             colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-                    sTintManager.setStatusBarTintColor((Integer) animation.getAnimatedValue());
-
-                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && system_flat) {
-                        sStatusBarTintDrawable.setColorFilter((Integer) animation.getAnimatedValue(), PorterDuff.Mode.MULTIPLY);
-                        sTintManager.setStatusBarTintDrawable(sStatusBarTintDrawable);
-                    }
+                    mWindow.setStatusBarColor((Integer) animation.getAnimatedValue());
                 }
             });
             colorAnimation.start();
         }
-    }
-
-    public static void setSystemBarFlatEnabled(boolean enabled) {
-        system_flat = enabled;
-
-        if (status_tint) {
-            status_tint = false;
-            setStatusBarTintEnabled(true);
-        }
-    }
-
-    public static void setStatusBarTintCompat(boolean enabled) {
-        sTintManager.setStatusBarTintEnabled(!enabled);
     }
 
     public static String getColorString(int color) {
@@ -672,12 +636,7 @@ public class ThemeManager {
                 }
 
                 if (status_tint) {
-                    sTintManager.setStatusBarTintColor(color);
-
-                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && system_flat) {
-                        sStatusBarTintDrawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-                        sTintManager.setStatusBarTintDrawable(sStatusBarTintDrawable);
-                    }
+                    mWindow.setStatusBarColor(color);
                 }
             }
         });
