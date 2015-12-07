@@ -519,10 +519,15 @@ public class ThemeManager {
         switch (sTheme) {
             case WHITE:
                 return sResources.getColor(R.color.grey_light_mega_ultra);
+
             case OFFWHITE:
                 return sResources.getColor(R.color.white_pure);
-            default:
+
+            case GREY:
                 return sResources.getColor(R.color.grey_dark);
+
+            default:
+                return sResources.getColor(R.color.grey_material);
         }
     }
 

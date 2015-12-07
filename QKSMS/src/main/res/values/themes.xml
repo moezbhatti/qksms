@@ -38,11 +38,11 @@
         <item name="toolbarStyle">@style/ActionBarTheme</item>
     </style>
 
-    <!-- LIGHT AMOLED THEME -->
+    <!-- DARK AMOLED THEME -->
 
     <style name="AppThemeDarkAmoled" parent="AppThemeDark">
         <item name="android:windowBackground">@color/black</item>
-        <item name="backgroundColor">@color/black</item>
+        <item name="backgroundColor">@color/grey_material</item>
     </style>
 
     <style name="AppThemeDarkAmoledDialog" parent="AppThemeDarkDialog">
