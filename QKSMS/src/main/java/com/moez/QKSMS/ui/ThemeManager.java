@@ -285,17 +285,14 @@ public class ThemeManager {
             if (startColor != endColor) {
                 ValueAnimator backgroundAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
                 backgroundAnimation.setDuration(TRANSITION_LENGTH);
-                backgroundAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int color = (Integer) animation.getAnimatedValue();
-                        if (fragment != null) {
-                            fragment.setBackgroundColor(color);
-                        }
-                        background.setBackgroundColor(color);
-                        menu.setBackgroundColor(color);
-                        content.setBackgroundColor(color);
+                backgroundAnimation.addUpdateListener(animation -> {
+                    int color = (Integer) animation.getAnimatedValue();
+                    if (fragment != null) {
+                        fragment.setBackgroundColor(color);
                     }
+                    background.setBackgroundColor(color);
+                    menu.setBackgroundColor(color);
+                    content.setBackgroundColor(color);
                 });
                 backgroundAnimation.addListener(new AnimatorListenerAdapter() {
                     @Override
@@ -384,51 +381,48 @@ public class ThemeManager {
                 .setTitle(R.string.update_icon_title)
                 .setMessage(R.string.update_icon_message)
                 .setButtonBarOrientation(LinearLayout.VERTICAL)
-                .setPositiveButton(R.string.okay, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PackageManager packageManager = context.getPackageManager();
+                .setPositiveButton(R.string.okay, v -> {
+                    PackageManager packageManager = context.getPackageManager();
 
-                        String[] colors = {
-                                "Red", "Pink", "Purple", "DeepPurple", "Indigo", "Blue",
-                                "LightBlue", "Cyan", "Teal", "Green", "LightGreen", "Lime",
-                                "Yellow", "Amber", "Orange", "DeepOrange", "Brown", "Grey",
-                                "BlueGrey"
-                        };
+                    String[] colors = {
+                            "Red", "Pink", "Purple", "DeepPurple", "Indigo", "Blue",
+                            "LightBlue", "Cyan", "Teal", "Green", "LightGreen", "Lime",
+                            "Yellow", "Amber", "Orange", "DeepOrange", "Brown", "Grey",
+                            "BlueGrey"
+                    };
 
-                        // Disable all of the color aliases, except for the alias with the current
-                        // color.
-                        String enabledComponent = null;
-                        for (int i = 0; i < colors.length; i++) {
-                            String componentClassName = String.format(
-                                    "com.moez.QKSMS.ui.MainActivity-%s", colors[i]
+                    // Disable all of the color aliases, except for the alias with the current
+                    // color.
+                    String enabledComponent = null;
+                    for (int i = 0; i < colors.length; i++) {
+                        String componentClassName = String.format(
+                                "com.moez.QKSMS.ui.MainActivity-%s", colors[i]
+                        );
+
+                        // Save the enabled component so we can kill the app with this one when
+                        // it's all done.
+                        if (getSwatchColour(sColor) == PALETTE[i]) {
+                            enabledComponent = componentClassName;
+
+                        } else {
+                            packageManager.setComponentEnabledSetting(
+                                    new ComponentName(context, componentClassName),
+                                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                                    // Don't kill the app while we're in the loop! This will
+                                    // prevent the other component enabled settings from
+                                    // changing, i.e. they will all be disabled and the app
+                                    // won't show up to the user.
+                                    PackageManager.DONT_KILL_APP
                             );
-
-                            // Save the enabled component so we can kill the app with this one when
-                            // it's all done.
-                            if (getSwatchColour(sColor) == PALETTE[i]) {
-                                enabledComponent = componentClassName;
-
-                            } else {
-                                packageManager.setComponentEnabledSetting(
-                                        new ComponentName(context, componentClassName),
-                                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                                        // Don't kill the app while we're in the loop! This will
-                                        // prevent the other component enabled settings from
-                                        // changing, i.e. they will all be disabled and the app
-                                        // won't show up to the user.
-                                        PackageManager.DONT_KILL_APP
-                                );
-                            }
                         }
-
-                        // Broadcast an intent to a receiver that will:
-                        // 1) enable the last component; and
-                        // 2) relaunch QKSMS with the new component name.
-                        Intent intent = new Intent(IconColorReceiver.ACTION_ICON_COLOR_CHANGED);
-                        intent.putExtra(IconColorReceiver.EXTRA_COMPONENT_NAME, enabledComponent);
-                        context.sendBroadcast(intent);
                     }
+
+                    // Broadcast an intent to a receiver that will:
+                    // 1) enable the last component; and
+                    // 2) relaunch QKSMS with the new component name.
+                    Intent intent = new Intent(IconColorReceiver.ACTION_ICON_COLOR_CHANGED);
+                    intent.putExtra(IconColorReceiver.EXTRA_COMPONENT_NAME, enabledComponent);
+                    context.sendBroadcast(intent);
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
@@ -530,12 +524,9 @@ public class ThemeManager {
 
         ColorPickerPalette palette = new ColorPickerPalette(context);
         palette.setGravity(Gravity.CENTER);
-        palette.init(19, 4, new ColorPickerSwatch.OnColorSelectedListener() {
-            @Override
-            public void onColorSelected(int color) {
-                showColourPickerDialog(context, color);
-                dialog.dismiss();
-            }
+        palette.init(19, 4, color -> {
+            showColourPickerDialog(context, color);
+            dialog.dismiss();
         });
 
         palette.drawPalette(PALETTE, getSwatchColour(sColor));
@@ -553,12 +544,9 @@ public class ThemeManager {
 
         ColorPickerPalette palette = new ColorPickerPalette(context);
         palette.setGravity(Gravity.CENTER);
-        palette.init(getSwatch(swatchColour).length, 4, new ColorPickerSwatch.OnColorSelectedListener() {
-            @Override
-            public void onColorSelected(int color) {
-                setColour(color);
-                dialog.dismiss();
-            }
+        palette.init(getSwatch(swatchColour).length, 4, color -> {
+            setColour(color);
+            dialog.dismiss();
         });
 
         palette.drawPalette(getSwatch(swatchColour), sColor);
@@ -578,12 +566,7 @@ public class ThemeManager {
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(TRANSITION_LENGTH);
-            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    mWindow.setStatusBarColor((Integer) animation.getAnimatedValue());
-                }
-            });
+            colorAnimation.addUpdateListener(animation -> mWindow.setStatusBarColor((Integer) animation.getAnimatedValue()));
             colorAnimation.start();
         }
     }
@@ -624,20 +607,17 @@ public class ThemeManager {
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colourFrom, color);
         colorAnimation.setDuration(TRANSITION_LENGTH);
         colorAnimation.setInterpolator(new DecelerateInterpolator());
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int color = (Integer) animation.getAnimatedValue();
+        colorAnimation.addUpdateListener(animation -> {
+            int color1 = (Integer) animation.getAnimatedValue();
 
-                if (mActivity != null) {
-                    if (mActivity.getSupportActionBar() != null) {
-                        mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-                    }
+            if (mActivity != null) {
+                if (mActivity.getSupportActionBar() != null) {
+                    mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color1));
                 }
+            }
 
-                if (status_tint) {
-                    mWindow.setStatusBarColor(color);
-                }
+            if (status_tint) {
+                mWindow.setStatusBarColor(color1);
             }
         });
         colorAnimation.addListener(new AnimatorListenerAdapter() {
@@ -658,13 +638,10 @@ public class ThemeManager {
                 ValueAnimator titleColorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), title.getCurrentTextColor(), ThemeManager.sTextOnColorPrimary);
                 titleColorAnimation.setDuration(TRANSITION_LENGTH);
                 titleColorAnimation.setInterpolator(new DecelerateInterpolator());
-                titleColorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        int color = (Integer) animation.getAnimatedValue();
-                        title.setTextColor(color);
-                        mActivity.colorMenuIcons(mActivity.getMenu(), color);
-                    }
+                titleColorAnimation.addUpdateListener(animation -> {
+                    int color1 = (Integer) animation.getAnimatedValue();
+                    title.setTextColor(color1);
+                    mActivity.colorMenuIcons(mActivity.getMenu(), color1);
                 });
                 titleColorAnimation.start();
             }
