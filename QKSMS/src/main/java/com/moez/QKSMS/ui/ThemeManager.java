@@ -30,7 +30,6 @@ import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;
-import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
 
 import java.util.Set;
@@ -265,7 +264,7 @@ public class ThemeManager {
 
         status_tint = sPrefs.getBoolean(SettingsFragment.STATUS_TINT, Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
 
-        if (mActivity != null) {
+        if (mActivity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mWindow.setStatusBarColor(status_tint ? sColor : sResources.getColor(R.color.black));
         }
 
@@ -566,7 +565,11 @@ public class ThemeManager {
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(TRANSITION_LENGTH);
-            colorAnimation.addUpdateListener(animation -> mWindow.setStatusBarColor((Integer) animation.getAnimatedValue()));
+            colorAnimation.addUpdateListener(animation -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mWindow.setStatusBarColor((Integer) animation.getAnimatedValue());
+                }
+            });
             colorAnimation.start();
         }
     }
@@ -616,7 +619,7 @@ public class ThemeManager {
                 }
             }
 
-            if (status_tint) {
+            if (status_tint && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mWindow.setStatusBarColor(color1);
             }
         });
