@@ -290,8 +290,11 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             showAvatar = messageItem.getBoxId() != messageItem2.getBoxId() || messageItem.mDate - messageItem2.mDate >= MAX_DURATION;
 
             // If the messages are from different people, then we don't care about any of the other checks,
-            // we need to show the avatar/timestamp
-            if (messageItem.mAddress != null && messageItem2.mAddress != null && !messageItem.mAddress.equals(messageItem2.mAddress)) {
+            // we need to show the avatar/timestamp. This is used for group chats, which is why we want
+            // both to be incoming messages
+            if (messageItem.mAddress != null && messageItem2.mAddress != null &&
+                    !messageItem.mAddress.equals(messageItem2.mAddress) &&
+                    !messageItem.isOutgoingMessage() && messageItem2.isOutgoingMessage()) {
                 showAvatar = true;
                 showTimestamp = true;
             }
