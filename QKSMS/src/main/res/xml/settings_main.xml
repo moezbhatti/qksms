@@ -56,12 +56,6 @@
             android:summary="@string/pref_category_summary_quickcompose"
             android:title="@string/pref_category_quickcompose" />
         <Preference
-            android:icon="@drawable/ic_more"
-            android:key="pref_key_category_advanced"
-            android:layout="@layout/list_item_preference"
-            android:summary="@string/pref_category_summary_advanced"
-            android:title="@string/pref_category_advanced" />
-        <Preference
             android:icon="@drawable/ic_info_fill"
             android:key="pref_key_category_about"
             android:layout="@layout/list_item_preference"
