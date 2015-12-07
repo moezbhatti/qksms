@@ -9,14 +9,14 @@
             android:key="pref_key_notifications"
             android:layout="@layout/list_item_preference"
             android:title="@string/pref_notifications"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:dependency="pref_key_notifications"
             android:key="pref_key_led"
             android:layout="@layout/list_item_preference"
             android:title="@string/pref_led"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <Preference
             android:defaultValue="-48060"
             android:dependency="pref_key_led"
@@ -30,7 +30,7 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_wake_summary"
             android:title="@string/pref_wake"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="@bool/preL"
             android:dependency="pref_key_notifications"
@@ -38,7 +38,7 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_ticker_summary"
             android:title="@string/pref_ticker"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/notification_private_options"
@@ -54,7 +54,7 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_vibration_summary"
             android:title="@string/pref_vibration"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <RingtonePreference
             android:defaultValue="content://settings/system/notification_sound"
             android:dependency="pref_key_notifications"
@@ -70,7 +70,7 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_notification_call_summary"
             android:title="@string/pref_notification_call"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:dependency="pref_key_notifications"
@@ -78,6 +78,6 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_dismiss_read_summary"
             android:title="@string/pref_dimiss_read"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -2,7 +2,7 @@ package com.moez.QKSMS.ui.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.CheckBoxPreference;
+import android.preference.SwitchPreference;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -12,15 +12,15 @@ import com.moez.QKSMS.R;
  * Regular android preferences don't have basic functionality when you manually add them to views
  * other than preferencegroups, this just cleans up some boilerplate code to set ours up
  */
-public class QKCheckBoxPreference extends CheckBoxPreference {
+public class QKSwitchPreference extends SwitchPreference {
 
     private SharedPreferences mPrefs;
     private OnPreferenceClickListener mOnPreferenceClickListener;
     private boolean mDefaultValue;
-    private QKCheckBox mCheckBox;
+    private QKSwitch mCheckBox;
 
-    public QKCheckBoxPreference(Context context, OnPreferenceClickListener onPreferenceClickListener,
-                                String key, SharedPreferences prefs, boolean defaultValue, int title, int summary) {
+    public QKSwitchPreference(Context context, OnPreferenceClickListener onPreferenceClickListener,
+                              String key, SharedPreferences prefs, boolean defaultValue, int title, int summary) {
         super(context);
         mPrefs = prefs;
         mOnPreferenceClickListener = onPreferenceClickListener;
@@ -29,7 +29,7 @@ public class QKCheckBoxPreference extends CheckBoxPreference {
         setEnabled(true);
         mDefaultValue = prefs.getBoolean(key, defaultValue);
         setLayoutResource(R.layout.list_item_preference);
-        setWidgetLayoutResource(R.layout.view_checkbox);
+        setWidgetLayoutResource(R.layout.view_switch);
         if (title != 0) setTitle(title);
         if (summary != 0) setSummary(summary);
     }
@@ -45,17 +45,14 @@ public class QKCheckBoxPreference extends CheckBoxPreference {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        mCheckBox = (QKCheckBox) view.findViewById(android.R.id.checkbox);
+        mCheckBox = (QKSwitch) view.findViewById(android.R.id.checkbox);
         mCheckBox.setChecked(mDefaultValue);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPrefs.edit().putBoolean(getKey(), !mCheckBox.isChecked()).apply();
-                mCheckBox.setChecked(!mCheckBox.isChecked());
-                if (mOnPreferenceClickListener != null) {
-                    mOnPreferenceClickListener.onPreferenceClick(QKCheckBoxPreference.this);
-                }
+        view.setOnClickListener(v -> {
+            mPrefs.edit().putBoolean(getKey(), !mCheckBox.isChecked()).apply();
+            mCheckBox.setChecked(!mCheckBox.isChecked());
+            if (mOnPreferenceClickListener != null) {
+                mOnPreferenceClickListener.onPreferenceClick(QKSwitchPreference.this);
             }
         });
 

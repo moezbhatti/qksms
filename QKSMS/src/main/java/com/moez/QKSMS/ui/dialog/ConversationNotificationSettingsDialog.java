@@ -15,7 +15,7 @@ import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-import com.moez.QKSMS.ui.view.QKCheckBoxPreference;
+import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKPreference;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
@@ -87,25 +87,25 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
         LinearLayout list = new LinearLayout(getActivity());
         list.setOrientation(LinearLayout.VERTICAL);
 
-        list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED,
+        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getNotificationLedEnabled(), R.string.pref_led, 0).getView());
 
         list.addView(new QKPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED_COLOR,
                 R.string.pref_theme_led, 0).getView());
 
-        list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.WAKE,
+        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.WAKE,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getWakePhoneEnabled(), R.string.pref_wake, R.string.pref_wake_summary).getView());
 
-        list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.NOTIFICATION_TICKER,
+        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_TICKER,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getTickerEnabled(), R.string.pref_ticker, R.string.pref_ticker_summary).getView());
 
-        list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.NOTIFICATION_VIBRATE,
+        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_VIBRATE,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getVibrateEnabled(), R.string.pref_vibration, R.string.pref_vibration_summary).getView());
 
         list.addView(new QKRingtonePreference(getActivity(), this, SettingsFragment.NOTIFICATION_TONE,
                 R.string.pref_ringtone, R.string.pref_ringtone_summary).getView());
 
-        list.addView(new QKCheckBoxPreference(getActivity(), this, SettingsFragment.NOTIFICATION_CALL_BUTTON,
+        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_CALL_BUTTON,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getCallButtonEnabled(), R.string.pref_notification_call, R.string.pref_notification_call_summary).getView());
 
         setCustomView(list);

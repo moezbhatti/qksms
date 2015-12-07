@@ -11,21 +11,21 @@
         android:layout="@layout/list_item_preference"
         android:summary="@string/pref_compose_group_summary"
         android:title="@string/pref_compose_group"
-        android:widgetLayout="@layout/view_checkbox" />
+        android:widgetLayout="@layout/view_switch" />
     <!--<CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_key_auto_download"
         android:layout="@layout/list_item_preference"
         android:summary="@string/pref_auto_download_summary"
         android:title="@string/pref_auto_download"
-        android:widgetLayout="@layout/view_checkbox" />-->
+        android:widgetLayout="@layout/view_switch" />-->
     <CheckBoxPreference
         android:defaultValue="true"
         android:key="pref_key_auto_data"
         android:layout="@layout/list_item_preference"
         android:summary="@string/pref_auto_data_summary"
         android:title="@string/pref_auto_data"
-        android:widgetLayout="@layout/view_checkbox" />
+        android:widgetLayout="@layout/view_switch" />
     <PreferenceCategory
         android:layout="@layout/list_item_preference_category"
         android:title="@string/pref_category_sending_mms">
@@ -35,7 +35,7 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_long_as_mms_summary"
             android:title="@string/pref_long_as_mms"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <EditTextPreference
             android:defaultValue="3"
             android:dependency="pref_key_long_as_mms"

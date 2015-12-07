@@ -1,4 +1,4 @@
-<com.moez.QKSMS.ui.view.QKCheckBox
+<com.moez.QKSMS.ui.view.QKSwitch
     android:id="@android:id/checkbox"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"

@@ -40,7 +40,7 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_night_auto_summary"
             android:title="@string/pref_night_auto"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <Preference
             android:defaultValue="6:00"
             android:dependency="pref_key_night_auto"
@@ -64,13 +64,13 @@
             android:key="pref_key_status_tint"
             android:layout="@layout/list_item_preference"
             android:title="@string/pref_status_tint"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_navigation_tint"
             android:layout="@layout/list_item_preference"
             android:title="@string/pref_navigation_tint"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -108,21 +108,21 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_hide_avatar_conversations_summary"
             android:title="@string/pref_hide_avatar_conversations"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pref_key_hide_avatar_sent"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_hide_avatar_sent_summary"
             android:title="@string/pref_hide_avatar_sent"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_hide_avatar_received"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_hide_avatar_received_summary"
             android:title="@string/pref_hide_avatar_received"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -134,20 +134,20 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_message_count_summary"
             android:title="@string/pref_message_count"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_sliding_tab"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_sliding_tab_summary"
             android:title="@string/pref_sliding_tab"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_24h"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_24h_summary"
             android:title="@string/pref_24h"
-            android:widgetLayout="@layout/view_checkbox" />
+            android:widgetLayout="@layout/view_switch" />
     </PreferenceCategory>
 </PreferenceScreen>
