@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -87,7 +88,8 @@ public class ThemeManager {
     private static Resources sResources;
     private static SharedPreferences sPrefs;
 
-    private static boolean status_tint = false;
+    private static boolean sStatusTintEnabled = false;
+    private static boolean sNavigationTintEnabled = false;
 
     private static QKActivity mActivity;
     private static Context mContext;
@@ -262,10 +264,16 @@ public class ThemeManager {
 
         initializeTheme(Theme.fromString(sPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
 
-        status_tint = sPrefs.getBoolean(SettingsFragment.STATUS_TINT, Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        sStatusTintEnabled = sPrefs.getBoolean(SettingsFragment.STATUS_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        sNavigationTintEnabled = sPrefs.getBoolean(SettingsFragment.NAVIGATION_TINT, false) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 
-        if (mActivity != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mWindow.setStatusBarColor(status_tint ? sColor : sResources.getColor(R.color.black));
+        if (mActivity != null && sStatusTintEnabled) {
+            if (sStatusTintEnabled) {
+                mWindow.setStatusBarColor(sColor);
+            }
+            if (sNavigationTintEnabled) {
+                mWindow.setNavigationBarColor(sColor);
+            }
         }
 
     }
@@ -557,18 +565,33 @@ public class ThemeManager {
                 .show();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void setStatusBarTintEnabled(boolean enabled) {
-        if (status_tint != enabled) {
-            status_tint = enabled;
+        if (sStatusTintEnabled != enabled) {
+            sStatusTintEnabled = enabled;
             int colorFrom = enabled ? sResources.getColor(R.color.black) : sColor;
             int colorTo = enabled ? sColor : sResources.getColor(R.color.black);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(TRANSITION_LENGTH);
             colorAnimation.addUpdateListener(animation -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mWindow.setStatusBarColor((Integer) animation.getAnimatedValue());
-                }
+                mWindow.setStatusBarColor((Integer) animation.getAnimatedValue());
+            });
+            colorAnimation.start();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setNavigationBarTintEnabled(boolean enabled) {
+        if (sNavigationTintEnabled != enabled) {
+            sNavigationTintEnabled = enabled;
+            int colorFrom = enabled ? sResources.getColor(R.color.black) : sColor;
+            int colorTo = enabled ? sColor : sResources.getColor(R.color.black);
+
+            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+            colorAnimation.setDuration(TRANSITION_LENGTH);
+            colorAnimation.addUpdateListener(animation -> {
+                mWindow.setNavigationBarColor((Integer) animation.getAnimatedValue());
             });
             colorAnimation.start();
         }
@@ -619,8 +642,11 @@ public class ThemeManager {
                 }
             }
 
-            if (status_tint && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (sStatusTintEnabled) {
                 mWindow.setStatusBarColor(color1);
+            }
+            if (sNavigationTintEnabled) {
+                mWindow.setNavigationBarColor(color1);
             }
         });
         colorAnimation.addListener(new AnimatorListenerAdapter() {

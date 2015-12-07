@@ -12,7 +12,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -77,11 +76,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_ABOUT = "pref_key_category_about";
 
     // Sub-categories
-    public static final String CATEGORY_APPEARANCE_STATUS_BARS = "pref_key_category_appearance_status_bars";
+    public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
 
     public static final String THEME = "pref_key_theme";
     public static final String ICON = "pref_key_icon";
     public static final String STATUS_TINT = "pref_key_status_tint";
+    public static final String NAVIGATION_TINT = "pref_key_navigation_tint";
     public static final String BACKGROUND = "pref_key_background";
     public static final String BUBBLES = "pref_key_bubbles";
     public static final String BUBBLES_NEW = "pref_key_new_bubbles";
@@ -239,11 +239,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             icon.setOnPreferenceClickListener(this);
         }
 
-        CheckBoxPreference status_tint = (CheckBoxPreference) findPreference(STATUS_TINT);
-        if (status_tint != null) {
-            status_tint.setOnPreferenceChangeListener(this);
-        }
-
         mThemeLed = findPreference(NOTIFICATION_LED_COLOR);
         if (mThemeLed != null) {
 
@@ -332,7 +327,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         // Status and nav bar tinting are only supported on kit kat or above.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            removePreference(CATEGORY_APPEARANCE_STATUS_BARS);
+            removePreference(CATEGORY_APPEARANCE_SYSTEM_BARS);
         }
     }
 
@@ -402,6 +397,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
             case STATUS_TINT:
                 ThemeManager.setStatusBarTintEnabled((Boolean) newValue);
+                break;
+            case NAVIGATION_TINT:
+                ThemeManager.setNavigationBarTintEnabled((Boolean) newValue);
                 break;
             case FONT_FAMILY:
                 preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
