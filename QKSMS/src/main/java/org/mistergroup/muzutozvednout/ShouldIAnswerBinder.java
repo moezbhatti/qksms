@@ -36,7 +36,8 @@ public class ShouldIAnswerBinder {
     }
 
     public void bind(Context context) {
-        Intent intent = new Intent("org.mistergroup.muzutozvednout.PublicService");
+        Intent intent=new Intent("org.mistergroup.muzutozvednout.PublicService");
+        intent.setPackage("org.mistergroup.muzutozvednout");
         context.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
