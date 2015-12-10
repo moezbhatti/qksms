@@ -15,10 +15,10 @@ import android.os.RemoteException;
  * Created by Mister Group s.r.o. on 30.11.2015.
  */
 public class ShouldIAnswerBinder {
-    static final int RATING_UNKNOWN = 0;
-    static final int RATING_POSITIVE = 1;
-    static final int RATING_NEGATIVE = 2;
-    static final int RATING_NEUTRAL = 3;
+    public static final int RATING_UNKNOWN = 0;
+    public static final int RATING_POSITIVE = 1;
+    public static final int RATING_NEGATIVE = 2;
+    public static final int RATING_NEUTRAL = 3;
 
     private Callback callback;
     public boolean isBound;
