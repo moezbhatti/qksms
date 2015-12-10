@@ -12,6 +12,8 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -36,6 +38,7 @@ import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.transaction.EndlessJabber;
@@ -530,6 +533,29 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
             case BLOCKED_FUTURE:
                 BlockedNumberDialog.showDialog(mContext);
+                break;
+            case SHOULD_I_ANSWER:
+                final String packageName = "org.mistergroup.muzutozvednout";
+                if (!PackageUtils.isAppInstalled(mContext, packageName)) {
+                    new QKDialog()
+                            .setContext(mContext)
+                            .setTitle(R.string.dialog_should_i_answer_title)
+                            .setMessage(R.string.dialog_should_i_answer_message)
+                            .setNegativeButton(R.string.cancel, null)
+                            .setPositiveButton(R.string.okay, v -> {
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+                                } catch (android.content.ActivityNotFoundException anfe) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+                                }
+                            })
+                            .show();
+
+                    new Handler().postDelayed(() -> {
+                        mPrefs.edit().putBoolean(SHOULD_I_ANSWER, false).commit();
+                        ((CheckBoxPreference) preference).setChecked(false);
+                    }, 500);
+                }
                 break;
             case NOTIFICATION_LED_COLOR:
                 mLedColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");

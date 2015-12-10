@@ -665,6 +665,10 @@ public class NotificationManager {
      */
     public static void initQuickCompose(Context context, boolean override, boolean overrideCancel) {
 
+        if (sPrefs == null) {
+            init(context);
+        }
+
         if (sPrefs.getBoolean(SettingsFragment.QUICKCOMPOSE, false) || override) {
             Intent composeIntent = new Intent(context, QKComposeActivity.class);
             PendingIntent composePI = PendingIntent.getActivity(context, 9, composeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
