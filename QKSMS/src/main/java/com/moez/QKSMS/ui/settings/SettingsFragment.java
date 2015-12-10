@@ -107,6 +107,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
     public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
     public static final String BLOCKED_FUTURE = "pref_key_block_future";
+    public static final String SHOULD_I_ANSWER = "pref_key_should_i_answer";
     public static final String MOBILE_ONLY = "pref_key_mobile_only";
     public static final String COMPOSE_GROUP = "pref_key_compose_group";
     public static final String SPLIT_SMS = "pref_key_split";

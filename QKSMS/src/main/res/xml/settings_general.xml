@@ -105,6 +105,13 @@
             android:title="@string/pref_block_future" />
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="pref_key_should_i_answer"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_should_i_answer_summary"
+            android:title="@string/pref_should_i_answer"
+            android:widgetLayout="@layout/view_switch" />
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="pref_key_mobile_only"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_mobile_only_summary"
