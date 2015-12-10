@@ -89,7 +89,7 @@ public class MessagingReceiver extends BroadcastReceiver {
         shouldIAnswerBinder.setCallback(new ShouldIAnswerBinder.Callback() {
             @Override
             public void onNumberRating(String number, int rating) {
-                Log.d("APP", "onNumberRating " + number + ": " + String.valueOf(rating));
+                Log.d(TAG, "onNumberRating " + number + ": " + String.valueOf(rating));
                 shouldIAnswerBinder.unbind(context.getApplicationContext());
             }
 
