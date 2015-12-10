@@ -88,7 +88,7 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:layout="@layout/list_item_preference_category"
-        android:title="@string/pref_category_general">
+        android:title="@string/pref_category_blocking">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_blocked_enabled"
@@ -110,6 +110,10 @@
             android:summary="@string/pref_should_i_answer_summary"
             android:title="@string/pref_should_i_answer"
             android:widgetLayout="@layout/view_switch" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/list_item_preference_category"
+        android:title="@string/pref_category_general">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="pref_key_mobile_only"

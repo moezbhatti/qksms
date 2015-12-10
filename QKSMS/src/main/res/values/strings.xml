@@ -110,6 +110,7 @@
     <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
+    <string name="pref_category_blocking">Message blocking</string>
     <string name="pref_category_notifications">Notifications</string>
     <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
     <string name="pref_category_mms">MMS</string>
