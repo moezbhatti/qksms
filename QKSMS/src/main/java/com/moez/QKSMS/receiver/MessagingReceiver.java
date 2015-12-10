@@ -59,11 +59,16 @@ public class MessagingReceiver extends BroadcastReceiver {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, message.getThreadId());
 
+            // The user has set messages from this address to be blocked, but we at the time there weren't any
+            // messages from them already in the database, so we couldn't block any thread URI. Now that we have one,
+            // we can block it, so that the conversation list adapter knows to ignore this thread in the main list
             if (BlockedConversationHelper.isFutureBlocked(prefs, mAddress)) {
                 BlockedConversationHelper.unblockFutureConversation(prefs, mAddress);
                 BlockedConversationHelper.blockConversation(prefs, message.getThreadId());
                 message.markSeen();
                 BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().futureBlockedConversationReceived();
+
+                // If we have notifications enabled and this conversation isn't blocked
             } else if (conversationPrefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
                     PreferenceManager.getDefaultSharedPreferences(context)).contains(message.getThreadId())) {
                 Intent messageHandlerIntent = new Intent(context, NotificationService.class);
@@ -73,7 +78,8 @@ public class MessagingReceiver extends BroadcastReceiver {
 
                 UnreadBadgeService.update(context);
                 NotificationManager.create(context);
-            } else {
+
+            } else { // We shouldn't show a notification for this message
                 message.markSeen();
             }
 
@@ -103,7 +109,8 @@ public class MessagingReceiver extends BroadcastReceiver {
             }
 
             @Override
-            public void onServiceDisconnected() {}
+            public void onServiceDisconnected() {
+            }
         });
         shouldIAnswerBinder.bind(context.getApplicationContext());
     }
