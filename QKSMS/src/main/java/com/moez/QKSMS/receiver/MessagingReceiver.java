@@ -15,6 +15,7 @@ import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.service.NotificationService;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
+import org.mistergroup.muzutozvednout.ShouldIAnswerBinder;
 
 public class MessagingReceiver extends BroadcastReceiver {
     private final String TAG = "MessagingReceiver";
@@ -63,7 +64,6 @@ public class MessagingReceiver extends BroadcastReceiver {
                 BlockedConversationHelper.blockConversation(prefs, message.getThreadId());
                 message.markSeen();
                 BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().futureBlockedConversationReceived();
-
             } else if (conversationPrefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
                     PreferenceManager.getDefaultSharedPreferences(context)).contains(message.getThreadId())) {
                 Intent messageHandlerIntent = new Intent(context, NotificationService.class);
@@ -84,5 +84,27 @@ public class MessagingReceiver extends BroadcastReceiver {
                 wakeLock.release();
             }
         }
+
+        ShouldIAnswerBinder shouldIAnswerBinder = new ShouldIAnswerBinder();
+        shouldIAnswerBinder.setCallback(new ShouldIAnswerBinder.Callback() {
+            @Override
+            public void onNumberRating(String number, int rating) {
+                Log.d("APP", "onNumberRating " + number + ": " + String.valueOf(rating));
+                shouldIAnswerBinder.unbind(context.getApplicationContext());
+            }
+
+            @Override
+            public void onServiceConnected() {
+                try {
+                    shouldIAnswerBinder.getNumberRating(address);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected() {}
+        });
+        shouldIAnswerBinder.bind(context.getApplicationContext());
     }
 }
