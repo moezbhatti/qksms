@@ -20,11 +20,11 @@ import org.mistergroup.muzutozvednout.ShouldIAnswerBinder;
 public class MessagingReceiver extends BroadcastReceiver {
     private final String TAG = "MessagingReceiver";
 
-    String address;
-    String body;
-    long date;
+    private String mAddress;
+    private String mBody;
+    private long mDate;
 
-    Uri uri;
+    private Uri mUri;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -41,26 +41,26 @@ public class MessagingReceiver extends BroadcastReceiver {
 
             SmsMessage sms = messages[0];
             if (messages.length == 1 || sms.isReplace()) {
-                body = sms.getDisplayMessageBody();
+                mBody = sms.getDisplayMessageBody();
             } else {
                 StringBuilder bodyText = new StringBuilder();
                 for (SmsMessage message : messages) {
                     bodyText.append(message.getMessageBody());
                 }
-                body = bodyText.toString();
+                mBody = bodyText.toString();
             }
 
-            address = sms.getDisplayOriginatingAddress();
-            date = sms.getTimestampMillis();
+            mAddress = sms.getDisplayOriginatingAddress();
+            mDate = sms.getTimestampMillis();
 
-            uri = SmsHelper.addMessageToInbox(context, address, body, date);
+            mUri = SmsHelper.addMessageToInbox(context, mAddress, mBody, mDate);
 
-            Message message = new Message(context, uri);
+            Message message = new Message(context, mUri);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, message.getThreadId());
 
-            if (BlockedConversationHelper.isFutureBlocked(prefs, address)) {
-                BlockedConversationHelper.unblockFutureConversation(prefs, address);
+            if (BlockedConversationHelper.isFutureBlocked(prefs, mAddress)) {
+                BlockedConversationHelper.unblockFutureConversation(prefs, mAddress);
                 BlockedConversationHelper.blockConversation(prefs, message.getThreadId());
                 message.markSeen();
                 BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().futureBlockedConversationReceived();
@@ -68,7 +68,7 @@ public class MessagingReceiver extends BroadcastReceiver {
                     PreferenceManager.getDefaultSharedPreferences(context)).contains(message.getThreadId())) {
                 Intent messageHandlerIntent = new Intent(context, NotificationService.class);
                 messageHandlerIntent.putExtra(NotificationService.EXTRA_POPUP, true);
-                messageHandlerIntent.putExtra(NotificationService.EXTRA_URI, uri.toString());
+                messageHandlerIntent.putExtra(NotificationService.EXTRA_URI, mUri.toString());
                 context.startService(messageHandlerIntent);
 
                 UnreadBadgeService.update(context);
@@ -96,7 +96,7 @@ public class MessagingReceiver extends BroadcastReceiver {
             @Override
             public void onServiceConnected() {
                 try {
-                    shouldIAnswerBinder.getNumberRating(address);
+                    shouldIAnswerBinder.getNumberRating(mAddress);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
