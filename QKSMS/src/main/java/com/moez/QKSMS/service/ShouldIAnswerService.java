@@ -1,5 +1,6 @@
 package com.moez.QKSMS.service;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -31,19 +32,24 @@ public class ShouldIAnswerService extends Service {
             mContext = context;
         }
 
+        @SuppressLint("CommitPrefEdits")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
             Messenger messenger = msg.replyTo;
-            if (messenger != null && msg.what == 918) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-
+            if (messenger != null && (msg.what == 918 || msg.what == 919)) {
                 Bundle data = new Bundle();
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+                if (msg.what == 919) {
+                    prefs.edit().putBoolean(SettingsFragment.SHOULD_I_ANSWER, true).commit();
+                }
+
                 data.putBoolean("blocking_enabled", prefs.getBoolean(SettingsFragment.SHOULD_I_ANSWER, false));
 
                 Message message = new Message();
-                message.what = 918;
+                message.what = msg.what;
                 message.setData(data);
 
                 try {
