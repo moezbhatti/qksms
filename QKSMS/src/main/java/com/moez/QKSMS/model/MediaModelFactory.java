@@ -44,7 +44,7 @@ import java.util.Collections;
 
 public class MediaModelFactory {
     private static final String TAG = "Mms:media";
-    private static final boolean LOCAL_LOGV = true;
+    private static final boolean LOCAL_LOGV = false;
 
     /**
      * Returns the media model for the given SMILMediaElement in the PduBody.
@@ -67,7 +67,7 @@ public class MediaModelFactory {
 
         String tag = sme.getTagName();
         String src = sme.getSrc();
-        Log.v(TAG, "SRC: " + src);
+
         PduPart part = findPart(context, pb, src, srcs);
 
         if (sme instanceof SMILRegionMediaElement) {
@@ -137,7 +137,6 @@ public class MediaModelFactory {
                         // Now, build a list of long IDs, sort them, and remove the duplicates.
                         ArrayList<Long> cids = new ArrayList<>();
                         for (String _src : srcs) {
-                            Log.v(TAG, "Current CID: " + _src);
                             cids.add(getContentId(_src));
                         }
                         Collections.sort(cids);
