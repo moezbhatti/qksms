@@ -82,21 +82,20 @@ public class MediaModelFactory {
     /**
      * This method is meant to identify the part in the given PduBody that corresponds to the given
      * src string.
-     * <p>
+     *
      * Essentially, a SMIL MMS is formatted as follows:
-     * <p>
+     *
      * 1. A smil/application part, which contains XML-like formatting for images, text, audio,
      * slideshows, videos, etc.
      * 2. One or more parts that correspond to one of the elements that was mentioned in the
      * formatting above.
-     * <p>
+     *
      * In the smil/application part, elements are identified by a "src" attribute in an XML-like
      * element. The challenge of this method lies in the fact that sometimes, the src string isn't
      * located at all in the part that it is meant to identify.
-     * <p>
+     *
      * We employ several methods of pairing src strings up to parts, using certain patterns we've
      * seen in failed MMS messages. These are described in this method.
-     * <p>
      * TODO TODO TODO: Create a testing suite for this!
      */
     private static PduPart findPart(final Context context, PduBody pb, String src,
@@ -327,12 +326,7 @@ public class MediaModelFactory {
             src = src.substring("cid:".length());
             src = unescapeXML(src);
             // Strip any leading < or trailing > ... they are present sometimes and causing error(s)
-            if (src.startsWith("<")) {
-                src = src.replace("<", "");
-            }
-            if (src.endsWith(">")) {
-                src = src.replace(">", "");
-            }
+            src = src.replaceAll("(^\\<)|(\\>$)", "");
             if (LOCAL_LOGV) {
                 Log.v(TAG, "Final contentId: " + src);
             }
