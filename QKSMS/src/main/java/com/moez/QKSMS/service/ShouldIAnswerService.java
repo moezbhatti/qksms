@@ -43,7 +43,8 @@ public class ShouldIAnswerService extends Service {
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
                 if (msg.what == 919) {
-                    prefs.edit().putBoolean(SettingsFragment.SHOULD_I_ANSWER, true).commit();
+                    boolean enabled=msg.getData().getBoolean("enabled");
+                    prefs.edit().putBoolean(SettingsFragment.SHOULD_I_ANSWER, enabled).commit();
                 }
 
                 data.putBoolean("blocking_enabled", prefs.getBoolean(SettingsFragment.SHOULD_I_ANSWER, false));
