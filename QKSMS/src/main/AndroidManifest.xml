@@ -451,8 +451,7 @@
             android:exported="false" />
 
         <service
-            android:name=".service.ShouldIAnswerService"
-            android:process=":exported">
+            android:name=".service.ShouldIAnswerService">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.ShouldIAnswerService" />
             </intent-filter>
