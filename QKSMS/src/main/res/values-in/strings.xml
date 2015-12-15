@@ -49,8 +49,8 @@
   <string name="details_body">Body</string>
   <string name="details_date_sent">Tanggal terkirim</string>
   <string name="details_date_received">Tanggal diterima</string>
-  <string name="rate_title">Like QKSMS?</string>
-  <string name="rate_action">Rate</string>
+  <string name="rate_title">Suka QKSMS?</string>
+  <string name="rate_action">Nilai</string>
   <string name="pref_category_appearance">Penampilan</string>
   <string name="pref_category_summary_appearance">Tema, huruf, warna, avatar, dan lainnya</string>
   <string name="pref_category_general">Umum</string>
@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">QK Balas, opsi munculan</string>
   <string name="pref_category_quickcompose">QK Compose</string>
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
-  <string name="pref_category_advanced">Tingkat Lanjut</string>
-  <string name="pref_category_summary_advanced">Rekayasa UI lanjutan</string>
   <string name="pref_category_about">Tentang</string>
   <string name="pref_category_summary_about">Versi, catatan perubahan, pengembang, kontributor</string>
   <string name="pref_theme">Skema warna</string>
@@ -111,10 +109,10 @@
   <string name="pref_delivery_vibrate_summary">Bergetar pada saat pengiriman pesan</string>
   <string name="pref_yappy">Integrasi Yappy</string>
   <string name="pref_endlessjabber_summary">Aktifkan dukungan penuh untuk Yappy</string>
-  <string name="pref_blocked_conversations">Blocked conversations</string>
-  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
-  <string name="pref_block_future">Block future messages</string>
-  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_blocked_conversations">Blokir percakapan</string>
+  <string name="pref_blocked_conversations_summary">Tekan lama pada percakapan dan blokir untuk memindahkannya ke kotak blokir dan menghentikan notifikasi</string>
+  <string name="pref_block_future">Blokir pesan yang akan datang</string>
+  <string name="pref_block_future_summary">Tambah nomor telepon lainnya untuk diblokir</string>
   <string name="pref_mobile_only">Nomor ponsel</string>
   <string name="pref_mobile_only_summary">Hanya tampilkan nomor ponsel di dalam saran kontak</string>
   <string name="pref_auto_emoji">Emoji otomatis</string>
@@ -135,8 +133,8 @@
   <string name="pref_long_as_mms_summary">Send long messages as MMS instead of splitting them</string>
   <string name="pref_long_as_mms_after">Kirim pesan panjang sebagai MMS setelah</string>
   <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
-  <string name="pref_24h">24h time</string>
-  <string name="pref_24h_summary">Display timestamps in 24-hour format</string>
+  <string name="pref_24h">Waktu 24jam</string>
+  <string name="pref_24h_summary">Tampilkan waktu dalam format 24 jam</string>
   <string name="pref_return">Tampilkan tombol enter</string>
   <string name="pref_return_summary">Tampilkan tombol enter pada kibor bukan tombol Emoji</string>
   <string name="pref_text">Teks</string>
@@ -144,9 +142,9 @@
   <string name="pref_led">LED Notifikasi</string>
   <string name="pref_theme_led">Warna LED Notifikasi</string>
   <string name="pref_wake">Wake phone</string>
-  <string name="pref_wake_summary">Turn your screen on when you receive a new message</string>
+  <string name="pref_wake_summary">Nyalakan layar ketika Anda menerima pesan baru</string>
   <string name="pref_notifications_private">Notifikasi privat</string>
-  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
+  <string name="pref_notifications_private_summary">Ketuk untuk mengubah apa yang harus disembunyikan dari notifikasi</string>
   <string name="pref_ringtone">Suara notifikasi</string>
   <string name="pref_ringtone_summary">Pilih suara notifikasi</string>
   <string name="pref_ticker">Show ticker</string>
@@ -155,8 +153,8 @@
   <string name="pref_vibration_summary">Bergetar ketika pesan baru diterima</string>
   <string name="pref_notification_call">Tombol panggil</string>
   <string name="pref_notification_call_summary">Panggil pengirim pesan langsung dari notifikasi</string>
-  <string name="pref_dimiss_read">Mark as read</string>
-  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
+  <string name="pref_dimiss_read">Tandai sudah dibaca</string>
+  <string name="pref_dismiss_read_summary">Tandai pesan sudah dibaca ketika notifikasi dibersihkan</string>
   <string name="pref_delayed">Pesan tertunda</string>
   <string name="pref_delayed_summary">Menunggu sebentar sebelum mengirim pesan, sehingga Anda memiliki kesempatan untuk meninjaunya</string>
   <string name="pref_delayed_duration">Lama tundaan (detik)</string>
@@ -181,8 +179,8 @@
   <string name="pref_apn_chooser">Muat APN bawaan</string>
   <string name="pref_strip_unicode">Hilangkan unicode</string>
   <string name="pref_strip_unicode_summary">Swap characters that are not supported in full-length messages for GSM compatible characters</string>
-  <string name="pref_system_bar_flat">Flat system bars</string>
-  <string name="pref_system_bar_flat_summary">Get rid of the gradient shown on the system UI bars on most KitKat devices</string>
+  <string name="pref_system_bar_flat">Bilah sistem datar</string>
+  <string name="pref_system_bar_flat_summary">Buang gradien yang tertampil di bilah UI sistem pada sebagian besar perangkat KitKat</string>
   <string name="pref_status_compat">Bilah status tetap</string>
   <string name="pref_status_compat_summary">Memperbaiki masalah yang disebabkan oleh mode immersive, Tinted Status Bar (Xposed), atau pengaturan DPI ubahsuai</string>
   <string name="pref_navigation_compat">Bilah navigasi tetap</string>
@@ -224,8 +222,9 @@
   <string name="title_picker">Pesan baru</string>
   <string name="title_donate">Donasi</string>
   <string name="title_qk_responses">QK Respons</string>
-  <string name="title_block_address">Block number</string>
-  <string name="title_unblock_address">Unblock number</string>
+  <string name="title_block_address">Blokir nomor</string>
+  <string name="title_unblock_address">Buka blokir nomor</string>
+  <string name="title_conversations_selected">%s selected</string>
   <string name="menu_add_address_to_contacts">Tambah <xliff:g id="contactEmailOrNumber">%s</xliff:g> ke Orang</string>
   <string name="view_slideshow">View slideshow</string>
   <string name="view_message_details">Lihat detail</string>
@@ -236,15 +235,15 @@
   <string name="message_options">Opsi pesan</string>
   <string name="delivery_header_title">Laporan</string>
   <string name="restart_message">These changes will take effect the next time QKSMS is opened</string>
-  <string name="delete_conversation">Hapus percakapan</string>
+  <string name="delete_conversation">Delete conversations</string>
   <string name="delete_all_failed">Hapus pesan gagal</string>
-  <string name="delete_confirmation">Apakah Anda yakin ingin menghapus percakapan?</string>
-  <string name="delete_all_failed_confirmation">Apakah Anda yakin ingin menghapus semua pesan gagal?</string>
+  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <string name="apns_not_set">APN belum disetel</string>
   <string name="apns_not_set_description">It appears that your APNs have not been set. This means that MMS will not work properly. Please press okay to have QKSMS find them for you :)</string>
-  <string name="set_up_mms_title">Set up MMS?</string>
-  <string name="set_up_mms_description">It appears that MMS hasn\'t been configured in QKSMS yet. Press okay automatically configure MMS.</string>
-  <string name="discard_message_reason">Your message will be discarded because it has no valid recipients.</string>
+  <string name="set_up_mms_title">Siapkan MMS?</string>
+  <string name="set_up_mms_description">Sepertinya MMS belum dikonfigurasi di QKSMS. Tekan ok secara otomatis mengkonfigurasi MMS.</string>
+  <string name="discard_message_reason">Pesan Anda akan dibuang karena tidak memiliki penerima yang valid.</string>
   <string name="invalid_code">Kode tidak valid</string>
   <string name="restart">Mulai ulang sekarang</string>
   <string name="reply">Balas</string>
@@ -253,12 +252,12 @@
   <string name="mark_read">Tandai sudah dibaca</string>
   <string name="call">Panggil</string>
   <string name="yes">Ya</string>
-  <string name="add">Add</string>
+  <string name="add">Tambah</string>
   <string name="save">Simpan</string>
   <string name="enable">Aktifkan</string>
   <string name="upgrade_now">Terapkan sekarang</string>
   <string name="okay">Oke</string>
-  <string name="redeem">Redeem</string>
+  <string name="redeem">Tebus</string>
   <string name="just_once">Hanya sekali</string>
   <string name="later">Nanti</string>
   <string name="cancel">Batal</string>
@@ -274,6 +273,7 @@
   <string name="me">Saya</string>
   <string name="menu_edit">Sunting</string>
   <string name="menu_delete_messages">Hapus pesan</string>
+  <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">Kunci</string>
   <string name="menu_unlock">Buka kunci</string>
   <string name="cannot_get_details">Tidak bisa mendapatkan detail.</string>
@@ -371,28 +371,32 @@
   <string name="toast_copy_text">Salin teks ke papan klip</string>
   <string name="toast_billing_not_available">Pembelian membutuhkan Toko Google Play (penagihan) di Android Anda</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber belum terpasang, membuka Google Play</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">Terima kasih telah menyumbang! Sekarang Anda adalah teman baruku.</string>
   <string name="thanks_2">Terima kasih telah menyumbang! Aku cinta kamu.</string>
-  <string name="thanks_3">Thanks for donating! You\'re helping QKSMS become the best texting app ever made.</string>
-  <string name="thanks_4">Thanks for the donation! You\'re awesome.</string>
-  <string name="menu_mute_conversation">Mute conversation</string>
-  <string name="menu_unmute_conversation">Unmute conversation</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
-  <string name="menu_messages">Messages</string>
-  <string name="menu_blocked">Blocked</string>
-  <string name="menu_blocked_conversations">Blocked (%s new)</string>
-  <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="thanks_3">Terima kasih telah menyumbang! Anda membantu QKSMS menjadi aplikasi perpesanan teks terbaik yang pernah dibuat.</string>
+  <string name="thanks_4">Terima kasih atas donasinya! Anda luar biasa.</string>
+  <string name="menu_mute_conversation">Bisukan percakapan</string>
+  <string name="menu_unmute_conversation">Bunyikan percakapan</string>
+  <string name="menu_block_conversations">Block conversations</string>
+  <string name="menu_unblock_conversations">Unblock conversations</string>
+  <string name="menu_messages">Pesan</string>
+  <string name="menu_blocked">Diblokir</string>
+  <string name="menu_blocked_conversations">Diblokir (%s baru)</string>
+  <string name="menu_unblocked_conversations">Pesan (%s baru)</string>
+  <string name="menu_notifications">Notifications</string>
+  <string name="menu_notifications_off">Notifications off</string>
   <string name="menu_notification_settings">Pengaturan notifikasi</string>
-  <string name="menu_view_details">View details</string>
-  <string name="menu_mark_read">Mark read</string>
-  <string name="menu_mark_unread">Mark unread</string>
-  <string name="menu_delete_conversation">Delete conversation</string>
-  <string name="menu_multi_select">Select conversation</string>
-  <string name="failed_message_title">Failed message options</string>
-  <string name="attachment_app_not_found">Attachments app not found. Try installing a photo gallery app!</string>
-  <string name="attachment_camera_error">The camera could not be opened</string>
-  <string name="pref_max_mms_attachment_size">Maximum MMS attachment size</string>
+  <string name="menu_view_details">Lihat detail</string>
+  <string name="menu_mark_read">Tandai dibaca</string>
+  <string name="menu_mark_unread">Tandai belum dibaca</string>
+  <string name="menu_delete_conversation">Hapus percakapan</string>
+  <string name="menu_multi_select">Pilih percakapan</string>
+  <string name="menu_done">Done</string>
+  <string name="failed_message_title">Opsi pesan gagal</string>
+  <string name="attachment_app_not_found">Aplikasi lampiran tidak ditemukan. Coba pasang aplikasi galeri foto!</string>
+  <string name="attachment_camera_error">Kamera tidak bisa dibuka</string>
+  <string name="pref_max_mms_attachment_size">Ukuran maksimum lampiran MMS</string>
   <string name="error_no_recipients">Select some contacts to send this message to!</string>
   <string name="error_file_not_found">QKSMS can\'t access the file you\'re trying to share!</string>
   <string name="sending_blocked_welcome_screen_message">Hold up! You\'ll get to send real messages in a minute!</string>
@@ -420,10 +424,10 @@
   <string name="na">T/A</string>
   <string name="no">Tidak</string>
   <string name="pref_automatically_configure_mms">Otomatis mengkonfigurasi MMS</string>
-  <string name="pref_mms_contact_support">Contact Support</string>
-  <string name="pref_category_sending_mms">Sending MMS</string>
+  <string name="pref_mms_contact_support">Hubungi Dukungan</string>
+  <string name="pref_category_sending_mms">Mengirim MMS</string>
   <string name="pref_category_mms_configuration">Konfigurasi MMS</string>
-  <string name="pref_mms_contact_support_summary">Contact the QKSMS team for help setting up MMS</string>
+  <string name="pref_mms_contact_support_summary">Hubungi tim QKSMS untuk bantuan pengaturan MMS</string>
   <string name="pref_markdown_enabled">Format teks</string>
   <string name="pref_markdown_enabled_summary">Gunakan sintaks markdown untuk huruf tebal, garis bawah, dan miring dalam pesan Anda</string>
   <string name="want_read_indicators">Want read indicators?</string>
@@ -438,7 +442,7 @@
   <string name="service_message_not_found">Pesan kedaluwarsa atau tidak tersedia.</string>
   <string name="service_network_problem">Tidak bisa mengirim karena masalah jaringan.</string>
   <string name="message_queued">Currently can\'t send your message. It will be sent when the service becomes available.</string>
-  <string name="download_later">Can\'t download right now. Try again later.</string>
+  <string name="download_later">Tidak bisa mengunduh sekarang. Coba lagi nanti.</string>
   <string name="no_apn">No APN specified for the app, you need to set it up in settings!</string>
   <string name="no_subject">(Tidak ada subyek)</string>
   <string name="unknown_sender">Pengirim tidak dikenal</string>
@@ -450,6 +454,7 @@
   <string name="date_yesterday">Kemarin</string>
   <string name="date_just_now">Baru saja</string>
   <string name="compose_loading_attachment">Memuat lampiran</string>
+  <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
   <string-array name="resend_menu">
     <item>Kirim ulang</item>
     <item>Sunting</item>
@@ -476,7 +481,7 @@
   <string-array name="font_families">
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Lato</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Tipis</item>
@@ -505,9 +510,9 @@
     <item>Kirim pesan</item>
   </string-array>
   <string-array name="notification_private_options">
-    <item>Show all</item>
-    <item>Hide message</item>
-    <item>Hide message and sender</item>
+    <item>Tampilkan semua</item>
+    <item>Sembunyikan pesan</item>
+    <item>Sembunyikan pesan dan pengirim</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

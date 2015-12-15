@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
   <string name="pref_category_quickcompose">QK Compose</string>
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
-  <string name="pref_category_advanced">進階</string>
-  <string name="pref_category_summary_advanced">Advanced UI tweaks</string>
   <string name="pref_category_about">About</string>
   <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
   <string name="pref_theme">Color scheme</string>
@@ -226,6 +224,7 @@
   <string name="title_qk_responses">QK Responses</string>
   <string name="title_block_address">Block number</string>
   <string name="title_unblock_address">Unblock number</string>
+  <string name="title_conversations_selected">%s selected</string>
   <string name="menu_add_address_to_contacts">Add <xliff:g id="contactEmailOrNumber">%s</xliff:g> to People</string>
   <string name="view_slideshow">View slideshow</string>
   <string name="view_message_details">View details</string>
@@ -236,10 +235,10 @@
   <string name="message_options">Message options</string>
   <string name="delivery_header_title">Report</string>
   <string name="restart_message">這些更改將會在下次開啟 QKSMS 時生效</string>
-  <string name="delete_conversation">Delete conversation</string>
+  <string name="delete_conversation">Delete conversations</string>
   <string name="delete_all_failed">Delete failed messages</string>
-  <string name="delete_confirmation">你確定要刪除這個對話？</string>
-  <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
+  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <string name="apns_not_set">尚未設置 APN</string>
   <string name="apns_not_set_description">看來你尚未設置 APN，這代表你的 MMS 將無法正常使用。
 點擊確定讓 QKSMS 協助您 : )</string>
@@ -275,6 +274,7 @@
   <string name="me">Me</string>
   <string name="menu_edit">Edit</string>
   <string name="menu_delete_messages">Delete messages</string>
+  <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">Lock</string>
   <string name="menu_unlock">Unlock</string>
   <string name="cannot_get_details">Can\'t get details.</string>
@@ -374,24 +374,28 @@
   <string name="toast_copy_text">複製文字到剪貼簿</string>
   <string name="toast_billing_not_available">在 Google Play 上購買</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber 尚未安裝，正在開啟 Google Play</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">謝謝你的捐獻！你是我最新的好朋友 : )</string>
   <string name="thanks_2">謝謝你的捐獻！我...愛你！</string>
   <string name="thanks_3">謝謝你的捐獻！你幫助 QKSMS 能變成更好的簡訊軟體！</string>
   <string name="thanks_4">謝謝你的捐獻！你超讚的！</string>
   <string name="menu_mute_conversation">Mute conversation</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_block_conversations">Block conversations</string>
+  <string name="menu_unblock_conversations">Unblock conversations</string>
   <string name="menu_messages">Messages</string>
   <string name="menu_blocked">Blocked</string>
   <string name="menu_blocked_conversations">Blocked (%s new)</string>
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_notifications">Notifications</string>
+  <string name="menu_notifications_off">Notifications off</string>
   <string name="menu_notification_settings">Notification settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
   <string name="menu_mark_unread">Mark unread</string>
   <string name="menu_delete_conversation">Delete conversation</string>
   <string name="menu_multi_select">Select conversation</string>
+  <string name="menu_done">Done</string>
   <string name="failed_message_title">Failed message options</string>
   <string name="attachment_app_not_found">Attachments app not found. Try installing a photo gallery app!</string>
   <string name="attachment_camera_error">The camera could not be opened</string>
@@ -453,6 +457,7 @@
   <string name="date_yesterday">Yesterday</string>
   <string name="date_just_now">Just now</string>
   <string name="compose_loading_attachment">Loading attachment</string>
+  <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
   <string-array name="resend_menu">
     <item>Resend</item>
     <item>Edit</item>
@@ -479,7 +484,7 @@
   <string-array name="font_families">
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Lato</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Light</item>

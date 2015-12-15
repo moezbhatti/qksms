@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">QK Reply, popup-indstillinger</string>
   <string name="pref_category_quickcompose">QK Compose</string>
   <string name="pref_category_summary_quickcompose">QK Compose, stjernemarkerede kontakter</string>
-  <string name="pref_category_advanced">Avanceret</string>
-  <string name="pref_category_summary_advanced">Avancerede UI tweaks</string>
   <string name="pref_category_about">Om</string>
   <string name="pref_category_summary_about">Version, ændringslog, forfattere, tak</string>
   <string name="pref_theme">Farveskema</string>
@@ -226,6 +224,7 @@
   <string name="title_qk_responses">QK Responses</string>
   <string name="title_block_address">Block number</string>
   <string name="title_unblock_address">Unblock number</string>
+  <string name="title_conversations_selected">%s selected</string>
   <string name="menu_add_address_to_contacts">Tilføj <xliff:g id="contactEmailOrNumber">%s</xliff:g> til Personer</string>
   <string name="view_slideshow">Vis slideshow</string>
   <string name="view_message_details">Vis detaljer</string>
@@ -236,10 +235,10 @@
   <string name="message_options">Besked indstillinger</string>
   <string name="delivery_header_title">Rapporter</string>
   <string name="restart_message">Disse indstillinger vil træde i kraft næste gang QKSMS bliver åbnet</string>
-  <string name="delete_conversation">Slet samtale</string>
+  <string name="delete_conversation">Delete conversations</string>
   <string name="delete_all_failed">Slet mislykkede beskeder</string>
-  <string name="delete_confirmation">Er du sikker på at du vil slette samtalen?</string>
-  <string name="delete_all_failed_confirmation">Er du sikker på at du vil slette alle mislykkede beskeder?</string>
+  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <string name="apns_not_set">APN\'er er ikke valgt</string>
   <string name="apns_not_set_description">Det ser ud til, at dine APN\'er ikke er blevet valgt. Dette betyder, at MMS ikke vil virke optimalt. Tryk venligst \"Okay\" og lad QKSMS finde dem for dig. :)</string>
   <string name="set_up_mms_title">Konfigurer MMS?</string>
@@ -274,6 +273,7 @@
   <string name="me">Mig</string>
   <string name="menu_edit">Rediger</string>
   <string name="menu_delete_messages">Slet beskeder</string>
+  <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">Lås</string>
   <string name="menu_unlock">Lås op</string>
   <string name="cannot_get_details">Fejl under indhentning af detaljer.</string>
@@ -372,24 +372,28 @@
   <string name="toast_copy_text">Kopieret til udklipsholderen</string>
   <string name="toast_billing_not_available">Køb kræver Google Play Butik (betaling) på din Android</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber er ikke installeret. Åbner Google Play</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">Tak for din donering! Du er min nye bedste ven.</string>
   <string name="thanks_2">Tak for donationen! Jeg elsker dig.</string>
   <string name="thanks_3">Tak for din donering. Du hjælper QKSMS med at blive den bedste SMS app nogensinde.</string>
   <string name="thanks_4">Tak for din donation! Du er awesome.</string>
   <string name="menu_mute_conversation">Dæmp samtale</string>
   <string name="menu_unmute_conversation">Unmute conversation</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_block_conversations">Block conversations</string>
+  <string name="menu_unblock_conversations">Unblock conversations</string>
   <string name="menu_messages">Messages</string>
   <string name="menu_blocked">Blocked</string>
   <string name="menu_blocked_conversations">Blocked (%s new)</string>
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_notifications">Notifications</string>
+  <string name="menu_notifications_off">Notifications off</string>
   <string name="menu_notification_settings">Notifikationsindstillinger</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Markér som læst</string>
   <string name="menu_mark_unread">Markér som ulæst</string>
   <string name="menu_delete_conversation">Delete conversation</string>
   <string name="menu_multi_select">Vælg samtale</string>
+  <string name="menu_done">Done</string>
   <string name="failed_message_title">Indstillinger for fejlede beskeder</string>
   <string name="attachment_app_not_found">Attachments app not found. Try installing a photo gallery app!</string>
   <string name="attachment_camera_error">Kameraet kunne ikke åbnes</string>
@@ -451,6 +455,7 @@
   <string name="date_yesterday">Igår</string>
   <string name="date_just_now">Lige nu</string>
   <string name="compose_loading_attachment">Indlæser vedhæftet fil</string>
+  <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
   <string-array name="resend_menu">
     <item>Gensend</item>
     <item>Rediger</item>
@@ -477,7 +482,7 @@
   <string-array name="font_families">
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Lato</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Tynd</item>

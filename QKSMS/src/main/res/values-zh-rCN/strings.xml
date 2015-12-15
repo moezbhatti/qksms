@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">快速回复，弹出式菜单选项</string>
   <string name="pref_category_quickcompose">快速撰写</string>
   <string name="pref_category_summary_quickcompose">快速撰写，星标联系人</string>
-  <string name="pref_category_advanced">高级</string>
-  <string name="pref_category_summary_advanced">高级UI调节</string>
   <string name="pref_category_about">关于</string>
   <string name="pref_category_summary_about">版本，更新日志，作者，致谢</string>
   <string name="pref_theme">配色方案</string>
@@ -101,7 +99,7 @@
   <string name="pref_sliding_tab_summary">可快速查看最后一个对话的侧滑选项卡</string>
   <string name="pref_compose_favorites">星标联系人</string>
   <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
-  <string name="pref_prox_sensor_call">Proximity sensor</string>
+  <string name="pref_prox_sensor_call">距离传感器</string>
   <string name="pref_prox_sensor_call_summary">While in a conversation, bring your phone to your ear to start a call</string>
   <string name="pref_delivery">送达确认</string>
   <string name="pref_delivery_summary">确认信息已发送成功</string>
@@ -226,6 +224,7 @@
   <string name="title_qk_responses">快捷回应</string>
   <string name="title_block_address">Block number</string>
   <string name="title_unblock_address">Unblock number</string>
+  <string name="title_conversations_selected">%s selected</string>
   <string name="menu_add_address_to_contacts">将 <xliff:g id="contactEmailOrNumber">%s</xliff:g> 添加到联系人</string>
   <string name="view_slideshow">查看幻灯片</string>
   <string name="view_message_details">查看详情</string>
@@ -236,10 +235,10 @@
   <string name="message_options">信息选项</string>
   <string name="delivery_header_title">报告</string>
   <string name="restart_message">这些更改会在下次打开 QKSMS 时生效</string>
-  <string name="delete_conversation">删除会话</string>
+  <string name="delete_conversation">Delete conversations</string>
   <string name="delete_all_failed">删除发送失败的消息</string>
-  <string name="delete_confirmation">确定删除会话？</string>
-  <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
+  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <string name="apns_not_set">尚未设置接入点名称服 (APNs)</string>
   <string name="apns_not_set_description">貌似您尚未设置接入点名称 (APNs)。这意味着无法正常收发彩信。请点击「确定」来让 QKSMS 协助您 :)</string>
   <string name="set_up_mms_title">Set up MMS?</string>
@@ -274,6 +273,7 @@
   <string name="me">我</string>
   <string name="menu_edit">编辑</string>
   <string name="menu_delete_messages">删除信息</string>
+  <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">锁定</string>
   <string name="menu_unlock">解锁</string>
   <string name="cannot_get_details">无法获取详情</string>
@@ -371,24 +371,28 @@
   <string name="toast_copy_text">文本已复制到剪贴板</string>
   <string name="toast_billing_not_available">您的设备上装有 Play 商店后才能购买</string>
   <string name="toast_endlessjabber_not_installed">尚未未安装 EndlessJabber，正在打开 Play 商店</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">感谢您的捐赠！你是我最好的朋友</string>
   <string name="thanks_2">感谢您的捐赠！我爱你。</string>
   <string name="thanks_3">感谢您的捐赠！你将帮助 QKSMS 成为有史以来最好的短信应用。</string>
   <string name="thanks_4">感谢您的捐赠！您真棒。</string>
   <string name="menu_mute_conversation">会话静音</string>
   <string name="menu_unmute_conversation">取消会话静音</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_block_conversations">Block conversations</string>
+  <string name="menu_unblock_conversations">Unblock conversations</string>
   <string name="menu_messages">Messages</string>
   <string name="menu_blocked">Blocked</string>
   <string name="menu_blocked_conversations">Blocked (%s new)</string>
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_notifications">Notifications</string>
+  <string name="menu_notifications_off">Notifications off</string>
   <string name="menu_notification_settings">Notification settings</string>
   <string name="menu_view_details">查看详情</string>
   <string name="menu_mark_read">标为已读</string>
   <string name="menu_mark_unread">设为未读</string>
   <string name="menu_delete_conversation">删除会话</string>
   <string name="menu_multi_select">选择会话</string>
+  <string name="menu_done">Done</string>
   <string name="failed_message_title">Failed message options</string>
   <string name="attachment_app_not_found">附件应用程序找不到。请尝试安装一个照片库应用程序 ！</string>
   <string name="attachment_camera_error">The camera could not be opened</string>
@@ -450,6 +454,7 @@
   <string name="date_yesterday">昨天</string>
   <string name="date_just_now">刚刚</string>
   <string name="compose_loading_attachment">加载附件</string>
+  <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
   <string-array name="resend_menu">
     <item>重新发送</item>
     <item>编辑</item>
@@ -476,7 +481,7 @@
   <string-array name="font_families">
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Lato</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>纤细</item>

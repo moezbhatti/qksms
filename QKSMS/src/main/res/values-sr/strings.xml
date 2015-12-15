@@ -49,8 +49,8 @@
   <string name="details_body">Текст поруке</string>
   <string name="details_date_sent">Датум слања</string>
   <string name="details_date_received">Датум пријема</string>
-  <string name="rate_title">Like QKSMS?</string>
-  <string name="rate_action">Rate</string>
+  <string name="rate_title">Свиђа Вам се QKSMS?</string>
+  <string name="rate_action">Оцените</string>
   <string name="pref_category_appearance">Изглед</string>
   <string name="pref_category_summary_appearance">Теме, фонтови, боје, сличице и остало</string>
   <string name="pref_category_general">Опште</string>
@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">QK одговор, могућности искачућег прозора</string>
   <string name="pref_category_quickcompose">QK састављач</string>
   <string name="pref_category_summary_quickcompose">QK састављач, омиљени контакти</string>
-  <string name="pref_category_advanced">Напредно</string>
-  <string name="pref_category_summary_advanced">Напредна подешавања корисничког интерфејса</string>
   <string name="pref_category_about">Основни подаци</string>
   <string name="pref_category_summary_about">Верзија, измене, аутори, захвале</string>
   <string name="pref_theme">Шема боја</string>
@@ -111,10 +109,10 @@
   <string name="pref_delivery_vibrate_summary">Вибрирај по достави поруке</string>
   <string name="pref_yappy">Yappy интеграција</string>
   <string name="pref_endlessjabber_summary">Омогући потпуну подршку за Yappy</string>
-  <string name="pref_blocked_conversations">Blocked conversations</string>
-  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
-  <string name="pref_block_future">Block future messages</string>
-  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_blocked_conversations">Блокирани разговори</string>
+  <string name="pref_blocked_conversations_summary">Задржите притисак на разговор и блокирајте га како бисте га померили у сандуче блокираних порука и престали да примате обавештења</string>
+  <string name="pref_block_future">Блокирај будуће поруке</string>
+  <string name="pref_block_future_summary">Додај додатне бројеве за блокирање</string>
   <string name="pref_mobile_only">Само мобилни бројеви</string>
   <string name="pref_mobile_only_summary">У предлозима контаката приказује само мобилне бројеве</string>
   <string name="pref_auto_emoji">Аутоматски емоџији</string>
@@ -146,7 +144,7 @@
   <string name="pref_wake">Упали екран</string>
   <string name="pref_wake_summary">Екран ће се укључити када стигне нова порука</string>
   <string name="pref_notifications_private">Приватност обавештења</string>
-  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
+  <string name="pref_notifications_private_summary">Додирните да измените шта би требало сакрити у обавештењу</string>
   <string name="pref_ringtone">Звук обавештења</string>
   <string name="pref_ringtone_summary">Изаберите звук обавештења</string>
   <string name="pref_ticker">Прикажи кајрон</string>
@@ -155,8 +153,8 @@
   <string name="pref_vibration_summary">Вибрирај за нове поруке</string>
   <string name="pref_notification_call">Дугме за позив</string>
   <string name="pref_notification_call_summary">Позовите пошиљаоца поруке директно из обавештења</string>
-  <string name="pref_dimiss_read">Mark as read</string>
-  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
+  <string name="pref_dimiss_read">Означи као прочитано</string>
+  <string name="pref_dismiss_read_summary">Означава поруку као прочитану када се обавештење уклони</string>
   <string name="pref_delayed">Одложено слање</string>
   <string name="pref_delayed_summary">Прави се пауза пре слања поруке, како бисте могли да је преправите</string>
   <string name="pref_delayed_duration">Дужина одлагања (у секундама)</string>
@@ -219,13 +217,14 @@
   <string name="title_search">Претрага</string>
   <string name="title_compose">Састављање</string>
   <string name="title_conversation_list">Разговори</string>
-  <string name="title_blocked">Blocked</string>
+  <string name="title_blocked">Блокирано</string>
   <string name="title_changelog">Измене</string>
   <string name="title_picker">Нове поруке</string>
   <string name="title_donate">Донација</string>
   <string name="title_qk_responses">QK одговори</string>
-  <string name="title_block_address">Block number</string>
-  <string name="title_unblock_address">Unblock number</string>
+  <string name="title_block_address">Блокирај број</string>
+  <string name="title_unblock_address">Одблокирај број</string>
+  <string name="title_conversations_selected">%s selected</string>
   <string name="menu_add_address_to_contacts">Додај <xliff:g id="contactEmailOrNumber">%s</xliff:g> у контакте</string>
   <string name="view_slideshow">Прикажи пројекцију слајдова</string>
   <string name="view_message_details">Прикажи детаље</string>
@@ -236,10 +235,10 @@
   <string name="message_options">Опције поруке</string>
   <string name="delivery_header_title">Извештај</string>
   <string name="restart_message">Ове измене ће се применити при следећем отварању QKSMS-a</string>
-  <string name="delete_conversation">Брисање разговора</string>
+  <string name="delete_conversation">Delete conversations</string>
   <string name="delete_all_failed">Брисање неуспелих порука</string>
-  <string name="delete_confirmation">Јесте ли сигурни да желите да избришете разговор?</string>
-  <string name="delete_all_failed_confirmation">Јесте ли сигурни да желите да избришете све неуспеле поруке?</string>
+  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <string name="apns_not_set">Имена приступних тачака нису подешена</string>
   <string name="apns_not_set_description">Изгледа да имена приступних тачака нису подешена. То значи да ММС неће добро радити. Додирните Потврди да би их QKSMS пронашао за вас :)</string>
   <string name="set_up_mms_title">Подешавање ММС-а?</string>
@@ -253,7 +252,7 @@
   <string name="mark_read">Означи као прочитано</string>
   <string name="call">Позови</string>
   <string name="yes">Да</string>
-  <string name="add">Add</string>
+  <string name="add">Додај</string>
   <string name="save">Сачувај</string>
   <string name="enable">Омогући</string>
   <string name="upgrade_now">Подеси сада</string>
@@ -274,6 +273,7 @@
   <string name="me">Ја</string>
   <string name="menu_edit">Уреди</string>
   <string name="menu_delete_messages">Избриши поруке</string>
+  <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">Закључај</string>
   <string name="menu_unlock">Откључај</string>
   <string name="cannot_get_details">Преузимање детаља није могуће.</string>
@@ -373,24 +373,28 @@
   <string name="toast_copy_text">Текст је ископиран у међумеморију</string>
   <string name="toast_billing_not_available">Куповина захтева да Google Play продавница буде на Вашем Андроиду</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber није нађен, отварам Google Play</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">Хвала Вам за донацију! Ви сте мој нови најбољи пријатељ.</string>
   <string name="thanks_2">Хвала Вам за донацију! Волим Вас.</string>
   <string name="thanks_3">Хвала Вам за донацију! Помажете QKSMS да постане најбоља апликација за поруке икада.</string>
   <string name="thanks_4">Хвала Вам за донацију! Сјајни сте.</string>
   <string name="menu_mute_conversation">Не примај обавештења из овог разговора</string>
   <string name="menu_unmute_conversation">Примај обавештења из овог разговора</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
-  <string name="menu_messages">Messages</string>
-  <string name="menu_blocked">Blocked</string>
-  <string name="menu_blocked_conversations">Blocked (%s new)</string>
-  <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_block_conversations">Block conversations</string>
+  <string name="menu_unblock_conversations">Unblock conversations</string>
+  <string name="menu_messages">Поруке</string>
+  <string name="menu_blocked">Блокирано</string>
+  <string name="menu_blocked_conversations">Блокирано (%s нових)</string>
+  <string name="menu_unblocked_conversations">Поруке (%s нових)</string>
+  <string name="menu_notifications">Notifications</string>
+  <string name="menu_notifications_off">Notifications off</string>
   <string name="menu_notification_settings">Подешавање обавештења</string>
   <string name="menu_view_details">Видите детаље</string>
   <string name="menu_mark_read">Означи као прочитано</string>
   <string name="menu_mark_unread">Означи као непрочитано</string>
   <string name="menu_delete_conversation">Обриши разговор</string>
   <string name="menu_multi_select">Обележи разговор</string>
+  <string name="menu_done">Done</string>
   <string name="failed_message_title">Могућности неуспеле поруке</string>
   <string name="attachment_app_not_found">Нема апликације за додатке. Пробајте да инсталирате неку фото-галерију!</string>
   <string name="attachment_camera_error">Камера није могла да се покрене</string>
@@ -452,6 +456,7 @@
   <string name="date_yesterday">Јуче</string>
   <string name="date_just_now">Управо сада</string>
   <string name="compose_loading_attachment">Учитавам прилог</string>
+  <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
   <string-array name="resend_menu">
     <item>Поново пошаљи</item>
     <item>Уреди</item>
@@ -478,7 +483,7 @@
   <string-array name="font_families">
     <item>Roboto Обичан</item>
     <item>Roboto Згуснути</item>
-    <item>Lato</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Танак</item>
@@ -507,9 +512,9 @@
     <item>Пошаљи поруку</item>
   </string-array>
   <string-array name="notification_private_options">
-    <item>Show all</item>
-    <item>Hide message</item>
-    <item>Hide message and sender</item>
+    <item>Прикажи све</item>
+    <item>Сакриј поруку</item>
+    <item>Сакриј поруку и пошиљаоца</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KБ</item>
