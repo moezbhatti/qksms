@@ -1,11 +1,12 @@
 package com.moez.QKSMS;
 
-import com.crittercism.app.Crittercism;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 public class QKSMSApp extends QKSMSAppBase {
     @Override
     public void onCreate() {
         super.onCreate();
-        Crittercism.initialize(getApplicationContext(), getString(R.string.crtsm_key));
+        Fabric.with(this, new Crashlytics());
     }
 }

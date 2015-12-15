@@ -1,9 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'io.fabric'
 
 repositories {
     mavenCentral()
     jcenter()
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 android {
@@ -32,10 +34,16 @@ android {
         versionName "2.2.5"
         minSdkVersion 15
         targetSdkVersion 22
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'qksms-proguard.pro'
+        }
+        debug {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'qksms-proguard.pro'
@@ -63,10 +71,12 @@ android {
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:3.2.2'
+        classpath 'io.fabric.tools:gradle:1.21.2'
     }
 }
 
@@ -85,15 +95,19 @@ dependencies {
     compile 'com.vdurmont:emoji-java:1.1.1'
     compile 'me.leolin:ShortcutBadger:1.1.1'
     compile 'com.googlecode.ez-vcard:ez-vcard:0.9.6'
-    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.google.code.gson:gson:2.4'
     compile 'com.koushikdutta.ion:ion:1.1.7'
     compile 'org.ligi:snackengage:0.4'
 
     // Google libraries
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:support-v13:22.2.1'
     compile 'com.android.support:recyclerview-v7:22.2.1'
-    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:7.5.0'
+    withAnalyticsCompile 'com.google.android.gms:play-services-analytics:8.3.0'
+
     // External services
-    withAnalyticsCompile 'com.crittercism:crittercism-android-agent:5.0.3'
+    withAnalyticsCompile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
 }

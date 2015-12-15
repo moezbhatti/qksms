@@ -486,6 +486,10 @@
         <service
             android:name=".ui.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0" />
     </application>
 
 </manifest>
