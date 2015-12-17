@@ -49,8 +49,8 @@
   <string name="details_body">本文</string>
   <string name="details_date_sent">送信日</string>
   <string name="details_date_received">受信日</string>
-  <string name="rate_title">Like QKSMS?</string>
-  <string name="rate_action">Rate</string>
+  <string name="rate_title">QKSMS はいかがですか?</string>
+  <string name="rate_action">評価</string>
   <string name="pref_category_appearance">外観</string>
   <string name="pref_category_summary_appearance">テーマ、フォント、色、アバター、その他</string>
   <string name="pref_category_general">全般</string>
@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">QK 返信、ポップアップのオプション</string>
   <string name="pref_category_quickcompose">QK 作成</string>
   <string name="pref_category_summary_quickcompose">QK 作成、スターを付けた連絡先</string>
-  <string name="pref_category_advanced">詳細</string>
-  <string name="pref_category_summary_advanced">高度な UI の微調整</string>
   <string name="pref_category_about">アプリについて</string>
   <string name="pref_category_summary_about">バージョン、変更履歴、作者、謝辞</string>
   <string name="pref_theme">配色パターン</string>
@@ -111,10 +109,10 @@
   <string name="pref_delivery_vibrate_summary">メッセージ配信で振動します</string>
   <string name="pref_yappy">Yappy 統合</string>
   <string name="pref_endlessjabber_summary">Yappy の完全なサポートを有効にします</string>
-  <string name="pref_blocked_conversations">Blocked conversations</string>
-  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
-  <string name="pref_block_future">Block future messages</string>
-  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_blocked_conversations">ブロックされた会話</string>
+  <string name="pref_blocked_conversations_summary">会話を長押ししてブロックすると、ブロックされた受信トレイに移動して通知を停止します</string>
+  <string name="pref_block_future">将来のメッセージをブロック</string>
+  <string name="pref_block_future_summary">ブロックする電話番号を追加します</string>
   <string name="pref_mobile_only">携帯電話番号</string>
   <string name="pref_mobile_only_summary">連絡先の候補で携帯電話番号のみを表示します</string>
   <string name="pref_auto_emoji">自動絵文字</string>
@@ -146,7 +144,7 @@
   <string name="pref_wake">携帯電話をウェイク</string>
   <string name="pref_wake_summary">新しいメッセージを受信したときに画面をオンにします</string>
   <string name="pref_notifications_private">プライベート通知</string>
-  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
+  <string name="pref_notifications_private_summary">タップして、非表示にする通知を変更します</string>
   <string name="pref_ringtone">通知音</string>
   <string name="pref_ringtone_summary">通知音を選択します</string>
   <string name="pref_ticker">ティッカーを表示</string>
@@ -155,8 +153,8 @@
   <string name="pref_vibration_summary">新しいメッセージを受信したときに振動します</string>
   <string name="pref_notification_call">通話ボタン</string>
   <string name="pref_notification_call_summary">通知から、メッセージの送信者に電話します</string>
-  <string name="pref_dimiss_read">Mark as read</string>
-  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
+  <string name="pref_dimiss_read">既読としてマーク</string>
+  <string name="pref_dismiss_read_summary">通知をクリアしたとき、メッセージを既読としてマークします</string>
   <string name="pref_delayed">メッセージ送信遅延</string>
   <string name="pref_delayed_summary">メッセージを送信する前に待機して、確認する機会を与えます</string>
   <string name="pref_delayed_duration">遅延時間 (秒)</string>
@@ -219,13 +217,14 @@
   <string name="title_search">検索</string>
   <string name="title_compose">作成</string>
   <string name="title_conversation_list">会話</string>
-  <string name="title_blocked">Blocked</string>
+  <string name="title_blocked">ブロック</string>
   <string name="title_changelog">変更履歴</string>
   <string name="title_picker">新しいメッセージ</string>
   <string name="title_donate">寄付</string>
   <string name="title_qk_responses">QK 応答</string>
-  <string name="title_block_address">Block number</string>
-  <string name="title_unblock_address">Unblock number</string>
+  <string name="title_block_address">ブロック番号</string>
+  <string name="title_unblock_address">ブロック解除番号</string>
+  <string name="title_conversations_selected">%s 選択しました</string>
   <string name="menu_add_address_to_contacts">人に <xliff:g id="contactEmailOrNumber">%s</xliff:g> を追加</string>
   <string name="view_slideshow">スライド ショーの表示</string>
   <string name="view_message_details">詳細の表示</string>
@@ -238,8 +237,8 @@
   <string name="restart_message">この変更は次に QKSMS を開いたときに有効になります</string>
   <string name="delete_conversation">会話を削除</string>
   <string name="delete_all_failed">失敗したメッセージを削除</string>
-  <string name="delete_confirmation">会話を削除してもよろしいですか?</string>
-  <string name="delete_all_failed_confirmation">失敗したメッセージをすべて削除してもよろしいですか?</string>
+  <string name="delete_confirmation">(%s) 会話を削除してもよろしいですか?</string>
+  <string name="delete_all_failed_confirmation">(%s) 会話から失敗したメッセージを削除してもよろしいですか?</string>
   <string name="apns_not_set">APN が設定されていません</string>
   <string name="apns_not_set_description">APN が設定されていないようです。これは MMS が正しく動作しないことを意味します。QKSMS が見つけるために OK を押してください :)</string>
   <string name="set_up_mms_title">MMS を設定しますか?</string>
@@ -253,7 +252,7 @@
   <string name="mark_read">既読としてマーク</string>
   <string name="call">通話</string>
   <string name="yes">はい</string>
-  <string name="add">Add</string>
+  <string name="add">追加</string>
   <string name="save">保存</string>
   <string name="enable">有効</string>
   <string name="upgrade_now">今すぐ設定</string>
@@ -274,6 +273,7 @@
   <string name="me">自分</string>
   <string name="menu_edit">編集</string>
   <string name="menu_delete_messages">メッセージを削除</string>
+  <string name="menu_delete_failed">失敗したメッセージを削除</string>
   <string name="menu_lock">ロック</string>
   <string name="menu_unlock">ロックを解除</string>
   <string name="cannot_get_details">詳細を取得できません</string>
@@ -371,24 +371,28 @@
   <string name="toast_copy_text">テキストをクリップボードにコピーしました</string>
   <string name="toast_billing_not_available">購入は、お使いの Android に Google Play ストア (課金) が必要です</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber がインストールされていません。Google Play を開きます</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">寄付をありがとう! あなたは私の新しい親友です。</string>
   <string name="thanks_2">寄付をありがとう! 大好きです。</string>
   <string name="thanks_3">寄付をありがとう! あなたは、これまでに作られた最高のテキスト メッセージのアプリになる QKSMS を支援しています。</string>
   <string name="thanks_4">寄付をありがとう! あなたは素晴らしい人です。</string>
   <string name="menu_mute_conversation">会話をミュート</string>
   <string name="menu_unmute_conversation">会話をミュート解除</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
-  <string name="menu_messages">Messages</string>
-  <string name="menu_blocked">Blocked</string>
-  <string name="menu_blocked_conversations">Blocked (%s new)</string>
-  <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_block_conversations">会話をブロック</string>
+  <string name="menu_unblock_conversations">会話のブロックを解除</string>
+  <string name="menu_messages">メッセージ</string>
+  <string name="menu_blocked">ブロック</string>
+  <string name="menu_blocked_conversations">ブロック (新規 %s)</string>
+  <string name="menu_unblocked_conversations">メッセージ (新規 %s)</string>
+  <string name="menu_notifications">通知</string>
+  <string name="menu_notifications_off">通知オフ</string>
   <string name="menu_notification_settings">通知の設定</string>
   <string name="menu_view_details">詳細を表示</string>
   <string name="menu_mark_read">既読にマーク</string>
   <string name="menu_mark_unread">未読にマーク</string>
   <string name="menu_delete_conversation">会話を削除</string>
   <string name="menu_multi_select">会話を選択</string>
+  <string name="menu_done">完了</string>
   <string name="failed_message_title">失敗したメッセージのオプション</string>
   <string name="attachment_app_not_found">添付ファイルのアプリが見つかりません。フォトギャラリー アプリをインストールしてみてください!</string>
   <string name="attachment_camera_error">カメラを開くことができませんでした</string>
@@ -450,6 +454,7 @@
   <string name="date_yesterday">昨日</string>
   <string name="date_just_now">ちょうど今</string>
   <string name="compose_loading_attachment">添付ファイルを読み込んでいます</string>
+  <string name="hint_no_messages">まだメッセージはありません。\n+ をクリックして送信します!</string>
   <string-array name="resend_menu">
     <item>再送信</item>
     <item>編集</item>
@@ -476,7 +481,7 @@
   <string-array name="font_families">
     <item>Roboto 標準</item>
     <item>Roboto コンデンス</item>
-    <item>Lato</item>
+    <item>システム フォント</item>
   </string-array>
   <string-array name="font_weights">
     <item>ライト</item>
@@ -505,9 +510,9 @@
     <item>メッセージを送信</item>
   </string-array>
   <string-array name="notification_private_options">
-    <item>Show all</item>
-    <item>Hide message</item>
-    <item>Hide message and sender</item>
+    <item>すべて表示</item>
+    <item>メッセージを非表示</item>
+    <item>メッセージと送信者を非表示</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

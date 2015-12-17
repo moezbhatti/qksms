@@ -49,8 +49,8 @@
   <string name="details_body">Inhalt</string>
   <string name="details_date_sent">Gesendet</string>
   <string name="details_date_received">Empfangen</string>
-  <string name="rate_title">Like QKSMS?</string>
-  <string name="rate_action">Rate</string>
+  <string name="rate_title">Gefällt dir QKSMS?</string>
+  <string name="rate_action">Bewerten</string>
   <string name="pref_category_appearance">Erscheinungsbild</string>
   <string name="pref_category_summary_appearance">Themen, Schriften, Farben, Avatare und mehr</string>
   <string name="pref_category_general">Allgemein</string>
@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">QK Reply, Popup-Einstellungen</string>
   <string name="pref_category_quickcompose">QK Compose</string>
   <string name="pref_category_summary_quickcompose">QK Compose, Favoriten</string>
-  <string name="pref_category_advanced">Erweitert</string>
-  <string name="pref_category_summary_advanced">Erweiterte Oberflächeneinstellungen</string>
   <string name="pref_category_about">Über</string>
   <string name="pref_category_summary_about">Version, letzte Änderungen, Autoren, Danke</string>
   <string name="pref_theme">Farbschema</string>
@@ -111,10 +109,10 @@
   <string name="pref_delivery_vibrate_summary">Vibriere bei Nachrichtenzustellung</string>
   <string name="pref_yappy">Integration von Yappy</string>
   <string name="pref_endlessjabber_summary">Volle Unterstützung für Yappy aktivieren</string>
-  <string name="pref_blocked_conversations">Blocked conversations</string>
-  <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
-  <string name="pref_block_future">Block future messages</string>
-  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_blocked_conversations">Blockierte Unterhaltungen</string>
+  <string name="pref_blocked_conversations_summary">Unterhaltung gedrückt halten, um sie zur Blockliste hinzuzufügen und keine Nachrichten mehr zu bekommen</string>
+  <string name="pref_block_future">Zukünftige Nachrichten blockieren</string>
+  <string name="pref_block_future_summary">Weitere Telefonnummern hinzufügen, die geblockt werden</string>
   <string name="pref_mobile_only">Mobilfunknummern</string>
   <string name="pref_mobile_only_summary">Zeige nur Mobilfunknummern in den Kontaktvorschlägen</string>
   <string name="pref_auto_emoji">Automatische Emojis</string>
@@ -146,7 +144,7 @@
   <string name="pref_wake">Telefon aufwecken</string>
   <string name="pref_wake_summary">Das Display anschalten, wenn eine neue Nachricht empfangen wird</string>
   <string name="pref_notifications_private">Private Benachrichtigungen</string>
-  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
+  <string name="pref_notifications_private_summary">Ändern, was in der Benachrichtigung ausgeblendet werden soll</string>
   <string name="pref_ringtone">Benachrichtigungston</string>
   <string name="pref_ringtone_summary">Wählen Sie einen Benachrichtigungston</string>
   <string name="pref_ticker">Ausschnitt anzeigen</string>
@@ -155,8 +153,8 @@
   <string name="pref_vibration_summary">Vibrieren, wenn neue Nachrichten empfangen werden</string>
   <string name="pref_notification_call">Anruftaste</string>
   <string name="pref_notification_call_summary">Rufe den Absender der Nachricht direkt von der Benachrichtigung an</string>
-  <string name="pref_dimiss_read">Mark as read</string>
-  <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
+  <string name="pref_dimiss_read">Als gelesen markieren</string>
+  <string name="pref_dismiss_read_summary">Nachricht als gelesen makieren, wenn Benachrichtigung gelöscht wird</string>
   <string name="pref_delayed">Verzögerte Nachrichten</string>
   <string name="pref_delayed_summary">Warte vor dem Versenden deiner Nachrichten, so dass du sie überprüfen kannst</string>
   <string name="pref_delayed_duration">Verzögerungszeit (Sekunden)</string>
@@ -219,13 +217,14 @@
   <string name="title_search">Suche</string>
   <string name="title_compose">Verfassen</string>
   <string name="title_conversation_list">Unterhaltungen</string>
-  <string name="title_blocked">Blocked</string>
+  <string name="title_blocked">Blockiert</string>
   <string name="title_changelog">Changelog</string>
   <string name="title_picker">Neue Nachrichten</string>
   <string name="title_donate">Spenden</string>
   <string name="title_qk_responses">QK Reply</string>
-  <string name="title_block_address">Block number</string>
-  <string name="title_unblock_address">Unblock number</string>
+  <string name="title_block_address">Nummer blockieren</string>
+  <string name="title_unblock_address">Nummer freigeben</string>
+  <string name="title_conversations_selected">%s selected</string>
   <string name="menu_add_address_to_contacts"><xliff:g id="contactEmailOrNumber"> %s </xliff:g> zu Kontakten hinzufügen</string>
   <string name="view_slideshow">Diashow ansehen</string>
   <string name="view_message_details">Details anzeigen</string>
@@ -236,10 +235,10 @@
   <string name="message_options">Nachrichtenoptionen</string>
   <string name="delivery_header_title">Bericht</string>
   <string name="restart_message">Diese Änderungen werden erst beim nächsten Neustart von QKSMS wirksam</string>
-  <string name="delete_conversation">Lösche Unterhaltung</string>
+  <string name="delete_conversation">Delete conversations</string>
   <string name="delete_all_failed">Alle fehlgeschlagenen Nachrichten löschen</string>
-  <string name="delete_confirmation">Sind Sie sicher, dass Sie die Unterhaltung löschen möchten?</string>
-  <string name="delete_all_failed_confirmation">Bist du sicher, dass du alle fehlgeschlagenen Nachrichten löschen möchtest?</string>
+  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <string name="apns_not_set">APNs sind nicht festgelegt</string>
   <string name="apns_not_set_description">Deine APNs scheinen nicht festgelegt zu sein. Dies bedeutet, dass MMS nicht ordnungsgemäß funktioniert. Drücke okay, damit QKSMS sie für dich festlegt :)</string>
   <string name="set_up_mms_title">MMS einrichten?</string>
@@ -253,7 +252,7 @@
   <string name="mark_read">Als gelesen markieren</string>
   <string name="call">Anrufen</string>
   <string name="yes">Ja</string>
-  <string name="add">Add</string>
+  <string name="add">Hinzufügen</string>
   <string name="save">Speichern</string>
   <string name="enable">Aktivieren</string>
   <string name="upgrade_now">Jetzt setzen</string>
@@ -274,6 +273,7 @@
   <string name="me">Ich</string>
   <string name="menu_edit">Bearbeiten</string>
   <string name="menu_delete_messages">Nachrichten löschen</string>
+  <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">Sperren</string>
   <string name="menu_unlock">Entsperren</string>
   <string name="cannot_get_details">Kann Details nicht bekommen.</string>
@@ -372,24 +372,28 @@
   <string name="toast_copy_text">Text in Zwischenablage kopiert</string>
   <string name="toast_billing_not_available">Kauf erfordert Google Play Store (Abrechnung) auf Ihrem Android</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber ist nicht installiert, Google Play wird geöffnet</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">Vielen Dank für Ihre Spende! Du bist mein neuer bester Freund.</string>
   <string name="thanks_2">Vielen Dank für die Spende! Ich liebe dich.</string>
   <string name="thanks_3">Vielen Dank für Ihre Spende! Du hilfst QKSMS die beste SMS App aller Zeiten zu werden.</string>
   <string name="thanks_4">Vielen Dank für die Spende! Du bist großartig.</string>
   <string name="menu_mute_conversation">Unterhaltung stummschalten</string>
   <string name="menu_unmute_conversation">Unterhaltungen nicht mehr stummschalten</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
-  <string name="menu_messages">Messages</string>
-  <string name="menu_blocked">Blocked</string>
-  <string name="menu_blocked_conversations">Blocked (%s new)</string>
-  <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_block_conversations">Block conversations</string>
+  <string name="menu_unblock_conversations">Unblock conversations</string>
+  <string name="menu_messages">Nachrichten</string>
+  <string name="menu_blocked">Blockiert</string>
+  <string name="menu_blocked_conversations">Blockiert (%s neu)</string>
+  <string name="menu_unblocked_conversations">Nachrichten (%s neu)</string>
+  <string name="menu_notifications">Notifications</string>
+  <string name="menu_notifications_off">Notifications off</string>
   <string name="menu_notification_settings">Benachrichtigungseinstellungen</string>
   <string name="menu_view_details">Details anzeigen</string>
   <string name="menu_mark_read">Als gelesen markieren</string>
   <string name="menu_mark_unread">Als ungelesen markieren</string>
   <string name="menu_delete_conversation">Unterhaltung löschen</string>
   <string name="menu_multi_select">Unterhaltung auswählen</string>
+  <string name="menu_done">Done</string>
   <string name="failed_message_title">Fehlerhafte Nachrichtenoptionen</string>
   <string name="attachment_app_not_found">Keine App zum Hinzufügen des Anhangs gefunden. Versuche bitte, eine Fotogalerie-App zu installieren!</string>
   <string name="attachment_camera_error">Die Kamera konnte nicht geöffnet werden</string>
@@ -451,6 +455,7 @@
   <string name="date_yesterday">Gestern</string>
   <string name="date_just_now">Gerade eben</string>
   <string name="compose_loading_attachment">Lade Anhang</string>
+  <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
   <string-array name="resend_menu">
     <item>Nochmal senden</item>
     <item>Bearbeiten</item>
@@ -477,7 +482,7 @@
   <string-array name="font_families">
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Lato</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Dünn</item>
@@ -506,9 +511,9 @@
     <item>Nachricht senden</item>
   </string-array>
   <string-array name="notification_private_options">
-    <item>Show all</item>
-    <item>Hide message</item>
-    <item>Hide message and sender</item>
+    <item>Alles zeigen</item>
+    <item>Nachricht ausblenden</item>
+    <item>Nachricht und Sender ausblenden</item>
   </string-array>
   <string-array name="max_mms_attachment_sizes">
     <item>300 KB</item>

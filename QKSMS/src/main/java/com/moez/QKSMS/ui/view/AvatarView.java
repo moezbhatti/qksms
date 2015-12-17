@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,12 +23,11 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageView;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.ImageUtils;
-import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -39,7 +39,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
             ContactsContract.PhoneLookup.LOOKUP_KEY,
     };
 
-    public static final String ME = ":)";
+    public static final String ME = "Me";
 
     static final int PHONE_ID_COLUMN_INDEX = 0;
     static final int PHONE_LOOKUP_STRING_COLUMN_INDEX = 1;
@@ -53,6 +53,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
     private Bundle mExtras = null;
     private String mInitial = "#";
     private Paint mPaint;
+    private Drawable mDefaultDrawable;
 
     /**
      * When setImageDrawable is called with a drawable, we circle crop to size of this view and use
@@ -78,6 +79,8 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
             mPaint.setTextAlign(Paint.Align.CENTER);
             mPaint.setAntiAlias(true);
             mPaint.setTypeface(TypefaceManager.obtainTypeface(getContext(), TypefaceManager.Typefaces.ROBOTO_LIGHT));
+
+            mDefaultDrawable = ContextCompat.getDrawable(context, R.drawable.ic_person);
 
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarView, defStyle, 0);
             for (int i = 0; i < a.getIndexCount(); i++) {
@@ -160,36 +163,21 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
     }
 
     public void setContactName(String name) {
-        if (TextUtils.isEmpty(name)) {
-            mInitial = "#";
-        } else if (name.length() == 1 || name.equals(ME)) {
+        if (TextUtils.isEmpty(name) || name.equals(ME)) {
+            mInitial = "";
+            super.setImageDrawable(mDefaultDrawable);
+        } else if (name.length() == 1) {
             mInitial = "" + name.toUpperCase();
+            if (mOriginalDrawable == null) super.setImageDrawable(null);
         } else if (isPhoneNumberFormat(name)) {
-            mInitial = "#";
+            mInitial = "";
+            super.setImageDrawable(mDefaultDrawable);
         } else {
             mInitial = "" + name.toUpperCase().charAt(0);
+            if (mOriginalDrawable == null) super.setImageDrawable(null);
         }
 
         invalidate();
-    }
-
-    public String getContactPhone() {
-        return mContactPhone;
-    }
-
-    private boolean isValidPhoneNumber(String address) {
-        String networkPortion = PhoneNumberUtils.extractNetworkPortion(address);
-
-        return (!(networkPortion.equals("+") || TextUtils.isEmpty(networkPortion))) && isDialable(networkPortion);
-    }
-
-    private boolean isDialable(String address) {
-        for (int i = 0, count = address.length(); i < count; i++) {
-            if (!PhoneNumberUtils.isReallyDialable(address.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private boolean isPhoneNumberFormat(String name) {
@@ -272,7 +260,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
                 super.setImageDrawable(new BitmapDrawable(getResources(), roundBitmap));
                 getBackground().setColorFilter(0x00000000, PorterDuff.Mode.MULTIPLY);
             } else {
-                super.setImageDrawable(null);
+                super.setImageDrawable(TextUtils.isEmpty(mInitial) ? mDefaultDrawable : null);
                 getBackground().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
             }
         }
@@ -292,6 +280,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
     @Override
     public void refresh() {
         mPaint.setColor(ThemeManager.getTextOnColorPrimary());
+        mDefaultDrawable.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
 
         if (getBackground() == null) {
             setBackgroundResource(R.drawable.circle);

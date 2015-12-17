@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/menu_block"
-        android:title="@string/menu_block_conversation" />
+        android:title="@string/menu_block_conversations" />
 
     <item
         android:id="@+id/menu_delete_failed"

@@ -63,8 +63,6 @@
   <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
   <string name="pref_category_quickcompose">QK Compose</string>
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
-  <string name="pref_category_advanced">Avanzado</string>
-  <string name="pref_category_summary_advanced">Ajustes avanzados de la interfaz</string>
   <string name="pref_category_about">Acerca de</string>
   <string name="pref_category_summary_about">Versión, registro de cambios, autores, gracias</string>
   <string name="pref_theme">Esquema de color</string>
@@ -226,6 +224,7 @@
   <string name="title_qk_responses">Respuestas rápidas</string>
   <string name="title_block_address">Block number</string>
   <string name="title_unblock_address">Unblock number</string>
+  <string name="title_conversations_selected">%s selected</string>
   <string name="menu_add_address_to_contacts">Agregar <xliff:g id="contactEmailOrNumber"> %s </xliff:g> a los contactos</string>
   <string name="view_slideshow">Ver presentación</string>
   <string name="view_message_details">Ver detalles</string>
@@ -236,10 +235,10 @@
   <string name="message_options">Opciones de mensaje</string>
   <string name="delivery_header_title">Informe</string>
   <string name="restart_message">Estos cambios se aplicarán la próxima vez que se abra QKSMS</string>
-  <string name="delete_conversation">Borrar conversación</string>
+  <string name="delete_conversation">Delete conversations</string>
   <string name="delete_all_failed">Delete failed messages</string>
-  <string name="delete_confirmation">¿Seguro que quieres borrar la conversación?</string>
-  <string name="delete_all_failed_confirmation">Are you sure you would like to all failed messages?</string>
+  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <string name="apns_not_set">APNs no definidas</string>
   <string name="apns_not_set_description">Al parecer tus APNs no han sido definidas. Esto significa que los MMS no funcionarán correctamente. Por favor presiona \'okay\' para que QKSMS las encuentre para ti :)</string>
   <string name="set_up_mms_title">Set up MMS?</string>
@@ -274,6 +273,7 @@
   <string name="me">Yo</string>
   <string name="menu_edit">Editar</string>
   <string name="menu_delete_messages">Borrar mensajes</string>
+  <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">Bloquear</string>
   <string name="menu_unlock">Desbloquear</string>
   <string name="cannot_get_details">No se pueden obtener detalles.</string>
@@ -372,24 +372,28 @@
   <string name="toast_copy_text">Texto copiado en el portapapeles</string>
   <string name="toast_billing_not_available">La compra requiere de Google Play Store (facturación) en tu Android</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber no está instalado, abriendo Google Play</string>
+  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="thanks_1">¡Gracias por donar! Eres mi nuevo mejor amigo.</string>
   <string name="thanks_2">¡Gracias por la donación! Te quiero.</string>
   <string name="thanks_3">¡Gracias por donar! Estás ayudando a QKSMS para convertirse en la mejor aplicación de mensajes jamás creada.</string>
   <string name="thanks_4">¡Gracias por la donación! Eres asombroso.</string>
   <string name="menu_mute_conversation">Silenciar conversación</string>
   <string name="menu_unmute_conversation">Activar la conversación</string>
-  <string name="menu_block_conversation">Block conversation</string>
-  <string name="menu_unblock_conversation">Unblock conversation</string>
+  <string name="menu_block_conversations">Block conversations</string>
+  <string name="menu_unblock_conversations">Unblock conversations</string>
   <string name="menu_messages">Messages</string>
   <string name="menu_blocked">Blocked</string>
   <string name="menu_blocked_conversations">Blocked (%s new)</string>
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
+  <string name="menu_notifications">Notifications</string>
+  <string name="menu_notifications_off">Notifications off</string>
   <string name="menu_notification_settings">Configuración de notificaciones</string>
   <string name="menu_view_details">Ver detalles</string>
   <string name="menu_mark_read">Marcar como leído</string>
   <string name="menu_mark_unread">Marcar como no leído</string>
   <string name="menu_delete_conversation">Borrar conversación</string>
   <string name="menu_multi_select">Seleccionar conversación</string>
+  <string name="menu_done">Done</string>
   <string name="failed_message_title">Opciones de mensajes fallidos</string>
   <string name="attachment_app_not_found">Aplicación de adjuntos no encontrado. ¡Intenta instalar una aplicación de galería de fotos!</string>
   <string name="attachment_camera_error">La cámara no se puede abrir</string>
@@ -451,6 +455,7 @@
   <string name="date_yesterday">Ayer</string>
   <string name="date_just_now">Ahora</string>
   <string name="compose_loading_attachment">Loading attachment</string>
+  <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
   <string-array name="resend_menu">
     <item>Reenviar</item>
     <item>Editar</item>
@@ -477,7 +482,7 @@
   <string-array name="font_families">
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Lato</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Ligera</item>

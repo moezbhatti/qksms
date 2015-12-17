@@ -789,7 +789,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.values[0] == 0) {
+        if (event.values[0] == 0 && isAdded()) {
             makeCall();
         }
     }
