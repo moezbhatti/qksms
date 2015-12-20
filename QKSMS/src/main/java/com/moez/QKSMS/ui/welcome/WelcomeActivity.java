@@ -84,7 +84,7 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
     public void tintIndicators(int color) {
         if (mIndicators != null) {
             for (ImageView indicator : mIndicators) {
-                indicator.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+                indicator.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
             }
         }
 
@@ -93,11 +93,11 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
         }
 
         if (mPrevious != null) {
-            mPrevious.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+            mPrevious.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         }
 
         if (mNext != null) {
-            mNext.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+            mNext.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         }
     }
 

@@ -59,7 +59,7 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
 
         if (mNightHint != null) {
             mNightHint.setTextColor(colorBackground);
-            mNightHint.getBackground().setColorFilter(colorAccent, PorterDuff.Mode.MULTIPLY);
+            mNightHint.getBackground().setColorFilter(colorAccent, PorterDuff.Mode.SRC_ATOP);
         }
     }
 

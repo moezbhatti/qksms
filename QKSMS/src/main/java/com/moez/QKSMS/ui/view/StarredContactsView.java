@@ -176,7 +176,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
 
     @Override
     public void refresh() {
-        mIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.MULTIPLY);
+        mIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
         mFavoritesBackground.setBackgroundColor(ThemeManager.getBackgroundColor());
     }
 }

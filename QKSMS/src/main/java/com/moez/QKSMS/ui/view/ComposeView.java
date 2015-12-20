@@ -950,24 +950,24 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
     @Override
     public void refresh() {
-        mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
-        mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
-        mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
+        mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+        mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
         mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
-        mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
-        mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY);
+        mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+        mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
         updateDelayButton();
         mProgress.setUnfinishedStrokeColor(ThemeManager.getTextOnColorSecondary());
         mProgress.setFinishedStrokeColor(ThemeManager.getTextOnColorPrimary());
         if (ThemeManager.getSentBubbleRes() != 0) mReplyText.setBackgroundResource(ThemeManager.getSentBubbleRes());
-        mReplyText.getBackground().setColorFilter(ThemeManager.getNeutralBubbleColor(), PorterDuff.Mode.MULTIPLY);
+        mReplyText.getBackground().setColorFilter(ThemeManager.getNeutralBubbleColor(), PorterDuff.Mode.SRC_ATOP);
         mReplyText.refresh();
-        getBackground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.MULTIPLY);
+        getBackground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void updateDelayButton() {
         mDelay.setColorFilter(mDelayedMessagingEnabled ?
                         ThemeManager.getTextOnColorPrimary() : ThemeManager.getTextOnColorSecondary(),
-                PorterDuff.Mode.MULTIPLY);
+                PorterDuff.Mode.SRC_ATOP);
     }
 }

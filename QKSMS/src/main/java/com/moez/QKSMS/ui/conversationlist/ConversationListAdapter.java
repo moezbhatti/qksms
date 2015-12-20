@@ -34,7 +34,7 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         super(context);
         mPrefs = mContext.getPrefs();
 
-        mMuted = ContextCompat.getDrawable(context, R.drawable.ic_mute);
+        mMuted = ContextCompat.getDrawable(context, R.drawable.ic_notifications_muted);
         mUnread = ContextCompat.getDrawable(context, R.drawable.ic_unread_indicator);
         mError = ContextCompat.getDrawable(context, R.drawable.ic_error);
 
@@ -127,9 +127,9 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
     @Override
     public void refresh() {
-        mMuted.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
-        mUnread.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
-        mError.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
+        mMuted.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        mUnread.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        mError.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
         notifyDataSetChanged();
     }
 }

@@ -132,8 +132,8 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             // set up colors
             holder.mBodyTextView.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
             holder.mDateView.setOnColorBackground(false);
-            holder.mDeliveredIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.MULTIPLY);
-            holder.mLockedIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.MULTIPLY);
+            holder.mDeliveredIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
+            holder.mLockedIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
 
             // set up avatar
             holder.mAvatarView.setImageDrawable(Contact.getMe(true).getAvatar(mContext, null));
@@ -147,8 +147,8 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             // set up colors
             holder.mBodyTextView.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
             holder.mDateView.setOnColorBackground(false);
-            holder.mDeliveredIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.MULTIPLY);
-            holder.mLockedIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.MULTIPLY);
+            holder.mDeliveredIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
+            holder.mLockedIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
 
             // set up avatar
             if (mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_RECEIVED, false)) {
@@ -307,9 +307,9 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
                 ThemeManager.getSentBubbleAltRes() : ThemeManager.getReceivedBubbleAltRes()));
 
         if (messageItem.isMe()) {
-            holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.MULTIPLY);
+            holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
         } else {
-            holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.MULTIPLY);
+            holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
         }
 
         if (messageItem.isMe() && !mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_SENT, true)) {

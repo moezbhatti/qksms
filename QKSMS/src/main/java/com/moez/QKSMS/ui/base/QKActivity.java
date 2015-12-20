@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -99,7 +98,7 @@ public abstract class QKActivity extends ActionBarActivity {
         // Toolbar navigation icon
         Drawable navigationIcon = getToolbar().getNavigationIcon();
         if (navigationIcon != null) {
-            navigationIcon.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+            navigationIcon.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
             getToolbar().setNavigationIcon(navigationIcon);
         }
 
@@ -131,7 +130,7 @@ public abstract class QKActivity extends ActionBarActivity {
         if (mOverflowButton != null) {
             // We already have the overflow button, so just color it.
             Drawable icon = mOverflowButton.getDrawable();
-            icon.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+            icon.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
             // Have to clear the image drawable first or else it won't take effect
             mOverflowButton.setImageDrawable(null);
             mOverflowButton.setImageDrawable(icon);

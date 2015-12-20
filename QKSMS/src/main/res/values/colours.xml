@@ -22,10 +22,10 @@
     <color name="grey_dark_ultra">#111111</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
-    <color name="theme_light_text_primary">#DE000000</color>
-    <color name="theme_light_text_secondary">#8A000000</color>
-    <color name="theme_dark_text_primary">#FFFFFFFF</color>
-    <color name="theme_dark_text_secondary">#B3FFFFFF</color>
+    <color name="theme_light_text_primary">#212121</color>
+    <color name="theme_light_text_secondary">#707070</color>
+    <color name="theme_dark_text_primary">#FFFFFF</color>
+    <color name="theme_dark_text_secondary">#999999</color>
 
     <!-- Color states for `SwitchCompat` views -->
     <color name="switch_thumb_enabled_light">#ECECEC</color>

@@ -18,12 +18,12 @@ public class ListviewHelper {
     public static void applyCustomScrollbar(Context context, ListView listView) {
         if (context != null && listView != null) {
             try {
-                Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_scrollbar);
+                Drawable drawable = ContextCompat.getDrawable(context, R.drawable.scrollbar);
                 drawable.setColorFilter(Color.argb(64,
                         Color.red(ThemeManager.getTextOnBackgroundSecondary()),
                         Color.green(ThemeManager.getTextOnBackgroundSecondary()),
                         Color.blue(ThemeManager.getTextOnBackgroundSecondary())),
-                        PorterDuff.Mode.MULTIPLY);
+                        PorterDuff.Mode.SRC_ATOP);
 
                 Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");
                 mScrollCacheField.setAccessible(true);

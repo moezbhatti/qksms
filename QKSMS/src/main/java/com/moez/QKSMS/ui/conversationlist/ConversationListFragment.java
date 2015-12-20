@@ -8,7 +8,6 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.melnykov.fab.FloatingActionButton;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
@@ -39,9 +39,6 @@ import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -100,7 +97,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mFab.setColorNormal(ThemeManager.getColor());
         mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
         mFab.attachToRecyclerView(mRecyclerView);
-        mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
+        mFab.setColorFilter(ThemeManager.getTextOnColorPrimary());
         mFab.setOnClickListener(v -> {
             if (mAdapter.isInMultiSelectMode()) {
                 mAdapter.disableMultiSelectMode(true);
@@ -165,7 +162,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
             menu.findItem(R.id.menu_block).setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
 
-            menu.findItem(R.id.menu_mark_read).setIcon(getUnreadWeight() >= 0 ? R.drawable.ic_read : R.drawable.ic_unread);
+            menu.findItem(R.id.menu_mark_read).setIcon(getUnreadWeight() >= 0 ? R.drawable.ic_mark_read : R.drawable.ic_mark_unread);
             menu.findItem(R.id.menu_mark_read).setTitle(getUnreadWeight() >= 0 ? R.string.menu_mark_read : R.string.menu_mark_unread);
             menu.findItem(R.id.menu_block).setTitle(getBlockedWeight() > 0 ? R.string.menu_unblock_conversations : R.string.menu_block_conversations);
             menu.findItem(R.id.menu_delete_failed).setVisible(doSomeHaveErrors());
@@ -312,7 +309,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
         mFab.setColorNormal(ThemeManager.getColor());
         mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
-        mFab.getDrawable().setColorFilter(new PorterDuffColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.MULTIPLY));
+        mFab.getDrawable().setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
 
         mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
     }

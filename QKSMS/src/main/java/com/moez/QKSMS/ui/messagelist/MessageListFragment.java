@@ -782,7 +782,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         menu.findItem(R.id.menu_notifications).setTitle(conversationPrefs.getNotificationsEnabled() ?
                 R.string.menu_notifications : R.string.menu_notifications_off);
         menu.findItem(R.id.menu_notifications).setIcon(conversationPrefs.getNotificationsEnabled() ?
-                R.drawable.ic_notifications : R.drawable.ic_notifications_off);
+                R.drawable.ic_notifications : R.drawable.ic_notifications_muted);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
