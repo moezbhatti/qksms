@@ -21,6 +21,11 @@ public class ConversationPrefsHelper {
         mConversationPrefs = context.getSharedPreferences(CONVERSATIONS_FILE + threadId, Context.MODE_PRIVATE);
     }
 
+    public int getColor() {
+        //return getInt(SettingsFragment.THEME, 0xFF009688);
+        return 0xFFFF0000;
+    }
+
     public boolean getNotificationsEnabled() {
         return getBoolean(SettingsFragment.NOTIFICATIONS, true);
     }
@@ -63,6 +68,15 @@ public class ConversationPrefsHelper {
 
     public boolean getDimissedReadEnabled() {
         return getBoolean(SettingsFragment.DISMISSED_READ, false);
+    }
+
+    public void putInt(String key, int value) {
+        mConversationPrefs.edit().putInt(key, value).apply();
+    }
+
+    public int getInt(String key, int defaultValue) {
+        int globalValue = mPrefs.getInt(key, defaultValue);
+        return mConversationPrefs.getInt(key, globalValue);
     }
 
     public void putString(String key, String value) {
