@@ -80,6 +80,7 @@
             android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="true"
+            android:dependency="pref_key_split"
             android:key="pref_key_split_counter"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_split_counter_summary"

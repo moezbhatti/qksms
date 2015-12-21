@@ -139,10 +139,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String SIMPLE_PREFS = "pref_key_simple";
     public static final String DONATE = "pref_key_donate";
     public static final String DISMISSED_READ = "pref_key_dismiss_read";
-    /**
-     * @deprecated
-     */
-    public static final String APN_CHOOSER = "pref_key_apn_chooser";
     public static final String MAX_MMS_ATTACHMENT_SIZE = "pref_mms_max_attachment_size";
     public static final String QUICKREPLY = "pref_key_quickreply_enabled";
     public static final String QUICKREPLY_TAP_DISMISS = "pref_key_quickreply_dismiss";
