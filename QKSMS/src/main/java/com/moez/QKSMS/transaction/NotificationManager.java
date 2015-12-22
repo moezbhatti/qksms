@@ -535,7 +535,7 @@ public class NotificationManager {
 
             SlideshowModel model = message.mSlideshow;
 
-            if (model != null && model.isSimple()) {
+            if (model != null && model.isSimple() && model.get(0).getImage() != null) {
                 Log.d(TAG, "MMS type: image");
                 ImageModel imageModel = model.get(0).getImage();
                 Bitmap image = imageModel.getBitmap(imageModel.getWidth(), imageModel.getHeight());
