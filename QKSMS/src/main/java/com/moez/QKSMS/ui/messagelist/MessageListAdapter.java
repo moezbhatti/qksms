@@ -412,6 +412,10 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
             if (messageItem.mSlideshow == null) {
                 messageItem.setOnPduLoaded(messageItem1 -> {
+                    if (mCursor == null) {
+                        // The pdu has probably loaded after shutting down the fragment. Don't try to bind anything now
+                        return;
+                    }
                     if (messageItem1 != null && messageItem1.getMessageId() == messageItem1.getMessageId()) {
                         messageItem1.setCachedFormattedMessage(null);
                         bindGrouping(holder, messageItem);
