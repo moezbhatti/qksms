@@ -110,6 +110,7 @@
     <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
+    <string name="pref_category_blocking">Message blocking</string>
     <string name="pref_category_notifications">Notifications</string>
     <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
     <string name="pref_category_mms">MMS</string>
@@ -170,6 +171,8 @@
     <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
     <string name="pref_block_future">Block future messages</string>
     <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+    <string name="pref_should_i_answer">Should I Answer? Integration</string>
+    <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
     <string name="pref_mobile_only">Mobile numbers</string>
     <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
     <string name="pref_auto_emoji">Automatic emoji</string>
@@ -575,6 +578,8 @@
     <string name="dialog_conversation_details_last_message_date">Last message date</string>
     <string name="dialog_conversation_details_message_count">Message count</string>
     <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
+    <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+    <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
 
     <!-- Title for audio file picker -->
     <string name="select_audio">Choose audio</string>

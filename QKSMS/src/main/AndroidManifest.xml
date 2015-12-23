@@ -450,6 +450,13 @@
             android:name=".receiver.UnreadBadgeService"
             android:exported="false" />
 
+        <service
+            android:name=".service.ShouldIAnswerService">
+            <intent-filter>
+                <action android:name="com.moez.QKSMS.ShouldIAnswerService" />
+            </intent-filter>
+        </service>
+
         <!-- Service that delivers messages from the phone "quick response" -->
         <service
             android:name=".service.HeadlessSmsSendService"

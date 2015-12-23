@@ -30,8 +30,8 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
-        versionCode 119
-        versionName "2.3.1"
+        versionCode 121
+        versionName "2.4.1"
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true

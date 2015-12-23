@@ -12,6 +12,8 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -36,6 +38,7 @@ import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
+import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.transaction.EndlessJabber;
@@ -107,6 +110,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
     public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
     public static final String BLOCKED_FUTURE = "pref_key_block_future";
+    public static final String SHOULD_I_ANSWER = "pref_key_should_i_answer";
     public static final String MOBILE_ONLY = "pref_key_mobile_only";
     public static final String COMPOSE_GROUP = "pref_key_compose_group";
     public static final String SPLIT_SMS = "pref_key_split";
@@ -525,6 +529,30 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
             case BLOCKED_FUTURE:
                 BlockedNumberDialog.showDialog(mContext);
+                break;
+            case SHOULD_I_ANSWER:
+                final String packageName = "org.mistergroup.muzutozvednout";
+                if (!PackageUtils.isAppInstalled(mContext, packageName)) {
+                    String referrer="referrer=utm_source%3Dqksms%26utm_medium%3Dapp%26utm_campaign%3Dqksmssettings";
+                    new QKDialog()
+                            .setContext(mContext)
+                            .setTitle(R.string.dialog_should_i_answer_title)
+                            .setMessage(R.string.dialog_should_i_answer_message)
+                            .setNegativeButton(R.string.cancel, null)
+                            .setPositiveButton(R.string.okay, v -> {
+                                try {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName + "&" + referrer)));
+                                } catch (android.content.ActivityNotFoundException anfe) {
+                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName + "&" + referrer)));
+                                }
+                            })
+                            .show();
+
+                    new Handler().postDelayed(() -> {
+                        mPrefs.edit().putBoolean(SHOULD_I_ANSWER, false).commit();
+                        ((CheckBoxPreference) preference).setChecked(false);
+                    }, 500);
+                }
                 break;
             case NOTIFICATION_LED_COLOR:
                 mLedColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");

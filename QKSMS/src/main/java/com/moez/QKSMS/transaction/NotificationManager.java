@@ -535,7 +535,7 @@ public class NotificationManager {
 
             SlideshowModel model = message.mSlideshow;
 
-            if (model != null && model.isSimple()) {
+            if (model != null && model.isSimple() && model.get(0).getImage() != null) {
                 Log.d(TAG, "MMS type: image");
                 ImageModel imageModel = model.get(0).getImage();
                 Bitmap image = imageModel.getBitmap(imageModel.getWidth(), imageModel.getHeight());
@@ -664,6 +664,10 @@ public class NotificationManager {
      * @param overrideCancel If true, dismiss the notification no matter what
      */
     public static void initQuickCompose(Context context, boolean override, boolean overrideCancel) {
+
+        if (sPrefs == null) {
+            init(context);
+        }
 
         if (sPrefs.getBoolean(SettingsFragment.QUICKCOMPOSE, false) || override) {
             Intent composeIntent = new Intent(context, QKComposeActivity.class);

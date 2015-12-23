@@ -458,7 +458,10 @@ public class SmsHelper {
             do {
                 Uri threadUri = Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, conversationCursor.getString(Conversation.ID));
                 Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, SmsHelper.UNREAD_SELECTION, null, SmsHelper.sortDateDesc);
-                result += messageCursor.getCount();
+                if (messageCursor != null) {
+                    result += messageCursor.getCount();
+                    messageCursor.close();
+                }
             } while (conversationCursor.moveToNext());
         }
 
