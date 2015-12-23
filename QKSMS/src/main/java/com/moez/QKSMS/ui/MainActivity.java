@@ -110,7 +110,15 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         setTitle(R.string.title_conversation_list);
 
         mSlidingMenu = (SlidingMenu) findViewById(R.id.sliding_menu);
-        setupSlidingMenu();
+        setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
+        mSlidingMenu.setOnOpenListener(this);
+        mSlidingMenu.setOnCloseListener(this);
+        mSlidingMenu.setOnOpenedListener(this);
+        mSlidingMenu.setOnClosedListener(this);
+        mSlidingMenu.setContent();
+        mSlidingMenu.setMenu();
+        mSlidingMenu.showContent(false);
+        mSlidingMenu.showMenu(false);
 
         setupFragments(savedInstanceState);
         onNewIntent(getIntent());
@@ -219,28 +227,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         startActivityForResult(welcomeIntent, WelcomeActivity.WELCOME_REQUEST_CODE);
     }
 
-    public SlidingMenu getSlidingMenu() {
-        return mSlidingMenu;
-    }
-
     public void showMenu() {
         mSlidingMenu.showMenu();
-    }
-
-    private void setupSlidingMenu() {
-        setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
-        mSlidingMenu.setBehindScrollScale(0.5f);
-        mSlidingMenu.setFadeDegree(0.5f);
-        mSlidingMenu.setOnOpenListener(this);
-        mSlidingMenu.setOnCloseListener(this);
-        mSlidingMenu.setOnOpenedListener(this);
-        mSlidingMenu.setOnClosedListener(this);
-        mSlidingMenu.setShadowDrawable(R.drawable.shadow_slidingmenu);
-        mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        mSlidingMenu.setContent(R.layout.content_frame);
-        mSlidingMenu.setMenu(R.layout.menu_frame);
-        mSlidingMenu.showMenu(false);
     }
 
     /**
@@ -250,11 +238,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
      */
     public void setSlidingTabEnabled(boolean slidingTabEnabled) {
         if (slidingTabEnabled) {
-            mSlidingMenu.setShadowDrawable(R.drawable.shadow_slidingmenu);
-            mSlidingMenu.setShadowWidth(Units.dpToPx(this, 8));
             mSlidingMenu.setBehindOffset(Units.dpToPx(this, 48));
         } else {
-            mSlidingMenu.setShadowWidth(0);
             mSlidingMenu.setBehindOffset(0);
         }
     }
@@ -273,10 +258,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         }
 
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    public Fragment getConversationList() {
-        return mConversationList;
     }
 
     public Fragment getContent() {
