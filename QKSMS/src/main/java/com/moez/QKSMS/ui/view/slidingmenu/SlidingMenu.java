@@ -78,8 +78,6 @@ public class SlidingMenu extends RelativeLayout {
 
     private OnOpenListener mOpenListener;
     private OnOpenedListener mOpenedListener;
-    private OnOpenListener mSecondaryOpenListener;
-    private OnOpenedListener mSecondaryOpenedListener;
     private OnCloseListener mCloseListener;
     private OnClosedListener mClosedListener;
 
@@ -223,7 +221,6 @@ public class SlidingMenu extends RelativeLayout {
         mViewAbove.setOnPageChangeListener(new OnPageChangeListener() {
             public static final int POSITION_OPEN = 0;
             public static final int POSITION_CLOSE = 1;
-            public static final int POSITION_SECONDARY_OPEN = 2;
 
             public void onPageScrolled(int position, float positionOffset,
                                        int positionOffsetPixels) {
@@ -238,10 +235,6 @@ public class SlidingMenu extends RelativeLayout {
                     mCloseListener.onClose();
                 } else if (position == POSITION_CLOSE && mClosedListener != null) {
                     mClosedListener.onClosed();
-                } else if (position == POSITION_SECONDARY_OPEN && mSecondaryOpenListener != null && anim) {
-                    mSecondaryOpenListener.onOpen();
-                } else if (position == POSITION_SECONDARY_OPEN && mSecondaryOpenedListener != null) {
-                    mSecondaryOpenedListener.onOpened();
                 }
             }
         });
@@ -411,35 +404,6 @@ public class SlidingMenu extends RelativeLayout {
         return mViewBehind.getContent();
     }
 
-    /**
-     * Set the secondary behind view (right menu) content from a layout resource. The resource will be inflated, adding all top-level views
-     * to the behind view.
-     *
-     * @param res the new content
-     */
-    public void setSecondaryMenu(int res) {
-        setSecondaryMenu(LayoutInflater.from(getContext()).inflate(res, null));
-    }
-
-    /**
-     * Set the secondary behind view (right menu) content to the given View.
-     *
-     * @param view The desired content to display.
-     */
-    public void setSecondaryMenu(View v) {
-        mViewBehind.setSecondaryContent(v);
-        //		mViewBehind.invalidate();
-    }
-
-    /**
-     * Retrieves the current secondary menu (right).
-     *
-     * @return the current menu
-     */
-    public View getSecondaryMenu() {
-        return mViewBehind.getSecondaryContent();
-    }
-
 
     /**
      * Sets the sliding enabled.
@@ -516,24 +480,6 @@ public class SlidingMenu extends RelativeLayout {
     }
 
     /**
-     * Opens the menu and shows the secondary menu view. Will default to the regular menu
-     * if there is only one.
-     */
-    public void showSecondaryMenu() {
-        showSecondaryMenu(true);
-    }
-
-    /**
-     * Opens the menu and shows the secondary (right) menu view. Will default to the regular menu
-     * if there is only one.
-     *
-     * @param animate true to animate the transition, false to ignore animation
-     */
-    public void showSecondaryMenu(boolean animate) {
-        mViewAbove.setCurrentItem(2, animate);
-    }
-
-    /**
      * Closes the menu and shows the above view.
      */
     public void showContent() {
@@ -576,15 +522,6 @@ public class SlidingMenu extends RelativeLayout {
      */
     public boolean isMenuShowing() {
         return mViewAbove.getCurrentItem() == 0 || mViewAbove.getCurrentItem() == 2;
-    }
-
-    /**
-     * Checks if is the behind view showing.
-     *
-     * @return Whether or not the behind view is showing
-     */
-    public boolean isSecondaryMenuShowing() {
-        return mViewAbove.getCurrentItem() == 2;
     }
 
     /**
@@ -782,24 +719,6 @@ public class SlidingMenu extends RelativeLayout {
     }
 
     /**
-     * Sets the secondary (right) shadow drawable.
-     *
-     * @param resId the resource ID of the new shadow drawable
-     */
-    public void setSecondaryShadowDrawable(int resId) {
-        setSecondaryShadowDrawable(ContextCompat.getDrawable(getContext(), resId));
-    }
-
-    /**
-     * Sets the secondary (right) shadow drawable.
-     *
-     * @param d the new shadow drawable
-     */
-    public void setSecondaryShadowDrawable(Drawable d) {
-        mViewBehind.setSecondaryShadowDrawable(d);
-    }
-
-    /**
      * Sets the shadow width.
      *
      * @param resId The dimension resource id to be set as the shadow width.
@@ -907,26 +826,6 @@ public class SlidingMenu extends RelativeLayout {
         mOpenListener = listener;
     }
 
-
-    /**
-     * Sets the OnOpenListener for secondary menu  {@link OnOpenListener#onOpen() OnOpenListener.onOpen()} will be called when the secondary SlidingMenu is opened
-     *
-     * @param listener the new OnOpenListener
-     */
-
-    public void setSecondaryOnOpenListener(OnOpenListener listener) {
-        mSecondaryOpenListener = listener;
-    }
-
-    /**
-     * Sets the OnOpenedListener for the secondary menu. {@link OnOpenedListener#onOpened() OnOpenedListener.onOpened()} will be called after the secondary SlidingMenu is opened
-     *
-     * @param listener the new OnOpenedListener
-     */
-    public void setSecondaryOnOpenedListener(OnOpenedListener listener) {
-        mSecondaryOpenedListener = listener;
-        mViewAbove.setOnOpenedListener(listener);
-    }
 
     /**
      * Sets the OnCloseListener. {@link OnCloseListener#onClose() OnCloseListener.onClose()} will be called when any one of the SlidingMenu is closed
@@ -1041,14 +940,9 @@ public class SlidingMenu extends RelativeLayout {
         final int layerType = layer ? View.LAYER_TYPE_HARDWARE : View.LAYER_TYPE_NONE;
 
         if (layerType != getContent().getLayerType()) {
-            getHandler().post(new Runnable() {
-                public void run() {
-                    getContent().setLayerType(layerType, null);
-                    getMenu().setLayerType(layerType, null);
-                    if (getSecondaryMenu() != null) {
-                        getSecondaryMenu().setLayerType(layerType, null);
-                    }
-                }
+            getHandler().post(() -> {
+                getContent().setLayerType(layerType, null);
+                getMenu().setLayerType(layerType, null);
             });
         }
     }
