@@ -25,11 +25,11 @@ import android.widget.ImageView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class AvatarView extends ImageView implements View.OnClickListener, LiveView {
     private final String TAG = "AvatarView";
@@ -95,7 +95,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
 
             // Register this view for live updates.
             LiveViewManager.registerView(this);
-            LiveViewManager.registerPreference(this, SettingsFragment.THEME);
+            LiveViewManager.registerPreference(this, QKPreference.ACTIVE_THEME.getKey());
         }
     }
 
@@ -261,7 +261,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
                 getBackground().setColorFilter(0x00000000, PorterDuff.Mode.SRC_ATOP);
             } else {
                 super.setImageDrawable(TextUtils.isEmpty(mInitial) ? mDefaultDrawable : null);
-                getBackground().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+                getBackground().setColorFilter(ThemeManager.getActiveColor(), PorterDuff.Mode.SRC_ATOP);
             }
         }
     }
@@ -285,7 +285,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
         if (getBackground() == null) {
             setBackgroundResource(R.drawable.circle);
         }
-        getBackground().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        getBackground().setColorFilter(ThemeManager.getActiveColor(), PorterDuff.Mode.SRC_ATOP);
     }
 
     private class QueryHandler extends AsyncQueryHandler {

@@ -535,6 +535,10 @@ public class ThemeManager {
         return sColor;
     }
 
+    public static int getActiveColor() {
+        return sActiveColor;
+    }
+
     public static Theme getTheme() {
         return sTheme;
     }
