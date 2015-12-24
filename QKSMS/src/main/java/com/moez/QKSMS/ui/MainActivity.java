@@ -386,7 +386,6 @@ public class MainActivity extends QKActivity implements LiveView, SlidingMenu.Sl
     @Override
     protected void onResume() {
         super.onResume();
-        ThemeManager.loadThemeProperties(this);
 
         if (!mSlidingMenu.isMenuShowing()) {
             mContent.onContentOpened();
