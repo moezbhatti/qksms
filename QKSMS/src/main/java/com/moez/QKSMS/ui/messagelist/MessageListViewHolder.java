@@ -9,8 +9,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ThumbnailManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.interfaces.SlideViewInterface;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -20,8 +23,12 @@ import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.Map;
 
-public class MessageListViewHolder extends ClickyViewHolder<MessageItem> implements SlideViewInterface {
+public class MessageListViewHolder extends ClickyViewHolder<MessageItem> implements SlideViewInterface, LiveView {
     private final String TAG = "MessageListViewHolder";
+
+    protected interface LiveViewCallback {
+        void onRefresh();
+    }
 
     // Views
     protected View mRoot;
@@ -44,6 +51,8 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
     protected ImageLoadedCallback mImageLoadedCallback;
     protected Presenter mPresenter;
 
+    protected LiveViewCallback mLiveViewCallback;
+
     public MessageListViewHolder(QKActivity context, View view) {
         super(context, view);
 
@@ -56,6 +65,9 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
         mAvatarView = (AvatarView) view.findViewById(R.id.avatar);
         mMessageBlock = (LinearLayout) view.findViewById(R.id.message_block);
         mSpace = view.findViewById(R.id.space);
+
+        LiveViewManager.registerView(this);
+        LiveViewManager.registerPreference(this, QKPreference.ACTIVE_THEME.getKey());
     }
 
     protected void showMmsView(boolean visible) {
@@ -88,6 +100,10 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
             mDownloadButton = (Button) mRoot.findViewById(R.id.btn_download_msg);
             mDownloadingLabel = (QKTextView) mRoot.findViewById(R.id.label_downloading);
         }
+    }
+
+    protected void setLiveViewCallback(LiveViewCallback liveViewCallback) {
+        mLiveViewCallback = liveViewCallback;
     }
 
     @Override
@@ -207,6 +223,13 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
     @Override
     public void setVisibility(boolean visible) {
 
+    }
+
+    @Override
+    public void refresh() {
+        if (mLiveViewCallback != null) {
+            mLiveViewCallback.onRefresh();
+        }
     }
 
     static protected class ImageLoadedCallback implements ItemLoadedCallback<ThumbnailManager.ImageLoaded> {

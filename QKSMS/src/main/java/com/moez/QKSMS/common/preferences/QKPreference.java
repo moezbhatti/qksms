@@ -87,7 +87,10 @@ public enum QKPreference {
     TAP_DISMISS("pref_key_quickreply_dismiss", true),
 
     // QK Compose
-    QK_COMPOSE("pref_key_quickcompose", false);
+    QK_COMPOSE("pref_key_quickcompose", false),
+
+    // LiveViews
+    ACTIVE_THEME("pref_key_active_theme");
 
     private String mKey;
     private Object mDefaultValue;

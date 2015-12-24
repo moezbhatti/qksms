@@ -36,6 +36,8 @@ import com.moez.QKSMS.ui.widget.WidgetProvider;
 
 import java.util.Set;
 
+import static com.moez.QKSMS.common.preferences.QKPreference.ACTIVE_THEME;
+
 public class ThemeManager {
     private final static String TAG = "ThemeManager";
 
@@ -81,9 +83,11 @@ public class ThemeManager {
     private static int sTextOnBackgroundSecondary;
     private static int sSentBubbleRes;
     private static int sSentBubbleAltRes;
+    private static boolean sSentBubbleColored;
     private static int sSentBubbleColor;
     private static int sReceivedBubbleRes;
     private static int sReceivedBubbleAltRes;
+    private static boolean sReceivedBubbleColored;
     private static int sReceivedBubbleColor;
     private static Drawable sRippleBackground;
 
@@ -473,7 +477,7 @@ public class ThemeManager {
     }
 
     public static int getSentBubbleColor() {
-        return sSentBubbleColor;
+        return sSentBubbleColored ? sActiveColor : getNeutralBubbleColor();
     }
 
     public static int getReceivedBubbleRes() {
@@ -485,7 +489,7 @@ public class ThemeManager {
     }
 
     public static int getReceivedBubbleColor() {
-        return sReceivedBubbleColor;
+        return sReceivedBubbleColored ? sActiveColor : getNeutralBubbleColor();
     }
 
     public static void setBubbleStyleNew(boolean styleNew) {
@@ -496,11 +500,11 @@ public class ThemeManager {
     }
 
     public static void setSentBubbleColored(boolean colored) {
-        sSentBubbleColor = colored ? sColor : getNeutralBubbleColor();
+        sSentBubbleColored = colored;
     }
 
     public static void setReceivedBubbleColored(boolean colored) {
-        sReceivedBubbleColor = colored ? sColor : getNeutralBubbleColor();
+        sReceivedBubbleColored = colored;
     }
 
     public static int getNeutralBubbleColor() {
@@ -704,6 +708,10 @@ public class ThemeManager {
         }
         if (sNavigationTintEnabled) {
             mWindow.setNavigationBarColor(ColorUtils.darken(color));
+        }
+
+        for (LiveView view : LiveViewManager.getViews(ACTIVE_THEME.getKey())) {
+            view.refresh();
         }
     }
 
