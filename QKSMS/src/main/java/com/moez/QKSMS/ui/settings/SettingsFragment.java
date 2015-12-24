@@ -726,6 +726,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     @Override
+    public void onMenuChanging(float percentOpen) {
+
+    }
+
+    @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         if (mContext == null) {
             mContext = (MainActivity) context;

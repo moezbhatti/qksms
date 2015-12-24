@@ -60,8 +60,8 @@ import org.ligi.snackengage.snacks.BaseSnack;
 import java.net.URLDecoder;
 import java.util.Collection;
 
-public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener,
-        SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener, LiveView {
+
+public class MainActivity extends QKActivity implements LiveView, SlidingMenu.SlidingMenuListener {
 
     private final String TAG = "MainActivity";
 
@@ -111,10 +111,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
 
         mSlidingMenu = (SlidingMenu) findViewById(R.id.sliding_menu);
         setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
-        mSlidingMenu.setOnOpenListener(this);
-        mSlidingMenu.setOnCloseListener(this);
-        mSlidingMenu.setOnOpenedListener(this);
-        mSlidingMenu.setOnClosedListener(this);
+        mSlidingMenu.setListener(this);
         mSlidingMenu.setContent();
         mSlidingMenu.setMenu();
         mSlidingMenu.showContent(false);
@@ -602,6 +599,11 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         // When the menu (i.e. the conversation list) has been closed, the content has been opened.
         // So notify the content fragment.
         if (mContent != null) mContent.onContentOpened();
+    }
+
+    @Override
+    public void onChanging(float percentOpen) {
+        if (mContent != null) mContent.onMenuChanging(percentOpen);
     }
 
     /**

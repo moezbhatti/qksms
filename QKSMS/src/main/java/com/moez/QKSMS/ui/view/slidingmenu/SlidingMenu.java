@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.view.slidingmenu.CustomViewAbove.OnPageChangeListener;
 
 /**
@@ -26,83 +25,18 @@ public class SlidingMenu extends RelativeLayout {
     private CustomViewAbove mViewAbove;
     private CustomViewBehind mViewBehind;
 
-    private OnOpenListener mOpenListener;
-    private OnOpenedListener mOpenedListener;
-    private OnCloseListener mCloseListener;
-    private OnClosedListener mClosedListener;
+    private SlidingMenuListener mListener;
 
-    /**
-     * The listener interface for receiving onOpen events.
-     * The class that is interested in processing a onOpen
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnOpenListener<code> method. When
-     * the onOpen event occurs, that object's appropriate
-     * method is invoked
-     */
-    public interface OnOpenListener {
-
-        /**
-         * On open.
-         */
+    public interface SlidingMenuListener {
         void onOpen();
-    }
 
-    /**
-     * The listener interface for receiving onOpened events.
-     * The class that is interested in processing a onOpened
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnOpenedListener<code> method. When
-     * the onOpened event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see OnOpenedEvent
-     */
-    public interface OnOpenedListener {
-
-        /**
-         * On opened.
-         */
         void onOpened();
-    }
 
-    /**
-     * The listener interface for receiving onClose events.
-     * The class that is interested in processing a onClose
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnCloseListener<code> method. When
-     * the onClose event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see OnCloseEvent
-     */
-    public interface OnCloseListener {
-
-        /**
-         * On close.
-         */
         void onClose();
-    }
 
-    /**
-     * The listener interface for receiving onClosed events.
-     * The class that is interested in processing a onClosed
-     * event implements this interface, and the object created
-     * with that class is registered with a component using the
-     * component's <code>addOnClosedListener<code> method. When
-     * the onClosed event occurs, that object's appropriate
-     * method is invoked.
-     *
-     * @see OnClosedEvent
-     */
-    public interface OnClosedListener {
-
-        /**
-         * On closed.
-         */
         void onClosed();
+
+        void onChanging(float percentOpen);
     }
 
     /**
@@ -151,14 +85,14 @@ public class SlidingMenu extends RelativeLayout {
             }
 
             public void onPageSelected(int position, boolean anim) {
-                if (position == POSITION_OPEN && mOpenListener != null && anim) {
-                    mOpenListener.onOpen();
-                } else if (position == POSITION_OPEN && mOpenedListener != null) {
-                    mOpenedListener.onOpened();
-                } else if (position == POSITION_CLOSE && mCloseListener != null && anim) {
-                    mCloseListener.onClose();
-                } else if (position == POSITION_CLOSE && mClosedListener != null) {
-                    mClosedListener.onClosed();
+                if (position == POSITION_OPEN && mListener != null && anim) {
+                    mListener.onOpen();
+                } else if (position == POSITION_OPEN && mListener != null) {
+                    mListener.onOpened();
+                } else if (position == POSITION_CLOSE && mListener != null && anim) {
+                    mListener.onClose();
+                } else if (position == POSITION_CLOSE && mListener != null) {
+                    mListener.onClosed();
                 }
             }
         });
@@ -168,8 +102,6 @@ public class SlidingMenu extends RelativeLayout {
     /**
      * Set the above view content from a layout resource. The resource will be inflated, adding all top-level views
      * to the above view.
-     *
-     * @param res the new content
      */
     public void setContent() {
         mViewAbove.setContent(LayoutInflater.from(getContext()).inflate(R.layout.content_frame, null));
@@ -187,8 +119,6 @@ public class SlidingMenu extends RelativeLayout {
     /**
      * Set the behind view (menu) content from a layout resource. The resource will be inflated, adding all top-level views
      * to the behind view.
-     *
-     * @param res the new content
      */
     public void setMenu() {
         mViewBehind.setContent(LayoutInflater.from(getContext()).inflate(R.layout.menu_frame, null));
@@ -270,51 +200,12 @@ public class SlidingMenu extends RelativeLayout {
      * @param i The margin, in pixels, on the right of the screen that the behind view scrolls to.
      */
     public void setBehindOffset(int i) {
-        //		RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mViewBehind.getLayoutParams());
-        //		int bottom = params.bottomMargin;
-        //		int top = params.topMargin;
-        //		int left = params.leftMargin;
-        //		params.setMargins(left, top, i, bottom);
         mViewBehind.setWidthOffset(i);
     }
 
-    /**
-     * Sets the OnOpenListener. {@link OnOpenListener#onOpen() OnOpenListener.onOpen()} will be called when the SlidingMenu is opened
-     *
-     * @param listener the new OnOpenListener
-     */
-    public void setOnOpenListener(OnOpenListener listener) {
-        mOpenListener = listener;
-    }
-
-
-    /**
-     * Sets the OnCloseListener. {@link OnCloseListener#onClose() OnCloseListener.onClose()} will be called when any one of the SlidingMenu is closed
-     *
-     * @param listener the new setOnCloseListener
-     */
-    public void setOnCloseListener(OnCloseListener listener) {
-        mCloseListener = listener;
-    }
-
-    /**
-     * Sets the OnOpenedListener. {@link OnOpenedListener#onOpened() OnOpenedListener.onOpened()} will be called after the SlidingMenu is opened
-     *
-     * @param listener the new OnOpenedListener
-     */
-    public void setOnOpenedListener(OnOpenedListener listener) {
-        mOpenedListener = listener;
-        mViewAbove.setOnOpenedListener(listener);
-    }
-
-    /**
-     * Sets the OnClosedListener. {@link OnClosedListener#onClosed() OnClosedListener.onClosed()} will be called after the SlidingMenu is closed
-     *
-     * @param listener the new OnClosedListener
-     */
-    public void setOnClosedListener(OnClosedListener listener) {
-        mClosedListener = listener;
-        mViewAbove.setOnClosedListener(listener);
+    public void setListener(SlidingMenuListener listener) {
+        mListener = listener;
+        mViewAbove.setListener(listener);
     }
 
     public static class SavedState extends BaseSavedState {

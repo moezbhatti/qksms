@@ -136,6 +136,11 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
     }
 
     @Override
+    public void onMenuChanging(float percentOpen) {
+
+    }
+
+    @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         inflater.inflate(R.menu.search, menu);
         ((QKActivity) context).setTitle(R.string.title_search);

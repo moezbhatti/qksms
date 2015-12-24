@@ -774,6 +774,11 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
+    public void onMenuChanging(float percentOpen) {
+        Log.d(TAG, "onChanging: " + percentOpen);
+    }
+
+    @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         inflater.inflate(R.menu.conversation, menu);
         setTitle();

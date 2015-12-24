@@ -33,6 +33,14 @@ public interface ContentFragment {
     void onContentClosed();
 
     /**
+     * Called multiple times as the content is opening or closing. Allows it to receive updates
+     * of the position. Currently used to animate to the new theme color
+     *
+     * @param percentOpen
+     */
+    void onMenuChanging(float percentOpen);
+
+    /**
      * Allows the MainActivity to delegate setting of the Toolbar title and menu
      */
     void inflateToolbar(Menu menu, MenuInflater inflater, Context context);

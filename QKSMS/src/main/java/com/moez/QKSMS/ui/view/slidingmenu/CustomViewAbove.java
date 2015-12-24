@@ -2,7 +2,6 @@ package com.moez.QKSMS.ui.view.slidingmenu;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.os.Build;
 import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
@@ -75,8 +74,7 @@ public class CustomViewAbove extends ViewGroup {
     private OnPageChangeListener mOnPageChangeListener;
     private OnPageChangeListener mInternalPageChangeListener;
 
-    private SlidingMenu.OnClosedListener mClosedListener;
-    private SlidingMenu.OnOpenedListener mOpenedListener;
+    private SlidingMenu.SlidingMenuListener mListener;
 
     /**
      * Callback interface for responding to changing state of the selected page.
@@ -211,11 +209,11 @@ public class CustomViewAbove extends ViewGroup {
             if (notify) {
                 // Notify the listeners here, because the client has switched content.
                 if (isMenuOpen()) {
-                    if (mOpenedListener != null)
-                        mOpenedListener.onOpened();
+                    if (mListener != null)
+                        mListener.onOpened();
                 } else {
-                    if (mClosedListener != null)
-                        mClosedListener.onClosed();
+                    if (mListener != null)
+                        mListener.onClosed();
                 }
             }
 
@@ -251,12 +249,8 @@ public class CustomViewAbove extends ViewGroup {
         mOnPageChangeListener = listener;
     }
 
-    public void setOnOpenedListener(SlidingMenu.OnOpenedListener l) {
-        mOpenedListener = l;
-    }
-
-    public void setOnClosedListener(SlidingMenu.OnClosedListener l) {
-        mClosedListener = l;
+    public void setListener(SlidingMenu.SlidingMenuListener listener) {
+        mListener = listener;
     }
 
     /**
@@ -332,11 +326,11 @@ public class CustomViewAbove extends ViewGroup {
         if (dx == 0 && dy == 0) {
             completeScroll();
             if (isMenuOpen()) {
-                if (mOpenedListener != null)
-                    mOpenedListener.onOpened();
+                if (mListener != null)
+                    mListener.onOpened();
             } else {
-                if (mClosedListener != null)
-                    mClosedListener.onClosed();
+                if (mListener != null)
+                    mListener.onClosed();
             }
             return;
         }
@@ -478,11 +472,11 @@ public class CustomViewAbove extends ViewGroup {
                 scrollTo(x, y);
             }
             if (isMenuOpen()) {
-                if (mOpenedListener != null)
-                    mOpenedListener.onOpened();
+                if (mListener != null)
+                    mListener.onOpened();
             } else {
-                if (mClosedListener != null)
-                    mClosedListener.onClosed();
+                if (mListener != null)
+                    mListener.onClosed();
             }
         }
         mScrolling = false;
@@ -545,7 +539,7 @@ public class CustomViewAbove extends ViewGroup {
                 if (thisTouchAllowed(ev)) {
                     mIsBeingDragged = false;
                     mIsUnableToDrag = false;
-                    if (isMenuOpen() && mViewBehind.menuTouchInQuickReturn(mContent, mCurItem, ev.getX() + mScrollX)) {
+                    if (isMenuOpen() && mViewBehind.menuTouchInQuickReturn(mContent, ev.getX() + mScrollX)) {
                         mQuickReturn = true;
                     }
                 } else {
@@ -641,7 +635,7 @@ public class CustomViewAbove extends ViewGroup {
                     }
                     mActivePointerId = INVALID_POINTER;
                     endDrag();
-                } else if (mQuickReturn && mViewBehind.menuTouchInQuickReturn(mContent, mCurItem, ev.getX() + mScrollX)) {
+                } else if (mQuickReturn && mViewBehind.menuTouchInQuickReturn(mContent, ev.getX() + mScrollX)) {
                     // close the menu
                     setCurrentItem(1);
                     endDrag();
@@ -696,9 +690,13 @@ public class CustomViewAbove extends ViewGroup {
     @Override
     public void scrollTo(int x, int y) {
         super.scrollTo(x, y);
+        float percentOpen = getPercentOpen();
         mScrollX = x;
         mViewBehind.scrollBehindTo(mContent, x, y);
-        ((SlidingMenu) getParent()).manageLayers(getPercentOpen());
+        ((SlidingMenu) getParent()).manageLayers(percentOpen);
+        if (mListener != null) {
+            mListener.onChanging(percentOpen);
+        }
     }
 
     private int determineTargetPage(float pageOffset, int velocity, int deltaX) {
@@ -803,14 +801,12 @@ public class CustomViewAbove extends ViewGroup {
                     handled = arrowScroll(FOCUS_RIGHT);
                     break;
                 case KeyEvent.KEYCODE_TAB:
-                    if (Build.VERSION.SDK_INT >= 11) {
-                        // The focus finder had a bug handling FOCUS_FORWARD and FOCUS_BACKWARD
-                        // before Android 3.0. Ignore the tab key on those devices.
-                        if (KeyEventCompat.hasNoModifiers(event)) {
-                            handled = arrowScroll(FOCUS_FORWARD);
-                        } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
-                            handled = arrowScroll(FOCUS_BACKWARD);
-                        }
+                    // The focus finder had a bug handling FOCUS_FORWARD and FOCUS_BACKWARD
+                    // before Android 3.0. Ignore the tab key on those devices.
+                    if (KeyEventCompat.hasNoModifiers(event)) {
+                        handled = arrowScroll(FOCUS_FORWARD);
+                    } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
+                        handled = arrowScroll(FOCUS_BACKWARD);
                     }
                     break;
             }

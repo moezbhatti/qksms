@@ -16,6 +16,10 @@ public class CustomViewBehind extends ViewGroup {
     private int mWidthOffset;
     private boolean mChildrenEnabled;
 
+    private float mScrollScale;
+    private Drawable mShadowDrawable;
+    private int mShadowWidth;
+
     public CustomViewBehind(Context context) {
         this(context, null);
     }
@@ -87,10 +91,6 @@ public class CustomViewBehind extends ViewGroup {
         mContent.measure(contentWidth, contentHeight);
     }
 
-    private float mScrollScale;
-    private Drawable mShadowDrawable;
-    private int mShadowWidth;
-
     public void setScrollScale(float scrollScale) {
         mScrollScale = scrollScale;
     }
@@ -138,10 +138,9 @@ public class CustomViewBehind extends ViewGroup {
      * Returns whether x is on a menu.
      *
      * @param content  content
-     * @param currPage current page
      * @param x        the position of the touch
      */
-    public boolean menuTouchInQuickReturn(View content, int currPage, float x) {
+    public boolean menuTouchInQuickReturn(View content, float x) {
         return x >= content.getLeft();
     }
 
