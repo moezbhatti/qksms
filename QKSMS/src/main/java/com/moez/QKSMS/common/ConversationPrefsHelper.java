@@ -23,7 +23,7 @@ public class ConversationPrefsHelper {
 
     public int getColor() {
         //return getInt(SettingsFragment.THEME, 0xFF009688);
-        return 0xFFFF0000;
+        return 0xff26a69a;
     }
 
     public boolean getNotificationsEnabled() {

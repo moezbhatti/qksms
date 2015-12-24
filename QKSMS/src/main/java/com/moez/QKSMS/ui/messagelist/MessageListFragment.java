@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui.messagelist;
 
+import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -69,6 +70,7 @@ import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
@@ -154,6 +156,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private boolean mIsSmsEnabled;
 
     private Cursor mCursor;
+    private ArgbEvaluator mArgbEvaluator;
     private MessageListAdapter mAdapter;
     private SmoothLinearLayoutManager mLayoutManager;
     private MessageListRecyclerView mRecyclerView;
@@ -166,6 +169,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private AsyncDialog mAsyncDialog;
     private ComposeView mComposeView;
     private SharedPreferences mPrefs;
+    private ConversationPrefsHelper mConversationPrefs;
     private ConversationDetailsDialog mConversationDetailsDialog;
 
     private int mSavedScrollPosition = -1;  // we save the ListView's scroll position in onPause(),
@@ -207,7 +211,9 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mShowImmediate = savedInstanceState.getBoolean(ARG_SHOW_IMMEDIATE, false);
         }
 
+        mArgbEvaluator = new ArgbEvaluator();
         mPrefs = mContext.getPrefs();
+        mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
         setHasOptionsMenu(true);
@@ -775,7 +781,8 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     @Override
     public void onMenuChanging(float percentOpen) {
-        Log.d(TAG, "onChanging: " + percentOpen);
+        mContext.getToolbar().setBackgroundColor((int) mArgbEvaluator.evaluate(
+                percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getColor()));
     }
 
     @Override
