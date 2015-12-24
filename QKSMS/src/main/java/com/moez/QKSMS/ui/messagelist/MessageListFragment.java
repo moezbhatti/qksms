@@ -14,7 +14,6 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SqliteWrapper;
@@ -780,8 +779,10 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     @Override
     public void onMenuChanging(float percentOpen) {
-        mContext.getToolbar().setBackgroundColor((int) mArgbEvaluator.evaluate(
-                percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getColor()));
+        if (mConversationPrefs != null) {
+            ThemeManager.setActiveColor((int) mArgbEvaluator.evaluate(
+                    percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getColor()));
+        }
     }
 
     @Override

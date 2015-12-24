@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -25,6 +24,7 @@ import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -71,6 +71,7 @@ public class ThemeManager {
     }
 
     private static int sColor;
+    private static int sActiveColor;
     private static int sBackgroundColor;
     private static Theme sTheme;
 
@@ -256,6 +257,7 @@ public class ThemeManager {
         mContext = context;
 
         sColor = Integer.parseInt(sPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
+        sActiveColor = sColor;
 
         if (context instanceof QKActivity) {
             mActivity = (QKActivity) context;
@@ -270,10 +272,10 @@ public class ThemeManager {
 
         if (mActivity != null && sStatusTintEnabled) {
             if (sStatusTintEnabled) {
-                mWindow.setStatusBarColor(darkenColor(sColor));
+                mWindow.setStatusBarColor(ColorUtils.darken(sColor));
             }
             if (sNavigationTintEnabled) {
-                mWindow.setNavigationBarColor(darkenColor(sColor));
+                mWindow.setNavigationBarColor(ColorUtils.darken(sColor));
             }
         }
 
@@ -586,7 +588,7 @@ public class ThemeManager {
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(TRANSITION_LENGTH);
             colorAnimation.addUpdateListener(animation -> {
-                mWindow.setStatusBarColor(darkenColor((Integer) animation.getAnimatedValue()));
+                mWindow.setStatusBarColor(ColorUtils.darken((Integer) animation.getAnimatedValue()));
             });
             colorAnimation.start();
         }
@@ -602,7 +604,7 @@ public class ThemeManager {
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(TRANSITION_LENGTH);
             colorAnimation.addUpdateListener(animation -> {
-                mWindow.setNavigationBarColor(darkenColor((Integer) animation.getAnimatedValue()));
+                mWindow.setNavigationBarColor(ColorUtils.darken((Integer) animation.getAnimatedValue()));
             });
             colorAnimation.start();
         }
@@ -622,6 +624,7 @@ public class ThemeManager {
 
         int colourFrom = sColor;
         sColor = color;
+        sActiveColor = color;
 
         sPrefs.edit().putString(SettingsFragment.THEME, "" + color).apply();
 
@@ -654,10 +657,10 @@ public class ThemeManager {
             }
 
             if (sStatusTintEnabled) {
-                mWindow.setStatusBarColor(darkenColor(color1));
+                mWindow.setStatusBarColor(ColorUtils.darken(color1));
             }
             if (sNavigationTintEnabled) {
-                mWindow.setNavigationBarColor(darkenColor(color1));
+                mWindow.setNavigationBarColor(ColorUtils.darken(color1));
             }
         });
         colorAnimation.addListener(new AnimatorListenerAdapter() {
@@ -688,12 +691,20 @@ public class ThemeManager {
         }
     }
 
-    private static int darkenColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.75f;
-        color = Color.HSVToColor(hsv);
-        return color;
+    public static void setActiveColor(int color) {
+        sActiveColor = color;
+
+        if (mActivity != null) {
+            if (mActivity.getSupportActionBar() != null) {
+                mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+            }
+        }
+        if (sStatusTintEnabled) {
+            mWindow.setStatusBarColor(ColorUtils.darken(color));
+        }
+        if (sNavigationTintEnabled) {
+            mWindow.setNavigationBarColor(ColorUtils.darken(color));
+        }
     }
 
     private static boolean isColorDarkEnough(int color) {

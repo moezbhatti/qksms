@@ -34,9 +34,10 @@ public class ColorUtils {
     }
 
     public static int darken(int color) {
-        return Color.argb(Color.alpha(color),
-                (int) (Color.red(color) * 0.7),
-                (int) (Color.green(color) * 0.7),
-                (int) (Color.blue(color) * 0.7));
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] *= 0.75f;
+        color = Color.HSVToColor(hsv);
+        return color;
     }
 }
