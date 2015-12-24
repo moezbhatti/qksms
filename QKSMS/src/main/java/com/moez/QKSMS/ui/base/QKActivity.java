@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.view.QKTextView;
 
@@ -235,5 +236,29 @@ public abstract class QKActivity extends ActionBarActivity {
 
     public RequestQueue getRequestQueue() {
         return ((QKSMSApp) getApplication()).getRequestQueue();
+    }
+
+    public boolean getBoolean(QKPreference preference) {
+        return getPrefs().getBoolean(preference.getKey(), (boolean) preference.getDefaultValue());
+    }
+
+    public void setBoolean(QKPreference preference, boolean newValue) {
+        getPrefs().edit().putBoolean(preference.getKey(), newValue).apply();
+    }
+
+    public int getInt(QKPreference preference) {
+        return getPrefs().getInt(preference.getKey(), (int) preference.getDefaultValue());
+    }
+
+    public void setInt(QKPreference preference, int newValue) {
+        getPrefs().edit().putInt(preference.getKey(), newValue).apply();
+    }
+
+    public String getString(QKPreference preference) {
+        return getPrefs().getString(preference.getKey(), (String) preference.getDefaultValue());
+    }
+
+    public void setString(QKPreference preference, String newValue) {
+        getPrefs().edit().putString(preference.getKey(), newValue).apply();
     }
 }

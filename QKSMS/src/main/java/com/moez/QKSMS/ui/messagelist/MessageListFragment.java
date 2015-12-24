@@ -56,6 +56,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.DrmUtils;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
@@ -168,7 +169,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private SensorManager mSensorManager;
     private AsyncDialog mAsyncDialog;
     private ComposeView mComposeView;
-    private SharedPreferences mPrefs;
     private ConversationPrefsHelper mConversationPrefs;
     private ConversationDetailsDialog mConversationDetailsDialog;
 
@@ -212,7 +212,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         }
 
         mArgbEvaluator = new ArgbEvaluator();
-        mPrefs = mContext.getPrefs();
         mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
@@ -221,7 +220,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mProxSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        if (mPrefs.getBoolean(SettingsFragment.PROXIMITY_CALLING, false)) {
+        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
@@ -751,7 +750,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         super.onContentOpened();
         mOpened = true; // The fragment has finished animating in
 
-        if (mPrefs != null && mPrefs.getBoolean(SettingsFragment.PROXIMITY_CALLING, false)) {
+        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
     }
