@@ -113,6 +113,9 @@ public class ImageUtils {
         Cursor cursor = context.getContentResolver().query(
                 photoUri, new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null
         );
+        if (cursor == null) {
+            return 0;
+        }
         if (cursor.moveToFirst()) {
             result = cursor.getInt(0);
         } else {
