@@ -36,6 +36,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.moez.QKSMS.common.preferences.*;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.R;
@@ -182,7 +184,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         mDelay.setOnClickListener(this);
 
         LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.THEME);
+        LiveViewManager.registerPreference(this, QKPreference.ACTIVE_THEME.getKey());
         LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
 
         refresh();
@@ -950,10 +952,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
     @Override
     public void refresh() {
-        mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        mButtonBackground.setColorFilter(ThemeManager.getActiveColor(), PorterDuff.Mode.SRC_ATOP);
         mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
         mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
+        mAttachmentPanel.setBackgroundColor(ThemeManager.getActiveColor());
         mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
         mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
         updateDelayButton();
