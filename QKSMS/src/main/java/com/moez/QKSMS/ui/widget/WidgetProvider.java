@@ -45,7 +45,7 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-        ThemeManager.loadThemeProperties(context);
+        ThemeManager.getInstance().loadThemeProperties(context);
 
         for (int appWidgetId : appWidgetIds) {
             updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager, appWidgetId));
@@ -118,10 +118,10 @@ public class WidgetProvider extends AppWidgetProvider {
         remoteViews.setRemoteAdapter(R.id.conversation_list, intent);
 
         remoteViews.setTextViewText(R.id.widget_label, context.getString(R.string.title_conversation_list));
-        remoteViews.setTextColor(R.id.widget_label, ThemeManager.getTextOnColorPrimary());
+        remoteViews.setTextColor(R.id.widget_label, ThemeManager.getInstance().getTextOnColorPrimary());
 
-        remoteViews.setInt(R.id.conversation_list_background, "setColorFilter", ThemeManager.getBackgroundColor());
-        remoteViews.setInt(R.id.header_background, "setColorFilter", ThemeManager.getColor());
+        remoteViews.setInt(R.id.conversation_list_background, "setColorFilter", ThemeManager.getInstance().getBackgroundColor());
+        remoteViews.setInt(R.id.header_background, "setColorFilter", ThemeManager.getInstance().getColor());
 
         // Open Mms's app conversation list when click on header
         final Intent convIntent = new Intent(context, MainActivity.class);

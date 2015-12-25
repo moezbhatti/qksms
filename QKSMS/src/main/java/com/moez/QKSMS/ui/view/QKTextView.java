@@ -106,19 +106,19 @@ public class QKTextView extends TextView implements LiveView {
 
             if (onColorBackground) {
                 if (mType == FontManager.TEXT_TYPE_PRIMARY) {
-                    setTextColor(ThemeManager.getTextOnColorPrimary());
-                    setLinkTextColor(ThemeManager.getTextOnColorPrimary());
+                    setTextColor(ThemeManager.getInstance().getTextOnColorPrimary());
+                    setLinkTextColor(ThemeManager.getInstance().getTextOnColorPrimary());
                 } else if (mType == FontManager.TEXT_TYPE_SECONDARY ||
                         mType == FontManager.TEXT_TYPE_TERTIARY) {
-                    setTextColor(ThemeManager.getTextOnColorSecondary());
+                    setTextColor(ThemeManager.getInstance().getTextOnColorSecondary());
                 }
             } else {
                 if (mType == FontManager.TEXT_TYPE_PRIMARY) {
-                    setTextColor(ThemeManager.getTextOnBackgroundPrimary());
-                    setLinkTextColor(ThemeManager.getColor());
+                    setTextColor(ThemeManager.getInstance().getTextOnBackgroundPrimary());
+                    setLinkTextColor(ThemeManager.getInstance().getColor());
                 } else if (mType == FontManager.TEXT_TYPE_SECONDARY ||
                         mType == FontManager.TEXT_TYPE_TERTIARY) {
-                    setTextColor(ThemeManager.getTextOnBackgroundSecondary());
+                    setTextColor(ThemeManager.getInstance().getTextOnBackgroundSecondary());
                 }
             }
         }

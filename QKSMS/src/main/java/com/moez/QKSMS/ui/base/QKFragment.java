@@ -37,7 +37,7 @@ public class QKFragment extends Fragment implements LiveView {
     @Override
     public void refresh() {
         if (getView() != null) {
-            getView().setBackgroundColor(ThemeManager.getBackgroundColor());
+            getView().setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
         }
     }
 }

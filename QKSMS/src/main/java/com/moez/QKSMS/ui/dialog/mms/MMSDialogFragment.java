@@ -190,7 +190,7 @@ public class MMSDialogFragment extends DialogFragment {
             mPositiveButtonView = (QKTextView) view.findViewById(R.id.buttonPositive);
             mPositiveButtonView.setVisibility(View.VISIBLE);
             mPositiveButtonView.setText(mPositiveButtonText);
-            mPositiveButtonView.setTextColor(ThemeManager.getColor());
+            mPositiveButtonView.setTextColor(ThemeManager.getInstance().getColor());
             mPositiveButtonView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -465,11 +465,11 @@ public class MMSDialogFragment extends DialogFragment {
             }
 
             QKTextView title = (QKTextView) convertView.findViewById(R.id.list_item_title);
-            title.setTextColor(ThemeManager.getColor());
+            title.setTextColor(ThemeManager.getInstance().getColor());
             title.setText(getItem(position).title);
 
             QKTextView subtitle = (QKTextView) convertView.findViewById(R.id.list_item_subtitle);
-            subtitle.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+            subtitle.setTextColor(ThemeManager.getInstance().getTextOnBackgroundPrimary());
             subtitle.setText(getItem(position).subtitle);
 
             ((QKTextView) convertView.findViewById(R.id.list_item_body))

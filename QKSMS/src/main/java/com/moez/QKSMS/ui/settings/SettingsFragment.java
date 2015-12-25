@@ -381,7 +381,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         String valueString = newValue == null ? "null" : newValue.toString();
         if (key.equals(NOTIFICATION_LED_COLOR)) {
             // Format the color as a nice string if it's the LED color.
-            valueString = ThemeManager.getColorString(Integer.parseInt(valueString));
+            valueString = ThemeManager.getInstance().getColorString(Integer.parseInt(valueString));
         }
 
         Log.d(TAG, "onPreferenceChange key:" + key + " newValue: " + valueString);
@@ -393,13 +393,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         switch (key) {
             case BACKGROUND:
-                ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
+                ThemeManager.getInstance().setTheme(ThemeManager.Theme.fromString((String) newValue));
                 break;
             case STATUS_TINT:
-                ThemeManager.setStatusBarTintEnabled((Boolean) newValue);
+                ThemeManager.getInstance().setStatusBarTintEnabled((Boolean) newValue);
                 break;
             case NAVIGATION_TINT:
-                ThemeManager.setNavigationBarTintEnabled((Boolean) newValue);
+                ThemeManager.getInstance().setNavigationBarTintEnabled((Boolean) newValue);
                 break;
             case FONT_FAMILY:
                 preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
@@ -412,10 +412,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 preference.setSummary(mFontWeights[i == 2 ? 0 : 1]);
                 break;
             case COLOUR_SENT:
-                ThemeManager.setSentBubbleColored((Boolean) newValue);
+                ThemeManager.getInstance().setSentBubbleColored((Boolean) newValue);
                 break;
             case COLOUR_RECEIVED:
-                ThemeManager.setReceivedBubbleColored((Boolean) newValue);
+                ThemeManager.getInstance().setReceivedBubbleColored((Boolean) newValue);
                 break;
             case NIGHT_AUTO:
                 updateAlarmManager(mContext, (Boolean) newValue);
@@ -519,13 +519,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         switch (key) {
             case THEME:
-                ThemeManager.showColourSwatchesDialog(mContext);
+                ThemeManager.getInstance().showColourSwatchesDialog(mContext);
                 break;
             case BUBBLES:
                 new BubblePreferenceDialog().setContext(mContext).show();
                 break;
             case ICON:
-                ThemeManager.setIcon(mContext);
+                ThemeManager.getInstance().setIcon(mContext);
                 break;
             case BLOCKED_FUTURE:
                 BlockedNumberDialog.showDialog(mContext);
@@ -701,7 +701,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         View view = getView();
         if (view != null) {
-            view.setBackgroundColor(ThemeManager.getBackgroundColor());
+            view.setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
         }
     }
 

@@ -56,7 +56,7 @@ public class WearableIntentReceiver extends BroadcastReceiver {
             background = Bitmap.createBitmap(640, 400, Bitmap.Config.ARGB_8888);
 
             // We can't use ThemeManager here because it might not be initialized
-            background.eraseColor(Integer.parseInt(prefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR)));
+            background.eraseColor(Integer.parseInt(prefs.getString(SettingsFragment.THEME, "" + ThemeManager.getInstance().DEFAULT_COLOR)));
         }
 
         wearableExtender.setBackground(background);

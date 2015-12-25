@@ -58,7 +58,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
         super.onFinishInflate();
 
         mFavoritesBackground = (LinearLayout) findViewById(R.id.starred_contacts);
-        mFavoritesBackground.setBackgroundColor(ThemeManager.getBackgroundColor());
+        mFavoritesBackground.setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
 
         mTitle = (QKTextView) findViewById(R.id.title);
 
@@ -154,13 +154,13 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
     }
 
     public void expand() {
-        mTitle.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+        mTitle.setTextColor(ThemeManager.getInstance().getTextOnBackgroundPrimary());
         mFavorites.setVisibility(View.VISIBLE);
         mIndicator.setRotation(0f);
     }
 
     public void collapse() {
-        mTitle.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
+        mTitle.setTextColor(ThemeManager.getInstance().getTextOnBackgroundSecondary());
         mFavorites.setVisibility(View.GONE);
         mIndicator.setRotation(90f);
     }
@@ -176,7 +176,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
 
     @Override
     public void refresh() {
-        mIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
-        mFavoritesBackground.setBackgroundColor(ThemeManager.getBackgroundColor());
+        mIndicator.setColorFilter(ThemeManager.getInstance().getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
+        mFavoritesBackground.setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
     }
 }

@@ -102,7 +102,7 @@ public abstract class QKContentFragment extends QKFragment implements LiveView, 
     public void refresh() {
         View view = getView();
         if (view != null) {
-            view.setBackgroundColor(ThemeManager.getBackgroundColor());
+            view.setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
         }
     }
 }

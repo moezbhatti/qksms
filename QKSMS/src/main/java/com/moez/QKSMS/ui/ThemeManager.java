@@ -71,35 +71,6 @@ public class ThemeManager {
         }
     }
 
-    private static int sColor;
-    private static int sActiveColor;
-    private static int sBackgroundColor;
-    private static Theme sTheme;
-
-    private static int sTextOnColorPrimary;
-    private static int sTextOnColorSecondary;
-    private static int sTextOnBackgroundPrimary;
-    private static int sTextOnBackgroundSecondary;
-    private static int sSentBubbleRes;
-    private static int sSentBubbleAltRes;
-    private static boolean sSentBubbleColored;
-    private static int sSentBubbleColor;
-    private static int sReceivedBubbleRes;
-    private static int sReceivedBubbleAltRes;
-    private static boolean sReceivedBubbleColored;
-    private static int sReceivedBubbleColor;
-    private static Drawable sRippleBackground;
-
-    private static Resources sResources;
-    private static SharedPreferences sPrefs;
-
-    private static boolean sStatusTintEnabled = false;
-    private static boolean sNavigationTintEnabled = false;
-
-    private static QKActivity mActivity;
-    private static Context mContext;
-    private static Window mWindow;
-
     // Colours copied from http://www.google.com/design/spec/style/color.html#color-ui-color-palette
     private static final int[][] COLOURS = {{
             // Red
@@ -249,45 +220,86 @@ public class ThemeManager {
             0, 0, 0, 1, 1, 1, 1, 1, 1, 1
     }};
 
+    private int mColor;
+    private int mActiveColor;
+    private int mBackgroundColor;
+    private Theme mTheme;
+
+    private int mTextOnColorPrimary;
+    private int mTextOnColorSecondary;
+    private int mTextOnBackgroundPrimary;
+    private int mtextOnBackgroundSecondary;
+    private int mSentBubbleRes;
+    private int mSentBubbleAltRes;
+    private boolean mSentBubbleColored;
+    private int mReceivedBubbleRes;
+    private int mReceivedBubbleAltRes;
+    private boolean mReceivedBubbleColored;
+    private Drawable mRippleBackground;
+
+    private Resources mResources;
+    private SharedPreferences mPrefs;
+
+    private boolean mStatusTintEnabled = false;
+    private boolean mNavigationTintEnabled = false;
+
+    private QKActivity mActivity;
+    private Context mContext;
+    private Window mWindow;
+
+    private static ThemeManager sInstance;
+
+    public static ThemeManager getInstance() {
+        if (sInstance == null) {
+            sInstance = new ThemeManager();
+        }
+
+        return sInstance;
+    }
+
+    private ThemeManager() {
+
+    }
+
     /**
      * Loads all theme properties. Should be called during onCreate
      * of each activity that contains fragments that use ThemeManager
      */
-    public static void loadThemeProperties(Context context) {
-        sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        sResources = context.getResources();
+    public void loadThemeProperties(Context context) {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mResources = context.getResources();
 
         mContext = context;
 
-        sColor = Integer.parseInt(sPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
-        sActiveColor = sColor;
+        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.getInstance().DEFAULT_COLOR));
+        mActiveColor = mColor;
 
         if (context instanceof QKActivity) {
             mActivity = (QKActivity) context;
-            mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(sColor));
+            mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(mColor));
             mWindow = mActivity.getWindow();
         }
 
-        initializeTheme(Theme.fromString(sPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
+        initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
 
-        sStatusTintEnabled = sPrefs.getBoolean(SettingsFragment.STATUS_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-        sNavigationTintEnabled = sPrefs.getBoolean(SettingsFragment.NAVIGATION_TINT, false) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        mStatusTintEnabled = mPrefs.getBoolean(SettingsFragment.STATUS_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        mNavigationTintEnabled = mPrefs.getBoolean(SettingsFragment.NAVIGATION_TINT, false) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 
-        if (mActivity != null && sStatusTintEnabled) {
-            if (sStatusTintEnabled) {
-                mWindow.setStatusBarColor(ColorUtils.darken(sColor));
+        if (mActivity != null && mStatusTintEnabled) {
+            if (mStatusTintEnabled) {
+                mWindow.setStatusBarColor(ColorUtils.darken(mColor));
             }
-            if (sNavigationTintEnabled) {
-                mWindow.setNavigationBarColor(ColorUtils.darken(sColor));
+            if (mNavigationTintEnabled) {
+                mWindow.setNavigationBarColor(ColorUtils.darken(mColor));
             }
         }
 
     }
 
-    public static void setTheme(Theme theme) {
-        int startColor = sBackgroundColor;
+    public void setTheme(Theme theme) {
+        int startColor = mBackgroundColor;
         initializeTheme(theme);
-        int endColor = sBackgroundColor;
+        int endColor = mBackgroundColor;
 
         if (mActivity instanceof MainActivity) {
             final View background = mActivity.findViewById(R.id.menu_frame).getRootView();
@@ -331,70 +343,70 @@ public class ThemeManager {
         }
     }
 
-    public static void initializeTheme(Theme theme) {
-        sTheme = theme;
+    public void initializeTheme(Theme theme) {
+        mTheme = theme;
 
         switch (theme) {
             case WHITE:
-                sBackgroundColor = sResources.getColor(R.color.white_pure);
+                mBackgroundColor = mResources.getColor(R.color.white_pure);
                 if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
                         R.style.AppThemeWhite : R.style.AppThemeWhiteDialog);
                 break;
             case OFFWHITE:
-                sBackgroundColor = sResources.getColor(R.color.grey_light_mega_ultra);
+                mBackgroundColor = mResources.getColor(R.color.grey_light_mega_ultra);
                 if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
                         R.style.AppThemeLight : R.style.AppThemeLightDialog);
                 break;
             case GREY:
-                sBackgroundColor = sResources.getColor(R.color.grey_material);
+                mBackgroundColor = mResources.getColor(R.color.grey_material);
                 if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
                         R.style.AppThemeDark : R.style.AppThemeDarkDialog);
                 break;
             case BLACK:
-                sBackgroundColor = sResources.getColor(R.color.black);
+                mBackgroundColor = mResources.getColor(R.color.black);
                 if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
                         R.style.AppThemeDarkAmoled : R.style.AppThemeDarkAmoledDialog);
                 break;
         }
 
-        switch (sTheme) {
+        switch (mTheme) {
             case WHITE:
             case OFFWHITE:
-                sTextOnBackgroundPrimary = sResources.getColor(R.color.theme_light_text_primary);
-                sTextOnBackgroundSecondary = sResources.getColor(R.color.theme_light_text_secondary);
-                sRippleBackground = sResources.getDrawable(R.drawable.button_background_transparent);
+                mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_light_text_primary);
+                mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_light_text_secondary);
+                mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent);
                 if (mActivity != null) {
                     mActivity.getToolbar().setPopupTheme(R.style.PopupThemeLight);
                 }
                 break;
             case GREY:
             case BLACK:
-                sTextOnBackgroundPrimary = sResources.getColor(R.color.theme_dark_text_primary);
-                sTextOnBackgroundSecondary = sResources.getColor(R.color.theme_dark_text_secondary);
-                sRippleBackground = sResources.getDrawable(R.drawable.button_background_transparent_light);
+                mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
+                mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
+                mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent_light);
                 if (mActivity != null) {
                     mActivity.getToolbar().setPopupTheme(R.style.PopupTheme);
                 }
                 break;
         }
 
-        sTextOnColorPrimary = sResources.getColor(isColorDarkEnough(sColor) ?
+        mTextOnColorPrimary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_primary : R.color.theme_light_text_primary);
-        sTextOnColorSecondary = sResources.getColor(isColorDarkEnough(sColor) ?
+        mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
-        setSentBubbleColored(sPrefs.getBoolean(SettingsFragment.COLOUR_SENT, true));
-        setReceivedBubbleColored(sPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
-        setBubbleStyleNew(sPrefs.getBoolean(SettingsFragment.BUBBLES_NEW, true));
+        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_SENT, true));
+        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
+        setBubbleStyleNew(mPrefs.getBoolean(SettingsFragment.BUBBLES_NEW, true));
 
         if (mActivity != null) {
             // We need to set this here because the title bar is initialized before the ThemeManager,
             // so it's not using the correct color yet
-            ((QKTextView) mActivity.findViewById(R.id.toolbar_title)).setTextColor(sTextOnColorPrimary);
+            ((QKTextView) mActivity.findViewById(R.id.toolbar_title)).setTextColor(mTextOnColorPrimary);
         }
     }
 
-    public static void setIcon(final QKActivity context) {
+    public void setIcon(final QKActivity context) {
         new QKDialog()
                 .setContext(context)
                 .setTitle(R.string.update_icon_title)
@@ -420,7 +432,7 @@ public class ThemeManager {
 
                         // Save the enabled component so we can kill the app with this one when
                         // it's all done.
-                        if (getSwatchColour(sColor) == PALETTE[i]) {
+                        if (getSwatchColour(mColor) == PALETTE[i]) {
                             enabledComponent = componentClassName;
 
                         } else {
@@ -447,106 +459,106 @@ public class ThemeManager {
                 .show();
     }
 
-    public static int getBackgroundColor() {
-        return sBackgroundColor;
+    public int getBackgroundColor() {
+        return mBackgroundColor;
     }
 
-    public static int getTextOnColorPrimary() {
-        return sTextOnColorPrimary;
+    public int getTextOnColorPrimary() {
+        return mTextOnColorPrimary;
     }
 
-    public static int getTextOnColorSecondary() {
-        return sTextOnColorSecondary;
+    public int getTextOnColorSecondary() {
+        return mTextOnColorSecondary;
     }
 
-    public static int getTextOnBackgroundPrimary() {
-        return sTextOnBackgroundPrimary;
+    public int getTextOnBackgroundPrimary() {
+        return mTextOnBackgroundPrimary;
     }
 
-    public static int getTextOnBackgroundSecondary() {
-        return sTextOnBackgroundSecondary;
+    public int getTextOnBackgroundSecondary() {
+        return mtextOnBackgroundSecondary;
     }
 
-    public static int getSentBubbleRes() {
-        return sSentBubbleRes;
+    public int getSentBubbleRes() {
+        return mSentBubbleRes;
     }
 
-    public static int getSentBubbleAltRes() {
-        return sSentBubbleAltRes;
+    public int getSentBubbleAltRes() {
+        return mSentBubbleAltRes;
     }
 
-    public static int getSentBubbleColor() {
-        return sSentBubbleColored ? sActiveColor : getNeutralBubbleColor();
+    public int getSentBubbleColor() {
+        return mSentBubbleColored ? mActiveColor : getNeutralBubbleColor();
     }
 
-    public static int getReceivedBubbleRes() {
-        return sReceivedBubbleRes;
+    public int getReceivedBubbleRes() {
+        return mReceivedBubbleRes;
     }
 
-    public static int getReceivedBubbleAltRes() {
-        return sReceivedBubbleAltRes;
+    public int getReceivedBubbleAltRes() {
+        return mReceivedBubbleAltRes;
     }
 
-    public static int getReceivedBubbleColor() {
-        return sReceivedBubbleColored ? sActiveColor : getNeutralBubbleColor();
+    public int getReceivedBubbleColor() {
+        return mReceivedBubbleColored ? mActiveColor : getNeutralBubbleColor();
     }
 
-    public static void setBubbleStyleNew(boolean styleNew) {
-        sSentBubbleRes = styleNew ? R.drawable.message_sent_2 : R.drawable.message_sent;
-        sSentBubbleAltRes = styleNew ? R.drawable.message_sent_alt_2 : R.drawable.message_sent_alt;
-        sReceivedBubbleRes = styleNew ? R.drawable.message_received_2 : R.drawable.message_received;
-        sReceivedBubbleAltRes = styleNew ? R.drawable.message_received_alt_2 : R.drawable.message_received_alt;
+    public void setBubbleStyleNew(boolean styleNew) {
+        mSentBubbleRes = styleNew ? R.drawable.message_sent_2 : R.drawable.message_sent;
+        mSentBubbleAltRes = styleNew ? R.drawable.message_sent_alt_2 : R.drawable.message_sent_alt;
+        mReceivedBubbleRes = styleNew ? R.drawable.message_received_2 : R.drawable.message_received;
+        mReceivedBubbleAltRes = styleNew ? R.drawable.message_received_alt_2 : R.drawable.message_received_alt;
     }
 
-    public static void setSentBubbleColored(boolean colored) {
-        sSentBubbleColored = colored;
+    public void setSentBubbleColored(boolean colored) {
+        mSentBubbleColored = colored;
     }
 
-    public static void setReceivedBubbleColored(boolean colored) {
-        sReceivedBubbleColored = colored;
+    public void setReceivedBubbleColored(boolean colored) {
+        mReceivedBubbleColored = colored;
     }
 
-    public static int getNeutralBubbleColor() {
-        if (sTheme == null) {
+    public int getNeutralBubbleColor() {
+        if (mTheme == null) {
             return 0xeeeeee;
         }
 
-        switch (sTheme) {
+        switch (mTheme) {
             case WHITE:
-                return sResources.getColor(R.color.grey_light_mega_ultra);
+                return mResources.getColor(R.color.grey_light_mega_ultra);
 
             case OFFWHITE:
-                return sResources.getColor(R.color.white_pure);
+                return mResources.getColor(R.color.white_pure);
 
             case GREY:
-                return sResources.getColor(R.color.grey_dark);
+                return mResources.getColor(R.color.grey_dark);
 
             default:
-                return sResources.getColor(R.color.grey_material);
+                return mResources.getColor(R.color.grey_material);
         }
     }
 
-    public static Drawable getRippleBackground() {
-        return sRippleBackground;
+    public Drawable getRippleBackground() {
+        return mRippleBackground;
     }
 
-    public static int getColor() {
-        return sActiveColor;
+    public int getColor() {
+        return mActiveColor;
     }
 
-    public static int getThemeColor() {
-        return sColor;
+    public int getThemeColor() {
+        return mColor;
     }
 
-    public static Theme getTheme() {
-        return sTheme;
+    public Theme getTheme() {
+        return mTheme;
     }
 
-    public static boolean isNightMode() {
-        return sTheme == Theme.GREY || sTheme == Theme.BLACK;
+    public boolean isNightMode() {
+        return mTheme == Theme.GREY || mTheme == Theme.BLACK;
     }
 
-    public static void showColourSwatchesDialog(final QKActivity context) {
+    public void showColourSwatchesDialog(final QKActivity context) {
         final QKDialog dialog = new QKDialog();
 
         ColorPickerPalette palette = new ColorPickerPalette(context);
@@ -556,7 +568,7 @@ public class ThemeManager {
             dialog.dismiss();
         });
 
-        palette.drawPalette(PALETTE, getSwatchColour(sColor));
+        palette.drawPalette(PALETTE, getSwatchColour(mColor));
 
         dialog.setContext(context)
                 .setTitle(R.string.pref_theme)
@@ -566,7 +578,7 @@ public class ThemeManager {
         dialog.show();
     }
 
-    private static void showColourPickerDialog(final QKActivity context, int swatchColour) {
+    private void showColourPickerDialog(final QKActivity context, int swatchColour) {
         final QKDialog dialog = new QKDialog();
 
         ColorPickerPalette palette = new ColorPickerPalette(context);
@@ -576,7 +588,7 @@ public class ThemeManager {
             dialog.dismiss();
         });
 
-        palette.drawPalette(getSwatch(swatchColour), sColor);
+        palette.drawPalette(getSwatch(swatchColour), mColor);
 
         dialog.setContext(context)
                 .setTitle(R.string.pref_theme)
@@ -586,11 +598,11 @@ public class ThemeManager {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setStatusBarTintEnabled(boolean enabled) {
-        if (sStatusTintEnabled != enabled) {
-            sStatusTintEnabled = enabled;
-            int colorFrom = enabled ? sResources.getColor(R.color.black) : sColor;
-            int colorTo = enabled ? sColor : sResources.getColor(R.color.black);
+    public void setStatusBarTintEnabled(boolean enabled) {
+        if (mStatusTintEnabled != enabled) {
+            mStatusTintEnabled = enabled;
+            int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
+            int colorTo = enabled ? mColor : mResources.getColor(R.color.black);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(TRANSITION_LENGTH);
@@ -602,11 +614,11 @@ public class ThemeManager {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setNavigationBarTintEnabled(boolean enabled) {
-        if (sNavigationTintEnabled != enabled) {
-            sNavigationTintEnabled = enabled;
-            int colorFrom = enabled ? sResources.getColor(R.color.black) : sColor;
-            int colorTo = enabled ? sColor : sResources.getColor(R.color.black);
+    public void setNavigationBarTintEnabled(boolean enabled) {
+        if (mNavigationTintEnabled != enabled) {
+            mNavigationTintEnabled = enabled;
+            int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
+            int colorTo = enabled ? mColor : mResources.getColor(R.color.black);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(TRANSITION_LENGTH);
@@ -617,11 +629,11 @@ public class ThemeManager {
         }
     }
 
-    public static String getColorString(int color) {
+    public String getColorString(int color) {
         return String.format("#%08x", color).toUpperCase();
     }
 
-    public static void setColour(int color) {
+    public void setColour(int color) {
 
         AnalyticsManager.getInstance().sendEvent(
                 AnalyticsManager.CATEGORY_PREFERENCE_CHANGE,
@@ -629,17 +641,17 @@ public class ThemeManager {
                 getColorString(color)
         );
 
-        int colourFrom = sColor;
-        sColor = color;
-        sActiveColor = color;
+        int colourFrom = mColor;
+        mColor = color;
+        mActiveColor = color;
 
-        sPrefs.edit().putString(SettingsFragment.THEME, "" + color).apply();
+        mPrefs.edit().putString(SettingsFragment.THEME, "" + color).apply();
 
-        setSentBubbleColored(sPrefs.getBoolean(SettingsFragment.COLOUR_SENT, true));
-        setReceivedBubbleColored(sPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
-        sTextOnColorPrimary = sResources.getColor(isColorDarkEnough(sColor) ?
+        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_SENT, true));
+        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
+        mTextOnColorPrimary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_primary : R.color.theme_light_text_primary);
-        sTextOnColorSecondary = sResources.getColor(isColorDarkEnough(sColor) ?
+        mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
         // Some views are updated every frame of the animation; get these views here. We
@@ -663,10 +675,10 @@ public class ThemeManager {
                 }
             }
 
-            if (sStatusTintEnabled) {
+            if (mStatusTintEnabled) {
                 mWindow.setStatusBarColor(ColorUtils.darken(color1));
             }
-            if (sNavigationTintEnabled) {
+            if (mNavigationTintEnabled) {
                 mWindow.setNavigationBarColor(ColorUtils.darken(color1));
             }
         });
@@ -684,8 +696,8 @@ public class ThemeManager {
             //final Toolbar toolbar = (Toolbar) mActivity.findViewById(R.id.title);
             final QKTextView title = (QKTextView) mActivity.findViewById(R.id.toolbar_title);
 
-            if (title.getCurrentTextColor() != ThemeManager.sTextOnColorPrimary) {
-                ValueAnimator titleColorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), title.getCurrentTextColor(), ThemeManager.sTextOnColorPrimary);
+            if (title.getCurrentTextColor() != mTextOnColorPrimary) {
+                ValueAnimator titleColorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), title.getCurrentTextColor(), mTextOnColorPrimary);
                 titleColorAnimation.setDuration(TRANSITION_LENGTH);
                 titleColorAnimation.setInterpolator(new DecelerateInterpolator());
                 titleColorAnimation.addUpdateListener(animation -> {
@@ -698,18 +710,18 @@ public class ThemeManager {
         }
     }
 
-    public static void setActiveColor(int color) {
-        sActiveColor = color;
+    public void setActiveColor(int color) {
+        mActiveColor = color;
 
         if (mActivity != null) {
             if (mActivity.getSupportActionBar() != null) {
                 mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
             }
         }
-        if (sStatusTintEnabled) {
+        if (mStatusTintEnabled) {
             mWindow.setStatusBarColor(ColorUtils.darken(color));
         }
-        if (sNavigationTintEnabled) {
+        if (mNavigationTintEnabled) {
             mWindow.setNavigationBarColor(ColorUtils.darken(color));
         }
 
@@ -718,7 +730,7 @@ public class ThemeManager {
         }
     }
 
-    private static boolean isColorDarkEnough(int color) {
+    private boolean isColorDarkEnough(int color) {
         for (int i = 0; i < COLOURS.length; i++) {
             for (int j = 0; j < COLOURS[i].length; j++) {
                 if (color == COLOURS[i][j]) {
@@ -730,7 +742,7 @@ public class ThemeManager {
         return true;
     }
 
-    public static int getSwatchColour(int colour) {
+    public int getSwatchColour(int colour) {
         for (int i = 0; i < COLOURS.length; i++) {
             for (int j = 0; j < COLOURS[i].length; j++) {
                 if (colour == COLOURS[i][j]) {
@@ -742,7 +754,7 @@ public class ThemeManager {
         return colour;
     }
 
-    private static int[] getSwatch(int colour) {
+    private int[] getSwatch(int colour) {
         for (int[] swatch : COLOURS) {
             for (int swatchColor : swatch) {
                 if (colour == swatchColor) {

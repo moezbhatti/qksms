@@ -648,9 +648,9 @@ public class MainActivity extends QKActivity implements LiveView, SlidingMenu.Sl
     public void refresh() {
         // Update the background color. This code is important during the welcome screen setup, when the activity
         // in the ThemeManager isn't the MainActivity
-        findViewById(R.id.menu_frame).getRootView().setBackgroundColor(ThemeManager.getBackgroundColor());
-        findViewById(R.id.menu_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
-        findViewById(R.id.content_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
+        findViewById(R.id.menu_frame).getRootView().setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
+        findViewById(R.id.menu_frame).setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
+        findViewById(R.id.content_frame).setBackgroundColor(ThemeManager.getInstance().getBackgroundColor());
     }
 
     public static class DeleteThreadListener implements DialogInterface.OnClickListener {

@@ -110,7 +110,7 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
             buf.append(mContext.getResources().getString(R.string.draft_separator));
             int before = buf.length();
             buf.append(mContext.getResources().getString(R.string.has_draft));
-            buf.setSpan(new ForegroundColorSpan(ThemeManager.getColor()), before, buf.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            buf.setSpan(new ForegroundColorSpan(ThemeManager.getInstance().getColor()), before, buf.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         }
 
         return buf;

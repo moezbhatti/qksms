@@ -38,7 +38,7 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
         getSupportActionBar().hide();
 
         mBackground = findViewById(R.id.welcome);
-        mBackground.setBackgroundColor(ThemeManager.getColor());
+        mBackground.setBackgroundColor(ThemeManager.getInstance().getColor());
 
         mPrevious = (ImageView) findViewById(R.id.welcome_previous);
         mPrevious.setOnClickListener(this);
@@ -63,8 +63,8 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
     }
 
     public void setColor(int color) {
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), ThemeManager.getColor(), color);
-        colorAnimation.setDuration(ThemeManager.TRANSITION_LENGTH);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), ThemeManager.getInstance().getColor(), color);
+        colorAnimation.setDuration(ThemeManager.getInstance().TRANSITION_LENGTH);
         colorAnimation.setInterpolator(new DecelerateInterpolator());
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -74,7 +74,7 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
         });
         colorAnimation.start();
 
-        ThemeManager.setColour(color);
+        ThemeManager.getInstance().setColour(color);
     }
 
     public void setColorBackground(int color) {

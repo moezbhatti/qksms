@@ -680,7 +680,7 @@ public class NotificationManager {
                     .setContentIntent(composePI)
                     .setSmallIcon(R.drawable.ic_compose)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
-                    .setColor(ThemeManager.getColor());
+                    .setColor(ThemeManager.getInstance().getColor());
 
             NotificationManager.notify(context, NOTIFICATION_ID_QUICKCOMPOSE, builder.build());
         } else {

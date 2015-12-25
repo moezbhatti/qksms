@@ -88,16 +88,16 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         View view = inflater.inflate(R.layout.fragment_conversations, null);
         ButterKnife.bind(this, view);
 
-        mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
+        mEmptyStateIcon.setColorFilter(ThemeManager.getInstance().getTextOnBackgroundPrimary());
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        mFab.setColorNormal(ThemeManager.getColor());
-        mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
+        mFab.setColorNormal(ThemeManager.getInstance().getColor());
+        mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getInstance().getColor()));
         mFab.attachToRecyclerView(mRecyclerView);
-        mFab.setColorFilter(ThemeManager.getTextOnColorPrimary());
+        mFab.setColorFilter(ThemeManager.getInstance().getTextOnColorPrimary());
         mFab.setOnClickListener(v -> {
             if (mAdapter.isInMultiSelectMode()) {
                 mAdapter.disableMultiSelectMode(true);
@@ -307,11 +307,11 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             return;
         }
 
-        mFab.setColorNormal(ThemeManager.getColor());
-        mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
-        mFab.getDrawable().setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+        mFab.setColorNormal(ThemeManager.getInstance().getColor());
+        mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getInstance().getColor()));
+        mFab.getDrawable().setColorFilter(ThemeManager.getInstance().getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
 
-        mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
+        mEmptyStateIcon.setColorFilter(ThemeManager.getInstance().getTextOnBackgroundPrimary());
     }
 
     @Override
