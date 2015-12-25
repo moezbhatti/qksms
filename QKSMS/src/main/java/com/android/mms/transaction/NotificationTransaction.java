@@ -17,16 +17,6 @@
 
 package com.android.mms.transaction;
 
-import static com.android.mms.transaction.TransactionState.FAILED;
-import static com.android.mms.transaction.TransactionState.INITIALIZED;
-import static com.android.mms.transaction.TransactionState.SUCCESS;
-import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF;
-import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_DEFERRED;
-import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_RETRIEVED;
-import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_UNRECOGNIZED;
-
-import java.io.IOException;
-
 import android.app.Service;
 import android.content.ContentValues;
 import android.content.Context;
@@ -36,12 +26,10 @@ import android.net.Uri;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.Telephony.Mms;
-import android.provider.Telephony.Threads;
 import android.provider.Telephony.Mms.Inbox;
+import android.provider.Telephony.Threads;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-
-import com.android.mms.MmsConfig;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.GenericPdu;
@@ -51,6 +39,17 @@ import com.google.android.mms.pdu_alt.PduComposer;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
+import com.moez.QKSMS.MmsConfig;
+
+import java.io.IOException;
+
+import static com.android.mms.transaction.TransactionState.FAILED;
+import static com.android.mms.transaction.TransactionState.INITIALIZED;
+import static com.android.mms.transaction.TransactionState.SUCCESS;
+import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF;
+import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_DEFERRED;
+import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_RETRIEVED;
+import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_UNRECOGNIZED;
 
 /**
  * The NotificationTransaction is responsible for handling multimedia

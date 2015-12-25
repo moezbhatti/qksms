@@ -22,10 +22,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import com.android.mms.MmsConfig;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.smil.SmilHelper;
 import com.moez.QKSMS.LogTag;
+import com.moez.QKSMS.MmsConfig;
 import org.w3c.dom.events.EventListener;
 
 import java.io.FileInputStream;
