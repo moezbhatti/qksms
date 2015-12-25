@@ -14,12 +14,16 @@ import android.telephony.TelephonyManager;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
+import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.android.mms.transaction.Transaction;
 import com.android.mms.transaction.TransactionBundle;
 import com.android.mms.transaction.TransactionService;
@@ -30,6 +34,7 @@ import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.CursorUtils;
+import com.moez.QKSMS.common.utils.LinkifyUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -39,6 +44,7 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
+
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
@@ -323,6 +329,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     }
 
     private void bindBody(MessageListViewHolder holder, MessageItem messageItem) {
+        holder.mBodyTextView.setAutoLinkMask(0);
         SpannableStringBuilder buf = new SpannableStringBuilder();
 
         String body = messageItem.mBody;
@@ -357,7 +364,10 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             }
         }
 
-        holder.mBodyTextView.setText(buf);
+        if (!TextUtils.isEmpty(buf)) {
+            holder.mBodyTextView.setText(buf);
+            LinkifyUtils.addLinks(holder.mBodyTextView);
+        }
         holder.mBodyTextView.setVisibility(TextUtils.isEmpty(buf) ? View.GONE : View.VISIBLE);
     }
 
