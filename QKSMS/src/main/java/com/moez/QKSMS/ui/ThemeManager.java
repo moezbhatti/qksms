@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.IconColorReceiver;
@@ -35,8 +36,6 @@ import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
 
 import java.util.Set;
-
-import static com.moez.QKSMS.common.preferences.QKPreference.ACTIVE_THEME;
 
 public class ThemeManager {
     private final static String TAG = "ThemeManager";
@@ -532,11 +531,11 @@ public class ThemeManager {
     }
 
     public static int getColor() {
-        return sColor;
+        return sActiveColor;
     }
 
-    public static int getActiveColor() {
-        return sActiveColor;
+    public static int getThemeColor() {
+        return sColor;
     }
 
     public static Theme getTheme() {
@@ -714,7 +713,7 @@ public class ThemeManager {
             mWindow.setNavigationBarColor(ColorUtils.darken(color));
         }
 
-        for (LiveView view : LiveViewManager.getViews(ACTIVE_THEME.getKey())) {
+        for (LiveView view : LiveViewManager.getViews(QKPreference.ACTIVE_THEME.getKey())) {
             view.refresh();
         }
     }

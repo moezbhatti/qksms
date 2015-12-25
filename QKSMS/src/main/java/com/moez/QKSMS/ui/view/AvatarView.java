@@ -261,7 +261,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
                 getBackground().setColorFilter(0x00000000, PorterDuff.Mode.SRC_ATOP);
             } else {
                 super.setImageDrawable(TextUtils.isEmpty(mInitial) ? mDefaultDrawable : null);
-                getBackground().setColorFilter(ThemeManager.getActiveColor(), PorterDuff.Mode.SRC_ATOP);
+                getBackground().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
             }
         }
     }
@@ -285,7 +285,7 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
         if (getBackground() == null) {
             setBackgroundResource(R.drawable.circle);
         }
-        getBackground().setColorFilter(ThemeManager.getActiveColor(), PorterDuff.Mode.SRC_ATOP);
+        getBackground().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
     }
 
     private class QueryHandler extends AsyncQueryHandler {

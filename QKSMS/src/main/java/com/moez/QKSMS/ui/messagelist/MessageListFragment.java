@@ -790,7 +790,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     public void onMenuChanging(float percentOpen) {
         if (mConversationPrefs != null) {
             ThemeManager.setActiveColor((int) mArgbEvaluator.evaluate(
-                    percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getColor()));
+                    percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getThemeColor()));
         }
     }
 
