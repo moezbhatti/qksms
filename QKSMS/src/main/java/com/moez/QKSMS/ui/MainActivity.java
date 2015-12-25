@@ -158,7 +158,7 @@ public class MainActivity extends QKActivity implements LiveView, SlidingMenu.Sl
             case TYPE_CONVERSATION:
                 Bundle args = new Bundle();
                 args.putLong(MessageListFragment.ARG_THREAD_ID, mThreadId);
-                mContent = MessageListFragment.getInstance(args);
+                mContent = MessageListFragment.getInstance(mThreadId, 0, null, false);
                 break;
             case TYPE_SETTINGS:
                 mContent = SettingsFragment.newInstance(R.xml.settings_simple);
@@ -535,15 +535,7 @@ public class MainActivity extends QKActivity implements LiveView, SlidingMenu.Sl
     }
 
     public void setConversation(long threadId, long rowId, String pattern, boolean animate) {
-
-        // Build the arguments for this conversation
-        Bundle args = new Bundle();
-        args.putLong(MessageListFragment.ARG_THREAD_ID, threadId);
-        args.putLong(MessageListFragment.ARG_ROW_ID, rowId);
-        args.putString(MessageListFragment.ARG_HIGHLIGHT, pattern);
-        args.putBoolean(MessageListFragment.ARG_SHOW_IMMEDIATE, !animate);
-
-        MessageListFragment fragment = MessageListFragment.getInstance(args);
+        MessageListFragment fragment = MessageListFragment.getInstance(threadId, rowId, pattern, !animate);
 
         // Save the thread ID here and switch the content
         mThreadId = threadId;

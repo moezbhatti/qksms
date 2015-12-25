@@ -190,13 +190,22 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private String mHighlight;
     private boolean mShowImmediate;
 
-    public static MessageListFragment getInstance(Bundle args) {
-        MessageListFragment fragment = new MessageListFragment();
+    public static MessageListFragment getInstance(long threadId, long rowId, String highlight, boolean showImmediate) {
 
-        // Update the fragment with the new arguments.
+        Bundle args = new Bundle();
+        args.putLong(ARG_THREAD_ID, threadId);
+        args.putLong(ARG_ROW_ID, rowId);
+        args.putString(ARG_HIGHLIGHT, highlight);
+        args.putBoolean(ARG_SHOW_IMMEDIATE, showImmediate);
+
+        MessageListFragment fragment = new MessageListFragment();
         fragment.updateArguments(args);
 
         return fragment;
+    }
+
+    public MessageListFragment() {
+
     }
 
     @Override
@@ -323,7 +332,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     /**
      * To be called when the user opens a conversation. Initializes the Conversation objects, sets
      * up the draft, and marks the conversation as read.
-     * <p/>
+     * <p>
      * Note: This will have no effect if the context has not been initialized yet.
      */
     private void onOpenConversation() {
@@ -672,7 +681,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     /**
      * Should only be called for failed messages. Deletes the message, placing the text from the
      * message back in the edit box to be updated and then sent.
-     * <p/>
+     * <p>
      * Assumes that cursor points to the correct MessageItem.
      *
      * @param msgItem
