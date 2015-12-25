@@ -761,6 +761,8 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
+
+        ThemeManager.setActiveColor(mConversationPrefs.getColor());
     }
 
     @Override
@@ -784,6 +786,8 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 mComposeView.saveDraft();
             }
         }
+
+        ThemeManager.setActiveColor(ThemeManager.getThemeColor());
     }
 
     @Override
