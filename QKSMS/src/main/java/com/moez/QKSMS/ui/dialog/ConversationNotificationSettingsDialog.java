@@ -15,12 +15,12 @@ import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKPreference;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
+import com.moez.QKSMS.ui.view.QKSwitchPreference;
+import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
-import com.moez.QKSMS.ui.view.QKTextView;
 
 public class ConversationNotificationSettingsDialog extends QKDialog implements Preference.OnPreferenceClickListener {
     private final String TAG = "ConversationNotificationSettingsDialog";
@@ -87,6 +87,9 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
         LinearLayout list = new LinearLayout(getActivity());
         list.setOrientation(LinearLayout.VERTICAL);
 
+        list.addView(new QKPreference(getActivity(), this, SettingsFragment.THEME,
+                R.string.pref_theme, 0).getView());
+
         list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getNotificationLedEnabled(), R.string.pref_led, 0).getView());
 
@@ -114,7 +117,9 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
     }
 
     public boolean onPreferenceClick(Preference preference) {
-        if (preference.getKey().equals(SettingsFragment.NOTIFICATION_LED_COLOR)) {
+        if (preference.getKey().equals(SettingsFragment.THEME)) {
+            mContext.makeToast(R.string.test);
+        } else if (preference.getKey().equals(SettingsFragment.NOTIFICATION_LED_COLOR)) {
             mLedColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");
             return true;
         } else if (preference.getKey().equals(SettingsFragment.NOTIFICATION_TONE)) {
