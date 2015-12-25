@@ -27,7 +27,6 @@ import android.preference.PreferenceManager;
 import android.provider.Telephony.Mms;
 import android.text.TextUtils;
 import android.util.Log;
-import com.android.mms.MmsConfig;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.AcknowledgeInd;
@@ -37,6 +36,7 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
+import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.mmssms.Utils;
 
 import java.io.IOException;

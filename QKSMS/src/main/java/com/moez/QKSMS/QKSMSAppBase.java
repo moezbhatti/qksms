@@ -88,7 +88,7 @@ public class QKSMSAppBase extends MultiDexApplication {
         mPduLoaderManager = new PduLoaderManager(context);
         mThumbnailManager = new ThumbnailManager(context);
 
-        com.android.mms.MmsConfig.init(this);
+        MmsConfig.init(this);
         Contact.init(this);
         DraftCache.init(this);
         Conversation.init(this);
