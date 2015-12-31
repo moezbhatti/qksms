@@ -220,58 +220,49 @@ public class ThemeManager {
             0, 0, 0, 1, 1, 1, 1, 1, 1, 1
     }};
 
-    private int mColor;
-    private int mActiveColor;
-    private int mBackgroundColor;
-    private Theme mTheme;
+    private static int mColor;
+    private static int mActiveColor;
+    private static int mBackgroundColor;
+    private static Theme mTheme;
 
-    private int mTextOnColorPrimary;
-    private int mTextOnColorSecondary;
-    private int mTextOnBackgroundPrimary;
-    private int mtextOnBackgroundSecondary;
-    private int mSentBubbleRes;
-    private int mSentBubbleAltRes;
-    private boolean mSentBubbleColored;
-    private int mReceivedBubbleRes;
-    private int mReceivedBubbleAltRes;
-    private boolean mReceivedBubbleColored;
-    private Drawable mRippleBackground;
+    private static int mTextOnColorPrimary;
+    private static int mTextOnColorSecondary;
+    private static int mTextOnBackgroundPrimary;
+    private static int mtextOnBackgroundSecondary;
+    private static int mSentBubbleRes;
+    private static int mSentBubbleAltRes;
+    private static boolean mSentBubbleColored;
+    private static int mReceivedBubbleRes;
+    private static int mReceivedBubbleAltRes;
+    private static boolean mReceivedBubbleColored;
+    private static Drawable mRippleBackground;
 
-    private Resources mResources;
-    private SharedPreferences mPrefs;
+    private static Resources mResources;
+    private static SharedPreferences mPrefs;
 
-    private boolean mStatusTintEnabled = false;
-    private boolean mNavigationTintEnabled = false;
+    private static boolean mStatusTintEnabled = false;
+    private static boolean mNavigationTintEnabled = false;
 
-    private QKActivity mActivity;
-    private Context mContext;
-    private Window mWindow;
+    private static QKActivity mActivity;
+    private static Context mContext;
+    private static Window mWindow;
 
-    private static ThemeManager sInstance;
+    public static void init(Context context) {
+        mContext = context;
 
-    public static ThemeManager getInstance() {
-        if (sInstance == null) {
-            sInstance = new ThemeManager();
-        }
-
-        return sInstance;
-    }
-
-    private ThemeManager() {
-
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mResources = context.getResources();
     }
 
     /**
      * Loads all theme properties. Should be called during onCreate
      * of each activity that contains fragments that use ThemeManager
      */
-    public void loadThemeProperties(Context context) {
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mResources = context.getResources();
+    public static void loadThemeProperties(Context context) {
 
         mContext = context;
 
-        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.getInstance().DEFAULT_COLOR));
+        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
         mActiveColor = mColor;
 
         if (context instanceof QKActivity) {
@@ -296,7 +287,7 @@ public class ThemeManager {
 
     }
 
-    public void setTheme(Theme theme) {
+    public static void setTheme(Theme theme) {
         int startColor = mBackgroundColor;
         initializeTheme(theme);
         int endColor = mBackgroundColor;
@@ -343,7 +334,7 @@ public class ThemeManager {
         }
     }
 
-    public void initializeTheme(Theme theme) {
+    public static void initializeTheme(Theme theme) {
         mTheme = theme;
 
         switch (theme) {
@@ -406,7 +397,7 @@ public class ThemeManager {
         }
     }
 
-    public void setIcon(final QKActivity context) {
+    public static void setIcon(final QKActivity context) {
         new QKDialog()
                 .setContext(context)
                 .setTitle(R.string.update_icon_title)
@@ -459,66 +450,66 @@ public class ThemeManager {
                 .show();
     }
 
-    public int getBackgroundColor() {
+    public static int getBackgroundColor() {
         return mBackgroundColor;
     }
 
-    public int getTextOnColorPrimary() {
+    public static int getTextOnColorPrimary() {
         return mTextOnColorPrimary;
     }
 
-    public int getTextOnColorSecondary() {
+    public static int getTextOnColorSecondary() {
         return mTextOnColorSecondary;
     }
 
-    public int getTextOnBackgroundPrimary() {
+    public static int getTextOnBackgroundPrimary() {
         return mTextOnBackgroundPrimary;
     }
 
-    public int getTextOnBackgroundSecondary() {
+    public static int getTextOnBackgroundSecondary() {
         return mtextOnBackgroundSecondary;
     }
 
-    public int getSentBubbleRes() {
+    public static int getSentBubbleRes() {
         return mSentBubbleRes;
     }
 
-    public int getSentBubbleAltRes() {
+    public static int getSentBubbleAltRes() {
         return mSentBubbleAltRes;
     }
 
-    public int getSentBubbleColor() {
+    public static int getSentBubbleColor() {
         return mSentBubbleColored ? mActiveColor : getNeutralBubbleColor();
     }
 
-    public int getReceivedBubbleRes() {
+    public static int getReceivedBubbleRes() {
         return mReceivedBubbleRes;
     }
 
-    public int getReceivedBubbleAltRes() {
+    public static int getReceivedBubbleAltRes() {
         return mReceivedBubbleAltRes;
     }
 
-    public int getReceivedBubbleColor() {
+    public static int getReceivedBubbleColor() {
         return mReceivedBubbleColored ? mActiveColor : getNeutralBubbleColor();
     }
 
-    public void setBubbleStyleNew(boolean styleNew) {
+    public static void setBubbleStyleNew(boolean styleNew) {
         mSentBubbleRes = styleNew ? R.drawable.message_sent_2 : R.drawable.message_sent;
         mSentBubbleAltRes = styleNew ? R.drawable.message_sent_alt_2 : R.drawable.message_sent_alt;
         mReceivedBubbleRes = styleNew ? R.drawable.message_received_2 : R.drawable.message_received;
         mReceivedBubbleAltRes = styleNew ? R.drawable.message_received_alt_2 : R.drawable.message_received_alt;
     }
 
-    public void setSentBubbleColored(boolean colored) {
+    public static void setSentBubbleColored(boolean colored) {
         mSentBubbleColored = colored;
     }
 
-    public void setReceivedBubbleColored(boolean colored) {
+    public static void setReceivedBubbleColored(boolean colored) {
         mReceivedBubbleColored = colored;
     }
 
-    public int getNeutralBubbleColor() {
+    public static int getNeutralBubbleColor() {
         if (mTheme == null) {
             return 0xeeeeee;
         }
@@ -538,27 +529,27 @@ public class ThemeManager {
         }
     }
 
-    public Drawable getRippleBackground() {
+    public static Drawable getRippleBackground() {
         return mRippleBackground;
     }
 
-    public int getColor() {
+    public static int getColor() {
         return mActiveColor;
     }
 
-    public int getThemeColor() {
+    public static int getThemeColor() {
         return mColor;
     }
 
-    public Theme getTheme() {
+    public static Theme getTheme() {
         return mTheme;
     }
 
-    public boolean isNightMode() {
+    public static boolean isNightMode() {
         return mTheme == Theme.GREY || mTheme == Theme.BLACK;
     }
 
-    public void showColourSwatchesDialog(final QKActivity context) {
+    public static void showColourSwatchesDialog(final QKActivity context) {
         final QKDialog dialog = new QKDialog();
 
         ColorPickerPalette palette = new ColorPickerPalette(context);
@@ -578,7 +569,7 @@ public class ThemeManager {
         dialog.show();
     }
 
-    private void showColourPickerDialog(final QKActivity context, int swatchColour) {
+    private static void showColourPickerDialog(final QKActivity context, int swatchColour) {
         final QKDialog dialog = new QKDialog();
 
         ColorPickerPalette palette = new ColorPickerPalette(context);
@@ -598,7 +589,7 @@ public class ThemeManager {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setStatusBarTintEnabled(boolean enabled) {
+    public static void setStatusBarTintEnabled(boolean enabled) {
         if (mStatusTintEnabled != enabled) {
             mStatusTintEnabled = enabled;
             int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
@@ -614,7 +605,7 @@ public class ThemeManager {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void setNavigationBarTintEnabled(boolean enabled) {
+    public static void setNavigationBarTintEnabled(boolean enabled) {
         if (mNavigationTintEnabled != enabled) {
             mNavigationTintEnabled = enabled;
             int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
@@ -629,11 +620,11 @@ public class ThemeManager {
         }
     }
 
-    public String getColorString(int color) {
+    public static String getColorString(int color) {
         return String.format("#%08x", color).toUpperCase();
     }
 
-    public void setColour(int color) {
+    public static void setColour(int color) {
 
         AnalyticsManager.getInstance().sendEvent(
                 AnalyticsManager.CATEGORY_PREFERENCE_CHANGE,
@@ -710,7 +701,7 @@ public class ThemeManager {
         }
     }
 
-    public void setActiveColor(int color) {
+    public static void setActiveColor(int color) {
         mActiveColor = color;
 
         if (mActivity != null) {
@@ -730,7 +721,7 @@ public class ThemeManager {
         }
     }
 
-    private boolean isColorDarkEnough(int color) {
+    private static boolean isColorDarkEnough(int color) {
         for (int i = 0; i < COLOURS.length; i++) {
             for (int j = 0; j < COLOURS[i].length; j++) {
                 if (color == COLOURS[i][j]) {
@@ -742,7 +733,7 @@ public class ThemeManager {
         return true;
     }
 
-    public int getSwatchColour(int colour) {
+    public static int getSwatchColour(int colour) {
         for (int i = 0; i < COLOURS.length; i++) {
             for (int j = 0; j < COLOURS[i].length; j++) {
                 if (colour == COLOURS[i][j]) {
@@ -754,7 +745,7 @@ public class ThemeManager {
         return colour;
     }
 
-    private int[] getSwatch(int colour) {
+    private static int[] getSwatch(int colour) {
         for (int[] swatch : COLOURS) {
             for (int swatchColor : swatch) {
                 if (colour == swatchColor) {

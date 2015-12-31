@@ -29,9 +29,9 @@ public abstract class QKPopupActivity extends QKActivity {
         setFinishOnTouchOutside(mPrefs.getBoolean(SettingsFragment.QUICKREPLY_TAP_DISMISS, true));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         setContentView(getLayoutResource());
-        ThemeManager.getInstance().loadThemeProperties(this);
+        ThemeManager.loadThemeProperties(this);
 
-        ((QKLinearLayout) findViewById(R.id.popup)).setBackgroundTint(ThemeManager.getInstance().getBackgroundColor());
+        ((QKLinearLayout) findViewById(R.id.popup)).setBackgroundTint(ThemeManager.getBackgroundColor());
 
         View title = findViewById(R.id.title);
         if (title != null && title instanceof AppCompatTextView) {

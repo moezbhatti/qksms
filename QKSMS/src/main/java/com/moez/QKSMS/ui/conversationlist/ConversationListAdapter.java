@@ -80,23 +80,23 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
         if (conversation.hasUnreadMessages()) {
             holder.unreadView.setVisibility(View.VISIBLE);
-            holder.snippetView.setTextColor(ThemeManager.getInstance().getTextOnBackgroundPrimary());
-            holder.dateView.setTextColor(ThemeManager.getInstance().getColor());
+            holder.snippetView.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+            holder.dateView.setTextColor(ThemeManager.getColor());
         } else {
             holder.unreadView.setVisibility(View.GONE);
-            holder.snippetView.setTextColor(ThemeManager.getInstance().getTextOnBackgroundSecondary());
-            holder.dateView.setTextColor(ThemeManager.getInstance().getTextOnBackgroundSecondary());
+            holder.snippetView.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
+            holder.dateView.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
         }
 
         if (isInMultiSelectMode()) {
             holder.mSelected.setVisibility(View.VISIBLE);
             if (isSelected(conversation.getThreadId())) {
                 holder.mSelected.setImageResource(R.drawable.ic_selected);
-                holder.mSelected.setColorFilter(ThemeManager.getInstance().getColor());
+                holder.mSelected.setColorFilter(ThemeManager.getColor());
                 holder.mSelected.setAlpha(1f);
             } else {
                 holder.mSelected.setImageResource(R.drawable.ic_unselected);
-                holder.mSelected.setColorFilter(ThemeManager.getInstance().getTextOnBackgroundSecondary());
+                holder.mSelected.setColorFilter(ThemeManager.getTextOnBackgroundSecondary());
                 holder.mSelected.setAlpha(0.5f);
             }
         } else {
@@ -127,9 +127,9 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
     @Override
     public void refresh() {
-        mMuted.setColorFilter(ThemeManager.getInstance().getColor(), PorterDuff.Mode.SRC_ATOP);
-        mUnread.setColorFilter(ThemeManager.getInstance().getColor(), PorterDuff.Mode.SRC_ATOP);
-        mError.setColorFilter(ThemeManager.getInstance().getColor(), PorterDuff.Mode.SRC_ATOP);
+        mMuted.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        mUnread.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        mError.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
         notifyDataSetChanged();
     }
 }

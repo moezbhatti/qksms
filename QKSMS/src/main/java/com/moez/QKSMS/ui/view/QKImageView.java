@@ -44,7 +44,7 @@ public class QKImageView extends ImageView implements LiveView {
         mDrawable = drawable;
 
         if (mDrawable != null) {
-            mDrawable.setColorFilter(ThemeManager.getInstance().getColor(), PorterDuff.Mode.SRC_ATOP);
+            mDrawable.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
             super.setImageDrawable(drawable);
         }
     }

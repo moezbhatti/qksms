@@ -21,7 +21,7 @@ public class WelcomeThemeFragment extends BaseWelcomeFragment implements ColorPi
 
         mPallette = (ColorPickerPalette) view.findViewById(R.id.welcome_themes);
         mPallette.init(19, 4, this);
-        mPallette.drawPalette(ThemeManager.getInstance().PALETTE, ThemeManager.getInstance().getColor());
+        mPallette.drawPalette(ThemeManager.PALETTE, ThemeManager.getColor());
 
         return view;
     }
@@ -29,7 +29,7 @@ public class WelcomeThemeFragment extends BaseWelcomeFragment implements ColorPi
     @Override
     public void onColorSelected(int color) {
         ((WelcomeActivity) getActivity()).setColor(color);
-        mPallette.drawPalette(ThemeManager.getInstance().PALETTE, color);
+        mPallette.drawPalette(ThemeManager.PALETTE, color);
     }
 
     @Override

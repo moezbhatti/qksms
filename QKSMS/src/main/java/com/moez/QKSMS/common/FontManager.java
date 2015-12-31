@@ -89,26 +89,26 @@ public class FontManager {
         // Colors and font weight
         switch (type) {
             case FontManager.TEXT_TYPE_PRIMARY:
-                boolean isNight = ThemeManager.getInstance().getTheme() == ThemeManager.Theme.GREY ||
-                                  ThemeManager.getInstance().getTheme() == ThemeManager.Theme.BLACK;
+                boolean isNight = ThemeManager.getTheme() == ThemeManager.Theme.GREY ||
+                                  ThemeManager.getTheme() == ThemeManager.Theme.BLACK;
                 int id = isNight ? R.color.text_primary_dark : R.color.text_primary_light;
                 return context.getResources().getColorStateList(id);
             case FontManager.TEXT_TYPE_SECONDARY:
-                return ColorStateList.valueOf(ThemeManager.getInstance().getTextOnBackgroundSecondary());
+                return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundSecondary());
             case FontManager.TEXT_TYPE_TERTIARY:
-                return ColorStateList.valueOf(ThemeManager.getInstance().getTextOnBackgroundSecondary());
+                return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundSecondary());
             case FontManager.TEXT_TYPE_CATEGORY:
-                return ColorStateList.valueOf(ThemeManager.getInstance().getColor());
+                return ColorStateList.valueOf(ThemeManager.getColor());
             case FontManager.TEXT_TYPE_DIALOG_TITLE:
-                return ColorStateList.valueOf(ThemeManager.getInstance().getTextOnBackgroundPrimary());
+                return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundPrimary());
             case FontManager.TEXT_TYPE_DIALOG_MESSAGE:
-                return ColorStateList.valueOf(ThemeManager.getInstance().getTextOnBackgroundSecondary());
+                return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundSecondary());
             case FontManager.TEXT_TYPE_DIALOG_BUTTON:
-                return ColorStateList.valueOf(ThemeManager.getInstance().getTextOnBackgroundPrimary());
+                return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundPrimary());
             case FontManager.TEXT_TYPE_TOOLBAR:
-                return ColorStateList.valueOf(ThemeManager.getInstance().getTextOnColorPrimary());
+                return ColorStateList.valueOf(ThemeManager.getTextOnColorPrimary());
         }
-        return ColorStateList.valueOf(ThemeManager.getInstance().getTextOnBackgroundPrimary());
+        return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundPrimary());
     }
 
     public static int getFontWeight(Context context, boolean heavy) {

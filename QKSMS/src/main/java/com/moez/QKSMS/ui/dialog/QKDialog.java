@@ -130,7 +130,7 @@ public class QKDialog extends DialogFragment {
             mPositiveButtonView = (QKTextView) view.findViewById(R.id.buttonPositive);
             mPositiveButtonView.setVisibility(View.VISIBLE);
             mPositiveButtonView.setText(mPositiveButtonText);
-            mPositiveButtonView.setTextColor(ThemeManager.getInstance().getColor());
+            mPositiveButtonView.setTextColor(ThemeManager.getColor());
             mPositiveButtonView.setOnClickListener(mPositiveButtonClickListener);
         }
 
@@ -443,11 +443,11 @@ public class QKDialog extends DialogFragment {
             }
 
             QKTextView title = (QKTextView) convertView.findViewById(R.id.list_item_title);
-            title.setTextColor(ThemeManager.getInstance().getColor());
+            title.setTextColor(ThemeManager.getColor());
             title.setText(getItem(position).title);
 
             QKTextView subtitle = (QKTextView) convertView.findViewById(R.id.list_item_subtitle);
-            subtitle.setTextColor(ThemeManager.getInstance().getTextOnBackgroundPrimary());
+            subtitle.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
             subtitle.setText(getItem(position).subtitle);
 
             ((QKTextView) convertView.findViewById(R.id.list_item_body))

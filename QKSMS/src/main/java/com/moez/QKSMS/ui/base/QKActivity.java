@@ -72,7 +72,7 @@ public abstract class QKActivity extends ActionBarActivity {
             setSupportActionBar(mToolbar);
         }
 
-        ThemeManager.getInstance().loadThemeProperties(this);
+        ThemeManager.loadThemeProperties(this);
     }
 
     protected void showBackButton(boolean show) {
@@ -173,7 +173,7 @@ public abstract class QKActivity extends ActionBarActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Save a reference to the menu so that we can quickly access menu icons later.
         mMenu = menu;
-        colorMenuIcons(mMenu, ThemeManager.getInstance().getTextOnColorPrimary());
+        colorMenuIcons(mMenu, ThemeManager.getTextOnColorPrimary());
         return true;
     }
 

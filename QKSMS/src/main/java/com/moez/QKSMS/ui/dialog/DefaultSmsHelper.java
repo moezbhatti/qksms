@@ -45,7 +45,7 @@ public class DefaultSmsHelper implements ActionClickListener {
                     .type(getSnackBarType())
                     .text(mMessage)
                     .duration(duration)
-                    .actionColor(ThemeManager.getInstance().getColor())
+                    .actionColor(ThemeManager.getColor())
                     .actionLabel(R.string.upgrade_now)
                     .actionListener(this);
 

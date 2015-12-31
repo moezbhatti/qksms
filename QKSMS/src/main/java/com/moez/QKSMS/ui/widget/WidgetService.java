@@ -224,9 +224,9 @@ public class WidgetService extends RemoteViewsService {
         }
 
         private void bindIndicators(RemoteViews remoteViews, Conversation conversation) {
-            remoteViews.setInt(R.id.muted, "setColorFilter", ThemeManager.getInstance().getColor());
-            remoteViews.setInt(R.id.error, "setColorFilter", ThemeManager.getInstance().getColor());
-            remoteViews.setInt(R.id.unread, "setColorFilter", ThemeManager.getInstance().getColor());
+            remoteViews.setInt(R.id.muted, "setColorFilter", ThemeManager.getColor());
+            remoteViews.setInt(R.id.error, "setColorFilter", ThemeManager.getColor());
+            remoteViews.setInt(R.id.unread, "setColorFilter", ThemeManager.getColor());
             remoteViews.setViewVisibility(R.id.muted, new ConversationPrefsHelper(mContext, conversation.getThreadId())
                     .getNotificationsEnabled() ? View.GONE : View.VISIBLE);
             remoteViews.setViewVisibility(R.id.error, conversation.hasError() ? View.VISIBLE : View.GONE);
@@ -234,15 +234,15 @@ public class WidgetService extends RemoteViewsService {
         }
 
         private void bindName(RemoteViews remoteViews, Conversation conversation) {
-            SpannableStringBuilder from = addColor(conversation.getRecipients().formatNames(", "), ThemeManager.getInstance().getTextOnBackgroundPrimary());
+            SpannableStringBuilder from = addColor(conversation.getRecipients().formatNames(", "), ThemeManager.getTextOnBackgroundPrimary());
 
             if (conversation.hasDraft()) {
                 from.append(mContext.getResources().getString(R.string.draft_separator));
                 int before = from.length();
                 from.append(mContext.getResources().getString(R.string.has_draft));
                 from.setSpan(new TextAppearanceSpan(mContext, android.R.style.TextAppearance_Small,
-                        ThemeManager.getInstance().getTextOnBackgroundPrimary()), before, from.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                from.setSpan(new ForegroundColorSpan(ThemeManager.getInstance().getColor()), before, from.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                        ThemeManager.getTextOnBackgroundPrimary()), before, from.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                from.setSpan(new ForegroundColorSpan(ThemeManager.getColor()), before, from.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
             }
 
             remoteViews.setTextViewText(R.id.name, from);
@@ -250,12 +250,12 @@ public class WidgetService extends RemoteViewsService {
 
         private void bindDate(RemoteViews remoteViews, Conversation conversation) {
             remoteViews.setTextViewText(R.id.date, addColor(MessageUtils.formatTimeStampString(mContext, conversation.getDate()),
-                    conversation.hasUnreadMessages() ? ThemeManager.getInstance().getColor() : ThemeManager.getInstance().getTextOnBackgroundSecondary()));
+                    conversation.hasUnreadMessages() ? ThemeManager.getColor() : ThemeManager.getTextOnBackgroundSecondary()));
         }
 
         private void bindSnippet(RemoteViews remoteViews, Conversation conversation) {
             remoteViews.setTextViewText(R.id.snippet, addColor(conversation.getSnippet(), conversation.hasUnreadMessages() ?
-                    ThemeManager.getInstance().getTextOnBackgroundPrimary() : ThemeManager.getInstance().getTextOnBackgroundSecondary()));
+                    ThemeManager.getTextOnBackgroundPrimary() : ThemeManager.getTextOnBackgroundSecondary()));
         }
 
         /**

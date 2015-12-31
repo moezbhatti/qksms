@@ -20,9 +20,9 @@ public class ListviewHelper {
             try {
                 Drawable drawable = ContextCompat.getDrawable(context, R.drawable.scrollbar);
                 drawable.setColorFilter(Color.argb(64,
-                        Color.red(ThemeManager.getInstance().getTextOnBackgroundSecondary()),
-                        Color.green(ThemeManager.getInstance().getTextOnBackgroundSecondary()),
-                        Color.blue(ThemeManager.getInstance().getTextOnBackgroundSecondary())),
+                        Color.red(ThemeManager.getTextOnBackgroundSecondary()),
+                        Color.green(ThemeManager.getTextOnBackgroundSecondary()),
+                        Color.blue(ThemeManager.getTextOnBackgroundSecondary())),
                         PorterDuff.Mode.SRC_ATOP);
 
                 Field mScrollCacheField = View.class.getDeclaredField("mScrollCache");

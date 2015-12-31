@@ -50,16 +50,16 @@ public class QKSwitch extends SwitchCompat implements LiveView {
 
         // Disabled state
         states[0] = new int[]{-android.R.attr.state_enabled};
-        colors[0] = mRes.getColor(ThemeManager.getInstance().isNightMode() ?
+        colors[0] = mRes.getColor(ThemeManager.isNightMode() ?
                 R.color.switch_thumb_disabled_dark : R.color.switch_thumb_disabled_light);
 
         // Checked state
         states[1] = new int[]{android.R.attr.state_checked};
-        colors[1] = ThemeManager.getInstance().getColor();
+        colors[1] = ThemeManager.getColor();
 
         // Unchecked enabled state state
         states[2] = new int[0];
-        colors[2] = mRes.getColor(ThemeManager.getInstance().isNightMode() ?
+        colors[2] = mRes.getColor(ThemeManager.isNightMode() ?
                 R.color.switch_thumb_enabled_dark : R.color.switch_thumb_enabled_light);
 
         return new ColorStateList(states, colors);
@@ -71,19 +71,19 @@ public class QKSwitch extends SwitchCompat implements LiveView {
 
         // Disabled state
         states[0] = new int[]{-android.R.attr.state_enabled};
-        colors[0] = mRes.getColor(ThemeManager.getInstance().isNightMode() ?
+        colors[0] = mRes.getColor(ThemeManager.isNightMode() ?
                 R.color.switch_track_disabled_dark : R.color.switch_track_disabled_light);
 
         // Checked state
         states[1] = new int[]{android.R.attr.state_checked};
         colors[1] = Color.argb(0x4D, // 30% alpha
-                Color.red(ThemeManager.getInstance().getColor()),
-                Color.green(ThemeManager.getInstance().getColor()),
-                Color.blue(ThemeManager.getInstance().getColor()));
+                Color.red(ThemeManager.getColor()),
+                Color.green(ThemeManager.getColor()),
+                Color.blue(ThemeManager.getColor()));
 
         // Unchecked enabled state state
         states[2] = new int[0];
-        colors[2] = mRes.getColor(ThemeManager.getInstance().isNightMode() ?
+        colors[2] = mRes.getColor(ThemeManager.isNightMode() ?
                 R.color.switch_track_enabled_dark : R.color.switch_track_enabled_light);
 
         return new ColorStateList(states, colors);

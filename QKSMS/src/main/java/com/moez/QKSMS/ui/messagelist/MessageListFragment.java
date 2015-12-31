@@ -762,7 +762,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
-        ThemeManager.getInstance().setActiveColor(mConversationPrefs.getColor());
+        ThemeManager.setActiveColor(mConversationPrefs.getColor());
     }
 
     @Override
@@ -787,14 +787,14 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             }
         }
 
-        ThemeManager.getInstance().setActiveColor(ThemeManager.getInstance().getThemeColor());
+        ThemeManager.setActiveColor(ThemeManager.getThemeColor());
     }
 
     @Override
     public void onMenuChanging(float percentOpen) {
         if (mConversationPrefs != null) {
-            ThemeManager.getInstance().setActiveColor((int) mArgbEvaluator.evaluate(
-                    percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getInstance().getThemeColor()));
+            ThemeManager.setActiveColor((int) mArgbEvaluator.evaluate(
+                    percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getThemeColor()));
         }
     }
 

@@ -197,7 +197,7 @@ public class ContactHelper {
         int length = Units.dpToPx(context, 64);
 
         Bitmap bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
-        bitmap.eraseColor(ThemeManager.getInstance().getColor());
+        bitmap.eraseColor(ThemeManager.getColor());
 
         Canvas canvas = new Canvas(bitmap);
 

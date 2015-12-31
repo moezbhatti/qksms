@@ -951,24 +951,24 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
 
     @Override
     public void refresh() {
-        mButtonBackground.setColorFilter(ThemeManager.getInstance().getColor(), PorterDuff.Mode.SRC_ATOP);
-        mButtonBar1.setColorFilter(ThemeManager.getInstance().getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        mButtonBar2.setColorFilter(ThemeManager.getInstance().getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        mAttachmentPanel.setBackgroundColor(ThemeManager.getInstance().getColor());
-        mAttach.setColorFilter(ThemeManager.getInstance().getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        mCamera.setColorFilter(ThemeManager.getInstance().getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+        mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+        mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+        mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+        mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
+        mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+        mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
         updateDelayButton();
-        mProgress.setUnfinishedStrokeColor(ThemeManager.getInstance().getTextOnColorSecondary());
-        mProgress.setFinishedStrokeColor(ThemeManager.getInstance().getTextOnColorPrimary());
-        if (ThemeManager.getInstance().getSentBubbleRes() != 0) mReplyText.setBackgroundResource(ThemeManager.getInstance().getSentBubbleRes());
-        mReplyText.getBackground().setColorFilter(ThemeManager.getInstance().getNeutralBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+        mProgress.setUnfinishedStrokeColor(ThemeManager.getTextOnColorSecondary());
+        mProgress.setFinishedStrokeColor(ThemeManager.getTextOnColorPrimary());
+        if (ThemeManager.getSentBubbleRes() != 0) mReplyText.setBackgroundResource(ThemeManager.getSentBubbleRes());
+        mReplyText.getBackground().setColorFilter(ThemeManager.getNeutralBubbleColor(), PorterDuff.Mode.SRC_ATOP);
         mReplyText.refresh();
-        getBackground().setColorFilter(ThemeManager.getInstance().getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
+        getBackground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void updateDelayButton() {
         mDelay.setColorFilter(mDelayedMessagingEnabled ?
-                        ThemeManager.getInstance().getTextOnColorPrimary() : ThemeManager.getInstance().getTextOnColorSecondary(),
+                        ThemeManager.getTextOnColorPrimary() : ThemeManager.getTextOnColorSecondary(),
                 PorterDuff.Mode.SRC_ATOP);
     }
 }

@@ -61,8 +61,8 @@ public class AutoCompleteContactView extends RecipientEditTextView implements Li
                 FontManager.getFontWeight(mContext, false)));
         setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
 
-        setTextColor(ThemeManager.getInstance().getTextOnBackgroundPrimary());
-        setHintTextColor(ThemeManager.getInstance().getTextOnBackgroundSecondary());
+        setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+        setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
 
         if (mAdapter != null) {
             SharedPreferences prefs = mContext.getPrefs();

@@ -43,8 +43,8 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
 
     @Override
     public void onScrollOffsetChanged(WelcomeActivity activity, float offset) {
-        int colorBackground = (Integer) mArgbEvaluator.evaluate(Math.abs(offset), ThemeManager.getInstance().getBackgroundColor(), ThemeManager.getInstance().getColor());
-        int colorAccent = (Integer) mArgbEvaluator.evaluate(1 - Math.abs(offset), 0xFFFFFFFF, ThemeManager.getInstance().getColor());
+        int colorBackground = (Integer) mArgbEvaluator.evaluate(Math.abs(offset), ThemeManager.getBackgroundColor(), ThemeManager.getColor());
+        int colorAccent = (Integer) mArgbEvaluator.evaluate(1 - Math.abs(offset), 0xFFFFFFFF, ThemeManager.getColor());
 
         activity.setColorBackground(colorBackground);
         activity.tintIndicators(colorAccent);
@@ -66,14 +66,14 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.welcome_night_hint) {
-            boolean night = ThemeManager.getInstance().getTheme() == ThemeManager.Theme.OFFWHITE;
+            boolean night = ThemeManager.getTheme() == ThemeManager.Theme.OFFWHITE;
 
             int backgroundColor = mContext.getResources().getColor(night ? R.color.grey_light_mega_ultra : R.color.grey_material);
             int newBackgroundColor = mContext.getResources().getColor(night ? R.color.grey_material : R.color.grey_light_mega_ultra);
-            ThemeManager.getInstance().setTheme(night ? ThemeManager.Theme.GREY : ThemeManager.Theme.OFFWHITE);
+            ThemeManager.setTheme(night ? ThemeManager.Theme.GREY : ThemeManager.Theme.OFFWHITE);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), backgroundColor, newBackgroundColor);
-            colorAnimation.setDuration(ThemeManager.getInstance().TRANSITION_LENGTH);
+            colorAnimation.setDuration(ThemeManager.TRANSITION_LENGTH);
             colorAnimation.setInterpolator(new DecelerateInterpolator());
             colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
