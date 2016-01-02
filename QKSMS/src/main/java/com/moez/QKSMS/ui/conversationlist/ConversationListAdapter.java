@@ -11,17 +11,16 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
-public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationListViewHolder, Conversation>
-        implements LiveView {
+public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationListViewHolder, Conversation> {
 
 
     private final SharedPreferences mPrefs;
@@ -38,9 +37,12 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         mUnread = ContextCompat.getDrawable(context, R.drawable.ic_unread_indicator);
         mError = ContextCompat.getDrawable(context, R.drawable.ic_error);
 
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.THEME);
-        refresh();
+        LiveViewManager.registerView(QKPreference.THEME, key -> {
+            mMuted.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+            mUnread.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+            mError.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+            notifyDataSetChanged();
+        });
     }
 
     protected Conversation getItem(int position) {
@@ -123,13 +125,5 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
         // Update the avatar and name
         holder.onUpdate(conversation.getRecipients().size() == 1 ? conversation.getRecipients().get(0) : null);
-    }
-
-    @Override
-    public void refresh() {
-        mMuted.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
-        mUnread.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
-        mError.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
-        notifyDataSetChanged();
     }
 }

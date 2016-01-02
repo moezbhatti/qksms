@@ -26,7 +26,6 @@ import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.QKDialog;
@@ -34,8 +33,6 @@ import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
-
-import java.util.Set;
 
 public class ThemeManager {
     private final static String TAG = "ThemeManager";
@@ -306,14 +303,14 @@ public class ThemeManager {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         // This updates the colors and fonts of all the views.
-                        LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
+                        LiveViewManager.refreshViews(QKPreference.BACKGROUND);
                         WidgetProvider.notifyThemeChanged(mContext);
                     }
                 });
                 backgroundAnimation.start();
             } else {
                 // This updates the colors and fonts of all the views.
-                LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
+                LiveViewManager.refreshViews(QKPreference.BACKGROUND);
                 background.setBackgroundColor(endColor);
                 menu.setBackgroundColor(endColor);
                 content.setBackgroundColor(endColor);
@@ -321,7 +318,7 @@ public class ThemeManager {
             }
         } else {
             // This updates the colors and fonts of all the views.
-            LiveViewManager.refreshViews(SettingsFragment.BACKGROUND);
+            LiveViewManager.refreshViews(QKPreference.BACKGROUND);
             WidgetProvider.notifyThemeChanged(mContext);
         }
     }
@@ -639,12 +636,7 @@ public class ThemeManager {
 
         // Some views are updated every frame of the animation; get these views here. We
         // build this list once beforehand since it's a slightly expensive operation.
-        final Set<LiveView> views = LiveViewManager.getViews(SettingsFragment.THEME);
-
-        // Refresh all the views with the new color.
-        for (LiveView view : views) {
-            view.refresh();
-        }
+        LiveViewManager.refreshViews(QKPreference.THEME);
 
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colourFrom, color);
         colorAnimation.setDuration(TRANSITION_LENGTH);
@@ -705,9 +697,7 @@ public class ThemeManager {
             mWindow.setNavigationBarColor(ColorUtils.darken(color));
         }
 
-        for (LiveView view : LiveViewManager.getViews(QKPreference.ACTIVE_THEME.getKey())) {
-            view.refresh();
-        }
+        LiveViewManager.refreshViews(QKPreference.ACTIVE_THEME);
     }
 
     private static boolean isColorDarkEnough(int color) {

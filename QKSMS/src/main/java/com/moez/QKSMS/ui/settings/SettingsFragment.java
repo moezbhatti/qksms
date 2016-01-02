@@ -36,10 +36,10 @@ import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PackageUtils;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.transaction.EndlessJabber;
 import com.moez.QKSMS.transaction.NotificationManager;
@@ -66,7 +66,7 @@ import java.util.Set;
 import java.util.Stack;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
-        Preference.OnPreferenceClickListener, LiveView, ContentFragment {
+        Preference.OnPreferenceClickListener, ContentFragment {
     private final String TAG = "PreferenceFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
@@ -368,9 +368,14 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         KeyboardUtils.hide(mContext, view);
         mListView = (ListView) view.findViewById(android.R.id.list);
 
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
-        refresh();
+        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+            ListviewHelper.applyCustomScrollbar(mContext, mListView);
+
+            View view1 = getView();
+            if (view1 != null) {
+                view1.setBackgroundColor(ThemeManager.getBackgroundColor());
+            }
+        });
     }
 
     @Override
@@ -685,23 +690,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         } else {
             alarmManager.cancel(dayIntent);
             alarmManager.cancel(nightIntent);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        LiveViewManager.unregisterView(this);
-    }
-
-    @Override
-    public void refresh() {
-        ListviewHelper.applyCustomScrollbar(mContext, mListView);
-
-        View view = getView();
-        if (view != null) {
-            view.setBackgroundColor(ThemeManager.getBackgroundColor());
         }
     }
 

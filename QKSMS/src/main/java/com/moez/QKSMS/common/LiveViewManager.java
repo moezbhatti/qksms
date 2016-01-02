@@ -3,166 +3,126 @@ package com.moez.QKSMS.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.interfaces.LiveView;
 
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
- * Allows LiveViews to register for updates on relevant preferences.
+ * Allows views to register for updates on preferences
+ *
+ * Example: A button may need to know when the theme changes, so it that
+ * it can change colors accordingly
+ *
+ * In order to do this, you can use this class as following:
+ * LiveViewManager.registerView(QKPreference.THEME, key -> {
+ *     // Change button color
+ * }
+ *
+ * You won't need to initialize the button color in addition to registering it
+ * in the LiveViewManager, because registering it will trigger a refresh automatically,
+ * which will initialize it
  */
 public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private static final String TAG = "LiveViewManager";
-    private static final boolean LOCAL_LOGV = false;
+    private static final String TAG = "ThemedViewManager";
 
     private static LiveViewManager sInstance;
-
-    private static final Set<LiveView> sSet = Collections.newSetFromMap(new WeakHashMap<LiveView, Boolean>());
-    private static final WeakHashMap<LiveView, Set<String>> sPrefsMap = new WeakHashMap<>();
+    private static final HashMap<String, Set<LiveView>> sViews = new HashMap<>();
 
     /**
-     * Private constructor.
+     * Private constructor
      */
-    private LiveViewManager() {}
+    private LiveViewManager() {
+    }
 
-    /**
-     * Initialize a static instance so that we can listen for views.
-     */
     static {
         sInstance = new LiveViewManager();
     }
 
+    /**
+     * Initialize preferences and register a listener for changes
+     *
+     * @param context Context
+     */
     public static void init(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.registerOnSharedPreferenceChangeListener(sInstance);
     }
 
+    /**
+     * Listen for preference changes from the SharedPreferences
+     *
+     * @param prefs SharedPreferences instance
+     * @param key   Key of preference that was changed
+     */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
         LiveViewManager.refreshViews(key);
     }
 
     /**
-     * Registers a LiveView for global updates. To get updates for specific preferences, use
-     * registerPreference.
-     * @param v
-     */
-    public static void registerView(LiveView v) {
-        synchronized (sSet) {
-            sSet.add(v);
-        }
-
-        synchronized(sPrefsMap) {
-            // Don't add the view to the prefs map more than once, in case the LiveView has already
-            // been initalized.
-            if (!sPrefsMap.containsKey(v)) {
-                sPrefsMap.put(v, new HashSet<String>());
-            }
-        }
-    }
-
-    /**
-     * Unregisters a LiveView for any updates: global, or preference-specific.
-     * @param v
-     */
-    public static void unregisterView(LiveView v) {
-        synchronized (sSet) {
-            sSet.remove(v);
-        }
-
-        synchronized (sPrefsMap) {
-            sPrefsMap.remove(v);
-        }
-    }
-
-    /**
-     * Register a LiveView to be notified when this preference is updated.
-     * Note that you must first register the view, otherwise #refresh() will
-     * not be called on it
+     * Convenience method for #registerView(QKPreference, ThemedView) to allow registering a single
+     * ThemedView to listen for multiple preferences
      *
-     * @param v
-     * @param pref
+     * @param view        The ThemedView
+     * @param preferences The preferences to listen for
      */
-    public static void registerPreference(LiveView v, String pref) {
-        synchronized (sPrefsMap) {
-            Set<String> prefs = sPrefsMap.get(v);
-            // WeakHashSet: the value might have been removed.
-            if (prefs != null) {
-                prefs.add(pref);
-            }
+    public static void registerView(LiveView view, QKPreference... preferences) {
+        for (QKPreference preference : preferences) {
+            registerView(preference, view);
         }
     }
 
     /**
-     * Register a LiveView to be notified when this preference is updated.
+     * Register a view to be updated when a QKPreference is changed
+     * We don't need to manually unregister the views because we're using weak sets
      *
-     * @param v
-     * @param pref
+     * @param preference The preference to listen for
+     * @param view       The view
      */
-    public static void unregisterPreference(LiveView v, String pref) {
-        synchronized (sPrefsMap) {
-            Set<String> prefs = sPrefsMap.get(v);
-            // WeakHashSet: the value might have been removed.
-            if (prefs != null) {
-                prefs.remove(pref);
+    public static void registerView(QKPreference preference, LiveView view) {
+        synchronized (sViews) {
+            if (sViews.containsKey(preference.getKey())) {
+                Set<LiveView> views = sViews.get(preference.getKey());
+                views.add(view);
+            } else {
+                Set<LiveView> set = Collections.newSetFromMap(new WeakHashMap<>());
+                set.add(view);
+                sViews.put(preference.getKey(), set);
             }
         }
+
+        // Fire it off once registered
+        view.refresh(preference.getKey());
     }
 
     /**
-     * Refresh all views.
+     * Refresh all views that are registered to listen for updates to the given preference
+     * Convenience method for #refreshViews(String key)
+     *
+     * @param preference The preference
      */
-    public static void refreshViews() {
-        synchronized (sSet) {
-            for (LiveView view : sSet) {
-                view.refresh();
-            }
-        }
+    public static void refreshViews(QKPreference preference) {
+        refreshViews(preference.getKey());
     }
 
     /**
-     * Refreshes only the views that are listening for any of the given preferences.
-     * @param query
+     * Refresh all views that are registered to listen for updates to the given preference
+     * Convenience method for #refreshViews(String key)
+     *
+     * @param key The preference key
      */
-    public static void refreshViews(String... query) {
-        Set<LiveView> toRefresh = getViews(query);
+    private static void refreshViews(String key) {
+        Set<LiveView> toRefresh = sViews.get(key);
 
         // Refresh those views.
-        for (LiveView view : toRefresh) {
-            view.refresh();
-        }
-    }
-
-    /**
-     * Returns the set of LiveViews which subscribe to at least one of the given preferences. Can
-     * be used to build a quick cache of LiveViews for rapid refreshing, i.e. animations.
-     *
-     * @param query
-     * @return
-     */
-    public static Set<LiveView> getViews(String... query) {
-        // Build a set of the given preferences.
-        Set<String> querySet = new HashSet<>();
-        for (String string : query) {
-            querySet.add(string);
-        }
-
-        // Get all the views that have at least one of the changed preferences.
-        Set<LiveView> result = new HashSet<>();
-        synchronized (sPrefsMap) {
-            for (LiveView view : sPrefsMap.keySet()) {
-                Set<String> viewPrefs = sPrefsMap.get(view);
-                if (viewPrefs != null && !Collections.disjoint(querySet, viewPrefs)) {
-                    result.add(view);
-                }
+        if (toRefresh != null) {
+            for (LiveView view : toRefresh) {
+                view.refresh(key);
             }
         }
-
-        if (LOCAL_LOGV) Log.v(TAG, "getViews returned:" + result.size() + " for preferences:" + querySet);
-        return result;
     }
 }

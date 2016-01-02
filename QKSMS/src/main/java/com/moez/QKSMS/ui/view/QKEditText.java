@@ -8,14 +8,13 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
-public class QKEditText extends android.widget.EditText implements LiveView {
+public class QKEditText extends android.widget.EditText {
     public static final String TAG = "QKEditText";
 
     public interface TextChangedListener {
@@ -28,7 +27,7 @@ public class QKEditText extends android.widget.EditText implements LiveView {
         super(context);
 
         if (!isInEditMode()) {
-            init(context, null);
+            init(context);
         }
     }
 
@@ -36,7 +35,7 @@ public class QKEditText extends android.widget.EditText implements LiveView {
         super(context, attrs);
 
         if (!isInEditMode()) {
-            init(context, attrs);
+            init(context);
         }
     }
 
@@ -44,24 +43,29 @@ public class QKEditText extends android.widget.EditText implements LiveView {
         super(context, attrs, defStyle);
 
         if (!isInEditMode()) {
-            init(context, attrs);
+            init(context);
         }
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context) {
         mContext = context;
 
-        // Load the properties
-        refresh();
+        LiveViewManager.registerView(key -> {
+            int fontFamily = FontManager.getFontFamily(mContext);
+            int fontWeight = FontManager.getFontWeight(mContext, false);
+            setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight));
+        }, QKPreference.FONT_FAMILY, QKPreference.FONT_WEIGHT);
+
+        LiveViewManager.registerView(QKPreference.FONT_SIZE, key -> {
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
+        });
+
+        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+            setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+            setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
+        });
 
         setText(getText());
-
-        // Register this view for live updates.
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.FONT_FAMILY);
-        LiveViewManager.registerPreference(this, SettingsFragment.FONT_SIZE);
-        LiveViewManager.registerPreference(this, SettingsFragment.FONT_WEIGHT);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
     }
 
     @Override
@@ -90,20 +94,5 @@ public class QKEditText extends android.widget.EditText implements LiveView {
                 }
             });
         }
-    }
-
-    @Override
-    public void refresh() {
-        // Typeface and colors
-        int fontFamily = FontManager.getFontFamily(mContext);
-        int fontWeight = FontManager.getFontWeight(mContext, false);
-        setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight
-        ));
-        setTextColor(ThemeManager.getTextOnBackgroundPrimary());
-        setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
-
-        // Text size
-        int sp = FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY);
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
     }
 }

@@ -68,7 +68,6 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
         int padding = Units.dpToPx(getActivity(), 16);
         QKTextView premiumWarning = new QKTextView(getActivity());
         premiumWarning.setLayoutParams(mLayoutParams);
-        premiumWarning.setType(FontManager.TEXT_TYPE_PRIMARY);
         premiumWarning.setPadding(padding, padding, padding, padding);
 
         LinearLayout list = new LinearLayout(getActivity());

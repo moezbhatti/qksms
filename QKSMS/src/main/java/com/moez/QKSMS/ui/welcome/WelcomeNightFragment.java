@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -35,8 +34,6 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
         mNightHint.setOnClickListener(this);
 
         mContext.setFinished();
-
-        LiveViewManager.unregisterView(mNightHint);
 
         return view;
     }
@@ -91,10 +88,5 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
                     .putString(SettingsFragment.BACKGROUND, night ? ThemeManager.Theme.PREF_GREY : ThemeManager.Theme.PREF_OFFWHITE)
                     .commit();
         }
-    }
-
-    @Override
-    public void refresh() {
-        // Don't let the super class change the background, since we'll handle animations here
     }
 }

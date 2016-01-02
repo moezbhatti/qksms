@@ -72,7 +72,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         mComposeView.setActivityLauncher(this);
         mComposeView.setOnSendListener(this);
         mComposeView.setLabel("QKReply");
-        mComposeView.refresh();
 
         mAdapter = new QKReplyAdapter(this);
 
