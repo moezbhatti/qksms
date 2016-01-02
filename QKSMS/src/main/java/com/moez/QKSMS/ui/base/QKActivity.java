@@ -72,7 +72,7 @@ public abstract class QKActivity extends ActionBarActivity {
             setSupportActionBar(mToolbar);
         }
 
-        ThemeManager.loadThemeProperties(this);
+        ThemeManager.themeActivity(this);
     }
 
     protected void showBackButton(boolean show) {

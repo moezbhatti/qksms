@@ -19,7 +19,6 @@ public class NightModeAutoReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ThemeManager.loadThemeProperties(context);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         if (prefs.getBoolean(SettingsFragment.NIGHT_AUTO, false)) {

@@ -243,7 +243,6 @@ public class ThemeManager {
     private static boolean mStatusTintEnabled = false;
     private static boolean mNavigationTintEnabled = false;
 
-    private static QKActivity mActivity;
     private static Context mContext;
     private static Window mWindow;
 
@@ -252,37 +251,30 @@ public class ThemeManager {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mResources = context.getResources();
+
+        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
+        mActiveColor = mColor;
+
+        initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
     }
 
     /**
      * Loads all theme properties. Should be called during onCreate
      * of each activity that contains fragments that use ThemeManager
      */
-    public static void loadThemeProperties(Context context) {
+    public static void themeActivity(QKActivity activity) {
 
-        mContext = context;
-
-        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
-        mActiveColor = mColor;
-
-        if (context instanceof QKActivity) {
-            mActivity = (QKActivity) context;
-            mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(mColor));
-            mWindow = mActivity.getWindow();
-        }
-
-        initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
+        activity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(mColor));
+        mWindow = activity.getWindow();
 
         mStatusTintEnabled = mPrefs.getBoolean(SettingsFragment.STATUS_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         mNavigationTintEnabled = mPrefs.getBoolean(SettingsFragment.NAVIGATION_TINT, false) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
 
-        if (mActivity != null && mStatusTintEnabled) {
-            if (mStatusTintEnabled) {
-                mWindow.setStatusBarColor(ColorUtils.darken(mColor));
-            }
-            if (mNavigationTintEnabled) {
-                mWindow.setNavigationBarColor(ColorUtils.darken(mColor));
-            }
+        if (mStatusTintEnabled) {
+            mWindow.setStatusBarColor(ColorUtils.darken(mColor));
+        }
+        if (mNavigationTintEnabled) {
+            mWindow.setNavigationBarColor(ColorUtils.darken(mColor));
         }
 
     }
@@ -292,11 +284,11 @@ public class ThemeManager {
         initializeTheme(theme);
         int endColor = mBackgroundColor;
 
-        if (mActivity instanceof MainActivity) {
-            final View background = mActivity.findViewById(R.id.menu_frame).getRootView();
-            final View menu = mActivity.findViewById(R.id.menu_frame);
-            final View content = mActivity.findViewById(R.id.content_frame);
-            final View fragment = ((MainActivity) mActivity).getContent().getView();
+        if (mContext instanceof MainActivity) {
+            final View background = ((MainActivity) mContext).findViewById(R.id.menu_frame).getRootView();
+            final View menu = ((MainActivity) mContext).findViewById(R.id.menu_frame);
+            final View content = ((MainActivity) mContext).findViewById(R.id.content_frame);
+            final View fragment = ((MainActivity) mContext).getContent().getView();
 
             if (startColor != endColor) {
                 ValueAnimator backgroundAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
@@ -366,18 +358,18 @@ public class ThemeManager {
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_light_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_light_text_secondary);
                 mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent);
-                if (mActivity != null) {
+                /*if (mActivity != null) {
                     mActivity.getToolbar().setPopupTheme(R.style.PopupThemeLight);
-                }
+                }*/
                 break;
             case GREY:
             case BLACK:
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
                 mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent_light);
-                if (mActivity != null) {
+                /*if (mActivity != null) {
                     mActivity.getToolbar().setPopupTheme(R.style.PopupTheme);
-                }
+                }*/
                 break;
         }
 
@@ -390,11 +382,11 @@ public class ThemeManager {
         setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
         setBubbleStyleNew(mPrefs.getBoolean(SettingsFragment.BUBBLES_NEW, true));
 
-        if (mActivity != null) {
+        /*if (mActivity != null) {
             // We need to set this here because the title bar is initialized before the ThemeManager,
             // so it's not using the correct color yet
             ((QKTextView) mActivity.findViewById(R.id.toolbar_title)).setTextColor(mTextOnColorPrimary);
-        }
+        }*/
     }
 
     public static void setIcon(final QKActivity context) {
@@ -575,7 +567,7 @@ public class ThemeManager {
         ColorPickerPalette palette = new ColorPickerPalette(context);
         palette.setGravity(Gravity.CENTER);
         palette.init(getSwatch(swatchColour).length, 4, color -> {
-            setColour(color);
+            setColour(context, color);
             dialog.dismiss();
         });
 
@@ -624,7 +616,7 @@ public class ThemeManager {
         return String.format("#%08x", color).toUpperCase();
     }
 
-    public static void setColour(int color) {
+    public static void setColour(QKActivity activity, int color) {
 
         AnalyticsManager.getInstance().sendEvent(
                 AnalyticsManager.CATEGORY_PREFERENCE_CHANGE,
@@ -660,10 +652,8 @@ public class ThemeManager {
         colorAnimation.addUpdateListener(animation -> {
             int color1 = (Integer) animation.getAnimatedValue();
 
-            if (mActivity != null) {
-                if (mActivity.getSupportActionBar() != null) {
-                    mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color1));
-                }
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color1));
             }
 
             if (mStatusTintEnabled) {
@@ -683,9 +673,9 @@ public class ThemeManager {
         colorAnimation.start();
 
 
-        if (mActivity != null && mActivity.findViewById(R.id.toolbar_title) != null) {
+        if (activity.findViewById(R.id.toolbar_title) != null) {
             //final Toolbar toolbar = (Toolbar) mActivity.findViewById(R.id.title);
-            final QKTextView title = (QKTextView) mActivity.findViewById(R.id.toolbar_title);
+            final QKTextView title = (QKTextView) activity.findViewById(R.id.toolbar_title);
 
             if (title.getCurrentTextColor() != mTextOnColorPrimary) {
                 ValueAnimator titleColorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), title.getCurrentTextColor(), mTextOnColorPrimary);
@@ -694,21 +684,20 @@ public class ThemeManager {
                 titleColorAnimation.addUpdateListener(animation -> {
                     int color1 = (Integer) animation.getAnimatedValue();
                     title.setTextColor(color1);
-                    mActivity.colorMenuIcons(mActivity.getMenu(), color1);
+                    activity.colorMenuIcons(activity.getMenu(), color1);
                 });
                 titleColorAnimation.start();
             }
         }
     }
 
-    public static void setActiveColor(int color) {
+    public static void setActiveColor(QKActivity activity, int color) {
         mActiveColor = color;
 
-        if (mActivity != null) {
-            if (mActivity.getSupportActionBar() != null) {
-                mActivity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-            }
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
         }
+
         if (mStatusTintEnabled) {
             mWindow.setStatusBarColor(ColorUtils.darken(color));
         }

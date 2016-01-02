@@ -29,7 +29,7 @@ public abstract class QKPopupActivity extends QKActivity {
         setFinishOnTouchOutside(mPrefs.getBoolean(SettingsFragment.QUICKREPLY_TAP_DISMISS, true));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         setContentView(getLayoutResource());
-        ThemeManager.loadThemeProperties(this);
+        ThemeManager.themeActivity(this);
 
         ((QKLinearLayout) findViewById(R.id.popup)).setBackgroundTint(ThemeManager.getBackgroundColor());
 

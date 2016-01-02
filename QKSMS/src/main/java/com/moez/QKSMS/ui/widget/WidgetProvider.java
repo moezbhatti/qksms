@@ -45,8 +45,6 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-        ThemeManager.loadThemeProperties(context);
-
         for (int appWidgetId : appWidgetIds) {
             updateWidget(context, appWidgetId, isSmallWidget(appWidgetManager, appWidgetId));
         }
