@@ -13,34 +13,23 @@ import java.util.WeakHashMap;
 
 /**
  * Allows views to register for updates on preferences
- *
+ * <p>
  * Example: A button may need to know when the theme changes, so it that
  * it can change colors accordingly
- *
+ * <p>
  * In order to do this, you can use this class as following:
  * LiveViewManager.registerView(QKPreference.THEME, key -> {
- *     // Change button color
+ * // Change button color
  * }
- *
+ * <p>
  * You won't need to initialize the button color in addition to registering it
  * in the LiveViewManager, because registering it will trigger a refresh automatically,
  * which will initialize it
  */
-public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChangeListener {
+public abstract class LiveViewManager {
     private static final String TAG = "ThemedViewManager";
 
-    private static LiveViewManager sInstance;
-    private static final HashMap<String, Set<LiveView>> sViews = new HashMap<>();
-
-    /**
-     * Private constructor
-     */
-    private LiveViewManager() {
-    }
-
-    static {
-        sInstance = new LiveViewManager();
-    }
+    private static HashMap<String, Set<LiveView>> sViews = new HashMap<>();
 
     /**
      * Initialize preferences and register a listener for changes
@@ -49,18 +38,7 @@ public class LiveViewManager implements SharedPreferences.OnSharedPreferenceChan
      */
     public static void init(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.registerOnSharedPreferenceChangeListener(sInstance);
-    }
-
-    /**
-     * Listen for preference changes from the SharedPreferences
-     *
-     * @param prefs SharedPreferences instance
-     * @param key   Key of preference that was changed
-     */
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-        LiveViewManager.refreshViews(key);
+        prefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> refreshViews(key));
     }
 
     /**
