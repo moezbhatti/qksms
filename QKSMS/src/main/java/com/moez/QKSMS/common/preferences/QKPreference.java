@@ -90,7 +90,7 @@ public enum QKPreference {
     QK_COMPOSE("pref_key_quickcompose", false),
 
     // LiveViews
-    ACTIVE_THEME("pref_key_active_theme");
+    ACTIVE_COLOR("pref_key_active_theme");
 
     private String mKey;
     private Object mDefaultValue;

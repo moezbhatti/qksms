@@ -353,18 +353,12 @@ public class ThemeManager {
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_light_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_light_text_secondary);
                 mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent);
-                /*if (mActivity != null) {
-                    mActivity.getToolbar().setPopupTheme(R.style.PopupThemeLight);
-                }*/
                 break;
             case GREY:
             case BLACK:
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
                 mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent_light);
-                /*if (mActivity != null) {
-                    mActivity.getToolbar().setPopupTheme(R.style.PopupTheme);
-                }*/
                 break;
         }
 
@@ -377,11 +371,7 @@ public class ThemeManager {
         setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
         setBubbleStyleNew(mPrefs.getBoolean(SettingsFragment.BUBBLES_NEW, true));
 
-        /*if (mActivity != null) {
-            // We need to set this here because the title bar is initialized before the ThemeManager,
-            // so it's not using the correct color yet
-            ((QKTextView) mActivity.findViewById(R.id.toolbar_title)).setTextColor(mTextOnColorPrimary);
-        }*/
+        LiveViewManager.refreshViews(QKPreference.THEME);
     }
 
     public static void setIcon(final QKActivity context) {
@@ -649,7 +639,7 @@ public class ThemeManager {
                 mWindow.setNavigationBarColor(ColorUtils.darken(color1));
             }
 
-            LiveViewManager.refreshViews(QKPreference.ACTIVE_THEME);
+            LiveViewManager.refreshViews(QKPreference.ACTIVE_COLOR);
         });
         colorAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -689,7 +679,7 @@ public class ThemeManager {
             mWindow.setNavigationBarColor(ColorUtils.darken(color));
         }
 
-        LiveViewManager.refreshViews(QKPreference.ACTIVE_THEME);
+        LiveViewManager.refreshViews(QKPreference.ACTIVE_COLOR);
     }
 
     private static boolean isColorDarkEnough(int color) {

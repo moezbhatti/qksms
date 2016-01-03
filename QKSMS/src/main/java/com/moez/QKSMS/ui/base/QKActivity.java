@@ -73,8 +73,23 @@ public abstract class QKActivity extends AppCompatActivity {
             setSupportActionBar(mToolbar);
         }
 
-        LiveViewManager.registerView(QKPreference.ACTIVE_THEME, this, key -> {
+        LiveViewManager.registerView(QKPreference.ACTIVE_COLOR, this, key -> {
             mToolbar.setBackgroundColor(ThemeManager.getColor());
+        });
+
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
+            switch (ThemeManager.getTheme()) {
+                case WHITE:
+                case OFFWHITE:
+                    mToolbar.setPopupTheme(R.style.PopupThemeLight);
+                    break;
+
+                case GREY:
+                case BLACK:
+                    mToolbar.setPopupTheme(R.style.PopupTheme);
+                    break;
+            }
+            ((QKTextView) findViewById(R.id.toolbar_title)).setTextColor(ThemeManager.getTextOnColorPrimary());
         });
 
         ThemeManager.themeActivity(this);
@@ -102,10 +117,10 @@ public abstract class QKActivity extends AppCompatActivity {
     public void colorMenuIcons(Menu menu, int color) {
 
         // Toolbar navigation icon
-        Drawable navigationIcon = getToolbar().getNavigationIcon();
+        Drawable navigationIcon = mToolbar.getNavigationIcon();
         if (navigationIcon != null) {
             navigationIcon.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-            getToolbar().setNavigationIcon(navigationIcon);
+            mToolbar.setNavigationIcon(navigationIcon);
         }
 
         // Overflow icon
@@ -215,15 +230,6 @@ public abstract class QKActivity extends AppCompatActivity {
         if (mTitle != null) {
             mTitle.setText(title);
         }
-    }
-
-    /**
-     * Returns the Toolbar for this activity.
-     *
-     * @return
-     */
-    public Toolbar getToolbar() {
-        return mToolbar;
     }
 
     public boolean isScreenOn() {
