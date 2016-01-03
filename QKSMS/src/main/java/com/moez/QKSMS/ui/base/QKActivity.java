@@ -25,6 +25,7 @@ import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.view.QKTextView;
 
@@ -73,7 +74,7 @@ public abstract class QKActivity extends ActionBarActivity {
             setSupportActionBar(mToolbar);
         }
 
-        LiveViewManager.registerView(QKPreference.ACTIVE_THEME, key -> {
+        LiveViewManager.registerView(QKPreference.ACTIVE_THEME, this, key -> {
             mToolbar.setBackgroundColor(ThemeManager.getColor());
         });
 

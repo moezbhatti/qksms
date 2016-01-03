@@ -30,7 +30,7 @@ public class QKImageView extends ImageView {
     }
 
     public void init() {
-        LiveViewManager.registerView(QKPreference.THEME, key -> {
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             setImageDrawable(mDrawable);
         });
     }

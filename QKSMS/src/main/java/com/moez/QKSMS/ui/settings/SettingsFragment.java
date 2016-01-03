@@ -368,7 +368,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         KeyboardUtils.hide(mContext, view);
         mListView = (ListView) view.findViewById(android.R.id.list);
 
-        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             ListviewHelper.applyCustomScrollbar(mContext, mListView);
 
             View view1 = getView();

@@ -91,7 +91,7 @@ public class AvatarView extends ImageView implements View.OnClickListener {
 
             setOnClickListener(this);
 
-            LiveViewManager.registerView(QKPreference.ACTIVE_THEME, key -> {
+            LiveViewManager.registerView(QKPreference.ACTIVE_THEME, this, key -> {
                 mPaint.setColor(ThemeManager.getTextOnColorPrimary());
                 mDefaultDrawable.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
 

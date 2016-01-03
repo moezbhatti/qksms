@@ -65,7 +65,7 @@ public class QKTextView extends TextView {
 
         // Register for theme updates if we're text that changes color dynamically.
         if (mType == FontManager.TEXT_TYPE_CATEGORY) {
-            LiveViewManager.registerView(QKPreference.THEME, key ->
+            LiveViewManager.registerView(QKPreference.THEME, this, key ->
                     setTextColor(FontManager.getTextColor(mContext, mType)));
         }
 
@@ -75,15 +75,15 @@ public class QKTextView extends TextView {
             setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight));
         }, QKPreference.FONT_FAMILY, QKPreference.FONT_WEIGHT);
 
-        LiveViewManager.registerView(QKPreference.FONT_SIZE, key -> {
+        LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, mType));
         });
 
-        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             setTextColor(FontManager.getTextColor(mContext, mType));
         });
 
-        LiveViewManager.registerView(QKPreference.TEXT_FORMATTING, key -> {
+        LiveViewManager.registerView(QKPreference.TEXT_FORMATTING, this, key -> {
             setText(getText(), BufferType.NORMAL);
         });
     }

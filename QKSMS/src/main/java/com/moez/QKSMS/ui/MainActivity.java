@@ -122,7 +122,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
 
         showDialogIfNeeded(savedInstanceState);
 
-        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             // Update the background color. This code is important during the welcome screen setup, when the activity
             // in the ThemeManager isn't the MainActivity
             findViewById(R.id.menu_frame).getRootView().setBackgroundColor(ThemeManager.getBackgroundColor());

@@ -75,7 +75,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
             collapse();
         }
 
-        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             mIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
             mFavoritesBackground.setBackgroundColor(ThemeManager.getBackgroundColor());
         });

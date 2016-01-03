@@ -79,7 +79,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mLayoutManager = new LinearLayoutManager(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
 
-        LiveViewManager.registerView(QKPreference.THEME, key -> {
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             if (!mViewHasLoaded) {
                 return;
             }

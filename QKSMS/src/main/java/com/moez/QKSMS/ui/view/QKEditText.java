@@ -56,11 +56,11 @@ public class QKEditText extends android.widget.EditText {
             setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight));
         }, QKPreference.FONT_FAMILY, QKPreference.FONT_WEIGHT);
 
-        LiveViewManager.registerView(QKPreference.FONT_SIZE, key -> {
+        LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
         });
 
-        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             setTextColor(ThemeManager.getTextOnBackgroundPrimary());
             setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
         });

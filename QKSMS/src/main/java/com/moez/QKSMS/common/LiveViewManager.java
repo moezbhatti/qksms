@@ -6,8 +6,8 @@ import android.preference.PreferenceManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.interfaces.LiveView;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -27,9 +27,9 @@ import java.util.WeakHashMap;
  * which will initialize it
  */
 public abstract class LiveViewManager {
-    private static final String TAG = "ThemedViewManager";
+    private static final String TAG = "LiveViewManager";
 
-    private static final HashMap<String, Set<LiveView>> sViews = new HashMap<>();
+    private static final HashMap<String, WeakHashMap<Object, Set<LiveView>>> sViews = new HashMap<>();
 
     /**
      * Initialize preferences and register a listener for changes
@@ -45,12 +45,17 @@ public abstract class LiveViewManager {
      * Convenience method for #registerView(QKPreference, ThemedView) to allow registering a single
      * ThemedView to listen for multiple preferences
      *
-     * @param view        The ThemedView
+     * @param view        The LiveView
+     * @param parent      The object to tie the lifecycle of the LiveView to. If we only reference
+     *                    a LiveView anonymous inner class, then it'll be quickly garbage collected
+     *                    and removed from the WeakHashMap. Instead, we should reference the parent
+     *                    object (ie. The Activity, Fragment, View, etc...) that this LiveView is
+     *                    concerned with. In most cases, it's acceptable to just pass in `this`
      * @param preferences The preferences to listen for
      */
-    public static void registerView(LiveView view, QKPreference... preferences) {
+    public static void registerView(LiveView view, Object parent, QKPreference... preferences) {
         for (QKPreference preference : preferences) {
-            registerView(preference, view);
+            registerView(preference, parent, view);
         }
     }
 
@@ -59,16 +64,25 @@ public abstract class LiveViewManager {
      * We don't need to manually unregister the views because we're using weak sets
      *
      * @param preference The preference to listen for
-     * @param view       The view
+     * @param parent     The object to tie the lifecycle of the LiveView to. If we only reference
+     *                   a LiveView anonymous inner class, then it'll be quickly garbage collected
+     *                   and removed from the WeakHashMap. Instead, we should reference the parent
+     *                   object (ie. The Activity, Fragment, View, etc...) that this LiveView is
+     *                   concerned with. In most cases, it's acceptable to just pass in `this`
+     * @param view       The LiveView
      */
-    public static void registerView(QKPreference preference, LiveView view) {
+    public static void registerView(QKPreference preference, Object parent, LiveView view) {
         synchronized (sViews) {
             if (sViews.containsKey(preference.getKey())) {
-                Set<LiveView> views = sViews.get(preference.getKey());
-                views.add(view);
+                WeakHashMap<Object, Set<LiveView>> parents = sViews.get(preference.getKey());
+                if (!parents.containsKey(parent)) {
+                    parents.put(parent, new HashSet<>());
+                }
+                parents.get(parent).add(view);
             } else {
-                Set<LiveView> set = Collections.newSetFromMap(new WeakHashMap<>());
-                set.add(view);
+                WeakHashMap<Object, Set<LiveView>> set = new WeakHashMap<>();
+                set.put(parent, new HashSet<>());
+                set.get(parent).add(view);
                 sViews.put(preference.getKey(), set);
             }
         }
@@ -94,12 +108,13 @@ public abstract class LiveViewManager {
      * @param key The preference key
      */
     private static void refreshViews(String key) {
-        Set<LiveView> toRefresh = sViews.get(key);
-
-        // Refresh those views.
-        if (toRefresh != null) {
-            for (LiveView view : toRefresh) {
-                view.refresh(key);
+        synchronized (sViews) {
+            if (sViews.get(key) != null) {
+                for (Set<LiveView> views : sViews.get(key).values()) {
+                    for (LiveView view : views) {
+                        view.refresh(key);
+                    }
+                }
             }
         }
     }

@@ -24,7 +24,7 @@ public class QKFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LiveViewManager.registerView(QKPreference.BACKGROUND, key -> {
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             if (getView() != null) {
                 getView().setBackgroundColor(ThemeManager.getBackgroundColor());
             }

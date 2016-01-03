@@ -37,7 +37,7 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         mUnread = ContextCompat.getDrawable(context, R.drawable.ic_unread_indicator);
         mError = ContextCompat.getDrawable(context, R.drawable.ic_error);
 
-        LiveViewManager.registerView(QKPreference.THEME, key -> {
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             mMuted.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
             mUnread.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
             mError.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
