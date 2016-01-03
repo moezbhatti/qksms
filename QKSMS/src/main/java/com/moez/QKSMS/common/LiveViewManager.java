@@ -29,7 +29,7 @@ import java.util.WeakHashMap;
 public abstract class LiveViewManager {
     private static final String TAG = "ThemedViewManager";
 
-    private static HashMap<String, Set<LiveView>> sViews = new HashMap<>();
+    private static final HashMap<String, Set<LiveView>> sViews = new HashMap<>();
 
     /**
      * Initialize preferences and register a listener for changes

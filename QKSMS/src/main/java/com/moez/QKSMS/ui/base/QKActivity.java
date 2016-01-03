@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -71,6 +72,10 @@ public abstract class QKActivity extends ActionBarActivity {
             mTitle = (QKTextView) mToolbar.findViewById(R.id.toolbar_title);
             setSupportActionBar(mToolbar);
         }
+
+        LiveViewManager.registerView(QKPreference.ACTIVE_THEME, key -> {
+            mToolbar.setBackgroundColor(ThemeManager.getColor());
+        });
 
         ThemeManager.themeActivity(this);
     }

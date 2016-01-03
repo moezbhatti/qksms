@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -261,7 +260,6 @@ public class ThemeManager {
      */
     public static void themeActivity(QKActivity activity) {
 
-        activity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(mColor));
         mWindow = activity.getWindow();
 
         mStatusTintEnabled = mPrefs.getBoolean(SettingsFragment.STATUS_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
@@ -644,16 +642,14 @@ public class ThemeManager {
         colorAnimation.addUpdateListener(animation -> {
             int color1 = (Integer) animation.getAnimatedValue();
 
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color1));
-            }
-
             if (mStatusTintEnabled) {
                 mWindow.setStatusBarColor(ColorUtils.darken(color1));
             }
             if (mNavigationTintEnabled) {
                 mWindow.setNavigationBarColor(ColorUtils.darken(color1));
             }
+
+            LiveViewManager.refreshViews(QKPreference.ACTIVE_THEME);
         });
         colorAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -685,10 +681,6 @@ public class ThemeManager {
 
     public static void setActiveColor(QKActivity activity, int color) {
         mActiveColor = color;
-
-        if (activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-        }
 
         if (mStatusTintEnabled) {
             mWindow.setStatusBarColor(ColorUtils.darken(color));
