@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.interfaces.LiveView;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +30,17 @@ import java.util.WeakHashMap;
 public abstract class LiveViewManager {
     private static final String TAG = "LiveViewManager";
 
+    /**
+     * Maps all of the LiveViews to their associated preference
+     */
     private static final HashMap<String, WeakHashMap<Object, Set<LiveView>>> sViews = new HashMap<>();
+
+    /**
+     * A list of preferences to be excluded from LiveView refreshing when the preference changes
+     */
+    private static final HashSet<String> sExcludedPrefs = new HashSet<>(Arrays.asList(
+            QKPreference.THEME.getKey()
+    ));
 
     /**
      * Initialize preferences and register a listener for changes
@@ -38,7 +49,11 @@ public abstract class LiveViewManager {
      */
     public static void init(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        prefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> refreshViews(key));
+        prefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
+            if (!sExcludedPrefs.contains(key)) {
+                refreshViews(key);
+            }
+        });
     }
 
     /**

@@ -622,21 +622,17 @@ public class ThemeManager {
         mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
-        // Some views are updated every frame of the animation; get these views here. We
-        // build this list once beforehand since it's a slightly expensive operation.
-        LiveViewManager.refreshViews(QKPreference.THEME);
-
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colourFrom, color);
         colorAnimation.setDuration(TRANSITION_LENGTH);
         colorAnimation.setInterpolator(new DecelerateInterpolator());
         colorAnimation.addUpdateListener(animation -> {
-            int color1 = (Integer) animation.getAnimatedValue();
+            mActiveColor = (Integer) animation.getAnimatedValue();
 
             if (mStatusTintEnabled) {
-                mWindow.setStatusBarColor(ColorUtils.darken(color1));
+                mWindow.setStatusBarColor(ColorUtils.darken(mActiveColor));
             }
             if (mNavigationTintEnabled) {
-                mWindow.setNavigationBarColor(ColorUtils.darken(color1));
+                mWindow.setNavigationBarColor(ColorUtils.darken(mActiveColor));
             }
 
             LiveViewManager.refreshViews(QKPreference.THEME);
