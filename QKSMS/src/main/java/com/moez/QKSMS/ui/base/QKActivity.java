@@ -73,11 +73,11 @@ public abstract class QKActivity extends AppCompatActivity {
             setSupportActionBar(mToolbar);
         }
 
-        LiveViewManager.registerView(QKPreference.ACTIVE_COLOR, this, key -> {
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             mToolbar.setBackgroundColor(ThemeManager.getColor());
         });
 
-        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             switch (ThemeManager.getTheme()) {
                 case WHITE:
                 case OFFWHITE:

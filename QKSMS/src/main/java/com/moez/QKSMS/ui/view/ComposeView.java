@@ -181,7 +181,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mCancel.setOnClickListener(this);
         mDelay.setOnClickListener(this);
 
-        LiveViewManager.registerView(QKPreference.ACTIVE_COLOR, this, key -> {
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
             mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
             mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);

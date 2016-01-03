@@ -94,7 +94,7 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
     }
 
     protected void setLiveViewCallback(LiveView liveViewCallback) {
-        LiveViewManager.registerView(QKPreference.ACTIVE_COLOR, this, liveViewCallback);
+        LiveViewManager.registerView(QKPreference.THEME, this, liveViewCallback);
     }
 
     @Override

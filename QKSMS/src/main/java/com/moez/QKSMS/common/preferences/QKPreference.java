@@ -1,11 +1,13 @@
 package com.moez.QKSMS.common.preferences;
 
+import com.moez.QKSMS.ui.ThemeManager;
+
 import java.util.Arrays;
 import java.util.HashSet;
 
 public enum QKPreference {
     // Appearance
-    THEME("pref_key_theme", 0xFFFFF),
+    THEME("pref_key_theme", ThemeManager.DEFAULT_COLOR),
     ICON("pref_key_icon"),
     BACKGROUND("pref_key_background", "offwhite"),
 
@@ -87,10 +89,9 @@ public enum QKPreference {
     TAP_DISMISS("pref_key_quickreply_dismiss", true),
 
     // QK Compose
-    QK_COMPOSE("pref_key_quickcompose", false),
+    QK_COMPOSE("pref_key_quickcompose", false);
 
     // LiveViews
-    ACTIVE_COLOR("pref_key_active_theme");
 
     private String mKey;
     private Object mDefaultValue;

@@ -371,7 +371,7 @@ public class ThemeManager {
         setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
         setBubbleStyleNew(mPrefs.getBoolean(SettingsFragment.BUBBLES_NEW, true));
 
-        LiveViewManager.refreshViews(QKPreference.THEME);
+        LiveViewManager.refreshViews(QKPreference.BACKGROUND);
     }
 
     public static void setIcon(final QKActivity context) {
@@ -639,7 +639,7 @@ public class ThemeManager {
                 mWindow.setNavigationBarColor(ColorUtils.darken(color1));
             }
 
-            LiveViewManager.refreshViews(QKPreference.ACTIVE_COLOR);
+            LiveViewManager.refreshViews(QKPreference.THEME);
         });
         colorAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -679,7 +679,7 @@ public class ThemeManager {
             mWindow.setNavigationBarColor(ColorUtils.darken(color));
         }
 
-        LiveViewManager.refreshViews(QKPreference.ACTIVE_COLOR);
+        LiveViewManager.refreshViews(QKPreference.THEME);
     }
 
     private static boolean isColorDarkEnough(int color) {
