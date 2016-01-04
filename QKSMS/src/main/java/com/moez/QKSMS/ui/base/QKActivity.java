@@ -25,7 +25,9 @@ import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ public abstract class QKActivity extends AppCompatActivity {
     protected Resources mRes;
     protected SharedPreferences mPrefs;
 
+    private static boolean mStatusTintEnabled = true;
+    private static boolean mNavigationTintEnabled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +56,24 @@ public abstract class QKActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setCancelable(false);
+
+        LiveViewManager.registerView(QKPreference.TINTED_STATUS, this, key -> {
+            mStatusTintEnabled = getBoolean(QKPreference.TINTED_STATUS) &&
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        });
+
+        LiveViewManager.registerView(QKPreference.TINTED_NAV, this, key -> {
+            mNavigationTintEnabled = getBoolean(QKPreference.TINTED_NAV) &&
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        });
     }
 
     /**
      * Reloads the toolbar and it's view references.
-     * <p/>
+     * <p>
      * This is called every time the content view of the activity is set, since the
      * toolbar is now a part of the activity layout.
-     * <p/>
+     * <p>
      * TODO: If someone ever wants to manage the Toolbar dynamically instead of keeping it in their
      * TODO  layout file, we can add an alternate way of setting the toolbar programmatically.
      */
@@ -75,6 +90,13 @@ public abstract class QKActivity extends AppCompatActivity {
 
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             mToolbar.setBackgroundColor(ThemeManager.getColor());
+
+            if (mStatusTintEnabled) {
+                getWindow().setStatusBarColor(ColorUtils.darken(ThemeManager.getColor()));
+            }
+            if (mNavigationTintEnabled) {
+                getWindow().setNavigationBarColor(ColorUtils.darken(ThemeManager.getColor()));
+            }
         });
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
@@ -217,7 +239,7 @@ public abstract class QKActivity extends AppCompatActivity {
 
     /**
      * Sets the title of the activity, displayed on the toolbar
-     * <p/>
+     * <p>
      * Make sure this is only called AFTER setContentView, or else the Toolbar
      * is likely not initialized yet and this method will do nothing
      *

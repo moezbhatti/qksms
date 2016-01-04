@@ -17,7 +17,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
@@ -236,11 +235,7 @@ public class ThemeManager {
     private static Resources mResources;
     private static SharedPreferences mPrefs;
 
-    private static boolean mStatusTintEnabled = false;
-    private static boolean mNavigationTintEnabled = false;
-
     private static Context mContext;
-    private static Window mWindow;
 
     public static void init(Context context) {
         mContext = context;
@@ -259,19 +254,6 @@ public class ThemeManager {
      * of each activity that contains fragments that use ThemeManager
      */
     public static void themeActivity(QKActivity activity) {
-
-        mWindow = activity.getWindow();
-
-        mStatusTintEnabled = mPrefs.getBoolean(SettingsFragment.STATUS_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-        mNavigationTintEnabled = mPrefs.getBoolean(SettingsFragment.NAVIGATION_TINT, false) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-
-        if (mStatusTintEnabled) {
-            mWindow.setStatusBarColor(ColorUtils.darken(mColor));
-        }
-        if (mNavigationTintEnabled) {
-            mWindow.setNavigationBarColor(ColorUtils.darken(mColor));
-        }
-
     }
 
     public static void setTheme(Theme theme) {
@@ -551,35 +533,29 @@ public class ThemeManager {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setStatusBarTintEnabled(boolean enabled) {
-        if (mStatusTintEnabled != enabled) {
-            mStatusTintEnabled = enabled;
-            int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
-            int colorTo = enabled ? mColor : mResources.getColor(R.color.black);
+    public static void setStatusBarTintEnabled(QKActivity activity, boolean enabled) {
+        int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
+        int colorTo = enabled ? mColor : mResources.getColor(R.color.black);
 
-            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-            colorAnimation.setDuration(TRANSITION_LENGTH);
-            colorAnimation.addUpdateListener(animation -> {
-                mWindow.setStatusBarColor(ColorUtils.darken((Integer) animation.getAnimatedValue()));
-            });
-            colorAnimation.start();
-        }
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(TRANSITION_LENGTH);
+        colorAnimation.addUpdateListener(animation -> {
+            activity.getWindow().setStatusBarColor(ColorUtils.darken((Integer) animation.getAnimatedValue()));
+        });
+        colorAnimation.start();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setNavigationBarTintEnabled(boolean enabled) {
-        if (mNavigationTintEnabled != enabled) {
-            mNavigationTintEnabled = enabled;
-            int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
-            int colorTo = enabled ? mColor : mResources.getColor(R.color.black);
+    public static void setNavigationBarTintEnabled(QKActivity activity, boolean enabled) {
+        int colorFrom = enabled ? mResources.getColor(R.color.black) : mColor;
+        int colorTo = enabled ? mColor : mResources.getColor(R.color.black);
 
-            ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-            colorAnimation.setDuration(TRANSITION_LENGTH);
-            colorAnimation.addUpdateListener(animation -> {
-                mWindow.setNavigationBarColor(ColorUtils.darken((Integer) animation.getAnimatedValue()));
-            });
-            colorAnimation.start();
-        }
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(TRANSITION_LENGTH);
+        colorAnimation.addUpdateListener(animation -> {
+            activity.getWindow().setNavigationBarColor(ColorUtils.darken((Integer) animation.getAnimatedValue()));
+        });
+        colorAnimation.start();
     }
 
     public static String getColorString(int color) {
@@ -611,16 +587,7 @@ public class ThemeManager {
         colorAnimation.setDuration(TRANSITION_LENGTH);
         colorAnimation.setInterpolator(new DecelerateInterpolator());
         colorAnimation.addUpdateListener(animation -> {
-            mActiveColor = (Integer) animation.getAnimatedValue();
-
-            if (mStatusTintEnabled) {
-                mWindow.setStatusBarColor(ColorUtils.darken(mActiveColor));
-            }
-            if (mNavigationTintEnabled) {
-                mWindow.setNavigationBarColor(ColorUtils.darken(mActiveColor));
-            }
-
-            LiveViewManager.refreshViews(QKPreference.THEME);
+            setActiveColor((Integer) animation.getAnimatedValue());
         });
         colorAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -650,16 +617,8 @@ public class ThemeManager {
         }
     }
 
-    public static void setActiveColor(QKActivity activity, int color) {
+    public static void setActiveColor(int color) {
         mActiveColor = color;
-
-        if (mStatusTintEnabled) {
-            mWindow.setStatusBarColor(ColorUtils.darken(color));
-        }
-        if (mNavigationTintEnabled) {
-            mWindow.setNavigationBarColor(ColorUtils.darken(color));
-        }
-
         LiveViewManager.refreshViews(QKPreference.THEME);
     }
 

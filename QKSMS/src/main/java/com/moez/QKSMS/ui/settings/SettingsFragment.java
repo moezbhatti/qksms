@@ -401,10 +401,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
                 break;
             case STATUS_TINT:
-                ThemeManager.setStatusBarTintEnabled((Boolean) newValue);
+                ThemeManager.setStatusBarTintEnabled(mContext, (Boolean) newValue);
                 break;
             case NAVIGATION_TINT:
-                ThemeManager.setNavigationBarTintEnabled((Boolean) newValue);
+                ThemeManager.setNavigationBarTintEnabled(mContext, (Boolean) newValue);
                 break;
             case FONT_FAMILY:
                 preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
