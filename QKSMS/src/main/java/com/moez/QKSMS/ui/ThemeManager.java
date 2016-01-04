@@ -300,23 +300,20 @@ public class ThemeManager {
         switch (theme) {
             case LIGHT:
                 mBackgroundColor = mResources.getColor(R.color.grey_light_mega_ultra);
-                break;
-            case DARK:
-                mBackgroundColor = mResources.getColor(R.color.grey_material);
-                break;
-            case BLACK:
-                mBackgroundColor = mResources.getColor(R.color.black);
-                break;
-        }
-
-        switch (mTheme) {
-            case LIGHT:
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_light_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_light_text_secondary);
                 mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent);
                 break;
+
             case DARK:
+                mBackgroundColor = mResources.getColor(R.color.grey_material);
+                mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
+                mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
+                mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent_light);
+                break;
+
             case BLACK:
+                mBackgroundColor = mResources.getColor(R.color.black);
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
                 mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent_light);
