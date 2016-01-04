@@ -166,7 +166,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
                 mContent = MessageListFragment.getInstance(mThreadId, 0, null, false);
                 break;
             case TYPE_SETTINGS:
-                mContent = SettingsFragment.newInstance(R.xml.settings_simple);
+                mContent = SettingsFragment.newInstance(R.xml.settings_main);
                 break;
             case TYPE_SEARCH:
                 mContent = new SearchFragment();
@@ -276,11 +276,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
             case android.R.id.home:
                 onKeyUp(KeyEvent.KEYCODE_BACK, null);
                 break;
-            case R.id.simple_settings:
-                mPrefs.edit().putBoolean(SettingsFragment.SIMPLE_PREFS,
-                        !mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)).apply();
             case R.id.menu_settings:
-                switchContent(SettingsFragment.newInstance(R.xml.settings_simple), true);
+                switchContent(SettingsFragment.newInstance(R.xml.settings_main), true);
                 break;
             case R.id.menu_search:
                 switchContent(new SearchFragment(), true);

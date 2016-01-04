@@ -24,7 +24,6 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -140,7 +139,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String MMS_PROXY = "mms_proxy";
     public static final String AUTOMATICALLY_CONFIGURE_MMS = "pref_key_automatically_configure_mms";
     public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
-    public static final String SIMPLE_PREFS = "pref_key_simple";
     public static final String DONATE = "pref_key_donate";
     public static final String DISMISSED_READ = "pref_key_dismiss_read";
     public static final String MAX_MMS_ATTACHMENT_SIZE = "pref_mms_max_attachment_size";
@@ -201,9 +199,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         mRes = mContext.getResources();
 
         mResource = args.getInt("category", R.xml.settings);
-        if (mResource == R.xml.settings_simple || mResource == R.xml.settings_main) {
-            mResource = mPrefs.getBoolean(SIMPLE_PREFS, true) ? R.xml.settings_simple : R.xml.settings_main;
-        }
         addPreferencesFromResource(mResource);
 
         // Set `this` to be the preferences click/change listener for all the preferences.
@@ -607,9 +602,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                 })
                         .show();
                 break;
-            case SIMPLE_PREFS:
-                mContext.onOptionsItemSelected(mContext.getMenu().findItem(R.id.simple_settings));
-                break;
             case DONATE:
                 DonationManager.getInstance(mContext).showDonateDialog();
                 break;
@@ -727,12 +719,5 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         inflater.inflate(R.menu.settings, menu);
         mContext.setTitle(R.string.title_settings);
-
-        MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
-        if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
-            simplePrefs.setTitle(R.string.menu_show_all_prefs);
-        } else {
-            simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
-        }
     }
 }
