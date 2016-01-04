@@ -302,23 +302,15 @@ public class ThemeManager {
         switch (theme) {
             case WHITE:
                 mBackgroundColor = mResources.getColor(R.color.white_pure);
-                if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
-                        R.style.AppThemeWhite : R.style.AppThemeWhiteDialog);
                 break;
             case OFFWHITE:
                 mBackgroundColor = mResources.getColor(R.color.grey_light_mega_ultra);
-                if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
-                        R.style.AppThemeLight : R.style.AppThemeLightDialog);
                 break;
             case GREY:
                 mBackgroundColor = mResources.getColor(R.color.grey_material);
-                if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
-                        R.style.AppThemeDark : R.style.AppThemeDarkDialog);
                 break;
             case BLACK:
                 mBackgroundColor = mResources.getColor(R.color.black);
-                if (mContext != null) mContext.setTheme(mContext instanceof MainActivity ?
-                        R.style.AppThemeDarkAmoled : R.style.AppThemeDarkAmoledDialog);
                 break;
         }
 

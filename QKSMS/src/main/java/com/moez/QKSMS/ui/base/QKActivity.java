@@ -99,6 +99,7 @@ public abstract class QKActivity extends AppCompatActivity {
         });
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            setTheme(getThemeRes());
             switch (ThemeManager.getTheme()) {
                 case WHITE:
                 case OFFWHITE:
@@ -258,6 +259,24 @@ public abstract class QKActivity extends AppCompatActivity {
         } else {
             return powerManager.isScreenOn();
         }
+    }
+
+    protected int getThemeRes() {
+        switch (ThemeManager.getTheme()) {
+            case WHITE:
+                return R.style.AppThemeWhite;
+
+            case OFFWHITE:
+                return R.style.AppThemeLight;
+
+            case GREY:
+                return R.style.AppThemeDark;
+
+            case BLACK:
+                return R.style.AppThemeDarkAmoled;
+        }
+
+        return R.style.AppThemeLight;
     }
 
     public void makeToast(@StringRes int message) {

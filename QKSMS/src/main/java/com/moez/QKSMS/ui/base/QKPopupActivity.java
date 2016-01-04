@@ -38,5 +38,24 @@ public abstract class QKPopupActivity extends QKActivity {
         }
     }
 
+    @Override
+    protected int getThemeRes() {
+        switch (ThemeManager.getTheme()) {
+            case WHITE:
+                return R.style.AppThemeWhiteDialog;
+
+            case OFFWHITE:
+                return R.style.AppThemeLightDialog;
+
+            case GREY:
+                return R.style.AppThemeDarkDialog;
+
+            case BLACK:
+                return R.style.AppThemeDarkAmoledDialog;
+        }
+
+        return R.style.AppThemeLightDialog;
+    }
+
     protected abstract int getLayoutResource();
 }
