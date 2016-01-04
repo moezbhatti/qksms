@@ -23,7 +23,7 @@ public class ConversationPrefsHelper {
     }
 
     public int getColor() {
-        return Integer.parseInt(mConversationPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
+        return Integer.parseInt(mConversationPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.getThemeColor()));
     }
 
     public boolean getNotificationsEnabled() {
