@@ -54,6 +54,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.DrmUtils;
@@ -220,7 +221,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         }
 
         mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
-        mCIELChEvaluator = new CIELChEvaluator(ThemeManager.getColor(), mConversationPrefs.getColor());
+        mCIELChEvaluator = new CIELChEvaluator(mConversationPrefs.getColor(), ThemeManager.getColor());
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
         setHasOptionsMenu(true);

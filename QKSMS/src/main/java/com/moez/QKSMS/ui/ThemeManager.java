@@ -21,6 +21,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
+import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
@@ -557,7 +558,7 @@ public class ThemeManager {
         mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, color);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new CIELChEvaluator(colorFrom, color), 0);
         colorAnimation.setDuration(TRANSITION_LENGTH);
         colorAnimation.setInterpolator(new DecelerateInterpolator());
         colorAnimation.addUpdateListener(animation -> {

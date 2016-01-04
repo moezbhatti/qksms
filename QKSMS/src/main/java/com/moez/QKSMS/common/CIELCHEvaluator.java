@@ -31,9 +31,9 @@ public class CIELChEvaluator implements TypeEvaluator<Integer> {
     public Integer evaluate(float fraction, Integer ignored, Integer ignored2) {
 
         // CIELCH to CIELAB
-        double L = mStartColor.L * fraction + mEndColor.L * (1 - fraction);
-        double C = mStartColor.C * fraction + mEndColor.C * (1 - fraction);
-        double H = mStartColor.H * fraction + mEndColor.H * (1 - fraction);
+        double L = mStartColor.L * (1 - fraction) + mEndColor.L * fraction;
+        double C = mStartColor.C * (1 - fraction) + mEndColor.C * fraction;
+        double H = mStartColor.H * (1 - fraction) + mEndColor.H * fraction;
 
         double a = Math.cos(Math.toRadians(H)) * C;
         double b = Math.sin(Math.toRadians(H)) * C;
