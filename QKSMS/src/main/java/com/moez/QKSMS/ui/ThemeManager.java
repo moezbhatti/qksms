@@ -67,8 +67,8 @@ public class ThemeManager {
         }
     }
 
-    // Colours copied from http://www.google.com/design/spec/style/color.html#color-ui-color-palette
-    private static final int[][] COLOURS = {{
+    // Colors copied from http://www.google.com/design/spec/style/color.html#color-ui-color-palette
+    private static final int[][] COLORS = {{
             // Red
             0xfffde0dc, 0xfff9bdbb, 0xfff69988, 0xfff36c60,
             0xffe84e40, 0xffe51c23, 0xffdd191d, 0xffd01716,
@@ -151,25 +151,25 @@ public class ThemeManager {
      * These are the colors that go in the initial palette.
      */
     public static final int[] PALETTE = {
-            COLOURS[0][5], // Red
-            COLOURS[1][5], // Pink
-            COLOURS[2][5], // Purple
-            COLOURS[3][5], // Deep purple
-            COLOURS[4][5], // Indigo
-            COLOURS[5][5], // Blue
-            COLOURS[6][5], // Light Blue
-            COLOURS[7][5], // Cyan
-            COLOURS[8][5], // Teal
-            COLOURS[9][5], // Green
-            COLOURS[10][5], // Light Green
-            COLOURS[11][5], // Lime
-            COLOURS[12][5], // Yellow
-            COLOURS[13][5], // Amber
-            COLOURS[14][5], // Orange
-            COLOURS[15][5], // Deep Orange
-            COLOURS[16][5], // Brown
-            COLOURS[17][5], // Grey
-            COLOURS[18][5] // Blue Grey
+            COLORS[0][5], // Red
+            COLORS[1][5], // Pink
+            COLORS[2][5], // Purple
+            COLORS[3][5], // Deep purple
+            COLORS[4][5], // Indigo
+            COLORS[5][5], // Blue
+            COLORS[6][5], // Light Blue
+            COLORS[7][5], // Cyan
+            COLORS[8][5], // Teal
+            COLORS[9][5], // Green
+            COLORS[10][5], // Light Green
+            COLORS[11][5], // Lime
+            COLORS[12][5], // Yellow
+            COLORS[13][5], // Amber
+            COLORS[14][5], // Orange
+            COLORS[15][5], // Deep Orange
+            COLORS[16][5], // Brown
+            COLORS[17][5], // Grey
+            COLORS[18][5] // Blue Grey
     };
 
     /**
@@ -367,8 +367,8 @@ public class ThemeManager {
         mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
-        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_SENT, true));
-        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
+        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_SENT, true));
+        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_RECEIVED, false));
         setBubbleStyleNew(mPrefs.getBoolean(SettingsFragment.BUBBLES_NEW, true));
 
         LiveViewManager.refreshViews(QKPreference.BACKGROUND);
@@ -400,7 +400,7 @@ public class ThemeManager {
 
                         // Save the enabled component so we can kill the app with this one when
                         // it's all done.
-                        if (getSwatchColour(mColor) == PALETTE[i]) {
+                        if (getSwatchColor(mColor) == PALETTE[i]) {
                             enabledComponent = componentClassName;
 
                         } else {
@@ -533,14 +533,14 @@ public class ThemeManager {
         palette.setGravity(Gravity.CENTER);
         palette.init(19, 4, color -> {
             palette.init(getSwatch(color).length, 4, color2 -> {
-                setColour(context, color2);
+                setColor(context, color2);
                 dialog.dismiss();
             });
 
             palette.drawPalette(getSwatch(color), mColor);
         });
 
-        palette.drawPalette(PALETTE, getSwatchColour(mColor));
+        palette.drawPalette(PALETTE, getSwatchColor(mColor));
 
         dialog.setContext(context)
                 .setTitle(R.string.pref_theme)
@@ -586,7 +586,7 @@ public class ThemeManager {
         return String.format("#%08x", color).toUpperCase();
     }
 
-    public static void setColour(QKActivity activity, int color) {
+    public static void setColor(QKActivity activity, int color) {
 
         AnalyticsManager.getInstance().sendEvent(
                 AnalyticsManager.CATEGORY_PREFERENCE_CHANGE,
@@ -594,20 +594,20 @@ public class ThemeManager {
                 getColorString(color)
         );
 
-        int colourFrom = mColor;
+        int colorFrom = mColor;
         mColor = color;
         mActiveColor = color;
 
         mPrefs.edit().putString(SettingsFragment.THEME, "" + color).apply();
 
-        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_SENT, true));
-        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOUR_RECEIVED, false));
+        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_SENT, true));
+        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_RECEIVED, false));
         mTextOnColorPrimary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_primary : R.color.theme_light_text_primary);
         mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colourFrom, color);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, color);
         colorAnimation.setDuration(TRANSITION_LENGTH);
         colorAnimation.setInterpolator(new DecelerateInterpolator());
         colorAnimation.addUpdateListener(animation -> {
@@ -664,9 +664,9 @@ public class ThemeManager {
     }
 
     private static boolean isColorDarkEnough(int color) {
-        for (int i = 0; i < COLOURS.length; i++) {
-            for (int j = 0; j < COLOURS[i].length; j++) {
-                if (color == COLOURS[i][j]) {
+        for (int i = 0; i < COLORS.length; i++) {
+            for (int j = 0; j < COLORS[i].length; j++) {
+                if (color == COLORS[i][j]) {
                     return TEXT_MODE[i][j] == 1;
                 }
             }
@@ -675,22 +675,22 @@ public class ThemeManager {
         return true;
     }
 
-    public static int getSwatchColour(int colour) {
-        for (int i = 0; i < COLOURS.length; i++) {
-            for (int j = 0; j < COLOURS[i].length; j++) {
-                if (colour == COLOURS[i][j]) {
+    public static int getSwatchColor(int color) {
+        for (int i = 0; i < COLORS.length; i++) {
+            for (int j = 0; j < COLORS[i].length; j++) {
+                if (color == COLORS[i][j]) {
                     return PALETTE[i];
                 }
             }
         }
 
-        return colour;
+        return color;
     }
 
-    private static int[] getSwatch(int colour) {
-        for (int[] swatch : COLOURS) {
+    private static int[] getSwatch(int color) {
+        for (int[] swatch : COLORS) {
             for (int swatchColor : swatch) {
-                if (colour == swatchColor) {
+                if (color == swatchColor) {
                     return swatch;
                 }
             }

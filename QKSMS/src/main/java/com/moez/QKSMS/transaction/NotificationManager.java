@@ -184,7 +184,7 @@ public class NotificationManager {
                     }
 
                     if (conversationPrefs.getNotificationLedEnabled()) {
-                        builder.setLights(getLedColour(conversationPrefs), 1000, 1000);
+                        builder.setLights(getLedColor(conversationPrefs), 1000, 1000);
                     }
 
                     Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
@@ -275,7 +275,7 @@ public class NotificationManager {
                                 .setAutoCancel(true);
 
                 if (conversationPrefs.getNotificationLedEnabled()) {
-                    builder.setLights(getLedColour(conversationPrefs), 1000, 1000);
+                    builder.setLights(getLedColor(conversationPrefs), 1000, 1000);
                 }
 
                 Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
@@ -359,7 +359,7 @@ public class NotificationManager {
                 }
 
                 if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_LED, true)) {
-                    builder.setLights(getLedColour(new ConversationPrefsHelper(context, 0)), 1000, 1000);
+                    builder.setLights(getLedColor(new ConversationPrefsHelper(context, 0)), 1000, 1000);
                 }
 
                 if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_TICKER, false)) {
@@ -692,18 +692,18 @@ public class NotificationManager {
         }
     }
 
-    private static int getLedColour(ConversationPrefsHelper conversationPrefs) {
-        int colour = Integer.parseInt(conversationPrefs.getNotificationLedColor());
+    private static int getLedColor(ConversationPrefsHelper conversationPrefs) {
+        int color = Integer.parseInt(conversationPrefs.getNotificationLedColor());
 
-        if (colour == sRes.getColor(R.color.blue_light) || colour == sRes.getColor(R.color.blue_dark))
+        if (color == sRes.getColor(R.color.blue_light) || color == sRes.getColor(R.color.blue_dark))
             return sRes.getColor(R.color.blue_dark);
-        if (colour == sRes.getColor(R.color.purple_light) || colour == sRes.getColor(R.color.purple_dark))
+        if (color == sRes.getColor(R.color.purple_light) || color == sRes.getColor(R.color.purple_dark))
             return sRes.getColor(R.color.purple_dark);
-        if (colour == sRes.getColor(R.color.green_light) || colour == sRes.getColor(R.color.green_dark))
+        if (color == sRes.getColor(R.color.green_light) || color == sRes.getColor(R.color.green_dark))
             return sRes.getColor(R.color.green_dark);
-        if (colour == sRes.getColor(R.color.yellow_light) || colour == sRes.getColor(R.color.yellow_dark))
+        if (color == sRes.getColor(R.color.yellow_light) || color == sRes.getColor(R.color.yellow_dark))
             return sRes.getColor(R.color.yellow_dark);
-        if (colour == sRes.getColor(R.color.red_light) || colour == sRes.getColor(R.color.red_dark))
+        if (color == sRes.getColor(R.color.red_light) || color == sRes.getColor(R.color.red_dark))
             return sRes.getColor(R.color.red_dark);
 
         return sRes.getColor(R.color.white_pure);

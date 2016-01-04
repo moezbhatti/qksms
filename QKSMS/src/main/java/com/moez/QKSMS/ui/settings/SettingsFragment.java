@@ -88,8 +88,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String BACKGROUND = "pref_key_background";
     public static final String BUBBLES = "pref_key_bubbles";
     public static final String BUBBLES_NEW = "pref_key_new_bubbles";
-    public static final String COLOUR_SENT = "pref_key_colour_sent";
-    public static final String COLOUR_RECEIVED = "pref_key_colour_received";
+    public static final String COLOR_SENT = "pref_key_colour_sent";
+    public static final String COLOR_RECEIVED = "pref_key_colour_received";
     public static final String HIDE_AVATAR_CONVERSATIONS = "pref_key_hide_avatar_conversations";
     public static final String HIDE_AVATAR_SENT = "pref_key_hide_avatar_sent";
     public static final String HIDE_AVATAR_RECEIVED = "pref_key_hide_avatar_received";
@@ -416,10 +416,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 int i = Integer.parseInt("" + newValue);
                 preference.setSummary(mFontWeights[i == 2 ? 0 : 1]);
                 break;
-            case COLOUR_SENT:
+            case COLOR_SENT:
                 ThemeManager.setSentBubbleColored((Boolean) newValue);
                 break;
-            case COLOUR_RECEIVED:
+            case COLOR_RECEIVED:
                 ThemeManager.setReceivedBubbleColored((Boolean) newValue);
                 break;
             case NIGHT_AUTO:
