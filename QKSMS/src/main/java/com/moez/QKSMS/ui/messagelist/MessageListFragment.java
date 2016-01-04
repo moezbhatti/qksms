@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui.messagelist;
 
-import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -52,6 +51,7 @@ import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
@@ -156,7 +156,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private boolean mIsSmsEnabled;
 
     private Cursor mCursor;
-    private ArgbEvaluator mArgbEvaluator;
+    private CIELChEvaluator mCIELChEvaluator;
     private MessageListAdapter mAdapter;
     private SmoothLinearLayoutManager mLayoutManager;
     private MessageListRecyclerView mRecyclerView;
@@ -219,11 +219,12 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mShowImmediate = savedInstanceState.getBoolean(ARG_SHOW_IMMEDIATE, false);
         }
 
-        mArgbEvaluator = new ArgbEvaluator();
         mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
+        mCIELChEvaluator = new CIELChEvaluator(ThemeManager.getColor(), mConversationPrefs.getColor());
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
         setHasOptionsMenu(true);
+
 
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mProxSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
@@ -793,8 +794,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     @Override
     public void onMenuChanging(float percentOpen) {
         if (mConversationPrefs != null) {
-            ThemeManager.setActiveColor((int) mArgbEvaluator.evaluate(
-                    percentOpen, 0xFF000000 | mConversationPrefs.getColor(), 0xFF000000 | ThemeManager.getThemeColor()));
+            ThemeManager.setActiveColor(mCIELChEvaluator.evaluate(percentOpen));
         }
     }
 
