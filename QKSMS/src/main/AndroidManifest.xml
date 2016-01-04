@@ -330,14 +330,6 @@
             android:theme="@style/AppThemeLightDialog"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Message picker activity -->
-        <activity
-            android:name=".ui.popup.MessagePickerActivity"
-            android:excludeFromRecents="true"
-            android:noHistory="true"
-            android:taskAffinity=""
-            android:theme="@style/AppThemeLightDialog" />
-
         <activity android:name=".ui.mms.SlideshowActivity" />
 
         <receiver
