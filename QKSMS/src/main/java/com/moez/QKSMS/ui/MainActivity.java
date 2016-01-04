@@ -591,7 +591,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
     public void onClosed() {
         // When the menu (i.e. the conversation list) has been closed, the content has been opened.
         // So notify the content fragment.
-        if (mContent != null) mContent.onContentOpened();
+        if (mContent != null && ((Fragment) mContent).isAdded()) mContent.onContentOpened();
     }
 
     @Override
