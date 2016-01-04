@@ -62,11 +62,6 @@
             android:summary="@string/pref_category_summary_about"
             android:title="@string/pref_category_about" />
         <Preference
-            android:icon="@drawable/ic_fold"
-            android:key="pref_key_simple"
-            android:layout="@layout/list_item_preference"
-            android:title="@string/pref_show_fewer" />
-        <Preference
             android:icon="@drawable/ic_donate"
             android:key="pref_key_donate"
             android:layout="@layout/list_item_preference"

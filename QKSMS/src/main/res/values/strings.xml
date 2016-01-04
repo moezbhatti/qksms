@@ -260,9 +260,6 @@
     <string name="pref_donate_title">Donate</string>
     <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
 
-    <string name="pref_show_all">Show all preferences</string>
-    <string name="pref_show_fewer">Show fewer preferences</string>
-
     <!--Preference subcategory-->
     <string name="pref_subcat_theme">Theme</string>
     <!--Preference subcategory-->
