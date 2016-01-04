@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- WHITE THEME -->
-
-    <style name="AppThemeWhite" parent="AppBaseThemeLight">
-        <item name="android:windowBackground">@color/white_pure</item>
-        <item name="backgroundColor">@color/grey_light_mega_ultra</item>
-    </style>
-
-    <style name="AppThemeWhiteDialog" parent="AppThemeLightDialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="backgroundColor">@color/white_pure</item>
-    </style>
-
     <!-- LIGHT THEME -->
 
     <style name="AppThemeLight" parent="AppBaseThemeLight" />

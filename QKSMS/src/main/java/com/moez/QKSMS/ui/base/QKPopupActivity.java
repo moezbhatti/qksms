@@ -41,13 +41,7 @@ public abstract class QKPopupActivity extends QKActivity {
     @Override
     protected int getThemeRes() {
         switch (ThemeManager.getTheme()) {
-            case WHITE:
-                return R.style.AppThemeWhiteDialog;
-
-            case OFFWHITE:
-                return R.style.AppThemeLightDialog;
-
-            case GREY:
+            case DARK:
                 return R.style.AppThemeDarkDialog;
 
             case BLACK:

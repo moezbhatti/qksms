@@ -744,9 +744,8 @@
     </string-array>
 
     <string-array name="background_titles">
-        <item>White</item>
-        <item>Off-white</item>
-        <item>Dark grey</item>
+        <item>Material Light</item>
+        <item>Material Dark</item>
         <item>Black</item>
     </string-array>
 

@@ -467,7 +467,6 @@
     <item>메시지 삭제</item>
   </string-array>
   <string-array name="background_titles">
-    <item>White</item>
     <item>Off-white</item>
     <item>Dark grey</item>
     <item>Black</item>

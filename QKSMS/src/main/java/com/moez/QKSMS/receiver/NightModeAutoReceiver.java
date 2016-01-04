@@ -41,11 +41,11 @@ public class NightModeAutoReceiver extends BroadcastReceiver {
                     (calendar.get(Calendar.HOUR_OF_DAY) == day.get(Calendar.HOUR_OF_DAY) && calendar.get(Calendar.MINUTE) <= day.get(Calendar.MINUTE))) {
                 Log.i(TAG, "Switching to night mode");
                 prefs.edit().putString(SettingsFragment.BACKGROUND, ThemeManager.Theme.PREF_GREY).apply();
-                ThemeManager.setTheme(ThemeManager.Theme.GREY);
+                ThemeManager.setTheme(ThemeManager.Theme.DARK);
             } else {
                 Log.i(TAG, "Switching to day mode");
                 prefs.edit().putString(SettingsFragment.BACKGROUND, ThemeManager.Theme.PREF_OFFWHITE).apply();
-                ThemeManager.setTheme(ThemeManager.Theme.OFFWHITE);
+                ThemeManager.setTheme(ThemeManager.Theme.LIGHT);
             }
         }
     }

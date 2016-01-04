@@ -16,7 +16,7 @@
             android:summary="@string/pref_icon_summary"
             android:title="@string/pref_icon" />
         <ListPreference
-            android:defaultValue="#FFEEEEEE"
+            android:defaultValue="light"
             android:entries="@array/background_titles"
             android:entryValues="@array/background_values"
             android:key="pref_key_background"

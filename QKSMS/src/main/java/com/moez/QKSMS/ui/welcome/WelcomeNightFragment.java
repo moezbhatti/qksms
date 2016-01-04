@@ -63,11 +63,11 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.welcome_night_hint) {
-            boolean night = ThemeManager.getTheme() == ThemeManager.Theme.OFFWHITE;
+            boolean night = ThemeManager.getTheme() == ThemeManager.Theme.LIGHT;
 
             int backgroundColor = mContext.getResources().getColor(night ? R.color.grey_light_mega_ultra : R.color.grey_material);
             int newBackgroundColor = mContext.getResources().getColor(night ? R.color.grey_material : R.color.grey_light_mega_ultra);
-            ThemeManager.setTheme(night ? ThemeManager.Theme.GREY : ThemeManager.Theme.OFFWHITE);
+            ThemeManager.setTheme(night ? ThemeManager.Theme.DARK : ThemeManager.Theme.LIGHT);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), backgroundColor, newBackgroundColor);
             colorAnimation.setDuration(ThemeManager.TRANSITION_LENGTH);

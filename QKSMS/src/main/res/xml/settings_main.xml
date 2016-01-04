@@ -8,7 +8,7 @@
         android:summary="@string/pref_theme_summary_alt"
         android:title="@string/pref_theme" />
     <ListPreference
-        android:defaultValue="#FFEEEEEE"
+        android:defaultValue="light"
         android:entries="@array/background_titles"
         android:entryValues="@array/background_values"
         android:key="pref_key_background"

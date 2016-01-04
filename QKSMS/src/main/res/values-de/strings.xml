@@ -468,7 +468,6 @@
     <item>Nachricht löschen</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Weiß</item>
     <item>Grau</item>
     <item>Dunkelgrau</item>
     <item>Schwarz</item>

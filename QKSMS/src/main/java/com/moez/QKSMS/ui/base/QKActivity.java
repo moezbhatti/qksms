@@ -101,12 +101,11 @@ public abstract class QKActivity extends AppCompatActivity {
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             setTheme(getThemeRes());
             switch (ThemeManager.getTheme()) {
-                case WHITE:
-                case OFFWHITE:
+                case LIGHT:
                     mToolbar.setPopupTheme(R.style.PopupThemeLight);
                     break;
 
-                case GREY:
+                case DARK:
                 case BLACK:
                     mToolbar.setPopupTheme(R.style.PopupTheme);
                     break;
@@ -263,13 +262,7 @@ public abstract class QKActivity extends AppCompatActivity {
 
     protected int getThemeRes() {
         switch (ThemeManager.getTheme()) {
-            case WHITE:
-                return R.style.AppThemeWhite;
-
-            case OFFWHITE:
-                return R.style.AppThemeLight;
-
-            case GREY:
+            case DARK:
                 return R.style.AppThemeDark;
 
             case BLACK:

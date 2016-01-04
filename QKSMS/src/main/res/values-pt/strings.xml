@@ -468,7 +468,6 @@
     <item>Apagar mensagem</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Branco</item>
     <item>Branco (off)</item>
     <item>Cinzento</item>
     <item>Preto</item>

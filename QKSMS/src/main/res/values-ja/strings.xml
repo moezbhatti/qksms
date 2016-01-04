@@ -467,7 +467,6 @@
     <item>メッセージを削除</item>
   </string-array>
   <string-array name="background_titles">
-    <item>白</item>
     <item>オフホワイト</item>
     <item>ダークグレー</item>
     <item>黒</item>

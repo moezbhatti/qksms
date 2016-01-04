@@ -39,29 +39,25 @@ public class ThemeManager {
     public static final int TRANSITION_LENGTH = 500;
 
     public enum Theme {
-        WHITE,
-        OFFWHITE,
-        GREY,
+        LIGHT,
+        DARK,
         BLACK;
 
-        public static final String PREF_WHITE = "white";
-        public static final String PREF_OFFWHITE = "offwhite";
+        public static final String PREF_OFFWHITE = "light";
         public static final String PREF_GREY = "grey";
         public static final String PREF_BLACK = "black";
 
         public static Theme fromString(String color) {
             switch (color) {
-                case PREF_WHITE:
-                    return WHITE;
                 case PREF_OFFWHITE:
-                    return OFFWHITE;
+                    return LIGHT;
                 case PREF_GREY:
-                    return GREY;
+                    return DARK;
                 case PREF_BLACK:
                     return BLACK;
                 default:
                     Log.w(TAG, "Tried to set theme with invalid string: " + color);
-                    return OFFWHITE;
+                    return LIGHT;
             }
         }
     }
@@ -300,13 +296,10 @@ public class ThemeManager {
         mTheme = theme;
 
         switch (theme) {
-            case WHITE:
-                mBackgroundColor = mResources.getColor(R.color.white_pure);
-                break;
-            case OFFWHITE:
+            case LIGHT:
                 mBackgroundColor = mResources.getColor(R.color.grey_light_mega_ultra);
                 break;
-            case GREY:
+            case DARK:
                 mBackgroundColor = mResources.getColor(R.color.grey_material);
                 break;
             case BLACK:
@@ -315,13 +308,12 @@ public class ThemeManager {
         }
 
         switch (mTheme) {
-            case WHITE:
-            case OFFWHITE:
+            case LIGHT:
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_light_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_light_text_secondary);
                 mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent);
                 break;
-            case GREY:
+            case DARK:
             case BLACK:
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
@@ -459,17 +451,14 @@ public class ThemeManager {
         }
 
         switch (mTheme) {
-            case WHITE:
-                return mResources.getColor(R.color.grey_light_mega_ultra);
-
-            case OFFWHITE:
-                return mResources.getColor(R.color.white_pure);
-
-            case GREY:
+            case DARK:
                 return mResources.getColor(R.color.grey_dark);
 
-            default:
+            case BLACK:
                 return mResources.getColor(R.color.grey_material);
+
+            default:
+                return mResources.getColor(R.color.white_pure);
         }
     }
 
@@ -490,7 +479,7 @@ public class ThemeManager {
     }
 
     public static boolean isNightMode() {
-        return mTheme == Theme.GREY || mTheme == Theme.BLACK;
+        return mTheme == Theme.DARK || mTheme == Theme.BLACK;
     }
 
     public static void showColorPickerDialog(final QKActivity context) {
