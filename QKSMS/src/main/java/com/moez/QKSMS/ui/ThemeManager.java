@@ -526,14 +526,18 @@ public class ThemeManager {
         return mTheme == Theme.GREY || mTheme == Theme.BLACK;
     }
 
-    public static void showColourSwatchesDialog(final QKActivity context) {
+    public static void showColorPickerDialog(final QKActivity context) {
         final QKDialog dialog = new QKDialog();
 
         ColorPickerPalette palette = new ColorPickerPalette(context);
         palette.setGravity(Gravity.CENTER);
         palette.init(19, 4, color -> {
-            showColourPickerDialog(context, color);
-            dialog.dismiss();
+            palette.init(getSwatch(color).length, 4, color2 -> {
+                setColour(context, color2);
+                dialog.dismiss();
+            });
+
+            palette.drawPalette(getSwatch(color), mColor);
         });
 
         palette.drawPalette(PALETTE, getSwatchColour(mColor));
@@ -544,25 +548,6 @@ public class ThemeManager {
                 .setNegativeButton(R.string.cancel, null);
 
         dialog.show();
-    }
-
-    private static void showColourPickerDialog(final QKActivity context, int swatchColour) {
-        final QKDialog dialog = new QKDialog();
-
-        ColorPickerPalette palette = new ColorPickerPalette(context);
-        palette.setGravity(Gravity.CENTER);
-        palette.init(getSwatch(swatchColour).length, 4, color -> {
-            setColour(context, color);
-            dialog.dismiss();
-        });
-
-        palette.drawPalette(getSwatch(swatchColour), mColor);
-
-        dialog.setContext(context)
-                .setTitle(R.string.pref_theme)
-                .setCustomView(palette)
-                .setNegativeButton(R.string.cancel, null)
-                .show();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

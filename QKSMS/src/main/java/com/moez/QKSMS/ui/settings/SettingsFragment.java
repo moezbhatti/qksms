@@ -524,7 +524,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         switch (key) {
             case THEME:
-                ThemeManager.showColourSwatchesDialog(mContext);
+                ThemeManager.showColorPickerDialog(mContext);
                 break;
             case BUBBLES:
                 new BubblePreferenceDialog().setContext(mContext).show();
