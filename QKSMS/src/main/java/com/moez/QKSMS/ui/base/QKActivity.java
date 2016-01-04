@@ -27,7 +27,6 @@ import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.ArrayList;
@@ -113,8 +112,6 @@ public abstract class QKActivity extends AppCompatActivity {
             }
             ((QKTextView) findViewById(R.id.toolbar_title)).setTextColor(ThemeManager.getTextOnColorPrimary());
         });
-
-        ThemeManager.themeActivity(this);
     }
 
     protected void showBackButton(boolean show) {

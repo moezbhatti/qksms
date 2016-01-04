@@ -249,13 +249,6 @@ public class ThemeManager {
         initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
     }
 
-    /**
-     * Loads all theme properties. Should be called during onCreate
-     * of each activity that contains fragments that use ThemeManager
-     */
-    public static void themeActivity(QKActivity activity) {
-    }
-
     public static void setTheme(Theme theme) {
         int startColor = mBackgroundColor;
         initializeTheme(theme);
