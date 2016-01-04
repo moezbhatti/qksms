@@ -16,7 +16,6 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
@@ -248,47 +247,27 @@ public class ThemeManager {
     }
 
     public static void setTheme(Theme theme) {
-        int startColor = mBackgroundColor;
+        final int startColor = mBackgroundColor;
         initializeTheme(theme);
-        int endColor = mBackgroundColor;
+        final int endColor = mBackgroundColor;
 
-        if (mContext instanceof MainActivity) {
-            final View background = ((MainActivity) mContext).findViewById(R.id.menu_frame).getRootView();
-            final View menu = ((MainActivity) mContext).findViewById(R.id.menu_frame);
-            final View content = ((MainActivity) mContext).findViewById(R.id.content_frame);
-            final View fragment = ((MainActivity) mContext).getContent().getView();
-
-            if (startColor != endColor) {
-                ValueAnimator backgroundAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
-                backgroundAnimation.setDuration(TRANSITION_LENGTH);
-                backgroundAnimation.addUpdateListener(animation -> {
-                    int color = (Integer) animation.getAnimatedValue();
-                    if (fragment != null) {
-                        fragment.setBackgroundColor(color);
-                    }
-                    background.setBackgroundColor(color);
-                    menu.setBackgroundColor(color);
-                    content.setBackgroundColor(color);
-                });
-                backgroundAnimation.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        // This updates the colors and fonts of all the views.
-                        LiveViewManager.refreshViews(QKPreference.BACKGROUND);
-                        WidgetProvider.notifyThemeChanged(mContext);
-                    }
-                });
-                backgroundAnimation.start();
-            } else {
-                // This updates the colors and fonts of all the views.
+        if (startColor != endColor) {
+            ValueAnimator backgroundAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+            backgroundAnimation.setDuration(TRANSITION_LENGTH);
+            backgroundAnimation.addUpdateListener(animation -> {
+                mBackgroundColor = (Integer) animation.getAnimatedValue();
                 LiveViewManager.refreshViews(QKPreference.BACKGROUND);
-                background.setBackgroundColor(endColor);
-                menu.setBackgroundColor(endColor);
-                content.setBackgroundColor(endColor);
-                WidgetProvider.notifyThemeChanged(mContext);
-            }
+            });
+            backgroundAnimation.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mBackgroundColor = endColor;
+                    LiveViewManager.refreshViews(QKPreference.BACKGROUND);
+                    WidgetProvider.notifyThemeChanged(mContext);
+                }
+            });
+            backgroundAnimation.start();
         } else {
-            // This updates the colors and fonts of all the views.
             LiveViewManager.refreshViews(QKPreference.BACKGROUND);
             WidgetProvider.notifyThemeChanged(mContext);
         }

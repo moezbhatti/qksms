@@ -39,7 +39,8 @@ public abstract class LiveViewManager {
      * A list of preferences to be excluded from LiveView refreshing when the preference changes
      */
     private static final HashSet<String> sExcludedPrefs = new HashSet<>(Arrays.asList(
-            QKPreference.THEME.getKey()
+            QKPreference.THEME.getKey(),
+            QKPreference.BACKGROUND.getKey()
     ));
 
     /**
