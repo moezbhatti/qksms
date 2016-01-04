@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
@@ -24,6 +25,7 @@ import com.moez.QKSMS.service.CopyUnreadMessageTextService;
 import com.moez.QKSMS.service.DeleteUnreadMessageService;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKPopupActivity;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.view.ComposeView;
@@ -43,6 +45,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
 
     private Conversation mConversation;
     private ConversationLegacy mConversationLegacy;
+    private ConversationPrefsHelper mConversationPrefsHelper;
 
     private Cursor mCursor;
     private boolean mShowUnreadOnly = true;
@@ -66,6 +69,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         sThreadId = extras.getLong(EXTRA_THREAD_ID);
         mConversation = Conversation.get(this, sThreadId, false);
         mConversationLegacy = new ConversationLegacy(this, sThreadId);
+        mConversationPrefsHelper = new ConversationPrefsHelper(this, sThreadId);
 
         // Set up the compose view.
         mComposeView = (ComposeView) findViewById(R.id.compose_view);
@@ -131,6 +135,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
     @Override
     protected void onPause() {
         super.onPause();
+        ThemeManager.setActiveColor(ThemeManager.getThemeColor());
 
         KeyboardUtils.hide(this, mComposeView);
 
@@ -161,6 +166,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
         sIsShowing = true;
         sThreadId = mConversationLegacy.getThreadId();
         mIsStartingActivity = false;
+        ThemeManager.setActiveColor(mConversationPrefsHelper.getColor());
     }
 
     @Override
