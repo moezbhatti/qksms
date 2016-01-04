@@ -74,7 +74,7 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
         list.setOrientation(LinearLayout.VERTICAL);
 
         list.addView(new QKPreference(getActivity(), this, SettingsFragment.THEME,
-                R.string.pref_theme, 0).getView());
+                R.string.pref_theme, R.string.pref_theme_summary_alt).getView());
 
         list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getNotificationLedEnabled(), R.string.pref_led, 0).getView());
