@@ -44,7 +44,7 @@ import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
 import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
-import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
+import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
@@ -302,7 +302,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ConversationNotificationSettingsDialog.RINGTONE_REQUEST_CODE) {
+        if (requestCode == ConversationSettingsDialog.RINGTONE_REQUEST_CODE) {
             if (data != null) {
                 if (mWaitingForThreadId > 0) {
                     ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(this, mWaitingForThreadId);

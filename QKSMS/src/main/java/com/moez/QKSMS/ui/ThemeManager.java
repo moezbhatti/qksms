@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.CIELChEvaluator;
+import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
@@ -498,6 +499,32 @@ public class ThemeManager {
         });
 
         palette.drawPalette(PALETTE, getSwatchColor(mColor));
+
+        dialog.setContext(context)
+                .setTitle(R.string.pref_theme)
+                .setCustomView(palette)
+                .setNegativeButton(R.string.cancel, null);
+
+        dialog.show();
+    }
+
+    public static void showColorPickerDialogForConversation(final QKActivity context, ConversationPrefsHelper prefs) {
+        final QKDialog dialog = new QKDialog();
+
+        ColorPickerPalette palette = new ColorPickerPalette(context);
+        palette.setGravity(Gravity.CENTER);
+        palette.init(19, 4, color -> {
+            palette.init(getSwatch(color).length, 4, color2 -> {
+                prefs.putString(QKPreference.THEME.getKey(), "" + color2);
+                setActiveColor(color2);
+                LiveViewManager.refreshViews(QKPreference.CONVERSATION_THEME);
+                dialog.dismiss();
+            });
+
+            palette.drawPalette(getSwatch(color), prefs.getColor());
+        });
+
+        palette.drawPalette(PALETTE, getSwatchColor(prefs.getColor()));
 
         dialog.setContext(context)
                 .setTitle(R.string.pref_theme)

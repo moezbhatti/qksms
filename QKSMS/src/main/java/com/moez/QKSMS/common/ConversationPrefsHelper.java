@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class ConversationPrefsHelper {
@@ -22,8 +23,7 @@ public class ConversationPrefsHelper {
     }
 
     public int getColor() {
-        //return getInt(SettingsFragment.THEME, 0xFF009688);
-        return 0xff26a69a;
+        return Integer.parseInt(mConversationPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
     }
 
     public boolean getNotificationsEnabled() {

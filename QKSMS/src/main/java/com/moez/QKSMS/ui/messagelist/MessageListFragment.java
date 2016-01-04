@@ -67,6 +67,7 @@ import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -77,7 +78,7 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
 import com.moez.QKSMS.ui.delivery.DeliveryReportItem;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
-import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
+import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -221,10 +222,13 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         }
 
         mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
-        mCIELChEvaluator = new CIELChEvaluator(mConversationPrefs.getColor(), ThemeManager.getColor());
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
         setHasOptionsMenu(true);
+
+        LiveViewManager.registerView(QKPreference.CONVERSATION_THEME, this, key -> {
+            mCIELChEvaluator = new CIELChEvaluator(mConversationPrefs.getColor(), ThemeManager.getThemeColor());
+        });
 
 
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
@@ -645,7 +649,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 return true;
 
             case R.id.menu_notification_settings:
-                ConversationNotificationSettingsDialog.newInstance(mThreadId, mConversation.getRecipients().formatNames(", "))
+                ConversationSettingsDialog.newInstance(mThreadId, mConversation.getRecipients().formatNames(", "))
                         .setContext(mContext)
                         .show();
                 return true;

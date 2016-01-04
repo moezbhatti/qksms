@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
-import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKPreference;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
@@ -21,8 +21,8 @@ import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
 
-public class ConversationNotificationSettingsDialog extends QKDialog implements Preference.OnPreferenceClickListener {
-    private final String TAG = "ConversationNotificationSettingsDialog";
+public class ConversationSettingsDialog extends QKDialog implements Preference.OnPreferenceClickListener {
+    private final String TAG = "ConversationSettingsDialog";
 
     public static final int RINGTONE_REQUEST_CODE = 716;
     public static final String ARG_THREAD_ID = "thread_id";
@@ -38,8 +38,8 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
 
-    public static ConversationNotificationSettingsDialog newInstance(long threadId, String name) {
-        ConversationNotificationSettingsDialog dialog = new ConversationNotificationSettingsDialog();
+    public static ConversationSettingsDialog newInstance(long threadId, String name) {
+        ConversationSettingsDialog dialog = new ConversationSettingsDialog();
 
         Bundle bundle = new Bundle();
         bundle.putLong(ARG_THREAD_ID, threadId);
@@ -105,7 +105,7 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
             case SettingsFragment.THEME:
-                mContext.makeToast(R.string.test);
+                ThemeManager.showColorPickerDialogForConversation(mContext, mConversationPrefs);
                 break;
 
             case SettingsFragment.NOTIFICATION_LED_COLOR:
