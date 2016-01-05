@@ -11,19 +11,18 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
-import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKPreference;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
-import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
-import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
+import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKTextView;
+import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
 
-public class ConversationNotificationSettingsDialog extends QKDialog implements Preference.OnPreferenceClickListener {
-    private final String TAG = "ConversationNotificationSettingsDialog";
+public class ConversationSettingsDialog extends QKDialog implements Preference.OnPreferenceClickListener {
+    private final String TAG = "ConversationSettingsDialog";
 
     public static final int RINGTONE_REQUEST_CODE = 716;
     public static final String ARG_THREAD_ID = "thread_id";
@@ -33,15 +32,14 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
     private ConversationPrefsHelper mConversationPrefs;
 
     private int[] mLedColors;
-    private ColorPickerDialog mLedColorPickerDialog;
 
     private long mThreadId;
     private ViewGroup.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
 
-    public static ConversationNotificationSettingsDialog newInstance(long threadId, String name) {
-        ConversationNotificationSettingsDialog dialog = new ConversationNotificationSettingsDialog();
+    public static ConversationSettingsDialog newInstance(long threadId, String name) {
+        ConversationSettingsDialog dialog = new ConversationSettingsDialog();
 
         Bundle bundle = new Bundle();
         bundle.putLong(ARG_THREAD_ID, threadId);
@@ -67,25 +65,16 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
                 mRes.getColor(R.color.red_light), mRes.getColor(R.color.white_pure)
         };
 
-        mLedColorPickerDialog = new ColorPickerDialog();
-        mLedColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(
-                mConversationPrefs.getNotificationLedColor()), 3, 2);
-        mLedColorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-
-            @Override
-            public void onColorSelected(int color) {
-                mConversationPrefs.putString(SettingsFragment.NOTIFICATION_LED_COLOR, "" + color);
-            }
-        });
-
         int padding = Units.dpToPx(getActivity(), 16);
         QKTextView premiumWarning = new QKTextView(getActivity());
         premiumWarning.setLayoutParams(mLayoutParams);
-        premiumWarning.setType(FontManager.TEXT_TYPE_PRIMARY);
         premiumWarning.setPadding(padding, padding, padding, padding);
 
         LinearLayout list = new LinearLayout(getActivity());
         list.setOrientation(LinearLayout.VERTICAL);
+
+        list.addView(new QKPreference(getActivity(), this, SettingsFragment.THEME,
+                R.string.pref_theme, R.string.pref_theme_summary_alt).getView());
 
         list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getNotificationLedEnabled(), R.string.pref_led, 0).getView());
@@ -114,22 +103,31 @@ public class ConversationNotificationSettingsDialog extends QKDialog implements 
     }
 
     public boolean onPreferenceClick(Preference preference) {
-        if (preference.getKey().equals(SettingsFragment.NOTIFICATION_LED_COLOR)) {
-            mLedColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");
-            return true;
-        } else if (preference.getKey().equals(SettingsFragment.NOTIFICATION_TONE)) {
-            Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-            Uri uri = Uri.parse(mConversationPrefs.getString(SettingsFragment.NOTIFICATION_TONE, "content://settings/system/notification_sound"));
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, uri);
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, getString(R.string.pref_ringtone));
-            intent.putExtra(ARG_THREAD_ID, mThreadId);
-            ((MainActivity) getActivity()).getResultForThreadId(mThreadId);
-            getActivity().startActivityForResult(intent, RINGTONE_REQUEST_CODE);
-            return true;
+        switch (preference.getKey()) {
+            case SettingsFragment.THEME:
+                ThemeManager.showColorPickerDialogForConversation(mContext, mConversationPrefs);
+                break;
+
+            case SettingsFragment.NOTIFICATION_LED_COLOR:
+                ColorPickerDialog ledColorPickerDialog = new ColorPickerDialog();
+                ledColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(mConversationPrefs.getNotificationLedColor()), 3, 2);
+                ledColorPickerDialog.setOnColorSelectedListener(color -> mConversationPrefs.putString(SettingsFragment.NOTIFICATION_LED_COLOR, "" + color));
+                ledColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");
+                break;
+
+            case SettingsFragment.NOTIFICATION_TONE:
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                Uri uri = Uri.parse(mConversationPrefs.getString(SettingsFragment.NOTIFICATION_TONE, "content://settings/system/notification_sound"));
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, uri);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, getString(R.string.pref_ringtone));
+                intent.putExtra(ARG_THREAD_ID, mThreadId);
+                ((MainActivity) getActivity()).getResultForThreadId(mThreadId);
+                getActivity().startActivityForResult(intent, RINGTONE_REQUEST_CODE);
+                break;
         }
 
         return true;

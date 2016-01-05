@@ -14,16 +14,12 @@ import android.telephony.TelephonyManager;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
-import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
 import com.android.mms.transaction.Transaction;
 import com.android.mms.transaction.TransactionBundle;
 import com.android.mms.transaction.TransactionService;
@@ -44,7 +40,6 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
-
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
@@ -136,7 +131,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         if (sent) {
             // set up colors
-            holder.mBodyTextView.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
+            holder.mBodyTextView.setOnColorBackground(ThemeManager.getSentBubbleColor() != ThemeManager.getNeutralBubbleColor());
             holder.mDateView.setOnColorBackground(false);
             holder.mDeliveredIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
             holder.mLockedIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
@@ -151,7 +146,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             }
         } else {
             // set up colors
-            holder.mBodyTextView.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
+            holder.mBodyTextView.setOnColorBackground(ThemeManager.getReceivedBubbleColor() != ThemeManager.getNeutralBubbleColor());
             holder.mDateView.setOnColorBackground(false);
             holder.mDeliveredIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
             holder.mLockedIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
@@ -312,11 +307,13 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
                 ThemeManager.getReceivedBubbleRes()) : (messageItem.isMe() ?
                 ThemeManager.getSentBubbleAltRes() : ThemeManager.getReceivedBubbleAltRes()));
 
-        if (messageItem.isMe()) {
-            holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-        } else {
-            holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-        }
+        holder.setLiveViewCallback(key -> {
+            if (messageItem.isMe()) {
+                holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+            } else {
+                holder.mBodyTextView.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+            }
+        });
 
         if (messageItem.isMe() && !mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_SENT, true)) {
             holder.mAvatarView.setVisibility(showAvatar ? View.VISIBLE : View.GONE);

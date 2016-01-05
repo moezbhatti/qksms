@@ -122,10 +122,10 @@
     <string name="pref_category_about">About</string>
     <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
 
-    <string name="pref_theme">Color scheme</string>
+    <string name="pref_theme">Theme color</string>
     <string name="pref_theme_summary_alt">Tap to change theme</string>
     <string name="pref_icon">Update QKSMS icon color</string>
-    <string name="pref_icon_summary">Update the QKSMS icon to match your color scheme</string>
+    <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
     <string name="pref_status_tint">Tinted status bar</string>
     <string name="pref_navigation_tint">Tinted navigation bar</string>
     <string name="pref_background">Background color</string>
@@ -259,9 +259,6 @@
     <string name="pref_about_thanks_summary">Tap to view open-source contributors</string>
     <string name="pref_donate_title">Donate</string>
     <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
-
-    <string name="pref_show_all">Show all preferences</string>
-    <string name="pref_show_fewer">Show fewer preferences</string>
 
     <!--Preference subcategory-->
     <string name="pref_subcat_theme">Theme</string>
@@ -646,7 +643,7 @@
     <string name="menu_unblocked_conversations">Messages (%s new)</string>
     <string name="menu_notifications">Notifications</string>
     <string name="menu_notifications_off">Notifications off</string>
-    <string name="menu_notification_settings">Notification settings</string>
+    <string name="menu_notification_settings">Conversation settings</string>
     <string name="menu_view_details">View details</string>
     <string name="menu_mark_read">Mark read</string>
     <string name="menu_mark_unread">Mark unread</string>
@@ -744,9 +741,8 @@
     </string-array>
 
     <string-array name="background_titles">
-        <item>White</item>
-        <item>Off-white</item>
-        <item>Dark grey</item>
+        <item>Material Light</item>
+        <item>Material Dark</item>
         <item>Black</item>
     </string-array>
 

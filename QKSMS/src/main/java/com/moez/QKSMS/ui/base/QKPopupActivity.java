@@ -29,7 +29,6 @@ public abstract class QKPopupActivity extends QKActivity {
         setFinishOnTouchOutside(mPrefs.getBoolean(SettingsFragment.QUICKREPLY_TAP_DISMISS, true));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         setContentView(getLayoutResource());
-        ThemeManager.loadThemeProperties(this);
 
         ((QKLinearLayout) findViewById(R.id.popup)).setBackgroundTint(ThemeManager.getBackgroundColor());
 
@@ -37,6 +36,19 @@ public abstract class QKPopupActivity extends QKActivity {
         if (title != null && title instanceof AppCompatTextView) {
             title.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected int getThemeRes() {
+        switch (ThemeManager.getTheme()) {
+            case DARK:
+                return R.style.AppThemeDarkDialog;
+
+            case BLACK:
+                return R.style.AppThemeDarkAmoledDialog;
+        }
+
+        return R.style.AppThemeLightDialog;
     }
 
     protected abstract int getLayoutResource();

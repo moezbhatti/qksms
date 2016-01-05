@@ -16,14 +16,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactHelper;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
-public class StarredContactsView extends LinearLayout implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener, LiveView {
+public class StarredContactsView extends LinearLayout implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
     private final String TAG = "StarredContactsView";
 
     private QKActivity mContext;
@@ -75,15 +75,16 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
             collapse();
         }
 
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
-        refresh();
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            mIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
+            mFavoritesBackground.setBackgroundColor(ThemeManager.getBackgroundColor());
+        });
     }
 
     public void setComposeScreenViews(AutoCompleteContactView recipients, ComposeView composeView) {
         mRecipients = recipients;
         mComposeView = composeView;
-        ((QKActivity) mContext).getLoaderManager().initLoader(0, null, this);
+        mContext.getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -172,11 +173,5 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
                 toggle();
                 break;
         }
-    }
-
-    @Override
-    public void refresh() {
-        mIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
-        mFavoritesBackground.setBackgroundColor(ThemeManager.getBackgroundColor());
     }
 }

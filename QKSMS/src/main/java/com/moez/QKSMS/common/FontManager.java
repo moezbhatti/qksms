@@ -89,7 +89,7 @@ public class FontManager {
         // Colors and font weight
         switch (type) {
             case FontManager.TEXT_TYPE_PRIMARY:
-                boolean isNight = ThemeManager.getTheme() == ThemeManager.Theme.GREY ||
+                boolean isNight = ThemeManager.getTheme() == ThemeManager.Theme.DARK ||
                                   ThemeManager.getTheme() == ThemeManager.Theme.BLACK;
                 int id = isNight ? R.color.text_primary_dark : R.color.text_primary_light;
                 return context.getResources().getColorStateList(id);

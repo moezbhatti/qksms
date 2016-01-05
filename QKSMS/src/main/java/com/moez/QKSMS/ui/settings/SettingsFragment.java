@@ -24,7 +24,6 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -36,10 +35,10 @@ import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PackageUtils;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.transaction.EndlessJabber;
 import com.moez.QKSMS.transaction.NotificationManager;
@@ -66,7 +65,7 @@ import java.util.Set;
 import java.util.Stack;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
-        Preference.OnPreferenceClickListener, LiveView, ContentFragment {
+        Preference.OnPreferenceClickListener, ContentFragment {
     private final String TAG = "PreferenceFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
@@ -88,8 +87,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String BACKGROUND = "pref_key_background";
     public static final String BUBBLES = "pref_key_bubbles";
     public static final String BUBBLES_NEW = "pref_key_new_bubbles";
-    public static final String COLOUR_SENT = "pref_key_colour_sent";
-    public static final String COLOUR_RECEIVED = "pref_key_colour_received";
+    public static final String COLOR_SENT = "pref_key_colour_sent";
+    public static final String COLOR_RECEIVED = "pref_key_colour_received";
     public static final String HIDE_AVATAR_CONVERSATIONS = "pref_key_hide_avatar_conversations";
     public static final String HIDE_AVATAR_SENT = "pref_key_hide_avatar_sent";
     public static final String HIDE_AVATAR_RECEIVED = "pref_key_hide_avatar_received";
@@ -140,13 +139,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String MMS_PROXY = "mms_proxy";
     public static final String AUTOMATICALLY_CONFIGURE_MMS = "pref_key_automatically_configure_mms";
     public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
-    public static final String SIMPLE_PREFS = "pref_key_simple";
     public static final String DONATE = "pref_key_donate";
     public static final String DISMISSED_READ = "pref_key_dismiss_read";
-    /**
-     * @deprecated
-     */
-    public static final String APN_CHOOSER = "pref_key_apn_chooser";
     public static final String MAX_MMS_ATTACHMENT_SIZE = "pref_mms_max_attachment_size";
     public static final String QUICKREPLY = "pref_key_quickreply_enabled";
     public static final String QUICKREPLY_TAP_DISMISS = "pref_key_quickreply_dismiss";
@@ -205,9 +199,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         mRes = mContext.getResources();
 
         mResource = args.getInt("category", R.xml.settings);
-        if (mResource == R.xml.settings_simple || mResource == R.xml.settings_main) {
-            mResource = mPrefs.getBoolean(SIMPLE_PREFS, true) ? R.xml.settings_simple : R.xml.settings_main;
-        }
         addPreferencesFromResource(mResource);
 
         // Set `this` to be the preferences click/change listener for all the preferences.
@@ -372,9 +363,14 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         KeyboardUtils.hide(mContext, view);
         mListView = (ListView) view.findViewById(android.R.id.list);
 
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
-        refresh();
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            ListviewHelper.applyCustomScrollbar(mContext, mListView);
+
+            View view1 = getView();
+            if (view1 != null) {
+                view1.setBackgroundColor(ThemeManager.getBackgroundColor());
+            }
+        });
     }
 
     @Override
@@ -400,10 +396,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
                 break;
             case STATUS_TINT:
-                ThemeManager.setStatusBarTintEnabled((Boolean) newValue);
+                ThemeManager.setStatusBarTintEnabled(mContext, (Boolean) newValue);
                 break;
             case NAVIGATION_TINT:
-                ThemeManager.setNavigationBarTintEnabled((Boolean) newValue);
+                ThemeManager.setNavigationBarTintEnabled(mContext, (Boolean) newValue);
                 break;
             case FONT_FAMILY:
                 preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
@@ -415,10 +411,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 int i = Integer.parseInt("" + newValue);
                 preference.setSummary(mFontWeights[i == 2 ? 0 : 1]);
                 break;
-            case COLOUR_SENT:
+            case COLOR_SENT:
                 ThemeManager.setSentBubbleColored((Boolean) newValue);
                 break;
-            case COLOUR_RECEIVED:
+            case COLOR_RECEIVED:
                 ThemeManager.setReceivedBubbleColored((Boolean) newValue);
                 break;
             case NIGHT_AUTO:
@@ -523,7 +519,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         switch (key) {
             case THEME:
-                ThemeManager.showColourSwatchesDialog(mContext);
+                ThemeManager.showColorPickerDialog(mContext);
                 break;
             case BUBBLES:
                 new BubblePreferenceDialog().setContext(mContext).show();
@@ -605,9 +601,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                     }
                                 })
                         .show();
-                break;
-            case SIMPLE_PREFS:
-                mContext.onOptionsItemSelected(mContext.getMenu().findItem(R.id.simple_settings));
                 break;
             case DONATE:
                 DonationManager.getInstance(mContext).showDonateDialog();
@@ -693,23 +686,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        LiveViewManager.unregisterView(this);
-    }
-
-    @Override
-    public void refresh() {
-        ListviewHelper.applyCustomScrollbar(mContext, mListView);
-
-        View view = getView();
-        if (view != null) {
-            view.setBackgroundColor(ThemeManager.getBackgroundColor());
-        }
-    }
-
-    @Override
     public void onContentOpening() {
 
     }
@@ -730,6 +706,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     @Override
+    public void onMenuChanging(float percentOpen) {
+
+    }
+
+    @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         if (mContext == null) {
             mContext = (MainActivity) context;
@@ -738,12 +719,5 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         inflater.inflate(R.menu.settings, menu);
         mContext.setTitle(R.string.title_settings);
-
-        MenuItem simplePrefs = menu.findItem(R.id.simple_settings);
-        if (mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)) {
-            simplePrefs.setTitle(R.string.menu_show_all_prefs);
-        } else {
-            simplePrefs.setTitle(R.string.menu_show_fewer_prefs);
-        }
     }
 }

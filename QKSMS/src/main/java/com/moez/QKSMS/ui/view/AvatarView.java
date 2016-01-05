@@ -25,13 +25,12 @@ import android.widget.ImageView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
-public class AvatarView extends ImageView implements View.OnClickListener, LiveView {
+public class AvatarView extends ImageView implements View.OnClickListener {
     private final String TAG = "AvatarView";
 
     static final String[] PHONE_LOOKUP_PROJECTION = new String[]{
@@ -90,12 +89,17 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
             }
             a.recycle();
 
-            refresh();
             setOnClickListener(this);
 
-            // Register this view for live updates.
-            LiveViewManager.registerView(this);
-            LiveViewManager.registerPreference(this, SettingsFragment.THEME);
+            LiveViewManager.registerView(QKPreference.THEME, this, key -> {
+                mPaint.setColor(ThemeManager.getTextOnColorPrimary());
+                mDefaultDrawable.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+
+                if (getBackground() == null) {
+                    setBackgroundResource(R.drawable.circle);
+                }
+                getBackground().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+            });
         }
     }
 
@@ -275,17 +279,6 @@ public class AvatarView extends ImageView implements View.OnClickListener, LiveV
             int yPos = (int) ((getHeight() / 2) - ((mPaint.descent() + mPaint.ascent()) / 2));
             canvas.drawText("" + mInitial, xPos, yPos, mPaint);
         }
-    }
-
-    @Override
-    public void refresh() {
-        mPaint.setColor(ThemeManager.getTextOnColorPrimary());
-        mDefaultDrawable.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-
-        if (getBackground() == null) {
-            setBackgroundResource(R.drawable.circle);
-        }
-        getBackground().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
     }
 
     private class QueryHandler extends AsyncQueryHandler {

@@ -10,12 +10,12 @@ import com.android.ex.chips.RecipientEditTextView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.interfaces.LiveView;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
-public class AutoCompleteContactView extends RecipientEditTextView implements LiveView {
+public class AutoCompleteContactView extends RecipientEditTextView {
     public static final String TAG = "AutoCompleteContactView";
 
     private QKActivity mContext;
@@ -33,40 +33,34 @@ public class AutoCompleteContactView extends RecipientEditTextView implements Li
 
     private void init(Context context) {
         mContext = (QKActivity) context;
-        SharedPreferences prefs = mContext.getPrefs();
-
-        // Setup text size, typeface, etc.
-        refresh();
 
         mAdapter = new BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_PHONE, getContext());
-        mAdapter.setShowMobileOnly(prefs.getBoolean(SettingsFragment.MOBILE_ONLY, false));
 
         setThreshold(1);
         setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         setAdapter(mAdapter);
         setOnItemClickListener(this);
 
-        // Register this view for live updates.
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.FONT_FAMILY);
-        LiveViewManager.registerPreference(this, SettingsFragment.FONT_SIZE);
-        LiveViewManager.registerPreference(this, SettingsFragment.FONT_WEIGHT);
-        LiveViewManager.registerPreference(this, SettingsFragment.MOBILE_ONLY);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
-    }
+        LiveViewManager.registerView(key -> {
+            int fontFamily = FontManager.getFontFamily(mContext);
+            int fontWeight = FontManager.getFontWeight(mContext, false);
+            setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight));
+        }, QKPreference.FONT_FAMILY, QKPreference.FONT_WEIGHT);
 
-    @Override
-    public void refresh() {
-        setTypeface(TypefaceManager.obtainTypeface(mContext, FontManager.getFontFamily(mContext),
-                FontManager.getFontWeight(mContext, false)));
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
+        LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
+        });
 
-        setTextColor(ThemeManager.getTextOnBackgroundPrimary());
-        setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+            setHintTextColor(ThemeManager.getTextOnBackgroundSecondary());
+        });
 
-        if (mAdapter != null) {
-            SharedPreferences prefs = mContext.getPrefs();
-            mAdapter.setShowMobileOnly(prefs.getBoolean(SettingsFragment.MOBILE_ONLY, false));
-        }
+        LiveViewManager.registerView(QKPreference.MOBILE_ONLY, this, key -> {
+            if (mAdapter != null) {
+                SharedPreferences prefs1 = mContext.getPrefs();
+                mAdapter.setShowMobileOnly(prefs1.getBoolean(SettingsFragment.MOBILE_ONLY, false));
+            }
+        });
     }
 }

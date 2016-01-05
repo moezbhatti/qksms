@@ -70,7 +70,7 @@ public class BubblePreferenceDialog extends QKDialog {
                         out2.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
                         return true;
 
-                    case SettingsFragment.COLOUR_RECEIVED:
+                    case SettingsFragment.COLOR_RECEIVED:
                         ThemeManager.setReceivedBubbleColored(((QKSwitchPreference) preference).isChecked());
                         in1.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
                         in1.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
@@ -78,7 +78,7 @@ public class BubblePreferenceDialog extends QKDialog {
                         in2.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
                         return true;
 
-                    case SettingsFragment.COLOUR_SENT:
+                    case SettingsFragment.COLOR_SENT:
                         ThemeManager.setSentBubbleColored(((QKSwitchPreference) preference).isChecked());
                         out1.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
                         out1.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
@@ -93,9 +93,9 @@ public class BubblePreferenceDialog extends QKDialog {
         LinearLayout prefsLayout = (LinearLayout) view.findViewById(R.id.prefs);
         prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.BUBBLES_NEW,
                 prefs, true, R.string.pref_bubble_style_new, 0).getView());
-        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.COLOUR_RECEIVED,
+        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.COLOR_RECEIVED,
                 prefs, false, R.string.pref_color_received, 0).getView());
-        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.COLOUR_SENT,
+        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.COLOR_SENT,
                 prefs, true, R.string.pref_color_sent, 0).getView());
 
         setTitle(R.string.pref_bubbles);

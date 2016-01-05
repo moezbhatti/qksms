@@ -169,6 +169,11 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
     }
 
     @Override
+    public void onMenuChanging(float percentOpen) {
+
+    }
+
+    @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
         inflater.inflate(R.menu.compose, menu);
         ((QKActivity) context).setTitle(R.string.title_compose);

@@ -41,6 +41,7 @@ import com.moez.QKSMS.common.google.ThumbnailManager;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.transaction.NotificationManager;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.mms.layout.LayoutManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -88,6 +89,7 @@ public class QKSMSAppBase extends MultiDexApplication {
         mPduLoaderManager = new PduLoaderManager(context);
         mThumbnailManager = new ThumbnailManager(context);
 
+        ThemeManager.init(this);
         MmsConfig.init(this);
         Contact.init(this);
         DraftCache.init(this);
@@ -97,7 +99,6 @@ public class QKSMSAppBase extends MultiDexApplication {
         LayoutManager.init(this);
         NotificationManager.init(this);
         LiveViewManager.init(this);
-        //MessagingNotification.init(this);
 
         activePendingMessages();
     }

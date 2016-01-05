@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -35,8 +34,6 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
         mNightHint.setOnClickListener(this);
 
         mContext.setFinished();
-
-        LiveViewManager.unregisterView(mNightHint);
 
         return view;
     }
@@ -66,11 +63,11 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.welcome_night_hint) {
-            boolean night = ThemeManager.getTheme() == ThemeManager.Theme.OFFWHITE;
+            boolean night = ThemeManager.getTheme() == ThemeManager.Theme.LIGHT;
 
             int backgroundColor = mContext.getResources().getColor(night ? R.color.grey_light_mega_ultra : R.color.grey_material);
             int newBackgroundColor = mContext.getResources().getColor(night ? R.color.grey_material : R.color.grey_light_mega_ultra);
-            ThemeManager.setTheme(night ? ThemeManager.Theme.GREY : ThemeManager.Theme.OFFWHITE);
+            ThemeManager.setTheme(night ? ThemeManager.Theme.DARK : ThemeManager.Theme.LIGHT);
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), backgroundColor, newBackgroundColor);
             colorAnimation.setDuration(ThemeManager.TRANSITION_LENGTH);
@@ -91,10 +88,5 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
                     .putString(SettingsFragment.BACKGROUND, night ? ThemeManager.Theme.PREF_GREY : ThemeManager.Theme.PREF_OFFWHITE)
                     .commit();
         }
-    }
-
-    @Override
-    public void refresh() {
-        // Don't let the super class change the background, since we'll handle animations here
     }
 }

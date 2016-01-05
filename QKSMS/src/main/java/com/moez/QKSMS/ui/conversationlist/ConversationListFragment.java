@@ -27,10 +27,10 @@ import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ContentFragment;
 import com.moez.QKSMS.ui.MainActivity;
@@ -44,7 +44,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>, LiveView,
+public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>,
         RecyclerCursorAdapter.ItemClickListener<Conversation>, RecyclerCursorAdapter.MultiSelectListener, Observer {
 
     private final String TAG = "ConversationList";
@@ -79,8 +79,17 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mLayoutManager = new LinearLayoutManager(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
 
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.THEME);
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
+            if (!mViewHasLoaded) {
+                return;
+            }
+
+            mFab.setColorNormal(ThemeManager.getColor());
+            mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
+            mFab.getDrawable().setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+
+            mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
+        });
     }
 
     @Override
@@ -272,7 +281,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LiveViewManager.unregisterView(this);
         BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().deleteObserver(this);
     }
 
@@ -299,19 +307,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         if (mAdapter != null) {
             mAdapter.changeCursor(null);
         }
-    }
-
-    @Override
-    public void refresh() {
-        if (!mViewHasLoaded) {
-            return;
-        }
-
-        mFab.setColorNormal(ThemeManager.getColor());
-        mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
-        mFab.getDrawable().setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-
-        mEmptyStateIcon.setColorFilter(ThemeManager.getTextOnBackgroundPrimary());
     }
 
     @Override

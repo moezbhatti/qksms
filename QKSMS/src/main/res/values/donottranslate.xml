@@ -4,8 +4,7 @@
     <string name="app_name">QKSMS</string>
 
     <string-array name="background_values">
-        <item>white</item>
-        <item>offwhite</item>
+        <item>light</item>
         <item>grey</item>
         <item>black</item>
     </string-array>

@@ -36,6 +36,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.R;
@@ -43,9 +45,7 @@ import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.interfaces.RecipientProvider;
-import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.common.utils.Units;
@@ -65,7 +65,7 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ComposeView extends LinearLayout implements View.OnClickListener, LiveView {
+public class ComposeView extends LinearLayout implements View.OnClickListener {
     public final static String TAG = "ComposeView";
 
     private final String KEY_DELAYED_INFO_DIALOG_SHOWN = "delayed_info_dialog_shown";
@@ -181,11 +181,23 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
         mCancel.setOnClickListener(this);
         mDelay.setOnClickListener(this);
 
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.THEME);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
+            mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
+            mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+            mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+            mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
+            mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+            mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+            updateDelayButton();
+            mProgress.setUnfinishedStrokeColor(ThemeManager.getTextOnColorSecondary());
+            mProgress.setFinishedStrokeColor(ThemeManager.getTextOnColorPrimary());
+            if (ThemeManager.getSentBubbleRes() != 0) mReplyText.setBackgroundResource(ThemeManager.getSentBubbleRes());
+        });
 
-        refresh();
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            mReplyText.getBackground().setColorFilter(ThemeManager.getNeutralBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+            getBackground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
+        });
 
         // There is an option for using the return button instead of the emoticon button in the
         // keyboard; set that up here.
@@ -946,23 +958,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener, L
             }
             return null;
         }
-    }
-
-    @Override
-    public void refresh() {
-        mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
-        mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
-        mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-        updateDelayButton();
-        mProgress.setUnfinishedStrokeColor(ThemeManager.getTextOnColorSecondary());
-        mProgress.setFinishedStrokeColor(ThemeManager.getTextOnColorPrimary());
-        if (ThemeManager.getSentBubbleRes() != 0) mReplyText.setBackgroundResource(ThemeManager.getSentBubbleRes());
-        mReplyText.getBackground().setColorFilter(ThemeManager.getNeutralBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-        mReplyText.refresh();
-        getBackground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void updateDelayButton() {

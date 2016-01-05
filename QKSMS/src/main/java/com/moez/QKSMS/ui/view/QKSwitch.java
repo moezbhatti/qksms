@@ -9,11 +9,10 @@ import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.interfaces.LiveView;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
-public class QKSwitch extends SwitchCompat implements LiveView {
+public class QKSwitch extends SwitchCompat {
 
     private Resources mRes;
 
@@ -30,18 +29,10 @@ public class QKSwitch extends SwitchCompat implements LiveView {
     private void init(Context context) {
         mRes = context.getResources();
 
-        // Register this view for live updates.
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.THEME);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
-
-        refresh();
-    }
-
-    @Override
-    public void refresh() {
-        DrawableCompat.setTintList(getThumbDrawable(), getSwitchThumbColorStateList());
-        DrawableCompat.setTintList(getTrackDrawable(), getSwitchTrackColorStateList());
+        LiveViewManager.registerView(key -> {
+            DrawableCompat.setTintList(getThumbDrawable(), getSwitchThumbColorStateList());
+            DrawableCompat.setTintList(getTrackDrawable(), getSwitchTrackColorStateList());
+        }, QKPreference.THEME, QKPreference.BACKGROUND);
     }
 
     private ColorStateList getSwitchThumbColorStateList() {

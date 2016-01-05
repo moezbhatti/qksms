@@ -468,7 +468,6 @@
     <item>Poista viesti</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Valkoinen</item>
     <item>Luonnonvalkoinen</item>
     <item>Tummanharmaa</item>
     <item>Musta</item>

@@ -29,14 +29,14 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
-import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKRateSnack;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.DraftCache;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.transaction.NotificationManager;
@@ -44,7 +44,7 @@ import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
 import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
-import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
+import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
@@ -60,8 +60,8 @@ import org.ligi.snackengage.snacks.BaseSnack;
 import java.net.URLDecoder;
 import java.util.Collection;
 
-public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener,
-        SlidingMenu.OnOpenedListener, SlidingMenu.OnClosedListener, LiveView {
+
+public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuListener {
 
     private final String TAG = "MainActivity";
 
@@ -110,15 +110,25 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         setTitle(R.string.title_conversation_list);
 
         mSlidingMenu = (SlidingMenu) findViewById(R.id.sliding_menu);
-        setupSlidingMenu();
+        setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
+        mSlidingMenu.setListener(this);
+        mSlidingMenu.setContent();
+        mSlidingMenu.setMenu();
+        mSlidingMenu.showContent(false);
+        mSlidingMenu.showMenu(false);
 
         setupFragments(savedInstanceState);
         onNewIntent(getIntent());
 
         showDialogIfNeeded(savedInstanceState);
 
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            // Update the background color. This code is important during the welcome screen setup, when the activity
+            // in the ThemeManager isn't the MainActivity
+            findViewById(R.id.menu_frame).getRootView().setBackgroundColor(ThemeManager.getBackgroundColor());
+            findViewById(R.id.menu_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
+            findViewById(R.id.content_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
+        });
 
         //Adds a small/non intrusive snackbar that asks the user to rate the app
         SnackEngage.from(this).withSnack(new QKRateSnack().withDuration(BaseSnack.DURATION_LONG))
@@ -153,10 +163,10 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             case TYPE_CONVERSATION:
                 Bundle args = new Bundle();
                 args.putLong(MessageListFragment.ARG_THREAD_ID, mThreadId);
-                mContent = MessageListFragment.getInstance(args);
+                mContent = MessageListFragment.getInstance(mThreadId, 0, null, false);
                 break;
             case TYPE_SETTINGS:
-                mContent = SettingsFragment.newInstance(R.xml.settings_simple);
+                mContent = SettingsFragment.newInstance(R.xml.settings_main);
                 break;
             case TYPE_SEARCH:
                 mContent = new SearchFragment();
@@ -219,28 +229,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         startActivityForResult(welcomeIntent, WelcomeActivity.WELCOME_REQUEST_CODE);
     }
 
-    public SlidingMenu getSlidingMenu() {
-        return mSlidingMenu;
-    }
-
     public void showMenu() {
         mSlidingMenu.showMenu();
-    }
-
-    private void setupSlidingMenu() {
-        setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
-        mSlidingMenu.setBehindScrollScale(0.5f);
-        mSlidingMenu.setFadeDegree(0.5f);
-        mSlidingMenu.setOnOpenListener(this);
-        mSlidingMenu.setOnCloseListener(this);
-        mSlidingMenu.setOnOpenedListener(this);
-        mSlidingMenu.setOnClosedListener(this);
-        mSlidingMenu.setShadowDrawable(R.drawable.shadow_slidingmenu);
-        mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        mSlidingMenu.setContent(R.layout.content_frame);
-        mSlidingMenu.setMenu(R.layout.menu_frame);
-        mSlidingMenu.showMenu(false);
     }
 
     /**
@@ -250,11 +240,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
      */
     public void setSlidingTabEnabled(boolean slidingTabEnabled) {
         if (slidingTabEnabled) {
-            mSlidingMenu.setShadowDrawable(R.drawable.shadow_slidingmenu);
-            mSlidingMenu.setShadowWidth(Units.dpToPx(this, 8));
             mSlidingMenu.setBehindOffset(Units.dpToPx(this, 48));
         } else {
-            mSlidingMenu.setShadowWidth(0);
             mSlidingMenu.setBehindOffset(0);
         }
     }
@@ -275,10 +262,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public Fragment getConversationList() {
-        return mConversationList;
-    }
-
     public Fragment getContent() {
         return (Fragment) mContent;
     }
@@ -293,11 +276,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
             case android.R.id.home:
                 onKeyUp(KeyEvent.KEYCODE_BACK, null);
                 break;
-            case R.id.simple_settings:
-                mPrefs.edit().putBoolean(SettingsFragment.SIMPLE_PREFS,
-                        !mPrefs.getBoolean(SettingsFragment.SIMPLE_PREFS, true)).apply();
             case R.id.menu_settings:
-                switchContent(SettingsFragment.newInstance(R.xml.settings_simple), true);
+                switchContent(SettingsFragment.newInstance(R.xml.settings_main), true);
                 break;
             case R.id.menu_search:
                 switchContent(new SearchFragment(), true);
@@ -322,7 +302,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ConversationNotificationSettingsDialog.RINGTONE_REQUEST_CODE) {
+        if (requestCode == ConversationSettingsDialog.RINGTONE_REQUEST_CODE) {
             if (data != null) {
                 if (mWaitingForThreadId > 0) {
                     ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(this, mWaitingForThreadId);
@@ -408,7 +388,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     @Override
     protected void onResume() {
         super.onResume();
-        ThemeManager.loadThemeProperties(this);
 
         if (!mSlidingMenu.isMenuShowing()) {
             mContent.onContentOpened();
@@ -558,15 +537,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     }
 
     public void setConversation(long threadId, long rowId, String pattern, boolean animate) {
-
-        // Build the arguments for this conversation
-        Bundle args = new Bundle();
-        args.putLong(MessageListFragment.ARG_THREAD_ID, threadId);
-        args.putLong(MessageListFragment.ARG_ROW_ID, rowId);
-        args.putString(MessageListFragment.ARG_HIGHLIGHT, pattern);
-        args.putBoolean(MessageListFragment.ARG_SHOW_IMMEDIATE, !animate);
-
-        MessageListFragment fragment = MessageListFragment.getInstance(args);
+        MessageListFragment fragment = MessageListFragment.getInstance(threadId, rowId, pattern, !animate);
 
         // Save the thread ID here and switch the content
         mThreadId = threadId;
@@ -620,7 +591,12 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
     public void onClosed() {
         // When the menu (i.e. the conversation list) has been closed, the content has been opened.
         // So notify the content fragment.
-        if (mContent != null) mContent.onContentOpened();
+        if (mContent != null && ((Fragment) mContent).isAdded()) mContent.onContentOpened();
+    }
+
+    @Override
+    public void onChanging(float percentOpen) {
+        if (mContent != null) mContent.onMenuChanging(percentOpen);
     }
 
     /**
@@ -668,15 +644,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.OnOpenListen
                 .setNegativeButton(R.string.cancel, null)
                 .setView(contents)
                 .show();
-    }
-
-    @Override
-    public void refresh() {
-        // Update the background color. This code is important during the welcome screen setup, when the activity
-        // in the ThemeManager isn't the MainActivity
-        findViewById(R.id.menu_frame).getRootView().setBackgroundColor(ThemeManager.getBackgroundColor());
-        findViewById(R.id.menu_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
-        findViewById(R.id.content_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
     }
 
     public static class DeleteThreadListener implements DialogInterface.OnClickListener {

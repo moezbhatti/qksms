@@ -65,13 +65,13 @@ public class QKLinearLayout extends LinearLayout {
     @TargetApi(16)
     @Override
     public void setBackground(Drawable background) {
-        background.mutate().setColorFilter(mBackgroundTint, PorterDuff.Mode.SRC_ATOP);
+        background.mutate().setColorFilter(mBackgroundTint, PorterDuff.Mode.MULTIPLY);
         super.setBackground(background);
     }
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
-        background.mutate().setColorFilter(mBackgroundTint, PorterDuff.Mode.SRC_ATOP);
+        background.mutate().setColorFilter(mBackgroundTint, PorterDuff.Mode.MULTIPLY);
         super.setBackgroundDrawable(background);
     }
 }

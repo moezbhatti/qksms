@@ -8,7 +8,7 @@
         android:summary="@string/pref_theme_summary_alt"
         android:title="@string/pref_theme" />
     <ListPreference
-        android:defaultValue="#FFEEEEEE"
+        android:defaultValue="light"
         android:entries="@array/background_titles"
         android:entryValues="@array/background_values"
         android:key="pref_key_background"
@@ -61,11 +61,6 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_category_summary_about"
             android:title="@string/pref_category_about" />
-        <Preference
-            android:icon="@drawable/ic_fold"
-            android:key="pref_key_simple"
-            android:layout="@layout/list_item_preference"
-            android:title="@string/pref_show_fewer" />
         <Preference
             android:icon="@drawable/ic_donate"
             android:key="pref_key_donate"

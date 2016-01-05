@@ -3,14 +3,14 @@ package com.moez.QKSMS.ui.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.View;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.interfaces.LiveView;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.squareup.leakcanary.RefWatcher;
 
-public class QKFragment extends Fragment implements LiveView {
+public class QKFragment extends Fragment {
 
     protected QKActivity mContext;
 
@@ -21,10 +21,14 @@ public class QKFragment extends Fragment implements LiveView {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        LiveViewManager.registerView(this);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            if (getView() != null) {
+                getView().setBackgroundColor(ThemeManager.getBackgroundColor());
+            }
+        });
     }
 
     @Override
@@ -32,12 +36,5 @@ public class QKFragment extends Fragment implements LiveView {
         super.onDestroy();
         RefWatcher refWatcher = QKSMSApp.getRefWatcher(getActivity());
         refWatcher.watch(this);
-    }
-
-    @Override
-    public void refresh() {
-        if (getView() != null) {
-            getView().setBackgroundColor(ThemeManager.getBackgroundColor());
-        }
     }
 }

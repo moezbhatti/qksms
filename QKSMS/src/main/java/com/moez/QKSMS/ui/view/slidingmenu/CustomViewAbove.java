@@ -2,12 +2,9 @@ package com.moez.QKSMS.ui.view.slidingmenu;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.os.Build;
 import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.util.FloatMath;
@@ -23,9 +20,6 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CustomViewAbove extends ViewGroup {
 
     private static final String TAG = "CustomViewAbove";
@@ -36,13 +30,7 @@ public class CustomViewAbove extends ViewGroup {
     private static final int MAX_SETTLE_DURATION = 350; // ms
     private static final int MIN_DISTANCE_FOR_FLING = 25; // dips
 
-    private static final Interpolator sInterpolator = new Interpolator() {
-        // See [1] for explanation for the 0.63 * t.
-        // http://www.wolframalpha.com/input/?i=graph+1%2B%28t-1%29%5E5%2C+1%2B%28t*0.63-1%29%5E5+from+t+%3D+0+to+1
-        public float getInterpolation(float t) {
-            return (float) Math.pow(0.63 * t - 1.0f, 5) + 1.0f;
-        }
-    };
+    private static final Interpolator sInterpolator = t -> (float) Math.pow(0.63 * t - 1.0f, 5) + 1.0f;
 
     private View mContent;
 
@@ -82,20 +70,11 @@ public class CustomViewAbove extends ViewGroup {
     private int mFlingDistance;
 
     private CustomViewBehind mViewBehind;
-    //	private int mMode;
-    private boolean mEnabled = true;
 
     private OnPageChangeListener mOnPageChangeListener;
     private OnPageChangeListener mInternalPageChangeListener;
 
-    //	private OnCloseListener mCloseListener;
-    //	private OnOpenListener mOpenListener;
-    private SlidingMenu.OnClosedListener mClosedListener;
-    private SlidingMenu.OnOpenedListener mOpenedListener;
-
-    private List<View> mIgnoredViews = new ArrayList<>();
-
-    //	private int mScrollState = SCROLL_STATE_IDLE;
+    private SlidingMenu.SlidingMenuListener mListener;
 
     /**
      * Callback interface for responding to changing state of the selected page.
@@ -111,7 +90,7 @@ public class CustomViewAbove extends ViewGroup {
          * @param positionOffset       Value from [0, 1) indicating the offset from the page at position.
          * @param positionOffsetPixels Value in pixels indicating the offset from position.
          */
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
 
         /**
          * This method will be invoked when a new page becomes selected. Animation is not
@@ -119,7 +98,7 @@ public class CustomViewAbove extends ViewGroup {
          *
          * @param position Position index of the new selected page.
          */
-        public void onPageSelected(int position, boolean anim);
+        void onPageSelected(int position, boolean anim);
 
     }
 
@@ -135,10 +114,6 @@ public class CustomViewAbove extends ViewGroup {
         }
 
         public void onPageSelected(int position, boolean anim) {
-            // This space for rent
-        }
-
-        public void onPageScrollStateChanged(int state) {
             // This space for rent
         }
 
@@ -227,19 +202,18 @@ public class CustomViewAbove extends ViewGroup {
         setCurrentItemInternal(item, smoothScroll, always, velocity, false);
     }
 
-    void setCurrentItemInternal(int item, boolean smoothScroll, boolean always, int velocity,
-                                boolean notify) {
+    void setCurrentItemInternal(int item, boolean smoothScroll, boolean always, int velocity, boolean notify) {
         if (!always && mCurItem == item) {
             setScrollingCacheEnabled(false);
 
             if (notify) {
                 // Notify the listeners here, because the client has switched content.
                 if (isMenuOpen()) {
-                    if (mOpenedListener != null)
-                        mOpenedListener.onOpened();
+                    if (mListener != null)
+                        mListener.onOpened();
                 } else {
-                    if (mClosedListener != null)
-                        mClosedListener.onClosed();
+                    if (mListener != null)
+                        mListener.onClosed();
                 }
             }
 
@@ -275,21 +249,8 @@ public class CustomViewAbove extends ViewGroup {
         mOnPageChangeListener = listener;
     }
 
-    /*
-    public void setOnOpenListener(OnOpenListener l) {
-        mOpenListener = l;
-    }
-
-    public void setOnCloseListener(OnCloseListener l) {
-        mCloseListener = l;
-    }
-     */
-    public void setOnOpenedListener(SlidingMenu.OnOpenedListener l) {
-        mOpenedListener = l;
-    }
-
-    public void setOnClosedListener(SlidingMenu.OnClosedListener l) {
-        mClosedListener = l;
+    public void setListener(SlidingMenu.SlidingMenuListener listener) {
+        mListener = listener;
     }
 
     /**
@@ -304,20 +265,6 @@ public class CustomViewAbove extends ViewGroup {
         return oldListener;
     }
 
-    public void addIgnoredView(View v) {
-        if (!mIgnoredViews.contains(v)) {
-            mIgnoredViews.add(v);
-        }
-    }
-
-    public void removeIgnoredView(View v) {
-        mIgnoredViews.remove(v);
-    }
-
-    public void clearIgnoredViews() {
-        mIgnoredViews.clear();
-    }
-
     // We want the duration of the page snap animation to be influenced by the distance that
     // the screen has to travel, however, we don't want this duration to be effected in a
     // purely linear fashion. Instead, we use this method to moderate the effect that the distance
@@ -325,7 +272,7 @@ public class CustomViewAbove extends ViewGroup {
     float distanceInfluenceForSnapDuration(float f) {
         f -= 0.5f; // center the values about 0.
         f *= 0.3f * Math.PI / 2.0f;
-        return (float) FloatMath.sin(f);
+        return FloatMath.sin(f);
     }
 
     public int getDestScrollX(int page) {
@@ -347,21 +294,8 @@ public class CustomViewAbove extends ViewGroup {
         return mViewBehind.getAbsRightBound(mContent);
     }
 
-    public int getContentLeft() {
-        return mContent.getLeft() + mContent.getPaddingLeft();
-    }
-
     public boolean isMenuOpen() {
         return mCurItem == 0 || mCurItem == 2;
-    }
-
-    private boolean isInIgnoredView(MotionEvent ev) {
-        Rect rect = new Rect();
-        for (View v : mIgnoredViews) {
-            v.getHitRect(rect);
-            if (rect.contains((int) ev.getX(), (int) ev.getY())) return true;
-        }
-        return false;
     }
 
     public int getBehindWidth() {
@@ -370,35 +304,6 @@ public class CustomViewAbove extends ViewGroup {
         } else {
             return mViewBehind.getBehindWidth();
         }
-    }
-
-    public int getChildWidth(int i) {
-        switch (i) {
-            case 0:
-                return getBehindWidth();
-            case 1:
-                return mContent.getWidth();
-            default:
-                return 0;
-        }
-    }
-
-    public boolean isSlidingEnabled() {
-        return mEnabled;
-    }
-
-    public void setSlidingEnabled(boolean b) {
-        mEnabled = b;
-    }
-
-    /**
-     * Like {@link View#scrollBy}, but scroll smoothly instead of immediately.
-     *
-     * @param x the number of pixels to scroll by on the X axis
-     * @param y the number of pixels to scroll by on the Y axis
-     */
-    void smoothScrollTo(int x, int y) {
-        smoothScrollTo(x, y, 0);
     }
 
     /**
@@ -421,11 +326,11 @@ public class CustomViewAbove extends ViewGroup {
         if (dx == 0 && dy == 0) {
             completeScroll();
             if (isMenuOpen()) {
-                if (mOpenedListener != null)
-                    mOpenedListener.onOpened();
+                if (mListener != null)
+                    mListener.onOpened();
             } else {
-                if (mClosedListener != null)
-                    mClosedListener.onClosed();
+                if (mListener != null)
+                    mListener.onClosed();
             }
             return;
         }
@@ -444,8 +349,6 @@ public class CustomViewAbove extends ViewGroup {
         if (velocity > 0) {
             duration = 4 * Math.round(1000 * Math.abs(distance / velocity));
         } else {
-            final float pageDelta = (float) Math.abs(dx) / width;
-            duration = (int) ((pageDelta + 1) * 100);
             duration = MAX_SETTLE_DURATION;
         }
         duration = Math.min(duration, MAX_SETTLE_DURATION);
@@ -487,8 +390,7 @@ public class CustomViewAbove extends ViewGroup {
         // Make sure scroll position is set correctly.
         if (w != oldw) {
             // [ChrisJ] - This fixes the onConfiguration change for orientation issue..
-            // maybe worth having a look why the recomputeScroll pos is screwing
-            // up?
+            // maybe worth having a look why the recomputeScroll pos is screwing up?
             completeScroll();
             scrollTo(getDestScrollX(mCurItem), getScrollY());
         }
@@ -499,13 +401,6 @@ public class CustomViewAbove extends ViewGroup {
         final int width = r - l;
         final int height = b - t;
         mContent.layout(0, 0, width, height);
-    }
-
-    public void setAboveOffset(int i) {
-        //		RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mContent.getLayoutParams());
-        //		params.setMargins(i, params.topMargin, params.rightMargin, params.bottomMargin);
-        mContent.setPadding(i, mContent.getPaddingTop(),
-                mContent.getPaddingRight(), mContent.getPaddingBottom());
     }
 
 
@@ -577,45 +472,22 @@ public class CustomViewAbove extends ViewGroup {
                 scrollTo(x, y);
             }
             if (isMenuOpen()) {
-                if (mOpenedListener != null)
-                    mOpenedListener.onOpened();
+                if (mListener != null)
+                    mListener.onOpened();
             } else {
-                if (mClosedListener != null)
-                    mClosedListener.onClosed();
+                if (mListener != null)
+                    mListener.onClosed();
             }
         }
         mScrolling = false;
     }
 
-    protected int mTouchMode = SlidingMenu.TOUCHMODE_MARGIN;
-
-    public void setTouchMode(int i) {
-        mTouchMode = i;
-    }
-
-    public int getTouchMode() {
-        return mTouchMode;
-    }
-
     private boolean thisTouchAllowed(MotionEvent ev) {
-        int x = (int) (ev.getX() + mScrollX);
-        if (isMenuOpen()) {
-            return mViewBehind.menuOpenTouchAllowed(mContent, mCurItem, x);
-        } else {
-            switch (mTouchMode) {
-                case SlidingMenu.TOUCHMODE_FULLSCREEN:
-                    return !isInIgnoredView(ev);
-                case SlidingMenu.TOUCHMODE_NONE:
-                    return false;
-                case SlidingMenu.TOUCHMODE_MARGIN:
-                    return mViewBehind.marginTouchAllowed(mContent, x);
-            }
-        }
-        return false;
+        return !isMenuOpen();
     }
 
     private boolean thisSlideAllowed(float dx) {
-        boolean allowed = false;
+        boolean allowed;
         if (isMenuOpen()) {
             allowed = mViewBehind.menuOpenSlideAllowed(dx);
         } else {
@@ -640,9 +512,6 @@ public class CustomViewAbove extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-
-        if (!mEnabled)
-            return false;
 
         final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
 
@@ -670,7 +539,7 @@ public class CustomViewAbove extends ViewGroup {
                 if (thisTouchAllowed(ev)) {
                     mIsBeingDragged = false;
                     mIsUnableToDrag = false;
-                    if (isMenuOpen() && mViewBehind.menuTouchInQuickReturn(mContent, mCurItem, ev.getX() + mScrollX)) {
+                    if (isMenuOpen() && mViewBehind.menuTouchInQuickReturn(mContent, ev.getX() + mScrollX)) {
                         mQuickReturn = true;
                     }
                 } else {
@@ -695,14 +564,8 @@ public class CustomViewAbove extends ViewGroup {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
 
-        if (!mEnabled)
-            return false;
-
         if (!mIsBeingDragged && !thisTouchAllowed(ev))
             return false;
-
-        //		if (!mIsBeingDragged && !mQuickReturn)
-        //			return false;
 
         final int action = ev.getAction();
 
@@ -772,7 +635,7 @@ public class CustomViewAbove extends ViewGroup {
                     }
                     mActivePointerId = INVALID_POINTER;
                     endDrag();
-                } else if (mQuickReturn && mViewBehind.menuTouchInQuickReturn(mContent, mCurItem, ev.getX() + mScrollX)) {
+                } else if (mQuickReturn && mViewBehind.menuTouchInQuickReturn(mContent, ev.getX() + mScrollX)) {
                     // close the menu
                     setCurrentItem(1);
                     endDrag();
@@ -827,9 +690,13 @@ public class CustomViewAbove extends ViewGroup {
     @Override
     public void scrollTo(int x, int y) {
         super.scrollTo(x, y);
+        float percentOpen = getPercentOpen();
         mScrollX = x;
         mViewBehind.scrollBehindTo(mContent, x, y);
-        ((SlidingMenu) getParent()).manageLayers(getPercentOpen());
+        ((SlidingMenu) getParent()).manageLayers(percentOpen);
+        if (mListener != null) {
+            mListener.onChanging(percentOpen);
+        }
     }
 
     private int determineTargetPage(float pageOffset, int velocity, int deltaX) {
@@ -841,7 +708,7 @@ public class CustomViewAbove extends ViewGroup {
                 targetPage += 1;
             }
         } else {
-            targetPage = (int) Math.round(mCurItem + pageOffset);
+            targetPage = Math.round(mCurItem + pageOffset);
         }
         return targetPage;
     }
@@ -855,8 +722,6 @@ public class CustomViewAbove extends ViewGroup {
         super.dispatchDraw(canvas);
         // Draw the margin drawable if needed.
         mViewBehind.drawShadow(mContent, canvas);
-        mViewBehind.drawFade(mContent, canvas, getPercentOpen());
-        mViewBehind.drawSelector(mContent, canvas, getPercentOpen());
     }
 
     // variables for drawing
@@ -910,38 +775,6 @@ public class CustomViewAbove extends ViewGroup {
         }
     }
 
-    /**
-     * Tests scrollability within child views of v given a delta of dx.
-     *
-     * @param v      View to test for horizontal scrollability
-     * @param checkV Whether the view v passed should itself be checked for scrollability (true),
-     *               or just its children (false).
-     * @param dx     Delta scrolled in pixels
-     * @param x      X coordinate of the active touch point
-     * @param y      Y coordinate of the active touch point
-     * @return true if child views of v can be scrolled by delta of dx.
-     */
-    protected boolean canScroll(View v, boolean checkV, int dx, int x, int y) {
-        if (v instanceof ViewGroup) {
-            final ViewGroup group = (ViewGroup) v;
-            final int scrollX = v.getScrollX();
-            final int scrollY = v.getScrollY();
-            final int count = group.getChildCount();
-            // Count backwards - let topmost views consume scroll distance first.
-            for (int i = count - 1; i >= 0; i--) {
-                final View child = group.getChildAt(i);
-                if (x + scrollX >= child.getLeft() && x + scrollX < child.getRight() &&
-                        y + scrollY >= child.getTop() && y + scrollY < child.getBottom() &&
-                        canScroll(child, true, dx, x + scrollX - child.getLeft(),
-                                y + scrollY - child.getTop())) {
-                    return true;
-                }
-            }
-        }
-
-        return checkV && ViewCompat.canScrollHorizontally(v, -dx);
-    }
-
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -968,14 +801,12 @@ public class CustomViewAbove extends ViewGroup {
                     handled = arrowScroll(FOCUS_RIGHT);
                     break;
                 case KeyEvent.KEYCODE_TAB:
-                    if (Build.VERSION.SDK_INT >= 11) {
-                        // The focus finder had a bug handling FOCUS_FORWARD and FOCUS_BACKWARD
-                        // before Android 3.0. Ignore the tab key on those devices.
-                        if (KeyEventCompat.hasNoModifiers(event)) {
-                            handled = arrowScroll(FOCUS_FORWARD);
-                        } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
-                            handled = arrowScroll(FOCUS_BACKWARD);
-                        }
+                    // The focus finder had a bug handling FOCUS_FORWARD and FOCUS_BACKWARD
+                    // before Android 3.0. Ignore the tab key on those devices.
+                    if (KeyEventCompat.hasNoModifiers(event)) {
+                        handled = arrowScroll(FOCUS_FORWARD);
+                    } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
+                        handled = arrowScroll(FOCUS_BACKWARD);
                     }
                     break;
             }

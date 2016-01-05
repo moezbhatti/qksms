@@ -74,7 +74,7 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
         });
         colorAnimation.start();
 
-        ThemeManager.setColour(color);
+        ThemeManager.setColor(this, color);
     }
 
     public void setColorBackground(int color) {

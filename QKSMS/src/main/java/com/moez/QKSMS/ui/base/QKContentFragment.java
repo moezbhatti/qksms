@@ -1,12 +1,7 @@
 package com.moez.QKSMS.ui.base;
 
 import android.os.Bundle;
-import android.view.View;
-import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ContentFragment;
-import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 /**
  * Base class for Fragments. QKSMS uses the recycle pattern as an optimization, and our fragment
@@ -22,7 +17,7 @@ import com.moez.QKSMS.ui.settings.SettingsFragment;
  * - Manages the current state of the fragment in terms of the animation, i.e. opening, fully
  * opened, etc.
  */
-public abstract class QKContentFragment extends QKFragment implements LiveView, ContentFragment {
+public abstract class QKContentFragment extends QKFragment implements ContentFragment {
 
     /**
      * It's not strictly necessary, but subclasses should call through to super() in their
@@ -60,18 +55,6 @@ public abstract class QKContentFragment extends QKFragment implements LiveView, 
         onNewArguments();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        LiveViewManager.registerPreference(this, SettingsFragment.BACKGROUND);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        refresh();
-    }
-
     /**
      * Called when the content is being opened with an animation.
      */
@@ -96,13 +79,5 @@ public abstract class QKContentFragment extends QKFragment implements LiveView, 
      * been closed immediately.
      */
     public void onContentClosed() {
-    }
-
-    @Override
-    public void refresh() {
-        View view = getView();
-        if (view != null) {
-            view.setBackgroundColor(ThemeManager.getBackgroundColor());
-        }
     }
 }

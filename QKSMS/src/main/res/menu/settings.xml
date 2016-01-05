@@ -4,11 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/simple_settings"
-        android:title="@string/menu_show_all_prefs"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/menu_changelog"
         android:title="@string/menu_changelog" />
 

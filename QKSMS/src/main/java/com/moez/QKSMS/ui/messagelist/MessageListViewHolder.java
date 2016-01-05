@@ -9,9 +9,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ThumbnailManager;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.interfaces.SlideViewInterface;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.mms.Presenter;
@@ -88,6 +91,10 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
             mDownloadButton = (Button) mRoot.findViewById(R.id.btn_download_msg);
             mDownloadingLabel = (QKTextView) mRoot.findViewById(R.id.label_downloading);
         }
+    }
+
+    protected void setLiveViewCallback(LiveView liveViewCallback) {
+        LiveViewManager.registerView(QKPreference.THEME, this, liveViewCallback);
     }
 
     @Override

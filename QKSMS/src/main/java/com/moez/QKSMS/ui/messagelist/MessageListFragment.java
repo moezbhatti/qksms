@@ -13,7 +13,6 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SqliteWrapper;
@@ -52,9 +51,12 @@ import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.common.preferences.QKPreference;
 import com.moez.QKSMS.common.utils.DrmUtils;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
@@ -65,16 +67,18 @@ import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
 import com.moez.QKSMS.ui.delivery.DeliveryReportItem;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
-import com.moez.QKSMS.ui.dialog.ConversationNotificationSettingsDialog;
+import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -154,6 +158,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private boolean mIsSmsEnabled;
 
     private Cursor mCursor;
+    private CIELChEvaluator mCIELChEvaluator;
     private MessageListAdapter mAdapter;
     private SmoothLinearLayoutManager mLayoutManager;
     private MessageListRecyclerView mRecyclerView;
@@ -165,7 +170,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private SensorManager mSensorManager;
     private AsyncDialog mAsyncDialog;
     private ComposeView mComposeView;
-    private SharedPreferences mPrefs;
+    private ConversationPrefsHelper mConversationPrefs;
     private ConversationDetailsDialog mConversationDetailsDialog;
 
     private int mSavedScrollPosition = -1;  // we save the ListView's scroll position in onPause(),
@@ -187,13 +192,22 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private String mHighlight;
     private boolean mShowImmediate;
 
-    public static MessageListFragment getInstance(Bundle args) {
-        MessageListFragment fragment = new MessageListFragment();
+    public static MessageListFragment getInstance(long threadId, long rowId, String highlight, boolean showImmediate) {
 
-        // Update the fragment with the new arguments.
+        Bundle args = new Bundle();
+        args.putLong(ARG_THREAD_ID, threadId);
+        args.putLong(ARG_ROW_ID, rowId);
+        args.putString(ARG_HIGHLIGHT, highlight);
+        args.putBoolean(ARG_SHOW_IMMEDIATE, showImmediate);
+
+        MessageListFragment fragment = new MessageListFragment();
         fragment.updateArguments(args);
 
         return fragment;
+    }
+
+    public MessageListFragment() {
+
     }
 
     @Override
@@ -207,15 +221,20 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mShowImmediate = savedInstanceState.getBoolean(ARG_SHOW_IMMEDIATE, false);
         }
 
-        mPrefs = mContext.getPrefs();
+        mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
         setHasOptionsMenu(true);
 
+        LiveViewManager.registerView(QKPreference.CONVERSATION_THEME, this, key -> {
+            mCIELChEvaluator = new CIELChEvaluator(mConversationPrefs.getColor(), ThemeManager.getThemeColor());
+        });
+
+
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mProxSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        if (mPrefs.getBoolean(SettingsFragment.PROXIMITY_CALLING, false)) {
+        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
@@ -319,7 +338,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     /**
      * To be called when the user opens a conversation. Initializes the Conversation objects, sets
      * up the draft, and marks the conversation as read.
-     * <p/>
+     * <p>
      * Note: This will have no effect if the context has not been initialized yet.
      */
     private void onOpenConversation() {
@@ -630,7 +649,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 return true;
 
             case R.id.menu_notification_settings:
-                ConversationNotificationSettingsDialog.newInstance(mThreadId, mConversation.getRecipients().formatNames(", "))
+                ConversationSettingsDialog.newInstance(mThreadId, mConversation.getRecipients().formatNames(", "))
                         .setContext(mContext)
                         .show();
                 return true;
@@ -668,7 +687,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     /**
      * Should only be called for failed messages. Deletes the message, placing the text from the
      * message back in the edit box to be updated and then sent.
-     * <p/>
+     * <p>
      * Assumes that cursor points to the correct MessageItem.
      *
      * @param msgItem
@@ -745,9 +764,11 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         super.onContentOpened();
         mOpened = true; // The fragment has finished animating in
 
-        if (mPrefs != null && mPrefs.getBoolean(SettingsFragment.PROXIMITY_CALLING, false)) {
+        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
+
+        ThemeManager.setActiveColor(mConversationPrefs.getColor());
     }
 
     @Override
@@ -770,6 +791,15 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 mConversation.markAsRead();
                 mComposeView.saveDraft();
             }
+        }
+
+        ThemeManager.setActiveColor(ThemeManager.getThemeColor());
+    }
+
+    @Override
+    public void onMenuChanging(float percentOpen) {
+        if (mConversationPrefs != null) {
+            ThemeManager.setActiveColor(mCIELChEvaluator.evaluate(percentOpen));
         }
     }
 
