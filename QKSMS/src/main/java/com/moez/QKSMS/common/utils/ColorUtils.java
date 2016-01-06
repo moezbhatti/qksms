@@ -36,7 +36,7 @@ public class ColorUtils {
     public static int darken(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.75f;
+        hsv[2] *= 0.85f;
         color = Color.HSVToColor(hsv);
         return color;
     }
