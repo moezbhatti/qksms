@@ -28,7 +28,7 @@ public class WelcomeThemeFragment extends BaseWelcomeFragment implements ColorPi
 
     @Override
     public void onColorSelected(int color) {
-        ((WelcomeActivity) getActivity()).setColor(color);
+        ThemeManager.setColor(mContext, color);
         mPallette.drawPalette(ThemeManager.PALETTE, color);
     }
 

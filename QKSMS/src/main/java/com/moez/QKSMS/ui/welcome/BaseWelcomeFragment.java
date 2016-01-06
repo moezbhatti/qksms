@@ -1,12 +1,14 @@
 package com.moez.QKSMS.ui.welcome;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import com.moez.QKSMS.ui.base.QKFragment;
 
 public class BaseWelcomeFragment extends QKFragment {
 
     public interface WelcomeScrollListener {
-        public void onScrollOffsetChanged(WelcomeActivity activity, float offset);
+        void onScrollOffsetChanged(WelcomeActivity activity, float offset);
     }
 
     protected static ViewPager mPager;
@@ -20,4 +22,8 @@ public class BaseWelcomeFragment extends QKFragment {
         mContext = context;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        // Do nothing
+    }
 }
