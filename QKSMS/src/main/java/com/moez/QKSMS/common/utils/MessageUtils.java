@@ -19,7 +19,10 @@ package com.moez.QKSMS.common.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
@@ -28,23 +31,23 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
+import android.drm.DrmStore;
 import android.media.CamcorderProfile;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Sms;
-import android.text.Html;
-import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.text.style.URLSpan;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
-
 import com.android.mms.transaction.MmsMessageSender;
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
@@ -59,34 +62,400 @@ import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.google.android.mms.pdu_alt.SendReq;
 import com.moez.QKSMS.LogTag;
-import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.TempFileProvider;
+import com.moez.QKSMS.common.google.ThumbnailManager;
+import com.moez.QKSMS.common.google.UriImage;
+import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.model.MediaModel;
 import com.moez.QKSMS.model.SlideModel;
 import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.common.google.ThumbnailManager;
-import com.moez.QKSMS.common.google.UriImage;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.mms.SlideshowActivity;
+import com.moez.QKSMS.ui.popup.QKComposeActivity;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
 
 /**
  * An utility class for managing messages.
  */
-public class  MessageUtils {
+public abstract class MessageUtils {
+
+    /**
+     * Copies media from an Mms to the DrmProvider
+     *
+     * @param context
+     * @param msgId
+     */
+    public static boolean saveRingtone(Context context, long msgId) {
+        boolean result = true;
+        PduBody body = null;
+        try {
+            body = SlideshowModel.getPduBody(context, ContentUris.withAppendedId(Mms.CONTENT_URI, msgId));
+        } catch (MmsException e) {
+            Log.e(TAG, "copyToDrmProvider can't load pdu body: " + msgId);
+        }
+        if (body == null) {
+            return false;
+        }
+
+        int partNum = body.getPartsNum();
+        for (int i = 0; i < partNum; i++) {
+            PduPart part = body.getPart(i);
+            String type = new String(part.getContentType());
+
+            if (DrmUtils.isDrmType(type)) {
+                // All parts (but there's probably only a single one) have to be successful
+                // for a valid result.
+                result &= copyPart(context, part, Long.toHexString(msgId));
+            }
+        }
+        return result;
+    }
+
+    public static boolean copyPart(Context context, PduPart part, String fallback) {
+        Uri uri = part.getDataUri();
+        String type = new String(part.getContentType());
+        boolean isDrm = DrmUtils.isDrmType(type);
+        if (isDrm) {
+            type = QKSMSApp.getApplication().getDrmManagerClient().getOriginalMimeType(part.getDataUri());
+        }
+        if (!ContentType.isImageType(type) && !ContentType.isVideoType(type) &&
+                !ContentType.isAudioType(type)) {
+            return true;    // we only save pictures, videos, and sounds. Skip the text parts,
+            // the app (smil) parts, and other type that we can't handle.
+            // Return true to pretend that we successfully saved the part so
+            // the whole save process will be counted a success.
+        }
+        InputStream input = null;
+        FileOutputStream fout = null;
+        try {
+            input = context.getContentResolver().openInputStream(uri);
+            if (input instanceof FileInputStream) {
+                FileInputStream fin = (FileInputStream) input;
+
+                byte[] location = part.getName();
+                if (location == null) {
+                    location = part.getFilename();
+                }
+                if (location == null) {
+                    location = part.getContentLocation();
+                }
+
+                String fileName;
+                if (location == null) {
+                    // Use fallback name.
+                    fileName = fallback;
+                } else {
+                    // For locally captured videos, fileName can end up being something like this:
+                    //      /mnt/sdcard/Android/data/com.android.mms/cache/.temp1.3gp
+                    fileName = new String(location);
+                }
+                File originalFile = new File(fileName);
+                fileName = originalFile.getName();  // Strip the full path of where the "part" is
+                // stored down to just the leaf filename.
+
+                // Depending on the location, there may be an
+                // extension already on the name or not. If we've got audio, put the attachment
+                // in the Ringtones directory.
+                String dir = Environment.getExternalStorageDirectory() + "/"
+                        + (ContentType.isAudioType(type) ? Environment.DIRECTORY_RINGTONES :
+                        Environment.DIRECTORY_DOWNLOADS) + "/";
+                String extension;
+                int index;
+                if ((index = fileName.lastIndexOf('.')) == -1) {
+                    extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(type);
+                } else {
+                    extension = fileName.substring(index + 1, fileName.length());
+                    fileName = fileName.substring(0, index);
+                }
+                if (isDrm) {
+                    extension += DrmUtils.getConvertExtension(type);
+                }
+                // Remove leading periods. The gallery ignores files starting with a period.
+                fileName = fileName.replaceAll("^.", "");
+
+                File file = getUniqueDestination(dir + fileName, extension);
+
+                // make sure the path is valid and directories created for this file.
+                File parentFile = file.getParentFile();
+                if (!parentFile.exists() && !parentFile.mkdirs()) {
+                    Log.e(TAG, "[MMS] copyPart: mkdirs for " + parentFile.getPath() + " failed!");
+                    return false;
+                }
+
+                fout = new FileOutputStream(file);
+
+                byte[] buffer = new byte[8000];
+                int size = 0;
+                while ((size = fin.read(buffer)) != -1) {
+                    fout.write(buffer, 0, size);
+                }
+
+                // Notify other applications listening to scanner events
+                // that a media file has been added to the sd card
+                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+            }
+        } catch (IOException e) {
+            // Ignore
+            Log.e(TAG, "IOException caught while opening or reading stream", e);
+            return false;
+        } finally {
+            if (null != input) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    // Ignore
+                    Log.e(TAG, "IOException caught while closing stream", e);
+                    return false;
+                }
+            }
+            if (null != fout) {
+                try {
+                    fout.close();
+                } catch (IOException e) {
+                    // Ignore
+                    Log.e(TAG, "IOException caught while closing stream", e);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static File getUniqueDestination(String base, String extension) {
+        File file = new File(base + "." + extension);
+
+        for (int i = 2; file.exists(); i++) {
+            file = new File(base + "_" + i + "." + extension);
+        }
+        return file;
+    }
+
+    public static int getDrmMimeSavedStringRsrc(Context context, long msgId, boolean success) {
+        if (isDrmRingtoneWithRights(context, msgId)) {
+            return success ? R.string.saved_ringtone : R.string.saved_ringtone_fail;
+        }
+        return 0;
+    }
+
+    /**
+     * Returns true if any part is drm'd audio with ringtone rights.
+     *
+     * @param context
+     * @param msgId
+     * @return true if one of the parts is drm'd audio with rights to save as a ringtone.
+     */
+    public static boolean isDrmRingtoneWithRights(Context context, long msgId) {
+        PduBody body = null;
+        try {
+            body = SlideshowModel.getPduBody(context, ContentUris.withAppendedId(Mms.CONTENT_URI, msgId));
+        } catch (MmsException e) {
+            Log.e(TAG, "isDrmRingtoneWithRights can't load pdu body: " + msgId);
+        }
+        if (body == null) {
+            return false;
+        }
+
+        int partNum = body.getPartsNum();
+        for (int i = 0; i < partNum; i++) {
+            PduPart part = body.getPart(i);
+            String type = new String(part.getContentType());
+
+            if (DrmUtils.isDrmType(type)) {
+                String mimeType = QKSMSApp.getApplication().getDrmManagerClient()
+                        .getOriginalMimeType(part.getDataUri());
+                if (ContentType.isAudioType(mimeType) && DrmUtils.haveRightsForAction(part.getDataUri(),
+                        DrmStore.Action.RINGTONE)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Copies media from an Mms to the "download" directory on the SD card. If any of the parts
+     * are audio types, drm'd or not, they're copied to the "Ringtones" directory.
+     *
+     * @param context
+     * @param msgId
+     */
+    public static boolean copyMedia(Context context, long msgId) {
+        boolean result = true;
+        PduBody body = null;
+        try {
+            body = SlideshowModel.getPduBody(context, ContentUris.withAppendedId(Mms.CONTENT_URI, msgId));
+        } catch (MmsException e) {
+            Log.e(TAG, "copyMedia can't load pdu body: " + msgId);
+        }
+        if (body == null) {
+            return false;
+        }
+
+        int partNum = body.getPartsNum();
+        for (int i = 0; i < partNum; i++) {
+            PduPart part = body.getPart(i);
+
+            // all parts have to be successful for a valid result.
+            result &= copyPart(context, part, Long.toHexString(msgId));
+        }
+        return result;
+    }
+
+    /**
+     * Returns true if all drm'd parts are forwardable.
+     *
+     * @param context
+     * @param msgId
+     * @return true if all drm'd parts are forwardable.
+     */
+    public static boolean isForwardable(Context context, long msgId) {
+        PduBody body = null;
+        try {
+            body = SlideshowModel.getPduBody(context, ContentUris.withAppendedId(Mms.CONTENT_URI, msgId));
+        } catch (MmsException e) {
+            Log.e(TAG, "getDrmMimeType can't load pdu body: " + msgId);
+        }
+        if (body == null) {
+            return false;
+        }
+
+        int partNum = body.getPartsNum();
+        for (int i = 0; i < partNum; i++) {
+            PduPart part = body.getPart(i);
+            String type = new String(part.getContentType());
+
+            if (DrmUtils.isDrmType(type) && !DrmUtils.haveRightsForAction(part.getDataUri(),
+                    DrmStore.Action.TRANSFER)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void addToContacts(Context context, MessageItem msgItem) {
+        Intent intent = new Intent(Intent.ACTION_INSERT);
+        intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+        intent.putExtra(ContactsContract.Intents.Insert.PHONE, msgItem.mAddress);
+        context.startActivity(intent);
+    }
+
+    public static void copyToClipboard(Context context, String str) {
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText(null, str));
+    }
+
+    public static void forwardMessage(Context context, MessageItem msgItem) {
+        Intent forwardIntent = new Intent(context, QKComposeActivity.class);
+        forwardIntent.putExtra("sms_body", msgItem.mBody);
+        context.startActivity(forwardIntent);
+    }
+
+    public static void lockMessage(Context context, MessageItem msgItem, boolean locked) {
+        Uri uri;
+        if ("sms".equals(msgItem.mType)) {
+            uri = Sms.CONTENT_URI;
+        } else {
+            uri = Mms.CONTENT_URI;
+        }
+        final Uri lockUri = ContentUris.withAppendedId(uri, msgItem.mMsgId);
+
+        final ContentValues values = new ContentValues(1);
+        values.put("locked", locked ? 1 : 0);
+
+        new Thread(() -> {
+            context.getContentResolver().update(lockUri,
+                    values, null, null);
+        }, "MainActivity.lockMessage").start();
+    }
+
+    /**
+     * Looks to see if there are any valid parts of the attachment that can be copied to a SD card.
+     *
+     * @param context
+     * @param msgId
+     */
+    public static boolean haveSomethingToCopyToSDCard(Context context, long msgId) {
+        PduBody body = null;
+        try {
+            body = SlideshowModel.getPduBody(context, ContentUris.withAppendedId(Mms.CONTENT_URI, msgId));
+        } catch (MmsException e) {
+            Log.e(TAG, "haveSomethingToCopyToSDCard can't load pdu body: " + msgId);
+        }
+        if (body == null) {
+            return false;
+        }
+
+        boolean result = false;
+        int partNum = body.getPartsNum();
+        for (int i = 0; i < partNum; i++) {
+            PduPart part = body.getPart(i);
+            String type = new String(part.getContentType());
+
+            if (Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
+                Log.v(TAG, "[CMA] haveSomethingToCopyToSDCard: part[" + i + "] contentType=" + type);
+            }
+
+            if (ContentType.isImageType(type) || ContentType.isVideoType(type) ||
+                    ContentType.isAudioType(type) || DrmUtils.isDrmType(type)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    public static int getDrmMimeMenuStringRsrc(Context context, long msgId) {
+        if (isDrmRingtoneWithRights(context, msgId)) {
+            return R.string.save_ringtone;
+        }
+        return 0;
+    }
+
+    public static Uri getContactUriForEmail(Context context, String emailAddress) {
+        Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
+                Uri.withAppendedPath(ContactsContract.CommonDataKinds.Email.CONTENT_LOOKUP_URI, Uri.encode(emailAddress)),
+                new String[]{ContactsContract.CommonDataKinds.Email.CONTACT_ID, ContactsContract.Contacts.DISPLAY_NAME}, null, null, null);
+
+        if (cursor != null) {
+            try {
+                while (cursor.moveToNext()) {
+                    String name = cursor.getString(1);
+                    if (!TextUtils.isEmpty(name)) {
+                        return ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, cursor.getLong(0));
+                    }
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return null;
+    }
+
+    public static Uri getContactUriForPhoneNumber(String phoneNumber) {
+        Contact contact = Contact.get(phoneNumber, false);
+        if (contact.existsInDatabase()) {
+            return contact.getUri();
+        }
+        return null;
+    }
+
     interface ResizeImageResultCallback {
         void onResizeResult(PduPart part, boolean append);
     }
@@ -107,17 +476,17 @@ public class  MessageUtils {
 
     // When we pass a video record duration to the video recorder, use one of these values.
     private static final int[] sVideoDuration =
-            new int[] {0, 5, 10, 15, 20, 30, 40, 50, 60, 90, 120};
+            new int[]{0, 5, 10, 15, 20, 30, 40, 50, 60, 90, 120};
 
     /**
      * MMS address parsing data structures
      */
     // allowable phone number separators
     private static final char[] NUMERIC_CHARS_SUGAR = {
-        '-', '.', ',', '(', ')', ' ', '/', '\\', '*', '#', '+'
+            '-', '.', ',', '(', ')', ' ', '/', '\\', '*', '#', '+'
     };
 
-    private static HashMap numericSugarMap = new HashMap (NUMERIC_CHARS_SUGAR.length);
+    private static HashMap numericSugarMap = new HashMap(NUMERIC_CHARS_SUGAR.length);
 
     static {
         for (int i = 0; i < NUMERIC_CHARS_SUGAR.length; i++) {
@@ -133,8 +502,9 @@ public class  MessageUtils {
     /**
      * cleanseMmsSubject will take a subject that's says, "<Subject: no subject>", and return
      * a null string. Otherwise it will return the original subject string.
-     * @param context a regular context so the function can grab string resources
-     * @param subject the raw subject
+     *
+     * @param context   a regular context so the function can grab string resources
+     * @param subject   the raw subject
      * @param blacklist any extra strings to cleanse
      * @return
      */
@@ -212,15 +582,15 @@ public class  MessageUtils {
         String from = extractEncStr(context, nInd.getFrom());
         details.append("\n\n");
         details.append(res.getString(R.string.from_label));
-        details.append(!TextUtils.isEmpty(from)? from:
-                                 res.getString(R.string.hidden_sender_address));
+        details.append(!TextUtils.isEmpty(from) ? from :
+                res.getString(R.string.hidden_sender_address));
 
         // Date: ***
         details.append("\n\n");
         details.append(res.getString(
-                                R.string.expire_on,
-                                MessageUtils.formatTimeStampString(
-                                        context, nInd.getExpiry() * 1000L, true)));
+                R.string.expire_on,
+                MessageUtils.formatTimeStampString(
+                        context, nInd.getExpiry() * 1000L, true)));
 
         // Subject: ***
         details.append("\n\n");
@@ -276,8 +646,8 @@ public class  MessageUtils {
             String from = extractEncStr(context, ((RetrieveConf) msg).getFrom());
             details.append("\n\n");
             details.append(res.getString(R.string.from_label));
-            details.append(!TextUtils.isEmpty(from)? from:
-                                  res.getString(R.string.hidden_sender_address));
+            details.append(!TextUtils.isEmpty(from) ? from :
+                    res.getString(R.string.hidden_sender_address));
         }
 
         // To: ***
@@ -286,8 +656,7 @@ public class  MessageUtils {
         EncodedStringValue[] to = msg.getTo();
         if (to != null) {
             details.append(EncodedStringValue.concat(to));
-        }
-        else {
+        } else {
             Log.w(TAG, "recipient list is empty!");
         }
 
@@ -336,7 +705,7 @@ public class  MessageUtils {
         // Message size: *** KB
         details.append("\n\n");
         details.append(res.getString(R.string.message_size_label));
-        details.append((size - 1)/1000 + 1);
+        details.append((size - 1) / 1000 + 1);
         details.append(" KB");
 
         return details.toString();
@@ -401,8 +770,8 @@ public class  MessageUtils {
         int errorCode = cursor.getInt(MessageColumns.COLUMN_SMS_ERROR_CODE);
         if (errorCode != 0) {
             details.append("\n\n")
-                .append(res.getString(R.string.error_code_label))
-                .append(errorCode);
+                    .append(res.getString(R.string.error_code_label))
+                    .append(errorCode);
         }
 
         return details.toString();
@@ -410,7 +779,7 @@ public class  MessageUtils {
 
     static private String getPriorityDescription(Context context, int PriorityValue) {
         Resources res = context.getResources();
-        switch(PriorityValue) {
+        switch (PriorityValue) {
             case PduHeaders.PRIORITY_HIGH:
                 return res.getString(R.string.priority_high);
             case PduHeaders.PRIORITY_LOW:
@@ -500,8 +869,8 @@ public class  MessageUtils {
 
         // Basic settings for formatDateTime() we want for all cases.
         int format_flags = DateUtils.FORMAT_NO_NOON_MIDNIGHT |
-                           DateUtils.FORMAT_ABBREV_ALL |
-                           DateUtils.FORMAT_CAP_AMPM;
+                DateUtils.FORMAT_ABBREV_ALL |
+                DateUtils.FORMAT_CAP_AMPM;
 
         // If the message is from a different year, show the date and year.
         if (then.year != now.year) {
@@ -597,7 +966,7 @@ public class  MessageUtils {
 
     private static void selectMediaByType(
             Context context, int requestCode, String contentType, boolean localFilesOnly) {
-         if (context instanceof Activity) {
+        if (context instanceof Activity) {
 
             Intent innerIntent = new Intent(Intent.ACTION_GET_CONTENT);
 
@@ -640,7 +1009,7 @@ public class  MessageUtils {
     }
 
     public static void showErrorDialog(Activity activity,
-            String title, String message) {
+                                       String title, String message) {
         if (activity.isFinishing()) {
             return;
         }
@@ -677,9 +1046,9 @@ public class  MessageUtils {
     public static final int MESSAGE_OVERHEAD = 5000;
 
     public static void resizeImageAsync(final Context context,
-            final Uri imageUri, final Handler handler,
-            final ResizeImageResultCallback cb,
-            final boolean append) {
+                                        final Uri imageUri, final Handler handler,
+                                        final ResizeImageResultCallback cb,
+                                        final boolean append) {
 
         // Show a progress toast if the resize hasn't finished
         // within one second.
@@ -712,9 +1081,9 @@ public class  MessageUtils {
                     }
 
                     part = image.getResizedImageAsPart(
-                        widthLimit,
-                        heightLimit,
-                        MmsConfig.getMaxMessageSize() - MESSAGE_OVERHEAD);
+                            widthLimit,
+                            heightLimit,
+                            MmsConfig.getMaxMessageSize() - MESSAGE_OVERHEAD);
                 } finally {
                     // Cancel pending show of the progress toast if necessary.
                     handler.removeCallbacks(showProgress);
@@ -731,7 +1100,7 @@ public class  MessageUtils {
     }
 
     public static void showDiscardDraftConfirmDialog(Context context,
-            OnClickListener listener) {
+                                                     OnClickListener listener) {
         new AlertDialog.Builder(context)
                 .setMessage(R.string.discard_message_reason)
                 .setPositiveButton(R.string.yes, listener)
@@ -760,9 +1129,9 @@ public class  MessageUtils {
     }
 
     public static void handleReadReport(final Context context,
-            final Collection<Long> threadIds,
-            final int status,
-            final Runnable callback) {
+                                        final Collection<Long> threadIds,
+                                        final int status,
+                                        final Runnable callback) {
         StringBuilder selectionBuilder = new StringBuilder(Mms.MESSAGE_TYPE + " = "
                 + PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF
                 + " AND " + Mms.READ + " = 0"
@@ -788,8 +1157,8 @@ public class  MessageUtils {
         }
 
         final Cursor c = SqliteWrapper.query(context, context.getContentResolver(),
-                        Mms.Inbox.CONTENT_URI, new String[] {Mms._ID, Mms.MESSAGE_ID},
-                        selectionBuilder.toString(), selectionArgs, null);
+                Mms.Inbox.CONTENT_URI, new String[]{Mms._ID, Mms.MESSAGE_ID},
+                selectionBuilder.toString(), selectionArgs, null);
 
         if (c == null) {
             return;
@@ -848,13 +1217,13 @@ public class  MessageUtils {
         };
 
         confirmReadReportDialog(context, positiveListener,
-                                         negativeListener,
-                                         cancelListener);
+                negativeListener,
+                cancelListener);
     }
 
     private static void confirmReadReportDialog(Context context,
-            OnClickListener positiveListener, OnClickListener negativeListener,
-            OnCancelListener cancelListener) {
+                                                OnClickListener positiveListener, OnClickListener negativeListener,
+                                                OnCancelListener cancelListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
         builder.setTitle(R.string.confirm);
@@ -866,7 +1235,7 @@ public class  MessageUtils {
     }
 
     public static String extractEncStrFromCursor(Cursor cursor,
-            int columnRawBytes, int columnCharset) {
+                                                 int columnRawBytes, int columnCharset) {
         String rawBytes = cursor.getString(columnRawBytes);
         int charset = cursor.getInt(columnCharset);
 
@@ -900,22 +1269,23 @@ public class  MessageUtils {
     /**
      * Play/view the message attachments.
      * TOOD: We need to save the draft before launching another activity to view the attachments.
-     *       This is hacky though since we will do saveDraft twice and slow down the UI.
-     *       We should pass the slideshow in intent extra to the view activity instead of
-     *       asking it to read attachments from database.
+     * This is hacky though since we will do saveDraft twice and slow down the UI.
+     * We should pass the slideshow in intent extra to the view activity instead of
+     * asking it to read attachments from database.
+     *
      * @param activity
-     * @param msgUri the MMS message URI in database
+     * @param msgUri    the MMS message URI in database
      * @param slideshow the slideshow to save
      * @param persister the PDU persister for updating the database
-     * @param sendReq the SendReq for updating the database
+     * @param sendReq   the SendReq for updating the database
      */
     public static void viewMmsMessageAttachment(Activity activity, Uri msgUri,
-            SlideshowModel slideshow, AsyncDialog asyncDialog) {
+                                                SlideshowModel slideshow, AsyncDialog asyncDialog) {
         viewMmsMessageAttachment(activity, msgUri, slideshow, 0, asyncDialog);
     }
 
     public static void viewMmsMessageAttachment(final Activity activity, final Uri msgUri,
-            final SlideshowModel slideshow, final int requestCode, AsyncDialog asyncDialog) {
+                                                final SlideshowModel slideshow, final int requestCode, AsyncDialog asyncDialog) {
         boolean isSimple = (slideshow != null) && slideshow.isSimple();
         if (isSimple) {
             // In attachment-editor mode, we only ever have one slide.
@@ -958,7 +1328,7 @@ public class  MessageUtils {
         intent.setData(msgUri);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         if (requestCode > 0 && context instanceof Activity) {
-            ((Activity)context).startActivityForResult(intent, requestCode);
+            ((Activity) context).startActivityForResult(intent, requestCode);
         } else {
             context.startActivity(intent);
         }
@@ -968,7 +1338,7 @@ public class  MessageUtils {
     /**
      * Debugging
      */
-    public static void writeHprofDataToFile(){
+    public static void writeHprofDataToFile() {
         String filename = Environment.getExternalStorageDirectory() + "/mms_oom_hprof_data";
         try {
             android.os.Debug.dumpHprofData(filename);
