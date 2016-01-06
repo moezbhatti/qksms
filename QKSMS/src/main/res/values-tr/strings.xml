@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Temalar, yazı tipleri, renkler, avatarları ve daha fazlası</string>
   <string name="pref_category_general">Genel</string>
   <string name="pref_category_summary_general">İletim, mesaj gönderme, biçimlendirme</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Bildirimler</string>
   <string name="pref_category_summary_notifications">Sesler, LED, gizlilik</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">QK oluşturmak, yıldız eklediğiniz kişiler</string>
   <string name="pref_category_about">Hakkında</string>
   <string name="pref_category_summary_about">Sürüm, değişenler, yazarlar, teşekkürler</string>
-  <string name="pref_theme">Renk şeması</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Temayı değiştirmek için dokunun</string>
   <string name="pref_icon">QKSMS simge rengini güncelle</string>
-  <string name="pref_icon_summary">QKSMS simgesini renk şemasına göre güncelle</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Renkli bildirim çubuğu</string>
   <string name="pref_navigation_tint">Renkli sistem çubuğu</string>
   <string name="pref_background">Arkaplan rengi</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Sohbete uzun basarak engelleyin yada bildirimi kapatın</string>
   <string name="pref_block_future">Gelecek mesajları engelleyin</string>
   <string name="pref_block_future_summary">Ek telefon numaralarını engellemek için ekleyin</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Telefon numaraları</string>
   <string name="pref_mobile_only_summary">Sadece rehberdeki numaraları göster</string>
   <string name="pref_auto_emoji">Otomatik emoji</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Açık kaynaklara katkıda bulunanları görüntülemek için dokunun</string>
   <string name="pref_donate_title">Bağış Yapın</string>
   <string name="pref_donate_summary">QKSMS ücretsizdir. Bize bağış yaparak destek olun!</string>
-  <string name="pref_show_all">Tüm tercihleri göster</string>
-  <string name="pref_show_fewer">Tercihleri daha az göster</string>
   <string name="pref_subcat_theme">Tema</string>
   <string name="pref_subcat_system_bars">Sistem çubuğu</string>
   <string name="pref_subcat_categories">Kategoriler</string>
@@ -352,6 +353,8 @@
   <string name="dialog_conversation_details_last_message_date">Son mesaj tarihi</string>
   <string name="dialog_conversation_details_message_count">Mesaj sayısı</string>
   <string name="dialog_conversation_details_recipients">Alıcılar (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Seç dosyası seç</string>
   <string name="copy_to_sdcard">Eklentiyi kaydet</string>
   <string name="copy_to_sdcard_success">Eklenti kaydedildi.</string>
@@ -372,7 +375,7 @@
   <string name="toast_copy_text">Yazı panoya kopyalandı</string>
   <string name="toast_billing_not_available">Satın alma Android cihazınızda Google Play Store (ödeme) gerektiriyor</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber yüklü değil, Google Play açılıyor</string>
-  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_changelog_error">Yenilikler yüklenemedi. Lütfen daha sonra yeniden deneyin</string>
   <string name="thanks_1">Bağışın için teşekkürler! Siz benim yeni dostumsunuz.</string>
   <string name="thanks_2">Yardımın için teşekkürler! Sizi seviyoruz.</string>
   <string name="thanks_3">Yardımın için teşekkürler! QKSMS\'in şimdiye kadarki en iyi mesajlaşma uygulaması olmasına yardımcı oluyorsun.</string>
@@ -387,7 +390,7 @@
   <string name="menu_unblocked_conversations">Mesajlar (yeni%s)</string>
   <string name="menu_notifications">Bildirimler</string>
   <string name="menu_notifications_off">Bildirimleri kapat</string>
-  <string name="menu_notification_settings">Bildirim Ayarları</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">Ayrıntıları görüntüle</string>
   <string name="menu_mark_read">Okundu olarak işaretle</string>
   <string name="menu_mark_unread">Okunmadı olarak işaretle</string>
@@ -468,9 +471,9 @@
     <item>Mesajı sil</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Kirli beyaz</item>
-    <item>Koyu gri</item>
-    <item>Siyah</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Küçük</item>

@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Теме, фонтови, боје, сличице и остало</string>
   <string name="pref_category_general">Опште</string>
   <string name="pref_category_summary_general">Извештаји, слање порука, форматирање</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Обавештења</string>
   <string name="pref_category_summary_notifications">Звуци, LED, приватност</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">QK састављач, омиљени контакти</string>
   <string name="pref_category_about">Основни подаци</string>
   <string name="pref_category_summary_about">Верзија, измене, аутори, захвале</string>
-  <string name="pref_theme">Шема боја</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Додирните да бисте променили тему</string>
   <string name="pref_icon">Ажурирај боју QKSMS иконе</string>
-  <string name="pref_icon_summary">Ажурирајте боју QKSMS иконе да се слаже са вашом шемом боја</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Обојена статусна трака</string>
   <string name="pref_navigation_tint">Обојена навигациона трака</string>
   <string name="pref_background">Боја позадине</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Задржите притисак на разговор и блокирајте га како бисте га померили у сандуче блокираних порука и престали да примате обавештења</string>
   <string name="pref_block_future">Блокирај будуће поруке</string>
   <string name="pref_block_future_summary">Додај додатне бројеве за блокирање</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Само мобилни бројеви</string>
   <string name="pref_mobile_only_summary">У предлозима контаката приказује само мобилне бројеве</string>
   <string name="pref_auto_emoji">Аутоматски емоџији</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Додирните да видите ко доприноси отвореном коду</string>
   <string name="pref_donate_title">Донирајте</string>
   <string name="pref_donate_summary">QKSMS је бесплатан. Помозите нам донацијама!</string>
-  <string name="pref_show_all">Прикажи сва подешавања</string>
-  <string name="pref_show_fewer">Прикажи мање подешавања</string>
   <string name="pref_subcat_theme">Тема</string>
   <string name="pref_subcat_system_bars">Системске траке</string>
   <string name="pref_subcat_categories">Категорије</string>
@@ -353,6 +354,8 @@
   <string name="dialog_conversation_details_last_message_date">Датум последње поруке</string>
   <string name="dialog_conversation_details_message_count">Број порука</string>
   <string name="dialog_conversation_details_recipients">Примаоци (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Одабери звук</string>
   <string name="copy_to_sdcard">Сачувај прилог</string>
   <string name="copy_to_sdcard_success">Прилог је сачуван.</string>
@@ -388,7 +391,7 @@
   <string name="menu_unblocked_conversations">Поруке (%s нових)</string>
   <string name="menu_notifications">Notifications</string>
   <string name="menu_notifications_off">Notifications off</string>
-  <string name="menu_notification_settings">Подешавање обавештења</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">Видите детаље</string>
   <string name="menu_mark_read">Означи као прочитано</string>
   <string name="menu_mark_unread">Означи као непрочитано</string>
@@ -469,9 +472,9 @@
     <item>Избриши поруку</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Беличаста</item>
-    <item>Тамно-сива</item>
-    <item>Црна</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Мали</item>

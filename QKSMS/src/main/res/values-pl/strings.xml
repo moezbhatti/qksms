@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Motywy, czcionki, kolory, awatary i więcej</string>
   <string name="pref_category_general">Ogólne</string>
   <string name="pref_category_summary_general">Dostarczanie, wysyłanie wiadomości, formatowanie</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Powiadomienia</string>
   <string name="pref_category_summary_notifications">Dźwięki, LED, prywatność</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">Komponuj QK, ulubione kontakty</string>
   <string name="pref_category_about">O aplikacji</string>
   <string name="pref_category_summary_about">Wersja, lista zmian, autorzy, podziękowania</string>
-  <string name="pref_theme">Motyw</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Dotknij, aby zmienić motyw</string>
   <string name="pref_icon">Aktualizacja koloru ikony QKSMS</string>
-  <string name="pref_icon_summary">Zaktualizuj ikonę QKSMS, aby pasowała do Twojego motywu</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Kolorowy pasek powiadomień</string>
   <string name="pref_navigation_tint">Kolorowy pasek nawigacyjny</string>
   <string name="pref_background">Kolor tła</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Przytrzymaj rozmowę i zablokuj, aby przenieść do zablokowanych i wstrzymać powiadomienia</string>
   <string name="pref_block_future">Zablokuj kolejne wiadomości</string>
   <string name="pref_block_future_summary">Dodaj więcej numerów do blokowania</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Numery komórkowe</string>
   <string name="pref_mobile_only_summary">Pokazuj tylko numery komórkowe w podpowiedziach kontaków</string>
   <string name="pref_auto_emoji">Ustawienia emoji</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Dotknij, aby zobaczyć listę współautorów open-source</string>
   <string name="pref_donate_title">Wspomóż</string>
   <string name="pref_donate_summary">QKSMS jest bezpłatne. Wspomóż nas przekazując darowiznę!</string>
-  <string name="pref_show_all">Pokaż wszystkie ustawienia</string>
-  <string name="pref_show_fewer">Pokaż mniej ustawień</string>
   <string name="pref_subcat_theme">Motyw</string>
   <string name="pref_subcat_system_bars">Paski systemu</string>
   <string name="pref_subcat_categories">Kategorie</string>
@@ -353,6 +354,8 @@
   <string name="dialog_conversation_details_last_message_date">Data ostatniej wiadomości</string>
   <string name="dialog_conversation_details_message_count">Ilość wiadomości</string>
   <string name="dialog_conversation_details_recipients">Odbiorcy (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Wybierz dźwięk</string>
   <string name="copy_to_sdcard">Zapisz załącznik</string>
   <string name="copy_to_sdcard_success">Załącznik zapisany</string>
@@ -373,7 +376,7 @@
   <string name="toast_copy_text">Skopiowano tekst do schowka</string>
   <string name="toast_billing_not_available">Zakup wymaga Google Play Store (rachunek) na Twoim urządzeniu z Androidem</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber nie jest zainstalowany, otwórz Google Play</string>
-  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_changelog_error">Nie można załadować dziennika zmian. Spróbuj ponownie później</string>
   <string name="thanks_1">Dziękuję za dotację! Jesteś moim nowym najlepszym przyjacielem.</string>
   <string name="thanks_2">Dzięki za dotację! Kocham Cię.</string>
   <string name="thanks_3">Dzięki za dotację! Pomagasz QKSMS stać się najlepszą aplikacją do wiadomości SMS w historii.</string>
@@ -388,7 +391,7 @@
   <string name="menu_unblocked_conversations">Wiadomości (%s nowych)</string>
   <string name="menu_notifications">Powiadomienia</string>
   <string name="menu_notifications_off">Powiadomienia wyłączone</string>
-  <string name="menu_notification_settings">Ustawienia powiadomień</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">Wyświetl szczegóły</string>
   <string name="menu_mark_read">Oznacz jako przeczytane</string>
   <string name="menu_mark_unread">Oznacz jako nieprzeczytane</string>
@@ -469,9 +472,9 @@
     <item>Usuń wiadomość</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Złamana biel</item>
-    <item>Ciemnoszary</item>
-    <item>Czarny</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Mały</item>

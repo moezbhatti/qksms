@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Teemat, fontit, värit,  ja paljon muuta</string>
   <string name="pref_category_general">Yleiset</string>
   <string name="pref_category_summary_general">Toimitus, viestien lähetys, muotoilu</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Ilmoitukset</string>
   <string name="pref_category_summary_notifications">Äänet, LED, yksityisyys</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">QK Compose, tähdelliset yhteystiedot</string>
   <string name="pref_category_about">Tietoja</string>
   <string name="pref_category_summary_about">Versio, muutosloki, tekijät, kiitokset</string>
-  <string name="pref_theme">Väriteema</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Napauta teeman vaihtamiseksi</string>
   <string name="pref_icon">Päivitä QKSMS-kuvakkeen väri</string>
-  <string name="pref_icon_summary">Päivitä QKSMS-kuvake vastaamaan väriteemaasi</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Sävytetty tilapalkki</string>
   <string name="pref_navigation_tint">Sävytetty navigointipalkki</string>
   <string name="pref_background">Taustaväri</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
   <string name="pref_block_future">Block future messages</string>
   <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Matkapuhelinnumerot</string>
   <string name="pref_mobile_only_summary">Näytä vain matkapuhelinnumerot yhteystietoehdotuksissa</string>
   <string name="pref_auto_emoji">Automaattinen emoji</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Napauta nähdäksesi avoimen lähdekoodin kirjoittajat</string>
   <string name="pref_donate_title">Donate</string>
   <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
-  <string name="pref_show_all">Näytä kaikki asetukset</string>
-  <string name="pref_show_fewer">Näytä vähemmän asetuksia</string>
   <string name="pref_subcat_theme">Teema</string>
   <string name="pref_subcat_system_bars">Järjestelmäpalkit</string>
   <string name="pref_subcat_categories">Luokat</string>
@@ -352,6 +353,8 @@
   <string name="dialog_conversation_details_last_message_date">Last message date</string>
   <string name="dialog_conversation_details_message_count">Message count</string>
   <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Valitse ääni</string>
   <string name="copy_to_sdcard">Tallenna liite</string>
   <string name="copy_to_sdcard_success">Liite tallennettu.</string>
@@ -387,7 +390,7 @@
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notifications">Notifications</string>
   <string name="menu_notifications_off">Notifications off</string>
-  <string name="menu_notification_settings">Notification settings</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
   <string name="menu_mark_unread">Mark unread</string>
@@ -468,9 +471,9 @@
     <item>Poista viesti</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Luonnonvalkoinen</item>
-    <item>Tummanharmaa</item>
-    <item>Musta</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Pieni</item>

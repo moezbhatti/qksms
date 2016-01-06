@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Temas, fontes, cores, avatars e mais</string>
   <string name="pref_category_general">Geral</string>
   <string name="pref_category_summary_general">Entrega, envio e formatação de mensagens</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Notificações</string>
   <string name="pref_category_summary_notifications">Sons, privacidade e LED</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">Mensagem rápida e contactos com estrela</string>
   <string name="pref_category_about">Sobre</string>
   <string name="pref_category_summary_about">Versão, alterações, autores e agradecimentos</string>
-  <string name="pref_theme">Esquema de cores</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Toque para mudar de tema</string>
   <string name="pref_icon">Atualizar cor de ícone do QKSMS</string>
-  <string name="pref_icon_summary">Atualizar a cor do ícone QK de acordo com o seu esquema de cores</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Barra de status com cor sólida</string>
   <string name="pref_navigation_tint">Barra de navegação com cor sólida</string>
   <string name="pref_background">Cor de fundo</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Toque longo na conversa para a bloquear e mover para a caixa de mensagens bloqueadas e parar as notificações</string>
   <string name="pref_block_future">Bloquear mensagens futuras</string>
   <string name="pref_block_future_summary">Adicionar números de telefone a bloquear</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Números móveis</string>
   <string name="pref_mobile_only_summary">Apenas sugerir contactos com número de telemóvel</string>
   <string name="pref_auto_emoji">Emoji automático</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Toque para ver os colaboradores open source</string>
   <string name="pref_donate_title">Donativos</string>
   <string name="pref_donate_summary">O QKSMS é gratuito. Ajude-nos com um donativo!</string>
-  <string name="pref_show_all">Mostrar todas as preferências</string>
-  <string name="pref_show_fewer">Mostrar preferências básicas</string>
   <string name="pref_subcat_theme">Tema</string>
   <string name="pref_subcat_system_bars">Barras do sistema</string>
   <string name="pref_subcat_categories">Categorias</string>
@@ -224,7 +225,7 @@
   <string name="title_qk_responses">QK Responses</string>
   <string name="title_block_address">Bloquear número</string>
   <string name="title_unblock_address">Desbloquear número</string>
-  <string name="title_conversations_selected">%s selecionadas</string>
+  <string name="title_conversations_selected">%s selecionada(s)</string>
   <string name="menu_add_address_to_contacts">Adicionar <xliff:g id="contactEmailOrNumber">%s</xliff:g> aos contactos</string>
   <string name="view_slideshow">Ver apresentação</string>
   <string name="view_message_details">Ver detalhes</string>
@@ -235,9 +236,9 @@
   <string name="message_options">Opções da mensagem</string>
   <string name="delivery_header_title">Relatório</string>
   <string name="restart_message">Estas alterações serão aplicadas da próxima vez que iniciar QKSMS</string>
-  <string name="delete_conversation">Apagar conversas</string>
+  <string name="delete_conversation">Apagar conversa(s)</string>
   <string name="delete_all_failed">Apagar mensagens falhadas</string>
-  <string name="delete_confirmation">Tem certeza de que quer apagar %s conversas?</string>
+  <string name="delete_confirmation">Tem certeza de que deseja apagar %s conversa(s)?</string>
   <string name="delete_all_failed_confirmation">Tem a certeza de que deseja apagar as mensagens falhadas de %s conversas?</string>
   <string name="apns_not_set">APN não definidas</string>
   <string name="apns_not_set_description">Parece que as APN não foram definidas. Isto significa que as MMS não funcionarão corretamente. Prima OK para que o QKSMS defina as APN por si :)</string>
@@ -352,6 +353,8 @@
   <string name="dialog_conversation_details_last_message_date">Data da última mensagem</string>
   <string name="dialog_conversation_details_message_count">Número de mensagens</string>
   <string name="dialog_conversation_details_recipients">Destinatários (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Escolha o áudio</string>
   <string name="copy_to_sdcard">Guardar anexo</string>
   <string name="copy_to_sdcard_success">Anexo guardado.</string>
@@ -372,7 +375,7 @@
   <string name="toast_copy_text">Texto copiado para a área de transferência</string>
   <string name="toast_billing_not_available">Para comprar, tem que ter a Google Play Store (billing) no seu Android</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber não instalado, a abrir o Google Play</string>
-  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_changelog_error">Não foi possível carregar o registo de alterações. Tente mais tarde.</string>
   <string name="thanks_1">Obrigado pelo donativo! Você é o meu novo amigo.</string>
   <string name="thanks_2">Obrigado pela doação! Adoro-te.</string>
   <string name="thanks_3">Obrigado pela doação! Está a ajudar muito no desenvolvimento do QKSMS.</string>
@@ -387,7 +390,7 @@
   <string name="menu_unblocked_conversations">Mensagens (%s novas)</string>
   <string name="menu_notifications">Notificações</string>
   <string name="menu_notifications_off">Desligar notificações</string>
-  <string name="menu_notification_settings">Definições de notificação</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">Ver detalhes</string>
   <string name="menu_mark_read">Marcar como lida</string>
   <string name="menu_mark_unread">Marcar como não lida</string>
@@ -426,7 +429,7 @@
   <string name="no">Não</string>
   <string name="pref_automatically_configure_mms">Configurar MMS automaticamente</string>
   <string name="pref_mms_contact_support">Contactar suporte</string>
-  <string name="pref_category_sending_mms">A enviar MMS</string>
+  <string name="pref_category_sending_mms">Envio de MMS</string>
   <string name="pref_category_mms_configuration">Configuração MMS</string>
   <string name="pref_mms_contact_support_summary">Contacte a equipa do QKSMS para o ajudar a configurar as MMS</string>
   <string name="pref_markdown_enabled">Formatação de texto</string>
@@ -468,9 +471,9 @@
     <item>Apagar mensagem</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Branco (off)</item>
-    <item>Cinzento</item>
-    <item>Preto</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Pequeno</item>

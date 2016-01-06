@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Themen, Schriften, Farben, Avatare und mehr</string>
   <string name="pref_category_general">Allgemein</string>
   <string name="pref_category_summary_general">Zustellung, Nachrichtenversand, Formatierung</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Benachrichtigungen</string>
   <string name="pref_category_summary_notifications">Töne, LED, Privatsphäre</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">QK Compose, Favoriten</string>
   <string name="pref_category_about">Über</string>
   <string name="pref_category_summary_about">Version, letzte Änderungen, Autoren, Danke</string>
-  <string name="pref_theme">Farbschema</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Drücke um das Schema zu wechseln</string>
   <string name="pref_icon">Aktualisiere die QKSMS-Symbolfarbe</string>
-  <string name="pref_icon_summary">Aktualisiere das QKSMS-Symbol, um das Farbthema anzupassen</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Getönte Statusleiste</string>
   <string name="pref_navigation_tint">getönte Navigationsleiste</string>
   <string name="pref_background">Hintergrundfarbe</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Unterhaltung gedrückt halten, um sie zur Blockliste hinzuzufügen und keine Nachrichten mehr zu bekommen</string>
   <string name="pref_block_future">Zukünftige Nachrichten blockieren</string>
   <string name="pref_block_future_summary">Weitere Telefonnummern hinzufügen, die geblockt werden</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Mobilfunknummern</string>
   <string name="pref_mobile_only_summary">Zeige nur Mobilfunknummern in den Kontaktvorschlägen</string>
   <string name="pref_auto_emoji">Automatische Emojis</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Tippe um die Open-Source-Beteiligten zu sehen</string>
   <string name="pref_donate_title">Spenden</string>
   <string name="pref_donate_summary">QKSMS ist kostenlos. Unterstütze uns durch eine Spende!</string>
-  <string name="pref_show_all">Alle Einstellungen anzeigen</string>
-  <string name="pref_show_fewer">Weniger Einstellungen anzeigen</string>
   <string name="pref_subcat_theme">Thema</string>
   <string name="pref_subcat_system_bars">Systemleisten</string>
   <string name="pref_subcat_categories">Kategorien</string>
@@ -352,6 +353,8 @@
   <string name="dialog_conversation_details_last_message_date">Datum der letzten Nachricht</string>
   <string name="dialog_conversation_details_message_count">Anzahl der Nachrichten</string>
   <string name="dialog_conversation_details_recipients">Empfänger (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Wähle eine Audiodatei</string>
   <string name="copy_to_sdcard">Anhang speichern</string>
   <string name="copy_to_sdcard_success">Anhang gespeichert.</string>
@@ -387,7 +390,7 @@
   <string name="menu_unblocked_conversations">Nachrichten (%s neu)</string>
   <string name="menu_notifications">Notifications</string>
   <string name="menu_notifications_off">Notifications off</string>
-  <string name="menu_notification_settings">Benachrichtigungseinstellungen</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">Details anzeigen</string>
   <string name="menu_mark_read">Als gelesen markieren</string>
   <string name="menu_mark_unread">Als ungelesen markieren</string>
@@ -468,9 +471,9 @@
     <item>Nachricht löschen</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Grau</item>
-    <item>Dunkelgrau</item>
-    <item>Schwarz</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Klein</item>

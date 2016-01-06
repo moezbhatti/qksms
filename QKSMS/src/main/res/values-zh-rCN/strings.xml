@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">主题、 字体、 颜色、 头像，和更多</string>
   <string name="pref_category_general">通用</string>
   <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">通知</string>
   <string name="pref_category_summary_notifications">声音、 LED灯、 隐私</string>
   <string name="pref_category_mms">彩信</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">快速撰写，星标联系人</string>
   <string name="pref_category_about">关于</string>
   <string name="pref_category_summary_about">版本，更新日志，作者，致谢</string>
-  <string name="pref_theme">配色方案</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">点击以更改主题</string>
   <string name="pref_icon">更新 QKSMS 图标颜色</string>
-  <string name="pref_icon_summary">更新 QKSMS 图标来匹配你的配色方案</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">彩色状态栏</string>
   <string name="pref_navigation_tint">彩色导航栏</string>
   <string name="pref_background">背景色</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
   <string name="pref_block_future">Block future messages</string>
   <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">手机号码</string>
   <string name="pref_mobile_only_summary">联系人建议中只显示手机号码</string>
   <string name="pref_auto_emoji">自动Emoji</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">点击以查看开源贡献者</string>
   <string name="pref_donate_title">Donate</string>
   <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
-  <string name="pref_show_all">显示所有设置</string>
-  <string name="pref_show_fewer">Show fewer preferences</string>
   <string name="pref_subcat_theme">主题</string>
   <string name="pref_subcat_system_bars">System bars</string>
   <string name="pref_subcat_categories">类别</string>
@@ -351,6 +352,8 @@
   <string name="dialog_conversation_details_last_message_date">Last message date</string>
   <string name="dialog_conversation_details_message_count">消息计数</string>
   <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">选择音频</string>
   <string name="copy_to_sdcard">保存附件</string>
   <string name="copy_to_sdcard_success">附件已保存</string>
@@ -386,7 +389,7 @@
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notifications">Notifications</string>
   <string name="menu_notifications_off">Notifications off</string>
-  <string name="menu_notification_settings">Notification settings</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">查看详情</string>
   <string name="menu_mark_read">标为已读</string>
   <string name="menu_mark_unread">设为未读</string>
@@ -467,9 +470,9 @@
     <item>删除信息</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Off-white</item>
-    <item>Dark grey</item>
-    <item>黑</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>小</item>

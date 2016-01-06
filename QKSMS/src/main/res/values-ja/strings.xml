@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">テーマ、フォント、色、アバター、その他</string>
   <string name="pref_category_general">全般</string>
   <string name="pref_category_summary_general">配信、メッセージ送信、書式</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">通知</string>
   <string name="pref_category_summary_notifications">音、LED、プライバシー</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">QK 作成、スターを付けた連絡先</string>
   <string name="pref_category_about">アプリについて</string>
   <string name="pref_category_summary_about">バージョン、変更履歴、作者、謝辞</string>
-  <string name="pref_theme">配色パターン</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">タップするとテーマを変更します</string>
   <string name="pref_icon">QKSMS アイコンの色を更新</string>
-  <string name="pref_icon_summary">配色パターンに合わせて QKSMS アイコンを更新します</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">彩色のステータス バー</string>
   <string name="pref_navigation_tint">彩色のナビゲーション バー</string>
   <string name="pref_background">背景色</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">会話を長押ししてブロックすると、ブロックされた受信トレイに移動して通知を停止します</string>
   <string name="pref_block_future">将来のメッセージをブロック</string>
   <string name="pref_block_future_summary">ブロックする電話番号を追加します</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">携帯電話番号</string>
   <string name="pref_mobile_only_summary">連絡先の候補で携帯電話番号のみを表示します</string>
   <string name="pref_auto_emoji">自動絵文字</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">タップすると、オープン ソース貢献者を表示します</string>
   <string name="pref_donate_title">寄付</string>
   <string name="pref_donate_summary">QKSMS は無料です。寄付をして私たちをサポートしてください!</string>
-  <string name="pref_show_all">すべての設定を表示</string>
-  <string name="pref_show_fewer">少し設定を表示</string>
   <string name="pref_subcat_theme">テーマ</string>
   <string name="pref_subcat_system_bars">システム バー</string>
   <string name="pref_subcat_categories">カテゴリー</string>
@@ -351,6 +352,8 @@
   <string name="dialog_conversation_details_last_message_date">最新メッセージの日付</string>
   <string name="dialog_conversation_details_message_count">メッセージ件数</string>
   <string name="dialog_conversation_details_recipients">受信者 (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">音を選択</string>
   <string name="copy_to_sdcard">添付ファイルを保存</string>
   <string name="copy_to_sdcard_success">添付ファイルを保存しました。</string>
@@ -371,7 +374,7 @@
   <string name="toast_copy_text">テキストをクリップボードにコピーしました</string>
   <string name="toast_billing_not_available">購入は、お使いの Android に Google Play ストア (課金) が必要です</string>
   <string name="toast_endlessjabber_not_installed">EndlessJabber がインストールされていません。Google Play を開きます</string>
-  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_changelog_error">変更履歴を読み込めませんでした。もう一度やり直してください</string>
   <string name="thanks_1">寄付をありがとう! あなたは私の新しい親友です。</string>
   <string name="thanks_2">寄付をありがとう! 大好きです。</string>
   <string name="thanks_3">寄付をありがとう! あなたは、これまでに作られた最高のテキスト メッセージのアプリになる QKSMS を支援しています。</string>
@@ -386,7 +389,7 @@
   <string name="menu_unblocked_conversations">メッセージ (新規 %s)</string>
   <string name="menu_notifications">通知</string>
   <string name="menu_notifications_off">通知オフ</string>
-  <string name="menu_notification_settings">通知の設定</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">詳細を表示</string>
   <string name="menu_mark_read">既読にマーク</string>
   <string name="menu_mark_unread">未読にマーク</string>
@@ -467,9 +470,9 @@
     <item>メッセージを削除</item>
   </string-array>
   <string-array name="background_titles">
-    <item>オフホワイト</item>
-    <item>ダークグレー</item>
-    <item>黒</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>小</item>

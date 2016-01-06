@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Teman, typsnitt, färger, bilder med mera</string>
   <string name="pref_category_general">Allmänt</string>
   <string name="pref_category_summary_general">Leverans, skickande, formatering</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Aviseringar</string>
   <string name="pref_category_summary_notifications">Ljud, LED, integritet</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">QK-komponera, stjärnmarkerade kontakter</string>
   <string name="pref_category_about">Om</string>
   <string name="pref_category_summary_about">Version, ändringslogg, upphovsmän, tack</string>
-  <string name="pref_theme">Färgschema</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Tryck för att ändra tema</string>
   <string name="pref_icon">Uppdatera QKSMS ikonfärg</string>
-  <string name="pref_icon_summary">Uppdatera ikonen för QKSMS för att matcha ditt färgtema</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Tonat statusfält</string>
   <string name="pref_navigation_tint">Tonat navigeringsfält</string>
   <string name="pref_background">Bakgrundsfärg</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
   <string name="pref_block_future">Block future messages</string>
   <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Mobilnummer</string>
   <string name="pref_mobile_only_summary">Visa bara mobilnummer bland kontaktförslag</string>
   <string name="pref_auto_emoji">Automatisk Emoji</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Tryck för att visa bidragare</string>
   <string name="pref_donate_title">Donera</string>
   <string name="pref_donate_summary">QKSMS är gratis. Hjälp oss genom att donera!</string>
-  <string name="pref_show_all">Visa alla alternativ</string>
-  <string name="pref_show_fewer">Visa färre alternativ</string>
   <string name="pref_subcat_theme">Tema</string>
   <string name="pref_subcat_system_bars">Systemfält</string>
   <string name="pref_subcat_categories">Kategorier</string>
@@ -352,6 +353,8 @@
   <string name="dialog_conversation_details_last_message_date">Senaste meddelandedatum</string>
   <string name="dialog_conversation_details_message_count">Meddelanderäknare</string>
   <string name="dialog_conversation_details_recipients">Mottagare (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Välj jud</string>
   <string name="copy_to_sdcard">Spara bilaga</string>
   <string name="copy_to_sdcard_success">Bilagan sparades.</string>
@@ -387,7 +390,7 @@
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notifications">Notifications</string>
   <string name="menu_notifications_off">Notifications off</string>
-  <string name="menu_notification_settings">Aviseringsinställningar</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">Visa detaljer</string>
   <string name="menu_mark_read">Markera som läst</string>
   <string name="menu_mark_unread">Markera som oläst</string>
@@ -468,9 +471,9 @@
     <item>Ta bort meddelande</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Av-vit</item>
-    <item>Mörkgrå</item>
-    <item>Svart</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
+    <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Liten</item>

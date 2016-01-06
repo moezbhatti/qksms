@@ -55,6 +55,7 @@
   <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
   <string name="pref_category_general">Pagrindiniai</string>
   <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
+  <string name="pref_category_blocking">Message blocking</string>
   <string name="pref_category_notifications">Pranešimai</string>
   <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
   <string name="pref_category_mms">MMS</string>
@@ -65,10 +66,10 @@
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
   <string name="pref_category_about">Apie</string>
   <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
-  <string name="pref_theme">Spalvų schema</string>
+  <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Tap to change theme</string>
   <string name="pref_icon">Update QKSMS icon color</string>
-  <string name="pref_icon_summary">Update the QKSMS icon to match your color scheme</string>
+  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Pranešimų juostos spalvos efektas</string>
   <string name="pref_navigation_tint">Navigacijos juostos spalvos efektas</string>
   <string name="pref_background">Background color</string>
@@ -113,6 +114,8 @@
   <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
   <string name="pref_block_future">Block future messages</string>
   <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_should_i_answer">Should I Answer? Integration</string>
+  <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
   <string name="pref_mobile_only">Mobile numbers</string>
   <string name="pref_mobile_only_summary">Only show mobile numbers in contact suggestions</string>
   <string name="pref_auto_emoji">Automatic emoji</string>
@@ -193,8 +196,6 @@
   <string name="pref_about_thanks_summary">Spustelėkite, norėdami pamatyti atviro kodo autorius</string>
   <string name="pref_donate_title">Donate</string>
   <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
-  <string name="pref_show_all">Show all preferences</string>
-  <string name="pref_show_fewer">Show fewer preferences</string>
   <string name="pref_subcat_theme">Theme</string>
   <string name="pref_subcat_system_bars">System bars</string>
   <string name="pref_subcat_categories">Categories</string>
@@ -353,6 +354,8 @@
   <string name="dialog_conversation_details_last_message_date">Last message date</string>
   <string name="dialog_conversation_details_message_count">Message count</string>
   <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
   <string name="select_audio">Pasirinkti garso failą</string>
   <string name="copy_to_sdcard">Išsaugoti prisegtą failą</string>
   <string name="copy_to_sdcard_success">Prisegtas failas Išsaugotas.</string>
@@ -388,7 +391,7 @@
   <string name="menu_unblocked_conversations">Messages (%s new)</string>
   <string name="menu_notifications">Notifications</string>
   <string name="menu_notifications_off">Notifications off</string>
-  <string name="menu_notification_settings">Notification settings</string>
+  <string name="menu_notification_settings">Conversation settings</string>
   <string name="menu_view_details">View details</string>
   <string name="menu_mark_read">Mark read</string>
   <string name="menu_mark_unread">Mark unread</string>
@@ -469,8 +472,8 @@
     <item>Ištrinti žinutę</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Off-white</item>
-    <item>Dark grey</item>
+    <item>Material Light</item>
+    <item>Material Dark</item>
     <item>Black</item>
   </string-array>
   <string-array name="font_sizes">
