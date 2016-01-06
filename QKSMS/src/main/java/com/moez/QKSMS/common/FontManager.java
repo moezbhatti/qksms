@@ -16,6 +16,7 @@ public class FontManager {
     public static final int TEXT_SIZE_LARGEST = 3;
 
     // Attribute codes
+    public static final int TEXT_TYPE_PRIMARY_BOLD = 0x0;
     public static final int TEXT_TYPE_PRIMARY = 0x1;
     public static final int TEXT_TYPE_SECONDARY = 0x2;
     public static final int TEXT_TYPE_TERTIARY = 0x3;
@@ -49,6 +50,7 @@ public class FontManager {
                 if (fontSize == TEXT_SIZE_LARGE) return 16;
                 if (fontSize == TEXT_SIZE_LARGEST) return 18;
                 break;
+            case TEXT_TYPE_PRIMARY_BOLD:
             case TEXT_TYPE_PRIMARY:
             case TEXT_TYPE_DIALOG_MESSAGE:
                 if (fontSize == TEXT_SIZE_SMALL) return 14;
@@ -77,6 +79,7 @@ public class FontManager {
             case FontManager.TEXT_TYPE_TOOLBAR:
                 return false;
 
+            case FontManager.TEXT_TYPE_PRIMARY_BOLD:
             case FontManager.TEXT_TYPE_CATEGORY:
             case FontManager.TEXT_TYPE_DIALOG_TITLE:
             case FontManager.TEXT_TYPE_DIALOG_BUTTON:
@@ -88,6 +91,7 @@ public class FontManager {
     public static ColorStateList getTextColor(Context context, int type) {
         // Colors and font weight
         switch (type) {
+            case FontManager.TEXT_TYPE_PRIMARY_BOLD:
             case FontManager.TEXT_TYPE_PRIMARY:
                 boolean isNight = ThemeManager.getTheme() == ThemeManager.Theme.DARK ||
                                   ThemeManager.getTheme() == ThemeManager.Theme.BLACK;

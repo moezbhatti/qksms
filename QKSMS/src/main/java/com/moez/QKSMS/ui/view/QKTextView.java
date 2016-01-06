@@ -63,6 +63,12 @@ public class QKTextView extends TextView {
         setTextColor(FontManager.getTextColor(mContext, mType));
         setText(getText());
 
+        setType(mType);
+    }
+
+    public void setType(int type) {
+        mType = type;
+
         // Register for theme updates if we're text that changes color dynamically.
         if (mType == FontManager.TEXT_TYPE_CATEGORY) {
             LiveViewManager.registerView(QKPreference.THEME, this, key ->

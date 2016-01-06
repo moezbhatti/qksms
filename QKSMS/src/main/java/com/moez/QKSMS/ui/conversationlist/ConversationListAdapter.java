@@ -6,12 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
-import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
@@ -71,10 +72,14 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
             holder.unreadView.setVisibility(View.VISIBLE);
             holder.snippetView.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
             holder.dateView.setTextColor(ThemeManager.getColor());
+            holder.fromView.setType(FontManager.TEXT_TYPE_PRIMARY_BOLD);
+            holder.snippetView.setMaxLines(5);
         } else {
             holder.unreadView.setVisibility(View.GONE);
             holder.snippetView.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
             holder.dateView.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
+            holder.fromView.setType(FontManager.TEXT_TYPE_PRIMARY);
+            holder.snippetView.setMaxLines(1);
         }
 
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {

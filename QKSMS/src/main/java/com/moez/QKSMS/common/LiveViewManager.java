@@ -94,7 +94,9 @@ public abstract class LiveViewManager {
                 if (!parents.containsKey(parent)) {
                     parents.put(parent, new HashSet<>());
                 }
-                parents.get(parent).add(view);
+                if (!parents.get(parent).contains(view)) {
+                    parents.get(parent).add(view);
+                }
             } else {
                 WeakHashMap<Object, Set<LiveView>> set = new WeakHashMap<>();
                 set.put(parent, new HashSet<>());

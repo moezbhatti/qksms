@@ -8,6 +8,7 @@
     </declare-styleable>
 
     <attr name="type">
+        <flag name="primary_bold" value="0" />
         <flag name="primary" value="1" />
         <flag name="secondary" value="2" />
         <flag name="tertiary" value="3" />
