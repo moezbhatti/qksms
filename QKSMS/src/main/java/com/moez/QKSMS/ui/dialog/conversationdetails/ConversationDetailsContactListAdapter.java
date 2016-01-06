@@ -1,4 +1,4 @@
-package com.moez.QKSMS.common.conversationdetails;
+package com.moez.QKSMS.ui.dialog.conversationdetails;
 
 import android.content.Context;
 import android.view.View;

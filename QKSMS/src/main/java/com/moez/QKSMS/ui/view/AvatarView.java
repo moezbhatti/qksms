@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.ThemeManager;

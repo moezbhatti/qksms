@@ -1,4 +1,4 @@
-package com.moez.QKSMS.common.conversationdetails;
+package com.moez.QKSMS.ui.dialog.conversationdetails;
 
 import android.app.FragmentManager;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.ListView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.interfaces.ConversationDetails;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.view.QKTextView;

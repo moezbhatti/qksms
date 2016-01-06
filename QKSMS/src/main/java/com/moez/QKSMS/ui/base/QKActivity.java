@@ -24,7 +24,7 @@ import com.android.volley.RequestQueue;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.view.QKTextView;

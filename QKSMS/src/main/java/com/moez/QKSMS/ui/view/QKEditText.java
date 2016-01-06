@@ -11,7 +11,7 @@ import android.util.TypedValue;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 
 public class QKEditText extends android.widget.EditText {

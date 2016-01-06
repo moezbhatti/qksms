@@ -32,7 +32,7 @@ import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.QKRateSnack;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.DraftCache;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.utils.Units;

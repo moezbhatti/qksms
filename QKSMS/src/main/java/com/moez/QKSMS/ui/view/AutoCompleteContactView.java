@@ -10,7 +10,7 @@ import com.android.ex.chips.RecipientEditTextView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;

@@ -8,7 +8,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;

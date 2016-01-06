@@ -12,7 +12,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ThumbnailManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.interfaces.SlideViewInterface;
 import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;

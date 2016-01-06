@@ -3,7 +3,7 @@ package com.moez.QKSMS.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.interfaces.LiveView;
 
 import java.util.Arrays;

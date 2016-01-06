@@ -14,8 +14,8 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
-import com.moez.QKSMS.common.utils.MessageUtils;
+import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.common.utils.TextUtils;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -145,7 +145,7 @@ public class QKTextView extends TextView {
         }
 
         if (prefs.getBoolean(SettingsFragment.MARKDOWN_ENABLED, false)) {
-            text = MessageUtils.styleText(text);
+            text = TextUtils.styleText(text);
             if (text == null || text.length() <= 0 || Build.VERSION.SDK_INT >= 19) {
                 super.setText(text, BufferType.EDITABLE);
                 return;

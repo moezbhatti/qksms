@@ -37,7 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.R;

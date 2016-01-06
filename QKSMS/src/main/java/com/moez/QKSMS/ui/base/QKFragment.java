@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.squareup.leakcanary.RefWatcher;
 

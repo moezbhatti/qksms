@@ -1,4 +1,4 @@
-package com.moez.QKSMS.common.conversationdetails;
+package com.moez.QKSMS.interfaces;
 
 import com.moez.QKSMS.data.Conversation;
 

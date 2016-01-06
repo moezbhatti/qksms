@@ -1,4 +1,4 @@
-package com.moez.QKSMS.common.preferences;
+package com.moez.QKSMS.enums;
 
 import com.moez.QKSMS.ui.ThemeManager;
 

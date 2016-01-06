@@ -23,7 +23,7 @@ import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.base.QKActivity;

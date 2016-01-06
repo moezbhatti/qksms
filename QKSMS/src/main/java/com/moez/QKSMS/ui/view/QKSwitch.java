@@ -9,7 +9,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.preferences.QKPreference;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 
 public class QKSwitch extends SwitchCompat {
