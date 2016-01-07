@@ -458,7 +458,11 @@ public class QKDialog extends DialogFragment {
     }
 
     public void show() {
-        super.show(mContext.getFragmentManager(), null);
+        try {
+            super.show(mContext.getFragmentManager(), null);
+        } catch (IllegalStateException ignored) {
+            // Sometimes the context is destroyed, but the check for that is API 17+
+        }
     }
 
     @Deprecated
