@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,9 +37,7 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
     protected AvatarView mAvatarView;
     protected LinearLayout mMessageBlock;
     protected View mSpace;
-    // MMS only views. These are nested within ViewStubs, so we don't need to obtain a reference
-    // to them right away. We'll inflate the stub only when needed
-    protected View mMmsView;
+    protected FrameLayout mMmsView;
     protected ImageView mImageView;
     protected ImageButton mSlideShowButton;
     protected Button mDownloadButton;
@@ -59,30 +58,14 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
         mAvatarView = (AvatarView) view.findViewById(R.id.avatar);
         mMessageBlock = (LinearLayout) view.findViewById(R.id.message_block);
         mSpace = view.findViewById(R.id.space);
+        mMmsView = (FrameLayout) view.findViewById(R.id.mms_view);
+        mImageView = (ImageView) view.findViewById(R.id.image_view);
+        mSlideShowButton = (ImageButton) view.findViewById(R.id.play_slideshow_button);
     }
 
     protected void showMmsView(boolean visible) {
-        if (mMmsView == null) {
-            mMmsView = mRoot.findViewById(R.id.mms_view);
-            // if mMmsView is still null here, that mean the mms section hasn't been inflated
-
-            if (visible && mMmsView == null) {
-                // inflate the mms view_stub
-                View mmsStub = mRoot.findViewById(R.id.mms_layout_view_stub);
-                mmsStub.setVisibility(View.VISIBLE);
-                mMmsView = mRoot.findViewById(R.id.mms_view);
-            }
-        }
-        if (mMmsView != null) {
-            if (mImageView == null) {
-                mImageView = (ImageView) mRoot.findViewById(R.id.image_view);
-            }
-            if (mSlideShowButton == null) {
-                mSlideShowButton = (ImageButton) mRoot.findViewById(R.id.play_slideshow_button);
-            }
-            mMmsView.setVisibility(visible ? View.VISIBLE : View.GONE);
-            mImageView.setVisibility(visible ? View.VISIBLE : View.GONE);
-        }
+        mMmsView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        mImageView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     protected void inflateDownloadControls() {

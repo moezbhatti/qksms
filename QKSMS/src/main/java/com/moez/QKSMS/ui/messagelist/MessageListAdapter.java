@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
@@ -26,13 +27,16 @@ import com.android.mms.transaction.TransactionService;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.ContentType;
 import com.google.android.mms.pdu_alt.PduHeaders;
+import com.koushikdutta.ion.Ion;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.CursorUtils;
 import com.moez.QKSMS.common.utils.LinkifyUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Contact;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -50,12 +54,14 @@ import java.util.regex.Pattern;
 public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHolder, MessageItem> {
     private final String TAG = "MessageListAdapter";
 
-    public static final int INCOMING_ITEM_TYPE_SMS = 0;
-    public static final int OUTGOING_ITEM_TYPE_SMS = 1;
-    public static final int INCOMING_ITEM_TYPE_MMS = 2;
-    public static final int OUTGOING_ITEM_TYPE_MMS = 3;
+    public static final int INCOMING_ITEM = 0;
+    public static final int OUTGOING_ITEM = 1;
 
     private ArrayList<Long> mSelectedConversations = new ArrayList<>();
+
+    private static final Pattern urlPattern = Pattern.compile(
+            "\\b(https?:\\/\\/\\S+(?:png|jpe?g|gif)\\S*)\\b",
+            Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
 
     private MessageItemCache mMessageItemCache;
     private MessageColumns.ColumnsMap mColumnsMap;
@@ -114,7 +120,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         int resource;
         boolean sent;
 
-        if (viewType == INCOMING_ITEM_TYPE_SMS || viewType == INCOMING_ITEM_TYPE_MMS) {
+        if (viewType == INCOMING_ITEM) {
             resource = R.layout.list_item_message_in;
             sent = false;
         } else {
@@ -158,6 +164,10 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             }
         }
 
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            holder.mMmsView.getForeground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
+        });
+
         return holder;
     }
 
@@ -183,13 +193,13 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         boolean pduLoaded = messageItem.isSms() || messageItem.mSlideshow != null;
 
         bindGrouping(holder, messageItem);
-        bindBody(holder, messageItem);
         bindTimestamp(holder, messageItem);
 
         if (pduLoaded) {
             bindAvatar(holder, messageItem);
         }
         bindMmsView(holder, messageItem);
+        bindBody(holder, messageItem);
         bindIndicators(holder, messageItem);
         bindVcard(holder, messageItem);
 
@@ -360,6 +370,23 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         if (!TextUtils.isEmpty(buf)) {
             holder.mBodyTextView.setText(buf);
+            Matcher matcher = urlPattern.matcher(holder.mBodyTextView.getText());
+            if (matcher.find()) { //only find the image to the first link
+                int matchStart = matcher.start(1);
+                int matchEnd = matcher.end();
+                String imageUrl = buf.subSequence(matchStart, matchEnd).toString();
+                Ion.with(mContext).load(imageUrl).withBitmap().asBitmap().setCallback((e, result) -> {
+                    try {
+                        holder.setImage("url_img" + holder.getItemId(), result);
+                        holder.mImageView.setOnClickListener(v -> {
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(imageUrl));
+                            mContext.startActivity(i);
+                        });
+                    } catch (NullPointerException imageException) {
+                        imageException.printStackTrace();
+                    }
+                });
+            }
             LinkifyUtils.addLinks(holder.mBodyTextView);
         }
         holder.mBodyTextView.setVisibility(TextUtils.isEmpty(buf) ? View.GONE : View.VISIBLE);
@@ -552,15 +579,15 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         if (item.isSms()) {
             if (boxId == TextBasedSmsColumns.MESSAGE_TYPE_INBOX || boxId == TextBasedSmsColumns.MESSAGE_TYPE_ALL) {
-                return INCOMING_ITEM_TYPE_SMS;
+                return INCOMING_ITEM;
             } else {
-                return OUTGOING_ITEM_TYPE_SMS;
+                return OUTGOING_ITEM;
             }
         } else {
             if (boxId == Telephony.Mms.MESSAGE_BOX_ALL || boxId == Telephony.Mms.MESSAGE_BOX_INBOX) {
-                return INCOMING_ITEM_TYPE_MMS;
+                return INCOMING_ITEM;
             } else {
-                return OUTGOING_ITEM_TYPE_MMS;
+                return OUTGOING_ITEM;
             }
         }
     }
