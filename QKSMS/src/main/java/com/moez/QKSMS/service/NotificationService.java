@@ -8,13 +8,12 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.IBinder;
-
 import android.preference.PreferenceManager;
+import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -53,7 +52,7 @@ public class NotificationService extends Service {
 
             if (conversationPrefs.getNotificationsEnabled()) {
                 // Only show QuickReply if we're outside of the app, and they have popups and QuickReply enabled.
-                if (!QKReplyActivity.sIsShowing && message.getThreadId() != MainActivity.sThreadShowing &&
+                if (!LifecycleHandler.isApplicationVisible() &&
                         intent.getBooleanExtra(EXTRA_POPUP, false) && prefs.getBoolean(SettingsFragment.QUICKREPLY, true)) {
 
                     popupIntent = new Intent(context, QKReplyActivity.class);

@@ -40,7 +40,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
     public static final String EXTRA_THREAD_ID = "thread_id";
     public static final String EXTRA_SHOW_KEYBOARD = "open_keyboard";
 
-    public static boolean sIsShowing = false;
     private static long sThreadId;
 
     private Conversation mConversation;
@@ -141,8 +140,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
 
         mComposeView.saveDraft();
 
-        sIsShowing = false;
-
         // When the home button is pressed, this ensures that the QK Reply is shut down
         // Don't shut it down if it pauses and the screen is off though
         if (!mIsStartingActivity && !isChangingConfigurations() && isScreenOn()) {
@@ -163,7 +160,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
     @Override
     protected void onResume() {
         super.onResume();
-        sIsShowing = true;
         sThreadId = mConversationLegacy.getThreadId();
         mIsStartingActivity = false;
         ThemeManager.setActiveColor(mConversationPrefsHelper.getColor());
@@ -273,7 +269,6 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
      */
     public static void dismiss(long threadId) {
         if (sThreadId == threadId) {
-            sIsShowing = false;
             sThreadId = 0;
             System.exit(0);
         }

@@ -34,6 +34,7 @@ import com.android.mms.util.RateController;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.moez.QKSMS.common.AnalyticsManager;
+import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.google.PduLoaderManager;
@@ -88,6 +89,8 @@ public class QKSMSAppBase extends MultiDexApplication {
         Context context = getApplicationContext();
         mPduLoaderManager = new PduLoaderManager(context);
         mThumbnailManager = new ThumbnailManager(context);
+
+        registerActivityLifecycleCallbacks(new LifecycleHandler());
 
         ThemeManager.init(this);
         MmsConfig.init(this);
