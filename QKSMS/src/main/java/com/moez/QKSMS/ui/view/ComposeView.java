@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -104,8 +106,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
     private FrameLayout mButton;
     private DonutProgress mProgress;
     private ImageView mButtonBackground;
-    private ImageView mButtonBar1;
-    private ImageView mButtonBar2;
+    private ImageView mComposeIcon;
     private ImageButton mAttach;
     private ImageButton mCamera;
     private ImageButton mDelay;
@@ -164,8 +165,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mButton = (FrameLayout) findViewById(R.id.compose_button);
         mProgress = (DonutProgress) findViewById(R.id.progress);
         mButtonBackground = (ImageView) findViewById(R.id.compose_button_background);
-        mButtonBar1 = (ImageView) findViewById(R.id.compose_button_bar_1);
-        mButtonBar2 = (ImageView) findViewById(R.id.compose_button_bar_2);
+        mComposeIcon = (ImageView) findViewById(R.id.compose_icon);
         mAttachmentPanel = findViewById(R.id.attachment_panel);
         mAttach = (ImageButton) findViewById(R.id.attach);
         mCamera = (ImageButton) findViewById(R.id.camera);
@@ -183,8 +183,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             mButtonBackground.setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.SRC_ATOP);
-            mButtonBar1.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
-            mButtonBar2.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
+            mComposeIcon.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
             mAttachmentPanel.setBackgroundColor(ThemeManager.getColor());
             mAttach.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
             mCamera.setColorFilter(ThemeManager.getTextOnColorPrimary(), PorterDuff.Mode.SRC_ATOP);
@@ -361,30 +360,27 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
     private void updateButtonState(SendButtonState buttonState) {
         if (mButtonState != buttonState) {
+
+            // Check if we need to switch animations
+            AnimationDrawable animation = null;
+            if (buttonState == SendButtonState.SEND) {
+                animation = (AnimationDrawable) ContextCompat.getDrawable(mContext, R.drawable.plus_to_arrow);
+            } else if (mButtonState == SendButtonState.SEND) {
+                animation = (AnimationDrawable) ContextCompat.getDrawable(mContext, R.drawable.arrow_to_plus);
+            }
+            if (animation != null) {
+                mComposeIcon.setImageDrawable(animation);
+                animation.start();
+            }
+
+            // Handle any necessary rotation
+            float rotation = mComposeIcon.getRotation();
+            float target = buttonState == SendButtonState.ATTACH || buttonState == SendButtonState.SEND ? 0 : 45;
+            ObjectAnimator.ofFloat(mComposeIcon, "rotation", rotation, target)
+                    .setDuration(ANIMATION_DURATION)
+                    .start();
+
             mButtonState = buttonState;
-
-            float translation = Units.dpToPx(mContext, 14) / 3;
-            float barRotation1 = mButtonBar1.getRotation();
-            float barTranslation1 = mButtonBar1.getTranslationY();
-            float barRotation2 = mButtonBar2.getRotation();
-            float barTranslation2 = mButtonBar2.getTranslationY();
-            float barRotationTarget1 = mButtonState == SendButtonState.ATTACH ? 0 : 225;
-            float barTranslationTarget1 = mButtonState == SendButtonState.SEND ? -translation : 0;
-            float barRotationTarget2 = mButtonState == SendButtonState.ATTACH ? 90 : 135;
-            float barTranslationTarget2 = mButtonState == SendButtonState.SEND ? translation : 0;
-
-            ObjectAnimator.ofFloat(mButtonBar1, "rotation", barRotation1, barRotationTarget1)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar2, "rotation", barRotation2, barRotationTarget2)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar1, "translationY", barTranslation1, barTranslationTarget1)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
-            ObjectAnimator.ofFloat(mButtonBar2, "translationY", barTranslation2, barTranslationTarget2)
-                    .setDuration(ANIMATION_DURATION)
-                    .start();
         }
     }
 

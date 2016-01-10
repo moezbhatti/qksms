@@ -92,19 +92,11 @@
                 android:src="@drawable/send_background" />
 
             <ImageView
-                android:id="@+id/compose_button_bar_1"
-                android:layout_width="14dp"
-                android:layout_height="2dp"
+                android:id="@+id/compose_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:src="@color/white_pure" />
-
-            <ImageView
-                android:id="@+id/compose_button_bar_2"
-                android:layout_width="14dp"
-                android:layout_height="2dp"
-                android:layout_gravity="center"
-                android:rotation="90"
-                android:src="@color/white_pure" />
+                android:src="@drawable/plus_to_arrow" />
 
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/progress"
