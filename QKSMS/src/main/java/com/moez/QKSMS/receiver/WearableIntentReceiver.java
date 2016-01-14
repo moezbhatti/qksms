@@ -71,6 +71,8 @@ public class WearableIntentReceiver extends BroadcastReceiver {
 
             Notification chatPage = new NotificationCompat.Builder(context)
                     .setStyle(chatPageStyle)
+                    .extend(new NotificationCompat.WearableExtender()
+                            .setStartScrollBottom(true))
                     .build();
 
             wearableExtender.addPage(chatPage);
