@@ -196,6 +196,12 @@
   <string name="pref_about_thanks_summary">Tocca per visualizzare i contributori oper-source</string>
   <string name="pref_donate_title">Dona</string>
   <string name="pref_donate_summary">QKSMS è un software libero. Aiuta a supportaci con una donazione!</string>
+  <string name="pref_about_gplus_title">Google+</string>
+  <string name="pref_about_gplus_summary">Join us on Google+</string>
+  <string name="pref_about_github_title">GitHub</string>
+  <string name="pref_about_github_summary">Join us on GitHub</string>
+  <string name="pref_about_crowdin_title">Crowdin</string>
+  <string name="pref_about_crowdin_summary">Join us on Crowdin</string>
   <string name="pref_subcat_theme">Tema</string>
   <string name="pref_subcat_system_bars">Barre del sistema</string>
   <string name="pref_subcat_categories">Categorie</string>
