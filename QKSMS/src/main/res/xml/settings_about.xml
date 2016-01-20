@@ -23,6 +23,21 @@
             android:summary="@string/pref_about_thanks_summary"
             android:title="@string/pref_about_thanks_title" />
         <Preference
+            android:key="pref_key_google_plus"
+            android:layout="@layout/list_item_preference"
+            android:title="@string/pref_about_gplus_title"
+            android:summary="@string/pref_about_gplus_summary" />
+        <Preference
+            android:key="pref_key_github"
+            android:layout="@layout/list_item_preference"
+            android:title="@string/pref_about_github_title"
+            android:summary="@string/pref_about_github_summary" />
+        <Preference
+            android:key="pref_key_crowdin"
+            android:layout="@layout/list_item_preference"
+            android:title="@string/pref_about_crowdin_title"
+            android:summary="@string/pref_about_crowdin_summary" />
+        <Preference
             android:icon="@drawable/ic_donate"
             android:key="pref_key_donate"
             android:layout="@layout/list_item_preference"

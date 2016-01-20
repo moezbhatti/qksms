@@ -149,12 +149,19 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String VERSION = "pref_key_version";
     public static final String CHANGELOG = "pref_key_changelog";
     public static final String THANKS = "pref_key_thanks";
+    public static final String GOOGLE_PLUS = "pref_key_google_plus";
+    public static final String GITHUB = "pref_key_github";
+    public static final String CROWDIN = "pref_key_crowdin";
 
     public static final String WELCOME_SEEN = "pref_key_welcome_seen";
 
     public static final String DEFAULT_NOTIFICATION_TONE = "content://settings/system/notification_sound";
 
     public static final String CATEGORY_TAG = "settings_category_fragment_tag";
+
+    public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/104505769539048913485";
+    public static final String GITHUB_URL = "https://github.com/qklabs/qksms";
+    public static final String CROWDIN_URL = "https://crowdin.com/project/qksms";
 
     private MainActivity mContext;
     private PreferenceManager mPreferenceManager;
@@ -596,8 +603,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         String baseUrl = ((QKTextView) view.findViewById(R.id.list_item_subtitle)).getText().toString();
-                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://" + baseUrl));
-                                        startActivity(browserIntent);
+                                        startBrowserIntent("https://" + baseUrl);
                                     }
                                 })
                         .show();
@@ -605,9 +611,23 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case DONATE:
                 DonationManager.getInstance(mContext).showDonateDialog();
                 break;
+            case GOOGLE_PLUS:
+                startBrowserIntent(GOOGLE_PLUS_URL);
+                break;
+            case GITHUB:
+                startBrowserIntent(GITHUB_URL);
+                break;
+            case CROWDIN:
+                startBrowserIntent(CROWDIN_URL);
+                break;
         }
 
         return false;
+    }
+
+    private void startBrowserIntent(final String baseUrl) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl));
+        startActivity(browserIntent);
     }
 
     public boolean isCategoryList() {
