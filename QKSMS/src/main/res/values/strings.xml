@@ -373,6 +373,9 @@
     <string name="mark_read">Mark as read</string>
     <!--Notification action to call the sender of a message-->
     <string name="call">Call</string>
+    <!-- Notification toast message  -->
+    <string name="notification_mute_on">Notifications enabled</string>
+    <string name="notification_mute_off">Notifications disabled</string>
     <!--Positive action button-->
     <string name="yes">Yes</string>
     <string name="add">Add</string>
