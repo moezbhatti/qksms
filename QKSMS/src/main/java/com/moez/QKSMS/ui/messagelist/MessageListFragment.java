@@ -20,6 +20,7 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.Telephony;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -480,8 +481,10 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
             case R.id.menu_notifications:
                 ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
-                conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, !conversationPrefs.getNotificationsEnabled());
+                boolean notificationMuted = conversationPrefs.getNotificationsEnabled();
+                conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, !notificationMuted);
                 mContext.invalidateOptionsMenu();
+                vibrateOnConversationStateChanged(notificationMuted);
                 return true;
 
             case R.id.menu_details:
@@ -505,6 +508,14 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         Intent openDialerIntent = new Intent(Intent.ACTION_CALL);
         openDialerIntent.setData(Uri.parse("tel:" + mConversationLegacy.getAddress()));
         startActivity(openDialerIntent);
+    }
+
+    private void vibrateOnConversationStateChanged(final boolean notificationMuted) {
+        final int vibrateTime = 70;
+        Toast.makeText(getActivity(), notificationMuted ?
+                R.string.notification_mute_off : R.string.notification_mute_on, Toast.LENGTH_SHORT).show();
+        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(vibrateTime);
     }
 
     @Override
