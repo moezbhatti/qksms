@@ -82,13 +82,17 @@ public class MessageListViewHolder extends ClickyViewHolder<MessageItem> impleme
 
     @Override
     public void setImage(String name, Bitmap bitmap) {
-        showMmsView(true);
+        if (bitmap == null) {
+            showMmsView(false);
+        } else {
+            showMmsView(true);
 
-        try {
-            mImageView.setImageBitmap(bitmap);
-            mImageView.setVisibility(View.VISIBLE);
-        } catch (java.lang.OutOfMemoryError e) {
-            Log.e(TAG, "setImage: out of memory: ", e);
+            try {
+                mImageView.setImageBitmap(bitmap);
+                mImageView.setVisibility(View.VISIBLE);
+            } catch (java.lang.OutOfMemoryError e) {
+                Log.e(TAG, "setImage: out of memory: ", e);
+            }
         }
     }
 
