@@ -160,7 +160,7 @@ public class MessageItem {
             // Unless the message is currently in the progress of being sent, it gets a time stamp.
             if (!isOutgoingMessage()) {
                 // Set "received" or "sent" time stamp
-                boolean sent = prefs.getBoolean(QKPreference.SENT_TIMESTAMPS.getKey(), false);
+                boolean sent = prefs.getBoolean(QKPreference.SENT_TIMESTAMPS.getKey(), false) && !isMe();
                 mDate = cursor.getLong(sent ? columnsMap.mColumnSmsDateSent : columnsMap.mColumnSmsDate);
                 mTimestamp = DateFormatter.getMessageTimestamp(context, mDate);
             }
