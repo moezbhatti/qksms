@@ -27,7 +27,9 @@ If you'd like to donate to help support the project, you can donate via [PayPal 
 
 ### Translations
 
-Please do not perform translations directly on the source files. Pull requests for translations will not be accepted. If you would like to do translations for QKSMS, join the translation project on Crowdin: https://crowdin.com/project/qksms. Unfortunately since I have a million things to manage, I don't always have time to check notifications on Crowdin. If you'd like something checked or approved, send me a message on Slack and it's more likely to happen.
+Please do not perform translations directly on the source files. Pull requests for translations will not be accepted. If you would like to do translations for QKSMS, join the translation project on Crowdin: https://crowdin.com/project/qksms. 
+
+Unfortunately I don't always have time to check notifications on Crowdin. If you'd like something checked or approved, send me a message on Slack and then I'll take a look
 
 ### Development
 
