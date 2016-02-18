@@ -131,6 +131,13 @@
             android:summary="@string/pref_enter_button_summary"
             android:title="@string/pref_enter_button" />
         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_sent_timestamps"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_sent_timestamps_summary"
+            android:title="@string/pref_sent_timestamps"
+            android:widgetLayout="@layout/view_switch" />
+        <CheckBoxPreference
             android:defaultValue="true"
             android:key="pref_key_compose_favorites"
             android:layout="@layout/list_item_preference"

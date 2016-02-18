@@ -155,6 +155,8 @@
     <string name="pref_sliding_tab">Sliding panel tab</string>
     <string name="pref_sliding_tab_summary">Sliding tab that allows you to quickly view your last conversation</string>
 
+    <string name="pref_sent_timestamps">Sent timestamps</string>
+    <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
     <string name="pref_compose_favorites">Starred contacts</string>
     <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
     <string name="pref_prox_sensor_call">Proximity sensor</string>

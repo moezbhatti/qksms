@@ -54,6 +54,7 @@ public enum QKPreference {
     BLOCKED_FUTURE("pref_key_block_future", new HashSet<String>()),
     MOBILE_ONLY("pref_key_mobile_only", false),
     ENTER_BUTTON("pref_key_enter_button", "0"),
+    SENT_TIMESTAMPS("pref_key_sent_timestamps", false),
     STARRED_CONTACTS("pref_key_compose_favorites", true),
     PROXIMITY_SENSOR("pref_key_prox_sensor_calling", false),
     YAPPY_INTEGRATION("pref_key_endlessjabber", false),
