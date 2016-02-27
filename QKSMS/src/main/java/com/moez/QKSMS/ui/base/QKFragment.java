@@ -9,6 +9,7 @@ import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.squareup.leakcanary.RefWatcher;
+import icepick.Icepick;
 
 public class QKFragment extends Fragment {
 
@@ -29,6 +30,18 @@ public class QKFragment extends Fragment {
                 getView().setBackgroundColor(ThemeManager.getBackgroundColor());
             }
         });
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 
     @Override
