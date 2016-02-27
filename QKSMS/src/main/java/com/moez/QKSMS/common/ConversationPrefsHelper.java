@@ -98,6 +98,6 @@ public class ConversationPrefsHelper {
     }
 
     public SharedPreferences getConversationPrefs() {
-        return mPrefs;
+        return mConversationPrefs;
     }
 }
