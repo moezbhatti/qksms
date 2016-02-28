@@ -197,6 +197,10 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         mSlidingMenu.showMenu();
     }
 
+    public SlidingMenu getSlidingMenu() {
+        return mSlidingMenu;
+    }
+
     /**
      * Configured the sliding menu view to peek the content or not.
      *

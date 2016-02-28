@@ -291,7 +291,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     private void setTitle() {
-        if (mContext != null && mConversation != null) {
+        if (mContext != null && mConversation != null && !((MainActivity) mContext).getSlidingMenu().isMenuShowing()) {
             mContext.setTitle(mConversation.getRecipients().formatNames(", "));
         }
     }
