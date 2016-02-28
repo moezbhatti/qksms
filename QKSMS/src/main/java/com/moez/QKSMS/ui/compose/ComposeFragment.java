@@ -104,6 +104,7 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
 
         view.findViewById(R.id.compose_view_stub).setVisibility(View.VISIBLE);
         mComposeView = (ComposeView) view.findViewById(R.id.compose_view);
+        mComposeView.onOpenConversation(null, null);
         mComposeView.setActivityLauncher(this);
         mComposeView.setRecipientProvider(this);
         mComposeView.setOnSendListener(this);
@@ -165,6 +166,22 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
         // Clear the focus from this fragment.
         if (getActivity() != null && getActivity().getCurrentFocus() != null) {
             getActivity().getCurrentFocus().clearFocus();
+        }
+    }
+
+    @Override
+    public void onContentClosed() {
+        super.onContentClosed();
+        if (mComposeView != null) {
+            mComposeView.saveDraft();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mComposeView != null) {
+            mComposeView.saveDraft();
         }
     }
 

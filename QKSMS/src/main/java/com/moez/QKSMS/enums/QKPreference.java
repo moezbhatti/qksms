@@ -93,7 +93,10 @@ public enum QKPreference {
     QK_COMPOSE("pref_key_quickcompose", false),
 
     // LiveViews
-    CONVERSATION_THEME("conversation_theme");
+    CONVERSATION_THEME("conversation_theme"),
+
+    // Storage
+    COMPOSE_DRAFT("compose_draft", "");
 
     private String mKey;
     private Object mDefaultValue;

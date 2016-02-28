@@ -715,7 +715,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mConversationLegacy = conversationLegacy;
 
         // If the conversation was different, set up the draft here.
-        if (threadId != newThreadId) {
+        if (threadId != newThreadId || newThreadId == -1) {
             setupDraft();
         }
     }
@@ -735,15 +735,27 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
     public void saveDraft() {
         // If the conversation_reply view is null, then we won't worry about saving drafts at all. We also don't save
         // drafts if a message is about to be sent (delayed)
-        if (mReplyText != null && mConversation != null && mButtonState != SendButtonState.CANCEL) {
+        if (mReplyText != null && mButtonState != SendButtonState.CANCEL) {
             String draft = mReplyText.getText().toString();
 
-            if (mConversationLegacy.hasDraft() && TextUtils.isEmpty(draft)) {
-                mConversationLegacy.clearDrafts();
+            if (mConversation != null) {
+                if (mConversationLegacy.hasDraft() && TextUtils.isEmpty(draft)) {
+                    mConversationLegacy.clearDrafts();
 
-            } else if (!TextUtils.isEmpty(draft) &&
-                    (!mConversationLegacy.hasDraft() || !draft.equals(mConversationLegacy.getDraft()))) {
-                mConversationLegacy.saveDraft(draft);
+                } else if (!TextUtils.isEmpty(draft) &&
+                        (!mConversationLegacy.hasDraft() || !draft.equals(mConversationLegacy.getDraft()))) {
+                    mConversationLegacy.saveDraft(draft);
+                }
+            } else {
+                String oldDraft = mPrefs.getString(QKPreference.COMPOSE_DRAFT.getKey(), "");
+                if (!draft.equals(oldDraft)) {
+                    mPrefs.edit().putString(QKPreference.COMPOSE_DRAFT.getKey(), draft).apply();
+
+                    // Only show the draft if we saved text, not if we just cleared some
+                    if (!TextUtils.isEmpty(draft)) {
+                        Toast.makeText(mContext, R.string.toast_draft, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }
 
@@ -767,6 +779,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 mReplyText.setText("");
                 clearAttachment();
             }
+        } else {
+            String draft = mPrefs.getString(QKPreference.COMPOSE_DRAFT.getKey(), "");
+            mReplyText.setText(draft);
+            mReplyText.setSelection(draft.length());
         }
     }
 
