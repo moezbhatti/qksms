@@ -193,14 +193,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         mBackgroundQueryHandler = new BackgroundQueryHandler(mContext.getContentResolver());
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // Make sure to notify that this conversation has been opened. This will mark it as read, load new drafts, etc.
-        onOpenConversation();
-    }
-
     // This is called by BaseContentFragment when updateArguments is called.
     @Override
     public void onNewArguments() {
@@ -273,6 +265,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         // perform initialization such as set up the Conversation object, make a query in the
         // adapter, etc.
         loadFromArguments();
+        onOpenConversation();
     }
 
     @Override
