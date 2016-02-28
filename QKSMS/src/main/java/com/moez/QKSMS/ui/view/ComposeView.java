@@ -742,8 +742,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 mConversationLegacy.clearDrafts();
 
             } else if (!TextUtils.isEmpty(draft) &&
-                    (!mConversationLegacy.hasDraft() ||
-                            !draft.equals(mConversationLegacy.getDraft()))) {
+                    (!mConversationLegacy.hasDraft() || !draft.equals(mConversationLegacy.getDraft()))) {
                 mConversationLegacy.saveDraft(draft);
             }
         }

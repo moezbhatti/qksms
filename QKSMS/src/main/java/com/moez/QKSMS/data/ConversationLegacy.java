@@ -162,41 +162,29 @@ public class ConversationLegacy {
 
     public void saveDraft(final String draft) {
 
-        new AsyncTask<Void, Void, Void>() {
+        clearDrafts();
 
-            @Override
-            protected Void doInBackground(Void... params) {
-                clearDrafts();
+        if (draft.length() > 0) {
+            try {
+                DraftCache.getInstance().setSavingDraft(true);
+                DraftCache.getInstance().setDraftState(threadId, true);
+                ConversationLegacy.this.draft = draft;
 
-                if (draft.length() > 0) {
-                    try {
-                        DraftCache.getInstance().setSavingDraft(true);
-                        DraftCache.getInstance().setDraftState(threadId, true);
-                        ConversationLegacy.this.draft = draft;
+                ContentResolver contentResolver = context.getContentResolver();
+                ContentValues cv = new ContentValues();
 
-                        ContentResolver contentResolver = context.getContentResolver();
-                        ContentValues cv = new ContentValues();
+                cv.put("address", getAddress());
+                cv.put("body", draft);
 
-                        cv.put("address", getAddress());
-                        cv.put("body", draft);
-
-                        contentResolver.insert(SmsHelper.DRAFTS_CONTENT_PROVIDER, cv);
-                    } finally {
-                        DraftCache.getInstance().setSavingDraft(false);
-                    }
-                } else {
-                    ConversationLegacy.this.draft = null;
-                }
-
-                return null;
+                contentResolver.insert(SmsHelper.DRAFTS_CONTENT_PROVIDER, cv);
+            } finally {
+                DraftCache.getInstance().setSavingDraft(false);
             }
+        } else {
+            ConversationLegacy.this.draft = null;
+        }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                Toast.makeText(context, R.string.toast_draft, Toast.LENGTH_SHORT).show();
-            }
-        }.execute((Void[]) null);
+        Toast.makeText(context, R.string.toast_draft, Toast.LENGTH_SHORT).show();
     }
 
     public int getType() {

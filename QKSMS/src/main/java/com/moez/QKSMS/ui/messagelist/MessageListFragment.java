@@ -269,6 +269,12 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mComposeView.saveDraft();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putLong(ARG_THREAD_ID, mThreadId);
         outState.putLong(ARG_ROW_ID, mRowId);
@@ -509,14 +515,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 R.string.notification_mute_off : R.string.notification_mute_on, Toast.LENGTH_SHORT).show();
         Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(vibrateTime);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        // Save the draft. This should also clear the EditText.
-        mComposeView.saveDraft();
     }
 
     /**
