@@ -214,6 +214,8 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         View view = inflater.inflate(R.layout.fragment_conversation, container, false);
         mRecyclerView = (MessageListRecyclerView) view.findViewById(R.id.conversation);
 
+        mOpened = !((MainActivity) mContext).getSlidingMenu().isMenuShowing();
+
         mAdapter = new MessageListAdapter(mContext);
         mAdapter.setItemClickListener(this);
         mAdapter.setMultiSelectListener(this);
