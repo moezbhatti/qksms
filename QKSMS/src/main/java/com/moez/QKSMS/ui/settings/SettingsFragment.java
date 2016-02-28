@@ -520,7 +520,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             Fragment fragment = SettingsFragment.newInstance(resId);
             getFragmentManager()
                     .beginTransaction()
-                    .add(R.id.content_frame, fragment, CATEGORY_TAG)
+                    .replace(R.id.content_frame, fragment, CATEGORY_TAG)
                     .commit();
         }
 

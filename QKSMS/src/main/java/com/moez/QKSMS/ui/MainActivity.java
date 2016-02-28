@@ -310,7 +310,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
             if (!mSlidingMenu.isMenuShowing()) {
                 Fragment category = getFragmentManager().findFragmentByTag(SettingsFragment.CATEGORY_TAG);
                 if (category != null) {
-                    getFragmentManager().beginTransaction().remove(category).commit();
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.content_frame, SettingsFragment.newInstance(R.xml.settings_main)).commit();
                 } else {
                     mSlidingMenu.showMenu();
                 }
