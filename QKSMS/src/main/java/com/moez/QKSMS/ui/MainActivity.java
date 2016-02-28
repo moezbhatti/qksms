@@ -25,6 +25,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
@@ -63,7 +65,6 @@ import java.util.Collection;
 
 
 public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuListener {
-
     private final String TAG = "MainActivity";
 
     public final static String EXTRA_THREAD_ID = "thread_id";
@@ -78,7 +79,9 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
 
     public static final String MMS_SETUP_DONT_ASK_AGAIN = "mmsSetupDontAskAgain";
 
-    private SlidingMenu mSlidingMenu;
+    @Bind(R.id.root) View mRoot;
+    @Bind(R.id.sliding_menu) SlidingMenu mSlidingMenu;
+
     private ConversationListFragment mConversationList;
     private ContentFragment mContent;
     private long mWaitingForThreadId = -1;
@@ -97,8 +100,8 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
 
         setContentView(R.layout.activity_main);
         setTitle(R.string.title_conversation_list);
+        ButterKnife.bind(this);
 
-        mSlidingMenu = (SlidingMenu) findViewById(R.id.sliding_menu);
         setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
         mSlidingMenu.setListener(this);
         mSlidingMenu.setContent();
@@ -131,9 +134,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             // Update the background color. This code is important during the welcome screen setup, when the activity
             // in the ThemeManager isn't the MainActivity
-            findViewById(R.id.menu_frame).getRootView().setBackgroundColor(ThemeManager.getBackgroundColor());
-            findViewById(R.id.menu_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
-            findViewById(R.id.content_frame).setBackgroundColor(ThemeManager.getBackgroundColor());
+            mRoot.setBackgroundColor(ThemeManager.getBackgroundColor());
         });
 
         //Adds a small/non intrusive snackbar that asks the user to rate the app
