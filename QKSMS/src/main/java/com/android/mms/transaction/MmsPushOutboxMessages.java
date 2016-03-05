@@ -40,10 +40,6 @@ public class MmsPushOutboxMessages extends BroadcastReceiver {
         String action = intent.getAction();
         if(action.equalsIgnoreCase(INTENT_MMS_SEND_OUTBOX_MSG)){
             if (LOCAL_LOGV) Log.v(TAG, "Now waking up the MMS service");
-            Intent service = new Intent(
-                    TransactionService.HANDLE_PENDING_TRANSACTIONS_ACTION, null, context,
-                    TransactionService.class
-            );
         }
     }
 

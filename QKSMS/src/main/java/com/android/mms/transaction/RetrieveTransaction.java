@@ -136,7 +136,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 throw new MmsException("Invalid M-Retrieve.conf PDU.");
             }
 
-            Uri msgUri = null;
+            Uri msgUri;
             if (isDuplicateMessage(mContext, retrieveConf)) {
                 // Mark this transaction as failed to prevent duplicate
                 // notification to user.
@@ -225,11 +225,11 @@ public class RetrieveTransaction extends Transaction implements Runnable {
 
     private static boolean isDuplicateMessageExtra(Cursor cursor, RetrieveConf rc) {
         // Compare message subjects, taking encoding into account
-        EncodedStringValue encodedSubjectReceived = null;
+        EncodedStringValue encodedSubjectReceived;
         EncodedStringValue encodedSubjectStored = null;
         String subjectReceived = null;
-        String subjectStored = null;
-        String subject = null;
+        String subjectStored;
+        String subject;
 
         encodedSubjectReceived = rc.getSubject();
         if (encodedSubjectReceived != null) {

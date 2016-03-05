@@ -110,7 +110,7 @@ public class MmsMessageSender implements MessageSender {
                 values.put(Telephony.MmsSms.PendingMessages.RETRY_INDEX, 0);
                 values.put(Telephony.MmsSms.PendingMessages.DUE_TIME, 0);
 
-                Uri uri = SqliteWrapper.insert(mContext, mContext.getContentResolver(),
+                SqliteWrapper.insert(mContext, mContext.getContentResolver(),
                         Telephony.MmsSms.PendingMessages.CONTENT_URI, values);
             } catch (Throwable e) {
                 p.move(mMessageUri, Telephony.Mms.Outbox.CONTENT_URI);
