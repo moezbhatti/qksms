@@ -9,7 +9,6 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.transaction.NotificationManager;
 
 public class MessageFailedReceiver extends BroadcastReceiver {
-    private final String TAG = "MessageFailedReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
