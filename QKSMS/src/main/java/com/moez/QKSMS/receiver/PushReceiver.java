@@ -41,7 +41,6 @@ import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_READ_ORIG_I
  */
 public class PushReceiver extends BroadcastReceiver {
     private static final String TAG = "PushReceiver";
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
     private class ReceivePushTask extends AsyncTask<Intent,Void,Void> {

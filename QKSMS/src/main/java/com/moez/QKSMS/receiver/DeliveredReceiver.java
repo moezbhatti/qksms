@@ -10,7 +10,6 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class DeliveredReceiver extends com.moez.QKSMS.mmssms.DeliveredReceiver {
-    private final String TAG = "DeliveredReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {

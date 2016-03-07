@@ -34,7 +34,6 @@ import static android.support.v4.app.NotificationCompat.BigTextStyle;
 import static android.support.v4.app.NotificationCompat.WearableExtender;
 
 public class WearableIntentReceiver extends BroadcastReceiver {
-    private static final String TAG = "WearableIntentActivity";
 
     public static final String ACTION_REPLY = "com.moez.QKSMS.receiver.WearableIntentReceiver.REPLY";
 

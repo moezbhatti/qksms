@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import com.android.mms.transaction.TransactionSettings;
 
 public class MmsReceiver extends BroadcastReceiver {
-    private final String TAG = "MmsReceiver";
 
     private ConnectivityManager connectivityManager;
     private TransactionSettings transactionSettings;
