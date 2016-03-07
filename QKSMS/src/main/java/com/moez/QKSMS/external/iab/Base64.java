@@ -213,19 +213,19 @@ public class Base64 {
 
         switch (numSigBytes) {
             case 3:
-                destination[destOffset] = alphabet[(inBuff >>> 18)];
+                destination[destOffset] = alphabet[inBuff >>> 18];
                 destination[destOffset + 1] = alphabet[(inBuff >>> 12) & 0x3f];
                 destination[destOffset + 2] = alphabet[(inBuff >>> 6) & 0x3f];
                 destination[destOffset + 3] = alphabet[(inBuff) & 0x3f];
                 return destination;
             case 2:
-                destination[destOffset] = alphabet[(inBuff >>> 18)];
+                destination[destOffset] = alphabet[inBuff >>> 18];
                 destination[destOffset + 1] = alphabet[(inBuff >>> 12) & 0x3f];
                 destination[destOffset + 2] = alphabet[(inBuff >>> 6) & 0x3f];
                 destination[destOffset + 3] = EQUALS_SIGN;
                 return destination;
             case 1:
-                destination[destOffset] = alphabet[(inBuff >>> 18)];
+                destination[destOffset] = alphabet[inBuff >>> 18];
                 destination[destOffset + 1] = alphabet[(inBuff >>> 12) & 0x3f];
                 destination[destOffset + 2] = EQUALS_SIGN;
                 destination[destOffset + 3] = EQUALS_SIGN;
@@ -316,7 +316,7 @@ public class Base64 {
                     ((source[d + off] << 24) >>> 8)
                     | ((source[d + 1 + off] << 24) >>> 16)
                     | ((source[d + 2 + off] << 24) >>> 24);
-            outBuff[e] = alphabet[(inBuff >>> 18)];
+            outBuff[e] = alphabet[inBuff >>> 18];
             outBuff[e + 1] = alphabet[(inBuff >>> 12) & 0x3f];
             outBuff[e + 2] = alphabet[(inBuff >>> 6) & 0x3f];
             outBuff[e + 3] = alphabet[(inBuff) & 0x3f];
@@ -341,7 +341,7 @@ public class Base64 {
             e += 4;
         }
 
-        assert (e == outBuff.length);
+        assert e == outBuff.length;
         return outBuff;
     }
 
