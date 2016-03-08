@@ -115,7 +115,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         if (mConversationList == null) {
             mConversationList = new ConversationListFragment();
         }
-        mConversationList = new ConversationListFragment();
         FragmentTransaction menuTransaction = fm.beginTransaction();
         menuTransaction.replace(R.id.menu_frame, mConversationList);
         menuTransaction.commit();
