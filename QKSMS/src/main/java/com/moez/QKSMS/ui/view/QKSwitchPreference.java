@@ -3,6 +3,7 @@ package com.moez.QKSMS.ui.view;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.SwitchPreference;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -28,8 +29,6 @@ public class QKSwitchPreference extends SwitchPreference {
         setKey(key);
         setEnabled(true);
         mDefaultValue = prefs.getBoolean(key, defaultValue);
-        setLayoutResource(R.layout.list_item_preference);
-        setWidgetLayoutResource(R.layout.view_switch);
         if (title != 0) setTitle(title);
         if (summary != 0) setSummary(summary);
     }
@@ -40,15 +39,22 @@ public class QKSwitchPreference extends SwitchPreference {
 
     @Override
     public View getView(View convertView, ViewGroup parent) {
-        View view = super.getView(convertView, parent);
-        view.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_preference, parent, false);
+            convertView.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        mCheckBox = (QKSwitch) view.findViewById(android.R.id.checkbox);
+
+            LinearLayout frameLayout = (LinearLayout) convertView.findViewById(android.R.id.widget_frame);
+            LayoutInflater.from(getContext()).inflate(R.layout.view_switch, frameLayout);
+        }
+        super.onBindView(convertView);
+
+        mCheckBox = (QKSwitch) convertView.findViewById(android.R.id.checkbox);
         mCheckBox.setChecked(mDefaultValue);
 
-        view.setOnClickListener(v -> {
+        convertView.setOnClickListener(v -> {
             mPrefs.edit().putBoolean(getKey(), !mCheckBox.isChecked()).apply();
             mCheckBox.setChecked(!mCheckBox.isChecked());
             if (mOnPreferenceClickListener != null) {
@@ -56,8 +62,7 @@ public class QKSwitchPreference extends SwitchPreference {
             }
         });
 
-
-        return view;
+        return convertView;
     }
 
     @Override
