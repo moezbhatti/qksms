@@ -213,7 +213,7 @@ public class NotificationManager {
                     if (conversations.size() == 1 && lastConversation.size() == 1) {
                         singleMessage(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
                     } else if (conversations.size() == 1) {
-                        singleSender(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
+                        singleSender(context, lastConversation, threadId, builder, privateNotifications);
                     } else {
                         multipleSenders(context, conversations, oldThreads, builder);
                     }
@@ -283,7 +283,7 @@ public class NotificationManager {
                 if (conversations.size() == 1 && lastConversation.size() == 1) {
                     singleMessage(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
                 } else if (conversations.size() == 1) {
-                    singleSender(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
+                    singleSender(context, lastConversation, threadId, builder, privateNotifications);
                 } else {
                     multipleSenders(context, conversations, oldThreads, builder);
                 }
@@ -482,6 +482,10 @@ public class NotificationManager {
         readIntent.putExtra("thread_id", threadId);
         final PendingIntent readPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), readIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + message.mAddress));
+        final PendingIntent callPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 3), callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         Intent seenIntent = new Intent(ACTION_MARK_SEEN);
         final PendingIntent seenPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 4), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -515,19 +519,13 @@ public class NotificationManager {
                 .setContentIntent(threadPI)
                 .setNumber(unreadMessageCount)
                 .setStyle(nstyle)
+                .addAction(R.drawable.ic_call, sRes.getString(R.string.call), callPI)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
         if (conversationPrefs.getDimissedReadEnabled()) {
             builder.setDeleteIntent(readPI);
-        }
-
-        if (conversationPrefs.getCallButtonEnabled()) {
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + message.mAddress));
-            PendingIntent callPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 3), callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.addAction(R.drawable.ic_call, sRes.getString(R.string.call), callPI);
         }
 
         if (message.isMms()) {
@@ -563,8 +561,7 @@ public class NotificationManager {
      * Creates a notification that contains several messages that are all part of the same conversation
      */
     private static void singleSender(final Context context, ArrayList<MessageItem> messages, long threadId,
-                                     final NotificationCompat.Builder builder, ConversationPrefsHelper conversationPrefs,
-                                     final Integer privateNotifications) {
+                                     final NotificationCompat.Builder builder, final Integer privateNotifications) {
 
         MessageItem message = messages.get(0);
 
@@ -581,6 +578,10 @@ public class NotificationManager {
         Intent readIntent = new Intent(ACTION_MARK_READ);
         readIntent.putExtra("thread_id", threadId);
         PendingIntent readPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), readIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + message.mAddress));
+        final PendingIntent callPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 3), callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent seenIntent = new Intent(ACTION_MARK_SEEN);
         PendingIntent seenPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 4), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -602,17 +603,11 @@ public class NotificationManager {
                 .setContentIntent(threadPI)
                 .setNumber(unreadMessageCount)
                 .setStyle(inboxStyle)
+                .addAction(R.drawable.ic_call, sRes.getString(R.string.call), callPI)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
-
-        if (conversationPrefs.getCallButtonEnabled()) {
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + message.mAddress));
-            PendingIntent callPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 3), callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.addAction(R.drawable.ic_call, sRes.getString(R.string.call), callPI);
-        }
 
         notify(context, (int) threadId, builder.build());
     }
@@ -636,7 +631,7 @@ public class NotificationManager {
                 if (conversations.get(threadId).size() == 1) {
                     singleMessage(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, privateNotification);
                 } else {
-                    singleSender(context, conversations.get(threadId), threadId, copyBuilder(builder), conversationPrefs, privateNotification);
+                    singleSender(context, conversations.get(threadId), threadId, copyBuilder(builder), privateNotification);
                 }
             }
         }
