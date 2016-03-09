@@ -61,13 +61,13 @@ public class CIELChEvaluator implements TypeEvaluator<Integer> {
         double var_G = var_X2 * -0.9689 + var_Y2 * 1.8758 + var_Z2 * 0.0415;
         double var_B = var_X2 * 0.0557 + var_Y2 * -0.2040 + var_Z2 * 1.0570;
 
-        var_R = var_R > 0.0031308 ? 1.055 * Math.pow(var_R, (1 / 2.4)) - 0.055 : 12.92 * var_R;
-        var_G = var_G > 0.0031308 ? 1.055 * Math.pow(var_G, (1 / 2.4)) - 0.055 : 12.92 * var_G;
-        var_B = var_B > 0.0031308 ? 1.055 * Math.pow(var_B, (1 / 2.4)) - 0.055 : 12.92 * var_B;
+        var_R = var_R > 0.0031308 ? 1.055 * Math.pow(var_R, 1 / 2.4) - 0.055 : 12.92 * var_R;
+        var_G = var_G > 0.0031308 ? 1.055 * Math.pow(var_G, 1 / 2.4) - 0.055 : 12.92 * var_G;
+        var_B = var_B > 0.0031308 ? 1.055 * Math.pow(var_B, 1 / 2.4) - 0.055 : 12.92 * var_B;
 
-        double R = (var_R * 255);
-        double G = (var_G * 255);
-        double B = (var_B * 255);
+        double R = var_R * 255;
+        double G = var_G * 255;
+        double B = var_B * 255;
 
         int red = (int) Math.round(R);
         int green = (int) Math.round(G);
@@ -109,7 +109,7 @@ public class CIELChEvaluator implements TypeEvaluator<Integer> {
         double var_Y = Y / 100.000;
         double var_Z = Z / 108.883;
 
-        var_X = var_X > 0.008856 ? Math.pow(var_X, (1 / 3.0)) : (7.787 * var_X) + (16 / 116.0);
+        var_X = var_X > 0.008856 ? Math.pow(var_X, 1 / 3.0) : (7.787 * var_X) + (16 / 116.0);
         var_Y = var_Y > 0.008856 ? Math.pow(var_Y, 1 / 3.0) : (7.787 * var_Y) + (16 / 116.0);
         var_Z = var_Z > 0.008856 ? Math.pow(var_Z, 1 / 3.0) : (7.787 * var_Z) + (16 / 116.0);
 
