@@ -47,6 +47,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class UriImage {
+    private static final int NUMBER_OF_RESIZE_ATTEMPTS = 4;
     private static final String TAG = "Mms/image";
     private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
@@ -258,8 +259,6 @@ public class UriImage {
 
         return part;
     }
-
-    private static final int NUMBER_OF_RESIZE_ATTEMPTS = 4;
 
     /**
      * Resize and recompress the image such that it fits the given limits. The resulting byte
