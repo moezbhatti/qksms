@@ -27,7 +27,7 @@ public class BlockedConversationHelper {
 
     public static boolean isConversationBlocked(SharedPreferences prefs, long threadId) {
         Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
-        return (idStrings.contains(String.valueOf(threadId)));
+        return idStrings.contains(String.valueOf(threadId));
     }
 
     public static void blockConversation(SharedPreferences prefs, long threadId) {
