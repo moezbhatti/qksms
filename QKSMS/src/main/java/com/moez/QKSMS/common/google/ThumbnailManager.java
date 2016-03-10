@@ -122,10 +122,10 @@ public class ThumbnailManager extends BackgroundLoaderManager {
 
         final Bitmap thumbnail = DEBUG_DISABLE_CACHE ? null : mThumbnailCache.get(uri);
 
-        final boolean thumbnailExists = (thumbnail != null);
+        final boolean thumbnailExists = thumbnail != null;
         final boolean taskExists = mPendingTaskUris.contains(uri);
         final boolean newTaskRequired = !thumbnailExists && !taskExists;
-        final boolean callbackRequired = (callback != null);
+        final boolean callbackRequired = callback != null;
 
         if (Log.isLoggable(LogTag.THUMBNAIL_CACHE, Log.DEBUG)) {
             Log.v(TAG, "getThumbnail mThumbnailCache.get for uri: " + uri + " thumbnail: " +
