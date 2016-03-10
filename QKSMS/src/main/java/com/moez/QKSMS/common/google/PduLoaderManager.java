@@ -87,11 +87,11 @@ public class PduLoaderManager extends BackgroundLoaderManager {
         final SlideshowModel slideshow = (requestSlideshow && !DEBUG_DISABLE_CACHE) ?
                 mSlideshowCache.get(uri) : null;
 
-        final boolean slideshowExists = (!requestSlideshow || slideshow != null);
-        final boolean pduExists = (cacheEntry != null && cacheEntry.getPdu() != null);
+        final boolean slideshowExists = !requestSlideshow || slideshow != null;
+        final boolean pduExists = cacheEntry != null && cacheEntry.getPdu() != null;
         final boolean taskExists = mPendingTaskUris.contains(uri);
         final boolean newTaskRequired = (!pduExists || !slideshowExists) && !taskExists;
-        final boolean callbackRequired = (callback != null);
+        final boolean callbackRequired = callback != null;
 
         if (pduExists && slideshowExists) {
             if (callbackRequired) {
