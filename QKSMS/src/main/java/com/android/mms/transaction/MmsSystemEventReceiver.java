@@ -60,7 +60,7 @@ public class MmsSystemEventReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
         if (action.equals("android.intent.action.CONTENT_CHANGED")) {
-            Uri changed = (Uri) intent.getParcelableExtra("deleted_contents");
+            intent.getParcelableExtra("deleted_contents");
         } else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             if (mConnMgr == null) {
                 mConnMgr = (ConnectivityManager) context

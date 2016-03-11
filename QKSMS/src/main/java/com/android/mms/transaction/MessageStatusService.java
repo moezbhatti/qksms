@@ -53,7 +53,7 @@ public class MessageStatusService extends IntentService {
         byte[] pdu = intent.getByteArrayExtra("pdu");
         String format = intent.getStringExtra("format");
 
-        SmsMessage message = updateMessageStatus(this, messageUri, pdu, format);
+        updateMessageStatus(this, messageUri, pdu, format);
     }
 
     private SmsMessage updateMessageStatus(Context context, Uri messageUri, byte[] pdu,
