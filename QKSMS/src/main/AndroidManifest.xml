@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.moez.QKSMS"
+<manifest package="com.moez.QKSMS"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -80,6 +79,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
 
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
@@ -442,8 +442,7 @@
             android:name=".receiver.UnreadBadgeService"
             android:exported="false" />
 
-        <service
-            android:name=".service.ShouldIAnswerService">
+        <service android:name=".service.ShouldIAnswerService">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.ShouldIAnswerService" />
             </intent-filter>
@@ -489,6 +488,26 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0" />
+
+        <uses-library
+            android:name="com.sec.android.app.multiwindow"
+            android:required="false" />
+
+        <meta-data
+            android:name="com.sec.android.support.multiwindow"
+            android:value="true" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W"
+            android:value="632dp" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H"
+            android:value="598dp" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W"
+            android:value="632dp" />
+        <meta-data
+            android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
+            android:value="598dp" />
     </application>
 
 </manifest>
