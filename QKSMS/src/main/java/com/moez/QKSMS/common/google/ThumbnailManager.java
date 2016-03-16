@@ -322,8 +322,8 @@ public class ThumbnailManager extends BackgroundLoaderManager {
             if (data != null) {
                 Options options = new Options();
                 options.inPreferredConfig = Config.ARGB_8888;
-                Bitmap bitmap = requestDecode(data.mData,
-                        data.mOffset, data.mData.length - data.mOffset, options);
+                Bitmap bitmap = requestDecode(data.getData(),
+                        data.getOffset(), data.getData().length - data.getOffset(), options);
                 if (bitmap == null) {
                     Log.w(TAG, "decode cached failed " + path);
                 }

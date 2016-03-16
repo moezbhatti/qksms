@@ -400,9 +400,33 @@ public class BlobCache implements Closeable {
     }
 
     public static class LookupRequest {
-        public long key;        // input: the key to find
-        public byte[] buffer;   // input/output: the buffer to store the blob
-        public int length;      // output: the length of the blob
+        private long key;        // input: the key to find
+        private byte[] buffer;   // input/output: the buffer to store the blob
+        private int length;      // output: the length of the blob
+
+        public long getKey() {
+            return key;
+        }
+
+        public void setKey(long key) {
+            this.key = key;
+        }
+
+        public byte[] getBuffer() {
+            return buffer;
+        }
+
+        public void setBuffer(byte[] buffer) {
+            this.buffer = buffer;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public void setLength(int length) {
+            this.length = length;
+        }
     }
 
     // This method is for one-off lookup. For repeated lookup, use the version

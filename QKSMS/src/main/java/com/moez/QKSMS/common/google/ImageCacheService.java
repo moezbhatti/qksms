@@ -50,8 +50,24 @@ public class ImageCacheService {
             mData = data;
             mOffset = offset;
         }
-        public byte[] mData;
-        public int mOffset;
+        private byte[] mData;
+        private int mOffset;
+
+        public byte[] getData() {
+            return mData;
+        }
+
+        public void setData(byte[] mData) {
+            this.mData = mData;
+        }
+
+        public int getOffset() {
+            return mOffset;
+        }
+
+        public void setOffset(int mOffset) {
+            this.mOffset = mOffset;
+        }
     }
 
     public ImageData getImageData(String path, int type) {
