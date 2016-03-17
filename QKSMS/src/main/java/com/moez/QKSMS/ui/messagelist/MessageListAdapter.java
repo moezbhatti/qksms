@@ -291,6 +291,13 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             int MAX_DURATION = 60 * 60 * 1000;
             MessageItem messageItem2 = getItem(position + 1);
             showTimestamp = messageItem2.mDate - messageItem.mDate >= MAX_DURATION;
+
+
+            if (messageItem.mAddress != null && messageItem2.mAddress != null &&
+                    !messageItem.mAddress.equals(messageItem2.mAddress) &&
+                    !messageItem.isOutgoingMessage() && !messageItem2.isOutgoingMessage()) {
+                showTimestamp = true;
+            }
         }
 
         if (position == 0) {
@@ -305,9 +312,8 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             // both to be incoming messages
             if (messageItem.mAddress != null && messageItem2.mAddress != null &&
                     !messageItem.mAddress.equals(messageItem2.mAddress) &&
-                    !messageItem.isOutgoingMessage() && messageItem2.isOutgoingMessage()) {
+                    !messageItem.isOutgoingMessage() && !messageItem2.isOutgoingMessage()) {
                 showAvatar = true;
-                showTimestamp = true;
             }
         }
 
