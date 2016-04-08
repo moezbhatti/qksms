@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui.messagelist;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentResolver;
@@ -649,7 +648,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     @Override
     public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
-        inflater.inflate(R.menu.conversation, menu);
+        inflater.inflate(R.menu.message_list, menu);
         setTitle();
 
         ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, mThreadId);

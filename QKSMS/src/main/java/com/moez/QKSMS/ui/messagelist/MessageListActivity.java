@@ -2,8 +2,11 @@ package com.moez.QKSMS.ui.messagelist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 
 public class MessageListActivity extends QKActivity {
@@ -50,10 +53,21 @@ public class MessageListActivity extends QKActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.message_list, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+
+            case R.id.menu_donate:
+                DonationManager.getInstance(this).showDonateDialog();
                 return true;
         }
 
