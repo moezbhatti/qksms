@@ -19,10 +19,10 @@ import android.view.inputmethod.EditorInfo;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Contact;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKContentFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -150,8 +150,7 @@ public class SearchFragment extends QKContentFragment implements RecyclerCursorA
 
     @Override
     public void onItemClick(SearchData data, View view) {
-        MainActivity mainActivity = (MainActivity) mContext;
-        mainActivity.setConversation(data.threadId, data.rowId, mSearchString);
+        MessageListActivity.launch(mContext, data.threadId, data.rowId, mSearchString, true);
     }
 
     @Override

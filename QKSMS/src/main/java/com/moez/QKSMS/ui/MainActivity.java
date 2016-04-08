@@ -51,6 +51,7 @@ import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.messagelist.MessageListFragment;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.search.SearchFragment;
@@ -409,7 +410,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         // conversation.
         if (threadId != -1) {
             Log.v(TAG, "Opening thread: " + threadId);
-            setConversation(threadId);
+            MessageListActivity.launch(this, threadId, -1, null, true);
             mSlidingMenu.showContent();
         }
 
@@ -480,26 +481,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         } else {
             Log.w(TAG, "Null fragment, can't switch content");
         }
-    }
-
-    public void setConversation(long threadId) {
-        setConversation(threadId, -1, null, false);
-    }
-
-    public void setConversation(long threadId, long rowId) {
-        setConversation(threadId, rowId, null, false);
-    }
-
-    public void setConversation(long threadId, long rowId, String pattern) {
-        setConversation(threadId, rowId, pattern, false);
-    }
-
-    public void setConversation(long threadId, long rowId, String pattern, boolean animate) {
-        MessageListFragment fragment = MessageListFragment.getInstance(threadId, rowId, pattern, !animate);
-
-        // Save the thread ID here and switch the content
-        sThreadShowing = threadId;
-        switchContent(fragment, animate);
     }
 
     @Override

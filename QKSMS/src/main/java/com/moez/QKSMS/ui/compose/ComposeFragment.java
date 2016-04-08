@@ -20,6 +20,7 @@ import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKContentFragment;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.view.AutoCompleteContactView;
 import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.StarredContactsView;
@@ -130,7 +131,7 @@ public class ComposeFragment extends QKContentFragment implements ActivityLaunch
     public void onSend(String[] recipients, String body) {
         long threadId = Utils.getOrCreateThreadId(mContext, recipients[0]);
         if (recipients.length == 1) {
-            ((MainActivity) mContext).setConversation(threadId);
+            MessageListActivity.launch(mContext, threadId, -1, null, true);
         } else {
             ((MainActivity) mContext).showMenu();
         }

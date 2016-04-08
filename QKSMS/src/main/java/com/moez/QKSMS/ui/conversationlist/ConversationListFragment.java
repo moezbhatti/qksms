@@ -26,11 +26,10 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
-import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ContentFragment;
 import com.moez.QKSMS.ui.MainActivity;
@@ -38,6 +37,8 @@ import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeFragment;
+import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.Observable;
@@ -250,7 +251,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         if (mAdapter.isInMultiSelectMode()) {
             mAdapter.toggleSelection(conversation.getThreadId(), conversation);
         } else {
-            ((MainActivity) mContext).setConversation(conversation.getThreadId(), -1, null, true);
+            MessageListActivity.launch(mContext, conversation.getThreadId(), -1, null, true);
         }
     }
 

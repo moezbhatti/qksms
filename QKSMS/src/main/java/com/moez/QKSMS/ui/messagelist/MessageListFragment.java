@@ -214,7 +214,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         View view = inflater.inflate(R.layout.fragment_conversation, container, false);
         mRecyclerView = (MessageListRecyclerView) view.findViewById(R.id.conversation);
 
-        mOpened = !((MainActivity) mContext).getSlidingMenu().isMenuShowing();
+        mOpened = true; // TODO
 
         mAdapter = new MessageListAdapter(mContext);
         mAdapter.setItemClickListener(this);
@@ -299,7 +299,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     private void setTitle() {
-        if (mContext != null && mConversation != null && !((MainActivity) mContext).getSlidingMenu().isMenuShowing()) {
+        if (mContext != null && mConversation != null) {
             mContext.setTitle(mConversation.getRecipients().formatNames(", "));
         }
     }
