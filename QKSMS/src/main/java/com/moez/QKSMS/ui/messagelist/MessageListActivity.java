@@ -8,8 +8,9 @@ import android.view.MenuItem;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.ui.base.QKActivity;
+import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
 
-public class MessageListActivity extends QKActivity {
+public class MessageListActivity extends QKSwipeBackActivity {
 
     public static final String ARG_THREAD_ID = "threadId";
     public static final String ARG_ROW_ID = "rowId";
