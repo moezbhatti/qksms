@@ -9,7 +9,7 @@ import com.moez.QKSMS.ui.SwipeBackLayout;
 
 public abstract class QKSwipeBackActivity extends QKActivity {
 
-    private SwipeBackLayout mSwipeBackLayout;
+    protected SwipeBackLayout mSwipeBackLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

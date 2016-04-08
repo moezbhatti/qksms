@@ -77,7 +77,6 @@ public class MessageListActivity extends QKSwipeBackActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-        overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out);
+        mSwipeBackLayout.scrollToFinishActivity();
     }
 }
