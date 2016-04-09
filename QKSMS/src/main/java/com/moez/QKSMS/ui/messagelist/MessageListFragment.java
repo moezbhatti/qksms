@@ -133,7 +133,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private long mLastMessageId;
     private BackgroundQueryHandler mBackgroundQueryHandler;
 
-    public static final String ARG_THREAD_ID = "threadId";
+    public static final String ARG_THREAD_ID = "thread_id";
     public static final String ARG_ROW_ID = "rowId";
     public static final String ARG_HIGHLIGHT = "highlight";
     public static final String ARG_SHOW_IMMEDIATE = "showImmediate";

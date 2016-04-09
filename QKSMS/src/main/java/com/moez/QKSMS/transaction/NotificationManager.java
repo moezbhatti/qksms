@@ -39,6 +39,7 @@ import com.moez.QKSMS.receiver.WearableIntentReceiver;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -315,7 +316,7 @@ public class NotificationManager {
                 PendingIntent PI;
                 if (failedCursor.getCount() == 1) {
                     title = sRes.getString(R.string.failed_message);
-                    Intent intent = new Intent(context, MainActivity.class);
+                    Intent intent = new Intent(context, MessageListActivity.class);
                     intent.putExtra(MainActivity.EXTRA_THREAD_ID, failedCursor.getLong(0));
                     PI = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 } else {
@@ -474,7 +475,7 @@ public class NotificationManager {
         replyIntent.putExtra(QKReplyActivity.EXTRA_SHOW_KEYBOARD, true);
         final PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent threadIntent = new Intent(context, MainActivity.class);
+        Intent threadIntent = new Intent(context, MessageListActivity.class);
         threadIntent.putExtra(MainActivity.EXTRA_THREAD_ID, threadId);
         final PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -574,7 +575,7 @@ public class NotificationManager {
         replyIntent.putExtra(QKReplyActivity.EXTRA_SHOW_KEYBOARD, true);
         PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent threadIntent = new Intent(context, MainActivity.class);
+        Intent threadIntent = new Intent(context, MessageListActivity.class);
         threadIntent.putExtra(MainActivity.EXTRA_THREAD_ID, threadId);
         PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

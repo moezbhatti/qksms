@@ -2,17 +2,24 @@ package com.moez.QKSMS.ui.messagelist;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
+import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
+import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
 
-public class MessageListActivity extends QKSwipeBackActivity {
+import java.net.URLDecoder;
 
-    public static final String ARG_THREAD_ID = "threadId";
+public class MessageListActivity extends QKSwipeBackActivity {
+    private final String TAG = "MessageListActivity";
+
+    public static final String ARG_THREAD_ID = "thread_id";
     public static final String ARG_ROW_ID = "rowId";
     public static final String ARG_HIGHLIGHT = "highlight";
     public static final String ARG_SHOW_IMMEDIATE = "showImmediate";
@@ -44,13 +51,39 @@ public class MessageListActivity extends QKSwipeBackActivity {
             mRowId = intent.getLongExtra(ARG_ROW_ID, -1);
             mHighlight = intent.getStringExtra(ARG_HIGHLIGHT);
             mShowImmediate = intent.getBooleanExtra(ARG_SHOW_IMMEDIATE, false);
+
+            if (mThreadId == -1 && intent.getData() != null) {
+                String data = intent.getData().toString();
+                String scheme = intent.getData().getScheme();
+
+                String address = null;
+                if (scheme.startsWith("smsto") || scheme.startsWith("mmsto")) {
+                    address = data.replace("smsto:", "").replace("mmsto:", "");
+                } else if (scheme.startsWith("sms") || (scheme.startsWith("mms"))) {
+                    address = data.replace("sms:", "").replace("mms:", "");
+                }
+
+                mThreadId = Utils.getOrCreateThreadId(this, formatPhoneNumber(address));
+            }
         }
 
-        MessageListFragment fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commitAllowingStateLoss();
+        if (mThreadId != -1) {
+            Log.v(TAG, "Opening thread: " + mThreadId);
+            MessageListFragment fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commitAllowingStateLoss();
+        } else {
+            // TODO log crashlytics event and show toast
+        }
+    }
+
+    private String formatPhoneNumber(String address) {
+        address = URLDecoder.decode(address);
+        address = "" + Html.fromHtml(address);
+        address = PhoneNumberUtils.formatNumber(address);
+        return address;
     }
 
     @Override
