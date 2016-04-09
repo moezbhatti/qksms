@@ -63,7 +63,10 @@ public class MessageListActivity extends QKSwipeBackActivity {
                     address = data.replace("sms:", "").replace("mms:", "");
                 }
 
-                mThreadId = Utils.getOrCreateThreadId(this, formatPhoneNumber(address));
+                address = URLDecoder.decode(address);
+                address = "" + Html.fromHtml(address);
+                address = PhoneNumberUtils.formatNumber(address);
+                mThreadId = Utils.getOrCreateThreadId(this, address);
             }
         }
 
@@ -77,13 +80,6 @@ public class MessageListActivity extends QKSwipeBackActivity {
         } else {
             // TODO log crashlytics event and show toast
         }
-    }
-
-    private String formatPhoneNumber(String address) {
-        address = URLDecoder.decode(address);
-        address = "" + Html.fromHtml(address);
-        address = PhoneNumberUtils.formatNumber(address);
-        return address;
     }
 
     @Override
