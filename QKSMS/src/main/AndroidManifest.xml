@@ -99,6 +99,7 @@
         </activity>
 
         <activity android:name=".ui.settings.SettingsActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
 
         <activity-alias
             android:name=".ui.MainActivity-Teal"

@@ -49,7 +49,7 @@ import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.messagelist.MessageListFragment;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
-import com.moez.QKSMS.ui.search.SearchFragment;
+import com.moez.QKSMS.ui.search.SearchActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.slidingmenu.SlidingMenu;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
@@ -235,7 +235,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
                 onKeyUp(KeyEvent.KEYCODE_BACK, null);
                 return true;
             case R.id.menu_search:
-                switchContent(new SearchFragment(), true);
+                startActivity(SearchActivity.class);
                 return true;
         }
 
