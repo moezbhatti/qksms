@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
-import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKRateSnack;
@@ -234,19 +233,10 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         switch (item.getItemId()) {
             case android.R.id.home:
                 onKeyUp(KeyEvent.KEYCODE_BACK, null);
-                break;
-            case R.id.menu_settings:
-                switchContent(SettingsFragment.newInstance(R.xml.settings_main), true);
-                break;
+                return true;
             case R.id.menu_search:
                 switchContent(new SearchFragment(), true);
-                break;
-            case R.id.menu_changelog:
-                DialogHelper.showChangelog(this);
-                break;
-            case R.id.menu_donate:
-                DonationManager.getInstance(this).showDonateDialog();
-                break;
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -303,13 +293,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (!mSlidingMenu.isMenuShowing()) {
-                Fragment category = getFragmentManager().findFragmentByTag(SettingsFragment.CATEGORY_TAG);
-                if (category != null) {
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, SettingsFragment.newInstance(R.xml.settings_main)).commit();
-                } else {
-                    mSlidingMenu.showMenu();
-                }
+                mSlidingMenu.showMenu();
                 return true;
             } else {
                 if (mConversationList.isShowingBlocked()) {

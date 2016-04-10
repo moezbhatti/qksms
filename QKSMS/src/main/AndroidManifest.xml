@@ -98,6 +98,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.settings.SettingsActivity" />
+
         <activity-alias
             android:name=".ui.MainActivity-Teal"
             android:enabled="true"

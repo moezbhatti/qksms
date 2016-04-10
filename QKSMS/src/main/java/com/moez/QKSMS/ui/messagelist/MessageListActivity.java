@@ -43,9 +43,6 @@ public class MessageListActivity extends QKSwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
-        showBackButton(true);
-
         onNewIntent(getIntent());
     }
 
@@ -117,20 +114,11 @@ public class MessageListActivity extends QKSwipeBackActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
             case R.id.menu_donate:
                 DonationManager.getInstance(this).showDonateDialog();
                 return true;
         }
 
-        return false;
-    }
-
-    @Override
-    public void onBackPressed() {
-        mSwipeBackLayout.scrollToFinishActivity();
+        return super.onOptionsItemSelected(item);
     }
 }

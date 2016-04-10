@@ -143,7 +143,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private String mHighlight;
     private boolean mShowImmediate;
 
-    public static MessageListFragment getInstance(long threadId, long rowId, String highlight, boolean showImmediate) {
+    protected static MessageListFragment getInstance(long threadId, long rowId, String highlight, boolean showImmediate) {
 
         Bundle args = new Bundle();
         args.putLong(ARG_THREAD_ID, threadId);
