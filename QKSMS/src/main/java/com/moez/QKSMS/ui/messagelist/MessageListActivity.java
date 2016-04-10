@@ -45,29 +45,32 @@ public class MessageListActivity extends QKSwipeBackActivity {
         setContentView(R.layout.activity_fragment);
         showBackButton(true);
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            mThreadId = intent.getLongExtra(ARG_THREAD_ID, -1);
-            mRowId = intent.getLongExtra(ARG_ROW_ID, -1);
-            mHighlight = intent.getStringExtra(ARG_HIGHLIGHT);
-            mShowImmediate = intent.getBooleanExtra(ARG_SHOW_IMMEDIATE, false);
+        onNewIntent(getIntent());
+    }
 
-            if (mThreadId == -1 && intent.getData() != null) {
-                String data = intent.getData().toString();
-                String scheme = intent.getData().getScheme();
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mThreadId = intent.getLongExtra(ARG_THREAD_ID, -1);
+        mRowId = intent.getLongExtra(ARG_ROW_ID, -1);
+        mHighlight = intent.getStringExtra(ARG_HIGHLIGHT);
+        mShowImmediate = intent.getBooleanExtra(ARG_SHOW_IMMEDIATE, false);
 
-                String address = null;
-                if (scheme.startsWith("smsto") || scheme.startsWith("mmsto")) {
-                    address = data.replace("smsto:", "").replace("mmsto:", "");
-                } else if (scheme.startsWith("sms") || (scheme.startsWith("mms"))) {
-                    address = data.replace("sms:", "").replace("mms:", "");
-                }
+        if (mThreadId == -1 && intent.getData() != null) {
+            String data = intent.getData().toString();
+            String scheme = intent.getData().getScheme();
 
-                address = URLDecoder.decode(address);
-                address = "" + Html.fromHtml(address);
-                address = PhoneNumberUtils.formatNumber(address);
-                mThreadId = Utils.getOrCreateThreadId(this, address);
+            String address = null;
+            if (scheme.startsWith("smsto") || scheme.startsWith("mmsto")) {
+                address = data.replace("smsto:", "").replace("mmsto:", "");
+            } else if (scheme.startsWith("sms") || (scheme.startsWith("mms"))) {
+                address = data.replace("sms:", "").replace("mms:", "");
             }
+
+            address = URLDecoder.decode(address);
+            address = "" + Html.fromHtml(address);
+            address = PhoneNumberUtils.formatNumber(address);
+            mThreadId = Utils.getOrCreateThreadId(this, address);
         }
 
         if (mThreadId != -1) {
