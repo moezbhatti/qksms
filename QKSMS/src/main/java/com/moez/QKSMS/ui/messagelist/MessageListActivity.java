@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import com.crashlytics.android.Crashlytics;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.mmssms.Utils;
@@ -81,7 +82,28 @@ public class MessageListActivity extends QKSwipeBackActivity {
                     .replace(R.id.content_frame, fragment)
                     .commitAllowingStateLoss();
         } else {
-            // TODO log crashlytics event and show toast
+            String msg = "Couldn't open conversation: {action:";
+            msg += intent.getAction();
+            msg += ", data:";
+            msg += intent.getData() == null ? "null" : intent.getData().toString();
+            msg += ", scheme:";
+            msg += intent.getData() == null ? "null" : intent.getData().getScheme();
+            msg += ", extras:{";
+            Object[] keys = intent.getExtras().keySet().toArray();
+            for (int i = 0; i < keys.length; i++) {
+                String key = keys[i].toString();
+                msg += keys[i].toString();
+                msg += ":";
+                msg += intent.getExtras().get(key);
+                if (i < keys.length - 1) {
+                    msg += ", ";
+                }
+            }
+            msg += "}}";
+            Log.d(TAG, msg);
+            Crashlytics.log(msg);
+            makeToast(R.string.toast_conversation_error);
+            finish();
         }
     }
 
