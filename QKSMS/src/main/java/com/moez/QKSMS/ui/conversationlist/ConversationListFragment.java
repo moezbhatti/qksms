@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui.conversationlist;
 
-import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -31,12 +30,11 @@ import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ContentFragment;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
-import com.moez.QKSMS.ui.compose.ComposeFragment;
+import com.moez.QKSMS.ui.compose.ComposeActivity;
 import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -112,13 +110,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             if (mAdapter.isInMultiSelectMode()) {
                 mAdapter.disableMultiSelectMode(true);
             } else {
-                // Show the compose fragment, showing the keyboard and focusing on the recipients edittext.
-                Bundle args = new Bundle();
-                args.putBoolean(ComposeFragment.ARG_SHOW_KEYBOARD, true);
-                args.putString(ComposeFragment.ARG_FOCUS, ComposeFragment.FOCUS_RECIPIENTS);
-
-                Fragment content = getFragmentManager().findFragmentById(R.id.content_frame);
-                switchFragment(ComposeFragment.getInstance(args, content));
+                mContext.startActivity(ComposeActivity.class);
             }
         });
 
@@ -273,10 +265,6 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
 
     private void initLoaderManager() {
         getLoaderManager().restartLoader(0, null, this);
-    }
-
-    private void switchFragment(ContentFragment fragment) {
-        ((MainActivity) getActivity()).switchContent(fragment, true);
     }
 
     @Override

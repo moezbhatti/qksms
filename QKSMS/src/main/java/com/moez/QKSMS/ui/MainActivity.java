@@ -41,7 +41,6 @@ import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.compose.ComposeFragment;
 import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
 import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
@@ -113,14 +112,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         FragmentTransaction menuTransaction = fm.beginTransaction();
         menuTransaction.replace(R.id.menu_frame, mConversationList);
         menuTransaction.commit();
-
-        mContent = (ContentFragment) fm.findFragmentById(R.id.content_frame);
-        if (mContent == null) {
-            mContent = ComposeFragment.getInstance(null);
-        }
-        FragmentTransaction contentTransaction = fm.beginTransaction();
-        contentTransaction.replace(R.id.content_frame, (Fragment) mContent);
-        contentTransaction.commit();
 
         onNewIntent(getIntent());
         showDialogIfNeeded(savedInstanceState);

@@ -81,8 +81,8 @@
         </activity>
         <activity
             android:name=".ui.messagelist.MessageListActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEND" />
@@ -98,8 +98,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.settings.SettingsActivity" />
-        <activity android:name=".ui.search.SearchActivity" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.compose.ComposeActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity-alias
             android:name=".ui.MainActivity-Teal"
