@@ -32,7 +32,6 @@ public enum QKPreference {
     AVATAR_RECEIVED("pref_key_avatar_received", true),
 
     MESSAGE_COUNT("pref_key_message_count", false),
-    SLIDING_TAB("pref_key_sliding_tab", false),
     TIMESTAMPS_24H("pref_key_24h", false),
 
     // General

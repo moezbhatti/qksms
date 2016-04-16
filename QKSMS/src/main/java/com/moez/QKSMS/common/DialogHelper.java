@@ -12,6 +12,7 @@ import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +31,7 @@ public class DialogHelper {
         showDeleteConversationsDialog(context, threadIds);
     }
 
-    public static void showDeleteConversationsDialog(final MainActivity context, final Set<Long> threadIds) {
+    public static void showDeleteConversationsDialog(final QKActivity context, final Set<Long> threadIds) {
         new DefaultSmsHelper(context, R.string.not_default_delete).showIfNotDefault(null);
 
         Set<Long> threads = new HashSet<>(threadIds); // Make a copy so the list isn't reset when multi-select is disabled
@@ -43,7 +44,9 @@ public class DialogHelper {
                     Conversation.ConversationQueryHandler handler = new Conversation.ConversationQueryHandler(context.getContentResolver());
                     Conversation.startDelete(handler, 0, false, threads);
                     Conversation.asyncDeleteObsoleteThreads(handler, 0);
-                    context.showMenu();
+                    if (context instanceof MessageListActivity) {
+                        context.onBackPressed();
+                    }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();

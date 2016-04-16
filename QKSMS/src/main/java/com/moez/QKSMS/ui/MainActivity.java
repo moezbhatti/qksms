@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,9 +31,7 @@ import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKRateSnack;
 import com.moez.QKSMS.common.google.DraftCache;
-import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
-import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
@@ -50,7 +47,6 @@ import com.moez.QKSMS.ui.messagelist.MessageListFragment;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.search.SearchActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
-import com.moez.QKSMS.ui.view.slidingmenu.SlidingMenu;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 import org.ligi.snackengage.SnackEngage;
 import org.ligi.snackengage.snacks.BaseSnack;
@@ -58,7 +54,7 @@ import org.ligi.snackengage.snacks.BaseSnack;
 import java.util.Collection;
 
 
-public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuListener {
+public class MainActivity extends QKActivity {
     private final String TAG = "MainActivity";
 
     public final static String EXTRA_THREAD_ID = "thread_id";
@@ -74,7 +70,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
     public static final String MMS_SETUP_DONT_ASK_AGAIN = "mmsSetupDontAskAgain";
 
     @Bind(R.id.root) View mRoot;
-    @Bind(R.id.sliding_menu) SlidingMenu mSlidingMenu;
 
     private ConversationListFragment mConversationList;
     private ContentFragment mContent;
@@ -92,25 +87,18 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         super.onCreate(savedInstanceState);
         launchWelcomeActivity();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_fragment);
         setTitle(R.string.title_conversation_list);
         ButterKnife.bind(this);
 
-        setSlidingTabEnabled(mPrefs.getBoolean(SettingsFragment.SLIDING_TAB, false));
-        mSlidingMenu.setListener(this);
-        mSlidingMenu.setContent();
-        mSlidingMenu.setMenu();
-        mSlidingMenu.showContent(false);
-        mSlidingMenu.showMenu(false);
-
         FragmentManager fm = getFragmentManager();
 
-        mConversationList = (ConversationListFragment) fm.findFragmentById(R.id.menu_frame);
+        mConversationList = (ConversationListFragment) fm.findFragmentById(R.id.content_frame);
         if (mConversationList == null) {
             mConversationList = new ConversationListFragment();
         }
         FragmentTransaction menuTransaction = fm.beginTransaction();
-        menuTransaction.replace(R.id.menu_frame, mConversationList);
+        menuTransaction.replace(R.id.content_frame, mConversationList);
         menuTransaction.commit();
 
         onNewIntent(getIntent());
@@ -178,39 +166,13 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         startActivityForResult(welcomeIntent, WelcomeActivity.WELCOME_REQUEST_CODE);
     }
 
-    public void showMenu() {
-        mSlidingMenu.showMenu();
-    }
-
-    public SlidingMenu getSlidingMenu() {
-        return mSlidingMenu;
-    }
-
-    /**
-     * Configured the sliding menu view to peek the content or not.
-     *
-     * @param slidingTabEnabled true to peek the content
-     */
-    public void setSlidingTabEnabled(boolean slidingTabEnabled) {
-        if (slidingTabEnabled) {
-            mSlidingMenu.setBehindOffset(Units.dpToPx(this, 48));
-        } else {
-            mSlidingMenu.setBehindOffset(0);
-        }
-    }
-
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         menu.clear();
 
-        if (mSlidingMenu.isMenuShowing() || mContent == null) {
-            showBackButton(false);
-            mConversationList.inflateToolbar(menu, inflater, this);
-        } else {
-            showBackButton(true);
-            mContent.inflateToolbar(menu, inflater, this);
-        }
+        showBackButton(false);
+        mConversationList.inflateToolbar(menu, inflater, this);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -283,15 +245,10 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (!mSlidingMenu.isMenuShowing()) {
-                mSlidingMenu.showMenu();
-                return true;
+            if (mConversationList.isShowingBlocked()) {
+                mConversationList.setShowingBlocked(false);
             } else {
-                if (mConversationList.isShowingBlocked()) {
-                    mConversationList.setShowingBlocked(false);
-                } else {
-                    finish();
-                }
+                finish();
             }
         }
 
@@ -302,9 +259,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
     protected void onPause() {
         super.onPause();
         sThreadShowing = 0;
-        if (!mSlidingMenu.isMenuShowing()) {
-            mContent.onContentClosed();
-        }
     }
 
     @Override
@@ -323,10 +277,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (!mSlidingMenu.isMenuShowing()) {
-            mContent.onContentOpened();
-        }
 
         if (mContent != null && mContent instanceof MessageListFragment) {
             sThreadShowing = ((MessageListFragment) mContent).getThreadId();
@@ -371,84 +321,6 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         if (m.findFragmentByTag(MMSSetupFragment.TAG) == null) {
             outState.putBoolean(KEY_MMS_SETUP_FRAGMENT_DISMISSED, true);
         }
-    }
-
-    public void switchContent(ContentFragment fragment, boolean animate) {
-        // Make sure that the activity isn't destroyed before making fragment transactions.
-        if (fragment != null && !mIsDestroyed) {
-            KeyboardUtils.hide(this);
-
-            mContent = fragment;
-            FragmentManager m = getFragmentManager();
-
-            // Only do a replace if it is a different fragment.
-            if (fragment != m.findFragmentById(R.id.content_frame)) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.content_frame, (Fragment) fragment)
-                        .commitAllowingStateLoss();
-            }
-
-            mSlidingMenu.showContent(animate);
-            invalidateOptionsMenu();
-
-        } else {
-            Log.w(TAG, "Null fragment, can't switch content");
-        }
-    }
-
-    @Override
-    public void onOpen() {
-        invalidateOptionsMenu();
-        sThreadShowing = 0;
-
-        // Notify the content that it is being closed, since the menu (i.e. conversation list) is being opened.
-        if (mContent != null) mContent.onContentClosing();
-
-        // Hide the soft keyboard
-        KeyboardUtils.hide(this, getCurrentFocus());
-
-        showBackButton(false);
-    }
-
-    @Override
-    public void onClose() {
-        invalidateOptionsMenu();
-
-        // Notify the content that it is being opened, since the menu (i.e. conversation list) is being closed.
-        if (mContent != null) {
-            mContent.onContentOpening();
-        }
-
-        if (mContent != null && mContent instanceof MessageListFragment) {
-            sThreadShowing = ((MessageListFragment) mContent).getThreadId();
-        } else {
-            sThreadShowing = 0;
-        }
-
-        // Hide the soft keyboard
-        KeyboardUtils.hide(this, getCurrentFocus());
-
-        showBackButton(true);
-    }
-
-    @Override
-    public void onOpened() {
-        // When the menu (i.e. the conversation list) has been opened, the content has been opened.
-        // So notify the content fragment.
-        if (mContent != null) mContent.onContentClosed();
-    }
-
-    @Override
-    public void onClosed() {
-        // When the menu (i.e. the conversation list) has been closed, the content has been opened.
-        // So notify the content fragment.
-        if (mContent != null && ((Fragment) mContent).isAdded()) mContent.onContentOpened();
-    }
-
-    @Override
-    public void onChanging(float percentOpen) {
-        if (mContent != null) mContent.onMenuChanging(percentOpen);
     }
 
     /**

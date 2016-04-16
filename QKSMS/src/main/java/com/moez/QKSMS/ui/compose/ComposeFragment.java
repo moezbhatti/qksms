@@ -13,7 +13,6 @@ import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.interfaces.RecipientProvider;
 import com.moez.QKSMS.mmssms.Utils;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.view.AutoCompleteContactView;
@@ -59,10 +58,10 @@ public class ComposeFragment extends QKFragment implements ActivityLauncher, Rec
     @Override
     public void onSend(String[] recipients, String body) {
         long threadId = Utils.getOrCreateThreadId(mContext, recipients[0]);
-        if (recipients.length == 1) {
+        if (threadId != 0) {
             MessageListActivity.launch(mContext, threadId, -1, null, true);
         } else {
-            ((MainActivity) mContext).showMenu();
+            mContext.onBackPressed();
         }
     }
 

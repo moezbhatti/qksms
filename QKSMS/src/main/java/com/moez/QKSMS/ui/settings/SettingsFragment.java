@@ -99,7 +99,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String FONT_SIZE = "pref_key_font_size";
     public static final String FONT_WEIGHT = "pref_key_font_weight";
     public static final String MESSAGE_COUNT = "pref_key_message_count";
-    public static final String SLIDING_TAB = "pref_key_sliding_tab";
     public static final String PROXIMITY_CALLING = "pref_key_prox_sensor_calling";
     public static final String DELIVERY_REPORTS = "pref_key_delivery";
     public static final String DELIVERY_TOAST = "pref_key_delivery_toast";

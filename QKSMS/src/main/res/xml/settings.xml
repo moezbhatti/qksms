@@ -46,9 +46,6 @@
         android:key="pref_key_message_count" />
     <Preference
         android:defaultValue="false"
-        android:key="pref_key_sliding_tab" />
-    <Preference
-        android:defaultValue="false"
         android:key="pref_key_24h" />
     <Preference
         android:defaultValue="false"

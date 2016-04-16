@@ -964,9 +964,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                             conv.clearThreadId();
                             conv.setDraftState(false);
                         }
-                        // The last message in this converation was just deleted. Send the user
-                        // to the conversation list.
-                        ((MainActivity) mContext).showMenu();
+                        mContext.onBackPressed();
                     }
                     cursor.close();
             }
@@ -1009,7 +1007,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 Conversation.init(mContext);
 
                 // Go back to the conversation list
-                ((MainActivity) mContext).showMenu();
+                mContext.onBackPressed();
             } else if (token == DELETE_MESSAGE_TOKEN) {
                 // Check to see if we just deleted the last message
                 startMsgListQuery(MESSAGE_LIST_QUERY_AFTER_DELETE_TOKEN);
