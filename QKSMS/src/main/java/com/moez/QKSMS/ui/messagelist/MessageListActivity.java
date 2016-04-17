@@ -2,7 +2,6 @@ package com.moez.QKSMS.ui.messagelist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.PhoneNumberUtils;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +10,7 @@ import android.view.MenuItem;
 import com.crashlytics.android.Crashlytics;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKSwipeBackActivity;

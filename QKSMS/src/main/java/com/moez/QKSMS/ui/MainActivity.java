@@ -43,6 +43,7 @@ import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.messagelist.MessageListFragment;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.search.SearchActivity;
@@ -56,8 +57,6 @@ import java.util.Collection;
 
 public class MainActivity extends QKActivity {
     private final String TAG = "MainActivity";
-
-    public final static String EXTRA_THREAD_ID = "thread_id";
 
     public static long sThreadShowing;
 
@@ -86,6 +85,7 @@ public class MainActivity extends QKActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         launchWelcomeActivity();
+        onNewIntent(getIntent());
 
         setContentView(R.layout.activity_fragment);
         setTitle(R.string.title_conversation_list);
@@ -101,7 +101,6 @@ public class MainActivity extends QKActivity {
         menuTransaction.replace(R.id.content_frame, mConversationList);
         menuTransaction.commit();
 
-        onNewIntent(getIntent());
         showDialogIfNeeded(savedInstanceState);
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
@@ -286,6 +285,40 @@ public class MainActivity extends QKActivity {
         }
 
         NotificationManager.initQuickCompose(this, false, false);
+    }
+
+    /**
+     * MainActivity has a "singleTask" launch mode, which means that if it is currently running
+     * and another intent is launched to open it, instead of creating a new MainActivity it
+     * just opens the current MainActivity. We use this so that when you click on notifications,
+     * only one main activity is ever used.
+     * <p>
+     * onNewIntent() is called every time the homescreen shortcut is tapped, even if the app
+     * is already running in the background. It's also called when the app is launched via other
+     * intents
+     * <p>
+     * Docs:
+     * http://developer.android.com/guide/components/tasks-and-back-stack.html#TaskLaunchModes
+     */
+    @Override
+    public void onNewIntent(Intent intent) {
+        // onNewIntent doesn't change the result of getIntent() by default, so here we set it since
+        // that makes the most sense.
+        setIntent(intent);
+
+        boolean shouldOpenConversation = intent.hasExtra(MessageListActivity.ARG_THREAD_ID);
+
+        // The activity can also be launched by clicking on the message button from the contacts app
+        // Check for {sms,mms}{,to}: schemes, in which case we know to open a conversation
+        if (intent.getData() != null) {
+            String scheme = intent.getData().getScheme();
+            shouldOpenConversation = shouldOpenConversation || scheme.startsWith("sms") || scheme.startsWith("mms");
+        }
+
+        if (shouldOpenConversation) {
+            intent.setClass(this, MessageListActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void beginMmsSetup() {
