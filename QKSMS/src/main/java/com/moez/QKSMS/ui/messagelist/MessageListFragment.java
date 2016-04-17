@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.provider.Telephony;
+import android.support.annotation.IntegerRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -45,9 +46,6 @@ import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.ui.SwipeBackLayout;
-import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
-import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.vcard.ContactOperations;
@@ -56,18 +54,21 @@ import com.moez.QKSMS.data.ContactList;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.data.Message;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
+import com.moez.QKSMS.ui.SwipeBackLayout;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.base.QKContentFragment;
+import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
 import com.moez.QKSMS.ui.delivery.DeliveryReportItem;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
 import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
+import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
@@ -80,7 +81,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class MessageListFragment extends QKContentFragment implements ActivityLauncher, SensorEventListener,
+public class MessageListFragment extends QKFragment implements ActivityLauncher, SensorEventListener,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener, SwipeBackLayout.ScrollChangedListener,
         RecyclerCursorAdapter.ItemClickListener<MessageItem> {
 
@@ -118,7 +119,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     private Conversation mConversation;
     private ConversationLegacy mConversationLegacy;
 
-    private boolean mOpened;
     private Sensor mProxSensor;
     private SensorManager mSensorManager;
     private AsyncDialog mAsyncDialog;
@@ -153,7 +153,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         args.putBoolean(ARG_SHOW_IMMEDIATE, showImmediate);
 
         MessageListFragment fragment = new MessageListFragment();
-        fragment.updateArguments(args);
+        fragment.setArguments(args);
 
         return fragment;
     }
@@ -166,6 +166,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        loadFromArguments();
         if (savedInstanceState != null) {
             mThreadId = savedInstanceState.getLong(ARG_THREAD_ID, -1);
             mRowId = savedInstanceState.getLong(ARG_ROW_ID, -1);
@@ -176,6 +177,7 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
         mIsSmsEnabled = MmsConfig.isSmsEnabled(mContext);
         mConversationDetailsDialog = new ConversationDetailsDialog(mContext, getFragmentManager());
+        onOpenConversation();
         setHasOptionsMenu(true);
 
         LiveViewManager.registerView(QKPreference.CONVERSATION_THEME, this, key -> {
@@ -193,12 +195,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         mBackgroundQueryHandler = new BackgroundQueryHandler(mContext.getContentResolver());
     }
 
-    // This is called by BaseContentFragment when updateArguments is called.
-    @Override
-    public void onNewArguments() {
-        loadFromArguments();
-    }
-
     public void loadFromArguments() {
         // Save the fields from the arguments
         Bundle args = getArguments();
@@ -213,8 +209,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
         View view = inflater.inflate(R.layout.fragment_conversation, container, false);
         mRecyclerView = (MessageListRecyclerView) view.findViewById(R.id.conversation);
-
-        mOpened = true; // TODO
 
         mAdapter = new MessageListAdapter(mContext);
         mAdapter.setItemClickListener(this);
@@ -262,12 +256,11 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     public void onResume() {
         super.onResume();
 
-        // All the data about the conversation, such as the thread ID and the row ID to skip to, is
-        // stored in the arguments. So, calling this method will set up all the fields and then
-        // perform initialization such as set up the Conversation object, make a query in the
-        // adapter, etc.
-        loadFromArguments();
-        onOpenConversation();
+        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
+            mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
+        ThemeManager.setActiveColor(mConversationPrefs.getColor());
     }
 
     @Override
@@ -481,9 +474,8 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
                 return true;
 
             case R.id.menu_notifications:
-                ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
-                boolean notificationMuted = conversationPrefs.getNotificationsEnabled();
-                conversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, !notificationMuted);
+                boolean notificationMuted = mConversationPrefs.getNotificationsEnabled();
+                mConversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, !notificationMuted);
                 mContext.invalidateOptionsMenu();
                 vibrateOnConversationStateChanged(notificationMuted);
                 return true;
@@ -598,64 +590,33 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     }
 
     @Override
-    public void onContentOpening() {
-        super.onContentOpening();
-        mOpened = false; // We're animating the fragment in, this flag warns us not to do anything heavy
-    }
-
-    @Override
-    public void onContentOpened() {
-        super.onContentOpened();
-        mOpened = true; // The fragment has finished animating in
-
-        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
-            mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        }
-
-        ThemeManager.setActiveColor(mConversationPrefs.getColor());
-    }
-
-    @Override
-    public void onContentClosing() {
-    }
-
-    @Override
-    public void onContentClosed() {
+    public void onPause() {
+        super.onPause();
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
         }
 
-        if (mOpened) {
-            if (mConversationLegacy != null) {
-                mConversationLegacy.markRead();
-            }
+        if (mConversationLegacy != null) {
+            mConversationLegacy.markRead();
+        }
 
-            if (mConversation != null) {
-                mConversation.blockMarkAsRead(true);
-                mConversation.markAsRead();
-                mComposeView.saveDraft();
-            }
+        if (mConversation != null) {
+            mConversation.blockMarkAsRead(true);
+            mConversation.markAsRead();
+            mComposeView.saveDraft();
         }
 
         ThemeManager.setActiveColor(ThemeManager.getThemeColor());
     }
 
     @Override
-    public void onMenuChanging(float percentOpen) {
-    }
-
-    @Override
-    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
-        inflater.inflate(R.menu.message_list, menu);
-        setTitle();
-
-        ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, mThreadId);
-        menu.findItem(R.id.menu_notifications).setTitle(conversationPrefs.getNotificationsEnabled() ?
-                R.string.menu_notifications : R.string.menu_notifications_off);
-        menu.findItem(R.id.menu_notifications).setIcon(conversationPrefs.getNotificationsEnabled() ?
-                R.drawable.ic_notifications : R.drawable.ic_notifications_muted);
-
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
+        menu.findItem(R.id.menu_notifications).setTitle(mConversationPrefs.getNotificationsEnabled() ?
+                R.string.menu_notifications : R.string.menu_notifications_off);
+        menu.findItem(R.id.menu_notifications).setIcon(mConversationPrefs.getNotificationsEnabled() ?
+                R.drawable.ic_notifications : R.drawable.ic_notifications_muted);
     }
 
     @Override
@@ -1037,25 +998,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
             mConversationLegacy.markRead();
             mConversation.blockMarkAsRead(true);
             mConversation.markAsRead();
-
-            // Delay the thread until the fragment has finished opening. If it waits longer than
-            // 10 seconds, then something is wrong, so cancel it. This happens when the fragment is closed before
-            // it opens, or the screen is rotated, and then "mOpened" never gets changed to true,
-            // leaving this thread running forever. This issue is actually what caused the great
-            // QKSMS battery drain of 2015
-            long time = System.currentTimeMillis();
-            while (!mOpened) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (System.currentTimeMillis() - time > 10000) {
-                    Log.w(TAG, "Task running for over 10 seconds, something is wrong");
-                    cancel(true);
-                    break;
-                }
-            }
 
             return null;
         }
