@@ -94,7 +94,7 @@ public class SwipeBackLayout extends FrameLayout {
 
     public SwipeBackLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs);
-        mDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragCallback());
+        mDragHelper = ViewDragHelper.create(this, 0.2f, new ViewDragCallback());
 
         int shadowLeft = R.drawable.shadow_left;
         int shadowBottom = R.drawable.shadow_bottom;
@@ -317,8 +317,7 @@ public class SwipeBackLayout extends FrameLayout {
         final boolean drawContent = child == mContentView;
 
         boolean ret = super.drawChild(canvas, child, drawingTime);
-        if (mScrimOpacity > 0 && drawContent
-                && mDragHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
+        if (mScrimOpacity > 0 && drawContent && mDragHelper.getViewDragState() != ViewDragHelper.STATE_IDLE) {
             drawShadow(canvas, child);
             drawScrim(canvas, child);
         }
@@ -392,30 +391,22 @@ public class SwipeBackLayout extends FrameLayout {
 
         @Override
         public boolean tryCaptureView(View view, int i) {
-            boolean ret = mDragHelper.isEdgeTouched(mEdgeFlag, i);
-            if (ret) {
-                if (mDragHelper.isEdgeTouched(EDGE_LEFT, i)) {
-                    mTrackingEdge = EDGE_LEFT;
-                } else if (mDragHelper.isEdgeTouched(EDGE_BOTTOM, i)) {
-                    mTrackingEdge = EDGE_BOTTOM;
+            mTrackingEdge = EDGE_LEFT;
+            if (mListeners != null && !mListeners.isEmpty()) {
+                for (SwipeListener listener : mListeners) {
+                    listener.onEdgeTouch(mTrackingEdge);
                 }
-                if (mListeners != null && !mListeners.isEmpty()) {
-                    for (SwipeListener listener : mListeners) {
-                        listener.onEdgeTouch(mTrackingEdge);
-                    }
-                }
-                mIsScrollOverValid = true;
             }
+            mIsScrollOverValid = true;
             boolean directionCheck = false;
             if (mEdgeFlag == EDGE_LEFT) {
                 directionCheck = !mDragHelper.checkTouchSlop(ViewDragHelper.DIRECTION_VERTICAL, i);
             } else if (mEdgeFlag == EDGE_BOTTOM) {
-                directionCheck = !mDragHelper
-                        .checkTouchSlop(ViewDragHelper.DIRECTION_HORIZONTAL, i);
+                directionCheck = !mDragHelper.checkTouchSlop(ViewDragHelper.DIRECTION_HORIZONTAL, i);
             } else if (mEdgeFlag == EDGE_ALL) {
                 directionCheck = true;
             }
-            return ret & directionCheck;
+            return directionCheck;
         }
 
         @Override
