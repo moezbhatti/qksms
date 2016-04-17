@@ -45,6 +45,7 @@ import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.ui.SwipeBackLayout;
 import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
@@ -80,7 +81,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class MessageListFragment extends QKContentFragment implements ActivityLauncher, SensorEventListener,
-        LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener,
+        LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener, SwipeBackLayout.ScrollChangedListener,
         RecyclerCursorAdapter.ItemClickListener<MessageItem> {
 
     private final String TAG = "MessageListFragment";
@@ -641,9 +642,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
 
     @Override
     public void onMenuChanging(float percentOpen) {
-        if (mConversationPrefs != null) {
-            ThemeManager.setActiveColor(mCIELChEvaluator.evaluate(percentOpen));
-        }
     }
 
     @Override
@@ -704,6 +702,13 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
     @Override
     public void onItemRemoved(long id) {
 
+    }
+
+    @Override
+    public void onScrollChanged(float scrollPercent) {
+        if (mConversationPrefs != null) {
+            ThemeManager.setActiveColor(mCIELChEvaluator.evaluate(scrollPercent));
+        }
     }
 
     private class DeleteMessageListener implements DialogInterface.OnClickListener {

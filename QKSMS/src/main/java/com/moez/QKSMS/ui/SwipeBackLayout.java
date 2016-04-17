@@ -24,6 +24,10 @@ import java.util.List;
 public class SwipeBackLayout extends FrameLayout {
     private final String TAG = "SwipeBackLayout";
 
+    public interface ScrollChangedListener {
+        void onScrollChanged(float scrollPercent);
+    }
+
     private static final int MIN_FLING_VELOCITY = 400; // dips per second
     private static final int DEFAULT_SCRIM_COLOR = 0x99000000;
     private static final int FULL_ALPHA = 255;
@@ -68,9 +72,9 @@ public class SwipeBackLayout extends FrameLayout {
      * The set of listeners to be sent events through.
      */
     private List<SwipeListener> mListeners;
+    private ScrollChangedListener mScrollChangedListener;
 
     private Drawable mShadowLeft;
-    private Drawable mShadowRight;
     private Drawable mShadowBottom;
 
     private float mScrimOpacity;
@@ -181,6 +185,10 @@ public class SwipeBackLayout extends FrameLayout {
             return;
         }
         mListeners.remove(listener);
+    }
+
+    public void setScrollChangedListener(ScrollChangedListener listener) {
+        mScrollChangedListener = listener;
     }
 
     public interface SwipeListener {
@@ -423,12 +431,15 @@ public class SwipeBackLayout extends FrameLayout {
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
             if ((mTrackingEdge & EDGE_LEFT) != 0) {
-                mScrollPercent = Math.abs((float) left
-                        / (mContentView.getWidth() + mShadowLeft.getIntrinsicWidth()));
+                mScrollPercent = Math.abs((float) left / (mContentView.getWidth() + mShadowLeft.getIntrinsicWidth()));
             } else if ((mTrackingEdge & EDGE_BOTTOM) != 0) {
-                mScrollPercent = Math.abs((float) top
-                        / (mContentView.getHeight() + mShadowBottom.getIntrinsicHeight()));
+                mScrollPercent = Math.abs((float) top / (mContentView.getHeight() + mShadowBottom.getIntrinsicHeight()));
             }
+
+            if (mScrollChangedListener != null) {
+                mScrollChangedListener.onScrollChanged(mScrollPercent);
+            }
+
             mContentLeft = left;
             mContentTop = top;
             invalidate();

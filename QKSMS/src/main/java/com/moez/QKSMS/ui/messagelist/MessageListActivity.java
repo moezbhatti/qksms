@@ -74,6 +74,7 @@ public class MessageListActivity extends QKSwipeBackActivity {
         if (mThreadId != -1) {
             Log.v(TAG, "Opening thread: " + mThreadId);
             MessageListFragment fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
+            mSwipeBackLayout.setScrollChangedListener(fragment);
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_frame, fragment)
