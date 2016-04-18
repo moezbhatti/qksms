@@ -1,5 +1,7 @@
 package com.moez.QKSMS.ui.messagelist;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -73,12 +75,14 @@ public class MessageListActivity extends QKSwipeBackActivity {
 
         if (mThreadId != -1) {
             Log.v(TAG, "Opening thread: " + mThreadId);
-            MessageListFragment fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
-            mSwipeBackLayout.setScrollChangedListener(fragment);
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content_frame, fragment)
-                    .commitAllowingStateLoss();
+            FragmentManager fm = getFragmentManager();
+            MessageListFragment fragment = (MessageListFragment) fm.findFragmentById(R.id.content_frame);
+            if (fragment == null) {
+                fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
+            }
+            FragmentTransaction menuTransaction = fm.beginTransaction();
+            menuTransaction.replace(R.id.content_frame, fragment);
+            menuTransaction.commit();
         } else {
             String msg = "Couldn't open conversation: {action:";
             msg += intent.getAction();

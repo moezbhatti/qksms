@@ -134,11 +134,6 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     private long mLastMessageId;
     private BackgroundQueryHandler mBackgroundQueryHandler;
 
-    public static final String ARG_THREAD_ID = "threadId";
-    public static final String ARG_ROW_ID = "rowId";
-    public static final String ARG_HIGHLIGHT = "highlight";
-    public static final String ARG_SHOW_IMMEDIATE = "showImmediate";
-
     private long mThreadId;
     private long mRowId;
     private String mHighlight;
@@ -147,10 +142,10 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     protected static MessageListFragment getInstance(long threadId, long rowId, String highlight, boolean showImmediate) {
 
         Bundle args = new Bundle();
-        args.putLong(ARG_THREAD_ID, threadId);
-        args.putLong(ARG_ROW_ID, rowId);
-        args.putString(ARG_HIGHLIGHT, highlight);
-        args.putBoolean(ARG_SHOW_IMMEDIATE, showImmediate);
+        args.putLong(MessageListActivity.ARG_THREAD_ID, threadId);
+        args.putLong(MessageListActivity.ARG_ROW_ID, rowId);
+        args.putString(MessageListActivity.ARG_HIGHLIGHT, highlight);
+        args.putBoolean(MessageListActivity.ARG_SHOW_IMMEDIATE, showImmediate);
 
         MessageListFragment fragment = new MessageListFragment();
         fragment.setArguments(args);
@@ -166,12 +161,17 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loadFromArguments();
-        if (savedInstanceState != null) {
-            mThreadId = savedInstanceState.getLong(ARG_THREAD_ID, -1);
-            mRowId = savedInstanceState.getLong(ARG_ROW_ID, -1);
-            mHighlight = savedInstanceState.getString(ARG_HIGHLIGHT, null);
-            mShowImmediate = savedInstanceState.getBoolean(ARG_SHOW_IMMEDIATE, false);
+        if (getArguments() != null) {
+            Bundle args = getArguments();
+            mThreadId = args.getLong(MessageListActivity.ARG_THREAD_ID, -1);
+            mRowId = args.getLong(MessageListActivity.ARG_ROW_ID, -1);
+            mHighlight = args.getString(MessageListActivity.ARG_HIGHLIGHT, null);
+            mShowImmediate = args.getBoolean(MessageListActivity.ARG_SHOW_IMMEDIATE, false);
+        } else if (savedInstanceState != null) {
+            mThreadId = savedInstanceState.getLong(MessageListActivity.ARG_THREAD_ID, -1);
+            mRowId = savedInstanceState.getLong(MessageListActivity.ARG_ROW_ID, -1);
+            mHighlight = savedInstanceState.getString(MessageListActivity.ARG_HIGHLIGHT, null);
+            mShowImmediate = savedInstanceState.getBoolean(MessageListActivity.ARG_SHOW_IMMEDIATE, false);
         }
 
         mConversationPrefs = new ConversationPrefsHelper(mContext, mThreadId);
@@ -193,15 +193,6 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
         }
 
         mBackgroundQueryHandler = new BackgroundQueryHandler(mContext.getContentResolver());
-    }
-
-    public void loadFromArguments() {
-        // Save the fields from the arguments
-        Bundle args = getArguments();
-        mThreadId = args.getLong(ARG_THREAD_ID, -1);
-        mRowId = args.getLong(ARG_ROW_ID, -1);
-        mHighlight = args.getString(ARG_HIGHLIGHT, null);
-        mShowImmediate = args.getBoolean(ARG_SHOW_IMMEDIATE, false);
     }
 
     @Override
@@ -264,17 +255,11 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mComposeView.saveDraft();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putLong(ARG_THREAD_ID, mThreadId);
-        outState.putLong(ARG_ROW_ID, mRowId);
-        outState.putString(ARG_HIGHLIGHT, mHighlight);
-        outState.putBoolean(ARG_SHOW_IMMEDIATE, mShowImmediate);
+        outState.putLong(MessageListActivity.ARG_THREAD_ID, mThreadId);
+        outState.putLong(MessageListActivity.ARG_ROW_ID, mRowId);
+        outState.putString(MessageListActivity.ARG_HIGHLIGHT, mHighlight);
+        outState.putBoolean(MessageListActivity.ARG_SHOW_IMMEDIATE, mShowImmediate);
     }
 
     public long getThreadId() {
@@ -592,6 +577,8 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     @Override
     public void onPause() {
         super.onPause();
+        mComposeView.saveDraft();
+
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
         }

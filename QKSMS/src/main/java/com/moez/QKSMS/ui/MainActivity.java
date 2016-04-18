@@ -92,7 +92,6 @@ public class MainActivity extends QKActivity {
         ButterKnife.bind(this);
 
         FragmentManager fm = getFragmentManager();
-
         mConversationList = (ConversationListFragment) fm.findFragmentById(R.id.content_frame);
         if (mConversationList == null) {
             mConversationList = new ConversationListFragment();
