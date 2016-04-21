@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.android.mms.transaction.Transaction;
 import com.android.mms.transaction.TransactionBundle;
 import com.android.mms.transaction.TransactionService;
@@ -44,12 +45,13 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHolder, MessageItem> {
     private final String TAG = "MessageListAdapter";
@@ -273,12 +275,8 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         holder.mDownloadButton.setVisibility(View.GONE);
     }
 
-    private void bindGrouping(MessageListViewHolder holder, MessageItem messageItem) {
-        boolean showAvatar;
+    private boolean shouldShowTimestamp(MessageItem messageItem, int position){
         boolean showTimestamp;
-
-        int position = mCursor.getPosition();
-
         if (position == mCursor.getCount() - 1) {
             showTimestamp = true;
         } else if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
@@ -299,6 +297,11 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
                 showTimestamp = true;
             }
         }
+        return showTimestamp;
+    }
+
+    private boolean shouldShowAvatar(MessageItem messageItem, int position){
+        boolean showAvatar;
 
         if (position == 0) {
             showAvatar = true;
@@ -317,11 +320,26 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             }
         }
 
+        return showAvatar;
+    }
+
+    private int getBubbleBackgroundResource(boolean showAvatar, boolean isMine){
+        if(showAvatar && isMine) return ThemeManager.getSentBubbleRes();
+        else if(showAvatar && !isMine) return ThemeManager.getReceivedBubbleRes();
+        else if(!showAvatar && isMine) return ThemeManager.getSentBubbleAltRes();
+        else if(!showAvatar && !isMine) return ThemeManager.getReceivedBubbleAltRes();
+        else return -1;
+    }
+
+    private void bindGrouping(MessageListViewHolder holder, MessageItem messageItem) {
+        int position = mCursor.getPosition();
+
+        boolean showAvatar = shouldShowAvatar(messageItem, position);
+        boolean showTimestamp = shouldShowTimestamp(messageItem, position);
+
         holder.mDateView.setVisibility(showTimestamp ? View.VISIBLE : View.GONE);
         holder.mSpace.setVisibility(showAvatar ? View.VISIBLE : View.GONE);
-        holder.mBodyTextView.setBackgroundResource(showAvatar ? (messageItem.isMe() ? ThemeManager.getSentBubbleRes() :
-                ThemeManager.getReceivedBubbleRes()) : (messageItem.isMe() ?
-                ThemeManager.getSentBubbleAltRes() : ThemeManager.getReceivedBubbleAltRes()));
+        holder.mBodyTextView.setBackgroundResource(getBubbleBackgroundResource(showAvatar, messageItem.isMe()));
 
         holder.setLiveViewCallback(key -> {
             if (messageItem.isMe()) {
