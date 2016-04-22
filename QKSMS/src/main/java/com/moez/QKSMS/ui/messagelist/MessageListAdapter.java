@@ -275,59 +275,56 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         holder.mDownloadButton.setVisibility(View.GONE);
     }
 
-    private boolean shouldShowTimestamp(MessageItem messageItem, int position){
-        boolean showTimestamp;
+    private boolean shouldShowTimestamp(MessageItem messageItem, int position) {
         if (position == mCursor.getCount() - 1) {
-            showTimestamp = true;
-        } else if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
-            showTimestamp = true;
+            return true;
+        }
+
+        MessageItem messageItem2 = getItem(position + 1);
+
+        if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
+            return true;
         } else if (messageItem.isFailedMessage()) {
-            showTimestamp = true;
+            return true;
         } else if (messageItem.isSending()) {
-            showTimestamp = true;
+            return true;
+        } else if (messagesFromDifferentPeople(messageItem, messageItem2)) {
+            return true;
         } else {
             int MAX_DURATION = 60 * 60 * 1000;
-            MessageItem messageItem2 = getItem(position + 1);
-            showTimestamp = messageItem2.mDate - messageItem.mDate >= MAX_DURATION;
-
-
-            if (messageItem.mAddress != null && messageItem2.mAddress != null &&
-                    !messageItem.mAddress.equals(messageItem2.mAddress) &&
-                    !messageItem.isOutgoingMessage() && !messageItem2.isOutgoingMessage()) {
-                showTimestamp = true;
-            }
+            return (messageItem2.mDate - messageItem.mDate >= MAX_DURATION);
         }
-        return showTimestamp;
     }
 
-    private boolean shouldShowAvatar(MessageItem messageItem, int position){
-        boolean showAvatar;
-
+    private boolean shouldShowAvatar(MessageItem messageItem, int position) {
         if (position == 0) {
-            showAvatar = true;
-        } else {
-            int MAX_DURATION = 60 * 60 * 1000;
-            MessageItem messageItem2 = getItem(position - 1);
-            showAvatar = messageItem.getBoxId() != messageItem2.getBoxId() || messageItem.mDate - messageItem2.mDate >= MAX_DURATION;
+            return true;
+        }
 
+        MessageItem messageItem2 = getItem(position - 1);
+
+        if (messagesFromDifferentPeople(messageItem, messageItem2)) {
             // If the messages are from different people, then we don't care about any of the other checks,
             // we need to show the avatar/timestamp. This is used for group chats, which is why we want
             // both to be incoming messages
-            if (messageItem.mAddress != null && messageItem2.mAddress != null &&
-                    !messageItem.mAddress.equals(messageItem2.mAddress) &&
-                    !messageItem.isOutgoingMessage() && !messageItem2.isOutgoingMessage()) {
-                showAvatar = true;
-            }
+            return true;
+        } else {
+            int MAX_DURATION = 60 * 60 * 1000;
+            return (messageItem.getBoxId() != messageItem2.getBoxId() || messageItem.mDate - messageItem2.mDate >= MAX_DURATION);
         }
-
-        return showAvatar;
     }
 
-    private int getBubbleBackgroundResource(boolean showAvatar, boolean isMine){
-        if(showAvatar && isMine) return ThemeManager.getSentBubbleRes();
-        else if(showAvatar && !isMine) return ThemeManager.getReceivedBubbleRes();
-        else if(!showAvatar && isMine) return ThemeManager.getSentBubbleAltRes();
-        else if(!showAvatar && !isMine) return ThemeManager.getReceivedBubbleAltRes();
+    private boolean messagesFromDifferentPeople(MessageItem a, MessageItem b) {
+        return (a.mAddress != null && b.mAddress != null &&
+                !a.mAddress.equals(b.mAddress) &&
+                !a.isOutgoingMessage() && !b.isOutgoingMessage());
+    }
+
+    private int getBubbleBackgroundResource(boolean showAvatar, boolean isMine) {
+        if (showAvatar && isMine) return ThemeManager.getSentBubbleRes();
+        else if (showAvatar && !isMine) return ThemeManager.getReceivedBubbleRes();
+        else if (!showAvatar && isMine) return ThemeManager.getSentBubbleAltRes();
+        else if (!showAvatar && !isMine) return ThemeManager.getReceivedBubbleAltRes();
         else return -1;
     }
 
