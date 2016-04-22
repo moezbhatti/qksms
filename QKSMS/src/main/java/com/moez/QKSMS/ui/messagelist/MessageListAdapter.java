@@ -282,7 +282,9 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         MessageItem messageItem2 = getItem(position + 1);
 
-        if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
+        if(mPrefs.getBoolean(SettingsFragment.FORCE_TIMESTAMPS, false)) {
+            return true;
+        } else if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
             return true;
         } else if (messageItem.isFailedMessage()) {
             return true;
@@ -291,7 +293,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         } else if (messagesFromDifferentPeople(messageItem, messageItem2)) {
             return true;
         } else {
-            int MAX_DURATION = 60 * 60 * 1000;
+            int MAX_DURATION = Integer.parseInt(mPrefs.getString(SettingsFragment.SHOW_NEW_TIMESTAMP_DELAY, "60")) * 60 * 1000;
             return (messageItem2.mDate - messageItem.mDate >= MAX_DURATION);
         }
     }
@@ -317,7 +319,9 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     private boolean messagesFromDifferentPeople(MessageItem a, MessageItem b) {
         return (a.mAddress != null && b.mAddress != null &&
                 !a.mAddress.equals(b.mAddress) &&
-                !a.isOutgoingMessage() && !b.isOutgoingMessage());
+                !a.isOutgoingMessage(
+
+                ) && !b.isOutgoingMessage());
     }
 
     private int getBubbleBackgroundResource(boolean showAvatar, boolean isMine) {
