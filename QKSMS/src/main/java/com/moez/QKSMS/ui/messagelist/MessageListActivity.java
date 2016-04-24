@@ -37,7 +37,6 @@ public class MessageListActivity extends QKSwipeBackActivity {
         intent.putExtra(ARG_HIGHLIGHT, pattern);
         intent.putExtra(ARG_SHOW_IMMEDIATE, showImmediate);
         context.startActivity(intent);
-        context.overridePendingTransition(R.anim.slide_in, android.R.anim.fade_out);
     }
 
     @Override
@@ -78,6 +77,7 @@ public class MessageListActivity extends QKSwipeBackActivity {
             if (fragment == null) {
                 fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
             }
+            mSwipeBackLayout.setScrollChangedListener(fragment);
             FragmentTransaction menuTransaction = fm.beginTransaction();
             menuTransaction.replace(R.id.content_frame, fragment);
             menuTransaction.commit();
