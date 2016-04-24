@@ -91,6 +91,7 @@
         </activity>
         <activity
             android:name=".ui.messagelist.MessageListActivity"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
