@@ -8,10 +8,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import com.crashlytics.android.Crashlytics;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -114,16 +112,5 @@ public class MessageListActivity extends QKSwipeBackActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.message_list, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_donate:
-                DonationManager.getInstance(this).showDonateDialog();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
