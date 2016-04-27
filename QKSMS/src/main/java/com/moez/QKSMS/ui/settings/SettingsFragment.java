@@ -35,17 +35,16 @@ import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PackageUtils;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.transaction.EndlessJabber;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ContentFragment;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
 import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
@@ -65,7 +64,7 @@ import java.util.Set;
 import java.util.Stack;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
-        Preference.OnPreferenceClickListener, ContentFragment {
+        Preference.OnPreferenceClickListener {
     private final String TAG = "PreferenceFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
@@ -100,7 +99,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String FONT_SIZE = "pref_key_font_size";
     public static final String FONT_WEIGHT = "pref_key_font_weight";
     public static final String MESSAGE_COUNT = "pref_key_message_count";
-    public static final String SLIDING_TAB = "pref_key_sliding_tab";
     public static final String PROXIMITY_CALLING = "pref_key_prox_sensor_calling";
     public static final String DELIVERY_REPORTS = "pref_key_delivery";
     public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
@@ -163,7 +161,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String GITHUB_URL = "https://github.com/qklabs/qksms";
     public static final String CROWDIN_URL = "https://crowdin.com/project/qksms";
 
-    private MainActivity mContext;
+    private QKActivity mContext;
     private PreferenceManager mPreferenceManager;
     private SharedPreferences mPrefs;
     private Resources mRes;
@@ -186,7 +184,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     private int mResource;
 
-    public static SettingsFragment newInstance(int category) {
+    protected static SettingsFragment newInstance(int category) {
         SettingsFragment fragment = new SettingsFragment();
 
         Bundle args = new Bundle();
@@ -200,10 +198,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
+        setHasOptionsMenu(true);
 
-        mContext = (MainActivity) getActivity();
+        mContext = (QKActivity) getActivity();
         mPrefs = mContext.getPrefs();
         mRes = mContext.getResources();
+
+        mContext.setTitle(R.string.title_settings);
 
         mResource = args.getInt("category", R.xml.settings);
         addPreferencesFromResource(mResource);
@@ -333,6 +334,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.settings, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     /**
      * Removed top level preferences from the layout
      */
@@ -431,9 +438,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case NIGHT_START:
                 updateAlarmManager(mContext, true);
                 break;
-            case SLIDING_TAB:
-                mContext.setSlidingTabEnabled((Boolean) newValue);
-                break;
             case YAPPY:
                 if ((Boolean) newValue) {
                     try {
@@ -520,6 +524,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             Fragment fragment = SettingsFragment.newInstance(resId);
             getFragmentManager()
                     .beginTransaction()
+                    .addToBackStack(null)
                     .replace(R.id.content_frame, fragment, CATEGORY_TAG)
                     .commit();
         }
@@ -703,41 +708,5 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             alarmManager.cancel(dayIntent);
             alarmManager.cancel(nightIntent);
         }
-    }
-
-    @Override
-    public void onContentOpening() {
-
-    }
-
-    @Override
-    public void onContentOpened() {
-
-    }
-
-    @Override
-    public void onContentClosing() {
-
-    }
-
-    @Override
-    public void onContentClosed() {
-
-    }
-
-    @Override
-    public void onMenuChanging(float percentOpen) {
-
-    }
-
-    @Override
-    public void inflateToolbar(Menu menu, MenuInflater inflater, Context context) {
-        if (mContext == null) {
-            mContext = (MainActivity) context;
-            mPrefs = mContext.getPrefs();
-        }
-
-        inflater.inflate(R.menu.settings, menu);
-        mContext.setTitle(R.string.title_settings);
     }
 }

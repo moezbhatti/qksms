@@ -1,6 +1,7 @@
 package com.moez.QKSMS.ui.base;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
@@ -23,10 +24,14 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.DialogHelper;
+import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.search.SearchFragment;
+import com.moez.QKSMS.ui.settings.SettingsActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.ArrayList;
@@ -239,6 +244,28 @@ public abstract class QKActivity extends AppCompatActivity {
         if (mTitle != null) {
             mTitle.setText(title);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                startActivity(SettingsActivity.class);
+                return true;
+            case R.id.menu_changelog:
+                DialogHelper.showChangelog(this);
+                return true;
+            case R.id.menu_donate:
+                DonationManager.getInstance(this).showDonateDialog();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void startActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
     }
 
     public boolean isScreenOn() {

@@ -152,8 +152,6 @@
     <string name="pref_font_weight">Font weight</string>
     <string name="pref_message_count">Message count</string>
     <string name="pref_message_count_summary">Show the number of messages for each conversation</string>
-    <string name="pref_sliding_tab">Sliding panel tab</string>
-    <string name="pref_sliding_tab_summary">Sliding tab that allows you to quickly view your last conversation</string>
 
     <string name="pref_sent_timestamps">Sent timestamps</string>
     <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
@@ -632,6 +630,7 @@
     <!--Toast shown when Google Play Services is not available for purchasing a product-->
     <string name="toast_endlessjabber_not_installed">EndlessJabber is not installed, opening Google Play</string>
     <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+    <string name="toast_conversation_error">Couldn\'t open conversation</string>
 
     <!--Toast shown to thank user for donating-->
     <string name="thanks_1">Thank you for donating! You\'re my new best friend.</string>

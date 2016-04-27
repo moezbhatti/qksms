@@ -39,6 +39,7 @@ import com.moez.QKSMS.receiver.WearableIntentReceiver;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -316,7 +317,7 @@ public class NotificationManager {
                 if (failedCursor.getCount() == 1) {
                     title = sRes.getString(R.string.failed_message);
                     Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(MainActivity.EXTRA_THREAD_ID, failedCursor.getLong(0));
+                    intent.putExtra(MessageListActivity.ARG_THREAD_ID, failedCursor.getLong(0));
                     PI = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 } else {
                     title = failedCursor.getCount() + " " + sRes.getString(R.string.failed_messages);
@@ -475,7 +476,7 @@ public class NotificationManager {
         final PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent threadIntent = new Intent(context, MainActivity.class);
-        threadIntent.putExtra(MainActivity.EXTRA_THREAD_ID, threadId);
+        threadIntent.putExtra(MessageListActivity.ARG_THREAD_ID, threadId);
         final PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent readIntent = new Intent(ACTION_MARK_READ);
@@ -575,7 +576,7 @@ public class NotificationManager {
         PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent threadIntent = new Intent(context, MainActivity.class);
-        threadIntent.putExtra(MainActivity.EXTRA_THREAD_ID, threadId);
+        threadIntent.putExtra(MessageListActivity.ARG_THREAD_ID, threadId);
         PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent readIntent = new Intent(ACTION_MARK_READ);

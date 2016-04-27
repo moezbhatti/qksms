@@ -28,6 +28,7 @@ import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKPopupActivity;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.view.ComposeView;
 
 public class QKReplyActivity extends QKPopupActivity implements DialogInterface.OnDismissListener,
@@ -190,7 +191,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
 
             case R.id.menu_open_thread:
                 Intent threadIntent = new Intent(this, MainActivity.class);
-                threadIntent.putExtra(MainActivity.EXTRA_THREAD_ID, mConversationLegacy.getThreadId());
+                threadIntent.putExtra(MessageListActivity.ARG_THREAD_ID, mConversationLegacy.getThreadId());
                 startActivity(threadIntent);
                 finish();
                 return true;

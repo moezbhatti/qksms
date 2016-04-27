@@ -50,6 +50,7 @@
         <item name="android:windowBackground">@color/grey_light_mega_ultra</item>
         <item name="colorPrimary">@color/grey_material</item>
         <item name="backgroundColor">@color/grey_light_mega_ultra</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="AppBaseThemeDark" parent="Theme.AppCompat">
@@ -62,6 +63,7 @@
         <item name="android:windowBackground">@color/grey_material</item>
         <item name="colorPrimary">@color/grey_material</item>
         <item name="backgroundColor">@color/grey_material</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <!-- OTHER THEMES -->
