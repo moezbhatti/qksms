@@ -293,7 +293,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         } else if (messagesFromDifferentPeople(messageItem, messageItem2)) {
             return true;
         } else {
-            int MAX_DURATION = Integer.parseInt(mPrefs.getString(SettingsFragment.SHOW_NEW_TIMESTAMP_DELAY, "60")) * 60 * 1000;
+            int MAX_DURATION = Integer.parseInt(mPrefs.getString(SettingsFragment.SHOW_NEW_TIMESTAMP_DELAY, "5")) * 60 * 1000;
             return (messageItem2.mDate - messageItem.mDate >= MAX_DURATION);
         }
     }
