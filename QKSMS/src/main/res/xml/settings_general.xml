@@ -137,6 +137,22 @@
             android:summary="@string/pref_sent_timestamps_summary"
             android:title="@string/pref_sent_timestamps"
             android:widgetLayout="@layout/view_switch" />
+        <EditTextPreference
+            android:defaultValue="60"
+            android:dependency="pref_key_force_timestamps"
+            android:inputType="number"
+            android:key="pref_key_timestamp_delay"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_key_timestamp_delay_summary"
+            android:title="@string/pref_key_timestamp_delay" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_force_timestamps"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_force_timestamps_summary"
+            android:title="@string/pref_force_timestamps"
+            android:widgetLayout="@layout/view_switch"
+            android:disableDependentsState="true"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pref_key_compose_favorites"

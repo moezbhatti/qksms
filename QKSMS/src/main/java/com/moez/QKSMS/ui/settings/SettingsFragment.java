@@ -95,6 +95,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String AUTO_EMOJI = "pref_key_auto_emoji";
     public static final String MARKDOWN_ENABLED = "pref_key_markdown_enabled";
     public static final String ENTER_BUTTON = "pref_key_enter_button";
+    public static final String FORCE_TIMESTAMPS = "pref_key_force_timestamps";
+    public static final String SHOW_NEW_TIMESTAMP_DELAY = "pref_key_timestamp_delay";
     public static final String COMPOSE_FAVORITES = "pref_key_compose_favorites";
     public static final String FONT_FAMILY = "pref_key_font_family";
     public static final String FONT_SIZE = "pref_key_font_size";
