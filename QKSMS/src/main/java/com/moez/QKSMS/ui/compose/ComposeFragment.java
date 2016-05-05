@@ -59,6 +59,7 @@ public class ComposeFragment extends QKFragment implements ActivityLauncher, Rec
     public void onSend(String[] recipients, String body) {
         long threadId = Utils.getOrCreateThreadId(mContext, recipients[0]);
         if (threadId != 0) {
+            mContext.finish();
             MessageListActivity.launch(mContext, threadId, -1, null, true);
         } else {
             mContext.onBackPressed();
