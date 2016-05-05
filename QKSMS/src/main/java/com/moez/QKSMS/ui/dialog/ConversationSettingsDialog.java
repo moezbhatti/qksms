@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKPreference;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
@@ -125,7 +125,7 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, getString(R.string.pref_ringtone));
                 intent.putExtra(ARG_THREAD_ID, mThreadId);
-                ((MainActivity) getActivity()).getResultForThreadId(mThreadId);
+                ((MessageListActivity) getActivity()).getResultForThreadId(mThreadId);
                 getActivity().startActivityForResult(intent, RINGTONE_REQUEST_CODE);
                 break;
         }

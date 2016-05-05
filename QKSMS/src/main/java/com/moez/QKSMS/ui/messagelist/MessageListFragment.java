@@ -476,7 +476,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
                 return true;
 
             case R.id.menu_delete_conversation:
-                DialogHelper.showDeleteConversationDialog((MainActivity) mContext, mThreadId);
+                DialogHelper.showDeleteConversationDialog(mContext, mThreadId);
                 return true;
         }
         return super.onOptionsItemSelected(item);

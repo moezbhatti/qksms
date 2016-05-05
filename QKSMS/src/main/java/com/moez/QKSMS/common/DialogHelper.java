@@ -25,7 +25,7 @@ import java.util.Set;
 public class DialogHelper {
     private static final String TAG = "DialogHelper";
 
-    public static void showDeleteConversationDialog(MainActivity context, long threadId) {
+    public static void showDeleteConversationDialog(QKActivity context, long threadId) {
         Set<Long> threadIds = new HashSet<>();
         threadIds.add(threadId);
         showDeleteConversationsDialog(context, threadIds);

@@ -9,8 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
@@ -26,7 +24,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKRateSnack;
@@ -39,7 +36,6 @@ import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
-import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
@@ -72,7 +68,6 @@ public class MainActivity extends QKActivity {
 
     private ConversationListFragment mConversationList;
     private ContentFragment mContent;
-    private long mWaitingForThreadId = -1;
 
     private boolean mIsDestroyed = false;
 
@@ -193,26 +188,9 @@ public class MainActivity extends QKActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getResultForThreadId(long threadId) {
-        mWaitingForThreadId = threadId;
-    }
-
-    /**
-     * When In-App billing is done, it'll return information via onActivityResult().
-     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ConversationSettingsDialog.RINGTONE_REQUEST_CODE) {
-            if (data != null) {
-                if (mWaitingForThreadId > 0) {
-                    ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(this, mWaitingForThreadId);
-                    Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    conversationPrefs.putString(SettingsFragment.NOTIFICATION_TONE, uri.toString());
-                    mWaitingForThreadId = -1;
-                }
-            }
-
-        } else if (requestCode == WelcomeActivity.WELCOME_REQUEST_CODE) {
+        if (requestCode == WelcomeActivity.WELCOME_REQUEST_CODE) {
             new DefaultSmsHelper(this, R.string.not_default_first).showIfNotDefault(null);
         }
     }
