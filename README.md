@@ -1,11 +1,10 @@
 # QKSMS
 
 [![Join the chat at https://gitter.im/qklabs/qksms](https://badges.gitter.im/qklabs/qksms.svg)](https://gitter.im/qklabs/qksms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the Google Play Store.
-
 [![ZenHub] (https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)] (https://zenhub.io)
 [![Build Status](https://travis-ci.org/qklabs/qksms.svg?branch=master)](https://travis-ci.org/qklabs/qksms)
+
+QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the Google Play Store.
 
 [![Download on Google Play](http://i.imgur.com/rHhHvZw.png)](https://play.google.com/store/apps/details?id=com.moez.QKSMS)
 [![Download on F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.moez.QKSMS)
