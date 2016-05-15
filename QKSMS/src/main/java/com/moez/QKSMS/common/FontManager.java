@@ -3,6 +3,7 @@ package com.moez.QKSMS.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -26,7 +27,7 @@ public class FontManager {
     public static final int TEXT_TYPE_DIALOG_BUTTON = 0x7;
     public static final int TEXT_TYPE_TOOLBAR = 0x8;
 
-    public static int getFontFamily(Context context) {
+    private static int getFontFamily(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return Integer.parseInt(prefs.getString(SettingsFragment.FONT_FAMILY, "0"));
     }
@@ -115,7 +116,7 @@ public class FontManager {
         return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundPrimary());
     }
 
-    public static int getFontWeight(Context context, boolean heavy) {
+    private static int getFontWeight(Context context, boolean heavy) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int fontWeight = Integer.parseInt(prefs.getString(SettingsFragment.FONT_WEIGHT, "0"));
         int fontFamily = getFontFamily(context);
@@ -132,5 +133,17 @@ public class FontManager {
         } else {
             return TypefaceManager.TextWeight.BOLD;
         }
+    }
+
+    public static Typeface getFont(Context context, int type) {
+        int fontFamily = getFontFamily(context);
+        int fontWeight = getFontWeight(context, getIsFontHeavy(type));
+        return TypefaceManager.obtainTypeface(context, fontFamily, fontWeight);
+    }
+
+    public static Typeface getFont(Context context) {
+        int fontFamily = getFontFamily(context);
+        int fontWeight = getFontWeight(context, false);
+        return TypefaceManager.obtainTypeface(context, fontFamily, fontWeight);
     }
 }

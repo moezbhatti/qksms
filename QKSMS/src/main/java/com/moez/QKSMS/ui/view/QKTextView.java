@@ -13,9 +13,8 @@ import android.widget.TextView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.TextUtils;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -75,11 +74,13 @@ public class QKTextView extends TextView {
                     setTextColor(FontManager.getTextColor(mContext, mType)));
         }
 
-        LiveViewManager.registerView(key -> {
-            int fontFamily = FontManager.getFontFamily(mContext);
-            int fontWeight = FontManager.getFontWeight(mContext, FontManager.getIsFontHeavy(mType));
-            setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight));
-        }, QKPreference.FONT_FAMILY, QKPreference.FONT_WEIGHT);
+        LiveViewManager.registerView(QKPreference.FONT_FAMILY, this, key -> {
+            setTypeface(FontManager.getFont(mContext, type));
+        });
+
+        LiveViewManager.registerView(QKPreference.FONT_WEIGHT, this, key -> {
+            setTypeface(FontManager.getFont(mContext, type));
+        });
 
         LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, mType));

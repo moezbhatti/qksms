@@ -9,7 +9,6 @@ import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -41,11 +40,13 @@ public class AutoCompleteContactView extends RecipientEditTextView {
         setAdapter(mAdapter);
         setOnItemClickListener(this);
 
-        LiveViewManager.registerView(key -> {
-            int fontFamily = FontManager.getFontFamily(mContext);
-            int fontWeight = FontManager.getFontWeight(mContext, false);
-            setTypeface(TypefaceManager.obtainTypeface(mContext, fontFamily, fontWeight));
-        }, QKPreference.FONT_FAMILY, QKPreference.FONT_WEIGHT);
+        LiveViewManager.registerView(QKPreference.FONT_FAMILY, this, key -> {
+            setTypeface(FontManager.getFont(mContext));
+        });
+
+        LiveViewManager.registerView(QKPreference.FONT_WEIGHT, this, key -> {
+            setTypeface(FontManager.getFont(mContext));
+        });
 
         LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));

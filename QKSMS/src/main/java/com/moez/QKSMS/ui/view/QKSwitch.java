@@ -29,10 +29,15 @@ public class QKSwitch extends SwitchCompat {
     private void init(Context context) {
         mRes = context.getResources();
 
-        LiveViewManager.registerView(key -> {
+        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             DrawableCompat.setTintList(getThumbDrawable(), getSwitchThumbColorStateList());
             DrawableCompat.setTintList(getTrackDrawable(), getSwitchTrackColorStateList());
-        }, QKPreference.THEME, QKPreference.BACKGROUND);
+        });
+
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            DrawableCompat.setTintList(getThumbDrawable(), getSwitchThumbColorStateList());
+            DrawableCompat.setTintList(getTrackDrawable(), getSwitchTrackColorStateList());
+        });
     }
 
     private ColorStateList getSwitchThumbColorStateList() {

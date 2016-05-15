@@ -58,24 +58,6 @@ public abstract class LiveViewManager {
     }
 
     /**
-     * Convenience method for #registerView(QKPreference, ThemedView) to allow registering a single
-     * ThemedView to listen for multiple preferences
-     *
-     * @param view        The LiveView
-     * @param parent      The object to tie the lifecycle of the LiveView to. If we only reference
-     *                    a LiveView anonymous inner class, then it'll be quickly garbage collected
-     *                    and removed from the WeakHashMap. Instead, we should reference the parent
-     *                    object (ie. The Activity, Fragment, View, etc...) that this LiveView is
-     *                    concerned with. In most cases, it's acceptable to just pass in `this`
-     * @param preferences The preferences to listen for
-     */
-    public static void registerView(LiveView view, Object parent, QKPreference... preferences) {
-        for (QKPreference preference : preferences) {
-            registerView(preference, parent, view);
-        }
-    }
-
-    /**
      * Register a view to be updated when a QKPreference is changed
      * We don't need to manually unregister the views because we're using weak sets
      *
