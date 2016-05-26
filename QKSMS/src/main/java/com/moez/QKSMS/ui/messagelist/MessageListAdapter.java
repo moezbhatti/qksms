@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.android.mms.transaction.Transaction;
 import com.android.mms.transaction.TransactionBundle;
 import com.android.mms.transaction.TransactionService;
@@ -44,12 +45,13 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHolder, MessageItem> {
     private final String TAG = "MessageListAdapter";
@@ -273,55 +275,72 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         holder.mDownloadButton.setVisibility(View.GONE);
     }
 
-    private void bindGrouping(MessageListViewHolder holder, MessageItem messageItem) {
-        boolean showAvatar;
-        boolean showTimestamp;
-
-        int position = mCursor.getPosition();
-
+    private boolean shouldShowTimestamp(MessageItem messageItem, int position) {
         if (position == mCursor.getCount() - 1) {
-            showTimestamp = true;
-        } else if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
-            showTimestamp = true;
-        } else if (messageItem.isFailedMessage()) {
-            showTimestamp = true;
-        } else if (messageItem.isSending()) {
-            showTimestamp = true;
-        } else {
-            int MAX_DURATION = 60 * 60 * 1000;
-            MessageItem messageItem2 = getItem(position + 1);
-            showTimestamp = messageItem2.mDate - messageItem.mDate >= MAX_DURATION;
-
-
-            if (messageItem.mAddress != null && messageItem2.mAddress != null &&
-                    !messageItem.mAddress.equals(messageItem2.mAddress) &&
-                    !messageItem.isOutgoingMessage() && !messageItem2.isOutgoingMessage()) {
-                showTimestamp = true;
-            }
+            return true;
         }
 
-        if (position == 0) {
-            showAvatar = true;
-        } else {
-            int MAX_DURATION = 60 * 60 * 1000;
-            MessageItem messageItem2 = getItem(position - 1);
-            showAvatar = messageItem.getBoxId() != messageItem2.getBoxId() || messageItem.mDate - messageItem2.mDate >= MAX_DURATION;
+        MessageItem messageItem2 = getItem(position + 1);
 
+        if(mPrefs.getBoolean(SettingsFragment.FORCE_TIMESTAMPS, false)) {
+            return true;
+        } else if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
+            return true;
+        } else if (messageItem.isFailedMessage()) {
+            return true;
+        } else if (messageItem.isSending()) {
+            return true;
+        } else if (messagesFromDifferentPeople(messageItem, messageItem2)) {
+            return true;
+        } else {
+            int MAX_DURATION = Integer.parseInt(mPrefs.getString(SettingsFragment.SHOW_NEW_TIMESTAMP_DELAY, "5")) * 60 * 1000;
+            return (messageItem2.mDate - messageItem.mDate >= MAX_DURATION);
+        }
+    }
+
+    private boolean shouldShowAvatar(MessageItem messageItem, int position) {
+        if (position == 0) {
+            return true;
+        }
+
+        MessageItem messageItem2 = getItem(position - 1);
+
+        if (messagesFromDifferentPeople(messageItem, messageItem2)) {
             // If the messages are from different people, then we don't care about any of the other checks,
             // we need to show the avatar/timestamp. This is used for group chats, which is why we want
             // both to be incoming messages
-            if (messageItem.mAddress != null && messageItem2.mAddress != null &&
-                    !messageItem.mAddress.equals(messageItem2.mAddress) &&
-                    !messageItem.isOutgoingMessage() && !messageItem2.isOutgoingMessage()) {
-                showAvatar = true;
-            }
+            return true;
+        } else {
+            int MAX_DURATION = 60 * 60 * 1000;
+            return (messageItem.getBoxId() != messageItem2.getBoxId() || messageItem.mDate - messageItem2.mDate >= MAX_DURATION);
         }
+    }
+
+    private boolean messagesFromDifferentPeople(MessageItem a, MessageItem b) {
+        return (a.mAddress != null && b.mAddress != null &&
+                !a.mAddress.equals(b.mAddress) &&
+                !a.isOutgoingMessage(
+
+                ) && !b.isOutgoingMessage());
+    }
+
+    private int getBubbleBackgroundResource(boolean showAvatar, boolean isMine) {
+        if (showAvatar && isMine) return ThemeManager.getSentBubbleRes();
+        else if (showAvatar && !isMine) return ThemeManager.getReceivedBubbleRes();
+        else if (!showAvatar && isMine) return ThemeManager.getSentBubbleAltRes();
+        else if (!showAvatar && !isMine) return ThemeManager.getReceivedBubbleAltRes();
+        else return -1;
+    }
+
+    private void bindGrouping(MessageListViewHolder holder, MessageItem messageItem) {
+        int position = mCursor.getPosition();
+
+        boolean showAvatar = shouldShowAvatar(messageItem, position);
+        boolean showTimestamp = shouldShowTimestamp(messageItem, position);
 
         holder.mDateView.setVisibility(showTimestamp ? View.VISIBLE : View.GONE);
         holder.mSpace.setVisibility(showAvatar ? View.VISIBLE : View.GONE);
-        holder.mBodyTextView.setBackgroundResource(showAvatar ? (messageItem.isMe() ? ThemeManager.getSentBubbleRes() :
-                ThemeManager.getReceivedBubbleRes()) : (messageItem.isMe() ?
-                ThemeManager.getSentBubbleAltRes() : ThemeManager.getReceivedBubbleAltRes()));
+        holder.mBodyTextView.setBackgroundResource(getBubbleBackgroundResource(showAvatar, messageItem.isMe()));
 
         holder.setLiveViewCallback(key -> {
             if (messageItem.isMe()) {

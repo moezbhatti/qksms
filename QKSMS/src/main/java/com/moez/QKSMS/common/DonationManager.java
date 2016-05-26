@@ -42,6 +42,13 @@ public class DonationManager {
         return sInstance;
     }
 
+    public static void clearInstance() {
+        if (null != sInstance) {
+            sInstance.destroy();
+        }
+        sInstance = null;
+    }
+
     private DonationManager(QKActivity context) {
         mContext = context;
         mRes = mContext.getResources();
@@ -77,6 +84,10 @@ public class DonationManager {
         if (mHelper != null) {
             mHelper.dispose();
         }
+        mHelper = null;
+        mContext = null;
+        mRes = null;
+        mBillingServiceReady = false;
     }
 
     // Callback for when a purchase is finished

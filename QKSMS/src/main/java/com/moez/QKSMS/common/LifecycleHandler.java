@@ -15,13 +15,19 @@ public class LifecycleHandler implements Application.ActivityLifecycleCallbacks 
     private static int sPaused;
     private static int sStarted;
     private static int sStopped;
+    private static int sActivityCounter;
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        sActivityCounter++;
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
+        sActivityCounter--;
+        if (isNoActivitiesAlive()) {
+            DonationManager.clearInstance();
+        }
     }
 
     @Override
@@ -56,5 +62,9 @@ public class LifecycleHandler implements Application.ActivityLifecycleCallbacks 
 
     public static boolean isApplicationInForeground() {
         return sResumed > sPaused;
+    }
+
+    public static boolean isNoActivitiesAlive() {
+        return sActivityCounter <= 0;
     }
 }

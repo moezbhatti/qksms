@@ -85,13 +85,10 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
         final ConversationLegacy conversationLegacy = new ConversationLegacy(mContext, mData.getThreadId());
 
         if (shouldUpdate) {
-            ((MainActivity) mContext).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAvatarView.setImageDrawable(drawable);
-                    mAvatarView.setContactName(name);
-                    fromView.setText(formatMessage(mData, conversationLegacy));
-                }
+            mContext.runOnUiThread(() -> {
+                mAvatarView.setImageDrawable(drawable);
+                mAvatarView.setContactName(name);
+                fromView.setText(formatMessage(mData, conversationLegacy));
             });
         }
     }

@@ -155,6 +155,10 @@
 
     <string name="pref_sent_timestamps">Sent timestamps</string>
     <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+    <string name="pref_force_timestamps">Force timestamps</string>
+    <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+    <string name="pref_key_timestamp_delay">New timestamp delay</string>
+    <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
     <string name="pref_compose_favorites">Starred contacts</string>
     <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
     <string name="pref_prox_sensor_call">Proximity sensor</string>
