@@ -26,6 +26,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
@@ -282,6 +283,21 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public void onDestroy() {
         super.onDestroy();
         BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().deleteObserver(this);
+
+        if (null == mRecyclerView) {
+            return;
+        }
+        try {
+            for (int i = 0; i < mRecyclerView.getChildCount(); i++) {
+                View child = mRecyclerView.getChildAt(i);
+                RecyclerView.ViewHolder holder = mRecyclerView.getChildViewHolder(child);
+                if (holder instanceof ConversationListViewHolder) {
+                    Contact.removeListener((ConversationListViewHolder) holder);
+                }
+            }
+        } catch (Exception ignored) {
+            //
+        }
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
