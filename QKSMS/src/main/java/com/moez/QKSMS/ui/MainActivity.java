@@ -1,7 +1,6 @@
 package com.moez.QKSMS.ui;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -40,8 +39,6 @@ import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
-import com.moez.QKSMS.ui.messagelist.MessageListFragment;
-import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.search.SearchActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
@@ -67,9 +64,6 @@ public class MainActivity extends QKActivity {
     @Bind(R.id.root) View mRoot;
 
     private ConversationListFragment mConversationList;
-    private ContentFragment mContent;
-
-    private boolean mIsDestroyed = false;
 
     /**
      * True if the mms setup fragment has been dismissed and we shouldn't show it anymore.
@@ -170,10 +164,6 @@ public class MainActivity extends QKActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public Fragment getContent() {
-        return (Fragment) mContent;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -214,7 +204,6 @@ public class MainActivity extends QKActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mIsDestroyed = true;
         DonationManager.getInstance(this).destroy();
     }
 
@@ -254,12 +243,7 @@ public class MainActivity extends QKActivity {
     protected void onResume() {
         super.onResume();
 
-        if (mContent != null && mContent instanceof MessageListFragment) {
-            sThreadShowing = ((MessageListFragment) mContent).getThreadId();
-            QKReplyActivity.dismiss(sThreadShowing);
-        } else {
-            sThreadShowing = 0;
-        }
+        sThreadShowing = 0;
 
         NotificationManager.initQuickCompose(this, false, false);
     }
