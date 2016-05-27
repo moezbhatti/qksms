@@ -482,6 +482,12 @@ public class NotificationManager {
         readIntent.putExtra("thread_id", threadId);
         final PendingIntent readPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), readIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+
+        Intent readIntent2 = new Intent(ACTION_MARK_READ);
+        readIntent.putExtra("thread_id", threadId);
+        final PendingIntent readPI2 = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), readIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         Intent seenIntent = new Intent(ACTION_MARK_SEEN);
         final PendingIntent seenPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 4), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -517,6 +523,7 @@ public class NotificationManager {
                 .setStyle(nstyle)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
+                .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI2)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
         if (conversationPrefs.getDimissedReadEnabled()) {
