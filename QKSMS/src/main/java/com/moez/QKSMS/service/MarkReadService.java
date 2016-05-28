@@ -16,7 +16,6 @@ public class MarkReadService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
         long threadId = extras.getLong("thread_id");
-
         ConversationLegacy conversation = new ConversationLegacy(this, threadId);
         conversation.markRead();
     }

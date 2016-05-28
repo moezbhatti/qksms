@@ -245,7 +245,6 @@ public class ConversationLegacy {
                     }
 
                     NotificationManager.update(context);
-
                     UnreadBadgeService.update(context);
                 }
             }

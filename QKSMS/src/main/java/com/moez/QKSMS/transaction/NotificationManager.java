@@ -57,6 +57,7 @@ public class NotificationManager {
 
     public static final String ACTION_MARK_READ = "com.moez.QKSMS.MARK_READ";
     public static final String ACTION_MARK_SEEN = "com.moez.QKSMS.MARK_SEEN";
+    public static final String ACTION_DELETE = "com.moez.QKSMS.MARK_DELETE";
 
     private static final String DEFAULT_RINGTONE = "content://settings/system/notification_sound";
 
@@ -483,9 +484,10 @@ public class NotificationManager {
         final PendingIntent readPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), readIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        Intent readIntent2 = new Intent(ACTION_MARK_READ);
-        readIntent.putExtra("thread_id", threadId);
-        final PendingIntent readPI2 = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), readIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent deleteIntent = new Intent(ACTION_DELETE);
+        deleteIntent.putExtra("thread_id", threadId);
+        deleteIntent.putExtra("mMessageUri",message.mMessageUri);
+        final PendingIntent deletePI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         Intent seenIntent = new Intent(ACTION_MARK_SEEN);
@@ -523,7 +525,7 @@ public class NotificationManager {
                 .setStyle(nstyle)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
-                .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI2)
+                .addAction(R.drawable.ic_delete, sRes.getString(R.string.delete), deletePI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
         if (conversationPrefs.getDimissedReadEnabled()) {
@@ -592,6 +594,12 @@ public class NotificationManager {
         Intent seenIntent = new Intent(ACTION_MARK_SEEN);
         PendingIntent seenPI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 4), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent deleteIntent = new Intent(ACTION_DELETE);
+        deleteIntent.putExtra("thread_id", threadId);
+        deleteIntent.putExtra("mMessageUri",message.mMessageUri);
+        final PendingIntent deletePI = PendingIntent.getBroadcast(context, buildRequestCode(threadId, 2), deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         for (MessageItem message1 : messages) {
             inboxStyle.addLine(message1.mBody);
@@ -611,6 +619,7 @@ public class NotificationManager {
                 .setStyle(inboxStyle)
                 .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
+                .addAction(R.drawable.ic_delete, sRes.getString(R.string.delete), deletePI)
                 .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
 
