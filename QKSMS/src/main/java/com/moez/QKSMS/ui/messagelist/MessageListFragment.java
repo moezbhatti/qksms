@@ -594,35 +594,6 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         }.execute();
     }
 
-    public void delete(boolean isMms,long mMsgId,Uri mMessageUri,boolean mLocked){
-        new AsyncTask<Void, Void, Void>() {
-            protected Void doInBackground(Void... none) {
-                if (isMms) {
-                    //MessageUtils.removeThumbnailsFromCache(msgItem.getSlideshow());
-
-                    //QKSMSApp.getApplication().getPduLoaderManager().removePdu(msgItem.mMessageUri);
-                    // Delete the message *after* we've removed the thumbnails because we
-                    // need the pdu and slideshow for removeThumbnailsFromCache to work.
-                    return null;
-                }
-
-                // Determine if we're deleting the last item in the cursor.
-                Boolean deletingLastItem = false;
-                if (mAdapter != null && mAdapter.getCursor() != null) {
-                    mCursor = mAdapter.getCursor();
-                    mCursor.moveToLast();
-                    long msgId = mCursor.getLong(MessageColumns.COLUMN_ID);
-                    deletingLastItem = msgId == mMsgId;
-                }
-
-                mBackgroundQueryHandler.startDelete(DELETE_MESSAGE_TOKEN, deletingLastItem,
-                        mMessageUri, mLocked ? null : "locked=0", null);
-                return null;
-            }
-        }.execute();
-
-    }
-
     private void initLoaderManager() {
         getLoaderManager().initLoader(0, null, this);
     }
