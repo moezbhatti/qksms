@@ -20,27 +20,34 @@ public class MarkDeleteReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
         long threadId = extras.getLong("thread_id");
         Uri mMessageUri = extras.getParcelable("mMessageUri");
+        ConversationLegacy conversation = new ConversationLegacy(context, threadId);
+        conversation.markRead();
         new Thread(() -> {
-            ConversationLegacy conversation = new ConversationLegacy(context, threadId);
-            conversation.markRead();
             context.getContentResolver().delete(mMessageUri, null, null);
             NotificationManager.dismiss(context, (int) threadId);
         }).start();
 
-      /*
-      new AsyncTask<Void, Void, Void>() {
-            protected Void doInBackground(Void... none) {
-                try {
-                    Log.i("Deleting SMS from inbox", "");
-                    context.getContentResolver().delete(mMessageUri, null, null);
-                } catch (Exception e) {
-                    Log.i("Could not delete", e.getMessage());
-                }
-                NotificationManager.dismiss(context, (int) thread_id);
-                return null;
-            }
-        }.execute();
-      */
+
+//        new AsyncTask<Void, Void, Void>() {
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//                ConversationLegacy conversation = new ConversationLegacy(context, threadId);
+//                conversation.markRead();
+//            }
+//
+//            protected Void doInBackground(Void... none) {
+//                context.getContentResolver().delete(mMessageUri, null, null);
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Void aVoid) {
+//                super.onPostExecute(aVoid);
+//                NotificationManager.dismiss(context, (int) threadId);
+//                QKReplyActivity.dismiss(threadId);
+//            }
+//        }.execute();
 
 
     }
