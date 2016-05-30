@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
 import com.android.mms.transaction.Transaction;
 import com.android.mms.transaction.TransactionBundle;
 import com.android.mms.transaction.TransactionService;
@@ -45,13 +44,12 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import ezvcard.Ezvcard;
-import ezvcard.VCard;
 
 public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHolder, MessageItem> {
     private final String TAG = "MessageListAdapter";
@@ -415,6 +413,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             LinkifyUtils.addLinks(holder.mBodyTextView);
         }
         holder.mBodyTextView.setVisibility(TextUtils.isEmpty(buf) ? View.GONE : View.VISIBLE);
+        holder.mBodyTextView.setOnClickListener(v -> holder.mRoot.callOnClick());
     }
 
     private void bindTimestamp(MessageListViewHolder holder, MessageItem messageItem) {
