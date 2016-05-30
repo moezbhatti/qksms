@@ -28,4 +28,9 @@ public class AnalyticsManager implements AnalyticsManagerBase {
     public void sendEvent(String category, String action, String label, long value) {
 
     }
+
+    @Override
+    public void log(String msg) {
+
+    }
 }

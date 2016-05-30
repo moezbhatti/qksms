@@ -10,8 +10,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import com.crashlytics.android.Crashlytics;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.mmssms.Utils;
@@ -110,7 +110,7 @@ public class MessageListActivity extends QKSwipeBackActivity {
             }
             msg += "}}";
             Log.d(TAG, msg);
-            Crashlytics.log(msg);
+            AnalyticsManager.getInstance().log(msg);
             makeToast(R.string.toast_conversation_error);
             finish();
         }

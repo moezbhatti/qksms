@@ -3,6 +3,7 @@ package com.moez.QKSMS.common;
 import android.content.Context;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -61,5 +62,10 @@ public class AnalyticsManager implements AnalyticsManagerBase {
         b.setValue(value);
 
         mTracker.send(b.build());
+    }
+
+    @Override
+    public void log(String msg) {
+        Crashlytics.log(msg);
     }
 }
