@@ -13,10 +13,13 @@ import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.interfaces.LiveView;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
+
+import static com.moez.QKSMS.R.id.conversation;
 
 public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationListViewHolder, Conversation> {
 
@@ -101,11 +104,8 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
             holder.mSelected.setVisibility(View.GONE);
         }
 
-        if (mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_CONVERSATIONS, false)) {
-            holder.mAvatarView.setVisibility(View.GONE);
-        } else {
-            holder.mAvatarView.setVisibility(View.VISIBLE);
-        }
+        LiveViewManager.registerView(QKPreference.HIDE_AVATAR_CONVERSATIONS, this, key ->
+                holder.mAvatarView.setVisibility(mContext.getBoolean(QKPreference.HIDE_AVATAR_CONVERSATIONS) ? View.GONE : View.VISIBLE));
 
         // Date
         holder.dateView.setText(DateFormatter.getConversationTimestamp(mContext, conversation.getDate()));

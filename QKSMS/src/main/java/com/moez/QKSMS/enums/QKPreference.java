@@ -27,9 +27,9 @@ public enum QKPreference {
     FONT_SIZE("pref_key_font_size", "1"),
     FONT_WEIGHT("pref_key_font_weight", "0"),
 
-    AVATAR_CONVERSATIONS("pref_key_avatar_conversations", true),
-    AVATAR_SENT("pref_key_avatar_sent", false),
-    AVATAR_RECEIVED("pref_key_avatar_received", true),
+    HIDE_AVATAR_CONVERSATIONS("pref_key_hide_avatar_conversations", false),
+    HIDE_AVATAR_SENT("pref_key_hide_avatar_sent", true),
+    HIDE_AVATAR_RECEIVED("pref_key_hide_avatar_received", false),
 
     MESSAGE_COUNT("pref_key_message_count", false),
     TIMESTAMPS_24H("pref_key_24h", false),
