@@ -408,6 +408,11 @@
                 <action android:name="com.moez.QKSMS.MARK_READ" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.MarkDeleteReceiver">
+            <intent-filter>
+                <action android:name="com.moez.QKSMS.MARK_DELETE" />
+            </intent-filter>
+        </receiver>
         <receiver android:name=".receiver.MarkSeenReceiver">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.MARK_SEEN" />
