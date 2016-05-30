@@ -29,7 +29,6 @@ import android.provider.Telephony.MmsSms;
 import android.provider.Telephony.Sms;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
@@ -61,7 +60,7 @@ import java.util.regex.Pattern;
  * <p>The only mutable field is the cached formatted message member,
  * the formatting of which is done outside this model in MessageListItem.
  */
-public class MessageItem{
+public class MessageItem {
     private static String TAG = "MessageItem";
 
     public enum DeliveryStatus  { NONE, INFO, FAILED, PENDING, RECEIVED }
