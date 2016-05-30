@@ -414,6 +414,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         }
         holder.mBodyTextView.setVisibility(TextUtils.isEmpty(buf) ? View.GONE : View.VISIBLE);
         holder.mBodyTextView.setOnClickListener(v -> holder.mRoot.callOnClick());
+        holder.mBodyTextView.setOnLongClickListener(v -> holder.mRoot.performLongClick());
     }
 
     private void bindTimestamp(MessageListViewHolder holder, MessageItem messageItem) {
