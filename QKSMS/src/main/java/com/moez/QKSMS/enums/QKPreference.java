@@ -1,5 +1,6 @@
 package com.moez.QKSMS.enums;
 
+import android.os.Build;
 import com.moez.QKSMS.ui.ThemeManager;
 
 import java.util.Arrays;
@@ -85,7 +86,7 @@ public enum QKPreference {
     MMS_PROXY("mms_proxy", true),
 
     // QK Reply
-    QK_REPLY("pref_key_quickreply_enabled", true),
+    QK_REPLY("pref_key_quickreply_enabled", Build.VERSION.SDK_INT < 23),
     TAP_DISMISS("pref_key_quickreply_dismiss", true),
 
     // QK Compose

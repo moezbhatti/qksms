@@ -23,7 +23,6 @@ import android.provider.Telephony;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.util.Log;
-
 import com.android.mms.transaction.TransactionService;
 import com.android.mms.transaction.TransactionState;
 import com.google.android.mms.pdu_alt.PduHeaders;
@@ -35,7 +34,7 @@ import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.model.ImageModel;
 import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.receiver.WearableIntentReceiver;
+import com.moez.QKSMS.receiver.RemoteMessagingReceiver;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
@@ -267,10 +266,10 @@ public class NotificationManager {
                 NotificationCompat.Builder builder =
                         new NotificationCompat.Builder(context)
                                 .setSmallIcon(R.drawable.ic_notification)
-                                        // SMS messages are high priority
+                                // SMS messages are high priority
                                 .setPriority(getNotificationPriority(context))
-                                        // Silent here because this is just an update, not a new
-                                        // notification
+                                // Silent here because this is just an update, not a new
+                                // notification
                                 .setSound(null)
                                 .setVibrate(VIBRATION_SILENT)
                                 .setAutoCancel(true);
@@ -469,12 +468,6 @@ public class NotificationManager {
 
         MessageItem message = messages.get(0);
 
-        Intent replyIntent = new Intent(context, QKReplyActivity.class);
-        replyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        replyIntent.putExtra(QKReplyActivity.EXTRA_THREAD_ID, threadId);
-        replyIntent.putExtra(QKReplyActivity.EXTRA_SHOW_KEYBOARD, true);
-        final PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         Intent threadIntent = new Intent(context, MainActivity.class);
         threadIntent.putExtra(MessageListActivity.ARG_THREAD_ID, threadId);
         final PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -517,10 +510,21 @@ public class NotificationManager {
                 .setNumber(unreadMessageCount)
                 .setStyle(nstyle)
                 .setColor(ThemeManager.getColor())
-                .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
-                .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
+                .extend(RemoteMessagingReceiver.getConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
+
+        if (Build.VERSION.SDK_INT < 23) {
+            Intent replyIntent = new Intent(context, QKReplyActivity.class);
+            replyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            replyIntent.putExtra(QKReplyActivity.EXTRA_THREAD_ID, threadId);
+            replyIntent.putExtra(QKReplyActivity.EXTRA_SHOW_KEYBOARD, true);
+            PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI);
+        } else {
+            builder.addAction(RemoteMessagingReceiver.getReplyAction(context, message.mAddress, threadId));
+        }
+
         if (conversationPrefs.getDimissedReadEnabled()) {
             builder.setDeleteIntent(readPI);
         }
@@ -570,12 +574,6 @@ public class NotificationManager {
 
         MessageItem message = messages.get(0);
 
-        Intent replyIntent = new Intent(context, QKReplyActivity.class);
-        replyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        replyIntent.putExtra(QKReplyActivity.EXTRA_THREAD_ID, threadId);
-        replyIntent.putExtra(QKReplyActivity.EXTRA_SHOW_KEYBOARD, true);
-        PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         Intent threadIntent = new Intent(context, MainActivity.class);
         threadIntent.putExtra(MessageListActivity.ARG_THREAD_ID, threadId);
         PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -605,10 +603,20 @@ public class NotificationManager {
                 .setNumber(unreadMessageCount)
                 .setStyle(inboxStyle)
                 .setColor(ThemeManager.getColor())
-                .addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI)
                 .addAction(R.drawable.ic_accept, sRes.getString(R.string.read), readPI)
-                .extend(WearableIntentReceiver.getSingleConversationExtender(context, message.mContact, message.mAddress, threadId))
+                .extend(RemoteMessagingReceiver.getConversationExtender(context, message.mContact, message.mAddress, threadId))
                 .setDeleteIntent(seenPI);
+
+        if (Build.VERSION.SDK_INT < 23) {
+            Intent replyIntent = new Intent(context, QKReplyActivity.class);
+            replyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            replyIntent.putExtra(QKReplyActivity.EXTRA_THREAD_ID, threadId);
+            replyIntent.putExtra(QKReplyActivity.EXTRA_SHOW_KEYBOARD, true);
+            PendingIntent replyPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 0), replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.addAction(R.drawable.ic_reply, sRes.getString(R.string.reply), replyPI);
+        } else {
+            builder.addAction(RemoteMessagingReceiver.getReplyAction(context, message.mAddress, threadId));
+        }
 
         if (conversationPrefs.getCallButtonEnabled()) {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -624,6 +632,7 @@ public class NotificationManager {
      * Creates a unique action ID for notification actions (Open, Mark read, Call, etc)
      */
     private static int buildRequestCode(long threadId, int action) {
+        action++; // Fixes issue on some 4.3 phones | http://stackoverflow.com/questions/19031861/pendingintent-not-opening-activity-in-android-4-3
         return (int) (action * 100000 + threadId);
     }
 
@@ -740,7 +749,7 @@ public class NotificationManager {
      */
     private static int getNotificationPriority(Context context) {
         boolean qkreplyEnabled = PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(SettingsFragment.QUICKREPLY, true);
+                .getBoolean(SettingsFragment.QUICKREPLY, Build.VERSION.SDK_INT < 23);
         if (qkreplyEnabled) {
             return NotificationCompat.PRIORITY_DEFAULT;
         } else {

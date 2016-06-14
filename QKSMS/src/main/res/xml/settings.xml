@@ -151,7 +151,7 @@
 
     <!-- QUICKREPLY -->
     <Preference
-        android:defaultValue="true"
+        android:defaultValue="@bool/preN"
         android:key="pref_key_quickreply_enabled" />
     <Preference
         android:defaultValue="true"

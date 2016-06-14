@@ -348,7 +348,7 @@
         <activity android:name=".ui.mms.SlideshowActivity" />
 
         <receiver
-            android:name=".receiver.WearableIntentReceiver"
+            android:name=".receiver.RemoteMessagingReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.receiver.WearableIntentReceiver.REPLY" />

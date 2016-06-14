@@ -13,11 +13,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.RemoteInput;
 import android.view.Gravity;
-
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.ContactHelper;
+import com.moez.QKSMS.mmssms.Message;
+import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.service.MarkReadService;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -33,7 +32,7 @@ import java.util.Set;
 import static android.support.v4.app.NotificationCompat.BigTextStyle;
 import static android.support.v4.app.NotificationCompat.WearableExtender;
 
-public class WearableIntentReceiver extends BroadcastReceiver {
+public class RemoteMessagingReceiver extends BroadcastReceiver {
 
     public static final String ACTION_REPLY = "com.moez.QKSMS.receiver.WearableIntentReceiver.REPLY";
 
@@ -41,8 +40,29 @@ public class WearableIntentReceiver extends BroadcastReceiver {
     public static final String EXTRA_THREAD_ID = "thread_id";
     public static final String EXTRA_VOICE_REPLY = "voice_reply";
 
-    public static WearableExtender getSingleConversationExtender(Context context, String name, String address, long threadId) {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+        Bundle bundle = intent.getExtras();
+        if (remoteInput != null && bundle != null) {
+            if (intent.getAction().equals(ACTION_REPLY)) {
 
+                Message message = new Message(
+                        remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString(),
+                        new String[]{bundle.getString(EXTRA_ADDRESS)}
+                );
+
+                Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
+                sendTransaction.sendNewMessage(message, bundle.getLong(EXTRA_THREAD_ID));
+
+                Intent i = new Intent(context, MarkReadService.class);
+                i.putExtra(EXTRA_THREAD_ID, bundle.getLong(EXTRA_THREAD_ID));
+                context.startService(i);
+            }
+        }
+    }
+
+    public static WearableExtender getConversationExtender(Context context, String name, String address, long threadId) {
         WearableExtender wearableExtender = new WearableExtender();
         wearableExtender.setGravity(Gravity.BOTTOM);
         wearableExtender.setStartScrollBottom(true);
@@ -77,32 +97,7 @@ public class WearableIntentReceiver extends BroadcastReceiver {
             wearableExtender.addPage(chatPage);
         }
 
-
-
-        Intent replyIntent = new Intent(ACTION_REPLY).setClass(context, WearableIntentReceiver.class);
-        replyIntent.putExtra(EXTRA_ADDRESS, address);
-        replyIntent.putExtra(EXTRA_THREAD_ID, threadId);
-
-        Set<String> defaultResponses = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.qk_responses)));
-        Set<String> responseSet = prefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
-        ArrayList<String> responses = new ArrayList<String>();
-        responses.addAll(responseSet);
-        Collections.sort(responses);
-
-        PendingIntent replyPI = PendingIntent.getBroadcast(context, 0, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
-                .setLabel(context.getString(R.string.reply))
-                .setChoices(responses.toArray(new String[responses.size()]))
-                .build();
-
-        NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(
-                R.drawable.ic_reply,
-                context.getString(R.string.reply_qksms), replyPI)
-                .addRemoteInput(remoteInput)
-                .build();
-
-        wearableExtender.addAction(replyAction);
-
+        wearableExtender.addAction(getReplyAction(context, address, threadId));
 
         Intent readIntent = new Intent(NotificationManager.ACTION_MARK_READ);
         readIntent.putExtra(EXTRA_THREAD_ID, threadId);
@@ -119,26 +114,29 @@ public class WearableIntentReceiver extends BroadcastReceiver {
         return wearableExtender;
     }
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+    public static NotificationCompat.Action getReplyAction(Context context, String address, long threadId) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
-        Bundle bundle = intent.getExtras();
-        if (remoteInput != null && bundle != null) {
-            if (intent.getAction().equals(ACTION_REPLY)) {
+        Intent replyIntent = new Intent(ACTION_REPLY).setClass(context, RemoteMessagingReceiver.class);
+        replyIntent.putExtra(EXTRA_ADDRESS, address);
+        replyIntent.putExtra(EXTRA_THREAD_ID, threadId);
 
-                Message message = new Message(
-                        remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString(),
-                        new String[]{bundle.getString(EXTRA_ADDRESS)}
-                );
+        Set<String> defaultResponses = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.qk_responses)));
+        Set<String> responseSet = prefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
+        ArrayList<String> responses = new ArrayList<>();
+        responses.addAll(responseSet);
+        Collections.sort(responses);
 
-                Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
-                sendTransaction.sendNewMessage(message, bundle.getLong(EXTRA_THREAD_ID));
+        PendingIntent replyPI = PendingIntent.getBroadcast(context, 0, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
+                .setLabel(context.getString(R.string.reply))
+                .setChoices(responses.toArray(new String[responses.size()]))
+                .build();
 
-                Intent i = new Intent(context, MarkReadService.class);
-                i.putExtra(EXTRA_THREAD_ID, bundle.getLong(EXTRA_THREAD_ID));
-                context.startService(i);
-            }
-        }
+        return new NotificationCompat.Action.Builder(
+                R.drawable.ic_reply,
+                context.getString(R.string.reply), replyPI)
+                .addRemoteInput(remoteInput)
+                .build();
     }
 }

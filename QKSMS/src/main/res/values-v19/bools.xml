@@ -2,6 +2,4 @@
 <resources>
     <bool name="hasKitKat">true</bool>
     <bool name="preKitKat">false</bool>
-    <bool name="hasL">false</bool>
-    <bool name="preL">true</bool>
 </resources>
