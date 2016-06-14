@@ -93,7 +93,7 @@ dependencies {
     compile 'com.googlecode.libphonenumber:libphonenumber:6.2'
     compile 'com.nispok:snackbar:2.10.6'
     compile 'com.github.lzyzsd:circleprogress:1.1.0'
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
+    debugCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
     compile 'com.vdurmont:emoji-java:1.1.1'
     compile 'me.leolin:ShortcutBadger:1.1.1'
