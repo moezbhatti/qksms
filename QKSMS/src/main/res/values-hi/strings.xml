@@ -18,7 +18,7 @@
   <!--Hint for message reply text field-->
   <string name="hint_reply">संदेश लिखें</string>
   <!--Hint for code redemption-->
-  <string name="hint_redeem">Enter code</string>
+  <string name="hint_redeem">कोड दर्ज करें</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">नई संदेश</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -34,19 +34,19 @@
   <!--QuickCompose notification text-->
   <string name="quickcompose_detail">संदेश भेजने के लिए क्लिक करें</string>
   <!--Welcome screen intro button-->
-  <string name="welcome_start">Let\'s get started!</string>
+  <string name="welcome_start">चलो शुरू हो जाओ!</string>
   <!--Allows user to skip welcome screen-->
   <string name="welcome_skip">SKIP</string>
   <!--Allows user to finish the welcome screen-->
   <string name="welcome_finish">FINISH</string>
   <!--Indicates to user they can pick a color-->
-  <string name="welcome_theme_title">Pick a color</string>
+  <string name="welcome_theme_title">एक रंग चुनें</string>
   <!--Indicates to user they can pick any colors-->
-  <string name="welcome_theme_description">Any color.</string>
+  <string name="welcome_theme_description">किसी भी रंग।</string>
   <!--Tells user to press button to toggle night mode-->
   <string name="welcome_night_description">Easy on the eyes.</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_night_hint">Toggle me</string>
+  <string name="welcome_night_hint">मुझे टॉगल करें</string>
   <!--Tells user to press button to toggle night mode-->
   <string name="welcome_quickreply_title">QK Reply</string>
   <!--QK Reply explanation-->
@@ -146,10 +146,12 @@
   <string name="pref_font_weight">फ़ॉन्ट आकार</string>
   <string name="pref_message_count">संदेश संख्या</string>
   <string name="pref_message_count_summary">Show the number of messages for each conversation</string>
-  <string name="pref_sliding_tab">फिसलने पैनल टैब</string>
-  <string name="pref_sliding_tab_summary">Sliding tab that allows you to quickly view your last conversation</string>
   <string name="pref_sent_timestamps">Sent timestamps</string>
   <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Starred contacts</string>
   <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
   <string name="pref_prox_sensor_call">Proximity sensor</string>
@@ -593,6 +595,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber is not installed, opening Google Play</string>
   <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">दान के लिए धन्यवाद! आप मेरे नए सबसे अच्छे  दोस्त हैं.</string>
   <!--Toast shown to thank user for donating-->

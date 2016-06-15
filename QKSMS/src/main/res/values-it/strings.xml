@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Larghezza carattere</string>
   <string name="pref_message_count">Contatore messaggi</string>
   <string name="pref_message_count_summary">Visualizza il numero di messaggi per ogni conversazione</string>
-  <string name="pref_sliding_tab">Scheda con pannello scorrevole</string>
-  <string name="pref_sliding_tab_summary">Scheda che consente di visualizzare rapidamente l\'ultima conversazione</string>
-  <string name="pref_sent_timestamps">Sent timestamps</string>
-  <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_sent_timestamps">Data e ora di invio</string>
+  <string name="pref_sent_timestamps_summary">Mostra data e ora di quando un messaggio è stato inviato, non ricevuto</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Contatti speciali</string>
   <string name="pref_compose_summary_favorites">Mostra i tuoi contatti speciali nella Composizione QK, per sceglierli più velocemente</string>
   <string name="pref_prox_sensor_call">Sensore di prossimità</string>
@@ -245,15 +247,15 @@
   <string name="pref_about_authors_summary">Moez Bhatti</string>
   <string name="pref_changelog_summary">Tocca per vedere il changelog</string>
   <string name="pref_about_thanks_title">Grazie</string>
-  <string name="pref_about_thanks_summary">Tocca per visualizzare i contributori oper-source</string>
+  <string name="pref_about_thanks_summary">Tocca per visualizzare i contributori open-source</string>
   <string name="pref_donate_title">Dona</string>
-  <string name="pref_donate_summary">QKSMS è un software libero. Aiuta a supportaci con una donazione!</string>
+  <string name="pref_donate_summary">QKSMS è un software libero. Supportaci con una donazione!</string>
   <string name="pref_about_gplus_title">Google+</string>
-  <string name="pref_about_gplus_summary">Join the QKSMS Beta Testing community on Google+</string>
+  <string name="pref_about_gplus_summary">Entra nella community QKSMS Beta Testing su Google+</string>
   <string name="pref_about_github_title">GitHub</string>
-  <string name="pref_about_github_summary">QKSMS is open source. Contribute and report issues on GitHub</string>
+  <string name="pref_about_github_summary">QKSMS è open source. Contribuisci e riporta i problemi su GitHub</string>
   <string name="pref_about_crowdin_title">Crowdin</string>
-  <string name="pref_about_crowdin_summary">Join the QKSMS translation project on Crowdin</string>
+  <string name="pref_about_crowdin_summary">Entra nel progetto di traduzione di QKSMS su Crowdin</string>
   <!--Preference subcategory-->
   <string name="pref_subcat_theme">Tema</string>
   <!--Preference subcategory-->
@@ -352,8 +354,8 @@
   <!--Notification action to call the sender of a message-->
   <string name="call">Chiama</string>
   <!-- Notification toast message  -->
-  <string name="notification_mute_on">Notifications enabled</string>
-  <string name="notification_mute_off">Notifications disabled</string>
+  <string name="notification_mute_on">Notifiche abilitate</string>
+  <string name="notification_mute_off">Notifiche disabilitate</string>
   <!--Positive action button-->
   <string name="yes">Sì</string>
   <string name="add">Aggiungi</string>
@@ -404,7 +406,7 @@
   <!-- Title of "Message details" dialog -->
   <string name="message_details_title">Dettagli messaggio</string>
   <!-- Label in "Message details" dialog -->
-  <string name="message_type_label">Scritto</string>
+  <string name="message_type_label">Tipo\u000A</string>
   <!-- "Type" value in "Message details" dialog -->
   <string name="text_message">Messaggio di testo</string>
   <!-- "Type" value in "Message details" dialog -->
@@ -412,23 +414,23 @@
   <!-- "Type" value in "Message details" dialog -->
   <string name="multimedia_notification">Notifica del messaggio multimediale</string>
   <!-- Label in "Message details" dialog showing who sent the message. -->
-  <string name="from_label">Da</string>
+  <string name="from_label">Da\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="to_address_label">Per</string>
+  <string name="to_address_label">Per\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="bcc_label">Bcc</string>
+  <string name="bcc_label">Ccn\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="sent_label">Inviato</string>
+  <string name="sent_label">Inviato\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="received_label">Ricevuto</string>
+  <string name="received_label">Ricevuto\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="saved_label">Salvato</string>
+  <string name="saved_label">Salvato\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="subject_label">Soggetto</string>
+  <string name="subject_label">Soggetto\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="message_size_label">Dimensione del messaggio</string>
+  <string name="message_size_label">Dimensione del messaggio\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="priority_label">Priorità</string>
+  <string name="priority_label">Priorità\u000A</string>
   <!-- "Priority" value in "Message details" dialog -->
   <string name="priority_high">Alta</string>
   <!-- "Priority" value in "Message details" dialog -->
@@ -436,9 +438,9 @@
   <!-- "Priority" value in "Message details" dialog -->
   <string name="priority_low">Bassa</string>
   <!-- Label in "Message details" dialog -->
-  <string name="message_class_label">Classe del messaggio</string>
+  <string name="message_class_label">Classe del messaggio\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="error_code_label">Codice di errore</string>
+  <string name="error_code_label">Codice di errore\u000A</string>
   <!-- Alert dialog title when creating a slideshow [CHAR LIMIT=none] -->
   <string name="building_slideshow_title">Creazione presentazione in corso</string>
   <!-- Tag appearing on conversations in the conversation list that contain a draft message -->
@@ -593,6 +595,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber non è installato, apertura di Google Play in corso</string>
   <string name="toast_changelog_error">Impossibile caricare i cambiamenti. Per favore riprova più tardi</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Grazie per la donazione! Sei il mio nuovo migliore amico.</string>
   <!--Toast shown to thank user for donating-->

@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Толщина шрифта</string>
   <string name="pref_message_count">Количество сообщений</string>
   <string name="pref_message_count_summary">Показать количество сообщений для каждой переписки</string>
-  <string name="pref_sliding_tab">Выдвигающаяся панель</string>
-  <string name="pref_sliding_tab_summary">Выдвигающаяся панель, которая позволяет вам быстро просмотреть ваш последний разговор</string>
-  <string name="pref_sent_timestamps">Sent timestamps</string>
-  <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_sent_timestamps">Отправленные временные отметки</string>
+  <string name="pref_sent_timestamps_summary">Показывать временную отметку, когда сообщение было отправлено (не получено)</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Помеченные контакты</string>
   <string name="pref_compose_summary_favorites">Показать ваши помеченные контакты в окне быстрого сообщения, убрать их можно будет касанием</string>
   <string name="pref_prox_sensor_call">Датчик приближения</string>
@@ -249,11 +251,11 @@
   <string name="pref_donate_title">Пожертвования</string>
   <string name="pref_donate_summary">QKSMS является бесплатным. Поддержите нас, материально!</string>
   <string name="pref_about_gplus_title">Google+</string>
-  <string name="pref_about_gplus_summary">Join the QKSMS Beta Testing community on Google+</string>
+  <string name="pref_about_gplus_summary">Присоединяйтесь к бета-тестированию QKSMS в Google+</string>
   <string name="pref_about_github_title">GitHub</string>
-  <string name="pref_about_github_summary">QKSMS is open source. Contribute and report issues on GitHub</string>
+  <string name="pref_about_github_summary">QKSMS это открытый проект, сообщать о проблемах и вносить изменения можно на GitHub</string>
   <string name="pref_about_crowdin_title">Crowdin</string>
-  <string name="pref_about_crowdin_summary">Join the QKSMS translation project on Crowdin</string>
+  <string name="pref_about_crowdin_summary">Присоединяйтесь к проекту перевода QKSMS на другие языки на Crowdin</string>
   <!--Preference subcategory-->
   <string name="pref_subcat_theme">Тема</string>
   <!--Preference subcategory-->
@@ -352,8 +354,8 @@
   <!--Notification action to call the sender of a message-->
   <string name="call">Позвонить</string>
   <!-- Notification toast message  -->
-  <string name="notification_mute_on">Notifications enabled</string>
-  <string name="notification_mute_off">Notifications disabled</string>
+  <string name="notification_mute_on">Уведомления включены</string>
+  <string name="notification_mute_off">Уведомления выключены</string>
   <!--Positive action button-->
   <string name="yes">Да</string>
   <string name="add">Добавить</string>
@@ -595,6 +597,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber не установлен, открытие Google Play</string>
   <string name="toast_changelog_error">Не удается загрузить список изменений. Пожалуйста, повторите попытку позже</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Благодарим за пожертвование! Теперь Вы наш новый лучший друг.</string>
   <!--Toast shown to thank user for donating-->
@@ -661,7 +664,7 @@
   <string name="pref_mms_contact_support_summary">Связаться с командой QKSMS для помощи в настройке MMS</string>
   <string name="pref_markdown_enabled">Форматирование текста</string>
   <string name="pref_markdown_enabled_summary">Используйте полужирный шрифт, подчеркивание, и курсив в ваших сообщениях</string>
-  <string name="want_read_indicators">Want read indicators?</string>
+  <string name="want_read_indicators">Хотите ли читать индикаторы?</string>
   <string name="color_swatch_description">Цвет %1$d</string>
   <string name="color_swatch_description_selected">%1$d цвет выбран</string>
   <string name="color_picker_default_title">Выберите цвет</string>

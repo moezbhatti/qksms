@@ -24,9 +24,9 @@
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
   <string name="new_messages">개의 새로운 메시지</string>
   <!--Text shown for single failed message in notification-->
-  <string name="failed_message">Message failed to send</string>
+  <string name="failed_message">메시지 전송 실패</string>
   <!--Text shown after number of failed messages in notification (ex. 3 messages failed to send)-->
-  <string name="failed_messages">messages failed to send</string>
+  <string name="failed_messages">메시지 전송 실패</string>
   <!--Text shown under failed message count-->
   <string name="failed_messages_summary">Tap to view</string>
   <!--QuickCompose notification title-->
@@ -36,9 +36,9 @@
   <!--Welcome screen intro button-->
   <string name="welcome_start">Let\'s get started!</string>
   <!--Allows user to skip welcome screen-->
-  <string name="welcome_skip">SKIP</string>
+  <string name="welcome_skip">건너 뛰기</string>
   <!--Allows user to finish the welcome screen-->
-  <string name="welcome_finish">FINISH</string>
+  <string name="welcome_finish">완료</string>
   <!--Indicates to user they can pick a color-->
   <string name="welcome_theme_title">Pick a color</string>
   <!--Indicates to user they can pick any colors-->
@@ -60,11 +60,11 @@
   <!--Settings option in menu-->
   <string name="menu_settings">설정</string>
   <!--Search option in menu-->
-  <string name="menu_search">Search</string>
+  <string name="menu_search">검색</string>
   <!--Show full conversation in QuickReply-->
-  <string name="menu_show_all">Show all messages</string>
+  <string name="menu_show_all">모든 메시지 표시</string>
   <!--Show only unread messages in QuickReply-->
-  <string name="menu_show_unread">Show unread messages</string>
+  <string name="menu_show_unread">읽지 않은 메시지 표시</string>
   <!--Open conversation option in menu (shown in QuickReply)-->
   <string name="menu_open_thread">대화 열기</string>
   <!--Forward message option in menu-->
@@ -74,15 +74,15 @@
   <!--Mark a message/conversation as read option in menu-->
   <string name="menu_read">읽음으로 표시</string>
   <!--Delete a message option in menu-->
-  <string name="menu_delete">Delete</string>
+  <string name="menu_delete">삭제</string>
   <!--Donate option in menu-->
-  <string name="menu_billing">Donate</string>
+  <string name="menu_billing">기부</string>
   <!--Copy text option in menu-->
   <string name="menu_copy">복사</string>
   <!--Changelog option in menu-->
   <string name="menu_changelog">"업데이트 로그"</string>
   <!--Expand settings option in menu-->
-  <string name="menu_show_all_prefs">Show all</string>
+  <string name="menu_show_all_prefs">모두 보기</string>
   <!--Show less settings option in menu-->
   <string name="menu_show_fewer_prefs">Show fewer</string>
   <!--Title for message details popup-->
@@ -102,10 +102,10 @@
   <!--Title for rate button-->
   <string name="rate_action">Rate</string>
   <string name="pref_category_appearance">Appearance</string>
-  <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
+  <string name="pref_category_summary_appearance">테마, 글꼴, 색상, 아바타 등</string>
   <string name="pref_category_general">일반</string>
   <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
-  <string name="pref_category_blocking">Message blocking</string>
+  <string name="pref_category_blocking">메시지 차단</string>
   <string name="pref_category_notifications">알림</string>
   <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
   <string name="pref_category_mms">MMS</string>
@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Font weight</string>
   <string name="pref_message_count">Message count</string>
   <string name="pref_message_count_summary">Show the number of messages for each conversation</string>
-  <string name="pref_sliding_tab">패널 슬라이드</string>
-  <string name="pref_sliding_tab_summary">Sliding tab that allows you to quickly view your last conversation</string>
   <string name="pref_sent_timestamps">Sent timestamps</string>
   <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Starred contacts</string>
   <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
   <string name="pref_prox_sensor_call">Proximity sensor</string>
@@ -592,6 +594,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber is not installed, opening Google Play</string>
   <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Thank you for donating! You\'re my new best friend.</string>
   <!--Toast shown to thank user for donating-->

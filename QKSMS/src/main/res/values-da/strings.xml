@@ -116,10 +116,10 @@
   <string name="pref_category_summary_quickcompose">QK Compose, stjernemarkerede kontakter</string>
   <string name="pref_category_about">Om</string>
   <string name="pref_category_summary_about">Version, ændringslog, forfattere, tak</string>
-  <string name="pref_theme">Theme color</string>
+  <string name="pref_theme">Temafarve</string>
   <string name="pref_theme_summary_alt">Tryk for at ændre tema</string>
   <string name="pref_icon">Opdater QKSMS ikonfarven</string>
-  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
+  <string name="pref_icon_summary">Opdater QKSMS ikonet til at matche dit farveskema</string>
   <string name="pref_status_tint">Tonet statusbjælke</string>
   <string name="pref_navigation_tint">Tonet navigationslinje</string>
   <string name="pref_background">Baggrundsfarve</string>
@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Typografi</string>
   <string name="pref_message_count">Beskedtæller</string>
   <string name="pref_message_count_summary">Vis antallet af beskeder for hver samtale</string>
-  <string name="pref_sliding_tab">Glidende panel fane</string>
-  <string name="pref_sliding_tab_summary">Glidende panel som tillader dig hurtigt at se den seneste samtale</string>
   <string name="pref_sent_timestamps">Sent timestamps</string>
   <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Stjernemarkerede kontakter</string>
   <string name="pref_compose_summary_favorites">Vis dine stjernemarkerede kontakter i QK Compose vinduet, så de kun er et klik væk</string>
   <string name="pref_prox_sensor_call">Nærhedssensor</string>
@@ -352,8 +354,8 @@
   <!--Notification action to call the sender of a message-->
   <string name="call">Ring op</string>
   <!-- Notification toast message  -->
-  <string name="notification_mute_on">Notifications enabled</string>
-  <string name="notification_mute_off">Notifications disabled</string>
+  <string name="notification_mute_on">Notifikationer er aktiveret</string>
+  <string name="notification_mute_off">Notifikationer er deaktiveret</string>
   <!--Positive action button-->
   <string name="yes">Ja</string>
   <string name="add">Tilføj</string>
@@ -550,7 +552,7 @@
   <string name="dialog_conversation_details_message_count">Beskedtæller</string>
   <string name="dialog_conversation_details_recipients">Modtagere (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
-  <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
+  <string name="dialog_should_i_answer_message">Ønsker du at downloade app\'en fra Google Play nu?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Vælg lydside</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -592,7 +594,8 @@
   <string name="toast_billing_not_available">Køb kræver Google Play Butik (betaling) på din Android</string>
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber er ikke installeret. Åbner Google Play</string>
-  <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_changelog_error">Kunne ikke indlæse ændringsloggen. Prøv igen senere</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Tak for din donering! Du er min nye bedste ven.</string>
   <!--Toast shown to thank user for donating-->
@@ -696,9 +699,9 @@
     <item>Slet besked</item>
   </string-array>
   <string-array name="background_titles">
-    <item>Material Light</item>
-    <item>Material Dark</item>
-    <item>Black</item>
+    <item>Material Lys</item>
+    <item>Material Mørk</item>
+    <item>Sort</item>
   </string-array>
   <string-array name="font_sizes">
     <item>Lille</item>

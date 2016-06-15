@@ -8,7 +8,7 @@
   <!--Content description for photos-->
   <string name="popup_photo_CD">Foto</string>
   <!--Text to be displayed while content is loading-->
-  <string name="loading">Nahrávání&#8230;</string>
+  <string name="loading">Načítání&#8230;</string>
   <!--Test string-->
   <string name="test">Test string</string>
   <!--Hint for contacts text field-->
@@ -34,17 +34,17 @@
   <!--QuickCompose notification text-->
   <string name="quickcompose_detail">Kliknutím odešlete zprávu</string>
   <!--Welcome screen intro button-->
-  <string name="welcome_start">Let\'s get started!</string>
+  <string name="welcome_start">Začněme!</string>
   <!--Allows user to skip welcome screen-->
-  <string name="welcome_skip">SKIP</string>
+  <string name="welcome_skip">PŘESKOČIT</string>
   <!--Allows user to finish the welcome screen-->
-  <string name="welcome_finish">FINISH</string>
+  <string name="welcome_finish">DOKONČIT</string>
   <!--Indicates to user they can pick a color-->
-  <string name="welcome_theme_title">Pick a color</string>
+  <string name="welcome_theme_title">Vyberte si barvu</string>
   <!--Indicates to user they can pick any colors-->
   <string name="welcome_theme_description">Jakákoliv barva.</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_night_description">Easy on the eyes.</string>
+  <string name="welcome_night_description">Šetří oči.</string>
   <!--Tells user to press button to toggle night mode-->
   <string name="welcome_night_hint">Toggle me</string>
   <!--Tells user to press button to toggle night mode-->
@@ -60,11 +60,11 @@
   <!--Settings option in menu-->
   <string name="menu_settings">Nastavení</string>
   <!--Search option in menu-->
-  <string name="menu_search">Search</string>
+  <string name="menu_search">Hledat</string>
   <!--Show full conversation in QuickReply-->
-  <string name="menu_show_all">Show all messages</string>
+  <string name="menu_show_all">Zobrazit všechny zprávy</string>
   <!--Show only unread messages in QuickReply-->
-  <string name="menu_show_unread">Show unread messages</string>
+  <string name="menu_show_unread">Zobrazit nepřečtené zprávy</string>
   <!--Open conversation option in menu (shown in QuickReply)-->
   <string name="menu_open_thread">Otevřít konverzaci</string>
   <!--Forward message option in menu-->
@@ -74,17 +74,17 @@
   <!--Mark a message/conversation as read option in menu-->
   <string name="menu_read">Označit jako přečtené</string>
   <!--Delete a message option in menu-->
-  <string name="menu_delete">Delete</string>
+  <string name="menu_delete">Smazat</string>
   <!--Donate option in menu-->
-  <string name="menu_billing">Donate</string>
+  <string name="menu_billing">Přispět</string>
   <!--Copy text option in menu-->
   <string name="menu_copy">Kopírovat text</string>
   <!--Changelog option in menu-->
   <string name="menu_changelog">"Co je nového"</string>
   <!--Expand settings option in menu-->
-  <string name="menu_show_all_prefs">Show all</string>
+  <string name="menu_show_all_prefs">Zobrazit vše</string>
   <!--Show less settings option in menu-->
-  <string name="menu_show_fewer_prefs">Show fewer</string>
+  <string name="menu_show_fewer_prefs">Zobrazit méně</string>
   <!--Title for message details popup-->
   <string name="details_title">Podrobnosti</string>
   <!--Title for address that message is being sent to in message details popup-->
@@ -98,14 +98,14 @@
   <!--Title for date received of a message in message details popup-->
   <string name="details_date_received">Datum přijetí</string>
   <!--Title for rate snackbar-->
-  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_title">Líbí se vám QKSMS?</string>
   <!--Title for rate button-->
-  <string name="rate_action">Rate</string>
-  <string name="pref_category_appearance">Appearance</string>
-  <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
+  <string name="rate_action">Hodnotit</string>
+  <string name="pref_category_appearance">Vzhled</string>
+  <string name="pref_category_summary_appearance">Motivy vzhledu, písma, barvy, avatary a další</string>
   <string name="pref_category_general">Obecné</string>
   <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
-  <string name="pref_category_blocking">Message blocking</string>
+  <string name="pref_category_blocking">Blokování zpráv</string>
   <string name="pref_category_notifications">Oznámení</string>
   <string name="pref_category_summary_notifications">Zvuky, LED, soukromí</string>
   <string name="pref_category_mms">MMS</string>
@@ -114,23 +114,23 @@
   <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
   <string name="pref_category_quickcompose">QK napsat</string>
   <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
-  <string name="pref_category_about">O</string>
-  <string name="pref_category_summary_about">Verze, seznam změn, autoři, díky</string>
-  <string name="pref_theme">Theme color</string>
+  <string name="pref_category_about">O aplikaci</string>
+  <string name="pref_category_summary_about">Verze, seznam změn, autoři, poděkování</string>
+  <string name="pref_theme">Barva motivu</string>
   <string name="pref_theme_summary_alt">Změnit téma klepnutím</string>
   <string name="pref_icon">Aktualizovat barvu ikony QKSMS</string>
   <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
   <string name="pref_status_tint">Transparentní stavový panel</string>
   <string name="pref_navigation_tint">Transparentní navigační panel</string>
   <string name="pref_background">Barva pozadí</string>
-  <string name="pref_background_summary">Tap to change background color</string>
-  <string name="pref_bubbles">Message bubbles</string>
+  <string name="pref_background_summary">Klepnutím změníte barvu pozadí</string>
+  <string name="pref_bubbles">Bubliny zpráv</string>
   <string name="pref_bubbles_summary">Tap to change message bubble preferences</string>
   <string name="pref_night">Noční režim</string>
   <string name="pref_night_summary">Save battery and reduce eye strain</string>
   <string name="pref_night_amoled">Čistě černé pozadí</string>
   <string name="pref_night_amoled_summary">Výrazně šetří baterii na zařízeních s AMOLED displejem</string>
-  <string name="pref_bubble_style_new">Use new bubble style</string>
+  <string name="pref_bubble_style_new">Používat nový styl bublin</string>
   <string name="pref_color_sent">Color sent messages</string>
   <string name="pref_color_sent_summary">Color the background bubbles for outgoing messages</string>
   <string name="pref_color_received">Color received messages</string>
@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Font weight</string>
   <string name="pref_message_count">Počet zpráv</string>
   <string name="pref_message_count_summary">Show the number of messages for each conversation</string>
-  <string name="pref_sliding_tab">Posuvný panel</string>
-  <string name="pref_sliding_tab_summary">Sliding tab that allows you to quickly view your last conversation</string>
   <string name="pref_sent_timestamps">Sent timestamps</string>
   <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Starred contacts</string>
   <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
   <string name="pref_prox_sensor_call">Proximity sensor</string>
@@ -182,7 +184,7 @@
   <string name="pref_auto_data_summary">Turn on data automatically when sending or receiving MMS</string>
   <string name="pref_split">Rozdělit SMS</string>
   <string name="pref_split_summary">Rozdělit dlouhé zprávy do samostatných zpráv</string>
-  <string name="pref_split_counter">Počítač znaků</string>
+  <string name="pref_split_counter">Počítadlo znaků</string>
   <string name="pref_split_counter_summary">Přidá počítač znaků na začátek každé nové zprávy</string>
   <string name="pref_long_as_mms">Dlouhé zprávy jako MMS</string>
   <string name="pref_long_as_mms_summary">Dlouhé zprávy budou zaslány jako jedna MMS</string>
@@ -195,7 +197,7 @@
   <string name="pref_text">Text</string>
   <string name="pref_notifications">SMS oznámení povoleno</string>
   <string name="pref_led">Oznámení LED</string>
-  <string name="pref_theme_led">Barva LED oznámení</string>
+  <string name="pref_theme_led">Barva LED upozornění</string>
   <string name="pref_wake">Probudit telefon</string>
   <string name="pref_wake_summary">Zapnout obrazovku při obdržení nové zprávy</string>
   <string name="pref_notifications_private">Soukromé oznámení</string>
@@ -215,7 +217,7 @@
   <string name="pref_delayed_duration">Délka zpoždění (sekundy)</string>
   <string name="pref_delayed_duration_summary">Čas čekání před odesláním zprávy</string>
   <string name="pref_night_auto">Automatický noční režim</string>
-  <string name="pref_night_auto_summary">Zapnout noční režim automaticky na základě času</string>
+  <string name="pref_night_auto_summary">Zapnout noční režim automaticky podle času</string>
   <string name="pref_day_start">Day time begins</string>
   <string name="pref_night_start">Noční čas začíná</string>
   <string name="pref_qk_responses">QK odpovědi</string>
@@ -244,16 +246,16 @@
   <string name="pref_about_authors_title">Autoři</string>
   <string name="pref_about_authors_summary">Moez Bhatti</string>
   <string name="pref_changelog_summary">Klepnutím zobrazíte seznam změn</string>
-  <string name="pref_about_thanks_title">Děkuji</string>
-  <string name="pref_about_thanks_summary">Tap to view open-source contributors</string>
-  <string name="pref_donate_title">Donate</string>
-  <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
+  <string name="pref_about_thanks_title">Poděkování</string>
+  <string name="pref_about_thanks_summary">Klepnutím zobrazíte open source přispěvatele</string>
+  <string name="pref_donate_title">Přispět</string>
+  <string name="pref_donate_summary">QKSMS je zdarma. Podpořte nás a přispějte na vývoj.</string>
   <string name="pref_about_gplus_title">Google+</string>
-  <string name="pref_about_gplus_summary">Join the QKSMS Beta Testing community on Google+</string>
+  <string name="pref_about_gplus_summary">Přidejte se do skupiny beta testerů QKSMS na Google+</string>
   <string name="pref_about_github_title">GitHub</string>
-  <string name="pref_about_github_summary">QKSMS is open source. Contribute and report issues on GitHub</string>
+  <string name="pref_about_github_summary">QKSMS je open source. Zapojte se a hlašte chyby na GitHub.</string>
   <string name="pref_about_crowdin_title">Crowdin</string>
-  <string name="pref_about_crowdin_summary">Join the QKSMS translation project on Crowdin</string>
+  <string name="pref_about_crowdin_summary">Zapojte se do překladatelského projektu na Crowdinu</string>
   <!--Preference subcategory-->
   <string name="pref_subcat_theme">Téma</string>
   <!--Preference subcategory-->
@@ -266,19 +268,19 @@
   <string name="pref_subcat_messages">Zprávy</string>
   <!--Preference subcategory-->
   <string name="pref_subcat_avatars">Avatary</string>
-  <string name="donate_google">Donate with Google</string>
-  <string name="donate_google_summary">Google takes 30% of donations</string>
-  <string name="donate_paypal">Donate with PayPal</string>
-  <string name="donate_paypal_button">Donate any amount</string>
-  <string name="donate_paypal_button_summary">Buy me anything you want!</string>
+  <string name="donate_google">Přispět pomocí Google</string>
+  <string name="donate_google_summary">Google si bere 30 % z částky daru</string>
+  <string name="donate_paypal">Přispět pomocí PayPal</string>
+  <string name="donate_paypal_button">Přispět libovolnou částkou</string>
+  <string name="donate_paypal_button_summary">Kup mi cokoliv chceš!</string>
   <!--Donation product name-->
   <string name="product_name_donation">Donation</string>
   <!--$1 donation product name-->
-  <string name="product_name_donate_1">Donate $1 USD</string>
+  <string name="product_name_donate_1">Darovat $1 USD</string>
   <!--$5 donation product name-->
-  <string name="product_name_donate_5">Donate $5 USD</string>
+  <string name="product_name_donate_5">Darovat $5 USD</string>
   <!--$3 donation product name-->
-  <string name="product_name_donate_10">Donate $10 USD</string>
+  <string name="product_name_donate_10">Darovat $10 USD</string>
   <!--$1 donation product description-->
   <string name="product_description_donate_1">Kup mi kolu</string>
   <!--$5 donation product description-->
@@ -290,13 +292,13 @@
   <string name="title_compose">Nová zpráva</string>
   <string name="title_conversation_list">Konverzace</string>
   <string name="title_blocked">Blocked</string>
-  <string name="title_changelog">Changelog</string>
+  <string name="title_changelog">Seznam změn</string>
   <string name="title_picker">Nové zprávy</string>
-  <string name="title_donate">Donate</string>
+  <string name="title_donate">Přispět</string>
   <string name="title_qk_responses">QK odpovědi</string>
   <string name="title_block_address">Block number</string>
   <string name="title_unblock_address">Unblock number</string>
-  <string name="title_conversations_selected">%s selected</string>
+  <string name="title_conversations_selected">Vybráno: %s</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -321,11 +323,11 @@
   <!--Text for app restart confirmation dialog-->
   <string name="restart_message">Změny se projeví až při dalším otevření QKSMS</string>
   <!--Dialog title for asking if a user wants to delete a conversation-->
-  <string name="delete_conversation">Delete conversations</string>
+  <string name="delete_conversation">Smazat konverzace</string>
   <!--Dialog title for asking if a user wants to delete all failed messages-->
   <string name="delete_all_failed">Delete failed messages</string>
   <!--CDialog title for asking if a user wants to delete a conversation-->
-  <string name="delete_confirmation">Are you sure you would like to delete (%s) conversations?</string>
+  <string name="delete_confirmation">Opravdu chcete smazat vybrané konverzace (%s)?</string>
   <!--CDialog title for asking if a user wants to delete all failed messages-->
   <string name="delete_all_failed_confirmation">Are you sure you would like to delete failed messages from (%s) conversations?</string>
   <!--(Unused) Dialog title shown if APNs have not been set-->
@@ -358,9 +360,9 @@
   <string name="yes">Ano</string>
   <string name="add">Add</string>
   <!--Positive action button-->
-  <string name="save">Save</string>
+  <string name="save">Uložit</string>
   <!--Positive action button-->
-  <string name="enable">Enable</string>
+  <string name="enable">Povolit</string>
   <!--Positive action button-->
   <string name="upgrade_now">Set now</string>
   <!--Positive action button-->
@@ -394,7 +396,7 @@
   <!-- Word represents 'self' in a conversation -->
   <string name="me">Me</string>
   <string name="menu_edit">Edit</string>
-  <string name="menu_delete_messages">Delete messages</string>
+  <string name="menu_delete_messages">Smazat zprávy</string>
   <string name="menu_delete_failed">Delete failed messages</string>
   <string name="menu_lock">Lock</string>
   <string name="menu_unlock">Unlock</string>
@@ -485,17 +487,17 @@
   <string name="do_something">Do something</string>
   <!-- Confirm Delete -->
   <!-- Delete confirmation dialog title -->
-  <string name="confirm_dialog_title">Delete?</string>
+  <string name="confirm_dialog_title">Smazat?</string>
   <!-- Delete confirmation dialog title for locked messages -->
-  <string name="confirm_dialog_locked_title">Delete locked message?</string>
+  <string name="confirm_dialog_locked_title">Smazat uzamčené zprávy?</string>
   <!-- This message is displayed in a confirmation dialog when the user selects one or more
          conversations and then taps the "Delete" button. -->
   <plurals name="confirm_delete_conversation">
     <!-- Case of 1 result. -->
-    <item quantity="one">One conversation will be deleted.</item>
-    <item quantity="few"><xliff:g id="number" example="15">%1$s</xliff:g> conversations will be deleted.</item>
+    <item quantity="one">Konverzace bude odstraněna.</item>
+    <item quantity="few">Budou odstraněny <xliff:g id="number" example="15">%1$s</xliff:g> konverzace.</item>
     <!-- Case of 0 or 2 or more results. -->
-    <item quantity="other"><xliff:g id="number" example="15">%1$s</xliff:g> conversations will be deleted.</item>
+    <item quantity="other">Bude odstraněno <xliff:g id="number" example="15">%1$s</xliff:g> konverzací.</item>
   </plurals>
   <string name="confirm_delete_conversation">The entire thread will be deleted.</string>
   <!-- Delete all threads confirmation dialog message -->
@@ -570,7 +572,7 @@
   <!-- Menu item  [CHAR LIMIT=40] -->
   <string name="menu_group_participants">Group participants</string>
   <!--Toast shown when a draft is saved-->
-  <string name="toast_draft">Uložit draft</string>
+  <string name="toast_draft">Uložit koncept</string>
   <!--Toast shown when a conversation is deleted-->
   <string name="toast_conversation_deleted">Konverzace odstraněna</string>
   <!--Toast shown when device is low on storage-->
@@ -594,6 +596,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber is not installed, opening Google Play</string>
   <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Děkuji za přispění! Jsi mým novým nejlepším přítelem.</string>
   <!--Toast shown to thank user for donating-->
@@ -601,7 +604,7 @@
   <!--Toast shown to thank user for donating-->
   <string name="thanks_3">Děkuji za přispění. Pomáháte QKSMS aby patřila mezi ty nejlepší SMS aplikace, které kdy byli.</string>
   <!--Toast shown to thank user for donating-->
-  <string name="thanks_4">Děkuji za přispění! Si úžasný/á.</string>
+  <string name="thanks_4">Děkuji za přispění! Jsi vskutku boží!</string>
   <!--Menu option to mute conversation-->
   <string name="menu_mute_conversation">Mute conversation</string>
   <!--Menu option to mute conversation-->
@@ -620,7 +623,7 @@
   <string name="menu_mark_unread">Mark unread</string>
   <string name="menu_delete_conversation">Delete conversation</string>
   <string name="menu_multi_select">Select conversation</string>
-  <string name="menu_done">Done</string>
+  <string name="menu_done">Hotovo</string>
   <string name="failed_message_title">Failed message options</string>
   <!--Toast shown to tell the user that they don't have a photo attachments app, and suggests that they download one-->
   <string name="attachment_app_not_found">Attachments app not found. Try installing a photo gallery app!</string>
@@ -688,7 +691,7 @@
   <string-array name="resend_menu">
     <item>Resend</item>
     <item>Edit</item>
-    <item>Delete</item>
+    <item>Smazat</item>
   </string-array>
   <string-array name="message_menu">
     <item>Přeposlat zprávu</item>

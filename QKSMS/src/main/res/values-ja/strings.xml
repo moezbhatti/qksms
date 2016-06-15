@@ -146,10 +146,12 @@
   <string name="pref_font_weight">フォントの太さ</string>
   <string name="pref_message_count">メッセージ件数</string>
   <string name="pref_message_count_summary">会話ごとにメッセージ数を表示します</string>
-  <string name="pref_sliding_tab">スライド パネル タブ</string>
-  <string name="pref_sliding_tab_summary">スライド タブは最後の会話をすばやく表示することができます</string>
   <string name="pref_sent_timestamps">送信タイムスタンプ</string>
   <string name="pref_sent_timestamps_summary">受信されていないメッセージが送信されたときのタイムスタンプを表示します</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">スターを付けた連絡先</string>
   <string name="pref_compose_summary_favorites">QK 作成ウィンドウにスターを付けた連絡先を表示します。タップすると消えます</string>
   <string name="pref_prox_sensor_call">近接センサー</string>
@@ -592,6 +594,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber がインストールされていません。Google Play を開きます</string>
   <string name="toast_changelog_error">変更履歴を読み込めませんでした。もう一度やり直してください</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">寄付をありがとう! あなたは私の新しい親友です。</string>
   <!--Toast shown to thank user for donating-->

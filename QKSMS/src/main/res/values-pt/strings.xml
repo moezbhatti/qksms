@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Espessura da fonte</string>
   <string name="pref_message_count">Número de mensagens</string>
   <string name="pref_message_count_summary">Mostrar o número de mensagens em cada conversa</string>
-  <string name="pref_sliding_tab">Painel deslizante</string>
-  <string name="pref_sliding_tab_summary">Mostrar painel deslizante que lhe permite ver rapidamente a última conversa</string>
-  <string name="pref_sent_timestamps">Sent timestamps</string>
-  <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_sent_timestamps">Data/hora de envio</string>
+  <string name="pref_sent_timestamps_summary">Mostrar data/hora do envio da mensagem e não de quando foi recebida</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Contactos favoritos</string>
   <string name="pref_compose_summary_favorites">Mostrar contactos favoritos na janela QK Compose, apenas a um toque de distância</string>
   <string name="pref_prox_sensor_call">Sensor de proximidade</string>
@@ -290,7 +292,7 @@
   <string name="title_compose">Nova mensagem</string>
   <string name="title_conversation_list">Conversas</string>
   <string name="title_blocked">Bloqueado</string>
-  <string name="title_changelog">Histórico de Alterações</string>
+  <string name="title_changelog">Registo de alterações</string>
   <string name="title_picker">Novas mensagens</string>
   <string name="title_donate">Donativos</string>
   <string name="title_qk_responses">QK Responses</string>
@@ -593,6 +595,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber não instalado, a abrir o Google Play</string>
   <string name="toast_changelog_error">Não foi possível carregar o registo de alterações. Tente mais tarde.</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Obrigado pelo donativo! Você é o meu novo amigo.</string>
   <!--Toast shown to thank user for donating-->
@@ -611,8 +614,8 @@
   <string name="menu_blocked">Bloqueada</string>
   <string name="menu_blocked_conversations">Bloqueadas (%s novas)</string>
   <string name="menu_unblocked_conversations">Mensagens (%s novas)</string>
-  <string name="menu_notifications">Notificações</string>
-  <string name="menu_notifications_off">Desligar notificações</string>
+  <string name="menu_notifications">Desativar notificações</string>
+  <string name="menu_notifications_off">Ativar notificações</string>
   <string name="menu_notification_settings">Definições de conversação</string>
   <string name="menu_view_details">Ver detalhes</string>
   <string name="menu_mark_read">Marcar como lida</string>

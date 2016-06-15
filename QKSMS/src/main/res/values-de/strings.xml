@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Schriftstärke</string>
   <string name="pref_message_count">Nachrichtenzähler</string>
   <string name="pref_message_count_summary">Zeige die Anzahl der Nachrichten für jede Unterhaltung</string>
-  <string name="pref_sliding_tab">Gleitendes Feld</string>
-  <string name="pref_sliding_tab_summary">Sliding tab: Du kannst schnell auf deinen letzten Chat zugreifen</string>
   <string name="pref_sent_timestamps">Sent timestamps</string>
   <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Favoriten</string>
   <string name="pref_compose_summary_favorites">Zeige deine Favoriten im QK Compose-Fenster, so dass sie nur einen Klick entfernt sind</string>
   <string name="pref_prox_sensor_call">Näherungssensor</string>
@@ -593,6 +595,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber ist nicht installiert, Google Play wird geöffnet</string>
   <string name="toast_changelog_error">Die Änderungshistorie konnte nicht geladen werden. Bitte versuche es später nochmal.</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Vielen Dank für Ihre Spende! Du bist mein neuer bester Freund.</string>
   <!--Toast shown to thank user for donating-->

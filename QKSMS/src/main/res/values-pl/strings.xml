@@ -146,10 +146,12 @@
   <string name="pref_font_weight">Grubość czcionki</string>
   <string name="pref_message_count">Liczba wiadomości</string>
   <string name="pref_message_count_summary">Pokazuj liczbę wiadomości dla każdej rozmowy</string>
-  <string name="pref_sliding_tab">Wysuwana zakładka</string>
-  <string name="pref_sliding_tab_summary">Wysuwana zakładka pozwalająca Ci szybko podejrzeć ostatnie rozmowy</string>
-  <string name="pref_sent_timestamps">Sent timestamps</string>
-  <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_sent_timestamps">Sygnatury czasowe wysłanych</string>
+  <string name="pref_sent_timestamps_summary">Pokaż sygnaturę czasową wysłania wiadomości, a nie otrzymania</string>
+  <string name="pref_force_timestamps">Force timestamps</string>
+  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
+  <string name="pref_key_timestamp_delay">New timestamp delay</string>
+  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
   <string name="pref_compose_favorites">Ulubione kontakty</string>
   <string name="pref_compose_summary_favorites">Pokaż ulubione kontakty w oknie Komponowania QK, aby je wybrać jednym kliknięciem</string>
   <string name="pref_prox_sensor_call">Czujnik zbliżeniowy</string>
@@ -249,11 +251,11 @@
   <string name="pref_donate_title">Wspomóż</string>
   <string name="pref_donate_summary">QKSMS jest bezpłatne. Wspomóż nas przekazując darowiznę!</string>
   <string name="pref_about_gplus_title">Google+</string>
-  <string name="pref_about_gplus_summary">Join the QKSMS Beta Testing community on Google+</string>
+  <string name="pref_about_gplus_summary">Dołącz do społeczności beta testerów QKSMS na Google+</string>
   <string name="pref_about_github_title">GitHub</string>
-  <string name="pref_about_github_summary">QKSMS is open source. Contribute and report issues on GitHub</string>
+  <string name="pref_about_github_summary">QKSMS ma otwarte źródło. Współtwórz i zgłaszaj błędy na GitHub</string>
   <string name="pref_about_crowdin_title">Crowdin</string>
-  <string name="pref_about_crowdin_summary">Join the QKSMS translation project on Crowdin</string>
+  <string name="pref_about_crowdin_summary">Pomóż tłumaczyć QKSMS na Crowdin</string>
   <!--Preference subcategory-->
   <string name="pref_subcat_theme">Motyw</string>
   <!--Preference subcategory-->
@@ -352,8 +354,8 @@
   <!--Notification action to call the sender of a message-->
   <string name="call">Zadzwoń</string>
   <!-- Notification toast message  -->
-  <string name="notification_mute_on">Notifications enabled</string>
-  <string name="notification_mute_off">Notifications disabled</string>
+  <string name="notification_mute_on">Powiadomienia włączone</string>
+  <string name="notification_mute_off">Powiadomienia wyłączone</string>
   <!--Positive action button-->
   <string name="yes">Tak</string>
   <string name="add">Dodaj</string>
@@ -594,6 +596,7 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber nie jest zainstalowany, otwórz Google Play</string>
   <string name="toast_changelog_error">Nie można załadować dziennika zmian. Spróbuj ponownie później</string>
+  <string name="toast_conversation_error">Couldn\'t open conversation</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Dziękuję za dotację! Jesteś moim nowym najlepszym przyjacielem.</string>
   <!--Toast shown to thank user for donating-->
