@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.external.iab.IabHelper;
 import com.moez.QKSMS.external.iab.IabResult;
-import com.moez.QKSMS.external.iab.Inventory;
 import com.moez.QKSMS.external.iab.Purchase;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.QKDialog;
@@ -37,6 +36,8 @@ public class DonationManager {
     public static DonationManager getInstance(QKActivity context) {
         if (sInstance == null) {
             sInstance = new DonationManager(context);
+        } else {
+            sInstance.mContext = context; // Update the context, in case the previous context was destroyed
         }
 
         return sInstance;
@@ -56,27 +57,23 @@ public class DonationManager {
         // Create the helper, passing it our context and the public key to verify signatures with
         mHelper = new IabHelper(mContext, PUBLIC_KEY);
 
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) {
-                    return;
-                }
-
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    Log.w(TAG, "Problem setting up in-app billing: " + result.getMessage());
-                    return;
-                }
-
-                // IAB is fully set up.
-                mBillingServiceReady = true;
-
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                mHelper.queryInventoryAsync(iabInventoryListener());
+        mHelper.startSetup(result -> {
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) {
+                return;
             }
+
+            if (!result.isSuccess()) {
+                // Oh noes, there was a problem.
+                Log.w(TAG, "Problem setting up in-app billing: " + result.getMessage());
+                return;
+            }
+
+            // IAB is fully set up.
+            mBillingServiceReady = true;
+
+            // IAB is fully set up. Now, let's get an inventory of stuff we own.
+            mHelper.queryInventoryAsync(iabInventoryListener());
         });
     }
 
@@ -119,47 +116,44 @@ public class DonationManager {
      * Listener that's called when we finish querying the items and subscriptions we own
      */
     private IabHelper.QueryInventoryFinishedListener iabInventoryListener() {
-        return new IabHelper.QueryInventoryFinishedListener() {
-            @Override
-            public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) {
-                    return;
-                }
+        return (result, inventory) -> {
+            // Have we been disposed of in the meantime? If so, quit.
+            if (mHelper == null) {
+                return;
+            }
 
-                // Something went wrong
-                if (!result.isSuccess()) {
-                    return;
-                }
+            // Something went wrong
+            if (!result.isSuccess()) {
+                return;
+            }
 
-                IabHelper.OnConsumeFinishedListener onConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-                    @Override
-                    public void onConsumeFinished(Purchase purchase, IabResult result) {
-                        // if we were disposed of in the meantime, quit.
-                        if (mHelper == null) {
-                            return;
-                        }
-
-                        if (result.isSuccess()) {
-                            String[] thanks = {mRes.getString(R.string.thanks_1), mRes.getString(R.string.thanks_2), mRes.getString(R.string.thanks_3), mRes.getString(R.string.thanks_4)};
-                            Toast.makeText(mContext, thanks[new Random().nextInt(thanks.length)], Toast.LENGTH_LONG).show();
-                        } else {
-                            Log.w(TAG, "Error while consuming: " + result);
-                        }
+            IabHelper.OnConsumeFinishedListener onConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
+                @Override
+                public void onConsumeFinished(Purchase purchase, IabResult result) {
+                    // if we were disposed of in the meantime, quit.
+                    if (mHelper == null) {
+                        return;
                     }
-                };
 
-                if (inventory.hasPurchase(SKU_DONATE_1)) {
-                    mHelper.consumeAsync(inventory.getPurchase(SKU_DONATE_1), onConsumeFinishedListener);
+                    if (result.isSuccess()) {
+                        String[] thanks = {mRes.getString(R.string.thanks_1), mRes.getString(R.string.thanks_2), mRes.getString(R.string.thanks_3), mRes.getString(R.string.thanks_4)};
+                        Toast.makeText(mContext, thanks[new Random().nextInt(thanks.length)], Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.w(TAG, "Error while consuming: " + result);
+                    }
                 }
+            };
 
-                if (inventory.hasPurchase(SKU_DONATE_5)) {
-                    mHelper.consumeAsync(inventory.getPurchase(SKU_DONATE_5), onConsumeFinishedListener);
-                }
+            if (inventory.hasPurchase(SKU_DONATE_1)) {
+                mHelper.consumeAsync(inventory.getPurchase(SKU_DONATE_1), onConsumeFinishedListener);
+            }
 
-                if (inventory.hasPurchase(SKU_DONATE_10)) {
-                    mHelper.consumeAsync(inventory.getPurchase(SKU_DONATE_10), onConsumeFinishedListener);
-                }
+            if (inventory.hasPurchase(SKU_DONATE_5)) {
+                mHelper.consumeAsync(inventory.getPurchase(SKU_DONATE_5), onConsumeFinishedListener);
+            }
+
+            if (inventory.hasPurchase(SKU_DONATE_10)) {
+                mHelper.consumeAsync(inventory.getPurchase(SKU_DONATE_10), onConsumeFinishedListener);
             }
         };
     }
@@ -180,23 +174,20 @@ public class DonationManager {
 
     public void showDonateDialog() {
 
-        View.OnClickListener clickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.donate_1:
-                        onDonateButtonClicked(SKU_DONATE_1);
-                        break;
-                    case R.id.donate_5:
-                        onDonateButtonClicked(SKU_DONATE_5);
-                        break;
-                    case R.id.donate_10:
-                        onDonateButtonClicked(SKU_DONATE_10);
-                        break;
-                    case R.id.donate_paypal:
-                        donatePaypal();
-                        break;
-                }
+        View.OnClickListener clickListener = view -> {
+            switch (view.getId()) {
+                case R.id.donate_1:
+                    onDonateButtonClicked(SKU_DONATE_1);
+                    break;
+                case R.id.donate_5:
+                    onDonateButtonClicked(SKU_DONATE_5);
+                    break;
+                case R.id.donate_10:
+                    onDonateButtonClicked(SKU_DONATE_10);
+                    break;
+                case R.id.donate_paypal:
+                    donatePaypal();
+                    break;
             }
         };
 
