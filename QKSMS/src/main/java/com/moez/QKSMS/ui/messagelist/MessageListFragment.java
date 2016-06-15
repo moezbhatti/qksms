@@ -85,7 +85,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener, SwipeBackLayout.ScrollChangedListener,
         RecyclerCursorAdapter.ItemClickListener<MessageItem> {
 
-    private final String TAG = "MessageListFragment";
+    public static final String TAG = "MessageListFragment";
 
     private static final int MESSAGE_LIST_QUERY_TOKEN = 9527;
     private static final int MESSAGE_LIST_QUERY_AFTER_DELETE_TOKEN = 9528;

@@ -82,13 +82,13 @@ public class MessageListActivity extends QKSwipeBackActivity {
         if (mThreadId != -1) {
             Log.v(TAG, "Opening thread: " + mThreadId);
             FragmentManager fm = getFragmentManager();
-            MessageListFragment fragment = (MessageListFragment) fm.findFragmentById(R.id.content_frame);
+            MessageListFragment fragment = (MessageListFragment) fm.findFragmentByTag(MessageListFragment.TAG);
             if (fragment == null) {
                 fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
             }
             mSwipeBackLayout.setScrollChangedListener(fragment);
             FragmentTransaction menuTransaction = fm.beginTransaction();
-            menuTransaction.replace(R.id.content_frame, fragment);
+            menuTransaction.replace(R.id.content_frame, fragment, MessageListFragment.TAG);
             menuTransaction.commit();
         } else {
             String msg = "Couldn't open conversation: {action:";

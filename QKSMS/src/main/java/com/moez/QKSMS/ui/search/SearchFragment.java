@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class SearchFragment extends QKFragment implements RecyclerCursorAdapter.ItemClickListener<SearchData> {
+    public static final String TAG = "SearchFragment";
+
     private AsyncQueryHandler mQueryHandler;
 
     // Track which TextView's show which Contact objects so that we can update

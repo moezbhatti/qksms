@@ -14,13 +14,13 @@ public class SettingsActivity extends QKSwipeBackActivity {
         super.onCreate(savedInstanceState);
 
         FragmentManager fm = getFragmentManager();
-        mSettingsFragment = (SettingsFragment) fm.findFragmentById(R.id.content_frame);
+        mSettingsFragment = (SettingsFragment) fm.findFragmentByTag(SettingsFragment.TAG);
         if (mSettingsFragment == null) {
             mSettingsFragment = SettingsFragment.newInstance(R.xml.settings_main);
         }
 
         fm.beginTransaction()
-                .replace(R.id.content_frame, mSettingsFragment)
+                .replace(R.id.content_frame, mSettingsFragment, SettingsFragment.TAG)
                 .commit();
     }
 

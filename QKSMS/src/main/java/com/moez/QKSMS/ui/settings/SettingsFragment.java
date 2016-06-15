@@ -65,7 +65,7 @@ import java.util.Stack;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener {
-    private final String TAG = "PreferenceFragment";
+    public static final String TAG = "SettingsFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
     public static final String CATEGORY_THEME = "pref_category_theme";

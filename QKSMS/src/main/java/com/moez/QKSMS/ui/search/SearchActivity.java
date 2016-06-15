@@ -17,13 +17,13 @@ public class SearchActivity extends QKSwipeBackActivity {
         setTitle(R.string.title_search);
 
         FragmentManager fm = getFragmentManager();
-        mSearchFragment = (SearchFragment) fm.findFragmentById(R.id.content_frame);
+        mSearchFragment = (SearchFragment) fm.findFragmentByTag(SearchFragment.TAG);
         if (mSearchFragment == null) {
             mSearchFragment = new SearchFragment();
         }
 
         fm.beginTransaction()
-                .replace(R.id.content_frame, mSearchFragment)
+                .replace(R.id.content_frame, mSearchFragment, SearchFragment.TAG)
                 .commit();
     }
 

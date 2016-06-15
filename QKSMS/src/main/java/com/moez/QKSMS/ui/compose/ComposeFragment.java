@@ -22,7 +22,7 @@ import com.moez.QKSMS.ui.view.StarredContactsView;
 public class ComposeFragment extends QKFragment implements ActivityLauncher, RecipientProvider,
         ComposeView.OnSendListener, AdapterView.OnItemClickListener {
 
-    private final String TAG = "ComposeFragment";
+    public static final String TAG = "ComposeFragment";
 
     private AutoCompleteContactView mRecipients;
     private ComposeView mComposeView;

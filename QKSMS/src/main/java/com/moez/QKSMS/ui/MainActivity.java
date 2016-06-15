@@ -81,12 +81,12 @@ public class MainActivity extends QKActivity {
         ButterKnife.bind(this);
 
         FragmentManager fm = getFragmentManager();
-        mConversationList = (ConversationListFragment) fm.findFragmentById(R.id.content_frame);
+        mConversationList = (ConversationListFragment) fm.findFragmentByTag(ConversationListFragment.TAG);
         if (mConversationList == null) {
             mConversationList = new ConversationListFragment();
         }
         FragmentTransaction menuTransaction = fm.beginTransaction();
-        menuTransaction.replace(R.id.content_frame, mConversationList);
+        menuTransaction.replace(R.id.content_frame, mConversationList, ConversationListFragment.TAG);
         menuTransaction.commit();
 
         showDialogIfNeeded(savedInstanceState);

@@ -17,13 +17,13 @@ public class ComposeActivity extends QKSwipeBackActivity {
         setTitle(R.string.title_compose);
 
         FragmentManager fm = getFragmentManager();
-        mComposeFragment = (ComposeFragment) fm.findFragmentById(R.id.content_frame);
+        mComposeFragment = (ComposeFragment) fm.findFragmentByTag(ComposeFragment.TAG);
         if (mComposeFragment == null) {
             mComposeFragment = new ComposeFragment();
         }
 
         fm.beginTransaction()
-                .replace(R.id.content_frame, mComposeFragment)
+                .replace(R.id.content_frame, mComposeFragment, ComposeFragment.TAG)
                 .commit();
     }
 

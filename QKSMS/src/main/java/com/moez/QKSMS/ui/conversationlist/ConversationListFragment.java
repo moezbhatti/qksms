@@ -47,7 +47,7 @@ import java.util.Observer;
 public class ConversationListFragment extends QKFragment implements LoaderManager.LoaderCallbacks<Cursor>,
         RecyclerCursorAdapter.ItemClickListener<Conversation>, RecyclerCursorAdapter.MultiSelectListener, Observer {
 
-    private final String TAG = "ConversationList";
+    public static final String TAG = "ConversationListFragment";
 
     @Bind(R.id.empty_state) View mEmptyState;
     @Bind(R.id.empty_state_icon) ImageView mEmptyStateIcon;
