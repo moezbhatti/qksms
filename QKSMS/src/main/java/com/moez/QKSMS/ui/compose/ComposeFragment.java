@@ -39,7 +39,6 @@ public class ComposeFragment extends QKFragment implements ActivityLauncher, Rec
         mRecipients = (AutoCompleteContactView) view.findViewById(R.id.compose_recipients);
         mRecipients.setOnItemClickListener(this);
 
-        view.findViewById(R.id.compose_view_stub).setVisibility(View.VISIBLE);
         mComposeView = (ComposeView) view.findViewById(R.id.compose_view);
         mComposeView.onOpenConversation(null, null);
         mComposeView.setActivityLauncher(this);
