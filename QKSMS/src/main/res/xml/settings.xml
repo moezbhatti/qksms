@@ -3,8 +3,7 @@
     <Preference
         android:defaultValue="-16746133"
         android:key="pref_key_theme" />
-    <Preference
-        android:key="pref_key_icon" />
+    <Preference android:key="pref_key_icon" />
     <Preference
         android:defaultValue="@bool/hasL"
         android:key="pref_key_status_tint" />
@@ -73,6 +72,15 @@
     <Preference
         android:defaultValue="false"
         android:key="pref_key_mobile_only" />
+    <Preference
+        android:defaultValue="false"
+        android:key="pref_key_delete_old_messages" />
+    <Preference
+        android:defaultValue="7"
+        android:key="pref_key_delete_old_unread_messages" />
+    <Preference
+        android:defaultValue="7"
+        android:key="pref_key_delete_old_read_messages" />
     <Preference
         android:defaultValue="false"
         android:key="pref_key_strip_unicode" />

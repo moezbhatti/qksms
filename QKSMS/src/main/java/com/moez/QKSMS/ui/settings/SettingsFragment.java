@@ -105,6 +105,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String DELIVERY_REPORTS = "pref_key_delivery";
     public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
     public static final String DELIVERY_VIBRATE = "pref_key_delivery_vibrate";
+    public static final String DELETE_UNREAD_MESSAGES = "pref_key_delete_old_unread_messages";
+    public static final String DELETE_READ_MESSAGES = "pref_key_delete_old_read_messages";
     public static final String YAPPY = "pref_key_endlessjabber";
     public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
     public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
@@ -284,6 +286,16 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             font_weight.setSummary(mFontWeights[i == 2 ? 0 : 1]);
         }
 
+        EditTextPreference deleteUnread = (EditTextPreference) findPreference(DELETE_UNREAD_MESSAGES);
+        if (deleteUnread != null) {
+            deleteUnread.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, mContext.getString(QKPreference.DELETE_UNREAD_MESSAGES)));
+        }
+
+        EditTextPreference deleteRead = (EditTextPreference) findPreference(DELETE_READ_MESSAGES);
+        if (deleteRead != null) {
+            deleteRead.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, mContext.getString(QKPreference.DELETE_READ_MESSAGES)));
+        }
+
         Preference day_start = findPreference(DAY_START);
         if (day_start != null) {
             day_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, mPrefs.getString(DAY_START, "6:00")));
@@ -439,6 +451,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case DAY_START:
             case NIGHT_START:
                 updateAlarmManager(mContext, true);
+                break;
+            case DELETE_UNREAD_MESSAGES:
+                preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, newValue));
+                break;
+            case DELETE_READ_MESSAGES:
+                preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, newValue));
                 break;
             case YAPPY:
                 if ((Boolean) newValue) {

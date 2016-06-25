@@ -169,6 +169,12 @@
     <string name="pref_delivery_toast_summary">Show a short toast to indicate a message being delivered</string>
     <string name="pref_delivery_vibrate">Vibrate</string>
     <string name="pref_delivery_vibrate_summary">Vibrate on message delivery</string>
+    <string name="pref_delete_old_messages">Delete old messages</string>
+    <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+    <string name="pref_delete_old_messages_unread">Unread messages</string>
+    <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+    <string name="pref_delete_old_messages_read">Read messages</string>
+    <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
     <string name="pref_yappy">Yappy integration</string>
     <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
     <string name="pref_blocked_conversations">Blocked conversations</string>

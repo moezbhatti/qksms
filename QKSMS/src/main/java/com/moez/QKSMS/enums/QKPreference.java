@@ -43,6 +43,10 @@ public enum QKPreference {
     DELIVERY_TOAST("pref_key_delivery_toast", true),
     DELIVERY_VIBRATE("pref_key_delivery_vibrate", true),
 
+    DELETE_OLD_MESSAGES("pref_key_delete_old_messages", false),
+    DELETE_UNREAD_MESSAGES("pref_key_delete_old_unread_messages", "7"), // This type of preference only accepts strings
+    DELETE_READ_MESSAGES("pref_key_delete_old_read_messages", "7"),
+
     AUTO_EMOJI("pref_key_auto_emoji", false),
     TEXT_FORMATTING("pref_key_markdown_enabled", false),
     STRIP_UNICODE("pref_key_strip_unicode", false),
