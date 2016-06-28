@@ -5,14 +5,14 @@
         android:layout="@layout/list_item_preference_category"
         android:title="@string/pref_delayed">
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="pref_key_delayed"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_delayed_summary"
             android:title="@string/pref_delayed"
             android:widgetLayout="@layout/view_switch" />
         <EditTextPreference
-            android:defaultValue="3"
+            android:defaultValue="4"
             android:dependency="pref_key_delayed"
             android:inputType="number"
             android:key="pref_key_delay_duration"
@@ -148,7 +148,7 @@
             android:title="@string/pref_mobile_only"
             android:widgetLayout="@layout/view_switch" />
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="1"
             android:entries="@array/enter_button_options"
             android:entryValues="@array/enter_button_values"
             android:key="pref_key_enter_button"
@@ -179,7 +179,7 @@
             android:title="@string/pref_force_timestamps"
             android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="pref_key_compose_favorites"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_compose_summary_favorites"

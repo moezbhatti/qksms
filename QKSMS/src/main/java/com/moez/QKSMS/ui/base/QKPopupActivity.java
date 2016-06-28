@@ -26,7 +26,7 @@ public abstract class QKPopupActivity extends QKActivity {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mRes = getResources();
 
-        setFinishOnTouchOutside(mPrefs.getBoolean(SettingsFragment.QUICKREPLY_TAP_DISMISS, true));
+        setFinishOnTouchOutside(mPrefs.getBoolean(SettingsFragment.QUICKREPLY_TAP_DISMISS, false));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         setContentView(getLayoutResource());
 

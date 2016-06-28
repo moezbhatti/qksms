@@ -73,7 +73,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
 
         mIndicator = (ImageView) findViewById(R.id.indicator);
 
-        if (mPrefs.getBoolean(SettingsFragment.COMPOSE_FAVORITES, true)) {
+        if (mPrefs.getBoolean(SettingsFragment.COMPOSE_FAVORITES, false)) {
             expand();
         } else {
             collapse();

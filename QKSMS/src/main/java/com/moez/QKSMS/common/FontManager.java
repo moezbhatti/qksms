@@ -34,7 +34,7 @@ public class FontManager {
 
     public static int getTextSize(Context context, int type) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int fontSize = Integer.parseInt(prefs.getString(SettingsFragment.FONT_SIZE, "1"));
+        int fontSize = Integer.parseInt(prefs.getString(SettingsFragment.FONT_SIZE, "3"));
 
         switch (type) {
             case TEXT_TYPE_TERTIARY:

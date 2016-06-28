@@ -51,7 +51,7 @@ import com.moez.QKSMS.ui.widget.WidgetProvider;
 public class ThemeManager {
     private final static String TAG = "ThemeManager";
 
-    public static final int DEFAULT_COLOR = 0xff009688;
+    public static final int DEFAULT_COLOR = 0xff616161;
     public static final int TRANSITION_LENGTH = 500;
 
     public enum Theme {
@@ -73,7 +73,7 @@ public class ThemeManager {
                     return BLACK;
                 default:
                     Log.w(TAG, "Tried to set theme with invalid string: " + color);
-                    return LIGHT;
+                    return DARK;
             }
         }
     }
@@ -258,7 +258,7 @@ public class ThemeManager {
         mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + DEFAULT_COLOR));
         mActiveColor = mColor;
 
-        initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
+        initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, Theme.PREF_GREY)));
     }
 
     public static void setTheme(Theme theme) {
@@ -471,14 +471,14 @@ public class ThemeManager {
         }
 
         switch (mTheme) {
-            case DARK:
-                return mResources.getColor(R.color.grey_dark);
+            case LIGHT:
+                return mResources.getColor(R.color.white_pure);
 
             case BLACK:
                 return mResources.getColor(R.color.grey_material);
 
             default:
-                return mResources.getColor(R.color.white_pure);
+                return mResources.getColor(R.color.grey_dark);
         }
     }
 

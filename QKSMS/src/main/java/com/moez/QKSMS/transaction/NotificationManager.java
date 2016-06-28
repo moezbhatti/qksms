@@ -748,7 +748,7 @@ public class NotificationManager {
      */
     private static int getNotificationPriority(Context context) {
         boolean qkreplyEnabled = PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(SettingsFragment.QUICKREPLY, Build.VERSION.SDK_INT < 24);
+                .getBoolean(SettingsFragment.QUICKREPLY, false);
         if (qkreplyEnabled) {
             return NotificationCompat.PRIORITY_DEFAULT;
         } else {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
-        android:defaultValue="-16746133"
+        android:defaultValue="-6381921"
         android:key="pref_key_theme" />
     <Preference
         android:key="pref_key_icon_dark" />
@@ -12,7 +12,7 @@
         android:defaultValue="false"
         android:key="pref_key_navigation_tint" />
     <Preference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="pref_key_night" />
     <Preference
         android:defaultValue="false"
@@ -36,7 +36,7 @@
         android:defaultValue="0"
         android:key="pref_key_font_family" />
     <Preference
-        android:defaultValue="1"
+        android:defaultValue="3"
         android:key="pref_key_font_size" />
     <Preference
         android:defaultValue="0"
@@ -56,13 +56,13 @@
         android:defaultValue="true"
         android:key="pref_key_auto_emoji" />
     <Preference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="pref_key_compose_favorites" />
     <Preference
         android:defaultValue="false"
         android:key="pref_key_prox_sensor_calling" />
     <Preference
-        android:defaultValue="0"
+        android:defaultValue="1"
         android:key="pref_key_enter_button" />
     <Preference
         android:defaultValue="false"
@@ -129,8 +129,11 @@
 
     <!-- QKSMS+ -->
     <Preference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="pref_key_delayed" />
+    <Preference
+        android:defaultValue="4"
+        android:key="pref_key_delay_duration" />
     <Preference
         android:defaultValue="false"
         android:key="pref_key_night_auto" />
@@ -160,10 +163,10 @@
 
     <!-- QUICKREPLY -->
     <Preference
-        android:defaultValue="@bool/preN"
+        android:defaultValue="false"
         android:key="pref_key_quickreply_enabled" />
     <Preference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="pref_key_quickreply_dismiss" />
 
     <!-- QUICKCOMPOSE -->

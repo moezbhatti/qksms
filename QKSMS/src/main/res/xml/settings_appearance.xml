@@ -5,7 +5,7 @@
         android:layout="@layout/list_item_preference_category"
         android:title="@string/pref_subcat_theme">
         <Preference
-            android:defaultValue="-16746133"
+            android:defaultValue="-6381921"
             android:key="pref_key_theme"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_theme_summary_alt"
@@ -18,7 +18,7 @@
             android:title="@string/pref_icon_dark"
             android:widgetLayout="@layout/view_switch" />
         <ListPreference
-            android:defaultValue="light"
+            android:defaultValue="grey"
             android:entries="@array/background_titles"
             android:entryValues="@array/background_values"
             android:key="pref_key_background"
@@ -85,7 +85,7 @@
             android:layout="@layout/list_item_preference"
             android:title="@string/pref_font_family" />
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="3"
             android:entries="@array/font_sizes"
             android:entryValues="@array/font_size_codes"
             android:key="pref_key_font_size"

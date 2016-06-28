@@ -142,9 +142,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mPrefs = mContext.getPrefs();
         mRes = mContext.getResources();
 
-        mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
+        mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, true);
         try {
-            mDelayDuration = Integer.parseInt(mPrefs.getString(SettingsFragment.DELAY_DURATION, "3"));
+            mDelayDuration = Integer.parseInt(mPrefs.getString(SettingsFragment.DELAY_DURATION, "4"));
             if (mDelayDuration < 1) {
                 mDelayDuration = 1;
             } else if (mDelayDuration > 30) {
@@ -200,7 +200,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
         // There is an option for using the return button instead of the emoticon button in the
         // keyboard; set that up here.
-        switch (Integer.parseInt(mPrefs.getString(SettingsFragment.ENTER_BUTTON, "0"))) {
+        switch (Integer.parseInt(mPrefs.getString(SettingsFragment.ENTER_BUTTON, "1"))) {
             case 0: // emoji
                 break;
             case 1: // new line
@@ -265,7 +265,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 if (!mSendingCancelled) {
                     sendSms();
                     // In case they only enabled it for a particular message, let's set it back to the pref value
-                    mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
+                    mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, true);
                     updateDelayButton();
                 } else {
                     mSendingCancelled = false;
