@@ -42,7 +42,7 @@ public enum QKPreference {
     DELIVERY_TOAST("pref_key_delivery_toast", true),
     DELIVERY_VIBRATE("pref_key_delivery_vibrate", true),
 
-    AUTO_DELETE("pref_key_delete_old_messages", false),
+    AUTO_DELETE("pref_key_delete_old_messages", true),
     AUTO_DELETE_UNREAD("pref_key_delete_old_unread_messages", "7"), // This type of preference only accepts strings
     AUTO_DELETE_READ("pref_key_delete_old_read_messages", "7"),
 

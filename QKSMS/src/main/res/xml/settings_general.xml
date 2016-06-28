@@ -51,7 +51,7 @@
         android:layout="@layout/list_item_preference_category"
         android:title="@string/pref_delete_old_messages">
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="pref_key_delete_old_messages"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_delete_old_messages_summary"

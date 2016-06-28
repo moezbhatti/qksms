@@ -74,7 +74,7 @@
         android:defaultValue="false"
         android:key="pref_key_mobile_only" />
     <Preference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="pref_key_delete_old_messages" />
     <Preference
         android:defaultValue="7"
