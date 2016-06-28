@@ -641,6 +641,7 @@
     <string name="toast_endlessjabber_not_installed">EndlessJabber is not installed, opening Google Play</string>
     <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
     <string name="toast_conversation_error">Couldn\'t open conversation</string>
+    <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
 
     <!--Toast shown to thank user for donating-->
     <string name="thanks_1">Thank you for donating! You\'re my new best friend.</string>

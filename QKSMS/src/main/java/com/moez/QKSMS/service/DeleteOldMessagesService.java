@@ -44,42 +44,29 @@ public class DeleteOldMessagesService extends IntentService {
     private void deleteOldUnreadMessages(Context context) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -Integer.parseInt(QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD)));
-
-        Cursor cursor = null;
-        String selection = SmsHelper.COLUMN_DATE + "<=?";
-
-        try {
-            cursor = context.getContentResolver().query(
-                    SmsHelper.SMS_CONTENT_PROVIDER,
-                    new String[]{SmsHelper.COLUMN_ID, SmsHelper.COLUMN_DATE},
-                    selection,
-                    new String[]{String.valueOf(calendar.getTimeInMillis())},
-                    null);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
+        int count = deleteOldMessages(context, SmsHelper.UNREAD_SELECTION, calendar.getTimeInMillis());
+        Log.i(TAG, "Deleted unread messages: " + count);
     }
 
     private void deleteOldReadMessages(Context context) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -Integer.parseInt(QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
+        int count = deleteOldMessages(context, SmsHelper.READ_SELECTION + "=" + SmsHelper.READ, calendar.getTimeInMillis());
+        Log.i(TAG, "Deleted read messages: " + count);
+    }
 
+    private int deleteOldMessages(Context context, String selection, long before) {
         Cursor cursor = null;
-        String selection = SmsHelper.COLUMN_DATE + "<=?";
+        selection += " AND " + SmsHelper.COLUMN_DATE + "<=?";
 
         try {
             cursor = context.getContentResolver().query(
                     SmsHelper.SMS_CONTENT_PROVIDER,
                     new String[]{SmsHelper.COLUMN_ID, SmsHelper.COLUMN_DATE},
                     selection,
-                    new String[]{String.valueOf(calendar.getTimeInMillis())},
+                    new String[]{String.valueOf(before)},
                     null);
-
+            return cursor.getCount();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -87,6 +74,8 @@ public class DeleteOldMessagesService extends IntentService {
                 cursor.close();
             }
         }
+
+        return 0;
     }
 
     public static void setupAutoDeleteAlarm(Context context) {

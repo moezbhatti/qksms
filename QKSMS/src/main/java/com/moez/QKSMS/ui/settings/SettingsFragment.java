@@ -41,6 +41,7 @@ import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
+import com.moez.QKSMS.service.DeleteOldMessagesService;
 import com.moez.QKSMS.transaction.EndlessJabber;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -106,6 +107,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String DELIVERY_REPORTS = "pref_key_delivery";
     public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
     public static final String DELIVERY_VIBRATE = "pref_key_delivery_vibrate";
+    public static final String DELETE_OLD_MESSAGES = "pref_key_delete_old_messages";
     public static final String DELETE_UNREAD_MESSAGES = "pref_key_delete_old_unread_messages";
     public static final String DELETE_READ_MESSAGES = "pref_key_delete_old_read_messages";
     public static final String YAPPY = "pref_key_endlessjabber";
@@ -453,12 +455,22 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case NIGHT_START:
                 updateAlarmManager(mContext, true);
                 break;
+
+            case DELETE_OLD_MESSAGES:
+                DeleteOldMessagesService.setupAutoDeleteAlarm(mContext);
+                if ((Boolean) newValue) {
+                    mContext.makeToast(R.string.toast_deleting_old_messages);
+                }
+                break;
+
             case DELETE_UNREAD_MESSAGES:
                 preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, newValue));
                 break;
+
             case DELETE_READ_MESSAGES:
                 preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, newValue));
                 break;
+
             case YAPPY:
                 if ((Boolean) newValue) {
                     try {
@@ -566,7 +578,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";
                 if (!PackageUtils.isAppInstalled(mContext, packageName)) {
-                    String referrer="referrer=utm_source%3Dqksms%26utm_medium%3Dapp%26utm_campaign%3Dqksmssettings";
+                    String referrer = "referrer=utm_source%3Dqksms%26utm_medium%3Dapp%26utm_campaign%3Dqksmssettings";
                     new QKDialog()
                             .setContext(mContext)
                             .setTitle(R.string.dialog_should_i_answer_title)
