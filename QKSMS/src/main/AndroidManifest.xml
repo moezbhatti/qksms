@@ -450,6 +450,7 @@
                 <action android:name="com.mariussoft.endlessjabber.action.extend" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.AutoDeleteReceiver" />
 
         <service android:name="com.mariussoft.endlessjabber.sdk.EndlessJabberWakefulService" />
 

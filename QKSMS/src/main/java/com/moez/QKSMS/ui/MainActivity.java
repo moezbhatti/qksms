@@ -30,6 +30,7 @@ import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.receiver.AutoDeleteReceiver;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
@@ -100,6 +101,8 @@ public class MainActivity extends QKActivity {
         //Adds a small/non intrusive snackbar that asks the user to rate the app
         SnackEngage.from(this).withSnack(new QKRateSnack().withDuration(BaseSnack.DURATION_LONG))
                 .build().engageWhenAppropriate();
+
+        AutoDeleteReceiver.setupAutoDeleteAlarm(this);
     }
 
     /**

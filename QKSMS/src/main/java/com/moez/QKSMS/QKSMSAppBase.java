@@ -36,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.google.PduLoaderManager;
 import com.moez.QKSMS.common.google.ThumbnailManager;
@@ -102,6 +103,7 @@ public class QKSMSAppBase extends MultiDexApplication {
         LayoutManager.init(this);
         NotificationManager.init(this);
         LiveViewManager.init(this);
+        QKPreferences.init(this);
 
         activePendingMessages();
     }

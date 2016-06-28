@@ -35,6 +35,7 @@ import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PackageUtils;
@@ -288,12 +289,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         EditTextPreference deleteUnread = (EditTextPreference) findPreference(DELETE_UNREAD_MESSAGES);
         if (deleteUnread != null) {
-            deleteUnread.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, mContext.getString(QKPreference.DELETE_UNREAD_MESSAGES)));
+            deleteUnread.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD)));
         }
 
         EditTextPreference deleteRead = (EditTextPreference) findPreference(DELETE_READ_MESSAGES);
         if (deleteRead != null) {
-            deleteRead.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, mContext.getString(QKPreference.DELETE_READ_MESSAGES)));
+            deleteRead.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
         }
 
         Preference day_start = findPreference(DAY_START);

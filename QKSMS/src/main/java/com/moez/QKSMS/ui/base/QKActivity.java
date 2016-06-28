@@ -27,10 +27,10 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.search.SearchFragment;
 import com.moez.QKSMS.ui.settings.SettingsActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
 
@@ -62,12 +62,12 @@ public abstract class QKActivity extends AppCompatActivity {
         mProgressDialog.setCancelable(false);
 
         LiveViewManager.registerView(QKPreference.TINTED_STATUS, this, key -> {
-            mStatusTintEnabled = getBoolean(QKPreference.TINTED_STATUS) &&
+            mStatusTintEnabled = QKPreferences.getBoolean(QKPreference.TINTED_STATUS) &&
                     Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         });
 
         LiveViewManager.registerView(QKPreference.TINTED_NAV, this, key -> {
-            mNavigationTintEnabled = getBoolean(QKPreference.TINTED_NAV) &&
+            mNavigationTintEnabled = QKPreferences.getBoolean(QKPreference.TINTED_NAV) &&
                     Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         });
     }
@@ -295,29 +295,5 @@ public abstract class QKActivity extends AppCompatActivity {
 
     public RequestQueue getRequestQueue() {
         return ((QKSMSApp) getApplication()).getRequestQueue();
-    }
-
-    public boolean getBoolean(QKPreference preference) {
-        return getPrefs().getBoolean(preference.getKey(), (boolean) preference.getDefaultValue());
-    }
-
-    public void setBoolean(QKPreference preference, boolean newValue) {
-        getPrefs().edit().putBoolean(preference.getKey(), newValue).apply();
-    }
-
-    public int getInt(QKPreference preference) {
-        return getPrefs().getInt(preference.getKey(), (int) preference.getDefaultValue());
-    }
-
-    public void setInt(QKPreference preference, int newValue) {
-        getPrefs().edit().putInt(preference.getKey(), newValue).apply();
-    }
-
-    public String getString(QKPreference preference) {
-        return getPrefs().getString(preference.getKey(), (String) preference.getDefaultValue());
-    }
-
-    public void setString(QKPreference preference, String newValue) {
-        getPrefs().edit().putString(preference.getKey(), newValue).apply();
     }
 }

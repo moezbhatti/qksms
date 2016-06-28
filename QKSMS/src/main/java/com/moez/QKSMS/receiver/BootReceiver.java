@@ -15,5 +15,7 @@ public class BootReceiver extends BroadcastReceiver {
         NotificationManager.create(context);
 
         SettingsFragment.updateAlarmManager(context, PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SettingsFragment.NIGHT_AUTO, false));
+
+        AutoDeleteReceiver.setupAutoDeleteAlarm(context);
     }
 }
