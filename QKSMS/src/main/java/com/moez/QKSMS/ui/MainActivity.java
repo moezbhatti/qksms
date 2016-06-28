@@ -30,8 +30,8 @@ import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.receiver.AutoDeleteReceiver;
 import com.moez.QKSMS.receiver.IconColorReceiver;
+import com.moez.QKSMS.service.DeleteOldMessagesService;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -102,7 +102,7 @@ public class MainActivity extends QKActivity {
         SnackEngage.from(this).withSnack(new QKRateSnack().withDuration(BaseSnack.DURATION_LONG))
                 .build().engageWhenAppropriate();
 
-        AutoDeleteReceiver.setupAutoDeleteAlarm(this);
+        DeleteOldMessagesService.setupAutoDeleteAlarm(this);
     }
 
     /**

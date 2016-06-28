@@ -1,8 +1,8 @@
-package com.moez.QKSMS.receiver;
+package com.moez.QKSMS.service;
 
 import android.app.AlarmManager;
+import android.app.IntentService;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,11 +13,15 @@ import com.moez.QKSMS.transaction.SmsHelper;
 
 import java.util.Calendar;
 
-public class AutoDeleteReceiver extends BroadcastReceiver {
-    private static final String TAG = "AutoDeleteService";
+public class DeleteOldMessagesService extends IntentService {
+    private static final String TAG = "DeleteOldMessages";
+
+    public DeleteOldMessagesService() {
+        super(TAG);
+    }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    protected void onHandleIntent(Intent intent) {
         Calendar last = Calendar.getInstance();
         last.setTimeInMillis(QKPreferences.getLong(QKPreference.LAST_AUTO_DELETE_CHECK));
 
@@ -30,30 +34,18 @@ public class AutoDeleteReceiver extends BroadcastReceiver {
             Log.i(TAG, "Ready to delete old messages");
             QKPreferences.setLong(QKPreference.LAST_AUTO_DELETE_CHECK, System.currentTimeMillis());
 
-            getAutoDeleteCount(context);
+            deleteOldUnreadMessages(this);
+            deleteOldReadMessages(this);
         } else {
             Log.i(TAG, "Not going to delete old messages");
         }
     }
 
-    public static void setupAutoDeleteAlarm(Context context) {
+    private void deleteOldUnreadMessages(Context context) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 3); // We want this service to run when the phone is not likely being used
-
-        Intent intent = new Intent(context, AutoDeleteReceiver.class);
-        PendingIntent pIntent = PendingIntent.getBroadcast(context, 9237, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
-    }
-
-    private int getAutoDeleteCount(Context context) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -Integer.parseInt(QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
+        calendar.add(Calendar.DAY_OF_YEAR, -Integer.parseInt(QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD)));
 
         Cursor cursor = null;
-        int count = 0;
         String selection = SmsHelper.COLUMN_DATE + "<=?";
 
         try {
@@ -64,7 +56,6 @@ public class AutoDeleteReceiver extends BroadcastReceiver {
                     new String[]{String.valueOf(calendar.getTimeInMillis())},
                     null);
 
-            count = cursor.getCount();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -72,7 +63,41 @@ public class AutoDeleteReceiver extends BroadcastReceiver {
                 cursor.close();
             }
         }
+    }
 
-        return count;
+    private void deleteOldReadMessages(Context context) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -Integer.parseInt(QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
+
+        Cursor cursor = null;
+        String selection = SmsHelper.COLUMN_DATE + "<=?";
+
+        try {
+            cursor = context.getContentResolver().query(
+                    SmsHelper.SMS_CONTENT_PROVIDER,
+                    new String[]{SmsHelper.COLUMN_ID, SmsHelper.COLUMN_DATE},
+                    selection,
+                    new String[]{String.valueOf(calendar.getTimeInMillis())},
+                    null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    public static void setupAutoDeleteAlarm(Context context) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 3); // We want this service to run when the phone is not likely being used
+
+        Intent intent = new Intent(context, DeleteOldMessagesService.class);
+        PendingIntent pIntent = PendingIntent.getService(context, 9237, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
     }
 }
