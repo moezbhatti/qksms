@@ -5,7 +5,6 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.util.Log;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.enums.QKPreference;
@@ -56,23 +55,12 @@ public class DeleteOldMessagesService extends IntentService {
     }
 
     private int deleteOldMessages(Context context, String selection, long before) {
-        Cursor cursor = null;
         selection += " AND " + SmsHelper.COLUMN_DATE + "<=?";
 
         try {
-            cursor = context.getContentResolver().query(
-                    SmsHelper.SMS_CONTENT_PROVIDER,
-                    new String[]{SmsHelper.COLUMN_ID, SmsHelper.COLUMN_DATE},
-                    selection,
-                    new String[]{String.valueOf(before)},
-                    null);
-            return cursor.getCount();
+            return context.getContentResolver().delete(SmsHelper.SMS_CONTENT_PROVIDER, selection, new String[]{String.valueOf(before)});
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
 
         return 0;
