@@ -40,12 +40,16 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
 
     public StarredContactsView(Context context) {
         super(context);
-        init(context);
+        if (!isInEditMode()) {
+            init(context);
+        }
     }
 
     public StarredContactsView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        if (!isInEditMode()) {
+            init(context);
+        }
     }
 
     private void init(Context context) {

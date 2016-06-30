@@ -22,12 +22,16 @@ public class AutoCompleteContactView extends RecipientEditTextView {
 
     public AutoCompleteContactView(Context context) {
         this(context, null);
-        init(context);
+        if (!isInEditMode()) {
+            init(context);
+        }
     }
 
     public AutoCompleteContactView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        if (!isInEditMode()) {
+            init(context);
+        }
     }
 
     private void init(Context context) {

@@ -86,7 +86,7 @@ public enum QKPreference {
     MMS_PROXY("mms_proxy", true),
 
     // QK Reply
-    QK_REPLY("pref_key_quickreply_enabled", Build.VERSION.SDK_INT < 23),
+    QK_REPLY("pref_key_quickreply_enabled", Build.VERSION.SDK_INT < 24),
     TAP_DISMISS("pref_key_quickreply_dismiss", true),
 
     // QK Compose
