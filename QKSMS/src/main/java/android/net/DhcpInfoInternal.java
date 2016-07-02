@@ -140,7 +140,7 @@ public class DhcpInfoInternal {
             dns2 = orig.dns2;
         }
 
-        if (mRoutes.size() == 0) {
+        if (mRoutes.isEmpty()) {
             for (RouteInfo route : orig.getRoutes()) {
                 addRoute(route);
             }
