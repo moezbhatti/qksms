@@ -406,6 +406,7 @@ public class SlideshowModel extends Model
     //
     // Implement List<E> interface.
     //
+    @Override
     public boolean add(SlideModel object) {
         int increaseSize = object.getSlideSize();
         checkMessageSize(increaseSize);
@@ -422,10 +423,12 @@ public class SlideshowModel extends Model
         return false;
     }
 
+    @Override
     public boolean addAll(Collection<? extends SlideModel> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public void clear() {
         if (mSlides.size() > 0) {
             for (SlideModel slide : mSlides) {
@@ -440,22 +443,27 @@ public class SlideshowModel extends Model
         }
     }
 
+    @Override
     public boolean contains(Object object) {
         return mSlides.contains(object);
     }
 
+    @Override
     public boolean containsAll(Collection<?> collection) {
         return mSlides.containsAll(collection);
     }
 
+    @Override
     public boolean isEmpty() {
         return mSlides.isEmpty();
     }
 
+    @Override
     public Iterator<SlideModel> iterator() {
         return mSlides.iterator();
     }
 
+    @Override
     public boolean remove(Object object) {
         if ((object != null) && mSlides.remove(object)) {
             SlideModel slide = (SlideModel) object;
@@ -467,26 +475,32 @@ public class SlideshowModel extends Model
         return false;
     }
 
+    @Override
     public boolean removeAll(Collection<?> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public boolean retainAll(Collection<?> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public int size() {
         return mSlides.size();
     }
 
+    @Override
     public Object[] toArray() {
         return mSlides.toArray();
     }
 
+    @Override
     public <T> T[] toArray(T[] array) {
         return mSlides.toArray(array);
     }
 
+    @Override
     public void add(int location, SlideModel object) {
         if (object != null) {
             int increaseSize = object.getSlideSize();
@@ -502,31 +516,38 @@ public class SlideshowModel extends Model
         }
     }
 
+    @Override
     public boolean addAll(int location,
             Collection<? extends SlideModel> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public SlideModel get(int location) {
         return (location >= 0 && location < mSlides.size()) ? mSlides.get(location) : null;
     }
 
+    @Override
     public int indexOf(Object object) {
         return mSlides.indexOf(object);
     }
 
+    @Override
     public int lastIndexOf(Object object) {
         return mSlides.lastIndexOf(object);
     }
 
+    @Override
     public ListIterator<SlideModel> listIterator() {
         return mSlides.listIterator();
     }
 
+    @Override
     public ListIterator<SlideModel> listIterator(int location) {
         return mSlides.listIterator(location);
     }
 
+    @Override
     public SlideModel remove(int location) {
         SlideModel slide = mSlides.remove(location);
         if (slide != null) {
@@ -537,6 +558,7 @@ public class SlideshowModel extends Model
         return slide;
     }
 
+    @Override
     public SlideModel set(int location, SlideModel object) {
         SlideModel slide = mSlides.get(location);
         if (null != object) {
