@@ -11,7 +11,7 @@ public interface INetworkPolicyListener extends android.os.IInterface {
     /**
      * Local-side IPC implementation stub class.
      */
-    public static abstract class Stub extends android.os.Binder implements android.net.INetworkPolicyListener {
+    public abstract static class Stub extends android.os.Binder implements android.net.INetworkPolicyListener {
         private static final String DESCRIPTOR = "android.net.INetworkPolicyListener";
 
         /**

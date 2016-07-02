@@ -34,11 +34,11 @@ public class PduComposer {
     /**
      * Address type.
      */
-    static private final int PDU_PHONE_NUMBER_ADDRESS_TYPE = 1;
-    static private final int PDU_EMAIL_ADDRESS_TYPE = 2;
-    static private final int PDU_IPV4_ADDRESS_TYPE = 3;
-    static private final int PDU_IPV6_ADDRESS_TYPE = 4;
-    static private final int PDU_UNKNOWN_ADDRESS_TYPE = 5;
+    private static final int PDU_PHONE_NUMBER_ADDRESS_TYPE = 1;
+    private static final int PDU_EMAIL_ADDRESS_TYPE = 2;
+    private static final int PDU_IPV4_ADDRESS_TYPE = 3;
+    private static final int PDU_IPV6_ADDRESS_TYPE = 4;
+    private static final int PDU_UNKNOWN_ADDRESS_TYPE = 5;
 
     /**
      * Address regular expression string.
@@ -63,25 +63,25 @@ public class PduComposer {
     /**
      * Error values.
      */
-    static private final int PDU_COMPOSE_SUCCESS = 0;
-    static private final int PDU_COMPOSE_CONTENT_ERROR = 1;
-    static private final int PDU_COMPOSE_FIELD_NOT_SET = 2;
-    static private final int PDU_COMPOSE_FIELD_NOT_SUPPORTED = 3;
+    private static final int PDU_COMPOSE_SUCCESS = 0;
+    private static final int PDU_COMPOSE_CONTENT_ERROR = 1;
+    private static final int PDU_COMPOSE_FIELD_NOT_SET = 2;
+    private static final int PDU_COMPOSE_FIELD_NOT_SUPPORTED = 3;
 
     /**
      * WAP values defined in WSP spec.
      */
-    static private final int QUOTED_STRING_FLAG = 34;
-    static private final int END_STRING_FLAG = 0;
-    static private final int LENGTH_QUOTE = 31;
-    static private final int TEXT_MAX = 127;
-    static private final int SHORT_INTEGER_MAX = 127;
-    static private final int LONG_INTEGER_LENGTH_MAX = 8;
+    private static final int QUOTED_STRING_FLAG = 34;
+    private static final int END_STRING_FLAG = 0;
+    private static final int LENGTH_QUOTE = 31;
+    private static final int TEXT_MAX = 127;
+    private static final int SHORT_INTEGER_MAX = 127;
+    private static final int LONG_INTEGER_LENGTH_MAX = 8;
 
     /**
      * Block size when read data from InputStream.
      */
-    static private final int PDU_COMPOSER_BLOCK_SIZE = 1024;
+    private static final int PDU_COMPOSER_BLOCK_SIZE = 1024;
     private static final String TAG = "PduComposer";
 
     /**
@@ -1029,7 +1029,7 @@ public class PduComposer {
     /**
      *  Record current message informations.
      */
-    static private class LengthRecordNode {
+    private static class LengthRecordNode {
         ByteArrayOutputStream currentMessage = null;
         public int currentPosition = 0;
 
