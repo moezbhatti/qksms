@@ -131,7 +131,7 @@ public class DraftCache {
             // If nobody's interested in finding out about changes,
             // just bail out early.
             synchronized (mChangeListenersLock) {
-                if (mChangeListeners.size() < 1) {
+                if (mChangeListeners.isEmpty()) {
                     return;
                 }
             }

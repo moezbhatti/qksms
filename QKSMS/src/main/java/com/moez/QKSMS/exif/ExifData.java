@@ -110,7 +110,7 @@ class ExifData {
      * Returns true if this header contains uncompressed strip.
      */
     protected boolean hasUncompressedStrip() {
-        return mStripBytes.size() != 0;
+        return !mStripBytes.isEmpty();
     }
 
     /**
@@ -264,7 +264,7 @@ class ExifData {
                 }
             }
         }
-        if (ret.size() == 0) {
+        if (ret.isEmpty()) {
             return null;
         }
         return ret;
@@ -287,7 +287,7 @@ class ExifData {
         for (ExifTag t : tags) {
             ret.add(t);
         }
-        if (ret.size() == 0) {
+        if (ret.isEmpty()) {
             return null;
         }
         return ret;
@@ -307,7 +307,7 @@ class ExifData {
                 }
             }
         }
-        if (ret.size() == 0) {
+        if (ret.isEmpty()) {
             return null;
         }
         return ret;

@@ -2348,7 +2348,7 @@ public class ExifInterface {
                 l.add(ifds[i]);
             }
         }
-        if (l.size() <= 0) {
+        if (l.isEmpty()) {
             return null;
         }
         int[] ret = new int[l.size()];

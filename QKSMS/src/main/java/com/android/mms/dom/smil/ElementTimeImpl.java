@@ -81,7 +81,7 @@ public abstract class ElementTimeImpl implements ElementTime {
                 // Ignore badly formatted times
             }
         }
-        if (beginTimeList.size() == 0) {
+        if (beginTimeList.isEmpty()) {
             /*
              * What is the right default value?
              *
@@ -139,7 +139,7 @@ public abstract class ElementTimeImpl implements ElementTime {
         }
 
         // "end" time is not specified
-        if (endTimeList.size() == 0) {
+        if (endTimeList.isEmpty()) {
             // Get duration
             float duration = getDur();
 

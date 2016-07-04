@@ -282,7 +282,7 @@ public abstract class MediaModel extends Model implements EventListener {
     }
 
     public MediaAction getCurrentAction() {
-        if (0 == mMediaActions.size()) {
+        if (mMediaActions.isEmpty()) {
             return MediaAction.NO_ACTIVE_ACTION;
         }
         return mMediaActions.remove(0);

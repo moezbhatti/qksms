@@ -503,14 +503,14 @@ public class Contact {
                         while (true) {
                             Runnable r = null;
                             synchronized (mThingsToLoad) {
-                                if (mThingsToLoad.size() == 0) {
+                                if (mThingsToLoad.isEmpty()) {
                                     try {
                                         mThingsToLoad.wait();
                                     } catch (InterruptedException ex) {
                                         break;  // Exception sent by Contact.init() to stop Runnable
                                     }
                                 }
-                                if (mThingsToLoad.size() > 0) {
+                                if (!mThingsToLoad.isEmpty()) {
                                     r = mThingsToLoad.remove(0);
                                 }
                             }
@@ -1175,7 +1175,7 @@ public class Contact {
                             }
                         }
                     }
-                    if (candidates.size() == 0) {
+                    if (candidates.isEmpty()) {
                         mContactsHash.remove(key);
                     }
                 }

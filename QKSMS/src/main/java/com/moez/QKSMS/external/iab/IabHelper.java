@@ -921,7 +921,7 @@ public class IabHelper {
             }
         }
 
-        if (skuList.size() == 0) {
+        if (skuList.isEmpty()) {
             logDebug("queryPrices: nothing to do because there are no SKUs.");
             return BILLING_RESPONSE_RESULT_OK;
         }
