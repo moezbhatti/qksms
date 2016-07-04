@@ -15,7 +15,7 @@ public interface IConnectivityManager extends android.os.IInterface {
     /**
      * Local-side IPC implementation stub class.
      */
-    public static abstract class Stub extends android.os.Binder implements android.net.IConnectivityManager {
+    public abstract static class Stub extends android.os.Binder implements android.net.IConnectivityManager {
         private static final String DESCRIPTOR = "android.net.IConnectivityManager";
 
         /**
