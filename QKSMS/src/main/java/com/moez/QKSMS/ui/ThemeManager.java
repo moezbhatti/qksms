@@ -11,26 +11,32 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
-import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
 
 public class ThemeManager {
@@ -461,53 +467,72 @@ public class ThemeManager {
     }
 
     public static void showColorPickerDialog(final QKActivity context) {
-        final QKDialog dialog = new QKDialog();
-
-        ColorPickerPalette palette = new ColorPickerPalette(context);
-        palette.setGravity(Gravity.CENTER);
-        palette.init(19, 4, color -> {
-            palette.init(getSwatch(color).length, 4, color2 -> {
-                setColor(context, color2);
-                dialog.dismiss();
-            });
-
-            palette.drawPalette(getSwatch(color), mColor);
-        });
-
-        palette.drawPalette(PALETTE, getSwatchColor(mColor));
-
-        dialog.setContext(context)
-                .setTitle(R.string.pref_theme)
-                .setCustomView(palette)
-                .setNegativeButton(R.string.cancel, null);
-
-        dialog.show();
+        showColorPicker(context, v -> setColor(context, getColor()));
     }
 
     public static void showColorPickerDialogForConversation(final QKActivity context, ConversationPrefsHelper prefs) {
+        showColorPicker(context, v -> {
+            prefs.putString(QKPreference.THEME.getKey(), "" + getColor());
+            LiveViewManager.refreshViews(QKPreference.CONVERSATION_THEME);
+        });
+    }
+
+    private static void showColorPicker(QKActivity context, View.OnClickListener saveListener) {
         final QKDialog dialog = new QKDialog();
 
-        ColorPickerPalette palette = new ColorPickerPalette(context);
-        palette.setGravity(Gravity.CENTER);
-        palette.init(19, 4, color -> {
-            palette.init(getSwatch(color).length, 4, color2 -> {
-                prefs.putString(QKPreference.THEME.getKey(), "" + color2);
-                setActiveColor(color2);
-                LiveViewManager.refreshViews(QKPreference.CONVERSATION_THEME);
-                dialog.dismiss();
-            });
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker_rgb, null, false);
+        ColorPickerViewHolder holder = new ColorPickerViewHolder(view);
 
-            palette.drawPalette(getSwatch(color), prefs.getColor());
+        SeekBar.OnSeekBarChangeListener seekListener = new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int color = ThemeManager.getColor();
+                color = Color.rgb(seekBar == holder.mRed ? progress : Color.red(color),
+                        seekBar == holder.mGreen ? progress : Color.green(color),
+                        seekBar == holder.mBlue ? progress : Color.blue(color));
+
+                if (seekBar == holder.mRed) holder.mRedValue.setText(String.valueOf(progress));
+                if (seekBar == holder.mGreen) holder.mGreenValue.setText(String.valueOf(progress));
+                if (seekBar == holder.mBlue) holder.mBlueValue.setText(String.valueOf(progress));
+
+                ThemeManager.setActiveColor(color);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        };
+
+        Drawable thumbRed = ContextCompat.getDrawable(mContext, R.drawable.seek_thumb);
+        Drawable thumbGreen = ContextCompat.getDrawable(mContext, R.drawable.seek_thumb);
+        Drawable thumbBlue = ContextCompat.getDrawable(mContext, R.drawable.seek_thumb);
+        LiveViewManager.registerView(QKPreference.THEME, holder.mPreview, key -> {
+            holder.mPreview.setBackgroundColor(ThemeManager.getColor());
+            holder.mRed.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
+            holder.mGreen.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
+            holder.mBlue.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
         });
 
-        palette.drawPalette(PALETTE, getSwatchColor(prefs.getColor()));
+        holder.mRed.setThumb(thumbRed);
+        holder.mRed.setOnSeekBarChangeListener(seekListener);
+        holder.mGreen.setThumb(thumbGreen);
+        holder.mGreen.setOnSeekBarChangeListener(seekListener);
+        holder.mBlue.setThumb(thumbBlue);
+        holder.mBlue.setOnSeekBarChangeListener(seekListener);
+
+        holder.mRed.setProgress(Color.red(ThemeManager.getColor()));
+        holder.mGreen.setProgress(Color.green(ThemeManager.getColor()));
+        holder.mBlue.setProgress(Color.blue(ThemeManager.getColor()));
 
         dialog.setContext(context)
-                .setTitle(R.string.pref_theme)
-                .setCustomView(palette)
-                .setNegativeButton(R.string.cancel, null);
-
-        dialog.show();
+                .setCustomView(view)
+                .setNegativeButton(R.string.cancel, v -> ThemeManager.setActiveColor(ThemeManager.getThemeColor()))
+                .setPositiveButton(R.string.save, saveListener)
+                .show();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -548,7 +573,7 @@ public class ThemeManager {
                 getColorString(color)
         );
 
-        int colorFrom = mColor;
+        int colorFrom = mActiveColor;
         mColor = color;
         mActiveColor = color;
 
@@ -634,5 +659,20 @@ public class ThemeManager {
         }
 
         return PALETTE;
+    }
+
+    static class ColorPickerViewHolder {
+        @Bind(R.id.preview) View mPreview;
+        @Bind(R.id.red) SeekBar mRed;
+        @Bind(R.id.red_value) QKTextView mRedValue;
+        @Bind(R.id.green) SeekBar mGreen;
+        @Bind(R.id.green_value) QKTextView mGreenValue;
+        @Bind(R.id.blue) SeekBar mBlue;
+        @Bind(R.id.blue_value) QKTextView mBlueValue;
+
+        public ColorPickerViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
     }
 }

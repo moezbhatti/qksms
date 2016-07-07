@@ -24,7 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -130,8 +132,10 @@ public class QKDialog extends DialogFragment {
             mPositiveButtonView = (QKTextView) view.findViewById(R.id.buttonPositive);
             mPositiveButtonView.setVisibility(View.VISIBLE);
             mPositiveButtonView.setText(mPositiveButtonText);
-            mPositiveButtonView.setTextColor(ThemeManager.getColor());
             mPositiveButtonView.setOnClickListener(mPositiveButtonClickListener);
+            LiveViewManager.registerView(QKPreference.THEME, mPositiveButtonView, key -> {
+                mPositiveButtonView.setTextColor(ThemeManager.getColor());
+            });
         }
 
         if (mNeutralButtonEnabled) {
