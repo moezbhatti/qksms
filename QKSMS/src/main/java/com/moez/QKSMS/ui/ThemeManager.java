@@ -621,8 +621,10 @@ public class ThemeManager {
     }
 
     public static void setActiveColor(int color) {
-        mActiveColor = color;
-        LiveViewManager.refreshViews(QKPreference.THEME);
+        if (mActiveColor != color) {
+            mActiveColor = color;
+            LiveViewManager.refreshViews(QKPreference.THEME);
+        }
     }
 
     private static boolean isColorDarkEnough(int color) {
