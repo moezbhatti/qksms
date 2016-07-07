@@ -197,8 +197,6 @@
     <string name="pref_long_as_mms_summary">Send long messages as MMS instead of splitting them</string>
     <string name="pref_long_as_mms_after">Send long as MMS after</string>
     <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
-    <string name="pref_24h">24h time</string>
-    <string name="pref_24h_summary">Display timestamps in 24-hour format</string>
     <string name="pref_return">Show return button</string>
     <string name="pref_return_summary">Show return key on keyboard instead of Emoji button</string>
     <string name="pref_text">Text</string>
