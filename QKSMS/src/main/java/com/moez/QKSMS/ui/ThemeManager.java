@@ -553,7 +553,10 @@ public class ThemeManager {
 
                 setActiveColor(color);
                 String colorString = Integer.toHexString(color);
+                holder.mHex.setTextChangedListenerEnabled(false);
                 holder.mHex.setText(colorString.substring(colorString.length() > 6 ? colorString.length() - 6 : 0));
+                holder.mHex.setTextChangedListenerEnabled(true);
+                holder.mError.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -606,7 +609,7 @@ public class ThemeManager {
             return false;
         });
         holder.mHex.setTextChangedListener(s -> {
-            try {
+            if (s.length() == 6) {
                 int color = Color.parseColor("#" + s.toString());
                 holder.mError.setVisibility(View.INVISIBLE);
                 if (color != getColor()) {
@@ -614,7 +617,7 @@ public class ThemeManager {
                     holder.mGreen.setProgress(Color.green(color));
                     holder.mBlue.setProgress(Color.blue(color));
                 }
-            } catch (IllegalArgumentException e) {
+            } else {
                 holder.mError.setVisibility(View.VISIBLE);
             }
         });
