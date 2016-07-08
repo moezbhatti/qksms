@@ -236,7 +236,7 @@ public class ThemeManager {
     private static int mReceivedBubbleRes;
     private static int mReceivedBubbleAltRes;
     private static boolean mReceivedBubbleColored;
-    private static Drawable mRippleBackground;
+    private static int mRippleBackgroundRes;
 
     private static Resources mResources;
     private static SharedPreferences mPrefs;
@@ -290,21 +290,21 @@ public class ThemeManager {
                 mBackgroundColor = mResources.getColor(R.color.grey_light_mega_ultra);
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_light_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_light_text_secondary);
-                mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent);
+                mRippleBackgroundRes = R.drawable.button_background_transparent;
                 break;
 
             case DARK:
                 mBackgroundColor = mResources.getColor(R.color.grey_material);
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
-                mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent_light);
+                mRippleBackgroundRes = R.drawable.button_background_transparent_light;
                 break;
 
             case BLACK:
                 mBackgroundColor = mResources.getColor(R.color.black);
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
-                mRippleBackground = mResources.getDrawable(R.drawable.button_background_transparent_light);
+                mRippleBackgroundRes = R.drawable.button_background_transparent_light;
                 break;
         }
 
@@ -450,7 +450,7 @@ public class ThemeManager {
     }
 
     public static Drawable getRippleBackground() {
-        return mRippleBackground;
+        return mResources.getDrawable(mRippleBackgroundRes);
     }
 
     public static int getColor() {
@@ -486,6 +486,8 @@ public class ThemeManager {
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker_pager, null, false);
         ColorPickerViewHolder holder = new ColorPickerViewHolder(view);
 
+        holder.mTab1.setBackgroundDrawable(getRippleBackground());
+        holder.mTab2.setBackgroundDrawable(getRippleBackground());
         holder.mTab1.setOnClickListener(v -> holder.mPager.setCurrentItem(0));
         holder.mTab2.setOnClickListener(v -> holder.mPager.setCurrentItem(1));
 
