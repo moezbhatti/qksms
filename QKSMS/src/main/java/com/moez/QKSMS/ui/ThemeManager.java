@@ -16,6 +16,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -373,46 +375,57 @@ public class ThemeManager {
                 .show();
     }
 
+    @ColorInt
     public static int getBackgroundColor() {
         return mBackgroundColor;
     }
 
+    @ColorInt
     public static int getTextOnColorPrimary() {
         return mTextOnColorPrimary;
     }
 
+    @ColorInt
     public static int getTextOnColorSecondary() {
         return mTextOnColorSecondary;
     }
 
+    @ColorInt
     public static int getTextOnBackgroundPrimary() {
         return mTextOnBackgroundPrimary;
     }
 
+    @ColorInt
     public static int getTextOnBackgroundSecondary() {
         return mtextOnBackgroundSecondary;
     }
 
+    @DrawableRes
     public static int getSentBubbleRes() {
         return mSentBubbleRes;
     }
 
+    @DrawableRes
     public static int getSentBubbleAltRes() {
         return mSentBubbleAltRes;
     }
 
+    @ColorInt
     public static int getSentBubbleColor() {
         return mSentBubbleColored ? mActiveColor : getNeutralBubbleColor();
     }
 
+    @DrawableRes
     public static int getReceivedBubbleRes() {
         return mReceivedBubbleRes;
     }
 
+    @DrawableRes
     public static int getReceivedBubbleAltRes() {
         return mReceivedBubbleAltRes;
     }
 
+    @ColorInt
     public static int getReceivedBubbleColor() {
         return mReceivedBubbleColored ? mActiveColor : getNeutralBubbleColor();
     }
@@ -432,6 +445,7 @@ public class ThemeManager {
         mReceivedBubbleColored = colored;
     }
 
+    @ColorInt
     public static int getNeutralBubbleColor() {
         if (mTheme == null) {
             return 0xeeeeee;
@@ -453,10 +467,12 @@ public class ThemeManager {
         return mResources.getDrawable(mRippleBackgroundRes);
     }
 
+    @ColorInt
     public static int getColor() {
         return mActiveColor;
     }
 
+    @ColorInt
     public static int getThemeColor() {
         return mColor;
     }
@@ -495,7 +511,6 @@ public class ThemeManager {
         holder.mPager.setAdapter(adapter);
         holder.mPager.setOffscreenPageLimit(1);
         holder.mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @SuppressWarnings("ResourceAsColor")
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);

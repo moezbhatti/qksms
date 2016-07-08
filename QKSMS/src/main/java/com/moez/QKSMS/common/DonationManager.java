@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.external.iab.IabHelper;
 import com.moez.QKSMS.external.iab.IabResult;
 import com.moez.QKSMS.external.iab.Purchase;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 
@@ -196,6 +198,13 @@ public class DonationManager {
         view.findViewById(R.id.donate_5).setOnClickListener(clickListener);
         view.findViewById(R.id.donate_10).setOnClickListener(clickListener);
         view.findViewById(R.id.donate_paypal).setOnClickListener(clickListener);
+
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            view.findViewById(R.id.donate_1).setBackgroundDrawable(ThemeManager.getRippleBackground());
+            view.findViewById(R.id.donate_5).setBackgroundDrawable(ThemeManager.getRippleBackground());
+            view.findViewById(R.id.donate_10).setBackgroundDrawable(ThemeManager.getRippleBackground());
+            view.findViewById(R.id.donate_paypal).setBackgroundDrawable(ThemeManager.getRippleBackground());
+        });
 
         QKDialog dialog = new QKDialog()
                 .setContext(mContext)
