@@ -166,6 +166,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             holder.mRoot.setBackgroundDrawable(ThemeManager.getRippleBackground());
+            holder.mSlideShowButton.setBackgroundDrawable(ThemeManager.getRippleBackground());
             holder.mMmsView.getForeground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
         });
 

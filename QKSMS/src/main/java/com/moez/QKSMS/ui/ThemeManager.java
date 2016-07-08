@@ -292,21 +292,21 @@ public class ThemeManager {
                 mBackgroundColor = mResources.getColor(R.color.grey_light_mega_ultra);
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_light_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_light_text_secondary);
-                mRippleBackgroundRes = R.drawable.button_background_transparent;
+                mRippleBackgroundRes = R.drawable.ripple;
                 break;
 
             case DARK:
                 mBackgroundColor = mResources.getColor(R.color.grey_material);
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
-                mRippleBackgroundRes = R.drawable.button_background_transparent_light;
+                mRippleBackgroundRes = R.drawable.ripple_light;
                 break;
 
             case BLACK:
                 mBackgroundColor = mResources.getColor(R.color.black);
                 mTextOnBackgroundPrimary = mResources.getColor(R.color.theme_dark_text_primary);
                 mtextOnBackgroundSecondary = mResources.getColor(R.color.theme_dark_text_secondary);
-                mRippleBackgroundRes = R.drawable.button_background_transparent_light;
+                mRippleBackgroundRes = R.drawable.ripple_light;
                 break;
         }
 
