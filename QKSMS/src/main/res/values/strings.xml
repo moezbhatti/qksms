@@ -19,6 +19,7 @@
     <string name="hint_reply">Enter a message</string>
     <!--Hint for code redemption-->
     <string name="hint_redeem">Enter code</string>
+    <string name="hint_hex">Hex</string>
 
     <!--Text shown for single new message in notification-->
     <string name="new_message">New message</string>

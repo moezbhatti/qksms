@@ -24,6 +24,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import butterknife.Bind;
@@ -34,12 +36,14 @@ import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.ColorUtils;
+import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.ColorPickerPagerAdapter;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
@@ -251,7 +255,7 @@ public class ThemeManager {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mResources = context.getResources();
 
-        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR));
+        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + DEFAULT_COLOR));
         mActiveColor = mColor;
 
         initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
@@ -538,7 +542,7 @@ public class ThemeManager {
         SeekBar.OnSeekBarChangeListener seekListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int color = ThemeManager.getColor();
+                int color = getColor();
                 color = Color.rgb(seekBar == holder.mRed ? progress : Color.red(color),
                         seekBar == holder.mGreen ? progress : Color.green(color),
                         seekBar == holder.mBlue ? progress : Color.blue(color));
@@ -547,7 +551,9 @@ public class ThemeManager {
                 if (seekBar == holder.mGreen) holder.mGreenValue.setText(String.valueOf(progress));
                 if (seekBar == holder.mBlue) holder.mBlueValue.setText(String.valueOf(progress));
 
-                ThemeManager.setActiveColor(color);
+                setActiveColor(color);
+                String colorString = Integer.toHexString(color);
+                holder.mHex.setText(colorString.substring(colorString.length() > 6 ? colorString.length() - 6 : 0));
             }
 
             @Override
@@ -563,15 +569,20 @@ public class ThemeManager {
         Drawable thumbGreen = ContextCompat.getDrawable(mContext, R.drawable.seek_thumb);
         Drawable thumbBlue = ContextCompat.getDrawable(mContext, R.drawable.seek_thumb);
         LiveViewManager.registerView(QKPreference.THEME, holder.mPreview, key -> {
-            holder.mPreview.setBackgroundColor(ThemeManager.getColor());
-            holder.mRed.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
-            holder.mGreen.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
-            holder.mBlue.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
+            holder.mPreview.setBackgroundColor(getColor());
+            holder.mRed.getProgressDrawable().setColorFilter(getColor(), PorterDuff.Mode.MULTIPLY);
+            holder.mGreen.getProgressDrawable().setColorFilter(getColor(), PorterDuff.Mode.MULTIPLY);
+            holder.mBlue.getProgressDrawable().setColorFilter(getColor(), PorterDuff.Mode.MULTIPLY);
             if (holder.mPager.getCurrentItem() == 0) {
                 holder.mTab1.setTextColor(getColor());
             } else {
                 holder.mTab2.setTextColor(getColor());
             }
+        });
+
+        LiveViewManager.registerView(QKPreference.BACKGROUND, holder.mHex, key -> {
+            holder.mHex.getBackground().setColorFilter(0x22888888, PorterDuff.Mode.MULTIPLY);
+            holder.mError.setColorFilter(getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
         });
 
         holder.mRed.setThumb(thumbRed);
@@ -581,13 +592,36 @@ public class ThemeManager {
         holder.mBlue.setThumb(thumbBlue);
         holder.mBlue.setOnSeekBarChangeListener(seekListener);
 
-        holder.mRed.setProgress(Color.red(ThemeManager.getColor()));
-        holder.mGreen.setProgress(Color.green(ThemeManager.getColor()));
-        holder.mBlue.setProgress(Color.blue(ThemeManager.getColor()));
+        holder.mRed.setProgress(Color.red(getColor()));
+        holder.mGreen.setProgress(Color.green(getColor()));
+        holder.mBlue.setProgress(Color.blue(getColor()));
+
+        String colorString = Integer.toHexString(getColor());
+        holder.mHex.setText(colorString.substring(colorString.length() > 6 ? colorString.length() - 6 : 0));
+        holder.mHex.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                holder.mHex.clearFocus();
+                KeyboardUtils.hide(mContext, holder.mHex);
+            }
+            return false;
+        });
+        holder.mHex.setTextChangedListener(s -> {
+            try {
+                int color = Color.parseColor("#" + s.toString());
+                holder.mError.setVisibility(View.INVISIBLE);
+                if (color != getColor()) {
+                    holder.mRed.setProgress(Color.red(color));
+                    holder.mGreen.setProgress(Color.green(color));
+                    holder.mBlue.setProgress(Color.blue(color));
+                }
+            } catch (IllegalArgumentException e) {
+                holder.mError.setVisibility(View.VISIBLE);
+            }
+        });
 
         dialog.setContext(context)
                 .setCustomView(view)
-                .setNegativeButton(R.string.cancel, v -> ThemeManager.setActiveColor(ThemeManager.getThemeColor()))
+                .setNegativeButton(R.string.cancel, v -> setActiveColor(getThemeColor()))
                 .setPositiveButton(R.string.save, saveListener)
                 .show();
     }
@@ -732,6 +766,8 @@ public class ThemeManager {
         @Bind(R.id.green_value) QKTextView mGreenValue;
         @Bind(R.id.blue) SeekBar mBlue;
         @Bind(R.id.blue_value) QKTextView mBlueValue;
+        @Bind(R.id.hex) QKEditText mHex;
+        @Bind(R.id.error) ImageView mError;
 
         public ColorPickerViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -161,6 +161,46 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical">
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/hint_hex"
+                    app:type="primary" />
+
+                <com.moez.QKSMS.ui.view.QKEditText
+                    android:id="@+id/hex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edittext"
+                    android:digits="1234567890abcdef"
+                    android:imeOptions="actionDone"
+                    android:lines="1"
+                    android:maxLength="6"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/error"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_error"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </android.support.v4.view.ViewPager>
