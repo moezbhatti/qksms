@@ -499,7 +499,7 @@ public class ThemeManager {
     private static void showColorPicker(QKActivity context, View.OnClickListener saveListener) {
         final QKDialog dialog = new QKDialog();
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker_pager, null, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker, null, false);
         ColorPickerViewHolder holder = new ColorPickerViewHolder(view);
 
         holder.mTab1.setBackgroundDrawable(getRippleBackground());
@@ -724,7 +724,7 @@ public class ThemeManager {
         @Bind(R.id.tab_1) QKTextView mTab1;
         @Bind(R.id.tab_2) QKTextView mTab2;
         @Bind(R.id.pager) ViewPager mPager;
-        @Bind(R.id.palette_view) ColorPickerPalette mPalette;
+        @Bind(R.id.palette) ColorPickerPalette mPalette;
         @Bind(R.id.preview) View mPreview;
         @Bind(R.id.red) SeekBar mRed;
         @Bind(R.id.red_value) QKTextView mRedValue;

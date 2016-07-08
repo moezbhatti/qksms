@@ -63,7 +63,7 @@ public class ColorPickerDialog extends DialogFragment implements ColorPickerSwat
     }
 
     public Dialog onCreateDialog(Bundle bundle) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_color_picker, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_color_picker_led, null);
         mProgress = ((ProgressBar) view.findViewById(android.R.id.progress));
         mPalette = ((ColorPickerPalette) view.findViewById(R.id.color_picker));
         mPalette.init(mSize, mColumns, this);
