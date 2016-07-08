@@ -521,12 +521,13 @@ public class ThemeManager {
 
         holder.mPalette.init(19, 4, color -> {
             holder.mPalette.init(getSwatch(color).length, 4, color2 -> {
-                setColor(context, color2);
+                setActiveColor(color2);
+                saveListener.onClick(null);
                 dialog.dismiss();
             });
-            holder.mPalette.drawPalette(getSwatch(color), mColor);
+            holder.mPalette.drawPalette(getSwatch(color), getColor());
         });
-        holder.mPalette.drawPalette(PALETTE, getSwatchColor(mColor));
+        holder.mPalette.drawPalette(PALETTE, getSwatchColor(getColor()));
 
 
         SeekBar.OnSeekBarChangeListener seekListener = new SeekBar.OnSeekBarChangeListener() {
