@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/tab_1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/title_palette"
+            app:type="primary_bold" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/tab_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/title_rgb"
+            app:type="primary_bold" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="320dp">
+
+        <FrameLayout
+            android:id="@+id/palette"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette
+                android:id="@+id/palette_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/rgb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/dialog_color_picker_rgb" />
+
+        </FrameLayout>
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

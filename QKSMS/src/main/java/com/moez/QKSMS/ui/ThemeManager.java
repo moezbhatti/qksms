@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +35,11 @@ import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.base.QKActivity;
+import com.moez.QKSMS.ui.dialog.ColorPickerPagerAdapter;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
+import com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
 
 public class ThemeManager {
@@ -480,8 +483,34 @@ public class ThemeManager {
     private static void showColorPicker(QKActivity context, View.OnClickListener saveListener) {
         final QKDialog dialog = new QKDialog();
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker_rgb, null, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_color_picker_pager, null, false);
         ColorPickerViewHolder holder = new ColorPickerViewHolder(view);
+
+        holder.mTab1.setOnClickListener(v -> holder.mPager.setCurrentItem(0));
+        holder.mTab2.setOnClickListener(v -> holder.mPager.setCurrentItem(1));
+
+        ColorPickerPagerAdapter adapter = new ColorPickerPagerAdapter(context);
+        holder.mPager.setAdapter(adapter);
+        holder.mPager.setOffscreenPageLimit(1);
+        holder.mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @SuppressWarnings("ResourceAsColor")
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                holder.mTab1.setTextColor(position == 0 ? getColor() : getTextOnBackgroundPrimary());
+                holder.mTab2.setTextColor(position == 1 ? getColor() : getTextOnBackgroundPrimary());
+            }
+        });
+
+        holder.mPalette.init(19, 4, color -> {
+            holder.mPalette.init(getSwatch(color).length, 4, color2 -> {
+                setColor(context, color2);
+                dialog.dismiss();
+            });
+            holder.mPalette.drawPalette(getSwatch(color), mColor);
+        });
+        holder.mPalette.drawPalette(PALETTE, getSwatchColor(mColor));
+
 
         SeekBar.OnSeekBarChangeListener seekListener = new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -515,6 +544,11 @@ public class ThemeManager {
             holder.mRed.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
             holder.mGreen.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
             holder.mBlue.getProgressDrawable().setColorFilter(ThemeManager.getColor(), PorterDuff.Mode.MULTIPLY);
+            if (holder.mPager.getCurrentItem() == 0) {
+                holder.mTab1.setTextColor(getColor());
+            } else {
+                holder.mTab2.setTextColor(getColor());
+            }
         });
 
         holder.mRed.setThumb(thumbRed);
@@ -664,6 +698,10 @@ public class ThemeManager {
     }
 
     static class ColorPickerViewHolder {
+        @Bind(R.id.tab_1) QKTextView mTab1;
+        @Bind(R.id.tab_2) QKTextView mTab2;
+        @Bind(R.id.pager) ViewPager mPager;
+        @Bind(R.id.palette_view) ColorPickerPalette mPalette;
         @Bind(R.id.preview) View mPreview;
         @Bind(R.id.red) SeekBar mRed;
         @Bind(R.id.red_value) QKTextView mRedValue;

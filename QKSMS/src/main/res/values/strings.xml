@@ -313,6 +313,8 @@
     <string name="title_block_address">Block number</string>
     <string name="title_unblock_address">Unblock number</string>
     <string name="title_conversations_selected">%s selected</string>
+    <string name="title_palette">Palette</string>
+    <string name="title_rgb">RGB</string>
 
     <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
