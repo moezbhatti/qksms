@@ -519,6 +519,7 @@ public class ThemeManager {
             }
         });
 
+        int swatchColor = getSwatchColor(getColor());
         holder.mPalette.init(19, 4, color -> {
             holder.mPalette.init(getSwatch(color).length, 4, color2 -> {
                 setActiveColor(color2);
@@ -527,7 +528,11 @@ public class ThemeManager {
             });
             holder.mPalette.drawPalette(getSwatch(color), getColor());
         });
-        holder.mPalette.drawPalette(PALETTE, getSwatchColor(getColor()));
+        holder.mPalette.drawPalette(PALETTE, swatchColor);
+
+        if (swatchColor == getColor()) { // If the current theme was set from the RGB picker, show that page instead
+            holder.mPager.setCurrentItem(1);
+        }
 
 
         SeekBar.OnSeekBarChangeListener seekListener = new SeekBar.OnSeekBarChangeListener() {
