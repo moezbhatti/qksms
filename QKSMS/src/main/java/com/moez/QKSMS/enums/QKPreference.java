@@ -33,7 +33,6 @@ public enum QKPreference {
     HIDE_AVATAR_RECEIVED("pref_key_hide_avatar_received", false),
 
     MESSAGE_COUNT("pref_key_message_count", false),
-    TIMESTAMPS_24H("pref_key_24h", false),
 
     // General
     DELAYED_MESSAGING("pref_key_delayed", false),

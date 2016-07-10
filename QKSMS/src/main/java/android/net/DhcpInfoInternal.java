@@ -33,9 +33,9 @@ import java.util.Collections;
  * @hide
  */
 public class DhcpInfoInternal {
-    private final static String TAG = "DhcpInfoInternal";
+    private static final String TAG = "DhcpInfoInternal";
 
-    private final static boolean LOCAL_LOGV = false;
+    private static final boolean LOCAL_LOGV = false;
     public String ipAddress;
     public int prefixLength;
 
@@ -140,7 +140,7 @@ public class DhcpInfoInternal {
             dns2 = orig.dns2;
         }
 
-        if (mRoutes.size() == 0) {
+        if (mRoutes.isEmpty()) {
             for (RouteInfo route : orig.getRoutes()) {
                 addRoute(route);
             }

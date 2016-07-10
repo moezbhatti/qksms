@@ -165,6 +165,8 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         }
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            holder.mRoot.setBackgroundDrawable(ThemeManager.getRippleBackground());
+            holder.mSlideShowButton.setBackgroundDrawable(ThemeManager.getRippleBackground());
             holder.mMmsView.getForeground().setColorFilter(ThemeManager.getBackgroundColor(), PorterDuff.Mode.SRC_ATOP);
         });
 
@@ -280,7 +282,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         MessageItem messageItem2 = getItem(position + 1);
 
-        if(mPrefs.getBoolean(SettingsFragment.FORCE_TIMESTAMPS, false)) {
+        if (mPrefs.getBoolean(SettingsFragment.FORCE_TIMESTAMPS, false)) {
             return true;
         } else if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
             return true;

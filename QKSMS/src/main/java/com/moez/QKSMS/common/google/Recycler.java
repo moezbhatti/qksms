@@ -104,9 +104,9 @@ public abstract class Recycler {
         return /*prefs.getBoolean(MessagingPreferenceActivity.AUTO_DELETE, DEFAULT_AUTO_DELETE)*/ false;
     }
 
-    abstract public int getMessageLimit(Context context);
+    public abstract int getMessageLimit(Context context);
 
-    abstract public void setMessageLimit(Context context, int limit);
+    public abstract void setMessageLimit(Context context, int limit);
 
     public int getMessageMinLimit() {
         return MmsConfig.getMinMessageCountPerThread();
@@ -116,15 +116,15 @@ public abstract class Recycler {
         return MmsConfig.getMaxMessageCountPerThread();
     }
 
-    abstract protected long getThreadId(Cursor cursor);
+    protected abstract long getThreadId(Cursor cursor);
 
-    abstract protected Cursor getAllThreads(Context context);
+    protected abstract Cursor getAllThreads(Context context);
 
-    abstract protected void deleteMessagesForThread(Context context, long threadId, int keep);
+    protected abstract void deleteMessagesForThread(Context context, long threadId, int keep);
 
-    abstract protected void dumpMessage(Cursor cursor, Context context);
+    protected abstract void dumpMessage(Cursor cursor, Context context);
 
-    abstract protected boolean anyThreadOverLimit(Context context);
+    protected abstract boolean anyThreadOverLimit(Context context);
 
     public static class SmsRecycler extends Recycler {
         private static final String[] ALL_SMS_THREADS_PROJECTION = {
@@ -135,7 +135,7 @@ public abstract class Recycler {
         private static final int ID             = 0;
         private static final int MESSAGE_COUNT  = 1;
 
-        static private final String[] SMS_MESSAGE_PROJECTION = new String[] {
+        private static final String[] SMS_MESSAGE_PROJECTION = new String[] {
             BaseColumns._ID,
             Conversations.THREAD_ID,
             Sms.ADDRESS,
@@ -148,14 +148,14 @@ public abstract class Recycler {
 
         // The indexes of the default columns which must be consistent
         // with above PROJECTION.
-        static private final int COLUMN_ID                  = 0;
-        static private final int COLUMN_THREAD_ID           = 1;
-        static private final int COLUMN_SMS_ADDRESS         = 2;
-        static private final int COLUMN_SMS_BODY            = 3;
-        static private final int COLUMN_SMS_DATE            = 4;
-        static private final int COLUMN_SMS_READ            = 5;
-        static private final int COLUMN_SMS_TYPE            = 6;
-        static private final int COLUMN_SMS_STATUS          = 7;
+        private static final int COLUMN_ID                  = 0;
+        private static final int COLUMN_THREAD_ID           = 1;
+        private static final int COLUMN_SMS_ADDRESS         = 2;
+        private static final int COLUMN_SMS_BODY            = 3;
+        private static final int COLUMN_SMS_DATE            = 4;
+        private static final int COLUMN_SMS_READ            = 5;
+        private static final int COLUMN_SMS_TYPE            = 6;
+        private static final int COLUMN_SMS_STATUS          = 7;
 
         private final String MAX_SMS_MESSAGES_PER_THREAD = "MaxSmsMessagesPerThread";
 
@@ -283,7 +283,7 @@ public abstract class Recycler {
         private static final int ID             = 0;
         private static final int MESSAGE_COUNT  = 1;
 
-        static private final String[] MMS_MESSAGE_PROJECTION = new String[] {
+        private static final String[] MMS_MESSAGE_PROJECTION = new String[] {
             BaseColumns._ID,
             Conversations.THREAD_ID,
             Mms.DATE,
@@ -291,10 +291,10 @@ public abstract class Recycler {
 
         // The indexes of the default columns which must be consistent
         // with above PROJECTION.
-        static private final int COLUMN_ID                  = 0;
-        static private final int COLUMN_THREAD_ID           = 1;
-        static private final int COLUMN_MMS_DATE            = 2;
-        static private final int COLUMN_MMS_READ            = 3;
+        private static final int COLUMN_ID                  = 0;
+        private static final int COLUMN_THREAD_ID           = 1;
+        private static final int COLUMN_MMS_DATE            = 2;
+        private static final int COLUMN_MMS_READ            = 3;
 
         private final String MAX_MMS_MESSAGES_PER_THREAD = "MaxMmsMessagesPerThread";
 

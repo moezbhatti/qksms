@@ -29,6 +29,8 @@ import java.util.LinkedHashMap;
  * from Peter Balwin and books app.
  */
 public class SimpleCache<K, V> {
+    private final SoftReferenceMap mSoftReferences;
+    private final HardReferenceMap mHardReferences;
 
     /**
      * A simple LRU cache to prevent the number of {@link java.util.Map.Entry} instances
@@ -66,13 +68,6 @@ public class SimpleCache<K, V> {
         }
     }
 
-    private static <V> V unwrap(SoftReference<V> ref) {
-        return ref != null ? ref.get() : null;
-    }
-
-    private final SoftReferenceMap mSoftReferences;
-    private final HardReferenceMap mHardReferences;
-
     /**
      * Constructor.
      *
@@ -93,6 +88,10 @@ public class SimpleCache<K, V> {
             mSoftReferences = new SoftReferenceMap(initialCapacity, maxCapacity, loadFactor);
             mHardReferences = null;
         }
+    }
+
+    private static <V> V unwrap(SoftReference<V> ref) {
+        return ref != null ? ref.get() : null;
     }
 
     /**

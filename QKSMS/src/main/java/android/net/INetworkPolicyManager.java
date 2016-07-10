@@ -13,7 +13,7 @@ public interface INetworkPolicyManager extends android.os.IInterface {
     /**
      * Local-side IPC implementation stub class.
      */
-    public static abstract class Stub extends android.os.Binder implements android.net.INetworkPolicyManager {
+    public abstract static class Stub extends android.os.Binder implements android.net.INetworkPolicyManager {
         private static final String DESCRIPTOR = "android.net.INetworkPolicyManager";
 
         /**

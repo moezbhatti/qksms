@@ -69,6 +69,7 @@
             android:icon="@mipmap/ic_launcher_teal"
             android:label="@string/app_name"
             android:logo="@color/transparent"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -92,16 +93,20 @@
         <activity
             android:name=".ui.messagelist.MessageListActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.settings.SettingsActivity"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.search.SearchActivity"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.compose.ComposeActivity"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
 
         <activity-alias
@@ -335,17 +340,21 @@
 
         <activity
             android:name=".ui.welcome.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeLight" />
 
         <!-- Popup activity -->
         <activity
             android:name=".ui.popup.QKReplyActivity"
             android:excludeFromRecents="true"
+            android:screenOrientation="user"
             android:taskAffinity=""
             android:theme="@style/AppThemeLightDialog"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".ui.mms.SlideshowActivity" />
+        <activity
+            android:name=".ui.mms.SlideshowActivity"
+            android:screenOrientation="user" />
 
         <receiver
             android:name=".receiver.RemoteMessagingReceiver"

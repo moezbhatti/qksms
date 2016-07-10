@@ -19,9 +19,4 @@
         <item name="type">tertiary</item>
     </style>
 
-    <style name="ButtonStyle">
-        <item name="android:background">?android:attr/selectableItemBackground</item>
-        <item name="android:soundEffectsEnabled">true</item>
-    </style>
-
 </resources>

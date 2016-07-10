@@ -9,7 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.DateFormatter;
+import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 
@@ -37,6 +40,11 @@ public class SearchAdapter extends RecyclerCursorAdapter<SearchViewHolder, Searc
     public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.list_item_search, parent, false);
+
+        LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
+            view.setBackgroundDrawable(ThemeManager.getRippleBackground());
+        });
+
         return new SearchViewHolder(mContext, view);
     }
 

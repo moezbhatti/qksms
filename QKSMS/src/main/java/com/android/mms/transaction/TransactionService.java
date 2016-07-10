@@ -473,7 +473,7 @@ public class TransactionService extends Service implements Observer {
         try {
             synchronized (mProcessing) {
                 mProcessing.remove(transaction);
-                if (mPending.size() > 0) {
+                if (!mPending.isEmpty()) {
                     if (LOCAL_LOGV) Log.v(TAG, "update: handle next pending transaction...");
                     Message msg = mServiceHandler.obtainMessage(
                             EVENT_HANDLE_NEXT_PENDING_TRANSACTION,
@@ -799,7 +799,7 @@ public class TransactionService extends Service implements Observer {
 
         public void markAllPendingTransactionsAsFailed() {
             synchronized (mProcessing) {
-                while (mPending.size() != 0) {
+                while (!mPending.isEmpty()) {
                     Transaction transaction = mPending.remove(0);
                     transaction.mTransactionState.setState(TransactionState.FAILED);
                     if (transaction instanceof SendTransaction) {
@@ -824,7 +824,7 @@ public class TransactionService extends Service implements Observer {
             int numProcessTransaction;
 
             synchronized (mProcessing) {
-                if (mPending.size() != 0) {
+                if (!mPending.isEmpty()) {
                     transaction = mPending.remove(0);
                 }
                 numProcessTransaction = mProcessing.size();
