@@ -39,7 +39,7 @@
     <application
         android:name=".QKSMSApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_teal"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppThemeDark">
@@ -66,9 +66,11 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:icon="@mipmap/ic_launcher_teal"
+            android:enabled="true"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:logo="@color/transparent"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -92,22 +94,50 @@
         <activity
             android:name=".ui.messagelist.MessageListActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.settings.SettingsActivity"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.search.SearchActivity"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.compose.ComposeActivity"
+            android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
 
         <activity-alias
-            android:name=".ui.MainActivity-Teal"
+            android:name=".ui.MainActivity-Default"
             android:enabled="true"
-            android:icon="@mipmap/ic_launcher_teal"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:targetActivity=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".ui.MainActivity-Dark"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_dark"
+            android:label="@string/app_name"
+            android:targetActivity=".ui.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".ui.MainActivity-Teal"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -119,7 +149,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Red"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_red"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -131,7 +161,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Pink"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_pink"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -143,7 +173,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Purple"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_purple"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -155,7 +185,7 @@
         <activity-alias
             android:name=".ui.MainActivity-DeepPurple"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_deep_purple"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -167,7 +197,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Indigo"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_indigo"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -179,7 +209,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Blue"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_blue"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -191,7 +221,7 @@
         <activity-alias
             android:name=".ui.MainActivity-LightBlue"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_light_blue"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -203,7 +233,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Cyan"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_cyan"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -215,7 +245,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Green"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_green"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -227,7 +257,7 @@
         <activity-alias
             android:name=".ui.MainActivity-LightGreen"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_light_green"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -239,7 +269,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Lime"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_lime"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -251,7 +281,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Yellow"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_yellow"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -263,7 +293,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Amber"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_amber"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -275,7 +305,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Orange"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_orange"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -287,7 +317,7 @@
         <activity-alias
             android:name=".ui.MainActivity-DeepOrange"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_deep_orange"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -299,7 +329,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Brown"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_brown"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -311,7 +341,7 @@
         <activity-alias
             android:name=".ui.MainActivity-Grey"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_grey"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -323,7 +353,7 @@
         <activity-alias
             android:name=".ui.MainActivity-BlueGrey"
             android:enabled="false"
-            android:icon="@mipmap/ic_launcher_blue_grey"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:targetActivity=".ui.MainActivity">
             <intent-filter>
@@ -335,17 +365,21 @@
 
         <activity
             android:name=".ui.welcome.WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeLight" />
 
         <!-- Popup activity -->
         <activity
             android:name=".ui.popup.QKReplyActivity"
             android:excludeFromRecents="true"
+            android:screenOrientation="user"
             android:taskAffinity=""
             android:theme="@style/AppThemeLightDialog"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name=".ui.mms.SlideshowActivity" />
+        <activity
+            android:name=".ui.mms.SlideshowActivity"
+            android:screenOrientation="user" />
 
         <receiver
             android:name=".receiver.RemoteMessagingReceiver"

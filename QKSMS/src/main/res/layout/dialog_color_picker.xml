@@ -1,31 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:gravity="center">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:padding="28dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
-        <ProgressBar
-            android:id="@android:id/progress"
-            style="?android:attr/progressBarStyleLarge"
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/tab_1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/title_palette"
+            app:type="primary_bold" />
+
+        <com.moez.QKSMS.ui.view.QKTextView
+            android:id="@+id/tab_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/title_rgb"
+            app:type="primary_bold" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="320dp">
 
         <com.moez.QKSMS.ui.view.colorpicker.ColorPickerPalette
-            android:id="@+id/color_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="gone" />
-    </FrameLayout>
-</ScrollView>
+            android:id="@+id/palette"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/rgb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/preview"
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:background="#e2e28e" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical">
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="R"
+                    app:type="secondary"
+                    tools:ignore="HardcodedText" />
+
+                <SeekBar
+                    android:id="@+id/red"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="255" />
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:id="@+id/red_value"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    app:type="primary"
+                    tools:text="41" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center_vertical">
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="G"
+                    app:type="secondary"
+                    tools:ignore="HardcodedText" />
+
+                <SeekBar
+                    android:id="@+id/green"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="255" />
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:id="@+id/green_value"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    app:type="primary"
+                    tools:text="22" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:text="B"
+                    app:type="secondary"
+                    tools:ignore="HardcodedText" />
+
+                <SeekBar
+                    android:id="@+id/blue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="255" />
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:id="@+id/blue_value"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center"
+                    android:lines="1"
+                    app:type="primary"
+                    tools:text="231" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical">
+
+                <com.moez.QKSMS.ui.view.QKTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/hint_hex"
+                    app:type="primary" />
+
+                <com.moez.QKSMS.ui.view.QKEditText
+                    android:id="@+id/hex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/edittext"
+                    android:digits="1234567890abcdef"
+                    android:imeOptions="actionDone"
+                    android:lines="1"
+                    android:maxLength="6"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/error"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_error"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

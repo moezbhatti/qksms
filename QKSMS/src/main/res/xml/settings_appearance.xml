@@ -10,12 +10,13 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_theme_summary_alt"
             android:title="@string/pref_theme" />
-        <Preference
-            android:defaultValue="-16746133"
-            android:key="pref_key_icon"
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_icon_dark"
             android:layout="@layout/list_item_preference"
-            android:summary="@string/pref_icon_summary"
-            android:title="@string/pref_icon" />
+            android:summary="@string/pref_icon_dark_summary"
+            android:title="@string/pref_icon_dark"
+            android:widgetLayout="@layout/view_switch" />
         <ListPreference
             android:defaultValue="light"
             android:entries="@array/background_titles"
@@ -134,13 +135,6 @@
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_message_count_summary"
             android:title="@string/pref_message_count"
-            android:widgetLayout="@layout/view_switch" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="pref_key_24h"
-            android:layout="@layout/list_item_preference"
-            android:summary="@string/pref_24h_summary"
-            android:title="@string/pref_24h"
             android:widgetLayout="@layout/view_switch" />
     </PreferenceCategory>
 </PreferenceScreen>

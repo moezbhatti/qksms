@@ -33,7 +33,6 @@ public enum QKPreference {
     HIDE_AVATAR_RECEIVED("pref_key_hide_avatar_received", false),
 
     MESSAGE_COUNT("pref_key_message_count", false),
-    TIMESTAMPS_24H("pref_key_24h", false),
 
     // General
     DELAYED_MESSAGING("pref_key_delayed", false),
@@ -101,7 +100,8 @@ public enum QKPreference {
 
     // Storage
     COMPOSE_DRAFT("compose_draft", ""),
-    LAST_AUTO_DELETE_CHECK("last_auto_delete_check", 0);
+    LAST_AUTO_DELETE_CHECK("last_auto_delete_check", 0),
+    MIGRATED_ICON("migrated_icon", false);
 
     private String mKey;
     private Object mDefaultValue;

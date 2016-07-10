@@ -903,7 +903,7 @@ public class PduPersister {
      * Here <table_name> shall be "video" or "audio" or "images"
      * <row_index> the index of the content in given table
      */
-    static public String convertUriToPath(Context context, Uri uri) {
+    public static String convertUriToPath(Context context, Uri uri) {
         String path = null;
         if (null != uri) {
             String scheme = uri.getScheme();

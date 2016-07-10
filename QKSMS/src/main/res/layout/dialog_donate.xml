@@ -30,7 +30,6 @@
         android:id="@+id/donate_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -52,7 +51,6 @@
         android:id="@+id/donate_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -74,7 +72,6 @@
         android:id="@+id/donate_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -104,7 +101,6 @@
         android:id="@+id/donate_paypal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
         android:padding="8dp">
 

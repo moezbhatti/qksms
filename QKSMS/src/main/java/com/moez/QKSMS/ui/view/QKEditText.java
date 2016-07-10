@@ -21,6 +21,7 @@ public class QKEditText extends android.widget.EditText {
     }
 
     private Context mContext;
+    private boolean mTextChangedListenerEnabled = true;
 
     public QKEditText(Context context) {
         super(context);
@@ -77,6 +78,10 @@ public class QKEditText extends android.widget.EditText {
         super.setText(text, type);
     }
 
+    public void setTextChangedListenerEnabled(boolean textChangedListenerEnabled) {
+        mTextChangedListenerEnabled = textChangedListenerEnabled;
+    }
+
     public void setTextChangedListener(final TextChangedListener listener) {
         if (listener != null) {
             addTextChangedListener(new TextWatcher() {
@@ -91,7 +96,9 @@ public class QKEditText extends android.widget.EditText {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    listener.onTextChanged(s);
+                    if (mTextChangedListenerEnabled) {
+                        listener.onTextChanged(s);
+                    }
                 }
             });
         }

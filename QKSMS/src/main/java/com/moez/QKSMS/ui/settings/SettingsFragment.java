@@ -82,7 +82,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
 
     public static final String THEME = "pref_key_theme";
-    public static final String ICON = "pref_key_icon";
+    public static final String ICON = "pref_key_icon_dark";
     public static final String STATUS_TINT = "pref_key_status_tint";
     public static final String NAVIGATION_TINT = "pref_key_navigation_tint";
     public static final String BACKGROUND = "pref_key_background";
@@ -121,7 +121,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String SPLIT_COUNTER = "pref_key_split_counter";
     public static final String LONG_AS_MMS = "pref_key_long_as_mms";
     public static final String LONG_AS_MMS_AFTER = "pref_key_long_as_mms_after";
-    public static final String TIMESTAMPS_24H = "pref_key_24h";
     public static final String NOTIFICATIONS = "pref_key_notifications";
     public static final String NOTIFICATION_LED = "pref_key_led";
     public static final String NOTIFICATION_LED_COLOR = "pref_key_theme_led";
@@ -426,6 +425,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case BACKGROUND:
                 ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
                 break;
+            case ICON:
+                ThemeManager.setIcon(mContext, (Boolean) newValue);
+                break;
             case STATUS_TINT:
                 ThemeManager.setStatusBarTintEnabled(mContext, (Boolean) newValue);
                 break;
@@ -568,9 +570,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
             case BUBBLES:
                 new BubblePreferenceDialog().setContext(mContext).show();
-                break;
-            case ICON:
-                ThemeManager.setIcon(mContext);
                 break;
             case BLOCKED_FUTURE:
                 BlockedNumberDialog.showDialog(mContext);

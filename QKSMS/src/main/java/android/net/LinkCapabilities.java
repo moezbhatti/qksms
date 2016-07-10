@@ -65,28 +65,28 @@ public class LinkCapabilities implements Parcelable {
          *
          * @see ConnectivityManager
          */
-        public final static int RO_NETWORK_TYPE = 1;
+        public static final int RO_NETWORK_TYPE = 1;
 
         /**
          * Desired minimum forward link (download) bandwidth for the
          * in kilobits per second (kbps). Values should be strings such
          * "50", "100", "1500", etc.
          */
-        public final static int RW_DESIRED_FWD_BW = 2;
+        public static final int RW_DESIRED_FWD_BW = 2;
 
         /**
          * Required minimum forward link (download) bandwidth, in
          * per second (kbps), below which the socket cannot function.
          * Values should be strings such as "50", "100", "1500", etc.
          */
-        public final static int RW_REQUIRED_FWD_BW = 3;
+        public static final int RW_REQUIRED_FWD_BW = 3;
 
         /**
          * Available forward link (download) bandwidth for the socket.
          * This value is in kilobits per second (kbps).
          * Values will be strings such as "50", "100", "1500", etc.
          */
-        public final static int RO_AVAILABLE_FWD_BW = 4;
+        public static final int RO_AVAILABLE_FWD_BW = 4;
 
         /**
          * Desired minimum reverse link (upload) bandwidth for the socket
@@ -95,7 +95,7 @@ public class LinkCapabilities implements Parcelable {
          * <p/>
          * This key is set via the needs map.
          */
-        public final static int RW_DESIRED_REV_BW = 5;
+        public static final int RW_DESIRED_REV_BW = 5;
 
         /**
          * Required minimum reverse link (upload) bandwidth, in kilobits
@@ -103,21 +103,21 @@ public class LinkCapabilities implements Parcelable {
          * If a rate is not specified, the default rate of kbps will be
          * Values should be strings such as "50", "100", "1500", etc.
          */
-        public final static int RW_REQUIRED_REV_BW = 6;
+        public static final int RW_REQUIRED_REV_BW = 6;
 
         /**
          * Available reverse link (upload) bandwidth for the socket.
          * This value is in kilobits per second (kbps).
          * Values will be strings such as "50", "100", "1500", etc.
          */
-        public final static int RO_AVAILABLE_REV_BW = 7;
+        public static final int RO_AVAILABLE_REV_BW = 7;
 
         /**
          * Maximum latency for the socket, in milliseconds, above which
          * socket cannot function.
          * Values should be strings such as "50", "300", "500", etc.
          */
-        public final static int RW_MAX_ALLOWED_LATENCY = 8;
+        public static final int RW_MAX_ALLOWED_LATENCY = 8;
 
         /**
          * Interface that the socket is bound to. This can be a virtual
@@ -125,7 +125,7 @@ public class LinkCapabilities implements Parcelable {
          * (e.g. wlan0 or rmnet0).
          * Values will be strings such as "wlan0", "rmnet0"
          */
-        public final static int RO_BOUND_INTERFACE = 9;
+        public static final int RO_BOUND_INTERFACE = 9;
 
         /**
          * Physical interface that the socket is routed on.
@@ -134,7 +134,7 @@ public class LinkCapabilities implements Parcelable {
          * if seamless mobility is supported.
          * Values will be strings such as "wlan0", "rmnet0"
          */
-        public final static int RO_PHYSICAL_INTERFACE = 10;
+        public static final int RO_PHYSICAL_INTERFACE = 10;
     }
 
     /**
