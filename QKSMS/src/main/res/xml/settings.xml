@@ -4,7 +4,7 @@
         android:defaultValue="-16746133"
         android:key="pref_key_theme" />
     <Preference
-        android:key="pref_key_icon" />
+        android:key="pref_key_icon_dark" />
     <Preference
         android:defaultValue="@bool/hasL"
         android:key="pref_key_status_tint" />

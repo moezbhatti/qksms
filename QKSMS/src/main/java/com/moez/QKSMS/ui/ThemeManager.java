@@ -326,7 +326,7 @@ public class ThemeManager {
         LiveViewManager.refreshViews(QKPreference.BACKGROUND);
     }
 
-    public static void setIcon(final QKActivity context) {
+    public static void setIcon(final QKActivity context, boolean dark) {
         new QKDialog()
                 .setContext(context)
                 .setTitle(R.string.update_icon_title)
@@ -335,48 +335,63 @@ public class ThemeManager {
                 .setPositiveButton(R.string.okay, v -> {
                     PackageManager packageManager = context.getPackageManager();
 
-                    String[] colors = {
-                            "Red", "Pink", "Purple", "DeepPurple", "Indigo", "Blue",
-                            "LightBlue", "Cyan", "Teal", "Green", "LightGreen", "Lime",
-                            "Yellow", "Amber", "Orange", "DeepOrange", "Brown", "Grey",
-                            "BlueGrey"
-                    };
+                    String defaultComponent = "com.moez.QKSMS.ui.MainActivity-Default";
+                    String darkComponent = "com.moez.QKSMS.ui.MainActivity-Dark";
 
-                    // Disable all of the color aliases, except for the alias with the current
-                    // color.
-                    String enabledComponent = null;
-                    for (int i = 0; i < colors.length; i++) {
-                        String componentClassName = String.format(
-                                "com.moez.QKSMS.ui.MainActivity-%s", colors[i]
-                        );
-
-                        // Save the enabled component so we can kill the app with this one when
-                        // it's all done.
-                        if (getSwatchColor(mColor) == PALETTE[i]) {
-                            enabledComponent = componentClassName;
-
-                        } else {
-                            packageManager.setComponentEnabledSetting(
-                                    new ComponentName(context, componentClassName),
-                                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                                    // Don't kill the app while we're in the loop! This will
-                                    // prevent the other component enabled settings from
-                                    // changing, i.e. they will all be disabled and the app
-                                    // won't show up to the user.
-                                    PackageManager.DONT_KILL_APP
-                            );
-                        }
-                    }
+                    packageManager.setComponentEnabledSetting(
+                            new ComponentName(context, dark ? defaultComponent : darkComponent),
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                            // Don't kill the app while we're in the loop! This will
+                            // prevent the other component enabled settings from
+                            // changing, i.e. they will all be disabled and the app
+                            // won't show up to the user.
+                            PackageManager.DONT_KILL_APP
+                    );
 
                     // Broadcast an intent to a receiver that will:
                     // 1) enable the last component; and
                     // 2) relaunch QKSMS with the new component name.
                     Intent intent = new Intent(IconColorReceiver.ACTION_ICON_COLOR_CHANGED);
-                    intent.putExtra(IconColorReceiver.EXTRA_COMPONENT_NAME, enabledComponent);
+                    intent.putExtra(IconColorReceiver.EXTRA_COMPONENT_NAME, dark ? darkComponent : defaultComponent);
                     context.sendBroadcast(intent);
                 })
-                .setNegativeButton(R.string.cancel, null)
+                .setCancelOnTouchOutside(false)
                 .show();
+    }
+
+    public static void migrateIcon(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+
+        // If we've already migrated to use the MainActivity-Default component, we don't need to do anything
+        if (mPrefs.getBoolean(QKPreference.MIGRATED_ICON.getKey(), (Boolean) QKPreference.MIGRATED_ICON.getDefaultValue())) {
+            return;
+        }
+
+        mPrefs.edit().putBoolean(QKPreference.MIGRATED_ICON.getKey(), true).apply();
+
+        String[] colors = {
+                "Red", "Pink", "Purple", "DeepPurple", "Indigo", "Blue",
+                "LightBlue", "Cyan", "Teal", "Green", "LightGreen", "Lime",
+                "Yellow", "Amber", "Orange", "DeepOrange", "Brown", "Grey",
+                "BlueGrey"
+        };
+
+        // Disable all of the old components
+        for (String color : colors) {
+            String componentClassName = String.format("com.moez.QKSMS.ui.MainActivity-%s", color);
+            packageManager.setComponentEnabledSetting(
+                    new ComponentName(context, componentClassName),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP
+            );
+        }
+
+        // Enable the new component
+        ComponentName componentName = new ComponentName(context, "com.moez.QKSMS.ui.MainActivity-Default");
+        packageManager.setComponentEnabledSetting(componentName,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+        );
     }
 
     @ColorInt

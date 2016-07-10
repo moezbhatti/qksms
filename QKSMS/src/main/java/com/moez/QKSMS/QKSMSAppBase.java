@@ -93,6 +93,7 @@ public class QKSMSAppBase extends MultiDexApplication {
         registerActivityLifecycleCallbacks(new LifecycleHandler());
 
         ThemeManager.init(this);
+        ThemeManager.migrateIcon(this); // TODO a few versions after 2.7, we can phase this out along with the old alias
         MmsConfig.init(this);
         Contact.init(this);
         DraftCache.init(this);

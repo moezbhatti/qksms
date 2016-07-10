@@ -95,7 +95,8 @@ public enum QKPreference {
     CONVERSATION_THEME("conversation_theme"),
 
     // Storage
-    COMPOSE_DRAFT("compose_draft", "");
+    COMPOSE_DRAFT("compose_draft", ""),
+    MIGRATED_ICON("migrated_icon", false);
 
     private String mKey;
     private Object mDefaultValue;
