@@ -109,8 +109,8 @@ public class Emojis {
     public static final String NOSE = "nose";
     public static final String TONGUE = "tongue";
     public static final String LIPS = "lips";
-    public static final String THUMBSUP = "1";
-    public static final String THUMBSDOWN = "-1";
+    public static final String PLUS_1 = "+1";
+    public static final String MINUS_1 = "-1";
     public static final String OK_HAND = "ok_hand";
     public static final String FACEPUNCH = "facepunch";
     public static final String FIST = "fist";
@@ -466,7 +466,7 @@ public class Emojis {
     public static final String SOCCER = "soccer";
     public static final String BASEBALL = "baseball";
     public static final String TENNIS = "tennis";
-    public static final String EIGHT_BALL = "8ball";
+    public static final String NUM_8BALL = "8ball";
     public static final String RUGBY_FOOTBALL = "rugby_football";
     public static final String BOWLING = "bowling";
     public static final String GOLF = "golf";
@@ -641,7 +641,7 @@ public class Emojis {
     public static final String NINE = "nine";
     public static final String ZERO = "zero";
     public static final String KEYCAP_TEN = "keycap_ten";
-    public static final String ONE_TWO_THREE_FOUR = "1234";
+    public static final String NUM_1234 = "1234";
     public static final String HASH = "hash";
     public static final String SYMBOLS = "symbols";
     public static final String ARROW_UP = "arrow_up";
@@ -810,7 +810,7 @@ public class Emojis {
     public static final String CLUBS = "clubs";
     public static final String DIAMONDS = "diamonds";
     public static final String WHITE_FLOWER = "white_flower";
-    public static final String ONEHUNDRED = "100";
+    public static final String NUM_100 = "100";
     public static final String HEAVY_CHECK_MARK = "heavy_check_mark";
     public static final String BALLOT_BOX_WITH_CHECK = "ballot_box_with_check";
     public static final String RADIO_BUTTON = "radio_button";
