@@ -35,6 +35,12 @@ package com.moez.QKSMS.common.google;
 public class DraftCache {
     private static final String TAG = "Mms/draft";
 
+    static final String[] DRAFT_PROJECTION = new String[] {
+        Conversations.THREAD_ID           // 0
+    };
+
+    static final int COLUMN_DRAFT_THREAD_ID = 0;
+
     private static DraftCache sInstance;
 
     private final Context mContext;
@@ -60,12 +66,6 @@ public class DraftCache {
         mContext = context;
         refresh();
     }
-
-    static final String[] DRAFT_PROJECTION = new String[] {
-            Conversations.THREAD_ID           // 0
-    };
-
-    static final int COLUMN_DRAFT_THREAD_ID = 0;
 
     /** To be called whenever the draft state might have changed.
      *  Dispatches work to a thread and returns immediately.
@@ -131,7 +131,7 @@ public class DraftCache {
             // If nobody's interested in finding out about changes,
             // just bail out early.
             synchronized (mChangeListenersLock) {
-                if (mChangeListeners.size() < 1) {
+                if (mChangeListeners.isEmpty()) {
                     return;
                 }
             }

@@ -207,7 +207,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
     }
 
     private void showConfigurationDialog() {
-        if (mAPNs.size() == 0) {
+        if (mAPNs.isEmpty()) {
             // Give the user a support channel and further instructions if automatic
             // configuration failed.
             launchDialog(NO_CONFIGURATIONS_FOUND);

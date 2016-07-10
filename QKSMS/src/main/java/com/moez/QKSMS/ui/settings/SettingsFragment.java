@@ -116,7 +116,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String SPLIT_COUNTER = "pref_key_split_counter";
     public static final String LONG_AS_MMS = "pref_key_long_as_mms";
     public static final String LONG_AS_MMS_AFTER = "pref_key_long_as_mms_after";
-    public static final String TIMESTAMPS_24H = "pref_key_24h";
     public static final String NOTIFICATIONS = "pref_key_notifications";
     public static final String NOTIFICATION_LED = "pref_key_led";
     public static final String NOTIFICATION_LED_COLOR = "pref_key_theme_led";

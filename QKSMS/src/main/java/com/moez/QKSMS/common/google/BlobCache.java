@@ -123,6 +123,11 @@ public class BlobCache implements Closeable {
     private byte[] mBlobHeader = new byte[BLOB_HEADER_SIZE];
     private Adler32 mAdler32 = new Adler32();
 
+    private int mSlotOffset;
+    private int mFileOffset;
+
+    private LookupRequest mLookupRequest = new LookupRequest();
+
     // Creates the cache. Three files will be created:
     // path + ".idx", path + ".0", and path + ".1"
     // The ".0" file and the ".1" file each stores data for a region. Each of
@@ -431,7 +436,6 @@ public class BlobCache implements Closeable {
 
     // This method is for one-off lookup. For repeated lookup, use the version
     // accepting LookupRequest to avoid repeated memory allocation.
-    private LookupRequest mLookupRequest = new LookupRequest();
     public byte[] lookup(long key) throws IOException {
         mLookupRequest.key = key;
         mLookupRequest.buffer = null;
@@ -555,8 +559,6 @@ public class BlobCache implements Closeable {
     // insertion.
     // If the lookup is successful, the file offset is also saved in
     // mFileOffset.
-    private int mSlotOffset;
-    private int mFileOffset;
     private boolean lookupInternal(long key, int hashStart) {
         int slot = (int) (key % mMaxEntries);
         if (slot < 0) slot += mMaxEntries;

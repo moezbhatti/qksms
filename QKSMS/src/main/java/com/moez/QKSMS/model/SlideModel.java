@@ -279,16 +279,19 @@ public class SlideModel extends Model implements List<MediaModel>, EventListener
      * @throws ContentRestrictionException when can not add this object.
      *
      */
+    @Override
     public boolean add(MediaModel object) {
         internalAdd(object);
         notifyModelChanged(true);
         return true;
     }
 
+    @Override
     public boolean addAll(Collection<? extends MediaModel> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public void clear() {
         if (mMedia.size() > 0) {
             for (MediaModel media : mMedia) {
@@ -312,22 +315,27 @@ public class SlideModel extends Model implements List<MediaModel>, EventListener
         }
     }
 
+    @Override
     public boolean contains(Object object) {
         return mMedia.contains(object);
     }
 
+    @Override
     public boolean containsAll(Collection<?> collection) {
         return mMedia.containsAll(collection);
     }
 
+    @Override
     public boolean isEmpty() {
         return mMedia.isEmpty();
     }
 
+    @Override
     public Iterator<MediaModel> iterator() {
         return mMedia.iterator();
     }
 
+    @Override
     public boolean remove(Object object) {
         if ((object != null) && (object instanceof MediaModel)
                 && internalRemove(object)) {
@@ -337,35 +345,43 @@ public class SlideModel extends Model implements List<MediaModel>, EventListener
         return false;
     }
 
+    @Override
     public boolean removeAll(Collection<?> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public boolean retainAll(Collection<?> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public int size() {
         return mMedia.size();
     }
 
+    @Override
     public Object[] toArray() {
         return mMedia.toArray();
     }
 
+    @Override
     public <T> T[] toArray(T[] array) {
         return mMedia.toArray(array);
     }
 
+    @Override
     public void add(int location, MediaModel object) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public boolean addAll(int location,
             Collection<? extends MediaModel> collection) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public MediaModel get(int location) {
         if (mMedia.size() == 0) {
             return null;
@@ -374,22 +390,27 @@ public class SlideModel extends Model implements List<MediaModel>, EventListener
         return mMedia.get(location);
     }
 
+    @Override
     public int indexOf(Object object) {
         return mMedia.indexOf(object);
     }
 
+    @Override
     public int lastIndexOf(Object object) {
         return mMedia.lastIndexOf(object);
     }
 
+    @Override
     public ListIterator<MediaModel> listIterator() {
         return mMedia.listIterator();
     }
 
+    @Override
     public ListIterator<MediaModel> listIterator(int location) {
         return mMedia.listIterator(location);
     }
 
+    @Override
     public MediaModel remove(int location) {
         MediaModel media = mMedia.get(location);
         if ((media != null) && internalRemove(media)) {
@@ -398,10 +419,12 @@ public class SlideModel extends Model implements List<MediaModel>, EventListener
         return media;
     }
 
+    @Override
     public MediaModel set(int location, MediaModel object) {
         throw new UnsupportedOperationException("Operation not supported.");
     }
 
+    @Override
     public List<MediaModel> subList(int start, int end) {
         return mMedia.subList(start, end);
     }

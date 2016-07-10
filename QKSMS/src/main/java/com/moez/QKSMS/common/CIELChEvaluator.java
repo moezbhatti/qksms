@@ -18,7 +18,13 @@ public class CIELChEvaluator implements TypeEvaluator<Integer> {
     private final ColorCIELCh mStartColor;
     private final ColorCIELCh mEndColor;
 
+    private final int mStartInt;
+    private final int mEndInt;
+
     public CIELChEvaluator(int startColor, int endColor) {
+        mStartInt = startColor;
+        mEndInt = endColor;
+
         mStartColor = convertRgbToCIELCH(startColor);
         mEndColor = convertRgbToCIELCH(endColor);
     }
@@ -29,6 +35,9 @@ public class CIELChEvaluator implements TypeEvaluator<Integer> {
 
     @Override
     public Integer evaluate(float fraction, Integer ignored, Integer ignored2) {
+        if (mStartInt == mEndInt) {
+            return mStartInt;
+        }
 
         // CIELCH to CIELAB
         double L = mStartColor.L * (1 - fraction) + mEndColor.L * fraction;

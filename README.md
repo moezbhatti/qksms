@@ -1,8 +1,8 @@
 # QKSMS
 
-[![Join the chat at https://gitter.im/qklabs/qksms](https://badges.gitter.im/qklabs/qksms.svg)](https://gitter.im/qklabs/qksms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/moezbhatti/qksms](https://badges.gitter.im/moezbhatti/qksms.svg)](https://gitter.im/moezbhatti/qksms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![ZenHub] (https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)] (https://zenhub.io)
-[![Build Status](https://travis-ci.org/qklabs/qksms.svg?branch=master)](https://travis-ci.org/qklabs/qksms)
+[![Build Status](https://travis-ci.org/moezbhatti/qksms.svg?branch=master)](https://travis-ci.org/moezbhatti/qksms)
 
 QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the Google Play Store.
 
@@ -53,7 +53,7 @@ Any new code written should follow these guidelines.
 
 # Bug Reports / Feature Requests
 
-We track issues and feature requests using GitHub issues. You can view existing issues and create your own here: https://github.com/qklabs/qksms/issues
+We track issues and feature requests using GitHub issues. You can view existing issues and create your own here: https://github.com/moezbhatti/qksms/issues
 
 ### How to help
 
@@ -94,7 +94,7 @@ The conversation isn't marked as read.
 #### Helping reproduce bugs
 Reproducing a bug is important, since if we can't reproduce an issue then it's hard to figure out what's going wrong, and we can't know that we've fixed it. 
 
-You can see bugs which need "repro steps" [here](https://github.com/qklabs/qksms/issues?q=is%3Aopen+is%3Aissue+label%3Aneeds-repro). If you see any bugs that you know how to reproduce (see above for example repro steps), then make a comment with the steps and we'll track the bug down!
+You can see bugs which need "repro steps" [here](https://github.com/moezbhatti/qksms/issues?q=is%3Aopen+is%3Aissue+label%3Aneeds-repro). If you see any bugs that you know how to reproduce (see above for example repro steps), then make a comment with the steps and we'll track the bug down!
 
 #### Making enhancement requests
 There are no rules for enhancement requests. Your ideas are all awesome. Although we may not implement every suggestion, we love brainstorming with you and hearing your feedback.

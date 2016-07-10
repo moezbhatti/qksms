@@ -37,7 +37,7 @@
                 android:id="@+id/widget_compose"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/button_background_transparent"
+                android:background="@drawable/ripple"
                 android:contentDescription="@string/new_message"
                 android:padding="16dp"
                 android:src="@drawable/ic_compose" />

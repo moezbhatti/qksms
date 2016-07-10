@@ -19,6 +19,7 @@
     <string name="hint_reply">Enter a message</string>
     <!--Hint for code redemption-->
     <string name="hint_redeem">Enter code</string>
+    <string name="hint_hex">Hex</string>
 
     <!--Text shown for single new message in notification-->
     <string name="new_message">New message</string>
@@ -197,8 +198,6 @@
     <string name="pref_long_as_mms_summary">Send long messages as MMS instead of splitting them</string>
     <string name="pref_long_as_mms_after">Send long as MMS after</string>
     <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
-    <string name="pref_24h">24h time</string>
-    <string name="pref_24h_summary">Display timestamps in 24-hour format</string>
     <string name="pref_return">Show return button</string>
     <string name="pref_return_summary">Show return key on keyboard instead of Emoji button</string>
     <string name="pref_text">Text</string>
@@ -315,6 +314,8 @@
     <string name="title_block_address">Block number</string>
     <string name="title_unblock_address">Unblock number</string>
     <string name="title_conversations_selected">%s selected</string>
+    <string name="title_palette">Palette</string>
+    <string name="title_rgb">RGB</string>
 
     <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to

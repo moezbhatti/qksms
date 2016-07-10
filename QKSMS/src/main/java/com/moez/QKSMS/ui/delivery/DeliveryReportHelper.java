@@ -208,7 +208,7 @@ public class DeliveryReportHelper {
             return null;
         }
 
-        if (reportReqs.size() == 0) {
+        if (reportReqs.isEmpty()) {
             return null;
         }
 
