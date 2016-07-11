@@ -597,6 +597,7 @@
     <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
     <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
     <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
+    <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
 
     <!-- Title for audio file picker -->
     <string name="select_audio">Choose audio</string>

@@ -459,9 +459,20 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
 
             case DELETE_OLD_MESSAGES:
-                DeleteOldMessagesService.setupAutoDeleteAlarm(mContext);
                 if ((Boolean) newValue) {
-                    mContext.makeToast(R.string.toast_deleting_old_messages);
+                    new QKDialog()
+                            .setContext(mContext)
+                            .setTitle(R.string.pref_delete_old_messages)
+                            .setMessage(R.string.dialog_delete_old_messages)
+                            .setPositiveButton(R.string.yes, v -> {
+                                QKPreferences.setBoolean(QKPreference.AUTO_DELETE, true);
+                                ((CheckBoxPreference) preference).setChecked(true);
+                                DeleteOldMessagesService.setupAutoDeleteAlarm(mContext);
+                                mContext.makeToast(R.string.toast_deleting_old_messages);
+                            })
+                            .setNegativeButton(R.string.cancel, null)
+                            .show();
+                    return false;
                 }
                 break;
 
