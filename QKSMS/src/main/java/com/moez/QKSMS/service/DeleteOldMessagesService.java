@@ -43,6 +43,9 @@ public class DeleteOldMessagesService extends IntentService {
     private void deleteOldUnreadMessages(Context context) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -Integer.parseInt(QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD)));
+        calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMaximum(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, calendar.getActualMaximum(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, calendar.getActualMaximum(Calendar.SECOND));
         int count = deleteOldMessages(context, SmsHelper.UNREAD_SELECTION, calendar.getTimeInMillis());
         Log.i(TAG, "Deleted unread messages: " + count);
     }
@@ -50,6 +53,9 @@ public class DeleteOldMessagesService extends IntentService {
     private void deleteOldReadMessages(Context context) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -Integer.parseInt(QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
+        calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMaximum(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE, calendar.getActualMaximum(Calendar.MINUTE));
+        calendar.set(Calendar.SECOND, calendar.getActualMaximum(Calendar.SECOND));
         int count = deleteOldMessages(context, SmsHelper.READ_SELECTION + "=" + SmsHelper.READ, calendar.getTimeInMillis());
         Log.i(TAG, "Deleted read messages: " + count);
     }
