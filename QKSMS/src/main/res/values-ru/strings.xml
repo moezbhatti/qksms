@@ -19,6 +19,7 @@
   <string name="hint_reply">Сообщение</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Введите код</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Новое сообщение</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">Версия, список изменений, авторы, благодарности</string>
   <string name="pref_theme">Цвет темы</string>
   <string name="pref_theme_summary_alt">Нажмите, чтобы изменить тему</string>
-  <string name="pref_icon">Обновить цвет значка QKSMS</string>
-  <string name="pref_icon_summary">сделать цвет значка QKSMS таким же как цвет темы</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Прозрачная строка состояния</string>
   <string name="pref_navigation_tint">Прозрачная панель навигации</string>
   <string name="pref_background">Цвет фона</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">Показать короткий тост для обозначения что сообщения отправляються</string>
   <string name="pref_delivery_vibrate">Вибрация</string>
   <string name="pref_delivery_vibrate_summary">Вибрировать при получении сообщения</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">поддержка Yappy</string>
   <string name="pref_endlessjabber_summary">Включить полную поддержку приложения Yappy</string>
   <string name="pref_blocked_conversations">Заблокированные переписки</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">Отправлять длинные сообщения в виде MMS вместо разделения на несколько сообщений</string>
   <string name="pref_long_as_mms_after">Отправлять длинные сообщения как MMS после</string>
   <string name="pref_long_as_mms_after_summary">Отправлять длинные сообщения как MMS, когда они превышают длину нескольких сообщений</string>
-  <string name="pref_24h">24-часовой формат</string>
-  <string name="pref_24h_summary">Отображение времени отправки и получения в 24-часовом формате</string>
   <string name="pref_return">Показать кнопку Возврата</string>
   <string name="pref_return_summary">Показывать кнопку Возврата строки вместо кнопки смайликов</string>
   <string name="pref_text">Текст</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">заблокировать номер</string>
   <string name="title_unblock_address">Разблокировать номер</string>
   <string name="title_conversations_selected">%s выбран</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -547,13 +554,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">обновить цвет значка</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS должен быть перезапущен для изменения цвета значка. Перезапустить сейчас?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">Подробности переписки</string>
   <string name="dialog_conversation_details_last_message_date">Дата последнего сообщения</string>
   <string name="dialog_conversation_details_message_count">Количество сообщений</string>
   <string name="dialog_conversation_details_recipients">Получатели (%s)</string>
   <string name="dialog_should_i_answer_title">Небери трубку не установлено</string>
   <string name="dialog_should_i_answer_message">Скачать приложение с Google Play сейчас?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Выбрать аудио</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -598,6 +606,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber не установлен, открытие Google Play</string>
   <string name="toast_changelog_error">Не удается загрузить список изменений. Пожалуйста, повторите попытку позже</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Благодарим за пожертвование! Теперь Вы наш новый лучший друг.</string>
   <!--Toast shown to thank user for donating-->

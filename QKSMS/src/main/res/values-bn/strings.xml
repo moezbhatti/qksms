@@ -19,6 +19,7 @@
   <string name="hint_reply">বার্তা লিখুন</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">কোড লিখুন</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">নতুন বার্তা</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">সংস্করণ, পরিবর্তনসূচী, লেখক, ধন্যবাদ</string>
   <string name="pref_theme">থিমের রঙ</string>
   <string name="pref_theme_summary_alt">থিম পরিবর্তন করতে হালকা টোকা দিন</string>
-  <string name="pref_icon">কিউকে এস‌এম‌এস এর আইকনের রঙ আধুনিকীকরণ করুন</string>
-  <string name="pref_icon_summary">কিউকে এস‌এম‌এস আইকনের রঙ থিম রঙের সাথে সমন্বয় করুন</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint"> রঞ্জিত স্থিতি দণ্ড</string>
   <string name="pref_navigation_tint"> রঞ্জিত নেভিগেশন বার</string>
   <string name="pref_background">প্রেক্ষাপট রঙ</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">ছোট্ট একটি নোটিফিকেশন দিন এটা জানিয়ে যে বার্তা সরবরাহ করা হচ্ছে</string>
   <string name="pref_delivery_vibrate">কাঁপান</string>
   <string name="pref_delivery_vibrate_summary">বার্তা ডেলিভারিতে কম্পন দিন</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">ইয়েপ্পি সংযোগ</string>
   <string name="pref_endlessjabber_summary">ইয়েপ্পির জন্য পূর্ণ সমর্থন চালু করুন</string>
   <string name="pref_blocked_conversations">অবরুদ্ধ কথোপকথন</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">বিভাজিত করার বদলে দীর্ঘ বার্তা এমএমএস হিসেবে প্রেরণ করুন</string>
   <string name="pref_long_as_mms_after">দীর্ঘ বার্তা এমএমএস হিসেবে প্রেরণ করুন এর পরে</string>
   <string name="pref_long_as_mms_after_summary">বার্তা দৈর্ঘ্য অতিক্রম করে গেলে দীর্ঘ বার্তাকে এমএমএস হিসেবে প্রেরণ করুন</string>
-  <string name="pref_24h">24-h সময়</string>
-  <string name="pref_24h_summary">২৪ ঘন্টার ফরম্যাটে সময়কাল দেখান</string>
   <string name="pref_return">প্রত্যাবর্তন বোতাম প্রদেখুন করুন</string>
   <string name="pref_return_summary">কীবোর্ডে ইমোজি এর বদলে রিটার্ন কী দেখান</string>
   <string name="pref_text">লেখা</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">নাম্বার ব্লক করুন</string>
   <string name="title_unblock_address">নাম্বার আনব্লক করুন</string>
   <string name="title_conversations_selected">%s নির্বাচিত</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -546,13 +553,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">আইকনের রঙ আধুনিকীকরণ করুন</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">কিউকে এসএমএস এর আইকন রঙ পরিবর্তন করা হলে রিস্টার্ট করা আবশ্যক। এখনই রিস্টার্ট করুন?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">কথোপকথন বিস্তারিত</string>
   <string name="dialog_conversation_details_last_message_date">সর্বশেষ বার্তার তারিখ</string>
   <string name="dialog_conversation_details_message_count">বার্তা সংখ্যা</string>
   <string name="dialog_conversation_details_recipients">প্রাপক (%s)</string>
   <string name="dialog_should_i_answer_title">উত্তর দেব কী? ইনস্টল করা নেই</string>
   <string name="dialog_should_i_answer_message">এখন কী গুগল প্লে থেকে অ্যাপটি ডাউনলোড করতে চান?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">অডিও বাছুন</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -596,6 +604,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber ইনস্টল করা হয় নি, গুগল প্লে খোলা হচ্ছে</string>
   <string name="toast_changelog_error">পরিবর্তনসূচী লোড করতে পারেনি। অনুগ্রহ করে পরে আবার চেষ্টা করুন</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">অনুদানের জন্য ধন্যবাদ! আপনিই আমার নতুন সেরা বন্ধু।</string>
   <!--Toast shown to thank user for donating-->

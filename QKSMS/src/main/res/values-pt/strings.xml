@@ -19,6 +19,7 @@
   <string name="hint_reply">Escrever mensagem</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Digite o código</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Nova mensagem</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">Versão, alterações, autores e agradecimentos</string>
   <string name="pref_theme">Cor do tema</string>
   <string name="pref_theme_summary_alt">Toque para mudar de tema</string>
-  <string name="pref_icon">Atualizar a cor do ícone do QKSMS</string>
-  <string name="pref_icon_summary">Atualizar o ícone do QKSMS para combinar com a cor do tema</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Barra de estado colorida</string>
   <string name="pref_navigation_tint">Barra de navegação colorida</string>
   <string name="pref_background">Cor de fundo</string>
@@ -147,11 +148,11 @@
   <string name="pref_message_count">Número de mensagens</string>
   <string name="pref_message_count_summary">Mostrar o número de mensagens em cada conversa</string>
   <string name="pref_sent_timestamps">Data/hora de envio</string>
-  <string name="pref_sent_timestamps_summary">Mostrar data/hora do envio da mensagem e não de quando foi recebida</string>
-  <string name="pref_force_timestamps">Force timestamps</string>
-  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
-  <string name="pref_key_timestamp_delay">New timestamp delay</string>
-  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
+  <string name="pref_sent_timestamps_summary">Mostrar data/hora do envio da mensagem e não da receção</string>
+  <string name="pref_force_timestamps">Impor data/hora</string>
+  <string name="pref_force_timestamps_summary">Mostrar data/hora para todas as mensagens</string>
+  <string name="pref_key_timestamp_delay">Atraso para data/hora</string>
+  <string name="pref_key_timestamp_delay_summary">O número de minutos que deve decorrer entre duas mensagens para poder mostrar a nova marca temporal.</string>
   <string name="pref_compose_favorites">Contactos favoritos</string>
   <string name="pref_compose_summary_favorites">Mostrar contactos favoritos na janela QK Compose, apenas a um toque de distância</string>
   <string name="pref_prox_sensor_call">Sensor de proximidade</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">Mostra uma pequena notificação que indica a entrega da mensagem</string>
   <string name="pref_delivery_vibrate">Vibrar</string>
   <string name="pref_delivery_vibrate_summary">Vibrar na entrega de mensagens</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">Integração com Yappy</string>
   <string name="pref_endlessjabber_summary">Ativar suporte ao Yappy</string>
   <string name="pref_blocked_conversations">Conversas bloqueadas</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">Enviar mensagens longas como MMS em vez de as separar</string>
   <string name="pref_long_as_mms_after">Enviar mensagens longas como MMS após</string>
   <string name="pref_long_as_mms_after_summary">Enviar mensagens longas como MMS, se excederem o tamanho do número de mensagens</string>
-  <string name="pref_24h">Relógio 24h</string>
-  <string name="pref_24h_summary">Mostrar horas no formato 24 horas</string>
   <string name="pref_return">Mostrar botão de retorno</string>
   <string name="pref_return_summary">Mostrar botão de retorno em vez de botão emoji</string>
   <string name="pref_text">Texto</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">Bloquear número</string>
   <string name="title_unblock_address">Desbloquear número</string>
   <string name="title_conversations_selected">%s selecionada(s)</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -546,13 +553,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Atualizar cor do ícone</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">Tem que reiniciar o QKSMS para aplicar as alterações. Reiniciar agora?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">Detalhes da conversa</string>
   <string name="dialog_conversation_details_last_message_date">Data da última mensagem</string>
   <string name="dialog_conversation_details_message_count">Número de mensagens</string>
   <string name="dialog_conversation_details_recipients">Destinatários (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? não está instalado</string>
   <string name="dialog_should_i_answer_message">Obter a aplicação agora através do Google Play?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Escolha o áudio</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -595,7 +603,8 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber não instalado, a abrir o Google Play</string>
   <string name="toast_changelog_error">Não foi possível carregar o registo de alterações. Tente mais tarde.</string>
-  <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_conversation_error">Não foi possível abrir a conversa</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Obrigado pelo donativo! Você é o meu novo amigo.</string>
   <!--Toast shown to thank user for donating-->

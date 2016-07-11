@@ -19,6 +19,7 @@
   <string name="hint_reply">Melding</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Angi kode</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Ny melding </string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">Versjon, endringslogg, forfattere, takk</string>
   <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Trykk for å endre tema</string>
-  <string name="pref_icon">Oppdatere QKSMS ikon-farge</string>
-  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Gjennomsiktig status linje</string>
   <string name="pref_navigation_tint">Gjennomsiktig navigasjons linje</string>
   <string name="pref_background">Bakgrunnsfarge</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">Vis et kort varsel for å vise at meldinger er levert</string>
   <string name="pref_delivery_vibrate">Vibrer</string>
   <string name="pref_delivery_vibrate_summary">Vibrer når melding leveres</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">Yappy integrering</string>
   <string name="pref_endlessjabber_summary">Aktivere full støtte for Yappy</string>
   <string name="pref_blocked_conversations">Blokkerte samtaler</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">Send lange meldinger som MMS fremfor å dele de i flere meldinger</string>
   <string name="pref_long_as_mms_after">Send lang som MMS i etterkant</string>
   <string name="pref_long_as_mms_after_summary">Sende lange meldinger som MMS</string>
-  <string name="pref_24h">24 timers-klokke</string>
-  <string name="pref_24h_summary">Vis tidsstempler i 24-timers format</string>
   <string name="pref_return">Vis tilbake-knappen</string>
   <string name="pref_return_summary">Vis tilbake-knappen på tastaturet fremfor Emoji-knappen</string>
   <string name="pref_text">Tekst</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">Blokkèr nummer</string>
   <string name="title_unblock_address">Avblokker nummer</string>
   <string name="title_conversations_selected">%s valgt</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -546,13 +553,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Oppdatere ikonfarge</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS må startes på nytt når du endrer ikonfarge. Starte på nytt nå?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">Samtaledetaljer</string>
   <string name="dialog_conversation_details_last_message_date">Dato for siste melding</string>
   <string name="dialog_conversation_details_message_count">Antall meldinger</string>
   <string name="dialog_conversation_details_recipients">Mottakere (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
   <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Velg lydfil</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -596,6 +604,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber ikke installert, åpner Google Play</string>
   <string name="toast_changelog_error">Kunne ikke laste endringslogg. Prøv igjen senere</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Takk for at du støttet meg! Du er min nye bestevenn.</string>
   <!--Toast shown to thank user for donating-->

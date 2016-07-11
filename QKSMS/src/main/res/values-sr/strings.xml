@@ -19,6 +19,7 @@
   <string name="hint_reply">Унесите поруку</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Унесите код</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Нова порука</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">Верзија, измене, аутори, захвале</string>
   <string name="pref_theme">Боја теме</string>
   <string name="pref_theme_summary_alt">Додирните да бисте променили тему</string>
-  <string name="pref_icon">Ажурирај боју QKSMS иконе</string>
-  <string name="pref_icon_summary">Уклапа боју QKSMS иконе бојом теме</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Обојена статусна трака</string>
   <string name="pref_navigation_tint">Обојена навигациона трака</string>
   <string name="pref_background">Боја позадине</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">Показује облачић да је порука достављена</string>
   <string name="pref_delivery_vibrate">Вибрација</string>
   <string name="pref_delivery_vibrate_summary">Вибрирај по достави поруке</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">Yappy интеграција</string>
   <string name="pref_endlessjabber_summary">Омогући потпуну подршку за Yappy</string>
   <string name="pref_blocked_conversations">Блокирани разговори</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">Уместо дељења, дуге поруке шаље као MMS</string>
   <string name="pref_long_as_mms_after">Дугачку поруку шаљи као MMS након</string>
   <string name="pref_long_as_mms_after_summary">Дугачку поруку шаљи као MMS када по дужини претекну одређени број порука</string>
-  <string name="pref_24h">24-часовно време</string>
-  <string name="pref_24h_summary">Приказуј времена у 24-часовном формату</string>
   <string name="pref_return">Прикажи дугме Enter</string>
   <string name="pref_return_summary">Прикажи Enter на тастатури уместо дугмета за емоџије</string>
   <string name="pref_text">Текст</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">Блокирај број</string>
   <string name="title_unblock_address">Одблокирај број</string>
   <string name="title_conversations_selected">%s одабрано</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -547,13 +554,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Ажурирај боју иконе</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS се мора поново покренути када се мења боја иконе. Да покренем поново одмах?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">Детаљи о разговору</string>
   <string name="dialog_conversation_details_last_message_date">Датум последње поруке</string>
   <string name="dialog_conversation_details_message_count">Број порука</string>
   <string name="dialog_conversation_details_recipients">Примаоци (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? није инсталиран</string>
   <string name="dialog_should_i_answer_message">Желите ли да преузмете апликацију са Google Play-а?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Одабери звук</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -597,6 +605,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber није нађен, отварам Google Play</string>
   <string name="toast_changelog_error">Није могуће учитати листу измена. Молимо покушајте касније</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Хвала Вам за донацију! Ви сте мој нови најбољи пријатељ.</string>
   <!--Toast shown to thank user for donating-->

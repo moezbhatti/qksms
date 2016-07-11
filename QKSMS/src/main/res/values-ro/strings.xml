@@ -19,6 +19,7 @@
   <string name="hint_reply">Introduceţi un mesaj</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Enter code</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Mesaj nou</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
   <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Tap to change theme</string>
-  <string name="pref_icon">Update QKSMS icon color</string>
-  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Nuanțați bara de stare</string>
   <string name="pref_navigation_tint">Nuanțați bara de navigare</string>
   <string name="pref_background">Background color</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">Show a short toast to indicate a message being delivered</string>
   <string name="pref_delivery_vibrate">Vibrează</string>
   <string name="pref_delivery_vibrate_summary">Vibrează la trimiterea mesajului</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">Yappy integration</string>
   <string name="pref_endlessjabber_summary">Enable full support for Yappy</string>
   <string name="pref_blocked_conversations">Blocked conversations</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">Trimite mesaje lungi ca MMS in loc de divizarea lor</string>
   <string name="pref_long_as_mms_after">Trimite mesajele lungi ca MMS după</string>
   <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
-  <string name="pref_24h">timp de 24 de ore</string>
-  <string name="pref_24h_summary">Afişeaza marcajele de timp în format de 24 de ore</string>
   <string name="pref_return">Afișeaza butonul de înapoi</string>
   <string name="pref_return_summary">Afișează tasta de înapoi pe tastatură în loc de butonul de Emoji</string>
   <string name="pref_text">Text</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">Block number</string>
   <string name="title_unblock_address">Unblock number</string>
   <string name="title_conversations_selected">%s selected</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -547,13 +554,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Update icon color</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color. Restart now?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">Conversation details</string>
   <string name="dialog_conversation_details_last_message_date">Last message date</string>
   <string name="dialog_conversation_details_message_count">Message count</string>
   <string name="dialog_conversation_details_recipients">Recipients (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
   <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Alege audio</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -597,6 +605,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber nu este instalat, se deschide Google Play</string>
   <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Îți mulțumesc pentru donare! Ești noul meu cel mai bun prieten.</string>
   <!--Toast shown to thank user for donating-->

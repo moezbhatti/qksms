@@ -19,6 +19,7 @@
   <string name="hint_reply">Nhập một tin nhắn</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Nhập mã</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Tin nhắn mới</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">Phiên bản, thay đổi, tác giả, cảm ơn</string>
   <string name="pref_theme">Màu chủ đề</string>
   <string name="pref_theme_summary_alt">Bấm để thay đổi chủ đề</string>
-  <string name="pref_icon">Cập nhật màu sắc icon QKSMS</string>
-  <string name="pref_icon_summary">Cập nhật màu sắc icon QKSMS để phù hợp với màu sác chủ đề của bạn</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Nhuộm thanh trạng thái</string>
   <string name="pref_navigation_tint">Nhuộm thanh điều hướng</string>
   <string name="pref_background">Màu nền</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">Show a short toast to indicate a message being delivered</string>
   <string name="pref_delivery_vibrate">Báo rung</string>
   <string name="pref_delivery_vibrate_summary">Báo rung khi gửi tin nhành công</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">Kết hợp Yappy</string>
   <string name="pref_endlessjabber_summary">Bật hỗ trợ đầy đủ cho Yappy</string>
   <string name="pref_blocked_conversations">Cuộc hội thoại đã chặn</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">Gửi tin nhắn dài như là MMS thay vì tách chúng ra</string>
   <string name="pref_long_as_mms_after">Send long as MMS after</string>
   <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
-  <string name="pref_24h">Kiểu giờ 24h</string>
-  <string name="pref_24h_summary">Hiển thi thời gian dưới định dạng 24h</string>
   <string name="pref_return">Hiển thị nút trở về</string>
   <string name="pref_return_summary">Hiển thi nút trở về trên bàn phím thay cho nút Emoji</string>
   <string name="pref_text">Văn bản</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">Chặn số điện thoại</string>
   <string name="title_unblock_address">Bỏ chặn số điện thoại</string>
   <string name="title_conversations_selected">Đã chọn %s</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -545,13 +552,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Cập nhật màu sắc icon</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS cần phải khởi động lại khi thay đổi màu sắc icon. Khởi dộng lại ngay?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">Chi tiết cuộc trò chuyện</string>
   <string name="dialog_conversation_details_last_message_date">Ngày tin nhắn cuối cùng</string>
   <string name="dialog_conversation_details_message_count">Số lượng tin nhắn</string>
   <string name="dialog_conversation_details_recipients">Người nhận (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? chư được cài đặt</string>
   <string name="dialog_should_i_answer_message">Bạn có muốn tải ứng dụng từ Google Play bây giờ không?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Chọn âm thanh</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -595,6 +603,7 @@
   <string name="toast_endlessjabber_not_installed">Chưa cài đặt EndlessJabber, mở Google Play</string>
   <string name="toast_changelog_error">Không tải được các thay đổi. Vui lòng thử lại sau</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Cảm ơn bạn đã quyên góp! Bạn là bạn thân nhất của tôi rồi.</string>
   <!--Toast shown to thank user for donating-->

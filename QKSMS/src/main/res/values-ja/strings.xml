@@ -19,6 +19,7 @@
   <string name="hint_reply">メッセージを入力します</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">コードを入力します</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">新しいメッセージ</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">バージョン、変更履歴、作者、謝辞</string>
   <string name="pref_theme">テーマ色</string>
   <string name="pref_theme_summary_alt">タップするとテーマを変更します</string>
-  <string name="pref_icon">QKSMS アイコンの色を更新</string>
-  <string name="pref_icon_summary">テーマ色が一致するように QKSMS アイコンを更新します</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">彩色のステータス バー</string>
   <string name="pref_navigation_tint">彩色のナビゲーション バー</string>
   <string name="pref_background">背景色</string>
@@ -148,10 +149,10 @@
   <string name="pref_message_count_summary">会話ごとにメッセージ数を表示します</string>
   <string name="pref_sent_timestamps">送信タイムスタンプ</string>
   <string name="pref_sent_timestamps_summary">受信されていないメッセージが送信されたときのタイムスタンプを表示します</string>
-  <string name="pref_force_timestamps">Force timestamps</string>
-  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
-  <string name="pref_key_timestamp_delay">New timestamp delay</string>
-  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
+  <string name="pref_force_timestamps">強制的にタイムスタンプ</string>
+  <string name="pref_force_timestamps_summary">すべてのメッセージでタイムスタンプを有効にします</string>
+  <string name="pref_key_timestamp_delay">新しいタイムスタンプの遅延</string>
+  <string name="pref_key_timestamp_delay_summary">新しいタイムスタンプを表示するまで、2 つのメッセージ間で経過する必要がある分数。</string>
   <string name="pref_compose_favorites">スターを付けた連絡先</string>
   <string name="pref_compose_summary_favorites">QK 作成ウィンドウにスターを付けた連絡先を表示します。タップすると消えます</string>
   <string name="pref_prox_sensor_call">近接センサー</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">メッセージの配信を示す、短いトーストを表示します</string>
   <string name="pref_delivery_vibrate">振動</string>
   <string name="pref_delivery_vibrate_summary">メッセージ配信で振動します</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">Yappy 統合</string>
   <string name="pref_endlessjabber_summary">Yappy の完全なサポートを有効にします</string>
   <string name="pref_blocked_conversations">ブロックされた会話</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">長いメッセージを分割ではなく MMS として送信します</string>
   <string name="pref_long_as_mms_after">MMS として送信する長さ</string>
   <string name="pref_long_as_mms_after_summary">メッセージの長さを超えた場合、長いメッセージを MMS として送信します</string>
-  <string name="pref_24h">24 時間形式</string>
-  <string name="pref_24h_summary">24 時間形式でタイムスタンプを表示します</string>
   <string name="pref_return">Return ボタンを表示</string>
   <string name="pref_return_summary">絵文字ボタンの代わりにキーボードの return キーを表示します</string>
   <string name="pref_text">テキスト</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">ブロック番号</string>
   <string name="title_unblock_address">ブロック解除番号</string>
   <string name="title_conversations_selected">%s 選択しました</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -545,13 +552,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">アイコンの色を更新</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">アイコンの色を変更する場合、QKSMS を再起動する必要があります。今すぐ再起動しますか?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">会話の詳細</string>
   <string name="dialog_conversation_details_last_message_date">最新メッセージの日付</string>
   <string name="dialog_conversation_details_message_count">メッセージ件数</string>
   <string name="dialog_conversation_details_recipients">受信者 (%s)</string>
   <string name="dialog_should_i_answer_title">回答する必要がありますか? インストールされていません</string>
   <string name="dialog_should_i_answer_message">Google Play から今すぐアプリをダウンロードしますか?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">音を選択</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -594,7 +602,8 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber がインストールされていません。Google Play を開きます</string>
   <string name="toast_changelog_error">変更履歴を読み込めませんでした。もう一度やり直してください</string>
-  <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_conversation_error">会話を開くことができませんでした</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">寄付をありがとう! あなたは私の新しい親友です。</string>
   <!--Toast shown to thank user for donating-->

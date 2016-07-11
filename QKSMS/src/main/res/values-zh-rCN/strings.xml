@@ -19,6 +19,7 @@
   <string name="hint_reply">输入信息</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Enter code</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">新信息</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">版本，更新日志，作者，致谢</string>
   <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">点击以更改主题</string>
-  <string name="pref_icon">更新 QKSMS 图标颜色</string>
-  <string name="pref_icon_summary">Update the QKSMS icon to match your theme color</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">彩色状态栏</string>
   <string name="pref_navigation_tint">彩色导航栏</string>
   <string name="pref_background">背景色</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">显示一个简短的弹出式提醒来指示信息已送达</string>
   <string name="pref_delivery_vibrate">震动</string>
   <string name="pref_delivery_vibrate_summary">信息送达后震动</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">集成Yappy</string>
   <string name="pref_endlessjabber_summary">启用对Yappy的完整支持</string>
   <string name="pref_blocked_conversations">Blocked conversations</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">将长信息作为彩信发送，而不是拆分为多条短信</string>
   <string name="pref_long_as_mms_after">在此之后将长信息作为彩信发送</string>
   <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
-  <string name="pref_24h">二十四小时制</string>
-  <string name="pref_24h_summary">以二十四小时制显示时间戳</string>
   <string name="pref_return">显示返回按钮</string>
   <string name="pref_return_summary">在键盘上显示返回键而不是颜文字表情键</string>
   <string name="pref_text">信息</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">拦截号码</string>
   <string name="title_unblock_address">解除拦截号码</string>
   <string name="title_conversations_selected">已选择 %s</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -545,13 +552,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">更新图标颜色</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color. Restart now?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">会话详情</string>
   <string name="dialog_conversation_details_last_message_date">最后的消息日期</string>
   <string name="dialog_conversation_details_message_count">消息计数</string>
   <string name="dialog_conversation_details_recipients">收件人 (%s)</string>
   <string name="dialog_should_i_answer_title">需要我回答吗？没有安装</string>
   <string name="dialog_should_i_answer_message">Would you like to download the app from Google Play now?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">选择音频</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -595,6 +603,7 @@
   <string name="toast_endlessjabber_not_installed">尚未未安装 EndlessJabber，正在打开 Play 商店</string>
   <string name="toast_changelog_error">Couldn\'t load the changelog. Please try again later</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">感谢您的捐赠！你是我最好的朋友</string>
   <!--Toast shown to thank user for donating-->

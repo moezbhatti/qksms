@@ -19,6 +19,7 @@
   <string name="hint_reply">Skriv en besked</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Indtast kode</string>
+  <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Ny besked</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -105,7 +106,7 @@
   <string name="pref_category_summary_appearance">Temaer, skrifttyper, farver, avatars og mere</string>
   <string name="pref_category_general">Generelt</string>
   <string name="pref_category_summary_general">Levering, beskedafsendelse, formatering</string>
-  <string name="pref_category_blocking">Message blocking</string>
+  <string name="pref_category_blocking">Blokering af beskeder</string>
   <string name="pref_category_notifications">Notifikationer</string>
   <string name="pref_category_summary_notifications">Lyde, LED, privatliv</string>
   <string name="pref_category_mms">MMS</string>
@@ -118,8 +119,8 @@
   <string name="pref_category_summary_about">Version, ændringslog, forfattere, tak</string>
   <string name="pref_theme">Temafarve</string>
   <string name="pref_theme_summary_alt">Tryk for at ændre tema</string>
-  <string name="pref_icon">Opdater QKSMS ikonfarven</string>
-  <string name="pref_icon_summary">Opdater QKSMS ikonet til at matche dit farveskema</string>
+  <string name="pref_icon_dark">Use dark icon</string>
+  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Tonet statusbjælke</string>
   <string name="pref_navigation_tint">Tonet navigationslinje</string>
   <string name="pref_background">Baggrundsfarve</string>
@@ -162,6 +163,12 @@
   <string name="pref_delivery_toast_summary">Vis en kort toast for at indikere at beskeden bliver leveret</string>
   <string name="pref_delivery_vibrate">Vibrer</string>
   <string name="pref_delivery_vibrate_summary">Vibrer ved beskedlevering</string>
+  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
+  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">Yappy integration</string>
   <string name="pref_endlessjabber_summary">Aktiver fuld understøttelse af Yappy</string>
   <string name="pref_blocked_conversations">Blokerede samtaler</string>
@@ -190,8 +197,6 @@
   <string name="pref_long_as_mms_summary">Send lange beskeder som MMS\'er i stedet for at opdele dem</string>
   <string name="pref_long_as_mms_after">Send lang besked som MMS efter</string>
   <string name="pref_long_as_mms_after_summary">Send lange beskeder som MMS når de overskrider længden af et antal beskeder</string>
-  <string name="pref_24h">Brug 24-timers format</string>
-  <string name="pref_24h_summary">Vis tidsstempler i 24-timers format</string>
   <string name="pref_return">Vis tilbageknap</string>
   <string name="pref_return_summary">Vis retur-tasten på tastaturet, i stedet for Emoji knap</string>
   <string name="pref_text">Tekst</string>
@@ -299,6 +304,8 @@
   <string name="title_block_address">Blokér nummer</string>
   <string name="title_unblock_address">Fjern blokering af nummer</string>
   <string name="title_conversations_selected">%s valgt</string>
+  <string name="title_palette">Palette</string>
+  <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
@@ -546,13 +553,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Opdater ikonets farve</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS skal genstartes når du ændrer ikonfarven. Genstart nu?</string>
+  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
   <string name="dialog_conversation_details_title">Samtale informationer</string>
   <string name="dialog_conversation_details_last_message_date">Sidste besked modtaget</string>
   <string name="dialog_conversation_details_message_count">Beskedtæller</string>
   <string name="dialog_conversation_details_recipients">Modtagere (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
   <string name="dialog_should_i_answer_message">Ønsker du at downloade app\'en fra Google Play nu?</string>
+  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Vælg lydside</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -596,6 +604,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber er ikke installeret. Åbner Google Play</string>
   <string name="toast_changelog_error">Kunne ikke indlæse ændringsloggen. Prøv igen senere</string>
   <string name="toast_conversation_error">Couldn\'t open conversation</string>
+  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Tak for din donering! Du er min nye bedste ven.</string>
   <!--Toast shown to thank user for donating-->
