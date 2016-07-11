@@ -86,6 +86,7 @@ public class SmsHelper {
     public static final String COLUMN_BODY = "body";
     public static final String COLUMN_SEEN = "seen";
 
+    public static final String READ_SELECTION = COLUMN_READ + " = " + READ;
     public static final String UNREAD_SELECTION = COLUMN_READ + " = " + UNREAD;
     public static final String UNSEEN_SELECTION = COLUMN_SEEN + " = " + UNREAD;
     public static final String FAILED_SELECTION = COLUMN_TYPE + " = " + Message.FAILED;

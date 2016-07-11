@@ -42,6 +42,10 @@ public enum QKPreference {
     DELIVERY_TOAST("pref_key_delivery_toast", true),
     DELIVERY_VIBRATE("pref_key_delivery_vibrate", true),
 
+    AUTO_DELETE("pref_key_delete_old_messages", false),
+    AUTO_DELETE_UNREAD("pref_key_delete_old_unread_messages", "7"), // This type of preference only accepts strings
+    AUTO_DELETE_READ("pref_key_delete_old_read_messages", "7"),
+
     AUTO_EMOJI("pref_key_auto_emoji", false),
     TEXT_FORMATTING("pref_key_markdown_enabled", false),
     STRIP_UNICODE("pref_key_strip_unicode", false),
@@ -96,6 +100,7 @@ public enum QKPreference {
 
     // Storage
     COMPOSE_DRAFT("compose_draft", ""),
+    LAST_AUTO_DELETE_CHECK("last_auto_delete_check", 0),
     MIGRATED_ICON("migrated_icon", false);
 
     private String mKey;

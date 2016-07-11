@@ -49,6 +49,31 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:layout="@layout/list_item_preference_category"
+        android:title="@string/pref_delete_old_messages">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_delete_old_messages"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_delete_old_messages_summary"
+            android:title="@string/pref_delete_old_messages"
+            android:widgetLayout="@layout/view_switch" />
+        <EditTextPreference
+            android:defaultValue="7"
+            android:inputType="number"
+            android:key="pref_key_delete_old_unread_messages"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_delete_old_messages_unread_summary"
+            android:title="@string/pref_delete_old_messages_unread" />
+        <EditTextPreference
+            android:defaultValue="7"
+            android:inputType="number"
+            android:key="pref_key_delete_old_read_messages"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_delete_old_messages_read_summary"
+            android:title="@string/pref_delete_old_messages_read" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/list_item_preference_category"
         android:title="@string/pref_text">
         <CheckBoxPreference
             android:defaultValue="false"
@@ -147,12 +172,12 @@
             android:title="@string/pref_key_timestamp_delay" />
         <CheckBoxPreference
             android:defaultValue="false"
+            android:disableDependentsState="true"
             android:key="pref_key_force_timestamps"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_force_timestamps_summary"
             android:title="@string/pref_force_timestamps"
-            android:widgetLayout="@layout/view_switch"
-            android:disableDependentsState="true"/>
+            android:widgetLayout="@layout/view_switch" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pref_key_compose_favorites"

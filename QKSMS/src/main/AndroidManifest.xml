@@ -486,6 +486,7 @@
         </receiver>
 
         <service android:name="com.mariussoft.endlessjabber.sdk.EndlessJabberWakefulService" />
+        <service android:name=".service.DeleteOldMessagesService" />
 
         <service
             android:name=".receiver.UnreadBadgeService"

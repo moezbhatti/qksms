@@ -46,6 +46,7 @@ import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.vcard.ContactOperations;
@@ -188,7 +189,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mProxSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
-        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
+        if (QKPreferences.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
@@ -247,7 +248,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     public void onResume() {
         super.onResume();
 
-        if (mContext.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
+        if (QKPreferences.getBoolean(QKPreference.PROXIMITY_SENSOR)) {
             mSensorManager.registerListener(this, mProxSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
