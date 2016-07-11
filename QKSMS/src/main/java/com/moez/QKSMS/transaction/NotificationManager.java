@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -350,9 +349,9 @@ public class NotificationManager {
                         .setContentTitle(title)
                         .setStyle(inboxStyle)
                         .setContentText(sRes.getString(R.string.failed_messages_summary))
-                        .setLargeIcon(BitmapFactory.decodeResource(sRes, R.drawable.ic_notification_failed))
                         .setContentIntent(PI)
-                        .setNumber(failedCursor.getCount());
+                        .setNumber(failedCursor.getCount())
+                        .setColor(ThemeManager.getThemeColor());
 
                 if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_VIBRATE, false)) {
                     builder.setVibrate(VIBRATION);
