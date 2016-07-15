@@ -55,9 +55,9 @@
   <!--Prompts user to try QK Reply-->
   <string name="welcome_quickreply_hint">Try it!</string>
   <!--QK Reply demo message-->
-  <string name="welcome_quickreply_message_1">Wow! Now wasn\'t that awesome? You can view your entire conversation at a glance. Tap outside the popup or press the checkmark to dismiss it.</string>
+  <string name="welcome_quickreply_message_1">Wow! Thật tuyệt đúng không nào? Bạn có thể xem toàn bộ cuộc trò chuyện trong nháy mắt. Nhấn ra ngoài cửa sổ hoặc nhấn nút hoàn thành để tắt bỏ nó.</string>
   <!--QK Reply demo message-->
-  <string name="welcome_quickreply_message_2">This is QK Reply. Now you can reply to messages from anywhere. Tap the expand button to see what happens next :)</string>
+  <string name="welcome_quickreply_message_2">Đây là QK Reply. Giờ đây bạn có thể trả lời tin nhắn từ bất cứ đâu. Nhấn nút mở rộng để tiếp tục :)</string>
   <!--Settings option in menu-->
   <string name="menu_settings">Cài đặt</string>
   <!--Search option in menu-->
@@ -105,22 +105,22 @@
   <string name="pref_category_appearance">Hiển thị</string>
   <string name="pref_category_summary_appearance">Chủ đề, phông chữ, màu sắc, ảnh đại diện, và nhiều hơn nữa</string>
   <string name="pref_category_general">Chung</string>
-  <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
+  <string name="pref_category_summary_general">Báo cáo, gửi tin nhắn, định dạng</string>
   <string name="pref_category_blocking">Chặn tin nhắn</string>
   <string name="pref_category_notifications">Thông báo</string>
   <string name="pref_category_summary_notifications">Âm thanh, đèn LED, bảo mật</string>
   <string name="pref_category_mms">MMS</string>
   <string name="pref_category_summary_mms">Cấu hình MMS (APNs), kích thước tối đa, tin nhắn nhóm</string>
   <string name="pref_category_quickreply">QK Reply</string>
-  <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
+  <string name="pref_category_summary_quickreply">QK Reply, tùy chọn popup</string>
   <string name="pref_category_quickcompose">QK Compose</string>
-  <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
+  <string name="pref_category_summary_quickcompose">QK Compose, địa chỉ liên hệ yêu thích</string>
   <string name="pref_category_about">Giới thiệu</string>
   <string name="pref_category_summary_about">Phiên bản, thay đổi, tác giả, cảm ơn</string>
   <string name="pref_theme">Màu chủ đề</string>
   <string name="pref_theme_summary_alt">Bấm để thay đổi chủ đề</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon_dark">Sử dụng icon tối màu</string>
+  <string name="pref_icon_dark_summary">Sử dụng phiên bản màu tối cho icon của QKSMS để phù hợp hơn với hình nền của bạn</string>
   <string name="pref_status_tint">Nhuộm thanh trạng thái</string>
   <string name="pref_navigation_tint">Nhuộm thanh điều hướng</string>
   <string name="pref_background">Màu nền</string>
@@ -147,28 +147,28 @@
   <string name="pref_font_weight">Độ đậm phông</string>
   <string name="pref_message_count">Đếm tin nhắn</string>
   <string name="pref_message_count_summary">Hiển thị số tin nhắn cho mỗi cuộc hội thoại</string>
-  <string name="pref_sent_timestamps">Sent timestamps</string>
-  <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
+  <string name="pref_sent_timestamps">Dấu thời gian gửi</string>
+  <string name="pref_sent_timestamps_summary">Hiển thị dấu thời gian khi tin nhắn được gửi chứ không phải khi được nhận</string>
   <string name="pref_force_timestamps">Force timestamps</string>
-  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
-  <string name="pref_key_timestamp_delay">New timestamp delay</string>
-  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
-  <string name="pref_compose_favorites">Địa chỉ liên hệ có gắn dấu sao</string>
-  <string name="pref_compose_summary_favorites">Show your starred contacts in the QK Compose window, making them only a tap away</string>
+  <string name="pref_force_timestamps_summary">Kích hoạt dấu thời gian cho tất cả tin nhắn</string>
+  <string name="pref_key_timestamp_delay">Trì hoãn dấu thời gian mới</string>
+  <string name="pref_key_timestamp_delay_summary">Số phút trôi qua giữa 2 tin nhắn để dấu thời gian mới được hiển thị.</string>
+  <string name="pref_compose_favorites">Địa chỉ liên hệ yêu thích</string>
+  <string name="pref_compose_summary_favorites">Hiển thị địa chỉ liên hệ yêu thích ở cửa sổ QK Compose giúp truy cập dễ dàng hơn.</string>
   <string name="pref_prox_sensor_call">Cảm biến tiệm cận</string>
   <string name="pref_prox_sensor_call_summary">Khi trong một cuộc trò chuyện, đưa điện thoại lên tai để bắt đầu một cuộc gọi</string>
   <string name="pref_delivery">Báo gửi</string>
   <string name="pref_delivery_summary">Xác nhận rằng tin nhắn đã được gửi thành công</string>
   <string name="pref_delivery_toast">Show toast</string>
-  <string name="pref_delivery_toast_summary">Show a short toast to indicate a message being delivered</string>
+  <string name="pref_delivery_toast_summary">Hiển thị 1 báo cáo ngắn để thông báo rằng tin nhắn đã được gửi</string>
   <string name="pref_delivery_vibrate">Báo rung</string>
   <string name="pref_delivery_vibrate_summary">Báo rung khi gửi tin nhành công</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">Xóa tin nhắn cũ</string>
+  <string name="pref_delete_old_messages_summary">Tự động xóa tin nhắn khi chúng đã quá cũ</string>
+  <string name="pref_delete_old_messages_unread">Tin nhắn chưa đọc</string>
+  <string name="pref_delete_old_messages_unread_summary">Tự động xóa tin nhắn chưa đọc sau %s ngày</string>
+  <string name="pref_delete_old_messages_read">Tin nhắn đã đọc</string>
+  <string name="pref_delete_old_messages_read_summary">Tự động xóa tin nhắn đã đọc sau %s ngày</string>
   <string name="pref_yappy">Kết hợp Yappy</string>
   <string name="pref_endlessjabber_summary">Bật hỗ trợ đầy đủ cho Yappy</string>
   <string name="pref_blocked_conversations">Cuộc hội thoại đã chặn</string>
@@ -179,24 +179,24 @@
   <string name="pref_should_i_answer_summary">Tự động xóa tin nhắn từ các số điện thoại bị chặn từ Should I Answer?</string>
   <string name="pref_mobile_only">Số điện thoại</string>
   <string name="pref_mobile_only_summary">Chỉ hiển thị số điện thoại trong gợi ý danh bạ</string>
-  <string name="pref_auto_emoji">Automatic emoji</string>
-  <string name="pref_auto_emoji_summary">Replace text with image emoji</string>
-  <string name="pref_enter_button">Enter button</string>
-  <string name="pref_enter_button_summary">Tap to change keyboard enter button behavior</string>
-  <string name="pref_compose_group">Group messaging</string>
-  <string name="pref_compose_group_summary">When composing message to multiple people, send a group message instead of individual messages</string>
-  <string name="pref_auto_download">Auto download MMS</string>
-  <string name="pref_auto_download_summary">Automatically download MMS messages when they become available</string>
-  <string name="pref_auto_data">Automatic data</string>
-  <string name="pref_auto_data_summary">Turn on data automatically when sending or receiving MMS</string>
+  <string name="pref_auto_emoji">Tự động dùng emoji</string>
+  <string name="pref_auto_emoji_summary">Thay chữ bằng hình emoji</string>
+  <string name="pref_enter_button">Nút enter</string>
+  <string name="pref_enter_button_summary">Nhấn để thay đổi hành vi khi ấn nút enter</string>
+  <string name="pref_compose_group">Nhắn tin nhóm</string>
+  <string name="pref_compose_group_summary">Khi soạn tin nhắn cho nhiều người, gửi tin nhắn nhóm thay vì gửi từng tin nhắn riêng lẻ</string>
+  <string name="pref_auto_download">Tự động tải tin MMS</string>
+  <string name="pref_auto_download_summary">Tự động tải tin nhắn MMS khi khả dụng</string>
+  <string name="pref_auto_data">Tự động sử dụng data</string>
+  <string name="pref_auto_data_summary">Tự động bật data khi gửi hay nhận MMS</string>
   <string name="pref_split">Tách SMS</string>
   <string name="pref_split_summary">Tách tin nhắn dài thành nhiều tin nhắn</string>
-  <string name="pref_split_counter">Split counter</string>
-  <string name="pref_split_counter_summary">Adds a counter to the front of each split message</string>
+  <string name="pref_split_counter">Bộ đếm kí tự tách</string>
+  <string name="pref_split_counter_summary">Thêm bộ đếm vào đằng trước mỗi tin nhắn được tách</string>
   <string name="pref_long_as_mms">Gửi tin nhắn dài như là MMS</string>
   <string name="pref_long_as_mms_summary">Gửi tin nhắn dài như là MMS thay vì tách chúng ra</string>
-  <string name="pref_long_as_mms_after">Send long as MMS after</string>
-  <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
+  <string name="pref_long_as_mms_after">Gửi tin nhắn dài như là MMS sau</string>
+  <string name="pref_long_as_mms_after_summary">Gửi những tin nhắn dài như là MMS khi vượt quá số tin nhắn cho phép</string>
   <string name="pref_return">Hiển thị nút trở về</string>
   <string name="pref_return_summary">Hiển thi nút trở về trên bàn phím thay cho nút Emoji</string>
   <string name="pref_text">Văn bản</string>
@@ -210,8 +210,8 @@
   <string name="pref_ringtone">Âm thông báo</string>
   <string name="pref_ringtone_summary">Chọn âm thanh thông báo</string>
   <string name="pref_ticker">Show ticker</string>
-  <string name="pref_ticker_summary">Shows snippet of new message in notification bar</string>
-  <string name="pref_vibration">Vibration</string>
+  <string name="pref_ticker_summary">Hiển thị trích đoạn của tin nhắn mới trên thanh thông báo</string>
+  <string name="pref_vibration">Rung</string>
   <string name="pref_vibration_summary">Báo rung khi nhận tin nhắn mới</string>
   <string name="pref_notification_call">Nút gọi</string>
   <string name="pref_notification_call_summary">Gọi cho người gửi ngay trong thông báo</string>
@@ -226,9 +226,9 @@
   <string name="pref_day_start">Bắt đầu thời gian ban ngày</string>
   <string name="pref_night_start">Bắt đầu thời gian ban đêm</string>
   <string name="pref_qk_responses">QK Responses</string>
-  <string name="pref_qk_responses_summary">Modify your preset responses to be used from your Android Wear device</string>
+  <string name="pref_qk_responses_summary">Thay đổi những câu trả lời có sẵn để sử dụng trên thiết bị Android Wear của bạn</string>
   <string name="pref_quickreply_enabled">Đã kích hoạt QK Reply</string>
-  <string name="pref_quickreply_enabled_summary">Hiển thị của sổ QK Reply mỗi khi nhận được tin nhắn mới</string>
+  <string name="pref_quickreply_enabled_summary">Hiển thị cửa sổ QK Reply mỗi khi nhận được tin nhắn mới</string>
   <string name="pref_tap_to_quit">Chạm để bỏ qua</string>
   <string name="pref_tap_to_quit_summary">Chạm bất cứ chỗ nào bên ngoài cửa sổ để đóng nó</string>
   <string name="pref_quickcompose">Đã kích hoạt QK Compose</string>
@@ -241,12 +241,12 @@
   <string name="pref_apn_chooser">Tải APNs mặc đinh</string>
   <string name="pref_strip_unicode">Lấy mã Unicode</string>
   <string name="pref_strip_unicode_summary">Chuyển các ký tự không được hỗ trợ trong tin nhắn-đầy đủ sang các ký tự tương thích với GSM</string>
-  <string name="pref_system_bar_flat">Flat system bars</string>
-  <string name="pref_system_bar_flat_summary">Get rid of the gradient shown on the system UI bars on most KitKat devices</string>
+  <string name="pref_system_bar_flat">Thanh công cụ hệ thống phẳng</string>
+  <string name="pref_system_bar_flat_summary">Loại bỏ hiệu ứng tô chuyển hiện trên các thanh công cụ của hệ thống trên hầu hết các thiết bị chạy KitKat</string>
   <string name="pref_status_compat">Sửa thanh trạng thái</string>
-  <string name="pref_status_compat_summary">Fixes issues caused by immersive mode, Tinted Status Bar (Xposed), or custom DPI settings</string>
+  <string name="pref_status_compat_summary">Sửa các vấn đề gây ra bởi chế độ immersive, Tinted Status Bar (Xposed), hay các tùy chỉnh DPI</string>
   <string name="pref_navigation_compat">Sửa thanh điều hướng</string>
-  <string name="pref_navigation_compat_summary">Fixes issues caused by immersive mode, Tinted Status Bar (Xposed), or custom DPI settings</string>
+  <string name="pref_navigation_compat_summary">Sửa các vấn đề gây ra bởi chế độ immersive, Tinted Status Bar (Xposed), hay các tùy chỉnh DPI</string>
   <string name="pref_about_version_title">Phiên bản QKSMS</string>
   <string name="pref_about_authors_title">Tác giả</string>
   <string name="pref_about_authors_summary">Moez Bhatti</string>
@@ -254,7 +254,7 @@
   <string name="pref_about_thanks_title">Cảm ơn bạn</string>
   <string name="pref_about_thanks_summary">Chạm để xem những người có đóng góp</string>
   <string name="pref_donate_title">Quyên góp</string>
-  <string name="pref_donate_summary">QKSMS là ứng dụng miễn phí. Hãy hỗ trợ chúng tôi bằng các quyên góp!</string>
+  <string name="pref_donate_summary">QKSMS là ứng dụng miễn phí. Hãy hỗ trợ chúng tôi bằng cách quyên góp!</string>
   <string name="pref_about_gplus_title">Google+</string>
   <string name="pref_about_gplus_summary">Tham gia cộng đồng Thử Nghiệm QKSMS Beta trên Google+</string>
   <string name="pref_about_github_title">GitHub</string>
@@ -289,7 +289,7 @@
   <!--$1 donation product description-->
   <string name="product_description_donate_1">Mua cho tôi một lon Coca-Cola</string>
   <!--$5 donation product description-->
-  <string name="product_description_donate_5">Mua cho tôi một bánh sanhwich</string>
+  <string name="product_description_donate_5">Mua cho tôi một bánh sandwich</string>
   <!--$10 donaion product description-->
   <string name="product_description_donate_10">Mua cho tôi một bữa trưa</string>
   <string name="title_settings">Cài đặt</string>
@@ -311,7 +311,7 @@
          contacts. [CHAR LIMIT=50] -->
   <string name="menu_add_address_to_contacts">Thêm <xliff:g id="contactEmailOrNumber">%s</xliff:g> vào Danh bạ</string>
   <!-- Context menu item on an individual message for viewing an attached slideshow -->
-  <string name="view_slideshow">View slideshow</string>
+  <string name="view_slideshow">Xem slideshow</string>
   <!-- Context menu item on an individual message for viewing message details such as time and date -->
   <string name="view_message_details">Xem chi tiết</string>
   <!-- Context menu item on an individual message for viewing a delivery report -->
@@ -340,11 +340,11 @@
   <!--(Unused) Dialog title shown if APNs have not been set-->
   <string name="apns_not_set">Chưa đặt APNs</string>
   <!--(Unused) Dialog description shown if APNs have not been set-->
-  <string name="apns_not_set_description">It appears that your APNs have not been set. This means that MMS will not work properly. Please press okay to have QKSMS find them for you :)</string>
+  <string name="apns_not_set_description">Có vẻ như cấu hình APN của bạn chưa được thiết lập. Điều đó có nghĩa là MMS sẽ không hoạt động như mong đợi. Hãy ấn OK để QKSMS thiết lập giúp bạn :)</string>
   <!--Dialog title show if MMS hasn't been configured-->
   <string name="set_up_mms_title">Cài đặt MMS?</string>
   <!--Dialog description shown if MMS hasn't yet been configured-->
-  <string name="set_up_mms_description">It appears that MMS hasn\'t been configured in QKSMS yet. Press okay automatically configure MMS.</string>
+  <string name="set_up_mms_description">Có vẻ như cấu hình MMS chưa được thiết lập cho QKSMS. Ấn OK để tự động thiết lập MMS.</string>
   <!-- Dialog message text explaining that a draft message will not be saved due to invalid recipients -->
   <string name="discard_message_reason">Tin nhắn của bạn sẽ bị loại bỏ vì không có người nhận hợp lệ.</string>
   <string name="invalid_code">Mã không hợp lệ</string>
@@ -389,9 +389,9 @@
   <!-- Subject to display in the conversation list if there is no subject -->
   <string name="no_subject_view">(Không có tiêu đề)</string>
   <!-- Time and date a message is due to expire -->
-  <string name="expire_on">"Expires: <xliff:g id="date">%s</xliff:g>"</string>
+  <string name="expire_on">"Ngày hết hạn: <xliff:g id="date">%s</xliff:g>"</string>
   <!-- Formatting for subject displayed inline, prepended to MMS message text -->
-  <string name="inline_subject">"&lt;Subject: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
+  <string name="inline_subject">"&lt;Tiêu đề: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
   <!-- Text of a button appearing for MMS messages that have not yet been downloaded, causing the message to be downloaded (imperative verb) -->
   <string name="download">Tải về</string>
   <!-- Message displayed in place of the "download message" button once it has been pressed, indicating that the download is in progress -->
@@ -449,7 +449,7 @@
   <!-- Label in "Message details" dialog -->
   <string name="error_code_label">Mã lỗi\u000A</string>
   <!-- Alert dialog title when creating a slideshow [CHAR LIMIT=none] -->
-  <string name="building_slideshow_title">Building slideshow</string>
+  <string name="building_slideshow_title">Đang dựng slideshow</string>
   <!-- Tag appearing on conversations in the conversation list that contain a draft message -->
   <string name="has_draft">Nháp</string>
   <!-- In conversation list items, this is the separator between a contact's name and the draft stamp [CHAR LIMIT=5] -->
@@ -457,9 +457,9 @@
   <!-- In conversation list items, this comes after the receipient's name and contains the number of messages in the thread [CHAR LIMIT=5] -->
   <string name="message_count_format">\u00a0<xliff:g id="number" example="1">%1$s</xliff:g></string>
   <!-- For debugging: Dialog box title indicating there's a situation where data has unexpectedly changed -->
-  <string name="error_state">Inconsistent state</string>
+  <string name="error_state">Trạng thái không nhất quán</string>
   <!-- For debugging: Dialog box text indicating there's a situation where data has unexpectedly changed -->
-  <string name="error_state_text">The state of threads and recipients is inconsistent. Please capture a bug report and report it via http://go/droidanizer </string>
+  <string name="error_state_text">http://go/droidanizer Trạng thái của các cuộc hội thoại và người nhận là không nhất quán. Xin hãy gửi 1 báo cáo lỗi đến http://go/droidanizer</string>
   <!-- This is the dialog title for the "Select link" dialog, shown when the user clicks on a
     chat in the chat history view if there are links in the chat message. The dialog displays the
     links if there are any -->
@@ -474,7 +474,7 @@
   <!-- Status in "Report" window -->
   <string name="status_none">(Không có)</string>
   <!-- Status in "Report" window -->
-  <string name="status_pending">Dang chờ</string>
+  <string name="status_pending">Đang chờ</string>
   <!-- Status in "Report" window -->
   <string name="status_read">Đã đọc</string>
   <!-- Status in "Report" window -->
@@ -490,13 +490,13 @@
   <!-- Label in "Report" window -->
   <string name="status_label">Trạng thái:\u0020</string>
   <!-- Label in "Report" window [CHAR LIMIT=50]-->
-  <string name="delivered_label">Delivered:\u0020</string>
+  <string name="delivered_label">Đã gửi:\u0020</string>
   <string name="do_something">Làm gì đó</string>
   <!-- Confirm Delete -->
   <!-- Delete confirmation dialog title -->
   <string name="confirm_dialog_title">Xóa?</string>
   <!-- Delete confirmation dialog title for locked messages -->
-  <string name="confirm_dialog_locked_title">Xóa tin nhắn bj khóa?</string>
+  <string name="confirm_dialog_locked_title">Xóa tin nhắn bị khóa?</string>
   <!-- This message is displayed in a confirmation dialog when the user selects one or more
          conversations and then taps the "Delete" button. -->
   <plurals name="confirm_delete_conversation">
@@ -510,7 +510,7 @@
   <!-- Delete message confirmation dialog message -->
   <string name="confirm_delete_message">Tin nhắn sẽ bị xóa.</string>
   <!-- Delete message confirmation dialog message for a locked message -->
-  <string name="confirm_delete_locked_message">Xóa thư bị khóa này?</string>
+  <string name="confirm_delete_locked_message">Xóa tin nhắn bị khóa này?</string>
   <!-- Delete all the messages on the SIM dialog message -->
   <string name="confirm_delete_all_SIM_messages">Tất cả tin nhắn trên SIM sẽ bị xóa.</string>
   <!-- Delete the selected message on the SIM dialog message -->
@@ -532,17 +532,17 @@
   <!-- Tells the user that QKSMS isn't the default SMS app -->
   <string name="not_default">SMS mặc định</string>
   <!-- Tells the user they need to set QKSMS as the default app in order to use this feature -->
-  <string name="default_info">QKSMS cần phải là ứng dụng nhắn tin SMS của bạn để làm điều đó</string>
+  <string name="default_info">QKSMS cần phải là ứng dụng nhắn tin SMS mặc định để làm điều đó</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as read -->
-  <string name="not_default_mark_read">QKSMS cần phải là ứng dụng nhắn tin SMS của bạn để đánh dáu thư đã đọc</string>
+  <string name="not_default_mark_read">QKSMS cần phải là ứng dụng nhắn tin SMS mặc định để đánh dấu tin nhắn đã đọc</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as unread -->
-  <string name="not_default_mark_unread">QKSMS must be your SMS app to mark messages unread</string>
+  <string name="not_default_mark_unread">QKSMS cần phải là ứng dụng nhắn tin SMS mặc định để có thể đánh dấu tin nhắn chưa đọc</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to send messages -->
-  <string name="not_default_delete">QKSMS cần phải là ứng dụng nhắn tin SMS của bạn để xóa tin nhắn</string>
+  <string name="not_default_delete">QKSMS cần phải là ứng dụng nhắn tin SMS mặc định để có thể xóa tin nhắn</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to delete messages -->
-  <string name="not_default_send">QKSMS cần phải là ứng dụng nhắn tin SMS của bạn để gửi tin nhắn</string>
+  <string name="not_default_send">QKSMS cần phải là ứng dụng nhắn tin SMS mặc định để có thể gửi tin nhắn</string>
   <!-- Tells the user they should set QKSMS as the default messaging app -->
-  <string name="not_default_first">Một số thứ sẽ không hoạt động cho đến khi QKSMS là ứng dụng nhắn tin mặc định</string>
+  <string name="not_default_first">Một số chức năng sẽ không hoạt động cho đến khi QKSMS là ứng dụng nhắn tin mặc định</string>
   <string name="delayed_messaging_info">Hoãn gửi tin nhắn cho phép bạn hủy tin nhắn trước khi gửi nó. Thay đổi hành vi mặc định và nhiều hơn ở Cài đặt</string>
   <string name="delayed_duration_bounds_error">Thời gian phải từ 1 đến 30 giây</string>
   <!-- Dialog title for the Read Report dialog. -->
@@ -552,14 +552,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Cập nhật màu sắc icon</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">QKSMS cần phải được khởi động lại sau khi thay đổi màu icon của ứng dụng</string>
   <string name="dialog_conversation_details_title">Chi tiết cuộc trò chuyện</string>
   <string name="dialog_conversation_details_last_message_date">Ngày tin nhắn cuối cùng</string>
   <string name="dialog_conversation_details_message_count">Số lượng tin nhắn</string>
   <string name="dialog_conversation_details_recipients">Người nhận (%s)</string>
-  <string name="dialog_should_i_answer_title">Should I Answer? chư được cài đặt</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? chưa được cài đặt</string>
   <string name="dialog_should_i_answer_message">Bạn có muốn tải ứng dụng từ Google Play bây giờ không?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">Bạn có chắc chắn muốn ứng dụng tự động xóa tin nhắn cũ không?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Chọn âm thanh</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -598,12 +598,12 @@
   <!--Toast shown when text is copied to the clipboard-->
   <string name="toast_copy_text">Đã chép văn bản vào bộ nhớ tạm</string>
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
-  <string name="toast_billing_not_available">Mua hang yêu cầu Google Play Store (thanh toán) trên thiết bị Android của bạn</string>
+  <string name="toast_billing_not_available">Mua hàng yêu cầu Google Play Store (thanh toán) trên thiết bị Android của bạn</string>
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">Chưa cài đặt EndlessJabber, mở Google Play</string>
   <string name="toast_changelog_error">Không tải được các thay đổi. Vui lòng thử lại sau</string>
-  <string name="toast_conversation_error">Couldn\'t open conversation</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_conversation_error">Không thể mở cuộc hội thoại</string>
+  <string name="toast_deleting_old_messages">Những tin nhắn cũ của bạn sẽ sắp bị xóa</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Cảm ơn bạn đã quyên góp! Bạn là bạn thân nhất của tôi rồi.</string>
   <!--Toast shown to thank user for donating-->
@@ -611,7 +611,7 @@
   <!--Toast shown to thank user for donating-->
   <string name="thanks_3">Cảm ơn bạn đã quyên góp! Bạn đang giúp QKSMS trở thành ứng dụng nhắn tin tuyệt vời nhất từng được tạo ra.</string>
   <!--Toast shown to thank user for donating-->
-  <string name="thanks_4">Cảm ơn bạn đã quyên góp! Bạn thật tuyệt với.</string>
+  <string name="thanks_4">Cảm ơn bạn đã quyên góp! Bạn thật tuyệt vời.</string>
   <!--Menu option to mute conversation-->
   <string name="menu_mute_conversation">Tắt tiếng cuộc trò chuyện</string>
   <!--Menu option to mute conversation-->
@@ -669,8 +669,8 @@
   <string name="pref_category_mms_configuration">Cấu hình MMS</string>
   <string name="pref_mms_contact_support_summary">Liên hệ nhóm QKSMS để được giúp đỡ cấu hình MMS</string>
   <string name="pref_markdown_enabled">Định dạng văn bản</string>
-  <string name="pref_markdown_enabled_summary">Use markdown syntax to get bold, underline, and italics in your messages</string>
-  <string name="want_read_indicators">Want read indicators?</string>
+  <string name="pref_markdown_enabled_summary">Dùng cú pháp markdown để định dạng chữ đậm, gạch chân và in nghiêng trong tin nhắn của bạn</string>
+  <string name="want_read_indicators">Cần thông báo đã đọc?</string>
   <string name="color_swatch_description">Màu %1$d</string>
   <string name="color_swatch_description_selected">Đã chọn màu %1$d</string>
   <string name="color_picker_default_title">Chọn màu</string>
@@ -683,14 +683,14 @@
   <string name="service_network_problem">Không thể gửi do lỗi mạng.</string>
   <string name="message_queued">Hiện tại tin nhắn của bạn không thể gửi được. Nó sẽ được gửi khi đện thoại của bạn có sóng.</string>
   <string name="download_later">Không thể tải về lúc này. Hãy thử lại sau.</string>
-  <string name="no_apn">No APN specified for the app, you need to set it up in settings!</string>
+  <string name="no_apn">Không tìm thấy cấu hình APN cho ứng dụng, bạn cần thiết lập nó trong mục Cài đặt!</string>
   <string name="no_subject">(Không đề)</string>
   <string name="unknown_sender">Không rõ người gửi</string>
   <string name="dl_failure_notification">Không thể tải tin nhắn <xliff:g id="subject">%1$s</xliff:g> từ <xliff:g id="from">%2$s</xliff:g>.</string>
-  <string name="auto_select_multiple_apns">Multiple different configurations have been found. Try one now. If it doesn\'t work, you can try a new one by going to Settings &gt; Advanced &gt; Load default APNs.</string>
-  <string name="auto_select_apn">Tự động chọn APNs</string>
+  <string name="auto_select_multiple_apns">Chúng tôi đã tìm thấy nhiều cài đặt có sẵn. Đã chọn thử một cài đặt. Nếu nó không hoạt động, bạn có thể thử những cái khác bằng cách đi đến Cài đặt &gt; Nâng cao &gt; Nạp các APN mặc định.</string>
+  <string name="auto_select_apn">Tự động chọn các APN</string>
   <string name="auto_select_failed_title">Tự động cấu hình thất bại</string>
-  <string name="auto_select_failed">Hãy thử tìm kiếm cài đặt APN cho mạng của bạn (MMSC, Port, and Proxy) và điền chúng trong Cài đặt &gt; Nâng cao.</string>
+  <string name="auto_select_failed">Hãy thử tìm kiếm cấu hình APN cho mạng của bạn (MMSC, Port, and Proxy) và điền chúng trong Cài đặt &gt; Nâng cao.</string>
   <string name="date_yesterday">Hôm qua</string>
   <string name="date_just_now">Vừa xong</string>
   <string name="compose_loading_attachment">Đang tải tệp đính kèm</string>
@@ -723,7 +723,7 @@
     <item>Font hệ thống</item>
   </string-array>
   <string-array name="font_weights">
-    <item>Light</item>
+    <item>Mảnh</item>
     <item>Bình thường</item>
   </string-array>
   <!-- String to match as no subject and filter out as a subject. For example, if the
