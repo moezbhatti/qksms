@@ -74,7 +74,7 @@ public class MainActivity extends QKActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        launchWelcomeActivity();
+        launchWelcomeActivity(savedInstanceState);
         onNewIntent(getIntent());
 
         setContentView(R.layout.activity_fragment);
@@ -89,8 +89,6 @@ public class MainActivity extends QKActivity {
         FragmentTransaction menuTransaction = fm.beginTransaction();
         menuTransaction.replace(R.id.content_frame, mConversationList, ConversationListFragment.TAG);
         menuTransaction.commit();
-
-        showDialogIfNeeded(savedInstanceState);
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
             // Update the background color. This code is important during the welcome screen setup, when the activity
@@ -134,7 +132,7 @@ public class MainActivity extends QKActivity {
                     .show();
 
             // Only show the MMS setup fragment if it hasn't already been dismissed
-        } else if (!wasMmsSetupFragmentDismissed(savedInstanceState)) {
+        } else if (savedInstanceState == null || !wasMmsSetupFragmentDismissed(savedInstanceState)) {
             beginMmsSetup();
         }
     }
@@ -146,9 +144,10 @@ public class MainActivity extends QKActivity {
                 && savedInstanceState.getBoolean(KEY_MMS_SETUP_FRAGMENT_DISMISSED, false);
     }
 
-    private void launchWelcomeActivity() {
+    private void launchWelcomeActivity(Bundle savedInstanceState) {
         if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
             // User has already seen the welcome screen
+            showDialogIfNeeded(savedInstanceState);
             return;
         }
 
@@ -185,6 +184,7 @@ public class MainActivity extends QKActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == WelcomeActivity.WELCOME_REQUEST_CODE) {
             new DefaultSmsHelper(this, R.string.not_default_first).showIfNotDefault(null);
+            showDialogIfNeeded(null);
         }
     }
 
