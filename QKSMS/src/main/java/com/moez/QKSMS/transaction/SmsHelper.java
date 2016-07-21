@@ -216,7 +216,7 @@ public class SmsHelper {
             sendSettings.setGroup(prefs.getBoolean(SettingsFragment.COMPOSE_GROUP, true));
             setMaxAttachmentSizeSetting(context, prefs.getString(SettingsFragment.MAX_MMS_ATTACHMENT_SIZE, "300kb"));
             sendSettings.setDeliveryReports(prefs.getBoolean(SettingsFragment.DELIVERY_REPORTS, false));
-            sendSettings.setSplit(prefs.getBoolean(SettingsFragment.SPLIT_SMS, true));
+            sendSettings.setSplit(prefs.getBoolean(SettingsFragment.SPLIT_SMS, false));
             sendSettings.setSplitCounter(prefs.getBoolean(SettingsFragment.SPLIT_COUNTER, true));
             sendSettings.setStripUnicode(prefs.getBoolean(SettingsFragment.STRIP_UNICODE, false));
             sendSettings.setSignature(prefs.getString("pref_key_signature", ""));
