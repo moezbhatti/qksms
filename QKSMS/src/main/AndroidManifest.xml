@@ -484,6 +484,11 @@
                 <action android:name="com.mariussoft.endlessjabber.action.extend" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.AirplaneModeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+            </intent-filter>
+        </receiver>
 
         <service android:name="com.mariussoft.endlessjabber.sdk.EndlessJabberWakefulService" />
         <service android:name=".service.DeleteOldMessagesService" />
