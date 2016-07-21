@@ -812,9 +812,11 @@ public class Conversation {
 
     public static class ConversationQueryHandler extends AsyncQueryHandler {
         private int mDeleteToken;
+        private Context mContext;
 
-        public ConversationQueryHandler(ContentResolver cr) {
+        public ConversationQueryHandler(ContentResolver cr, Context context) {
             super(cr);
+            mContext = context;
         }
 
         public void setDeleteToken(int token) {
@@ -835,6 +837,8 @@ public class Conversation {
                     }
                     sDeletingThreadsLock.notifyAll();
                 }
+                UnreadBadgeService.update(mContext);
+                NotificationManager.create(mContext);
             }
         }
     }
