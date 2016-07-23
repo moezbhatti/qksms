@@ -20,10 +20,12 @@ import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -88,8 +90,14 @@ public class WidgetProvider extends AppWidgetProvider {
     @TargetApi(16)
     private static int isSmallWidget(AppWidgetManager appWidgetManager, int appWidgetId) {
 
-        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
-        int size = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        int size;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+            size = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        } else {
+            AppWidgetProviderInfo appWidgetInfo = appWidgetManager.getAppWidgetInfo(appWidgetId);
+            size = appWidgetInfo.minWidth;
+        }
         int n = 2;
         while (70 * n - 30 < size) {
             ++n;
