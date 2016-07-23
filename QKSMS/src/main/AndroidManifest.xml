@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.moez.QKSMS"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.moez.QKSMS">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -45,6 +45,7 @@
         android:theme="@style/AppThemeDark">
         <activity
             android:name=".ui.popup.QKComposeActivity"
+            android:configChanges="orientation|screenSize"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/AppThemeLightDialog"
@@ -66,6 +67,7 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
+            android:configChanges="orientation|screenSize"
             android:enabled="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -93,20 +95,24 @@
         </activity>
         <activity
             android:name=".ui.messagelist.MessageListActivity"
+            android:configChanges="orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ui.settings.SettingsActivity"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.search.SearchActivity"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.compose.ComposeActivity"
+            android:configChanges="orientation|screenSize"
             android:screenOrientation="user"
             android:windowSoftInputMode="adjustResize" />
 
@@ -371,6 +377,7 @@
         <!-- Popup activity -->
         <activity
             android:name=".ui.popup.QKReplyActivity"
+            android:configChanges="orientation|screenSize"
             android:excludeFromRecents="true"
             android:screenOrientation="user"
             android:taskAffinity=""
@@ -482,6 +489,11 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="com.mariussoft.endlessjabber.action.extend" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.AirplaneModeReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
             </intent-filter>
         </receiver>
 
