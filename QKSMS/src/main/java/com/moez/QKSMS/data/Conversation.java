@@ -62,11 +62,10 @@ public class Conversation {
             Threads.READ
     };
 
-    private static final String UNREAD_SELECTION = "(read=0 OR seen=0)";
+    public static final String UNREAD_SELECTION = "(read=0 OR seen=0)";
+    public static final String FAILED_SELECTION = "error != 0";
 
-    private static final String[] SEEN_PROJECTION = new String[]{
-            "seen"
-    };
+    public static final String[] SEEN_PROJECTION = new String[]{"seen"};
 
     public static final int ID = 0;
     public static final int DATE = 1;
