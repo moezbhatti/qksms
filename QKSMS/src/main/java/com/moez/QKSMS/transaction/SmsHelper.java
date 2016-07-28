@@ -39,6 +39,7 @@ public class SmsHelper {
 
     public static final Uri SMS_CONTENT_PROVIDER = Uri.parse("content://sms/");
     public static final Uri MMS_CONTENT_PROVIDER = Uri.parse("content://mms/");
+    public static final Uri MMS_SMS_CONTENT_PROVIDER = Uri.parse("content://mms-sms/conversations/");
     public static final Uri SENT_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/sent");
     public static final Uri DRAFTS_CONTENT_PROVIDER = Uri.parse("content://sms/draft");
     public static final Uri PENDING_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/outbox");
