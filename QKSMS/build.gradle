@@ -90,7 +90,6 @@ dependencies {
     compile 'com.pushbullet:android-extensions:1.0.4'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.klinkerapps:android-chips:1.0.0'
-    compile 'com.googlecode.libphonenumber:libphonenumber:6.2'
     compile 'com.nispok:snackbar:2.10.6'
     compile 'com.github.lzyzsd:circleprogress:1.1.0'
     debugCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
