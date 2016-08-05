@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">সংস্করণ, পরিবর্তনসূচী, লেখক, ধন্যবাদ</string>
   <string name="pref_theme">থিমের রঙ</string>
   <string name="pref_theme_summary_alt">থিম পরিবর্তন করতে হালকা টোকা দিন</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint"> রঞ্জিত স্থিতি দণ্ড</string>
   <string name="pref_navigation_tint"> রঞ্জিত নেভিগেশন বার</string>
   <string name="pref_background">প্রেক্ষাপট রঙ</string>

@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">버전, 변경이력, 제작자, 감사의 말</string>
   <string name="pref_theme">테마 색상</string>
   <string name="pref_theme_summary_alt">테마를 변경하려면 탭하기</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">상단바 색상표시(투명화)</string>
   <string name="pref_navigation_tint">소프트키 색상표시(투명화)</string>
   <string name="pref_background">배경 색상</string>

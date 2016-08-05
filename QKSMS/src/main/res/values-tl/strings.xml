@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
   <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Tap to change theme</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Kulayan ang status bar</string>
   <string name="pref_navigation_tint">Kulayan ang navigation bar</string>
   <string name="pref_background">Background color</string>

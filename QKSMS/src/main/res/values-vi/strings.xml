@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Phiên bản, thay đổi, tác giả, cảm ơn</string>
   <string name="pref_theme">Màu chủ đề</string>
   <string name="pref_theme_summary_alt">Bấm để thay đổi chủ đề</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Nhuộm thanh trạng thái</string>
   <string name="pref_navigation_tint">Nhuộm thanh điều hướng</string>
   <string name="pref_background">Màu nền</string>

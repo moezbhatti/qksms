@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Верзија, измене, аутори, захвале</string>
   <string name="pref_theme">Боја теме</string>
   <string name="pref_theme_summary_alt">Додирните да бисте променили тему</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Обојена статусна трака</string>
   <string name="pref_navigation_tint">Обојена навигациона трака</string>
   <string name="pref_background">Боја позадине</string>

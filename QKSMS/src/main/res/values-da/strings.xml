@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Version, ændringslog, forfattere, tak</string>
   <string name="pref_theme">Temafarve</string>
   <string name="pref_theme_summary_alt">Tryk for at ændre tema</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Tonet statusbjælke</string>
   <string name="pref_navigation_tint">Tonet navigationslinje</string>
   <string name="pref_background">Baggrundsfarve</string>

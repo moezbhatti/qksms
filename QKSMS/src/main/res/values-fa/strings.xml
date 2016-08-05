@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">نسخه، تغییرات، نویسندگان، تشکرها</string>
   <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">برای تغییر تم لمس کنید</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">نوار وضعیت رنگی</string>
   <string name="pref_navigation_tint">نوار راهبری رنگی</string>
   <string name="pref_background">رنگ پس زمینه</string>

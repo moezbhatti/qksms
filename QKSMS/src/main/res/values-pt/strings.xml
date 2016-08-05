@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Versão, alterações, autores e agradecimentos</string>
   <string name="pref_theme">Cor do tema</string>
   <string name="pref_theme_summary_alt">Toque para mudar de tema</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Use dark icon</string>
+  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
   <string name="pref_status_tint">Barra de estado colorida</string>
   <string name="pref_navigation_tint">Barra de navegação colorida</string>
   <string name="pref_background">Cor de fundo</string>
