@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Versione, changelog, autori, ringraziamenti</string>
   <string name="pref_theme">Colore del tema</string>
   <string name="pref_theme_summary_alt">Tocca per cambiare tema</string>
-  <string name="pref_icon">Use dark icon</string>
-  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Barra di stato colorata</string>
   <string name="pref_navigation_tint">Barra di navigazione colorata</string>
   <string name="pref_background">Colore di sfondo</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">Mostra un piccolo \"toast\" per indicare che il messaggio è stato spedito</string>
   <string name="pref_delivery_vibrate">Vibrazione</string>
   <string name="pref_delivery_vibrate_summary">Vibra alla consegna di un messaggio</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
+  <string name="pref_delete_old_messages">Cancella i vecchi messaggi</string>
   <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread">Messaggi non letti</string>
   <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
   <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages_read_summary">Cancella automaticamente i messaggi letti dopo %s giorni</string>
   <string name="pref_yappy">Integra con Yappy</string>
   <string name="pref_endlessjabber_summary">Abilita il supporto compleato a Yappy</string>
   <string name="pref_blocked_conversations">Conversazioni bloccate</string>
@@ -553,14 +553,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Aggiorna colore icona</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">QKSMS deve essere riavviato quando si cambia il colore dell\'icona</string>
   <string name="dialog_conversation_details_title">Dettagli conversazione</string>
   <string name="dialog_conversation_details_last_message_date">Data ultimo messaggio</string>
   <string name="dialog_conversation_details_message_count">Numero di messaggi</string>
   <string name="dialog_conversation_details_recipients">Destinatari (%s)</string>
   <string name="dialog_should_i_answer_title">Dovrei rispondere? non installato</string>
   <string name="dialog_should_i_answer_message">Vorresti scaricare l\'app da Google Play ora?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">Sei sicuro di voler eliminare automaticamente i vecchi messaggi?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Scegli audio</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->

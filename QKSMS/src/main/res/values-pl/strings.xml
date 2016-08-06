@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Wersja, lista zmian, autorzy, podziękowania</string>
   <string name="pref_theme">Kolor motywu</string>
   <string name="pref_theme_summary_alt">Dotknij, aby zmienić motyw</string>
-  <string name="pref_icon">Use dark icon</string>
-  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Kolorowy pasek powiadomień</string>
   <string name="pref_navigation_tint">Kolorowy pasek nawigacyjny</string>
   <string name="pref_background">Kolor tła</string>
@@ -149,10 +149,10 @@
   <string name="pref_message_count_summary">Pokazuj liczbę wiadomości dla każdej rozmowy</string>
   <string name="pref_sent_timestamps">Sygnatury czasowe wysłanych</string>
   <string name="pref_sent_timestamps_summary">Pokaż sygnaturę czasową wysłania wiadomości, a nie otrzymania</string>
-  <string name="pref_force_timestamps">Force timestamps</string>
-  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
-  <string name="pref_key_timestamp_delay">New timestamp delay</string>
-  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
+  <string name="pref_force_timestamps">Wymuś sygnatury czasowe</string>
+  <string name="pref_force_timestamps_summary">Włącz sygnatury czasowe dla wszystkich wiadomości</string>
+  <string name="pref_key_timestamp_delay">Nowe opóźnienie sygnatury czasowej</string>
+  <string name="pref_key_timestamp_delay_summary">Ilość minut, które muszą upłynąć między dwoma wiadomościami, aby wyświetlić nową sygnaturę czasową.</string>
   <string name="pref_compose_favorites">Ulubione kontakty</string>
   <string name="pref_compose_summary_favorites">Pokaż ulubione kontakty w oknie Komponowania QK, aby je wybrać jednym kliknięciem</string>
   <string name="pref_prox_sensor_call">Czujnik zbliżeniowy</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">Pokazuj mały wyskakujący dymek z potwierdzeniem odbioru wiadomości</string>
   <string name="pref_delivery_vibrate">Wibracje</string>
   <string name="pref_delivery_vibrate_summary">Wibracje po dostarczeniu wiadomości</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">Usuń stare wiadomości</string>
+  <string name="pref_delete_old_messages_summary">Automatycznie usuń wystarczająco stare wiadomości</string>
+  <string name="pref_delete_old_messages_unread">Nieprzeczytane wiadomości</string>
+  <string name="pref_delete_old_messages_unread_summary">Automatycznie usuń nieprzeczytane wiadomości po %s dniach</string>
+  <string name="pref_delete_old_messages_read">Przeczytane wiadomości</string>
+  <string name="pref_delete_old_messages_read_summary">Automatycznie usuń przeczytane wiadomości po %s dniach</string>
   <string name="pref_yappy">Pełna integracja z Yappy</string>
   <string name="pref_endlessjabber_summary">Włącz integrację z Yappy</string>
   <string name="pref_blocked_conversations">Zablokowane rozmowy</string>
@@ -304,7 +304,7 @@
   <string name="title_block_address">Zablokuj numer</string>
   <string name="title_unblock_address">Odblokuj numer</string>
   <string name="title_conversations_selected">%s wybranych</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">Paleta</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -554,14 +554,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Zmień kolor ikony</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">Przy zmianie koloru ikony QKSMS musi zostać uruchomiony ponownie</string>
   <string name="dialog_conversation_details_title">Szczegóły rozmowy</string>
   <string name="dialog_conversation_details_last_message_date">Data ostatniej wiadomości</string>
   <string name="dialog_conversation_details_message_count">Ilość wiadomości</string>
   <string name="dialog_conversation_details_recipients">Odbiorcy (%s)</string>
   <string name="dialog_should_i_answer_title">Aplikacja \"Odebrać telefon?\" nie jest zainstalowana</string>
   <string name="dialog_should_i_answer_message">Czy pobrać aplikację ze Sklepu Play?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">Czy na pewno chcesz usunąć automatycznie stare wiadomości?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Wybierz dźwięk</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -604,8 +604,8 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber nie jest zainstalowany, otwórz Google Play</string>
   <string name="toast_changelog_error">Nie można załadować dziennika zmian. Spróbuj ponownie później</string>
-  <string name="toast_conversation_error">Couldn\'t open conversation</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_conversation_error">Nie można otworzyć rozmowy</string>
+  <string name="toast_deleting_old_messages">Twoje stare wiadomości zostaną wkrótce usunięte</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Dziękuję za dotację! Jesteś moim nowym najlepszym przyjacielem.</string>
   <!--Toast shown to thank user for donating-->

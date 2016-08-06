@@ -107,7 +107,7 @@
   <string name="pref_category_general">Obecné</string>
   <string name="pref_category_summary_general">Doručenky, posílání zpráv, formátování</string>
   <string name="pref_category_blocking">Blokování zpráv</string>
-  <string name="pref_category_notifications">Oznámení</string>
+  <string name="pref_category_notifications">Upozornění</string>
   <string name="pref_category_summary_notifications">Zvuky, LED, soukromí</string>
   <string name="pref_category_mms">MMS</string>
   <string name="pref_category_summary_mms">Konfigurace MMS (APN), maximální velikost, skupinové zprávy</string>
@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Verze, seznam změn, autoři, poděkování</string>
   <string name="pref_theme">Barva motivu</string>
   <string name="pref_theme_summary_alt">Nastavení hlavní barvy</string>
-  <string name="pref_icon">Use dark icon</string>
-  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Transparentní stavový panel</string>
   <string name="pref_navigation_tint">Transparentní navigační panel</string>
   <string name="pref_background">Barva pozadí</string>
@@ -148,7 +148,7 @@
   <string name="pref_message_count">Počet zpráv</string>
   <string name="pref_message_count_summary">Zobrazit počet zpráv u každé konverzace</string>
   <string name="pref_sent_timestamps">Časové značky odeslání</string>
-  <string name="pref_sent_timestamps_summary">Zobrazit časové značky pro odeslání zprávy, ne přijetí</string>
+  <string name="pref_sent_timestamps_summary">Zobrazit časové značky pro odeslané zprávy, ne pro přijaté</string>
   <string name="pref_force_timestamps">Vynutit časové značky</string>
   <string name="pref_force_timestamps_summary">Povolit časové značky pro všechny zprávy</string>
   <string name="pref_key_timestamp_delay">Doba mezi časovými značkami</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">Zobrazit bublinu s upozorněním, při doručení zprávy</string>
   <string name="pref_delivery_vibrate">Vibrace</string>
   <string name="pref_delivery_vibrate_summary">Vibrovat při doručení zpráv</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">Odstranit staré zprávy</string>
+  <string name="pref_delete_old_messages_summary">Automaticky odstranit staré zprávy</string>
+  <string name="pref_delete_old_messages_unread">Nepřečtené zprávy</string>
+  <string name="pref_delete_old_messages_unread_summary">Automaticky odstranit nepřečtené zprávy po %s dnech</string>
+  <string name="pref_delete_old_messages_read">Přečtené zprávy</string>
+  <string name="pref_delete_old_messages_read_summary">Automaticky odstranit přečtené zprávy po %s dnech</string>
   <string name="pref_yappy">Integrace Yappy</string>
   <string name="pref_endlessjabber_summary">Zapnout plnou podporu pro Yappy</string>
   <string name="pref_blocked_conversations">Blokované konverzace</string>
@@ -192,7 +192,7 @@
   <string name="pref_split">Rozdělit SMS</string>
   <string name="pref_split_summary">Rozdělit dlouhé zprávy do samostatných zpráv</string>
   <string name="pref_split_counter">Počítadlo znaků</string>
-  <string name="pref_split_counter_summary">Přidá počítač znaků na začátek každé nové zprávy</string>
+  <string name="pref_split_counter_summary">Zobrazovat počítadlo znaků před každou novou zprávu</string>
   <string name="pref_long_as_mms">Dlouhé zprávy jako MMS</string>
   <string name="pref_long_as_mms_summary">Dlouhé zprávy budou zaslány jako jedna MMS</string>
   <string name="pref_long_as_mms_after">Dlouhé zprávy jako MMS po</string>
@@ -200,8 +200,8 @@
   <string name="pref_return">Zobrazit tlačítko zpět</string>
   <string name="pref_return_summary">Zobrazí znaménko zpět na klávesnici, místo Emoji tlačítka</string>
   <string name="pref_text">Text</string>
-  <string name="pref_notifications">SMS oznámení povoleno</string>
-  <string name="pref_led">Oznámení LED</string>
+  <string name="pref_notifications">Upozornění na SMS</string>
+  <string name="pref_led">LED upozornění</string>
   <string name="pref_theme_led">Barva LED upozornění</string>
   <string name="pref_wake">Probudit telefon</string>
   <string name="pref_wake_summary">Zapnout obrazovku při obdržení nové zprávy</string>
@@ -213,7 +213,7 @@
   <string name="pref_ticker_summary">Zobrazí úryvek nové zprávy v oznamovacím pruhu</string>
   <string name="pref_vibration">Vibrace</string>
   <string name="pref_vibration_summary">Vibrovat při přijmu nové zprávy</string>
-  <string name="pref_notification_call">tlačítko Volat</string>
+  <string name="pref_notification_call">Tlačítko Volat</string>
   <string name="pref_notification_call_summary">Zavolat odesílateli zprávy přímo z oznámení</string>
   <string name="pref_dimiss_read">Označit jako přečtené</string>
   <string name="pref_dismiss_read_summary">Označit zprávu jakou přečtenou při zavření oznámení</string>
@@ -239,8 +239,8 @@
   <string name="pref_mms_proxy">MMS proxy</string>
   <string name="pref_mms_port">MMS port</string>
   <string name="pref_apn_chooser">Načíst výchozí APN</string>
-  <string name="pref_strip_unicode">Strip unicode</string>
-  <string name="pref_strip_unicode_summary">Odstraní diakritická znaménka, které zvětšují délku zpráv</string>
+  <string name="pref_strip_unicode">Nahradit unicode znaky</string>
+  <string name="pref_strip_unicode_summary">Odstranit diakritická znaménka, které zvětšují délku zpráv</string>
   <string name="pref_system_bar_flat">Ploché systémové panely</string>
   <string name="pref_system_bar_flat_summary">Odstranění vizuálního přechodu v systémových lištách na většině KitKat zařízení</string>
   <string name="pref_status_compat">Oprava stavového panelu</string>
@@ -304,7 +304,7 @@
   <string name="title_block_address">Blokovat číslo</string>
   <string name="title_unblock_address">Odblokovat číslo</string>
   <string name="title_conversations_selected">Vybráno: %s</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">Paleta</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -375,7 +375,7 @@
   <!--Positive action button-->
   <string name="okay">OK</string>
   <!--Positive action button-->
-  <string name="redeem">Redeem</string>
+  <string name="redeem">Uplatnit</string>
   <!--Neutral action button-->
   <string name="just_once">Pouze jednou</string>
   <!--Neutral action button-->
@@ -472,7 +472,7 @@
   <!--<string name="status_failed">Failed. Tap to retry</string>-->
   <!-- Delivery Report Activity -->
   <!-- Status in "Report" window -->
-  <string name="status_none">(None)</string>
+  <string name="status_none">(Žádný)</string>
   <!-- Status in "Report" window -->
   <string name="status_pending">Čekající</string>
   <!-- Status in "Report" window -->
@@ -554,14 +554,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Aktualizovat barvu ikony</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">Pro změnu barvy ikony je třeba QKSMS restartovat</string>
   <string name="dialog_conversation_details_title">Podrobnosti konverzace</string>
   <string name="dialog_conversation_details_last_message_date">Datum poslední zprávy</string>
   <string name="dialog_conversation_details_message_count">Počet zpráv</string>
   <string name="dialog_conversation_details_recipients">Příjemci (%s)</string>
   <string name="dialog_should_i_answer_title">Aplikace „Můžu to zvednout?“ není nainstalována</string>
   <string name="dialog_should_i_answer_message">Chcete aplikaci stáhnout z obchodu Google Play?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">Opravdu chcete automaticky odstraňovat všechny staré zprávy?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Vyberte zvuk</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -650,11 +650,11 @@
   <string name="stagefright_warning">Video zprávy mohou obsahovat škodlivý kód, který může zanechat telefon náchylný k útokům. Chcete pokračovat?</string>
   <!-- MMS DIALOG SETUP STRINGS -->
   <string name="mms_setup_set_up_mms_title">Nastavit MMS?</string>
-  <string name="mms_setup_set_up_mms_body">Zdá se, že MMS nejsou v QKSMS nastaveny. Stiskněte tlačítko OK pro automatickou konfiguraci MMS.</string>
+  <string name="mms_setup_set_up_mms_body">Zdá se, že MMS nejsou v QKSMS nastaveny. Pro automatické nastavení MMS stiskněte OK.</string>
   <string name="mms_setup_setting_up_later_title">Nastavit MMS později</string>
   <string name="mms_setup_setting_up_later_body">Navštivte sekci MMS v Nastavení pro automatickou konfiguraci, obraťte se na podporu, nebo zadejte konfiguraci ručně.</string>
   <string name="mms_setup_no_configurations_found_title">Konfigurace nebyla nalezena</string>
-  <string name="mms_setup_no_configurations_found_body">We couldn\'t find an MMS configuration for your carrier automatically. Press okay to contact support. We\'ll help you get set up! </string>
+  <string name="mms_setup_no_configurations_found_body">Automatické nastavení MMS pro vašeho operátora se nezdařilo. Stiskem OK nás můžete kontaktovat. Pomůžeme vám! </string>
   <string name="mms_setup_one_configuration_found_title">Nalezena jedna konfigurace</string>
   <string name="mms_setup_one_configuration_found_body">Našli jsme MMS konfiguraci pro operátora %s. Zní to rozumně?</string>
   <string name="mms_setup_multiple_configurations_found_title">Nalezeno více konfigurací</string>
@@ -671,7 +671,7 @@
   <string name="pref_category_mms_configuration">Nastavení MMS</string>
   <string name="pref_mms_contact_support_summary">Obraťte se na tým QKSMS pro nápovědu k nastavení MMS</string>
   <string name="pref_markdown_enabled">Formátování textu</string>
-  <string name="pref_markdown_enabled_summary">Použít syntaxi markdown pro tučné a podtržené písmo nebo kurzívu ve zprávách</string>
+  <string name="pref_markdown_enabled_summary">Použít markdown syntaxi pro tučné a podtržené písmo nebo kurzívu ve zprávách</string>
   <string name="want_read_indicators">Chcete oznámení o přečtení?</string>
   <string name="color_swatch_description">Barva %1$d</string>
   <string name="color_swatch_description_selected">Barva %1$d vybrána</string>

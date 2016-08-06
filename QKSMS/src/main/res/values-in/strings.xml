@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Versi, catatan perubahan, pengembang, kontributor</string>
   <string name="pref_theme">Warna tema</string>
   <string name="pref_theme_summary_alt">Ketuk untuk mengubah tema</string>
-  <string name="pref_icon">Use dark icon</string>
-  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Bilah status berwarna</string>
   <string name="pref_navigation_tint">Bilah navigasi berwarna</string>
   <string name="pref_background">Warna latar belakang</string>

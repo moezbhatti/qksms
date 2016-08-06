@@ -108,7 +108,7 @@
   <string name="pref_category_summary_general">Accusés de réception et d\'envoi, mise en forme</string>
   <string name="pref_category_blocking">Blocage des messages</string>
   <string name="pref_category_notifications">Notifications</string>
-  <string name="pref_category_summary_notifications">Sons, DEL, vie privée</string>
+  <string name="pref_category_summary_notifications">Sons, LED, vie privée</string>
   <string name="pref_category_mms">MMS</string>
   <string name="pref_category_summary_mms">Configurer les MMS (APNs), taille maximale, messagerie de groupe</string>
   <string name="pref_category_quickreply">QK Reply</string>
@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Version, modifications, auteurs, remerciements</string>
   <string name="pref_theme">Couleur du thème</string>
   <string name="pref_theme_summary_alt">Appuyer pour changer le thème</string>
-  <string name="pref_icon">Use dark icon</string>
-  <string name="pref_icon_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Barre d\'état colorée</string>
   <string name="pref_navigation_tint">Barre de navigation colorée</string>
   <string name="pref_background">Couleur d\'arrière-plan</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">Afficher une notification toast pour indiquer que le message a été reçu</string>
   <string name="pref_delivery_vibrate">Vibrer</string>
   <string name="pref_delivery_vibrate_summary">Vibrer quand le message est remis</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">Supprimer messages anciens</string>
+  <string name="pref_delete_old_messages_summary">Supprimer automatiquement les messages dès qu’ils sont assez anciens</string>
+  <string name="pref_delete_old_messages_unread">Messages non lus</string>
+  <string name="pref_delete_old_messages_unread_summary">Supprimer automatiquement les messages non lus après %s jours</string>
+  <string name="pref_delete_old_messages_read">Messages lus</string>
+  <string name="pref_delete_old_messages_read_summary">Supprimer automatiquement les messages lus après %s jours</string>
   <string name="pref_yappy">Intégration de Yappy</string>
   <string name="pref_endlessjabber_summary">Activer le support complet de Yappy</string>
   <string name="pref_blocked_conversations">Conversations bloquées</string>
@@ -201,8 +201,8 @@
   <string name="pref_return_summary">Afficher le bouton retour sur le clavier au lieu du bouton émoticône</string>
   <string name="pref_text">Texte</string>
   <string name="pref_notifications">Notifications SMS</string>
-  <string name="pref_led">DEL de notification</string>
-  <string name="pref_theme_led">Couleur de la DEL</string>
+  <string name="pref_led">LED de notification</string>
+  <string name="pref_theme_led">Couleur de la LED</string>
   <string name="pref_wake">Allumer l\'écran</string>
   <string name="pref_wake_summary">Allumer votre écran lorsque vous recevez un nouveau message</string>
   <string name="pref_notifications_private">Notifications privées</string>
@@ -319,7 +319,7 @@
   <!-- Context menu item on an individual message for deleting only that message -->
   <string name="delete_message">Supprimer</string>
   <!-- Abbreviation for "kilobyte" -->
-  <string name="kilobyte">KB</string>
+  <string name="kilobyte">Ko</string>
   <!-- Individual message context menu item -->
   <string name="copy_message_text">Copier le texte</string>
   <!-- Header for context menu on an individual message -->
@@ -553,14 +553,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Actualiser la couleur de l\'icône</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">QKSMS doit redémarrer lorsque vous changez la couleur de l’icône</string>
   <string name="dialog_conversation_details_title">Détails de la conversation</string>
   <string name="dialog_conversation_details_last_message_date">Date du dernier message</string>
   <string name="dialog_conversation_details_message_count">Compteur de messages</string>
   <string name="dialog_conversation_details_recipients">Destinataires (%s)</string>
   <string name="dialog_should_i_answer_title">Dois-je répondre ? non installé</string>
   <string name="dialog_should_i_answer_message">Voulez-vous télécharger l\'application depuis le Play Store maintenant ?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">Êtes-vous sûr de vouloir supprimer automatiquement les anciens messages ?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Choisir le fichier audio</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -604,7 +604,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber n\'est pas installé, ouverture de Google Play</string>
   <string name="toast_changelog_error">Impossible de charger le journal des modifications. Veuillez réessayer plus tard</string>
   <string name="toast_conversation_error">Impossible d’ouvrir la conversation</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_deleting_old_messages">Vos anciens messages seront bientôt supprimés</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Merci pour ton don ! Tu es mon nouveau meilleur ami.</string>
   <!--Toast shown to thank user for donating-->
@@ -760,9 +760,9 @@
   <!-- Max MMS attachment sizes. I.e. will compress pictures that are larger than 300 KB down to
          under 300KB. -->
   <string-array name="max_mms_attachment_sizes">
-    <item>300 KB</item>
-    <item>600 KB</item>
-    <item>1 MB</item>
+    <item>300 Ko</item>
+    <item>600 Ko</item>
+    <item>1 Mo</item>
     <item>Illimité</item>
   </string-array>
 </resources>
