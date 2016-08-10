@@ -589,12 +589,12 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
     @Override
     public void changeCursor(Cursor cursor) {
-        super.changeCursor(cursor);
-
         if (CursorUtils.isValid(cursor)) {
             mColumnsMap = new MessageColumns.ColumnsMap(cursor);
             mMessageItemCache = new MessageItemCache(mContext, mColumnsMap, mSearchHighlighter, MessageColumns.CACHE_SIZE);
         }
+
+        super.changeCursor(cursor);
     }
 
     @Override
