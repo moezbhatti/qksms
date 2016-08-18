@@ -52,8 +52,6 @@ android {
     }
 
     compileOptions {
-        compileOptions.encoding = "UTF-8"
-
         // Use Java 1.7, requires minSdk 8
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
