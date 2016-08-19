@@ -82,7 +82,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
 
     public static final String THEME = "pref_key_theme";
-    public static final String ICON = "pref_key_icon_dark";
+    public static final String ICON = "pref_key_icon";
     public static final String STATUS_TINT = "pref_key_status_tint";
     public static final String NAVIGATION_TINT = "pref_key_navigation_tint";
     public static final String BACKGROUND = "pref_key_background";
@@ -425,9 +425,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case BACKGROUND:
                 ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
                 break;
-            case ICON:
-                ThemeManager.setIcon(mContext, (Boolean) newValue);
-                break;
             case STATUS_TINT:
                 ThemeManager.setStatusBarTintEnabled(mContext, (Boolean) newValue);
                 break;
@@ -578,6 +575,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         switch (key) {
             case THEME:
                 ThemeManager.showColorPickerDialog(mContext);
+                break;
+            case ICON:
+                ThemeManager.setIcon(mContext);
                 break;
             case BUBBLES:
                 new BubblePreferenceDialog().setContext(mContext).show();

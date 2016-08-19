@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">সংস্করণ, পরিবর্তনসূচী, লেখক, ধন্যবাদ</string>
   <string name="pref_theme">থিমের রঙ</string>
   <string name="pref_theme_summary_alt">থিম পরিবর্তন করতে হালকা টোকা দিন</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint"> রঞ্জিত স্থিতি দণ্ড</string>
   <string name="pref_navigation_tint"> রঞ্জিত নেভিগেশন বার</string>
   <string name="pref_background">প্রেক্ষাপট রঙ</string>
@@ -165,9 +165,9 @@
   <string name="pref_delivery_vibrate_summary">বার্তা ডেলিভারিতে কম্পন দিন</string>
   <string name="pref_delete_old_messages">Delete old messages</string>
   <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
+  <string name="pref_delete_old_messages_unread">অপঠিত বার্তা</string>
   <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_read">পঠিত বার্তাসমূহ</string>
   <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
   <string name="pref_yappy">ইয়েপ্পি সংযোগ</string>
   <string name="pref_endlessjabber_summary">ইয়েপ্পির জন্য পূর্ণ সমর্থন চালু করুন</string>
@@ -304,7 +304,7 @@
   <string name="title_block_address">নাম্বার ব্লক করুন</string>
   <string name="title_unblock_address">নাম্বার আনব্লক করুন</string>
   <string name="title_conversations_selected">%s নির্বাচিত</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">প্যালেট</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to

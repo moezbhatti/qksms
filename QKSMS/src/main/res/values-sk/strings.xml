@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Verzia, zoznam zmien, autori, poďakovanie</string>
   <string name="pref_theme">Farba motívu</string>
   <string name="pref_theme_summary_alt">Dotykom zmeniť motív</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Farebný stavový riadok</string>
   <string name="pref_navigation_tint">Farebný navigačný panel</string>
   <string name="pref_background">Farba pozadia</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">Krátke toast oznámenie o doručení správy prijímateľovi</string>
   <string name="pref_delivery_vibrate">Vibrovať</string>
   <string name="pref_delivery_vibrate_summary">Vibrovať pri prijatí potvrdenia o doručení</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">Vymazať staré správy</string>
+  <string name="pref_delete_old_messages_summary">Automaticky vymazať dostatočne staré správy</string>
+  <string name="pref_delete_old_messages_unread">Neprečítané správy</string>
+  <string name="pref_delete_old_messages_unread_summary">Automaticky vymazať neprečítané správy po %s dňoch</string>
+  <string name="pref_delete_old_messages_read">Prečítané správy</string>
+  <string name="pref_delete_old_messages_read_summary">Automaticky vymazať prečítané správy po %s dňoch</string>
   <string name="pref_yappy">Integrácia Yappy</string>
   <string name="pref_endlessjabber_summary">Zapnút plnú podporu Yappy</string>
   <string name="pref_blocked_conversations">Blokované konverzácie</string>
@@ -304,7 +304,7 @@
   <string name="title_block_address">Blokovať číslo</string>
   <string name="title_unblock_address">Povoliť číslo</string>
   <string name="title_conversations_selected">%s vybraných</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">Paleta</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -554,14 +554,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Aktualizovať farbu ikony</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">Kvôli zmene farby ikony QKSMS je nutné aplikáciu reštartovať</string>
   <string name="dialog_conversation_details_title">Podrobnosti konverzácie</string>
   <string name="dialog_conversation_details_last_message_date">Dátum poslednej správy</string>
   <string name="dialog_conversation_details_message_count">Počet správ</string>
   <string name="dialog_conversation_details_recipients">Príjemcovia (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? nie je nainštalovaná</string>
   <string name="dialog_should_i_answer_message">Chcete aplikáciu prevziať z obchodu Google Play?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">Ste si istí, že chcete automaticky vymazať staré správy?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Vybrať zvuk</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -605,7 +605,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber nie je nainštalovaný, otváranie Obchodu Play</string>
   <string name="toast_changelog_error">Nemožno načítať zoznam zmien. Skúste to prosím neskôr</string>
   <string name="toast_conversation_error">Nemožno otvoriť konverzáciu</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_deleting_old_messages">Vaše staré správy budú čoskoro vymazané</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Ďakujem za darovanie! Si môj nový najlepší kamarát .</string>
   <!--Toast shown to thank user for donating-->
@@ -696,7 +696,7 @@
   <string name="date_yesterday">Včera</string>
   <string name="date_just_now">Práve teraz</string>
   <string name="compose_loading_attachment">Načítavanie prílohy</string>
-  <string name="hint_no_messages">Zatiaľ nemáte žiadne správy. \nPoklepte na + a nejakú pošlite!</string>
+  <string name="hint_no_messages">Zatiaľ nemáte žiadne správy. \nDotykom \"+\" nejakú pošlite!</string>
   <string-array name="resend_menu">
     <item>Znovu odoslať</item>
     <item>Upraviť</item>

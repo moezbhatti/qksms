@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">نسخه، تغییرات، نویسندگان، تشکرها</string>
   <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">برای تغییر تم لمس کنید</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">نوار وضعیت رنگی</string>
   <string name="pref_navigation_tint">نوار راهبری رنگی</string>
   <string name="pref_background">رنگ پس زمینه</string>
@@ -198,22 +198,22 @@
   <string name="pref_long_as_mms_after">Send long as MMS after</string>
   <string name="pref_long_as_mms_after_summary">Send long messages as MMS when they exceed the length of a number of messages</string>
   <string name="pref_return">Show return button</string>
-  <string name="pref_return_summary">Show return key on keyboard instead of Emoji button</string>
-  <string name="pref_text">Text</string>
+  <string name="pref_return_summary">نمایش کلید بازگشت روی صفحه کلید به جای دکمه ایموجی</string>
+  <string name="pref_text">متن</string>
   <string name="pref_notifications">SMS notifications enabled</string>
   <string name="pref_led">Notification LED</string>
-  <string name="pref_theme_led">Notification LED color</string>
-  <string name="pref_wake">Wake phone</string>
-  <string name="pref_wake_summary">Turn your screen on when you receive a new message</string>
-  <string name="pref_notifications_private">Private notifications</string>
-  <string name="pref_notifications_private_summary">Tap to change what should be hidden in notfication</string>
-  <string name="pref_ringtone">Notification sound</string>
-  <string name="pref_ringtone_summary">Select a notification sound</string>
+  <string name="pref_theme_led">رنگ LED اعلانات</string>
+  <string name="pref_wake">روشن کردن صفحه نمایش</string>
+  <string name="pref_wake_summary">روشن کردن صفحه نمایش</string>
+  <string name="pref_notifications_private">نوتفیکشن های خصوصی</string>
+  <string name="pref_notifications_private_summary">برای تغییر دادن آنچه باید در اعلانات پنهان شود کیلیک کنید</string>
+  <string name="pref_ringtone">صدای اعلان</string>
+  <string name="pref_ringtone_summary">انتخاب صدای اعلان</string>
   <string name="pref_ticker">Show ticker</string>
   <string name="pref_ticker_summary">Shows snippet of new message in notification bar</string>
-  <string name="pref_vibration">Vibration</string>
-  <string name="pref_vibration_summary">Vibrate when new messages are received</string>
-  <string name="pref_notification_call">Call button</string>
+  <string name="pref_vibration">ویبره</string>
+  <string name="pref_vibration_summary">لرزش هنگام دریافت پیام جدید</string>
+  <string name="pref_notification_call">دکمه تماس</string>
   <string name="pref_notification_call_summary">Call the sender of a message right from the notification</string>
   <string name="pref_dimiss_read">Mark as read</string>
   <string name="pref_dismiss_read_summary">Mark message as read when notification is cleared</string>
@@ -223,18 +223,18 @@
   <string name="pref_delayed_duration_summary">Time to wait before sending your message</string>
   <string name="pref_night_auto">Automatic night mode</string>
   <string name="pref_night_auto_summary">Enable night mode automatically based on the time</string>
-  <string name="pref_day_start">Day time begins</string>
-  <string name="pref_night_start">Night time begins</string>
-  <string name="pref_qk_responses">QK Responses</string>
+  <string name="pref_day_start">زمان آغاز روز</string>
+  <string name="pref_night_start">زمان آغاز شب</string>
+  <string name="pref_qk_responses">پاسخ QK</string>
   <string name="pref_qk_responses_summary">Modify your preset responses to be used from your Android Wear device</string>
   <string name="pref_quickreply_enabled">QK Reply enabled</string>
   <string name="pref_quickreply_enabled_summary">Show QK Reply window whenever a new message is received</string>
-  <string name="pref_tap_to_quit">Tap to dismiss</string>
-  <string name="pref_tap_to_quit_summary">Tap anywhere outside of the window to close it</string>
+  <string name="pref_tap_to_quit">برای بستن کیلیک کنید</string>
+  <string name="pref_tap_to_quit_summary">برای بستن پنجره خارج از محدوده آن کیلیک کنید</string>
   <string name="pref_quickcompose">QK Compose enabled</string>
   <string name="pref_quickcompose_summary">Display a notification that allows you to click on to compose a new message</string>
-  <string name="pref_mms_enabled">MMS enabled</string>
-  <string name="pref_mms_enabled_summary">Enable sending and receiving of MMS messages</string>
+  <string name="pref_mms_enabled">MMS فعال است</string>
+  <string name="pref_mms_enabled_summary">فعال کردن ارسال و دریافت MMS</string>
   <string name="pref_mmsc_url">MMSC</string>
   <string name="pref_mms_proxy">MMS proxy</string>
   <string name="pref_mms_port">MMS port</string>
@@ -251,7 +251,7 @@
   <string name="pref_about_authors_title">Authors</string>
   <string name="pref_about_authors_summary">Moez Bhatti</string>
   <string name="pref_changelog_summary">Tap to view changelog</string>
-  <string name="pref_about_thanks_title">Thank you</string>
+  <string name="pref_about_thanks_title">از شما ممنونم</string>
   <string name="pref_about_thanks_summary">Tap to view open-source contributors</string>
   <string name="pref_donate_title">Donate</string>
   <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
@@ -441,7 +441,7 @@
   <!-- "Priority" value in "Message details" dialog -->
   <string name="priority_high">High</string>
   <!-- "Priority" value in "Message details" dialog -->
-  <string name="priority_normal">Normal</string>
+  <string name="priority_normal">معمولی</string>
   <!-- "Priority" value in "Message details" dialog -->
   <string name="priority_low">Low</string>
   <!-- Label in "Message details" dialog -->
@@ -467,7 +467,7 @@
   <!-- In message list items, this string builds the timestamp line when the message is in a group [CHAR LIMIT=NONE] -->
   <string name="message_timestamp_format"><xliff:g id="string" example="Fred Flinstone">%1$s</xliff:g>\u0020-\u0020<xliff:g id="string" example="9:39AM">%2$s</xliff:g></string>
   <!--Message sending status: sending-->
-  <string name="status_sending">Sending&#8230;</string>
+  <string name="status_sending">در حال ارسال&#8230;</string>
   <!--Message sending status: failed-->
   <!--<string name="status_failed">Failed. Tap to retry</string>-->
   <!-- Delivery Report Activity -->
@@ -478,7 +478,7 @@
   <!-- Status in "Report" window -->
   <string name="status_read">Read</string>
   <!-- Status in "Report" window -->
-  <string name="status_received">Received</string>
+  <string name="status_received">موارد دریافتی</string>
   <!-- Status in "Report" window -->
   <string name="status_failed">Failed. Tap for options</string>
   <!-- Status in "Report" window -->

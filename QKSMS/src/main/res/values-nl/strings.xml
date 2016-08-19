@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Versie, changelog, auteurs, bedankingen</string>
   <string name="pref_theme">Themakleur</string>
   <string name="pref_theme_summary_alt">Klik om thema te veranderen</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Gekleurde statusbalk</string>
   <string name="pref_navigation_tint">Gekleurde navigatiebalk</string>
   <string name="pref_background">Achtergrondkleur</string>

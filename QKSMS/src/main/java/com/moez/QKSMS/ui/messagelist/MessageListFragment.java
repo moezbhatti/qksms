@@ -874,7 +874,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
 
     private final class BackgroundQueryHandler extends Conversation.ConversationQueryHandler {
         public BackgroundQueryHandler(ContentResolver contentResolver) {
-            super(contentResolver);
+            super(contentResolver, mContext);
         }
 
         @Override

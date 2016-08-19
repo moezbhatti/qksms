@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -113,7 +114,7 @@ public class QKDialog extends DialogFragment {
             mCustomPanel = (LinearLayout) view.findViewById(R.id.customPanel);
             mCustomPanel.setVisibility(View.VISIBLE);
 
-            if (mCustomView instanceof ListView) {
+            if (mCustomView instanceof ListView || mCustomView instanceof RecyclerView) {
                 mCustomPanel.addView(mCustomView);
             } else {
                 ScrollView scrollView = new ScrollView(mContext);

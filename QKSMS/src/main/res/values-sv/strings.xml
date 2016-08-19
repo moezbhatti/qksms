@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Version, ändringslogg, upphovsmän, tack</string>
   <string name="pref_theme">Theme color</string>
   <string name="pref_theme_summary_alt">Tryck för att ändra tema</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">Tonat statusfält</string>
   <string name="pref_navigation_tint">Tonat navigeringsfält</string>
   <string name="pref_background">Bakgrundsfärg</string>

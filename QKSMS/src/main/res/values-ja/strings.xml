@@ -19,7 +19,7 @@
   <string name="hint_reply">メッセージを入力します</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">コードを入力します</string>
-  <string name="hint_hex">Hex</string>
+  <string name="hint_hex">16 進数</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">新しいメッセージ</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">バージョン、変更履歴、作者、謝辞</string>
   <string name="pref_theme">テーマ色</string>
   <string name="pref_theme_summary_alt">タップするとテーマを変更します</string>
-  <string name="pref_icon_dark">Use dark icon</string>
-  <string name="pref_icon_dark_summary">Use the dark version of the QKSMS icon on your homescreen, to better match your wallpaper</string>
+  <string name="pref_icon">Icon color</string>
+  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
   <string name="pref_status_tint">彩色のステータス バー</string>
   <string name="pref_navigation_tint">彩色のナビゲーション バー</string>
   <string name="pref_background">背景色</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">メッセージの配信を示す、短いトーストを表示します</string>
   <string name="pref_delivery_vibrate">振動</string>
   <string name="pref_delivery_vibrate_summary">メッセージ配信で振動します</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">古いメッセージを削除</string>
+  <string name="pref_delete_old_messages_summary">十分に古くなったメッセージを自動的に削除します</string>
+  <string name="pref_delete_old_messages_unread">未読メ ッ セージ</string>
+  <string name="pref_delete_old_messages_unread_summary">%s 日後に自動的に未読メ ッ セージを削除します</string>
+  <string name="pref_delete_old_messages_read">既読メッセージ</string>
+  <string name="pref_delete_old_messages_read_summary">%s 日後に自動的に既読メッセージを削除します</string>
   <string name="pref_yappy">Yappy 統合</string>
   <string name="pref_endlessjabber_summary">Yappy の完全なサポートを有効にします</string>
   <string name="pref_blocked_conversations">ブロックされた会話</string>
@@ -304,7 +304,7 @@
   <string name="title_block_address">ブロック番号</string>
   <string name="title_unblock_address">ブロック解除番号</string>
   <string name="title_conversations_selected">%s 選択しました</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">パレット</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -552,14 +552,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">アイコンの色を更新</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">アイコンの色を変更するときに QKSMS を再起動する必要があります</string>
   <string name="dialog_conversation_details_title">会話の詳細</string>
   <string name="dialog_conversation_details_last_message_date">最新メッセージの日付</string>
   <string name="dialog_conversation_details_message_count">メッセージ件数</string>
   <string name="dialog_conversation_details_recipients">受信者 (%s)</string>
   <string name="dialog_should_i_answer_title">回答する必要がありますか? インストールされていません</string>
   <string name="dialog_should_i_answer_message">Google Play から今すぐアプリをダウンロードしますか?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">自動的に古いメッセージを削除してもよろしいですか？</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">音を選択</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -603,7 +603,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber がインストールされていません。Google Play を開きます</string>
   <string name="toast_changelog_error">変更履歴を読み込めませんでした。もう一度やり直してください</string>
   <string name="toast_conversation_error">会話を開くことができませんでした</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_deleting_old_messages">古いメッセージはすぐに削除されます</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">寄付をありがとう! あなたは私の新しい親友です。</string>
   <!--Toast shown to thank user for donating-->

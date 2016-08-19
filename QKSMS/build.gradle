@@ -31,8 +31,8 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
-        versionCode 132
-        versionName "2.7.0"
+        versionCode 133
+        versionName "2.7.1"
         minSdkVersion 15
         targetSdkVersion 22
         multiDexEnabled true
@@ -52,8 +52,6 @@ android {
     }
 
     compileOptions {
-        compileOptions.encoding = "UTF-8"
-
         // Use Java 1.7, requires minSdk 8
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

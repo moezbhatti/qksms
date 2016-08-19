@@ -41,7 +41,7 @@ public class DialogHelper {
                 .setMessage(context.getString(R.string.delete_confirmation, threads.size()))
                 .setPositiveButton(R.string.yes, v -> {
                     Log.d(TAG, "Deleting threads: " + Arrays.toString(threads.toArray()));
-                    Conversation.ConversationQueryHandler handler = new Conversation.ConversationQueryHandler(context.getContentResolver());
+                    Conversation.ConversationQueryHandler handler = new Conversation.ConversationQueryHandler(context.getContentResolver(), context);
                     Conversation.startDelete(handler, 0, false, threads);
                     Conversation.asyncDeleteObsoleteThreads(handler, 0);
                     if (context instanceof MessageListActivity) {

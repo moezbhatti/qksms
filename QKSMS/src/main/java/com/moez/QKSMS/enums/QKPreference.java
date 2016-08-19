@@ -100,8 +100,7 @@ public enum QKPreference {
 
     // Storage
     COMPOSE_DRAFT("compose_draft", ""),
-    LAST_AUTO_DELETE_CHECK("last_auto_delete_check", 0),
-    MIGRATED_ICON("migrated_icon", false);
+    LAST_AUTO_DELETE_CHECK("last_auto_delete_check", 0);
 
     private String mKey;
     private Object mDefaultValue;
