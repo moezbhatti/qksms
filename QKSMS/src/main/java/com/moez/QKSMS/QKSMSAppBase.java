@@ -53,6 +53,9 @@ import java.util.Locale;
 public class QKSMSAppBase extends MultiDexApplication {
     public static final String LOG_TAG = "Mms";
 
+    public static final int LOADER_CONVERSATIONS = 0;
+    public static final int LOADER_MESSAGES = 1;
+
     private SearchRecentSuggestions mRecentSuggestions;
     private TelephonyManager mTelephonyManager;
     private String mCountryIso;
