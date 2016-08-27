@@ -413,7 +413,8 @@
         <!-- Legacy broadcast receiver for SMS -->
         <receiver
             android:name=".receiver.SmsReceiverLegacy"
-            android:enabled="@bool/preKitKat">
+            android:enabled="@bool/preKitKat"
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -435,27 +436,37 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".mmssms.SentReceiver">
+        <receiver
+            android:name=".mmssms.SentReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.SMS_SENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.DeliveredReceiver">
+        <receiver
+            android:name=".receiver.DeliveredReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.SMS_DELIVERED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.MessageFailedReceiver">
+        <receiver
+            android:name=".receiver.MessageFailedReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.NOTIFY_SMS_FAILURE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.MarkReadReceiver">
+        <receiver
+            android:name=".receiver.MarkReadReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.MARK_READ" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.MarkSeenReceiver">
+        <receiver
+            android:name=".receiver.MarkSeenReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.moez.QKSMS.MARK_SEEN" />
             </intent-filter>
