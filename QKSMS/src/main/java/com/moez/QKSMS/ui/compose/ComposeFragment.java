@@ -105,4 +105,11 @@ public class ComposeFragment extends QKFragment implements ActivityLauncher, Rec
         mStarredContactsView.collapse();
         mComposeView.requestReplyTextFocus();
     }
+
+    public boolean isReplyTextEmpty() {
+        if (mComposeView != null) {
+            return mComposeView.isReplyTextEmpty();
+        }
+        return true;
+    }
 }

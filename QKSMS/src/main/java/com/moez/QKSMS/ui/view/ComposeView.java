@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -748,13 +749,34 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                     mConversationLegacy.saveDraft(draft);
                 }
             } else {
-                String oldDraft = mPrefs.getString(QKPreference.COMPOSE_DRAFT.getKey(), "");
-                if (!draft.equals(oldDraft)) {
-                    mPrefs.edit().putString(QKPreference.COMPOSE_DRAFT.getKey(), draft).apply();
+                // Only show the draft if we saved text, not if we just cleared some
+                if (!TextUtils.isEmpty(draft)) {
+                    if (mRecipientProvider != null) {
+                        String[] addresses = mRecipientProvider.getRecipientAddresses();
 
-                    // Only show the draft if we saved text, not if we just cleared some
-                    if (!TextUtils.isEmpty(draft)) {
-                        Toast.makeText(mContext, R.string.toast_draft, Toast.LENGTH_SHORT).show();
+                        if (addresses != null && addresses.length > 0) {
+                            // save the message for each of the addresses
+                            for (int i = 0; i < addresses.length; i++) {
+                                ContentValues values = new ContentValues();
+                                values.put("address", addresses[i]);
+                                values.put("date", System.currentTimeMillis());
+                                values.put("read", 1);
+                                values.put("type", 4);
+
+                                // attempt to create correct thread id
+                                long threadId = Utils.getOrCreateThreadId(mContext, addresses[i]);
+
+                                Log.v(TAG, "saving message with thread id: " + threadId);
+
+                                values.put("thread_id", threadId);
+                                Uri messageUri = mContext.getContentResolver().insert(Uri.parse("content://sms/draft"), values);
+
+                                Log.v(TAG, "inserted to uri: " + messageUri);
+
+                                ConversationLegacy mConversationLegacy = new ConversationLegacy(mContext, threadId);
+                                mConversationLegacy.saveDraft(draft);
+                            }
+                        }
                     }
                 }
             }
@@ -780,10 +802,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 mReplyText.setText("");
                 clearAttachment();
             }
-        } else {
-            String draft = mPrefs.getString(QKPreference.COMPOSE_DRAFT.getKey(), "");
-            mReplyText.setText(draft);
-            mReplyText.setSelection(draft.length());
         }
     }
 
@@ -976,5 +994,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mDelay.setColorFilter(mDelayedMessagingEnabled ?
                         ThemeManager.getTextOnColorPrimary() : ThemeManager.getTextOnColorSecondary(),
                 PorterDuff.Mode.SRC_ATOP);
+    }
+
+    public boolean isReplyTextEmpty() {
+        return TextUtils.isEmpty(mReplyText.getText());
     }
 }
