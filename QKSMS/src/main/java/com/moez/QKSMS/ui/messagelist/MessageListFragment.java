@@ -134,7 +134,6 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     // If the value >= 0, then we jump to that line. If the
     // value is maxint, then we jump to the end.
 
-    private long mLastMessageId;
     private BackgroundQueryHandler mBackgroundQueryHandler;
 
     private long mThreadId;
@@ -208,6 +207,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
         mAdapter.setItemClickListener(this);
         mAdapter.setMultiSelectListener(this);
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            private long mLastMessageId = -1;
             @Override
             public void onChanged() {
                 LinearLayoutManager manager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
@@ -225,8 +225,15 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
                     position = mAdapter.getItemCount() - 1;
                 }
 
-                if (position != -1) {
-                    manager.smoothScrollToPosition(mRecyclerView, null, position);
+                if(mAdapter.getCount() > 0) {
+                    MessageItem lastMessage = mAdapter.getItem(mAdapter.getCount() - 1);
+                    if (mLastMessageId >= 0 && mLastMessageId != lastMessage.getMessageId()) {
+                        // Scroll to bottom only if a new message was inserted in this conversation
+                        if (position != -1) {
+                            manager.smoothScrollToPosition(mRecyclerView, null, position);
+                        }
+                    }
+                    mLastMessageId = lastMessage.getMessageId();
                 }
             }
         });
@@ -941,10 +948,6 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
                     mConversation.setMessageCount(0);
                     // fall through
                 case DELETE_MESSAGE_TOKEN:
-                    if (cookie instanceof Boolean && ((Boolean) cookie).booleanValue()) {
-                        // If we just deleted the last message, reset the saved id.
-                        mLastMessageId = 0;
-                    }
 
                     // Update the notification for new messages since they may be deleted.
                     NotificationManager.update(mContext);
