@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui;
 
+import android.app.ActivityManager.TaskDescription;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,6 +9,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
