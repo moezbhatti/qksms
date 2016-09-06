@@ -16,6 +16,7 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -869,6 +870,13 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mLabel = label;
     }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix,
+                true);
+    }
+
     private class ImageLoaderFromCameraTask extends AsyncTask<Void, Void, Bitmap> {
 
         @Override
@@ -879,7 +887,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
             int photoW = bmOptions.outWidth;
             int photoH = bmOptions.outHeight;
 
@@ -891,7 +898,33 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
 
-            return BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+            long maxAttachmentSize =
+                    SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+            bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
+
+            // Now, rotation the bitmap according to the Exif data.
+            ExifInterface ei = null;
+            try {
+                ei = new ExifInterface(mCurrentPhotoPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+
+            switch(orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    return rotateImage(bitmap, 90);
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    return rotateImage(bitmap, 180);
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    return rotateImage(bitmap, 270);
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    return rotateImage(bitmap, 0); // No rotation
+            }
         }
 
         @Override
