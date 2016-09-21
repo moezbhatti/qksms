@@ -80,8 +80,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
