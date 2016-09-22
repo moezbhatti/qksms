@@ -42,7 +42,7 @@ import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.service.DeleteOldMessagesService;
-import com.moez.QKSMS.transaction.EndlessJabber;
+import com.moez.QKSMS.transaction.YappyImplementation;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -484,16 +484,16 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case YAPPY:
                 if ((Boolean) newValue) {
                     try {
-                        EndlessJabberInterface.EnableIntegration(mContext, EndlessJabber.class, true, false);
+                        EndlessJabberInterface.EnableIntegration(mContext, YappyImplementation.class, true, false, true, true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     if (!EndlessJabberInterface.IsInstalled(mContext)) {
-                        EndlessJabberInterface.OpenGooglePlayLink(mContext);
+                        EndlessJabberInterface.OpenGooglePlayLink(mContext, "QKSMS");
                     }
                 } else {
                     try {
-                        EndlessJabberInterface.DisableIntegration(mContext, EndlessJabber.class);
+                        EndlessJabberInterface.DisableIntegration(mContext, YappyImplementation.class);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

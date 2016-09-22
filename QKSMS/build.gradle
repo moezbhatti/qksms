@@ -82,6 +82,8 @@ buildscript {
 String leakCanaryVersion = '1.4-beta2'
 
 dependencies {
+    compile files('libs/yappysdk.jar')
+
     // Open source libraries
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.melnykov:floatingactionbutton:1.3.0'

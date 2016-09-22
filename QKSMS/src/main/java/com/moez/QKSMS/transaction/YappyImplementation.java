@@ -9,10 +9,10 @@ import com.mariussoft.endlessjabber.sdk.IEndlessJabberImplementation;
 import com.mariussoft.endlessjabber.sdk.MMSPart;
 import com.moez.QKSMS.data.ConversationLegacy;
 
-public class EndlessJabber implements IEndlessJabberImplementation {
+public class YappyImplementation implements IEndlessJabberImplementation {
     private final String TAG = "EndlessJabber";
 
-    public EndlessJabber() {
+    public YappyImplementation() {
 
     }
 
@@ -26,6 +26,16 @@ public class EndlessJabber implements IEndlessJabberImplementation {
     public void DeleteThread(Context context, int threadId) {
         Log.d(TAG, "DeleteThread");
         new ConversationLegacy(context, threadId).delete();
+    }
+
+    @Override
+    public void DeleteSMSMessage(Context context, int id) {
+        new com.moez.QKSMS.data.Message(context, id).delete();
+    }
+
+    @Override
+    public void DeleteMMSMessage(Context context, int id) {
+        new com.moez.QKSMS.data.Message(context, id).delete();
     }
 
     @Override
