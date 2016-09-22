@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qklabs.qkms.test;
+package com.moez.QKSMS.mmssms;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
-
-import com.moez.QKSMS.mmssms.Apn;
-import com.moez.QKSMS.mmssms.ApnUtils;
 
 import java.util.Arrays;
 import java.util.List;
