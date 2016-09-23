@@ -28,7 +28,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
 

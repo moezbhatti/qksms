@@ -45,7 +45,7 @@ import com.moez.QKSMS.service.DeleteOldMessagesService;
 import com.moez.QKSMS.transaction.YappyImplementation;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;

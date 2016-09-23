@@ -1,7 +1,7 @@
 package com.moez.QKSMS.enums;
 
 import android.os.Build;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package com.moez.QKSMS.ui;
+package com.moez.QKSMS.common;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -33,19 +33,15 @@ import android.widget.SeekBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.AnalyticsManager;
-import com.moez.QKSMS.common.CIELChEvaluator;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
-import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
-import com.moez.QKSMS.ui.icon.IconAdapter;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.settings.ColorPickerPagerAdapter;
 import com.moez.QKSMS.ui.dialog.QKDialog;
+import com.moez.QKSMS.ui.icon.IconAdapter;
+import com.moez.QKSMS.ui.settings.ColorPickerPagerAdapter;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.QKTextView;

@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKTextView;

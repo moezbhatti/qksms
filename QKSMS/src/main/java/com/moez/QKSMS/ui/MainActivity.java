@@ -26,6 +26,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKRateSnack;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Conversation;

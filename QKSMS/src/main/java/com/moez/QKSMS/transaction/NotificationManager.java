@@ -35,7 +35,7 @@ import com.moez.QKSMS.model.ImageModel;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver;
 import com.moez.QKSMS.ui.MainActivity;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;

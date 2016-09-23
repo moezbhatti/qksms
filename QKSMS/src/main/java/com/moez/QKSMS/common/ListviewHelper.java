@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ListView;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.ThemeManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

@@ -20,7 +20,7 @@ import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.service.MarkReadService;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;

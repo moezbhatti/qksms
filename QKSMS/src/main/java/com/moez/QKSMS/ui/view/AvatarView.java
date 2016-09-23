@@ -28,7 +28,7 @@ import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 
 public class AvatarView extends ImageView implements View.OnClickListener {
     private final String TAG = "AvatarView";

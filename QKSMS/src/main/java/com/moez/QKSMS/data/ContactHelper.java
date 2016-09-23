@@ -19,7 +19,7 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

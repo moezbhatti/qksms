@@ -1,4 +1,4 @@
-package com.moez.QKSMS.ui;
+package com.moez.QKSMS.ui.view;
 
 import android.app.Activity;
 import android.content.Context;
