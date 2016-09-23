@@ -11,7 +11,7 @@ import com.moez.QKSMS.ui.ThemeManager;
 import com.squareup.leakcanary.RefWatcher;
 import icepick.Icepick;
 
-public class QKFragment extends Fragment {
+public abstract class QKFragment extends Fragment {
 
     protected QKActivity mContext;
 
