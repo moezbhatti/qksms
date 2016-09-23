@@ -42,7 +42,7 @@ import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
-import com.moez.QKSMS.theme.IconAdapter;
+import com.moez.QKSMS.ui.icon.IconAdapter;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.ColorPickerPagerAdapter;
 import com.moez.QKSMS.ui.dialog.QKDialog;
