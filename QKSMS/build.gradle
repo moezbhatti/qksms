@@ -33,7 +33,7 @@ android {
     defaultConfig {
         versionCode 135
         versionName "2.7.3"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 22
         multiDexEnabled true
     }
