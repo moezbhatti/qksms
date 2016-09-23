@@ -23,7 +23,7 @@ import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.service.CopyUnreadMessageTextService;
 import com.moez.QKSMS.service.DeleteUnreadMessageService;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKPopupActivity;

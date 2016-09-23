@@ -1,4 +1,4 @@
-package com.moez.QKSMS.transaction;
+package com.moez.QKSMS.common;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -26,7 +26,6 @@ import com.android.mms.transaction.TransactionService;
 import com.android.mms.transaction.TransactionState;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactHelper;
@@ -35,7 +34,6 @@ import com.moez.QKSMS.model.ImageModel;
 import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver;
 import com.moez.QKSMS.ui.MainActivity;
-import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;

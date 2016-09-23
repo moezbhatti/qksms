@@ -25,7 +25,7 @@ import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 
 import java.io.IOException;
 import java.io.InputStream;

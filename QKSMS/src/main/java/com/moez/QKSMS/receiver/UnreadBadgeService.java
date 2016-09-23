@@ -3,7 +3,7 @@ package com.moez.QKSMS.receiver;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
 import me.leolin.shortcutbadger.ShortcutBadger;
 

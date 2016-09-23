@@ -10,7 +10,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.view.RunnableToast;
 
 public class CopyUnreadMessageTextService extends IntentService {

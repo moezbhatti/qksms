@@ -7,7 +7,6 @@ import com.moez.QKSMS.BuildConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.model.ChangeModel;
-import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;

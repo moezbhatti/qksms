@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import com.moez.QKSMS.service.DeleteOldMessagesService;
-import com.moez.QKSMS.transaction.NotificationManager;
+import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class BootReceiver extends BroadcastReceiver {

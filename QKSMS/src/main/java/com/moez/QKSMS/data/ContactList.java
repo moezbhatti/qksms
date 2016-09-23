@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.moez.QKSMS.common.LogTag;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.ArrayList;
 import java.util.List;

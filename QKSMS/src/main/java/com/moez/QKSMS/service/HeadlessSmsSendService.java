@@ -8,8 +8,8 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import com.moez.QKSMS.mmssms.Message;
 import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.SmsHelper;
 
 import static com.moez.QKSMS.data.Conversation.getRecipients;
 

@@ -9,7 +9,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 
 public class CursorUtils {
     public static final String TAG = "CursorUtils";

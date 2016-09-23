@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.transaction;
+package com.moez.QKSMS.common;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;

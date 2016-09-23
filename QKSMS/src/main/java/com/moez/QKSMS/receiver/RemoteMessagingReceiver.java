@@ -18,8 +18,8 @@ import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.mmssms.Message;
 import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.service.MarkReadService;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 

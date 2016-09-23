@@ -3,8 +3,8 @@ package com.moez.QKSMS.service;
 import com.moez.QKSMS.mmssms.Message;
 import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.pushbullet.android.extension.MessagingExtension;
 

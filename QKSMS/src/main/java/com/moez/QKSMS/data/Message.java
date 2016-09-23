@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 
 public class Message {

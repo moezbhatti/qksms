@@ -72,7 +72,7 @@ import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.model.MediaModel;
 import com.moez.QKSMS.model.SlideModel;
 import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;

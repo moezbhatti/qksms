@@ -13,7 +13,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.mmssms.Apn;
 import com.moez.QKSMS.mmssms.ApnUtils;
 import com.moez.QKSMS.mmssms.Settings;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.base.QKFragment;
 
 import java.util.List;

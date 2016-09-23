@@ -10,7 +10,7 @@ import com.google.android.mms.MmsException;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.mmssms.Message;
 import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 

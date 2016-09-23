@@ -14,7 +14,7 @@ import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 

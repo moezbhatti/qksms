@@ -44,7 +44,7 @@ import com.moez.QKSMS.common.google.PduLoaderManager;
 import com.moez.QKSMS.common.google.ThumbnailManager;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.transaction.NotificationManager;
+import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.mms.layout.LayoutManager;
 import com.squareup.leakcanary.LeakCanary;

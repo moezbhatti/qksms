@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.ArrayList;
 

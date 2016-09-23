@@ -12,7 +12,6 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 

@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.Calendar;
 

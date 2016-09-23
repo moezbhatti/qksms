@@ -29,7 +29,7 @@ import android.util.Log;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.MessageUtils;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
