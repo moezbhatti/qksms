@@ -10,7 +10,7 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.widget.Toast;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.receiver.UnreadBadgeService;
+import com.moez.QKSMS.service.UnreadBadgeService;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.SmsHelper;

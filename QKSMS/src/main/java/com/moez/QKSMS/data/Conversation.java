@@ -31,7 +31,7 @@ import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.AddressUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.mmssms.Utils;
-import com.moez.QKSMS.receiver.UnreadBadgeService;
+import com.moez.QKSMS.service.UnreadBadgeService;
 
 import java.util.ArrayList;
 import java.util.Collection;

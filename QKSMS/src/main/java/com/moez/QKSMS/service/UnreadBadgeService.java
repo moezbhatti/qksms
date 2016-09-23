@@ -1,4 +1,4 @@
-package com.moez.QKSMS.receiver;
+package com.moez.QKSMS.service;
 
 import android.app.IntentService;
 import android.content.Context;

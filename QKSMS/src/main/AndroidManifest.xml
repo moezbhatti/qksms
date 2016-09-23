@@ -503,7 +503,7 @@
         <service android:name=".service.DeleteOldMessagesService" />
 
         <service
-            android:name=".receiver.UnreadBadgeService"
+            android:name=".service.UnreadBadgeService"
             android:exported="false" />
 
         <service android:name=".service.ShouldIAnswerService">
