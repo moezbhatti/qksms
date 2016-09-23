@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SqliteWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -33,13 +32,13 @@ import android.provider.Telephony.Mms.Part;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
-
 import com.google.android.mms.ContentType;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.exif.ExifInterface;
 import com.moez.QKSMS.model.ImageModel;
-import com.moez.QKSMS.common.SmsHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

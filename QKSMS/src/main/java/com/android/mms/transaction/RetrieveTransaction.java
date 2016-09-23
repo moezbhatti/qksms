@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Telephony.Mms;
@@ -37,6 +36,7 @@ import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.moez.QKSMS.common.MmsConfig;
+import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.mmssms.Utils;
 
 import java.io.IOException;

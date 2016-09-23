@@ -21,7 +21,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
@@ -29,8 +28,8 @@ import android.provider.Telephony.Mms;
 import android.provider.Telephony.Sms;
 import android.provider.Telephony.Sms.Conversations;
 import android.util.Log;
-
 import com.moez.QKSMS.common.MmsConfig;
+import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.common.utils.DateFormatter;
 
 /**

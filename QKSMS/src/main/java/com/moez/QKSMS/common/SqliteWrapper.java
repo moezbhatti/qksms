@@ -17,6 +17,7 @@
 
 package com.moez.QKSMS.common;
 
+import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,7 +26,6 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.moez.QKSMS.R;
 
 public final class SqliteWrapper {
@@ -35,6 +35,20 @@ public final class SqliteWrapper {
 
     private SqliteWrapper() {
         // Forbidden being instantiated.
+    }
+
+    // FIXME: It looks like outInfo.lowMemory does not work well as we expected.
+    // after run command: adb shell fillup -p 100, outInfo.lowMemory is still false.
+    private static boolean isLowMemory(Context context) {
+        if (null == context) {
+            return false;
+        }
+
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo outInfo = new ActivityManager.MemoryInfo();
+        am.getMemoryInfo(outInfo);
+
+        return outInfo.lowMemory;
     }
 
     // FIXME: need to optimize this method.
@@ -50,8 +64,8 @@ public final class SqliteWrapper {
         }
     }
 
-    public static Cursor query(Context context, ContentResolver resolver, Uri uri,
-                               String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public static Cursor query(Context context, ContentResolver resolver, Uri uri, String[] projection, String selection,
+                               String[] selectionArgs, String sortOrder) {
         try {
             return resolver.query(uri, projection, selection, selectionArgs, sortOrder);
         } catch (SQLiteException e) {
@@ -70,8 +84,8 @@ public final class SqliteWrapper {
             return false;
         }
     }
-    public static int update(Context context, ContentResolver resolver, Uri uri,
-                             ContentValues values, String where, String[] selectionArgs) {
+
+    public static int update(Context context, ContentResolver resolver, Uri uri, ContentValues values, String where, String[] selectionArgs) {
         try {
             return resolver.update(uri, values, where, selectionArgs);
         } catch (SQLiteException e) {
@@ -81,8 +95,7 @@ public final class SqliteWrapper {
         }
     }
 
-    public static int delete(Context context, ContentResolver resolver, Uri uri,
-                             String where, String[] selectionArgs) {
+    public static int delete(Context context, ContentResolver resolver, Uri uri, String where, String[] selectionArgs) {
         try {
             return resolver.delete(uri, where, selectionArgs);
         } catch (SQLiteException e) {
@@ -92,8 +105,7 @@ public final class SqliteWrapper {
         }
     }
 
-    public static Uri insert(Context context, ContentResolver resolver,
-                             Uri uri, ContentValues values) {
+    public static Uri insert(Context context, ContentResolver resolver, Uri uri, ContentValues values) {
         try {
             return resolver.insert(uri, values);
         } catch (SQLiteException e) {

@@ -22,7 +22,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -33,6 +32,7 @@ import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.NotificationInd;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 public class DownloadManager {
     private static final String TAG = "DownloadManager";

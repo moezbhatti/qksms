@@ -20,19 +20,17 @@ package com.moez.QKSMS.model;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.provider.MediaStore.Audio;
 import android.provider.Telephony.Mms.Part;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.android.mms.dom.events.EventImpl;
 import com.android.mms.dom.smil.SmilMediaElementImpl;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.smil.SmilHelper;
+import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.exception.ContentRestrictionException;
-
 import org.w3c.dom.events.Event;
 
 import java.util.HashMap;

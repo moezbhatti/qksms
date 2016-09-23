@@ -19,7 +19,6 @@ package com.moez.QKSMS.ui.messagelist;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Sms;
@@ -28,8 +27,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.SqliteWrapper;
+import com.moez.QKSMS.common.utils.MessageUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

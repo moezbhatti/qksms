@@ -19,12 +19,11 @@ package com.moez.QKSMS.common.google;
  import android.annotation.SuppressLint;
  import android.content.Context;
  import android.database.Cursor;
- import android.database.sqlite.SqliteWrapper;
  import android.provider.Telephony.MmsSms;
  import android.provider.Telephony.Sms.Conversations;
  import android.util.Log;
-
  import com.moez.QKSMS.common.LogTag;
+ import com.moez.QKSMS.common.SqliteWrapper;
 
  import java.util.HashSet;
  import java.util.Set;

@@ -5,13 +5,12 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

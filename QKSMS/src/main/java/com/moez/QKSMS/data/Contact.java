@@ -4,7 +4,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,12 +19,12 @@ import android.provider.ContactsContract.Presence;
 import android.provider.ContactsContract.Profile;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.SqliteWrapper;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

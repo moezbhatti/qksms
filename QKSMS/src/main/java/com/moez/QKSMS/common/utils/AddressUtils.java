@@ -18,18 +18,17 @@ package com.moez.QKSMS.common.utils;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Addr;
 import android.text.TextUtils;
-
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 public class AddressUtils {
     private static final String TAG = "AddressUtils";
