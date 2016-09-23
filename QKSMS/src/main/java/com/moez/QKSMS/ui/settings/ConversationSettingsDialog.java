@@ -15,7 +15,7 @@ import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
-import com.moez.QKSMS.ui.view.QKPreference;
+import com.moez.QKSMS.ui.view.QKPreferenceView;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
 import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -73,13 +73,13 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
         LinearLayout list = new LinearLayout(getActivity());
         list.setOrientation(LinearLayout.VERTICAL);
 
-        list.addView(new QKPreference(getActivity(), this, SettingsFragment.THEME,
+        list.addView(new QKPreferenceView(getActivity(), this, SettingsFragment.THEME,
                 R.string.pref_theme, R.string.pref_theme_summary_alt).getView());
 
         list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getNotificationLedEnabled(), R.string.pref_led, 0).getView());
 
-        list.addView(new QKPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED_COLOR,
+        list.addView(new QKPreferenceView(getActivity(), this, SettingsFragment.NOTIFICATION_LED_COLOR,
                 R.string.pref_theme_led, 0).getView());
 
         list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.WAKE,

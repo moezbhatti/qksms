@@ -11,11 +11,11 @@ import com.moez.QKSMS.R;
  * Regular android preferences don't have basic functionality when you manually add them to views
  * other than preferencegroups, this just cleans up some boilerplate code to set ours up
  */
-public class QKPreference extends Preference {
+public class QKPreferenceView extends Preference {
 
     private OnPreferenceClickListener mOnPreferenceClickListener;
 
-    public QKPreference(Context context, OnPreferenceClickListener onPreferenceClickListener, String key, int title, int summary) {
+    public QKPreferenceView(Context context, OnPreferenceClickListener onPreferenceClickListener, String key, int title, int summary) {
         super(context);
         mOnPreferenceClickListener = onPreferenceClickListener;
 
@@ -37,12 +37,9 @@ public class QKPreference extends Preference {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnPreferenceClickListener != null) {
-                    mOnPreferenceClickListener.onPreferenceClick(QKPreference.this);
-                }
+        view.setOnClickListener(v -> {
+            if (mOnPreferenceClickListener != null) {
+                mOnPreferenceClickListener.onPreferenceClick(QKPreferenceView.this);
             }
         });
 
