@@ -3,7 +3,7 @@ package com.moez.QKSMS.common.utils;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-public class Units {
+public class UnitUtils {
 
     /**
      * Converts dp to pixels.

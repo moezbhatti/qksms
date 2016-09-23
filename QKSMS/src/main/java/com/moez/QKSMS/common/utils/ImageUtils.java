@@ -68,7 +68,7 @@ public class ImageUtils {
     }
 
     public static RoundedBitmapDrawable getRoundedDrawable(Context context, Bitmap bitmap, int radiusDp) {
-        float radius = (float) Units.dpToPx(context, radiusDp);
+        float radius = (float) UnitUtils.dpToPx(context, radiusDp);
 
         RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
         drawable.setCornerRadius(radius);

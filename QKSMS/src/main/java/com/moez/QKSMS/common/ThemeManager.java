@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -336,7 +336,7 @@ public class ThemeManager {
         };
 
         RecyclerView recyclerView = new RecyclerView(context);
-        recyclerView.setLayoutParams(new LinearLayout.LayoutParams(-1, Units.dpToPx(context, 200)));
+        recyclerView.setLayoutParams(new LinearLayout.LayoutParams(-1, UnitUtils.dpToPx(context, 200)));
         recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
         recyclerView.setAdapter(new IconAdapter(context, (parent, view, position, id) -> {
             PackageManager packageManager = context.getPackageManager();

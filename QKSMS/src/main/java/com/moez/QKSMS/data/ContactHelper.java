@@ -18,7 +18,7 @@ import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.common.ThemeManager;
 
 import java.io.BufferedInputStream;
@@ -194,7 +194,7 @@ public class ContactHelper {
     public static Bitmap blankContact(Context context, String name) {
         String text = name == null || PhoneNumberUtils.isWellFormedSmsAddress(PhoneNumberUtils.stripSeparators(name)) || name.length() == 0 ? "#" : "" + name.toUpperCase().charAt(0);
 
-        int length = Units.dpToPx(context, 64);
+        int length = UnitUtils.dpToPx(context, 64);
 
         Bitmap bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(ThemeManager.getColor());

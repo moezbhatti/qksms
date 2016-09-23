@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ContextMenu;
 import android.view.View;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.utils.UnitUtils;
 
 /**
  * Based off of:
@@ -33,7 +33,7 @@ public class MessageListRecyclerView extends RecyclerView {
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 if (bottom - top != mComposeViewHeight) {
                     mComposeViewHeight = bottom - top;
-                    int padding = Units.dpToPx(getContext(), 8);
+                    int padding = UnitUtils.dpToPx(getContext(), 8);
                     setPadding(padding, padding, padding, padding + mComposeViewHeight);
 
                     LayoutManager manager = getLayoutManager();

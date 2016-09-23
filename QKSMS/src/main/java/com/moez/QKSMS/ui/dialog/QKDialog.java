@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
@@ -240,7 +240,7 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -261,7 +261,7 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -292,7 +292,7 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -324,7 +324,7 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

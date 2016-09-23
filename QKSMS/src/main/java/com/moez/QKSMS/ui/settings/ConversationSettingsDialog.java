@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
@@ -65,7 +65,7 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
                 mRes.getColor(R.color.red_light), mRes.getColor(R.color.white_pure)
         };
 
-        int padding = Units.dpToPx(getActivity(), 16);
+        int padding = UnitUtils.dpToPx(getActivity(), 16);
         QKTextView premiumWarning = new QKTextView(getActivity());
         premiumWarning.setLayoutParams(mLayoutParams);
         premiumWarning.setPadding(padding, padding, padding, padding);

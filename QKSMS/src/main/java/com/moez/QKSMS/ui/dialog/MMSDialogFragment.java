@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.view.QKTextView;
 
@@ -305,7 +305,7 @@ public class MMSDialogFragment extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -336,7 +336,7 @@ public class MMSDialogFragment extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -370,7 +370,7 @@ public class MMSDialogFragment extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
