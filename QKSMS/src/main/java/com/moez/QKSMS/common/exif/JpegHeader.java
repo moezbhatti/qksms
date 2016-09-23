@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.exif;
+package com.moez.QKSMS.common.exif;
 
 class JpegHeader {
     public static final short SOI =  (short) 0xFFD8;

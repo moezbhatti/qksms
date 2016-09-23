@@ -37,7 +37,7 @@ import com.google.android.mms.pdu_alt.PduPart;
 import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.SqliteWrapper;
-import com.moez.QKSMS.exif.ExifInterface;
+import com.moez.QKSMS.common.exif.ExifInterface;
 import com.moez.QKSMS.model.ImageModel;
 
 import java.io.ByteArrayOutputStream;

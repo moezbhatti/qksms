@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.exif;
+package com.moez.QKSMS.common.exif;
 
 import java.io.FilterOutputStream;
 import java.io.IOException;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.exif;
+package com.moez.QKSMS.common.exif;
 
 /**
  * The rational data type of EXIF tag. Contains a pair of longs representing the
