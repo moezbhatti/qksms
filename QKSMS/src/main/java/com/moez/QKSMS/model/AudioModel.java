@@ -31,7 +31,7 @@ import com.android.mms.dom.events.EventImpl;
 import com.android.mms.dom.smil.SmilMediaElementImpl;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.smil.SmilHelper;
-import com.moez.QKSMS.ContentRestrictionException;
+import com.moez.QKSMS.exception.ContentRestrictionException;
 
 import org.w3c.dom.events.Event;
 

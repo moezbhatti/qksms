@@ -20,12 +20,12 @@ import android.content.ContentResolver;
 import android.util.Log;
 
 import com.google.android.mms.ContentType;
-import com.moez.QKSMS.ContentRestrictionException;
-import com.moez.QKSMS.ExceedMessageSizeException;
-import com.moez.QKSMS.LogTag;
-import com.moez.QKSMS.MmsConfig;
-import com.moez.QKSMS.ResolutionException;
-import com.moez.QKSMS.UnsupportContentTypeException;
+import com.moez.QKSMS.exception.ContentRestrictionException;
+import com.moez.QKSMS.exception.ExceedMessageSizeException;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.MmsConfig;
+import com.moez.QKSMS.exception.ResolutionException;
+import com.moez.QKSMS.exception.UnsupportContentTypeException;
 
 import java.util.ArrayList;
 

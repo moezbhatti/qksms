@@ -36,6 +36,8 @@ import com.android.volley.toolbox.Volley;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.google.PduLoaderManager;

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.moez.QKSMS.LogTag;
+import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.transaction.SmsHelper;
 
 import java.util.ArrayList;

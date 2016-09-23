@@ -24,7 +24,7 @@ package com.moez.QKSMS.common.google;
  import android.provider.Telephony.Sms.Conversations;
  import android.util.Log;
 
- import com.moez.QKSMS.LogTag;
+ import com.moez.QKSMS.common.LogTag;
 
  import java.util.HashSet;
  import java.util.Set;

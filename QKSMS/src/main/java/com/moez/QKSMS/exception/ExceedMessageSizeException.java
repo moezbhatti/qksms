@@ -15,23 +15,19 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS;
+package com.moez.QKSMS.exception;
 
 /**
- * A generic exception that is thrown by checking content restriction.
+ * An exception that is thrown when message size exceeds limitation.
  */
-public class ContentRestrictionException extends RuntimeException {
-    private static final long serialVersionUID = 516136015813043499L;
+public final class ExceedMessageSizeException extends ContentRestrictionException {
+    private static final long serialVersionUID = 6647713416796190850L;
 
-    public ContentRestrictionException() {
+    public ExceedMessageSizeException() {
         super();
     }
 
-    public ContentRestrictionException(String msg) {
+    public ExceedMessageSizeException(String msg) {
         super(msg);
-    }
-
-    public ContentRestrictionException(Exception cause) {
-        super(cause);
     }
 }

@@ -26,9 +26,9 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.util.Log;
 
-import com.moez.QKSMS.LogTag;
+import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.TempFileProvider;
+import com.moez.QKSMS.common.TempFileProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;

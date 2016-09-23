@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS;
+package com.moez.QKSMS.exception;
 
 /**
- * An exception that is thrown when message size exceeds limitation.
+ * An exception that is thrown when image resolution exceeds restriction.
  */
-public final class ExceedMessageSizeException extends ContentRestrictionException {
-    private static final long serialVersionUID = 6647713416796190850L;
+public final class ResolutionException extends ContentRestrictionException {
+    private static final long serialVersionUID = 5509925632215500520L;
 
-    public ExceedMessageSizeException() {
+    public ResolutionException() {
         super();
     }
 
-    public ExceedMessageSizeException(String msg) {
+    public ResolutionException(String msg) {
         super(msg);
     }
 }

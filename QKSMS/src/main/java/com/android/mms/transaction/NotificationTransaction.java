@@ -39,7 +39,7 @@ import com.google.android.mms.pdu_alt.PduComposer;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
-import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.common.MmsConfig;
 
 import java.io.IOException;
 

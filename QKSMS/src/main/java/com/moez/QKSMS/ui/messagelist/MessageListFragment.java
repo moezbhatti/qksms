@@ -21,7 +21,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.provider.Telephony;
-import android.support.annotation.IntegerRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -38,8 +37,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 import com.google.android.mms.ContentType;
-import com.moez.QKSMS.LogTag;
-import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.CIELChEvaluator;
@@ -81,8 +80,6 @@ import ezvcard.VCard;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import static android.R.attr.data;
 
 public class MessageListFragment extends QKFragment implements ActivityLauncher, SensorEventListener,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener, SwipeBackLayout.ScrollChangedListener,

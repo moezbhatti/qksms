@@ -36,7 +36,7 @@ import android.webkit.MimeTypeMap;
 
 import com.google.android.mms.ContentType;
 import com.google.android.mms.pdu_alt.PduPart;
-import com.moez.QKSMS.LogTag;
+import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.exif.ExifInterface;
 import com.moez.QKSMS.model.ImageModel;
 import com.moez.QKSMS.transaction.SmsHelper;

@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS;
+package com.moez.QKSMS.exception;
 
 /**
- * An exception that is thrown when image resolution exceeds restriction.
+ * An exception that is thrown when content type is not supported.
  */
-public final class ResolutionException extends ContentRestrictionException {
-    private static final long serialVersionUID = 5509925632215500520L;
+public final class UnsupportContentTypeException extends ContentRestrictionException {
+    private static final long serialVersionUID = 2684128059358484321L;
 
-    public ResolutionException() {
+    public UnsupportContentTypeException() {
         super();
     }
 
-    public ResolutionException(String msg) {
+    public UnsupportContentTypeException(String msg) {
         super(msg);
     }
 }

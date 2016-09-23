@@ -28,7 +28,7 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.ReadOrigInd;
-import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_DELIVERY_IND;

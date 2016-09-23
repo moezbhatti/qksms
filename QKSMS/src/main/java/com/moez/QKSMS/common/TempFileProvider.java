@@ -1,7 +1,7 @@
 // Copyright 2011 Google Inc.
 // All Rights Reserved.
 
-package com.moez.QKSMS;
+package com.moez.QKSMS.common;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

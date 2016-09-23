@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS;
+package com.moez.QKSMS.common;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +25,7 @@ import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.util.Log;
 
+import com.moez.QKSMS.R;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 

@@ -18,7 +18,7 @@ import com.google.android.mms.pdu_alt.CharacterSets;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
 import com.google.android.mms.pdu_alt.PduPersister;
-import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.Message;

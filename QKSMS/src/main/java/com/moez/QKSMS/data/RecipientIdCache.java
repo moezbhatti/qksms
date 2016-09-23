@@ -11,7 +11,7 @@ import android.provider.Telephony;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.moez.QKSMS.LogTag;
+import com.moez.QKSMS.common.LogTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -30,7 +30,7 @@ import android.provider.Telephony.Sms;
 import android.provider.Telephony.Sms.Conversations;
 import android.util.Log;
 
-import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.common.utils.DateFormatter;
 
 /**

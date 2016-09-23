@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS;
+package com.moez.QKSMS.common;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.util.Log;
-
+import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.RecipientIdCache;
@@ -94,15 +92,13 @@ public class LogTag {
         if (!ALLOW_DUMP_IN_LOGS) {
             return;
         }
-        new Thread(new Runnable() {
-            public void run() {
-                RecipientIdCache.canonicalTableDump();
-                RecipientIdCache.dump();
-                Conversation.dumpThreadsTable(context);
-                Conversation.dump();
-                Conversation.dumpSmsTable(context);
-                Contact.dump();
-            }
+        new Thread(() -> {
+            RecipientIdCache.canonicalTableDump();
+            RecipientIdCache.dump();
+            Conversation.dumpThreadsTable(context);
+            Conversation.dump();
+            Conversation.dumpSmsTable(context);
+            Contact.dump();
         }).start();
     }
 
@@ -111,20 +107,12 @@ public class LogTag {
 
         if (SHOW_SEVERE_WARNING_DIALOG) {
             dumpInternalTables(activity);
-            activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    new AlertDialog.Builder(activity)
-                        .setIconAttribute(android.R.attr.alertDialogIcon)
-                        .setTitle(R.string.error_state)
-                        .setMessage(msg + "\n\n" + activity.getString(R.string.error_state_text))
-                        .setPositiveButton(R.string.yes, new OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
-                }
-            });
+            activity.runOnUiThread(() -> new AlertDialog.Builder(activity)
+                .setIconAttribute(android.R.attr.alertDialogIcon)
+                .setTitle(R.string.error_state)
+                .setMessage(msg + "\n\n" + activity.getString(R.string.error_state_text))
+                .setPositiveButton(R.string.yes, (dialog, which) -> dialog.dismiss())
+                .show());
         }
     }
 

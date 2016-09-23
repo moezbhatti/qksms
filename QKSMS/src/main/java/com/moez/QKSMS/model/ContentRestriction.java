@@ -18,7 +18,7 @@ package com.moez.QKSMS.model;
 
 import android.content.ContentResolver;
 
-import com.moez.QKSMS.ContentRestrictionException;
+import com.moez.QKSMS.exception.ContentRestrictionException;
 
 public interface ContentRestriction {
     void checkMessageSize(int messageSize, int increaseSize, ContentResolver resolver)

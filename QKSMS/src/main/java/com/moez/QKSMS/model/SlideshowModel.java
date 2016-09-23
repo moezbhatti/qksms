@@ -34,11 +34,11 @@ import com.google.android.mms.pdu_alt.PduBody;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.google.android.mms.pdu_alt.PduPersister;
-import com.moez.QKSMS.ContentRestrictionException;
-import com.moez.QKSMS.ExceedMessageSizeException;
-import com.moez.QKSMS.LogTag;
-import com.moez.QKSMS.MmsConfig;
-import com.moez.QKSMS.UnsupportContentTypeException;
+import com.moez.QKSMS.exception.ContentRestrictionException;
+import com.moez.QKSMS.exception.ExceedMessageSizeException;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.MmsConfig;
+import com.moez.QKSMS.exception.UnsupportContentTypeException;
 import com.moez.QKSMS.ui.mms.layout.LayoutManager;
 
 import org.w3c.dom.NodeList;
