@@ -28,7 +28,7 @@ import com.android.mms.dom.smil.SmilMediaElementImpl;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.google.android.mms.pdu_alt.PduPersister;
-import com.google.android.mms.smil.SmilHelper;
+import com.moez.QKSMS.common.SmilHelper;
 import com.moez.QKSMS.exception.ContentRestrictionException;
 import com.moez.QKSMS.exception.ExceedMessageSizeException;
 import com.moez.QKSMS.common.LogTag;

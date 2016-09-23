@@ -23,9 +23,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import com.google.android.mms.MmsException;
-import com.google.android.mms.smil.SmilHelper;
 import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.common.MmsConfig;
+import com.moez.QKSMS.common.SmilHelper;
 import org.w3c.dom.events.EventListener;
 
 import java.io.FileInputStream;

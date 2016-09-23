@@ -22,8 +22,8 @@ import android.util.Log;
 
 import com.android.mms.dom.smil.SmilMediaElementImpl;
 import com.google.android.mms.pdu_alt.CharacterSets;
-import com.google.android.mms.smil.SmilHelper;
 
+import com.moez.QKSMS.common.SmilHelper;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.smil.ElementTime;
 

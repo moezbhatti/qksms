@@ -27,6 +27,7 @@ import com.google.android.mms.pdu_alt.PduBody;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.moez.QKSMS.common.MmsConfig;
 
+import com.moez.QKSMS.common.SmilHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.smil.SMILMediaElement;

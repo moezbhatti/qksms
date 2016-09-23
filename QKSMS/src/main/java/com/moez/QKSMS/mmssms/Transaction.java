@@ -38,7 +38,6 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.android.mms.dom.smil.parser.SmilXmlSerializer;
 import com.android.mms.transaction.HttpUtils;
 import com.android.mms.transaction.MmsMessageSender;
@@ -57,11 +56,11 @@ import com.google.android.mms.pdu_alt.PduComposer;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.SendReq;
-import com.google.android.mms.smil.SmilHelper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.ion.Ion;
 import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.SmilHelper;
 import com.moez.QKSMS.enums.QKPreference;
 
 import java.io.ByteArrayInputStream;

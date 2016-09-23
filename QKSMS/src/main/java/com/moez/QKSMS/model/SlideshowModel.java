@@ -34,6 +34,7 @@ import com.google.android.mms.pdu_alt.PduBody;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.google.android.mms.pdu_alt.PduPersister;
+import com.moez.QKSMS.common.SmilHelper;
 import com.moez.QKSMS.exception.ContentRestrictionException;
 import com.moez.QKSMS.exception.ExceedMessageSizeException;
 import com.moez.QKSMS.common.LogTag;

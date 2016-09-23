@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.model;
+package com.moez.QKSMS.common;
 
 import android.drm.DrmManagerClient;
 import android.text.TextUtils;
 import android.util.Config;
 import android.util.Log;
-
 import com.android.mms.dom.smil.SmilDocumentImpl;
 import com.android.mms.dom.smil.parser.SmilXmlParser;
 import com.android.mms.dom.smil.parser.SmilXmlSerializer;
@@ -30,7 +29,15 @@ import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduBody;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.moez.QKSMS.QKSMSApp;
-
+import com.moez.QKSMS.model.AudioModel;
+import com.moez.QKSMS.model.ImageModel;
+import com.moez.QKSMS.model.LayoutModel;
+import com.moez.QKSMS.model.MediaModel;
+import com.moez.QKSMS.model.RegionModel;
+import com.moez.QKSMS.model.SlideModel;
+import com.moez.QKSMS.model.SlideshowModel;
+import com.moez.QKSMS.model.TextModel;
+import com.moez.QKSMS.model.VideoModel;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.smil.SMILDocument;
 import org.w3c.dom.smil.SMILElement;
@@ -64,6 +71,7 @@ public class SmilHelper {
     public static final String ELEMENT_TAG_IMAGE = "img";
     public static final String ELEMENT_TAG_AUDIO = "audio";
     public static final String ELEMENT_TAG_VIDEO = "video";
+    public static final String ELEMENT_TAG_VCARD = "vcard";
     public static final String ELEMENT_TAG_REF = "ref";
 
     private SmilHelper() {
@@ -167,7 +175,7 @@ public class SmilHelper {
                   .replaceAll("'", "&apos;");
     }
 
-    private static SMILDocument createSmilDocument(PduBody pb) {
+    public static SMILDocument createSmilDocument(PduBody pb) {
         if (Config.LOGV) {
             Log.v(TAG, "Creating default SMIL document.");
         }
@@ -239,9 +247,13 @@ public class SmilHelper {
                         ELEMENT_TAG_AUDIO, document, part.generateLocation());
                 par.appendChild(audioElement);
                 hasMedia = true;
+            } else if (contentType.equals(ContentType.TEXT_VCARD)) {
+                SMILMediaElement textElement = createMediaElement(
+                        ELEMENT_TAG_VCARD, document, part.generateLocation());
+                par.appendChild(textElement);
+                hasMedia = true;
             } else {
-                // TODO: handle other media types.
-                Log.w(TAG, "unsupport media type");
+                Log.e("creating_smil_document", "unknown mimetype");
             }
         }
 
@@ -371,8 +383,7 @@ public class SmilHelper {
         return document;
     }
 
-    private static SMILRegionElement findRegionElementById(
-            ArrayList<SMILRegionElement> smilRegions, String rId) {
+    private static SMILRegionElement findRegionElementById(ArrayList<SMILRegionElement> smilRegions, String rId) {
         for (SMILRegionElement smilRegion : smilRegions) {
             if (smilRegion.getId().equals(rId)) {
                 return smilRegion;
@@ -395,8 +406,7 @@ public class SmilHelper {
         return false;
     }
 
-    static void addMediaElementEventListeners(
-            EventTarget target, MediaModel media) {
+    public static void addMediaElementEventListeners(EventTarget target, MediaModel media) {
         // To play the media with SmilPlayer, we should add them
         // as EventListener into an EventTarget.
         target.addEventListener(SMIL_MEDIA_START_EVENT, media, false);
@@ -405,11 +415,11 @@ public class SmilHelper {
         target.addEventListener(SMIL_MEDIA_SEEK_EVENT, media, false);
     }
 
-    static void addParElementEventListeners(
-            EventTarget target, SlideModel slide) {
+    public static void addParElementEventListeners(EventTarget target, SlideModel slide) {
         // To play the slide with SmilPlayer, we should add it
         // as EventListener into an EventTarget.
         target.addEventListener(SMIL_SLIDE_START_EVENT, slide, false);
         target.addEventListener(SMIL_SLIDE_END_EVENT, slide, false);
     }
+
 }

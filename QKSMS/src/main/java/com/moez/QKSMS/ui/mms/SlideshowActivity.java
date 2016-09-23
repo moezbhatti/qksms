@@ -39,7 +39,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.model.LayoutModel;
 import com.moez.QKSMS.model.RegionModel;
 import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.model.SmilHelper;
+import com.moez.QKSMS.common.SmilHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
