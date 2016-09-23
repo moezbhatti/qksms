@@ -44,7 +44,7 @@ import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.ui.icon.IconAdapter;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.dialog.ColorPickerPagerAdapter;
+import com.moez.QKSMS.ui.settings.ColorPickerPagerAdapter;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKEditText;

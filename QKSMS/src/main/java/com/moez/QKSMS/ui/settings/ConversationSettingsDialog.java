@@ -1,4 +1,4 @@
-package com.moez.QKSMS.ui.dialog;
+package com.moez.QKSMS.ui.settings;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKPreference;
 import com.moez.QKSMS.ui.view.QKRingtonePreference;
 import com.moez.QKSMS.ui.view.QKSwitchPreference;

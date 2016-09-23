@@ -1,4 +1,4 @@
-package com.moez.QKSMS.ui.dialog.mms;
+package com.moez.QKSMS.ui.dialog;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -18,12 +18,12 @@ import com.moez.QKSMS.ui.base.QKFragment;
 
 import java.util.List;
 
-import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.DISMISS_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.DialogFragmentListener;
-import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.LIST_ITEM_CLICK_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.NEGATIVE_BUTTON_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.NEUTRAL_BUTTON_RESULT;
-import static com.moez.QKSMS.ui.dialog.mms.MMSDialogFragment.POSITIVE_BUTTON_RESULT;
+import static com.moez.QKSMS.ui.dialog.MMSDialogFragment.DISMISS_RESULT;
+import static com.moez.QKSMS.ui.dialog.MMSDialogFragment.DialogFragmentListener;
+import static com.moez.QKSMS.ui.dialog.MMSDialogFragment.LIST_ITEM_CLICK_RESULT;
+import static com.moez.QKSMS.ui.dialog.MMSDialogFragment.NEGATIVE_BUTTON_RESULT;
+import static com.moez.QKSMS.ui.dialog.MMSDialogFragment.NEUTRAL_BUTTON_RESULT;
+import static com.moez.QKSMS.ui.dialog.MMSDialogFragment.POSITIVE_BUTTON_RESULT;
 
 /**
  * @author Shane Creighton-Young

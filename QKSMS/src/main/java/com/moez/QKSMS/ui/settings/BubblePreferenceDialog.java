@@ -1,4 +1,4 @@
-package com.moez.QKSMS.ui.dialog;
+package com.moez.QKSMS.ui.settings;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKTextView;
 

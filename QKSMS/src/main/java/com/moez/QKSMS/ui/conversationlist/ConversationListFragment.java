@@ -37,7 +37,7 @@ import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeActivity;
-import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.ui.messagelist.ConversationDetailsDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 

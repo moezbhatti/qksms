@@ -36,15 +36,12 @@ public  class QKResponseAdapter extends ArrayAdapter<String> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.position = position;
+        vh.mPosition = position;
         vh.mResponseIndex.setText(Integer.toString(position + 1));
         vh.mResponse.setText(mResponses.get(position));
-        vh.mResponse.setTextChangedListener(new QKEditText.TextChangedListener() {
-            @Override
-            public void onTextChanged(CharSequence s) {
-                mResponses.remove(vh.position);
-                mResponses.add(vh.position, s.toString());
-            }
+        vh.mResponse.setTextChangedListener(s -> {
+            mResponses.remove(vh.mPosition);
+            mResponses.add(vh.mPosition, s.toString());
         });
 
         return convertView;
@@ -58,10 +55,10 @@ public  class QKResponseAdapter extends ArrayAdapter<String> {
     public int getCount() {
         return mResponses.size();
     }
-}
 
-class ViewHolder {
-    int position;
-    QKTextView mResponseIndex;
-    QKEditText mResponse;
+    private class ViewHolder {
+        int mPosition;
+        QKTextView mResponseIndex;
+        QKEditText mResponse;
+    }
 }

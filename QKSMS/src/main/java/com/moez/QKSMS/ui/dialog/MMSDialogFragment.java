@@ -1,4 +1,4 @@
-package com.moez.QKSMS.ui.dialog.mms;
+package com.moez.QKSMS.ui.dialog;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

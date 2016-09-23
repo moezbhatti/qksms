@@ -1,4 +1,4 @@
-package com.moez.QKSMS.ui.dialog;
+package com.moez.QKSMS.ui.settings;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.View;

@@ -52,14 +52,13 @@ import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.interfaces.RecipientProvider;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
-import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
-import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
+import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.io.File;

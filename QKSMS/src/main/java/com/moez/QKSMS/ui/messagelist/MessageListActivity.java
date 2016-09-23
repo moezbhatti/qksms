@@ -17,7 +17,7 @@ import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
-import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
+import com.moez.QKSMS.ui.settings.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
