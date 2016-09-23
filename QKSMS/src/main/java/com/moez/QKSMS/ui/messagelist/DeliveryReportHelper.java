@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.ui.delivery;
+package com.moez.QKSMS.ui.messagelist;
 
 import android.content.Context;
 import android.database.Cursor;

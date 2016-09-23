@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.ui.delivery;
+package com.moez.QKSMS.ui.messagelist;
 
 /**
  * This object holds information used by the DeliveryReportAdapter to create

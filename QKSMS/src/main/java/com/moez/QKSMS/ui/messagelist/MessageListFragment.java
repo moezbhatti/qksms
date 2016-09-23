@@ -63,8 +63,6 @@ import com.moez.QKSMS.ui.view.SwipeBackLayout;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
-import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
-import com.moez.QKSMS.ui.delivery.DeliveryReportItem;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
 import com.moez.QKSMS.ui.settings.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
