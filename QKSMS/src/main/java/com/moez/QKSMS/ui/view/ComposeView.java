@@ -30,7 +30,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
@@ -40,25 +39,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.github.lzyzsd.circleprogress.DonutProgress;
-import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
-import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.interfaces.ActivityLauncher;
-import com.moez.QKSMS.interfaces.RecipientProvider;
-import com.moez.QKSMS.common.utils.ImageUtils;
-import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.common.utils.ImageUtils;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.data.ConversationLegacy;
+import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.interfaces.ActivityLauncher;
+import com.moez.QKSMS.interfaces.RecipientProvider;
+import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
-import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
+import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.io.File;
@@ -440,22 +439,13 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                     mLabel
             );
 
-            Transaction sendTransaction = new Transaction(mContext, SmsHelper.getSendSettings(mContext));
-
-            com.moez.QKSMS.mmssms.Message message = new com.moez.QKSMS.mmssms.Message(body, recipients);
-            if (attachment != null) {
-                message.setImage(ImageUtils.drawableToBitmap(attachment));
-            }
-
             // Notify the listener about the new text message
             if (mOnSendListener != null) {
-                mOnSendListener.onSend(recipients, message.getSubject());
+                mOnSendListener.onSend(recipients, body);
             }
 
-            long threadId = mConversation != null ? mConversation.getThreadId() : 0;
-            if (!message.toString().equals("")) {
-                sendTransaction.sendNewMessage(message, threadId);
-            }
+            Bitmap bitmap = attachment == null ? null : ImageUtils.drawableToBitmap(attachment);
+            MessagingHelper.sendMessage(mContext, recipients, body, bitmap);
             NotificationManager.update(mContext);
 
             if (mConversationLegacy != null) {

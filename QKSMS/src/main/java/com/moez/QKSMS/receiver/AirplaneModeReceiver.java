@@ -7,10 +7,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import com.google.android.mms.MmsException;
-import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 
@@ -61,12 +60,7 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
     }
 
     private void sendSms(Context context, MessageItem messageItem) {
-        Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
-
-        Message message = new Message(messageItem.mBody, messageItem.mAddress);
-
         context.getContentResolver().delete(messageItem.mMessageUri, null, null);
-
-        sendTransaction.sendNewMessage(message, 0);
+        MessagingHelper.sendMessage(context, messageItem.mAddress, messageItem.mBody, null);
     }
 }

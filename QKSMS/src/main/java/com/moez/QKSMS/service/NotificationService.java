@@ -5,16 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LifecycleHandler;
-import com.moez.QKSMS.data.ContactHelper;
-import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -61,15 +59,6 @@ public class NotificationService extends Service {
                     popupIntent.putExtra(QKReplyActivity.EXTRA_THREAD_ID, message.getThreadId());
                     startActivity(popupIntent);
                 }
-
-                // Get the photo for the PushBullet notification.
-                Bitmap photoBitmap = message.getPhotoBitmap();
-                if (photoBitmap == null) {
-                    photoBitmap = ContactHelper.blankContact(context, message.getName());
-                }
-
-                PushbulletService.mirrorMessage(context, "" + message.getThreadId(),
-                        message.getName(), message.getBody(), photoBitmap, null, 6639);
             } else {
                 // If the conversation is muted, mark this message as "seen". Note that this is
                 // different from marking it as "read".

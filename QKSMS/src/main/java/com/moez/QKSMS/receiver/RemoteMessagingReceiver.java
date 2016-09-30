@@ -14,13 +14,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.RemoteInput;
 import android.view.Gravity;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.data.ContactHelper;
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.service.MarkReadService;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.data.ContactHelper;
+import com.moez.QKSMS.service.MarkReadService;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
@@ -46,14 +45,9 @@ public class RemoteMessagingReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         if (remoteInput != null && bundle != null) {
             if (intent.getAction().equals(ACTION_REPLY)) {
-
-                Message message = new Message(
-                        remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString(),
-                        new String[]{bundle.getString(EXTRA_ADDRESS)}
-                );
-
-                Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
-                sendTransaction.sendNewMessage(message, bundle.getLong(EXTRA_THREAD_ID));
+                String recipient = bundle.getString(EXTRA_ADDRESS);
+                String body = remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString();
+                MessagingHelper.sendMessage(context, recipient, body, null);
 
                 Intent i = new Intent(context, MarkReadService.class);
                 i.putExtra(EXTRA_THREAD_ID, bundle.getLong(EXTRA_THREAD_ID));

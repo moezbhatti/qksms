@@ -6,10 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.NotificationManager;
-import com.moez.QKSMS.common.SmsHelper;
 
 import static com.moez.QKSMS.data.Conversation.getRecipients;
 
@@ -35,12 +33,7 @@ public class HeadlessSmsSendService extends IntentService {
 
             if (!TextUtils.isEmpty(recipients) && !TextUtils.isEmpty(body)) {
                 String[] destinations = TextUtils.split(recipients, ";");
-
-                Transaction sendTransaction = new Transaction(this, SmsHelper.getSendSettings(this));
-
-                Message message = new Message(body, destinations);
-
-                sendTransaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+                MessagingHelper.sendMessage(this, destinations, body, null);
                 NotificationManager.update(this);
             }
         }

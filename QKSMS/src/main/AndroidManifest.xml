@@ -528,17 +528,6 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
-        <service
-            android:name=".service.PushbulletService"
-            android:permission="com.pushbullet.android.permission.READ_MESSAGING_EXTENSION_DATA">
-            <intent-filter>
-                <action android:name="com.pushbullet.android.extension.MessagingExtension" />
-            </intent-filter>
-
-            <meta-data
-                android:name="protocolVersion"
-                android:value="1" />
-        </service>
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service android:name=".service.NotificationService" />
         <service android:name=".service.MarkReadService" />

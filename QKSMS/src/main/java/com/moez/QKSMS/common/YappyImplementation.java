@@ -2,9 +2,6 @@ package com.moez.QKSMS.common;
 
 import android.content.Context;
 import android.util.Log;
-
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
 import com.mariussoft.endlessjabber.sdk.IEndlessJabberImplementation;
 import com.mariussoft.endlessjabber.sdk.MMSPart;
 import com.moez.QKSMS.data.ConversationLegacy;
@@ -39,26 +36,14 @@ public class YappyImplementation implements IEndlessJabberImplementation {
     }
 
     @Override
-    public void SendMMS(Context context, String[] recipients, MMSPart[] parts, String subject, boolean save, boolean send) {
+    public void SendMMS(Context context, String[] recipients, MMSPart[] parts, String body, boolean save, boolean send) {
         Log.d(TAG, "SendMMS");
-        Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
-
-        Message message = new Message();
-        message.setAddresses(recipients);
-        message.setSubject(subject);
-
-        sendTransaction.sendNewMessage(message, 0);
+        MessagingHelper.sendMessage(context, recipients, body, null);
     }
 
     @Override
     public void SendSMS(Context context, String[] recipients, String body, boolean send) {
         Log.d(TAG, "SendSMS");
-        Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
-
-        Message message = new Message();
-        message.setAddresses(recipients);
-        message.setText(body);
-
-        sendTransaction.sendNewMessage(message, 0);
+        MessagingHelper.sendMessage(context, recipients, body, null);
     }
 }

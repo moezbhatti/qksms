@@ -95,15 +95,6 @@ public class Transaction {
     public static final long NO_THREAD_ID = 0;
 
     /**
-     * Sets context and initializes settings to default values
-     *
-     * @param context is the context of the activity or service
-     */
-    public Transaction(Context context) {
-        this(context, new Settings());
-    }
-
-    /**
      * Sets context and settings
      *
      * @param context  is the context of the activity or service
