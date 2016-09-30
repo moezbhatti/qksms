@@ -46,7 +46,6 @@ public class YappyImplementation implements IEndlessJabberImplementation {
         Message message = new Message();
         message.setAddresses(recipients);
         message.setSubject(subject);
-        message.setSave(save);
 
         sendTransaction.sendNewMessage(message, 0);
     }
