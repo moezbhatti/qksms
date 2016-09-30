@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LifecycleHandler;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
@@ -60,9 +61,8 @@ public class NotificationService extends Service {
                     startActivity(popupIntent);
                 }
             } else {
-                // If the conversation is muted, mark this message as "seen". Note that this is
-                // different from marking it as "read".
-                message.markSeen();
+                // If the conversation is muted, mark this message as "seen". Note that this is different from marking it as "read".
+                MessagingHelper.markMessageSeen(context, messageId);
             }
         }
 

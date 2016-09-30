@@ -11,6 +11,7 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.service.NotificationService;
@@ -108,7 +109,7 @@ public class MessagingReceiver extends BroadcastReceiver {
         if (BlockedConversationHelper.isFutureBlocked(mPrefs, mAddress)) {
             BlockedConversationHelper.unblockFutureConversation(mPrefs, mAddress);
             BlockedConversationHelper.blockConversation(mPrefs, message.getThreadId());
-            message.markSeen();
+            MessagingHelper.markMessageSeen(mContext, message.getId());
             BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().futureBlockedConversationReceived();
 
             // If we have notifications enabled and this conversation isn't blocked
@@ -121,9 +122,8 @@ public class MessagingReceiver extends BroadcastReceiver {
 
             UnreadBadgeService.update(mContext);
             NotificationManager.create(mContext);
-
         } else { // We shouldn't show a notification for this message
-            message.markSeen();
+            MessagingHelper.markMessageSeen(mContext, message.getId());
         }
 
         if (conversationPrefs.getWakePhoneEnabled()) {

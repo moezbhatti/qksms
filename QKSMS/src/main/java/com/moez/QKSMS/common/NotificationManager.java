@@ -154,7 +154,7 @@ public class NotificationManager {
                 // If this message is in the foreground, mark it as read
                 Message message = new Message(context, lastMessage.mMsgId);
                 if (MessageListActivity.isInForeground && message.getThreadId() == MessageListActivity.getThreadId()) {
-                    message.markRead();
+                    MessagingHelper.markMessageRead(context, lastMessage.mMsgId);
                     return;
                 }
 
@@ -248,7 +248,7 @@ public class NotificationManager {
             // don't show a notification; just mark it as read and return.
             Message message = new Message(context, lastMessage.mMsgId);
             if (MessageListActivity.isInForeground && message.getThreadId() == MessageListActivity.getThreadId()) {
-                message.markRead();
+                MessagingHelper.markMessageRead(context, lastMessage.mMsgId);
                 return;
             }
 

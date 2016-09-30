@@ -12,6 +12,7 @@ import android.provider.Telephony.Sms;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 import android.util.Patterns;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.CharacterSets;
@@ -493,16 +494,18 @@ public class SmsHelper {
         return messages;
     }
 
-    public static List<Message> deleteFailedMessages(Context context, long threadId) {
+    public static void deleteFailedMessages(Context context, long threadId) {
         Log.d(TAG, "Deleting failed messages");
         Cursor cursor = null;
-        List<Message> messages = new ArrayList<>();
+        ArrayList<Pair<Long, Long>> messages2 = new ArrayList<>();
 
         try {
-            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{COLUMN_ID}, FAILED_SELECTION, null, sortDateDesc);
+            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{COLUMN_THREAD_ID, COLUMN_ID}, FAILED_SELECTION, null, sortDateDesc);
             cursor.moveToFirst();
             for (int i = 0; i < cursor.getCount(); i++) {
-                messages.add(new Message(context, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))));
+                messages2.add(new Pair<>(
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_THREAD_ID)),
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))));
                 cursor.moveToNext();
             }
         } catch (Exception e) {
@@ -513,13 +516,12 @@ public class SmsHelper {
             }
         }
 
-        for (Message m : messages) {
-            if (m.getThreadId() == threadId) {
-                Log.d(TAG, "Deleting failed message to " + m.getName() + "\n Body: " + m.getBody());
-                m.delete();
+        for (Pair<Long, Long> pair : messages2) {
+            if (pair.first == threadId) {
+                Log.d(TAG, "Deleting failed message " + pair.second + " in: " + pair.first);
+                MessagingHelper.deleteMessage(context, pair.second);
             }
         }
-        return messages;
     }
 
     /**

@@ -27,12 +27,12 @@ public class YappyImplementation implements IEndlessJabberImplementation {
 
     @Override
     public void DeleteSMSMessage(Context context, int id) {
-        new com.moez.QKSMS.data.Message(context, id).delete();
+        MessagingHelper.deleteMessage(context, id);
     }
 
     @Override
     public void DeleteMMSMessage(Context context, int id) {
-        new com.moez.QKSMS.data.Message(context, id).delete();
+        MessagingHelper.deleteMessage(context, id);
     }
 
     @Override

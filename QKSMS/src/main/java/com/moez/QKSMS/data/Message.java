@@ -1,13 +1,10 @@
 package com.moez.QKSMS.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.SmsHelper;
-import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 
 public class Message {
     private final String TAG = "Message";
@@ -25,7 +22,6 @@ public class Message {
     // ContentResolver columns
     static final Uri RECEIVED_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/inbox");
     private Context context;
-    private Uri uri;
     private long id;
     private long threadId;
     private String body;
@@ -33,18 +29,14 @@ public class Message {
     private String name;
     private long contactId;
     private Bitmap photoBitmap;
-    private int read; // change to boolean
 
     public Message(Context context, long id) {
         this.context = context;
         this.id = id;
-
-        uri = Uri.withAppendedPath(MMS_SMS_CONTENT_PROVIDER, "" + id);
     }
 
     public Message(Context context, Uri uri) {
         this.context = context;
-        this.uri = uri;
 
         Cursor cursor = context.getContentResolver().query(uri, new String[]{SmsHelper.COLUMN_ID}, null, null, null);
         cursor.moveToFirst();
@@ -143,42 +135,5 @@ public class Message {
         if (photoBitmap == null)
             photoBitmap = ContactHelper.getBitmap(context, getContactId());
         return photoBitmap;
-    }
-
-    public void markSeen() {
-        ContentValues cv = new ContentValues();
-        cv.put("seen", true);
-
-        if (isMms()) {
-            context.getContentResolver().update(Uri.parse("content://mms/" + getId()), cv, null, null);
-        } else {
-            context.getContentResolver().update(Uri.parse("content://sms/" + getId()), cv, null, null);
-        }
-    }
-
-    public void markRead() {
-        ContentValues cv = new ContentValues();
-        cv.put("read", true);
-        cv.put("seen", true);
-
-        if (isMms()) {
-            context.getContentResolver().update(Uri.parse("content://mms/" + getId()), cv, null, null);
-        } else {
-            context.getContentResolver().update(Uri.parse("content://sms/" + getId()), cv, null, null);
-        }
-    }
-
-    public void delete() {
-        new DefaultSmsHelper(context, R.string.not_default_delete).showIfNotDefault(null);
-
-        try {
-            if (isMms()) {
-                context.getContentResolver().delete(Uri.parse("content://mms/" + getId()), null, null);
-            } else {
-                context.getContentResolver().delete(Uri.parse("content://sms/" + getId()), null, null);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
