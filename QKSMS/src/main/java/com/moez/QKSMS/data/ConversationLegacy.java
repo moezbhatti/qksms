@@ -30,7 +30,6 @@ public class ConversationLegacy {
 
     public static final int COLUMN_ADDRESSES_ADDRESS = 1;
 
-    private ContactHelper contactHelper;
     private Context context;
 
     private long threadId;
@@ -45,7 +44,6 @@ public class ConversationLegacy {
     public ConversationLegacy(Context context, long threadId) {
         this.context = context;
         this.threadId = threadId;
-        contactHelper = new ContactHelper();
     }
 
     public long getThreadId() {
@@ -59,7 +57,7 @@ public class ConversationLegacy {
 
     public String getName(boolean findIfNull) {
         if (name == null || name.trim().isEmpty()) {
-            if (findIfNull) name = contactHelper.getName(context, getAddress());
+            if (findIfNull) name = ContactHelper.getName(context, getAddress());
             else return getAddress();
         }
 

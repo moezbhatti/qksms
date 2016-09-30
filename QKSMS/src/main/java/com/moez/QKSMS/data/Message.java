@@ -25,7 +25,6 @@ public class Message {
     // ContentResolver columns
     static final Uri RECEIVED_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/inbox");
     private Context context;
-    private ContactHelper contactHelper;
     private Uri uri;
     private long id;
     private long threadId;
@@ -40,16 +39,12 @@ public class Message {
         this.context = context;
         this.id = id;
 
-        contactHelper = new ContactHelper();
-
         uri = Uri.withAppendedPath(MMS_SMS_CONTENT_PROVIDER, "" + id);
     }
 
     public Message(Context context, Uri uri) {
         this.context = context;
         this.uri = uri;
-
-        contactHelper = new ContactHelper();
 
         Cursor cursor = context.getContentResolver().query(uri, new String[]{SmsHelper.COLUMN_ID}, null, null, null);
         cursor.moveToFirst();
@@ -116,7 +111,7 @@ public class Message {
     }
 
     public String getName() {
-        if (name == null) name = contactHelper.getName(context, getAddress());
+        if (name == null) name = ContactHelper.getName(context, getAddress());
         return name;
     }
 
@@ -140,13 +135,13 @@ public class Message {
     }
 
     public long getContactId() {
-        if (contactId == 0) contactId = contactHelper.getId(context, getAddress());
+        if (contactId == 0) contactId = ContactHelper.getId(context, getAddress());
         return contactId;
     }
 
     public Bitmap getPhotoBitmap() {
         if (photoBitmap == null)
-            photoBitmap = contactHelper.getBitmap(context, getContactId());
+            photoBitmap = ContactHelper.getBitmap(context, getContactId());
         return photoBitmap;
     }
 
