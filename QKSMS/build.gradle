@@ -103,6 +103,7 @@ dependencies {
     compile 'frankiesardo:icepick:3.2.0'
     provided 'frankiesardo:icepick-processor:3.2.0'
     compile 'com.anjlab.android.iab.v3:library:1.0.32'
+    compile 'io.reactivex:rxjava:1.2.0'
 
     // Google libraries
     compile 'com.android.support:multidex:1.0.1'

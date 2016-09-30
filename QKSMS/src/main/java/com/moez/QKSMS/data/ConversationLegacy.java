@@ -10,14 +10,18 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.widget.Toast;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.service.UnreadBadgeService;
-import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.SqliteWrapper;
+import com.moez.QKSMS.common.google.DraftCache;
+import com.moez.QKSMS.service.UnreadBadgeService;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
+import java.util.ArrayList;
 
 /**
  * Use this class (rather than Conversation) for marking conversations as read, and managing drafts.
@@ -201,18 +205,17 @@ public class ConversationLegacy {
         return type;
     }
 
-    private long[] getUnreadIds() {
-        long[] ids = new long[0];
+    private ArrayList<Long> getUnreadIds() {
+        ArrayList<Long> ids = new ArrayList<>();
 
         try {
             cursor = context.getContentResolver().query(getUri(), new String[]{SmsHelper.COLUMN_ID}, SmsHelper.UNREAD_SELECTION, null, null);
-            ids = new long[cursor.getCount()];
             cursor.moveToFirst();
 
-            for (int i = 0; i < ids.length; i++) {
-                ids[i] = cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID));
+            for (int i = 0; i < cursor.getCount(); i++) {
+                ids.add(cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID)));
                 cursor.moveToNext();
-                Log.d(TAG, "Unread ID: " + ids[i]);
+                Log.d(TAG, "Unread ID: " + ids.get(i));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -226,28 +229,19 @@ public class ConversationLegacy {
     }
 
     public void markRead() {
+        ArrayList<Long> ids = getUnreadIds();
 
-        new Thread() {
-            public void run() {
+        ContentValues cv = new ContentValues();
+        cv.put("read", true);
+        cv.put("seen", true);
 
-                long[] ids = getUnreadIds();
-                if (ids.length > 0) {
-                    new DefaultSmsHelper(context, R.string.not_default_mark_read).showIfNotDefault(null);
-
-                    ContentValues cv = new ContentValues();
-                    cv.put("read", true);
-                    cv.put("seen", true);
-
-                    for (long id : ids) {
-                        context.getContentResolver().update(getUri(), cv, SmsHelper.COLUMN_ID + "=" + id, null);
-                    }
-
+        Observable.from(ids)
+                .doOnCompleted(() -> {
                     NotificationManager.update(context);
-
                     UnreadBadgeService.update(context);
-                }
-            }
-        }.start();
+                })
+                .subscribeOn(Schedulers.io())
+                .subscribe(id1 -> context.getContentResolver().update(getUri(), cv, SmsHelper.COLUMN_ID + "=" + id1, null));
     }
 
     public void markUnread() {
