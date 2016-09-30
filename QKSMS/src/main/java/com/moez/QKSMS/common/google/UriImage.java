@@ -38,7 +38,7 @@ import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.common.exif.ExifInterface;
-import com.moez.QKSMS.model.ImageModel;
+import com.moez.QKSMS.mmssms.model.ImageModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

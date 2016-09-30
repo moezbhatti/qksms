@@ -1,4 +1,4 @@
-package com.moez.QKSMS.model;
+package com.moez.QKSMS.mmssms.model;
 
 import com.google.gson.annotations.SerializedName;
 

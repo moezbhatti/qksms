@@ -14,9 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.moez.QKSMS.mmssms.model;
 
-package com.moez.QKSMS.model;
+public class ContentRestrictionFactory {
+    private static ContentRestriction sContentRestriction;
 
-public interface IModelChangedObserver {
-    void onModelChanged(Model model, boolean dataChanged);
+    private ContentRestrictionFactory() {
+    }
+
+    public static ContentRestriction getContentRestriction() {
+        if (null == sContentRestriction) {
+            sContentRestriction = new CarrierContentRestriction();
+        }
+        return sContentRestriction;
+    }
 }

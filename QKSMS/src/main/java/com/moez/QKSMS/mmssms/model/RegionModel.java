@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.model;
+package com.moez.QKSMS.mmssms.model;
 
 public class RegionModel extends Model {
     private static final String DEFAULT_FIT = "meet";

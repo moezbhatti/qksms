@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.moez.QKSMS.model;
+package com.moez.QKSMS.mmssms.model;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

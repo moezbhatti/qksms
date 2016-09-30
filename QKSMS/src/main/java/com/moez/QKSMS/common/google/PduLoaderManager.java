@@ -27,7 +27,7 @@ import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.util_alt.PduCache;
 import com.google.android.mms.util_alt.PduCacheEntry;
 import com.moez.QKSMS.common.LogTag;
-import com.moez.QKSMS.model.SlideshowModel;
+import com.moez.QKSMS.mmssms.model.SlideshowModel;
 
 import java.util.Set;
 

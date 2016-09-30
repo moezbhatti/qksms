@@ -24,17 +24,17 @@ import android.util.Log;
 import com.moez.QKSMS.interfaces.AdaptableSlideViewInterface;
 import com.moez.QKSMS.interfaces.SlideViewInterface;
 import com.moez.QKSMS.interfaces.ViewInterface;
-import com.moez.QKSMS.model.AudioModel;
-import com.moez.QKSMS.model.ImageModel;
-import com.moez.QKSMS.model.LayoutModel;
-import com.moez.QKSMS.model.MediaModel;
-import com.moez.QKSMS.model.Model;
-import com.moez.QKSMS.model.RegionMediaModel;
-import com.moez.QKSMS.model.RegionModel;
-import com.moez.QKSMS.model.SlideModel;
-import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.model.TextModel;
-import com.moez.QKSMS.model.VideoModel;
+import com.moez.QKSMS.mmssms.model.AudioModel;
+import com.moez.QKSMS.mmssms.model.ImageModel;
+import com.moez.QKSMS.mmssms.model.LayoutModel;
+import com.moez.QKSMS.mmssms.model.MediaModel;
+import com.moez.QKSMS.mmssms.model.Model;
+import com.moez.QKSMS.mmssms.model.RegionMediaModel;
+import com.moez.QKSMS.mmssms.model.RegionModel;
+import com.moez.QKSMS.mmssms.model.SlideModel;
+import com.moez.QKSMS.mmssms.model.SlideshowModel;
+import com.moez.QKSMS.mmssms.model.TextModel;
+import com.moez.QKSMS.mmssms.model.VideoModel;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 
 /**

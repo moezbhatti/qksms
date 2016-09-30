@@ -47,9 +47,9 @@ import com.moez.QKSMS.common.utils.AddressUtils;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.model.SlideModel;
-import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.model.TextModel;
+import com.moez.QKSMS.mmssms.model.SlideModel;
+import com.moez.QKSMS.mmssms.model.SlideshowModel;
+import com.moez.QKSMS.mmssms.model.TextModel;
 import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.regex.Pattern;
