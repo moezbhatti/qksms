@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.provider.Telephony.TextBasedSmsColumns;
@@ -31,14 +30,14 @@ import com.koushikdutta.ion.Ion;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.CursorUtils;
 import com.moez.QKSMS.common.utils.LinkifyUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.common.SmsHelper;
-import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
@@ -47,7 +46,6 @@ import com.moez.QKSMS.ui.view.AvatarView;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,7 +55,6 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     public static final int INCOMING_ITEM = 0;
     public static final int OUTGOING_ITEM = 1;
 
-    private ArrayList<Long> mSelectedConversations = new ArrayList<>();
 
     private static final Pattern urlPattern = Pattern.compile(
             "\\b(https?:\\/\\/\\S+(?:png|jpe?g|gif)\\S*)\\b",
@@ -70,12 +67,8 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     private final SharedPreferences mPrefs;
 
     // Configuration options.
-    private long mThreadId = -1;
-    private long mRowId = -1;
     private Pattern mSearchHighlighter = null;
     private boolean mIsGroupConversation = false;
-    private Handler mMessageListItemHandler = null; // TODO this isn't quite the same as the others
-    private String mSelection = null;
 
     public MessageListAdapter(QKActivity context) {
         super(context);
