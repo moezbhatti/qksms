@@ -46,15 +46,11 @@ public class RecipientIdCache {
 
     static void init(Context context) {
         sInstance = new RecipientIdCache(context);
-        new Thread(new Runnable() {
-            public void run() {
-                fill();
-            }
-        }, "RecipientIdCache.init").start();
+        new Thread(RecipientIdCache::fill, "RecipientIdCache.init").start();
     }
 
     RecipientIdCache(Context context) {
-        mCache = new HashMap<Long, String>();
+        mCache = new HashMap<>();
         mContext = context;
     }
 

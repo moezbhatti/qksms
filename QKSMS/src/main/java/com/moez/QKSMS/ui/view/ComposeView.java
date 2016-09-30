@@ -215,34 +215,29 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 mReplyText.setInputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 mReplyText.setSingleLine(false);
-                mReplyText.setOnKeyListener(new OnKeyListener() { //Workaround because ACTION_SEND does not support multiline mode
-                    @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if (keyCode == 66) {
-                            sendSms();
-                            return true;
-                        }
-                        return false;
-                    }});
+                mReplyText.setOnKeyListener((v, keyCode, event) -> {
+                    if (keyCode == 66) {
+                        sendSms();
+                        return true;
+                    }
+                    return false;
+                });
                 break;
         }
 
-        mReplyText.setTextChangedListener(new QKEditText.TextChangedListener() {
-            @Override
-            public void onTextChanged(CharSequence s) {
-                int length = s.length();
+        mReplyText.setTextChangedListener(s -> {
+            int length = s.length();
 
-                updateButtonState(length);
+            updateButtonState(length);
 
-                // If the reply is within 10 characters of the SMS limit (160), it will start counting down
-                // If the reply exceeds the SMS limit, it will count down until an extra message will have to be sent, and shows how many messages will currently be sent
-                if (length < 150) {
-                    mLetterCount.setText("");
-                } else if (150 <= length && length <= 160) {
-                    mLetterCount.setText("" + (160 - length));
-                } else if (160 < length) {
-                    mLetterCount.setText((160 - length % 160) + "/" + (length / 160 + 1));
-                }
+            // If the reply is within 10 characters of the SMS limit (160), it will start counting down
+            // If the reply exceeds the SMS limit, it will count down until an extra message will have to be sent, and shows how many messages will currently be sent
+            if (length < 150) {
+                mLetterCount.setText("");
+            } else if (150 <= length && length <= 160) {
+                mLetterCount.setText("" + (160 - length));
+            } else if (160 < length) {
+                mLetterCount.setText((160 - length % 160) + "/" + (length / 160 + 1));
             }
         });
 
@@ -250,12 +245,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mProgressAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mProgressAnimator.setDuration(mDelayDuration);
         mProgressAnimator.setIntValues(0, 360);
-        mProgressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mProgress.setProgress((int) animation.getAnimatedValue());
-            }
-        });
+        mProgressAnimator.addUpdateListener(animation -> mProgress.setProgress((int) animation.getAnimatedValue()));
         mProgressAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -534,18 +524,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 .setContext(mContext)
                 .setTitle(R.string.pref_delayed)
                 .setMessage(R.string.delayed_messaging_info)
-                .setNegativeButton(R.string.just_once, new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        toggleDelayedMessaging();
-                    }
-                })
-                .setPositiveButton(R.string.enable, new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPrefs.edit().putBoolean(SettingsFragment.DELAYED, true).apply();
-                        toggleDelayedMessaging();
-                    }
+                .setNegativeButton(R.string.just_once, v -> toggleDelayedMessaging())
+                .setPositiveButton(R.string.enable, v -> {
+                    mPrefs.edit().putBoolean(SettingsFragment.DELAYED, true).apply();
+                    toggleDelayedMessaging();
                 })
                 .show();
         mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, true).apply(); //This should be changed, the dialog should be shown each time when delayed messaging is disabled.
@@ -1006,16 +988,11 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             } catch (FileNotFoundException | NullPointerException e) {
                 // Make a toast to the user that the file they've requested to view
                 // isn't available.
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(
-                                mContext,
-                                mRes.getString(R.string.error_file_not_found),
-                                Toast.LENGTH_SHORT
-                        ).show();
-                    }
-                });
+                mHandler.post(() -> Toast.makeText(
+                        mContext,
+                        mRes.getString(R.string.error_file_not_found),
+                        Toast.LENGTH_SHORT
+                ).show());
             }
             return null;
         }

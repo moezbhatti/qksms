@@ -72,14 +72,11 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), backgroundColor, newBackgroundColor);
             colorAnimation.setDuration(ThemeManager.TRANSITION_LENGTH);
             colorAnimation.setInterpolator(new DecelerateInterpolator());
-            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    int color = (Integer) animation.getAnimatedValue();
-                    mContext.setColorBackground(color);
-                    mNightHint.setTextColor(color);
+            colorAnimation.addUpdateListener(animation -> {
+                int color = (Integer) animation.getAnimatedValue();
+                mContext.setColorBackground(color);
+                mNightHint.setTextColor(color);
 
-                }
             });
             colorAnimation.start();
 

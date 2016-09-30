@@ -15,14 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 /**
@@ -191,36 +190,21 @@ public class MMSDialogFragment extends DialogFragment {
             mPositiveButtonView.setVisibility(View.VISIBLE);
             mPositiveButtonView.setText(mPositiveButtonText);
             mPositiveButtonView.setTextColor(ThemeManager.getColor());
-            mPositiveButtonView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onResult(POSITIVE_BUTTON_RESULT);
-                }
-            });
+            mPositiveButtonView.setOnClickListener(v -> onResult(POSITIVE_BUTTON_RESULT));
         }
 
         if (mNeutralButtonEnabled) {
             mNeutralButtonView = (QKTextView) view.findViewById(R.id.buttonNeutral);
             mNeutralButtonView.setVisibility(View.VISIBLE);
             mNeutralButtonView.setText(mNeutralButtonText);
-            mNeutralButtonView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onResult(NEUTRAL_BUTTON_RESULT);
-                }
-            });
+            mNeutralButtonView.setOnClickListener(v -> onResult(NEUTRAL_BUTTON_RESULT));
         }
 
         if (mNegativeButtonEnabled) {
             mNegativeButtonView = (QKTextView) view.findViewById(R.id.buttonNegative);
             mNegativeButtonView.setVisibility(View.VISIBLE);
             mNegativeButtonView.setText(mNegativeButtonText);
-            mNegativeButtonView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onResult(NEGATIVE_BUTTON_RESULT);
-                }
-            });
+            mNegativeButtonView.setOnClickListener(v -> onResult(NEGATIVE_BUTTON_RESULT));
         }
 
         dialog.setContentView(view);
@@ -306,12 +290,9 @@ public class MMSDialogFragment extends DialogFragment {
         listView.setAdapter(adapter);
         listView.setDivider(null);
         listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onListResult(LIST_ITEM_CLICK_RESULT, position);
-                dismiss();
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            onListResult(LIST_ITEM_CLICK_RESULT, position);
+            dismiss();
         });
         return setCustomView(listView);
     }
@@ -337,12 +318,9 @@ public class MMSDialogFragment extends DialogFragment {
         listView.setAdapter(adapter);
         listView.setDivider(null);
         listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onListResult(LIST_ITEM_CLICK_RESULT, position);
-                dismiss();
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            onListResult(LIST_ITEM_CLICK_RESULT, position);
+            dismiss();
         });
         return setCustomView(listView);
     }
@@ -371,12 +349,9 @@ public class MMSDialogFragment extends DialogFragment {
         listView.setAdapter(adapter);
         listView.setDivider(null);
         listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onListResult(LIST_ITEM_CLICK_RESULT, position);
-                dismiss();
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            onListResult(LIST_ITEM_CLICK_RESULT, position);
+            dismiss();
         });
         return setCustomView(listView);
     }

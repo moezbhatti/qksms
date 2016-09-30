@@ -1018,12 +1018,9 @@ public abstract class MessageUtils {
         builder.setIcon(R.drawable.ic_error);
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-                    dialog.dismiss();
-                }
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            if (which == DialogInterface.BUTTON_POSITIVE) {
+                dialog.dismiss();
             }
         });
         builder.show();
@@ -1054,48 +1051,35 @@ public abstract class MessageUtils {
         // within one second.
         // Stash the runnable for showing it away so we can cancel
         // it later if the resize completes ahead of the deadline.
-        final Runnable showProgress = new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, R.string.compressing, Toast.LENGTH_SHORT).show();
-            }
-        };
+        final Runnable showProgress = () -> Toast.makeText(context, R.string.compressing, Toast.LENGTH_SHORT).show();
         // Schedule it for one second from now.
         handler.postDelayed(showProgress, 1000);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final PduPart part;
-                try {
-                    UriImage image = new UriImage(context, imageUri);
-                    int widthLimit = MmsConfig.getMaxImageWidth();
-                    int heightLimit = MmsConfig.getMaxImageHeight();
-                    // In mms_config.xml, the max width has always been declared larger than the max
-                    // height. Swap the width and height limits if necessary so we scale the picture
-                    // as little as possible.
-                    if (image.getHeight() > image.getWidth()) {
-                        int temp = widthLimit;
-                        widthLimit = heightLimit;
-                        heightLimit = temp;
-                    }
-
-                    part = image.getResizedImageAsPart(
-                            widthLimit,
-                            heightLimit,
-                            MmsConfig.getMaxMessageSize() - MESSAGE_OVERHEAD);
-                } finally {
-                    // Cancel pending show of the progress toast if necessary.
-                    handler.removeCallbacks(showProgress);
+        new Thread(() -> {
+            final PduPart part;
+            try {
+                UriImage image = new UriImage(context, imageUri);
+                int widthLimit = MmsConfig.getMaxImageWidth();
+                int heightLimit = MmsConfig.getMaxImageHeight();
+                // In mms_config.xml, the max width has always been declared larger than the max
+                // height. Swap the width and height limits if necessary so we scale the picture
+                // as little as possible.
+                if (image.getHeight() > image.getWidth()) {
+                    int temp = widthLimit;
+                    widthLimit = heightLimit;
+                    heightLimit = temp;
                 }
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        cb.onResizeResult(part, append);
-                    }
-                });
+                part = image.getResizedImageAsPart(
+                        widthLimit,
+                        heightLimit,
+                        MmsConfig.getMaxMessageSize() - MESSAGE_OVERHEAD);
+            } finally {
+                // Cancel pending show of the progress toast if necessary.
+                handler.removeCallbacks(showProgress);
             }
+
+            handler.post(() -> cb.onResizeResult(part, append));
         }, "MessageUtils.resizeImageAsync").start();
     }
 
@@ -1181,39 +1165,30 @@ public abstract class MessageUtils {
             c.close();
         }
 
-        OnClickListener positiveListener = new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                for (final Map.Entry<String, String> entry : map.entrySet()) {
-                    MmsMessageSender.sendReadRec(context, entry.getValue(),
-                            entry.getKey(), status);
-                }
-
-                if (callback != null) {
-                    callback.run();
-                }
-                dialog.dismiss();
+        OnClickListener positiveListener = (dialog, which) -> {
+            for (final Map.Entry<String, String> entry : map.entrySet()) {
+                MmsMessageSender.sendReadRec(context, entry.getValue(),
+                        entry.getKey(), status);
             }
+
+            if (callback != null) {
+                callback.run();
+            }
+            dialog.dismiss();
         };
 
-        OnClickListener negativeListener = new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (callback != null) {
-                    callback.run();
-                }
-                dialog.dismiss();
+        OnClickListener negativeListener = (dialog, which) -> {
+            if (callback != null) {
+                callback.run();
             }
+            dialog.dismiss();
         };
 
-        OnCancelListener cancelListener = new OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                if (callback != null) {
-                    callback.run();
-                }
-                dialog.dismiss();
+        OnCancelListener cancelListener = dialog -> {
+            if (callback != null) {
+                callback.run();
             }
+            dialog.dismiss();
         };
 
         confirmReadReportDialog(context, positiveListener,
@@ -1295,29 +1270,23 @@ public abstract class MessageUtils {
             // in a background task. If the task takes longer than a half second, a progress dialog
             // is displayed. Once the PDU persisting is done, another runnable on the UI thread get
             // executed to start the SlideshowActivity.
-            asyncDialog.runAsync(new Runnable() {
-                @Override
-                public void run() {
-                    // If a slideshow was provided, save it to disk first.
-                    if (slideshow != null) {
-                        PduPersister persister = PduPersister.getPduPersister(activity);
-                        try {
-                            PduBody pb = slideshow.toPduBody();
-                            persister.updateParts(msgUri, pb, null);
-                            slideshow.sync(pb);
-                        } catch (MmsException e) {
-                            Log.e(TAG, "Unable to save message for preview");
-                            return;
-                        }
+            asyncDialog.runAsync(() -> {
+                // If a slideshow was provided, save it to disk first.
+                if (slideshow != null) {
+                    PduPersister persister = PduPersister.getPduPersister(activity);
+                    try {
+                        PduBody pb = slideshow.toPduBody();
+                        persister.updateParts(msgUri, pb, null);
+                        slideshow.sync(pb);
+                    } catch (MmsException e) {
+                        Log.e(TAG, "Unable to save message for preview");
+                        return;
                     }
                 }
-            }, new Runnable() {
-                @Override
-                public void run() {
-                    // Once the above background thread is complete, this runnable is run
-                    // on the UI thread to launch the slideshow activity.
-                    launchSlideshowActivity(activity, msgUri, requestCode);
-                }
+            }, () -> {
+                // Once the above background thread is complete, this runnable is run
+                // on the UI thread to launch the slideshow activity.
+                launchSlideshowActivity(activity, msgUri, requestCode);
             }, R.string.building_slideshow_title);
         }
     }

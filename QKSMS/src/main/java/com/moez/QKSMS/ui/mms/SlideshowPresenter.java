@@ -67,24 +67,21 @@ public class SlideshowPresenter extends Presenter {
         }
     }
 
-    private final AdaptableSlideViewInterface.OnSizeChangedListener mViewSizeChangedListener =
-        new AdaptableSlideViewInterface.OnSizeChangedListener() {
-        public void onSizeChanged(int width, int height) {
-            LayoutModel layout = ((SlideshowModel) mModel).getLayout();
-            mWidthTransformRatio = getWidthTransformRatio(
-                    width, layout.getLayoutWidth());
-            mHeightTransformRatio = getHeightTransformRatio(
-                    height, layout.getLayoutHeight());
-            // The ratio indicates how to reduce the source to match the View,
-            // so the larger one should be used.
-            float ratio = mWidthTransformRatio > mHeightTransformRatio ?
-                    mWidthTransformRatio : mHeightTransformRatio;
-            mWidthTransformRatio = ratio;
-            mHeightTransformRatio = ratio;
-            if (LOCAL_LOGV) {
-                Log.v(TAG, "ratio_w = " + mWidthTransformRatio
-                        + ", ratio_h = " + mHeightTransformRatio);
-            }
+    private final AdaptableSlideViewInterface.OnSizeChangedListener mViewSizeChangedListener = (width, height) -> {
+        LayoutModel layout = ((SlideshowModel) mModel).getLayout();
+        mWidthTransformRatio = getWidthTransformRatio(
+                width, layout.getLayoutWidth());
+        mHeightTransformRatio = getHeightTransformRatio(
+                height, layout.getLayoutHeight());
+        // The ratio indicates how to reduce the source to match the View,
+        // so the larger one should be used.
+        float ratio = mWidthTransformRatio > mHeightTransformRatio ?
+                mWidthTransformRatio : mHeightTransformRatio;
+        mWidthTransformRatio = ratio;
+        mHeightTransformRatio = ratio;
+        if (LOCAL_LOGV) {
+            Log.v(TAG, "ratio_w = " + mWidthTransformRatio
+                    + ", ratio_h = " + mHeightTransformRatio);
         }
     };
 
@@ -137,7 +134,7 @@ public class SlideshowPresenter extends Presenter {
      * @param view
      */
     protected void presentRegionMedia(SlideViewInterface view,
-            RegionMediaModel rMedia, boolean dataChanged) {
+                                      RegionMediaModel rMedia, boolean dataChanged) {
         RegionModel r = (rMedia).getRegion();
         if (rMedia.isText()) {
             presentText(view, (TextModel) rMedia, r, dataChanged);
@@ -149,7 +146,7 @@ public class SlideshowPresenter extends Presenter {
     }
 
     protected void presentAudio(SlideViewInterface view, AudioModel audio,
-            boolean dataChanged) {
+                                boolean dataChanged) {
         // Set audio only when data changed.
         if (dataChanged) {
             view.setAudio(audio.getUri(), audio.getSrc(), audio.getExtras());
@@ -168,7 +165,7 @@ public class SlideshowPresenter extends Presenter {
     }
 
     protected void presentText(SlideViewInterface view, TextModel text,
-            RegionModel r, boolean dataChanged) {
+                               RegionModel r, boolean dataChanged) {
         if (dataChanged) {
             view.setText(text.getSrc(), text.getText());
         }
@@ -189,7 +186,7 @@ public class SlideshowPresenter extends Presenter {
      * @param r
      */
     protected void presentImage(SlideViewInterface view, ImageModel image,
-            RegionModel r, boolean dataChanged) {
+                                RegionModel r, boolean dataChanged) {
         int transformedWidth = transformWidth(r.getWidth());
         int transformedHeight = transformWidth(r.getHeight());
 
@@ -221,12 +218,12 @@ public class SlideshowPresenter extends Presenter {
      * @param r
      */
     protected void presentVideo(SlideViewInterface view, VideoModel video,
-            RegionModel r, boolean dataChanged) {
+                                RegionModel r, boolean dataChanged) {
         if (dataChanged) {
             view.setVideo(video.getSrc(), video.getUri());
         }
 
-            if (view instanceof AdaptableSlideViewInterface) {
+        if (view instanceof AdaptableSlideViewInterface) {
             ((AdaptableSlideViewInterface) view).setVideoRegion(
                     transformWidth(r.getLeft()),
                     transformHeight(r.getTop()),
@@ -275,31 +272,15 @@ public class SlideshowPresenter extends Presenter {
             // TODO:
         } else if (model instanceof SlideModel) {
             if (((SlideModel) model).isVisible()) {
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        presentSlide(view, (SlideModel) model);
-                    }
-                });
+                mHandler.post(() -> presentSlide(view, (SlideModel) model));
             } else {
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        goForward();
-                    }
-                });
+                mHandler.post(this::goForward);
             }
         } else if (model instanceof MediaModel) {
             if (model instanceof RegionMediaModel) {
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        presentRegionMedia(view, (RegionMediaModel) model, dataChanged);
-                    }
-                });
+                mHandler.post(() -> presentRegionMedia(view, (RegionMediaModel) model, dataChanged));
             } else if (((MediaModel) model).isAudio()) {
-                mHandler.post(new Runnable() {
-                    public void run() {
-                        presentAudio(view, (AudioModel) model, dataChanged);
-                    }
-                });
+                mHandler.post(() -> presentAudio(view, (AudioModel) model, dataChanged));
             }
         } else if (model instanceof RegionModel) {
             // TODO:

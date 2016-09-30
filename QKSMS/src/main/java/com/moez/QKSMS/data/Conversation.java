@@ -1093,12 +1093,7 @@ public class Conversation {
      * startup time.
      */
     public static void init(final Context context) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                cacheAllThreads(context);
-            }
-        }, "Conversation.init");
+        Thread thread = new Thread(() -> cacheAllThreads(context), "Conversation.init");
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.start();
     }
@@ -1108,18 +1103,15 @@ public class Conversation {
             Contact.logWithTrace(TAG, "Conversation.markAllConversationsAsSeen");
         }
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (DELETEDEBUG) {
-                    Log.d(TAG, "Conversation.markAllConversationsAsSeen.run");
-                }
-                blockingMarkAllSmsMessagesAsSeen(context);
-                blockingMarkAllMmsMessagesAsSeen(context);
-
-                // Always update notifications regardless of the read state.
-                //MessagingNotification.blockingUpdateAllNotifications(context, MessagingNotification.THREAD_NONE);
+        Thread thread = new Thread(() -> {
+            if (DELETEDEBUG) {
+                Log.d(TAG, "Conversation.markAllConversationsAsSeen.run");
             }
+            blockingMarkAllSmsMessagesAsSeen(context);
+            blockingMarkAllMmsMessagesAsSeen(context);
+
+            // Always update notifications regardless of the read state.
+            //MessagingNotification.blockingUpdateAllNotifications(context, MessagingNotification.THREAD_NONE);
         }, "Conversation.markAllConversationsAsSeen");
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.start();

@@ -40,12 +40,9 @@ public class QKRingtonePreference extends RingtonePreference {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnPreferenceClickListener != null) {
-                    mOnPreferenceClickListener.onPreferenceClick(QKRingtonePreference.this);
-                }
+        view.setOnClickListener(v -> {
+            if (mOnPreferenceClickListener != null) {
+                mOnPreferenceClickListener.onPreferenceClick(QKRingtonePreference.this);
             }
         });
 

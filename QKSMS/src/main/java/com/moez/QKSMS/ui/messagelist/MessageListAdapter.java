@@ -247,18 +247,15 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
                 holder.inflateDownloadControls();
                 holder.mDownloadingLabel.setVisibility(View.GONE);
                 holder.mDownloadButton.setVisibility(View.VISIBLE);
-                holder.mDownloadButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holder.mDownloadingLabel.setVisibility(View.VISIBLE);
-                        holder.mDownloadButton.setVisibility(View.GONE);
-                        Intent intent = new Intent(mContext, TransactionService.class);
-                        intent.putExtra(TransactionBundle.URI, messageItem.mMessageUri.toString());
-                        intent.putExtra(TransactionBundle.TRANSACTION_TYPE, Transaction.RETRIEVE_TRANSACTION);
-                        mContext.startService(intent);
+                holder.mDownloadButton.setOnClickListener(v -> {
+                    holder.mDownloadingLabel.setVisibility(View.VISIBLE);
+                    holder.mDownloadButton.setVisibility(View.GONE);
+                    Intent intent = new Intent(mContext, TransactionService.class);
+                    intent.putExtra(TransactionBundle.URI, messageItem.mMessageUri.toString());
+                    intent.putExtra(TransactionBundle.TRANSACTION_TYPE, Transaction.RETRIEVE_TRANSACTION);
+                    mContext.startService(intent);
 
-                        DownloadManager.getInstance().markState(messageItem.mMessageUri, DownloadManager.STATE_PRE_DOWNLOADING);
-                    }
+                    DownloadManager.getInstance().markState(messageItem.mMessageUri, DownloadManager.STATE_PRE_DOWNLOADING);
                 });
                 break;
         }

@@ -113,14 +113,11 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
                     final Contact contact = Contact.get(ContactHelper.getPhoneNumber(
                             mContext, mCursor.getString(ContactHelper.Favorites.ID)), true);
 
-                    final View.OnClickListener onClickListener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            collapse();
-                            mRecipients.submitItem(contact.getName(), contact.getNumber(),
-                                    photoUri == null ? null : Uri.parse(photoUri));
-                            mComposeView.requestReplyTextFocus();
-                        }
+                    final View.OnClickListener onClickListener = v -> {
+                        collapse();
+                        mRecipients.submitItem(contact.getName(), contact.getNumber(),
+                                photoUri == null ? null : Uri.parse(photoUri));
+                        mComposeView.requestReplyTextFocus();
                     };
 
                     View view = inflater.inflate(R.layout.view_favorite_contact, null);

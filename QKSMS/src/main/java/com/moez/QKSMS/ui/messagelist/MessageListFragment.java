@@ -304,11 +304,8 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
                                 .setTitle(R.string.warning)
                                 .setMessage(R.string.stagefright_warning)
                                 .setNegativeButton(R.string.cancel, null)
-                                .setPositiveButton(R.string.yes, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        MessageUtils.viewMmsMessageAttachment(getActivity(), messageItem.mMessageUri, messageItem.mSlideshow, getAsyncDialog());
-                                    }
+                                .setPositiveButton(R.string.yes, view1 -> {
+                                    MessageUtils.viewMmsMessageAttachment(getActivity(), messageItem.mMessageUri, messageItem.mSlideshow, getAsyncDialog());
                                 })
                                 .show();
                         break;

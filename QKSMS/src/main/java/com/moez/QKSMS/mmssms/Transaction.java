@@ -270,24 +270,21 @@ public class Transaction {
     private void sendDelayedSms(final SmsManager smsManager, final String address,
                                 final ArrayList<String> parts, final ArrayList<PendingIntent> sPI,
                                 final ArrayList<PendingIntent> dPI, final int delay, final Uri messageUri) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(delay);
-                } catch (Exception e) {
-                }
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+            } catch (Exception e) {
+            }
 
-                if (checkIfMessageExistsAfterDelay(messageUri)) {
-                    if (LOCAL_LOGV) Log.v(TAG, "message sent after delay");
-                    try {
-                        smsManager.sendMultipartTextMessage(address, null, parts, sPI, dPI);
-                    } catch (Exception e) {
-                        Log.e(TAG, "exception thrown", e);
-                    }
-                } else {
-                    if (LOCAL_LOGV) Log.v(TAG, "message not sent after delay, no longer exists");
+            if (checkIfMessageExistsAfterDelay(messageUri)) {
+                if (LOCAL_LOGV) Log.v(TAG, "message sent after delay");
+                try {
+                    smsManager.sendMultipartTextMessage(address, null, parts, sPI, dPI);
+                } catch (Exception e) {
+                    Log.e(TAG, "exception thrown", e);
                 }
+            } else {
+                if (LOCAL_LOGV) Log.v(TAG, "message not sent after delay, no longer exists");
             }
         }).start();
     }
@@ -584,19 +581,16 @@ public class Transaction {
             }
 
             // try sending after 3 seconds anyways if for some reason the receiver doesn't work
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!alreadySending) {
-                        try {
-                            if (LOCAL_LOGV) Log.v(TAG, "sending through handler");
-                            context.unregisterReceiver(receiver);
-                        } catch (Exception e) {
+            new Handler().postDelayed(() -> {
+                if (!alreadySending) {
+                    try {
+                        if (LOCAL_LOGV) Log.v(TAG, "sending through handler");
+                        context.unregisterReceiver(receiver);
+                    } catch (Exception e) {
 
-                        }
-
-                        sendData(bytesToSend);
                     }
+
+                    sendData(bytesToSend);
                 }
             }, 7000);
         } else {
@@ -672,23 +666,20 @@ public class Transaction {
                 }
 
                 // try sending after 3 seconds anyways if for some reason the receiver doesn't work
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!alreadySending) {
-                            try {
-                                context.unregisterReceiver(receiver);
-                            } catch (Exception e) {
+                new Handler().postDelayed(() -> {
+                    if (!alreadySending) {
+                        try {
+                            context.unregisterReceiver(receiver);
+                        } catch (Exception e) {
 
-                            }
+                        }
 
-                            try {
-                                Utils.ensureRouteToHost(context, settings.getMmsc(), settings.getProxy());
-                                sendData(bytesToSend);
-                            } catch (Exception e) {
-                                Log.e(TAG, "exception thrown", e);
-                                sendData(bytesToSend);
-                            }
+                        try {
+                            Utils.ensureRouteToHost(context, settings.getMmsc(), settings.getProxy());
+                            sendData(bytesToSend);
+                        } catch (Exception e) {
+                            Log.e(TAG, "exception thrown", e);
+                            sendData(bytesToSend);
                         }
                     }
                 }, 7000);
@@ -699,44 +690,39 @@ public class Transaction {
     private void sendData(final byte[] bytesToSend) {
         // be sure this is running on new thread, not UI
         if (LOCAL_LOGV) Log.v(TAG, "starting new thread to send on");
-        new Thread(new Runnable() {
+        new Thread(() -> {
+            List<APN> apns = new ArrayList<>();
 
-            @Override
-            public void run() {
-                List<APN> apns = new ArrayList<>();
+            try {
+                APN apn = new APN(settings.getMmsc(), settings.getPort(), settings.getProxy());
+                apns.add(apn);
 
-                try {
-                    APN apn = new APN(settings.getMmsc(), settings.getPort(), settings.getProxy());
-                    apns.add(apn);
+                String mmscUrl = apns.get(0).MMSCenterUrl != null ? apns.get(0).MMSCenterUrl.trim() : null;
+                apns.get(0).MMSCenterUrl = mmscUrl;
 
-                    String mmscUrl = apns.get(0).MMSCenterUrl != null ? apns.get(0).MMSCenterUrl.trim() : null;
-                    apns.get(0).MMSCenterUrl = mmscUrl;
-
-                    if (apns.get(0).MMSCenterUrl.equals("")) {
-                        // attempt to get apns from internal databases, most likely will fail due to insignificant permissions
-                        APNHelper helper = new APNHelper(context);
-                        apns = helper.getMMSApns();
-                    }
-                } catch (Exception e) {
-                    // error in the apns, none are available most likely causing an index out of bounds
-                    // exception. cant send a message, so therefore mark as failed
-                    markMmsFailed();
-                    return;
+                if (apns.get(0).MMSCenterUrl.equals("")) {
+                    // attempt to get apns from internal databases, most likely will fail due to insignificant permissions
+                    APNHelper helper = new APNHelper(context);
+                    apns = helper.getMMSApns();
                 }
+            } catch (Exception e) {
+                // error in the apns, none are available most likely causing an index out of bounds
+                // exception. cant send a message, so therefore mark as failed
+                markMmsFailed();
+                return;
+            }
 
-                try {
-                    // attempts to send the message using given apns
-                    if (LOCAL_LOGV)
-                        Log.v(TAG, apns.get(0).MMSCenterUrl + " " + apns.get(0).MMSProxy + " " + apns.get(0).MMSPort);
-                    if (LOCAL_LOGV) Log.v(TAG, "initial attempt at sending starting now");
-                    trySending(apns.get(0), bytesToSend, 0);
-                } catch (Exception e) {
-                    // some type of apn error, so notify user of failure
-                    if (LOCAL_LOGV)
-                        Log.v(TAG, "weird error, not sure how this could even be called other than apn stuff");
-                    markMmsFailed();
-                }
-
+            try {
+                // attempts to send the message using given apns
+                if (LOCAL_LOGV)
+                    Log.v(TAG, apns.get(0).MMSCenterUrl + " " + apns.get(0).MMSProxy + " " + apns.get(0).MMSPort);
+                if (LOCAL_LOGV) Log.v(TAG, "initial attempt at sending starting now");
+                trySending(apns.get(0), bytesToSend, 0);
+            } catch (Exception e) {
+                // some type of apn error, so notify user of failure
+                if (LOCAL_LOGV)
+                    Log.v(TAG, "weird error, not sure how this could even be called other than apn stuff");
+                markMmsFailed();
             }
 
         }).start();
@@ -780,13 +766,10 @@ public class Transaction {
                         } catch (Exception e) { /* Receiver not registered */ }
 
                         // give everything time to finish up, may help the abort being shown after the progress is already 100
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mConnMgr.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE_MMS, "enableMMS");
-                                if (settings.getWifiMmsFix()) {
-                                    reinstateWifi();
-                                }
+                        new Handler().postDelayed(() -> {
+                            mConnMgr.stopUsingNetworkFeature(ConnectivityManager.TYPE_MOBILE_MMS, "enableMMS");
+                            if (settings.getWifiMmsFix()) {
+                                reinstateWifi();
                             }
                         }, 1000);
                     } else if (progress == ProgressCallbackEntity.PROGRESS_ABORT) {
@@ -858,17 +841,12 @@ public class Transaction {
             context.getContentResolver().update(Uri.parse("content://mms"), values, where, null);
         }
 
-        ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content).post(new Runnable() {
+        ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content).post(() -> {
+            context.sendBroadcast(new Intent(REFRESH));
+            context.sendBroadcast(new Intent(NOTIFY_SMS_FAILURE));
 
-            @Override
-            public void run() {
-                context.sendBroadcast(new Intent(REFRESH));
-                context.sendBroadcast(new Intent(NOTIFY_SMS_FAILURE));
-
-                // broadcast that mms has failed and you can notify user from there if you would like
-                context.sendBroadcast(new Intent(MMS_ERROR));
-
-            }
+            // broadcast that mms has failed and you can notify user from there if you would like
+            context.sendBroadcast(new Intent(MMS_ERROR));
 
         });
     }

@@ -46,48 +46,45 @@ public class BubblePreferenceDialog extends QKDialog {
         out2.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
         out2.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
 
-        Preference.OnPreferenceClickListener onPreferenceClickListener = new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Log.d(TAG, preference.getKey());
-                switch (preference.getKey()) {
-                    case SettingsFragment.BUBBLES_NEW:
-                        ThemeManager.setBubbleStyleNew(((QKSwitchPreference) preference).isChecked());
-                        in1.setBackgroundResource(ThemeManager.getReceivedBubbleRes());
-                        in1.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        in1.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
+        Preference.OnPreferenceClickListener onPreferenceClickListener = preference -> {
+            Log.d(TAG, preference.getKey());
+            switch (preference.getKey()) {
+                case SettingsFragment.BUBBLES_NEW:
+                    ThemeManager.setBubbleStyleNew(((QKSwitchPreference) preference).isChecked());
+                    in1.setBackgroundResource(ThemeManager.getReceivedBubbleRes());
+                    in1.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    in1.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
 
-                        in2.setBackgroundResource(ThemeManager.getReceivedBubbleAltRes());
-                        in2.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        in2.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
+                    in2.setBackgroundResource(ThemeManager.getReceivedBubbleAltRes());
+                    in2.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    in2.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
 
-                        out1.setBackgroundResource(ThemeManager.getSentBubbleRes());
-                        out1.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        out1.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
+                    out1.setBackgroundResource(ThemeManager.getSentBubbleRes());
+                    out1.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    out1.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
 
-                        out2.setBackgroundResource(ThemeManager.getSentBubbleAltRes());
-                        out2.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        out2.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
-                        return true;
+                    out2.setBackgroundResource(ThemeManager.getSentBubbleAltRes());
+                    out2.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    out2.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
+                    return true;
 
-                    case SettingsFragment.COLOR_RECEIVED:
-                        ThemeManager.setReceivedBubbleColored(((QKSwitchPreference) preference).isChecked());
-                        in1.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        in1.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
-                        in2.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        in2.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
-                        return true;
+                case SettingsFragment.COLOR_RECEIVED:
+                    ThemeManager.setReceivedBubbleColored(((QKSwitchPreference) preference).isChecked());
+                    in1.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    in1.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
+                    in2.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    in2.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
+                    return true;
 
-                    case SettingsFragment.COLOR_SENT:
-                        ThemeManager.setSentBubbleColored(((QKSwitchPreference) preference).isChecked());
-                        out1.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        out1.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
-                        out2.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
-                        out2.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
-                        return true;
-                }
-                return false;
+                case SettingsFragment.COLOR_SENT:
+                    ThemeManager.setSentBubbleColored(((QKSwitchPreference) preference).isChecked());
+                    out1.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    out1.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
+                    out2.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
+                    out2.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
+                    return true;
             }
+            return false;
         };
 
         LinearLayout prefsLayout = (LinearLayout) view.findViewById(R.id.prefs);

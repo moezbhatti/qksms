@@ -495,27 +495,24 @@ public class Contact {
             private final ArrayList<Runnable> mThingsToLoad;
 
             public TaskStack() {
-                mThingsToLoad = new ArrayList<Runnable>();
-                mWorkerThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            Runnable r = null;
-                            synchronized (mThingsToLoad) {
-                                if (mThingsToLoad.isEmpty()) {
-                                    try {
-                                        mThingsToLoad.wait();
-                                    } catch (InterruptedException ex) {
-                                        break;  // Exception sent by Contact.init() to stop Runnable
-                                    }
-                                }
-                                if (!mThingsToLoad.isEmpty()) {
-                                    r = mThingsToLoad.remove(0);
+                mThingsToLoad = new ArrayList<>();
+                mWorkerThread = new Thread(() -> {
+                    while (true) {
+                        Runnable r = null;
+                        synchronized (mThingsToLoad) {
+                            if (mThingsToLoad.isEmpty()) {
+                                try {
+                                    mThingsToLoad.wait();
+                                } catch (InterruptedException ex) {
+                                    break;  // Exception sent by Contact.init() to stop Runnable
                                 }
                             }
-                            if (r != null) {
-                                r.run();
+                            if (!mThingsToLoad.isEmpty()) {
+                                r = mThingsToLoad.remove(0);
                             }
+                        }
+                        if (r != null) {
+                            r.run();
                         }
                     }
                 }, "Contact.ContactsCache.TaskStack worker thread");
@@ -582,12 +579,7 @@ public class Contact {
                     }
 
                     final Contact c = contact;
-                    r = new Runnable() {
-                        @Override
-                        public void run() {
-                            updateContact(c);
-                        }
-                    };
+                    r = () -> updateContact(c);
 
                     // set this to true while we have the lock on contact since we will
                     // either run the query directly (canBlock case) or push the query

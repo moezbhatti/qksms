@@ -350,12 +350,7 @@ public class MainActivity extends QKActivity {
             checkbox.setVisibility(View.GONE);
         } else {
             listener.setDeleteLockedMessage(checkbox.isChecked());
-            checkbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.setDeleteLockedMessage(checkbox.isChecked());
-                }
-            });
+            checkbox.setOnClickListener(v -> listener.setDeleteLockedMessage(checkbox.isChecked()));
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

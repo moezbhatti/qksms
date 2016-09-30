@@ -25,7 +25,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
@@ -35,24 +34,23 @@ import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.common.YappyImplementation;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.service.DeleteOldMessagesService;
-import com.moez.QKSMS.common.YappyImplementation;
-import com.moez.QKSMS.common.NotificationManager;
-import com.moez.QKSMS.common.SmsHelper;
-import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
-import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
+import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
-import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -258,13 +256,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
             mLedColorPickerDialog = new ColorPickerDialog();
             mLedColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(mPrefs.getString(NOTIFICATION_LED_COLOR, "-48060")), 3, 2);
-            mLedColorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-
-                @Override
-                public void onColorSelected(int color) {
-                    mPrefs.edit().putString(mThemeLed.getKey(), "" + color).apply();
-                    onPreferenceChange(findPreference(mThemeLed.getKey()), color);
-                }
+            mLedColorPickerDialog.setOnColorSelectedListener(color -> {
+                mPrefs.edit().putString(mThemeLed.getKey(), "" + color).apply();
+                onPreferenceChange(findPreference(mThemeLed.getKey()), color);
             });
         }
 
@@ -646,12 +640,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                         .setContext(mContext)
                         .setTitle(R.string.pref_about_thanks_title)
                         .setTripleLineItems(R.array.contributor_names, R.array.contributor_githubs, R.array.contributor_projects,
-                                new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        String baseUrl = ((QKTextView) view.findViewById(R.id.list_item_subtitle)).getText().toString();
-                                        startBrowserIntent("https://" + baseUrl);
-                                    }
+                                (parent, view, position, id) -> {
+                                    String baseUrl = ((QKTextView) view.findViewById(R.id.list_item_subtitle)).getText().toString();
+                                    startBrowserIntent("https://" + baseUrl);
                                 })
                         .show();
                 break;
@@ -701,12 +692,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 .setContext(mContext)
                 .setTitle(R.string.title_qk_responses)
                 .setCustomView(listView)
-                .setPositiveButton(R.string.save, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPrefs.edit().putStringSet(SettingsFragment.QK_RESPONSES, new HashSet<>(adapter.getResponses())).apply();
-                    }
-                })
+                .setPositiveButton(R.string.save, v -> mPrefs.edit().putStringSet(SettingsFragment.QK_RESPONSES, new HashSet<>(adapter.getResponses())).apply())
                 .setNegativeButton(R.string.cancel, null)
                 .show(getFragmentManager(), "qk_response");
     }
