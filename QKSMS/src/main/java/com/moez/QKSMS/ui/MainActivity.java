@@ -25,7 +25,9 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.QKRateSnack;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.MessageUtils;
@@ -33,16 +35,15 @@ import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.service.DeleteOldMessagesService;
-import com.moez.QKSMS.common.NotificationManager;
-import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
-import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
+import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.search.SearchActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 import org.ligi.snackengage.SnackEngage;
 import org.ligi.snackengage.snacks.BaseSnack;
@@ -334,7 +335,7 @@ public class MainActivity extends QKActivity {
     public static void confirmDeleteThreadDialog(final DeleteThreadListener listener, Collection<Long> threadIds,
                                                  boolean hasLockedMessages, Context context) {
         View contents = View.inflate(context, R.layout.dialog_delete_thread, null);
-        android.widget.TextView msg = (android.widget.TextView) contents.findViewById(R.id.message);
+        QKTextView msg = (QKTextView) contents.findViewById(R.id.message);
 
         if (threadIds == null) {
             msg.setText(R.string.confirm_delete_all_conversations);

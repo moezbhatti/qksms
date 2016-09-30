@@ -189,7 +189,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                 return true;
 
             case R.id.menu_delete:
-                DialogHelper.showDeleteConversationsDialog((MainActivity) mContext, mAdapter.getSelectedItems().keySet());
+                DialogHelper.showDeleteConversationsDialog(mContext, mAdapter.getSelectedItems().keySet());
                 mAdapter.disableMultiSelectMode(true);
                 return true;
 
