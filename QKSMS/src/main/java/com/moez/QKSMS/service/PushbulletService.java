@@ -18,7 +18,6 @@ public class PushbulletService extends MessagingExtension {
 
         Transaction sendTransaction = new Transaction(getApplicationContext(), SmsHelper.getSendSettings(getApplicationContext()));
         Message message = new com.moez.QKSMS.mmssms.Message(body, conversation.getAddress());
-        message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
         sendTransaction.sendNewMessage(message, conversation.getThreadId());
 
         QKReplyActivity.dismiss(conversation.getThreadId());
@@ -32,5 +31,4 @@ public class PushbulletService extends MessagingExtension {
         ConversationLegacy conversation = new ConversationLegacy(getApplicationContext(), threadId);
         conversation.markRead();
     }
-
 }

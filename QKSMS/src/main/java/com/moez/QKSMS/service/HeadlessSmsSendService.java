@@ -39,7 +39,6 @@ public class HeadlessSmsSendService extends IntentService {
                 Transaction sendTransaction = new Transaction(this, SmsHelper.getSendSettings(this));
 
                 Message message = new Message(body, destinations);
-                message.setType(Message.TYPE_SMSMMS);
 
                 sendTransaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
                 NotificationManager.update(this);

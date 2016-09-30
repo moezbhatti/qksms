@@ -31,10 +31,8 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
-import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -56,9 +54,6 @@ import com.google.android.mms.pdu_alt.PduComposer;
 import com.google.android.mms.pdu_alt.PduPart;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.SendReq;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.koushikdutta.ion.Ion;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.SmilHelper;
 import com.moez.QKSMS.enums.QKPreference;
@@ -72,9 +67,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Class to process transaction requests for sending
@@ -157,14 +150,8 @@ public class Transaction {
             DownloadManager.init(context);
             sendMmsMessage(message.getText(), message.getAddresses(), message.getImages(), message.getImageNames(), message.getMedia(), message.getMediaMimeType(), message.getSubject());
         } else {
-            if (message.getType() == Message.TYPE_VOICE) {
-                sendVoiceMessage(message.getText(), message.getAddresses(), threadId);
-            } else if (message.getType() == Message.TYPE_SMSMMS) {
-                if (LOCAL_LOGV) Log.v(TAG, "sending sms");
-                sendSmsMessage(message.getText(), message.getAddresses(), threadId, message.getDelay());
-            } else {
-                if (LOCAL_LOGV) Log.v(TAG, "error with message type, aborting...");
-            }
+            if (LOCAL_LOGV) Log.v(TAG, "sending sms");
+            sendSmsMessage(message.getText(), message.getAddresses(), threadId, message.getDelay());
         }
 
     }
@@ -533,35 +520,6 @@ public class Transaction {
         public long token;
         public Uri location;
         public byte[] bytes;
-    }
-
-    private void sendVoiceMessage(String text, String[] addresses, long threadId) {
-        // send a voice message to each recipient based off of koush's voice implementation in Voice+
-        for (int i = 0; i < addresses.length; i++) {
-            if (saveMessage) {
-                Calendar cal = Calendar.getInstance();
-                ContentValues values = new ContentValues();
-                values.put("address", addresses[i]);
-                values.put("body", text);
-                values.put("date", cal.getTimeInMillis() + "");
-                values.put("read", 1);
-                values.put("status", 2);   // if you want to be able to tell the difference between sms and voice, look for this value. SMS will be -1, 0, 64, 128 and voice will be 2
-
-                // attempt to create correct thread id if one is not supplied
-                if (threadId == NO_THREAD_ID || addresses.length > 1) {
-                    threadId = Utils.getOrCreateThreadId(context, addresses[i]);
-                }
-
-                values.put("thread_id", threadId);
-                context.getContentResolver().insert(Uri.parse("content://sms/outbox"), values);
-            }
-
-            if (!settings.getSignature().equals("")) {
-                text += "\n" + settings.getSignature();
-            }
-
-            sendVoiceMessage(addresses[i], text);
-        }
     }
 
     // splits text and adds split counter when applicable
@@ -933,142 +891,6 @@ public class Transaction {
         });
     }
 
-    private void sendVoiceMessage(final String destAddr, final String text) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String rnrse = settings.getRnrSe();
-                String account = settings.getAccount();
-                String authToken;
-
-                try {
-                    authToken = Utils.getAuthToken(account, context);
-
-                    if (rnrse == null) {
-                        rnrse = fetchRnrSe(authToken, context);
-                    }
-                } catch (Exception e) {
-                    failVoice();
-                    return;
-                }
-
-                try {
-                    sendRnrSe(authToken, rnrse, destAddr, text);
-                    successVoice();
-                    return;
-                } catch (Exception e) {
-                }
-
-                try {
-                    // try again...
-                    rnrse = fetchRnrSe(authToken, context);
-                    sendRnrSe(authToken, rnrse, destAddr, text);
-                    successVoice();
-                } catch (Exception e) {
-                    failVoice();
-                }
-            }
-        }).start();
-    }
-
-    // hit the google voice api to send a text
-    private void sendRnrSe(String authToken, String rnrse, String number, String text) throws Exception {
-        JsonObject json = Ion.with(context)
-                .load("https://www.google.com/voice/sms/send/")
-                .setHeader("Authorization", "GoogleLogin auth=" + authToken)
-                .setBodyParameter("phoneNumber", number)
-                .setBodyParameter("sendErrorSms", "0")
-                .setBodyParameter("text", text)
-                .setBodyParameter("_rnr_se", rnrse)
-                .asJsonObject()
-                .get();
-
-        if (!json.get("ok").getAsBoolean())
-            throw new Exception(json.toString());
-    }
-
-    private void failVoice() {
-        if (saveMessage) {
-            Cursor query = context.getContentResolver().query(Uri.parse("content://sms/outbox"), null, null, null, null);
-
-            // mark message as failed
-            if (query.moveToFirst()) {
-                String id = query.getString(query.getColumnIndex("_id"));
-                ContentValues values = new ContentValues();
-                values.put("type", "5");
-                values.put("read", true);
-                context.getContentResolver().update(Uri.parse("content://sms/outbox"), values, "_id=" + id, null);
-            }
-
-            query.close();
-        }
-
-        context.sendBroadcast(new Intent(REFRESH));
-        context.sendBroadcast(new Intent(VOICE_FAILED));
-    }
-
-    private void successVoice() {
-        if (saveMessage) {
-            Cursor query = context.getContentResolver().query(Uri.parse("content://sms/outbox"), null, null, null, null);
-
-            // mark message as sent successfully
-            if (query.moveToFirst()) {
-                String id = query.getString(query.getColumnIndex("_id"));
-                ContentValues values = new ContentValues();
-                values.put("type", "2");
-                values.put("read", true);
-                context.getContentResolver().update(Uri.parse("content://sms/outbox"), values, "_id=" + id, null);
-            }
-
-            query.close();
-        }
-
-        context.sendBroadcast(new Intent(REFRESH));
-    }
-
-    private String fetchRnrSe(String authToken, Context context) throws ExecutionException, InterruptedException {
-        JsonObject userInfo = Ion.with(context)
-                .load("https://www.google.com/voice/request/user")
-                .setHeader("Authorization", "GoogleLogin auth=" + authToken)
-                .asJsonObject()
-                .get();
-
-        String rnrse = userInfo.get("r").getAsString();
-
-        try {
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Activity.TELEPHONY_SERVICE);
-            String number = tm.getLine1Number();
-            if (number != null) {
-                JsonObject phones = userInfo.getAsJsonObject("phones");
-                for (Map.Entry<String, JsonElement> entry : phones.entrySet()) {
-                    JsonObject phone = entry.getValue().getAsJsonObject();
-                    if (!PhoneNumberUtils.compare(number, phone.get("phoneNumber").getAsString()))
-                        continue;
-                    if (!phone.get("smsEnabled").getAsBoolean())
-                        break;
-
-                    Ion.with(context)
-                            .load("https://www.google.com/voice/settings/editForwardingSms/")
-                            .setHeader("Authorization", "GoogleLogin auth=" + authToken)
-                            .setBodyParameter("phoneId", entry.getKey())
-                            .setBodyParameter("enabled", "0")
-                            .setBodyParameter("_rnr_se", rnrse)
-                            .asJsonObject();
-                    break;
-                }
-            }
-        } catch (Exception e) {
-
-        }
-
-        // broadcast so you can save it to your shared prefs or something so that it doesn't need to be retrieved every time
-        Intent intent = new Intent(VOICE_TOKEN);
-        intent.putExtra("_rnr_se", rnrse);
-        context.sendBroadcast(intent);
-
-        return rnrse;
-    }
-
     private static Uri insert(Context context, String[] to, MMSPart[] parts, String subject) {
         try {
             Uri destUri = Uri.parse("content://mms");
@@ -1200,7 +1022,7 @@ public class Transaction {
     public boolean checkMMS(Message message) {
         return message.getImages().length != 0 ||
                 (message.getMedia().length != 0 && message.getMediaMimeType() != null) ||
-                (settings.getSendLongAsMms() && Utils.getNumPages(settings, message.getText()) > settings.getSendLongAsMmsAfter() && message.getType() != Message.TYPE_VOICE) ||
+                (settings.getSendLongAsMms() && Utils.getNumPages(settings, message.getText()) > settings.getSendLongAsMmsAfter()) ||
                 (message.getAddresses().length > 1 && settings.getGroup()) ||
                 message.getSubject() != null;
     }

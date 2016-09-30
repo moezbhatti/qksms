@@ -64,7 +64,6 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
         Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
 
         Message message = new Message(messageItem.mBody, messageItem.mAddress);
-        message.setType(Message.TYPE_SMSMMS);
 
         context.getContentResolver().delete(messageItem.mMessageUri, null, null);
 

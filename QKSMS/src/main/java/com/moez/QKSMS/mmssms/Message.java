@@ -36,18 +36,7 @@ public class Message {
     private byte[] media;
     private String mediaMimeType;
     private boolean save;
-    private int type;
     private int delay;
-
-    /**
-     * Default send type, to be sent through SMS or MMS depending on contents
-     */
-    public static final int TYPE_SMSMMS = 0;
-
-    /**
-     * Google Voice send type
-     */
-    public static final int TYPE_VOICE = 1;
 
     /**
      * Default constructor
@@ -91,7 +80,6 @@ public class Message {
         this.media = new byte[0];
         this.mediaMimeType = null;
         this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -110,7 +98,6 @@ public class Message {
         this.media = new byte[0];
         this.mediaMimeType = null;
         this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -198,7 +185,6 @@ public class Message {
         this.media = new byte[0];
         this.mediaMimeType = null;
         this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -218,7 +204,6 @@ public class Message {
         this.media = new byte[0];
         this.mediaMimeType = null;
         this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -380,16 +365,6 @@ public class Message {
     }
 
     /**
-     * Sets the type of the message, could be any type definied in Message, for example
-     * Message.TYPE_SMSMMS, Message.TYPE_VOICE, or Message.TYPE_FACEBOOK
-     *
-     * @param type the type of message to send
-     */
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    /**
      * Gets the text of the message to send
      *
      * @return the string of the message to send
@@ -469,13 +444,6 @@ public class Message {
     public int getDelay() {
         return this.delay;
     }
-
-    /**
-     * Gets the type of message to be sent, see Message.TYPE_SMSMMS, Message.TYPE_FACEBOOK, or Message.TYPE_VOICE
-     *
-     * @return the type of the message
-     */
-    public int getType() { return this.type; }
 
     /**
      * Static method to convert a bitmap into a byte array to easily send it over http

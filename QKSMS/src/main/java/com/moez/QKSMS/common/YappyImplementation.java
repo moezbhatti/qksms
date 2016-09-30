@@ -44,7 +44,6 @@ public class YappyImplementation implements IEndlessJabberImplementation {
         Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
 
         Message message = new Message();
-        message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
         message.setAddresses(recipients);
         message.setSubject(subject);
         message.setSave(save);
@@ -58,7 +57,6 @@ public class YappyImplementation implements IEndlessJabberImplementation {
         Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
 
         Message message = new Message();
-        message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
         message.setAddresses(recipients);
         message.setText(body);
 
