@@ -5,19 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.MessagingHelper;
-import com.moez.QKSMS.common.utils.PackageUtils;
-import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.service.NotificationService;
 import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.utils.PackageUtils;
+import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.service.UnreadBadgeService;
+import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import org.mistergroup.muzutozvednout.ShouldIAnswerBinder;
 
@@ -115,11 +117,7 @@ public class MessagingReceiver extends BroadcastReceiver {
             // If we have notifications enabled and this conversation isn't blocked
         } else if (conversationPrefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
                 PreferenceManager.getDefaultSharedPreferences(mContext)).contains(message.getThreadId())) {
-            Intent messageHandlerIntent = new Intent(mContext, NotificationService.class);
-            messageHandlerIntent.putExtra(NotificationService.EXTRA_POPUP, true);
-            messageHandlerIntent.putExtra(NotificationService.EXTRA_URI, mUri.toString());
-            mContext.startService(messageHandlerIntent);
-
+            showPopup(message);
             UnreadBadgeService.update(mContext);
             NotificationManager.create(mContext);
         } else { // We shouldn't show a notification for this message
@@ -131,6 +129,24 @@ public class MessagingReceiver extends BroadcastReceiver {
             PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "MessagingReceiver");
             wakeLock.acquire();
             wakeLock.release();
+        }
+    }
+
+    private void showPopup(Message message) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, message.getThreadId());
+
+        if (conversationPrefs.getNotificationsEnabled()) {
+            // Only show QuickReply if we're outside of the app, and they have QuickReply enabled
+            if (!LifecycleHandler.isApplicationVisible() && prefs.getBoolean(SettingsFragment.QUICKREPLY, Build.VERSION.SDK_INT < 24)) {
+                Intent popupIntent = new Intent(mContext, QKReplyActivity.class);
+                popupIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                popupIntent.putExtra(QKReplyActivity.EXTRA_THREAD_ID, message.getThreadId());
+                mContext.startActivity(popupIntent);
+            }
+        } else {
+            // If the conversation is muted, mark this message as "seen". Note that this is different from marking it as "read".
+            MessagingHelper.markMessageSeen(mContext, message.getId());
         }
     }
 }

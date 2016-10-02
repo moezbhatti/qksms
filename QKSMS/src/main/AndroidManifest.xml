@@ -529,7 +529,6 @@
             </intent-filter>
         </service>
         <service android:name="com.android.mms.transaction.TransactionService" />
-        <service android:name=".service.NotificationService" />
         <service android:name=".service.MarkReadService" />
         <service android:name=".service.MarkSeenService" />
         <service android:name=".service.DeleteUnreadMessageService" />
