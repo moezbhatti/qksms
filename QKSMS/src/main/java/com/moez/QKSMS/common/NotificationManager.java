@@ -317,46 +317,48 @@ public class NotificationManager {
 
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
-            for (Message message : SmsHelper.getFailedMessages(context)) {
-                switch (Integer.parseInt(sPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"))) {
-                    case 0:
-                        inboxStyle.addLine(Html.fromHtml("<strong>" + message.getName() + "</strong> " + message.getBody()));
-                        break;
-                    case 1:
-                        inboxStyle.addLine(Html.fromHtml("<strong>" + message.getName() + "</strong> " + sRes.getString(R.string.new_message)));
-                        break;
-                    case 2:
-                        inboxStyle.addLine(Html.fromHtml("<strong>" + "QKSMS" + "</strong> " + sRes.getString(R.string.new_message)));
-                        break;
-                }
-            }
+            SmsHelper.getFailedMessages(context)
+                    .doOnCompleted(() -> {
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                                .setSmallIcon(R.drawable.ic_notification_failed)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setSound(Uri.parse(sPrefs.getString(SettingsFragment.NOTIFICATION_TONE, DEFAULT_RINGTONE)))
+                                .setVibrate(VIBRATION_SILENT)
+                                .setAutoCancel(true)
+                                .setContentTitle(title)
+                                .setStyle(inboxStyle)
+                                .setContentText(sRes.getString(R.string.failed_messages_summary))
+                                .setContentIntent(PI)
+                                .setNumber(failedCursor.getCount())
+                                .setColor(ThemeManager.getThemeColor());
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.ic_notification_failed)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setSound(Uri.parse(sPrefs.getString(SettingsFragment.NOTIFICATION_TONE, DEFAULT_RINGTONE)))
-                    .setVibrate(VIBRATION_SILENT)
-                    .setAutoCancel(true)
-                    .setContentTitle(title)
-                    .setStyle(inboxStyle)
-                    .setContentText(sRes.getString(R.string.failed_messages_summary))
-                    .setContentIntent(PI)
-                    .setNumber(failedCursor.getCount())
-                    .setColor(ThemeManager.getThemeColor());
+                        if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_VIBRATE, false)) {
+                            builder.setVibrate(VIBRATION);
+                        }
 
-            if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_VIBRATE, false)) {
-                builder.setVibrate(VIBRATION);
-            }
+                        if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_LED, true)) {
+                            builder.setLights(getLedColor(new ConversationPrefsHelper(context, 0)), 1000, 1000);
+                        }
 
-            if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_LED, true)) {
-                builder.setLights(getLedColor(new ConversationPrefsHelper(context, 0)), 1000, 1000);
-            }
+                        if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_TICKER, false)) {
+                            builder.setTicker(title);
+                        }
 
-            if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_TICKER, false)) {
-                builder.setTicker(title);
-            }
-
-            notify(context, NOTIFICATION_ID_FAILED, builder.build());
+                        notify(context, NOTIFICATION_ID_FAILED, builder.build());
+                    })
+                    .subscribe(message -> {
+                        switch (Integer.parseInt(sPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"))) {
+                            case 0:
+                                inboxStyle.addLine(Html.fromHtml("<strong>" + ContactHelper.getName(context, message.first) + "</strong> " + message.second));
+                                break;
+                            case 1:
+                                inboxStyle.addLine(Html.fromHtml("<strong>" + ContactHelper.getName(context, message.first) + "</strong> " + sRes.getString(R.string.new_message)));
+                                break;
+                            case 2:
+                                inboxStyle.addLine(Html.fromHtml("<strong>" + "QKSMS" + "</strong> " + sRes.getString(R.string.new_message)));
+                                break;
+                        }
+                    });
         });
     }
 

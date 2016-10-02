@@ -26,10 +26,10 @@ import com.moez.QKSMS.mmssms.model.SlideshowModel;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
+import rx.Observable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -419,26 +419,11 @@ public class SmsHelper {
         return result;
     }
 
-    public static List<Message> getFailedMessages(Context context) {
-        Cursor cursor = null;
-        List<Message> messages = new ArrayList<>();
-
-        try {
-            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{Sms._ID}, FAILED_SELECTION, null, SORT_DATE_DESC);
-            cursor.moveToFirst();
-            for (int i = 0; i < cursor.getCount(); i++) {
-                messages.add(new Message(context, cursor.getLong(cursor.getColumnIndexOrThrow(Sms._ID))));
-                cursor.moveToNext();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        return messages;
+    public static Observable<Pair<String, String>> getFailedMessages(Context context) {
+        return new CursorObservable(context, SMS_CONTENT_PROVIDER, new String[]{Sms.ADDRESS, Sms.BODY}, FAILED_SELECTION, null, SORT_DATE_DESC)
+                .map(cursor -> new Pair<>(
+                        cursor.getString(cursor.getColumnIndexOrThrow(Sms.ADDRESS)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(Sms.BODY))));
     }
 
     public static void deleteFailedMessages(Context context, long threadId) {
