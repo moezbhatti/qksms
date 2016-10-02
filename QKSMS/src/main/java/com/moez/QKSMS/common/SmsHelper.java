@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.provider.Telephony;
 import android.provider.Telephony.Sms;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
@@ -34,6 +33,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.provider.Telephony.TextBasedSmsColumns;
+
 public class SmsHelper {
 
     public static final Uri SMS_CONTENT_PROVIDER = Uri.parse("content://sms/");
@@ -51,8 +52,8 @@ public class SmsHelper {
     public static final String MAX_MMS_ATTACHMENT_SIZE_600KB = "600kb";
     public static final String MAX_MMS_ATTACHMENT_SIZE_1MB = "1mb";
 
-    public static final String sortDateDesc = "date DESC";
-    public static final String sortDateAsc = "date ASC";
+    public static final String SORT_DATE_DESC = "date DESC";
+    public static final String SORT_DATE_ASC = "date ASC";
 
     public static final byte UNREAD = 0;
     public static final byte READ = 1;
@@ -64,32 +65,10 @@ public class SmsHelper {
     public static final int AUDIO = 3;
     public static final int SLIDESHOW = 4;
 
-    // Columns for SMS content providers
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_THREAD_ID = "thread_id";
-    public static final String COLUMN_ADDRESS = "address";
-    public static final String COLUMN_RECIPIENT = "recipient_ids";
-    public static final String COLUMN_PERSON = "person";
-    public static final String COLUMN_SNIPPET = "snippet";
-    public static final String COLUMN_DATE = "date";
-    public static final String COLUMN_DATE_NORMALIZED = "normalized_date";
-    public static final String COLUMN_DATE_SENT = "date_sent";
-    public static final String COLUMN_STATUS = "status";
-    public static final String COLUMN_ERROR = "error";
-    public static final String COLUMN_READ = "read";
-    public static final String COLUMN_TYPE = "type";
-    public static final String COLUMN_MMS = "ct_t";
-    public static final String COLUMN_TEXT = "text";
-    public static final String COLUMN_SUB = "sub";
-    public static final String COLUMN_MSG_BOX = "msg_box";
-    public static final String COLUMN_SUBJECT = "subject";
-    public static final String COLUMN_BODY = "body";
-    public static final String COLUMN_SEEN = "seen";
-
-    public static final String READ_SELECTION = COLUMN_READ + " = " + READ;
-    public static final String UNREAD_SELECTION = COLUMN_READ + " = " + UNREAD;
-    public static final String UNSEEN_SELECTION = COLUMN_SEEN + " = " + UNREAD;
-    public static final String FAILED_SELECTION = COLUMN_TYPE + " = " + Message.FAILED;
+    public static final String READ_SELECTION = Sms.READ + " = " + READ;
+    public static final String UNREAD_SELECTION = Sms.READ + " = " + UNREAD;
+    public static final String UNSEEN_SELECTION = Sms.SEEN + " = " + UNREAD;
+    public static final String FAILED_SELECTION = Sms.TYPE + " = " + Message.FAILED;
 
     public static final int ADDRESSES_ADDRESS = 1;
 
@@ -157,7 +136,7 @@ public class SmsHelper {
     private static String[] sNoSubjectStrings;
 
     public static void markSmsSeen(Context context) {
-        new CursorObservable(context, RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_ID},
+        new CursorObservable(context, RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{Sms._ID},
                 SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null)
                 .map(cursor -> {
                     MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
@@ -167,7 +146,7 @@ public class SmsHelper {
     }
 
     public static void markMmsSeen(Context context) {
-        new CursorObservable(context, MMS_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_ID},
+        new CursorObservable(context, MMS_CONTENT_PROVIDER, new String[]{Sms._ID},
                 SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null)
                 .map(cursor -> {
                     MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
@@ -260,10 +239,10 @@ public class SmsHelper {
     public static int getUnseenSMSCount(Context context, long threadId) {
         Cursor cursor = null;
         int count = 0;
-        String selection = UNSEEN_SELECTION + " AND " + UNREAD_SELECTION + (threadId == 0 ? "" : " AND " + COLUMN_THREAD_ID + " = " + threadId);
+        String selection = UNSEEN_SELECTION + " AND " + UNREAD_SELECTION + (threadId == 0 ? "" : " AND " + Sms.THREAD_ID + " = " + threadId);
 
         try {
-            cursor = context.getContentResolver().query(RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{COLUMN_ID}, selection, null, null);
+            cursor = context.getContentResolver().query(RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{Sms._ID}, selection, null, null);
             cursor.moveToFirst();
             count = cursor.getCount();
         } catch (Exception e) {
@@ -291,15 +270,15 @@ public class SmsHelper {
 
         try {
             cursor = context.getContentResolver().query(
-                    Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, "" + threadId),
+                    Uri.withAppendedPath(MMS_SMS_CONTENT_PROVIDER, "" + threadId),
                     MessageColumns.PROJECTION, null, null, "normalized_date DESC LIMIT 10");
 
             cursor.moveToLast();
             do {
                 if (cursor.getString(map.mColumnMsgType).equals("sms")) {
                     int boxId = cursor.getInt(map.mColumnSmsType);
-                    boolean in = boxId == Telephony.TextBasedSmsColumns.MESSAGE_TYPE_INBOX ||
-                            boxId == Telephony.TextBasedSmsColumns.MESSAGE_TYPE_ALL;
+                    boolean in = boxId == TextBasedSmsColumns.MESSAGE_TYPE_INBOX ||
+                            boxId == TextBasedSmsColumns.MESSAGE_TYPE_ALL;
 
                     builder.append(in ? name : me)
                             .append("\n")
@@ -329,14 +308,14 @@ public class SmsHelper {
         // Create a cursor for the conversation list
         Cursor conversationCursor = context.getContentResolver().query(
                 SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
-                SmsHelper.UNREAD_SELECTION, null, SmsHelper.sortDateAsc);
+                SmsHelper.UNREAD_SELECTION, null, SmsHelper.SORT_DATE_ASC);
 
         if (conversationCursor != null && conversationCursor.moveToFirst()) {
             do {
                 ArrayList<MessageItem> messages = new ArrayList<>();
                 long threadId = conversationCursor.getLong(Conversation.ID);
-                Uri threadUri = Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, Long.toString(threadId));
-                Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, selection, null, SmsHelper.sortDateAsc);
+                Uri threadUri = Uri.withAppendedPath(MMS_SMS_CONTENT_PROVIDER, Long.toString(threadId));
+                Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, selection, null, SmsHelper.SORT_DATE_ASC);
 
                 if (messageCursor != null && messageCursor.moveToFirst()) {
                     do {
@@ -362,7 +341,7 @@ public class SmsHelper {
         ArrayList<Message> result = new ArrayList<>();
 
         if (threadUri != null) {
-            Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, UNREAD_SELECTION, null, SmsHelper.sortDateAsc);
+            Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, UNREAD_SELECTION, null, SmsHelper.SORT_DATE_ASC);
             MessageColumns.ColumnsMap columnsMap = new MessageColumns.ColumnsMap(messageCursor);
 
             if (messageCursor.moveToFirst()) {
@@ -402,9 +381,9 @@ public class SmsHelper {
         long threadId = 0;
 
         try {
-            cursor = context.getContentResolver().query(SENT_MESSAGE_CONTENT_PROVIDER, new String[]{COLUMN_THREAD_ID}, COLUMN_ADDRESS + "=" + address, null, sortDateDesc);
+            cursor = context.getContentResolver().query(SENT_MESSAGE_CONTENT_PROVIDER, new String[]{Sms.THREAD_ID}, Sms.ADDRESS + "=" + address, null, SORT_DATE_DESC);
             cursor.moveToFirst();
-            threadId = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_THREAD_ID));
+            threadId = cursor.getLong(cursor.getColumnIndexOrThrow(Sms.THREAD_ID));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -422,12 +401,12 @@ public class SmsHelper {
         // Create a cursor for the conversation list
         Cursor conversationCursor = context.getContentResolver().query(
                 SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
-                SmsHelper.UNREAD_SELECTION, null, SmsHelper.sortDateAsc);
+                SmsHelper.UNREAD_SELECTION, null, SmsHelper.SORT_DATE_ASC);
 
         if (conversationCursor.moveToFirst()) {
             do {
-                Uri threadUri = Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, conversationCursor.getString(Conversation.ID));
-                Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, SmsHelper.UNREAD_SELECTION, null, SmsHelper.sortDateDesc);
+                Uri threadUri = Uri.withAppendedPath(MMS_SMS_CONTENT_PROVIDER, conversationCursor.getString(Conversation.ID));
+                Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, SmsHelper.UNREAD_SELECTION, null, SmsHelper.SORT_DATE_DESC);
                 if (messageCursor != null) {
                     result += messageCursor.getCount();
                     messageCursor.close();
@@ -445,10 +424,10 @@ public class SmsHelper {
         List<Message> messages = new ArrayList<>();
 
         try {
-            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{COLUMN_ID}, FAILED_SELECTION, null, sortDateDesc);
+            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{Sms._ID}, FAILED_SELECTION, null, SORT_DATE_DESC);
             cursor.moveToFirst();
             for (int i = 0; i < cursor.getCount(); i++) {
-                messages.add(new Message(context, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))));
+                messages.add(new Message(context, cursor.getLong(cursor.getColumnIndexOrThrow(Sms._ID))));
                 cursor.moveToNext();
             }
         } catch (Exception e) {
@@ -468,12 +447,12 @@ public class SmsHelper {
         ArrayList<Pair<Long, Long>> messages2 = new ArrayList<>();
 
         try {
-            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{COLUMN_THREAD_ID, COLUMN_ID}, FAILED_SELECTION, null, sortDateDesc);
+            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{Sms.THREAD_ID, Sms._ID}, FAILED_SELECTION, null, SORT_DATE_DESC);
             cursor.moveToFirst();
             for (int i = 0; i < cursor.getCount(); i++) {
                 messages2.add(new Pair<>(
-                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_THREAD_ID)),
-                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID))));
+                        cursor.getLong(cursor.getColumnIndexOrThrow(Sms.THREAD_ID)),
+                        cursor.getLong(cursor.getColumnIndexOrThrow(Sms._ID))));
                 cursor.moveToNext();
             }
         } catch (Exception e) {

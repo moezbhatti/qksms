@@ -20,7 +20,6 @@ import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.service.CopyUnreadMessageTextService;
 import com.moez.QKSMS.service.DeleteUnreadMessageService;
@@ -240,7 +239,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = mShowUnreadOnly ? SmsHelper.UNREAD_SELECTION : null;
         return new CursorLoader(this,
-                Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, "" + mConversationLegacy.getThreadId()),
+                Uri.withAppendedPath(SmsHelper.MMS_SMS_CONTENT_PROVIDER, "" + mConversationLegacy.getThreadId()),
                 MessageColumns.PROJECTION, selection, null, "normalized_date ASC");
     }
 

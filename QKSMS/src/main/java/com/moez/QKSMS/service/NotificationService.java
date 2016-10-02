@@ -9,10 +9,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.MessagingHelper;
-import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -36,10 +36,10 @@ public class NotificationService extends Service {
 
         // Try to get the message's ID, in case the given Uri is bad.
         long messageId = -1;
-        Cursor cursor = context.getContentResolver().query(uri, new String[]{SmsHelper.COLUMN_ID},
+        Cursor cursor = context.getContentResolver().query(uri, new String[]{Telephony.Sms._ID},
                 null, null, null);
         if (cursor.moveToFirst()) {
-            messageId = cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID));
+            messageId = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID));
         }
         cursor.close();
 

@@ -290,7 +290,7 @@ public class NotificationManager {
         sHandler.post(() -> {
             Cursor failedCursor = context.getContentResolver().query(
                     SmsHelper.SMS_CONTENT_PROVIDER,
-                    new String[]{SmsHelper.COLUMN_THREAD_ID},
+                    new String[]{Telephony.Sms.THREAD_ID},
                     SmsHelper.FAILED_SELECTION,
                     null, null
             );

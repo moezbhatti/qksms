@@ -57,7 +57,6 @@ import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactList;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.ui.MainActivity;
@@ -624,7 +623,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (id == QKSMSApp.LOADER_MESSAGES) {
             return new CursorLoader(mContext,
-                    Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, String.valueOf(mThreadId)),
+                    Uri.withAppendedPath(SmsHelper.MMS_SMS_CONTENT_PROVIDER, String.valueOf(mThreadId)),
                     MessageColumns.PROJECTION, null, null, "normalized_date ASC");
         } else {
             return null;

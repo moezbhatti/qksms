@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.Telephony;
 import com.moez.QKSMS.common.SmsHelper;
 
 public class Message {
@@ -15,12 +16,6 @@ public class Message {
     public static final int SENDING = 4;
     public static final int FAILED = 5;
 
-    public static final Uri SMS_CONTENT_PROVIDER = Uri.parse("content://sms/");
-    public static final Uri MMS_SMS_CONTENT_PROVIDER = Uri.parse("content://mms-sms/conversations/");
-    public static final Uri SENT_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/sent");
-
-    // ContentResolver columns
-    static final Uri RECEIVED_MESSAGE_CONTENT_PROVIDER = Uri.parse("content://sms/inbox");
     private Context context;
     private long id;
     private long threadId;
@@ -38,9 +33,9 @@ public class Message {
     public Message(Context context, Uri uri) {
         this.context = context;
 
-        Cursor cursor = context.getContentResolver().query(uri, new String[]{SmsHelper.COLUMN_ID}, null, null, null);
+        Cursor cursor = context.getContentResolver().query(uri, new String[]{Telephony.Sms._ID}, null, null, null);
         cursor.moveToFirst();
-        id = cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID));
+        id = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID));
         cursor.close();
     }
 
@@ -52,9 +47,9 @@ public class Message {
         if (threadId == 0) {
             Cursor cursor = null;
             try {
-                cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_THREAD_ID}, "_id=" + id, null, null);
+                cursor = context.getContentResolver().query(SmsHelper.SMS_CONTENT_PROVIDER, new String[]{Telephony.Sms.THREAD_ID}, "_id=" + id, null, null);
                 cursor.moveToFirst();
-                threadId = cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_THREAD_ID));
+                threadId = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms.THREAD_ID));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -71,9 +66,9 @@ public class Message {
         boolean isMms = false;
         Cursor cursor = null;
         try {
-            cursor = context.getContentResolver().query(MMS_SMS_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_MMS}, "_id=" + id, null, null);
+            cursor = context.getContentResolver().query(SmsHelper.MMS_SMS_CONTENT_PROVIDER, new String[]{Telephony.Mms.CONTENT_TYPE}, "_id=" + id, null, null);
             cursor.moveToFirst();
-            isMms = "application/vnd.wap.multipart.related".equals(cursor.getString(cursor.getColumnIndex(SmsHelper.COLUMN_MMS)));
+            isMms = "application/vnd.wap.multipart.related".equals(cursor.getString(cursor.getColumnIndex(Telephony.Mms.CONTENT_TYPE)));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -88,9 +83,9 @@ public class Message {
         Cursor cursor = null;
         if (address == null) {
             try {
-                cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_ADDRESS}, "_id=" + id, null, null);
+                cursor = context.getContentResolver().query(Telephony.Sms.CONTENT_URI, new String[]{Telephony.Sms.ADDRESS}, "_id=" + id, null, null);
                 cursor.moveToFirst();
-                address = cursor.getString(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ADDRESS));
+                address = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.ADDRESS));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -111,9 +106,9 @@ public class Message {
         if (body == null) {
             Cursor cursor = null;
             try {
-                cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_BODY}, "_id=" + id, null, null);
+                cursor = context.getContentResolver().query(Telephony.Sms.CONTENT_URI, new String[]{Telephony.Sms.BODY}, "_id=" + id, null, null);
                 cursor.moveToFirst();
-                body = cursor.getString(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_BODY));
+                body = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.BODY));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {

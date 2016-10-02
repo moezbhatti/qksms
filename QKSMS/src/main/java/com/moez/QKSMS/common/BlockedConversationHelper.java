@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
@@ -146,13 +145,13 @@ public class BlockedConversationHelper {
             // Create a cursor for the conversation list
             Cursor conversationCursor = mContext.getContentResolver().query(
                     SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
-                    getCursorSelection(mPrefs, !mShowBlocked), getBlockedConversationArray(mPrefs), SmsHelper.sortDateDesc);
+                    getCursorSelection(mPrefs, !mShowBlocked), getBlockedConversationArray(mPrefs), SmsHelper.SORT_DATE_DESC);
 
             if (conversationCursor.moveToFirst()) {
                 do {
-                    Uri threadUri = Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, conversationCursor.getString(Conversation.ID));
+                    Uri threadUri = Uri.withAppendedPath(SmsHelper.MMS_SMS_CONTENT_PROVIDER, conversationCursor.getString(Conversation.ID));
                     Cursor messageCursor = mContext.getContentResolver().query(threadUri, MessageColumns.PROJECTION,
-                            SmsHelper.UNREAD_SELECTION, null, SmsHelper.sortDateDesc);
+                            SmsHelper.UNREAD_SELECTION, null, SmsHelper.SORT_DATE_DESC);
                     unreadCount += messageCursor.getCount();
                     messageCursor.close();
                 } while (conversationCursor.moveToNext());

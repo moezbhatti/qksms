@@ -30,7 +30,7 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
                 SmsHelper.CONVERSATIONS_CONTENT_PROVIDER,
                 Conversation.ALL_THREADS_PROJECTION,
                 Conversation.FAILED_SELECTION, null,
-                SmsHelper.sortDateDesc
+                SmsHelper.SORT_DATE_DESC
         );
 
         // Loop through each of the conversations
@@ -39,7 +39,7 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
 
             // Find the failed messages within the conversation
             Cursor cursor = context.getContentResolver().query(uri, MessageColumns.PROJECTION,
-                    SmsHelper.FAILED_SELECTION, null, SmsHelper.sortDateAsc);
+                    SmsHelper.FAILED_SELECTION, null, SmsHelper.SORT_DATE_ASC);
 
             // Map the cursor row to a MessageItem, then re-send it
             MessageColumns.ColumnsMap columnsMap = new MessageColumns.ColumnsMap(cursor);

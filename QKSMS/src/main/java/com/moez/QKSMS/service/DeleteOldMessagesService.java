@@ -5,6 +5,7 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Telephony;
 import android.util.Log;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.enums.QKPreference;
@@ -61,7 +62,7 @@ public class DeleteOldMessagesService extends IntentService {
     }
 
     private int deleteOldMessages(Context context, String selection, long before) {
-        selection += " AND " + SmsHelper.COLUMN_DATE + "<=?";
+        selection += " AND " + Telephony.Sms.DATE + "<=?";
 
         try {
             return context.getContentResolver().delete(SmsHelper.SMS_CONTENT_PROVIDER, selection, new String[]{String.valueOf(before)});

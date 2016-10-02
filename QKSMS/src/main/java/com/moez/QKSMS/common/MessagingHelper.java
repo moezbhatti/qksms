@@ -85,12 +85,12 @@ public class MessagingHelper {
     public static void markConversationRead(Context context, long id) {
         Uri uri = Uri.parse("content://mms-sms/conversations/" + id);
 
-        new CursorObservable(context, uri, new String[]{SmsHelper.COLUMN_ID}, SmsHelper.UNREAD_SELECTION, null, null)
+        new CursorObservable(context, uri, new String[]{Telephony.Sms._ID}, SmsHelper.UNREAD_SELECTION, null, null)
                 .doOnCompleted(() -> {
                     NotificationManager.update(context);
                     UnreadBadgeService.update(context);
                 })
-                .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID)))
+                .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID)))
                 .subscribeOn(Schedulers.io())
                 .subscribe(messageId -> markMessageRead(context, messageId));
     }
@@ -99,7 +99,7 @@ public class MessagingHelper {
         Uri uri = Uri.parse("content://mms-sms/conversations/" + id);
         final MessageColumns.ColumnsMap[] columnsMap = {null};
 
-        new CursorObservable(context, uri, MessageColumns.PROJECTION, null, null, SmsHelper.sortDateDesc)
+        new CursorObservable(context, uri, MessageColumns.PROJECTION, null, null, SmsHelper.SORT_DATE_DESC)
                 .doOnCompleted(() -> {
                     NotificationManager.create(context);
                     UnreadBadgeService.update(context);
@@ -116,9 +116,9 @@ public class MessagingHelper {
     public static boolean isMms(Context context, long id) {
         Cursor cursor = null;
         try {
-            cursor = context.getContentResolver().query(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, new String[]{SmsHelper.COLUMN_MMS}, "_id=" + id, null, null);
+            cursor = context.getContentResolver().query(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, new String[]{Telephony.Mms.CONTENT_TYPE}, "_id=" + id, null, null);
             cursor.moveToFirst();
-            return "application/vnd.wap.multipart.related".equals(cursor.getString(cursor.getColumnIndex(SmsHelper.COLUMN_MMS)));
+            return "application/vnd.wap.multipart.related".equals(cursor.getString(cursor.getColumnIndex(Telephony.Mms.CONTENT_TYPE)));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.Telephony;
 import android.telephony.PhoneNumberUtils;
 import android.widget.Toast;
 import com.moez.QKSMS.R;
@@ -70,10 +71,10 @@ public class ConversationLegacy {
                     address = PhoneNumberUtils.stripSeparators(address);
 
                     if (address == null || address.isEmpty()) {
-                        cursor = context.getContentResolver().query(SmsHelper.RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_ID}, "thread_id=" + threadId, null, SmsHelper.sortDateDesc);
+                        cursor = context.getContentResolver().query(SmsHelper.RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{Telephony.Sms._ID}, "thread_id=" + threadId, null, SmsHelper.SORT_DATE_DESC);
                         cursor.moveToFirst();
 
-                        long id = cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID));
+                        long id = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID));
                         address = new Message(context, id).getAddress();
                     }
                 } catch (Exception e) {
@@ -94,7 +95,7 @@ public class ConversationLegacy {
             try {
                 cursor = context.getContentResolver().query(CONVERSATIONS_CONTENT_PROVIDER, null, "_id=" + threadId, null, null);
                 cursor.moveToFirst();
-                recipient = cursor.getInt(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_RECIPIENT));
+                recipient = cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.ThreadsColumns.RECIPIENT_IDS));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -115,9 +116,9 @@ public class ConversationLegacy {
 
         if (draft == null) {
             try {
-                cursor = context.getContentResolver().query(SmsHelper.DRAFTS_CONTENT_PROVIDER, null, SmsHelper.COLUMN_THREAD_ID + "=" + threadId, null, null);
+                cursor = context.getContentResolver().query(SmsHelper.DRAFTS_CONTENT_PROVIDER, null, Telephony.Sms.THREAD_ID + "=" + threadId, null, null);
                 cursor.moveToFirst();
-                draft = cursor.getString(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_BODY));
+                draft = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.BODY));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -136,10 +137,10 @@ public class ConversationLegacy {
                 DraftCache.getInstance().setSavingDraft(true);
                 DraftCache.getInstance().setDraftState(threadId, false);
 
-                cursor = context.getContentResolver().query(SmsHelper.DRAFTS_CONTENT_PROVIDER, null, SmsHelper.COLUMN_THREAD_ID + "=" + threadId, null, null);
+                cursor = context.getContentResolver().query(SmsHelper.DRAFTS_CONTENT_PROVIDER, null, Telephony.Sms.THREAD_ID + "=" + threadId, null, null);
                 if (cursor.moveToFirst()) {
                     do {
-                        context.getContentResolver().delete(Uri.parse("content://sms/" + cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID))), null, null);
+                        context.getContentResolver().delete(Uri.parse("content://sms/" + cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID))), null, null);
                     } while (cursor.moveToNext());
                 }
             } catch (Exception e) {
@@ -185,7 +186,7 @@ public class ConversationLegacy {
             try {
                 cursor = context.getContentResolver().query(CONVERSATIONS_CONTENT_PROVIDER, null, "_id=" + threadId, null, null);
                 cursor.moveToFirst();
-                type = cursor.getInt(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_TYPE));
+                type = cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Sms.TYPE));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
