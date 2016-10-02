@@ -26,6 +26,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
@@ -196,9 +197,9 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             case R.id.menu_mark_read:
                 for (long threadId : mAdapter.getSelectedItems().keySet()) {
                     if (getUnreadWeight() >= 0) {
-                        new ConversationLegacy(mContext, threadId).markRead();
+                        MessagingHelper.markConversationRead(mContext, threadId);
                     } else {
-                        new ConversationLegacy(mContext, threadId).markUnread();
+                        MessagingHelper.markConversationUnread(mContext, threadId);
                     }
                 }
                 mAdapter.disableMultiSelectMode(true);

@@ -30,7 +30,6 @@ import android.provider.Telephony.Sms;
 import android.text.TextUtils;
 import android.util.Log;
 import com.android.mms.util.DownloadManager;
-import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
 import com.google.android.mms.pdu_alt.NotificationInd;
@@ -39,6 +38,7 @@ import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.formatter.FormatterFactory;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
 import com.moez.QKSMS.common.google.ItemLoadedFuture;
@@ -50,7 +50,6 @@ import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.mmssms.model.SlideModel;
 import com.moez.QKSMS.mmssms.model.SlideshowModel;
 import com.moez.QKSMS.mmssms.model.TextModel;
-import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.regex.Pattern;
 
@@ -115,7 +114,7 @@ public class MessageItem {
     @SuppressLint("NewApi")
     public MessageItem(Context context, String type, final Cursor cursor,
             final MessageColumns.ColumnsMap columnsMap, Pattern highlight,
-            boolean canBlock) throws MmsException {
+            boolean canBlock) {
         mContext = context;
         mMsgId = cursor.getLong(columnsMap.mColumnMsgId);
         mHighlight = highlight;
@@ -205,7 +204,8 @@ public class MessageItem {
                     new PduLoadedMessageItemCallback());
 
         } else {
-            throw new MmsException("Unknown type of the message: " + type);
+            Log.e(TAG, "Unknown type of the message: " + type);
+            mBoxId = 0;
         }
     }
 

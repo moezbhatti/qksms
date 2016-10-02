@@ -449,7 +449,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             NotificationManager.update(mContext);
 
             if (mConversationLegacy != null) {
-                mConversationLegacy.markRead();
+                MessagingHelper.markConversationRead(mContext, mConversationLegacy.getThreadId());
             }
 
             // Reset the image button state

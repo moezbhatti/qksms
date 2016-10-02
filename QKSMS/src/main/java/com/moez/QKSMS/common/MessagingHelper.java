@@ -8,8 +8,13 @@ import android.net.Uri;
 import android.provider.Telephony;
 import com.moez.QKSMS.mmssms.Message;
 import com.moez.QKSMS.mmssms.Transaction;
+import com.moez.QKSMS.service.UnreadBadgeService;
+import com.moez.QKSMS.ui.messagelist.MessageColumns;
+import com.moez.QKSMS.ui.messagelist.MessageItem;
+import rx.schedulers.Schedulers;
 
 public class MessagingHelper {
+    private static final String TAG = "MessagingHelper";
 
     public static void sendMessage(Context context, String recipient, String body, Bitmap attachment) {
         sendMessage(context, new String[]{recipient}, body, attachment);
@@ -26,6 +31,18 @@ public class MessagingHelper {
 
         if (!body.equals("")) {
             sendTransaction.sendNewMessage(message, Transaction.NO_THREAD_ID);
+        }
+    }
+
+    public static void markMessageUnread(Context context, long id) {
+        ContentValues cv = new ContentValues();
+        cv.put("read", false);
+        cv.put("seen", false);
+
+        if (MessagingHelper.isMms(context, id)) {
+            context.getContentResolver().update(Uri.parse("content://mms/" + id), cv, null, null);
+        } else {
+            context.getContentResolver().update(Uri.parse("content://sms/" + id), cv, null, null);
         }
     }
 
@@ -63,6 +80,37 @@ public class MessagingHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void markConversationRead(Context context, long id) {
+        Uri uri = Uri.parse("content://mms-sms/conversations/" + id);
+
+        new CursorObservable(context, uri, new String[]{SmsHelper.COLUMN_ID}, SmsHelper.UNREAD_SELECTION, null, null)
+                .doOnCompleted(() -> {
+                    NotificationManager.update(context);
+                    UnreadBadgeService.update(context);
+                })
+                .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID)))
+                .subscribeOn(Schedulers.io())
+                .subscribe(messageId -> markMessageRead(context, messageId));
+    }
+
+    public static void markConversationUnread(Context context, long id) {
+        Uri uri = Uri.parse("content://mms-sms/conversations/" + id);
+        final MessageColumns.ColumnsMap[] columnsMap = {null};
+
+        new CursorObservable(context, uri, MessageColumns.PROJECTION, null, null, SmsHelper.sortDateDesc)
+                .doOnCompleted(() -> {
+                    NotificationManager.create(context);
+                    UnreadBadgeService.update(context);
+                })
+                .map(cursor -> {
+                    if (columnsMap[0] == null) columnsMap[0] = new MessageColumns.ColumnsMap(cursor);
+                    return new MessageItem(context, cursor.getString(columnsMap[0].mColumnMsgType), cursor, columnsMap[0], null, true);
+                })
+                .filter(message -> !message.isMe())
+                .first()
+                .subscribe(message -> markMessageUnread(context, message.mMsgId));
     }
 
     public static boolean isMms(Context context, long id) {

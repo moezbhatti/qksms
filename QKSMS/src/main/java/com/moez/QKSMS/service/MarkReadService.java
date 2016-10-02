@@ -3,8 +3,7 @@ package com.moez.QKSMS.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.moez.QKSMS.data.ConversationLegacy;
+import com.moez.QKSMS.common.MessagingHelper;
 
 public class MarkReadService extends IntentService {
 
@@ -17,7 +16,6 @@ public class MarkReadService extends IntentService {
         Bundle extras = intent.getExtras();
         long threadId = extras.getLong("thread_id");
 
-        ConversationLegacy conversation = new ConversationLegacy(this, threadId);
-        conversation.markRead();
+        MessagingHelper.markConversationRead(this, threadId);
     }
 }

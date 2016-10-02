@@ -43,6 +43,7 @@ import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.QKPreferences;
@@ -585,7 +586,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
         }
 
         if (mConversationLegacy != null) {
-            mConversationLegacy.markRead();
+            MessagingHelper.markConversationRead(mContext, mConversationLegacy.getThreadId());
         }
 
         if (mConversation != null) {
@@ -986,7 +987,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
             mConversation = Conversation.get(mContext, mThreadId, true);
             mConversationLegacy = new ConversationLegacy(mContext, mThreadId);
 
-            mConversationLegacy.markRead();
+            MessagingHelper.markConversationRead(mContext, mConversationLegacy.getThreadId());
             mConversation.blockMarkAsRead(true);
             mConversation.markAsRead();
 

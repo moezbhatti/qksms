@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 import android.util.Patterns;
-import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.CharacterSets;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
@@ -368,12 +367,7 @@ public class SmsHelper {
                 if (messageCursor != null && messageCursor.moveToFirst()) {
                     do {
                         MessageColumns.ColumnsMap columnsMap = new MessageColumns.ColumnsMap(messageCursor);
-                        MessageItem message = null;
-                        try {
-                            message = new MessageItem(context, messageCursor.getString(columnsMap.mColumnMsgType), messageCursor, columnsMap, null, true);
-                        } catch (MmsException e) {
-                            e.printStackTrace();
-                        }
+                        MessageItem message = new MessageItem(context, messageCursor.getString(columnsMap.mColumnMsgType), messageCursor, columnsMap, null, true);
                         messages.add(message);
                     } while (messageCursor.moveToNext());
                     messageCursor.close();

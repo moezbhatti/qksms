@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
@@ -203,7 +204,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
                 return true;
 
             case R.id.menu_mark_read:
-                mConversationLegacy.markRead();
+                MessagingHelper.markConversationRead(this, mConversationLegacy.getThreadId());
                 finish();
                 return true;
 
@@ -282,7 +283,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
             mConversation.markAsRead();
         }
         if (mConversationLegacy != null) {
-            mConversationLegacy.markRead();
+            MessagingHelper.markConversationRead(this, mConversationLegacy.getThreadId());
         }
 
         finish();

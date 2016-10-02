@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import com.google.android.mms.MmsException;
 import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.data.Conversation;
@@ -45,13 +44,8 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
             // Map the cursor row to a MessageItem, then re-send it
             MessageColumns.ColumnsMap columnsMap = new MessageColumns.ColumnsMap(cursor);
             while (cursor.moveToNext()) {
-                try {
-                    MessageItem message = new MessageItem(context, cursor.getString(columnsMap.mColumnMsgType),
-                            cursor, columnsMap, null, true);
-                    sendSms(context, message);
-                } catch (MmsException e) {
-                    e.printStackTrace();
-                }
+                MessageItem message = new MessageItem(context, cursor.getString(columnsMap.mColumnMsgType), cursor, columnsMap, null, true);
+                sendSms(context, message);
             }
             cursor.close();
         }

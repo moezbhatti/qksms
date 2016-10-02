@@ -7,21 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.telephony.PhoneNumberUtils;
-import android.util.Log;
 import android.widget.Toast;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.common.google.DraftCache;
-import com.moez.QKSMS.service.UnreadBadgeService;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
-import com.moez.QKSMS.ui.messagelist.MessageColumns;
-import com.moez.QKSMS.ui.messagelist.MessageItem;
-import rx.Observable;
-import rx.schedulers.Schedulers;
-
-import java.util.ArrayList;
 
 /**
  * Use this class (rather than Conversation) for marking conversations as read, and managing drafts.
@@ -203,81 +194,6 @@ public class ConversationLegacy {
         }
 
         return type;
-    }
-
-    private ArrayList<Long> getUnreadIds() {
-        ArrayList<Long> ids = new ArrayList<>();
-
-        try {
-            cursor = context.getContentResolver().query(getUri(), new String[]{SmsHelper.COLUMN_ID}, SmsHelper.UNREAD_SELECTION, null, null);
-            cursor.moveToFirst();
-
-            for (int i = 0; i < cursor.getCount(); i++) {
-                ids.add(cursor.getLong(cursor.getColumnIndexOrThrow(SmsHelper.COLUMN_ID)));
-                cursor.moveToNext();
-                Log.d(TAG, "Unread ID: " + ids.get(i));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        return ids;
-    }
-
-    public void markRead() {
-        ArrayList<Long> ids = getUnreadIds();
-
-        ContentValues cv = new ContentValues();
-        cv.put("read", true);
-        cv.put("seen", true);
-
-        Observable.from(ids)
-                .doOnCompleted(() -> {
-                    NotificationManager.update(context);
-                    UnreadBadgeService.update(context);
-                })
-                .subscribeOn(Schedulers.io())
-                .subscribe(id1 -> context.getContentResolver().update(getUri(), cv, SmsHelper.COLUMN_ID + "=" + id1, null));
-    }
-
-    public void markUnread() {
-        new DefaultSmsHelper(context, R.string.not_default_mark_unread).showIfNotDefault(null);
-
-        try {
-            cursor = context.getContentResolver().query(getUri(), MessageColumns.PROJECTION, null, null, SmsHelper.sortDateDesc);
-            cursor.moveToFirst();
-
-            MessageColumns.ColumnsMap columnsMap = new MessageColumns.ColumnsMap(cursor);
-            MessageItem message = new MessageItem(context, cursor.getString(columnsMap.mColumnMsgType), cursor, columnsMap, null, true);
-
-            if (message.isMe()) {
-                while (cursor.moveToNext()) {
-                    MessageItem message2 = new MessageItem(context, cursor.getString(columnsMap.mColumnMsgType), cursor, columnsMap, null, true);
-                    if (!message2.isMe()) {
-                        message = message2;
-                        break;
-                    }
-                }
-            }
-
-            ContentValues cv = new ContentValues();
-            cv.put("read", false);
-            cv.put("seen", false);
-
-            context.getContentResolver().update(message.mMessageUri, cv, null, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        NotificationManager.create(context);
     }
 
     public void delete() { //TODO do this using AsyncQueryHandler

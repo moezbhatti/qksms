@@ -16,7 +16,7 @@ public class YappyImplementation implements IEndlessJabberImplementation {
     @Override
     public void UpdateReadMessages(Context context, long time, int threadId) {
         Log.d(TAG, "UpdateReadMessages");
-        new ConversationLegacy(context, threadId).markRead();
+        MessagingHelper.markConversationRead(context, threadId);
     }
 
     @Override

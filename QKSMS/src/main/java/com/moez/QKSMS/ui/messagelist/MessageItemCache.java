@@ -2,9 +2,7 @@ package com.moez.QKSMS.ui.messagelist;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.util.LruCache;
-import com.google.android.mms.MmsException;
 import com.moez.QKSMS.common.utils.CursorUtils;
 
 import java.util.regex.Pattern;
@@ -50,13 +48,9 @@ public class MessageItemCache extends LruCache<Long, MessageItem> {
         MessageItem item = get(key);
 
         if (item == null && CursorUtils.isValid(c)) {
-            try {
-                item = new MessageItem(mContext, type, c, mColumnsMap, mSearchHighlighter, false);
-                key = getKey(item.mType, item.mMsgId);
-                put(key, item);
-            } catch (MmsException e) {
-                Log.e(TAG, "getCachedMessageItem: ", e);
-            }
+            item = new MessageItem(mContext, type, c, mColumnsMap, mSearchHighlighter, false);
+            key = getKey(item.mType, item.mMsgId);
+            put(key, item);
         }
         return item;
     }
