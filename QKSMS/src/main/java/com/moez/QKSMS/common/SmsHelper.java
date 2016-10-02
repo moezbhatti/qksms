@@ -157,49 +157,23 @@ public class SmsHelper {
     private static String[] sNoSubjectStrings;
 
     public static void markSmsSeen(Context context) {
-        Cursor cursor = context.getContentResolver().query(RECEIVED_MESSAGE_CONTENT_PROVIDER,
-                new String[]{SmsHelper.COLUMN_ID}, SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null);
-
-        if (cursor == null) {
-            Log.i(TAG, "No unseen messages");
-            return;
-        }
-
-        MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
-
-        if (cursor.moveToFirst()) {
-            ContentValues cv = new ContentValues();
-            cv.put("seen", true);
-
-            do {
-                context.getContentResolver().update(Uri.parse("content://sms/" + cursor.getLong(map.mColumnMsgId)), cv, null, null);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
+        new CursorObservable(context, RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_ID},
+                SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null)
+                .map(cursor -> {
+                    MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
+                    return cursor.getLong(map.mColumnMsgId);
+                })
+                .subscribe(messageId -> MessagingHelper.markMessageSeen(context, messageId));
     }
 
     public static void markMmsSeen(Context context) {
-        Cursor cursor = context.getContentResolver().query(MMS_CONTENT_PROVIDER,
-                new String[]{SmsHelper.COLUMN_ID}, SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null);
-
-        if (cursor == null) {
-            Log.i(TAG, "No unseen messages");
-            return;
-        }
-
-        MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
-
-        if (cursor.moveToFirst()) {
-            ContentValues cv = new ContentValues();
-            cv.put("seen", true);
-
-            do {
-                context.getContentResolver().update(Uri.parse("content://mms/" + cursor.getLong(map.mColumnMsgId)), cv, null, null);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
+        new CursorObservable(context, MMS_CONTENT_PROVIDER, new String[]{SmsHelper.COLUMN_ID},
+                SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null)
+                .map(cursor -> {
+                    MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
+                    return cursor.getLong(map.mColumnMsgId);
+                })
+                .subscribe(messageId -> MessagingHelper.markMessageSeen(context, messageId));
     }
 
     public static Settings getSendSettings(Context context) {
