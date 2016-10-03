@@ -360,7 +360,7 @@ public class MMSSetupFragment extends QKFragment implements DialogFragmentListen
         if (context != null) {
             TelephonyManager manager = (TelephonyManager)
                     context.getSystemService(Context.TELEPHONY_SERVICE);
-            Settings settings = SmsHelper.getSendSettings(context);
+            Settings settings = SmsHelper.getSendSettings();
 
             // Build the message body
             StringBuilder body = new StringBuilder();

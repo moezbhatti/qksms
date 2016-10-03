@@ -87,7 +87,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String BUBBLES_NEW = "pref_key_new_bubbles";
     public static final String COLOR_SENT = "pref_key_colour_sent";
     public static final String COLOR_RECEIVED = "pref_key_colour_received";
-    public static final String HIDE_AVATAR_CONVERSATIONS = "pref_key_hide_avatar_conversations";
     public static final String HIDE_AVATAR_SENT = "pref_key_hide_avatar_sent";
     public static final String HIDE_AVATAR_RECEIVED = "pref_key_hide_avatar_received";
     public static final String AUTO_EMOJI = "pref_key_auto_emoji";
@@ -100,8 +99,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String FONT_SIZE = "pref_key_font_size";
     public static final String FONT_WEIGHT = "pref_key_font_weight";
     public static final String MESSAGE_COUNT = "pref_key_message_count";
-    public static final String PROXIMITY_CALLING = "pref_key_prox_sensor_calling";
-    public static final String DELIVERY_REPORTS = "pref_key_delivery";
     public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
     public static final String DELIVERY_VIBRATE = "pref_key_delivery_vibrate";
     public static final String DELETE_OLD_MESSAGES = "pref_key_delete_old_messages";
@@ -114,10 +111,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String SHOULD_I_ANSWER = "pref_key_should_i_answer";
     public static final String MOBILE_ONLY = "pref_key_mobile_only";
     public static final String COMPOSE_GROUP = "pref_key_compose_group";
-    public static final String SPLIT_SMS = "pref_key_split";
-    public static final String SPLIT_COUNTER = "pref_key_split_counter";
-    public static final String LONG_AS_MMS = "pref_key_long_as_mms";
-    public static final String LONG_AS_MMS_AFTER = "pref_key_long_as_mms_after";
     public static final String NOTIFICATIONS = "pref_key_notifications";
     public static final String NOTIFICATION_LED = "pref_key_led";
     public static final String NOTIFICATION_LED_COLOR = "pref_key_theme_led";
@@ -133,8 +126,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String DAY_START = "pref_key_day_start";
     public static final String NIGHT_START = "pref_key_night_start";
     public static final String QK_RESPONSES = "pref_key_qk_responses";
-    public static final String MMS_ENABLED = "pref_key_mms_enabled";
-    public static final String AUTO_DATA = "pref_key_auto_data";
     public static final String MMSC_URL = "mmsc_url";
     public static final String MMS_PORT = "mms_port";
     public static final String MMS_PROXY = "mms_proxy";
@@ -506,7 +497,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 int index = listpref.findIndexOfValue((String) newValue);
                 preference.setSummary(mMaxMmsAttachmentSizes[index]);
                 // Update the SMS helper static class with the new option
-                SmsHelper.setMaxAttachmentSizeSetting(mContext, (String) newValue);
+                SmsHelper.setMaxAttachmentSizeSetting((String) newValue);
                 break;
             case DELAY_DURATION:
                 try {

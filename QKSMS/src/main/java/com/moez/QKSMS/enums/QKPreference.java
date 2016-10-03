@@ -51,6 +51,7 @@ public enum QKPreference {
     STRIP_UNICODE("pref_key_strip_unicode", false),
     SPLIT_SMS("pref_key_split", false),
     SPLIT_COUNTER("pref_key_split_counter", true),
+    SIGNATURE("pref_key_signature", ""),
 
     BLOCKED_CONVERSATIONS("pref_key_blocked_enabled", false),
     BLOCKED_SENDERS("pref_key_blocked_senders", new HashSet<String>()),
@@ -79,14 +80,16 @@ public enum QKPreference {
 
     // MMS
     GROUP_MESSAGING("pref_key_compose_group", true),
-    AUTOMATIC_DATA("pref_key_auto_data", true),
-    LONG_AS_MMS("", true),
-    LONG_AS_MMS_AFTER("", true),
-    MAX_MMS_SIZE("", true),
-    AUTO_CONFIGURE_MMS("", true),
-    MMSC("mmsc_url", true),
-    MMS_PORT("mms_port", true),
-    MMS_PROXY("mms_proxy", true),
+    LONG_AS_MMS("pref_key_long_as_mms", false),
+    LONG_AS_MMS_AFTER("pref_key_long_as_mms_after", "3"),
+    MAX_MMS_SIZE("pref_mms_max_attachment_size", "300kb"),
+    AUTO_CONFIGURE_MMS("pref_key_automatically_configure_mms", true),
+    MMSC("mmsc_url", ""),
+    MMS_PORT("mms_port", ""),
+    MMS_PROXY("mms_proxy", ""),
+    MMS_AGENT("mms_agent", ""),
+    MMS_AGENT_PROFILE("mms_user_agent_profile_url", ""),
+    MMS_AGENT_NAME("mms_user_agent_tag_name", ""),
 
     // QK Reply
     QK_REPLY("pref_key_quickreply_enabled", Build.VERSION.SDK_INT < 24),

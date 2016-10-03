@@ -3,10 +3,8 @@ package com.moez.QKSMS.common;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.Telephony.Sms;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
@@ -19,12 +17,12 @@ import com.google.android.mms.pdu_alt.PduPersister;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.Message;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.mmssms.Settings;
 import com.moez.QKSMS.mmssms.model.SlideModel;
 import com.moez.QKSMS.mmssms.model.SlideshowModel;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import rx.Observable;
 
 import java.util.ArrayList;
@@ -74,7 +72,7 @@ public class SmsHelper {
     private static final String TAG = "SMSHelper";
     private static SmsManager sms;
 
-    private static Settings sendSettings;
+    private static Settings sSendSettings;
 
     public SmsHelper() {
 
@@ -154,51 +152,53 @@ public class SmsHelper {
                 .subscribe(messageId -> MessagingHelper.markMessageSeen(context, messageId));
     }
 
-    public static Settings getSendSettings(Context context) {
-        if (sendSettings == null) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-            sendSettings = new Settings();
-            sendSettings.setMmsc(prefs.getString(SettingsFragment.MMSC_URL, ""));
-            sendSettings.setProxy(prefs.getString(SettingsFragment.MMS_PROXY, ""));
-            sendSettings.setPort(prefs.getString(SettingsFragment.MMS_PORT, ""));
-            sendSettings.setAgent(prefs.getString("mms_agent", ""));
-            sendSettings.setUserProfileUrl(prefs.getString("mms_user_agent_profile_url", ""));
-            sendSettings.setUaProfTagName(prefs.getString("mms_user_agent_tag_name", ""));
-            sendSettings.setGroup(prefs.getBoolean(SettingsFragment.COMPOSE_GROUP, true));
-            setMaxAttachmentSizeSetting(context, prefs.getString(SettingsFragment.MAX_MMS_ATTACHMENT_SIZE, "300kb"));
-            sendSettings.setDeliveryReports(prefs.getBoolean(SettingsFragment.DELIVERY_REPORTS, false));
-            sendSettings.setSplit(prefs.getBoolean(SettingsFragment.SPLIT_SMS, false));
-            sendSettings.setSplitCounter(prefs.getBoolean(SettingsFragment.SPLIT_COUNTER, true));
-            sendSettings.setStripUnicode(prefs.getBoolean(SettingsFragment.STRIP_UNICODE, false));
-            sendSettings.setSignature(prefs.getString("pref_key_signature", ""));
-            sendSettings.setSendLongAsMms(prefs.getBoolean(SettingsFragment.LONG_AS_MMS, false));
-            sendSettings.setSendLongAsMmsAfter(Integer.parseInt(prefs.getString(SettingsFragment.LONG_AS_MMS_AFTER, "3")));
-            sendSettings.setAccount(null);
-            sendSettings.setRnrSe(null);
+    public static Settings getSendSettings() {
+        if (sSendSettings == null) {
+            sSendSettings = new Settings();
+            sSendSettings.setMmsc(QKPreferences.getString(QKPreference.MMSC));
+            sSendSettings.setProxy(QKPreferences.getString(QKPreference.MMS_PROXY));
+            sSendSettings.setPort(QKPreferences.getString(QKPreference.MMS_PORT));
+            sSendSettings.setAgent(QKPreferences.getString(QKPreference.MMS_AGENT));
+            sSendSettings.setUserProfileUrl(QKPreferences.getString(QKPreference.MMS_AGENT_PROFILE));
+            sSendSettings.setUaProfTagName(QKPreferences.getString(QKPreference.MMS_AGENT_NAME));
+            sSendSettings.setGroup(QKPreferences.getBoolean(QKPreference.GROUP_MESSAGING));
+            setMaxAttachmentSizeSetting(QKPreferences.getString(QKPreference.MAX_MMS_SIZE));
+            sSendSettings.setDeliveryReports(QKPreferences.getBoolean(QKPreference.DELIVERY_CONFIRMATIONS));
+            sSendSettings.setSplit(QKPreferences.getBoolean(QKPreference.SPLIT_SMS));
+            sSendSettings.setSplitCounter(QKPreferences.getBoolean(QKPreference.SPLIT_COUNTER));
+            sSendSettings.setStripUnicode(QKPreferences.getBoolean(QKPreference.STRIP_UNICODE));
+            sSendSettings.setSignature(QKPreferences.getString(QKPreference.SIGNATURE));
+            sSendSettings.setSendLongAsMms(QKPreferences.getBoolean(QKPreference.LONG_AS_MMS));
+            sSendSettings.setSendLongAsMmsAfter(Integer.parseInt(QKPreferences.getString(QKPreference.LONG_AS_MMS_AFTER)));
+            sSendSettings.setAccount(null);
+            sSendSettings.setRnrSe(null);
         }
-        return sendSettings;
+        return sSendSettings;
     }
 
     /**
      * Sets the max MMS attachment size in the MMS settings field.
      *
-     * @param context
      * @param maxAttachmentSize The String value in the ListPreference for max attachment sizes
      */
-    public static void setMaxAttachmentSizeSetting(Context context, String maxAttachmentSize) {
+    public static void setMaxAttachmentSizeSetting(String maxAttachmentSize) {
 
-        // Initialize sendSettings if it hasn't already been initialized
-        sendSettings = getSendSettings(context);
+        // Initialize sSendSettings if it hasn't already been initialized
+        sSendSettings = getSendSettings();
 
-        if (MAX_MMS_ATTACHMENT_SIZE_300KB.equals(maxAttachmentSize)) {
-            sendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_300KB);
-        } else if (MAX_MMS_ATTACHMENT_SIZE_600KB.equals(maxAttachmentSize)) {
-            sendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_600KB);
-        } else if (MAX_MMS_ATTACHMENT_SIZE_1MB.equals(maxAttachmentSize)) {
-            sendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_1MB);
-        } else if (MAX_MMS_ATTACHMENT_SIZE_UNLIMITED.equals(maxAttachmentSize)) {
-            sendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_UNLIMITED);
+        switch (maxAttachmentSize) {
+            case MAX_MMS_ATTACHMENT_SIZE_300KB:
+                sSendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_300KB);
+                break;
+            case MAX_MMS_ATTACHMENT_SIZE_600KB:
+                sSendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_600KB);
+                break;
+            case MAX_MMS_ATTACHMENT_SIZE_1MB:
+                sSendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_1MB);
+                break;
+            case MAX_MMS_ATTACHMENT_SIZE_UNLIMITED:
+                sSendSettings.setMaxAttachmentSize(Settings.MAX_ATTACHMENT_SIZE_UNLIMITED);
+                break;
         }
     }
 

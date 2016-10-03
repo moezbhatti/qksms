@@ -22,7 +22,7 @@ public class MessagingHelper {
     }
 
     public static void sendMessage(Context context, String[] recipients, String body, Bitmap attachment) {
-        Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
+        Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings());
         Message message = new Message(body, recipients);
 
         if (attachment != null) {

@@ -44,6 +44,7 @@ import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.utils.ImageUtils;
@@ -580,7 +581,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
     }
 
     private boolean hasSetupMms() {
-        if (TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMSC_URL, ""))
+        if (TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMSC))
                 && TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PROXY, ""))
                 && TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
 
@@ -590,7 +591,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             args.putBoolean(MMSSetupFragment.ARG_ASK_FIRST, true);
             f.setArguments(args);
 
-            ((Activity) mContext).getFragmentManager()
+            mContext.getFragmentManager()
                     .beginTransaction()
                     .add(f, MMSSetupFragment.TAG)
                     .commit();
@@ -889,7 +890,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
             long maxAttachmentSize =
-                    SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+                    SmsHelper.getSendSettings().getMaxAttachmentSize();
             bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
 
             // Now, rotation the bitmap according to the Exif data.
@@ -956,7 +957,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
                 long maxAttachmentSize =
-                        SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+                        SmsHelper.getSendSettings().getMaxAttachmentSize();
                 bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
 
                 // Now, rotation the bitmap according to the Exif data.
