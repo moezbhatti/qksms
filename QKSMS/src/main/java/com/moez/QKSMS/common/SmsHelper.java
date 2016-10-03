@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.provider.Telephony.Sms;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.util.Patterns;
 import com.google.android.mms.pdu_alt.CharacterSets;
@@ -424,36 +423,6 @@ public class SmsHelper {
                 .map(cursor -> new Pair<>(
                         cursor.getString(cursor.getColumnIndexOrThrow(Sms.ADDRESS)),
                         cursor.getString(cursor.getColumnIndexOrThrow(Sms.BODY))));
-    }
-
-    public static void deleteFailedMessages(Context context, long threadId) {
-        Log.d(TAG, "Deleting failed messages");
-        Cursor cursor = null;
-        ArrayList<Pair<Long, Long>> messages2 = new ArrayList<>();
-
-        try {
-            cursor = context.getContentResolver().query(SMS_CONTENT_PROVIDER, new String[]{Sms.THREAD_ID, Sms._ID}, FAILED_SELECTION, null, SORT_DATE_DESC);
-            cursor.moveToFirst();
-            for (int i = 0; i < cursor.getCount(); i++) {
-                messages2.add(new Pair<>(
-                        cursor.getLong(cursor.getColumnIndexOrThrow(Sms.THREAD_ID)),
-                        cursor.getLong(cursor.getColumnIndexOrThrow(Sms._ID))));
-                cursor.moveToNext();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-
-        for (Pair<Long, Long> pair : messages2) {
-            if (pair.first == threadId) {
-                Log.d(TAG, "Deleting failed message " + pair.second + " in: " + pair.first);
-                MessagingHelper.deleteMessage(context, pair.second);
-            }
-        }
     }
 
     /**

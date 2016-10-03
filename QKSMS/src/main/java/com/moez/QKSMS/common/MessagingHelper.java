@@ -82,6 +82,13 @@ public class MessagingHelper {
         }
     }
 
+    public static void deleteFailedMessages(Context context, long threadId) {
+        new CursorObservable(context, SmsHelper.SMS_CONTENT_PROVIDER, new String[]{Telephony.Sms.THREAD_ID, Telephony.Sms._ID}, SmsHelper.FAILED_SELECTION, null, null)
+                .filter(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms.THREAD_ID)) == threadId)
+                .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID)))
+                .subscribe(messageId -> deleteMessage(context, messageId));
+    }
+
     public static void markConversationRead(Context context, long id) {
         Uri uri = Uri.parse("content://mms-sms/conversations/" + id);
 

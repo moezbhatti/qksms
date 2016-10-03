@@ -63,7 +63,7 @@ public class DialogHelper {
                 .setPositiveButton(R.string.yes, v -> {
                     new Thread(() -> {
                         for (long threadId : threads) {
-                            SmsHelper.deleteFailedMessages(context, threadId);
+                            MessagingHelper.deleteFailedMessages(context, threadId);
                         }
                     }).start();
                 })
