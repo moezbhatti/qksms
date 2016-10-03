@@ -11,6 +11,7 @@ import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.service.UnreadBadgeService;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
+import rx.Observable;
 import rx.schedulers.Schedulers;
 
 public class MessagingHelper {
@@ -38,52 +39,49 @@ public class MessagingHelper {
         ContentValues cv = new ContentValues();
         cv.put("read", false);
         cv.put("seen", false);
-
-        if (MessagingHelper.isMms(context, id)) {
-            context.getContentResolver().update(Uri.parse("content://mms/" + id), cv, null, null);
-        } else {
-            context.getContentResolver().update(Uri.parse("content://sms/" + id), cv, null, null);
-        }
+        updateMessage(context, id, cv);
     }
 
     public static void markMessageRead(Context context, long id) {
         ContentValues cv = new ContentValues();
         cv.put("read", true);
         cv.put("seen", true);
-
-        if (MessagingHelper.isMms(context, id)) {
-            context.getContentResolver().update(Uri.parse("content://mms/" + id), cv, null, null);
-        } else {
-            context.getContentResolver().update(Uri.parse("content://sms/" + id), cv, null, null);
-        }
+        updateMessage(context, id, cv);
     }
 
     public static void markMessageSeen(Context context, long id) {
         ContentValues cv = new ContentValues();
         cv.put("seen", true);
-
-        if (MessagingHelper.isMms(context, id)) {
-            context.getContentResolver().update(Uri.parse("content://mms/" + id), cv, null, null);
-        } else {
-            context.getContentResolver().update(Uri.parse("content://sms/" + id), cv, null, null);
-        }
-
+        updateMessage(context, id, cv);
     }
 
-    public static void deleteMessage(Context context, long id) {
-        try {
+    private static void updateMessage(Context context, long messageId, ContentValues cv) {
+        Observable.just(messageId).subscribeOn(Schedulers.io()).subscribe(id -> {
             if (MessagingHelper.isMms(context, id)) {
-                context.getContentResolver().delete(Uri.parse("content://mms/" + id), null, null);
+                context.getContentResolver().update(Uri.parse("content://mms/" + id), cv, null, null);
             } else {
-                context.getContentResolver().delete(Uri.parse("content://sms/" + id), null, null);
+                context.getContentResolver().update(Uri.parse("content://sms/" + id), cv, null, null);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
+    }
+
+    public static void deleteMessage(Context context, long messageId) {
+        Observable.just(messageId).subscribeOn(Schedulers.io()).subscribe(id -> {
+            try {
+                if (MessagingHelper.isMms(context, id)) {
+                    context.getContentResolver().delete(Uri.parse("content://mms/" + id), null, null);
+                } else {
+                    context.getContentResolver().delete(Uri.parse("content://sms/" + id), null, null);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public static void deleteFailedMessages(Context context, long threadId) {
-        new CursorObservable(context, SmsHelper.SMS_CONTENT_PROVIDER, new String[]{Telephony.Sms.THREAD_ID, Telephony.Sms._ID}, SmsHelper.FAILED_SELECTION, null, null)
+        new CursorObservable(context, SmsHelper.SMS_CONTENT_PROVIDER, new String[]{Telephony.Sms.THREAD_ID, Telephony.Sms._ID},
+                SmsHelper.FAILED_SELECTION, null, null)
                 .filter(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms.THREAD_ID)) == threadId)
                 .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID)))
                 .subscribe(messageId -> deleteMessage(context, messageId));
@@ -98,7 +96,6 @@ public class MessagingHelper {
                     UnreadBadgeService.update(context);
                 })
                 .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID)))
-                .subscribeOn(Schedulers.io())
                 .subscribe(messageId -> markMessageRead(context, messageId));
     }
 
