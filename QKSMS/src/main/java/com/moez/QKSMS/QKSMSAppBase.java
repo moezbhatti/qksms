@@ -18,6 +18,7 @@
 package com.moez.QKSMS;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.drm.DrmManagerClient;
@@ -25,7 +26,6 @@ import android.location.Country;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.SearchRecentSuggestions;
-import android.support.multidex.MultiDexApplication;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import com.android.mms.transaction.MmsSystemEventReceiver;
@@ -52,7 +52,7 @@ import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Locale;
 
-public class QKSMSAppBase extends MultiDexApplication {
+public class QKSMSAppBase extends Application {
     public static final String LOG_TAG = "Mms";
 
     public static final int LOADER_CONVERSATIONS = 0;
