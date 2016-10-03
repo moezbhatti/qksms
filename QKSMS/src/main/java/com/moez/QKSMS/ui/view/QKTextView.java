@@ -1,10 +1,8 @@
 package com.moez.QKSMS.ui.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -12,10 +10,10 @@ import android.widget.TextView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.utils.TextUtils;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.common.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class QKTextView extends TextView {
     private final String TAG = "QKTextView";
@@ -121,13 +119,11 @@ public class QKTextView extends TextView {
     @Override
     public void setText(CharSequence text, BufferType type) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
         if (mType == FontManager.TEXT_TYPE_DIALOG_BUTTON) {
             text = text.toString().toUpperCase();
         }
 
-        if (prefs.getBoolean(SettingsFragment.MARKDOWN_ENABLED, false)) {
+        if (QKPreferences.getBoolean(QKPreference.TEXT_FORMATTING)) {
             text = TextUtils.styleText(text);
             if (text == null || text.length() <= 0 || Build.VERSION.SDK_INT >= 19) {
                 super.setText(text, BufferType.EDITABLE);

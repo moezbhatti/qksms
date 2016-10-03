@@ -62,6 +62,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import static com.moez.QKSMS.enums.QKPreference.ICON;
+
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener {
     public static final String TAG = "SettingsFragment";
@@ -79,21 +81,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
 
     public static final String THEME = "pref_key_theme";
-    public static final String ICON = "pref_key_icon";
-    public static final String STATUS_TINT = "pref_key_status_tint";
-    public static final String NAVIGATION_TINT = "pref_key_navigation_tint";
     public static final String BACKGROUND = "pref_key_background";
-    public static final String BUBBLES = "pref_key_bubbles";
     public static final String BUBBLES_NEW = "pref_key_new_bubbles";
     public static final String COLOR_SENT = "pref_key_colour_sent";
     public static final String COLOR_RECEIVED = "pref_key_colour_received";
-    public static final String HIDE_AVATAR_SENT = "pref_key_hide_avatar_sent";
-    public static final String HIDE_AVATAR_RECEIVED = "pref_key_hide_avatar_received";
     public static final String AUTO_EMOJI = "pref_key_auto_emoji";
-    public static final String MARKDOWN_ENABLED = "pref_key_markdown_enabled";
-    public static final String ENTER_BUTTON = "pref_key_enter_button";
-    public static final String FORCE_TIMESTAMPS = "pref_key_force_timestamps";
-    public static final String SHOW_NEW_TIMESTAMP_DELAY = "pref_key_timestamp_delay";
     public static final String COMPOSE_FAVORITES = "pref_key_compose_favorites";
     public static final String FONT_FAMILY = "pref_key_font_family";
     public static final String FONT_SIZE = "pref_key_font_size";
@@ -101,14 +93,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String MESSAGE_COUNT = "pref_key_message_count";
     public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
     public static final String DELIVERY_VIBRATE = "pref_key_delivery_vibrate";
-    public static final String DELETE_OLD_MESSAGES = "pref_key_delete_old_messages";
-    public static final String DELETE_UNREAD_MESSAGES = "pref_key_delete_old_unread_messages";
-    public static final String DELETE_READ_MESSAGES = "pref_key_delete_old_read_messages";
-    public static final String YAPPY = "pref_key_endlessjabber";
     public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
     public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
     public static final String BLOCKED_FUTURE = "pref_key_block_future";
-    public static final String SHOULD_I_ANSWER = "pref_key_should_i_answer";
     public static final String MOBILE_ONLY = "pref_key_mobile_only";
     public static final String COMPOSE_GROUP = "pref_key_compose_group";
     public static final String NOTIFICATIONS = "pref_key_notifications";
@@ -129,21 +116,10 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String MMSC_URL = "mmsc_url";
     public static final String MMS_PORT = "mms_port";
     public static final String MMS_PROXY = "mms_proxy";
-    public static final String AUTOMATICALLY_CONFIGURE_MMS = "pref_key_automatically_configure_mms";
-    public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
-    public static final String DONATE = "pref_key_donate";
     public static final String DISMISSED_READ = "pref_key_dismiss_read";
-    public static final String MAX_MMS_ATTACHMENT_SIZE = "pref_mms_max_attachment_size";
     public static final String QUICKREPLY = "pref_key_quickreply_enabled";
     public static final String QUICKREPLY_TAP_DISMISS = "pref_key_quickreply_dismiss";
     public static final String QUICKCOMPOSE = "pref_key_quickcompose";
-    public static final String STRIP_UNICODE = "pref_key_strip_unicode";
-    public static final String VERSION = "pref_key_version";
-    public static final String CHANGELOG = "pref_key_changelog";
-    public static final String THANKS = "pref_key_thanks";
-    public static final String GOOGLE_PLUS = "pref_key_google_plus";
-    public static final String GITHUB = "pref_key_github";
-    public static final String CROWDIN = "pref_key_crowdin";
 
     public static final String WELCOME_SEEN = "pref_key_welcome_seen";
 
@@ -156,7 +132,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CROWDIN_URL = "https://crowdin.com/project/qksms";
 
     private QKActivity mContext;
-    private PreferenceManager mPreferenceManager;
     private SharedPreferences mPrefs;
     private Resources mRes;
     private ListView mListView;
@@ -231,7 +206,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             }
         }
 
-        Preference icon = findPreference(ICON);
+        Preference icon = findPreference(ICON.getKey());
         if (icon != null) {
             icon.setOnPreferenceClickListener(this);
         }
@@ -253,61 +228,61 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             });
         }
 
-        ListPreference font_family = (ListPreference) findPreference(FONT_FAMILY);
+        ListPreference font_family = (ListPreference) findPreference(QKPreference.FONT_FAMILY.getKey());
         if (font_family != null) {
             mFontFamilies = mRes.getStringArray(R.array.font_families);
             font_family.setSummary(mFontFamilies[Integer.parseInt(font_family.getValue())]);
         }
 
-        ListPreference font_size = (ListPreference) findPreference(FONT_SIZE);
+        ListPreference font_size = (ListPreference) findPreference(QKPreference.FONT_SIZE.getKey());
         if (font_size != null) {
             mFontSizes = mRes.getStringArray(R.array.font_sizes);
             font_size.setSummary(mFontSizes[Integer.parseInt(font_size.getValue())]);
         }
 
-        ListPreference font_weight = (ListPreference) findPreference(FONT_WEIGHT);
+        ListPreference font_weight = (ListPreference) findPreference(QKPreference.FONT_WEIGHT.getKey());
         if (font_weight != null) {
             mFontWeights = mRes.getStringArray(R.array.font_weights);
             int i = Integer.parseInt(font_weight.getValue());
             font_weight.setSummary(mFontWeights[i == 2 ? 0 : 1]);
         }
 
-        EditTextPreference deleteUnread = (EditTextPreference) findPreference(DELETE_UNREAD_MESSAGES);
+        EditTextPreference deleteUnread = (EditTextPreference) findPreference(QKPreference.AUTO_DELETE_UNREAD.getKey());
         if (deleteUnread != null) {
             deleteUnread.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD)));
         }
 
-        EditTextPreference deleteRead = (EditTextPreference) findPreference(DELETE_READ_MESSAGES);
+        EditTextPreference deleteRead = (EditTextPreference) findPreference(QKPreference.AUTO_DELETE_READ.getKey());
         if (deleteRead != null) {
             deleteRead.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
         }
 
-        Preference day_start = findPreference(DAY_START);
+        Preference day_start = findPreference(QKPreference.AUTO_NIGHT_DAY_START.getKey());
         if (day_start != null) {
-            day_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, mPrefs.getString(DAY_START, "6:00")));
+            day_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_DAY_START)));
         }
 
-        Preference night_start = findPreference(NIGHT_START);
+        Preference night_start = findPreference(QKPreference.AUTO_NIGHT_NIGHT_START.getKey());
         if (night_start != null) {
-            night_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, mPrefs.getString(NIGHT_START, "21:00")));
+            night_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_NIGHT_START)));
         }
 
-        mMmscUrl = (EditTextPreference) findPreference(MMSC_URL);
+        mMmscUrl = (EditTextPreference) findPreference(QKPreference.MMSC.getKey());
         if (mMmscUrl != null) {
             mMmscUrl.setSummary(mMmscUrl.getText());
         }
 
-        mMmsProxy = (EditTextPreference) findPreference(MMS_PROXY);
+        mMmsProxy = (EditTextPreference) findPreference(QKPreference.MMS_PROXY.getKey());
         if (mMmsProxy != null) {
             mMmsProxy.setSummary(mMmsProxy.getText());
         }
 
-        mMmsPort = (EditTextPreference) findPreference(MMS_PORT);
+        mMmsPort = (EditTextPreference) findPreference(QKPreference.MMS_PORT.getKey());
         if (mMmsPort != null) {
             mMmsPort.setSummary(mMmsPort.getText());
         }
 
-        mMaxMmsAttachmentSize = (ListPreference) findPreference(MAX_MMS_ATTACHMENT_SIZE);
+        mMaxMmsAttachmentSize = (ListPreference) findPreference(QKPreference.MAX_MMS_SIZE.getKey());
         if (mMaxMmsAttachmentSize != null) {
             mMaxMmsAttachmentSizes = mRes.getStringArray(R.array.max_mms_attachment_sizes);
 
@@ -316,7 +291,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             mMaxMmsAttachmentSize.setSummary(summary);
         }
 
-        Preference version = findPreference(VERSION);
+        Preference version = findPreference(QKPreference.VERSION.getKey());
         if (version != null) {
             String v = "unknown";
             try {
@@ -405,41 +380,50 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 valueString
         );
 
-        switch (key) {
+        switch (QKPreference.get(key)) {
             case BACKGROUND:
                 ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
                 break;
-            case STATUS_TINT:
+
+            case TINTED_STATUS:
                 ThemeManager.setStatusBarTintEnabled(mContext, (Boolean) newValue);
                 break;
-            case NAVIGATION_TINT:
+
+            case TINTED_NAV:
                 ThemeManager.setNavigationBarTintEnabled(mContext, (Boolean) newValue);
                 break;
+
             case FONT_FAMILY:
                 preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
                 break;
+
             case FONT_SIZE:
                 preference.setSummary(mFontSizes[Integer.parseInt("" + newValue)]);
                 break;
+
             case FONT_WEIGHT:
                 int i = Integer.parseInt("" + newValue);
                 preference.setSummary(mFontWeights[i == 2 ? 0 : 1]);
                 break;
-            case COLOR_SENT:
+
+            case BUBBLES_COLOR_SENT:
                 ThemeManager.setSentBubbleColored((Boolean) newValue);
                 break;
-            case COLOR_RECEIVED:
+
+            case BUBBLES_COLOR_RECEIVED:
                 ThemeManager.setReceivedBubbleColored((Boolean) newValue);
                 break;
-            case NIGHT_AUTO:
+
+            case AUTO_NIGHT:
                 updateAlarmManager(mContext, (Boolean) newValue);
                 break;
-            case DAY_START:
-            case NIGHT_START:
+
+            case AUTO_NIGHT_DAY_START:
+            case AUTO_NIGHT_NIGHT_START:
                 updateAlarmManager(mContext, true);
                 break;
 
-            case DELETE_OLD_MESSAGES:
+            case AUTO_DELETE:
                 if ((Boolean) newValue) {
                     new QKDialog()
                             .setContext(mContext)
@@ -457,15 +441,15 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 }
                 break;
 
-            case DELETE_UNREAD_MESSAGES:
+            case AUTO_DELETE_UNREAD:
                 preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, newValue));
                 break;
 
-            case DELETE_READ_MESSAGES:
+            case AUTO_DELETE_READ:
                 preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, newValue));
                 break;
 
-            case YAPPY:
+            case YAPPY_INTEGRATION:
                 if ((Boolean) newValue) {
                     try {
                         EndlessJabberInterface.EnableIntegration(mContext, YappyImplementation.class, true, false, true, true);
@@ -483,15 +467,18 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                     }
                 }
                 break;
-            case QUICKCOMPOSE:
+
+            case QK_COMPOSE:
                 NotificationManager.initQuickCompose(getActivity(), (Boolean) newValue, !(Boolean) newValue);
                 break;
-            case MMSC_URL:
+
+            case MMSC:
             case MMS_PROXY:
             case MMS_PORT:
                 preference.setSummary(newValue.toString());
                 break;
-            case MAX_MMS_ATTACHMENT_SIZE:
+
+            case MAX_MMS_SIZE:
                 // Update the summary in the list preference
                 ListPreference listpref = (ListPreference) preference;
                 int index = listpref.findIndexOfValue((String) newValue);
@@ -499,7 +486,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 // Update the SMS helper static class with the new option
                 SmsHelper.setMaxAttachmentSizeSetting((String) newValue);
                 break;
-            case DELAY_DURATION:
+
+            case DELAYED_DURATION:
                 try {
                     int duration = Integer.parseInt((String) newValue);
 
@@ -556,19 +544,23 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                     .commit();
         }
 
-        switch (key) {
+        switch (QKPreference.get(key)) {
             case THEME:
                 ThemeManager.showColorPickerDialog(mContext);
                 break;
+
             case ICON:
                 ThemeManager.setIcon(mContext);
                 break;
+
             case BUBBLES:
                 new BubblePreferenceDialog().setContext(mContext).show();
                 break;
+
             case BLOCKED_FUTURE:
                 BlockedNumberDialog.showDialog(mContext);
                 break;
+
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";
                 if (!PackageUtils.isAppInstalled(mContext, packageName)) {
@@ -588,25 +580,29 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                             .show();
 
                     new Handler().postDelayed(() -> {
-                        mPrefs.edit().putBoolean(SHOULD_I_ANSWER, false).commit();
+                        QKPreferences.setBoolean(QKPreference.SHOULD_I_ANSWER, false);
                         ((CheckBoxPreference) preference).setChecked(false);
                     }, 500);
                 }
                 break;
-            case NOTIFICATION_LED_COLOR:
+
+            case NOTIFICATIONS_LED_COLOR:
                 mLedColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");
                 break;
-            case DAY_START:
-            case NIGHT_START:
+
+            case AUTO_NIGHT_DAY_START:
+            case AUTO_NIGHT_NIGHT_START:
                 TimePickerFragment fragment = new TimePickerFragment();
                 fragment.setPreference(preference);
                 fragment.setOnPreferenceChangeListener(this);
                 fragment.show(getFragmentManager(), "timepicker");
                 break;
+
             case QK_RESPONSES:
                 showQkResponseEditor();
                 break;
-            case AUTOMATICALLY_CONFIGURE_MMS:
+
+            case AUTO_CONFIGURE_MMS:
                 // Show the MMS setup dialogs. See the MMSSetupDialog class for info about what the
                 // arguments mean.
                 MMSSetupFragment f = new MMSSetupFragment();
@@ -619,13 +615,16 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                         .add(f, MMSSetupFragment.TAG)
                         .commit();
                 break;
+
             case MMS_CONTACT_SUPPORT:
                 // Opens an email compose intent with MMS debugging information
                 MMSSetupFragment.contactSupport(getActivity());
                 break;
+
             case CHANGELOG:
                 DialogHelper.showChangelog(mContext);
                 break;
+
             case THANKS:
                 new QKDialog()
                         .setContext(mContext)
@@ -637,15 +636,19 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                                 })
                         .show();
                 break;
+
             case DONATE:
                 DonationManager.getInstance(mContext).showDonateDialog();
                 break;
+
             case GOOGLE_PLUS:
                 startBrowserIntent(GOOGLE_PLUS_URL);
                 break;
+
             case GITHUB:
                 startBrowserIntent(GITHUB_URL);
                 break;
+
             case CROWDIN:
                 startBrowserIntent(CROWDIN_URL);
                 break;

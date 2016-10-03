@@ -15,9 +15,11 @@ import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.data.Message;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.service.UnreadBadgeService;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -64,7 +66,7 @@ public class MessagingReceiver extends BroadcastReceiver {
             mAddress = sms.getDisplayOriginatingAddress();
             mDate = sms.getTimestampMillis();
 
-            if (mPrefs.getBoolean(SettingsFragment.SHOULD_I_ANSWER, false) &&
+            if (QKPreferences.getBoolean(QKPreference.SHOULD_I_ANSWER) &&
                     PackageUtils.isAppInstalled(mContext, "org.mistergroup.muzutozvednout")) {
 
                 ShouldIAnswerBinder shouldIAnswerBinder = new ShouldIAnswerBinder();

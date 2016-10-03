@@ -13,7 +13,8 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.enums.QKPreference;
 
 public class ShouldIAnswerService extends Service {
 
@@ -43,11 +44,11 @@ public class ShouldIAnswerService extends Service {
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
                 if (msg.what == 919) {
-                    boolean enabled=msg.getData().getBoolean("enabled");
-                    prefs.edit().putBoolean(SettingsFragment.SHOULD_I_ANSWER, enabled).commit();
+                    boolean enabled = msg.getData().getBoolean("enabled");
+                    QKPreferences.setBoolean(QKPreference.SHOULD_I_ANSWER, enabled);
                 }
 
-                data.putBoolean("blocking_enabled", prefs.getBoolean(SettingsFragment.SHOULD_I_ANSWER, false));
+                data.putBoolean("blocking_enabled", QKPreferences.getBoolean(QKPreference.SHOULD_I_ANSWER));
 
                 Message message = new Message();
                 message.what = msg.what;

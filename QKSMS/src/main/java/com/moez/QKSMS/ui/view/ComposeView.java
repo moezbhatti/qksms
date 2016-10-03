@@ -201,7 +201,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
         // There is an option for using the return button instead of the emoticon button in the
         // keyboard; set that up here.
-        switch (Integer.parseInt(mPrefs.getString(SettingsFragment.ENTER_BUTTON, "0"))) {
+        switch (Integer.parseInt(QKPreferences.getString(QKPreference.ENTER_BUTTON))) {
             case 0: // emoji
                 break;
             case 1: // new line
