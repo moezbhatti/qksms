@@ -4,6 +4,8 @@ import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Log;
 
+import com.moez.QKSMS.ui.settings.SettingsFragment;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -49,6 +51,15 @@ public class RecordAudioUtils {
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mRecorder.setOutputFile(getFilePath());
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mRecorder.setMaxFileSize(Long.valueOf(SettingsFragment.MAX_MMS_ATTACHMENT_SIZE));
+        mRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
+            @Override
+            public void onInfo(MediaRecorder mr, int what, int extra) {
+                if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_FILESIZE_REACHED) {
+                    //TODO Feedback for user
+                }
+            }
+        });
         mRecorder.prepare();
         mRecorder.start();
     }
@@ -59,4 +70,5 @@ public class RecordAudioUtils {
         mRecorder.release();
         mRecorder = null;
     }
+
 }

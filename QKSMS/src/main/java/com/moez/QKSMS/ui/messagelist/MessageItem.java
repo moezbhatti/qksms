@@ -49,6 +49,7 @@ import com.moez.QKSMS.common.google.PduLoaderManager;
 import com.moez.QKSMS.common.utils.AddressUtils;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.ui.mms.AudioPlayer;
 
 import java.util.regex.Pattern;
 
@@ -102,6 +103,7 @@ public class MessageItem {
     public int mAttachmentType;
     public String mSubject;
     public SlideshowModel mSlideshow;
+    public AudioPlayer mAudioPlayer;
     public int mMessageSize;
     public int mErrorType;
     public int mErrorCode;
@@ -393,6 +395,16 @@ public class MessageItem {
                     mBody = tm.getText();
                     mTextContentType = tm.getContentType();
                 }
+
+
+                //FIXME
+                AudioPlayer audio = new AudioPlayer(mContext);
+                if ((audio != null) && slide..()) {
+                    TextModel tm = audio.getText();
+                    mBody = tm.getText();
+                    mTextContentType = tm.getContentType();
+                }
+
 
                 mMessageSize = mSlideshow == null ? 0 : mSlideshow.getTotalMessageSize();
 

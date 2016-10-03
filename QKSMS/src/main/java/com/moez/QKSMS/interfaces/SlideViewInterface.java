@@ -20,8 +20,6 @@ package com.moez.QKSMS.interfaces;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
-import java.util.Map;
-
 /**
  * Defines the interfaces of the view to show contents of a slide.
  */
@@ -37,12 +35,6 @@ public interface SlideViewInterface extends ViewInterface {
     void stopVideo();
     void pauseVideo();
     void seekVideo(int seekTo);
-
-    void setAudio(Uri audio, String name, Map<String, ?> extras);
-    void startAudio();
-    void stopAudio();
-    void pauseAudio();
-    void seekAudio(int seekTo);
 
     void setText(String name, String text);
     void setTextVisibility(boolean visible);

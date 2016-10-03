@@ -21,10 +21,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playing_audio"
     android:layout_width="match_parent"
-    android:layout_height="82dip"
-    android:orientation="horizontal"
-    android:gravity="center"
-    android:visibility="gone">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/audio_icon"

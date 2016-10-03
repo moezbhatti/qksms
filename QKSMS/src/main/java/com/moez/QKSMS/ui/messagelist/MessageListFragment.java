@@ -339,8 +339,9 @@ public class MessageListFragment extends QKContentFragment implements ActivityLa
         } else {
             if (view.getId() == R.id.image_view || view.getId() == R.id.play_slideshow_button) {
                 switch (messageItem.mAttachmentType) {
+                    case SmsHelper.AUDIO:
+                    //TODO Play audio files in app
                     case SmsHelper.IMAGE:
-                    case SmsHelper.AUDIO:  //TODO Play audio files in app
                     case SmsHelper.SLIDESHOW:
                         MessageUtils.viewMmsMessageAttachment(getActivity(), messageItem.mMessageUri, messageItem.mSlideshow, getAsyncDialog());
                         break;
