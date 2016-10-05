@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -86,21 +85,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CROWDIN_URL = "https://crowdin.com/project/qksms";
 
     private QKActivity mContext;
-    private SharedPreferences mPrefs;
-    private Resources mRes;
     private ListView mListView;
-
-    private Preference mThemeLed;
-    private EditTextPreference mMmscUrl;
-    private EditTextPreference mMmsProxy;
-    private EditTextPreference mMmsPort;
 
     private ColorPickerDialog mLedColorPickerDialog;
 
     private String[] mFontFamilies;
     private String[] mFontSizes;
     private String[] mFontWeights;
-    private int[] mLedColors;
 
     private ListPreference mMaxMmsAttachmentSize;
     private String[] mMaxMmsAttachmentSizes;
@@ -124,8 +115,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         setHasOptionsMenu(true);
 
         mContext = (QKActivity) getActivity();
-        mPrefs = mContext.getPrefs();
-        mRes = mContext.getResources();
+        Resources res = mContext.getResources();
 
         mContext.setTitle(R.string.title_settings);
 
@@ -165,40 +155,40 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             icon.setOnPreferenceClickListener(this);
         }
 
-        mThemeLed = findPreference(QKPreference.NOTIFICATIONS_LED_COLOR.getKey());
-        if (mThemeLed != null) {
+        Preference notificationLedColor = findPreference(QKPreference.NOTIFICATIONS_LED_COLOR.getKey());
+        if (notificationLedColor != null) {
 
-            mLedColors = new int[]{
-                    mRes.getColor(R.color.blue_light), mRes.getColor(R.color.purple_light),
-                    mRes.getColor(R.color.green_light), mRes.getColor(R.color.yellow_light),
-                    mRes.getColor(R.color.red_light), mRes.getColor(R.color.white_pure)
+            int[] ledColors = new int[]{
+                    res.getColor(R.color.blue_light), res.getColor(R.color.purple_light),
+                    res.getColor(R.color.green_light), res.getColor(R.color.yellow_light),
+                    res.getColor(R.color.red_light), res.getColor(R.color.white_pure)
             };
 
             mLedColorPickerDialog = new ColorPickerDialog();
-            mLedColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(QKPreferences.getString(NOTIFICATIONS_LED_COLOR)), 3, 2);
+            mLedColorPickerDialog.initialize(R.string.pref_theme_led, ledColors, Integer.parseInt(QKPreferences.getString(NOTIFICATIONS_LED_COLOR)), 3, 2);
             mLedColorPickerDialog.setOnColorSelectedListener(color -> {
-                mPrefs.edit().putString(mThemeLed.getKey(), "" + color).apply();
-                onPreferenceChange(findPreference(mThemeLed.getKey()), color);
+                QKPreferences.putString(NOTIFICATIONS_LED_COLOR, String.valueOf(color));
+                onPreferenceChange(findPreference(notificationLedColor.getKey()), color);
             });
         }
 
-        ListPreference font_family = (ListPreference) findPreference(QKPreference.FONT_FAMILY.getKey());
-        if (font_family != null) {
-            mFontFamilies = mRes.getStringArray(R.array.font_families);
-            font_family.setSummary(mFontFamilies[Integer.parseInt(font_family.getValue())]);
+        ListPreference fontFamily = (ListPreference) findPreference(QKPreference.FONT_FAMILY.getKey());
+        if (fontFamily != null) {
+            mFontFamilies = res.getStringArray(R.array.font_families);
+            fontFamily.setSummary(mFontFamilies[Integer.parseInt(fontFamily.getValue())]);
         }
 
-        ListPreference font_size = (ListPreference) findPreference(QKPreference.FONT_SIZE.getKey());
-        if (font_size != null) {
-            mFontSizes = mRes.getStringArray(R.array.font_sizes);
-            font_size.setSummary(mFontSizes[Integer.parseInt(font_size.getValue())]);
+        ListPreference fontSize = (ListPreference) findPreference(QKPreference.FONT_SIZE.getKey());
+        if (fontSize != null) {
+            mFontSizes = res.getStringArray(R.array.font_sizes);
+            fontSize.setSummary(mFontSizes[Integer.parseInt(fontSize.getValue())]);
         }
 
-        ListPreference font_weight = (ListPreference) findPreference(QKPreference.FONT_WEIGHT.getKey());
-        if (font_weight != null) {
-            mFontWeights = mRes.getStringArray(R.array.font_weights);
-            int i = Integer.parseInt(font_weight.getValue());
-            font_weight.setSummary(mFontWeights[i == 2 ? 0 : 1]);
+        ListPreference fontWeight = (ListPreference) findPreference(QKPreference.FONT_WEIGHT.getKey());
+        if (fontWeight != null) {
+            mFontWeights = res.getStringArray(R.array.font_weights);
+            int i = Integer.parseInt(fontWeight.getValue());
+            fontWeight.setSummary(mFontWeights[i == 2 ? 0 : 1]);
         }
 
         EditTextPreference deleteUnread = (EditTextPreference) findPreference(QKPreference.AUTO_DELETE_UNREAD.getKey());
@@ -211,34 +201,34 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             deleteRead.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
         }
 
-        Preference day_start = findPreference(QKPreference.AUTO_NIGHT_DAY_START.getKey());
-        if (day_start != null) {
-            day_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_DAY_START)));
+        Preference dayStart = findPreference(QKPreference.AUTO_NIGHT_DAY_START.getKey());
+        if (dayStart != null) {
+            dayStart.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_DAY_START)));
         }
 
-        Preference night_start = findPreference(QKPreference.AUTO_NIGHT_NIGHT_START.getKey());
-        if (night_start != null) {
-            night_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_NIGHT_START)));
+        Preference nightStart = findPreference(QKPreference.AUTO_NIGHT_NIGHT_START.getKey());
+        if (nightStart != null) {
+            nightStart.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_NIGHT_START)));
         }
 
-        mMmscUrl = (EditTextPreference) findPreference(QKPreference.MMSC.getKey());
-        if (mMmscUrl != null) {
-            mMmscUrl.setSummary(mMmscUrl.getText());
+        EditTextPreference mmscUrl = (EditTextPreference) findPreference(QKPreference.MMSC.getKey());
+        if (mmscUrl != null) {
+            mmscUrl.setSummary(mmscUrl.getText());
         }
 
-        mMmsProxy = (EditTextPreference) findPreference(QKPreference.MMS_PROXY.getKey());
-        if (mMmsProxy != null) {
-            mMmsProxy.setSummary(mMmsProxy.getText());
+        EditTextPreference mmsProxy = (EditTextPreference) findPreference(QKPreference.MMS_PROXY.getKey());
+        if (mmsProxy != null) {
+            mmsProxy.setSummary(mmsProxy.getText());
         }
 
-        mMmsPort = (EditTextPreference) findPreference(QKPreference.MMS_PORT.getKey());
-        if (mMmsPort != null) {
-            mMmsPort.setSummary(mMmsPort.getText());
+        EditTextPreference mmsPort = (EditTextPreference) findPreference(QKPreference.MMS_PORT.getKey());
+        if (mmsPort != null) {
+            mmsPort.setSummary(mmsPort.getText());
         }
 
         mMaxMmsAttachmentSize = (ListPreference) findPreference(QKPreference.MAX_MMS_SIZE.getKey());
         if (mMaxMmsAttachmentSize != null) {
-            mMaxMmsAttachmentSizes = mRes.getStringArray(R.array.max_mms_attachment_sizes);
+            mMaxMmsAttachmentSizes = res.getStringArray(R.array.max_mms_attachment_sizes);
 
             String value = mMaxMmsAttachmentSize.getValue();
             String summary = mMaxMmsAttachmentSizes[mMaxMmsAttachmentSize.findIndexOfValue(value)];
