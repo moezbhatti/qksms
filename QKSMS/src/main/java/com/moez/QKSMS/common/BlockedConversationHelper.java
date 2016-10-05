@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.HashSet;
 import java.util.Observable;
@@ -23,25 +23,25 @@ import java.util.Set;
  */
 public class BlockedConversationHelper {
 
-    public static boolean isConversationBlocked(SharedPreferences prefs, long threadId) {
-        Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
+    public static boolean isConversationBlocked(long threadId) {
+        Set<String> idStrings = QKPreferences.getStringSet(QKPreference.BLOCKED_SENDERS);
         return idStrings.contains(String.valueOf(threadId));
     }
 
-    public static void blockConversation(SharedPreferences prefs, long threadId) {
-        Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
+    public static void blockConversation(long threadId) {
+        Set<String> idStrings = QKPreferences.getStringSet(QKPreference.BLOCKED_SENDERS);
         idStrings.add(String.valueOf(threadId));
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_SENDERS, idStrings).apply();
+        QKPreferences.putStringSet(QKPreference.BLOCKED_SENDERS, idStrings);
     }
 
-    public static void unblockConversation(SharedPreferences prefs, long threadId) {
-        Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
+    public static void unblockConversation(long threadId) {
+        Set<String> idStrings = QKPreferences.getStringSet(QKPreference.BLOCKED_SENDERS);
         idStrings.remove(String.valueOf(threadId));
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_SENDERS, idStrings).apply();
+        QKPreferences.putStringSet(QKPreference.BLOCKED_SENDERS, idStrings);
     }
 
-    public static Set<Long> getBlockedConversationIds(SharedPreferences prefs) {
-        Set<String> conversations = getBlockedConversations(prefs);
+    public static Set<Long> getBlockedConversationIds() {
+        Set<String> conversations = getBlockedConversations();
         Set<Long> ids = new HashSet<>();
         for (String id : conversations) {
             ids.add(Long.parseLong(id));
@@ -49,28 +49,28 @@ public class BlockedConversationHelper {
         return ids;
     }
 
-    public static Set<String> getBlockedConversations(SharedPreferences prefs) {
-        return prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
+    public static Set<String> getBlockedConversations() {
+        return QKPreferences.getStringSet(QKPreference.BLOCKED_SENDERS);
     }
 
-    public static void blockFutureConversation(SharedPreferences prefs, String address) {
-        Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
+    public static void blockFutureConversation(String address) {
+        Set<String> idStrings = QKPreferences.getStringSet(QKPreference.BLOCKED_FUTURE);
         idStrings.add(address);
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_FUTURE, idStrings).apply();
+        QKPreferences.putStringSet(QKPreference.BLOCKED_FUTURE, idStrings);
     }
 
-    public static void unblockFutureConversation(SharedPreferences prefs, String address) {
-        Set<String> idStrings2 = prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
-        idStrings2.remove(address);
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_FUTURE, idStrings2).apply();
+    public static void unblockFutureConversation(String address) {
+        Set<String> idStrings = QKPreferences.getStringSet(QKPreference.BLOCKED_FUTURE);
+        idStrings.remove(address);
+        QKPreferences.putStringSet(QKPreference.BLOCKED_FUTURE, idStrings);
     }
 
-    public static Set<String> getFutureBlockedConversations(SharedPreferences prefs) {
-        return prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
+    public static Set<String> getFutureBlockedConversations() {
+        return QKPreferences.getStringSet(QKPreference.BLOCKED_FUTURE);
     }
 
-    public static boolean isFutureBlocked(SharedPreferences prefs, String address) {
-        for (String s : getFutureBlockedConversations(prefs)) {
+    public static boolean isFutureBlocked(String address) {
+        for (String s : getFutureBlockedConversations()) {
             if (PhoneNumberUtils.compareLoosely(s, address)) {
                 return true;
             }
@@ -79,12 +79,12 @@ public class BlockedConversationHelper {
         return false;
     }
 
-    public static String[] getBlockedConversationArray(SharedPreferences prefs) {
-        Set<String> idStrings = getBlockedConversations(prefs);
+    public static String[] getBlockedConversationArray() {
+        Set<String> idStrings = getBlockedConversations();
         return idStrings.toArray(new String[idStrings.size()]);
     }
 
-    public static String getCursorSelection(SharedPreferences prefs, boolean blocked) {
+    public static String getCursorSelection(boolean blocked) {
         StringBuilder selection = new StringBuilder();
         selection.append(Telephony.Threads.MESSAGE_COUNT);
         selection.append(" != 0");
@@ -93,7 +93,7 @@ public class BlockedConversationHelper {
         if (!blocked) selection.append(" NOT");
         selection.append(" IN (");
 
-        Set<String> idStrings = getBlockedConversations(prefs);
+        Set<String> idStrings = getBlockedConversations();
         for (int i = 0; i < idStrings.size(); i++) {
             selection.append("?");
             if (i < idStrings.size() - 1) {
@@ -120,13 +120,11 @@ public class BlockedConversationHelper {
     private static class BindMenuItemTask extends AsyncTask<Void, Void, Integer> {
 
         private Context mContext;
-        private SharedPreferences mPrefs;
         private MenuItem mMenuItem;
         private boolean mShowBlocked;
 
         private BindMenuItemTask(Context context, SharedPreferences prefs, MenuItem item, boolean showBlocked) {
             mContext = context;
-            mPrefs = prefs;
             mMenuItem = item;
             mShowBlocked = showBlocked;
         }
@@ -134,7 +132,7 @@ public class BlockedConversationHelper {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mMenuItem.setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
+            mMenuItem.setVisible(QKPreferences.getBoolean(QKPreference.BLOCKED_CONVERSATIONS));
             mMenuItem.setTitle(mContext.getString(mShowBlocked ? R.string.menu_messages : R.string.menu_blocked));
         }
 
@@ -145,7 +143,7 @@ public class BlockedConversationHelper {
             // Create a cursor for the conversation list
             Cursor conversationCursor = mContext.getContentResolver().query(
                     SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
-                    getCursorSelection(mPrefs, !mShowBlocked), getBlockedConversationArray(mPrefs), SmsHelper.SORT_DATE_DESC);
+                    getCursorSelection(!mShowBlocked), getBlockedConversationArray(), SmsHelper.SORT_DATE_DESC);
 
             if (conversationCursor.moveToFirst()) {
                 do {

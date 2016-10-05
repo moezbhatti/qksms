@@ -26,6 +26,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.QKRateSnack;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.ThemeManager;
@@ -42,7 +43,6 @@ import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.search.SearchActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 import org.ligi.snackengage.SnackEngage;
@@ -149,7 +149,7 @@ public class MainActivity extends QKActivity {
     }
 
     private void launchWelcomeActivity() {
-        if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
+        if (QKPreferences.getBoolean(QKPreference.WELCOME_SEEN)) {
             // User has already seen the welcome screen
             return;
         }
@@ -289,9 +289,9 @@ public class MainActivity extends QKActivity {
 
     private void beginMmsSetup() {
         if (!mPrefs.getBoolean(MMS_SETUP_DONT_ASK_AGAIN, false) &&
-                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMSC_URL, "")) &&
-                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PROXY, "")) &&
-                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
+                TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMSC)) &&
+                TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PROXY)) &&
+                TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PORT))) {
 
             // Launch the MMS setup fragment here. This is a series of dialogs that will guide the
             // user through the MMS setup process.

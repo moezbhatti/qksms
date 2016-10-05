@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.telephony.SmsMessage;
@@ -22,7 +21,6 @@ import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.service.UnreadBadgeService;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import org.mistergroup.muzutozvednout.ShouldIAnswerBinder;
 
 public class MessagingReceiver extends BroadcastReceiver {
@@ -110,15 +108,15 @@ public class MessagingReceiver extends BroadcastReceiver {
         // The user has set messages from this address to be blocked, but we at the time there weren't any
         // messages from them already in the database, so we couldn't block any thread URI. Now that we have one,
         // we can block it, so that the conversation list adapter knows to ignore this thread in the main list
-        if (BlockedConversationHelper.isFutureBlocked(mPrefs, mAddress)) {
-            BlockedConversationHelper.unblockFutureConversation(mPrefs, mAddress);
-            BlockedConversationHelper.blockConversation(mPrefs, message.getThreadId());
+        if (BlockedConversationHelper.isFutureBlocked(mAddress)) {
+            BlockedConversationHelper.unblockFutureConversation(mAddress);
+            BlockedConversationHelper.blockConversation(message.getThreadId());
             MessagingHelper.markMessageSeen(mContext, message.getId());
             BlockedConversationHelper.FutureBlockedConversationObservable.getInstance().futureBlockedConversationReceived();
 
             // If we have notifications enabled and this conversation isn't blocked
         } else if (conversationPrefs.getNotificationsEnabled() && !BlockedConversationHelper.getBlockedConversationIds(
-                PreferenceManager.getDefaultSharedPreferences(mContext)).contains(message.getThreadId())) {
+        ).contains(message.getThreadId())) {
             showPopup(message);
             UnreadBadgeService.update(mContext);
             NotificationManager.create(mContext);
@@ -135,12 +133,11 @@ public class MessagingReceiver extends BroadcastReceiver {
     }
 
     private void showPopup(Message message) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(mContext, message.getThreadId());
 
         if (conversationPrefs.getNotificationsEnabled()) {
             // Only show QuickReply if we're outside of the app, and they have QuickReply enabled
-            if (!LifecycleHandler.isApplicationVisible() && prefs.getBoolean(SettingsFragment.QUICKREPLY, Build.VERSION.SDK_INT < 24)) {
+            if (!LifecycleHandler.isApplicationVisible() && QKPreferences.getBoolean(QKPreference.QK_REPLY)) {
                 Intent popupIntent = new Intent(mContext, QKReplyActivity.class);
                 popupIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 popupIntent.putExtra(QKReplyActivity.EXTRA_THREAD_ID, message.getThreadId());

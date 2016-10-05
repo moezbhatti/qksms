@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.enums.QKPreference;
 
 /**
  * Regular android preferences don't have basic functionality when you manually add them to views
@@ -15,11 +16,11 @@ public class QKPreferenceView extends Preference {
 
     private OnPreferenceClickListener mOnPreferenceClickListener;
 
-    public QKPreferenceView(Context context, OnPreferenceClickListener onPreferenceClickListener, String key, int title, int summary) {
+    public QKPreferenceView(Context context, OnPreferenceClickListener onPreferenceClickListener, QKPreference pref, int title, int summary) {
         super(context);
         mOnPreferenceClickListener = onPreferenceClickListener;
 
-        setKey(key);
+        setKey(pref.getKey());
         setEnabled(true);
         setLayoutResource(R.layout.list_item_preference);
         if (title != 0) setTitle(title);

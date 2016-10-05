@@ -19,7 +19,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.Menu;
@@ -62,13 +61,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import static com.moez.QKSMS.enums.QKPreference.AUTO_NIGHT_DAY_START;
+import static com.moez.QKSMS.enums.QKPreference.AUTO_NIGHT_NIGHT_START;
 import static com.moez.QKSMS.enums.QKPreference.ICON;
+import static com.moez.QKSMS.enums.QKPreference.NOTIFICATIONS_LED_COLOR;
 
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener {
     public static final String TAG = "SettingsFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
+    public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
     public static final String CATEGORY_THEME = "pref_category_theme";
     public static final String CATEGORY_GENERAL = "pref_key_category_general";
     public static final String CATEGORY_NOTIFICATIONS = "pref_key_category_notifications";
@@ -76,55 +79,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_QUICKREPLY = "pref_key_category_quickreply";
     public static final String CATEGORY_QUICKCOMPOSE = "pref_key_category_quickcompose";
     public static final String CATEGORY_ABOUT = "pref_key_category_about";
-
-    // Sub-categories
-    public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
-
-    public static final String THEME = "pref_key_theme";
-    public static final String BACKGROUND = "pref_key_background";
-    public static final String BUBBLES_NEW = "pref_key_new_bubbles";
-    public static final String COLOR_SENT = "pref_key_colour_sent";
-    public static final String COLOR_RECEIVED = "pref_key_colour_received";
-    public static final String AUTO_EMOJI = "pref_key_auto_emoji";
-    public static final String COMPOSE_FAVORITES = "pref_key_compose_favorites";
-    public static final String FONT_FAMILY = "pref_key_font_family";
-    public static final String FONT_SIZE = "pref_key_font_size";
-    public static final String FONT_WEIGHT = "pref_key_font_weight";
-    public static final String MESSAGE_COUNT = "pref_key_message_count";
-    public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
-    public static final String DELIVERY_VIBRATE = "pref_key_delivery_vibrate";
-    public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
-    public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
-    public static final String BLOCKED_FUTURE = "pref_key_block_future";
-    public static final String MOBILE_ONLY = "pref_key_mobile_only";
-    public static final String COMPOSE_GROUP = "pref_key_compose_group";
-    public static final String NOTIFICATIONS = "pref_key_notifications";
-    public static final String NOTIFICATION_LED = "pref_key_led";
-    public static final String NOTIFICATION_LED_COLOR = "pref_key_theme_led";
-    public static final String WAKE = "pref_key_wake";
-    public static final String NOTIFICATION_TICKER = "pref_key_ticker";
-    public static final String PRIVATE_NOTIFICATION = "pref_key_notification_private";
-    public static final String NOTIFICATION_VIBRATE = "pref_key_vibration";
-    public static final String NOTIFICATION_TONE = "pref_key_ringtone";
-    public static final String NOTIFICATION_CALL_BUTTON = "pref_key_notification_call";
-    public static final String DELAYED = "pref_key_delayed";
-    public static final String DELAY_DURATION = "pref_key_delay_duration";
-    public static final String NIGHT_AUTO = "pref_key_night_auto";
-    public static final String DAY_START = "pref_key_day_start";
-    public static final String NIGHT_START = "pref_key_night_start";
-    public static final String QK_RESPONSES = "pref_key_qk_responses";
-    public static final String MMSC_URL = "mmsc_url";
-    public static final String MMS_PORT = "mms_port";
-    public static final String MMS_PROXY = "mms_proxy";
-    public static final String DISMISSED_READ = "pref_key_dismiss_read";
-    public static final String QUICKREPLY = "pref_key_quickreply_enabled";
-    public static final String QUICKREPLY_TAP_DISMISS = "pref_key_quickreply_dismiss";
-    public static final String QUICKCOMPOSE = "pref_key_quickcompose";
-
-    public static final String WELCOME_SEEN = "pref_key_welcome_seen";
-
-    public static final String DEFAULT_NOTIFICATION_TONE = "content://settings/system/notification_sound";
-
     public static final String CATEGORY_TAG = "settings_category_fragment_tag";
 
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/104505769539048913485";
@@ -211,7 +165,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             icon.setOnPreferenceClickListener(this);
         }
 
-        mThemeLed = findPreference(NOTIFICATION_LED_COLOR);
+        mThemeLed = findPreference(QKPreference.NOTIFICATIONS_LED_COLOR.getKey());
         if (mThemeLed != null) {
 
             mLedColors = new int[]{
@@ -221,7 +175,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             };
 
             mLedColorPickerDialog = new ColorPickerDialog();
-            mLedColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(mPrefs.getString(NOTIFICATION_LED_COLOR, "-48060")), 3, 2);
+            mLedColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(QKPreferences.getString(NOTIFICATIONS_LED_COLOR)), 3, 2);
             mLedColorPickerDialog.setOnColorSelectedListener(color -> {
                 mPrefs.edit().putString(mThemeLed.getKey(), "" + color).apply();
                 onPreferenceChange(findPreference(mThemeLed.getKey()), color);
@@ -368,7 +322,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         String key = preference.getKey();
 
         String valueString = newValue == null ? "null" : newValue.toString();
-        if (key.equals(NOTIFICATION_LED_COLOR)) {
+        if (QKPreference.get(key)  == NOTIFICATIONS_LED_COLOR) {
             // Format the color as a nice string if it's the LED color.
             valueString = ThemeManager.getColorString(Integer.parseInt(valueString));
         }
@@ -430,7 +384,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                             .setTitle(R.string.pref_delete_old_messages)
                             .setMessage(R.string.dialog_delete_old_messages)
                             .setPositiveButton(R.string.yes, v -> {
-                                QKPreferences.setBoolean(QKPreference.AUTO_DELETE, true);
+                                QKPreferences.putBoolean(QKPreference.AUTO_DELETE, true);
                                 ((CheckBoxPreference) preference).setChecked(true);
                                 DeleteOldMessagesService.setupAutoDeleteAlarm(mContext);
                                 mContext.makeToast(R.string.toast_deleting_old_messages);
@@ -580,7 +534,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                             .show();
 
                     new Handler().postDelayed(() -> {
-                        QKPreferences.setBoolean(QKPreference.SHOULD_I_ANSWER, false);
+                        QKPreferences.putBoolean(QKPreference.SHOULD_I_ANSWER, false);
                         ((CheckBoxPreference) preference).setChecked(false);
                     }, 500);
                 }
@@ -669,7 +623,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public void showQkResponseEditor() {
 
         Set<String> defaultResponses = new HashSet<>(Arrays.asList(mContext.getResources().getStringArray(R.array.qk_responses)));
-        Set<String> responseSet = mPrefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
+        Set<String> responseSet = QKPreferences.getStringSet(QKPreference.QK_RESPONSES);
+        responseSet = responseSet.size() == 0 ? defaultResponses : responseSet;
         ArrayList<String> responses = new ArrayList<>();
         responses.addAll(responseSet);
         Collections.sort(responses);
@@ -686,7 +641,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 .setContext(mContext)
                 .setTitle(R.string.title_qk_responses)
                 .setCustomView(listView)
-                .setPositiveButton(R.string.save, v -> mPrefs.edit().putStringSet(SettingsFragment.QK_RESPONSES, new HashSet<>(adapter.getResponses())).apply())
+                .setPositiveButton(R.string.save, v -> {
+                    QKPreferences.putStringSet(QKPreference.QK_RESPONSES, new HashSet<>(adapter.getResponses()));
+                })
                 .setNegativeButton(R.string.cancel, null)
                 .show(getFragmentManager(), "qk_response");
     }
@@ -700,7 +657,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         Calendar dayCalendar = Calendar.getInstance();
         dayCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(DAY_START, "6:00")));
+            calendar.setTime(simpleDateFormat.parse(QKPreferences.getString(AUTO_NIGHT_DAY_START)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -712,7 +669,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         Calendar nightCalendar = Calendar.getInstance();
         nightCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(NIGHT_START, "21:00")));
+            calendar.setTime(simpleDateFormat.parse(QKPreferences.getString(AUTO_NIGHT_NIGHT_START)));
         } catch (ParseException e) {
             e.printStackTrace();
         }

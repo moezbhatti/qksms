@@ -80,7 +80,7 @@ public class QKTextView extends TextView {
         });
 
         LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, mType));
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mType));
         });
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {

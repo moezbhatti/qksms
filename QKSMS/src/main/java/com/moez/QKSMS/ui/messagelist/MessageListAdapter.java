@@ -42,7 +42,6 @@ import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
@@ -370,7 +369,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         }
 
         if (!TextUtils.isEmpty(body)) {
-            if (mPrefs.getBoolean(SettingsFragment.AUTO_EMOJI, false)) {
+            if (QKPreferences.getBoolean(QKPreference.AUTO_EMOJI)) {
                 body = EmojiRegistry.parseEmojis(body);
             }
 

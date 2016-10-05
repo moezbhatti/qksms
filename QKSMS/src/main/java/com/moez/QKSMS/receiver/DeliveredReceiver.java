@@ -8,12 +8,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.Calendar;
 
@@ -66,11 +66,11 @@ public class DeliveredReceiver extends BroadcastReceiver {
                     query.close();
                 }
 
-                if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SettingsFragment.DELIVERY_TOAST, true)) {
+                if (QKPreferences.getBoolean(QKPreference.DELIVERY_TOAST)) {
                     Toast.makeText(context, R.string.message_delivered, Toast.LENGTH_LONG).show();
                 }
 
-                if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SettingsFragment.DELIVERY_VIBRATE, true)) {
+                if (QKPreferences.getBoolean(QKPreference.DELIVERY_VIBRATE)) {
                     Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(100);
                 }

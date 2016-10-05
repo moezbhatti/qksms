@@ -4,19 +4,18 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import com.moez.QKSMS.common.ThemeManager;
 
-import java.util.Arrays;
 import java.util.HashSet;
 
 public enum QKPreference {
     // Appearance
-    THEME("pref_key_theme", ThemeManager.DEFAULT_COLOR),
+    THEME("pref_key_theme", String.valueOf(ThemeManager.DEFAULT_COLOR)),
     ICON("pref_key_icon"),
     BACKGROUND("pref_key_background", "offwhite"),
 
     BUBBLES("pref_key_bubbles"),
     BUBBLES_NEW("pref_key_new_bubbles", true),
-    BUBBLES_COLOR_SENT("pref_key_colour_sent", false),
-    BUBBLES_COLOR_RECEIVED("pref_key_colour_received", true),
+    BUBBLES_COLOR_SENT("pref_key_colour_sent", true),
+    BUBBLES_COLOR_RECEIVED("pref_key_colour_received", false),
 
     AUTO_NIGHT("pref_key_night_auto", false),
     AUTO_NIGHT_DAY_START("pref_key_day_start", "6:00"),
@@ -66,17 +65,15 @@ public enum QKPreference {
     STARRED_CONTACTS("pref_key_compose_favorites", true),
     PROXIMITY_SENSOR("pref_key_prox_sensor_calling", false),
     YAPPY_INTEGRATION("pref_key_endlessjabber", false),
-    QK_RESPONSES("pref_key_qk_responses", new HashSet<>(Arrays.asList(new String[]{
-            "Okay", "Give me a moment", "On my way", "Thanks", "Sounds good", "What's up?", "Agreed", "No",
-            "Love you", "Sorry", "LOL", "That's okay"}))),
+    QK_RESPONSES("pref_key_qk_responses", new HashSet<>()),
 
     // Notifications
     NOTIFICATIONS("pref_key_notifications", true),
     NOTIFICATIONS_LED("pref_key_led", true),
     NOTIFICATIONS_LED_COLOR("pref_key_theme_led", "-48060"),
     NOTIFICATIONS_WAKE("pref_key_wake", false),
-    NOTIFICATIONS_TICKER("pref_key_ticker", false),
-    NOTIFICATIONS_PRIVATE("pref_key_notification_private", false),
+    NOTIFICATIONS_TICKER("pref_key_ticker", true),
+    NOTIFICATIONS_PRIVATE("pref_key_notification_private", "0"),
     NOTIFICATIONS_VIBRATION("pref_key_vibration", true),
     NOTIFICATIONS_SOUND("pref_key_ringtone", "content://settings/system/notification_sound"),
     NOTIFICATIONS_CALL_BUTTON("pref_key_notification_call", false),
@@ -117,6 +114,7 @@ public enum QKPreference {
 
     // Storage
     LAST_AUTO_DELETE_CHECK("last_auto_delete_check", 0),
+    WELCOME_SEEN("pref_key_welcome_seen", false),
 
     // Used if `get(String)` can't find an enum, instead of passing null, which would break switches
     NULL("");
@@ -135,11 +133,12 @@ public enum QKPreference {
 
     @NonNull
     public static QKPreference get(String key) {
-        try {
-            return QKPreference.valueOf(key);
-        } catch (IllegalArgumentException e) {
-            return NULL;
+        for (QKPreference preference : QKPreference.values()) {
+            if (preference.mKey.equals(key)) {
+                return preference;
+            }
         }
+        return NULL;
     }
 
     public String getKey() {

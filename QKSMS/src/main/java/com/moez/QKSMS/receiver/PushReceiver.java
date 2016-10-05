@@ -28,8 +28,9 @@ import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.ReadOrigInd;
 import com.moez.QKSMS.common.MmsConfig;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.SqliteWrapper;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.enums.QKPreference;
 
 import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_DELIVERY_IND;
 import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND;
@@ -86,7 +87,7 @@ public class PushReceiver extends BroadcastReceiver {
                         try {
                             group = com.moez.QKSMS.mmssms.Transaction.settings.getGroup();
                         } catch (Exception e) {
-                            group = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(SettingsFragment.COMPOSE_GROUP, true);
+                            group = QKPreferences.getBoolean(QKPreference.GROUP_MESSAGING);
                         }
 
                         Uri uri = p.persist(pdu, Uri.parse("content://mms/inbox"), true,
@@ -119,7 +120,7 @@ public class PushReceiver extends BroadcastReceiver {
                         try {
                             group = com.moez.QKSMS.mmssms.Transaction.settings.getGroup();
                         } catch (Exception e) {
-                            group = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(SettingsFragment.COMPOSE_GROUP, true);
+                            group = QKPreferences.getBoolean(QKPreference.GROUP_MESSAGING);
                         }
 
                         // Save the pdu. If we can start downloading the real pdu immediately,

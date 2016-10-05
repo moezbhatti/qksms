@@ -59,7 +59,7 @@ public class QKEditText extends android.widget.EditText {
         });
 
         LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(FontManager.TEXT_TYPE_PRIMARY));
         });
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {

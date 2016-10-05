@@ -13,6 +13,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.view.QKPreferenceView;
@@ -73,29 +74,29 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
         LinearLayout list = new LinearLayout(getActivity());
         list.setOrientation(LinearLayout.VERTICAL);
 
-        list.addView(new QKPreferenceView(getActivity(), this, SettingsFragment.THEME,
+        list.addView(new QKPreferenceView(getActivity(), this, QKPreference.THEME,
                 R.string.pref_theme, R.string.pref_theme_summary_alt).getView());
 
-        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED,
-                mConversationPrefs.getConversationPrefs(), mConversationPrefs.getNotificationLedEnabled(), R.string.pref_led, 0).getView());
+        list.addView(new QKSwitchPreference(getActivity(), this, QKPreference.NOTIFICATIONS_LED,
+                mConversationPrefs.getConversationPrefs(), R.string.pref_led, 0).getView());
 
-        list.addView(new QKPreferenceView(getActivity(), this, SettingsFragment.NOTIFICATION_LED_COLOR,
+        list.addView(new QKPreferenceView(getActivity(), this, QKPreference.NOTIFICATIONS_LED_COLOR,
                 R.string.pref_theme_led, 0).getView());
 
-        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.WAKE,
-                mConversationPrefs.getConversationPrefs(), mConversationPrefs.getWakePhoneEnabled(), R.string.pref_wake, R.string.pref_wake_summary).getView());
+        list.addView(new QKSwitchPreference(getActivity(), this, QKPreference.NOTIFICATIONS_WAKE,
+                mConversationPrefs.getConversationPrefs(), R.string.pref_wake, R.string.pref_wake_summary).getView());
 
-        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_TICKER,
-                mConversationPrefs.getConversationPrefs(), mConversationPrefs.getTickerEnabled(), R.string.pref_ticker, R.string.pref_ticker_summary).getView());
+        list.addView(new QKSwitchPreference(getActivity(), this, QKPreference.NOTIFICATIONS_TICKER,
+                mConversationPrefs.getConversationPrefs(), R.string.pref_ticker, R.string.pref_ticker_summary).getView());
 
-        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_VIBRATE,
-                mConversationPrefs.getConversationPrefs(), mConversationPrefs.getVibrateEnabled(), R.string.pref_vibration, R.string.pref_vibration_summary).getView());
+        list.addView(new QKSwitchPreference(getActivity(), this, QKPreference.NOTIFICATIONS_VIBRATION,
+                mConversationPrefs.getConversationPrefs(), R.string.pref_vibration, R.string.pref_vibration_summary).getView());
 
-        list.addView(new QKRingtonePreference(getActivity(), this, SettingsFragment.NOTIFICATION_TONE,
+        list.addView(new QKRingtonePreference(getActivity(), this, QKPreference.NOTIFICATIONS_SOUND,
                 R.string.pref_ringtone, R.string.pref_ringtone_summary).getView());
 
-        list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.NOTIFICATION_CALL_BUTTON,
-                mConversationPrefs.getConversationPrefs(), mConversationPrefs.getCallButtonEnabled(), R.string.pref_notification_call, R.string.pref_notification_call_summary).getView());
+        list.addView(new QKSwitchPreference(getActivity(), this, QKPreference.NOTIFICATIONS_CALL_BUTTON,
+                mConversationPrefs.getConversationPrefs(), R.string.pref_notification_call, R.string.pref_notification_call_summary).getView());
 
         setCustomView(list);
 
@@ -103,21 +104,21 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
     }
 
     public boolean onPreferenceClick(Preference preference) {
-        switch (preference.getKey()) {
-            case SettingsFragment.THEME:
+        switch (QKPreference.get(preference.getKey())) {
+            case THEME:
                 ThemeManager.showColorPickerDialogForConversation(mContext, mConversationPrefs);
                 break;
 
-            case SettingsFragment.NOTIFICATION_LED_COLOR:
+            case NOTIFICATIONS_LED_COLOR:
                 ColorPickerDialog ledColorPickerDialog = new ColorPickerDialog();
                 ledColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(mConversationPrefs.getNotificationLedColor()), 3, 2);
-                ledColorPickerDialog.setOnColorSelectedListener(color -> mConversationPrefs.putString(SettingsFragment.NOTIFICATION_LED_COLOR, "" + color));
+                ledColorPickerDialog.setOnColorSelectedListener(color -> mConversationPrefs.putString(QKPreference.NOTIFICATIONS_LED_COLOR, "" + color));
                 ledColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");
                 break;
 
-            case SettingsFragment.NOTIFICATION_TONE:
+            case NOTIFICATIONS_SOUND:
                 Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                Uri uri = Uri.parse(mConversationPrefs.getString(SettingsFragment.NOTIFICATION_TONE, "content://settings/system/notification_sound"));
+                Uri uri = Uri.parse(mConversationPrefs.getNotificationSound());
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, uri);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));

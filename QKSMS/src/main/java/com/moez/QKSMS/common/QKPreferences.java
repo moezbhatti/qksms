@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.moez.QKSMS.enums.QKPreference;
 
+import java.util.Set;
+
 public abstract class QKPreferences {
 
     private static SharedPreferences sPrefs;
@@ -17,7 +19,7 @@ public abstract class QKPreferences {
         return sPrefs.getBoolean(preference.getKey(), (boolean) preference.getDefaultValue());
     }
 
-    public static void setBoolean(QKPreference preference, boolean newValue) {
+    public static void putBoolean(QKPreference preference, boolean newValue) {
         sPrefs.edit().putBoolean(preference.getKey(), newValue).apply();
     }
 
@@ -25,7 +27,7 @@ public abstract class QKPreferences {
         return sPrefs.getInt(preference.getKey(), (int) preference.getDefaultValue());
     }
 
-    public static void setInt(QKPreference preference, int newValue) {
+    public static void putInt(QKPreference preference, int newValue) {
         sPrefs.edit().putInt(preference.getKey(), newValue).apply();
     }
 
@@ -33,7 +35,7 @@ public abstract class QKPreferences {
         return sPrefs.getLong(preference.getKey(), (int) preference.getDefaultValue());
     }
 
-    public static void setLong(QKPreference preference, long newValue) {
+    public static void putLong(QKPreference preference, long newValue) {
         sPrefs.edit().putLong(preference.getKey(), newValue).apply();
     }
 
@@ -41,7 +43,15 @@ public abstract class QKPreferences {
         return sPrefs.getString(preference.getKey(), (String) preference.getDefaultValue());
     }
 
-    public static void setString(QKPreference preference, String newValue) {
+    public static void putString(QKPreference preference, String newValue) {
         sPrefs.edit().putString(preference.getKey(), newValue).apply();
+    }
+
+    public static Set<String> getStringSet(QKPreference preference) {
+        return sPrefs.getStringSet(preference.getKey(), (Set<String>) preference.getDefaultValue());
+    }
+
+    public static void putStringSet(QKPreference preference, Set<String> newValue) {
+        sPrefs.edit().putStringSet(preference.getKey(), newValue).apply();
     }
 }

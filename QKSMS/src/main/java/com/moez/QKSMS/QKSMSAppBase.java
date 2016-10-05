@@ -98,6 +98,7 @@ public class QKSMSAppBase extends Application {
 
         registerActivityLifecycleCallbacks(new LifecycleHandler());
 
+        QKPreferences.init(this);
         ThemeManager.init(this);
         MmsConfig.init(this);
         Contact.init(this);
@@ -108,7 +109,6 @@ public class QKSMSAppBase extends Application {
         LayoutManager.init(this);
         NotificationManager.init(this);
         LiveViewManager.init(this);
-        QKPreferences.init(this);
 
         activePendingMessages();
     }

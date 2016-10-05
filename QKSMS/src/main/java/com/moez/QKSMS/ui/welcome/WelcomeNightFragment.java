@@ -4,14 +4,14 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.RobotoTextView;
 
@@ -80,10 +80,7 @@ public class WelcomeNightFragment extends BaseWelcomeFragment implements BaseWel
             });
             colorAnimation.start();
 
-            PreferenceManager.getDefaultSharedPreferences(mContext)
-                    .edit()
-                    .putString(SettingsFragment.BACKGROUND, night ? ThemeManager.Theme.PREF_GREY : ThemeManager.Theme.PREF_OFFWHITE)
-                    .commit();
+            QKPreferences.putString(QKPreference.BACKGROUND, night ? ThemeManager.Theme.PREF_GREY : ThemeManager.Theme.PREF_OFFWHITE);
         }
     }
 }

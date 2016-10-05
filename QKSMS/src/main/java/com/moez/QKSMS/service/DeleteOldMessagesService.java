@@ -32,7 +32,7 @@ public class DeleteOldMessagesService extends IntentService {
                 current.get(Calendar.DAY_OF_YEAR) != last.get(Calendar.DAY_OF_YEAR) ||
                 current.get(Calendar.YEAR) != last.get(Calendar.YEAR))) {
             Log.i(TAG, "Ready to delete old messages");
-            QKPreferences.setLong(QKPreference.LAST_AUTO_DELETE_CHECK, System.currentTimeMillis());
+            QKPreferences.putLong(QKPreference.LAST_AUTO_DELETE_CHECK, System.currentTimeMillis());
 
             deleteOldUnreadMessages(this);
             deleteOldReadMessages(this);

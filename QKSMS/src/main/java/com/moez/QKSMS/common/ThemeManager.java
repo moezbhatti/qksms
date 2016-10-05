@@ -255,10 +255,10 @@ public class ThemeManager {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mResources = context.getResources();
 
-        mColor = Integer.parseInt(mPrefs.getString(SettingsFragment.THEME, "" + DEFAULT_COLOR));
+        mColor = Integer.parseInt(QKPreferences.getString(QKPreference.THEME));
         mActiveColor = mColor;
 
-        initializeTheme(Theme.fromString(mPrefs.getString(SettingsFragment.BACKGROUND, "offwhite")));
+        initializeTheme(Theme.fromString(QKPreferences.getString(QKPreference.BACKGROUND)));
     }
 
     public static void setTheme(Theme theme) {
@@ -319,9 +319,9 @@ public class ThemeManager {
         mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
 
-        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_SENT, true));
-        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_RECEIVED, false));
-        setBubbleStyleNew(mPrefs.getBoolean(SettingsFragment.BUBBLES_NEW, true));
+        setSentBubbleColored(QKPreferences.getBoolean(QKPreference.BUBBLES_COLOR_SENT));
+        setReceivedBubbleColored(QKPreferences.getBoolean(QKPreference.BUBBLES_COLOR_RECEIVED));
+        setBubbleStyleNew(QKPreferences.getBoolean(QKPreference.BUBBLES_NEW));
 
         LiveViewManager.refreshViews(QKPreference.BACKGROUND);
     }
@@ -497,7 +497,7 @@ public class ThemeManager {
 
     public static void showColorPickerDialogForConversation(final QKActivity context, ConversationPrefsHelper prefs) {
         showColorPicker(context, v -> {
-            prefs.putString(QKPreference.THEME.getKey(), "" + getColor());
+            prefs.putString(QKPreference.THEME, "" + getColor());
             LiveViewManager.refreshViews(QKPreference.CONVERSATION_THEME);
         });
     }
@@ -673,10 +673,10 @@ public class ThemeManager {
         mColor = color;
         mActiveColor = color;
 
-        mPrefs.edit().putString(SettingsFragment.THEME, "" + color).apply();
+        QKPreferences.putString(QKPreference.THEME, String.valueOf(color));
 
-        setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_SENT, true));
-        setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_RECEIVED, false));
+        setSentBubbleColored(QKPreferences.getBoolean(QKPreference.BUBBLES_COLOR_SENT));
+        setReceivedBubbleColored(QKPreferences.getBoolean(QKPreference.BUBBLES_COLOR_RECEIVED));
         mTextOnColorPrimary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_primary : R.color.theme_light_text_primary);
         mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?

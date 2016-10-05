@@ -65,7 +65,6 @@ import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.settings.ConversationSettingsDialog;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.SmoothLinearLayoutManager;
@@ -461,7 +460,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
 
             case R.id.menu_notifications:
                 boolean notificationMuted = mConversationPrefs.getNotificationsEnabled();
-                mConversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, !notificationMuted);
+                mConversationPrefs.putBoolean(QKPreference.NOTIFICATIONS, !notificationMuted);
                 mContext.invalidateOptionsMenu();
                 vibrateOnConversationStateChanged(notificationMuted);
                 return true;

@@ -45,7 +45,7 @@ public class ShouldIAnswerService extends Service {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
                 if (msg.what == 919) {
                     boolean enabled = msg.getData().getBoolean("enabled");
-                    QKPreferences.setBoolean(QKPreference.SHOULD_I_ANSWER, enabled);
+                    QKPreferences.putBoolean(QKPreference.SHOULD_I_ANSWER, enabled);
                 }
 
                 data.putBoolean("blocking_enabled", QKPreferences.getBoolean(QKPreference.SHOULD_I_ANSWER));

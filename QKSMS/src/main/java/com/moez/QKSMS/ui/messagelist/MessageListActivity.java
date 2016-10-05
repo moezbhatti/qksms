@@ -14,12 +14,12 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
-import com.moez.QKSMS.ui.settings.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.ui.settings.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 
 import java.net.URLDecoder;
@@ -146,7 +146,7 @@ public class MessageListActivity extends QKSwipeBackActivity {
                 if (mWaitingForThreadId > 0) {
                     ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(this, mWaitingForThreadId);
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    conversationPrefs.putString(SettingsFragment.NOTIFICATION_TONE, uri.toString());
+                    conversationPrefs.putString(QKPreference.NOTIFICATIONS_SOUND, uri.toString());
                     mWaitingForThreadId = -1;
                 }
             }

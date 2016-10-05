@@ -30,6 +30,7 @@ import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Message;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.mmssms.model.ImageModel;
 import com.moez.QKSMS.mmssms.model.SlideshowModel;
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver;
@@ -38,7 +39,6 @@ import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -127,7 +127,7 @@ public class NotificationManager {
      * vibration
      */
     public static void create(final Context context) {
-        if (sPrefs.getBoolean(SettingsFragment.NOTIFICATIONS, true)) {
+        if (QKPreferences.getBoolean(QKPreference.NOTIFICATIONS)) {
             sHandler.post(() -> {
                 HashMap<Long, ArrayList<MessageItem>> conversations = SmsHelper.getUnreadUnseenConversations(context);
 
@@ -169,7 +169,7 @@ public class NotificationManager {
                 NotificationCompat.Builder builder =
                         new NotificationCompat.Builder(context)
                                 .setSmallIcon(R.drawable.ic_notification)
-                                .setPriority(getNotificationPriority(context))
+                                .setPriority(getNotificationPriority())
                                 .setSound(conversationPrefs.getNotificationSoundUri())
                                 .setVibrate(VIBRATION_SILENT)
                                 .setAutoCancel(true);
@@ -259,7 +259,7 @@ public class NotificationManager {
                     new NotificationCompat.Builder(context)
                             .setSmallIcon(R.drawable.ic_notification)
                             // SMS messages are high priority
-                            .setPriority(getNotificationPriority(context))
+                            .setPriority(getNotificationPriority())
                             // Silent here because this is just an update, not a new
                             // notification
                             .setSound(null)
@@ -322,7 +322,7 @@ public class NotificationManager {
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                                 .setSmallIcon(R.drawable.ic_notification_failed)
                                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                                .setSound(Uri.parse(sPrefs.getString(SettingsFragment.NOTIFICATION_TONE, DEFAULT_RINGTONE)))
+                                .setSound(Uri.parse(QKPreferences.getString(QKPreference.NOTIFICATIONS_SOUND)))
                                 .setVibrate(VIBRATION_SILENT)
                                 .setAutoCancel(true)
                                 .setContentTitle(title)
@@ -332,22 +332,22 @@ public class NotificationManager {
                                 .setNumber(failedCursor.getCount())
                                 .setColor(ThemeManager.getThemeColor());
 
-                        if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_VIBRATE, false)) {
+                        if (QKPreferences.getBoolean(QKPreference.NOTIFICATIONS_VIBRATION)) {
                             builder.setVibrate(VIBRATION);
                         }
 
-                        if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_LED, true)) {
+                        if (QKPreferences.getBoolean(QKPreference.NOTIFICATIONS_LED)) {
                             builder.setLights(getLedColor(new ConversationPrefsHelper(context, 0)), 1000, 1000);
                         }
 
-                        if (sPrefs.getBoolean(SettingsFragment.NOTIFICATION_TICKER, false)) {
+                        if (QKPreferences.getBoolean(QKPreference.NOTIFICATIONS_TICKER)) {
                             builder.setTicker(title);
                         }
 
                         notify(context, NOTIFICATION_ID_FAILED, builder.build());
                     })
                     .subscribe(message -> {
-                        switch (Integer.parseInt(sPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"))) {
+                        switch (Integer.parseInt(QKPreferences.getString(QKPreference.NOTIFICATIONS_PRIVATE))) {
                             case 0:
                                 inboxStyle.addLine(Html.fromHtml("<strong>" + ContactHelper.getName(context, message.first) + "</strong> " + message.second));
                                 break;
@@ -669,7 +669,7 @@ public class NotificationManager {
             init(context);
         }
 
-        if (sPrefs.getBoolean(SettingsFragment.QUICKCOMPOSE, false) || override) {
+        if (QKPreferences.getBoolean(QKPreference.QK_COMPOSE) || override) {
             Intent composeIntent = new Intent(context, QKComposeActivity.class);
             PendingIntent composePI = PendingIntent.getActivity(context, 9, composeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -735,10 +735,8 @@ public class NotificationManager {
      * Returns the notification priority we should be using based on whether or not the Heads-up notification should
      * show
      */
-    private static int getNotificationPriority(Context context) {
-        boolean qkreplyEnabled = PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(SettingsFragment.QUICKREPLY, Build.VERSION.SDK_INT < 24);
-        if (qkreplyEnabled) {
+    private static int getNotificationPriority() {
+        if (QKPreferences.getBoolean(QKPreference.QK_REPLY)) {
             return NotificationCompat.PRIORITY_DEFAULT;
         } else {
             return NotificationCompat.PRIORITY_HIGH;

@@ -14,7 +14,7 @@ public class BlockedNumberDialog {
 
     public static void showDialog(final QKActivity context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> addresses = BlockedConversationHelper.getFutureBlockedConversations(prefs);
+        Set<String> addresses = BlockedConversationHelper.getFutureBlockedConversations();
 
         new QKDialog()
                 .setContext(context)
@@ -25,7 +25,7 @@ public class BlockedNumberDialog {
                             .setTitle(R.string.title_unblock_address)
                             .setMessage(((TextView) view).getText().toString())
                             .setPositiveButton(R.string.yes, v -> {
-                                BlockedConversationHelper.unblockFutureConversation(prefs, ((TextView) view).getText().toString());
+                                BlockedConversationHelper.unblockFutureConversation(((TextView) view).getText().toString());
                             })
                             .setNegativeButton(R.string.cancel, null)
                             .show();
@@ -38,7 +38,7 @@ public class BlockedNumberDialog {
                             .setCustomView(editText)
                             .setPositiveButton(R.string.add, v1 -> {
                                 if (editText.getText().length() > 0) {
-                                    BlockedConversationHelper.blockFutureConversation(prefs, editText.getText().toString());
+                                    BlockedConversationHelper.blockFutureConversation(editText.getText().toString());
                                 }
                             })
                             .setNegativeButton(R.string.cancel, null)

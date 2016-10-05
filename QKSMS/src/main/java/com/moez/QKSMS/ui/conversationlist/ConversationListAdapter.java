@@ -9,15 +9,14 @@ import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationListViewHolder, Conversation> {
 
@@ -115,7 +114,7 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
         // Subject
         String emojiSnippet = conversation.getSnippet();
-        if (mPrefs.getBoolean(SettingsFragment.AUTO_EMOJI, false)) {
+        if (QKPreferences.getBoolean(QKPreference.AUTO_EMOJI)) {
             emojiSnippet = EmojiRegistry.parseEmojis(emojiSnippet);
         }
         holder.mSnippet.setText(emojiSnippet);

@@ -59,7 +59,6 @@ import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
 import com.moez.QKSMS.ui.dialog.QKDialog;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -143,9 +142,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mPrefs = mContext.getPrefs();
         mRes = mContext.getResources();
 
-        mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
+        mDelayedMessagingEnabled = QKPreferences.getBoolean(QKPreference.DELAYED_MESSAGING);
         try {
-            mDelayDuration = Integer.parseInt(mPrefs.getString(SettingsFragment.DELAY_DURATION, "3"));
+            mDelayDuration = Integer.parseInt(QKPreferences.getString(QKPreference.DELAYED_DURATION));
             if (mDelayDuration < 1) {
                 mDelayDuration = 1;
             } else if (mDelayDuration > 30) {
@@ -256,7 +255,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 if (!mSendingCancelled) {
                     sendSms();
                     // In case they only enabled it for a particular message, let's set it back to the pref value
-                    mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
+                    mDelayedMessagingEnabled = QKPreferences.getBoolean(QKPreference.DELAYED_MESSAGING);
                     updateDelayButton();
                 } else {
                     mSendingCancelled = false;
@@ -517,7 +516,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 .setMessage(R.string.delayed_messaging_info)
                 .setNegativeButton(R.string.just_once, v -> toggleDelayedMessaging())
                 .setPositiveButton(R.string.enable, v -> {
-                    mPrefs.edit().putBoolean(SettingsFragment.DELAYED, true).apply();
+                    QKPreferences.putBoolean(QKPreference.DELAYED_MESSAGING, true);
                     toggleDelayedMessaging();
                 })
                 .show();
@@ -582,8 +581,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
     private boolean hasSetupMms() {
         if (TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMSC))
-                && TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PROXY, ""))
-                && TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
+                && TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PROXY))
+                && TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PORT))) {
 
             // Not so fast! You need to set up MMS first.
             MMSSetupFragment f = new MMSSetupFragment();

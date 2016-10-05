@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.ImageView;
 import butterknife.Bind;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -83,7 +85,7 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
 
         SpannableStringBuilder buf = new SpannableStringBuilder(from);
 
-        if (conversation.getMessageCount() > 1 && mContext.getPrefs().getBoolean(SettingsFragment.MESSAGE_COUNT, false)) {
+        if (conversation.getMessageCount() > 1 && QKPreferences.getBoolean(QKPreference.MESSAGE_COUNT)) {
             int before = buf.length();
             buf.append(mContext.getResources().getString(R.string.message_count_format, conversation.getMessageCount()));
             buf.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.grey_light)), before, buf.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);

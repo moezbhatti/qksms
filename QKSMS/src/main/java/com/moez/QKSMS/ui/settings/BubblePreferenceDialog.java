@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.view.QKSwitchPreference;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -48,8 +49,8 @@ public class BubblePreferenceDialog extends QKDialog {
 
         Preference.OnPreferenceClickListener onPreferenceClickListener = preference -> {
             Log.d(TAG, preference.getKey());
-            switch (preference.getKey()) {
-                case SettingsFragment.BUBBLES_NEW:
+            switch (QKPreference.get(preference.getKey())) {
+                case BUBBLES_NEW:
                     ThemeManager.setBubbleStyleNew(((QKSwitchPreference) preference).isChecked());
                     in1.setBackgroundResource(ThemeManager.getReceivedBubbleRes());
                     in1.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
@@ -68,7 +69,7 @@ public class BubblePreferenceDialog extends QKDialog {
                     out2.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
                     return true;
 
-                case SettingsFragment.COLOR_RECEIVED:
+                case BUBBLES_COLOR_RECEIVED:
                     ThemeManager.setReceivedBubbleColored(((QKSwitchPreference) preference).isChecked());
                     in1.getBackground().setColorFilter(ThemeManager.getReceivedBubbleColor(), PorterDuff.Mode.SRC_ATOP);
                     in1.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
@@ -76,7 +77,7 @@ public class BubblePreferenceDialog extends QKDialog {
                     in2.setOnColorBackground(ThemeManager.getReceivedBubbleColor() == ThemeManager.getColor());
                     return true;
 
-                case SettingsFragment.COLOR_SENT:
+                case BUBBLES_COLOR_SENT:
                     ThemeManager.setSentBubbleColored(((QKSwitchPreference) preference).isChecked());
                     out1.getBackground().setColorFilter(ThemeManager.getSentBubbleColor(), PorterDuff.Mode.SRC_ATOP);
                     out1.setOnColorBackground(ThemeManager.getSentBubbleColor() == ThemeManager.getColor());
@@ -88,12 +89,12 @@ public class BubblePreferenceDialog extends QKDialog {
         };
 
         LinearLayout prefsLayout = (LinearLayout) view.findViewById(R.id.prefs);
-        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.BUBBLES_NEW,
-                prefs, true, R.string.pref_bubble_style_new, 0).getView());
-        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.COLOR_RECEIVED,
-                prefs, false, R.string.pref_color_received, 0).getView());
-        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, SettingsFragment.COLOR_SENT,
-                prefs, true, R.string.pref_color_sent, 0).getView());
+        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, QKPreference.BUBBLES_NEW,
+                prefs, R.string.pref_bubble_style_new, 0).getView());
+        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, QKPreference.BUBBLES_COLOR_RECEIVED,
+                prefs, R.string.pref_color_received, 0).getView());
+        prefsLayout.addView(new QKSwitchPreference(mContext, onPreferenceClickListener, QKPreference.BUBBLES_COLOR_SENT,
+                prefs, R.string.pref_color_sent, 0).getView());
 
         setTitle(R.string.pref_bubbles);
         setCustomView(view);

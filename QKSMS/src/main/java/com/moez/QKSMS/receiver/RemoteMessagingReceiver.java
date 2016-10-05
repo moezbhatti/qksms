@@ -19,8 +19,8 @@ import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.data.ContactHelper;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.service.MarkReadService;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +69,7 @@ public class RemoteMessagingReceiver extends BroadcastReceiver {
             background = Bitmap.createBitmap(640, 400, Bitmap.Config.ARGB_8888);
 
             // We can't use ThemeManager here because it might not be initialized
-            background.eraseColor(Integer.parseInt(prefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR)));
+            background.eraseColor(Integer.parseInt(prefs.getString(QKPreference.THEME.getKey(), "" + ThemeManager.DEFAULT_COLOR)));
         }
 
         wearableExtender.setBackground(background);
@@ -116,7 +116,7 @@ public class RemoteMessagingReceiver extends BroadcastReceiver {
         replyIntent.putExtra(EXTRA_THREAD_ID, threadId);
 
         Set<String> defaultResponses = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.qk_responses)));
-        Set<String> responseSet = prefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
+        Set<String> responseSet = prefs.getStringSet(QKPreference.QK_RESPONSES.getKey(), defaultResponses);
         ArrayList<String> responses = new ArrayList<>();
         responses.addAll(responseSet);
         Collections.sort(responses);
