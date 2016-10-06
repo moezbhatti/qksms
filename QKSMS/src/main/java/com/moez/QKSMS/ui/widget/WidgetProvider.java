@@ -32,7 +32,7 @@ import android.widget.RemoteViews;
 
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.ui.MainActivity;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 
 public class WidgetProvider extends AppWidgetProvider {

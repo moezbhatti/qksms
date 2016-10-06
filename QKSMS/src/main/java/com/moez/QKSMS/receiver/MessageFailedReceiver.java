@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.transaction.NotificationManager;
+import com.moez.QKSMS.common.NotificationManager;
 
 public class MessageFailedReceiver extends BroadcastReceiver {
 

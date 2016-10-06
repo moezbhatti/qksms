@@ -24,9 +24,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.util.Log;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 public class RateController {
     private static final String TAG = "RateController";

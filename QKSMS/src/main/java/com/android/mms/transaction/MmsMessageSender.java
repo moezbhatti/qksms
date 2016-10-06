@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.util.Log;
-
 import com.android.mms.util.SendingProgressTokenManager;
 import com.google.android.mms.InvalidHeaderValueException;
 import com.google.android.mms.MmsException;
@@ -37,7 +36,7 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.ReadRecInd;
 import com.google.android.mms.pdu_alt.SendReq;
-import com.google.android.mms.util_alt.SqliteWrapper;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 public class MmsMessageSender implements MessageSender {
     private static final String TAG = "MmsMessageSender";

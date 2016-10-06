@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.enums.QKPreference;
 
 public class ConversationPrefsHelper {
 
@@ -23,39 +21,39 @@ public class ConversationPrefsHelper {
     }
 
     public int getColor() {
-        return Integer.parseInt(mConversationPrefs.getString(SettingsFragment.THEME, "" + ThemeManager.getThemeColor()));
+        return Integer.parseInt(mConversationPrefs.getString(QKPreference.THEME.getKey(), "" + ThemeManager.getThemeColor()));
     }
 
     public boolean getNotificationsEnabled() {
-        return getBoolean(SettingsFragment.NOTIFICATIONS, true);
+        return getBoolean(QKPreference.NOTIFICATIONS);
     }
 
     public boolean getNotificationLedEnabled() {
-        return getBoolean(SettingsFragment.NOTIFICATION_LED, true);
+        return getBoolean(QKPreference.NOTIFICATIONS_LED);
     }
 
     public String getNotificationLedColor() {
-        return getString(SettingsFragment.NOTIFICATION_LED_COLOR, "" + mContext.getResources().getColor(R.color.red_light));
+        return getString(QKPreference.NOTIFICATIONS_LED_COLOR);
     }
 
     public boolean getWakePhoneEnabled() {
-        return getBoolean(SettingsFragment.WAKE, false);
+        return getBoolean(QKPreference.NOTIFICATIONS_WAKE);
     }
 
     public boolean getTickerEnabled() {
-        return getBoolean(SettingsFragment.NOTIFICATION_TICKER, true);
+        return getBoolean(QKPreference.NOTIFICATIONS_TICKER);
     }
 
     public Integer getPrivateNotificationsSetting(){
-        return Integer.parseInt(mPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"));
+        return Integer.parseInt(getString(QKPreference.NOTIFICATIONS_PRIVATE));
     }
 
     public boolean getVibrateEnabled() {
-        return getBoolean(SettingsFragment.NOTIFICATION_VIBRATE, true);
+        return getBoolean(QKPreference.NOTIFICATIONS_VIBRATION);
     }
 
     public String getNotificationSound() {
-        return getString(SettingsFragment.NOTIFICATION_TONE, SettingsFragment.DEFAULT_NOTIFICATION_TONE);
+        return getString(QKPreference.NOTIFICATIONS_SOUND);
     }
 
     public Uri getNotificationSoundUri() {
@@ -63,38 +61,38 @@ public class ConversationPrefsHelper {
     }
 
     public boolean getCallButtonEnabled() {
-        return getBoolean(SettingsFragment.NOTIFICATION_CALL_BUTTON, false);
+        return getBoolean(QKPreference.NOTIFICATIONS_CALL_BUTTON);
     }
 
     public boolean getDimissedReadEnabled() {
-        return getBoolean(SettingsFragment.DISMISSED_READ, false);
+        return getBoolean(QKPreference.NOTIFICATIONS_MARK_READ);
     }
 
-    public void putInt(String key, int value) {
-        mConversationPrefs.edit().putInt(key, value).apply();
+    public void putInt(QKPreference preference, int value) {
+        mConversationPrefs.edit().putInt(preference.getKey(), value).apply();
     }
 
-    public int getInt(String key, int defaultValue) {
-        int globalValue = mPrefs.getInt(key, defaultValue);
-        return mConversationPrefs.getInt(key, globalValue);
+    private int getInt(QKPreference preference) {
+        int globalValue = QKPreferences.getInt(preference);
+        return mConversationPrefs.getInt(preference.getKey(), globalValue);
     }
 
-    public void putString(String key, String value) {
-        mConversationPrefs.edit().putString(key, value).apply();
+    public void putString(QKPreference preference, String value) {
+        mConversationPrefs.edit().putString(preference.getKey(), value).apply();
     }
 
-    public String getString(String key, String defaultValue) {
-        String globalValue = mPrefs.getString(key, defaultValue);
-        return mConversationPrefs.getString(key, globalValue);
+    private String getString(QKPreference preference) {
+        String globalValue = QKPreferences.getString(preference);
+        return mConversationPrefs.getString(preference.getKey(), globalValue);
     }
 
-    public void putBoolean(String key, boolean value) {
-        mConversationPrefs.edit().putBoolean(key, value).apply();
+    public void putBoolean(QKPreference preference, boolean value) {
+        mConversationPrefs.edit().putBoolean(preference.getKey(), value).apply();
     }
 
-    public boolean getBoolean(String key, boolean defaultValue) {
-        boolean globalValue = mPrefs.getBoolean(key, defaultValue);
-        return mConversationPrefs.getBoolean(key, globalValue);
+    private boolean getBoolean(QKPreference preference) {
+        boolean globalValue = QKPreferences.getBoolean(preference);
+        return mConversationPrefs.getBoolean(preference.getKey(), globalValue);
     }
 
     public SharedPreferences getConversationPrefs() {

@@ -25,7 +25,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -39,6 +38,7 @@ import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 public class RetryScheduler implements Observer {
     private static final String TAG = "RetryScheduler";

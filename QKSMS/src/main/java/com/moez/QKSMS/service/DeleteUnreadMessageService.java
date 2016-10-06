@@ -4,9 +4,10 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.data.Message;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.ArrayList;
 
@@ -36,8 +37,8 @@ public class DeleteUnreadMessageService extends IntentService {
         // this problem.
         ArrayList<Message> messages = SmsHelper.getUnreadMessagesLegacy(this, threadUri);
         for (Message message : messages) {
-            message.markRead();
-            message.delete();
+            MessagingHelper.markMessageRead(this, message.getId());
+            MessagingHelper.deleteMessage(this, message.getId());
         }
         NotificationManager.update(this);
     }

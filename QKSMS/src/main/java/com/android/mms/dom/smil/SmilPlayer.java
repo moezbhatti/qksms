@@ -66,12 +66,7 @@ public class SmilPlayer implements Runnable {
 
     public static final String MEDIA_TIME_UPDATED_EVENT = "mediaTimeUpdated";
 
-    private static final Comparator<TimelineEntry> sTimelineEntryComparator =
-        new Comparator<TimelineEntry>() {
-        public int compare(TimelineEntry o1, TimelineEntry o2) {
-            return Double.compare(o1.getOffsetTime(), o2.getOffsetTime());
-        }
-    };
+    private static final Comparator<TimelineEntry> sTimelineEntryComparator = (o1, o2) -> Double.compare(o1.getOffsetTime(), o2.getOffsetTime());
 
     private static SmilPlayer sPlayer;
 

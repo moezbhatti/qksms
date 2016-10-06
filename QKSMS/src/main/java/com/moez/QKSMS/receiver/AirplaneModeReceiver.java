@@ -6,11 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import com.google.android.mms.MmsException;
+import com.moez.QKSMS.common.MessagingHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 
@@ -32,7 +30,7 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
                 SmsHelper.CONVERSATIONS_CONTENT_PROVIDER,
                 Conversation.ALL_THREADS_PROJECTION,
                 Conversation.FAILED_SELECTION, null,
-                SmsHelper.sortDateDesc
+                SmsHelper.SORT_DATE_DESC
         );
 
         // Loop through each of the conversations
@@ -41,18 +39,13 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
 
             // Find the failed messages within the conversation
             Cursor cursor = context.getContentResolver().query(uri, MessageColumns.PROJECTION,
-                    SmsHelper.FAILED_SELECTION, null, SmsHelper.sortDateAsc);
+                    SmsHelper.FAILED_SELECTION, null, SmsHelper.SORT_DATE_ASC);
 
             // Map the cursor row to a MessageItem, then re-send it
             MessageColumns.ColumnsMap columnsMap = new MessageColumns.ColumnsMap(cursor);
             while (cursor.moveToNext()) {
-                try {
-                    MessageItem message = new MessageItem(context, cursor.getString(columnsMap.mColumnMsgType),
-                            cursor, columnsMap, null, true);
-                    sendSms(context, message);
-                } catch (MmsException e) {
-                    e.printStackTrace();
-                }
+                MessageItem message = new MessageItem(context, cursor.getString(columnsMap.mColumnMsgType), cursor, columnsMap, null, true);
+                sendSms(context, message);
             }
             cursor.close();
         }
@@ -61,13 +54,7 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
     }
 
     private void sendSms(Context context, MessageItem messageItem) {
-        Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
-
-        Message message = new Message(messageItem.mBody, messageItem.mAddress);
-        message.setType(Message.TYPE_SMSMMS);
-
         context.getContentResolver().delete(messageItem.mMessageUri, null, null);
-
-        sendTransaction.sendNewMessage(message, 0);
+        MessagingHelper.sendMessage(context, messageItem.mAddress, messageItem.mBody, null);
     }
 }

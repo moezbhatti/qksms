@@ -489,11 +489,9 @@ public class SlideView extends AbsoluteLayout implements
             mViewPort = new LinearLayout(mContext);
             mViewPort.setOrientation(LinearLayout.VERTICAL);
             mViewPort.setGravity(Gravity.CENTER);
-            mViewPort.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    if (mMediaController != null) {
-                        mMediaController.show();
-                    }
+            mViewPort.setOnClickListener(v -> {
+                if (mMediaController != null) {
+                    mMediaController.show();
                 }
             });
             mScrollViewPort.addView(mViewPort, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,

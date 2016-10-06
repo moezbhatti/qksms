@@ -1,19 +1,17 @@
 package com.moez.QKSMS.ui.welcome;
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.RobotoTextView;
 
 
@@ -161,9 +159,6 @@ public class WelcomeActivity extends QKActivity implements ViewPager.OnPageChang
     @Override
     protected void onStop() {
         super.onStop();
-
-        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        prefs.putBoolean(SettingsFragment.WELCOME_SEEN, true);
-        prefs.apply();
+        QKPreferences.putBoolean(QKPreference.WELCOME_SEEN, true);
     }
 }

@@ -16,12 +16,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactHelper;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class StarredContactsView extends LinearLayout implements LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
     private final String TAG = "StarredContactsView";
@@ -73,7 +73,7 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
 
         mIndicator = (ImageView) findViewById(R.id.indicator);
 
-        if (mPrefs.getBoolean(SettingsFragment.COMPOSE_FAVORITES, true)) {
+        if (QKPreferences.getBoolean(QKPreference.STARRED_CONTACTS)) {
             expand();
         } else {
             collapse();
@@ -113,14 +113,11 @@ public class StarredContactsView extends LinearLayout implements LoaderManager.L
                     final Contact contact = Contact.get(ContactHelper.getPhoneNumber(
                             mContext, mCursor.getString(ContactHelper.Favorites.ID)), true);
 
-                    final View.OnClickListener onClickListener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            collapse();
-                            mRecipients.submitItem(contact.getName(), contact.getNumber(),
-                                    photoUri == null ? null : Uri.parse(photoUri));
-                            mComposeView.requestReplyTextFocus();
-                        }
+                    final View.OnClickListener onClickListener = v -> {
+                        collapse();
+                        mRecipients.submitItem(contact.getName(), contact.getNumber(),
+                                photoUri == null ? null : Uri.parse(photoUri));
+                        mComposeView.requestReplyTextFocus();
                     };
 
                     View view = inflater.inflate(R.layout.view_favorite_contact, null);

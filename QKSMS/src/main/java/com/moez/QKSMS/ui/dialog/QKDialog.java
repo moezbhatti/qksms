@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -26,9 +25,9 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.common.utils.UnitUtils;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
 
@@ -240,14 +239,11 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Ignore the given ID and use the one that we set in #addMenuItem()
-                onItemClickListener.onItemClick(parent, view, position, mMenuItemIds.get(position));
-                dismiss();
-            }
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            // Ignore the given ID and use the one that we set in #addMenuItem()
+            onItemClickListener.onItemClick(parent, view, position, mMenuItemIds.get(position));
+            dismiss();
         });
         return setCustomView(listView);
     }
@@ -261,14 +257,11 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (onClickListener != null) {
-                    onClickListener.onItemClick(parent, view, position, id);
-                    dismiss();
-                }
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if (onClickListener != null) {
+                onClickListener.onItemClick(parent, view, position, id);
+                dismiss();
             }
         });
         return setCustomView(listView);
@@ -292,14 +285,11 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (onClickListener != null) {
-                    onClickListener.onItemClick(parent, view, position, id);
-                    dismiss();
-                }
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if (onClickListener != null) {
+                onClickListener.onItemClick(parent, view, position, id);
+                dismiss();
             }
         });
         return setCustomView(listView);
@@ -324,14 +314,11 @@ public class QKDialog extends DialogFragment {
         ListView listView = new ListView(mContext);
         listView.setAdapter(adapter);
         listView.setDivider(null);
-        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (onClickListener != null) {
-                    onClickListener.onItemClick(parent, view, position, id);
-                    dismiss();
-                }
+        listView.setPadding(0, UnitUtils.dpToPx(mContext, 8), 0, UnitUtils.dpToPx(mContext, 8));
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if (onClickListener != null) {
+                onClickListener.onItemClick(parent, view, position, id);
+                dismiss();
             }
         });
         return setCustomView(listView);
@@ -344,14 +331,11 @@ public class QKDialog extends DialogFragment {
     public QKDialog setPositiveButton(String text, final OnClickListener onClickListener) {
         mPositiveButtonEnabled = true;
         mPositiveButtonText = text;
-        mPositiveButtonClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(v);
-                }
-                dismiss();
+        mPositiveButtonClickListener = v -> {
+            if (onClickListener != null) {
+                onClickListener.onClick(v);
             }
+            dismiss();
         };
         return this;
     }
@@ -363,14 +347,11 @@ public class QKDialog extends DialogFragment {
     public QKDialog setNeutralButton(String text, final OnClickListener onClickListener) {
         mNeutralButtonEnabled = true;
         mNeutralButtonText = text;
-        mNeutralButtonClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(v);
-                }
-                dismiss();
+        mNeutralButtonClickListener = v -> {
+            if (onClickListener != null) {
+                onClickListener.onClick(v);
             }
+            dismiss();
         };
         return this;
     }
@@ -382,14 +363,11 @@ public class QKDialog extends DialogFragment {
     public QKDialog setNegativeButton(String text, final OnClickListener onClickListener) {
         mNegativeButtonEnabled = true;
         mNegativeButtonText = text;
-        mNegativeButtonClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(v);
-                }
-                dismiss();
+        mNegativeButtonClickListener = v -> {
+            if (onClickListener != null) {
+                onClickListener.onClick(v);
             }
+            dismiss();
         };
         return this;
     }

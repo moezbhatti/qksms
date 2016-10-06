@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.provider.Telephony.TextBasedSmsColumns;
@@ -31,23 +30,22 @@ import com.koushikdutta.ion.Ion;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.CursorUtils;
 import com.moez.QKSMS.common.utils.LinkifyUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.mms.MmsThumbnailPresenter;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,7 +55,6 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     public static final int INCOMING_ITEM = 0;
     public static final int OUTGOING_ITEM = 1;
 
-    private ArrayList<Long> mSelectedConversations = new ArrayList<>();
 
     private static final Pattern urlPattern = Pattern.compile(
             "\\b(https?:\\/\\/\\S+(?:png|jpe?g|gif)\\S*)\\b",
@@ -70,12 +67,8 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
     private final SharedPreferences mPrefs;
 
     // Configuration options.
-    private long mThreadId = -1;
-    private long mRowId = -1;
     private Pattern mSearchHighlighter = null;
     private boolean mIsGroupConversation = false;
-    private Handler mMessageListItemHandler = null; // TODO this isn't quite the same as the others
-    private String mSelection = null;
 
     public MessageListAdapter(QKActivity context) {
         super(context);
@@ -146,7 +139,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             holder.mAvatarView.setImageDrawable(Contact.getMe(true).getAvatar(mContext, null));
             holder.mAvatarView.setContactName(AvatarView.ME);
             holder.mAvatarView.assignContactUri(ContactsContract.Profile.CONTENT_URI);
-            if (mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_SENT, true)) {
+            if (QKPreferences.getBoolean(QKPreference.HIDE_AVATAR_SENT)) {
                 ((RelativeLayout.LayoutParams) holder.mMessageBlock.getLayoutParams()).setMargins(0, 0, 0, 0);
                 holder.mAvatarView.setVisibility(View.GONE);
             }
@@ -158,7 +151,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             holder.mLockedIndicator.setColorFilter(ThemeManager.getTextOnBackgroundSecondary(), PorterDuff.Mode.SRC_ATOP);
 
             // set up avatar
-            if (mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_RECEIVED, false)) {
+            if (QKPreferences.getBoolean(QKPreference.HIDE_AVATAR_RECEIVED)) {
                 ((RelativeLayout.LayoutParams) holder.mMessageBlock.getLayoutParams()).setMargins(0, 0, 0, 0);
                 holder.mAvatarView.setVisibility(View.GONE);
             }
@@ -247,18 +240,15 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
                 holder.inflateDownloadControls();
                 holder.mDownloadingLabel.setVisibility(View.GONE);
                 holder.mDownloadButton.setVisibility(View.VISIBLE);
-                holder.mDownloadButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holder.mDownloadingLabel.setVisibility(View.VISIBLE);
-                        holder.mDownloadButton.setVisibility(View.GONE);
-                        Intent intent = new Intent(mContext, TransactionService.class);
-                        intent.putExtra(TransactionBundle.URI, messageItem.mMessageUri.toString());
-                        intent.putExtra(TransactionBundle.TRANSACTION_TYPE, Transaction.RETRIEVE_TRANSACTION);
-                        mContext.startService(intent);
+                holder.mDownloadButton.setOnClickListener(v -> {
+                    holder.mDownloadingLabel.setVisibility(View.VISIBLE);
+                    holder.mDownloadButton.setVisibility(View.GONE);
+                    Intent intent = new Intent(mContext, TransactionService.class);
+                    intent.putExtra(TransactionBundle.URI, messageItem.mMessageUri.toString());
+                    intent.putExtra(TransactionBundle.TRANSACTION_TYPE, Transaction.RETRIEVE_TRANSACTION);
+                    mContext.startService(intent);
 
-                        DownloadManager.getInstance().markState(messageItem.mMessageUri, DownloadManager.STATE_PRE_DOWNLOADING);
-                    }
+                    DownloadManager.getInstance().markState(messageItem.mMessageUri, DownloadManager.STATE_PRE_DOWNLOADING);
                 });
                 break;
         }
@@ -282,7 +272,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
 
         MessageItem messageItem2 = getItem(position + 1);
 
-        if (mPrefs.getBoolean(SettingsFragment.FORCE_TIMESTAMPS, false)) {
+        if (QKPreferences.getBoolean(QKPreference.FORCE_TIMESTAMPS)) {
             return true;
         } else if (messageItem.mDeliveryStatus != MessageItem.DeliveryStatus.NONE) {
             return true;
@@ -293,7 +283,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         } else if (messagesFromDifferentPeople(messageItem, messageItem2)) {
             return true;
         } else {
-            int MAX_DURATION = Integer.parseInt(mPrefs.getString(SettingsFragment.SHOW_NEW_TIMESTAMP_DELAY, "5")) * 60 * 1000;
+            int MAX_DURATION = Integer.parseInt(QKPreferences.getString(QKPreference.NEW_TIMESTAMP_DELAY)) * 60 * 1000;
             return (messageItem2.mDate - messageItem.mDate >= MAX_DURATION);
         }
     }
@@ -350,9 +340,9 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
             }
         });
 
-        if (messageItem.isMe() && !mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_SENT, true)) {
+        if (messageItem.isMe() && !QKPreferences.getBoolean(QKPreference.HIDE_AVATAR_SENT)) {
             holder.mAvatarView.setVisibility(showAvatar ? View.VISIBLE : View.GONE);
-        } else if (!messageItem.isMe() && !mPrefs.getBoolean(SettingsFragment.HIDE_AVATAR_RECEIVED, false)) {
+        } else if (!messageItem.isMe() && !QKPreferences.getBoolean(QKPreference.HIDE_AVATAR_RECEIVED)) {
             holder.mAvatarView.setVisibility(showAvatar ? View.VISIBLE : View.GONE);
         }
     }
@@ -379,7 +369,7 @@ public class MessageListAdapter extends RecyclerCursorAdapter<MessageListViewHol
         }
 
         if (!TextUtils.isEmpty(body)) {
-            if (mPrefs.getBoolean(SettingsFragment.AUTO_EMOJI, false)) {
+            if (QKPreferences.getBoolean(QKPreference.AUTO_EMOJI)) {
                 body = EmojiRegistry.parseEmojis(body);
             }
 

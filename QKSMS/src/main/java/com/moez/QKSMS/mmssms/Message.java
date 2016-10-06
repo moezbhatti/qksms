@@ -35,19 +35,7 @@ public class Message {
     private String[] imageNames;
     private byte[] media;
     private String mediaMimeType;
-    private boolean save;
-    private int type;
     private int delay;
-
-    /**
-     * Default send type, to be sent through SMS or MMS depending on contents
-     */
-    public static final int TYPE_SMSMMS = 0;
-
-    /**
-     * Google Voice send type
-     */
-    public static final int TYPE_VOICE = 1;
 
     /**
      * Default constructor
@@ -90,8 +78,6 @@ public class Message {
         this.subject = null;
         this.media = new byte[0];
         this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -109,8 +95,6 @@ public class Message {
         this.subject = subject;
         this.media = new byte[0];
         this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -197,8 +181,6 @@ public class Message {
         this.subject = null;
         this.media = new byte[0];
         this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -217,8 +199,6 @@ public class Message {
         this.subject = subject;
         this.media = new byte[0];
         this.mediaMimeType = null;
-        this.save = true;
-        this.type = TYPE_SMSMMS;
         this.delay = 0;
     }
 
@@ -319,15 +299,6 @@ public class Message {
     }
 
     /**
-     * Sets whether or not to save a message to the database
-     *
-     * @param save is whether or not to save the message
-     */
-    public void setSave(boolean save) {
-        this.save = save;
-    }
-
-    /**
      * Sets the time delay before sending a message
      * NOTE: this is only applicable for SMS messages
      *
@@ -377,16 +348,6 @@ public class Message {
         }
 
         this.images[temp.length] = image;
-    }
-
-    /**
-     * Sets the type of the message, could be any type definied in Message, for example
-     * Message.TYPE_SMSMMS, Message.TYPE_VOICE, or Message.TYPE_FACEBOOK
-     *
-     * @param type the type of message to send
-     */
-    public void setType(int type) {
-        this.type = type;
     }
 
     /**
@@ -453,15 +414,6 @@ public class Message {
     }
 
     /**
-     * Gets whether or not to save the message to the database
-     *
-     * @return a boolean of whether or not to save
-     */
-    public boolean getSave() {
-        return this.save;
-    }
-
-    /**
      * Gets the time to delay before sending the message
      *
      * @return the delay time in milliseconds
@@ -469,13 +421,6 @@ public class Message {
     public int getDelay() {
         return this.delay;
     }
-
-    /**
-     * Gets the type of message to be sent, see Message.TYPE_SMSMMS, Message.TYPE_FACEBOOK, or Message.TYPE_VOICE
-     *
-     * @return the type of the message
-     */
-    public int getType() { return this.type; }
 
     /**
      * Static method to convert a bitmap into a byte array to easily send it over http

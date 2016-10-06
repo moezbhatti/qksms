@@ -1,13 +1,10 @@
 package com.moez.QKSMS.common;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
-import android.preference.PreferenceManager;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.enums.QKPreference;
 
 public class FontManager {
 
@@ -27,14 +24,12 @@ public class FontManager {
     public static final int TEXT_TYPE_DIALOG_BUTTON = 0x7;
     public static final int TEXT_TYPE_TOOLBAR = 0x8;
 
-    private static int getFontFamily(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return Integer.parseInt(prefs.getString(SettingsFragment.FONT_FAMILY, "0"));
+    private static int getFontFamily() {
+        return Integer.parseInt(QKPreferences.getString(QKPreference.FONT_FAMILY));
     }
 
-    public static int getTextSize(Context context, int type) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int fontSize = Integer.parseInt(prefs.getString(SettingsFragment.FONT_SIZE, "1"));
+    public static int getTextSize(int type) {
+        int fontSize = Integer.parseInt(QKPreferences.getString(QKPreference.FONT_SIZE));
 
         switch (type) {
             case TEXT_TYPE_TERTIARY:
@@ -116,10 +111,9 @@ public class FontManager {
         return ColorStateList.valueOf(ThemeManager.getTextOnBackgroundPrimary());
     }
 
-    private static int getFontWeight(Context context, boolean heavy) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int fontWeight = Integer.parseInt(prefs.getString(SettingsFragment.FONT_WEIGHT, "0"));
-        int fontFamily = getFontFamily(context);
+    private static int getFontWeight(boolean heavy) {
+        int fontWeight = Integer.parseInt(QKPreferences.getString(QKPreference.FONT_WEIGHT));
+        int fontFamily = getFontFamily();
 
         if (!heavy) {
             return fontWeight;
@@ -136,14 +130,14 @@ public class FontManager {
     }
 
     public static Typeface getFont(Context context, int type) {
-        int fontFamily = getFontFamily(context);
-        int fontWeight = getFontWeight(context, getIsFontHeavy(type));
+        int fontFamily = getFontFamily();
+        int fontWeight = getFontWeight(getIsFontHeavy(type));
         return TypefaceManager.obtainTypeface(context, fontFamily, fontWeight);
     }
 
     public static Typeface getFont(Context context) {
-        int fontFamily = getFontFamily(context);
-        int fontWeight = getFontWeight(context, false);
+        int fontFamily = getFontFamily();
+        int fontWeight = getFontWeight(false);
         return TypefaceManager.obtainTypeface(context, fontFamily, fontWeight);
     }
 }

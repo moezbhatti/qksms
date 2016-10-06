@@ -4,7 +4,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,12 +19,12 @@ import android.provider.ContactsContract.Presence;
 import android.provider.ContactsContract.Profile;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
-import com.moez.QKSMS.transaction.SmsHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -496,27 +495,24 @@ public class Contact {
             private final ArrayList<Runnable> mThingsToLoad;
 
             public TaskStack() {
-                mThingsToLoad = new ArrayList<Runnable>();
-                mWorkerThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (true) {
-                            Runnable r = null;
-                            synchronized (mThingsToLoad) {
-                                if (mThingsToLoad.isEmpty()) {
-                                    try {
-                                        mThingsToLoad.wait();
-                                    } catch (InterruptedException ex) {
-                                        break;  // Exception sent by Contact.init() to stop Runnable
-                                    }
-                                }
-                                if (!mThingsToLoad.isEmpty()) {
-                                    r = mThingsToLoad.remove(0);
+                mThingsToLoad = new ArrayList<>();
+                mWorkerThread = new Thread(() -> {
+                    while (true) {
+                        Runnable r = null;
+                        synchronized (mThingsToLoad) {
+                            if (mThingsToLoad.isEmpty()) {
+                                try {
+                                    mThingsToLoad.wait();
+                                } catch (InterruptedException ex) {
+                                    break;  // Exception sent by Contact.init() to stop Runnable
                                 }
                             }
-                            if (r != null) {
-                                r.run();
+                            if (!mThingsToLoad.isEmpty()) {
+                                r = mThingsToLoad.remove(0);
                             }
+                        }
+                        if (r != null) {
+                            r.run();
                         }
                     }
                 }, "Contact.ContactsCache.TaskStack worker thread");
@@ -583,12 +579,7 @@ public class Contact {
                     }
 
                     final Contact c = contact;
-                    r = new Runnable() {
-                        @Override
-                        public void run() {
-                            updateContact(c);
-                        }
-                    };
+                    r = () -> updateContact(c);
 
                     // set this to true while we have the lock on contact since we will
                     // either run the query directly (canBlock case) or push the query

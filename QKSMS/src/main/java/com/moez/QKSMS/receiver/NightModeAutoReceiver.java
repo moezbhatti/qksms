@@ -3,11 +3,10 @@ package com.moez.QKSMS.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.enums.QKPreference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,9 +18,7 @@ public class NightModeAutoReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        if (prefs.getBoolean(SettingsFragment.NIGHT_AUTO, false)) {
+        if (QKPreferences.getBoolean(QKPreference.AUTO_NIGHT)) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis() + 300000); // add 5 mins in case receiver is called early
 
@@ -29,8 +26,8 @@ public class NightModeAutoReceiver extends BroadcastReceiver {
             Calendar day = Calendar.getInstance();
             Calendar night = Calendar.getInstance();
             try {
-                day.setTime(simpleDateFormat.parse(prefs.getString(SettingsFragment.DAY_START, "6:00")));
-                night.setTime(simpleDateFormat.parse(prefs.getString(SettingsFragment.NIGHT_START, "21:00")));
+                day.setTime(simpleDateFormat.parse(QKPreferences.getString(QKPreference.AUTO_NIGHT_DAY_START)));
+                night.setTime(simpleDateFormat.parse(QKPreferences.getString(QKPreference.AUTO_NIGHT_NIGHT_START)));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -40,11 +37,11 @@ public class NightModeAutoReceiver extends BroadcastReceiver {
                     (calendar.get(Calendar.HOUR_OF_DAY) < day.get(Calendar.HOUR_OF_DAY)) ||
                     (calendar.get(Calendar.HOUR_OF_DAY) == day.get(Calendar.HOUR_OF_DAY) && calendar.get(Calendar.MINUTE) <= day.get(Calendar.MINUTE))) {
                 Log.i(TAG, "Switching to night mode");
-                prefs.edit().putString(SettingsFragment.BACKGROUND, ThemeManager.Theme.PREF_GREY).apply();
+                QKPreferences.putString(QKPreference.BACKGROUND, ThemeManager.Theme.PREF_GREY);
                 ThemeManager.setTheme(ThemeManager.Theme.DARK);
             } else {
                 Log.i(TAG, "Switching to day mode");
-                prefs.edit().putString(SettingsFragment.BACKGROUND, ThemeManager.Theme.PREF_OFFWHITE).apply();
+                QKPreferences.putString(QKPreference.BACKGROUND, ThemeManager.Theme.PREF_OFFWHITE);
                 ThemeManager.setTheme(ThemeManager.Theme.LIGHT);
             }
         }

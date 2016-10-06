@@ -7,7 +7,7 @@ import android.provider.Telephony;
 import android.view.ViewGroup;
 
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.enums.SnackbarType;

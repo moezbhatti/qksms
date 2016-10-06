@@ -40,7 +40,7 @@ public class MessageColumns {
     public static final String[] PROJECTION = new String[] {
             Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN,
             BaseColumns._ID,
-            Telephony.Sms.Conversations.THREAD_ID,
+            Telephony.Sms.THREAD_ID,
             // For SMS
             Telephony.Sms.ADDRESS,
             Telephony.Sms.BODY,

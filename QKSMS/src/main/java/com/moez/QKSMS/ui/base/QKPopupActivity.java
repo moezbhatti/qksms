@@ -1,21 +1,19 @@
 package com.moez.QKSMS.ui.base;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.view.QKLinearLayout;
 
 public abstract class QKPopupActivity extends QKActivity {
 
-    protected SharedPreferences mPrefs;
     protected Resources mRes;
 
     @Override
@@ -23,10 +21,9 @@ public abstract class QKPopupActivity extends QKActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mRes = getResources();
 
-        setFinishOnTouchOutside(mPrefs.getBoolean(SettingsFragment.QUICKREPLY_TAP_DISMISS, true));
+        setFinishOnTouchOutside(QKPreferences.getBoolean(QKPreference.TAP_DISMISS));
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         setContentView(getLayoutResource());
 

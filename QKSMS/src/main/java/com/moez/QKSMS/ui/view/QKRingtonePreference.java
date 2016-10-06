@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.enums.QKPreference;
 
 /**
  * Regular android preferences don't have basic functionality when you manually add them to views
@@ -16,12 +17,12 @@ public class QKRingtonePreference extends RingtonePreference {
 
     private OnPreferenceClickListener mOnPreferenceClickListener;
 
-    public QKRingtonePreference(Context context, OnPreferenceClickListener onPreferenceClickListener, String key,
+    public QKRingtonePreference(Context context, OnPreferenceClickListener onPreferenceClickListener, QKPreference pref,
                                 int title, int summary) {
         super(context);
         mOnPreferenceClickListener = onPreferenceClickListener;
 
-        setKey(key);
+        setKey(pref.getKey());
         setEnabled(true);
         setLayoutResource(R.layout.list_item_preference);
         setRingtoneType(RingtoneManager.TYPE_NOTIFICATION);
@@ -40,12 +41,9 @@ public class QKRingtonePreference extends RingtonePreference {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnPreferenceClickListener != null) {
-                    mOnPreferenceClickListener.onPreferenceClick(QKRingtonePreference.this);
-                }
+        view.setOnClickListener(v -> {
+            if (mOnPreferenceClickListener != null) {
+                mOnPreferenceClickListener.onPreferenceClick(QKRingtonePreference.this);
             }
         });
 

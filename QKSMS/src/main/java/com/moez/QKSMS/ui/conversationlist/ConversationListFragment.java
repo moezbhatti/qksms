@@ -26,20 +26,20 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.MessagingHelper;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.data.ConversationLegacy;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
 import com.moez.QKSMS.ui.compose.ComposeActivity;
-import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
+import com.moez.QKSMS.ui.messagelist.ConversationDetailsDialog;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -142,7 +142,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     private int getBlockedWeight() {
         int blockedWeight = 0;
         for (Conversation conversation : mAdapter.getSelectedItems().values()) {
-            blockedWeight += BlockedConversationHelper.isConversationBlocked(mPrefs, conversation.getThreadId()) ? 1 : -1;
+            blockedWeight += BlockedConversationHelper.isConversationBlocked(conversation.getThreadId()) ? 1 : -1;
         }
         return blockedWeight;
     }
@@ -164,7 +164,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             inflater.inflate(R.menu.conversations_selection, menu);
             mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
 
-            menu.findItem(R.id.menu_block).setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
+            menu.findItem(R.id.menu_block).setVisible(QKPreferences.getBoolean(QKPreference.BLOCKED_CONVERSATIONS));
 
             menu.findItem(R.id.menu_mark_read).setIcon(getUnreadWeight() >= 0 ? R.drawable.ic_mark_read : R.drawable.ic_mark_unread);
             menu.findItem(R.id.menu_mark_read).setTitle(getUnreadWeight() >= 0 ? R.string.menu_mark_read : R.string.menu_mark_unread);
@@ -189,16 +189,16 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
                 return true;
 
             case R.id.menu_delete:
-                DialogHelper.showDeleteConversationsDialog((MainActivity) mContext, mAdapter.getSelectedItems().keySet());
+                DialogHelper.showDeleteConversationsDialog(mContext, mAdapter.getSelectedItems().keySet());
                 mAdapter.disableMultiSelectMode(true);
                 return true;
 
             case R.id.menu_mark_read:
                 for (long threadId : mAdapter.getSelectedItems().keySet()) {
                     if (getUnreadWeight() >= 0) {
-                        new ConversationLegacy(mContext, threadId).markRead();
+                        MessagingHelper.markConversationRead(mContext, threadId);
                     } else {
-                        new ConversationLegacy(mContext, threadId).markUnread();
+                        MessagingHelper.markConversationUnread(mContext, threadId);
                     }
                 }
                 mAdapter.disableMultiSelectMode(true);
@@ -207,9 +207,9 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             case R.id.menu_block:
                 for (long threadId : mAdapter.getSelectedItems().keySet()) {
                     if (getBlockedWeight() > 0) {
-                        BlockedConversationHelper.unblockConversation(mPrefs, threadId);
+                        BlockedConversationHelper.unblockConversation(threadId);
                     } else {
-                        BlockedConversationHelper.blockConversation(mPrefs, threadId);
+                        BlockedConversationHelper.blockConversation(threadId);
                     }
                 }
                 mAdapter.disableMultiSelectMode(true);
@@ -294,8 +294,8 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (id == QKSMSApp.LOADER_CONVERSATIONS) {
             return new CursorLoader(mContext, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
-                    BlockedConversationHelper.getCursorSelection(mPrefs, mShowBlocked),
-                    BlockedConversationHelper.getBlockedConversationArray(mPrefs), "date DESC");
+                    BlockedConversationHelper.getCursorSelection(mShowBlocked),
+                    BlockedConversationHelper.getBlockedConversationArray(), "date DESC");
         } else {
             return null;
         }

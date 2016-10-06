@@ -26,9 +26,9 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.util.Log;
 
-import com.moez.QKSMS.LogTag;
+import com.moez.QKSMS.common.LogTag;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.TempFileProvider;
+import com.moez.QKSMS.common.TempFileProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -251,50 +251,47 @@ public class ThumbnailManager extends BackgroundLoaderManager {
             }
             final Bitmap resultBitmap = bitmap;
 
-            mCallbackHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    final Set<ItemLoadedCallback> callbacks = mCallbacks.get(mUri);
-                    if (callbacks != null) {
-                        Bitmap bitmap = resultBitmap == null ?
-                                (mIsVideo ? mEmptyVideoBitmap : mEmptyImageBitmap)
-                                : resultBitmap;
+            mCallbackHandler.post(() -> {
+                final Set<ItemLoadedCallback> callbacks = mCallbacks.get(mUri);
+                if (callbacks != null) {
+                    Bitmap bitmap1 = resultBitmap == null ?
+                            (mIsVideo ? mEmptyVideoBitmap : mEmptyImageBitmap)
+                            : resultBitmap;
 
-                        // Make a copy so that the callback can unregister itself
-                        for (final ItemLoadedCallback<ImageLoaded> callback : asList(callbacks)) {
-                            if (Log.isLoggable(LogTag.THUMBNAIL_CACHE, Log.DEBUG)) {
-                                Log.d(TAG, "Invoking item loaded callback " + callback);
-                            }
-                            if (!DEBUG_DISABLE_CALLBACK) {
-                                ImageLoaded imageLoaded = new ImageLoaded(bitmap, mIsVideo);
-                                callback.onItemLoaded(imageLoaded, null);
-                            }
-                        }
-                    } else {
-                        if (Log.isLoggable(TAG, Log.DEBUG)) {
-                            Log.d(TAG, "No image callback!");
-                        }
-                    }
-
-                    // Add the bitmap to the soft cache if the load succeeded. Don't cache the
-                    // stand-ins for empty bitmaps.
-                    if (resultBitmap != null) {
-                        mThumbnailCache.put(mUri, resultBitmap);
+                    // Make a copy so that the callback can unregister itself
+                    for (final ItemLoadedCallback<ImageLoaded> callback : asList(callbacks)) {
                         if (Log.isLoggable(LogTag.THUMBNAIL_CACHE, Log.DEBUG)) {
-                            Log.v(TAG, "in callback runnable: bitmap uri: " + mUri +
-                                    " width: " + resultBitmap.getWidth() + " height: " +
-                                    resultBitmap.getHeight() + " size: " +
-                                    resultBitmap.getByteCount());
+                            Log.d(TAG, "Invoking item loaded callback " + callback);
+                        }
+                        if (!DEBUG_DISABLE_CALLBACK) {
+                            ImageLoaded imageLoaded = new ImageLoaded(bitmap1, mIsVideo);
+                            callback.onItemLoaded(imageLoaded, null);
                         }
                     }
-
-                    mCallbacks.remove(mUri);
-                    mPendingTaskUris.remove(mUri);
-
-                    if (Log.isLoggable(LogTag.THUMBNAIL_CACHE, Log.DEBUG)) {
-                        Log.d(TAG, "Image task for " + mUri + "exiting " + mPendingTaskUris.size()
-                                + " remain");
+                } else {
+                    if (Log.isLoggable(TAG, Log.DEBUG)) {
+                        Log.d(TAG, "No image callback!");
                     }
+                }
+
+                // Add the bitmap to the soft cache if the load succeeded. Don't cache the
+                // stand-ins for empty bitmaps.
+                if (resultBitmap != null) {
+                    mThumbnailCache.put(mUri, resultBitmap);
+                    if (Log.isLoggable(LogTag.THUMBNAIL_CACHE, Log.DEBUG)) {
+                        Log.v(TAG, "in callback runnable: bitmap uri: " + mUri +
+                                " width: " + resultBitmap.getWidth() + " height: " +
+                                resultBitmap.getHeight() + " size: " +
+                                resultBitmap.getByteCount());
+                    }
+                }
+
+                mCallbacks.remove(mUri);
+                mPendingTaskUris.remove(mUri);
+
+                if (Log.isLoggable(LogTag.THUMBNAIL_CACHE, Log.DEBUG)) {
+                    Log.d(TAG, "Image task for " + mUri + "exiting " + mPendingTaskUris.size()
+                            + " remain");
                 }
             });
         }

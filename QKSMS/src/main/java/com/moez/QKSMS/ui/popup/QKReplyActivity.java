@@ -16,16 +16,16 @@ import android.widget.ListView;
 
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.service.CopyUnreadMessageTextService;
 import com.moez.QKSMS.service.DeleteUnreadMessageService;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.base.QKPopupActivity;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
@@ -203,7 +203,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
                 return true;
 
             case R.id.menu_mark_read:
-                mConversationLegacy.markRead();
+                MessagingHelper.markConversationRead(this, mConversationLegacy.getThreadId());
                 finish();
                 return true;
 
@@ -239,7 +239,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = mShowUnreadOnly ? SmsHelper.UNREAD_SELECTION : null;
         return new CursorLoader(this,
-                Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, "" + mConversationLegacy.getThreadId()),
+                Uri.withAppendedPath(SmsHelper.MMS_SMS_CONTENT_PROVIDER, "" + mConversationLegacy.getThreadId()),
                 MessageColumns.PROJECTION, selection, null, "normalized_date ASC");
     }
 
@@ -282,7 +282,7 @@ public class QKReplyActivity extends QKPopupActivity implements DialogInterface.
             mConversation.markAsRead();
         }
         if (mConversationLegacy != null) {
-            mConversationLegacy.markRead();
+            MessagingHelper.markConversationRead(this, mConversationLegacy.getThreadId());
         }
 
         finish();

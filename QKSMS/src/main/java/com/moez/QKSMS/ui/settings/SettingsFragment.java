@@ -1,11 +1,9 @@
 package com.moez.QKSMS.ui.settings;
 
 import android.app.AlarmManager;
-import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -19,13 +17,11 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
@@ -35,25 +31,23 @@ import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.ListviewHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.ThemeManager;
+import com.moez.QKSMS.common.YappyImplementation;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.PackageUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.NightModeAutoReceiver;
 import com.moez.QKSMS.service.DeleteOldMessagesService;
-import com.moez.QKSMS.transaction.EndlessJabber;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
-import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
+import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
 import com.moez.QKSMS.ui.dialog.QKDialog;
-import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.view.colorpicker.ColorPickerDialog;
-import com.moez.QKSMS.ui.view.colorpicker.ColorPickerSwatch;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -65,11 +59,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+import static com.moez.QKSMS.enums.QKPreference.AUTO_NIGHT_DAY_START;
+import static com.moez.QKSMS.enums.QKPreference.AUTO_NIGHT_NIGHT_START;
+import static com.moez.QKSMS.enums.QKPreference.ICON;
+import static com.moez.QKSMS.enums.QKPreference.NOTIFICATIONS_LED_COLOR;
+
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener {
     public static final String TAG = "SettingsFragment";
 
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
+    public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
     public static final String CATEGORY_THEME = "pref_category_theme";
     public static final String CATEGORY_GENERAL = "pref_key_category_general";
     public static final String CATEGORY_NOTIFICATIONS = "pref_key_category_notifications";
@@ -77,90 +77,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_QUICKREPLY = "pref_key_category_quickreply";
     public static final String CATEGORY_QUICKCOMPOSE = "pref_key_category_quickcompose";
     public static final String CATEGORY_ABOUT = "pref_key_category_about";
-
-    // Sub-categories
-    public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
-
-    public static final String THEME = "pref_key_theme";
-    public static final String ICON = "pref_key_icon";
-    public static final String STATUS_TINT = "pref_key_status_tint";
-    public static final String NAVIGATION_TINT = "pref_key_navigation_tint";
-    public static final String BACKGROUND = "pref_key_background";
-    public static final String BUBBLES = "pref_key_bubbles";
-    public static final String BUBBLES_NEW = "pref_key_new_bubbles";
-    public static final String COLOR_SENT = "pref_key_colour_sent";
-    public static final String COLOR_RECEIVED = "pref_key_colour_received";
-    public static final String HIDE_AVATAR_CONVERSATIONS = "pref_key_hide_avatar_conversations";
-    public static final String HIDE_AVATAR_SENT = "pref_key_hide_avatar_sent";
-    public static final String HIDE_AVATAR_RECEIVED = "pref_key_hide_avatar_received";
-    public static final String AUTO_EMOJI = "pref_key_auto_emoji";
-    public static final String MARKDOWN_ENABLED = "pref_key_markdown_enabled";
-    public static final String ENTER_BUTTON = "pref_key_enter_button";
-    public static final String FORCE_TIMESTAMPS = "pref_key_force_timestamps";
-    public static final String SHOW_NEW_TIMESTAMP_DELAY = "pref_key_timestamp_delay";
-    public static final String COMPOSE_FAVORITES = "pref_key_compose_favorites";
-    public static final String FONT_FAMILY = "pref_key_font_family";
-    public static final String FONT_SIZE = "pref_key_font_size";
-    public static final String FONT_WEIGHT = "pref_key_font_weight";
-    public static final String MESSAGE_COUNT = "pref_key_message_count";
-    public static final String PROXIMITY_CALLING = "pref_key_prox_sensor_calling";
-    public static final String DELIVERY_REPORTS = "pref_key_delivery";
-    public static final String DELIVERY_TOAST = "pref_key_delivery_toast";
-    public static final String DELIVERY_VIBRATE = "pref_key_delivery_vibrate";
-    public static final String DELETE_OLD_MESSAGES = "pref_key_delete_old_messages";
-    public static final String DELETE_UNREAD_MESSAGES = "pref_key_delete_old_unread_messages";
-    public static final String DELETE_READ_MESSAGES = "pref_key_delete_old_read_messages";
-    public static final String YAPPY = "pref_key_endlessjabber";
-    public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
-    public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
-    public static final String BLOCKED_FUTURE = "pref_key_block_future";
-    public static final String SHOULD_I_ANSWER = "pref_key_should_i_answer";
-    public static final String MOBILE_ONLY = "pref_key_mobile_only";
-    public static final String COMPOSE_GROUP = "pref_key_compose_group";
-    public static final String SPLIT_SMS = "pref_key_split";
-    public static final String SPLIT_COUNTER = "pref_key_split_counter";
-    public static final String LONG_AS_MMS = "pref_key_long_as_mms";
-    public static final String LONG_AS_MMS_AFTER = "pref_key_long_as_mms_after";
-    public static final String NOTIFICATIONS = "pref_key_notifications";
-    public static final String NOTIFICATION_LED = "pref_key_led";
-    public static final String NOTIFICATION_LED_COLOR = "pref_key_theme_led";
-    public static final String WAKE = "pref_key_wake";
-    public static final String NOTIFICATION_TICKER = "pref_key_ticker";
-    public static final String PRIVATE_NOTIFICATION = "pref_key_notification_private";
-    public static final String NOTIFICATION_VIBRATE = "pref_key_vibration";
-    public static final String NOTIFICATION_TONE = "pref_key_ringtone";
-    public static final String NOTIFICATION_CALL_BUTTON = "pref_key_notification_call";
-    public static final String DELAYED = "pref_key_delayed";
-    public static final String DELAY_DURATION = "pref_key_delay_duration";
-    public static final String NIGHT_AUTO = "pref_key_night_auto";
-    public static final String DAY_START = "pref_key_day_start";
-    public static final String NIGHT_START = "pref_key_night_start";
-    public static final String QK_RESPONSES = "pref_key_qk_responses";
-    public static final String MMS_ENABLED = "pref_key_mms_enabled";
-    public static final String AUTO_DATA = "pref_key_auto_data";
-    public static final String MMSC_URL = "mmsc_url";
-    public static final String MMS_PORT = "mms_port";
-    public static final String MMS_PROXY = "mms_proxy";
-    public static final String AUTOMATICALLY_CONFIGURE_MMS = "pref_key_automatically_configure_mms";
-    public static final String MMS_CONTACT_SUPPORT = "pref_key_mms_contact_support";
-    public static final String DONATE = "pref_key_donate";
-    public static final String DISMISSED_READ = "pref_key_dismiss_read";
-    public static final String MAX_MMS_ATTACHMENT_SIZE = "pref_mms_max_attachment_size";
-    public static final String QUICKREPLY = "pref_key_quickreply_enabled";
-    public static final String QUICKREPLY_TAP_DISMISS = "pref_key_quickreply_dismiss";
-    public static final String QUICKCOMPOSE = "pref_key_quickcompose";
-    public static final String STRIP_UNICODE = "pref_key_strip_unicode";
-    public static final String VERSION = "pref_key_version";
-    public static final String CHANGELOG = "pref_key_changelog";
-    public static final String THANKS = "pref_key_thanks";
-    public static final String GOOGLE_PLUS = "pref_key_google_plus";
-    public static final String GITHUB = "pref_key_github";
-    public static final String CROWDIN = "pref_key_crowdin";
-
-    public static final String WELCOME_SEEN = "pref_key_welcome_seen";
-
-    public static final String DEFAULT_NOTIFICATION_TONE = "content://settings/system/notification_sound";
-
     public static final String CATEGORY_TAG = "settings_category_fragment_tag";
 
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/104505769539048913485";
@@ -168,22 +84,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CROWDIN_URL = "https://crowdin.com/project/qksms";
 
     private QKActivity mContext;
-    private PreferenceManager mPreferenceManager;
-    private SharedPreferences mPrefs;
-    private Resources mRes;
     private ListView mListView;
-
-    private Preference mThemeLed;
-    private EditTextPreference mMmscUrl;
-    private EditTextPreference mMmsProxy;
-    private EditTextPreference mMmsPort;
 
     private ColorPickerDialog mLedColorPickerDialog;
 
     private String[] mFontFamilies;
     private String[] mFontSizes;
     private String[] mFontWeights;
-    private int[] mLedColors;
 
     private ListPreference mMaxMmsAttachmentSize;
     private String[] mMaxMmsAttachmentSizes;
@@ -194,7 +101,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         SettingsFragment fragment = new SettingsFragment();
 
         Bundle args = new Bundle();
-        args.putInt("category", category);
+        args.putInt(SettingsActivity.ARG_SETTINGS_PAGE, category);
         fragment.setArguments(args);
 
         return fragment;
@@ -207,13 +114,45 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         setHasOptionsMenu(true);
 
         mContext = (QKActivity) getActivity();
-        mPrefs = mContext.getPrefs();
-        mRes = mContext.getResources();
+        Resources res = mContext.getResources();
+
+        mResource = args.getInt(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings);
+        addPreferencesFromResource(mResource);
 
         mContext.setTitle(R.string.title_settings);
+        switch (mResource) {
+            case R.xml.settings_main:
+                mContext.setTitle(R.string.title_settings);
+                break;
 
-        mResource = args.getInt("category", R.xml.settings);
-        addPreferencesFromResource(mResource);
+            case R.xml.settings_appearance:
+                mContext.setTitle(R.string.pref_category_appearance);
+                break;
+
+            case R.xml.settings_general:
+                mContext.setTitle(R.string.pref_category_general);
+                break;
+
+            case R.xml.settings_notifications:
+                mContext.setTitle(R.string.pref_category_notifications);
+                break;
+
+            case R.xml.settings_mms:
+                mContext.setTitle(R.string.pref_category_mms);
+                break;
+
+            case R.xml.settings_quickreply:
+                mContext.setTitle(R.string.pref_category_quickreply);
+                break;
+
+            case R.xml.settings_quickcompose:
+                mContext.setTitle(R.string.pref_category_quickcompose);
+                break;
+
+            case R.xml.settings_about:
+                mContext.setTitle(R.string.pref_category_about);
+                break;
+        }
 
         // Set `this` to be the preferences click/change listener for all the preferences.
         PreferenceScreen screen = getPreferenceScreen();
@@ -243,96 +182,91 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             }
         }
 
-        Preference icon = findPreference(ICON);
+        Preference icon = findPreference(ICON.getKey());
         if (icon != null) {
             icon.setOnPreferenceClickListener(this);
         }
 
-        mThemeLed = findPreference(NOTIFICATION_LED_COLOR);
-        if (mThemeLed != null) {
-
-            mLedColors = new int[]{
-                    mRes.getColor(R.color.blue_light), mRes.getColor(R.color.purple_light),
-                    mRes.getColor(R.color.green_light), mRes.getColor(R.color.yellow_light),
-                    mRes.getColor(R.color.red_light), mRes.getColor(R.color.white_pure)
+        Preference notificationLedColor = findPreference(QKPreference.NOTIFICATIONS_LED_COLOR.getKey());
+        if (notificationLedColor != null) {
+            int[] ledColors = new int[]{
+                    res.getColor(R.color.blue_light), res.getColor(R.color.purple_light),
+                    res.getColor(R.color.green_light), res.getColor(R.color.yellow_light),
+                    res.getColor(R.color.red_light), res.getColor(R.color.white_pure)
             };
 
             mLedColorPickerDialog = new ColorPickerDialog();
-            mLedColorPickerDialog.initialize(R.string.pref_theme_led, mLedColors, Integer.parseInt(mPrefs.getString(NOTIFICATION_LED_COLOR, "-48060")), 3, 2);
-            mLedColorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-
-                @Override
-                public void onColorSelected(int color) {
-                    mPrefs.edit().putString(mThemeLed.getKey(), "" + color).apply();
-                    onPreferenceChange(findPreference(mThemeLed.getKey()), color);
-                }
+            mLedColorPickerDialog.initialize(R.string.pref_theme_led, ledColors, Integer.parseInt(QKPreferences.getString(NOTIFICATIONS_LED_COLOR)), 3, 2);
+            mLedColorPickerDialog.setOnColorSelectedListener(color -> {
+                QKPreferences.putString(NOTIFICATIONS_LED_COLOR, String.valueOf(color));
+                onPreferenceChange(findPreference(notificationLedColor.getKey()), color);
             });
         }
 
-        ListPreference font_family = (ListPreference) findPreference(FONT_FAMILY);
-        if (font_family != null) {
-            mFontFamilies = mRes.getStringArray(R.array.font_families);
-            font_family.setSummary(mFontFamilies[Integer.parseInt(font_family.getValue())]);
+        ListPreference fontFamily = (ListPreference) findPreference(QKPreference.FONT_FAMILY.getKey());
+        if (fontFamily != null) {
+            mFontFamilies = res.getStringArray(R.array.font_families);
+            fontFamily.setSummary(mFontFamilies[Integer.parseInt(fontFamily.getValue())]);
         }
 
-        ListPreference font_size = (ListPreference) findPreference(FONT_SIZE);
-        if (font_size != null) {
-            mFontSizes = mRes.getStringArray(R.array.font_sizes);
-            font_size.setSummary(mFontSizes[Integer.parseInt(font_size.getValue())]);
+        ListPreference fontSize = (ListPreference) findPreference(QKPreference.FONT_SIZE.getKey());
+        if (fontSize != null) {
+            mFontSizes = res.getStringArray(R.array.font_sizes);
+            fontSize.setSummary(mFontSizes[Integer.parseInt(fontSize.getValue())]);
         }
 
-        ListPreference font_weight = (ListPreference) findPreference(FONT_WEIGHT);
-        if (font_weight != null) {
-            mFontWeights = mRes.getStringArray(R.array.font_weights);
-            int i = Integer.parseInt(font_weight.getValue());
-            font_weight.setSummary(mFontWeights[i == 2 ? 0 : 1]);
+        ListPreference fontWeight = (ListPreference) findPreference(QKPreference.FONT_WEIGHT.getKey());
+        if (fontWeight != null) {
+            mFontWeights = res.getStringArray(R.array.font_weights);
+            int i = Integer.parseInt(fontWeight.getValue());
+            fontWeight.setSummary(mFontWeights[i == 2 ? 0 : 1]);
         }
 
-        EditTextPreference deleteUnread = (EditTextPreference) findPreference(DELETE_UNREAD_MESSAGES);
+        EditTextPreference deleteUnread = (EditTextPreference) findPreference(QKPreference.AUTO_DELETE_UNREAD.getKey());
         if (deleteUnread != null) {
             deleteUnread.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD)));
         }
 
-        EditTextPreference deleteRead = (EditTextPreference) findPreference(DELETE_READ_MESSAGES);
+        EditTextPreference deleteRead = (EditTextPreference) findPreference(QKPreference.AUTO_DELETE_READ.getKey());
         if (deleteRead != null) {
             deleteRead.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_READ)));
         }
 
-        Preference day_start = findPreference(DAY_START);
-        if (day_start != null) {
-            day_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, mPrefs.getString(DAY_START, "6:00")));
+        Preference dayStart = findPreference(QKPreference.AUTO_NIGHT_DAY_START.getKey());
+        if (dayStart != null) {
+            dayStart.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_DAY_START)));
         }
 
-        Preference night_start = findPreference(NIGHT_START);
-        if (night_start != null) {
-            night_start.setSummary(DateFormatter.getSummaryTimestamp(mContext, mPrefs.getString(NIGHT_START, "21:00")));
+        Preference nightStart = findPreference(QKPreference.AUTO_NIGHT_NIGHT_START.getKey());
+        if (nightStart != null) {
+            nightStart.setSummary(DateFormatter.getSummaryTimestamp(mContext, QKPreferences.getString(QKPreference.AUTO_NIGHT_NIGHT_START)));
         }
 
-        mMmscUrl = (EditTextPreference) findPreference(MMSC_URL);
-        if (mMmscUrl != null) {
-            mMmscUrl.setSummary(mMmscUrl.getText());
+        EditTextPreference mmscUrl = (EditTextPreference) findPreference(QKPreference.MMSC.getKey());
+        if (mmscUrl != null) {
+            mmscUrl.setSummary(mmscUrl.getText());
         }
 
-        mMmsProxy = (EditTextPreference) findPreference(MMS_PROXY);
-        if (mMmsProxy != null) {
-            mMmsProxy.setSummary(mMmsProxy.getText());
+        EditTextPreference mmsProxy = (EditTextPreference) findPreference(QKPreference.MMS_PROXY.getKey());
+        if (mmsProxy != null) {
+            mmsProxy.setSummary(mmsProxy.getText());
         }
 
-        mMmsPort = (EditTextPreference) findPreference(MMS_PORT);
-        if (mMmsPort != null) {
-            mMmsPort.setSummary(mMmsPort.getText());
+        EditTextPreference mmsPort = (EditTextPreference) findPreference(QKPreference.MMS_PORT.getKey());
+        if (mmsPort != null) {
+            mmsPort.setSummary(mmsPort.getText());
         }
 
-        mMaxMmsAttachmentSize = (ListPreference) findPreference(MAX_MMS_ATTACHMENT_SIZE);
+        mMaxMmsAttachmentSize = (ListPreference) findPreference(QKPreference.MAX_MMS_SIZE.getKey());
         if (mMaxMmsAttachmentSize != null) {
-            mMaxMmsAttachmentSizes = mRes.getStringArray(R.array.max_mms_attachment_sizes);
+            mMaxMmsAttachmentSizes = res.getStringArray(R.array.max_mms_attachment_sizes);
 
             String value = mMaxMmsAttachmentSize.getValue();
             String summary = mMaxMmsAttachmentSizes[mMaxMmsAttachmentSize.findIndexOfValue(value)];
             mMaxMmsAttachmentSize.setSummary(summary);
         }
 
-        Preference version = findPreference(VERSION);
+        Preference version = findPreference(QKPreference.VERSION.getKey());
         if (version != null) {
             String v = "unknown";
             try {
@@ -409,7 +343,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         String key = preference.getKey();
 
         String valueString = newValue == null ? "null" : newValue.toString();
-        if (key.equals(NOTIFICATION_LED_COLOR)) {
+        if (QKPreference.get(key) == NOTIFICATIONS_LED_COLOR) {
             // Format the color as a nice string if it's the LED color.
             valueString = ThemeManager.getColorString(Integer.parseInt(valueString));
         }
@@ -421,48 +355,57 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 valueString
         );
 
-        switch (key) {
+        switch (QKPreference.get(key)) {
             case BACKGROUND:
                 ThemeManager.setTheme(ThemeManager.Theme.fromString((String) newValue));
                 break;
-            case STATUS_TINT:
+
+            case TINTED_STATUS:
                 ThemeManager.setStatusBarTintEnabled(mContext, (Boolean) newValue);
                 break;
-            case NAVIGATION_TINT:
+
+            case TINTED_NAV:
                 ThemeManager.setNavigationBarTintEnabled(mContext, (Boolean) newValue);
                 break;
+
             case FONT_FAMILY:
                 preference.setSummary(mFontFamilies[Integer.parseInt("" + newValue)]);
                 break;
+
             case FONT_SIZE:
                 preference.setSummary(mFontSizes[Integer.parseInt("" + newValue)]);
                 break;
+
             case FONT_WEIGHT:
                 int i = Integer.parseInt("" + newValue);
                 preference.setSummary(mFontWeights[i == 2 ? 0 : 1]);
                 break;
-            case COLOR_SENT:
+
+            case BUBBLES_COLOR_SENT:
                 ThemeManager.setSentBubbleColored((Boolean) newValue);
                 break;
-            case COLOR_RECEIVED:
+
+            case BUBBLES_COLOR_RECEIVED:
                 ThemeManager.setReceivedBubbleColored((Boolean) newValue);
                 break;
-            case NIGHT_AUTO:
+
+            case AUTO_NIGHT:
                 updateAlarmManager(mContext, (Boolean) newValue);
                 break;
-            case DAY_START:
-            case NIGHT_START:
+
+            case AUTO_NIGHT_DAY_START:
+            case AUTO_NIGHT_NIGHT_START:
                 updateAlarmManager(mContext, true);
                 break;
 
-            case DELETE_OLD_MESSAGES:
+            case AUTO_DELETE:
                 if ((Boolean) newValue) {
                     new QKDialog()
                             .setContext(mContext)
                             .setTitle(R.string.pref_delete_old_messages)
                             .setMessage(R.string.dialog_delete_old_messages)
                             .setPositiveButton(R.string.yes, v -> {
-                                QKPreferences.setBoolean(QKPreference.AUTO_DELETE, true);
+                                QKPreferences.putBoolean(QKPreference.AUTO_DELETE, true);
                                 ((CheckBoxPreference) preference).setChecked(true);
                                 DeleteOldMessagesService.setupAutoDeleteAlarm(mContext);
                                 mContext.makeToast(R.string.toast_deleting_old_messages);
@@ -473,49 +416,53 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 }
                 break;
 
-            case DELETE_UNREAD_MESSAGES:
+            case AUTO_DELETE_UNREAD:
                 preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, newValue));
                 break;
 
-            case DELETE_READ_MESSAGES:
+            case AUTO_DELETE_READ:
                 preference.setSummary(mContext.getString(R.string.pref_delete_old_messages_read_summary, newValue));
                 break;
 
-            case YAPPY:
+            case YAPPY_INTEGRATION:
                 if ((Boolean) newValue) {
                     try {
-                        EndlessJabberInterface.EnableIntegration(mContext, EndlessJabber.class, true, false);
+                        EndlessJabberInterface.EnableIntegration(mContext, YappyImplementation.class, true, false, true, true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     if (!EndlessJabberInterface.IsInstalled(mContext)) {
-                        EndlessJabberInterface.OpenGooglePlayLink(mContext);
+                        EndlessJabberInterface.OpenGooglePlayLink(mContext, "QKSMS");
                     }
                 } else {
                     try {
-                        EndlessJabberInterface.DisableIntegration(mContext, EndlessJabber.class);
+                        EndlessJabberInterface.DisableIntegration(mContext, YappyImplementation.class);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 break;
-            case QUICKCOMPOSE:
+
+            case QK_COMPOSE:
                 NotificationManager.initQuickCompose(getActivity(), (Boolean) newValue, !(Boolean) newValue);
                 break;
-            case MMSC_URL:
+
+            case MMSC:
             case MMS_PROXY:
             case MMS_PORT:
                 preference.setSummary(newValue.toString());
                 break;
-            case MAX_MMS_ATTACHMENT_SIZE:
+
+            case MAX_MMS_SIZE:
                 // Update the summary in the list preference
                 ListPreference listpref = (ListPreference) preference;
                 int index = listpref.findIndexOfValue((String) newValue);
                 preference.setSummary(mMaxMmsAttachmentSizes[index]);
                 // Update the SMS helper static class with the new option
-                SmsHelper.setMaxAttachmentSizeSetting(mContext, (String) newValue);
+                SmsHelper.setMaxAttachmentSizeSetting((String) newValue);
                 break;
-            case DELAY_DURATION:
+
+            case DELAYED_DURATION:
                 try {
                     int duration = Integer.parseInt((String) newValue);
 
@@ -539,52 +486,57 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         AnalyticsManager.getInstance().sendEvent(AnalyticsManager.CATEGORY_PREFERENCE_CLICK, key, null);
 
         // Categories
-        int resId = 0;
+        Intent intent = new Intent(mContext, SettingsActivity.class);
         switch (key) {
             case CATEGORY_APPEARANCE:
-                resId = R.xml.settings_appearance;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_appearance);
                 break;
+
             case CATEGORY_GENERAL:
-                resId = R.xml.settings_general;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_general);
                 break;
+
             case CATEGORY_NOTIFICATIONS:
-                resId = R.xml.settings_notifications;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_notifications);
                 break;
+
             case CATEGORY_MMS:
-                resId = R.xml.settings_mms;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_mms);
                 break;
+
             case CATEGORY_QUICKREPLY:
-                resId = R.xml.settings_quickreply;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_quickreply);
                 break;
+
             case CATEGORY_QUICKCOMPOSE:
-                resId = R.xml.settings_quickcompose;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_quickcompose);
                 break;
+
             case CATEGORY_ABOUT:
-                resId = R.xml.settings_about;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_about);
                 break;
         }
-        if (resId != 0) {
-            Fragment fragment = SettingsFragment.newInstance(resId);
-            getFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.content_frame, fragment, CATEGORY_TAG)
-                    .commit();
+        if (intent.hasExtra(SettingsActivity.ARG_SETTINGS_PAGE)) {
+            startActivity(intent);
         }
 
-        switch (key) {
+        switch (QKPreference.get(key)) {
             case THEME:
                 ThemeManager.showColorPickerDialog(mContext);
                 break;
+
             case ICON:
                 ThemeManager.setIcon(mContext);
                 break;
+
             case BUBBLES:
                 new BubblePreferenceDialog().setContext(mContext).show();
                 break;
+
             case BLOCKED_FUTURE:
                 BlockedNumberDialog.showDialog(mContext);
                 break;
+
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";
                 if (!PackageUtils.isAppInstalled(mContext, packageName)) {
@@ -604,25 +556,29 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                             .show();
 
                     new Handler().postDelayed(() -> {
-                        mPrefs.edit().putBoolean(SHOULD_I_ANSWER, false).commit();
+                        QKPreferences.putBoolean(QKPreference.SHOULD_I_ANSWER, false);
                         ((CheckBoxPreference) preference).setChecked(false);
                     }, 500);
                 }
                 break;
-            case NOTIFICATION_LED_COLOR:
+
+            case NOTIFICATIONS_LED_COLOR:
                 mLedColorPickerDialog.show(getActivity().getFragmentManager(), "colorpicker");
                 break;
-            case DAY_START:
-            case NIGHT_START:
+
+            case AUTO_NIGHT_DAY_START:
+            case AUTO_NIGHT_NIGHT_START:
                 TimePickerFragment fragment = new TimePickerFragment();
                 fragment.setPreference(preference);
                 fragment.setOnPreferenceChangeListener(this);
                 fragment.show(getFragmentManager(), "timepicker");
                 break;
+
             case QK_RESPONSES:
                 showQkResponseEditor();
                 break;
-            case AUTOMATICALLY_CONFIGURE_MMS:
+
+            case AUTO_CONFIGURE_MMS:
                 // Show the MMS setup dialogs. See the MMSSetupDialog class for info about what the
                 // arguments mean.
                 MMSSetupFragment f = new MMSSetupFragment();
@@ -635,36 +591,40 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                         .add(f, MMSSetupFragment.TAG)
                         .commit();
                 break;
+
             case MMS_CONTACT_SUPPORT:
                 // Opens an email compose intent with MMS debugging information
                 MMSSetupFragment.contactSupport(getActivity());
                 break;
+
             case CHANGELOG:
                 DialogHelper.showChangelog(mContext);
                 break;
+
             case THANKS:
                 new QKDialog()
                         .setContext(mContext)
                         .setTitle(R.string.pref_about_thanks_title)
                         .setTripleLineItems(R.array.contributor_names, R.array.contributor_githubs, R.array.contributor_projects,
-                                new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        String baseUrl = ((QKTextView) view.findViewById(R.id.list_item_subtitle)).getText().toString();
-                                        startBrowserIntent("https://" + baseUrl);
-                                    }
+                                (parent, view, position, id) -> {
+                                    String baseUrl = ((QKTextView) view.findViewById(R.id.list_item_subtitle)).getText().toString();
+                                    startBrowserIntent("https://" + baseUrl);
                                 })
                         .show();
                 break;
+
             case DONATE:
                 DonationManager.getInstance(mContext).showDonateDialog();
                 break;
+
             case GOOGLE_PLUS:
                 startBrowserIntent(GOOGLE_PLUS_URL);
                 break;
+
             case GITHUB:
                 startBrowserIntent(GITHUB_URL);
                 break;
+
             case CROWDIN:
                 startBrowserIntent(CROWDIN_URL);
                 break;
@@ -678,14 +638,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         startActivity(browserIntent);
     }
 
-    public boolean isCategoryList() {
-        return mResource == R.xml.settings_main;
-    }
-
     public void showQkResponseEditor() {
 
         Set<String> defaultResponses = new HashSet<>(Arrays.asList(mContext.getResources().getStringArray(R.array.qk_responses)));
-        Set<String> responseSet = mPrefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
+        Set<String> responseSet = QKPreferences.getStringSet(QKPreference.QK_RESPONSES);
+        responseSet = responseSet.size() == 0 ? defaultResponses : responseSet;
         ArrayList<String> responses = new ArrayList<>();
         responses.addAll(responseSet);
         Collections.sort(responses);
@@ -702,11 +659,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 .setContext(mContext)
                 .setTitle(R.string.title_qk_responses)
                 .setCustomView(listView)
-                .setPositiveButton(R.string.save, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPrefs.edit().putStringSet(SettingsFragment.QK_RESPONSES, new HashSet<>(adapter.getResponses())).apply();
-                    }
+                .setPositiveButton(R.string.save, v -> {
+                    QKPreferences.putStringSet(QKPreference.QK_RESPONSES, new HashSet<>(adapter.getResponses()));
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show(getFragmentManager(), "qk_response");
@@ -721,7 +675,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         Calendar dayCalendar = Calendar.getInstance();
         dayCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(DAY_START, "6:00")));
+            calendar.setTime(simpleDateFormat.parse(QKPreferences.getString(AUTO_NIGHT_DAY_START)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -733,7 +687,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         Calendar nightCalendar = Calendar.getInstance();
         nightCalendar.setTimeInMillis(System.currentTimeMillis());
         try {
-            calendar.setTime(simpleDateFormat.parse(PreferenceManager.getDefaultSharedPreferences(context).getString(NIGHT_START, "21:00")));
+            calendar.setTime(simpleDateFormat.parse(QKPreferences.getString(AUTO_NIGHT_NIGHT_START)));
         } catch (ParseException e) {
             e.printStackTrace();
         }

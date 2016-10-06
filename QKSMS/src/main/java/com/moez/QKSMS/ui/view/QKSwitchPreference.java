@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.enums.QKPreference;
 
 /**
  * Regular android preferences don't have basic functionality when you manually add them to views
@@ -20,15 +22,15 @@ public class QKSwitchPreference extends SwitchPreference {
     private boolean mDefaultValue;
     private QKSwitch mCheckBox;
 
-    public QKSwitchPreference(Context context, OnPreferenceClickListener onPreferenceClickListener,
-                              String key, SharedPreferences prefs, boolean defaultValue, int title, int summary) {
+    public QKSwitchPreference(Context context, OnPreferenceClickListener onPreferenceClickListener, QKPreference pref,
+                              SharedPreferences prefs, int title, int summary) {
         super(context);
         mPrefs = prefs;
         mOnPreferenceClickListener = onPreferenceClickListener;
 
-        setKey(key);
+        setKey(pref.getKey());
         setEnabled(true);
-        mDefaultValue = prefs.getBoolean(key, defaultValue);
+        mDefaultValue = QKPreferences.getBoolean(pref);
         if (title != 0) setTitle(title);
         if (summary != 0) setSummary(summary);
     }

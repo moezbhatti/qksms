@@ -40,7 +40,7 @@ import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.ContactHelper;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.ui.MainActivity;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 
 public class WidgetService extends RemoteViewsService {

@@ -10,16 +10,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.TypefaceManager;
-import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.utils.UnitUtils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -29,7 +27,7 @@ import java.util.regex.Pattern;
 
 import static android.provider.ContactsContract.CommonDataKinds.Phone;
 
-public class ContactHelper {
+public abstract class ContactHelper {
     private static final String TAG = "ContactHelper";
 
     public static Uri CONTACTS_URI = ContactsContract.Contacts.CONTENT_URI;
@@ -149,31 +147,6 @@ public class ContactHelper {
         return id;
     }
 
-    public static Uri getPhotoUri(Context context, Uri contactUri) {
-        Cursor cursor = context.getContentResolver().query(contactUri, Favorites.PROJECTION, null, null, null);
-
-        String photoUriString = null;
-        if (cursor.moveToFirst()) {
-            photoUriString = cursor.getString(Favorites.PHOTO_THUMBNAIL_URI);
-        }
-
-        return photoUriString == null ? null : Uri.parse(photoUriString);
-    }
-
-    public static Drawable getDrawable(Context context, long id) {
-        return new BitmapDrawable(context.getResources(), getBitmap(context, id));
-    }
-
-    public static Bitmap getOwnerPhoto(Context context) {
-
-        final String[] SELF_PROJECTION = new String[]{Phone._ID};
-        Cursor cursor = context.getContentResolver().query(ContactsContract.Profile.CONTENT_URI, SELF_PROJECTION, null, null, null);
-        cursor.moveToFirst();
-        if (cursor.getCount() > 0) return getBitmap(context, cursor.getLong(0));
-
-        return null;
-    }
-
     public static Bitmap getBitmap(Context context, long id) {
         Bitmap bitmap = null;
         try {
@@ -194,7 +167,7 @@ public class ContactHelper {
     public static Bitmap blankContact(Context context, String name) {
         String text = name == null || PhoneNumberUtils.isWellFormedSmsAddress(PhoneNumberUtils.stripSeparators(name)) || name.length() == 0 ? "#" : "" + name.toUpperCase().charAt(0);
 
-        int length = Units.dpToPx(context, 64);
+        int length = UnitUtils.dpToPx(context, 64);
 
         Bitmap bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
         bitmap.eraseColor(ThemeManager.getColor());

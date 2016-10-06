@@ -11,7 +11,7 @@ import android.util.TypedValue;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.ThemeManager;
 
 public class QKEditText extends android.widget.EditText {
     public static final String TAG = "QKEditText";
@@ -59,7 +59,7 @@ public class QKEditText extends android.widget.EditText {
         });
 
         LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(FontManager.TEXT_TYPE_PRIMARY));
         });
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {

@@ -9,15 +9,14 @@ import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.emoji.EmojiRegistry;
 import com.moez.QKSMS.common.utils.DateFormatter;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationListViewHolder, Conversation> {
 
@@ -40,18 +39,18 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         View view = inflater.inflate(R.layout.list_item_conversation, null);
 
         ConversationListViewHolder holder = new ConversationListViewHolder(mContext, view);
-        holder.mutedView.setImageResource(R.drawable.ic_notifications_muted);
-        holder.unreadView.setImageResource(R.drawable.ic_unread_indicator);
-        holder.errorIndicator.setImageResource(R.drawable.ic_error);
+        holder.mMuted.setImageResource(R.drawable.ic_notifications_muted);
+        holder.mUnread.setImageResource(R.drawable.ic_unread_indicator);
+        holder.mError.setImageResource(R.drawable.ic_error);
 
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {
-            holder.mutedView.setColorFilter(ThemeManager.getColor());
-            holder.unreadView.setColorFilter(ThemeManager.getColor());
-            holder.errorIndicator.setColorFilter(ThemeManager.getColor());
+            holder.mMuted.setColorFilter(ThemeManager.getColor());
+            holder.mUnread.setColorFilter(ThemeManager.getColor());
+            holder.mError.setColorFilter(ThemeManager.getColor());
         });
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
-            holder.root.setBackgroundDrawable(ThemeManager.getRippleBackground());
+            holder.itemView.setBackgroundDrawable(ThemeManager.getRippleBackground());
         });
 
         return holder;
@@ -64,31 +63,31 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         holder.mData = conversation;
         holder.mContext = mContext;
         holder.mClickListener = mItemClickListener;
-        holder.root.setOnClickListener(holder);
-        holder.root.setOnLongClickListener(holder);
+        holder.itemView.setOnClickListener(holder);
+        holder.itemView.setOnLongClickListener(holder);
 
-        holder.mutedView.setVisibility(new ConversationPrefsHelper(mContext, conversation.getThreadId())
+        holder.mMuted.setVisibility(new ConversationPrefsHelper(mContext, conversation.getThreadId())
                 .getNotificationsEnabled() ? View.GONE : View.VISIBLE);
 
-        holder.errorIndicator.setVisibility(conversation.hasError() ? View.VISIBLE : View.GONE);
+        holder.mError.setVisibility(conversation.hasError() ? View.VISIBLE : View.GONE);
 
         final boolean hasUnreadMessages = conversation.hasUnreadMessages();
         if (hasUnreadMessages) {
-            holder.unreadView.setVisibility(View.VISIBLE);
-            holder.snippetView.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
-            holder.dateView.setTextColor(ThemeManager.getColor());
-            holder.fromView.setType(FontManager.TEXT_TYPE_PRIMARY_BOLD);
-            holder.snippetView.setMaxLines(5);
+            holder.mUnread.setVisibility(View.VISIBLE);
+            holder.mSnippet.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+            holder.mDate.setTextColor(ThemeManager.getColor());
+            holder.mName.setType(FontManager.TEXT_TYPE_PRIMARY_BOLD);
+            holder.mSnippet.setMaxLines(5);
         } else {
-            holder.unreadView.setVisibility(View.GONE);
-            holder.snippetView.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
-            holder.dateView.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
-            holder.fromView.setType(FontManager.TEXT_TYPE_PRIMARY);
-            holder.snippetView.setMaxLines(1);
+            holder.mUnread.setVisibility(View.GONE);
+            holder.mSnippet.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
+            holder.mDate.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
+            holder.mName.setType(FontManager.TEXT_TYPE_PRIMARY);
+            holder.mSnippet.setMaxLines(1);
         }
 
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {
-            holder.dateView.setTextColor(hasUnreadMessages ? ThemeManager.getColor() : ThemeManager.getTextOnBackgroundSecondary());
+            holder.mDate.setTextColor(hasUnreadMessages ? ThemeManager.getColor() : ThemeManager.getTextOnBackgroundSecondary());
         });
 
         if (isInMultiSelectMode()) {
@@ -107,18 +106,18 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         }
 
         LiveViewManager.registerView(QKPreference.HIDE_AVATAR_CONVERSATIONS, this, key -> {
-            holder.mAvatarView.setVisibility(QKPreferences.getBoolean(QKPreference.HIDE_AVATAR_CONVERSATIONS) ? View.GONE : View.VISIBLE);
+            holder.mAvatar.setVisibility(QKPreferences.getBoolean(QKPreference.HIDE_AVATAR_CONVERSATIONS) ? View.GONE : View.VISIBLE);
         });
 
         // Date
-        holder.dateView.setText(DateFormatter.getConversationTimestamp(mContext, conversation.getDate()));
+        holder.mDate.setText(DateFormatter.getConversationTimestamp(mContext, conversation.getDate()));
 
         // Subject
         String emojiSnippet = conversation.getSnippet();
-        if (mPrefs.getBoolean(SettingsFragment.AUTO_EMOJI, false)) {
+        if (QKPreferences.getBoolean(QKPreference.AUTO_EMOJI)) {
             emojiSnippet = EmojiRegistry.parseEmojis(emojiSnippet);
         }
-        holder.snippetView.setText(emojiSnippet);
+        holder.mSnippet.setText(emojiSnippet);
 
         Contact.addListener(holder);
 

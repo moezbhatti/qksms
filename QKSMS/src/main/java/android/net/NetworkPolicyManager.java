@@ -24,8 +24,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.os.RemoteException;
 import android.text.format.Time;
-
-import com.google.android.collect.Sets;
+import com.google.common.collect.Sets;
 
 import java.io.PrintWriter;
 import java.util.HashSet;

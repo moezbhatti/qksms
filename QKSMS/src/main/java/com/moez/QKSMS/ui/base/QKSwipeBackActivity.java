@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.SwipeBackLayout;
+import com.moez.QKSMS.ui.view.SwipeBackLayout;
 
 public abstract class QKSwipeBackActivity extends QKActivity {
 

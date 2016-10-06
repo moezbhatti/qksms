@@ -23,10 +23,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.telephony.SmsMessage;
 import android.util.Log;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 /**
  * Service that gets started by the MessageStatusReceiver when a message status report is

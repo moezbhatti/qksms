@@ -14,14 +14,13 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.RemoteInput;
 import android.view.Gravity;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.MessagingHelper;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.data.ContactHelper;
-import com.moez.QKSMS.mmssms.Message;
-import com.moez.QKSMS.mmssms.Transaction;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.service.MarkReadService;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ThemeManager;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,14 +45,9 @@ public class RemoteMessagingReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         if (remoteInput != null && bundle != null) {
             if (intent.getAction().equals(ACTION_REPLY)) {
-
-                Message message = new Message(
-                        remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString(),
-                        new String[]{bundle.getString(EXTRA_ADDRESS)}
-                );
-
-                Transaction sendTransaction = new Transaction(context, SmsHelper.getSendSettings(context));
-                sendTransaction.sendNewMessage(message, bundle.getLong(EXTRA_THREAD_ID));
+                String recipient = bundle.getString(EXTRA_ADDRESS);
+                String body = remoteInput.getCharSequence(EXTRA_VOICE_REPLY).toString();
+                MessagingHelper.sendMessage(context, recipient, body, null);
 
                 Intent i = new Intent(context, MarkReadService.class);
                 i.putExtra(EXTRA_THREAD_ID, bundle.getLong(EXTRA_THREAD_ID));
@@ -75,7 +69,7 @@ public class RemoteMessagingReceiver extends BroadcastReceiver {
             background = Bitmap.createBitmap(640, 400, Bitmap.Config.ARGB_8888);
 
             // We can't use ThemeManager here because it might not be initialized
-            background.eraseColor(Integer.parseInt(prefs.getString(SettingsFragment.THEME, "" + ThemeManager.DEFAULT_COLOR)));
+            background.eraseColor(Integer.parseInt(prefs.getString(QKPreference.THEME.getKey(), "" + ThemeManager.DEFAULT_COLOR)));
         }
 
         wearableExtender.setBackground(background);
@@ -122,7 +116,7 @@ public class RemoteMessagingReceiver extends BroadcastReceiver {
         replyIntent.putExtra(EXTRA_THREAD_ID, threadId);
 
         Set<String> defaultResponses = new HashSet<>(Arrays.asList(context.getResources().getStringArray(R.array.qk_responses)));
-        Set<String> responseSet = prefs.getStringSet(SettingsFragment.QK_RESPONSES, defaultResponses);
+        Set<String> responseSet = prefs.getStringSet(QKPreference.QK_RESPONSES.getKey(), defaultResponses);
         ArrayList<String> responses = new ArrayList<>();
         responses.addAll(responseSet);
         Collections.sort(responses);

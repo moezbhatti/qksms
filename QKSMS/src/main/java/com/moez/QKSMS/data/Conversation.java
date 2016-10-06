@@ -7,7 +7,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.BaseColumns;
@@ -19,20 +18,21 @@ import android.provider.Telephony.Threads;
 import android.provider.Telephony.ThreadsColumns;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.android.mms.transaction.MmsMessageSender;
 import com.google.android.mms.pdu_alt.PduHeaders;
-import com.moez.QKSMS.QKSMSAppBase;
-import com.moez.QKSMS.mmssms.Utils;
-import com.moez.QKSMS.LogTag;
 import com.moez.QKSMS.QKSMSApp;
+import com.moez.QKSMS.QKSMSAppBase;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.common.google.DraftCache;
-import com.moez.QKSMS.receiver.UnreadBadgeService;
 import com.moez.QKSMS.common.utils.AddressUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.mmssms.Utils;
+import com.moez.QKSMS.service.UnreadBadgeService;
+import com.moez.QKSMS.ui.base.QKActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -787,8 +787,7 @@ public class Conversation {
      * @param token     The token that will be passed to onDeleteComplete
      * @param deleteAll Delete the whole thread including locked messages
      */
-    public static void startDeleteAll(ConversationQueryHandler handler, int token,
-                                      boolean deleteAll) {
+    public static void startDeleteAll(ConversationQueryHandler handler, int token, boolean deleteAll) {
         synchronized (sDeletingThreadsLock) {
             if (DELETEDEBUG) {
                 Log.v(TAG, "Conversation startDeleteAll sDeletingThreads: " +
@@ -801,8 +800,8 @@ public class Conversation {
             String selection = deleteAll ? null : "locked=0";
 
             QKSMSAppBase app = QKSMSApp.getApplication();
-            //app.getPduLoaderManager().clear();
-            //app.getThumbnailManager().clear();
+            app.getPduLoaderManager().clear();
+            app.getThumbnailManager().clear();
 
             handler.setDeleteToken(token);
             handler.startDelete(token, new Long(-1), Threads.CONTENT_URI, selection, null);
@@ -811,9 +810,9 @@ public class Conversation {
 
     public static class ConversationQueryHandler extends AsyncQueryHandler {
         private int mDeleteToken;
-        private Context mContext;
+        private QKActivity mContext;
 
-        public ConversationQueryHandler(ContentResolver cr, Context context) {
+        public ConversationQueryHandler(ContentResolver cr, QKActivity context) {
             super(cr);
             mContext = context;
         }
@@ -850,9 +849,7 @@ public class Conversation {
      * @param threadIds A list of threads to search. null means all threads
      * @param token     The token that will be passed to onQueryComplete
      */
-    public static void startQueryHaveLockedMessages(AsyncQueryHandler handler,
-                                                    Collection<Long> threadIds,
-                                                    int token) {
+    public static void startQueryHaveLockedMessages(AsyncQueryHandler handler, Collection<Long> threadIds, int token) {
         handler.cancelOperation(token);
         Uri uri = MmsSms.CONTENT_LOCKED_URI;
 
@@ -883,9 +880,7 @@ public class Conversation {
      * @param threadId The threadId of the thread to search. -1 means all threads
      * @param token    The token that will be passed to onQueryComplete
      */
-    public static void startQueryHaveLockedMessages(AsyncQueryHandler handler,
-                                                    long threadId,
-                                                    int token) {
+    public static void startQueryHaveLockedMessages(AsyncQueryHandler handler, long threadId, int token) {
         ArrayList<Long> threadIds = null;
         if (threadId != -1) {
             threadIds = new ArrayList<Long>();
@@ -900,8 +895,7 @@ public class Conversation {
      * is false and the recipient IDs are not in cache.  The cursor should
      * be one made via {@link #startQueryForAll}.
      */
-    private static void fillFromCursor(Context context, Conversation conv,
-                                       Cursor c, boolean allowQuery) {
+    private static void fillFromCursor(Context context, Conversation conv, Cursor c, boolean allowQuery) {
         synchronized (conv) {
             conv.mThreadId = c.getLong(ID);
             conv.mDate = c.getLong(DATE);
@@ -1094,12 +1088,7 @@ public class Conversation {
      * startup time.
      */
     public static void init(final Context context) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                cacheAllThreads(context);
-            }
-        }, "Conversation.init");
+        Thread thread = new Thread(() -> cacheAllThreads(context), "Conversation.init");
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.start();
     }
@@ -1109,18 +1098,15 @@ public class Conversation {
             Contact.logWithTrace(TAG, "Conversation.markAllConversationsAsSeen");
         }
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (DELETEDEBUG) {
-                    Log.d(TAG, "Conversation.markAllConversationsAsSeen.run");
-                }
-                blockingMarkAllSmsMessagesAsSeen(context);
-                blockingMarkAllMmsMessagesAsSeen(context);
-
-                // Always update notifications regardless of the read state.
-                //MessagingNotification.blockingUpdateAllNotifications(context, MessagingNotification.THREAD_NONE);
+        Thread thread = new Thread(() -> {
+            if (DELETEDEBUG) {
+                Log.d(TAG, "Conversation.markAllConversationsAsSeen.run");
             }
+            blockingMarkAllSmsMessagesAsSeen(context);
+            blockingMarkAllMmsMessagesAsSeen(context);
+
+            // Always update notifications regardless of the read state.
+            //MessagingNotification.blockingUpdateAllNotifications(context, MessagingNotification.THREAD_NONE);
         }, "Conversation.markAllConversationsAsSeen");
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.start();

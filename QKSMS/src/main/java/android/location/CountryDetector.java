@@ -70,11 +70,7 @@ public class CountryDetector {
         }
 
         public void onCountryDetected(final Country country) {
-            mHandler.post(new Runnable() {
-                public void run() {
-                    mListener.onCountryDetected(country);
-                }
-            });
+            mHandler.post(() -> mListener.onCountryDetected(country));
         }
     }
 

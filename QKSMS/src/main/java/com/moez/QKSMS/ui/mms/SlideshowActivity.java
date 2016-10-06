@@ -25,8 +25,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.MediaController;
 import android.widget.MediaController.MediaPlayerControl;
@@ -36,10 +34,10 @@ import com.android.mms.dom.smil.SmilPlayer;
 import com.android.mms.dom.smil.parser.SmilXmlSerializer;
 import com.google.android.mms.MmsException;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.model.LayoutModel;
-import com.moez.QKSMS.model.RegionModel;
-import com.moez.QKSMS.model.SlideshowModel;
-import com.moez.QKSMS.model.SmilHelper;
+import com.moez.QKSMS.common.SmilHelper;
+import com.moez.QKSMS.mmssms.model.LayoutModel;
+import com.moez.QKSMS.mmssms.model.RegionModel;
+import com.moez.QKSMS.mmssms.model.SlideshowModel;
 import com.moez.QKSMS.ui.base.QKActivity;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -240,16 +238,8 @@ public class SlideshowActivity extends QKActivity implements EventListener {
         mMediaController.setMediaPlayer(new SmilPlayerController(mSmilPlayer));
         mMediaController.setAnchorView(findViewById(R.id.slide_view));
         mMediaController.setPrevNextListeners(
-            new OnClickListener() {
-              public void onClick(View v) {
-                  mSmilPlayer.next();
-              }
-            },
-            new OnClickListener() {
-              public void onClick(View v) {
-                  mSmilPlayer.prev();
-              }
-            });
+                v -> mSmilPlayer.next(),
+                v -> mSmilPlayer.prev());
     }
 
     @Override
@@ -398,12 +388,10 @@ public class SlideshowActivity extends QKActivity implements EventListener {
 
     public void handleEvent(Event evt) {
         final Event event = evt;
-        mHandler.post(new Runnable() {
-            public void run() {
-                String type = event.getType();
-                if(type.equals(SmilDocumentImpl.SMIL_DOCUMENT_END_EVENT)) {
-                    finish();
-                }
+        mHandler.post(() -> {
+            String type = event.getType();
+            if(type.equals(SmilDocumentImpl.SMIL_DOCUMENT_END_EVENT)) {
+                finish();
             }
         });
     }

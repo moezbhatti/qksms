@@ -5,13 +5,12 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.moez.QKSMS.LogTag;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,15 +46,11 @@ public class RecipientIdCache {
 
     static void init(Context context) {
         sInstance = new RecipientIdCache(context);
-        new Thread(new Runnable() {
-            public void run() {
-                fill();
-            }
-        }, "RecipientIdCache.init").start();
+        new Thread(RecipientIdCache::fill, "RecipientIdCache.init").start();
     }
 
     RecipientIdCache(Context context) {
-        mCache = new HashMap<Long, String>();
+        mCache = new HashMap<>();
         mContext = context;
     }
 

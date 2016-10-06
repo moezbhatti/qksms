@@ -3,9 +3,10 @@ package com.moez.QKSMS.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.preference.PreferenceManager;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.service.DeleteOldMessagesService;
-import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -15,7 +16,7 @@ public class BootReceiver extends BroadcastReceiver {
         NotificationManager.initQuickCompose(context, false, false);
         NotificationManager.create(context);
 
-        SettingsFragment.updateAlarmManager(context, PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SettingsFragment.NIGHT_AUTO, false));
+        SettingsFragment.updateAlarmManager(context, QKPreferences.getBoolean(QKPreference.AUTO_NIGHT));
 
         DeleteOldMessagesService.setupAutoDeleteAlarm(context);
     }

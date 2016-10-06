@@ -5,10 +5,11 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Telephony;
 import android.util.Log;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.common.SmsHelper;
 
 import java.util.Calendar;
 
@@ -31,7 +32,7 @@ public class DeleteOldMessagesService extends IntentService {
                 current.get(Calendar.DAY_OF_YEAR) != last.get(Calendar.DAY_OF_YEAR) ||
                 current.get(Calendar.YEAR) != last.get(Calendar.YEAR))) {
             Log.i(TAG, "Ready to delete old messages");
-            QKPreferences.setLong(QKPreference.LAST_AUTO_DELETE_CHECK, System.currentTimeMillis());
+            QKPreferences.putLong(QKPreference.LAST_AUTO_DELETE_CHECK, System.currentTimeMillis());
 
             deleteOldUnreadMessages(this);
             deleteOldReadMessages(this);
@@ -61,7 +62,7 @@ public class DeleteOldMessagesService extends IntentService {
     }
 
     private int deleteOldMessages(Context context, String selection, long before) {
-        selection += " AND " + SmsHelper.COLUMN_DATE + "<=?";
+        selection += " AND " + Telephony.Sms.DATE + "<=?";
 
         try {
             return context.getContentResolver().delete(SmsHelper.SMS_CONTENT_PROVIDER, selection, new String[]{String.valueOf(before)});

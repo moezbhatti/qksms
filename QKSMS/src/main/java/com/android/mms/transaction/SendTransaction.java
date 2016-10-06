@@ -17,18 +17,14 @@
 
 package com.android.mms.transaction;
 
-import java.util.Arrays;
-
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Sent;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.android.mms.util.RateController;
 import com.android.mms.util.SendingProgressTokenManager;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
@@ -38,7 +34,10 @@ import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.SendConf;
 import com.google.android.mms.pdu_alt.SendReq;
+import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.mmssms.Utils;
+
+import java.util.Arrays;
 
 /**
  * The SendTransaction is responsible for sending multimedia messages

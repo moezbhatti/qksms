@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui;
 
-import android.app.ActivityManager.TaskDescription;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -9,9 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
@@ -29,23 +25,25 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.QKRateSnack;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.receiver.IconColorReceiver;
 import com.moez.QKSMS.service.DeleteOldMessagesService;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
+import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
 import com.moez.QKSMS.ui.dialog.QKDialog;
-import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.search.SearchActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 import org.ligi.snackengage.SnackEngage;
 import org.ligi.snackengage.snacks.BaseSnack;
@@ -151,7 +149,7 @@ public class MainActivity extends QKActivity {
     }
 
     private void launchWelcomeActivity() {
-        if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
+        if (QKPreferences.getBoolean(QKPreference.WELCOME_SEEN)) {
             // User has already seen the welcome screen
             return;
         }
@@ -291,9 +289,9 @@ public class MainActivity extends QKActivity {
 
     private void beginMmsSetup() {
         if (!mPrefs.getBoolean(MMS_SETUP_DONT_ASK_AGAIN, false) &&
-                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMSC_URL, "")) &&
-                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PROXY, "")) &&
-                TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
+                TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMSC)) &&
+                TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PROXY)) &&
+                TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PORT))) {
 
             // Launch the MMS setup fragment here. This is a series of dialogs that will guide the
             // user through the MMS setup process.
@@ -337,7 +335,7 @@ public class MainActivity extends QKActivity {
     public static void confirmDeleteThreadDialog(final DeleteThreadListener listener, Collection<Long> threadIds,
                                                  boolean hasLockedMessages, Context context) {
         View contents = View.inflate(context, R.layout.dialog_delete_thread, null);
-        android.widget.TextView msg = (android.widget.TextView) contents.findViewById(R.id.message);
+        QKTextView msg = (QKTextView) contents.findViewById(R.id.message);
 
         if (threadIds == null) {
             msg.setText(R.string.confirm_delete_all_conversations);
@@ -353,12 +351,7 @@ public class MainActivity extends QKActivity {
             checkbox.setVisibility(View.GONE);
         } else {
             listener.setDeleteLockedMessage(checkbox.isChecked());
-            checkbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.setDeleteLockedMessage(checkbox.isChecked());
-                }
-            });
+            checkbox.setOnClickListener(v -> listener.setDeleteLockedMessage(checkbox.isChecked()));
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

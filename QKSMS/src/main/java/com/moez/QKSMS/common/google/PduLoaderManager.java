@@ -26,8 +26,8 @@ import com.google.android.mms.pdu_alt.MultimediaMessagePdu;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.util_alt.PduCache;
 import com.google.android.mms.util_alt.PduCacheEntry;
-import com.moez.QKSMS.LogTag;
-import com.moez.QKSMS.model.SlideshowModel;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.mmssms.model.SlideshowModel;
 
 import java.util.Set;
 
@@ -193,31 +193,28 @@ public class PduLoaderManager extends BackgroundLoaderManager {
             final GenericPdu resultPdu = pdu;
             final SlideshowModel resultSlideshow = slideshow;
             final Throwable resultException = exception;
-            mCallbackHandler.post(new Runnable() {
-                public void run() {
-                    final Set<ItemLoadedCallback> callbacks = mCallbacks.get(mUri);
-                    if (callbacks != null) {
-                        // Make a copy so that the callback can unregister itself
-                        for (final ItemLoadedCallback<PduLoaded> callback : asList(callbacks)) {
-                            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                                Log.d(TAG, "Invoking pdu callback " + callback);
-                            }
-                            PduLoaded pduLoaded = new PduLoaded(resultPdu, resultSlideshow);
-                            callback.onItemLoaded(pduLoaded, resultException);
+            mCallbackHandler.post(() -> {
+                final Set<ItemLoadedCallback> callbacks = mCallbacks.get(mUri);
+                if (callbacks != null) {
+                    // Make a copy so that the callback can unregister itself
+                    for (final ItemLoadedCallback<PduLoaded> callback : asList(callbacks)) {
+                        if (Log.isLoggable(TAG, Log.DEBUG)) {
+                            Log.d(TAG, "Invoking pdu callback " + callback);
                         }
+                        PduLoaded pduLoaded = new PduLoaded(resultPdu, resultSlideshow);
+                        callback.onItemLoaded(pduLoaded, resultException);
                     }
-                    // Add the slideshow to the soft cache if the load succeeded
-                    if (resultSlideshow != null) {
-                        mSlideshowCache.put(mUri, resultSlideshow);
-                    }
+                }
+                // Add the slideshow to the soft cache if the load succeeded
+                if (resultSlideshow != null) {
+                    mSlideshowCache.put(mUri, resultSlideshow);
+                }
 
-                    mCallbacks.remove(mUri);
-                    mPendingTaskUris.remove(mUri);
+                mCallbacks.remove(mUri);
+                mPendingTaskUris.remove(mUri);
 
-                    if (Log.isLoggable(LogTag.PDU_CACHE, Log.DEBUG)) {
-                        Log.d(TAG, "Pdu task for " + mUri + "exiting; " + mPendingTaskUris.size()
-                                + " remain");
-                    }
+                if (Log.isLoggable(LogTag.PDU_CACHE, Log.DEBUG)) {
+                    Log.d(TAG, "Pdu task for " + mUri + "exiting; " + mPendingTaskUris.size() + " remain");
                 }
             });
         }

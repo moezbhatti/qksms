@@ -18,6 +18,7 @@
 package com.moez.QKSMS;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.drm.DrmManagerClient;
@@ -25,7 +26,6 @@ import android.location.Country;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.SearchRecentSuggestions;
-import android.support.multidex.MultiDexApplication;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import com.android.mms.transaction.MmsSystemEventReceiver;
@@ -36,21 +36,23 @@ import com.android.volley.toolbox.Volley;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.google.PduLoaderManager;
 import com.moez.QKSMS.common.google.ThumbnailManager;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.ui.mms.layout.LayoutManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Locale;
 
-public class QKSMSAppBase extends MultiDexApplication {
+public class QKSMSAppBase extends Application {
     public static final String LOG_TAG = "Mms";
 
     public static final int LOADER_CONVERSATIONS = 0;
@@ -96,6 +98,7 @@ public class QKSMSAppBase extends MultiDexApplication {
 
         registerActivityLifecycleCallbacks(new LifecycleHandler());
 
+        QKPreferences.init(this);
         ThemeManager.init(this);
         MmsConfig.init(this);
         Contact.init(this);
@@ -106,7 +109,6 @@ public class QKSMSAppBase extends MultiDexApplication {
         LayoutManager.init(this);
         NotificationManager.init(this);
         LiveViewManager.init(this);
-        QKPreferences.init(this);
 
         activePendingMessages();
     }

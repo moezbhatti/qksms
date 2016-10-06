@@ -1,7 +1,6 @@
 package com.moez.QKSMS.ui.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.MultiAutoCompleteTextView;
@@ -9,10 +8,10 @@ import com.android.ex.chips.BaseRecipientAdapter;
 import com.android.ex.chips.RecipientEditTextView;
 import com.moez.QKSMS.common.FontManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 public class AutoCompleteContactView extends RecipientEditTextView {
     public static final String TAG = "AutoCompleteContactView";
@@ -53,7 +52,7 @@ public class AutoCompleteContactView extends RecipientEditTextView {
         });
 
         LiveViewManager.registerView(QKPreference.FONT_SIZE, this, key -> {
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(mContext, FontManager.TEXT_TYPE_PRIMARY));
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, FontManager.getTextSize(FontManager.TEXT_TYPE_PRIMARY));
         });
 
         LiveViewManager.registerView(QKPreference.BACKGROUND, this, key -> {
@@ -63,8 +62,7 @@ public class AutoCompleteContactView extends RecipientEditTextView {
 
         LiveViewManager.registerView(QKPreference.MOBILE_ONLY, this, key -> {
             if (mAdapter != null) {
-                SharedPreferences prefs1 = mContext.getPrefs();
-                mAdapter.setShowMobileOnly(prefs1.getBoolean(SettingsFragment.MOBILE_ONLY, false));
+                mAdapter.setShowMobileOnly(QKPreferences.getBoolean(QKPreference.MOBILE_ONLY));
             }
         });
     }

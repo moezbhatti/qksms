@@ -1,17 +1,19 @@
 package com.moez.QKSMS.ui.conversationlist;
 
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
+import butterknife.Bind;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.ui.base.ClickyViewHolder;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -20,31 +22,17 @@ import com.moez.QKSMS.ui.view.QKTextView;
 
 public class ConversationListViewHolder extends ClickyViewHolder<Conversation> implements Contact.UpdateListener {
 
-    private final SharedPreferences mPrefs;
-
-    protected View root;
-    protected QKTextView snippetView;
-    protected QKTextView fromView;
-    protected QKTextView dateView;
-    protected ImageView mutedView;
-    protected ImageView unreadView;
-    protected ImageView errorIndicator;
-    protected AvatarView mAvatarView;
-    protected ImageView mSelected;
+    @Bind(R.id.conversation_list_snippet) protected QKTextView mSnippet;
+    @Bind(R.id.conversation_list_name) protected QKTextView mName;
+    @Bind(R.id.conversation_list_date) protected QKTextView mDate;
+    @Bind(R.id.conversation_list_muted) protected ImageView mMuted;
+    @Bind(R.id.conversation_list_unread) protected ImageView mUnread;
+    @Bind(R.id.conversation_list_error) protected ImageView mError;
+    @Bind(R.id.conversation_list_avatar) protected AvatarView mAvatar;
+    @Bind(R.id.conversation_list_selected) protected ImageView mSelected;
 
     public ConversationListViewHolder(QKActivity context, View view) {
         super(context, view);
-        mPrefs = mContext.getPrefs();
-
-        root = view;
-        fromView = (QKTextView) view.findViewById(R.id.conversation_list_name);
-        snippetView = (QKTextView) view.findViewById(R.id.conversation_list_snippet);
-        dateView = (QKTextView) view.findViewById(R.id.conversation_list_date);
-        mutedView = (ImageView) view.findViewById(R.id.conversation_list_muted);
-        unreadView = (ImageView) view.findViewById(R.id.conversation_list_unread);
-        errorIndicator = (ImageView) view.findViewById(R.id.conversation_list_error);
-        mAvatarView = (AvatarView) view.findViewById(R.id.conversation_list_avatar);
-        mSelected = (ImageView) view.findViewById(R.id.selected);
     }
 
     @Override
@@ -60,9 +48,9 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
                 name = contact.getName();
 
                 if (contact.existsInDatabase()) {
-                    mAvatarView.assignContactUri(contact.getUri());
+                    mAvatar.assignContactUri(contact.getUri());
                 } else {
-                    mAvatarView.assignContactFromPhone(contact.getNumber(), true);
+                    mAvatar.assignContactFromPhone(contact.getNumber(), true);
                 }
             } else {
                 // onUpdate was called because *some* contact was loaded, but it wasn't the contact for this
@@ -74,20 +62,20 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
         } else if (mData.getRecipients().size() > 1) {
             drawable = null;
             name = "" + mData.getRecipients().size();
-            mAvatarView.assignContactUri(null);
+            mAvatar.assignContactUri(null);
         } else {
             drawable = null;
             name = "#";
-            mAvatarView.assignContactUri(null);
+            mAvatar.assignContactUri(null);
         }
 
         final ConversationLegacy conversationLegacy = new ConversationLegacy(mContext, mData.getThreadId());
 
         if (shouldUpdate) {
             mContext.runOnUiThread(() -> {
-                mAvatarView.setImageDrawable(drawable);
-                mAvatarView.setContactName(name);
-                fromView.setText(formatMessage(mData, conversationLegacy));
+                mAvatar.setImageDrawable(drawable);
+                mAvatar.setContactName(name);
+                mName.setText(formatMessage(mData, conversationLegacy));
             });
         }
     }
@@ -97,7 +85,7 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
 
         SpannableStringBuilder buf = new SpannableStringBuilder(from);
 
-        if (conversation.getMessageCount() > 1 && mPrefs.getBoolean(SettingsFragment.MESSAGE_COUNT, false)) {
+        if (conversation.getMessageCount() > 1 && QKPreferences.getBoolean(QKPreference.MESSAGE_COUNT)) {
             int before = buf.length();
             buf.append(mContext.getResources().getString(R.string.message_count_format, conversation.getMessageCount()));
             buf.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.grey_light)), before, buf.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);

@@ -7,32 +7,24 @@ import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
 
 public class SettingsActivity extends QKSwipeBackActivity {
 
-    private SettingsFragment mSettingsFragment;
+    public static final String ARG_SETTINGS_PAGE = "settings_page";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         FragmentManager fm = getFragmentManager();
-        mSettingsFragment = (SettingsFragment) fm.findFragmentByTag(SettingsFragment.TAG);
-        if (mSettingsFragment == null) {
-            mSettingsFragment = SettingsFragment.newInstance(R.xml.settings_main);
+        SettingsFragment settingsFragment = (SettingsFragment) fm.findFragmentByTag(SettingsFragment.TAG);
+        if (settingsFragment == null) {
+            int page = getIntent().getIntExtra(ARG_SETTINGS_PAGE, R.xml.settings_main);
+            settingsFragment = SettingsFragment.newInstance(page);
             fm.beginTransaction()
-                    .replace(R.id.content_frame, mSettingsFragment, SettingsFragment.TAG)
+                    .replace(R.id.content_frame, settingsFragment, SettingsFragment.TAG)
                     .commit();
         } else {
             fm.beginTransaction()
-                    .show(mSettingsFragment)
+                    .show(settingsFragment)
                     .commit();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
         }
     }
 }

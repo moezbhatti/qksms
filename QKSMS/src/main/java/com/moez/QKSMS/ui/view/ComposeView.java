@@ -30,7 +30,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
@@ -40,27 +39,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.github.lzyzsd.circleprogress.DonutProgress;
-import com.moez.QKSMS.common.LiveViewManager;
-import com.moez.QKSMS.enums.QKPreference;
-import com.moez.QKSMS.mmssms.Transaction;
-import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
-import com.moez.QKSMS.data.Conversation;
-import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.interfaces.ActivityLauncher;
-import com.moez.QKSMS.interfaces.RecipientProvider;
+import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.MessagingHelper;
+import com.moez.QKSMS.common.NotificationManager;
+import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.utils.ImageUtils;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
-import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.data.Conversation;
+import com.moez.QKSMS.data.ConversationLegacy;
+import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.interfaces.ActivityLauncher;
+import com.moez.QKSMS.interfaces.RecipientProvider;
+import com.moez.QKSMS.mmssms.Utils;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
+import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
 import com.moez.QKSMS.ui.dialog.QKDialog;
-import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -144,9 +142,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mPrefs = mContext.getPrefs();
         mRes = mContext.getResources();
 
-        mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
+        mDelayedMessagingEnabled = QKPreferences.getBoolean(QKPreference.DELAYED_MESSAGING);
         try {
-            mDelayDuration = Integer.parseInt(mPrefs.getString(SettingsFragment.DELAY_DURATION, "3"));
+            mDelayDuration = Integer.parseInt(QKPreferences.getString(QKPreference.DELAYED_DURATION));
             if (mDelayDuration < 1) {
                 mDelayDuration = 1;
             } else if (mDelayDuration > 30) {
@@ -202,7 +200,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
         // There is an option for using the return button instead of the emoticon button in the
         // keyboard; set that up here.
-        switch (Integer.parseInt(mPrefs.getString(SettingsFragment.ENTER_BUTTON, "0"))) {
+        switch (Integer.parseInt(QKPreferences.getString(QKPreference.ENTER_BUTTON))) {
             case 0: // emoji
                 break;
             case 1: // new line
@@ -216,34 +214,29 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 mReplyText.setInputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 mReplyText.setSingleLine(false);
-                mReplyText.setOnKeyListener(new OnKeyListener() { //Workaround because ACTION_SEND does not support multiline mode
-                    @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if (keyCode == 66) {
-                            sendSms();
-                            return true;
-                        }
-                        return false;
-                    }});
+                mReplyText.setOnKeyListener((v, keyCode, event) -> {
+                    if (keyCode == 66) {
+                        sendSms();
+                        return true;
+                    }
+                    return false;
+                });
                 break;
         }
 
-        mReplyText.setTextChangedListener(new QKEditText.TextChangedListener() {
-            @Override
-            public void onTextChanged(CharSequence s) {
-                int length = s.length();
+        mReplyText.setTextChangedListener(s -> {
+            int length = s.length();
 
-                updateButtonState(length);
+            updateButtonState(length);
 
-                // If the reply is within 10 characters of the SMS limit (160), it will start counting down
-                // If the reply exceeds the SMS limit, it will count down until an extra message will have to be sent, and shows how many messages will currently be sent
-                if (length < 150) {
-                    mLetterCount.setText("");
-                } else if (150 <= length && length <= 160) {
-                    mLetterCount.setText("" + (160 - length));
-                } else if (160 < length) {
-                    mLetterCount.setText((160 - length % 160) + "/" + (length / 160 + 1));
-                }
+            // If the reply is within 10 characters of the SMS limit (160), it will start counting down
+            // If the reply exceeds the SMS limit, it will count down until an extra message will have to be sent, and shows how many messages will currently be sent
+            if (length < 150) {
+                mLetterCount.setText("");
+            } else if (150 <= length && length <= 160) {
+                mLetterCount.setText("" + (160 - length));
+            } else if (160 < length) {
+                mLetterCount.setText((160 - length % 160) + "/" + (length / 160 + 1));
             }
         });
 
@@ -251,12 +244,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mProgressAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mProgressAnimator.setDuration(mDelayDuration);
         mProgressAnimator.setIntValues(0, 360);
-        mProgressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mProgress.setProgress((int) animation.getAnimatedValue());
-            }
-        });
+        mProgressAnimator.addUpdateListener(animation -> mProgress.setProgress((int) animation.getAnimatedValue()));
         mProgressAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -267,7 +255,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 if (!mSendingCancelled) {
                     sendSms();
                     // In case they only enabled it for a particular message, let's set it back to the pref value
-                    mDelayedMessagingEnabled = mPrefs.getBoolean(SettingsFragment.DELAYED, false);
+                    mDelayedMessagingEnabled = QKPreferences.getBoolean(QKPreference.DELAYED_MESSAGING);
                     updateDelayButton();
                 } else {
                     mSendingCancelled = false;
@@ -451,27 +439,17 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                     mLabel
             );
 
-            Transaction sendTransaction = new Transaction(mContext, SmsHelper.getSendSettings(mContext));
-
-            com.moez.QKSMS.mmssms.Message message = new com.moez.QKSMS.mmssms.Message(body, recipients);
-            message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
-            if (attachment != null) {
-                message.setImage(ImageUtils.drawableToBitmap(attachment));
-            }
-
             // Notify the listener about the new text message
             if (mOnSendListener != null) {
-                mOnSendListener.onSend(recipients, message.getSubject());
+                mOnSendListener.onSend(recipients, body);
             }
 
-            long threadId = mConversation != null ? mConversation.getThreadId() : 0;
-            if (!message.toString().equals("")) {
-                sendTransaction.sendNewMessage(message, threadId);
-            }
+            Bitmap bitmap = attachment == null ? null : ImageUtils.drawableToBitmap(attachment);
+            MessagingHelper.sendMessage(mContext, recipients, body, bitmap);
             NotificationManager.update(mContext);
 
             if (mConversationLegacy != null) {
-                mConversationLegacy.markRead();
+                MessagingHelper.markConversationRead(mContext, mConversationLegacy.getThreadId());
             }
 
             // Reset the image button state
@@ -536,18 +514,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 .setContext(mContext)
                 .setTitle(R.string.pref_delayed)
                 .setMessage(R.string.delayed_messaging_info)
-                .setNegativeButton(R.string.just_once, new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        toggleDelayedMessaging();
-                    }
-                })
-                .setPositiveButton(R.string.enable, new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPrefs.edit().putBoolean(SettingsFragment.DELAYED, true).apply();
-                        toggleDelayedMessaging();
-                    }
+                .setNegativeButton(R.string.just_once, v -> toggleDelayedMessaging())
+                .setPositiveButton(R.string.enable, v -> {
+                    QKPreferences.putBoolean(QKPreference.DELAYED_MESSAGING, true);
+                    toggleDelayedMessaging();
                 })
                 .show();
         mPrefs.edit().putBoolean(KEY_DELAYED_INFO_DIALOG_SHOWN, true).apply(); //This should be changed, the dialog should be shown each time when delayed messaging is disabled.
@@ -610,9 +580,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
     }
 
     private boolean hasSetupMms() {
-        if (TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMSC_URL, ""))
-                && TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PROXY, ""))
-                && TextUtils.isEmpty(mPrefs.getString(SettingsFragment.MMS_PORT, ""))) {
+        if (TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMSC))
+                && TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PROXY))
+                && TextUtils.isEmpty(QKPreferences.getString(QKPreference.MMS_PORT))) {
 
             // Not so fast! You need to set up MMS first.
             MMSSetupFragment f = new MMSSetupFragment();
@@ -620,7 +590,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             args.putBoolean(MMSSetupFragment.ARG_ASK_FIRST, true);
             f.setArguments(args);
 
-            ((Activity) mContext).getFragmentManager()
+            mContext.getFragmentManager()
                     .beginTransaction()
                     .add(f, MMSSetupFragment.TAG)
                     .commit();
@@ -919,7 +889,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
             long maxAttachmentSize =
-                    SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+                    SmsHelper.getSendSettings().getMaxAttachmentSize();
             bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
 
             // Now, rotation the bitmap according to the Exif data.
@@ -986,7 +956,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
                 long maxAttachmentSize =
-                        SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+                        SmsHelper.getSendSettings().getMaxAttachmentSize();
                 bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
 
                 // Now, rotation the bitmap according to the Exif data.
@@ -1008,16 +978,11 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             } catch (FileNotFoundException | NullPointerException e) {
                 // Make a toast to the user that the file they've requested to view
                 // isn't available.
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(
-                                mContext,
-                                mRes.getString(R.string.error_file_not_found),
-                                Toast.LENGTH_SHORT
-                        ).show();
-                    }
-                });
+                mHandler.post(() -> Toast.makeText(
+                        mContext,
+                        mRes.getString(R.string.error_file_not_found),
+                        Toast.LENGTH_SHORT
+                ).show());
             }
             return null;
         }

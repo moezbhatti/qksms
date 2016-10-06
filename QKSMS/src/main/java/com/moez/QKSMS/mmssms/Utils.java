@@ -32,8 +32,7 @@ import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.google.android.mms.util_alt.SqliteWrapper;
+import com.moez.QKSMS.common.SqliteWrapper;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

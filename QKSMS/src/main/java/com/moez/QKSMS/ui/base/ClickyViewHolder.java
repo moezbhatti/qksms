@@ -2,6 +2,7 @@ package com.moez.QKSMS.ui.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import butterknife.ButterKnife;
 
 public abstract class ClickyViewHolder<DataType> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
@@ -9,8 +10,9 @@ public abstract class ClickyViewHolder<DataType> extends RecyclerView.ViewHolder
     public DataType mData;
     public QKActivity mContext;
 
-    public ClickyViewHolder(QKActivity context, View itemView) {
-        super(itemView);
+    public ClickyViewHolder(QKActivity context, View view) {
+        super(view);
+        ButterKnife.bind(this, view);
         mContext = context;
     }
 

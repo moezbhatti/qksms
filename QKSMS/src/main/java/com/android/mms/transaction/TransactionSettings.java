@@ -22,7 +22,7 @@ import android.content.Context;
 import android.net.NetworkUtils;
 import android.text.TextUtils;
 import android.util.Log;
-import com.moez.QKSMS.MmsConfig;
+import com.moez.QKSMS.common.MmsConfig;
 import com.moez.QKSMS.mmssms.Transaction;
 import com.moez.QKSMS.mmssms.Utils;
 

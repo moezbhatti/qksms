@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SqliteWrapper;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -21,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.provider.Telephony;
-import android.support.annotation.IntegerRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -38,15 +36,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 import com.google.android.mms.ContentType;
-import com.moez.QKSMS.LogTag;
-import com.moez.QKSMS.MmsConfig;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.CIELChEvaluator;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.LogTag;
+import com.moez.QKSMS.common.MessagingHelper;
+import com.moez.QKSMS.common.MmsConfig;
+import com.moez.QKSMS.common.NotificationManager;
 import com.moez.QKSMS.common.QKPreferences;
+import com.moez.QKSMS.common.SmsHelper;
+import com.moez.QKSMS.common.SqliteWrapper;
+import com.moez.QKSMS.common.ThemeManager;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.common.utils.MessageUtils;
 import com.moez.QKSMS.common.vcard.ContactOperations;
@@ -54,26 +57,18 @@ import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.ContactList;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.ConversationLegacy;
-import com.moez.QKSMS.data.Message;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
-import com.moez.QKSMS.transaction.NotificationManager;
-import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.MainActivity;
-import com.moez.QKSMS.ui.SwipeBackLayout;
-import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.base.RecyclerCursorAdapter;
-import com.moez.QKSMS.ui.delivery.DeliveryReportHelper;
-import com.moez.QKSMS.ui.delivery.DeliveryReportItem;
 import com.moez.QKSMS.ui.dialog.AsyncDialog;
-import com.moez.QKSMS.ui.dialog.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
-import com.moez.QKSMS.ui.dialog.conversationdetails.ConversationDetailsDialog;
-import com.moez.QKSMS.ui.settings.SettingsFragment;
+import com.moez.QKSMS.ui.settings.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.view.ComposeView;
 import com.moez.QKSMS.ui.view.MessageListRecyclerView;
 import com.moez.QKSMS.ui.view.SmoothLinearLayoutManager;
+import com.moez.QKSMS.ui.view.SwipeBackLayout;
 import com.moez.QKSMS.ui.widget.WidgetProvider;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
@@ -81,8 +76,6 @@ import ezvcard.VCard;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import static android.R.attr.data;
 
 public class MessageListFragment extends QKFragment implements ActivityLauncher, SensorEventListener,
         LoaderManager.LoaderCallbacks<Cursor>, RecyclerCursorAdapter.MultiSelectListener, SwipeBackLayout.ScrollChangedListener,
@@ -310,11 +303,8 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
                                 .setTitle(R.string.warning)
                                 .setMessage(R.string.stagefright_warning)
                                 .setNegativeButton(R.string.cancel, null)
-                                .setPositiveButton(R.string.yes, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        MessageUtils.viewMmsMessageAttachment(getActivity(), messageItem.mMessageUri, messageItem.mSlideshow, getAsyncDialog());
-                                    }
+                                .setPositiveButton(R.string.yes, view1 -> {
+                                    MessageUtils.viewMmsMessageAttachment(getActivity(), messageItem.mMessageUri, messageItem.mSlideshow, getAsyncDialog());
                                 })
                                 .show();
                         break;
@@ -470,7 +460,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
 
             case R.id.menu_notifications:
                 boolean notificationMuted = mConversationPrefs.getNotificationsEnabled();
-                mConversationPrefs.putBoolean(SettingsFragment.NOTIFICATIONS, !notificationMuted);
+                mConversationPrefs.putBoolean(QKPreference.NOTIFICATIONS, !notificationMuted);
                 mContext.invalidateOptionsMenu();
                 vibrateOnConversationStateChanged(notificationMuted);
                 return true;
@@ -594,7 +584,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
         }
 
         if (mConversationLegacy != null) {
-            mConversationLegacy.markRead();
+            MessagingHelper.markConversationRead(mContext, mConversationLegacy.getThreadId());
         }
 
         if (mConversation != null) {
@@ -632,7 +622,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (id == QKSMSApp.LOADER_MESSAGES) {
             return new CursorLoader(mContext,
-                    Uri.withAppendedPath(Message.MMS_SMS_CONTENT_PROVIDER, String.valueOf(mThreadId)),
+                    Uri.withAppendedPath(SmsHelper.MMS_SMS_CONTENT_PROVIDER, String.valueOf(mThreadId)),
                     MessageColumns.PROJECTION, null, null, "normalized_date ASC");
         } else {
             return null;
@@ -995,7 +985,7 @@ public class MessageListFragment extends QKFragment implements ActivityLauncher,
             mConversation = Conversation.get(mContext, mThreadId, true);
             mConversationLegacy = new ConversationLegacy(mContext, mThreadId);
 
-            mConversationLegacy.markRead();
+            MessagingHelper.markConversationRead(mContext, mConversationLegacy.getThreadId());
             mConversation.blockMarkAsRead(true);
             mConversation.markAsRead();
 

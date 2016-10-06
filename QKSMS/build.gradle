@@ -33,9 +33,8 @@ android {
     defaultConfig {
         versionCode 135
         versionName "2.7.3"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 22
-        multiDexEnabled true
     }
 
     buildTypes {
@@ -82,10 +81,11 @@ buildscript {
 String leakCanaryVersion = '1.4-beta2'
 
 dependencies {
+    compile files('libs/yappysdk.jar')
+
     // Open source libraries
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
-    compile 'com.pushbullet:android-extensions:1.0.4'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.klinkerapps:android-chips:1.0.0'
     compile 'com.googlecode.libphonenumber:libphonenumber:6.2'
@@ -101,9 +101,11 @@ dependencies {
     compile 'org.ligi:snackengage:0.4'
     compile 'frankiesardo:icepick:3.2.0'
     provided 'frankiesardo:icepick-processor:3.2.0'
+    compile 'com.anjlab.android.iab.v3:library:1.0.32'
+    compile 'io.reactivex:rxjava:1.2.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
 
     // Google libraries
-    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:support-v13:22.2.1'
     compile 'com.android.support:recyclerview-v7:22.2.1'

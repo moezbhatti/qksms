@@ -27,8 +27,8 @@ import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ImageUtils;
-import com.moez.QKSMS.common.utils.Units;
-import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.common.utils.UnitUtils;
+import com.moez.QKSMS.common.ThemeManager;
 
 public class AvatarView extends ImageView implements View.OnClickListener {
     private final String TAG = "AvatarView";
@@ -74,7 +74,7 @@ public class AvatarView extends ImageView implements View.OnClickListener {
         if (!isInEditMode()) {
             mQueryHandler = new QueryHandler(context.getContentResolver());
             mPaint = new Paint();
-            mPaint.setTextSize(Units.dpToPx(context, 32));
+            mPaint.setTextSize(UnitUtils.dpToPx(context, 32));
             mPaint.setTextAlign(Paint.Align.CENTER);
             mPaint.setAntiAlias(true);
             mPaint.setTypeface(TypefaceManager.obtainTypeface(getContext(), TypefaceManager.Typefaces.ROBOTO_LIGHT));
