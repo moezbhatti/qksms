@@ -1,7 +1,6 @@
 package com.moez.QKSMS.ui.settings;
 
 import android.app.AlarmManager;
-import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -102,7 +101,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         SettingsFragment fragment = new SettingsFragment();
 
         Bundle args = new Bundle();
-        args.putInt("category", category);
+        args.putInt(SettingsActivity.ARG_SETTINGS_PAGE, category);
         fragment.setArguments(args);
 
         return fragment;
@@ -117,10 +116,43 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         mContext = (QKActivity) getActivity();
         Resources res = mContext.getResources();
 
-        mContext.setTitle(R.string.title_settings);
-
-        mResource = args.getInt("category", R.xml.settings);
+        mResource = args.getInt(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings);
         addPreferencesFromResource(mResource);
+
+        mContext.setTitle(R.string.title_settings);
+        switch (mResource) {
+            case R.xml.settings_main:
+                mContext.setTitle(R.string.title_settings);
+                break;
+
+            case R.xml.settings_appearance:
+                mContext.setTitle(R.string.pref_category_appearance);
+                break;
+
+            case R.xml.settings_general:
+                mContext.setTitle(R.string.pref_category_general);
+                break;
+
+            case R.xml.settings_notifications:
+                mContext.setTitle(R.string.pref_category_notifications);
+                break;
+
+            case R.xml.settings_mms:
+                mContext.setTitle(R.string.pref_category_mms);
+                break;
+
+            case R.xml.settings_quickreply:
+                mContext.setTitle(R.string.pref_category_quickreply);
+                break;
+
+            case R.xml.settings_quickcompose:
+                mContext.setTitle(R.string.pref_category_quickcompose);
+                break;
+
+            case R.xml.settings_about:
+                mContext.setTitle(R.string.pref_category_about);
+                break;
+        }
 
         // Set `this` to be the preferences click/change listener for all the preferences.
         PreferenceScreen screen = getPreferenceScreen();
@@ -157,7 +189,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         Preference notificationLedColor = findPreference(QKPreference.NOTIFICATIONS_LED_COLOR.getKey());
         if (notificationLedColor != null) {
-
             int[] ledColors = new int[]{
                     res.getColor(R.color.blue_light), res.getColor(R.color.purple_light),
                     res.getColor(R.color.green_light), res.getColor(R.color.yellow_light),
@@ -312,7 +343,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         String key = preference.getKey();
 
         String valueString = newValue == null ? "null" : newValue.toString();
-        if (QKPreference.get(key)  == NOTIFICATIONS_LED_COLOR) {
+        if (QKPreference.get(key) == NOTIFICATIONS_LED_COLOR) {
             // Format the color as a nice string if it's the LED color.
             valueString = ThemeManager.getColorString(Integer.parseInt(valueString));
         }
@@ -455,37 +486,38 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         AnalyticsManager.getInstance().sendEvent(AnalyticsManager.CATEGORY_PREFERENCE_CLICK, key, null);
 
         // Categories
-        int resId = 0;
+        Intent intent = new Intent(mContext, SettingsActivity.class);
         switch (key) {
             case CATEGORY_APPEARANCE:
-                resId = R.xml.settings_appearance;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_appearance);
                 break;
+
             case CATEGORY_GENERAL:
-                resId = R.xml.settings_general;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_general);
                 break;
+
             case CATEGORY_NOTIFICATIONS:
-                resId = R.xml.settings_notifications;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_notifications);
                 break;
+
             case CATEGORY_MMS:
-                resId = R.xml.settings_mms;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_mms);
                 break;
+
             case CATEGORY_QUICKREPLY:
-                resId = R.xml.settings_quickreply;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_quickreply);
                 break;
+
             case CATEGORY_QUICKCOMPOSE:
-                resId = R.xml.settings_quickcompose;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_quickcompose);
                 break;
+
             case CATEGORY_ABOUT:
-                resId = R.xml.settings_about;
+                intent.putExtra(SettingsActivity.ARG_SETTINGS_PAGE, R.xml.settings_about);
                 break;
         }
-        if (resId != 0) {
-            Fragment fragment = SettingsFragment.newInstance(resId);
-            getFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.content_frame, fragment, CATEGORY_TAG)
-                    .commit();
+        if (intent.hasExtra(SettingsActivity.ARG_SETTINGS_PAGE)) {
+            startActivity(intent);
         }
 
         switch (QKPreference.get(key)) {
@@ -604,10 +636,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     private void startBrowserIntent(final String baseUrl) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl));
         startActivity(browserIntent);
-    }
-
-    public boolean isCategoryList() {
-        return mResource == R.xml.settings_main;
     }
 
     public void showQkResponseEditor() {
