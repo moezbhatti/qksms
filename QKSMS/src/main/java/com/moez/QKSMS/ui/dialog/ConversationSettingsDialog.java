@@ -7,8 +7,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.Units;
@@ -117,8 +119,7 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
 
             case SettingsFragment.NOTIFICATION_TONE:
                 Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                Uri uri = Uri.parse(mConversationPrefs.getString(SettingsFragment.NOTIFICATION_TONE, "content://settings/system/notification_sound"));
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, uri);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, getRingtoneUri());
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
@@ -131,6 +132,11 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
         }
 
         return true;
+    }
+
+    private Uri getRingtoneUri() {
+        final String uriString = mConversationPrefs.getString(SettingsFragment.NOTIFICATION_TONE, "content://settings/system/notification_sound");
+        return !TextUtils.isEmpty(uriString) ? Uri.parse(uriString) : null;
     }
 
 }
