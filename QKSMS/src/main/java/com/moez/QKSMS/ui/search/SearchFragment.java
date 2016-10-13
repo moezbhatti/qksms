@@ -1,8 +1,6 @@
 package com.moez.QKSMS.ui.search;
 
 import android.content.AsyncQueryHandler;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,60 +22,28 @@ import com.moez.QKSMS.ui.view.QKEditText;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 public class SearchFragment extends QKFragment implements RecyclerCursorAdapter.ItemClickListener<SearchData> {
     public static final String TAG = "SearchFragment";
 
     private AsyncQueryHandler mQueryHandler;
 
-    // Track which TextView's show which Contact objects so that we can update
+    // Track which TextViews show which Contact objects so that we can update
     // appropriately when the Contact gets fully loaded.
     private HashMap<Contact, QKTextView> mContactMap = new HashMap<>();
 
-    private SharedPreferences mPrefs;
-    private Resources mRes;
-    private Cursor mCursor;
     private QKEditText mQuery;
     private String mSearchString;
-    private LinearLayoutManager mLayoutManager;
-    private MessageListRecyclerView mRecyclerView;
-    private SearchAdapter mAdapter;
-    private Pattern mPattern;
-
-    public SearchFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPrefs = mContext.getPrefs();
-        mRes = mContext.getResources();
-
-        // When the query completes cons up a new adapter and set our list adapter to that.
-        mQueryHandler = new AsyncQueryHandler(mContext.getContentResolver()) {
-            protected void onQueryComplete(int token, Object cookie, Cursor c) {
-
-                mAdapter.changeCursor(c);
-                mAdapter.setQuery(mSearchString);
-            }
-        };
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         mQuery = (QKEditText) view.findViewById(R.id.search_query);
-        mQuery.setTextChangedListener(s -> {
-            mSearchString = s.toString();
-            query();
-        });
+        mQuery.setTextChangedListener(s -> query(s.toString()));
         mQuery.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                mSearchString = mQuery.getText().toString();
-                query();
+                query(mQuery.getText().toString());
 
                 // Hide the keyboard when the user makes a query
                 mQuery.clearFocus();
@@ -87,26 +53,33 @@ public class SearchFragment extends QKFragment implements RecyclerCursorAdapter.
             return false;
         });
 
-        mLayoutManager = new LinearLayoutManager(mContext);
-        mAdapter = new SearchAdapter(mContext);
-        mAdapter.setItemClickListener(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        SearchAdapter adapter = new SearchAdapter(mContext);
+        adapter.setItemClickListener(this);
 
+        // When the query completes cons up a new adapter and set our list adapter to that.
+        mQueryHandler = new AsyncQueryHandler(mContext.getContentResolver()) {
+            protected void onQueryComplete(int token, Object cookie, Cursor c) {
+                adapter.changeCursor(c);
+                adapter.setQuery(mSearchString);
+            }
+        };
 
-        mRecyclerView = (MessageListRecyclerView) view.findViewById(R.id.search_list);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        MessageListRecyclerView recyclerView = (MessageListRecyclerView) view.findViewById(R.id.search_list);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         new Handler().postDelayed(() -> KeyboardUtils.showAndFocus(mContext, mQuery), 50);
         return view;
     }
 
-    private void query() {
-        Contact.addListener(mContactListener);
+    private void query(String searchString) {
+        mSearchString = searchString;
 
-        // don't pass a projection since the search uri ignores it
-        Uri uri = Telephony.MmsSms.SEARCH_URI.buildUpon().appendQueryParameter("pattern", mSearchString).build();
+        // Don't pass a projection since the search uri ignores it
+        Uri uri = Telephony.MmsSms.SEARCH_URI.buildUpon().appendQueryParameter("pattern", searchString).build();
 
-        // kick off a query for the threads which match the search string
+        // Kick off a query for the threads which match the search string
         mQueryHandler.startQuery(0, null, uri, null, null, null, null);
     }
 
@@ -117,6 +90,12 @@ public class SearchFragment extends QKFragment implements RecyclerCursorAdapter.
             tv.setText(updated.getNameAndNumber());
         }
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Contact.addListener(mContactListener);
+    }
 
     @Override
     public void onStop() {
