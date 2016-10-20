@@ -10,6 +10,8 @@ import android.provider.Telephony;
 import android.telephony.PhoneNumberUtils;
 import android.widget.Toast;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.CursorObservable;
+import com.moez.QKSMS.common.MessagingHelper;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.SqliteWrapper;
 import com.moez.QKSMS.common.google.DraftCache;
@@ -132,26 +134,17 @@ public class ConversationLegacy {
     }
 
     public void clearDrafts() {
-        if (hasDraft()) {
-            try {
-                DraftCache.getInstance().setSavingDraft(true);
-                DraftCache.getInstance().setDraftState(threadId, false);
-
-                cursor = context.getContentResolver().query(SmsHelper.DRAFTS_CONTENT_PROVIDER, null, Telephony.Sms.THREAD_ID + "=" + threadId, null, null);
-                if (cursor.moveToFirst()) {
-                    do {
-                        context.getContentResolver().delete(Uri.parse("content://sms/" + cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID))), null, null);
-                    } while (cursor.moveToNext());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
-                DraftCache.getInstance().setSavingDraft(false);
-            }
+        if (!hasDraft()) {
+            return;
         }
+
+        DraftCache.getInstance().setSavingDraft(true);
+        DraftCache.getInstance().setDraftState(threadId, false);
+
+        new CursorObservable(context, SmsHelper.DRAFTS_CONTENT_PROVIDER, null, Telephony.Sms.THREAD_ID + "=" + threadId, null, null)
+                .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID)))
+                .doOnCompleted(() -> DraftCache.getInstance().setSavingDraft(false))
+                .subscribe(id -> MessagingHelper.deleteMessage(context, id));
     }
 
     public void saveDraft(final String draft) {
