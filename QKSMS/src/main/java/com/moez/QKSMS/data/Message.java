@@ -2,7 +2,6 @@ package com.moez.QKSMS.data;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.Telephony;
 import com.moez.QKSMS.common.SmsHelper;
@@ -21,9 +20,6 @@ public class Message {
     private long threadId;
     private String body;
     private String address;
-    private String name;
-    private long contactId;
-    private Bitmap photoBitmap;
 
     public Message(Context context, long id) {
         this.context = context;
@@ -62,23 +58,6 @@ public class Message {
         return threadId;
     }
 
-    public boolean isMms() {
-        boolean isMms = false;
-        Cursor cursor = null;
-        try {
-            cursor = context.getContentResolver().query(SmsHelper.MMS_SMS_CONTENT_PROVIDER, new String[]{Telephony.Mms.CONTENT_TYPE}, "_id=" + id, null, null);
-            cursor.moveToFirst();
-            isMms = "application/vnd.wap.multipart.related".equals(cursor.getString(cursor.getColumnIndex(Telephony.Mms.CONTENT_TYPE)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return isMms;
-    }
-
     public String getAddress() {
         Cursor cursor = null;
         if (address == null) {
@@ -95,11 +74,6 @@ public class Message {
             }
         }
         return address;
-    }
-
-    public String getName() {
-        if (name == null) name = ContactHelper.getName(context, getAddress());
-        return name;
     }
 
     public String getBody() {
@@ -121,14 +95,4 @@ public class Message {
         return body;
     }
 
-    public long getContactId() {
-        if (contactId == 0) contactId = ContactHelper.getId(context, getAddress());
-        return contactId;
-    }
-
-    public Bitmap getPhotoBitmap() {
-        if (photoBitmap == null)
-            photoBitmap = ContactHelper.getBitmap(context, getContactId());
-        return photoBitmap;
-    }
 }
