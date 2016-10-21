@@ -5,11 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import rx.Observable;
 
-public class CursorObservable extends Observable<Cursor> {
-
-    private CursorObservable() {
-        super(null);
-    }
+public abstract class CursorObservable {
 
     public static Observable<Cursor> from(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         return Observable.create(subscriber -> {
