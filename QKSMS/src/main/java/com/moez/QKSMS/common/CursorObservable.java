@@ -7,8 +7,12 @@ import rx.Observable;
 
 public class CursorObservable extends Observable<Cursor> {
 
-    public CursorObservable(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        super(subscriber -> {
+    private CursorObservable() {
+        super(null);
+    }
+
+    public static Observable<Cursor> from(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        return Observable.create(subscriber -> {
             Cursor cursor = null;
 
             try {

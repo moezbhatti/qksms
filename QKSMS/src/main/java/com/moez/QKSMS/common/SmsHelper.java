@@ -133,7 +133,7 @@ public class SmsHelper {
     private static String[] sNoSubjectStrings;
 
     public static void markSmsSeen(Context context) {
-        new CursorObservable(context, RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{Sms._ID},
+        CursorObservable.from(context, RECEIVED_MESSAGE_CONTENT_PROVIDER, new String[]{Sms._ID},
                 SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null)
                 .map(cursor -> {
                     MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
@@ -143,7 +143,7 @@ public class SmsHelper {
     }
 
     public static void markMmsSeen(Context context) {
-        new CursorObservable(context, MMS_CONTENT_PROVIDER, new String[]{Sms._ID},
+        CursorObservable.from(context, MMS_CONTENT_PROVIDER, new String[]{Sms._ID},
                 SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION, null, null)
                 .map(cursor -> {
                     MessageColumns.ColumnsMap map = new MessageColumns.ColumnsMap(cursor);
@@ -419,7 +419,7 @@ public class SmsHelper {
     }
 
     public static Observable<Pair<String, String>> getFailedMessages(Context context) {
-        return new CursorObservable(context, SMS_CONTENT_PROVIDER, new String[]{Sms.ADDRESS, Sms.BODY}, FAILED_SELECTION, null, SORT_DATE_DESC)
+        return CursorObservable.from(context, SMS_CONTENT_PROVIDER, new String[]{Sms.ADDRESS, Sms.BODY}, FAILED_SELECTION, null, SORT_DATE_DESC)
                 .map(cursor -> new Pair<>(
                         cursor.getString(cursor.getColumnIndexOrThrow(Sms.ADDRESS)),
                         cursor.getString(cursor.getColumnIndexOrThrow(Sms.BODY))));

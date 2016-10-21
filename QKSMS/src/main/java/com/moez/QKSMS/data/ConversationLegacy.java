@@ -141,7 +141,7 @@ public class ConversationLegacy {
         DraftCache.getInstance().setSavingDraft(true);
         DraftCache.getInstance().setDraftState(threadId, false);
 
-        new CursorObservable(context, SmsHelper.DRAFTS_CONTENT_PROVIDER, null, Telephony.Sms.THREAD_ID + "=" + threadId, null, null)
+        CursorObservable.from(context, SmsHelper.DRAFTS_CONTENT_PROVIDER, null, Telephony.Sms.THREAD_ID + "=" + threadId, null, null)
                 .map(cursor -> cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID)))
                 .doOnCompleted(() -> DraftCache.getInstance().setSavingDraft(false))
                 .subscribe(id -> MessagingHelper.deleteMessage(context, id));
