@@ -20,10 +20,8 @@ package com.moez.QKSMS.ui.messagelist;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.MmsSms;
 import android.provider.Telephony.Sms;
@@ -38,6 +36,7 @@ import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.SmsHelper;
 import com.moez.QKSMS.common.formatter.FormatterFactory;
 import com.moez.QKSMS.common.google.ItemLoadedCallback;
@@ -121,7 +120,6 @@ public class MessageItem {
         mHighlight = highlight;
         mType = type;
         mColumnsMap = columnsMap;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 
         if ("sms".equals(type)) {
             mReadReport = false; // No read reports in sms
@@ -160,7 +158,7 @@ public class MessageItem {
             // Unless the message is currently in the progress of being sent, it gets a time stamp.
             if (!isOutgoingMessage()) {
                 // Set "received" or "sent" time stamp
-                boolean sent = prefs.getBoolean(QKPreference.SENT_TIMESTAMPS.getKey(), false) && !isMe();
+                boolean sent = QKPreferences.getBoolean(QKPreference.SENT_TIMESTAMPS) && !isMe();
                 mDate = cursor.getLong(sent ? columnsMap.mColumnSmsDateSent : columnsMap.mColumnSmsDate);
                 mTimestamp = DateFormatter.getMessageTimestamp(context, mDate);
             }
