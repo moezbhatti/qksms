@@ -189,10 +189,9 @@ public class AvatarView extends ImageView implements View.OnClickListener {
     }
 
     private boolean isPhoneNumberFormat(String name) {
-//        We already checked it in first "if" condition in "setContactName"
-//        if (TextUtils.isEmpty(name)) {
-//            return false;
-//        }
+        if (TextUtils.isEmpty(name)) {
+            return false;
+        }
 
         char c = name.charAt(0);
         return !name.contains("@") && (c == '+' || c == '(' || Character.isDigit(c));
