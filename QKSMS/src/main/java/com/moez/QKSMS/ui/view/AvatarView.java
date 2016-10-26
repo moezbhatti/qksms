@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.TypefaceManager;
@@ -53,6 +54,7 @@ public class AvatarView extends ImageView implements View.OnClickListener {
     private String mInitial = "#";
     private Paint mPaint;
     private Drawable mDefaultDrawable;
+    private int mYOffset;
 
     /**
      * When setImageDrawable is called with a drawable, we circle crop to size of this view and use
@@ -88,6 +90,8 @@ public class AvatarView extends ImageView implements View.OnClickListener {
                 }
             }
             a.recycle();
+
+            mYOffset = (int) ((mPaint.descent() + mPaint.ascent()) / 2);
 
             setOnClickListener(this);
 
@@ -175,7 +179,7 @@ public class AvatarView extends ImageView implements View.OnClickListener {
             if (mOriginalDrawable == null) super.setImageDrawable(null);
         } else if (isPhoneNumberFormat(name)) {
             mInitial = "";
-            super.setImageDrawable(mDefaultDrawable);
+            if (mOriginalDrawable == null) super.setImageDrawable(mDefaultDrawable);
         } else {
             mInitial = "" + name.toUpperCase().charAt(0);
             if (mOriginalDrawable == null) super.setImageDrawable(null);
@@ -276,7 +280,7 @@ public class AvatarView extends ImageView implements View.OnClickListener {
 
         if (getDrawable() == null && !isInEditMode()) {
             int xPos = (getWidth() / 2);
-            int yPos = (int) ((getHeight() / 2) - ((mPaint.descent() + mPaint.ascent()) / 2));
+            int yPos = (getHeight() / 2) - mYOffset;
             canvas.drawText("" + mInitial, xPos, yPos, mPaint);
         }
     }

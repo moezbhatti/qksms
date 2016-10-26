@@ -10,6 +10,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
@@ -146,7 +147,7 @@ public class MessageListActivity extends QKSwipeBackActivity {
                 if (mWaitingForThreadId > 0) {
                     ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(this, mWaitingForThreadId);
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    conversationPrefs.putString(QKPreference.NOTIFICATIONS_SOUND, uri.toString());
+                    conversationPrefs.putString(QKPreference.NOTIFICATIONS_SOUND, uri == null ? "" : uri.toString());
                     mWaitingForThreadId = -1;
                 }
             }
