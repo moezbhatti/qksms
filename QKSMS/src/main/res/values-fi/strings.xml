@@ -719,6 +719,7 @@
     <item>Suurin</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
     <item>System font</item>

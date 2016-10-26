@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Verzia, zoznam zmien, autori, poďakovanie</string>
   <string name="pref_theme">Farba motívu</string>
   <string name="pref_theme_summary_alt">Dotykom zmeniť motív</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Farba ikony</string>
+  <string name="pref_icon_summary">Dotykom zmeniť farbu ikony QKSMS</string>
   <string name="pref_status_tint">Farebný stavový riadok</string>
   <string name="pref_navigation_tint">Farebný navigačný panel</string>
   <string name="pref_background">Farba pozadia</string>
@@ -720,9 +720,10 @@
     <item>Obrovské</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Systémové písmo</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Tenké</item>

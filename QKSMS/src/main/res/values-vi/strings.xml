@@ -16,7 +16,7 @@
   <!--Hint for search text field-->
   <string name="hint_search">Tìm kiếm gì đó</string>
   <!--Hint for message reply text field-->
-  <string name="hint_reply">Nhập một tin nhắn</string>
+  <string name="hint_reply">Nhập nội dung tin nhắn</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Nhập mã</string>
   <string name="hint_hex">Hex</string>
@@ -45,7 +45,7 @@
   <!--Indicates to user they can pick any colors-->
   <string name="welcome_theme_description">Bất kỳ màu nào.</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_night_description">Dễ chịu với mắt.</string>
+  <string name="welcome_night_description">Dễ chịu cho mắt.</string>
   <!--Tells user to press button to toggle night mode-->
   <string name="welcome_night_hint">Chuyển đổi</string>
   <!--Tells user to press button to toggle night mode-->
@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Phiên bản, thay đổi, tác giả, cảm ơn</string>
   <string name="pref_theme">Màu chủ đề</string>
   <string name="pref_theme_summary_alt">Bấm để thay đổi chủ đề</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Màu icon</string>
+  <string name="pref_icon_summary">Bấm để thay đổi màu sắc icon cho QKSMS</string>
   <string name="pref_status_tint">Nhuộm thanh trạng thái</string>
   <string name="pref_navigation_tint">Nhuộm thanh điều hướng</string>
   <string name="pref_background">Màu nền</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">Show a short toast to indicate a message being delivered</string>
   <string name="pref_delivery_vibrate">Báo rung</string>
   <string name="pref_delivery_vibrate_summary">Báo rung khi gửi tin nhành công</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">Xoá tin nhắn cũ</string>
+  <string name="pref_delete_old_messages_summary">Tự động xoá tin nhắn cũ khi nó đủ lâu</string>
+  <string name="pref_delete_old_messages_unread">Tin nhắn chưa đọc</string>
+  <string name="pref_delete_old_messages_unread_summary">Tự động xoá tin nhắn chưa đọc sau %s ngày</string>
+  <string name="pref_delete_old_messages_read">Tin nhắn đã đọc</string>
+  <string name="pref_delete_old_messages_read_summary">Tự động xoá tin nhắn đã đọc sau %s ngày</string>
   <string name="pref_yappy">Kết hợp Yappy</string>
   <string name="pref_endlessjabber_summary">Bật hỗ trợ đầy đủ cho Yappy</string>
   <string name="pref_blocked_conversations">Cuộc hội thoại đã chặn</string>
@@ -179,16 +179,16 @@
   <string name="pref_should_i_answer_summary">Tự động xóa tin nhắn từ các số điện thoại bị chặn từ Should I Answer?</string>
   <string name="pref_mobile_only">Số điện thoại</string>
   <string name="pref_mobile_only_summary">Chỉ hiển thị số điện thoại trong gợi ý danh bạ</string>
-  <string name="pref_auto_emoji">Automatic emoji</string>
-  <string name="pref_auto_emoji_summary">Replace text with image emoji</string>
-  <string name="pref_enter_button">Enter button</string>
-  <string name="pref_enter_button_summary">Tap to change keyboard enter button behavior</string>
-  <string name="pref_compose_group">Group messaging</string>
-  <string name="pref_compose_group_summary">When composing message to multiple people, send a group message instead of individual messages</string>
-  <string name="pref_auto_download">Auto download MMS</string>
-  <string name="pref_auto_download_summary">Automatically download MMS messages when they become available</string>
-  <string name="pref_auto_data">Automatic data</string>
-  <string name="pref_auto_data_summary">Turn on data automatically when sending or receiving MMS</string>
+  <string name="pref_auto_emoji">Tự động chuyển đổi emoji</string>
+  <string name="pref_auto_emoji_summary">Thay chữ bằng emoji</string>
+  <string name="pref_enter_button">Nút Enter</string>
+  <string name="pref_enter_button_summary">Bấm để thay đổi hành động của nút enter</string>
+  <string name="pref_compose_group">Tin nhắn nhóm</string>
+  <string name="pref_compose_group_summary">Khi soạn thảo tin nhắn cho nhiều người, gửi một tin nhắn nhóm thay vì nhiều tin nhắn riêng lẻ</string>
+  <string name="pref_auto_download">Tự đông tải xuống MMS</string>
+  <string name="pref_auto_download_summary">Tự động tải xuống MMS khi chúng có sẵn</string>
+  <string name="pref_auto_data">Tự động dùng dữ liệu</string>
+  <string name="pref_auto_data_summary">Tự động bật dữ liệu mạng khi nhận hoặc gửi MMS</string>
   <string name="pref_split">Tách SMS</string>
   <string name="pref_split_summary">Tách tin nhắn dài thành nhiều tin nhắn</string>
   <string name="pref_split_counter">Split counter</string>
@@ -211,7 +211,7 @@
   <string name="pref_ringtone_summary">Chọn âm thanh thông báo</string>
   <string name="pref_ticker">Show ticker</string>
   <string name="pref_ticker_summary">Shows snippet of new message in notification bar</string>
-  <string name="pref_vibration">Vibration</string>
+  <string name="pref_vibration">Rung</string>
   <string name="pref_vibration_summary">Báo rung khi nhận tin nhắn mới</string>
   <string name="pref_notification_call">Nút gọi</string>
   <string name="pref_notification_call_summary">Gọi cho người gửi ngay trong thông báo</string>
@@ -304,7 +304,7 @@
   <string name="title_block_address">Chặn số điện thoại</string>
   <string name="title_unblock_address">Bỏ chặn số điện thoại</string>
   <string name="title_conversations_selected">Đã chọn %s</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">Bảng màu</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -490,7 +490,7 @@
   <!-- Label in "Report" window -->
   <string name="status_label">Trạng thái:\u0020</string>
   <!-- Label in "Report" window [CHAR LIMIT=50]-->
-  <string name="delivered_label">Delivered:\u0020</string>
+  <string name="delivered_label">Đã gửi:\u0020</string>
   <string name="do_something">Làm gì đó</string>
   <!-- Confirm Delete -->
   <!-- Delete confirmation dialog title -->
@@ -536,7 +536,7 @@
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as read -->
   <string name="not_default_mark_read">QKSMS cần phải là ứng dụng nhắn tin SMS của bạn để đánh dáu thư đã đọc</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as unread -->
-  <string name="not_default_mark_unread">QKSMS must be your SMS app to mark messages unread</string>
+  <string name="not_default_mark_unread">QKSMS phải là ứng dụng nhắn tin mặc định thì mới có thể đánh dấu tin nhắn chưa đọc</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to send messages -->
   <string name="not_default_delete">QKSMS cần phải là ứng dụng nhắn tin SMS của bạn để xóa tin nhắn</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to delete messages -->
@@ -552,14 +552,14 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Cập nhật màu sắc icon</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">QKSMS cần khởi động lại khi thay đổi màu sắc icon</string>
   <string name="dialog_conversation_details_title">Chi tiết cuộc trò chuyện</string>
   <string name="dialog_conversation_details_last_message_date">Ngày tin nhắn cuối cùng</string>
   <string name="dialog_conversation_details_message_count">Số lượng tin nhắn</string>
   <string name="dialog_conversation_details_recipients">Người nhận (%s)</string>
   <string name="dialog_should_i_answer_title">Should I Answer? chư được cài đặt</string>
   <string name="dialog_should_i_answer_message">Bạn có muốn tải ứng dụng từ Google Play bây giờ không?</string>
-  <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
+  <string name="dialog_delete_old_messages">Bạn có chắc muốn tự động xoá tin nhắn cũ không?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Chọn âm thanh</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -602,8 +602,8 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">Chưa cài đặt EndlessJabber, mở Google Play</string>
   <string name="toast_changelog_error">Không tải được các thay đổi. Vui lòng thử lại sau</string>
-  <string name="toast_conversation_error">Couldn\'t open conversation</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_conversation_error">Không thể mở cuộc hội thoại</string>
+  <string name="toast_deleting_old_messages">Tin nhắn cũ của bạn sẽ bị xoá trong giây lát</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Cảm ơn bạn đã quyên góp! Bạn là bạn thân nhất của tôi rồi.</string>
   <!--Toast shown to thank user for donating-->
@@ -640,7 +640,7 @@
   <string name="error_file_not_found">QKSMS không thể truy cập tệp tin bạn đang cố gắng chia sẻ!</string>
   <string name="sending_blocked_welcome_screen_message">Chờ đã! Bạn sẽ được gửi tin nhắn thật một lúc nữa!</string>
   <string name="notification_colored_icon_ready">Chạm để thêm vào launcher của bạn từ màn hình chủ.</string>
-  <string name="notification_title_colored_icon_ready">QKSMS colored icon is ready</string>
+  <string name="notification_title_colored_icon_ready">Màu sắc icon của QKSMS đã sẵn sàng</string>
   <string name="icon_ready">Icon mới của bạn đã sẵn sàng!</string>
   <string name="icon_ready_message">Bây giờ bạn có thể thêm lại nó vào màn hình chủ của bạn với màu sắc đã được cập nhật.</string>
   <string name="dont_ask_again">Không hỏi lại</string>
@@ -718,9 +718,10 @@
     <item>Lớn nhất</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Font hệ thống</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Light</item>

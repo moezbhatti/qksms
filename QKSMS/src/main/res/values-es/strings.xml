@@ -31,7 +31,7 @@
   <!--Text shown under failed message count-->
   <string name="failed_messages_summary">Toque para ver</string>
   <!--QuickCompose notification title-->
-  <string name="quickcompose">QK Compose</string>
+  <string name="quickcompose">Composición Rapida</string>
   <!--QuickCompose notification text-->
   <string name="quickcompose_detail">Toque para enviar un mensaje</string>
   <!--Welcome screen intro button-->
@@ -111,16 +111,16 @@
   <string name="pref_category_summary_notifications">Sonidos, LED, privacidad</string>
   <string name="pref_category_mms">MMS</string>
   <string name="pref_category_summary_mms">Configurar MMS (APN), tamaño máximo, mensajes de grupo</string>
-  <string name="pref_category_quickreply">QK Reply</string>
-  <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
-  <string name="pref_category_quickcompose">QK Compose</string>
+  <string name="pref_category_quickreply">Respuesta Rapida</string>
+  <string name="pref_category_summary_quickreply">Opciones de Respuesta Rapida</string>
+  <string name="pref_category_quickcompose">Composición Rapida</string>
   <string name="pref_category_summary_quickcompose">QK Compose, contactos favoritos</string>
   <string name="pref_category_about">Acerca de</string>
   <string name="pref_category_summary_about">Versión, registro de cambios, autores, gracias</string>
   <string name="pref_theme">Color del tema</string>
   <string name="pref_theme_summary_alt">Toque para cambiar el tema</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Color del icono</string>
+  <string name="pref_icon_summary">Toca para cambiar el color del icono de QKSMS</string>
   <string name="pref_status_tint">Barra de estado coloreada</string>
   <string name="pref_navigation_tint">Barra de navegación coloreada</string>
   <string name="pref_background">Color de fondo</string>
@@ -227,11 +227,11 @@
   <string name="pref_night_start">Noche comienza</string>
   <string name="pref_qk_responses">Respuestas rápidas</string>
   <string name="pref_qk_responses_summary">Modificar sus respuestas preestablecidas para ser utilizado desde tu dispositivo Android Wear</string>
-  <string name="pref_quickreply_enabled">QK Reply enabled</string>
-  <string name="pref_quickreply_enabled_summary">Show QK Reply window whenever a new message is received</string>
+  <string name="pref_quickreply_enabled">Respuesta Rápida activada</string>
+  <string name="pref_quickreply_enabled_summary">Mostrar ventana de Respuesta Rápida cuando llegue un nuevo mensaje</string>
   <string name="pref_tap_to_quit">Tocar para descartar</string>
   <string name="pref_tap_to_quit_summary">Toque fuera de la ventana para cerrarla</string>
-  <string name="pref_quickcompose">QK Compose enabled</string>
+  <string name="pref_quickcompose">Composición Rápida activada</string>
   <string name="pref_quickcompose_summary">Mostrar una notificación que pueda tocar para redactar un nuevo mensaje</string>
   <string name="pref_mms_enabled">MMS activado</string>
   <string name="pref_mms_enabled_summary">Permitir el envío y recepción de mensajes MMS</string>
@@ -533,17 +533,17 @@
   <!-- Tells the user that QKSMS isn't the default SMS app -->
   <string name="not_default">SMS por defecto</string>
   <!-- Tells the user they need to set QKSMS as the default app in order to use this feature -->
-  <string name="default_info">QKSMS needs to be your SMS app to do that</string>
+  <string name="default_info">QKSMS necesita ser tu app predeterminada</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as read -->
-  <string name="not_default_mark_read">QKSMS must be your SMS app to mark messages read</string>
+  <string name="not_default_mark_read">QKSMS debe ser tu app SMS predeterminada para marcar los mensajes como leídos</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as unread -->
-  <string name="not_default_mark_unread">QKSMS must be your SMS app to mark messages unread</string>
+  <string name="not_default_mark_unread">QKSMS debe ser tu app SMS predeterminada para marcar los mensajes como no leidos</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to send messages -->
-  <string name="not_default_delete">QKSMS must be your SMS app to delete messages</string>
+  <string name="not_default_delete">QKSMS debe ser tu app SMS predeterminada para borrar mensajes</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to delete messages -->
-  <string name="not_default_send">QKSMS must be your SMS app to send messages</string>
+  <string name="not_default_send">QKSMS debe ser tu app SMS predeterminada para mandar mensajes</string>
   <!-- Tells the user they should set QKSMS as the default messaging app -->
-  <string name="not_default_first">Some things won\'t work until QKSMS is the default SMS app</string>
+  <string name="not_default_first">Algunas cosas no funcionaran hasta que QKSMS sea tu app SMS predeterminada</string>
   <string name="delayed_messaging_info">Delayed messaging allows you to cancel messages before they send. Change the default behavior and more in Settings</string>
   <string name="delayed_duration_bounds_error">Duration must be between 1 and 30 seconds</string>
   <!-- Dialog title for the Read Report dialog. -->
@@ -553,7 +553,7 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Actualizar color del icono</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">Se reiniciará QKSMS cuando cambies el color de icono</string>
   <string name="dialog_conversation_details_title">Conversation details</string>
   <string name="dialog_conversation_details_last_message_date">Last message date</string>
   <string name="dialog_conversation_details_message_count">Contador de mensaje</string>
@@ -668,7 +668,7 @@
   <string name="pref_mms_contact_support">Contactar con el soporte</string>
   <string name="pref_category_sending_mms">Envío de MMS</string>
   <string name="pref_category_mms_configuration">Configuración de MMS</string>
-  <string name="pref_mms_contact_support_summary">Contact the QKSMS team for help setting up MMS</string>
+  <string name="pref_mms_contact_support_summary">Contacta a QKSMS para ayuda configurando MMS</string>
   <string name="pref_markdown_enabled">Formato de texto</string>
   <string name="pref_markdown_enabled_summary">Usar el lenguage de marcado Markdown para obtener negrita, subrayado y cursiva en los mensajes</string>
   <string name="want_read_indicators">Want read indicators?</string>
@@ -682,7 +682,7 @@
   <string name="service_not_activated">Service not activated on network.</string>
   <string name="service_message_not_found">Message expired or not available.</string>
   <string name="service_network_problem">Couldn\'t send due to network problem.</string>
-  <string name="message_queued">Currently can\'t send your message. It will be sent when the service becomes available.</string>
+  <string name="message_queued">No podemos enviar tu mensaje. será enviado cuando el servicio este disponible.</string>
   <string name="download_later">Can\'t download right now. Try again later.</string>
   <string name="no_apn">No APN specified for the app, you need to set it up in settings!</string>
   <string name="no_subject">(Sin asunto)</string>
@@ -719,6 +719,7 @@
     <item>Más grande</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
     <item>System font</item>

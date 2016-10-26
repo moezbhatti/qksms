@@ -719,9 +719,10 @@
     <item>বৃহত্তম</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>সিস্টেম ফন্ট</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>হালকা</item>

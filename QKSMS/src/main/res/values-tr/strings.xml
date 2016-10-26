@@ -719,9 +719,10 @@
     <item>En büyük</item>
   </string-array>
   <string-array name="font_families">
-    <item>Roboto regular</item>
+    <item>Avenir</item>
+    <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Sistem yazı tipi</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>İnce</item>

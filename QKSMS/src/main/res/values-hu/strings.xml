@@ -719,9 +719,10 @@
     <item>Legnagyobb</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Rendszer alapértelmezett</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Vékony</item>

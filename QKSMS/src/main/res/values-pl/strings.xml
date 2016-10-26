@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Wersja, lista zmian, autorzy, podziękowania</string>
   <string name="pref_theme">Kolor motywu</string>
   <string name="pref_theme_summary_alt">Dotknij, aby zmienić motyw</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Kolor ikony</string>
+  <string name="pref_icon_summary">Naciśnij, aby zmienić kolor ikony QKSMS</string>
   <string name="pref_status_tint">Kolorowy pasek powiadomień</string>
   <string name="pref_navigation_tint">Kolorowy pasek nawigacyjny</string>
   <string name="pref_background">Kolor tła</string>
@@ -195,7 +195,7 @@
   <string name="pref_split_counter_summary">Dodaje licznik do każdej podzielonej wiadomości</string>
   <string name="pref_long_as_mms">Wysyłaj długie wiadomości jako MMS-y</string>
   <string name="pref_long_as_mms_summary">Wyślij długie wiadomości jako MMS zamiast dzielenia ich</string>
-  <string name="pref_long_as_mms_after">Licznik długich wiadomości</string>
+  <string name="pref_long_as_mms_after">Ilość wiadomości</string>
   <string name="pref_long_as_mms_after_summary">Wysyłaj długie wiadomości jako MMS-y, jeśli przekroczą określoną ilość wiadomości</string>
   <string name="pref_return">Pokaż przycisk enter</string>
   <string name="pref_return_summary">Pokaż przycisk Enter zamiast przycisku Emoji</string>
@@ -720,9 +720,10 @@
     <item>Największy</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Czcionka systemowa</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Cienka</item>

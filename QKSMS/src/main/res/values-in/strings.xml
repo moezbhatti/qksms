@@ -718,9 +718,10 @@
     <item>Terbesar</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Fon sistem</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Tipis</item>

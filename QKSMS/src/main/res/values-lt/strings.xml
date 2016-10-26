@@ -18,7 +18,7 @@
   <!--Hint for message reply text field-->
   <string name="hint_reply">Rašykite žinutę</string>
   <!--Hint for code redemption-->
-  <string name="hint_redeem">Enter code</string>
+  <string name="hint_redeem">Įveskite kodą</string>
   <string name="hint_hex">Hex</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Nauja žinutė</string>
@@ -31,7 +31,7 @@
   <!--Text shown under failed message count-->
   <string name="failed_messages_summary">Paspauskite, kad peržiūrėtumėte</string>
   <!--QuickCompose notification title-->
-  <string name="quickcompose">QK Compose</string>
+  <string name="quickcompose">QK Rašiklis</string>
   <!--QuickCompose notification text-->
   <string name="quickcompose_detail">Paspauskite, jei norite išsiųsti žinutę</string>
   <!--Welcome screen intro button-->
@@ -45,27 +45,27 @@
   <!--Indicates to user they can pick any colors-->
   <string name="welcome_theme_description">Betkokią spalvą.</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_night_description">Easy on the eyes.</string>
+  <string name="welcome_night_description">Lengviau akims.</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_night_hint">Toggle me</string>
+  <string name="welcome_night_hint">Įjunk mane</string>
   <!--Tells user to press button to toggle night mode-->
   <string name="welcome_quickreply_title">QK atsakymas</string>
   <!--QK Reply explanation-->
-  <string name="welcome_quickreply_description">Reply to messages faster than ever.</string>
+  <string name="welcome_quickreply_description">Atsakyk į žinutės greičiau nei bet kada.</string>
   <!--Prompts user to try QK Reply-->
   <string name="welcome_quickreply_hint">Išbandyk!</string>
   <!--QK Reply demo message-->
-  <string name="welcome_quickreply_message_1">Wow! Now wasn\'t that awesome? You can view your entire conversation at a glance. Tap outside the popup or press the checkmark to dismiss it.</string>
+  <string name="welcome_quickreply_message_1">Wow! Argi tai ne puiku? Taip gali laisvai peržiūrėti visą pokalbį akimirksniu. Paspausk bet kur už langelio arba paspausk varnelę, kad jį išjungtum.</string>
   <!--QK Reply demo message-->
-  <string name="welcome_quickreply_message_2">This is QK Reply. Now you can reply to messages from anywhere. Tap the expand button to see what happens next :)</string>
+  <string name="welcome_quickreply_message_2">Tai QK Atsakymas. Dabar gali atsakyti į žinutes iš bet kur. Paspausk išskleidimo mygtuką, kad pamatytum, kas bus toliau. :)</string>
   <!--Settings option in menu-->
   <string name="menu_settings">Nustatymai</string>
   <!--Search option in menu-->
   <string name="menu_search">Ieška</string>
   <!--Show full conversation in QuickReply-->
-  <string name="menu_show_all">Show all messages</string>
+  <string name="menu_show_all">Rodyti visas žinutes</string>
   <!--Show only unread messages in QuickReply-->
-  <string name="menu_show_unread">Show unread messages</string>
+  <string name="menu_show_unread">Rodyti neskaitytas žinutes</string>
   <!--Open conversation option in menu (shown in QuickReply)-->
   <string name="menu_open_thread">Atidaryti pokalbį</string>
   <!--Forward message option in menu-->
@@ -75,17 +75,17 @@
   <!--Mark a message/conversation as read option in menu-->
   <string name="menu_read">Pažymėti kaip perskaitytą</string>
   <!--Delete a message option in menu-->
-  <string name="menu_delete">Delete</string>
+  <string name="menu_delete">Ištrinti</string>
   <!--Donate option in menu-->
-  <string name="menu_billing">Donate</string>
+  <string name="menu_billing">Paremti</string>
   <!--Copy text option in menu-->
   <string name="menu_copy">Kopijuoti tekstą</string>
   <!--Changelog option in menu-->
   <string name="menu_changelog">"Kas naujo programėlėje"</string>
   <!--Expand settings option in menu-->
-  <string name="menu_show_all_prefs">Show all</string>
+  <string name="menu_show_all_prefs">Rodyti visus</string>
   <!--Show less settings option in menu-->
-  <string name="menu_show_fewer_prefs">Show fewer</string>
+  <string name="menu_show_fewer_prefs">Rodyti mažiau</string>
   <!--Title for message details popup-->
   <string name="details_title">Išsamiau</string>
   <!--Title for address that message is being sent to in message details popup-->
@@ -99,41 +99,41 @@
   <!--Title for date received of a message in message details popup-->
   <string name="details_date_received">Gavimo data</string>
   <!--Title for rate snackbar-->
-  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_title">Patinka QKSMS?</string>
   <!--Title for rate button-->
-  <string name="rate_action">Rate</string>
+  <string name="rate_action">Įvertinti</string>
   <string name="pref_category_appearance">Išvaizda</string>
-  <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
+  <string name="pref_category_summary_appearance">Temos, šriftai, spalvos, avatarai ir dar daugiau</string>
   <string name="pref_category_general">Pagrindiniai</string>
-  <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
-  <string name="pref_category_blocking">Message blocking</string>
+  <string name="pref_category_summary_general">Pristatymas, žinučių siuntimas, formatavimas</string>
+  <string name="pref_category_blocking">Žinučių blokavimas</string>
   <string name="pref_category_notifications">Pranešimai</string>
-  <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
+  <string name="pref_category_summary_notifications">Garsai, LED, privatumas</string>
   <string name="pref_category_mms">MMS</string>
-  <string name="pref_category_summary_mms">Configure MMS (APNs), max size, group messaging</string>
-  <string name="pref_category_quickreply">QK Reply</string>
-  <string name="pref_category_summary_quickreply">QK Reply, popup options</string>
-  <string name="pref_category_quickcompose">QK Compose</string>
-  <string name="pref_category_summary_quickcompose">QK Compose, starred contacts</string>
+  <string name="pref_category_summary_mms">Konfigūruoti MMS (APN), maksimalų dydį, susirašinėjimą grupėse</string>
+  <string name="pref_category_quickreply">QK Atsakymas</string>
+  <string name="pref_category_summary_quickreply">QK Atsakymas, langelio nustatymai</string>
+  <string name="pref_category_quickcompose">QK Rašymas</string>
+  <string name="pref_category_summary_quickcompose">QK Rašymas, pažymėti kontaktai</string>
   <string name="pref_category_about">Apie</string>
-  <string name="pref_category_summary_about">Version, changelog, authors, thanks</string>
-  <string name="pref_theme">Theme color</string>
-  <string name="pref_theme_summary_alt">Tap to change theme</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_category_summary_about">Versija, pakeitimai, autoriai, padėkos</string>
+  <string name="pref_theme">Teminė spalva</string>
+  <string name="pref_theme_summary_alt">Paspausk, kad pakeistum temą</string>
+  <string name="pref_icon">Ikonos spalva</string>
+  <string name="pref_icon_summary">Paspausk, kad pakeistum QKSMS ikonos spalvą</string>
   <string name="pref_status_tint">Pranešimų juostos spalvos efektas</string>
   <string name="pref_navigation_tint">Navigacijos juostos spalvos efektas</string>
-  <string name="pref_background">Background color</string>
-  <string name="pref_background_summary">Tap to change background color</string>
-  <string name="pref_bubbles">Message bubbles</string>
-  <string name="pref_bubbles_summary">Tap to change message bubble preferences</string>
+  <string name="pref_background">Fono spalva</string>
+  <string name="pref_background_summary">Paspausk, kad pakeistum fono spalvą</string>
+  <string name="pref_bubbles">Žinučių burbulai</string>
+  <string name="pref_bubbles_summary">Paspausk, kad pakeistum žinučių burbulų pasirinkimus</string>
   <string name="pref_night">Naktinis rėžimas</string>
-  <string name="pref_night_summary">Save battery and reduce eye strain</string>
+  <string name="pref_night_summary">Taupo bateriją ir sumažina apkrovą akims</string>
   <string name="pref_night_amoled">Visiškai juodas fonas</string>
   <string name="pref_night_amoled_summary">Sutaupo daugiau baterijos ant įrenginių su AMOLED ekranais</string>
-  <string name="pref_bubble_style_new">Use new bubble style</string>
-  <string name="pref_color_sent">Color sent messages</string>
-  <string name="pref_color_sent_summary">Color the background bubbles for outgoing messages</string>
+  <string name="pref_bubble_style_new">Naudoti naują burbulų stilių</string>
+  <string name="pref_color_sent">Nuspalvinti išsiųstas žinutes</string>
+  <string name="pref_color_sent_summary">Nuspalvina išsiųstų žinučių burbulų foną</string>
   <string name="pref_color_received">Color received messages</string>
   <string name="pref_color_received_summary">Color the background bubbles for incoming messages</string>
   <string name="pref_hide_avatar_conversations">Paslėpti pokalbių sąrašo nuotraukas</string>
@@ -720,6 +720,7 @@
     <item>Didžiausias</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
     <item>System font</item>

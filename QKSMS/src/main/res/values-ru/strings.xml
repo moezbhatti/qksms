@@ -14,9 +14,9 @@
   <!--Hint for contacts text field-->
   <string name="hint_contacts">Укажите получателей</string>
   <!--Hint for search text field-->
-  <string name="hint_search">что ищем?</string>
+  <string name="hint_search">Что ищем?</string>
   <!--Hint for message reply text field-->
-  <string name="hint_reply">Сообщение</string>
+  <string name="hint_reply">Введите сообщение</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Введите код</string>
   <string name="hint_hex">Hex</string>
@@ -31,11 +31,11 @@
   <!--Text shown under failed message count-->
   <string name="failed_messages_summary">Нажмите для просмотра</string>
   <!--QuickCompose notification title-->
-  <string name="quickcompose">QK Написать</string>
+  <string name="quickcompose">Быстрый набор</string>
   <!--QuickCompose notification text-->
   <string name="quickcompose_detail">Отправить сообщение</string>
   <!--Welcome screen intro button-->
-  <string name="welcome_start">Давайте начнем!</string>
+  <string name="welcome_start">Давайте начнём!</string>
   <!--Allows user to skip welcome screen-->
   <string name="welcome_skip">ПРОПУСТИТЬ</string>
   <!--Allows user to finish the welcome screen-->
@@ -49,7 +49,7 @@
   <!--Tells user to press button to toggle night mode-->
   <string name="welcome_night_hint">Нажми меня</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_quickreply_title">QK Ответ</string>
+  <string name="welcome_quickreply_title">Быстрый ответ</string>
   <!--QK Reply explanation-->
   <string name="welcome_quickreply_description">Ответить на сообщение можно быстрее чем обычно.</string>
   <!--Prompts user to try QK Reply-->
@@ -83,9 +83,9 @@
   <!--Changelog option in menu-->
   <string name="menu_changelog">"Новые возможности"</string>
   <!--Expand settings option in menu-->
-  <string name="menu_show_all_prefs">все</string>
+  <string name="menu_show_all_prefs">Все</string>
   <!--Show less settings option in menu-->
-  <string name="menu_show_fewer_prefs">основные</string>
+  <string name="menu_show_fewer_prefs">Основные</string>
   <!--Title for message details popup-->
   <string name="details_title">Подробности</string>
   <!--Title for address that message is being sent to in message details popup-->
@@ -110,17 +110,17 @@
   <string name="pref_category_notifications">Уведомления</string>
   <string name="pref_category_summary_notifications">Звуки, индикатор, конфиденциальность</string>
   <string name="pref_category_mms">MMS</string>
-  <string name="pref_category_summary_mms">Настройка MMS (APN), Макс. размер, групповые сообщения</string>
-  <string name="pref_category_quickreply">QK Ответ</string>
-  <string name="pref_category_summary_quickreply">быстрый ответ, всплывающие опции</string>
-  <string name="pref_category_quickcompose">QK Написать</string>
-  <string name="pref_category_summary_quickcompose">быстрый набор, помеченные контакты</string>
+  <string name="pref_category_summary_mms">Настройка MMS (APN), максимального размера, групповых сообщений</string>
+  <string name="pref_category_quickreply">Быстрый ответ</string>
+  <string name="pref_category_summary_quickreply">Быстрый ответ, всплывающие параметры</string>
+  <string name="pref_category_quickcompose">Быстрый набор</string>
+  <string name="pref_category_summary_quickcompose">Быстрый набор, помеченные контакты</string>
   <string name="pref_category_about">О приложении</string>
   <string name="pref_category_summary_about">Версия, список изменений, авторы, благодарности</string>
   <string name="pref_theme">Цвет темы</string>
   <string name="pref_theme_summary_alt">Нажмите, чтобы изменить тему</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Цвет значка</string>
+  <string name="pref_icon_summary">Нажмите, чтобы изменить цвет значка QKSMS</string>
   <string name="pref_status_tint">Прозрачная строка состояния</string>
   <string name="pref_navigation_tint">Прозрачная панель навигации</string>
   <string name="pref_background">Цвет фона</string>
@@ -128,13 +128,13 @@
   <string name="pref_bubbles">Пузыри сообщений</string>
   <string name="pref_bubbles_summary">Нажмите, чтобы изменить предпочтения пузыря сообщения</string>
   <string name="pref_night">Ночной режим</string>
-  <string name="pref_night_summary">Сохранить заряд аккумулятора и уменьшить напряжение глаз</string>
+  <string name="pref_night_summary">Сохраняет заряд аккумулятора и уменьшает нагрузку на глаза</string>
   <string name="pref_night_amoled">Настоящий черный фон</string>
   <string name="pref_night_amoled_summary">Экономит энергию на устройствах с AMOLED-экранами</string>
   <string name="pref_bubble_style_new">Использовать новый стиль пузыря</string>
   <string name="pref_color_sent">Отправленные сообщения в цвет темы</string>
   <string name="pref_color_sent_summary">Цвет фона пузыря для исходящих сообщений</string>
-  <string name="pref_color_received">Полученные сообщения в цвет</string>
+  <string name="pref_color_received">Полученные сообщения в цвете</string>
   <string name="pref_color_received_summary">Цвет фона пузыря для входящих сообщений</string>
   <string name="pref_hide_avatar_conversations">Скрыть фото в списке бесед</string>
   <string name="pref_hide_avatar_conversations_summary">Скрыть аватары контактов в списке разговоров</string>
@@ -156,11 +156,11 @@
   <string name="pref_compose_favorites">Помеченные контакты</string>
   <string name="pref_compose_summary_favorites">Показать ваши помеченные контакты в окне быстрого сообщения, убрать их можно будет касанием</string>
   <string name="pref_prox_sensor_call">Датчик приближения</string>
-  <string name="pref_prox_sensor_call_summary">Во время переписки, поднесите телефон к уху, чтобы позвонить</string>
-  <string name="pref_delivery">Отчеты о доставке</string>
-  <string name="pref_delivery_summary">Запрашивать отчет о доставке для всех отправленных SMS</string>
+  <string name="pref_prox_sensor_call_summary">Во время переписки поднесите телефон к уху, чтобы позвонить</string>
+  <string name="pref_delivery">Отчёты о доставке</string>
+  <string name="pref_delivery_summary">Запрашивать отчёт о доставке для всех отправленных SMS</string>
   <string name="pref_delivery_toast">Показывать toast-уведомление</string>
-  <string name="pref_delivery_toast_summary">Показать короткий тост для обозначения что сообщения отправляються</string>
+  <string name="pref_delivery_toast_summary">Показать короткое уведомление для обозначения того, что сообщения отправляються</string>
   <string name="pref_delivery_vibrate">Вибрация</string>
   <string name="pref_delivery_vibrate_summary">Вибрировать при получении сообщения</string>
   <string name="pref_delete_old_messages">Удалить старые сообщения</string>
@@ -169,20 +169,20 @@
   <string name="pref_delete_old_messages_unread_summary">Автоматически удалить непрочитанные сообщения после %s дней</string>
   <string name="pref_delete_old_messages_read">Прочитанные сообщения</string>
   <string name="pref_delete_old_messages_read_summary">Автоматически удалять прочитанные сообщения после %s дней</string>
-  <string name="pref_yappy">поддержка Yappy</string>
+  <string name="pref_yappy">Поддержка Yappy</string>
   <string name="pref_endlessjabber_summary">Включить полную поддержку приложения Yappy</string>
   <string name="pref_blocked_conversations">Заблокированные переписки</string>
-  <string name="pref_blocked_conversations_summary">длительным нажатием можно будет перенести в заблокированные входящие и отключить уведомления</string>
-  <string name="pref_block_future">заблокировать будущие сообщения</string>
+  <string name="pref_blocked_conversations_summary">Длительным нажатием можно будет перенести в заблокированные входящие и отключить уведомления</string>
+  <string name="pref_block_future">Заблокировать будущие сообщения</string>
   <string name="pref_block_future_summary">Добавить дополнительные номера телефонов для блокирования</string>
-  <string name="pref_should_i_answer">Поддержка приложения \"Небери трубку\"</string>
-  <string name="pref_should_i_answer_summary">Автоматически удалять входящие сообщения с номеров, которые блокируются через Небери трубку</string>
+  <string name="pref_should_i_answer">Поддержка приложения \"Should I Answer?\"</string>
+  <string name="pref_should_i_answer_summary">Автоматически удалять входящие сообщения с номеров, которые блокируются через \"Should I Answer?\"</string>
   <string name="pref_mobile_only">Номера телефонов</string>
   <string name="pref_mobile_only_summary">Показывать только мобильные номера в предложениях контактов</string>
   <string name="pref_auto_emoji">Автоматические emoji</string>
   <string name="pref_auto_emoji_summary">Заменить текст изображениями emoji</string>
   <string name="pref_enter_button">Кнопка \"Enter\"</string>
-  <string name="pref_enter_button_summary">нажмите чтобы указать что делать при нажатии \"enter\"</string>
+  <string name="pref_enter_button_summary">Нажмите, чтобы указать действие при нажатии \"Enter\"</string>
   <string name="pref_compose_group">Групповое сообщение</string>
   <string name="pref_compose_group_summary">При создании сообщения нескольким людям, отправлять групповое сообщение вместо индивидуальных сообщений</string>
   <string name="pref_auto_download">Автоматическая загрузка MMS</string>
@@ -191,25 +191,25 @@
   <string name="pref_auto_data_summary">Включать передачу данных автоматически при отправке или получении MMS</string>
   <string name="pref_split">Разделять SMS</string>
   <string name="pref_split_summary">Разделять длинные сообщения на несколько отдельных</string>
-  <string name="pref_split_counter">Счетчик сообщений</string>
-  <string name="pref_split_counter_summary">Показывать номер каждого разделенного сообщения</string>
+  <string name="pref_split_counter">Счётчик сообщений</string>
+  <string name="pref_split_counter_summary">Показывать номер каждого разделённого сообщения</string>
   <string name="pref_long_as_mms">Отправка длинных сообщений в MMS</string>
   <string name="pref_long_as_mms_summary">Отправлять длинные сообщения в виде MMS вместо разделения на несколько сообщений</string>
   <string name="pref_long_as_mms_after">Отправлять длинные сообщения как MMS после</string>
   <string name="pref_long_as_mms_after_summary">Отправлять длинные сообщения как MMS, когда они превышают длину нескольких сообщений</string>
-  <string name="pref_return">Показать кнопку Возврата</string>
-  <string name="pref_return_summary">Показывать кнопку Возврата строки вместо кнопки смайликов</string>
+  <string name="pref_return">Показать кнопку перевода строки</string>
+  <string name="pref_return_summary">Показывать кнопку перевода строки вместо кнопки смайликов</string>
   <string name="pref_text">Текст</string>
   <string name="pref_notifications">SMS-уведомления</string>
   <string name="pref_led">LED-уведомление</string>
   <string name="pref_theme_led">Цвет LED-уведомления</string>
-  <string name="pref_wake">разбудить устройство</string>
-  <string name="pref_wake_summary">включать экран когда приходит новое сообщение</string>
+  <string name="pref_wake">Будить устройство</string>
+  <string name="pref_wake_summary">Включать экран когда приходит новое сообщение</string>
   <string name="pref_notifications_private">Частные уведомления</string>
-  <string name="pref_notifications_private_summary">Нажмите, чтобы скрыть то что не должно отображаться</string>
+  <string name="pref_notifications_private_summary">Выберете что показывать в уведомлении</string>
   <string name="pref_ringtone">Звук уведомления</string>
   <string name="pref_ringtone_summary">Выберите звук уведомления</string>
-  <string name="pref_ticker">Показывать тикер</string>
+  <string name="pref_ticker">Показывать бегущую строку</string>
   <string name="pref_ticker_summary">Показывать фрагмент нового сообщения в панели уведомлений</string>
   <string name="pref_vibration">Вибросигнал</string>
   <string name="pref_vibration_summary">Вибрировать при получении новых сообщений</string>
@@ -225,15 +225,15 @@
   <string name="pref_night_auto_summary">Включать ночной режим автоматически на основе времени</string>
   <string name="pref_day_start">День начинается</string>
   <string name="pref_night_start">Ночь начинается</string>
-  <string name="pref_qk_responses">быстрые ответы</string>
-  <string name="pref_qk_responses_summary">Измените ваши настройки ответов для использования в Android Wear устройствах</string>
-  <string name="pref_quickreply_enabled">быстрые ответы включены</string>
-  <string name="pref_quickreply_enabled_summary">Показать окно быстрых ответов когда приходит новое сообщение</string>
-  <string name="pref_tap_to_quit">Нажатие на экране чтобы закрыть QuickReply</string>
-  <string name="pref_tap_to_quit_summary">Касание любого места за пределами окна, закроет его</string>
-  <string name="pref_quickcompose">быстрые сообщения включены</string>
+  <string name="pref_qk_responses">Быстрые ответы</string>
+  <string name="pref_qk_responses_summary">Измените ваши настройки ответов для использования в устройствах Android Wear</string>
+  <string name="pref_quickreply_enabled">Быстрые ответы включены</string>
+  <string name="pref_quickreply_enabled_summary">Показать окно быстрых ответов, когда приходит новое сообщение</string>
+  <string name="pref_tap_to_quit">Касание экрана, чтобы закрыть быстрый ответ</string>
+  <string name="pref_tap_to_quit_summary">Коснитесь любого места за пределами окна, чтобы закрыть его</string>
+  <string name="pref_quickcompose">Быстрые сообщения включены</string>
   <string name="pref_quickcompose_summary">Отображать уведомление, которое позволит быстро написать новое сообщение</string>
-  <string name="pref_mms_enabled">MMS включено</string>
+  <string name="pref_mms_enabled">MMS включены</string>
   <string name="pref_mms_enabled_summary">Включение отправки и получения MMS-сообщений</string>
   <string name="pref_mmsc_url">MMSC</string>
   <string name="pref_mms_proxy">Прокси MMS</string>
@@ -241,7 +241,7 @@
   <string name="pref_apn_chooser">Загрузка стандартных настроек APN</string>
   <string name="pref_strip_unicode">Преобразовать в Unicode</string>
   <string name="pref_strip_unicode_summary">Преобразовать несовместимые символы, которые не поддерживаются в длинных сообщениях для GSM</string>
-  <string name="pref_system_bar_flat">плоская системная панель</string>
+  <string name="pref_system_bar_flat">Плоская системная панель</string>
   <string name="pref_system_bar_flat_summary">Чтобы избавиться от градиента на панели пользовательского интерфейса системы на большинстве устройств KitKat</string>
   <string name="pref_status_compat">Исправление проблем со строкой состояния</string>
   <string name="pref_status_compat_summary">Устраняет проблемы, вызванные режимом \"Погружение\", модулем Tinted Status Bar (Xposed) или пользовательскими настройками DPI</string>
@@ -254,17 +254,17 @@
   <string name="pref_about_thanks_title">Спасибо</string>
   <string name="pref_about_thanks_summary">Нажмите для просмотра разработчиков открытого исходного кода</string>
   <string name="pref_donate_title">Пожертвования</string>
-  <string name="pref_donate_summary">QKSMS является бесплатным. Поддержите нас, материально!</string>
+  <string name="pref_donate_summary">QKSMS является бесплатным. Поддержите нас материально!</string>
   <string name="pref_about_gplus_title">Google+</string>
   <string name="pref_about_gplus_summary">Присоединяйтесь к бета-тестированию QKSMS в Google+</string>
   <string name="pref_about_github_title">GitHub</string>
-  <string name="pref_about_github_summary">QKSMS это открытый проект, сообщать о проблемах и вносить изменения можно на GitHub</string>
+  <string name="pref_about_github_summary">QKSMS — это открытый проект, сообщать о проблемах и вносить изменения можно на GitHub</string>
   <string name="pref_about_crowdin_title">Crowdin</string>
   <string name="pref_about_crowdin_summary">Присоединяйтесь к проекту перевода QKSMS на другие языки на Crowdin</string>
   <!--Preference subcategory-->
   <string name="pref_subcat_theme">Тема</string>
   <!--Preference subcategory-->
-  <string name="pref_subcat_system_bars">системные панели</string>
+  <string name="pref_subcat_system_bars">Системные панели</string>
   <!--Preference subcategory-->
   <string name="pref_subcat_categories">Категории</string>
   <!--Preference subcategory-->
@@ -274,10 +274,10 @@
   <!--Preference subcategory-->
   <string name="pref_subcat_avatars">Аватары</string>
   <string name="donate_google">Пожертвовать с помощью Google</string>
-  <string name="donate_google_summary">Google берёт 30% от пожертвований</string>
+  <string name="donate_google_summary">Google берёт 30% от суммы пожертвования</string>
   <string name="donate_paypal">Пожертвовать через PayPal</string>
   <string name="donate_paypal_button">Пожертвовать любую сумму</string>
-  <string name="donate_paypal_button_summary">Купите мне что-нибудь, что вы хотите!</string>
+  <string name="donate_paypal_button_summary">Купите мне что-нибудь на свой выбор!</string>
   <!--Donation product name-->
   <string name="product_name_donation">Пожертвование</string>
   <!--$1 donation product name-->
@@ -300,10 +300,10 @@
   <string name="title_changelog">История изменений</string>
   <string name="title_picker">Новые сообщения</string>
   <string name="title_donate">Пожертвовать</string>
-  <string name="title_qk_responses">быстрые ответы</string>
-  <string name="title_block_address">заблокировать номер</string>
+  <string name="title_qk_responses">Быстрые ответы</string>
+  <string name="title_block_address">Заблокировать номер</string>
   <string name="title_unblock_address">Разблокировать номер</string>
-  <string name="title_conversations_selected">%s выбран</string>
+  <string name="title_conversations_selected">%s выбрано</string>
   <string name="title_palette">Палитра</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
@@ -315,7 +315,7 @@
   <!-- Context menu item on an individual message for viewing message details such as time and date -->
   <string name="view_message_details">Показать подробности</string>
   <!-- Context menu item on an individual message for viewing a delivery report -->
-  <string name="view_delivery_report">Просмотреть отчет</string>
+  <string name="view_delivery_report">Просмотреть отчёт</string>
   <!-- Context menu item on an individual message for deleting only that message -->
   <string name="delete_message">Удалить</string>
   <!-- Abbreviation for "kilobyte" -->
@@ -340,11 +340,11 @@
   <!--(Unused) Dialog title shown if APNs have not been set-->
   <string name="apns_not_set">APN не задано</string>
   <!--(Unused) Dialog description shown if APNs have not been set-->
-  <string name="apns_not_set_description">Похоже, что ваша точка доступа APN для MMS не была настроена. Это означает, что MMS не будет работать должным образом. Нажмите пожалуйста ОК, чтобы QKSMS нашел их для вас :)</string>
+  <string name="apns_not_set_description">Похоже, что ваша точка доступа APN для MMS не была настроена. Это означает, что MMS не будет работать должным образом. Нажмите ОК, чтобы QKSMS нашёл настройки для вас :)</string>
   <!--Dialog title show if MMS hasn't been configured-->
   <string name="set_up_mms_title">Настроить MMS?</string>
   <!--Dialog description shown if MMS hasn't yet been configured-->
-  <string name="set_up_mms_description">Похоже, что MMS еще не был настроен в QKSMS. Нажмите ok чтобы автоматически настроить MMS.</string>
+  <string name="set_up_mms_description">Похоже, что MMS ещё не были настроены в QKSMS. Нажмите OK, чтобы автоматически настроить MMS.</string>
   <!-- Dialog message text explaining that a draft message will not be saved due to invalid recipients -->
   <string name="discard_message_reason">Ваше сообщение не будет сохранено, поскольку оно не имеет верного получателя.</string>
   <string name="invalid_code">Неверный код</string>
@@ -393,7 +393,7 @@
   <!-- Formatting for subject displayed inline, prepended to MMS message text -->
   <string name="inline_subject">"&lt;Subject: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
   <!-- Text of a button appearing for MMS messages that have not yet been downloaded, causing the message to be downloaded (imperative verb) -->
-  <string name="download">Скачать</string>
+  <string name="download">Загрузить</string>
   <!-- Message displayed in place of the "download message" button once it has been pressed, indicating that the download is in progress -->
   <string name="downloading">Загрузка</string>
   <!-- Toast message while an image is being resized -->
@@ -409,7 +409,7 @@
   <string name="menu_unlock">Разблокировать</string>
   <!-- When the user tries to view message details and some error occurs while
          retrieving those details, this message will be shown. -->
-  <string name="cannot_get_details">Не удается получить сведения.</string>
+  <string name="cannot_get_details">Не удаётся получить сведения.</string>
   <!-- Title of "Message details" dialog -->
   <string name="message_details_title">Детали сообщения</string>
   <!-- Label in "Message details" dialog -->
@@ -431,7 +431,7 @@
   <!-- Label in "Message details" dialog -->
   <string name="received_label">Принято\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="saved_label">Сохранённые\u000A</string>
+  <string name="saved_label">Сохранено\u000A</string>
   <!-- Label in "Message details" dialog -->
   <string name="subject_label">Тема\u000A</string>
   <!-- Label in "Message details" dialog -->
@@ -480,18 +480,18 @@
   <!-- Status in "Report" window -->
   <string name="status_received">Полученные</string>
   <!-- Status in "Report" window -->
-  <string name="status_failed">ошибка. Нажмите для выбора вариантов</string>
+  <string name="status_failed">Ошибка. Нажмите для выбора вариантов</string>
   <!-- Status in "Report" window -->
   <string name="status_unread">Непрочитанные</string>
   <!-- Status in "Report" window -->
-  <string name="status_rejected">Отклоненные</string>
+  <string name="status_rejected">Отклонённые</string>
   <!-- Label in "Report" window -->
   <string name="recipient_label">Получатель:\u0020</string>
   <!-- Label in "Report" window -->
   <string name="status_label">Статус:\u0020</string>
   <!-- Label in "Report" window [CHAR LIMIT=50]-->
   <string name="delivered_label">Доставлено:\u0020</string>
-  <string name="do_something">сделать что-нибудь</string>
+  <string name="do_something">Сделать что-нибудь</string>
   <!-- Confirm Delete -->
   <!-- Delete confirmation dialog title -->
   <string name="confirm_dialog_title">Удалить?</string>
@@ -522,37 +522,37 @@
   <!-- Delete button title -->
   <string name="delete">Удалить</string>
   <!-- More button title -->
-  <string name="more">дополнительно</string>
+  <string name="more">Дополнительно</string>
   <!-- More button summary -->
   <string name="more_summary">Нажмите, чтобы увидеть больше</string>
   <!-- Action bar mode title when multi-selecting conversations -->
   <string name="select_conversations">Выберите переписку</string>
   <!-- Show this in the middle of the main activity when there are no conversations [CHAR LIMIT=none] -->
-  <string name="no_conversations">нет разговоров.</string>
+  <string name="no_conversations">Нет разговоров.</string>
   <!-- Show this in the middle of the main activity when loading conversations [CHAR LIMIT=none] -->
   <string name="loading_conversations">Загрузка разговоров.</string>
   <!-- Tells the user that QKSMS isn't the default SMS app -->
-  <string name="not_default">приложение SMS по умолчанию</string>
+  <string name="not_default">Приложение SMS по умолчанию</string>
   <!-- Tells the user they need to set QKSMS as the default app in order to use this feature -->
-  <string name="default_info">QKSMS должен быть приложением по умолчанию для SMS чтобы использовать эту функцию</string>
+  <string name="default_info">QKSMS должен быть приложением по умолчанию для SMS, чтобы использовать эту функцию</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as read -->
-  <string name="not_default_mark_read">QKSMS должен быть приложением по умолчанию для SMS чтобы отметить сообщения прочитанными</string>
+  <string name="not_default_mark_read">QKSMS должен быть приложением по умолчанию для SMS, чтобы отметить сообщения прочитанными</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to mark messages as unread -->
-  <string name="not_default_mark_unread">QKSMS должен быть приложением по умолчанию для SMS чтобы отметить сообщения НЕпрочитанными</string>
+  <string name="not_default_mark_unread">QKSMS должен быть приложением по умолчанию для SMS, чтобы отметить сообщения НЕпрочитанными</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to send messages -->
-  <string name="not_default_delete">QKSMS должен быть приложением по умолчанию для SMS чтобы удалять сообщения</string>
+  <string name="not_default_delete">QKSMS должен быть приложением по умолчанию для SMS, чтобы удалять сообщения</string>
   <!-- Tells the user they need to set QKSMS as the default messaging app in order to delete messages -->
-  <string name="not_default_send">QKSMS должен быть приложением по умолчанию для SMS чтобы отправлять сообщения</string>
+  <string name="not_default_send">QKSMS должен быть приложением по умолчанию для SMS, чтобы отправлять сообщения</string>
   <!-- Tells the user they should set QKSMS as the default messaging app -->
   <string name="not_default_first">Некоторые вещи не будут работать до тех пор, пока QKSMS не будет назначен приложением по умолчанию для SMS</string>
   <string name="delayed_messaging_info">Задержка сообщений позволяет вам отменить сообщения перед отправкой. Изменить поведение по умолчанию можно в настройках</string>
-  <string name="delayed_duration_bounds_error">Длительность должна быть между 1 и 30 секунд</string>
+  <string name="delayed_duration_bounds_error">Длительность должна быть между 1 и 30 секундами</string>
   <!-- Dialog title for the Read Report dialog. -->
   <string name="confirm">Подтвердить</string>
   <!-- Dialog text for the Read Report dialog. -->
   <string name="message_send_read_report">Отчет о прочтении будет отправлен.</string>
   <!-- Dialog title for updating app icon color -->
-  <string name="update_icon_title">обновить цвет значка</string>
+  <string name="update_icon_title">Обновить цвет значка</string>
   <!-- Dialog message for updating app icon color -->
   <string name="update_icon_message">QKSMS должен быть перезапущен для изменения цвета значка</string>
   <string name="dialog_conversation_details_title">Подробности переписки</string>
@@ -561,7 +561,7 @@
   <string name="dialog_conversation_details_recipients">Получатели (%s)</string>
   <string name="dialog_should_i_answer_title">Небери трубку не установлено</string>
   <string name="dialog_should_i_answer_message">Скачать приложение с Google Play сейчас?</string>
-  <string name="dialog_delete_old_messages">Вы уверены что хотите чтобы старые сообщения удалялись автоматически?</string>
+  <string name="dialog_delete_old_messages">Вы уверены, что хотите, чтобы старые сообщения удалялись автоматически?</string>
   <!-- Title for audio file picker -->
   <string name="select_audio">Выбрать аудио</string>
   <!-- Menu title to copy an attachment to the shared storage [CHAR LIMIT=25] -->
@@ -573,9 +573,9 @@
   <!-- Menu title to save a sound as a ringtone -->
   <string name="save_ringtone">Сохранить как рингтон</string>
   <!-- Toast message on successful copying ringtone to drm provider -->
-  <string name="saved_ringtone">Рингтон сохранен.</string>
+  <string name="saved_ringtone">Рингтон сохранён.</string>
   <!-- Toast message on failed copying ringtone to drm provider -->
-  <string name="saved_ringtone_fail">Не удается сохранить рингтон.</string>
+  <string name="saved_ringtone_fail">Не удаётся сохранить рингтон.</string>
   <!-- Menu item -->
   <!-- Menu item  [CHAR LIMIT=40] -->
   <string name="menu_group_participants">Участники группы</string>
@@ -587,7 +587,7 @@
   <string name="toast_low_memory">"Память телефона заполнена. Удалите некоторые файлы, чтобы освободить пространство."</string>
   <!--Toast shown to tell user that forwarding messages doesn't work yet-->
   <string name="toast_forward">Эта функция пока не реализована. 
-А сейчас, пожалуйста, используйте Копировать и Вставить текст в переписку, который вы хотите переслать</string>
+А сейчас, пожалуйста, используйте копирование и вставку текста в переписку, который вы хотите переслать</string>
   <!--Toast shown for unimplemented features-->
   <string name="toast_unimplemented">Эта функция пока не реализована</string>
   <!--Toast shown when a message fails to send-->
@@ -601,24 +601,24 @@
   <!--Toast shown when text is copied to the clipboard-->
   <string name="toast_copy_text">Текст скопирован в буфер</string>
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
-  <string name="toast_billing_not_available">Для покупки требуется учетная запись магазина Google Play</string>
+  <string name="toast_billing_not_available">Для покупки требуется учёная запись магазина Google Play</string>
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber не установлен, открытие Google Play</string>
-  <string name="toast_changelog_error">Не удается загрузить список изменений. Пожалуйста, повторите попытку позже</string>
-  <string name="toast_conversation_error">Не удается открыть переписку</string>
-  <string name="toast_deleting_old_messages">Ваши старые сообщения скоро будут удалены</string>
+  <string name="toast_changelog_error">Не удаётся загрузить список изменений. Пожалуйста, повторите попытку позже</string>
+  <string name="toast_conversation_error">Не удаётся открыть переписку</string>
+  <string name="toast_deleting_old_messages">Спасибо за пожертвование! Вы восхитительны.</string>
   <!--Toast shown to thank user for donating-->
-  <string name="thanks_1">Благодарим за пожертвование! Теперь Вы наш новый лучший друг.</string>
+  <string name="thanks_1">Благодарим за пожертвование! Теперь вы наш новый лучший друг.</string>
   <!--Toast shown to thank user for donating-->
-  <string name="thanks_2">Спасибо за пожертвование! Мы любим тебя.</string>
+  <string name="thanks_2">Спасибо за пожертвование! Мы любим вас.</string>
   <!--Toast shown to thank user for donating-->
-  <string name="thanks_3">Спасибо за пожертвование! Вы помогаете QKSMS стать лучшим приложением для переписки когда либо сделанным.</string>
+  <string name="thanks_3">Спасибо за пожертвование! Вы помогаете QKSMS стать лучшим приложением для переписки из когда-либо созданных.</string>
   <!--Toast shown to thank user for donating-->
-  <string name="thanks_4">Спасибо за пожертвование! Ты классный.</string>
+  <string name="thanks_4">Спасибо за пожертвование! Вы восхитительны.</string>
   <!--Menu option to mute conversation-->
-  <string name="menu_mute_conversation">выключить звук уведомления в переписке</string>
+  <string name="menu_mute_conversation">Выключить звук уведомления в переписке</string>
   <!--Menu option to mute conversation-->
-  <string name="menu_unmute_conversation">включить звук уведомлений в переписке</string>
+  <string name="menu_unmute_conversation">Включить звук уведомлений в переписке</string>
   <string name="menu_block_conversations">Заблокировать переписки</string>
   <string name="menu_unblock_conversations">Разблокировать переписки</string>
   <string name="menu_messages">Сообщения</string>
@@ -636,27 +636,27 @@
   <string name="menu_done">Готово</string>
   <string name="failed_message_title">Параметры ошибки сообщения</string>
   <!--Toast shown to tell the user that they don't have a photo attachments app, and suggests that they download one-->
-  <string name="attachment_app_not_found">Приложение не найдено. Попробуйте установить приложение для просмотра Фото!</string>
-  <string name="attachment_camera_error">нет доступа к камере</string>
+  <string name="attachment_app_not_found">Приложение не найдено. Попробуйте установить приложение для просмотра изображений!</string>
+  <string name="attachment_camera_error">Нет доступа к камере</string>
   <string name="pref_max_mms_attachment_size">Максимальный размер вложения MMS</string>
   <string name="error_no_recipients">Выберите несколько контактов, чтобы отправить это сообщение!</string>
   <string name="error_file_not_found">QKSMS не может получить доступ к файлу, которым вы пытаетесь поделиться!</string>
-  <string name="sending_blocked_welcome_screen_message">вы быстро и легко сможете общаться!</string>
-  <string name="notification_colored_icon_ready">нажмите чтобы добавить значёк на рабочий стол.</string>
-  <string name="notification_title_colored_icon_ready">QKSMS цвет значка Готов</string>
+  <string name="sending_blocked_welcome_screen_message">Вы сможете общаться быстро и легко!</string>
+  <string name="notification_colored_icon_ready">Нажмите, чтобы добавить значок на домашний экран.</string>
+  <string name="notification_title_colored_icon_ready">Цветной значок QKSMS готов</string>
   <string name="icon_ready">Ваш новый значок готов!</string>
   <string name="icon_ready_message">Теперь можно добавить его на домашний экран с обновлённым цветом.</string>
   <string name="dont_ask_again">Не спрашивать снова</string>
-  <string name="warning">уязвимость Stagefright</string>
-  <string name="stagefright_warning">Видео сообщения могут содержать вредоносные данные которые могут открывать доступ к системе вашего устройства злоумышленникам. хотите продолжить?</string>
+  <string name="warning">Уязвимость Stagefright</string>
+  <string name="stagefright_warning">Видеосообщения могут содержать вредоносные данные, которые могут открывать доступ к системе вашего устройства злоумышленникам. Хотите продолжить?</string>
   <!-- MMS DIALOG SETUP STRINGS -->
   <string name="mms_setup_set_up_mms_title">Настроить MMS?</string>
-  <string name="mms_setup_set_up_mms_body">Похоже, что MMS еще не настроен в QKSMS. Нажмите ok, чтобы настроить автоматически.</string>
+  <string name="mms_setup_set_up_mms_body">Похоже, что MMS ещё не настроены в QKSMS. Нажмите OK, чтобы настроить автоматически.</string>
   <string name="mms_setup_setting_up_later_title">Настроить MMS позже</string>
-  <string name="mms_setup_setting_up_later_body">Посетите раздел MMS настройки, чтобы попробовать автоматическую конфигурацию, обратиться в службу поддержки, или ввести собственную конфигурацию.</string>
-  <string name="mms_setup_no_configurations_found_title">настройки не обнаружены</string>
-  <string name="mms_setup_no_configurations_found_body">Мы не смогли найти настройки MMS для вашего оператора автоматически. Нажмите ok чтобы связаться со службой поддержки. Мы поможем вам настроить! </string>
-  <string name="mms_setup_one_configuration_found_title">обнаружена 1 настройка</string>
+  <string name="mms_setup_setting_up_later_body">Посетите раздел настройки MMS, чтобы попробовать автоматическую конфигурацию, обратиться в службу поддержки или ввести собственную конфигурацию.</string>
+  <string name="mms_setup_no_configurations_found_title">Настройки не обнаружены</string>
+  <string name="mms_setup_no_configurations_found_body">Мы не смогли найти настройки MMS для вашего оператора автоматически. Нажмите OK, чтобы связаться со службой поддержки. Мы поможем вам настроить! </string>
+  <string name="mms_setup_one_configuration_found_title">Обнаружена 1 настройка</string>
   <string name="mms_setup_one_configuration_found_body">Мы нашли MMS настройки для оператора %s. возможно они подойдут</string>
   <string name="mms_setup_multiple_configurations_found_title">обнаружено несколько конфигураций</string>
   <string name="mms_setup_multiple_configurations_found_body">Мы нашли несколько конфигураций MMS. Выберите вашего оператора из списка, или если ваш оператор отсутствует в списке, нажмите н/д.</string>
@@ -672,7 +672,7 @@
   <string name="pref_category_mms_configuration">Настройка MMS</string>
   <string name="pref_mms_contact_support_summary">Связаться с командой QKSMS для помощи в настройке MMS</string>
   <string name="pref_markdown_enabled">Форматирование текста</string>
-  <string name="pref_markdown_enabled_summary">Используйте полужирный шрифт, подчеркивание, и курсив в ваших сообщениях</string>
+  <string name="pref_markdown_enabled_summary">Используйте полужирный шрифт, подчёркивание и курсив в ваших сообщениях</string>
   <string name="want_read_indicators">Хотите ли читать индикаторы?</string>
   <string name="color_swatch_description">Цвет %1$d</string>
   <string name="color_swatch_description_selected">%1$d цвет выбран</string>
@@ -684,8 +684,8 @@
   <string name="service_not_activated">Услуга не доступна в сети.</string>
   <string name="service_message_not_found">Истекло время хранения сообщения или сервис не доступен.</string>
   <string name="service_network_problem">Не удалось отправить из-за проблем с сетью.</string>
-  <string name="message_queued">В настоящее время не удается отправить ваше сообщение. Оно будет отправлено, когда сервис станет доступным.</string>
-  <string name="download_later">Не удается загрузить прямо сейчас. Повторите попытку позже.</string>
+  <string name="message_queued">В настоящее время не удаётся отправить ваше сообщение. Оно будет отправлено, когда сервис станет доступным.</string>
+  <string name="download_later">Не удаётся загрузить прямо сейчас. Повторите попытку позже.</string>
   <string name="no_apn">Не указан APN для приложения, необходимо задать его в настройках!</string>
   <string name="no_subject">(Тема не указана)</string>
   <string name="unknown_sender">Неизвестный отправитель</string>
@@ -695,11 +695,11 @@
   <string name="auto_select_failed_title">Ошибка автоматической конфигурации</string>
   <string name="auto_select_failed">Попробуйте найти настройки APN для вашего оператора (MMSC, порт и прокси) и введите их в настройки &gt; Дополнительно.</string>
   <string name="date_yesterday">Вчера</string>
-  <string name="date_just_now">сейчас</string>
+  <string name="date_just_now">Сейчас</string>
   <string name="compose_loading_attachment">Загрузка вложений</string>
-  <string name="hint_no_messages">Пока нет сообщений. \nНажми + чтобы написать!</string>
+  <string name="hint_no_messages">Пока нет сообщений. \nНажмите +, чтобы написать!</string>
   <string-array name="resend_menu">
-    <item>повторно отправить</item>
+    <item>Отправить повторно</item>
     <item>Изменить</item>
     <item>Удалить</item>
   </string-array>
@@ -721,9 +721,10 @@
     <item>Самый крупный</item>
   </string-array>
   <string-array name="font_families">
-    <item>Roboto обычный</item>
-    <item>Roboto узкий</item>
-    <item>Системный шрифт</item>
+    <item>Avenir</item>
+    <item>Roboto Regular</item>
+    <item>Roboto Condensed</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Тонкий</item>

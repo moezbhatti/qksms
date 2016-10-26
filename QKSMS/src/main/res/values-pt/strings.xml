@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Versão, alterações, autores e agradecimentos</string>
   <string name="pref_theme">Cor do tema</string>
   <string name="pref_theme_summary_alt">Toque para mudar de tema</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Cor do ícone</string>
+  <string name="pref_icon_summary">Toque para alterar a cor do ícone do QKSMS</string>
   <string name="pref_status_tint">Barra de estado colorida</string>
   <string name="pref_navigation_tint">Barra de navegação colorida</string>
   <string name="pref_background">Cor de fundo</string>
@@ -719,9 +719,10 @@
     <item>Enorme</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Fonte do sistema</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Leve</item>

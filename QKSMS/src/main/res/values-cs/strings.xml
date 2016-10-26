@@ -25,7 +25,7 @@
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
   <string name="new_messages">nové zprávy</string>
   <!--Text shown for single failed message in notification-->
-  <string name="failed_message">Odeslání zprávy se nezdařilo</string>
+  <string name="failed_message">Zprávu se nepodařilo odeslat</string>
   <!--Text shown after number of failed messages in notification (ex. 3 messages failed to send)-->
   <string name="failed_messages">nezdařených pokusů o odeslání zprávy</string>
   <!--Text shown under failed message count-->
@@ -55,9 +55,9 @@
   <!--Prompts user to try QK Reply-->
   <string name="welcome_quickreply_hint">Vyzkoušet!</string>
   <!--QK Reply demo message-->
-  <string name="welcome_quickreply_message_1">Wow! Now wasn\'t that awesome? You can view your entire conversation at a glance. Tap outside the popup or press the checkmark to dismiss it.</string>
+  <string name="welcome_quickreply_message_1">Páni! No není to úžasné? Na první pohled můžete vidět hned celou konverzaci. Pro zavření klepněte na ikonu zatržítka nebo kamkoliv mimo okno se zprávou.</string>
   <!--QK Reply demo message-->
-  <string name="welcome_quickreply_message_2">This is QK Reply. Now you can reply to messages from anywhere. Tap the expand button to see what happens next :)</string>
+  <string name="welcome_quickreply_message_2">Toto je QK odpověď. Na zprávy můžete odpovídat z libovolného místa. Klepněte na tlačítko Zobrazit vše a uvidíte, co se stane dál :)</string>
   <!--Settings option in menu-->
   <string name="menu_settings">Nastavení</string>
   <!--Search option in menu-->
@@ -119,12 +119,12 @@
   <string name="pref_category_summary_about">Verze, seznam změn, autoři, poděkování</string>
   <string name="pref_theme">Barva motivu</string>
   <string name="pref_theme_summary_alt">Nastavení hlavní barvy</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Barva ikony</string>
+  <string name="pref_icon_summary">Nastavení barvy ikony aplikace QKSMS</string>
   <string name="pref_status_tint">Transparentní stavový panel</string>
   <string name="pref_navigation_tint">Transparentní navigační panel</string>
   <string name="pref_background">Barva pozadí</string>
-  <string name="pref_background_summary">Klepnutím změníte barvu pozadí</string>
+  <string name="pref_background_summary">Nastavení barvy pozadí</string>
   <string name="pref_bubbles">Bubliny zpráv</string>
   <string name="pref_bubbles_summary">Nastavení možností bublin zpráv</string>
   <string name="pref_night">Noční režim</string>
@@ -174,7 +174,7 @@
   <string name="pref_blocked_conversations">Blokované konverzace</string>
   <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
   <string name="pref_block_future">Blokovat budoucí zprávy</string>
-  <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+  <string name="pref_block_future_summary">Zablokování dalších telefonních čísel</string>
   <string name="pref_should_i_answer">Integrace Můžu to zvednout?</string>
   <string name="pref_should_i_answer_summary">Automaticky mazat příchozí zprávy z čísel blokovaných pomocí aplikace „Můžu to zvednout?“</string>
   <string name="pref_mobile_only">Mobilní čísla</string>
@@ -182,7 +182,7 @@
   <string name="pref_auto_emoji">Automatické emoji</string>
   <string name="pref_auto_emoji_summary">Nahradit text obrázkem emoji</string>
   <string name="pref_enter_button">Tlačítko Enter</string>
-  <string name="pref_enter_button_summary">Klepněte pro změnu chování tlačítka Enter</string>
+  <string name="pref_enter_button_summary">Nastavení chování tlačítka Enter</string>
   <string name="pref_compose_group">Skupinové zprávy</string>
   <string name="pref_compose_group_summary">Při psaní zprávy více lidem, poslat skupinovou zprávu místo jednotlivých zpráv</string>
   <string name="pref_auto_download">Automaticky stahovat MMS</string>
@@ -206,7 +206,7 @@
   <string name="pref_wake">Probudit telefon</string>
   <string name="pref_wake_summary">Zapnout obrazovku při obdržení nové zprávy</string>
   <string name="pref_notifications_private">Soukromé oznámení</string>
-  <string name="pref_notifications_private_summary">Klepnutím nastavíte, co má být v oznámení skryto</string>
+  <string name="pref_notifications_private_summary">Nastavení, co má být v oznámení skryto</string>
   <string name="pref_ringtone">Zvukové upozornění</string>
   <string name="pref_ringtone_summary">Vybrat zvuk pro upozornění</string>
   <string name="pref_ticker">Zobrazí ticker</string>
@@ -224,13 +224,13 @@
   <string name="pref_night_auto">Automatický noční režim</string>
   <string name="pref_night_auto_summary">Zapnout noční režim automaticky podle času</string>
   <string name="pref_day_start">Začátek dne</string>
-  <string name="pref_night_start">Noční čas začíná</string>
+  <string name="pref_night_start">Začátek noci</string>
   <string name="pref_qk_responses">QK odpovědi</string>
   <string name="pref_qk_responses_summary">Nastavení předvolených odpovědí pro použití z vašeho Android Wear zařízení</string>
   <string name="pref_quickreply_enabled">QK odpověď zapnuta</string>
-  <string name="pref_quickreply_enabled_summary">Show QK Reply window whenever a new message is received</string>
+  <string name="pref_quickreply_enabled_summary">Zobrazit okno QK odpověď při obdržení nové zprávy</string>
   <string name="pref_tap_to_quit">Klepnutím zavřít</string>
-  <string name="pref_tap_to_quit_summary">Tap anywhere outside of the window to close it</string>
+  <string name="pref_tap_to_quit_summary">Klepnutí kdekoliv mimo okno zprávy jej zavře</string>
   <string name="pref_quickcompose">QK Compose enabled</string>
   <string name="pref_quickcompose_summary">Zobrazí v oznamovacím panelu možnost napsat rychlou zprávu</string>
   <string name="pref_mms_enabled">MMS zapnuty</string>
@@ -252,7 +252,7 @@
   <string name="pref_about_authors_summary">Moez Bhatti</string>
   <string name="pref_changelog_summary">Klepnutím zobrazíte seznam změn</string>
   <string name="pref_about_thanks_title">Poděkování</string>
-  <string name="pref_about_thanks_summary">Klepnutím zobrazíte open source přispěvatele</string>
+  <string name="pref_about_thanks_summary">Open source přispěvatelé</string>
   <string name="pref_donate_title">Přispět</string>
   <string name="pref_donate_summary">QKSMS je zdarma. Podpořte nás a přispějte na vývoj.</string>
   <string name="pref_about_gplus_title">Google+</string>
@@ -296,7 +296,7 @@
   <string name="title_search">Hledat</string>
   <string name="title_compose">Nová zpráva</string>
   <string name="title_conversation_list">Konverzace</string>
-  <string name="title_blocked">Blocked</string>
+  <string name="title_blocked">Blokováno</string>
   <string name="title_changelog">Seznam změn</string>
   <string name="title_picker">Nové zprávy</string>
   <string name="title_donate">Přispět</string>
@@ -309,7 +309,7 @@
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
          contacts. [CHAR LIMIT=50] -->
-  <string name="menu_add_address_to_contacts">Add <xliff:g id="contactEmailOrNumber">%s</xliff:g> to People</string>
+  <string name="menu_add_address_to_contacts">Přidat <xliff:g id="contactEmailOrNumber">„%s“</xliff:g> do kontaktů</string>
   <!-- Context menu item on an individual message for viewing an attached slideshow -->
   <string name="view_slideshow">Zobrazit prezentaci</string>
   <!-- Context menu item on an individual message for viewing message details such as time and date -->
@@ -330,13 +330,13 @@
   <!--Text for app restart confirmation dialog-->
   <string name="restart_message">Změny se projeví až při dalším otevření QKSMS</string>
   <!--Dialog title for asking if a user wants to delete a conversation-->
-  <string name="delete_conversation">Odstranit konverzace</string>
+  <string name="delete_conversation">Odstranit konverzaci</string>
   <!--Dialog title for asking if a user wants to delete all failed messages-->
   <string name="delete_all_failed">Odstranit chybné zprávy</string>
   <!--CDialog title for asking if a user wants to delete a conversation-->
-  <string name="delete_confirmation">Opravdu chcete smazat vybrané konverzace (%s)?</string>
+  <string name="delete_confirmation">Opravdu chcete odstranit vybrané konverzace (%s)?</string>
   <!--CDialog title for asking if a user wants to delete all failed messages-->
-  <string name="delete_all_failed_confirmation">Jste si jisti, že chcete odstranit chybné zprávy z konverzace (%s)?</string>
+  <string name="delete_all_failed_confirmation">Opravdu chcete odstranit chybné zprávy z konverzace (%s)?</string>
   <!--(Unused) Dialog title shown if APNs have not been set-->
   <string name="apns_not_set">Přístupové body APN nenastaveny</string>
   <!--(Unused) Dialog description shown if APNs have not been set-->
@@ -413,7 +413,7 @@
   <!-- Title of "Message details" dialog -->
   <string name="message_details_title">Podrobnosti zprávy</string>
   <!-- Label in "Message details" dialog -->
-  <string name="message_type_label">Type\u000A</string>
+  <string name="message_type_label">Typ\u000A</string>
   <!-- "Type" value in "Message details" dialog -->
   <string name="text_message">Textová zpráva</string>
   <!-- "Type" value in "Message details" dialog -->
@@ -575,7 +575,7 @@
   <!-- Toast message on successful copying ringtone to drm provider -->
   <string name="saved_ringtone">Vyzvánění uloženo.</string>
   <!-- Toast message on failed copying ringtone to drm provider -->
-  <string name="saved_ringtone_fail">Nelze uložit vyzváněcí tón.</string>
+  <string name="saved_ringtone_fail">Vyzváněcí tón nelze uložit.</string>
   <!-- Menu item -->
   <!-- Menu item  [CHAR LIMIT=40] -->
   <string name="menu_group_participants">Skupinoví příjemci</string>
@@ -603,9 +603,9 @@
   <string name="toast_billing_not_available">Nákupy vyžadují Google Play Store (fakturace)</string>
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">Aplikace EndlessJabber není nainstalována, otevírání Google Play</string>
-  <string name="toast_changelog_error">Nelze načíst seznam změn. Opakujte akci později</string>
-  <string name="toast_conversation_error">Nelze otevřít konverzaci</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_changelog_error">Seznam změn nelze načíst. Opakujte akci později.</string>
+  <string name="toast_conversation_error">Konverzaci nelze otevřít</string>
+  <string name="toast_deleting_old_messages">Vaše staré zprávy budou brzy odstraněny</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Děkuji za přispění! Jsi mým novým nejlepším přítelem.</string>
   <!--Toast shown to thank user for donating-->
@@ -636,11 +636,11 @@
   <string name="failed_message_title">Možnosti selhaného odeslání</string>
   <!--Toast shown to tell the user that they don't have a photo attachments app, and suggests that they download one-->
   <string name="attachment_app_not_found">Prohlížeč obrázků nebyl nalezen. Zkuste nainstalovat aplikaci galerie.</string>
-  <string name="attachment_camera_error">Nelze otevřít fotoaparát</string>
+  <string name="attachment_camera_error">Fotoaparát nelze otevřít</string>
   <string name="pref_max_mms_attachment_size">Maximální velikost přílohy MMS</string>
   <string name="error_no_recipients">Zvolte kontakty, kterým bude zpráva zaslána.</string>
   <string name="error_file_not_found">QKSMS nemá přístup k souboru, kterou chcete sdílet!</string>
-  <string name="sending_blocked_welcome_screen_message">Hold up! You\'ll get to send real messages in a minute!</string>
+  <string name="sending_blocked_welcome_screen_message">Držte se! Již za chvíli budete moci odesílat skutečné zprávy!</string>
   <string name="notification_colored_icon_ready">Touch to add to your launcher from home screen.</string>
   <string name="notification_title_colored_icon_ready">Obarvená ikona QKSMS je připravena</string>
   <string name="icon_ready">Vaše nová ikona je připravena!</string>
@@ -692,11 +692,11 @@
   <string name="auto_select_multiple_apns">Bylo nalezeno více konfigurací MMS. Zkuste nějakou. Pokud nebude fungovat, můžete zkusit další když vyberete Nastavení &gt; Pokročilé &gt; Načíst výchozí APN.</string>
   <string name="auto_select_apn">Automaticky vybrat APN</string>
   <string name="auto_select_failed_title">Automatická konfigurace selhala</string>
-  <string name="auto_select_failed">Try searching for your carrier\'s APN settings (MMSC, Port, and Proxy) and entering them in Settings &gt; Advanced.</string>
+  <string name="auto_select_failed">Zkuste vyhledat APN nastavení (MMSC, port a proxy) svého poskytovatele a zadat jej v Nastavení &gt; MMS.</string>
   <string name="date_yesterday">Včera</string>
   <string name="date_just_now">Právě teď</string>
   <string name="compose_loading_attachment">Načítání přílohy</string>
-  <string name="hint_no_messages">Zatím žádné zprávy. \nKlepněte + a nějakou pošlete!</string>
+  <string name="hint_no_messages">Zatím žádné zprávy.\nKlepněte na „+“ a nějakou pošlete!</string>
   <string-array name="resend_menu">
     <item>Znovu odeslat</item>
     <item>Upravit</item>
@@ -720,9 +720,10 @@
     <item>Největší</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Systémové písmo</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Tenký</item>

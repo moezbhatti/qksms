@@ -35,21 +35,21 @@
   <!--QuickCompose notification text-->
   <string name="quickcompose_detail">Faceţi clic pentru a trimite un mesaj</string>
   <!--Welcome screen intro button-->
-  <string name="welcome_start">Let\'s get started!</string>
+  <string name="welcome_start">Să începem!</string>
   <!--Allows user to skip welcome screen-->
-  <string name="welcome_skip">SKIP</string>
+  <string name="welcome_skip">SARI</string>
   <!--Allows user to finish the welcome screen-->
-  <string name="welcome_finish">FINISH</string>
+  <string name="welcome_finish">GATA</string>
   <!--Indicates to user they can pick a color-->
   <string name="welcome_theme_title">Alege o culoare</string>
   <!--Indicates to user they can pick any colors-->
   <string name="welcome_theme_description">Orice culoare.</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_night_description">Easy on the eyes.</string>
+  <string name="welcome_night_description">Mai bine pentru ochi.</string>
   <!--Tells user to press button to toggle night mode-->
   <string name="welcome_night_hint">Toggle me</string>
   <!--Tells user to press button to toggle night mode-->
-  <string name="welcome_quickreply_title">QK Reply</string>
+  <string name="welcome_quickreply_title">OK Răspunde</string>
   <!--QK Reply explanation-->
   <string name="welcome_quickreply_description">Reply to messages faster than ever.</string>
   <!--Prompts user to try QK Reply-->
@@ -720,6 +720,7 @@
     <item>Cel mai mare</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
     <item>System font</item>

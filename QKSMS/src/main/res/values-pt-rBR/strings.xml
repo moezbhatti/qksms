@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Versão, changelog, autores, obrigado</string>
   <string name="pref_theme">Cor do tema</string>
   <string name="pref_theme_summary_alt">Toque para mudar o tema</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Cor do Ícone</string>
+  <string name="pref_icon_summary">Toque para alterar a cor do ícone do QKSMS</string>
   <string name="pref_status_tint">Barra de status matizada</string>
   <string name="pref_navigation_tint">Barra de navegação matizada</string>
   <string name="pref_background">Cor do fundo</string>
@@ -128,7 +128,7 @@
   <string name="pref_bubbles">Message bubbles</string>
   <string name="pref_bubbles_summary">Toque para alterar as preferências de mensagem de bolha</string>
   <string name="pref_night">Modo noturno</string>
-  <string name="pref_night_summary">Save battery and reduce eye strain</string>
+  <string name="pref_night_summary">Economizar bateria e diminuir fadiga ocular</string>
   <string name="pref_night_amoled">Fundo preto puro</string>
   <string name="pref_night_amoled_summary">Economizar bateria extra em dispositivos com ecrãs AMOLED</string>
   <string name="pref_bubble_style_new">Usar novo estilo de bolha</string>
@@ -721,9 +721,10 @@ Plural form: Conversas serão excluídas.</item>
     <item>Maior</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Fonte do sistema</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Leve</item>

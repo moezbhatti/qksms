@@ -18,8 +18,8 @@
   <!--Hint for message reply text field-->
   <string name="hint_reply">输入信息</string>
   <!--Hint for code redemption-->
-  <string name="hint_redeem">Enter code</string>
-  <string name="hint_hex">Hex</string>
+  <string name="hint_redeem">输入代码</string>
+  <string name="hint_hex">十六进制</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">新信息</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -99,9 +99,9 @@
   <!--Title for date received of a message in message details popup-->
   <string name="details_date_received">接收时间</string>
   <!--Title for rate snackbar-->
-  <string name="rate_title">Like QKSMS?</string>
+  <string name="rate_title">喜欢 QKSMS?</string>
   <!--Title for rate button-->
-  <string name="rate_action">Rate</string>
+  <string name="rate_action">点赞</string>
   <string name="pref_category_appearance">外观</string>
   <string name="pref_category_summary_appearance">主题、 字体、 颜色、 头像，和更多</string>
   <string name="pref_category_general">通用</string>
@@ -117,21 +117,21 @@
   <string name="pref_category_summary_quickcompose">快速撰写，星标联系人</string>
   <string name="pref_category_about">关于</string>
   <string name="pref_category_summary_about">版本，更新日志，作者，致谢</string>
-  <string name="pref_theme">Theme color</string>
+  <string name="pref_theme">主题颜色</string>
   <string name="pref_theme_summary_alt">点击以更改主题</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">图标颜色</string>
+  <string name="pref_icon_summary">点击更改QKSMS的图标颜色</string>
   <string name="pref_status_tint">彩色状态栏</string>
   <string name="pref_navigation_tint">彩色导航栏</string>
   <string name="pref_background">背景色</string>
   <string name="pref_background_summary">点击以更改背景色</string>
   <string name="pref_bubbles">消息气泡</string>
-  <string name="pref_bubbles_summary">Tap to change message bubble preferences</string>
+  <string name="pref_bubbles_summary">点击更改消息气泡设置</string>
   <string name="pref_night">夜间模式</string>
   <string name="pref_night_summary">节约电量，减少眼睛疲劳</string>
   <string name="pref_night_amoled">纯黑背景</string>
   <string name="pref_night_amoled_summary">在使用 AMOLED 屏幕的设备上节省更多电量</string>
-  <string name="pref_bubble_style_new">Use new bubble style</string>
+  <string name="pref_bubble_style_new">使用新的气泡样式</string>
   <string name="pref_color_sent">为已发送信息标色</string>
   <string name="pref_color_sent_summary">为发送出的消息设置背景色</string>
   <string name="pref_color_received">为已接收信息添加颜色</string>
@@ -147,7 +147,7 @@
   <string name="pref_font_weight">字重</string>
   <string name="pref_message_count">信息计数</string>
   <string name="pref_message_count_summary">显示每个会话的消息数目</string>
-  <string name="pref_sent_timestamps">Sent timestamps</string>
+  <string name="pref_sent_timestamps">发送时间</string>
   <string name="pref_sent_timestamps_summary">Show the timestamp for when a message was sent, not received</string>
   <string name="pref_force_timestamps">Force timestamps</string>
   <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
@@ -253,7 +253,7 @@
   <string name="pref_changelog_summary">点击以查看更新日志</string>
   <string name="pref_about_thanks_title">谢谢</string>
   <string name="pref_about_thanks_summary">点击以查看开源贡献者</string>
-  <string name="pref_donate_title">Donate</string>
+  <string name="pref_donate_title">捐赠</string>
   <string name="pref_donate_summary">QKSMS is free. Help support us by donating!</string>
   <string name="pref_about_gplus_title">Google+</string>
   <string name="pref_about_gplus_summary">Join the QKSMS Beta Testing community on Google+</string>
@@ -279,11 +279,11 @@
   <string name="donate_paypal_button">捐赠任意款项</string>
   <string name="donate_paypal_button_summary">Buy me anything you want!</string>
   <!--Donation product name-->
-  <string name="product_name_donation">Donation</string>
+  <string name="product_name_donation">捐赠</string>
   <!--$1 donation product name-->
-  <string name="product_name_donate_1">Donate $1 USD</string>
+  <string name="product_name_donate_1">捐赠 1 美元</string>
   <!--$5 donation product name-->
-  <string name="product_name_donate_5">Donate $5 USD</string>
+  <string name="product_name_donate_5">捐赠 5 美元</string>
   <!--$3 donation product name-->
   <string name="product_name_donate_10">捐赠 10 美元</string>
   <!--$1 donation product description-->
@@ -304,7 +304,7 @@
   <string name="title_block_address">拦截号码</string>
   <string name="title_unblock_address">解除拦截号码</string>
   <string name="title_conversations_selected">已选择 %s</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">调色板</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -361,8 +361,8 @@
   <!--Notification action to call the sender of a message-->
   <string name="call">回拨</string>
   <!-- Notification toast message  -->
-  <string name="notification_mute_on">Notifications enabled</string>
-  <string name="notification_mute_off">Notifications disabled</string>
+  <string name="notification_mute_on">消息通知已启用</string>
+  <string name="notification_mute_off">消息通知已禁用</string>
   <!--Positive action button-->
   <string name="yes">是</string>
   <string name="add">添加</string>
@@ -413,7 +413,7 @@
   <!-- Title of "Message details" dialog -->
   <string name="message_details_title">信息详情</string>
   <!-- Label in "Message details" dialog -->
-  <string name="message_type_label">Type\u000A</string>
+  <string name="message_type_label">类型\u000A</string>
   <!-- "Type" value in "Message details" dialog -->
   <string name="text_message">文本信息</string>
   <!-- "Type" value in "Message details" dialog -->
@@ -421,17 +421,17 @@
   <!-- "Type" value in "Message details" dialog -->
   <string name="multimedia_notification">彩信通知</string>
   <!-- Label in "Message details" dialog showing who sent the message. -->
-  <string name="from_label">From\u000A</string>
+  <string name="from_label">发送者\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="to_address_label">To\u000A</string>
+  <string name="to_address_label">接收者\u000A</string>
   <!-- Label in "Message details" dialog -->
   <string name="bcc_label">Bcc\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="sent_label">Sent\u000A</string>
+  <string name="sent_label">发送于\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="received_label">Received\u000A</string>
+  <string name="received_label">接收于\u000A</string>
   <!-- Label in "Message details" dialog -->
-  <string name="saved_label">Saved\u000A</string>
+  <string name="saved_label">保存\u000A</string>
   <!-- Label in "Message details" dialog -->
   <string name="subject_label">主题\u000A</string>
   <!-- Label in "Message details" dialog -->
@@ -641,13 +641,13 @@
   <string name="sending_blocked_welcome_screen_message">Hold up! You\'ll get to send real messages in a minute!</string>
   <string name="notification_colored_icon_ready">Touch to add to your launcher from home screen.</string>
   <string name="notification_title_colored_icon_ready">QKSMS colored icon is ready</string>
-  <string name="icon_ready">Your new icon is ready!</string>
-  <string name="icon_ready_message">You can now add it to your home screen again with the updated color.</string>
+  <string name="icon_ready">您的新图标已经准备好了 ！</string>
+  <string name="icon_ready_message">您现在可以将其添加到主屏幕更新您的新图标颜色。</string>
   <string name="dont_ask_again">不再询问</string>
   <string name="warning">Stagefright warning</string>
   <string name="stagefright_warning">Video messages may contain a harmful exploit that can leave your phone vulnerable to attacks. Would you like to continue?</string>
   <!-- MMS DIALOG SETUP STRINGS -->
-  <string name="mms_setup_set_up_mms_title">Set up MMS?</string>
+  <string name="mms_setup_set_up_mms_title">设置彩信？</string>
   <string name="mms_setup_set_up_mms_body">It appears that MMS isn\'t set up in QKSMS. Press okay to automatically configure MMS.</string>
   <string name="mms_setup_setting_up_later_title">稍后设置彩信</string>
   <string name="mms_setup_setting_up_later_body">Visit the MMS section of Settings to try automatic configuration, contact support, or enter your own configuration.</string>
@@ -682,8 +682,8 @@
   <string name="service_message_not_found">信息过期或不可用。</string>
   <string name="service_network_problem">由于出现网络问题无法发送。</string>
   <string name="message_queued">Currently can\'t send your message. It will be sent when the service becomes available.</string>
-  <string name="download_later">Can\'t download right now. Try again later.</string>
-  <string name="no_apn">No APN specified for the app, you need to set it up in settings!</string>
+  <string name="download_later">无法下载，请稍后再试。</string>
+  <string name="no_apn">该程序没有指定的APN，你需要进行设置！</string>
   <string name="no_subject">（无主题）</string>
   <string name="unknown_sender">未知发件人</string>
   <string name="dl_failure_notification">Couldn\'t download message <xliff:g id="subject">%1$s</xliff:g> from <xliff:g id="from">%2$s</xliff:g>.</string>
@@ -718,9 +718,10 @@
     <item>最大</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>系统字体</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>纤细</item>

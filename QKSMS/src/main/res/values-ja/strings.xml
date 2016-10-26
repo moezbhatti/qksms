@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">バージョン、変更履歴、作者、謝辞</string>
   <string name="pref_theme">テーマ色</string>
   <string name="pref_theme_summary_alt">タップするとテーマを変更します</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">アイコンの色</string>
+  <string name="pref_icon_summary">タップして QKSMS アイコンの色を変更します</string>
   <string name="pref_status_tint">彩色のステータス バー</string>
   <string name="pref_navigation_tint">彩色のナビゲーション バー</string>
   <string name="pref_background">背景色</string>
@@ -718,9 +718,10 @@
     <item>最大</item>
   </string-array>
   <string-array name="font_families">
-    <item>Roboto 標準</item>
-    <item>Roboto コンデンス</item>
-    <item>システム フォント</item>
+    <item>Avenir</item>
+    <item>Roboto Regular</item>
+    <item>Roboto Condensed</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>ライト</item>

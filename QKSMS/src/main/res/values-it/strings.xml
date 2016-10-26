@@ -19,7 +19,7 @@
   <string name="hint_reply">Inserisci un messaggio</string>
   <!--Hint for code redemption-->
   <string name="hint_redeem">Inserisci il codice</string>
-  <string name="hint_hex">Hex</string>
+  <string name="hint_hex">Esadecimale</string>
   <!--Text shown for single new message in notification-->
   <string name="new_message">Nuovo messaggio</string>
   <!--Text shown after number of unread messages in notification (ex. 3 new messages)-->
@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Versione, changelog, autori, ringraziamenti</string>
   <string name="pref_theme">Colore del tema</string>
   <string name="pref_theme_summary_alt">Tocca per cambiare tema</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Colore dell\'icona</string>
+  <string name="pref_icon_summary">Toccare per cambiare il colore dell\'icona di QKSMS</string>
   <string name="pref_status_tint">Barra di stato colorata</string>
   <string name="pref_navigation_tint">Barra di navigazione colorata</string>
   <string name="pref_background">Colore di sfondo</string>
@@ -159,15 +159,15 @@
   <string name="pref_prox_sensor_call_summary">In una conversazione, avvicinare il telefono all\'orecchio per avviare una chiamata</string>
   <string name="pref_delivery">Conferme di recapito</string>
   <string name="pref_delivery_summary">Conferma che i messaggi sono stati inviati con successo</string>
-  <string name="pref_delivery_toast">Mostra il toast</string>
+  <string name="pref_delivery_toast">Mostra toast</string>
   <string name="pref_delivery_toast_summary">Mostra un piccolo \"toast\" per indicare che il messaggio è stato spedito</string>
   <string name="pref_delivery_vibrate">Vibrazione</string>
   <string name="pref_delivery_vibrate_summary">Vibra alla consegna di un messaggio</string>
   <string name="pref_delete_old_messages">Cancella i vecchi messaggi</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
+  <string name="pref_delete_old_messages_summary">Elimina automaticamente i messaggi una volta che sono abbastanza vecchi</string>
   <string name="pref_delete_old_messages_unread">Messaggi non letti</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
+  <string name="pref_delete_old_messages_unread_summary">Elimina automaticamente i messaggi non letti dopo %s giorni</string>
+  <string name="pref_delete_old_messages_read">Leggi i messaggi</string>
   <string name="pref_delete_old_messages_read_summary">Cancella automaticamente i messaggi letti dopo %s giorni</string>
   <string name="pref_yappy">Integra con Yappy</string>
   <string name="pref_endlessjabber_summary">Abilita il supporto compleato a Yappy</string>
@@ -304,7 +304,7 @@
   <string name="title_block_address">Bloccare il numero</string>
   <string name="title_unblock_address">Sbloccare il numero</string>
   <string name="title_conversations_selected">%s selezionata</string>
-  <string name="title_palette">Palette</string>
+  <string name="title_palette">Tavolozza</string>
   <string name="title_rgb">RGB</string>
   <!-- Menu shown in the context menu when long pressing on a message when the message contains
          one or more phone numbers and/or email addresses and the number or email is new to
@@ -604,7 +604,7 @@
   <string name="toast_endlessjabber_not_installed">EndlessJabber non è installato, apertura di Google Play in corso</string>
   <string name="toast_changelog_error">Impossibile caricare i cambiamenti. Per favore riprova più tardi</string>
   <string name="toast_conversation_error">Impossibile aprire la conversazione</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_deleting_old_messages">I tuoi vecchi messaggi verranno eliminati a breve</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Grazie per la donazione! Sei il mio nuovo migliore amico.</string>
   <!--Toast shown to thank user for donating-->
@@ -719,9 +719,10 @@
     <item>Più grande</item>
   </string-array>
   <string-array name="font_families">
+    <item>Avenir</item>
     <item>Roboto Regular</item>
     <item>Roboto Condensed</item>
-    <item>Font di sistema</item>
+    <item>System font</item>
   </string-array>
   <string-array name="font_weights">
     <item>Sottile</item>
