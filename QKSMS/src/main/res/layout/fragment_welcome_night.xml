@@ -17,7 +17,7 @@
         android:text="@string/pref_night"
         android:textColor="@color/theme_dark_text_primary"
         android:textSize="54sp"
-        app:typeface="roboto_thin" />
+        app:text_weight="medium" />
 
     <com.moez.QKSMS.ui.view.RobotoTextView
         android:id="@+id/welcome_night_description"
@@ -27,7 +27,7 @@
         android:text="@string/welcome_night_description"
         android:textColor="@color/text_primary_dark"
         android:textSize="18sp"
-        app:typeface="roboto_light" />
+        app:text_weight="light" />
 
     <View
         android:layout_width="match_parent"

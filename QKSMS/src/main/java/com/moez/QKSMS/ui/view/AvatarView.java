@@ -79,7 +79,7 @@ public class AvatarView extends ImageView implements View.OnClickListener {
             mPaint.setTextSize(UnitUtils.dpToPx(context, 32));
             mPaint.setTextAlign(Paint.Align.CENTER);
             mPaint.setAntiAlias(true);
-            mPaint.setTypeface(TypefaceManager.obtainTypeface(getContext(), TypefaceManager.Typefaces.ROBOTO_LIGHT));
+            mPaint.setTypeface(TypefaceManager.obtainTypeface(getContext(), TypefaceManager.TextWeight.LIGHT));
 
             mDefaultDrawable = ContextCompat.getDrawable(context, R.drawable.ic_person);
 

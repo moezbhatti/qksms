@@ -24,10 +24,6 @@ public class FontManager {
     public static final int TEXT_TYPE_DIALOG_BUTTON = 0x7;
     public static final int TEXT_TYPE_TOOLBAR = 0x8;
 
-    private static int getFontFamily() {
-        return Integer.parseInt(QKPreferences.getString(QKPreference.FONT_FAMILY));
-    }
-
     public static int getTextSize(int type) {
         int fontSize = Integer.parseInt(QKPreferences.getString(QKPreference.FONT_SIZE));
 
@@ -113,15 +109,15 @@ public class FontManager {
 
     private static int getFontWeight(boolean heavy) {
         int fontWeight = Integer.parseInt(QKPreferences.getString(QKPreference.FONT_WEIGHT));
-        int fontFamily = getFontFamily();
 
         if (!heavy) {
             return fontWeight;
         }
 
         // Otherwise, get the heavy font weight.
+        int fontFamily = Integer.parseInt(QKPreferences.getString(QKPreference.FONT_FAMILY));
         if (fontWeight == TypefaceManager.TextWeight.LIGHT) {
-            return TypefaceManager.TextWeight.NORMAL;
+            return TypefaceManager.TextWeight.REGULAR;
         } else if (fontFamily == TypefaceManager.FontFamily.ROBOTO) {
             return TypefaceManager.TextWeight.MEDIUM;
         } else {
@@ -130,14 +126,12 @@ public class FontManager {
     }
 
     public static Typeface getFont(Context context, int type) {
-        int fontFamily = getFontFamily();
         int fontWeight = getFontWeight(getIsFontHeavy(type));
-        return TypefaceManager.obtainTypeface(context, fontFamily, fontWeight);
+        return TypefaceManager.obtainTypeface(context, fontWeight);
     }
 
     public static Typeface getFont(Context context) {
-        int fontFamily = getFontFamily();
         int fontWeight = getFontWeight(false);
-        return TypefaceManager.obtainTypeface(context, fontFamily, fontWeight);
+        return TypefaceManager.obtainTypeface(context, fontWeight);
     }
 }

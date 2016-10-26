@@ -118,7 +118,6 @@ public class QKTextView extends TextView {
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-
         if (mType == FontManager.TEXT_TYPE_DIALOG_BUTTON) {
             text = text.toString().toUpperCase();
         }

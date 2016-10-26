@@ -3,6 +3,7 @@ package com.moez.QKSMS.common;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.SparseArray;
+import com.moez.QKSMS.enums.QKPreference;
 
 /**
  * Stripped down version of https://github.com/johnkil/Android-RobotoTextView/blob/master/robototextview/src/main/java/com/devspark/robototextview/util/RobotoTypefaceManager.java
@@ -11,9 +12,28 @@ public class TypefaceManager {
 
     private final static SparseArray<android.graphics.Typeface> mTypefaces = new SparseArray<>();
 
-    public static Typeface obtainTypeface(Context context, int fontFamily, int textWeight) throws IllegalArgumentException {
-        int typefaceValue = Typefaces.ROBOTO_REGULAR;
+    public static Typeface obtainTypeface(Context context, int textWeight) throws IllegalArgumentException {
+        int fontFamily = Integer.parseInt(QKPreferences.getString(QKPreference.FONT_FAMILY));
+        int typefaceValue = Typefaces.AVENIR_MEDIUM;
         switch (fontFamily) {
+            case FontFamily.AVENIR:
+                switch (textWeight) {
+                    case TextWeight.THIN:
+                        typefaceValue = Typefaces.AVENIR_LIGHT;
+                        break;
+                    case TextWeight.LIGHT:
+                        typefaceValue = Typefaces.AVENIR_REGULAR;
+                        break;
+                    case TextWeight.REGULAR:
+                        typefaceValue = Typefaces.AVENIR_MEDIUM;
+                        break;
+                    case TextWeight.MEDIUM:
+                    case TextWeight.BOLD:
+                        typefaceValue = Typefaces.AVENIR_DEMI_BOLD;
+                        break;
+                }
+                break;
+
             case FontFamily.ROBOTO:
                 switch (textWeight) {
                     case TextWeight.THIN:
@@ -22,7 +42,7 @@ public class TypefaceManager {
                     case TextWeight.LIGHT:
                         typefaceValue = Typefaces.ROBOTO_LIGHT;
                         break;
-                    case TextWeight.NORMAL:
+                    case TextWeight.REGULAR:
                         typefaceValue = Typefaces.ROBOTO_REGULAR;
                         break;
                     case TextWeight.MEDIUM:
@@ -38,7 +58,7 @@ public class TypefaceManager {
                     case TextWeight.LIGHT:
                         typefaceValue = Typefaces.ROBOTO_CONDENSED_LIGHT;
                         break;
-                    case TextWeight.NORMAL:
+                    case TextWeight.REGULAR:
                         typefaceValue = Typefaces.ROBOTO_CONDENSED_REGULAR;
                         break;
                     case TextWeight.MEDIUM:
@@ -52,7 +72,7 @@ public class TypefaceManager {
                 switch (textWeight) {
                     case TextWeight.THIN:
                     case TextWeight.LIGHT:
-                    case TextWeight.NORMAL:
+                    case TextWeight.REGULAR:
                         typefaceValue = Typefaces.DEFAULT_REGULAR;
                         break;
                     case TextWeight.MEDIUM:
@@ -63,11 +83,7 @@ public class TypefaceManager {
                 break;
         }
 
-        return obtainTypeface(context, typefaceValue);
-    }
-
-    public static Typeface obtainTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
-        android.graphics.Typeface typeface = mTypefaces.get(typefaceValue);
+        Typeface typeface = mTypefaces.get(typefaceValue);
         if (typeface == null) {
             typeface = createTypeface(context, typefaceValue);
             mTypefaces.put(typefaceValue, typeface);
@@ -77,6 +93,18 @@ public class TypefaceManager {
 
     private static Typeface createTypeface(Context context, int typefaceValue) throws IllegalArgumentException {
         switch (typefaceValue) {
+            case Typefaces.AVENIR_LIGHT:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNext-UltraLight.ttf");
+
+            case Typefaces.AVENIR_REGULAR:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNext-Regular.ttf");
+
+            case Typefaces.AVENIR_MEDIUM:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNext-Medium.ttf");
+
+            case Typefaces.AVENIR_DEMI_BOLD:
+                return Typeface.createFromAsset(context.getAssets(), "fonts/AvenirNext-DemiBold.ttf");
+
             case Typefaces.ROBOTO_THIN:
                 return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Thin.ttf");
 
@@ -110,29 +138,35 @@ public class TypefaceManager {
     }
 
     public class Typefaces {
-        public final static int ROBOTO_THIN = 0;
-        public final static int ROBOTO_LIGHT = 1;
-        public final static int ROBOTO_REGULAR = 2;
-        public final static int ROBOTO_MEDIUM = 3;
+        public final static int AVENIR_LIGHT = 0;
+        public final static int AVENIR_REGULAR = 1;
+        public final static int AVENIR_MEDIUM = 2;
+        public final static int AVENIR_DEMI_BOLD = 3;
 
-        public final static int ROBOTO_CONDENSED_REGULAR = 4;
-        public final static int ROBOTO_CONDENSED_BOLD = 5;
-        public final static int ROBOTO_CONDENSED_LIGHT = 6;
+        public final static int ROBOTO_THIN = 4;
+        public final static int ROBOTO_LIGHT = 5;
+        public final static int ROBOTO_REGULAR = 6;
+        public final static int ROBOTO_MEDIUM = 7;
 
-        public final static int DEFAULT_REGULAR = 7;
-        public final static int DEFAULT_BOLD = 8;
+        public final static int ROBOTO_CONDENSED_REGULAR = 8;
+        public final static int ROBOTO_CONDENSED_BOLD = 9;
+        public final static int ROBOTO_CONDENSED_LIGHT = 10;
+
+        public final static int DEFAULT_REGULAR = 11;
+        public final static int DEFAULT_BOLD = 12;
     }
 
     public class FontFamily {
-        public static final int ROBOTO = 0;
-        public static final int ROBOTO_CONDENSED = 1;
-        public static final int SYSTEM_FONT = 2;
+        public static final int AVENIR = 0;
+        public static final int ROBOTO = 1;
+        public static final int ROBOTO_CONDENSED = 2;
+        public static final int SYSTEM_FONT = 3;
     }
 
     public class TextWeight {
-        public static final int NORMAL = 0;
         public static final int THIN = 1;
         public static final int LIGHT = 2;
+        public static final int REGULAR = 0;
         public static final int MEDIUM = 3;
         public static final int BOLD = 4;
     }

@@ -38,8 +38,8 @@ public class RobotoTextView extends AppCompatTextView {
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RobotoTextView);
 
-            if (a.hasValue(R.styleable.RobotoTextView_typeface)) {
-                int typefaceValue = a.getInt(R.styleable.RobotoTextView_typeface, TypefaceManager.Typefaces.ROBOTO_REGULAR);
+            if (a.hasValue(R.styleable.RobotoTextView_text_weight)) {
+                int typefaceValue = a.getInt(R.styleable.RobotoTextView_text_weight, TypefaceManager.TextWeight.REGULAR);
                 typeface = TypefaceManager.obtainTypeface(context, typefaceValue);
             }
 

@@ -176,7 +176,7 @@ public abstract class ContactHelper {
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.WHITE);
-        paint.setTypeface(TypefaceManager.obtainTypeface(context, TypefaceManager.Typefaces.ROBOTO_LIGHT));
+        paint.setTypeface(TypefaceManager.obtainTypeface(context, TypefaceManager.TextWeight.LIGHT));
         paint.setTextSize(length / 2);
 
         Rect bounds = new Rect();
