@@ -39,6 +39,7 @@ import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
 import com.moez.QKSMS.ui.popup.QKReplyActivity;
+import rx.Observable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -127,93 +128,100 @@ public class NotificationManager {
      * vibration
      */
     public static void create(final Context context) {
-        if (QKPreferences.getBoolean(QKPreference.NOTIFICATIONS)) {
-            sHandler.post(() -> {
-                HashMap<Long, ArrayList<MessageItem>> conversations = SmsHelper.getUnreadUnseenConversations(context);
-
-                // Let's find the list of current notifications. If we're showing multiple notifications, now we know
-                // which ones don't need to be touched
-                Set<Long> oldThreads = new HashSet<>();
-                for (String s : sPrefs.getStringSet(PREV_NOTIFICATIONS, new HashSet<String>())) {
-                    long l = Long.parseLong(s);
-                    if (!oldThreads.contains(l)) {
-                        oldThreads.add(l);
-                    }
-                }
-
-                dismissOld(context, conversations);
-
-                // If there are no messages, don't try to create a notification
-                if (conversations.size() == 0) {
-                    return;
-                }
-
-                ArrayList<MessageItem> lastConversation = conversations.get(conversations.keySet().toArray()[0]);
-                MessageItem lastMessage = lastConversation.get(0);
-
-                // If this message is in the foreground, mark it as read
-                Message message = new Message(context, lastMessage.mMsgId);
-                if (MessageListActivity.isInForeground && message.getThreadId() == MessageListActivity.getThreadId()) {
-                    MessagingHelper.markMessageRead(context, lastMessage.mMsgId);
-                    return;
-                }
-
-                long threadId = (long) conversations.keySet().toArray()[0];
-                ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, threadId);
-
-                if (!conversationPrefs.getNotificationsEnabled()) {
-                    return;
-                }
-
-                // Otherwise, reset the state and show the notification.
-                NotificationCompat.Builder builder =
-                        new NotificationCompat.Builder(context)
-                                .setSmallIcon(R.drawable.ic_notification)
-                                .setPriority(getNotificationPriority())
-                                .setSound(conversationPrefs.getNotificationSoundUri())
-                                .setVibrate(VIBRATION_SILENT)
-                                .setAutoCancel(true);
-
-                if (conversationPrefs.getVibrateEnabled()) {
-                    builder.setVibrate(VIBRATION);
-                }
-
-                if (conversationPrefs.getNotificationLedEnabled()) {
-                    builder.setLights(getLedColor(conversationPrefs), 1000, 1000);
-                }
-
-                Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
-
-                if (conversationPrefs.getTickerEnabled()) {
-                    switch (privateNotifications) {
-                        case 0:
-                            builder.setTicker(String.format("%s: %s", lastMessage.mContact, lastMessage.mBody));
-                            break;
-                        case 1:
-                            builder.setTicker(String.format("%s: %s", lastMessage.mContact, sRes.getString(R.string.new_message)));
-                            break;
-                        case 2:
-                            builder.setTicker(String.format("%s: %s", "QKSMS", sRes.getString(R.string.new_message)));
-                            break;
-                    }
-                }
-
-                if (conversationPrefs.getWakePhoneEnabled()) {
-                    PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-                    PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "FlashActivity");
-                    wl.acquire();
-                    wl.release();
-                }
-
-                if (conversations.size() == 1 && lastConversation.size() == 1) {
-                    singleMessage(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
-                } else if (conversations.size() == 1) {
-                    singleSender(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
-                } else {
-                    multipleSenders(context, conversations, oldThreads, builder);
-                }
-            });
+        if (!QKPreferences.getBoolean(QKPreference.NOTIFICATIONS)) {
+            return;
         }
+
+        SmsHelper.getUnreadUnseenConversations(context)
+                .flatMap(Observable::toList)
+                .map(ArrayList::new)
+                .reduce(new HashMap<Long, ArrayList<MessageItem>>(), (hashmap, messageItems) -> {
+                    hashmap.put(messageItems.get(0).mThreadId, messageItems);
+                    return hashmap;
+                })
+                .subscribe(conversations -> {
+                    // Let's find the list of current notifications. If we're showing multiple notifications, now we know
+                    // which ones don't need to be touched
+                    Set<Long> oldThreads = new HashSet<>();
+                    for (String s : sPrefs.getStringSet(PREV_NOTIFICATIONS, new HashSet<>())) {
+                        long l = Long.parseLong(s);
+                        if (!oldThreads.contains(l)) {
+                            oldThreads.add(l);
+                        }
+                    }
+
+                    dismissOld(context, conversations);
+
+                    // If there are no messages, don't try to create a notification
+                    if (conversations.size() == 0) {
+                        return;
+                    }
+
+                    ArrayList<MessageItem> lastConversation = conversations.get(conversations.keySet().toArray()[0]);
+                    MessageItem lastMessage = lastConversation.get(0);
+
+                    // If this message is in the foreground, mark it as read
+                    Message message = new Message(context, lastMessage.mMsgId);
+                    if (MessageListActivity.isInForeground && message.getThreadId() == MessageListActivity.getThreadId()) {
+                        MessagingHelper.markMessageRead(context, lastMessage.mMsgId);
+                        return;
+                    }
+
+                    long threadId = (long) conversations.keySet().toArray()[0];
+                    ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, threadId);
+
+                    if (!conversationPrefs.getNotificationsEnabled()) {
+                        return;
+                    }
+
+                    // Otherwise, reset the state and show the notification.
+                    NotificationCompat.Builder builder =
+                            new NotificationCompat.Builder(context)
+                                    .setSmallIcon(R.drawable.ic_notification)
+                                    .setPriority(getNotificationPriority())
+                                    .setSound(conversationPrefs.getNotificationSoundUri())
+                                    .setVibrate(VIBRATION_SILENT)
+                                    .setAutoCancel(true);
+
+                    if (conversationPrefs.getVibrateEnabled()) {
+                        builder.setVibrate(VIBRATION);
+                    }
+
+                    if (conversationPrefs.getNotificationLedEnabled()) {
+                        builder.setLights(getLedColor(conversationPrefs), 1000, 1000);
+                    }
+
+                    Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
+
+                    if (conversationPrefs.getTickerEnabled()) {
+                        switch (privateNotifications) {
+                            case 0:
+                                builder.setTicker(String.format("%s: %s", lastMessage.mContact, lastMessage.mBody));
+                                break;
+                            case 1:
+                                builder.setTicker(String.format("%s: %s", lastMessage.mContact, sRes.getString(R.string.new_message)));
+                                break;
+                            case 2:
+                                builder.setTicker(String.format("%s: %s", "QKSMS", sRes.getString(R.string.new_message)));
+                                break;
+                        }
+                    }
+
+                    if (conversationPrefs.getWakePhoneEnabled()) {
+                        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "FlashActivity");
+                        wl.acquire();
+                        wl.release();
+                    }
+
+                    if (conversations.size() == 1 && lastConversation.size() == 1) {
+                        singleMessage(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
+                    } else if (conversations.size() == 1) {
+                        singleSender(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
+                    } else {
+                        multipleSenders(context, conversations, oldThreads, builder);
+                    }
+                });
     }
 
     /**
@@ -221,65 +229,75 @@ public class NotificationManager {
      * where we need to update the notifications without alerting the user
      */
     public static void update(final Context context) {
-        sHandler.post(() -> {
-            HashMap<Long, ArrayList<MessageItem>> conversations = SmsHelper.getUnreadUnseenConversations(context);
+        if (!QKPreferences.getBoolean(QKPreference.NOTIFICATIONS)) {
+            return;
+        }
 
-            // Let's find the list of current notifications. If we're showing multiple notifications, now we know
-            // which ones don't need to be touched
-            Set<Long> oldThreads = new HashSet<>();
-            for (String s : sPrefs.getStringSet(PREV_NOTIFICATIONS, new HashSet<String>())) {
-                long l = Long.parseLong(s);
-                if (!oldThreads.contains(l)) {
-                    oldThreads.add(l);
-                }
-            }
+        SmsHelper.getUnreadUnseenConversations(context)
+                .flatMap(Observable::toList)
+                .map(ArrayList::new)
+                .reduce(new HashMap<Long, ArrayList<MessageItem>>(), (hashmap, messageItems) -> {
+                    hashmap.put(messageItems.get(0).mThreadId, messageItems);
+                    return hashmap;
+                })
+                .subscribe(conversations -> {
 
-            dismissOld(context, conversations);
+                    // Let's find the list of current notifications. If we're showing multiple notifications, now we know
+                    // which ones don't need to be touched
+                    Set<Long> oldThreads = new HashSet<>();
+                    for (String s : sPrefs.getStringSet(PREV_NOTIFICATIONS, new HashSet<String>())) {
+                        long l = Long.parseLong(s);
+                        if (!oldThreads.contains(l)) {
+                            oldThreads.add(l);
+                        }
+                    }
 
-            // If there are no messages, don't try to create a notification
-            if (conversations.size() == 0) {
-                return;
-            }
+                    dismissOld(context, conversations);
 
-            ArrayList<MessageItem> lastConversation = conversations.get(conversations.keySet().toArray()[0]);
-            MessageItem lastMessage = lastConversation.get(0);
+                    // If there are no messages, don't try to create a notification
+                    if (conversations.size() == 0) {
+                        return;
+                    }
 
-            // If the message is visible (i.e. it is currently showing in the Main Activity),
-            // don't show a notification; just mark it as read and return.
-            Message message = new Message(context, lastMessage.mMsgId);
-            if (MessageListActivity.isInForeground && message.getThreadId() == MessageListActivity.getThreadId()) {
-                MessagingHelper.markMessageRead(context, lastMessage.mMsgId);
-                return;
-            }
+                    ArrayList<MessageItem> lastConversation = conversations.get(conversations.keySet().toArray()[0]);
+                    MessageItem lastMessage = lastConversation.get(0);
 
-            long threadId = (long) conversations.keySet().toArray()[0];
-            ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, threadId);
+                    // If the message is visible (i.e. it is currently showing in the Main Activity),
+                    // don't show a notification; just mark it as read and return.
+                    Message message = new Message(context, lastMessage.mMsgId);
+                    if (MessageListActivity.isInForeground && message.getThreadId() == MessageListActivity.getThreadId()) {
+                        MessagingHelper.markMessageRead(context, lastMessage.mMsgId);
+                        return;
+                    }
 
-            NotificationCompat.Builder builder =
-                    new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.drawable.ic_notification)
-                            // SMS messages are high priority
-                            .setPriority(getNotificationPriority())
-                            // Silent here because this is just an update, not a new
-                            // notification
-                            .setSound(null)
-                            .setVibrate(VIBRATION_SILENT)
-                            .setAutoCancel(true);
+                    long threadId = (long) conversations.keySet().toArray()[0];
+                    ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(context, threadId);
 
-            if (conversationPrefs.getNotificationLedEnabled()) {
-                builder.setLights(getLedColor(conversationPrefs), 1000, 1000);
-            }
+                    NotificationCompat.Builder builder =
+                            new NotificationCompat.Builder(context)
+                                    .setSmallIcon(R.drawable.ic_notification)
+                                    // SMS messages are high priority
+                                    .setPriority(getNotificationPriority())
+                                    // Silent here because this is just an update, not a new
+                                    // notification
+                                    .setSound(null)
+                                    .setVibrate(VIBRATION_SILENT)
+                                    .setAutoCancel(true);
 
-            Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
+                    if (conversationPrefs.getNotificationLedEnabled()) {
+                        builder.setLights(getLedColor(conversationPrefs), 1000, 1000);
+                    }
 
-            if (conversations.size() == 1 && lastConversation.size() == 1) {
-                singleMessage(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
-            } else if (conversations.size() == 1) {
-                singleSender(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
-            } else {
-                multipleSenders(context, conversations, oldThreads, builder);
-            }
-        });
+                    Integer privateNotifications = conversationPrefs.getPrivateNotificationsSetting();
+
+                    if (conversations.size() == 1 && lastConversation.size() == 1) {
+                        singleMessage(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
+                    } else if (conversations.size() == 1) {
+                        singleSender(context, lastConversation, threadId, builder, conversationPrefs, privateNotifications);
+                    } else {
+                        multipleSenders(context, conversations, oldThreads, builder);
+                    }
+                });
     }
 
     /**

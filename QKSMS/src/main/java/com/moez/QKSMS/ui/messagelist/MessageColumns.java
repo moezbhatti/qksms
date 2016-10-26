@@ -8,36 +8,36 @@ import android.util.Log;
 
 public class MessageColumns {
 
-    public static final int COLUMN_MSG_TYPE            = 0;
-    public static final int COLUMN_ID                  = 1;
-    public static final int COLUMN_THREAD_ID           = 2;
-    public static final int COLUMN_SMS_ADDRESS         = 3;
-    public static final int COLUMN_SMS_BODY            = 4;
-    public static final int COLUMN_SMS_DATE            = 5;
-    public static final int COLUMN_SMS_DATE_SENT       = 6;
-    public static final int COLUMN_SMS_READ            = 7;
-    public static final int COLUMN_SMS_TYPE            = 8;
-    public static final int COLUMN_SMS_STATUS          = 9;
-    public static final int COLUMN_SMS_LOCKED          = 10;
-    public static final int COLUMN_SMS_ERROR_CODE      = 11;
-    public static final int COLUMN_MMS_SUBJECT         = 12;
+    public static final int COLUMN_MSG_TYPE = 0;
+    public static final int COLUMN_ID = 1;
+    public static final int COLUMN_THREAD_ID = 2;
+    public static final int COLUMN_SMS_ADDRESS = 3;
+    public static final int COLUMN_SMS_BODY = 4;
+    public static final int COLUMN_SMS_DATE = 5;
+    public static final int COLUMN_SMS_DATE_SENT = 6;
+    public static final int COLUMN_SMS_READ = 7;
+    public static final int COLUMN_SMS_TYPE = 8;
+    public static final int COLUMN_SMS_STATUS = 9;
+    public static final int COLUMN_SMS_LOCKED = 10;
+    public static final int COLUMN_SMS_ERROR_CODE = 11;
+    public static final int COLUMN_MMS_SUBJECT = 12;
     public static final int COLUMN_MMS_SUBJECT_CHARSET = 13;
-    public static final int COLUMN_MMS_DATE            = 14;
-    public static final int COLUMN_MMS_DATE_SENT       = 15;
-    public static final int COLUMN_MMS_READ            = 16;
-    public static final int COLUMN_MMS_MESSAGE_TYPE    = 17;
-    public static final int COLUMN_MMS_MESSAGE_BOX     = 18;
+    public static final int COLUMN_MMS_DATE = 14;
+    public static final int COLUMN_MMS_DATE_SENT = 15;
+    public static final int COLUMN_MMS_READ = 16;
+    public static final int COLUMN_MMS_MESSAGE_TYPE = 17;
+    public static final int COLUMN_MMS_MESSAGE_BOX = 18;
     public static final int COLUMN_MMS_DELIVERY_REPORT = 19;
-    public static final int COLUMN_MMS_READ_REPORT     = 20;
-    public static final int COLUMN_MMS_ERROR_TYPE      = 21;
-    public static final int COLUMN_MMS_LOCKED          = 22;
-    public static final int COLUMN_MMS_STATUS          = 23;
-    public static final int COLUMN_MMS_TEXT_ONLY       = 24;
+    public static final int COLUMN_MMS_READ_REPORT = 20;
+    public static final int COLUMN_MMS_ERROR_TYPE = 21;
+    public static final int COLUMN_MMS_LOCKED = 22;
+    public static final int COLUMN_MMS_STATUS = 23;
+    public static final int COLUMN_MMS_TEXT_ONLY = 24;
 
-    public static final int CACHE_SIZE         = 50;
+    public static final int CACHE_SIZE = 50;
 
     @SuppressLint("InlinedApi")
-    public static final String[] PROJECTION = new String[] {
+    public static final String[] PROJECTION = new String[]{
             Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN,
             BaseColumns._ID,
             Telephony.Sms.THREAD_ID,
@@ -73,6 +73,7 @@ public class MessageColumns {
 
         public int mColumnMsgType;
         public int mColumnMsgId;
+        public int mColumnThreadId;
         public int mColumnSmsAddress;
         public int mColumnSmsBody;
         public int mColumnSmsDate;
@@ -97,26 +98,27 @@ public class MessageColumns {
         public int mColumnMmsTextOnly;
 
         public ColumnsMap() {
-            mColumnMsgType            = COLUMN_MSG_TYPE;
-            mColumnMsgId              = COLUMN_ID;
-            mColumnSmsAddress         = COLUMN_SMS_ADDRESS;
-            mColumnSmsBody            = COLUMN_SMS_BODY;
-            mColumnSmsDate            = COLUMN_SMS_DATE;
-            mColumnSmsDateSent        = COLUMN_SMS_DATE_SENT;
-            mColumnSmsType            = COLUMN_SMS_TYPE;
-            mColumnSmsStatus          = COLUMN_SMS_STATUS;
-            mColumnSmsLocked          = COLUMN_SMS_LOCKED;
-            mColumnSmsErrorCode       = COLUMN_SMS_ERROR_CODE;
-            mColumnMmsSubject         = COLUMN_MMS_SUBJECT;
-            mColumnMmsSubjectCharset  = COLUMN_MMS_SUBJECT_CHARSET;
-            mColumnMmsMessageType     = COLUMN_MMS_MESSAGE_TYPE;
-            mColumnMmsMessageBox      = COLUMN_MMS_MESSAGE_BOX;
-            mColumnMmsDeliveryReport  = COLUMN_MMS_DELIVERY_REPORT;
-            mColumnMmsReadReport      = COLUMN_MMS_READ_REPORT;
-            mColumnMmsErrorType       = COLUMN_MMS_ERROR_TYPE;
-            mColumnMmsLocked          = COLUMN_MMS_LOCKED;
-            mColumnMmsStatus          = COLUMN_MMS_STATUS;
-            mColumnMmsTextOnly        = COLUMN_MMS_TEXT_ONLY;
+            mColumnMsgType = COLUMN_MSG_TYPE;
+            mColumnMsgId = COLUMN_ID;
+            mColumnThreadId = COLUMN_THREAD_ID;
+            mColumnSmsAddress = COLUMN_SMS_ADDRESS;
+            mColumnSmsBody = COLUMN_SMS_BODY;
+            mColumnSmsDate = COLUMN_SMS_DATE;
+            mColumnSmsDateSent = COLUMN_SMS_DATE_SENT;
+            mColumnSmsType = COLUMN_SMS_TYPE;
+            mColumnSmsStatus = COLUMN_SMS_STATUS;
+            mColumnSmsLocked = COLUMN_SMS_LOCKED;
+            mColumnSmsErrorCode = COLUMN_SMS_ERROR_CODE;
+            mColumnMmsSubject = COLUMN_MMS_SUBJECT;
+            mColumnMmsSubjectCharset = COLUMN_MMS_SUBJECT_CHARSET;
+            mColumnMmsMessageType = COLUMN_MMS_MESSAGE_TYPE;
+            mColumnMmsMessageBox = COLUMN_MMS_MESSAGE_BOX;
+            mColumnMmsDeliveryReport = COLUMN_MMS_DELIVERY_REPORT;
+            mColumnMmsReadReport = COLUMN_MMS_READ_REPORT;
+            mColumnMmsErrorType = COLUMN_MMS_ERROR_TYPE;
+            mColumnMmsLocked = COLUMN_MMS_LOCKED;
+            mColumnMmsStatus = COLUMN_MMS_STATUS;
+            mColumnMmsTextOnly = COLUMN_MMS_TEXT_ONLY;
         }
 
         @SuppressLint("InlinedApi")
@@ -131,6 +133,12 @@ public class MessageColumns {
 
             try {
                 mColumnMsgId = cursor.getColumnIndexOrThrow(BaseColumns._ID);
+            } catch (IllegalArgumentException e) {
+                if (DEBUG) Log.w(TAG, e.getMessage());
+            }
+
+            try {
+                mColumnThreadId = cursor.getColumnIndexOrThrow(Telephony.Sms.THREAD_ID);
             } catch (IllegalArgumentException e) {
                 if (DEBUG) Log.w(TAG, e.getMessage());
             }

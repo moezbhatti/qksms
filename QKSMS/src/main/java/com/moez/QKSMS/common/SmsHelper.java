@@ -24,6 +24,7 @@ import com.moez.QKSMS.mmssms.model.SlideshowModel;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import rx.Observable;
+import rx.observables.GroupedObservable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -299,38 +300,19 @@ public class SmsHelper {
     /**
      * List of messages grouped by thread id, used for showing notifications
      */
-    public static HashMap<Long, ArrayList<MessageItem>> getUnreadUnseenConversations(Context context) {
-        HashMap<Long, ArrayList<MessageItem>> result = new HashMap<>();
-
+    public static Observable<GroupedObservable<Long, MessageItem>> getUnreadUnseenConversations(Context context) {
         String selection = SmsHelper.UNSEEN_SELECTION + " AND " + SmsHelper.UNREAD_SELECTION;
 
-        // Create a cursor for the conversation list
-        Cursor conversationCursor = context.getContentResolver().query(
-                SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
-                SmsHelper.UNREAD_SELECTION, null, SmsHelper.SORT_DATE_ASC);
-
-        if (conversationCursor != null && conversationCursor.moveToFirst()) {
-            do {
-                ArrayList<MessageItem> messages = new ArrayList<>();
-                long threadId = conversationCursor.getLong(Conversation.ID);
-                Uri threadUri = Uri.withAppendedPath(MMS_SMS_CONTENT_PROVIDER, Long.toString(threadId));
-                Cursor messageCursor = context.getContentResolver().query(threadUri, MessageColumns.PROJECTION, selection, null, SmsHelper.SORT_DATE_ASC);
-
-                if (messageCursor != null && messageCursor.moveToFirst()) {
-                    do {
-                        MessageColumns.ColumnsMap columnsMap = new MessageColumns.ColumnsMap(messageCursor);
-                        MessageItem message = new MessageItem(context, messageCursor.getString(columnsMap.mColumnMsgType), messageCursor, columnsMap, null, true);
-                        messages.add(message);
-                    } while (messageCursor.moveToNext());
-                    messageCursor.close();
-                    result.put(threadId, messages);
-                }
-
-            } while (conversationCursor.moveToNext());
-            conversationCursor.close();
-        }
-
-        return result;
+        return CursorObservable.from(context, SmsHelper.CONVERSATIONS_CONTENT_PROVIDER, Conversation.ALL_THREADS_PROJECTION,
+                SmsHelper.UNREAD_SELECTION, null, SmsHelper.SORT_DATE_ASC)
+                .map(cursor -> cursor.getLong(Conversation.ID))
+                .map(id -> Uri.withAppendedPath(MMS_SMS_CONTENT_PROVIDER, String.valueOf(id)))
+                .flatMap(uri -> {
+                    Observable<Cursor> c = CursorObservable.from(context, uri, MessageColumns.PROJECTION, selection, null, SmsHelper.SORT_DATE_ASC);
+                    return c.map(cursor -> new Pair<>(cursor, new MessageColumns.ColumnsMap(cursor))); // Attach a columns map to each message cursor
+                })
+                .map(pair -> new MessageItem(context, pair.first.getString(pair.second.mColumnMsgType), pair.first, pair.second, null, true))
+                .groupBy(messageItem -> messageItem.mThreadId);
     }
 
     /**

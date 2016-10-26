@@ -55,19 +55,20 @@ import java.util.regex.Pattern;
 
 /**
  * Mostly immutable model for an SMS/MMS message.
- *
+ * <p>
  * <p>The only mutable field is the cached formatted message member,
  * the formatting of which is done outside this model in MessageListItem.
  */
 public class MessageItem {
     private static String TAG = "MessageItem";
 
-    public enum DeliveryStatus  { NONE, INFO, FAILED, PENDING, RECEIVED }
+    public enum DeliveryStatus {NONE, INFO, FAILED, PENDING, RECEIVED}
 
     public static int ATTACHMENT_TYPE_NOT_LOADED = -1;
 
     final Context mContext;
     public final String mType;
+    public final long mThreadId;
     public final long mMsgId;
     public final int mBoxId;
 
@@ -112,10 +113,10 @@ public class MessageItem {
     private ItemLoadedFuture mItemLoadedFuture;
 
     @SuppressLint("NewApi")
-    public MessageItem(Context context, String type, final Cursor cursor,
-            final MessageColumns.ColumnsMap columnsMap, Pattern highlight,
-            boolean canBlock) {
+    public MessageItem(Context context, String type, final Cursor cursor, final MessageColumns.ColumnsMap columnsMap,
+                       Pattern highlight, boolean canBlock) {
         mContext = context;
+        mThreadId = cursor.getLong(columnsMap.mColumnThreadId);
         mMsgId = cursor.getLong(columnsMap.mColumnMsgId);
         mHighlight = highlight;
         mType = type;
@@ -200,9 +201,7 @@ public class MessageItem {
             boolean loadSlideshow = mMessageType != PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND;
 
             mItemLoadedFuture = QKSMSApp.getApplication().getPduLoaderManager()
-                    .getPdu(mMessageUri, loadSlideshow,
-                    new PduLoadedMessageItemCallback());
-
+                    .getPdu(mMessageUri, loadSlideshow, new PduLoadedMessageItemCallback());
         } else {
             Log.e(TAG, "Unknown type of the message: " + type);
             mBoxId = 0;
@@ -279,20 +278,20 @@ public class MessageItem {
         // type of MessageListItem to create: a left or right justified item depending on whether
         // the message is incoming or outgoing.
         boolean isIncomingMms = isMms()
-                                    && (mBoxId == Mms.MESSAGE_BOX_INBOX
-                                            || mBoxId == Mms.MESSAGE_BOX_ALL);
+                && (mBoxId == Mms.MESSAGE_BOX_INBOX
+                || mBoxId == Mms.MESSAGE_BOX_ALL);
         boolean isIncomingSms = isSms()
-                                    && (mBoxId == Sms.MESSAGE_TYPE_INBOX
-                                            || mBoxId == Sms.MESSAGE_TYPE_ALL);
+                && (mBoxId == Sms.MESSAGE_TYPE_INBOX
+                || mBoxId == Sms.MESSAGE_TYPE_ALL);
         return !(isIncomingMms || isIncomingSms);
     }
 
     public boolean isOutgoingMessage() {
         boolean isOutgoingMms = isMms() && (mBoxId == Mms.MESSAGE_BOX_OUTBOX);
         boolean isOutgoingSms = isSms()
-                                    && ((mBoxId == Sms.MESSAGE_TYPE_FAILED)
-                                            || (mBoxId == Sms.MESSAGE_TYPE_OUTBOX)
-                                            || (mBoxId == Sms.MESSAGE_TYPE_QUEUED));
+                && ((mBoxId == Sms.MESSAGE_TYPE_FAILED)
+                || (mBoxId == Sms.MESSAGE_TYPE_OUTBOX)
+                || (mBoxId == Sms.MESSAGE_TYPE_QUEUED));
         return isOutgoingMms || isOutgoingSms;
     }
 
@@ -302,9 +301,9 @@ public class MessageItem {
 
     public boolean isFailedMessage() {
         boolean isFailedMms = isMms()
-                            && (mErrorType >= MmsSms.ERR_TYPE_GENERIC_PERMANENT);
+                && (mErrorType >= MmsSms.ERR_TYPE_GENERIC_PERMANENT);
         boolean isFailedSms = isSms()
-                            && (mBoxId == Sms.MESSAGE_TYPE_FAILED);
+                && (mBoxId == Sms.MESSAGE_TYPE_FAILED);
         return isFailedMms || isFailedSms;
     }
 
@@ -322,7 +321,7 @@ public class MessageItem {
         if (isSending != mLastSendingState) {
             mLastSendingState = isSending;
             mCachedFormattedMessage = null;         // clear cache so we'll rebuild the message
-                                                    // to show "Sending..." or the sent date.
+            // to show "Sending..." or the sent date.
         }
         return mCachedFormattedMessage;
     }
@@ -342,12 +341,12 @@ public class MessageItem {
     @Override
     public String toString() {
         return "type: " + mType +
-            " box: " + mBoxId +
-            " uri: " + mMessageUri +
-            " address: " + mAddress +
-            " contact: " + mContact +
-            " read: " + mReadReport +
-            " delivery status: " + mDeliveryStatus;
+                " box: " + mBoxId +
+                " uri: " + mMessageUri +
+                " address: " + mAddress +
+                " contact: " + mContact +
+                " read: " + mReadReport +
+                " delivery status: " + mDeliveryStatus;
     }
 
     public class PduLoadedMessageItemCallback implements ItemLoadedCallback {
@@ -357,22 +356,22 @@ public class MessageItem {
                 return;
             }
             if (mItemLoadedFuture != null) {
-                synchronized(mItemLoadedFuture) {
+                synchronized (mItemLoadedFuture) {
                     mItemLoadedFuture.setIsDone(true);
                 }
             }
-            PduLoaderManager.PduLoaded pduLoaded = (PduLoaderManager.PduLoaded)result;
+            PduLoaderManager.PduLoaded pduLoaded = (PduLoaderManager.PduLoaded) result;
             long timestamp = 0L;
             if (PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND == mMessageType) {
                 mDeliveryStatus = DeliveryStatus.NONE;
-                NotificationInd notifInd = (NotificationInd)pduLoaded.mPdu;
+                NotificationInd notifInd = (NotificationInd) pduLoaded.mPdu;
                 interpretFrom(notifInd.getFrom(), mMessageUri);
                 // Borrow the mBody to hold the URL of the message.
                 mBody = new String(notifInd.getContentLocation());
                 mMessageSize = (int) notifInd.getMessageSize();
                 timestamp = notifInd.getExpiry() * 1000L;
             } else {
-                MultimediaMessagePdu msg = (MultimediaMessagePdu)pduLoaded.mPdu;
+                MultimediaMessagePdu msg = (MultimediaMessagePdu) pduLoaded.mPdu;
                 mSlideshow = pduLoaded.mSlideshow;
                 mAttachmentType = SmsHelper.getAttachmentType(mSlideshow, msg);
 
