@@ -151,7 +151,7 @@ public class MainActivity extends QKActivity {
     private void launchWelcomeActivity() {
         if (QKPreferences.getBoolean(QKPreference.WELCOME_SEEN)) {
             // User has already seen the welcome screen
-            //return;
+            return;
         }
 
         Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
