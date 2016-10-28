@@ -23,9 +23,9 @@
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="theme_light_text_primary">#3B3B3B</color>
-    <color name="theme_light_text_secondary">#B7B7B7</color>
+    <color name="theme_light_text_secondary">#47000000</color>
     <color name="theme_dark_text_primary">#FFFFFF</color>
-    <color name="theme_dark_text_secondary">#999999</color>
+    <color name="theme_dark_text_secondary">#99ffffff</color>
 
     <!-- Color states for `SwitchCompat` views -->
     <color name="switch_thumb_enabled_light">#ECECEC</color>
