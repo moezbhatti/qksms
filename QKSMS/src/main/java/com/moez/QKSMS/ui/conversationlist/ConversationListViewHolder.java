@@ -26,7 +26,6 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
     @Bind(R.id.conversation_list_name) protected QKTextView mName;
     @Bind(R.id.conversation_list_date) protected QKTextView mDate;
     @Bind(R.id.conversation_list_muted) protected ImageView mMuted;
-    @Bind(R.id.conversation_list_unread) protected ImageView mUnread;
     @Bind(R.id.conversation_list_error) protected ImageView mError;
     @Bind(R.id.conversation_list_avatar) protected AvatarView mAvatar;
     @Bind(R.id.conversation_list_selected) protected ImageView mSelected;

@@ -40,12 +40,10 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
         ConversationListViewHolder holder = new ConversationListViewHolder(mContext, view);
         holder.mMuted.setImageResource(R.drawable.ic_notifications_muted);
-        holder.mUnread.setImageResource(R.drawable.ic_unread_indicator);
         holder.mError.setImageResource(R.drawable.ic_error);
 
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             holder.mMuted.setColorFilter(ThemeManager.getColor());
-            holder.mUnread.setColorFilter(ThemeManager.getColor());
             holder.mError.setColorFilter(ThemeManager.getColor());
         });
 
@@ -73,22 +71,16 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
         final boolean hasUnreadMessages = conversation.hasUnreadMessages();
         if (hasUnreadMessages) {
-            holder.mUnread.setVisibility(View.VISIBLE);
             holder.mSnippet.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
-            holder.mDate.setTextColor(ThemeManager.getColor());
+            holder.mDate.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
             holder.mName.setType(FontManager.TEXT_TYPE_PRIMARY_BOLD);
             holder.mSnippet.setMaxLines(5);
         } else {
-            holder.mUnread.setVisibility(View.GONE);
             holder.mSnippet.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
             holder.mDate.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
             holder.mName.setType(FontManager.TEXT_TYPE_PRIMARY);
             holder.mSnippet.setMaxLines(1);
         }
-
-        LiveViewManager.registerView(QKPreference.THEME, this, key -> {
-            holder.mDate.setTextColor(hasUnreadMessages ? ThemeManager.getColor() : ThemeManager.getTextOnBackgroundSecondary());
-        });
 
         if (isInMultiSelectMode()) {
             holder.mSelected.setVisibility(View.VISIBLE);
