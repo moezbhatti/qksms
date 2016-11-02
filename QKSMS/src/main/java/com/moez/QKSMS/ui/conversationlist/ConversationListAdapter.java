@@ -72,12 +72,12 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
         final boolean hasUnreadMessages = conversation.hasUnreadMessages();
         if (hasUnreadMessages) {
             holder.mSnippet.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
-            holder.mDate.setTextColor(ThemeManager.getColor());
+            holder.mDate.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
             holder.mName.setType(FontManager.TEXT_TYPE_PRIMARY_BOLD);
             holder.mSnippet.setMaxLines(5);
         } else {
             holder.mSnippet.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
-            holder.mDate.setTextColor(ThemeManager.getTextOnBackgroundPrimary());
+            holder.mDate.setTextColor(ThemeManager.getTextOnBackgroundSecondary());
             holder.mName.setType(FontManager.TEXT_TYPE_PRIMARY);
             holder.mSnippet.setMaxLines(1);
         }
