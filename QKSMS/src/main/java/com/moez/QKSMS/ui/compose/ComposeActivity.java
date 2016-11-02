@@ -5,20 +5,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.ViewGroup;
-
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.mmssms.Utils;
-import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
+import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 
-public class ComposeActivity extends QKSwipeBackActivity {
+public class ComposeActivity extends QKActivity {
 
     private ComposeFragment mComposeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fragment);
+        showBackButton(true);
         setTitle(R.string.title_compose);
 
         FragmentManager fm = getFragmentManager();

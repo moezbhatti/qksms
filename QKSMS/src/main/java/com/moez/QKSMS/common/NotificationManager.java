@@ -474,7 +474,7 @@ public class NotificationManager {
 
         MessageItem message = messages.get(0);
 
-        Intent threadIntent = new Intent(context, MainActivity.class);
+        Intent threadIntent = new Intent(context, MessageListActivity.class);
         threadIntent.putExtra(MessageListActivity.ARG_THREAD_ID, threadId);
         final PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -580,7 +580,7 @@ public class NotificationManager {
 
         MessageItem message = messages.get(0);
 
-        Intent threadIntent = new Intent(context, MainActivity.class);
+        Intent threadIntent = new Intent(context, MessageListActivity.class);
         threadIntent.putExtra(MessageListActivity.ARG_THREAD_ID, threadId);
         PendingIntent threadPI = PendingIntent.getActivity(context, buildRequestCode(threadId, 1), threadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

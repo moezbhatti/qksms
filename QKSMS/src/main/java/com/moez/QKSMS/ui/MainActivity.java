@@ -41,7 +41,6 @@ import com.moez.QKSMS.ui.conversationlist.ConversationListFragment;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.MMSSetupFragment;
 import com.moez.QKSMS.ui.dialog.QKDialog;
-import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.search.SearchActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
@@ -271,20 +270,6 @@ public class MainActivity extends QKActivity {
         // onNewIntent doesn't change the result of getIntent() by default, so here we set it since
         // that makes the most sense.
         setIntent(intent);
-
-        boolean shouldOpenConversation = intent.hasExtra(MessageListActivity.ARG_THREAD_ID);
-
-        // The activity can also be launched by clicking on the message button from the contacts app
-        // Check for {sms,mms}{,to}: schemes, in which case we know to open a conversation
-        if (intent.getData() != null) {
-            String scheme = intent.getData().getScheme();
-            shouldOpenConversation = shouldOpenConversation || scheme.startsWith("sms") || scheme.startsWith("mms");
-        }
-
-        if (shouldOpenConversation) {
-            intent.setClass(this, MessageListActivity.class);
-            startActivity(intent);
-        }
     }
 
     private void beginMmsSetup() {

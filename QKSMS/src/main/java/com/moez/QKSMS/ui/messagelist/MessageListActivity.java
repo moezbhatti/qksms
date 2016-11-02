@@ -10,22 +10,21 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.mmssms.Utils;
+import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.settings.ConversationSettingsDialog;
 import com.moez.QKSMS.ui.welcome.WelcomeActivity;
 
 import java.net.URLDecoder;
 
-public class MessageListActivity extends QKSwipeBackActivity {
+public class MessageListActivity extends QKActivity {
     private final String TAG = "MessageListActivity";
 
     public static final String ARG_THREAD_ID = "thread_id";
@@ -54,6 +53,8 @@ public class MessageListActivity extends QKSwipeBackActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fragment);
+        showBackButton(true);
         onNewIntent(getIntent());
     }
 
@@ -101,7 +102,6 @@ public class MessageListActivity extends QKSwipeBackActivity {
             if (fragment == null) {
                 fragment = MessageListFragment.getInstance(mThreadId, mRowId, mHighlight, mShowImmediate);
             }
-            mSwipeBackLayout.setScrollChangedListener(fragment);
             FragmentTransaction menuTransaction = fm.beginTransaction();
             menuTransaction.replace(R.id.content_frame, fragment, MessageListFragment.TAG);
             menuTransaction.commit();
@@ -136,7 +136,6 @@ public class MessageListActivity extends QKSwipeBackActivity {
     }
 
 
-
     /**
      * When In-App billing is done, it'll return information via onActivityResult().
      */
@@ -166,5 +165,12 @@ public class MessageListActivity extends QKSwipeBackActivity {
 
     public static long getThreadId() {
         return mThreadId;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

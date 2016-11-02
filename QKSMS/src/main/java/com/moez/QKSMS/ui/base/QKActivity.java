@@ -261,12 +261,18 @@ public abstract class QKActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
             case R.id.menu_settings:
                 startActivity(SettingsActivity.class);
                 return true;
+
             case R.id.menu_changelog:
                 DialogHelper.showChangelog(this);
                 return true;
+
             case R.id.menu_donate:
                 DonationManager.getInstance(this).showDonateDialog();
                 return true;

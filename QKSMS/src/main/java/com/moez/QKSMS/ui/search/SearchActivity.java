@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
+import com.moez.QKSMS.ui.base.QKActivity;
 
-public class SearchActivity extends QKSwipeBackActivity {
+public class SearchActivity extends QKActivity {
 
     private SearchFragment mSearchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fragment);
+        showBackButton(true);
         setTitle(R.string.title_search);
 
         FragmentManager fm = getFragmentManager();
