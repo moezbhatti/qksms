@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+      <!-- Disable the annoying "InnerClasses attribute for an anonymous inner class"
+           warning. -->
+       <ignore regexp="warning: Ignoring InnerClasses attribute for an anonymous inner class" />
+       <ignore regexp="(freemarker\..*) that doesn't come with an" />
+       <ignore regexp="associated EnclosingMethod attribute. This class was probably produced by a" />
+       <ignore regexp="compiler that did not target the modern \.class file format\. The recommended" />
+       <ignore regexp="solution is to recompile the class from source, using an up-to-date compiler" />
+       <ignore regexp="and without specifying any &quot;-target&quot; type options\. The consequence of ignoring" />
+       <ignore regexp="this warning is that reflective operations on this class will incorrectly" />
+       <ignore regexp="indicate that it is *not* an inner class\." />
+</lint>
