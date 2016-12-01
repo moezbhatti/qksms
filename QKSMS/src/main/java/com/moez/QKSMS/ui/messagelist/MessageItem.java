@@ -374,6 +374,13 @@ public class MessageItem {
             } else {
                 MultimediaMessagePdu msg = (MultimediaMessagePdu)pduLoaded.mPdu;
                 mSlideshow = pduLoaded.mSlideshow;
+                TextModel tm = mSlideshow.getBody();
+
+                if(tm != null){
+                    mBody = tm.getText();
+                    mTextContentType = tm.getContentType();
+                }
+
                 mAttachmentType = SmsHelper.getAttachmentType(mSlideshow, msg);
 
                 if (mMessageType == PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF) {
@@ -389,13 +396,6 @@ public class MessageItem {
                     mContact = mAddress =
                             mContext.getString(R.string.messagelist_sender_self);
                     timestamp = msg == null ? 0 : msg.getDate() * 1000L;
-                }
-
-                SlideModel slide = mSlideshow == null ? null : mSlideshow.get(0);
-                if ((slide != null) && slide.hasText()) {
-                    TextModel tm = slide.getText();
-                    mBody = tm.getText();
-                    mTextContentType = tm.getContentType();
                 }
 
                 mMessageSize = mSlideshow == null ? 0 : mSlideshow.getTotalMessageSize();

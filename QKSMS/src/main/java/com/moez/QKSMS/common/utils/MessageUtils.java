@@ -32,6 +32,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
 import android.drm.DrmStore;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.CamcorderProfile;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -84,6 +86,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -364,6 +367,20 @@ public abstract class MessageUtils {
     public static void forwardMessage(Context context, MessageItem msgItem) {
         Intent forwardIntent = new Intent(context, QKComposeActivity.class);
         forwardIntent.putExtra("sms_body", msgItem.mBody);
+        if(msgItem.isMms()){
+            PduBody pduBody = msgItem.mSlideshow.toPduBody();
+            int s = pduBody.getPartsNum();
+            String toast = "";
+            for(int i = 0; i < s; i++){
+                PduPart part = pduBody.getPart(i);
+                String type = new String(part.getContentType());
+                if (ContentType.isImageType(type) || ContentType.isVideoType(type) ||
+                        ContentType.isAudioType(type)) {
+                    forwardIntent.putExtra("attachment_uri", part.getDataUri());
+                    break;
+                }
+            }
+        }
         context.startActivity(forwardIntent);
     }
 

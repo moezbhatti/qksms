@@ -14,32 +14,16 @@
     <FrameLayout
         android:id="@+id/attachment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="128dp"
         android:visibility="gone">
 
-        <com.moez.QKSMS.ui.view.AttachmentImageView
-            android:id="@+id/compose_attachment"
+        <include
+            layout="@layout/fragment_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:maxHeight="128dp"
-            android:minHeight="0dp"
-            android:scaleType="centerCrop" />
+            android:layout_gravity="bottom"
+            android:clipToPadding="false" />
 
-        <View
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="top|right"
-            android:background="@drawable/cancel_shadow" />
-
-        <ImageButton
-            android:id="@+id/cancel"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="top|right"
-            android:background="@null"
-            android:padding="16dp"
-            android:src="@drawable/ic_cancel" />
 
     </FrameLayout>
 

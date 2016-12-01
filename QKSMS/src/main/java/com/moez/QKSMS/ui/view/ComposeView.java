@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -56,6 +59,8 @@ import com.moez.QKSMS.common.utils.Units;
 import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.attachmentlist.AttachmentItem;
+import com.moez.QKSMS.ui.attachmentlist.AttachmentListAdapter;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.dialog.QKDialog;
@@ -67,7 +72,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ComposeView extends LinearLayout implements View.OnClickListener {
     public final static String TAG = "ComposeView";
@@ -78,6 +85,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
     public interface OnSendListener {
         void onSend(String[] addresses, String body);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(AttachmentItem item);
     }
 
     enum SendButtonState {
@@ -116,7 +127,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
     private QKTextView mLetterCount;
     private FrameLayout mAttachmentLayout;
     private AttachmentImageView mAttachment;
-    private ImageButton mCancel;
+//    private ImageButton mCancel;
+    private List<AttachmentItem> mAttachmentItems;
+    private AttachmentListAdapter mAdapter;
+    private RecyclerView mImageListView;
 
     // State
     private boolean mDelayedMessagingEnabled;
@@ -174,13 +188,14 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mDelay = (ImageButton) findViewById(R.id.delay);
         mLetterCount = (QKTextView) findViewById(R.id.compose_letter_count);
         mAttachmentLayout = (FrameLayout) findViewById(R.id.attachment);
-        mAttachment = (AttachmentImageView) findViewById(R.id.compose_attachment);
-        mCancel = (ImageButton) findViewById(R.id.cancel);
+//        mAttachment = (AttachmentImageView) findViewById(R.id.compose_attachment);
+//        mCancel = (ImageButton) findViewById(R.id.cancel);
+        mAttachmentItems = new ArrayList<AttachmentItem>();
 
         mButton.setOnClickListener(this);
         mAttach.setOnClickListener(this);
         mCamera.setOnClickListener(this);
-        mCancel.setOnClickListener(this);
+//        mCancel.setOnClickListener(this);
         mDelay.setOnClickListener(this);
 
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {
@@ -328,7 +343,29 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             result = true;
 
             Toast.makeText(mContext, R.string.compose_loading_attachment, Toast.LENGTH_LONG).show();
-            new ImageLoaderTask(mContext, data.getData()).execute();
+
+            Uri uri = data.getData();
+            Uri[] uris = null;
+
+            if(uri == null){
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                    ClipData clipData = data.getClipData();
+                    int numImages = clipData.getItemCount();
+                    uris = new Uri[numImages];
+                    for(int i = 0; i < numImages; i++){
+                        uris[i] = clipData.getItemAt(i).getUri();
+                    }
+                }
+            }
+            else
+            {
+                uris = new Uri[1];
+                uris[0] = uri;
+            }
+
+            if(uris != null) {
+                new ImageLoaderTask(mContext, uris).execute();
+            }
         } else if (requestCode == REQUEST_CODE_CAMERA && resultCode == Activity.RESULT_OK) {
             result = true;
             Toast.makeText(mContext, R.string.compose_loading_attachment, Toast.LENGTH_LONG).show();
@@ -351,7 +388,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
         if (mAttachmentPanel.getVisibility() == View.VISIBLE) {
             buttonState = SendButtonState.CLOSE;
-        } else if (length > 0 || mAttachment.hasAttachment()) {
+        } else if (length > 0 || mAttachmentItems.size() > 0) {
             buttonState = SendButtonState.SEND;
         } else {
             buttonState = SendButtonState.ATTACH;
@@ -422,18 +459,15 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
     public void sendSms() {
         String body = mReplyText.getText().toString();
 
-        final Drawable attachment;
-        if (mAttachment.hasAttachment()) {
-            attachment = mAttachment.getDrawable();
-        } else {
-            attachment = null;
-        }
-
         String[] recipients = null;
         if (mConversation != null) {
             recipients = mConversation.getRecipients().getNumbers();
             for (int i = 0; i < recipients.length; i++) {
-                recipients[i] = PhoneNumberUtils.stripSeparators(recipients[i]);
+                if(SmsHelper.isEmailAddress(recipients[i])){
+                    recipients[i] = SmsHelper.extractAddrSpec(recipients[i]);
+                } else {
+                    recipients[i] = PhoneNumberUtils.stripSeparators(recipients[i]);
+                }
             }
         } else if (mRecipientProvider != null) {
             recipients = mRecipientProvider.getRecipientAddresses();
@@ -455,8 +489,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
             com.moez.QKSMS.mmssms.Message message = new com.moez.QKSMS.mmssms.Message(body, recipients);
             message.setType(com.moez.QKSMS.mmssms.Message.TYPE_SMSMMS);
-            if (attachment != null) {
-                message.setImage(ImageUtils.drawableToBitmap(attachment));
+            if (mAttachmentItems.size() > 0) {
+                message.setAttachments(mAttachmentItems);
             }
 
             // Notify the listener about the new text message
@@ -494,9 +528,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 handleComposeButtonClick();
                 break;
 
-            case R.id.cancel:
-                clearAttachment();
-                break;
+//            case R.id.cancel:
+//                clearAttachment();
+//                break;
 
             case R.id.attach:
                 if (hasSetupMms()) {
@@ -586,7 +620,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                         // Ask to become the default SMS app
                         new DefaultSmsHelper(mContext, R.string.not_default_send).showIfNotDefault(this);
 
-                    } else if (!TextUtils.isEmpty(mReplyText.getText()) || mAttachment.hasAttachment()) {
+                    } else if (!TextUtils.isEmpty(mReplyText.getText()) || mAttachmentItems.size() > 0) {
                         if (mDelayedMessagingEnabled) {
                             sendDelayedSms();
                         } else {
@@ -671,8 +705,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         );
 
         try {
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+            Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
             photoPickerIntent.setType("image/*");
+            photoPickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             mActivityLauncher.startActivityForResult(photoPickerIntent, REQUEST_CODE_IMAGE);
         } catch (ActivityNotFoundException e) {
             // Send a toast saying no picture apps
@@ -825,7 +860,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 } else if (type.startsWith("image/")) {
 
                     Uri uri = intent.getData();
-
                     // If the Uri is null, try looking elsewhere for it. [1] [2]
                     // [1]: http://stackoverflow.com/questions/10386885/intent-filter-intent-getdata-returns-null
                     // [2]: http://developer.android.com/reference/android/content/Intent.html#ACTION_SEND
@@ -836,7 +870,10 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                         }
                     }
 
-                    new ImageLoaderTask(mContext, uri).execute();
+                    Uri[] uris = new Uri[1];
+                    uris[0] = uri;
+
+                    new ImageLoaderTask(mContext, uris).execute();
 
                     // If the Uri is still null here, throw the exception.
                     if (uri == null) {
@@ -845,6 +882,13 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 }
             } else {
                 if (intent.getExtras() != null) {
+                    if(intent.hasExtra("attachment_uri")){
+                        Uri uri = intent.getExtras().getParcelable("attachment_uri");
+                        Uri[] uris = new Uri[1];
+                        uris[0] = uri;
+                        new ImageLoaderTask(mContext, uris).execute();
+                    }
+
                     String body = intent.getExtras().getString("sms_body");
                     if (body != null) {
                         mReplyText.setText(body);
@@ -858,7 +902,7 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
      * Clears the image from the attachment view.
      */
     public void clearAttachment() {
-        mAttachment.setImageBitmap(null);
+//        mAttachment.setImageBitmap(null);
         mAttachmentLayout.setVisibility(View.GONE);
         updateButtonState();
     }
@@ -868,20 +912,31 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
      *
      * @param imageBitmap the bitmap
      */
-    public void setAttachment(Bitmap imageBitmap) {
-        if (imageBitmap == null) {
-            clearAttachment();
-        } else {
-            AnalyticsManager.getInstance().sendEvent(
-                    AnalyticsManager.CATEGORY_MESSAGES,
-                    AnalyticsManager.ACTION_ATTACH_IMAGE,
-                    mLabel
-            );
+//    public void setAttachment(Bitmap imageBitmap) {
+//        if (imageBitmap == null) {
+//            clearAttachment();
+//        } else {
+//            AnalyticsManager.getInstance().sendEvent(
+//                    AnalyticsManager.CATEGORY_MESSAGES,
+//                    AnalyticsManager.ACTION_ATTACH_IMAGE,
+//                    mLabel
+//            );
+//
+//            mAttachment.setImageBitmap(imageBitmap);
+//            mAttachmentLayout.setVisibility(View.VISIBLE);
+//            updateButtonState();
+//        }
+//    }
 
-            mAttachment.setImageBitmap(imageBitmap);
-            mAttachmentLayout.setVisibility(View.VISIBLE);
-            updateButtonState();
-        }
+    /**
+     * Adds an attachment to the attachment array
+     *
+     * @param attachmentItem the attachment
+     */
+    private void addAttachment(AttachmentItem attachmentItem){
+        mAttachmentItems.add(attachmentItem);
+        mAttachmentLayout.setVisibility(View.VISIBLE);
+        updateButtonState();
     }
 
     public void setLabel(String label) {
@@ -897,16 +952,23 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
     private class ImageLoaderFromCameraTask extends AsyncTask<Void, Void, Bitmap> {
 
+        public ImageLoaderFromCameraTask() {
+            mImageListView = (RecyclerView) findViewById(R.id.listView);
+            LinearLayoutManager layoutManager
+                    = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+            mImageListView.setLayoutManager(layoutManager);
+        }
+
         @Override
         protected Bitmap doInBackground(Void... params) {// Get the dimensions of the View
-            int targetW = mAttachment.getMaxWidth();
-            int targetH = mAttachment.getMaxHeight();
-
             // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             bmOptions.inJustDecodeBounds = true;
             int photoW = bmOptions.outWidth;
             int photoH = bmOptions.outHeight;
+
+            int targetW = 128;
+            int targetH = 128;
 
             // Determine how much to scale down the image
             int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
@@ -948,20 +1010,40 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            setAttachment(bitmap);
+            AttachmentItem item = new AttachmentItem();
+            item.setBitmap(bitmap);
+            item.setPosition(mAttachmentItems.size());
+            item.setType(SmsHelper.IMAGE);
+
+            addAttachment(item);
+
+            mAdapter = new AttachmentListAdapter(mContext, mAttachmentItems);
+            mAdapter.setOnItemClickListener(pItem -> {
+                mAttachmentItems.remove(pItem);
+                if(mAttachmentItems.size() < 1){
+                    mAttachmentLayout.setVisibility(GONE);
+                    updateButtonState();
+                }
+                mAdapter.notifyDataSetChanged();
+            });
+            mImageListView.setAdapter(mAdapter);
             mCurrentPhotoPath = null;
         }
     }
 
     private class ImageLoaderTask extends AsyncTask<Uri, Void, Void> {
         final Context mContext;
-        final Uri mUri;
+        final Uri[] mUri;
         final Handler mHandler;
 
-        public ImageLoaderTask(final Context context, final Uri uri) {
+        public ImageLoaderTask(final Context context, final Uri[] uri) {
             mContext = context;
             mUri = uri;
             mHandler = new Handler();
+            mImageListView = (RecyclerView) findViewById(R.id.listView);
+            LinearLayoutManager layoutManager
+                    = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            mImageListView.setLayoutManager(layoutManager);
         }
 
         public void execute() {
@@ -971,54 +1053,79 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         @Override
         protected Void doInBackground(Uri... params) {
 
-            if (params.length < 1) {
+            int length = params.length;
+            if (length < 1) {
                 Log.e(TAG, "ImageLoaderTask called with no Uri");
                 return null;
             }
 
-            try {
-                Uri uri = params[0];
+            for(int i = 0; i < length; i++)
+            {
+                try {
+                    Uri uri = params[i];
 
-                // Decode the image from the Uri into a bitmap [1], and shrink it
-                // according to the user's settings.
-                // [1]: http://stackoverflow.com/questions/13930009/how-can-i-get-an-image-from-another-application
-                InputStream inputStream = mContext.getContentResolver().openInputStream(uri);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    // Decode the image from the Uri into a bitmap [1], and shrink it
+                    // according to the user's settings.
+                    // [1]: http://stackoverflow.com/questions/13930009/how-can-i-get-an-image-from-another-application
+                    InputStream inputStream = mContext.getContentResolver().openInputStream(uri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
-                long maxAttachmentSize =
-                        SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
-                bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
+                    long maxAttachmentSize =
+                            SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+                    bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
 
-                // Now, rotation the bitmap according to the Exif data.
-                final int rotation = ImageUtils.getOrientation(mContext, uri);
-                Matrix matrix = new Matrix();
-                matrix.postRotate(rotation);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                        bitmap.getHeight(), matrix, true);
+                    // Now, rotation the bitmap according to the Exif data.
+                    final int rotation = ImageUtils.getOrientation(mContext, uri);
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(rotation);
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+                            bitmap.getHeight(), matrix, true);
 
-                // Can't post UI updates on a background thread.
-                final Bitmap imageBitmap = bitmap;
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setAttachment(imageBitmap);
-                    }
-                });
+                    AttachmentItem item = new AttachmentItem();
+                    item.setBitmap(bitmap);
+                    item.setPosition(mAttachmentItems.size());
+                    item.setType(SmsHelper.IMAGE);
 
-            } catch (FileNotFoundException | NullPointerException e) {
-                // Make a toast to the user that the file they've requested to view
-                // isn't available.
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(
-                                mContext,
-                                mRes.getString(R.string.error_file_not_found),
-                                Toast.LENGTH_SHORT
-                        ).show();
-                    }
-                });
+                    // Can't post UI updates on a background thread.
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            addAttachment(item);
+                        }
+                    });
+
+                } catch (FileNotFoundException | NullPointerException e) {
+                    // Make a toast to the user that the file they've requested to view
+                    // isn't available.
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(
+                                    mContext,
+                                    mRes.getString(R.string.error_file_not_found),
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    });
+                }
             }
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter = new AttachmentListAdapter(mContext, mAttachmentItems);
+                    mAdapter.setOnItemClickListener(item -> {
+                        mAttachmentItems.remove(item);
+                        if(mAttachmentItems.size() < 1){
+                            mAttachmentLayout.setVisibility(GONE);
+                            updateButtonState();
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    });
+                    mImageListView.setAdapter(mAdapter);
+                }
+            });
+
             return null;
         }
     }
