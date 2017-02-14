@@ -96,6 +96,7 @@ public class QKSMSAppBase extends MultiDexApplication {
 
         registerActivityLifecycleCallbacks(new LifecycleHandler());
 
+        QKPreferences.init(this);
         ThemeManager.init(this);
         MmsConfig.init(this);
         Contact.init(this);
@@ -106,7 +107,6 @@ public class QKSMSAppBase extends MultiDexApplication {
         LayoutManager.init(this);
         NotificationManager.init(this);
         LiveViewManager.init(this);
-        QKPreferences.init(this);
 
         activePendingMessages();
     }

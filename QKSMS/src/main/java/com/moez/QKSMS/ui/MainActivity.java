@@ -1,6 +1,5 @@
 package com.moez.QKSMS.ui;
 
-import android.app.ActivityManager.TaskDescription;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -9,9 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +25,7 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.common.QKRateSnack;
 import com.moez.QKSMS.common.google.DraftCache;
 import com.moez.QKSMS.common.utils.MessageUtils;
@@ -152,9 +149,15 @@ public class MainActivity extends QKActivity {
         if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
             // User has already seen the welcome screen
             showDialogIfNeeded(savedInstanceState);
+
+            if (QKPreferences.getInt(QKPreference.AUTO_DELETE_UPGRADE) == -1) {
+                QKPreferences.setInt(QKPreference.AUTO_DELETE_UPGRADE, 1);
+            }
+
             return;
         }
 
+        QKPreferences.setInt(QKPreference.AUTO_DELETE_UPGRADE, 0); // Fresh install
         Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
         startActivityForResult(welcomeIntent, WelcomeActivity.WELCOME_REQUEST_CODE);
     }

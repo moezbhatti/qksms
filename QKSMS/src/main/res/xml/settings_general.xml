@@ -58,7 +58,7 @@
             android:title="@string/pref_delete_old_messages"
             android:widgetLayout="@layout/view_switch" />
         <EditTextPreference
-            android:defaultValue="2"
+            android:defaultValue="14"
             android:inputType="number"
             android:key="pref_key_delete_old_unread_messages"
             android:layout="@layout/list_item_preference"

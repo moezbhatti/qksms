@@ -290,6 +290,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
         EditTextPreference deleteUnread = (EditTextPreference) findPreference(DELETE_UNREAD_MESSAGES);
         if (deleteUnread != null) {
+            deleteUnread.setDefaultValue(QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD));
             deleteUnread.setSummary(mContext.getString(R.string.pref_delete_old_messages_unread_summary, QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD)));
         }
 
