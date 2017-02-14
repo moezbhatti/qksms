@@ -17,11 +17,14 @@ public class SettingsActivity extends QKSwipeBackActivity {
         mSettingsFragment = (SettingsFragment) fm.findFragmentByTag(SettingsFragment.TAG);
         if (mSettingsFragment == null) {
             mSettingsFragment = SettingsFragment.newInstance(R.xml.settings_main);
+            fm.beginTransaction()
+                    .replace(R.id.content_frame, mSettingsFragment, SettingsFragment.TAG)
+                    .commit();
+        } else {
+            fm.beginTransaction()
+                    .show(mSettingsFragment)
+                    .commit();
         }
-
-        fm.beginTransaction()
-                .replace(R.id.content_frame, mSettingsFragment, SettingsFragment.TAG)
-                .commit();
     }
 
     @Override

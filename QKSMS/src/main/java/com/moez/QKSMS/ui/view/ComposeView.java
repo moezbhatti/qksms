@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -426,7 +428,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         } else {
             attachment = null;
         }
-        clearAttachment();
 
         String[] recipients = null;
         if (mConversation != null) {
@@ -440,6 +441,8 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
 
         // If we have some recipients, send the message!
         if (recipients != null && recipients.length > 0) {
+            clearAttachment();
+
             mReplyText.setText("");
 
             AnalyticsManager.getInstance().sendEvent(
@@ -747,13 +750,34 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                     mConversationLegacy.saveDraft(draft);
                 }
             } else {
-                String oldDraft = mPrefs.getString(QKPreference.COMPOSE_DRAFT.getKey(), "");
-                if (!draft.equals(oldDraft)) {
-                    mPrefs.edit().putString(QKPreference.COMPOSE_DRAFT.getKey(), draft).apply();
+                // Only show the draft if we saved text, not if we just cleared some
+                if (!TextUtils.isEmpty(draft)) {
+                    if (mRecipientProvider != null) {
+                        String[] addresses = mRecipientProvider.getRecipientAddresses();
 
-                    // Only show the draft if we saved text, not if we just cleared some
-                    if (!TextUtils.isEmpty(draft)) {
-                        Toast.makeText(mContext, R.string.toast_draft, Toast.LENGTH_SHORT).show();
+                        if (addresses != null && addresses.length > 0) {
+                            // save the message for each of the addresses
+                            for (int i = 0; i < addresses.length; i++) {
+                                ContentValues values = new ContentValues();
+                                values.put("address", addresses[i]);
+                                values.put("date", System.currentTimeMillis());
+                                values.put("read", 1);
+                                values.put("type", 4);
+
+                                // attempt to create correct thread id
+                                long threadId = Utils.getOrCreateThreadId(mContext, addresses[i]);
+
+                                Log.v(TAG, "saving message with thread id: " + threadId);
+
+                                values.put("thread_id", threadId);
+                                Uri messageUri = mContext.getContentResolver().insert(Uri.parse("content://sms/draft"), values);
+
+                                Log.v(TAG, "inserted to uri: " + messageUri);
+
+                                ConversationLegacy mConversationLegacy = new ConversationLegacy(mContext, threadId);
+                                mConversationLegacy.saveDraft(draft);
+                            }
+                        }
                     }
                 }
             }
@@ -779,10 +803,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
                 mReplyText.setText("");
                 clearAttachment();
             }
-        } else {
-            String draft = mPrefs.getString(QKPreference.COMPOSE_DRAFT.getKey(), "");
-            mReplyText.setText(draft);
-            mReplyText.setSelection(draft.length());
         }
     }
 
@@ -868,6 +888,13 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mLabel = label;
     }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix,
+                true);
+    }
+
     private class ImageLoaderFromCameraTask extends AsyncTask<Void, Void, Bitmap> {
 
         @Override
@@ -878,7 +905,6 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             // Get the dimensions of the bitmap
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             bmOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
             int photoW = bmOptions.outWidth;
             int photoH = bmOptions.outHeight;
 
@@ -890,7 +916,33 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
             bmOptions.inSampleSize = scaleFactor;
             bmOptions.inPurgeable = true;
 
-            return BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+            long maxAttachmentSize =
+                    SmsHelper.getSendSettings(mContext).getMaxAttachmentSize();
+            bitmap = ImageUtils.shrink(bitmap, 90, maxAttachmentSize);
+
+            // Now, rotation the bitmap according to the Exif data.
+            ExifInterface ei = null;
+            try {
+                ei = new ExifInterface(mCurrentPhotoPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+
+            switch(orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    return rotateImage(bitmap, 90);
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    return rotateImage(bitmap, 180);
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    return rotateImage(bitmap, 270);
+                case ExifInterface.ORIENTATION_NORMAL:
+                default:
+                    return rotateImage(bitmap, 0); // No rotation
+            }
         }
 
         @Override
@@ -975,5 +1027,9 @@ public class ComposeView extends LinearLayout implements View.OnClickListener {
         mDelay.setColorFilter(mDelayedMessagingEnabled ?
                         ThemeManager.getTextOnColorPrimary() : ThemeManager.getTextOnColorSecondary(),
                 PorterDuff.Mode.SRC_ATOP);
+    }
+
+    public boolean isReplyTextEmpty() {
+        return TextUtils.isEmpty(mReplyText.getText());
     }
 }

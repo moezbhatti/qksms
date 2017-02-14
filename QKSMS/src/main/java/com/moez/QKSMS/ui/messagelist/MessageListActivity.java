@@ -10,6 +10,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
@@ -32,12 +33,14 @@ public class MessageListActivity extends QKSwipeBackActivity {
     public static final String ARG_HIGHLIGHT = "highlight";
     public static final String ARG_SHOW_IMMEDIATE = "showImmediate";
 
-    private long mThreadId;
+    private static long mThreadId;
     private long mRowId;
     private String mHighlight;
     private boolean mShowImmediate;
 
     private long mWaitingForThreadId = -1;
+
+    public static boolean isInForeground;
 
     public static void launch(QKActivity context, long threadId, long rowId, String pattern, boolean showImmediate) {
         Intent intent = new Intent(context, MessageListActivity.class);
@@ -52,6 +55,18 @@ public class MessageListActivity extends QKSwipeBackActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isInForeground = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isInForeground = false;
     }
 
     @Override
@@ -132,7 +147,8 @@ public class MessageListActivity extends QKSwipeBackActivity {
                 if (mWaitingForThreadId > 0) {
                     ConversationPrefsHelper conversationPrefs = new ConversationPrefsHelper(this, mWaitingForThreadId);
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    conversationPrefs.putString(SettingsFragment.NOTIFICATION_TONE, uri.toString());
+                    conversationPrefs.putString(SettingsFragment.NOTIFICATION_TONE, (uri == null) ? "" : uri.toString());
+
                     mWaitingForThreadId = -1;
                 }
             }
@@ -147,5 +163,9 @@ public class MessageListActivity extends QKSwipeBackActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.message_list, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public static long getThreadId() {
+        return mThreadId;
     }
 }

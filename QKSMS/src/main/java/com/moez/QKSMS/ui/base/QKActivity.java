@@ -1,9 +1,12 @@
 package com.moez.QKSMS.ui.base;
 
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -44,6 +47,7 @@ public abstract class QKActivity extends AppCompatActivity {
     private ImageView mOverflowButton;
     private Menu mMenu;
     private ProgressDialog mProgressDialog;
+    private Bitmap mRecentsIcon;
 
     protected Resources mRes;
     protected SharedPreferences mPrefs;
@@ -70,6 +74,14 @@ public abstract class QKActivity extends AppCompatActivity {
             mNavigationTintEnabled = QKPreferences.getBoolean(QKPreference.TINTED_NAV) &&
                     Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
         });
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            mRecentsIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            LiveViewManager.registerView(QKPreference.THEME, this, key -> {
+                ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(getString(R.string.app_name), mRecentsIcon, ThemeManager.getColor());
+                setTaskDescription(taskDesc);
+            });
+        }
     }
 
     /**

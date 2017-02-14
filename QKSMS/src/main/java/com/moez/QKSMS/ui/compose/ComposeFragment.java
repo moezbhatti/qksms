@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui.compose;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -88,10 +89,27 @@ public class ComposeFragment extends QKFragment implements ActivityLauncher, Rec
         return addresses;
     }
 
+    /**
+     * Photo Selection result
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        if (!mComposeView.onActivityResult(requestCode, resultCode, data)) {
+            // Wasn't handled by ComposeView
+        }
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mRecipients.onItemClick(parent, view, position, id);
         mStarredContactsView.collapse();
         mComposeView.requestReplyTextFocus();
+    }
+
+    public boolean isReplyTextEmpty() {
+        if (mComposeView != null) {
+            return mComposeView.isReplyTextEmpty();
+        }
+        return true;
     }
 }
