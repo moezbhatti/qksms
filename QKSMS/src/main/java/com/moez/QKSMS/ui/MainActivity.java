@@ -82,6 +82,13 @@ public class MainActivity extends QKActivity {
         setTitle(R.string.title_conversation_list);
         ButterKnife.bind(this);
 
+        if (!QKPreferences.getBoolean(QKPreference.AUTO_DELETE_MIGRATED)) {
+            if (QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD).equals("2")) {
+                QKPreferences.setString(QKPreference.AUTO_DELETE_UNREAD, "14");
+            }
+            QKPreferences.setBoolean(QKPreference.AUTO_DELETE_MIGRATED, true);
+        }
+
         FragmentManager fm = getFragmentManager();
         mConversationList = (ConversationListFragment) fm.findFragmentByTag(ConversationListFragment.TAG);
         if (mConversationList == null) {
@@ -149,15 +156,9 @@ public class MainActivity extends QKActivity {
         if (mPrefs.getBoolean(SettingsFragment.WELCOME_SEEN, false)) {
             // User has already seen the welcome screen
             showDialogIfNeeded(savedInstanceState);
-
-            if (QKPreferences.getInt(QKPreference.AUTO_DELETE_UPGRADE) == -1) {
-                QKPreferences.setInt(QKPreference.AUTO_DELETE_UPGRADE, 1);
-            }
-
             return;
         }
 
-        QKPreferences.setInt(QKPreference.AUTO_DELETE_UPGRADE, 0); // Fresh install
         Intent welcomeIntent = new Intent(this, WelcomeActivity.class);
         startActivityForResult(welcomeIntent, WelcomeActivity.WELCOME_REQUEST_CODE);
     }

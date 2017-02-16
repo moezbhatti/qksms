@@ -1,7 +1,6 @@
 package com.moez.QKSMS.enums;
 
 import android.os.Build;
-import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.ui.ThemeManager;
 
 import java.util.Arrays;
@@ -43,9 +42,9 @@ public enum QKPreference {
     DELIVERY_TOAST("pref_key_delivery_toast", true),
     DELIVERY_VIBRATE("pref_key_delivery_vibrate", true),
 
-    AUTO_DELETE_UPGRADE("pref_key_auto_delete_upgrade", -1), // -1: Default state | 0: Fresh install | 1: Upgrade
+    AUTO_DELETE_MIGRATED("pref_key_auto_delete_migrated", false),
     AUTO_DELETE("pref_key_delete_old_messages", true),
-    AUTO_DELETE_UNREAD("pref_key_delete_old_unread_messages", String.valueOf(getAutoDeleteUnreadDays())), // This type of preference only accepts strings
+    AUTO_DELETE_UNREAD("pref_key_delete_old_unread_messages", "14"), // This type of preference only accepts strings
     AUTO_DELETE_READ("pref_key_delete_old_read_messages", "1"),
 
     AUTO_EMOJI("pref_key_auto_emoji", false),
@@ -121,15 +120,5 @@ public enum QKPreference {
 
     public Object getDefaultValue() {
         return mDefaultValue;
-    }
-
-    private static int getAutoDeleteUnreadDays() {
-        switch (QKPreferences.getInt(AUTO_DELETE_UPGRADE)) {
-            case 1:
-                return 2;
-
-            default: // Possible cases: -1 and 0
-                return 14;
-        }
     }
 }
