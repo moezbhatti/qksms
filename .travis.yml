@@ -1,5 +1,5 @@
 language: android
-sudo: false
+sudo: required
 
 android:
   components:
@@ -21,6 +21,9 @@ android:
 
 jdk:
     - oraclejdk8
+
+before_install:
+  - export JAVA8_HOME=$JAVA_HOME
 
 script:
     - ./gradlew clean
