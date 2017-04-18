@@ -72,6 +72,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_APPEARANCE = "pref_key_category_appearance";
     public static final String CATEGORY_THEME = "pref_category_theme";
     public static final String CATEGORY_GENERAL = "pref_key_category_general";
+    public static final String CATEGORY_BLOCKING = "pref_key_category_blocking";
     public static final String CATEGORY_NOTIFICATIONS = "pref_key_category_notifications";
     public static final String CATEGORY_MMS = "pref_key_category_mms";
     public static final String CATEGORY_QUICKREPLY = "pref_key_category_quickreply";
@@ -111,9 +112,6 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String DELETE_UNREAD_MESSAGES = "pref_key_delete_old_unread_messages";
     public static final String DELETE_READ_MESSAGES = "pref_key_delete_old_read_messages";
     public static final String YAPPY = "pref_key_endlessjabber";
-    public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
-    public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
-    public static final String BLOCKED_FUTURE = "pref_key_block_future";
     public static final String SHOULD_I_ANSWER = "pref_key_should_i_answer";
     public static final String MOBILE_ONLY = "pref_key_mobile_only";
     public static final String COMPOSE_GROUP = "pref_key_compose_group";
@@ -156,6 +154,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String GOOGLE_PLUS = "pref_key_google_plus";
     public static final String GITHUB = "pref_key_github";
     public static final String CROWDIN = "pref_key_crowdin";
+
+    public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
+    public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
+    public static final String BLOCKED_FUTURE = "pref_key_block_future";
+    public static final String BLOCKED_PATTERN = "pref_key_block_pattern";
+    public static final String BLOCKED_WORD = "pref_key_block_word";
+    public static final String BLOCK_SKIP_CONTACTS = "pref_key_block_skip_contact";
 
     public static final String WELCOME_SEEN = "pref_key_welcome_seen";
 
@@ -547,6 +552,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case CATEGORY_GENERAL:
                 resId = R.xml.settings_general;
                 break;
+            case CATEGORY_BLOCKING:
+                resId = R.xml.settings_blocking;
+                break;
             case CATEGORY_NOTIFICATIONS:
                 resId = R.xml.settings_notifications;
                 break;
@@ -583,7 +591,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 new BubblePreferenceDialog().setContext(mContext).show();
                 break;
             case BLOCKED_FUTURE:
-                BlockedDialog.showDialog(mContext);
+                BlockedDialog.showNumbersDialog(mContext);
+                break;
+            case BLOCKED_PATTERN:
+                BlockedDialog.showPatternsDialog(mContext);
+                break;
+            case BLOCKED_WORD:
+                BlockedDialog.showWordsDialog(mContext);
                 break;
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";
@@ -753,3 +767,4 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
     }
 }
+
