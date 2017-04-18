@@ -1,7 +1,7 @@
 package com.moez.QKSMS.ui.dialog;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -13,145 +13,113 @@ import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.QKEditText;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+
 
 public class BlockedDialog {
 
-    private static String vText(final View view) {
+    public static void showNumbersDialog(final QKActivity context, final SharedPreferences prefs) {
 
-        return ((TextView) view).getText().toString();
+        makeDialog(
+                context,
+                R.string.title_block_address,
+                R.string.pref_block_future,
+                BlockedConversationHelper.getFutureBlockedConversations(prefs),
+                value -> BlockedConversationHelper.blockFutureConversation(prefs, value),
+                value -> BlockedConversationHelper.unblockFutureConversation(prefs, value),
+                value -> true
+        );
     }
 
-    public static void showNumbersDialog(final QKActivity context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        List<String> addresses = new ArrayList<>(
-                BlockedConversationHelper.getFutureBlockedConversations(prefs));
-        Collections.sort(addresses);
+    public static void showPatternsDialog(final QKActivity context, final SharedPreferences prefs) {
 
-        final QKDialog dialog = new QKDialog();
-
-        dialog.setContext(context)
-              .setTitle(R.string.pref_block_future)
-              .setItems(false, addresses, new AdapterView.OnItemClickListener() {
-                  @Override
-                  public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                      final String address = vText(view);
-                      final boolean removed = BlockedConversationHelper.unblockFutureConversation(prefs, address);
-                      if (removed) {
-                          addresses.remove(address);
-                          dialog.getListAdapter().notifyDataSetChanged();
-                      }
-                  }
-              })
-              .setPositiveButton(R.string.add, new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                      final QKEditText editText = new QKEditText(context);
-                      dialog.setContext(context)
-                            .setTitle(R.string.title_block_address)
-                            .setCustomView(editText)
-                            .setPositiveButton(R.string.add, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    final String address = vText(editText);
-                                    if (address.length() > 0) {
-                                        final boolean added = BlockedConversationHelper.blockFutureConversation(prefs, address);
-                                        if(added)
-                                            dialog.getListAdapter().notifyDataSetChanged();
-                                    }
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, null)
-                            .show();
-                  }
-              })
-              .setNegativeButton(R.string.cancel, null)
-              .show();
+        makeDialog(
+                context,
+                R.string.title_block_pattern,
+                R.string.pref_block_pattern,
+                BlockedConversationHelper.getBlockedPatterns(prefs),
+                value -> BlockedConversationHelper.blockPattern(prefs, value),
+                value -> BlockedConversationHelper.unblockPattern(prefs, value),
+                value -> {
+                    if (BlockedConversationHelper.isValidPattern(value))
+                        return true;
+                    Toast.makeText(context, R.string.invalid_pattern, Toast.LENGTH_SHORT)
+                         .show();
+                    return false;
+                }
+        );
     }
 
-    public static void showPatternsDialog(final QKActivity context) {
+    public static void showWordsDialog(final QKActivity context, final SharedPreferences prefs) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final List<String> patterns = new ArrayList<>(BlockedConversationHelper.getBlockedPatterns(prefs));
-        Collections.sort(patterns);
-
-        final QKDialog dialog = new QKDialog();
-        dialog.setContext(context)
-              .setTitle(R.string.pref_block_future)
-              .setItems(false, patterns, (parent, view, position, id) -> {
-                  final String pattern =
-                          vText(view);
-                  final boolean removed =
-                          BlockedConversationHelper.unblockPattern(prefs, pattern);
-                  if (removed) {
-                      patterns.remove(pattern);
-                      dialog.getListAdapter().notifyDataSetChanged();
-                  }
-              })
-              .setPositiveButton(false, R.string.add, v0 -> {
-                  final QKEditText editText = new QKEditText(context);
-                  new QKDialog()
-                          .setContext(context)
-                          .setTitle(R.string.title_block_pattern)
-                          .setCustomView(editText)
-                          .setPositiveButton(R.string.add, v1 -> {
-                              final String pattern = vText(editText);
-                              if (!BlockedConversationHelper.isValidPattern(pattern)) {
-                                  Toast.makeText(context, "bad pattern!", Toast.LENGTH_SHORT).show();
-                                  return;
-                              }
-                              final boolean add = BlockedConversationHelper.blockPattern(prefs, pattern);
-                              if (add) {
-                                  patterns.add(pattern);
-                                  dialog.getListAdapter().notifyDataSetChanged();
-                              }
-                          })
-                          .setNegativeButton(R.string.cancel, null)
-                          .show();
-              })
-              .setNegativeButton(R.string.done, null)
-              .show();
+        makeDialog(
+                context,
+                R.string.title_block_word,
+                R.string.pref_block_word,
+                BlockedConversationHelper.getBlockedWords(prefs),
+                value -> BlockedConversationHelper.blockWord(prefs, value),
+                value -> BlockedConversationHelper.unblockWord(prefs, value),
+                value -> true
+        );
     }
 
-    public static void showWordsDialog(final QKActivity context) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final List<String> words = new ArrayList<>(BlockedConversationHelper.getBlockedWords(prefs));
-        Collections.sort(words);
-
-        final QKDialog dialog = new QKDialog();
-        dialog.setContext(context)
-              .setTitle(R.string.pref_block_future)
-              .setItems(false, words, (parent, view, position, id) -> {
-                  final String word = vText(view);
-                  final boolean removed = BlockedConversationHelper.unblockWord(prefs, word);
-                  if (removed) {
-                      words.remove(word);
-                      dialog.getListAdapter().notifyDataSetChanged();
-                  }
-              })
-              .setPositiveButton(false, R.string.add, v -> {
-                  final QKEditText editText = new QKEditText(context);
-                  new QKDialog()
-                          .setContext(context)
-                          .setTitle(R.string.title_block_word)
-                          .setCustomView(editText)
-                          .setPositiveButton(R.string.add, v1 -> {
-                              if (editText.getText().length() > 0) {
-                                  final String word = editText.getText().toString();
-                                  final boolean added = BlockedConversationHelper.blockWord(prefs, word);
-                                  if (added) {
-                                      words.add(word);
-                                      dialog.getListAdapter().notifyDataSetChanged();
-                                  }
-                              }
-                          })
-                          .setNegativeButton(R.string.cancel, null)
-                          .show();
-              })
-              .setNegativeButton(R.string.done, null)
-              .show();
+    private interface ValueProcessor {
+        boolean apply(String value);
     }
+
+    private static void makeDialog(final QKActivity context,
+                                   @StringRes final int addDialogTitle,
+                                   @StringRes final int parentDialogTitle,
+                                   final Collection<String> values,
+                                   final ValueProcessor adder,
+                                   final ValueProcessor remover,
+                                   final ValueProcessor validator) {
+
+        final List<String> values_ = new ArrayList<>(values);
+        Collections.sort(values_);
+
+        final QKDialog parentDialog = new QKDialog();
+        final QKDialog addDialog = new QKDialog();
+
+        final AdapterView.OnItemClickListener onItemClick = (parent, view, position, id) -> {
+            final CharSequence userInput = ((TextView) view).getText();
+            final String value = userInput == null ? "" : userInput.toString();
+            final boolean changed = remover.apply(value);
+            if (changed) {
+                values_.remove(value);
+                parentDialog.getListAdapter().notifyDataSetChanged();
+            }
+        };
+
+        final View.OnClickListener onAdd = view -> {
+            final QKEditText text = new QKEditText(context);
+            addDialog.setContext(context)
+                     .setTitle(addDialogTitle)
+                     .setCustomView(text)
+                     .setPositiveButton(R.string.add, v -> {
+                         final CharSequence userInput = ((TextView) text).getText();
+                         final String value = userInput == null ? "" : userInput.toString();
+                         if (value.isEmpty() || !validator.apply(value))
+                             return;
+                         final boolean changed = adder.apply(value);
+                         if (changed) {
+                             values_.add(value);
+                             parentDialog.getListAdapter().notifyDataSetChanged();
+                         }
+                     })
+                     .setNegativeButton(R.string.ret, null)
+                     .show();
+        };
+
+        parentDialog.setContext(context)
+                    .setTitle(parentDialogTitle)
+                    .setItems(false, values_, onItemClick)
+                    .setPositiveButton(false, R.string.add, onAdd)
+                    .setNegativeButton(R.string.ret, null)
+                    .show();
+    }
+
 }

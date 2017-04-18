@@ -591,13 +591,13 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 new BubblePreferenceDialog().setContext(mContext).show();
                 break;
             case BLOCKED_FUTURE:
-                BlockedDialog.showNumbersDialog(mContext);
+                BlockedDialog.showNumbersDialog(mContext, mPrefs);
                 break;
             case BLOCKED_PATTERN:
-                BlockedDialog.showPatternsDialog(mContext);
+                BlockedDialog.showPatternsDialog(mContext, mPrefs);
                 break;
             case BLOCKED_WORD:
-                BlockedDialog.showWordsDialog(mContext);
+                BlockedDialog.showWordsDialog(mContext, mPrefs);
                 break;
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";

@@ -378,9 +378,8 @@ public class QKDialog extends DialogFragment {
         return setPositiveButton(true, text, onClickListener);
     }
 
-    public QKDialog setPositiveButton(boolean dismiss, int text, final OnClickListener onClickListener) {
-
-        return setPositiveButton(dismiss, getString(text), onClickListener);
+    public QKDialog setPositiveButton(boolean dismiss, int title, final OnClickListener onClickListener) {
+        return setPositiveButton(dismiss, mResources.getString(title), onClickListener);
     }
 
     public QKDialog setPositiveButton(boolean dismiss, String text, final OnClickListener onClickListener) {

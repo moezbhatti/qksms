@@ -217,7 +217,7 @@ public class BlockedConversationHelper {
             return false;
         }
 
-        if (blockFutureConversation(prefs, address)) {
+        if (isFutureBlocked(prefs, address)) {
             Log.i(TAG, "blocked from <" + address + "> because of address blacklist");
             return true;
         }
