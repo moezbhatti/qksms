@@ -12,7 +12,7 @@ import com.moez.QKSMS.ui.view.QKEditText;
 
 import java.util.Set;
 
-public class BlockedNumberDialog {
+public class BlockedDialog {
 
     public static void showDialog(final QKActivity context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

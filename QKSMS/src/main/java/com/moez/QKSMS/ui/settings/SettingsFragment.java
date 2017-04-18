@@ -47,7 +47,7 @@ import com.moez.QKSMS.transaction.NotificationManager;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
-import com.moez.QKSMS.ui.dialog.BlockedNumberDialog;
+import com.moez.QKSMS.ui.dialog.BlockedDialog;
 import com.moez.QKSMS.ui.dialog.BubblePreferenceDialog;
 import com.moez.QKSMS.ui.dialog.QKDialog;
 import com.moez.QKSMS.ui.dialog.mms.MMSSetupFragment;
@@ -583,7 +583,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 new BubblePreferenceDialog().setContext(mContext).show();
                 break;
             case BLOCKED_FUTURE:
-                BlockedNumberDialog.showDialog(mContext);
+                BlockedDialog.showDialog(mContext);
                 break;
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";
