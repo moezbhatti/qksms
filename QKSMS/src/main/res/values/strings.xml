@@ -111,7 +111,6 @@
     <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
-    <string name="pref_category_blocking">Message blocking</string>
     <string name="pref_category_notifications">Notifications</string>
     <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
     <string name="pref_category_mms">MMS</string>
@@ -829,4 +828,21 @@
         <item>1 MB</item>
         <item>Unlimited</item>
     </string-array>
+
+    <string name="pref_category_blocking">Spam Blocking</string>
+    <string name="pref_category_summary_blocking">Blocking advertisement and unwanted messages</string>
+
+    <string name="title_block_pattern">Block a pattern</string>
+    <string name="title_unblock_pattern">Unblock regex pattern</string>
+    <string name="pref_block_pattern">Patterns (Advanced!)</string>
+    <string name="pref_block_pattern_summary">Add more regex patterns to blacklist (advanced users only!)</string>
+
+    <string name="title_block_word">Blacklist a word</string>
+    <string name="title_unblock_word">Un-Blacklist word</string>
+    <string name="pref_block_word">Blacklist Words</string>
+    <string name="pref_block_word_summary">Add more words to blacklist</string>
+
+    <string name="pref_block_skip_contact">Never block contacts</string>
+    <string name="pref_block_skip_contact_summary">Never block messages when they are received from known contacts</string>
+
 </resources>

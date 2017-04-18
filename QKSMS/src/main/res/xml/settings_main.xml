@@ -32,6 +32,12 @@
             android:summary="@string/pref_category_summary_general"
             android:title="@string/pref_category_general" />
         <Preference
+            android:icon="@drawable/ic_block"
+            android:key="pref_key_category_blocking"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_category_summary_blocking"
+            android:title="@string/pref_category_blocking"/>
+        <Preference
             android:icon="@drawable/ic_notifications"
             android:key="pref_key_category_notifications"
             android:layout="@layout/list_item_preference"
