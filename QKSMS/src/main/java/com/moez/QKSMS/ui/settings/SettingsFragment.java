@@ -65,6 +65,16 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
+
+/**
+ * Steps to add a new preferences:
+ *
+ * 1. Add the name of the pref to list of constants, in the beginning of {@link SettingsFragment} class.
+ * 2. Add handle change in {@link #onPreferenceChange(Preference, Object)}.
+ * 3. Add handle click in {@link #onPreferenceClick(Preference)}.
+ * 4. Add the required strings to {@code strings.xml}.
+ * 5. Add UI option.
+ */
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener {
     public static final String TAG = "SettingsFragment";
@@ -78,6 +88,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String CATEGORY_QUICKREPLY = "pref_key_category_quickreply";
     public static final String CATEGORY_QUICKCOMPOSE = "pref_key_category_quickcompose";
     public static final String CATEGORY_ABOUT = "pref_key_category_about";
+    public static final String CATEGORY_TAG = "settings_category_fragment_tag";
 
     // Sub-categories
     public static final String CATEGORY_APPEARANCE_SYSTEM_BARS = "pref_key_category_appearance_system_bars";
@@ -155,18 +166,19 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String GITHUB = "pref_key_github";
     public static final String CROWDIN = "pref_key_crowdin";
 
-    public static final String BLOCKED_ENABLED = "pref_key_blocked_enabled";
+    public static final String BLOCK_ENABLED = "pref_key_blocked_enabled";
+    public static final String BLOCK_SKIP_CONTACTS = "pref_key_block_skip_contact";
     public static final String BLOCKED_SENDERS = "pref_key_blocked_senders";
     public static final String BLOCKED_FUTURE = "pref_key_block_future";
     public static final String BLOCKED_PATTERN = "pref_key_block_pattern";
     public static final String BLOCKED_WORD = "pref_key_block_word";
-    public static final String BLOCK_SKIP_CONTACTS = "pref_key_block_skip_contact";
+    public static final String BLOCKED_NUMBER_PREFIX = "pref_key_block_number_prefix";
+
 
     public static final String WELCOME_SEEN = "pref_key_welcome_seen";
 
     public static final String DEFAULT_NOTIFICATION_TONE = "content://settings/system/notification_sound";
 
-    public static final String CATEGORY_TAG = "settings_category_fragment_tag";
 
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/communities/104505769539048913485";
     public static final String GITHUB_URL = "https://github.com/qklabs/qksms";
@@ -598,6 +610,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 break;
             case BLOCKED_WORD:
                 BlockedDialog.showWordsDialog(mContext, mPrefs);
+                break;
+            case BLOCKED_NUMBER_PREFIX:
+                BlockedDialog.showNumberPrefixDialog(mContext, mPrefs);
                 break;
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";

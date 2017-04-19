@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui.dialog;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.StringRes;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
+import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.QKEditText;
 
@@ -43,10 +45,9 @@ public class BlockedDialog {
                 value -> BlockedConversationHelper.blockPattern(prefs, value),
                 value -> BlockedConversationHelper.unblockPattern(prefs, value),
                 value -> {
-                    if (BlockedConversationHelper.isValidPattern(value))
+                    if (BlockedConversationHelper.compilePattern(value) != null)
                         return true;
-                    Toast.makeText(context, R.string.invalid_pattern, Toast.LENGTH_SHORT)
-                         .show();
+                    toast(context, R.string.invalid_pattern);
                     return false;
                 }
         );
@@ -65,9 +66,34 @@ public class BlockedDialog {
         );
     }
 
+    public static void showNumberPrefixDialog(final QKActivity context, final SharedPreferences prefs) {
 
+        makeDialog(
+                context,
+                R.string.title_block_number_prefix,
+                R.string.pref_block_number_prefix,
+                BlockedConversationHelper.getBlockedNumberPrefixes(prefs),
+                value -> BlockedConversationHelper.blockNumberPrefix(prefs, value),
+                value -> BlockedConversationHelper.unblockNumberPrefix(prefs, value),
+                value -> {
+                    if (!PhoneNumberUtils.isWellFormedSmsAddress(value))
+                        toast(context, R.string.invalid_number_prefix);
+                    return true;
+                }
+        );
+    }
+
+
+    // TODO add a Function<T, R> interface, it's useful.
+    // TODO is it ok to add guava dependency? if so it has the interface already.
+    // java.util.function isn't available in android's sdk (java 7).
     private interface ValueProcessor {
         boolean apply(String value);
+    }
+
+    private static void toast(final Context context, @StringRes final int msg) {
+
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     private static void makeDialog(final QKActivity context,

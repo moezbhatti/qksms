@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.provider.Telephony;
 import android.util.Log;
 import android.view.MenuItem;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.data.Contact;
@@ -145,7 +146,7 @@ public class BlockedConversationHelper {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mMenuItem.setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
+            mMenuItem.setVisible(mPrefs.getBoolean(SettingsFragment.BLOCK_ENABLED, false));
             mMenuItem.setTitle(mContext.getString(mShowBlocked ? R.string.menu_messages : R.string.menu_blocked));
         }
 
@@ -201,272 +202,319 @@ public class BlockedConversationHelper {
     /**
      * Check to see if a message from a sender should be blocked or not.
      *
-     * @param prefs app shared pref.
-     * @param address where message is coming from.
-     * @param body message text.
-     * @return true if message should be blocked, false otherwise.
      */
-    public static boolean isBlocked(SharedPreferences prefs, String address, String body) {
+    public static boolean isBlocked(final SharedPreferences prefs,
+                                    final Context context,
+                                    final Message message,
+                                    final String address,
+                                    String body,
+                                    final long date) {
 
-        if(!prefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false))
+        if(!prefs.getBoolean(SettingsFragment.BLOCK_ENABLED, false))
             return false;
 
-        final boolean skipContacts = prefs.getBoolean(SettingsFragment.BLOCK_SKIP_CONTACTS, true);
-        if (skipContacts && Contact.get(address, true).existsInDatabase()) {
+        if (prefs.getBoolean(SettingsFragment.BLOCK_SKIP_CONTACTS, true) &&
+                Contact.get(message.getAddress(), true).existsInDatabase()) {
             Log.d(TAG, "skipping spam check from contact: " + address);
             return false;
         }
 
-        if (isFutureBlocked(prefs, address)) {
-            Log.i(TAG, "blocked from <" + address + "> because of address blacklist");
-            return true;
+        if(address != null && !address.isEmpty()) {
+            if (isFutureBlocked(prefs, address)) {
+                Log.i(TAG, "blocked from <" + address + "> because of address blacklist");
+                return true;
+            }
+
+            final String numberPrefix0 = getBlockedNumberPrefixOf(prefs, address);
+            if(numberPrefix0 != null) {
+                Log.i(TAG, "blocked from <" + address + "> because of number prefix: " + numberPrefix0);
+                return true;
+            }
+
+            String rippedAddr = "";
+            for(int i = 0; i < address.length(); i++) {
+                final Character c = address.charAt(i);
+                if('0' <= c && c <= '9')
+                    rippedAddr += c;
+            }
+
+            final String numberPrefix1 = getBlockedNumberPrefixOf(prefs, rippedAddr);
+            if(numberPrefix1 != null) {
+                Log.i(TAG, "blocked from <" + address + "> because of number prefix: " + numberPrefix1);
+                return true;
+            }
         }
 
-        body = preProcessMessageText(body);
+        if(body != null && !body.isEmpty()) {
+            body = preProcessForWord(body);
 
-        final String blockedWordOf = getBlockedWordOf(prefs, body);
-        if(blockedWordOf != null) {
-            Log.i(TAG, "blocked from <" + address + "> because of spam words: " + blockedWordOf);
-            return true;
-        }
+            final String word = getBlockedWordOf(prefs, body);
+            if(word != null) {
+                Log.i(TAG, "blocked from <" + address + "> because of spam words: " + word);
+                return true;
+            }
 
-        final String blockedPatternOf = getBlockedPatternOf(prefs, body);
-        if(blockedPatternOf != null) {
-            Log.i(TAG, "blocked from <" + address + "> because of spam pattern: " + blockedPatternOf);
-            return true;
+            final String pattern = getBlockedPatternOf(prefs, body);
+            if(pattern != null) {
+                Log.i(TAG, "blocked from <" + address + "> because of spam pattern: " + pattern);
+                return true;
+            }
         }
 
         return false;
     }
 
-    /**
-     * if any pre-processing is needed on the message text before
-     * checking against spam patterns and spam words.
-     *
-     * @param text the text to pre-process.
-     * @return pre-processed text.
-     */
-    private static String preProcessMessageText(final String text) {
-
-        return text == null ? null : text.toLowerCase().trim();
-    }
-
-    // --------------------------------- WORD BLACKLIST
+    // ------------------- BLOCK BY WORD BLACKLIST
 
     /**
      * Whether if {@link String#trim()} should be called on every blacklisted word.
      *
-     * See {@link #preProcessWord(String)}
+     * See {@link #preProcessForWord(String)}
      */
     private static final boolean TRIM_WORD = false;
 
     /**
-     * Whether if {@link String#trim()} should be called on every blacklisted word.
+     * Whether if checking against blacklisted words is case-sensitive or not.
      *
-     * See {@link #preProcessWord(String)}
+     * See {@link #preProcessForWord(String)}
      */
-    private static final boolean CASE_SENSITIVE = false;
+    private static final boolean CASE_SENSITIVE_WORD = false;
 
     /**
-     * Add a word to the list of spam words.
-     *
-     * If later a message contains this word, the message is considered to be
-     * spam and should be blocked.
-     *
-     * </br>
-     *
-     * If the pattern is invalid, or the pattern already existed in the
-     * blacklist, this method return {@code false}.
-     *
+     * Add a value to the collection returned by {@link #getBlockedWords(SharedPreferences)}.
      *
      * @param prefs app shared pref.
-     * @return true if the word did not exist in the blacklist before.
+     * @return true if the value did not exist in the collection before, and hence the collection was modified.
+     * @see #getBlockedWords(SharedPreferences)
      */
-    public static boolean blockWord(SharedPreferences prefs, String word) {
+    public static boolean blockWord(SharedPreferences prefs, String value) {
 
-        final Set<String> words = prefs.getStringSet(
-                SettingsFragment.BLOCKED_WORD, new HashSet<String>(0));
+        value = preProcessForWord(value);
 
-        final boolean modified = words.add(preProcessWord(word));
-
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_WORD, words).apply();
+        final String key = SettingsFragment.BLOCKED_WORD;
+        final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
+        final boolean modified = values.add(value);
+        prefs.edit().putStringSet(key, values).apply();
 
         return modified;
     }
 
     /**
-     * Remove a word previously added to list of spam words.
+     * Remove a value from the collection returned by {@link #getBlockedWords(SharedPreferences)}.
      *
      * @param prefs app shared pref.
-     * @return true if the word was actually blacklisted before.
+     * @param value the value to remove.
+     * @return true if the value actually existed in the collection, and hence the collection was modified.
+     * @see #getBlockedWords(SharedPreferences)
      */
-    public static boolean unblockWord(SharedPreferences prefs, String word) {
+    public static boolean unblockWord(SharedPreferences prefs, String value) {
 
-        final Set<String> words = prefs.getStringSet(
-                SettingsFragment.BLOCKED_WORD, new HashSet<String>(0));
+        value = preProcessForWord(value);
 
-        final boolean modified = words.remove(preProcessWord(word));
-
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_WORD, words).apply();
+        final String key = SettingsFragment.BLOCKED_WORD;
+        final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
+        final boolean modified = values.remove(value);
+        prefs.edit().putStringSet(key, values).apply();
 
         return modified;
     }
 
     /**
-     * Returns collection of all the words considered to be spam if seen in a
-     * message.
+     * List of all blacklisted words (spam words). If a message contains any of
+     * these words, it is considered to be spam and should be blocked.
      *
      * @param prefs app shared pref.
      * @return collection of all the words considered to be spam if seen in a message.
      */
     public static Collection<String> getBlockedWords(SharedPreferences prefs) {
 
-        return prefs.getStringSet(SettingsFragment.BLOCKED_WORD, Collections.emptySet());
+        final String key = SettingsFragment.BLOCKED_WORD;
+        return prefs.getStringSet(key, Collections.emptySet());
     }
 
     /**
-     * Returns the first seen spam word in the {@code body}. null if none was found.
+     * Returns the first seen spam word in the {@code text}, null if none was found.
      *
      * @param prefs app shared pref.
-     * @param body body of the the message to check.
-     * @return the first seen spam word in body or null of none was found.
+     * @param value body of the the message to check.
+     * @return the first seen spam word in text or null of none was found.
+     * @see #getBlockedWords(SharedPreferences)
      */
-    private static String getBlockedWordOf(SharedPreferences prefs, String body) {
+    private static String getBlockedWordOf(SharedPreferences prefs, final String value) {
 
-        for (final String word : getBlockedWords(prefs)) {
-            if(body.contains(word)) {
-                return word;
-            }
-        }
+        for (final String each : getBlockedWords(prefs))
+            if (value.contains(each))
+                return each;
 
         return null;
     }
 
-    private static String preProcessWord(String word) {
+    private static String preProcessForWord(String value) {
 
         if(TRIM_WORD)
-            word = word.trim();
+            value = value.trim();
 
-        if(!CASE_SENSITIVE)
-            word = word.toLowerCase();
+        if(!CASE_SENSITIVE_WORD)
+            value = value.toLowerCase();
 
-        return word;
+        return value;
     }
 
-    // --------------------------------- PATTERN
-
-    public static boolean isValidPattern(final String pattern) {
-
-        if(pattern == null || pattern.isEmpty()) {
-            return false;
-        }
-        try {
-            @SuppressWarnings("unused")
-            final Pattern test = Pattern.compile(pattern.trim());
-        }
-        catch (final Exception e) {
-            Log.e(TAG, "invalid pattern, skipping: " + pattern);
-            return false;
-        }
-
-        return true;
-    }
+    // -------------------------- BLOCK BY PATTERN
 
     /**
-     * Add a pattern to the list of spam patterns.
-     *
-     * If later a message is matched against this pattern, the message is
-     * considered to be spam and should be blocked.
-     *
-     * </br>
-     *
-     * If the pattern is invalid, or the pattern already existed in the
-     * blacklist, this method return {@code false}.
-     *
+     * Add a value to the collection returned by {@link #getBlockedPatterns(SharedPreferences)}.
      *
      * @param prefs app shared pref.
-     * @param pattern the pattern to be added to the blacklist.
-     * @return true if the pattern did not exist in the blacklist before, and was a valid pattern.
+     * @return true if the value did not exist in the collection before, and hence the collection was modified.
+     * @see #getBlockedPatterns(SharedPreferences)
      */
-    public static boolean blockPattern(SharedPreferences prefs, String pattern) {
+    public static boolean blockPattern(SharedPreferences prefs, final String value) {
 
-        final Set<String> patterns = prefs.getStringSet(
-                SettingsFragment.BLOCKED_PATTERN, new HashSet<String>(0));
-
-        if(patterns.contains(pattern)) {
-            Log.w(TAG, "duplicate pattern: " + pattern);
+        if(compilePattern(value) == null)
             return false;
-        }
-        if(!isValidPattern(pattern)) {
-            Log.e(TAG, "invalid pattern: " + pattern);
-            return false;
-        }
 
-        patterns.add(pattern);
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_PATTERN, patterns).apply();
-        return true;
+        final String key = SettingsFragment.BLOCKED_PATTERN;
+        final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
+        final boolean modified = values.add(value);
+        prefs.edit().putStringSet(key, values).apply();
+
+        return modified;
     }
 
     /**
-     * Remove a pattern previously defined to be spam pattern.
+     * Remove a value from the collection returned by {@link #getBlockedPatterns(SharedPreferences)}.
      *
      * @param prefs app shared pref.
-     * @param pattern the pattern to remove from blacklist.
-     * @return true if the pattern was actually blocked before.
+     * @param value the value to remove.
+     * @return true if the value actually existed in the collection, and hence the collection was modified.
+     * @see #getBlockedPatterns(SharedPreferences)
      */
-    public static boolean unblockPattern(SharedPreferences prefs, String pattern) {
+    public static boolean unblockPattern(SharedPreferences prefs, final String value) {
 
-        final Set<String> values = prefs.getStringSet(
-                SettingsFragment.BLOCKED_PATTERN, new HashSet<String>(0));
+        final String key = SettingsFragment.BLOCKED_PATTERN;
+        final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
+        final boolean modified = values.remove(value);
+        prefs.edit().putStringSet(key, values).apply();
 
-        final boolean mod = values.remove(pattern);
-
-        prefs.edit().putStringSet(SettingsFragment.BLOCKED_PATTERN, values).apply();
-
-        return mod;
+        return modified;
     }
 
     /**
-     * Collection of all patterns considered to be spam.
-     *
-     * If a message matches against any of these patterns, then the message is
-     * spam and should be blocked.
+     * Collection of all patterns considered to be spam. If a message matches
+     * against any of these patterns, then the message is spam and should be
+     * blocked.
      *
      * @param prefs app shared pref
      * @return Collection of all patterns considered to be spam.
      */
     public static Collection<String> getBlockedPatterns(SharedPreferences prefs) {
 
-        return prefs.getStringSet(
-                SettingsFragment.BLOCKED_PATTERN, Collections.emptySet());
+        final String key = SettingsFragment.BLOCKED_PATTERN;
+        return prefs.getStringSet(key, Collections.emptySet());
     }
 
     /**
-     * Returns the first spam pattern {@code body} matches against, null if none was found.
+     * Returns the first spam pattern {@code text} matches against, null if none
+     * was found.
      *
      * @param prefs app shared pref.
-     * @param body body of the the message to check.
-     * @return the first spam pattern body matches against or null if none was found.
+     * @param value body of the the message to check.
+     * @return the first spam pattern text matches against or null if none was found.
+     * @see #getBlockedPatterns(SharedPreferences)
      */
-    private static String getBlockedPatternOf(SharedPreferences prefs, String body) {
+    private static String getBlockedPatternOf(SharedPreferences prefs, final String value) {
 
-        for (final String pattern : getBlockedPatterns(prefs)) {
-            if(pattern == null || pattern.isEmpty()) {
-                Log.w(TAG, "skipped empty pattern");
-                continue;
-            }
-            final Pattern regex;
-            try {
-                regex = Pattern.compile(pattern);
-            }
-            catch (final Exception e) {
-                Log.e(TAG, "pattern skipped, bad regex: " + pattern, e);
-                continue;
-            }
-            if (regex.matcher(body).matches()) {
-                return pattern;
-            }
+        Pattern regex;
+        for (final String each : getBlockedPatterns(prefs))
+            if ((regex = compilePattern(each)) != null)
+                if (regex.matcher(value).matches())
+                    return each;
+
+        return null;
+    }
+
+    public static Pattern compilePattern(final String pattern) {
+
+        if(pattern == null || pattern.isEmpty()) {
+            Log.e(TAG, "empty pattern");
+            return null;
         }
+
+        try {
+            return Pattern.compile(pattern.trim());
+        }
+        catch (final Exception e) {
+            Log.e(TAG, "invalid pattern: " + pattern);
+            return null;
+        }
+    }
+
+    // -------------------- BLOCK BY NUMBER PREFIX
+
+    /**
+     * Add a value to the collection returned by {@link #getBlockedNumberPrefixes(SharedPreferences)}
+     *
+     * @param prefs app shared pref.
+     * @return true if the value did not exist in the collection before, and hence the collection was modified.
+     * @see #getBlockedNumberPrefixes(SharedPreferences)
+     */
+    public static boolean blockNumberPrefix(SharedPreferences prefs, final String value) {
+
+        final String key = SettingsFragment.BLOCKED_NUMBER_PREFIX;
+        final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
+        final boolean modified = values.add(value);
+        prefs.edit().putStringSet(key, values).apply();
+
+        return modified;
+    }
+
+    /**
+     * Remove a value from the collection returned by {@link #getBlockedNumberPrefixes(SharedPreferences)}.
+     *
+     * @param prefs app shared pref.
+     * @param value the value to remove.
+     * @return true if the value actually existed in the collection, and hence the collection was modified.
+     * @see #getBlockedNumberPrefixes(SharedPreferences)
+     */
+    public static boolean unblockNumberPrefix(SharedPreferences prefs, final String value) {
+
+        final String key = SettingsFragment.BLOCKED_NUMBER_PREFIX;
+        final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
+        final boolean modified = values.remove(value);
+        prefs.edit().putStringSet(key, values).apply();
+
+        return modified;
+    }
+
+    /**
+     * Returns collection of all the number prefixes considered to be spam. If a
+     * messages arrives from a number, and that numbers prefix is in this list,
+     * that message is concidered to be spam and should be blocked.
+     *
+     * @param prefs app shared pref.
+     * @return collection of all the number prefixes considered to be spam.
+     */
+    public static Collection<String> getBlockedNumberPrefixes(SharedPreferences prefs) {
+
+        final String key = SettingsFragment.BLOCKED_NUMBER_PREFIX;
+        return prefs.getStringSet(key, Collections.emptySet());
+    }
+
+    /**
+     * Returns the first number prefix {@code text} matches against, null if none
+     * was found.
+     *
+     * @param prefs app shared pref.
+     * @param value body of the the message to check.
+     * @return the first spam pattern text matches against or null if none was found.
+     * @see #getBlockedPatterns(SharedPreferences)
+     */
+    private static String getBlockedNumberPrefixOf(SharedPreferences prefs, final String value) {
+
+        for (final String each : getBlockedNumberPrefixes(prefs))
+            if (value.startsWith(each))
+                return each;
 
         return null;
     }
