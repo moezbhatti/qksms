@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
+import com.android.ex.chips.RecipientEntry;
 import com.android.ex.chips.recipientchip.DrawableRecipientChip;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.KeyboardUtils;
@@ -14,6 +16,7 @@ import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.interfaces.ActivityLauncher;
 import com.moez.QKSMS.interfaces.RecipientProvider;
 import com.moez.QKSMS.mmssms.Utils;
+import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.base.QKFragment;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.view.AutoCompleteContactView;
@@ -82,8 +85,15 @@ public class ComposeFragment extends QKFragment implements ActivityLauncher, Rec
         DrawableRecipientChip[] chips = mRecipients.getRecipients();
         String[] addresses = new String[chips.length];
 
+        
         for (int i = 0; i < chips.length; i++) {
-            addresses[i] = PhoneNumberUtils.stripSeparators(chips[i].getEntry().getDestination());
+
+            String recipient = chips[i].getEntry().getDestination();
+            if(SmsHelper.isEmailAddress(recipient)){
+                addresses[i] = SmsHelper.extractAddrSpec(recipient);
+            } else {
+                addresses[i] = PhoneNumberUtils.stripSeparators(recipient);
+            }
         }
 
         return addresses;

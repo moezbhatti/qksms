@@ -63,6 +63,7 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.ion.Ion;
 import com.moez.QKSMS.common.QKPreferences;
 import com.moez.QKSMS.enums.QKPreference;
+import com.moez.QKSMS.transaction.SmsHelper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -1203,7 +1204,8 @@ public class Transaction {
                 (message.getMedia().length != 0 && message.getMediaMimeType() != null) ||
                 (settings.getSendLongAsMms() && Utils.getNumPages(settings, message.getText()) > settings.getSendLongAsMmsAfter() && message.getType() != Message.TYPE_VOICE) ||
                 (message.getAddresses().length > 1 && settings.getGroup()) ||
-                message.getSubject() != null;
+                message.getSubject() != null ||
+                SmsHelper.isEmailAddress(message.getAddresses()[0]);
     }
 
     /**

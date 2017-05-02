@@ -19,7 +19,12 @@ package com.moez.QKSMS.mmssms;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.moez.QKSMS.transaction.SmsHelper;
+import com.moez.QKSMS.ui.attachmentlist.AttachmentItem;
+
 import java.io.ByteArrayOutputStream;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class to hold all relevant message information to send
@@ -257,6 +262,16 @@ public class Message {
      */
     public void setImages(Bitmap[] images) {
         this.images = images;
+    }
+
+    public void setAttachments(List<AttachmentItem> attachmentItems){
+        Iterator<AttachmentItem> iterator = attachmentItems.iterator();
+        while(iterator.hasNext()){
+            AttachmentItem next = iterator.next();
+            if(next.getType() == SmsHelper.IMAGE) {
+                this.addImage(next.getBitmap());
+            }
+        }
     }
 
     /**

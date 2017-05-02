@@ -1,6 +1,10 @@
 package com.moez.QKSMS.ui.conversationlist;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -17,6 +21,8 @@ import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 import com.moez.QKSMS.ui.view.AvatarView;
 import com.moez.QKSMS.ui.view.QKTextView;
+
+import java.util.ArrayList;
 
 public class ConversationListViewHolder extends ClickyViewHolder<Conversation> implements Contact.UpdateListener {
 
@@ -53,7 +59,9 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
         final Drawable drawable;
         final String name;
 
-        if (mData.getRecipients().size() == 1) {
+        int recipientCount = mData.getRecipients().size();
+
+        if (recipientCount == 1) {
             Contact contact = mData.getRecipients().get(0);
             if (contact.getNumber().equals(updated.getNumber())) {
                 drawable = contact.getAvatar(mContext, null);
@@ -71,8 +79,36 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
                 name = "";
                 shouldUpdate = false;
             }
-        } else if (mData.getRecipients().size() > 1) {
-            drawable = null;
+        } else if (recipientCount > 1) {
+            int count = recipientCount < 4 ? recipientCount : 4;
+            ArrayList<Drawable> drawables = new ArrayList<>(count);
+
+            int left = 0, top = 0, width = 100, height = 100;
+            for(int i = 0; i < recipientCount; i++) {
+                if (i >= count) break;
+                Contact contact = mData.getRecipients().get(i);
+                Drawable d = contact.getAvatar(mContext, null);
+                if(d != null){
+                    drawables.add(d);
+                    height = d.getIntrinsicHeight() > height ? d.getIntrinsicHeight() : height;
+                    width = d.getIntrinsicWidth() > width ? d.getIntrinsicWidth() : width;
+                }
+            }
+
+            Bitmap bitmap = null;
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bitmap);
+            count = drawables.size();
+
+            for(int i = 0; i < count; i++){
+                if(i == 1)left += width/2;
+                if(i == 2)top += height/2;
+                if(i == 3)left -= width/2;
+
+                c.drawBitmap(((BitmapDrawable)drawables.get(i)).getBitmap(), null, new Rect(left, top, width, height), null);
+            }
+
+            drawable = new BitmapDrawable(mContext.getResources(),bitmap);
             name = "" + mData.getRecipients().size();
             mAvatarView.assignContactUri(null);
         } else {
