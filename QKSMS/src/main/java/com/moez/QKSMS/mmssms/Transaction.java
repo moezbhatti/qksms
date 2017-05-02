@@ -141,7 +141,7 @@ public class Transaction {
      */
     public void sendNewMessage(Message message, long threadId) {
         this.saveMessage = message.getSave();
-        boolean mmsShortCircuit = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("pref_key_texts_as_mms", true);
+        boolean mmsShortCircuit = QKPreferences.getBoolean(QKPreference.TEXT_VIA_MMS);
         // if message:
         //      1) Has images attached
         // or
