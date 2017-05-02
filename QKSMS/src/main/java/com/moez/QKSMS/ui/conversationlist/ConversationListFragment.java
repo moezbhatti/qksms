@@ -164,7 +164,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             inflater.inflate(R.menu.conversations_selection, menu);
             mContext.setTitle(getString(R.string.title_conversations_selected, mAdapter.getSelectedItems().size()));
 
-            menu.findItem(R.id.menu_block).setVisible(mPrefs.getBoolean(SettingsFragment.BLOCKED_ENABLED, false));
+            menu.findItem(R.id.menu_block).setVisible(mPrefs.getBoolean(SettingsFragment.BLOCK_ENABLED, false));
 
             menu.findItem(R.id.menu_mark_read).setIcon(getUnreadWeight() >= 0 ? R.drawable.ic_mark_read : R.drawable.ic_mark_unread);
             menu.findItem(R.id.menu_mark_read).setTitle(getUnreadWeight() >= 0 ? R.string.menu_mark_read : R.string.menu_mark_unread);

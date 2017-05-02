@@ -111,7 +111,6 @@
     <string name="pref_category_summary_appearance">Themes, fonts, colors, avatars, and more</string>
     <string name="pref_category_general">General</string>
     <string name="pref_category_summary_general">Delivery, message sending, formatting</string>
-    <string name="pref_category_blocking">Message blocking</string>
     <string name="pref_category_notifications">Notifications</string>
     <string name="pref_category_summary_notifications">Sounds, LED, privacy</string>
     <string name="pref_category_mms">MMS</string>
@@ -829,4 +828,30 @@
         <item>1 MB</item>
         <item>Unlimited</item>
     </string-array>
+
+    <string name="ret">return</string>
+
+    <string name="pref_category_blocking">Spam Blocking</string>
+    <string name="pref_category_summary_blocking">Blocking advertisement and unwanted messages</string>
+
+    <string name="title_block_pattern">Block a pattern</string>
+    <string name="title_unblock_pattern">Unblock regex pattern</string>
+    <string name="pref_block_pattern">Patterns (Advanced!)</string>
+    <string name="pref_block_pattern_summary">Add more regex patterns to blacklist. Follows java regex rules. Click on an item to remove (advanced users only!)</string>
+    <string name="invalid_pattern">Invalid pattern! pattern must follow java regex rules.</string>
+
+    <string name="title_block_word">Blacklist a word</string>
+    <string name="title_unblock_word">Un-Blacklist word</string>
+    <string name="pref_block_word">Blacklist Words</string>
+    <string name="pref_block_word_summary">Add more words to blacklist. Click on an item to remove. Don\'t forget to add spaces around your words if necessary!</string>
+
+    <string name="title_block_number_prefix">Block a number prefix</string>
+    <string name="title_unblock_number_prefix">Unblock number prefix</string>
+    <string name="pref_block_number_prefix">Block number prefix</string>
+    <string name="pref_block_number_prefix_summary">Add more number prefixes to blacklist. Click on an item to remove. Any message received from a number whose prefix is in this list is blocked.</string>
+    <string name="invalid_number_prefix">Invalid number prefix! number prefix was added to the list but does not seem to be a valid number.</string>
+
+    <string name="pref_block_skip_contact">Never block contacts</string>
+    <string name="pref_block_skip_contact_summary">Never block messages when they are received from known contacts</string>
+
 </resources>
