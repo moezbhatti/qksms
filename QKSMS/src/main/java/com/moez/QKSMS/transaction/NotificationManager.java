@@ -246,7 +246,7 @@ public class NotificationManager {
 
                 // If there are no messages, don't try to create a notification
                 // If this app is not default message app, don't try to create a notification either
-                if (conversations.size() == 0||!(new DefaultSmsHelper(context, 0).isDefault())) {
+                if (conversations.size() == 0 || !new DefaultSmsHelper(context, 0).isDefault()) {
                     return;
                 }
 
