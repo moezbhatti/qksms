@@ -84,4 +84,8 @@ public class DefaultSmsHelper implements ActionClickListener {
 
         return snackbarType;
     }
+
+    public boolean isDefault() {
+        return mIsDefault;
+    }
 }
