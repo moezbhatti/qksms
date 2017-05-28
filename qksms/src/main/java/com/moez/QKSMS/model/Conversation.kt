@@ -1,10 +1,11 @@
 package com.moez.QKSMS.model
 
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
 open class Conversation(
 
-        var id: Long = 0,
+        @PrimaryKey var id: Long = 0,
         var date: Long = 0,
         var messageCount: Int = 0,
         var recipientIds: Int = 0,
