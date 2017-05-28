@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Realm.init(this)
-
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.READ_SMS)
                 .withListener(object : PermissionListener {
