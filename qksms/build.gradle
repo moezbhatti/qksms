@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
+apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
 apply plugin: 'kotlin-android'
 
 android {
@@ -32,7 +32,9 @@ dependencies {
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:appcompat-v7:25.3.1'
+    kapt 'io.realm:realm-annotations:3.3.1'
+    kapt 'io.realm:realm-annotations-processor:3.3.1'
+    compile 'io.realm:android-adapters:1.3.0'
     compile 'com.karumi:dexter:4.1.0'
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
