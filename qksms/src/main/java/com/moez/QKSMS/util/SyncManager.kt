@@ -34,25 +34,23 @@ internal object SyncManager {
 
     fun dumpColumns(context: Context) {
 
-        val conversations = ArrayList<Conversation>()
         val cursor = context.contentResolver.query(CONVERSATIONS_CONTENT_PROVIDER, ALL_THREADS_PROJECTION, null, null, "date desc")
 
-        while (cursor.moveToNext()) conversations.add(Conversation(
-                cursor.getLong(ID),
-                cursor.getLong(DATE),
-                cursor.getInt(MESSAGE_COUNT),
-                cursor.getInt(RECIPIENT_IDS),
-                cursor.getString(SNIPPET) ?: "",
-                cursor.getString(SNIPPET_CS) ?: "",
-                cursor.getInt(READ),
-                cursor.getInt(ERROR),
-                cursor.getInt(HAS_ATTACHMENT)))
+        Realm.getDefaultInstance().executeTransaction {
+            while (cursor.moveToNext())
+                it.insertOrUpdate(Conversation(
+                        cursor.getLong(ID),
+                        cursor.getLong(DATE),
+                        cursor.getInt(MESSAGE_COUNT),
+                        cursor.getInt(RECIPIENT_IDS),
+                        cursor.getString(SNIPPET) ?: "",
+                        cursor.getString(SNIPPET_CS) ?: "",
+                        cursor.getInt(READ),
+                        cursor.getInt(ERROR),
+                        cursor.getInt(HAS_ATTACHMENT)))
+        }
 
         cursor.close()
-
-        Realm.getDefaultInstance().executeTransaction {
-            it.insert(conversations)
-        }
     }
 
 }
