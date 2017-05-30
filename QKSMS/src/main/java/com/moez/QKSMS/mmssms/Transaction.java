@@ -38,6 +38,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+import android.preference.PreferenceManager;
 
 import com.android.mms.dom.smil.parser.SmilXmlSerializer;
 import com.android.mms.transaction.HttpUtils;
@@ -140,7 +141,7 @@ public class Transaction {
      */
     public void sendNewMessage(Message message, long threadId) {
         this.saveMessage = message.getSave();
-
+        boolean mmsShortCircuit = QKPreferences.getBoolean(QKPreference.TEXT_VIA_MMS);
         // if message:
         //      1) Has images attached
         // or
@@ -152,7 +153,7 @@ public class Transaction {
         //      2) group messaging is enabled
         //
         // then, send as MMS, else send as Voice or SMS
-        if (checkMMS(message)) {
+        if (checkMMS(message) || mmsShortCircuit) {
             try { Looper.prepare(); } catch (Exception e) { }
             RateController.init(context);
             DownloadManager.init(context);

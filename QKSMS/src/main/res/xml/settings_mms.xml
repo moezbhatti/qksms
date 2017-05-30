@@ -26,6 +26,13 @@
         android:summary="@string/pref_auto_data_summary"
         android:title="@string/pref_auto_data"
         android:widgetLayout="@layout/view_switch" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="pref_key_texts_as_mms"
+        android:layout="@layout/list_item_preference"
+        android:summary="@string/pref_send_texts_as_mms_summary"
+        android:title="@string/pref_send_texts_as_mms"
+        android:widgetLayout="@layout/view_switch" />
     <PreferenceCategory
         android:layout="@layout/list_item_preference_category"
         android:title="@string/pref_category_sending_mms">

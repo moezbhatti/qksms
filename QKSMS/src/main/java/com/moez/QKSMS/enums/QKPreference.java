@@ -80,6 +80,7 @@ public enum QKPreference {
     // MMS
     GROUP_MESSAGING("pref_key_compose_group", true),
     AUTOMATIC_DATA("pref_key_auto_data", true),
+    TEXT_VIA_MMS("pref_key_texts_as_mms", false),
     LONG_AS_MMS("", true),
     LONG_AS_MMS_AFTER("", true),
     MAX_MMS_SIZE("", true),
