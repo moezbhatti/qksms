@@ -6,6 +6,7 @@ import io.realm.annotations.PrimaryKey
 open class Message(
 
         @PrimaryKey var id: Long = 0,
+        var threadId: Long = 0,
         var body: String = ""
 
 ) : RealmObject()

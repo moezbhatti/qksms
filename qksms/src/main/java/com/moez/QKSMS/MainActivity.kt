@@ -12,9 +12,9 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import com.moez.QKSMS.data.sync.ConversationSyncManager
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.ui.conversations.ConversationAdapter
-import com.moez.QKSMS.util.SyncManager
 import io.realm.Realm
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 .withListener(object : PermissionListener {
                     override fun onPermissionGranted(response: PermissionGrantedResponse) {
                         Log.d(TAG, "Permission granted")
-                        SyncManager.dumpColumns(this@MainActivity)
+                        ConversationSyncManager.copyToRealm(this@MainActivity)
                     }
 
                     override fun onPermissionDenied(response: PermissionDeniedResponse) {
@@ -46,6 +46,5 @@ class MainActivity : AppCompatActivity() {
         val conversations = findViewById(R.id.conversation_list) as RecyclerView
         conversations.layoutManager = LinearLayoutManager(this)
         conversations.adapter = ConversationAdapter(this, realmResults)
-
     }
 }
