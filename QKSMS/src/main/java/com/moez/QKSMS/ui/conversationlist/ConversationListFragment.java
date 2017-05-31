@@ -55,7 +55,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Bind(R.id.conversations_list) RecyclerView mRecyclerView;
     @Bind(R.id.fab) FloatingActionButton mFab;
 
-    private ConversationListAdapter mAdapter;
+    public static ConversationListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ConversationDetailsDialog mConversationDetailsDialog;
     private SharedPreferences mPrefs;

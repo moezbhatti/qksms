@@ -217,7 +217,9 @@ public class MainActivity extends QKActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mConversationList.isShowingBlocked()) {
+            if (ConversationListFragment.mAdapter.isInMultiSelectMode()){
+                ConversationListFragment.mAdapter.disableMultiSelectMode(true);
+            } else if (mConversationList.isShowingBlocked()) {
                 mConversationList.setShowingBlocked(false);
             } else {
                 finish();
