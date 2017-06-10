@@ -3,8 +3,6 @@ package com.moez.QKSMS
 import android.Manifest
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -13,9 +11,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.moez.QKSMS.data.sync.ConversationSyncManager
-import com.moez.QKSMS.model.Conversation
-import com.moez.QKSMS.ui.conversations.ConversationAdapter
-import io.realm.Realm
+import com.moez.QKSMS.ui.conversations.ConversationFragment
 
 class MainActivity : AppCompatActivity() {
     val TAG = "MainActivity"
@@ -41,10 +37,6 @@ class MainActivity : AppCompatActivity() {
                 })
                 .check()
 
-        val realmResults = Realm.getDefaultInstance().where(Conversation::class.java).findAll()
-
-        val conversations = findViewById(R.id.conversation_list) as RecyclerView
-        conversations.layoutManager = LinearLayoutManager(this)
-        conversations.adapter = ConversationAdapter(this, realmResults)
+        supportFragmentManager.beginTransaction().add(R.id.content_frame, ConversationFragment()).commit()
     }
 }

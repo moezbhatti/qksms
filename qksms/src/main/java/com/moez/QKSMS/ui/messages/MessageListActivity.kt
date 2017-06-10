@@ -13,7 +13,7 @@ class MessageListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.messages_fragment)
 
         val threadId = intent.getLongExtra("thread_id", 0)
 
@@ -24,7 +24,7 @@ class MessageListActivity : AppCompatActivity() {
                 .equalTo("threadId", threadId)
                 .findAll()
 
-        val messages = findViewById(R.id.conversation_list) as RecyclerView
+        val messages = findViewById(R.id.message_list) as RecyclerView
         messages.layoutManager = LinearLayoutManager(this)
         messages.adapter = MessageAdapter(this, realmResults)
     }
