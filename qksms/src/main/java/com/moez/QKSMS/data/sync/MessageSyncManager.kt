@@ -75,11 +75,15 @@ internal object MessageSyncManager {
         val columnsMap = ColumnsMap(cursor)
 
         Realm.getDefaultInstance().executeTransaction {
-            while (cursor.moveToNext())
+            while (cursor.moveToNext()) {
+
+                val body = cursor.getString(columnsMap.mColumnSmsBody) ?: ""
+
                 it.insertOrUpdate(Message(
                         cursor.getLong(columnsMap.mColumnMsgId),
                         threadId,
-                        cursor.getString(columnsMap.mColumnSmsBody)))
+                        body))
+            }
         }
 
         cursor.close()
