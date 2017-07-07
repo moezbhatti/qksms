@@ -9,6 +9,10 @@
         android:id="@+id/message_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
         tools:listitem="@layout/message_list_item" />
 
 </LinearLayout>
