@@ -23,12 +23,14 @@ class ConversationAdapter(context: Context, data: OrderedRealmCollection<Convers
     override fun onBindViewHolder(viewHolder: ConversationViewHolder, position: Int) {
         val conversation = getItem(position)
 
-        viewHolder.snippet.text = conversation?.snippet
         viewHolder.itemView.setOnClickListener {
             val intent = Intent(mContext, MessageListActivity::class.java)
             intent.putExtra("thread_id", conversation?.id)
 
             mContext.startActivity(intent)
         }
+
+        viewHolder.title.text = conversation?.recipientIds.toString()
+        viewHolder.snippet.text = conversation?.snippet
     }
 }
