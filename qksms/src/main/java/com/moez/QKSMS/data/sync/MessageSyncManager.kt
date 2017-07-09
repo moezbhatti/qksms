@@ -1,6 +1,5 @@
 package com.moez.QKSMS.data.sync
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
@@ -39,23 +38,21 @@ internal object MessageSyncManager {
 
     val MMS_SMS_CONTENT_PROVIDER = Uri.parse("content://mms-sms/conversations/")
 
-    @SuppressLint("InlinedApi")
     val PROJECTION = arrayOf(
             Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN,
             BaseColumns._ID,
             Telephony.Sms.Conversations.THREAD_ID,
 
-            // For SMS
             Telephony.Sms.ADDRESS,
             Telephony.Sms.BODY,
             Telephony.Sms.DATE,
             Telephony.Sms.DATE_SENT,
-            Telephony.Sms.READ, Telephony.Sms.TYPE,
+            Telephony.Sms.READ,
+            Telephony.Sms.TYPE,
             Telephony.Sms.STATUS,
             Telephony.Sms.LOCKED,
             Telephony.Sms.ERROR_CODE,
 
-            // For MMS
             Telephony.Mms.SUBJECT,
             Telephony.Mms.SUBJECT_CHARSET,
             Telephony.Mms.DATE,
@@ -77,23 +74,22 @@ internal object MessageSyncManager {
         Realm.getDefaultInstance().executeTransaction {
             while (cursor.moveToNext()) {
 
-                val type = cursor.getString(columnsMap.mColumnMsgType)
+                val type = cursor.getString(columnsMap.msgType)
                 if (type != "sms" && type != "mms") continue // If we can't read the type, don't use this message
 
                 val isMms = type == "mms"
-                val body = cursor.getString(columnsMap.mColumnSmsBody) ?: ""
-                val errorType = cursor.getInt(columnsMap.mColumnMmsErrorType)
+                val body = cursor.getString(columnsMap.smsBody) ?: ""
+                val errorType = cursor.getInt(columnsMap.mmsErrorType)
 
                 val boxId: Int
 
                 if (isMms) {
-                    boxId = cursor.getInt(columnsMap.mColumnMmsMessageBox)
+                    boxId = cursor.getInt(columnsMap.mmsMessageBox)
                 } else {
-                    boxId = cursor.getInt(columnsMap.mColumnSmsType)
+                    boxId = cursor.getInt(columnsMap.smsType)
                 }
 
-                it.insertOrUpdate(
-                        Message(cursor.getLong(columnsMap.mColumnMsgId), threadId, boxId, type, body, errorType))
+                it.insertOrUpdate(Message(cursor.getLong(columnsMap.msgId), threadId, boxId, type, body, errorType))
             }
         }
 
