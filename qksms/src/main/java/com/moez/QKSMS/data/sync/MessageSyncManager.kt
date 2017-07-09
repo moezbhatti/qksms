@@ -77,12 +77,23 @@ internal object MessageSyncManager {
         Realm.getDefaultInstance().executeTransaction {
             while (cursor.moveToNext()) {
 
-                val body = cursor.getString(columnsMap.mColumnSmsBody) ?: ""
+                val type = cursor.getString(columnsMap.mColumnMsgType)
+                if (type != "sms" && type != "mms") continue // If we can't read the type, don't use this message
 
-                it.insertOrUpdate(Message(
-                        cursor.getLong(columnsMap.mColumnMsgId),
-                        threadId,
-                        body))
+                val isMms = type == "mms"
+                val body = cursor.getString(columnsMap.mColumnSmsBody) ?: ""
+                val errorType = cursor.getInt(columnsMap.mColumnMmsErrorType)
+
+                val boxId: Int
+
+                if (isMms) {
+                    boxId = cursor.getInt(columnsMap.mColumnMmsMessageBox)
+                } else {
+                    boxId = cursor.getInt(columnsMap.mColumnSmsType)
+                }
+
+                it.insertOrUpdate(
+                        Message(cursor.getLong(columnsMap.mColumnMsgId), threadId, boxId, type, body, errorType))
             }
         }
 
