@@ -24,8 +24,12 @@ class MessageListActivity : AppCompatActivity() {
                 .equalTo("threadId", threadId)
                 .findAll()
 
+
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.stackFromEnd = true
+
         val messages = findViewById(R.id.message_list) as RecyclerView
-        messages.layoutManager = LinearLayoutManager(this)
+        messages.layoutManager = layoutManager
         messages.adapter = MessageAdapter(this, realmResults)
     }
 
