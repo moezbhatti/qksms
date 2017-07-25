@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/load_conversations"
-        android:title="Load conversations"
+        android:id="@+id/load_messages"
+        android:title="Load messages"
         tools:ignore="HardcodedText" />
 
 </menu>

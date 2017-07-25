@@ -10,8 +10,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import com.moez.QKSMS.data.sync.ConversationSyncManager
-import com.moez.QKSMS.ui.conversations.ConversationFragment
+import com.moez.QKSMS.ui.conversations.ConversationListFragment
 
 class MainActivity : AppCompatActivity() {
     val TAG = "MainActivity"
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
                 .withListener(object : PermissionListener {
                     override fun onPermissionGranted(response: PermissionGrantedResponse) {
                         Log.d(TAG, "Permission granted")
-                        ConversationSyncManager.copyToRealm(this@MainActivity)
                     }
 
                     override fun onPermissionDenied(response: PermissionDeniedResponse) {
@@ -37,6 +35,6 @@ class MainActivity : AppCompatActivity() {
                 })
                 .check()
 
-        supportFragmentManager.beginTransaction().add(R.id.content_frame, ConversationFragment()).commit()
+        supportFragmentManager.beginTransaction().add(R.id.content_frame, ConversationListFragment()).commit()
     }
 }

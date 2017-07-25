@@ -1,6 +1,7 @@
 package com.moez.QKSMS.data.sync
 
 import android.net.Uri
+import android.util.Log
 import com.moez.QKSMS.model.Conversation
 import io.realm.Realm
 
@@ -31,9 +32,12 @@ internal object ConversationSyncManager {
 
     fun copyToRealm(context: android.content.Context) {
 
+        val realm = Realm.getDefaultInstance()
         val cursor = context.contentResolver.query(ConversationSyncManager.CONVERSATIONS_CONTENT_PROVIDER, ConversationSyncManager.ALL_THREADS_PROJECTION, null, null, "date desc")
 
-        Realm.getDefaultInstance().executeTransaction {
+        realm.executeTransaction {
+            it.delete(Conversation::class.java)
+
             while (cursor.moveToNext())
                 it.insertOrUpdate(Conversation(
                         cursor.getLong(ID),
@@ -47,6 +51,7 @@ internal object ConversationSyncManager {
                         cursor.getInt(HAS_ATTACHMENT)))
         }
 
+        Log.i(TAG, "Inserted ${cursor.count} conversations")
         cursor.close()
     }
 
