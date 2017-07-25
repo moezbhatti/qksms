@@ -3,9 +3,7 @@ package com.moez.QKSMS.ui.conversations
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.moez.QKSMS.R
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.ui.base.QkFragment
@@ -28,6 +26,10 @@ class ConversationFragment : QkFragment<ConversationView, ConversationPresenter>
 
     override fun setConversations(conversations: RealmResults<Conversation>) {
         conversationList?.adapter = ConversationAdapter(context, conversations)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 }
