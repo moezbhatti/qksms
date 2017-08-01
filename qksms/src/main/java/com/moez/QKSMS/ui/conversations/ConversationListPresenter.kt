@@ -4,20 +4,15 @@ import com.hannesdorfmann.mosby.mvp.MvpBasePresenter
 import com.moez.QKSMS.model.Conversation
 import io.realm.Realm
 
-class ConversationPresenter : MvpBasePresenter<ConversationView>() {
+class ConversationListPresenter : MvpBasePresenter<ConversationListView>() {
 
-    override fun attachView(view: ConversationView?) {
+    override fun attachView(view: ConversationListView) {
         super.attachView(view)
 
-        loadConversations()
-    }
-
-    fun loadConversations() {
         val realm = Realm.getDefaultInstance()
         val realmResults = realm.where(Conversation::class.java).findAll()
 
-        view?.setConversations(realmResults)
+        view.setConversations(realmResults)
     }
-
 
 }

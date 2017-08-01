@@ -10,7 +10,7 @@ import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.ui.base.QkFragment
 import io.realm.RealmResults
 
-class ConversationListFragment : QkFragment<ConversationView, ConversationPresenter>(), ConversationView {
+class ConversationListFragment : QkFragment<ConversationListView, ConversationListPresenter>(), ConversationListView {
 
     var conversationList: RecyclerView? = null
 
@@ -20,7 +20,7 @@ class ConversationListFragment : QkFragment<ConversationView, ConversationPresen
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.conversations_fragment, container, false)
+        val view = inflater.inflate(R.layout.conversation_list_fragment, container, false)
 
         conversationList = view.findViewById(R.id.conversation_list) as RecyclerView
         conversationList?.layoutManager = LinearLayoutManager(context)
@@ -28,7 +28,7 @@ class ConversationListFragment : QkFragment<ConversationView, ConversationPresen
         return view
     }
 
-    override fun createPresenter(): ConversationPresenter = ConversationPresenter()
+    override fun createPresenter(): ConversationListPresenter = ConversationListPresenter()
 
     override fun setConversations(conversations: RealmResults<Conversation>) {
         conversationList?.adapter = ConversationAdapter(context, conversations)

@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.base_activity)
 
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.READ_SMS)
@@ -35,6 +35,6 @@ class MainActivity : AppCompatActivity() {
                 })
                 .check()
 
-        supportFragmentManager.beginTransaction().add(R.id.content_frame, ConversationListFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.content_frame, ConversationListFragment()).commit()
     }
 }

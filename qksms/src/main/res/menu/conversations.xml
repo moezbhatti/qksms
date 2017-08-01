@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/load_conversations"
-        android:title="Load conversations"
+        android:title="Sync conversations"
         tools:ignore="HardcodedText" />
 
 </menu>

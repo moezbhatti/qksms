@@ -4,7 +4,7 @@ import com.hannesdorfmann.mosby.mvp.MvpView
 import com.moez.QKSMS.model.Conversation
 import io.realm.RealmResults
 
-interface ConversationView : MvpView {
+interface ConversationListView : MvpView {
 
     fun setConversations(conversations: RealmResults<Conversation>)
 
