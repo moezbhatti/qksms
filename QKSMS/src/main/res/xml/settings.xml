@@ -78,7 +78,7 @@
         android:defaultValue="14"
         android:key="pref_key_delete_old_unread_messages" />
     <Preference
-        android:defaultValue="1"
+        android:defaultValue="14"
         android:key="pref_key_delete_old_read_messages" />
     <Preference
         android:defaultValue="false"
