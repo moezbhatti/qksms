@@ -36,6 +36,7 @@ import com.moez.QKSMS.model.SlideshowModel;
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver;
 import com.moez.QKSMS.ui.MainActivity;
 import com.moez.QKSMS.ui.ThemeManager;
+import com.moez.QKSMS.ui.dialog.DefaultSmsHelper;
 import com.moez.QKSMS.ui.messagelist.MessageItem;
 import com.moez.QKSMS.ui.messagelist.MessageListActivity;
 import com.moez.QKSMS.ui.popup.QKComposeActivity;
@@ -244,7 +245,8 @@ public class NotificationManager {
                 dismissOld(context, conversations);
 
                 // If there are no messages, don't try to create a notification
-                if (conversations.size() == 0) {
+                // If this app is not default message app, don't try to create a notification either
+                if (conversations.size() == 0 || !new DefaultSmsHelper(context, 0).isDefault()) {
                     return;
                 }
 

@@ -1,3 +1,7 @@
+<!--
+PLEASE SEARCH THE EXISTING ISSUES BEFORE OPENNING A NEW ONE
+https://github.com/moezbhatti/qksms/issues?q=is%3Aissue
+-->
 ### DESCRIPTION
 A short description of the issue. 
 Example: Conversations aren't marked as read when they are opened from a notification.
