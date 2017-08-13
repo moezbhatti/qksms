@@ -22,6 +22,10 @@
 
         <activity android:name=".ui.messages.MessageListActivity" />
 
+        <meta-data
+            android:name="com.bugsnag.android.API_KEY"
+            android:value="d87e83a633f143665e6466f524449791" />
+
     </application>
 
 </manifest>
