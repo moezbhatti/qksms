@@ -1,21 +1,38 @@
 package com.moez.QKSMS.model
 
+import android.database.Cursor
 import android.provider.Telephony
 import android.provider.Telephony.Mms
 import android.provider.Telephony.Sms
+import com.moez.QKSMS.data.sync.MessageColumns
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Message(
+open class Message() : RealmObject() {
 
-        @PrimaryKey var id: Long = 0,
-        var threadId: Long = 0,
-        var boxId: Int = 0,
-        var type: String = "",
-        var body: String = "",
-        var errorType: Int = 0
+    @PrimaryKey var id: Long = 0
+    var threadId: Long = 0
+    var boxId: Int = 0
+    var type: String = ""
+    var body: String = ""
+    var errorType: Int = 0
 
-) : RealmObject() {
+    constructor(threadId: Long, cursor: Cursor, columnsMap: MessageColumns) : this() {
+        this.threadId = threadId
+
+        id = cursor.getLong(columnsMap.msgId)
+        type = cursor.getString(columnsMap.msgType)
+
+        val isMms = type == "mms"
+        body = cursor.getString(columnsMap.smsBody) ?: ""
+        errorType = cursor.getInt(columnsMap.mmsErrorType)
+
+        if (isMms) {
+            boxId = cursor.getInt(columnsMap.mmsMessageBox)
+        } else {
+            boxId = cursor.getInt(columnsMap.smsType)
+        }
+    }
 
     fun isMms(): Boolean = type == "mms"
 

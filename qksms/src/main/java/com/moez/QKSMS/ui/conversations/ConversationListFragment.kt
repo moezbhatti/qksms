@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.moez.QKSMS.R
-import com.moez.QKSMS.data.sync.ConversationSyncManager
+import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.ui.base.QkFragment
 import io.realm.RealmResults
@@ -42,7 +42,7 @@ class ConversationListFragment : QkFragment<ConversationListView, ConversationLi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.load_conversations -> { // TODO: This is for testing, remove this
-                ConversationSyncManager.copyToRealm(context)
+                SyncManager.copyToRealm(context)
                 return true
             }
 

@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.moez.QKSMS.R
-import com.moez.QKSMS.data.sync.MessageSyncManager
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.ui.base.QkFragment
 import io.realm.RealmResults
@@ -68,11 +67,6 @@ class MessageListFragment : QkFragment<MessageListView, MessageListPresenter>(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.load_messages -> { // TODO: This is for testing, remove this
-                MessageSyncManager.copyToRealm(context, threadId)
-                return true
-            }
-
             else -> return super.onOptionsItemSelected(item)
         }
     }
