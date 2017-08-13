@@ -38,7 +38,7 @@ class MessageListFragment : QkFragment<MessageListView, MessageListPresenter>(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.message_list_fragment, container, false)
 
-        messageList = view.findViewById(R.id.message_list) as RecyclerView
+        messageList = view.findViewById(R.id.message_list)
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = true

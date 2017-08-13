@@ -7,6 +7,6 @@ import com.moez.QKSMS.R
 
 class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val body = view.findViewById(R.id.message_body) as TextView
+    val body: TextView = view.findViewById(R.id.message_body)
 
 }
