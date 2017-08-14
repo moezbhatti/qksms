@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
-        android:gravity="right"
+        android:gravity="end"
         android:padding="16dp"
         tools:text="Hey! How's it going?" />
 

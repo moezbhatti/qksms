@@ -9,6 +9,7 @@
         android:id="@+id/message_body"
         android:padding="16dp"
         android:layout_marginEnd="56dp"
+        android:gravity="start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Hey! How's it going?" />
