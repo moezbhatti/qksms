@@ -17,7 +17,7 @@ class MessageListPresenter : MvpBasePresenter<MessageListView>() {
         val realmResults = Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
-                .findAll()
+                .findAllSorted("date")
 
         view?.setMessages(realmResults)
     }

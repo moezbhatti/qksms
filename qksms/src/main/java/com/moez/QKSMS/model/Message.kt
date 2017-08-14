@@ -15,6 +15,8 @@ open class Message() : RealmObject() {
     var boxId: Int = 0
     var type: String = ""
     var body: String = ""
+    var date: Long = 0
+    var dateSent: Long = 0
     var errorType: Int = 0
 
     constructor(threadId: Long, cursor: Cursor, columnsMap: MessageColumns) : this() {
@@ -29,8 +31,12 @@ open class Message() : RealmObject() {
 
         if (isMms) {
             boxId = cursor.getInt(columnsMap.mmsMessageBox)
+            date = cursor.getLong(columnsMap.smsDate)
+            dateSent = cursor.getLong(columnsMap.smsDateSent)
         } else {
             boxId = cursor.getInt(columnsMap.smsType)
+            date = cursor.getLong(columnsMap.mmsDate)
+            dateSent = cursor.getLong(columnsMap.mmsDateSent)
         }
     }
 

@@ -1,6 +1,7 @@
 package com.moez.QKSMS.ui.messages
 
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import io.realm.RealmRecyclerViewAdapter
 
 class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         RealmRecyclerViewAdapter<Message, MessageViewHolder>(context, data, true) {
+    val TAG = "MessageAdapter"
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MessageViewHolder {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -19,6 +21,10 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
 
     override fun onBindViewHolder(viewHolder: MessageViewHolder, position: Int) {
         val message = getItem(position)!!
+
+        viewHolder.itemView.setOnClickListener {
+            Log.i(TAG, message.toString())
+        }
 
         viewHolder.body.text = message.body
         viewHolder.body.gravity = if (message.isMe()) Gravity.RIGHT else Gravity.LEFT
