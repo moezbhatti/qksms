@@ -6,4 +6,8 @@ import com.hannesdorfmann.mosby.mvp.MvpView
 
 abstract class QkFragment<V : MvpView, P : MvpPresenter<V>> : MvpFragment<V, P>() {
 
+    override fun getContext(): QkActivity {
+        return super.getContext() as QkActivity
+    }
+
 }

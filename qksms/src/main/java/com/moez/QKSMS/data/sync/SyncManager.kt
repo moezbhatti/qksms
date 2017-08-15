@@ -2,51 +2,55 @@ package com.moez.QKSMS.data.sync
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
-import com.moez.QKSMS.util.forEach
+import com.moez.QKSMS.util.asFlowable
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 
 internal object SyncManager {
     private val TAG = "SyncManager"
 
-    fun copyToRealm(context: Context) {
+    fun copyToRealm(context: Context, completionListener: () -> Unit) {
 
         val contentResolver = context.contentResolver
         val conversationsCursor = contentResolver.query(ConversationColumns.URI, ConversationColumns.PROJECTION, null, null, "date desc")
 
-        // Get the total number of messages so that we can calculate progress
-        var totalMessages = 0
-        var currentMessage = 0
-        conversationsCursor.forEach(false) { totalMessages += it.getInt(ConversationColumns.MESSAGE_COUNT) }
+        var realm: Realm? = null
 
-
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransaction {
-            it.delete(Conversation::class.java)
-            it.delete(Message::class.java)
-
-            conversationsCursor.forEach {
-                realm.insertOrUpdate(Conversation(conversationsCursor))
-
-                val threadId = conversationsCursor.getLong(ConversationColumns.ID)
-                val messagesUri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
-                val messagesCursor = contentResolver.query(messagesUri, MessageColumns.PROJECTION, null, null, "date desc")
-                val columnsMap = MessageColumns(messagesCursor)
-
-                messagesCursor.forEach {
-                    currentMessage++
-                    val type = messagesCursor.getString(columnsMap.msgType)
-                    if (type == "sms" || type == "mms") { // If we can't read the type, don't use this message
-                        realm.insertOrUpdate(Message(threadId, messagesCursor, columnsMap))
-                    }
+        Flowable.just(conversationsCursor)
+                .subscribeOn(Schedulers.io())
+                .doOnNext {
+                    // We need to setup realm on the io thread, and doOnSubscribe doesn't support setting a custom Scheduler
+                    realm = Realm.getDefaultInstance()
+                    realm?.beginTransaction()
+                    realm?.delete(Conversation::class.java)
+                    realm?.delete(Message::class.java)
                 }
-            }
-        }
-        realm.close()
-
-        Log.i(TAG, "Inserted $currentMessage messages")
+                .flatMap { cursor -> cursor.asFlowable() }
+                .map { cursor -> Conversation(cursor) }
+                .doOnNext { conversation -> realm?.insert(conversation) }
+                .map { conversation -> conversation.id }
+                .concatMap { threadId ->
+                    val uri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
+                    val messagesCursor = contentResolver.query(uri, MessageColumns.PROJECTION, null, null, "date desc")
+                    val columnsMap = MessageColumns(messagesCursor)
+                    messagesCursor.asFlowable().map { cursor -> Message(threadId, cursor, columnsMap) }
+                }
+                .filter { message -> message.type == "sms" || message.type == "mms" }
+                .doOnNext { message -> realm?.insert(message) }
+                .count()
+                .toFlowable()
+                .doOnNext {
+                    realm?.commitTransaction()
+                    realm?.close()
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    completionListener.invoke()
+                })
     }
 
 }

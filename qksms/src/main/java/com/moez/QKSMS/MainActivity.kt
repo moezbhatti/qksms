@@ -2,7 +2,6 @@ package com.moez.QKSMS
 
 import android.Manifest
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -10,9 +9,10 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import com.moez.QKSMS.ui.base.QkActivity
 import com.moez.QKSMS.ui.conversations.ConversationListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : QkActivity() {
     val TAG = "MainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
