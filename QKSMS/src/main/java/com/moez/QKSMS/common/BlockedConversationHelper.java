@@ -55,16 +55,18 @@ public class BlockedConversationHelper {
         return prefs.getStringSet(SettingsFragment.BLOCKED_SENDERS, new HashSet<String>());
     }
 
-    public static void blockFutureConversation(SharedPreferences prefs, String address) {
+    public static boolean blockFutureConversation(SharedPreferences prefs, String address) {
         Set<String> idStrings = prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
-        idStrings.add(address);
+        final boolean modified = idStrings.add(address);
         prefs.edit().putStringSet(SettingsFragment.BLOCKED_FUTURE, idStrings).apply();
+        return modified;
     }
 
-    public static void unblockFutureConversation(SharedPreferences prefs, String address) {
+    public static boolean unblockFutureConversation(SharedPreferences prefs, String address) {
         Set<String> idStrings2 = prefs.getStringSet(SettingsFragment.BLOCKED_FUTURE, new HashSet<String>());
-        idStrings2.remove(address);
+        final boolean modified = idStrings2.remove(address);
         prefs.edit().putStringSet(SettingsFragment.BLOCKED_FUTURE, idStrings2).apply();
+        return modified;
     }
 
     public static Set<String> getFutureBlockedConversations(SharedPreferences prefs) {
