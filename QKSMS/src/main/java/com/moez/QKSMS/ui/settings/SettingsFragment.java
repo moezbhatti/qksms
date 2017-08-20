@@ -157,6 +157,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public static final String GITHUB = "pref_key_github";
     public static final String CROWDIN = "pref_key_crowdin";
 
+    public static final String BLOCK_ENABLED = "pref_key_blocked_enabled";
+    public static final String BLOCK_SKIP_CONTACTS = "pref_key_block_skip_contact";
+    public static final String BLOCKED_PATTERN = "pref_key_block_pattern";
+    public static final String BLOCKED_WORD = "pref_key_block_word";
+    public static final String BLOCKED_NUMBER_PREFIX = "pref_key_block_number_prefix";
+
     public static final String WELCOME_SEEN = "pref_key_welcome_seen";
 
     public static final String DEFAULT_NOTIFICATION_TONE = "content://settings/system/notification_sound";
