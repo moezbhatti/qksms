@@ -17,9 +17,11 @@ import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -239,7 +241,7 @@ public class BlockedConversationHelper {
         }
 
         if(body != null && !body.isEmpty()) {
-            body = preProcessForWordByWordCheck(body);
+            body = body.trim().toLowerCase();
 
             final String word = getBlockedWordOf(prefs, body);
             if(word != null) {
@@ -260,20 +262,6 @@ public class BlockedConversationHelper {
     // ------------------- BLOCK BY WORD BLACKLIST
 
     /**
-     * Whether if {@link String#trim()} should be called on every blacklisted word.
-     *
-     * See {@link #preProcessForWordByWordCheck(String)}
-     */
-    private static final boolean TRIM_WORD = false;
-
-    /**
-     * Whether if checking against blacklisted words is case-sensitive or not.
-     *
-     * See {@link #preProcessForWordByWordCheck(String)}
-     */
-    private static final boolean CASE_SENSITIVE_WORD = false;
-
-    /**
      * Add a word to spam list. If a message contains that word, it's *probably* spam.
      *
      * @param prefs app shared pref.
@@ -282,7 +270,11 @@ public class BlockedConversationHelper {
      */
     public static boolean blockWord(SharedPreferences prefs, String value) {
 
-        value = preProcessForWordByWordCheck(value);
+        String value1 = value;
+
+        value1 = value1.toLowerCase().trim();
+
+        value = value1;
 
         final String key = SettingsFragment.BLOCKED_WORD;
         final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
@@ -302,7 +294,11 @@ public class BlockedConversationHelper {
      */
     public static boolean unblockWord(SharedPreferences prefs, String value) {
 
-        value = preProcessForWordByWordCheck(value);
+        String value1 = value;
+
+        value1 = value1.toLowerCase().trim();
+
+        value = value1;
 
         final String key = SettingsFragment.BLOCKED_WORD;
         final Set<String> values = prefs.getStringSet(key, new HashSet<String>(0));
@@ -333,28 +329,18 @@ public class BlockedConversationHelper {
      * @return the first seen spam word in text or null of none was found.
      * @see #getBlockedWords(SharedPreferences)
      */
-    private static String getBlockedWordOf(SharedPreferences prefs, final String value) {
+    private static String getBlockedWordOf(SharedPreferences prefs, String value) {
+
+        value = value.replaceAll("\\s", " ");
+        final List<String> split = Arrays.asList(value.split(" "));
+
+        // NO regex used, utf support for \w, \s, and \b character classes is very clunky.
 
         for (final String each : getBlockedWords(prefs))
-            if (value.contains(each))
+            if (split.contains(each))
                 return each;
 
         return null;
-    }
-
-    /**
-     * PreProcess body of a message (or a spam word, before adding it to list) before checking it
-     * for spam words.
-     */
-    private static String preProcessForWordByWordCheck(String value) {
-
-        if(TRIM_WORD)
-            value = value.trim();
-
-        if(!CASE_SENSITIVE_WORD)
-            value = value.toLowerCase();
-
-        return value;
     }
 
     // -------------------------- BLOCK BY PATTERN
