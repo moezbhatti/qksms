@@ -153,6 +153,13 @@
         <Preference
             android:defaultValue="false"
             android:dependency="pref_key_blocked_enabled"
+            android:key="pref_key_block_word_extreme"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_block_word_extreme_summary"
+            android:title="@string/pref_block_word_extreme" />
+        <Preference
+            android:defaultValue="false"
+            android:dependency="pref_key_blocked_enabled"
             android:key="pref_key_block_number_prefix"
             android:layout="@layout/list_item_preference"
             android:summary="@string/pref_block_number_prefix_summary"

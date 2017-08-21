@@ -114,9 +114,24 @@ public class BlockedNumberDialog {
                 context,
                 R.string.title_block_word,
                 R.string.pref_block_word,
-                BlockedConversationHelper.getBlockedWords(prefs),
-                value -> BlockedConversationHelper.blockWord(prefs, value),
-                value -> BlockedConversationHelper.unblockWord(prefs, value),
+                BlockedConversationHelper.getBlockedWords(prefs, false),
+                value -> BlockedConversationHelper.blockWord(prefs, value, false),
+                value -> BlockedConversationHelper.unblockWord(prefs, value, false),
+                value -> true
+        );
+    }
+
+    public static void showExtremeWordsDialog(final QKActivity context) {
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        makeDialog(
+                context,
+                R.string.title_block_word_extreme,
+                R.string.pref_block_word_extreme,
+                BlockedConversationHelper.getBlockedWords(prefs, true),
+                value -> BlockedConversationHelper.blockWord(prefs, value, true),
+                value -> BlockedConversationHelper.unblockWord(prefs, value, true),
                 value -> true
         );
     }

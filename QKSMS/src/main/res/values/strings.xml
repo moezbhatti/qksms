@@ -759,8 +759,12 @@
     <string name="invalid_pattern">Invalid pattern! pattern must follow java regex rules.</string>
     <string name="title_block_word">Blacklist a word</string>
     <string name="title_unblock_word">Un-Blacklist word</string>
-    <string name="pref_block_word">Blacklist Words</string>
-    <string name="pref_block_word_summary">Add more words to blacklist. Click on an item to remove. Don\'t forget to add spaces around your words if necessary!</string>
+    <string name="title_block_word_extreme">Blacklist a word (Extreme)</string>
+    <string name="title_unblock_word_extreme">Un-Blacklist word (Extreme)</string>
+    <string name="pref_block_word">Blacklist Words (Safe)</string>
+    <string name="pref_block_word_summary">Add more words to blacklist. Click on an item to remove.</string>
+    <string name="pref_block_word_extreme">Blacklist Words (Extreme)</string>
+    <string name="pref_block_word_extreme_summary">Add more words to blacklist. does NOT check word boundary.</string>
     <string name="pref_block_skip_contact">Never block contacts</string>
     <string name="pref_block_skip_contact_summary">Never block messages when they are received from known contacts</string>
 

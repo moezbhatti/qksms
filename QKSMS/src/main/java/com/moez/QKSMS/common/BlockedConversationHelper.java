@@ -13,6 +13,7 @@ import com.moez.QKSMS.common.utils.PhoneNumberUtils;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
 import com.moez.QKSMS.data.Message;
+import com.moez.QKSMS.mmssms.StripAccents;
 import com.moez.QKSMS.transaction.SmsHelper;
 import com.moez.QKSMS.ui.messagelist.MessageColumns;
 import com.moez.QKSMS.ui.settings.SettingsFragment;
@@ -282,9 +283,11 @@ public class BlockedConversationHelper {
      * @param prefs app shared pref.
      * @return true if the value did not exist in the collection before, and hence the collection was modified.
      */
-    public static boolean blockWord(SharedPreferences prefs, String value) {
+    public static boolean blockWord(SharedPreferences prefs, String value, boolean extreme) {
 
-        return modifyCollection(prefs, value, SettingsFragment.BLOCKED_WORD, true);
+        return modifyCollection(prefs, value,
+                extreme ? SettingsFragment.BLOCKED_WORD_EXTREME : SettingsFragment.BLOCKED_WORD,
+                true);
     }
 
     /**
@@ -294,9 +297,11 @@ public class BlockedConversationHelper {
      * @param value the value to remove.
      * @return true if the value actually existed in the collection, and hence the collection was modified.
      */
-    public static boolean unblockWord(SharedPreferences prefs, String value) {
+    public static boolean unblockWord(SharedPreferences prefs, String value, boolean extreme) {
 
-        return modifyCollection(prefs, value, SettingsFragment.BLOCKED_WORD, false);
+        return modifyCollection(prefs, value,
+                extreme ? SettingsFragment.BLOCKED_WORD_EXTREME : SettingsFragment.BLOCKED_WORD,
+                false);
     }
 
     /**
@@ -306,9 +311,10 @@ public class BlockedConversationHelper {
      * @param prefs app shared pref.
      * @return collection of all the words considered to be spam if seen in a message.
      */
-    public static Collection<String> getBlockedWords(SharedPreferences prefs) {
+    public static Collection<String> getBlockedWords(SharedPreferences prefs, boolean extreme) {
 
-        final String key = SettingsFragment.BLOCKED_WORD;
+        final String key = extreme ? SettingsFragment.BLOCKED_WORD_EXTREME
+                : SettingsFragment.BLOCKED_WORD;
 
         return prefs.getStringSet(key, Collections.emptySet());
     }
@@ -319,23 +325,44 @@ public class BlockedConversationHelper {
      * @param prefs app shared pref.
      * @param value body of the the message to check.
      * @return the first seen spam word in text or null of none was found.
-     * @see #getBlockedWords(SharedPreferences)
      */
     private static String getBlockedWordOf(SharedPreferences prefs, String value) {
 
-        value = value.replaceAll("\\s", " ");
+        value = preProcessFa(value.replaceAll("\\s", " "));
 
         // NO regex used, utf support for \w, \s, and \b character classes is very clunky.
         final List<String> split = Arrays.asList(value.split(" "));
-        for (final String each : getBlockedWords(prefs))
+        for (final String each : getBlockedWords(prefs, false))
             if (split.contains(each))
                 return each;
 
-        for (final String each : getBlockedWords(prefs))
+        for (final String each : getBlockedWords(prefs, true))
             if (value.contains(each))
                 return each;
 
         return null;
+    }
+
+    /**
+     * PreProcess for persian language.
+     */
+    private static String preProcessFa(String value) {
+
+        final String[] from = {
+                "ي", "ك", "‍", "دِ", "بِ", "زِ", "ذِ", "ِشِ", "ِسِ", "‌", "ى",
+                "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩", "٠", // arabic numbers
+                "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹", "۰", // persian numbers
+        };
+        final String[] to = {
+                "ی", "ک", "", "د", "ب", "ز", "ذ", "ش", "س", "", "ی",
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+        };
+
+        for (int i = 0; i < from.length; i++)
+            value = value.replace(from[i], to[i]);
+
+        return value;
     }
 
     // -------------------------- BLOCK BY PATTERN
