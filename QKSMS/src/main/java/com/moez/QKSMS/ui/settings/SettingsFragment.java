@@ -591,6 +591,15 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case BLOCKED_FUTURE:
                 BlockedNumberDialog.showDialog(mContext);
                 break;
+            case BLOCKED_NUMBER_PREFIX:
+                BlockedNumberDialog.showNumberPrefixDialog(mContext);
+                break;
+            case BLOCKED_PATTERN:
+                BlockedNumberDialog.showPatternsDialog(mContext);
+                break;
+            case BLOCKED_WORD:
+                BlockedNumberDialog.showWordsDialog(mContext);
+                break;
             case SHOULD_I_ANSWER:
                 final String packageName = "org.mistergroup.muzutozvednout";
                 if (!PackageUtils.isAppInstalled(mContext, packageName)) {

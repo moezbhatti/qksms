@@ -136,6 +136,34 @@
             android:summary="@string/pref_should_i_answer_summary"
             android:title="@string/pref_should_i_answer"
             android:widgetLayout="@layout/view_switch" />
+        <Preference
+            android:defaultValue="false"
+            android:dependency="pref_key_blocked_enabled"
+            android:key="pref_key_block_pattern"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_block_pattern_summary"
+            android:title="@string/pref_block_pattern" />
+        <Preference
+            android:defaultValue="false"
+            android:dependency="pref_key_blocked_enabled"
+            android:key="pref_key_block_word"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_block_word_summary"
+            android:title="@string/pref_block_word" />
+        <Preference
+            android:defaultValue="false"
+            android:dependency="pref_key_blocked_enabled"
+            android:key="pref_key_block_number_prefix"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_block_number_prefix_summary"
+            android:title="@string/pref_block_number_prefix" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_key_block_skip_contact"
+            android:layout="@layout/list_item_preference"
+            android:summary="@string/pref_block_skip_contact_summary"
+            android:title="@string/pref_block_skip_contact"
+            android:widgetLayout="@layout/view_switch" />
     </PreferenceCategory>
     <PreferenceCategory
         android:layout="@layout/list_item_preference_category"
