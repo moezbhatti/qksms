@@ -31,6 +31,7 @@ internal object SyncManager {
                 }
                 .flatMap { cursor -> cursor.asFlowable() }
                 .map { cursor -> Conversation(cursor) }
+                .distinct { conversation -> conversation.id }
                 .doOnNext { conversation -> realm?.insert(conversation) }
                 .map { conversation -> conversation.id }
                 .concatMap { threadId ->
@@ -40,6 +41,7 @@ internal object SyncManager {
                     messagesCursor.asFlowable().map { cursor -> Message(threadId, cursor, columnsMap) }
                 }
                 .filter { message -> message.type == "sms" || message.type == "mms" }
+                .distinct { message -> message.id }
                 .doOnNext { message -> realm?.insert(message) }
                 .count()
                 .toFlowable()
