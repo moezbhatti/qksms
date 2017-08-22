@@ -83,8 +83,8 @@ public class MainActivity extends QKActivity {
         ButterKnife.bind(this);
 
         if (!QKPreferences.getBoolean(QKPreference.AUTO_DELETE_MIGRATED)) {
-            if (QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD).equals("1")) {
-                QKPreferences.setString(QKPreference.AUTO_DELETE_UNREAD, "14");
+            if (QKPreferences.getString(QKPreference.AUTO_DELETE_READ).equals("1")) {
+                QKPreferences.setString(QKPreference.AUTO_DELETE_READ, "14");
             }
             QKPreferences.setBoolean(QKPreference.AUTO_DELETE_MIGRATED, true);
         }
