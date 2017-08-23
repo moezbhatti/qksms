@@ -82,11 +82,17 @@ public class MainActivity extends QKActivity {
         setTitle(R.string.title_conversation_list);
         ButterKnife.bind(this);
 
-        if (!QKPreferences.getBoolean(QKPreference.AUTO_DELETE_MIGRATED)) {
+        if (!QKPreferences.getBoolean(QKPreference.AUTO_DELETE_UNREAD_MIGRATED)) {
+            if (QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD).equals("2")) {
+                QKPreferences.setString(QKPreference.AUTO_DELETE_UNREAD_MIGRATED, "14");
+            }
+            QKPreferences.setBoolean(QKPreference.AUTO_DELETE_UNREAD_MIGRATED, true);
+        }
+        if (!QKPreferences.getBoolean(QKPreference.AUTO_DELETE_READ_MIGRATED)) {
             if (QKPreferences.getString(QKPreference.AUTO_DELETE_READ).equals("1")) {
                 QKPreferences.setString(QKPreference.AUTO_DELETE_READ, "14");
             }
-            QKPreferences.setBoolean(QKPreference.AUTO_DELETE_MIGRATED, true);
+            QKPreferences.setBoolean(QKPreference.AUTO_DELETE_READ_MIGRATED, true);
         }
 
         FragmentManager fm = getFragmentManager();
