@@ -30,7 +30,15 @@ class ConversationAdapter(context: Context, data: OrderedRealmCollection<Convers
             mContext.startActivity(intent)
         }
 
-        viewHolder.title.text = conversation?.recipientIds.toString()
+        var title = ""
+        conversation?.recipients?.forEachIndexed { index, recipient ->
+            title += recipient.id
+            if (index < conversation.recipients.size - 1) {
+                title += ", "
+            }
+        }
+
+        viewHolder.title.text = title
         viewHolder.snippet.text = conversation?.snippet
     }
 }

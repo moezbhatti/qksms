@@ -32,7 +32,7 @@ internal object SyncManager {
                 .flatMap { cursor -> cursor.asFlowable() }
                 .map { cursor -> Conversation(cursor) }
                 .distinct { conversation -> conversation.id }
-                .doOnNext { conversation -> realm?.insert(conversation) }
+                .doOnNext { conversation -> realm?.insertOrUpdate(conversation) }
                 .map { conversation -> conversation.id }
                 .concatMap { threadId ->
                     val uri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
@@ -42,7 +42,7 @@ internal object SyncManager {
                 }
                 .filter { message -> message.type == "sms" || message.type == "mms" }
                 .distinct { message -> message.id }
-                .doOnNext { message -> realm?.insert(message) }
+                .doOnNext { message -> realm?.insertOrUpdate(message) }
                 .count()
                 .toFlowable()
                 .doOnNext {
