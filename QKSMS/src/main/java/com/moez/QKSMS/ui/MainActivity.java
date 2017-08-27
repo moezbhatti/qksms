@@ -84,7 +84,7 @@ public class MainActivity extends QKActivity {
 
         if (!QKPreferences.getBoolean(QKPreference.AUTO_DELETE_UNREAD_MIGRATED)) {
             if (QKPreferences.getString(QKPreference.AUTO_DELETE_UNREAD).equals("2")) {
-                QKPreferences.setString(QKPreference.AUTO_DELETE_UNREAD_MIGRATED, "14");
+                QKPreferences.setString(QKPreference.AUTO_DELETE_UNREAD, "14");
             }
             QKPreferences.setBoolean(QKPreference.AUTO_DELETE_UNREAD_MIGRATED, true);
         }
