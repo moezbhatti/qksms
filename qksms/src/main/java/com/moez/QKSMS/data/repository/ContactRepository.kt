@@ -21,29 +21,19 @@ class ContactRepository(val context: Context) {
      * This function is not asynchronous, and potentially very slow. Make sure to
      * execute off of the main thread. At the time of writing
      */
-    fun getContact(recipientId: Long): Contact {
-        var contact: Contact? = getContactFromRealm(recipientId)
-        if (contact == null) {
-            contact = getContactFromContentProvider(recipientId)
-        }
-
-        return contact ?: Contact()
-    }
-
-    private fun getContactFromRealm(recipientId: Long): Contact? {
+    fun getContactBlocking(recipientId: Long): Contact {
+        // First, try loading the conversation from Realm
         val realm = Realm.getDefaultInstance()
         val results = realm.where(Contact::class.java)
                 .equalTo("recipientId", recipientId)
                 .findAll()
 
         if (results.size > 0) {
+            realm.close()
             return results[0]
         }
 
-        return null
-    }
-
-    private fun getContactFromContentProvider(recipientId: Long): Contact? {
+        // If it's not found, then load from the Contacts ContentProvider instead
         var contact: Contact? = null
 
         val recipientCursor = context.contentResolver.query(ContentUris.withAppendedId(URI, recipientId), null, null, null, null)
@@ -64,7 +54,13 @@ class ContactRepository(val context: Context) {
             contactCursor?.close()
         }
 
-        return contact
+        if (contact != null) {
+            realm.close()
+            return contact
+        }
+
+        // If it's still not found then return an empty Contact object
+        return Contact()
     }
 
 }
