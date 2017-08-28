@@ -8,18 +8,19 @@ import android.widget.ProgressBar
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.ui.base.QkFragment
+import javax.inject.Inject
 
 class ConversationListFragment : QkFragment() {
 
+    @Inject lateinit var viewModel: ConversationListViewModel
+
     private var progress: ProgressBar? = null
     private var conversationList: RecyclerView? = null
-    private var viewModel: ConversationListViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getAppComponent()?.inject(this)
         setHasOptionsMenu(true)
-
-        viewModel = ConversationListViewModel()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,7 +30,7 @@ class ConversationListFragment : QkFragment() {
 
         conversationList = view.findViewById(R.id.conversation_list)
         conversationList?.layoutManager = LinearLayoutManager(context)
-        conversationList?.adapter = ConversationAdapter(context, viewModel?.conversations)
+        conversationList?.adapter = ConversationAdapter(context, viewModel.conversations)
 
         return view
     }

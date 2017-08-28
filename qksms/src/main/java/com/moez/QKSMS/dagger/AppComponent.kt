@@ -1,5 +1,13 @@
 package com.moez.QKSMS.dagger
 
-/**
- * Created by moez on 2017-08-28.
- */
+import com.moez.QKSMS.ui.conversations.ConversationListFragment
+import dagger.Component
+import javax.inject.Singleton
+
+@Singleton
+@Component(modules = arrayOf(AppModule::class, ConversationModule::class))
+interface AppComponent {
+
+    fun inject(fragment: ConversationListFragment)
+
+}
