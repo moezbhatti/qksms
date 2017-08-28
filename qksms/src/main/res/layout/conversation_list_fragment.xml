@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <ProgressBar
-        android:id="@+id/conversation_progress"
+        android:id="@+id/progress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/conversation_list"
+        android:id="@+id/conversationList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

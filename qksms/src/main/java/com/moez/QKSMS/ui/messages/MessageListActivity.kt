@@ -22,7 +22,7 @@ class MessageListActivity : QkActivity() {
         val fragment = MessageListFragment()
         messagesComponent.inject(fragment)
 
-        supportFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.contentFrame, fragment).commit()
     }
 
 }

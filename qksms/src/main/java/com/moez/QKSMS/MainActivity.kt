@@ -35,6 +35,6 @@ class MainActivity : QkActivity() {
                 })
                 .check()
 
-        supportFragmentManager.beginTransaction().replace(R.id.content_frame, ConversationListFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.contentFrame, ConversationListFragment()).commit()
     }
 }

@@ -7,7 +7,7 @@ import com.moez.QKSMS.R
 
 class ConversationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val title: TextView = view.findViewById(R.id.conversation_title)
-    val snippet: TextView = view.findViewById(R.id.conversation_snippet)
+    val title: TextView = view.findViewById(R.id.title)
+    val snippet: TextView = view.findViewById(R.id.snippet)
 
 }

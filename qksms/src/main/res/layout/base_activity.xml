@@ -6,7 +6,7 @@
     tools:context="com.moez.QKSMS.MainActivity">
 
     <FrameLayout
-        android:id="@+id/content_frame"
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

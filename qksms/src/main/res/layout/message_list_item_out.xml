@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/message_body"
+        android:id="@+id/body"
         style="@style/TextPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
