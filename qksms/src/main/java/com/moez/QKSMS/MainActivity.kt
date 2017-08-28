@@ -17,7 +17,7 @@ class MainActivity : QkActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.base_activity)
+        setContentView(R.layout.conversation_list_fragment)
 
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.READ_SMS)
