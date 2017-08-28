@@ -40,4 +40,16 @@ open class Conversation() : RealmObject() {
         error = cursor.getInt(ConversationColumns.ERROR)
         hasAttachment = cursor.getInt(ConversationColumns.HAS_ATTACHMENT)
     }
+
+    fun getTitle(): String {
+        var title = ""
+        contacts.forEachIndexed { index, recipient ->
+            title += recipient.address
+            if (index < contacts.size - 1) {
+                title += ", "
+            }
+        }
+
+        return title
+    }
 }

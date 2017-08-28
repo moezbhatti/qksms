@@ -6,6 +6,13 @@ import io.realm.RealmResults
 
 class ConversationRepository {
 
+    fun getConversation(threadId: Long): RealmResults<Conversation> {
+        return Realm.getDefaultInstance()
+                .where(Conversation::class.java)
+                .equalTo("id", threadId)
+                .findAllAsync()
+    }
+
     fun getConversations(): RealmResults<Conversation> {
         return Realm.getDefaultInstance().where(Conversation::class.java).findAllAsync()
     }

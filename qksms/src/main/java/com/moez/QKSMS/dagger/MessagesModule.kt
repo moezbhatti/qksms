@@ -1,5 +1,6 @@
 package com.moez.QKSMS.dagger
 
+import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.ui.messages.MessageListViewModel
 import dagger.Module
@@ -23,8 +24,8 @@ class MessagesModule(val threadId: Long) {
 
     @ActivityScope
     @Provides
-    fun provideViewModel(repository: MessageRepository): MessageListViewModel {
-        return MessageListViewModel(threadId, repository)
+    fun provideViewModel(conversations: ConversationRepository, repository: MessageRepository): MessageListViewModel {
+        return MessageListViewModel(threadId, conversations, repository)
     }
 
 }

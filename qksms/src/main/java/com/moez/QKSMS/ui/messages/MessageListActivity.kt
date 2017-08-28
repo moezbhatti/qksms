@@ -11,6 +11,7 @@ class MessageListActivity : QkActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.base_activity)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val threadId = intent.getLongExtra("thread_id", 0)
 

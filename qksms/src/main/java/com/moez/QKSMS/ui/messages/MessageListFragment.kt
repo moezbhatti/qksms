@@ -15,6 +15,13 @@ class MessageListFragment : QkFragment() {
     override fun provideLayoutRes(): Int = R.layout.message_list_fragment
     override fun provideMenuRes(): Int = R.menu.messages
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.conversation.addChangeListener { realmResults ->
+            context.title = realmResults[0]?.getTitle()
+        }
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = true
