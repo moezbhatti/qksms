@@ -2,10 +2,7 @@ package com.moez.QKSMS
 
 import android.app.Application
 import com.bugsnag.android.Bugsnag
-import com.moez.QKSMS.dagger.AppComponent
-import com.moez.QKSMS.dagger.AppModule
-import com.moez.QKSMS.dagger.ConversationsModule
-import com.moez.QKSMS.dagger.DaggerAppComponent
+import com.moez.QKSMS.dagger.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -27,6 +24,7 @@ class QKApplication : Application() {
 
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
+                .contactModule(ContactModule())
                 .conversationsModule(ConversationsModule())
                 .build()
     }

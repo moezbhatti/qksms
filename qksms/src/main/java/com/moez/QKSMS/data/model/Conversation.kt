@@ -1,6 +1,7 @@
 package com.moez.QKSMS.data.model
 
 import android.database.Cursor
+import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.data.sync.ConversationColumns
 import io.reactivex.Flowable
 import io.realm.RealmList
@@ -12,7 +13,7 @@ open class Conversation() : RealmObject() {
     @PrimaryKey var id: Long = 0
     var date: Long = 0
     var messageCount: Int = 0
-    var recipients: RealmList<Recipient> = RealmList()
+    var contacts: RealmList<Contact> = RealmList()
     var snippet: String = ""
     var snippetCs: String = ""
     var read: Int = 0
@@ -22,15 +23,16 @@ open class Conversation() : RealmObject() {
     /**
      * Instantiates a Conversation from the Android SMS ContentProvider
      */
-    constructor(cursor: Cursor) : this() {
+    constructor(cursor: Cursor, contacts: ContactRepository) : this() {
         id = cursor.getLong(ConversationColumns.ID)
         date = cursor.getLong(ConversationColumns.DATE)
         messageCount = cursor.getInt(ConversationColumns.MESSAGE_COUNT)
 
         Flowable.fromIterable(cursor.getString(ConversationColumns.RECIPIENT_IDS).split(" "))
                 .map { id -> id.toLong() }
-                .map { id -> Recipient(id) }
-                .blockingSubscribe { recipient -> recipients.add(recipient) }
+                .map { id -> contacts.getContactBlocking(id) }
+                .filter { contact -> contact.id != 0L }
+                .blockingSubscribe { contact -> this.contacts.add(contact) }
 
         snippet = cursor.getString(ConversationColumns.SNIPPET) ?: ""
         snippetCs = cursor.getString(ConversationColumns.SNIPPET_CS) ?: ""

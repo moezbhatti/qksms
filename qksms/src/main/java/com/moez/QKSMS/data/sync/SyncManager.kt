@@ -4,13 +4,14 @@ import android.content.Context
 import android.net.Uri
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.util.asFlowable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 
-class SyncManager(val context: Context) {
+class SyncManager(val context: Context, val contacts: ContactRepository) {
     private val TAG = "SyncManager"
 
     fun copyToRealm(completionListener: () -> Unit) {
@@ -30,7 +31,7 @@ class SyncManager(val context: Context) {
                     realm?.delete(Message::class.java)
                 }
                 .flatMap { cursor -> cursor.asFlowable() }
-                .map { cursor -> Conversation(cursor) }
+                .map { cursor -> Conversation(cursor, contacts) }
                 .distinct { conversation -> conversation.id }
                 .doOnNext { conversation -> realm?.insertOrUpdate(conversation) }
                 .map { conversation -> conversation.id }

@@ -31,9 +31,9 @@ class ConversationAdapter(context: Context, data: OrderedRealmCollection<Convers
         }
 
         var title = ""
-        conversation?.recipients?.forEachIndexed { index, recipient ->
-            title += recipient.id
-            if (index < conversation.recipients.size - 1) {
+        conversation?.contacts?.forEachIndexed { index, recipient ->
+            title += recipient.address
+            if (index < conversation.contacts.size - 1) {
                 title += ", "
             }
         }

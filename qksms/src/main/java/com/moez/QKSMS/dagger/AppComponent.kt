@@ -6,7 +6,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class, ConversationsModule::class))
+@Component(modules = arrayOf(AppModule::class, ContactModule::class, ConversationsModule::class))
 interface AppComponent {
 
     fun inject(fragment: ConversationListFragment)
