@@ -5,9 +5,7 @@ import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.MessageRepository
 import io.realm.RealmResults
 
-class MessageListViewModel(threadId: Long) : ViewModel() {
-
-    private val repository = MessageRepository(threadId)
+class MessageListViewModel(val threadId: Long, repository: MessageRepository) : ViewModel() {
 
     val messages: RealmResults<Message> = repository.getMessages()
 
