@@ -19,7 +19,7 @@ class ConversationListFragment : QkFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getAppComponent()?.inject(this)
+        context.getAppComponent()?.inject(this)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

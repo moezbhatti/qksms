@@ -3,8 +3,6 @@ package com.moez.QKSMS.ui.base
 import android.arch.lifecycle.LifecycleFragment
 import android.os.Bundle
 import android.view.*
-import com.moez.QKSMS.QKApplication
-import com.moez.QKSMS.dagger.AppComponent
 
 abstract class QkFragment : LifecycleFragment() {
 
@@ -27,10 +25,6 @@ abstract class QkFragment : LifecycleFragment() {
 
     override fun getContext(): QkActivity {
         return super.getContext() as QkActivity
-    }
-
-    fun getAppComponent(): AppComponent? {
-        return (context.application as QKApplication).appComponent
     }
 
 }
