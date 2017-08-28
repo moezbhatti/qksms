@@ -1,4 +1,4 @@
-package com.moez.QKSMS.model
+package com.moez.QKSMS.data.model
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

@@ -5,12 +5,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
-import com.moez.QKSMS.model.Conversation
+import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.ui.messages.MessageListActivity
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
-class ConversationAdapter(context: Context, data: OrderedRealmCollection<Conversation>) :
+class ConversationAdapter(context: Context, data: OrderedRealmCollection<Conversation>?) :
         RealmRecyclerViewAdapter<Conversation, ConversationViewHolder>(context, data, true) {
 
     val mContext = context

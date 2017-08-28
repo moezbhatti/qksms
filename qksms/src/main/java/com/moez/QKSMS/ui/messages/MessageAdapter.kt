@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
-import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.data.model.Message
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 

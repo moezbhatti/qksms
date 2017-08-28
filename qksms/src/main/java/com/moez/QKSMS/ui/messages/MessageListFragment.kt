@@ -5,14 +5,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import com.moez.QKSMS.R
-import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.ui.base.QkFragment
-import io.realm.RealmResults
 
-class MessageListFragment : QkFragment<MessageListView, MessageListPresenter>(), MessageListView {
+class MessageListFragment : QkFragment() {
 
-    var threadId: Long = 0
-    var messageList: RecyclerView? = null
+    private var threadId: Long = 0
+    private var messageList: RecyclerView? = null
+    private var viewModel: MessageListViewModel? = null
 
     companion object {
         fun newInstance(threadId: Long): MessageListFragment {
@@ -31,7 +30,7 @@ class MessageListFragment : QkFragment<MessageListView, MessageListPresenter>(),
         setHasOptionsMenu(true)
 
         threadId = arguments.getLong("thread_id", 0)
-        presenter?.threadId = threadId
+        viewModel = MessageListViewModel(threadId)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -42,22 +41,9 @@ class MessageListFragment : QkFragment<MessageListView, MessageListPresenter>(),
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = true
         messageList?.layoutManager = layoutManager
+        messageList?.adapter = MessageAdapter(context, viewModel?.messages)
 
         return view
-    }
-
-    override fun createPresenter(): MessageListPresenter {
-        val presenter = MessageListPresenter()
-
-        if (threadId != 0L) {
-            presenter.threadId = threadId
-        }
-
-        return presenter
-    }
-
-    override fun setMessages(messages: RealmResults<Message>) {
-        messageList?.adapter = MessageAdapter(context, messages)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -66,8 +52,8 @@ class MessageListFragment : QkFragment<MessageListView, MessageListPresenter>(),
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

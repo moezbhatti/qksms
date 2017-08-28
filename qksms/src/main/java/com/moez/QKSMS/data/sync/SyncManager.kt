@@ -2,8 +2,8 @@ package com.moez.QKSMS.data.sync
 
 import android.content.Context
 import android.net.Uri
-import com.moez.QKSMS.model.Conversation
-import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.data.model.Conversation
+import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.util.asFlowable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

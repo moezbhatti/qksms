@@ -7,18 +7,19 @@ import android.view.*
 import android.widget.ProgressBar
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.sync.SyncManager
-import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.ui.base.QkFragment
-import io.realm.RealmResults
 
-class ConversationListFragment : QkFragment<ConversationListView, ConversationListPresenter>(), ConversationListView {
+class ConversationListFragment : QkFragment() {
 
-    var progress: ProgressBar? = null
-    var conversationList: RecyclerView? = null
+    private var progress: ProgressBar? = null
+    private var conversationList: RecyclerView? = null
+    private var viewModel: ConversationListViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        viewModel = ConversationListViewModel()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,14 +29,9 @@ class ConversationListFragment : QkFragment<ConversationListView, ConversationLi
 
         conversationList = view.findViewById(R.id.conversation_list)
         conversationList?.layoutManager = LinearLayoutManager(context)
+        conversationList?.adapter = ConversationAdapter(context, viewModel?.conversations)
 
         return view
-    }
-
-    override fun createPresenter(): ConversationListPresenter = ConversationListPresenter()
-
-    override fun setConversations(conversations: RealmResults<Conversation>) {
-        conversationList?.adapter = ConversationAdapter(context, conversations)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -44,16 +40,16 @@ class ConversationListFragment : QkFragment<ConversationListView, ConversationLi
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
             R.id.load_conversations -> { // TODO: This is for testing, remove this
                 progress?.visibility = View.VISIBLE
                 SyncManager.copyToRealm(context) {
                     progress?.visibility = View.GONE
                 }
-                return true
+                true
             }
 
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
