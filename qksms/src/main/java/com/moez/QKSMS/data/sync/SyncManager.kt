@@ -27,8 +27,7 @@ class SyncManager(val context: Context, val contacts: ContactRepository) {
                     // We need to setup realm on the io thread, and doOnSubscribe doesn't support setting a custom Scheduler
                     realm = Realm.getDefaultInstance()
                     realm?.beginTransaction()
-                    realm?.delete(Conversation::class.java)
-                    realm?.delete(Message::class.java)
+                    realm?.deleteAll()
                 }
                 .flatMap { cursor -> cursor.asFlowable() }
                 .map { cursor -> Conversation(cursor, contacts) }

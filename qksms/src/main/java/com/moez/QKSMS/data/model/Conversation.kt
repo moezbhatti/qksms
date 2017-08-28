@@ -44,7 +44,7 @@ open class Conversation() : RealmObject() {
     fun getTitle(): String {
         var title = ""
         contacts.forEachIndexed { index, recipient ->
-            title += recipient.address
+            title += if (recipient.name.isNotEmpty()) recipient.name else recipient.address
             if (index < contacts.size - 1) {
                 title += ", "
             }

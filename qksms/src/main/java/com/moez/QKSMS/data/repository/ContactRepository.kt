@@ -2,9 +2,13 @@ package com.moez.QKSMS.data.repository
 
 import android.content.ContentUris
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
+import android.provider.BaseColumns
+import android.provider.ContactsContract
 import com.moez.QKSMS.data.model.Contact
 import io.realm.Realm
+
 
 class ContactRepository(val context: Context) {
 
@@ -42,11 +46,23 @@ class ContactRepository(val context: Context) {
     private fun getContactFromContentProvider(recipientId: Long): Contact? {
         var contact: Contact? = null
 
-        val cursor = context.contentResolver.query(ContentUris.withAppendedId(URI, recipientId), null, null, null, null)
-        if (cursor.moveToFirst()) {
-            contact = Contact(recipientId, cursor.getString(0))
+        val recipientCursor = context.contentResolver.query(ContentUris.withAppendedId(URI, recipientId), null, null, null, null)
+        if (recipientCursor.moveToFirst()) {
+            contact = Contact(recipientId, recipientCursor.getString(0))
         }
-        cursor.close()
+        recipientCursor.close()
+
+        val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact?.address))
+        var contactCursor: Cursor? = null
+        try {
+            contactCursor = context.contentResolver.query(contactUri, arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME), null, null, null)
+            if (contactCursor.moveToFirst()) {
+                contact?.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME))
+            }
+        } catch (ignored: Exception) {
+        } finally {
+            contactCursor?.close()
+        }
 
         return contact
     }

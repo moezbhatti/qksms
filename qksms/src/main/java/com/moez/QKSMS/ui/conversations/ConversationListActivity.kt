@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.ui.base.QkActivity
 import kotlinx.android.synthetic.main.conversation_list_activity.*
@@ -32,22 +31,19 @@ class ConversationListActivity : QkActivity() {
             viewModel.onRefresh { swipeRefresh.isRefreshing = false }
         }
 
-        requestSmsPermission()
+        requestPermissions()
     }
 
-    private fun requestSmsPermission() {
+    private fun requestPermissions() {
         Dexter.withActivity(this)
-                .withPermission(Manifest.permission.READ_SMS)
-                .withListener(object : PermissionListener {
-                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                        Log.d(TAG, "Permission granted")
+                .withPermissions(arrayListOf(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS))
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionRationaleShouldBeShown(request: MutableList<PermissionRequest>, token: PermissionToken) {
                     }
 
-                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
-                        Log.d(TAG, "Permission denied")
-                    }
-
-                    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        for (response in report.grantedPermissionResponses) Log.v(TAG, "Permission granted: ${response.permissionName}")
+                        for (response in report.deniedPermissionResponses) Log.v(TAG, "Permission denied: ${response.permissionName}")
                     }
                 })
                 .check()
