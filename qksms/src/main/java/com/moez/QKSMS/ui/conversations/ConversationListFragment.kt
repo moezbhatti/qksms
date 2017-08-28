@@ -20,12 +20,12 @@ class ConversationListFragment : QkFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.conversation_list_fragment, container, false)
+        return inflater.inflate(R.layout.conversation_list_fragment, container, false)
+    }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         conversationList.layoutManager = LinearLayoutManager(context)
         conversationList.adapter = ConversationAdapter(context, viewModel.conversations)
-
-        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

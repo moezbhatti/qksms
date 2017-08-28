@@ -18,14 +18,14 @@ class MessageListFragment : QkFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.message_list_fragment, container, false)
+        return inflater.inflate(R.layout.message_list_fragment, container, false)
+    }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = true
         messageList.layoutManager = layoutManager
         messageList.adapter = MessageAdapter(context, viewModel.messages)
-
-        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
