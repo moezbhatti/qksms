@@ -10,10 +10,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 
-internal object SyncManager {
+class SyncManager(val context: Context) {
     private val TAG = "SyncManager"
 
-    fun copyToRealm(context: Context, completionListener: () -> Unit) {
+    fun copyToRealm(completionListener: () -> Unit) {
 
         val contentResolver = context.contentResolver
         val conversationsCursor = contentResolver.query(ConversationColumns.URI, ConversationColumns.PROJECTION, null, null, "date desc")

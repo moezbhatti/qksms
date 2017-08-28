@@ -2,7 +2,6 @@ package com.moez.QKSMS.ui.messages
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.MenuItem
 import android.view.View
 import com.moez.QKSMS.R
 import com.moez.QKSMS.ui.base.QkFragment
@@ -21,12 +20,6 @@ class MessageListFragment : QkFragment() {
         layoutManager.stackFromEnd = true
         messageList.layoutManager = layoutManager
         messageList.adapter = MessageAdapter(context, viewModel.messages)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
 }

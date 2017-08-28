@@ -1,6 +1,7 @@
 package com.moez.QKSMS.dagger
 
 import com.moez.QKSMS.data.repository.ConversationRepository
+import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.ui.conversations.ConversationListViewModel
 import dagger.Module
 import dagger.Provides
@@ -17,8 +18,8 @@ class ConversationsModule {
 
     @Provides
     @Singleton
-    fun provideViewModel(repository: ConversationRepository): ConversationListViewModel {
-        return ConversationListViewModel(repository)
+    fun provideViewModel(syncManager: SyncManager, repository: ConversationRepository): ConversationListViewModel {
+        return ConversationListViewModel(syncManager, repository)
     }
 
 }
