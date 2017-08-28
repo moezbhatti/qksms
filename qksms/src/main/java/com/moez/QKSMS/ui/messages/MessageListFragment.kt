@@ -2,7 +2,8 @@ package com.moez.QKSMS.ui.messages
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
+import android.view.MenuItem
+import android.view.View
 import com.moez.QKSMS.R
 import com.moez.QKSMS.ui.base.QkFragment
 import kotlinx.android.synthetic.main.message_list_fragment.*
@@ -12,25 +13,14 @@ class MessageListFragment : QkFragment() {
 
     @Inject lateinit var viewModel: MessageListViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.message_list_fragment, container, false)
-    }
+    override fun provideLayoutRes(): Int = R.layout.message_list_fragment
+    override fun provideMenuRes(): Int = R.menu.messages
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.stackFromEnd = true
         messageList.layoutManager = layoutManager
         messageList.adapter = MessageAdapter(context, viewModel.messages)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.messages, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

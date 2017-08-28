@@ -2,7 +2,8 @@ package com.moez.QKSMS.ui.conversations
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.*
+import android.view.MenuItem
+import android.view.View
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.ui.base.QkFragment
@@ -13,24 +14,17 @@ class ConversationListFragment : QkFragment() {
 
     @Inject lateinit var viewModel: ConversationListViewModel
 
+    override fun provideLayoutRes(): Int = R.layout.conversation_list_fragment
+    override fun provideMenuRes(): Int = R.menu.conversations
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getAppComponent()?.inject(this)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.conversation_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         conversationList.layoutManager = LinearLayoutManager(context)
         conversationList.adapter = ConversationAdapter(context, viewModel.conversations)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.conversations, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
