@@ -5,14 +5,14 @@ import io.realm.annotations.PrimaryKey
 
 open class Contact() : RealmObject() {
 
-    @PrimaryKey var id: Long = 0
+    @PrimaryKey var recipientId: Long = 0
     var address: String = ""
 
     /**
      * For inflating the contact using the cursor
      */
     constructor(id: Long, address: String) : this() {
-        this.id = id
+        this.recipientId = id
         this.address = address
     }
 

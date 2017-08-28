@@ -9,7 +9,7 @@ class ConversationRepository {
     fun getConversation(threadId: Long): RealmResults<Conversation> {
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
-                .equalTo("id", threadId)
+                .equalTo("recipientId", threadId)
                 .findAllAsync()
     }
 

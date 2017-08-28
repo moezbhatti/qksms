@@ -30,8 +30,8 @@ open class Conversation() : RealmObject() {
 
         Flowable.fromIterable(cursor.getString(ConversationColumns.RECIPIENT_IDS).split(" "))
                 .map { id -> id.toLong() }
-                .map { id -> contacts.getContactBlocking(id) }
-                .filter { contact -> contact.id != 0L }
+                .map { id -> contacts.getContact(id) }
+                .filter { contact -> contact.recipientId != 0L }
                 .blockingSubscribe { contact -> this.contacts.add(contact) }
 
         snippet = cursor.getString(ConversationColumns.SNIPPET) ?: ""
