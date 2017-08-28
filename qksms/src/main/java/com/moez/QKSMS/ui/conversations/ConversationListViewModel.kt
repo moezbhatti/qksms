@@ -12,4 +12,9 @@ class ConversationListViewModel(val syncManager: SyncManager, repository: Conver
         syncManager.copyToRealm(completionListener::invoke)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        conversations.removeAllChangeListeners()
+    }
+
 }
