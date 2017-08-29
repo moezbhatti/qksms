@@ -29,7 +29,7 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
         super.onFinishInflate()
         updateView()
 
-        setBackgroundResource(R.color.textSecondary)
+        setBackgroundResource(R.drawable.message_bubble)
     }
 
     private fun updateView() {

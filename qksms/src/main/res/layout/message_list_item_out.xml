@@ -6,8 +6,8 @@
     android:gravity="end|bottom"
     android:orientation="horizontal"
     android:paddingBottom="8dp"
-    android:paddingEnd="16dp"
-    android:paddingStart="56dp"
+    android:paddingEnd="12dp"
+    android:paddingStart="60dp"
     android:paddingTop="8dp">
 
     <LinearLayout
@@ -22,7 +22,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:gravity="start"
+            android:background="@drawable/message_bubble"
+            android:gravity="start|center_vertical"
+            android:minHeight="36dp"
+            android:paddingBottom="8dp"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
             tools:text="Hey! How's it going?" />
 
         <TextView
@@ -31,14 +37,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
+            android:visibility="gone"
             tools:text="2:50pm" />
 
     </LinearLayout>
 
     <com.moez.QKSMS.ui.view.AvatarView
         android:id="@+id/avatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp" />
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="12dp" />
 
 </LinearLayout>

@@ -6,4 +6,6 @@
 
     <color name="textPrimary">#2C3236</color>
     <color name="textSecondary">#898989</color>
+
+    <color name="list_separator">#F2F2F2</color>
 </resources>
