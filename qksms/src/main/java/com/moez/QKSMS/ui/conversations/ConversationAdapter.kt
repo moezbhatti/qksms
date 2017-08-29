@@ -13,24 +13,23 @@ import io.realm.RealmRecyclerViewAdapter
 class ConversationAdapter(context: Context, data: OrderedRealmCollection<Conversation>?) :
         RealmRecyclerViewAdapter<Conversation, ConversationViewHolder>(context, data, true) {
 
-    val mContext = context
-
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ConversationViewHolder {
-        val layoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         return ConversationViewHolder(layoutInflater.inflate(R.layout.conversation_list_item, parent, false))
     }
 
     override fun onBindViewHolder(viewHolder: ConversationViewHolder, position: Int) {
-        val conversation = getItem(position)
+        val conversation = getItem(position)!!
 
         viewHolder.itemView.setOnClickListener {
-            val intent = Intent(mContext, MessageListActivity::class.java)
-            intent.putExtra("thread_id", conversation?.id)
+            val intent = Intent(context, MessageListActivity::class.java)
+            intent.putExtra("thread_id", conversation.id)
 
-            mContext.startActivity(intent)
+            context.startActivity(intent)
         }
 
-        viewHolder.title.text = conversation?.getTitle()
-        viewHolder.snippet.text = conversation?.snippet
+        viewHolder.avatar.contacts = conversation.contacts
+        viewHolder.title.text = conversation.getTitle()
+        viewHolder.snippet.text = conversation.snippet
     }
 }

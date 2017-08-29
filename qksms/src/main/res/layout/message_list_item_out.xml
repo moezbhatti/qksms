@@ -3,26 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="end|bottom"
+    android:orientation="horizontal"
+    android:paddingBottom="16dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="56dp"
+    android:paddingTop="16dp">
 
-    <TextView
-        android:id="@+id/body"
-        style="@style/TextPrimary"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginStart="56dp"
-        android:gravity="start"
-        tools:text="Hey! How's it going?" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/timestamp"
-        style="@style/TextSecondary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:gravity="end"
-        tools:text="2:50pm" />
+        <TextView
+            android:id="@+id/body"
+            style="@style/TextPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="start"
+            tools:text="Hey! How's it going?" />
+
+        <TextView
+            android:id="@+id/timestamp"
+            style="@style/TextSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            tools:text="2:50pm" />
+
+    </LinearLayout>
+
+    <com.moez.QKSMS.ui.view.AvatarView
+        android:id="@+id/avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp" />
 
 </LinearLayout>

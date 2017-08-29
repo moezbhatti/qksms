@@ -10,12 +10,11 @@
     android:paddingStart="16dp"
     android:paddingTop="8dp">
 
-    <com.moez.QKSMS.ui.view.AvatarView
-        android:id="@+id/avatar"
+    <com.moez.QKSMS.ui.view.GroupAvatarView
+        android:id="@+id/avatars"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_gravity="top"
-        android:background="@color/textSecondary" />
+        android:layout_gravity="top" />
 
     <LinearLayout
         android:layout_width="0dp"

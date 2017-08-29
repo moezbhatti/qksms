@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
 import com.moez.QKSMS.dagger.AppComponentManager
+import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.util.DateFormatter
 import io.realm.OrderedRealmCollection
@@ -38,6 +39,7 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
             Log.i(TAG, message.toString())
         }
 
+        viewHolder.avatar.contact = Contact()
         viewHolder.body.text = message.body
         viewHolder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
