@@ -26,7 +26,11 @@ class MessageListActivity : QkActivity() {
                 .inject(this)
 
         viewModel.conversation.addChangeListener { realmResults ->
-            title = realmResults[0]?.getTitle()
+            if (realmResults.size > 0) {
+                title = realmResults[0]?.getTitle()
+            } else {
+                finish()
+            }
         }
 
         val layoutManager = LinearLayoutManager(this)
