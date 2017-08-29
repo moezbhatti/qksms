@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/textSecondary"
-    android:orientation="vertical"
+    tools:background="@color/textSecondary"
     tools:parentTag="com.moez.QKSMS.ui.view.AvatarView">
 
     <ImageView
@@ -19,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:textColor="@android:color/white"
         tools:text="M" />
 
 </merge>

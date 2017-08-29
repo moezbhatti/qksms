@@ -28,6 +28,8 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
     override fun onFinishInflate() {
         super.onFinishInflate()
         updateView()
+
+        setBackgroundResource(R.color.textSecondary)
     }
 
     private fun updateView() {
