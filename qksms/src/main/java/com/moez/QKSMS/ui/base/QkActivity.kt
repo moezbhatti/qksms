@@ -4,8 +4,6 @@ import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import com.moez.QKSMS.QKApplication
-import com.moez.QKSMS.dagger.AppComponent
 
 abstract class QkActivity : AppCompatActivity(), LifecycleRegistryOwner {
 
@@ -13,10 +11,6 @@ abstract class QkActivity : AppCompatActivity(), LifecycleRegistryOwner {
 
     override fun getLifecycle(): LifecycleRegistry {
         return mRegistry
-    }
-
-    fun getAppComponent(): AppComponent? {
-        return (application as QKApplication).appComponent
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

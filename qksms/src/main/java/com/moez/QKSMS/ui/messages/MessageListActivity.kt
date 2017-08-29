@@ -3,6 +3,7 @@ package com.moez.QKSMS.ui.messages
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.moez.QKSMS.R
+import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.dagger.DaggerMessagesComponent
 import com.moez.QKSMS.dagger.MessagesModule
 import com.moez.QKSMS.ui.base.QkActivity
@@ -20,7 +21,7 @@ class MessageListActivity : QkActivity() {
 
         val threadId = intent.getLongExtra("thread_id", 0)
         DaggerMessagesComponent.builder()
-                .appComponent(getAppComponent())
+                .appComponent(AppComponentManager.appComponent)
                 .messagesModule(MessagesModule(threadId))
                 .build()
                 .inject(this)

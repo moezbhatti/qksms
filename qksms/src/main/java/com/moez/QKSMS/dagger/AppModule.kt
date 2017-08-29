@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.data.sync.SyncManager
+import com.moez.QKSMS.util.DateFormatter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -15,6 +16,12 @@ class AppModule(var application: Application) {
     @Singleton
     fun provideContext(): Context {
         return application
+    }
+
+    @Provides
+    @Singleton
+    fun provideDateFormatter(context: Context): DateFormatter {
+        return DateFormatter(context)
     }
 
     @Provides

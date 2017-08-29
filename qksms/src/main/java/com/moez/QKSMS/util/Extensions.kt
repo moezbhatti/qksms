@@ -2,6 +2,24 @@ package com.moez.QKSMS.util
 
 import android.database.Cursor
 import io.reactivex.Flowable
+import java.util.*
+
+fun Calendar.isSameDay(other: Calendar): Boolean {
+    return get(Calendar.YEAR) == other.get(Calendar.YEAR) && get(Calendar.DAY_OF_YEAR) == other.get(Calendar.DAY_OF_YEAR)
+}
+
+fun Calendar.isSameWeek(other: Calendar): Boolean {
+    return get(Calendar.YEAR) == other.get(Calendar.YEAR) && get(Calendar.WEEK_OF_YEAR) == other.get(Calendar.WEEK_OF_YEAR)
+}
+
+fun Calendar.isSameYear(other: Calendar): Boolean {
+    return get(Calendar.YEAR) == other.get(Calendar.YEAR)
+}
+
+fun Calendar.isDayAfter(other: Calendar): Boolean {
+    other.add(Calendar.DAY_OF_YEAR, 1)
+    return isSameDay(other)
+}
 
 fun Cursor.forEach(closeOnComplete: Boolean = true, method: (Cursor) -> Unit = {}) {
     moveToPosition(-1)

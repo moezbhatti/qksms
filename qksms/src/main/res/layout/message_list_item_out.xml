@@ -3,16 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/body"
         style="@style/TextPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="56dp"
+        android:gravity="start"
+        tools:text="Hey! How's it going?" />
+
+    <TextView
+        android:id="@+id/timestamp"
+        style="@style/TextSecondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:gravity="end"
-        android:padding="16dp"
-        tools:text="Hey! How's it going?" />
+        tools:text="2:50pm" />
 
 </LinearLayout>

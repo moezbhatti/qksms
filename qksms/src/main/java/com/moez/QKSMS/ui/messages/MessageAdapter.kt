@@ -5,9 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
+import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.util.DateFormatter
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
+import javax.inject.Inject
 
 class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         RealmRecyclerViewAdapter<Message, MessageViewHolder>(context, data, true) {
@@ -15,6 +18,12 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
 
     val VIEWTYPE_IN = 0
     val VIEWTYPE_OUT = 1
+
+    @Inject lateinit var dateFormatter: DateFormatter
+
+    init {
+        AppComponentManager.appComponent.inject(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MessageViewHolder {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -30,6 +39,7 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         }
 
         viewHolder.body.text = message.body
+        viewHolder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
 
     override fun getItemViewType(position: Int): Int {

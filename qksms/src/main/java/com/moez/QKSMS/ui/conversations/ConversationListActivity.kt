@@ -10,6 +10,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
+import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.ui.base.QkActivity
 import kotlinx.android.synthetic.main.conversation_list_activity.*
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class ConversationListActivity : QkActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.conversation_list_activity)
-        getAppComponent()?.inject(this)
+        AppComponentManager.appComponent.inject(this)
 
         conversationList.layoutManager = LinearLayoutManager(this)
         conversationList.adapter = ConversationAdapter(this, viewModel.conversations)

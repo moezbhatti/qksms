@@ -1,3 +1,8 @@
 <resources>
+
     <string name="app_name">QKSMS</string>
+
+    <string name="date_yesterday">Yesterday</string>
+    <string name="date_just_now">Just now</string>
+
 </resources>
