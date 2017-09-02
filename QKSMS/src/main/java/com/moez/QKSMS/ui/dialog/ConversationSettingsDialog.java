@@ -1,5 +1,6 @@
 package com.moez.QKSMS.ui.dialog;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -84,6 +85,9 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
         list.addView(new QKPreference(getActivity(), this, SettingsFragment.NOTIFICATION_LED_COLOR,
                 R.string.pref_theme_led, 0).getView());
 
+        list.addView(new QKPreference(getActivity(), this, SettingsFragment.PRIVATE_NOTIFICATION,
+                R.string.pref_notifications_private, R.string.pref_notifications_private_summary).getView());
+
         list.addView(new QKSwitchPreference(getActivity(), this, SettingsFragment.WAKE,
                 mConversationPrefs.getConversationPrefs(), mConversationPrefs.getWakePhoneEnabled(), R.string.pref_wake, R.string.pref_wake_summary).getView());
 
@@ -129,6 +133,20 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
                 ((MessageListActivity) getActivity()).getResultForThreadId(mThreadId);
                 getActivity().startActivityForResult(intent, RINGTONE_REQUEST_CODE);
                 break;
+
+            case SettingsFragment.PRIVATE_NOTIFICATION:
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setTitle(R.string.pref_notifications_private);
+                builder.setSingleChoiceItems(R.array.notification_private_options, mConversationPrefs.getPrivateNotificationsSetting(), (dialog, item) -> {
+                    mConversationPrefs.putString(SettingsFragment.PRIVATE_NOTIFICATION, String.valueOf(item));
+                    dialog.dismiss();
+                });
+                builder.setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+                    dialogInterface.cancel();
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+                break;
         }
 
         return true;
@@ -138,5 +156,4 @@ public class ConversationSettingsDialog extends QKDialog implements Preference.O
         final String uriString = mConversationPrefs.getString(SettingsFragment.NOTIFICATION_TONE, "content://settings/system/notification_sound");
         return !TextUtils.isEmpty(uriString) ? Uri.parse(uriString) : null;
     }
-
 }

@@ -47,7 +47,7 @@ public class ConversationPrefsHelper {
     }
 
     public Integer getPrivateNotificationsSetting(){
-        return Integer.parseInt(mPrefs.getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"));
+        return Integer.parseInt(getString(SettingsFragment.PRIVATE_NOTIFICATION, "0"));
     }
 
     public boolean getVibrateEnabled() {
