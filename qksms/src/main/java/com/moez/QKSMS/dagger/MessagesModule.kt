@@ -1,5 +1,6 @@
 package com.moez.QKSMS.dagger
 
+import android.content.Context
 import com.moez.QKSMS.data.repository.MessageRepository
 import dagger.Module
 import dagger.Provides
@@ -10,8 +11,8 @@ class MessagesModule {
 
     @Singleton
     @Provides
-    fun provideRepository(): MessageRepository {
-        return MessageRepository()
+    fun provideRepository(context: Context): MessageRepository {
+        return MessageRepository(context)
     }
 
 }
