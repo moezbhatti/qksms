@@ -17,6 +17,7 @@ class QKApplication : Application() {
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
+                .compactOnLaunch()
                 .deleteRealmIfMigrationNeeded()
                 .build())
 
