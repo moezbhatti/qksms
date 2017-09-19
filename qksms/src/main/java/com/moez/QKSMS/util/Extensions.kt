@@ -1,5 +1,8 @@
 package com.moez.QKSMS.util
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
 import android.database.Cursor
 import io.reactivex.Flowable
 import java.util.*
@@ -30,6 +33,11 @@ fun Cursor.forEach(closeOnComplete: Boolean = true, method: (Cursor) -> Unit = {
     if (closeOnComplete) {
         close()
     }
+}
+
+
+fun <T, O> LiveData<T>.observe(observer: O) where O : LifecycleOwner, O : Observer<T> {
+    observe(observer, observer)
 }
 
 /**
