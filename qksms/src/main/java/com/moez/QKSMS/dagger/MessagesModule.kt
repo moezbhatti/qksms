@@ -1,31 +1,17 @@
 package com.moez.QKSMS.dagger
 
-import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.repository.MessageRepository
-import com.moez.QKSMS.ui.messages.MessageListViewModel
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
-class MessagesModule(val threadId: Long) {
+class MessagesModule {
 
-    @Provides
-    @Named("thread_id")
-    fun provideThreadId(): Long {
-        return threadId
-    }
-
-    @ActivityScope
+    @Singleton
     @Provides
     fun provideRepository(): MessageRepository {
-        return MessageRepository(threadId)
-    }
-
-    @ActivityScope
-    @Provides
-    fun provideViewModel(conversations: ConversationRepository, repository: MessageRepository): MessageListViewModel {
-        return MessageListViewModel(threadId, conversations, repository)
+        return MessageRepository()
     }
 
 }

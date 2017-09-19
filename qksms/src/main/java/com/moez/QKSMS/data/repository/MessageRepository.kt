@@ -4,9 +4,9 @@ import com.moez.QKSMS.data.model.Message
 import io.realm.Realm
 import io.realm.RealmResults
 
-class MessageRepository(val threadId: Long) {
+class MessageRepository {
 
-    fun getMessages(): RealmResults<Message> {
+    fun getMessages(threadId: Long): RealmResults<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
