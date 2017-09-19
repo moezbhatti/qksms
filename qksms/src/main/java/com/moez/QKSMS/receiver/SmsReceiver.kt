@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.telephony.SmsMessage
-import android.util.Log
 import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.repository.MessageRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class SmsReceiver : BroadcastReceiver() {
@@ -15,7 +15,7 @@ class SmsReceiver : BroadcastReceiver() {
     @Inject lateinit var messageRepo: MessageRepository
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log.d("SmsReceiver", "Received SMS: $intent")
+        Timber.v("Received SMS: $intent")
         AppComponentManager.appComponent.inject(this)
 
         intent.extras?.let { extras ->

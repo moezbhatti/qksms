@@ -3,12 +3,12 @@ package com.moez.QKSMS.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import timber.log.Timber
 
 class MmsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        Log.d("MmsReceiver", "Received MMS: $intent")
+        Timber.v("Received MMS: $intent")
     }
 
 }

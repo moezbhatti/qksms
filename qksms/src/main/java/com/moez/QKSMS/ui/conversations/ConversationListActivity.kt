@@ -4,7 +4,6 @@ import android.Manifest
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -13,9 +12,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.ui.base.QkActivity
 import kotlinx.android.synthetic.main.conversation_list_activity.*
+import timber.log.Timber
 
 class ConversationListActivity : QkActivity() {
-    val TAG = "MainActivity"
 
     lateinit var viewModel: ConversationListViewModel
 
@@ -43,8 +42,8 @@ class ConversationListActivity : QkActivity() {
                     }
 
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                        for (response in report.grantedPermissionResponses) Log.v(TAG, "Permission granted: ${response.permissionName}")
-                        for (response in report.deniedPermissionResponses) Log.v(TAG, "Permission denied: ${response.permissionName}")
+                        for (response in report.grantedPermissionResponses) Timber.v("Permission granted: ${response.permissionName}")
+                        for (response in report.deniedPermissionResponses) Timber.v("Permission denied: ${response.permissionName}")
                     }
                 })
                 .check()

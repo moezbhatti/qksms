@@ -1,7 +1,6 @@
 package com.moez.QKSMS.ui.messages
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
@@ -11,11 +10,11 @@ import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.util.DateFormatter
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
+import timber.log.Timber
 import javax.inject.Inject
 
 class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         RealmRecyclerViewAdapter<Message, MessageViewHolder>(context, data, true) {
-    val TAG = "MessageAdapter"
 
     val VIEWTYPE_IN = 0
     val VIEWTYPE_OUT = 1
@@ -36,7 +35,7 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         val message = getItem(position)!!
 
         viewHolder.itemView.setOnClickListener {
-            Log.i(TAG, message.toString())
+            Timber.v(message.toString())
         }
 
         viewHolder.avatar.contact = Contact()

@@ -6,6 +6,7 @@ import android.net.Uri
 import com.moez.QKSMS.data.model.Message
 import io.realm.Realm
 import io.realm.RealmResults
+import timber.log.Timber
 
 class MessageRepository(val context: Context) {
 
@@ -16,7 +17,7 @@ class MessageRepository(val context: Context) {
                 .findAllSortedAsync("date")
     }
 
-    fun insertMessage(address: String, body: String, time: Long): Uri {
+    fun insertMessage(address: String, body: String, time: Long) {
         val contentResolver = context.contentResolver
         val cv = ContentValues()
 
@@ -24,7 +25,9 @@ class MessageRepository(val context: Context) {
         cv.put("body", body)
         cv.put("date_sent", time)
 
-        return contentResolver.insert(Uri.parse("content://sms/inbox"), cv)
+        val uri = contentResolver.insert(Uri.parse("content://sms/inbox"), cv)
+
+        Timber.d("Uri: $uri")
     }
 
 }

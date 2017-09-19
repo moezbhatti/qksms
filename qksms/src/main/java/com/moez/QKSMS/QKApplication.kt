@@ -5,6 +5,7 @@ import com.bugsnag.android.Bugsnag
 import com.moez.QKSMS.dagger.AppComponentManager
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import timber.log.Timber
 
 
 class QKApplication : Application() {
@@ -20,6 +21,8 @@ class QKApplication : Application() {
                 .build())
 
         AppComponentManager.init(this)
+
+        Timber.plant(Timber.DebugTree())
     }
 
 }

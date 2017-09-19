@@ -4,7 +4,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.Telephony
-import android.util.Log
+import timber.log.Timber
 
 @Suppress("unused")
 class MessageColumns(val cursor: Cursor) {
@@ -75,7 +75,7 @@ class MessageColumns(val cursor: Cursor) {
         try {
             return cursor.getColumnIndexOrThrow(PROJECTION[index])
         } catch (e: IllegalArgumentException) {
-            if (DEBUG) Log.w(TAG, e.message)
+            Timber.w(e)
         }
 
         return index
