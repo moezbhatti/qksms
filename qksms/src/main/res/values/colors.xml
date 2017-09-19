@@ -4,8 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="textPrimary">#2C3236</color>
-    <color name="textSecondary">#898989</color>
+    <color name="textPrimary">#49555F</color>
+    <color name="textSecondary">#70808D</color>
+    <color name="textTertiary">#B7B9C0</color>
 
     <color name="list_separator">#F2F2F2</color>
 </resources>

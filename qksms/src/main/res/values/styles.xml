@@ -15,7 +15,7 @@
     </style>
 
     <style name="TextSecondary">
-        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textColor">@color/textTertiary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/lato</item>
     </style>
