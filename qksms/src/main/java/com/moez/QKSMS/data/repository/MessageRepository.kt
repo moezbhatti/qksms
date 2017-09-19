@@ -3,10 +3,11 @@ package com.moez.QKSMS.data.repository
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.provider.Telephony
 import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.data.sync.MessageColumns
 import io.realm.Realm
 import io.realm.RealmResults
-import timber.log.Timber
 
 class MessageRepository(val context: Context) {
 
@@ -27,7 +28,26 @@ class MessageRepository(val context: Context) {
 
         val uri = contentResolver.insert(Uri.parse("content://sms/inbox"), cv)
 
-        Timber.d("Uri: $uri")
+        // TODO this is really sloppy, it should be fixed
+        val projection = arrayOf(Telephony.Sms.Conversations.THREAD_ID)
+        val cursor = contentResolver.query(uri, projection, null, null, null)
+
+        if (cursor.moveToFirst()) {
+            val threadId = cursor.getLong(0)
+
+            val threadUri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
+            val messageCursor = contentResolver.query(threadUri, MessageColumns.PROJECTION, null, null, "date DESC")
+
+            if (messageCursor.moveToFirst()) {
+                val columns = MessageColumns(messageCursor)
+                val message = Message(threadId, messageCursor, columns)
+                val realm = Realm.getDefaultInstance()
+                realm.executeTransaction { it.insertOrUpdate(message) }
+                realm.close()
+            }
+            messageCursor.close()
+        }
+        cursor.close()
     }
 
 }
