@@ -40,6 +40,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.bugsnag:bugsnag-android:3.9.0'
     compile "com.google.dagger:dagger:2.9"
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     compile 'com.jakewharton.timber:timber:4.5.1'
     compile 'com.karumi:dexter:4.1.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'

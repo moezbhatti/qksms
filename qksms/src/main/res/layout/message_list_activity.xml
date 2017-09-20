@@ -23,12 +23,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:background="@drawable/bubble">
+        android:background="@drawable/bubble"
+        android:elevation="2dp">
 
         <ImageView
             android:id="@+id/attach"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:padding="12dp"
             android:src="@drawable/ic_add_black_24dp"
             android:tint="@color/colorPrimary" />
@@ -50,9 +52,10 @@
             android:id="@+id/send"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:padding="12dp"
             android:src="@drawable/ic_send_black_24dp"
-            android:tint="@color/textSecondary" />
+            android:tint="@color/textTertiary" />
 
     </LinearLayout>
 

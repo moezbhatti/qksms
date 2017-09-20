@@ -3,7 +3,9 @@ package com.moez.QKSMS.util
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
+import android.content.res.ColorStateList
 import android.database.Cursor
+import android.widget.ImageView
 import io.reactivex.Flowable
 import java.util.*
 
@@ -54,5 +56,9 @@ fun Cursor.asFlowable(): Flowable<Cursor> {
                 this
             }
             .doOnComplete { close() }
+}
+
+fun ImageView.setTint(color: Int) {
+    imageTintList = ColorStateList.valueOf(color)
 }
 
