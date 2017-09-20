@@ -8,5 +8,9 @@
     <color name="textSecondary">#70808D</color>
     <color name="textTertiary">#B7B9C0</color>
 
+    <color name="textPrimaryLight">#FFFFFFFF</color>
+    <color name="textSecondaryLight">#ccffffff</color>
+    <color name="textTertiaryLight">#80ffffff</color>
+
     <color name="list_separator">#F2F2F2</color>
 </resources>
