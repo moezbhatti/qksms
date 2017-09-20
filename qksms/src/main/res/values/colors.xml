@@ -12,5 +12,7 @@
     <color name="textSecondaryLight">#ccffffff</color>
     <color name="textTertiaryLight">#80ffffff</color>
 
+    <color name="backgroundLight">#f8f8f8</color>
+
     <color name="list_separator">#F2F2F2</color>
 </resources>

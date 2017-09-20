@@ -10,6 +10,7 @@
 
     <style name="TextPrimary">
         <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textColorHint">@color/textTertiary</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/lato</item>
     </style>

@@ -7,6 +7,6 @@
         android:bottomRightRadius="18dp"
         android:topLeftRadius="4dp"
         android:topRightRadius="18dp" />
-    <solid android:color="@color/list_separator" />
+    <solid android:color="@android:color/white" />
 
 </shape>
