@@ -25,6 +25,8 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
         layoutManager.stackFromEnd = true
         messageList.layoutManager = layoutManager
 
+        send.setOnClickListener { viewModel.sendMessage(message.text.toString()) }
+
         viewModel.state.observe(this)
     }
 
@@ -33,11 +35,12 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
             is MessageListViewState.ConversationLoaded -> onConversationLoaded(state)
             is MessageListViewState.ConversationError -> onConversationError(state)
             is MessageListViewState.MessagesLoaded -> onMessagesLoaded(state)
+            is MessageListViewState.DraftLoaded -> onDraftLoaded(state)
         }
     }
 
     private fun onConversationLoaded(conversationLoaded: MessageListViewState.ConversationLoaded) {
-        title = conversationLoaded.data.getTitle()
+        title = conversationLoaded.conversation.getTitle()
     }
 
     private fun onConversationError(conversationError: MessageListViewState.ConversationError) {
@@ -45,7 +48,11 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
     }
 
     private fun onMessagesLoaded(messagesLoaded: MessageListViewState.MessagesLoaded) {
-        messageList.adapter = MessageAdapter(this, messagesLoaded.data)
+        messageList.adapter = MessageAdapter(this, messagesLoaded.messages)
+    }
+
+    private fun onDraftLoaded(draftLoaded: MessageListViewState.DraftLoaded) {
+        message.setText(draftLoaded.draft)
     }
 
 }

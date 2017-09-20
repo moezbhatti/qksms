@@ -17,6 +17,8 @@ class MessageListViewModel : ViewModel() {
 
     val state: MutableLiveData<MessageListViewState> = MutableLiveData()
 
+    private var threadId: Long = 0
+
     private var conversation: RealmResults<Conversation>? = null
     private var messages: RealmResults<Message>? = null
 
@@ -27,9 +29,11 @@ class MessageListViewModel : ViewModel() {
     fun setThreadId(threadId: Long) {
         onCleared()
 
+        this.threadId = threadId
+
         messageRepo.getMessages(threadId).let {
             messages = it
-            state.value = MessageListViewState.MessagesLoaded(messages!!)
+            state.value = MessageListViewState.MessagesLoaded(it)
         }
 
         conversationRepo.getConversation(threadId).let {
@@ -40,6 +44,13 @@ class MessageListViewModel : ViewModel() {
                     else -> state.value = MessageListViewState.ConversationLoaded(realmResults[0])
                 }
             }
+        }
+    }
+
+    fun sendMessage(body: String) {
+        conversation?.get(0)?.let { conversation ->
+            messageRepo.sendMessage(threadId, conversation.contacts[0].address, body)
+            state.value = MessageListViewState.DraftLoaded("")
         }
     }
 
