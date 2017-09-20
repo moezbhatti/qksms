@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     android:gravity="start|bottom"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
+    android:paddingBottom="2dp"
     android:paddingEnd="60dp"
     android:paddingStart="12dp"
-    android:paddingTop="8dp">
+    android:paddingTop="2dp">
 
     <com.moez.QKSMS.ui.view.AvatarView
         android:id="@+id/avatar"
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:background="@drawable/message_only"
+            android:backgroundTint="@android:color/white"
             android:gravity="start|center_vertical"
             android:minHeight="36dp"
             android:paddingBottom="8dp"
