@@ -39,6 +39,7 @@ class MessageListViewModel : ViewModel() {
         messages = messageRepo.getMessages(threadId)
         messages?.let { partialStates.onNext(PartialState.MessagesLoaded(it)) }
 
+        conversation?.removeAllChangeListeners()
         conversation = conversationRepo.getConversation(threadId)
         conversation?.addChangeListener { realmResults ->
             when (realmResults.size) {
@@ -62,7 +63,6 @@ class MessageListViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         conversation?.removeAllChangeListeners()
-        messages?.removeAllChangeListeners()
     }
 
 }
