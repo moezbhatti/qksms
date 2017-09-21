@@ -50,9 +50,7 @@ class SyncManager(val context: Context, val contacts: ContactRepository) {
                     realm?.close()
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    completionListener.invoke()
-                })
+                .subscribe { completionListener.invoke() }
     }
 
 }

@@ -34,9 +34,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "android.arch.lifecycle:extensions:1.0.0-alpha9"
-    compile "android.arch.lifecycle:runtime:1.0.0-alpha9"
-    compile 'com.android.support:appcompat-v7:26.0.0'
+    compile "android.arch.lifecycle:extensions:1.0.0-alpha9-1"
+    compile "android.arch.lifecycle:runtime:1.0.0"
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.bugsnag:bugsnag-android:3.9.0'
     compile "com.google.dagger:dagger:2.9"
@@ -48,7 +48,7 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxkotlin:2.0.3'
     compile 'io.realm:android-adapters:1.3.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    kapt "android.arch.lifecycle:compiler:1.0.0-alpha9"
+    kapt "android.arch.lifecycle:compiler:1.0.0-alpha9-1"
     kapt "com.google.dagger:dagger-compiler:2.9"
     kapt 'io.realm:realm-annotations:3.7.0'
     kapt 'io.realm:realm-annotations-processor:3.7.0'
