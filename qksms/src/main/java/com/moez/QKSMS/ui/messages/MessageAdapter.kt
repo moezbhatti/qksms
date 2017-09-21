@@ -19,6 +19,8 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         RealmRecyclerViewAdapter<Message, MessageViewHolder>(context, data, true) {
 
     companion object {
+        private val TIMESTAMP_THRESHOLD = 60
+
         private val VIEWTYPE_IN = 0
         private val VIEWTYPE_OUT = 1
     }
@@ -51,14 +53,14 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
     }
 
     private fun bindGrouping(viewHolder: MessageViewHolder, position: Int) {
-
         val message = getItem(position)!!
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
 
-        val sent = message.isMe()
-        val diff = TimeUnit.MILLISECONDS.toMinutes(message.dateSent - (previous?.dateSent ?: 0))
+        val diff = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
+        viewHolder.timestamp.visibility = if (diff < TIMESTAMP_THRESHOLD) View.GONE else View.VISIBLE
 
+        val sent = message.isMe()
         val canGroupWithPrevious = canGroup(message, previous)
         val canGroupWithNext = canGroup(message, next)
 
@@ -80,14 +82,12 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
                 viewHolder.avatar?.apply { visibility = View.VISIBLE }
             }
         }
-
-        viewHolder.timestamp.visibility = if (diff >= 60) View.VISIBLE else View.GONE
     }
 
-    private fun canGroup(first: Message, second: Message?): Boolean {
-        if (second == null) return false
-        val diff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(first.dateSent - second.dateSent))
-        return first.isMe() == second.isMe() && diff < 60
+    private fun canGroup(message: Message, other: Message?): Boolean {
+        if (other == null) return false
+        val diff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(message.date - other.date))
+        return message.isMe() == other.isMe() && diff < TIMESTAMP_THRESHOLD
     }
 
     override fun getItemViewType(position: Int): Int {
