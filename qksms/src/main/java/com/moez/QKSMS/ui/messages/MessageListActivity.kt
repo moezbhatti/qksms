@@ -22,12 +22,10 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProviders.of(this)[MessageListViewModel::class.java]
-        viewModel.setThreadId(intent.getLongExtra("thread_id", 0))
+        viewModel.threadId = intent.getLongExtra("thread_id", 0)
         viewModel.state.observe(this)
 
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.stackFromEnd = true
-        messageList.layoutManager = layoutManager
+        messageList.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
 
         RxTextView.textChanges(message).subscribe { text -> viewModel.textChanged(text.toString()) }
         RxView.clicks(attach).subscribe { }
@@ -36,25 +34,14 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
 
     override fun onChanged(state: MessageListViewState?) {
         state?.let {
-            if (title != state.title) {
-                title = state.title
-            }
-
-            if (messageList.adapter == null) {
-                messageList.adapter = MessageAdapter(this, state.messages)
-            }
-
-            if (message.text.toString() != state.draft) {
-                message.setText(state.draft)
-            }
+            if (title != state.title) title = state.title
+            if (messageList.adapter == null) messageList.adapter = MessageAdapter(this, state.messages)
+            if (message.text.toString() != state.draft) message.setText(state.draft)
+            if (state.hasError) finish()
 
             val color = if (state.canSend) R.color.colorPrimary else R.color.textTertiary
             send.setTint(resources.getColor(color))
             send.isEnabled = state.canSend
-
-            if (state.hasError) {
-                finish()
-            }
         }
     }
 }

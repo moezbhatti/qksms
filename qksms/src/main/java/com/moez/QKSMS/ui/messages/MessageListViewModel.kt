@@ -16,40 +16,34 @@ class MessageListViewModel : ViewModel() {
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var messageRepo: MessageRepository
 
-    val partialStates: PublishSubject<PartialState> = PublishSubject.create()
     val state: MutableLiveData<MessageListViewState> = MutableLiveData()
+    var threadId: Long = 0
+        set(value) {
+            field = value
+            newThreadId()
+        }
 
-    private var threadId: Long = 0
-
+    private val partialStates: PublishSubject<PartialState> = PublishSubject.create()
     private var conversation: RealmResults<Conversation>? = null
     private var messages: RealmResults<Message>? = null
 
     init {
         AppComponentManager.appComponent.inject(this)
 
-        val initialState = MessageListViewState()
         partialStates
-                .scan(initialState, { previousState, changes -> changes.reduce(previousState) })
+                .scan(MessageListViewState(), { previous, changes -> changes.reduce(previous) })
                 .subscribe { newState -> state.value = newState }
     }
 
-    fun setThreadId(threadId: Long) {
-        onCleared()
+    private fun newThreadId() {
+        messages = messageRepo.getMessages(threadId)
+        messages?.let { partialStates.onNext(PartialState.MessagesLoaded(it)) }
 
-        this.threadId = threadId
-
-        messageRepo.getMessages(threadId).let {
-            messages = it
-            partialStates.onNext(PartialState.MessagesLoaded(it))
-        }
-
-        conversationRepo.getConversation(threadId).let {
-            conversation = it
-            it.addChangeListener { realmResults ->
-                when (realmResults.size) {
-                    0 -> partialStates.onNext(PartialState.ConversationError(true))
-                    else -> partialStates.onNext(PartialState.ConversationLoaded(realmResults[0]))
-                }
+        conversation = conversationRepo.getConversation(threadId)
+        conversation?.addChangeListener { realmResults ->
+            when (realmResults.size) {
+                0 -> partialStates.onNext(PartialState.ConversationError(true))
+                else -> partialStates.onNext(PartialState.ConversationLoaded(realmResults[0]))
             }
         }
     }
