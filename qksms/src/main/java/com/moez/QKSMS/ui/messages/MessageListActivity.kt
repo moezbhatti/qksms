@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.message_list_activity.*
 
 class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
 
-    lateinit var viewModel: MessageListViewModel
+    private lateinit var viewModel: MessageListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

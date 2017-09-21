@@ -1,6 +1,7 @@
 package com.moez.QKSMS.ui.conversations
 
 import android.Manifest
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -11,27 +12,33 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.ui.base.QkActivity
+import com.moez.QKSMS.util.observe
 import kotlinx.android.synthetic.main.conversation_list_activity.*
 import timber.log.Timber
 
-class ConversationListActivity : QkActivity() {
+class ConversationListActivity : QkActivity(), Observer<ConversationListViewState> {
 
-    lateinit var viewModel: ConversationListViewModel
+    private lateinit var viewModel: ConversationListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.conversation_list_activity)
+        requestPermissions()
 
         viewModel = ViewModelProviders.of(this)[ConversationListViewModel::class.java]
+        viewModel.state.observe(this)
 
         conversationList.layoutManager = LinearLayoutManager(this)
-        conversationList.adapter = ConversationAdapter(this, viewModel.conversations)
 
-        swipeRefresh.setOnRefreshListener {
-            viewModel.onRefresh { swipeRefresh.isRefreshing = false }
+        swipeRefresh.setOnRefreshListener { viewModel.onRefresh() }
+    }
+
+    override fun onChanged(state: ConversationListViewState?) {
+        state?.let {
+            if (conversationList.adapter == null) conversationList.adapter = ConversationAdapter(this, state.conversations)
+
+            swipeRefresh.isRefreshing = state.refreshing
         }
-
-        requestPermissions()
     }
 
     private fun requestPermissions() {
