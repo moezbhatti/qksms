@@ -7,6 +7,7 @@ import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.repository.MessageRepository
+import io.reactivex.subjects.PublishSubject
 import io.realm.RealmResults
 import javax.inject.Inject
 
@@ -15,6 +16,7 @@ class MessageListViewModel : ViewModel() {
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var messageRepo: MessageRepository
 
+    val partialStates: PublishSubject<PartialState> = PublishSubject.create()
     val state: MutableLiveData<MessageListViewState> = MutableLiveData()
 
     private var threadId: Long = 0
@@ -24,6 +26,11 @@ class MessageListViewModel : ViewModel() {
 
     init {
         AppComponentManager.appComponent.inject(this)
+
+        val initialState = MessageListViewState()
+        partialStates
+                .scan(initialState, { previousState, changes -> changes.reduce(previousState) })
+                .subscribe { newState -> state.value = newState }
     }
 
     fun setThreadId(threadId: Long) {
@@ -33,15 +40,15 @@ class MessageListViewModel : ViewModel() {
 
         messageRepo.getMessages(threadId).let {
             messages = it
-            state.value = MessageListViewState.MessagesLoaded(it)
+            partialStates.onNext(PartialState.MessagesLoaded(it))
         }
 
         conversationRepo.getConversation(threadId).let {
             conversation = it
             it.addChangeListener { realmResults ->
                 when (realmResults.size) {
-                    0 -> state.value = MessageListViewState.ConversationError(0)
-                    else -> state.value = MessageListViewState.ConversationLoaded(realmResults[0])
+                    0 -> partialStates.onNext(PartialState.ConversationError(true))
+                    else -> partialStates.onNext(PartialState.ConversationLoaded(realmResults[0]))
                 }
             }
         }
@@ -50,8 +57,12 @@ class MessageListViewModel : ViewModel() {
     fun sendMessage(body: String) {
         conversation?.get(0)?.let { conversation ->
             messageRepo.sendMessage(threadId, conversation.contacts[0].address, body)
-            state.value = MessageListViewState.DraftLoaded("")
+            partialStates.onNext(PartialState.TextChanged(""))
         }
+    }
+
+    fun textChanged(text: String) {
+        partialStates.onNext(PartialState.TextChanged(text))
     }
 
     override fun onCleared() {
