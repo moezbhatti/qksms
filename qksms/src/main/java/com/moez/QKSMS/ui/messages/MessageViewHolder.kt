@@ -8,7 +8,7 @@ import com.moez.QKSMS.ui.view.AvatarView
 
 class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val avatar: AvatarView = view.findViewById(R.id.avatar)
+    val avatar: AvatarView? = view.findViewById(R.id.avatar)
     val body: TextView = view.findViewById(R.id.body)
     val timestamp: TextView = view.findViewById(R.id.timestamp)
 

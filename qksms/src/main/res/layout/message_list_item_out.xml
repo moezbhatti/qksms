@@ -3,51 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="end|bottom"
-    android:orientation="horizontal"
-    android:paddingBottom="2dp"
-    android:paddingEnd="12dp"
-    android:paddingStart="60dp"
-    android:paddingTop="2dp">
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/timestamp"
+        style="@style/TextSecondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        tools:text="Tue at 11:39pm" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_marginBottom="2dp"
+        android:gravity="end|bottom"
+        android:paddingEnd="12dp"
+        android:paddingStart="60dp">
 
-        <TextView
-            android:id="@+id/body"
-            style="@style/TextPrimary"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/textPrimaryLight"
-            android:layout_gravity="end"
-            android:background="@drawable/message_only"
-            android:backgroundTint="@color/colorPrimary"
-            android:gravity="start|center_vertical"
-            android:minHeight="36dp"
-            android:paddingBottom="8dp"
-            android:paddingEnd="12dp"
-            android:paddingStart="12dp"
-            android:paddingTop="8dp"
-            tools:text="Hey! How's it going?" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/timestamp"
-            style="@style/TextSecondary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:visibility="gone"
-            tools:text="2:50pm" />
+            <TextView
+                android:id="@+id/body"
+                style="@style/TextPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/message_only"
+                android:backgroundTint="@color/colorPrimary"
+                android:gravity="start|center_vertical"
+                android:minHeight="36dp"
+                android:paddingBottom="8dp"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/textPrimaryLight"
+                tools:text="Hey! How's it going?" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <com.moez.QKSMS.ui.view.AvatarView
-        android:id="@+id/avatar"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="12dp" />
 
 </LinearLayout>

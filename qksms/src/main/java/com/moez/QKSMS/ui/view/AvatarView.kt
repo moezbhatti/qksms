@@ -20,16 +20,16 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
     constructor(context: Context) : this(context, null, 0)
 
     init {
-        if (!isInEditMode) {
-            View.inflate(context, R.layout.avatar_view, this)
-        }
+        View.inflate(context, R.layout.avatar_view, this)
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        updateView()
-
         setBackgroundResource(R.drawable.message_only)
+
+        if (!isInEditMode) {
+            updateView()
+        }
     }
 
     private fun updateView() {

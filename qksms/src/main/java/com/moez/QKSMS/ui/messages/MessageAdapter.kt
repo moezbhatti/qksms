@@ -12,6 +12,7 @@ import com.moez.QKSMS.util.DateFormatter
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
@@ -41,14 +42,14 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         val message = getItem(position)!!
 
         viewHolder.itemView.setOnClickListener { Timber.v(message.toString()) }
-        
+
         bindGrouping(viewHolder, position)
 
-        viewHolder.avatar.contact = Contact()
+        viewHolder.avatar?.apply { contact = Contact() }
         viewHolder.body.text = message.body
         viewHolder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
-    
+
     private fun bindGrouping(viewHolder: MessageViewHolder, position: Int) {
 
         val message = getItem(position)!!
@@ -56,41 +57,37 @@ class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
         val next = if (position == itemCount - 1) null else getItem(position + 1)
 
         val sent = message.isMe()
-        if (previous != null && next != null) { // Mid message
-            if (previous.isMe() == sent && sent == next.isMe()) { // Mid in group
+        val diff = TimeUnit.MILLISECONDS.toMinutes(message.dateSent - (previous?.dateSent ?: 0))
+
+        val canGroupWithPrevious = canGroup(message, previous)
+        val canGroupWithNext = canGroup(message, next)
+
+        when {
+            !canGroupWithPrevious && canGroupWithNext -> {
+                viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
+                viewHolder.avatar?.apply { visibility = View.INVISIBLE }
+            }
+            canGroupWithPrevious && canGroupWithNext -> {
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
-                viewHolder.avatar.visibility = View.INVISIBLE
-            } else if (previous.isMe() == sent && sent != next.isMe()) { // Last in group
+                viewHolder.avatar?.apply { visibility = View.INVISIBLE }
+            }
+            canGroupWithPrevious && !canGroupWithNext -> {
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
-                viewHolder.avatar.visibility = View.VISIBLE
-            } else if (previous.isMe() != sent && sent == next.isMe()) { // First in group
-                viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
-                viewHolder.avatar.visibility = View.INVISIBLE
-            } else { // Only in group
-                viewHolder.body.setBackgroundResource(R.drawable.message_only)
-                viewHolder.avatar.visibility = View.VISIBLE
+                viewHolder.avatar?.apply { visibility = View.VISIBLE }
             }
-        } else if (previous != null && next == null) { // Last message
-            if (previous.isMe() == sent) { // Last in group
-                viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
-                viewHolder.avatar.visibility = View.VISIBLE
-            } else { // Only in group
+            else -> {
                 viewHolder.body.setBackgroundResource(R.drawable.message_only)
-                viewHolder.avatar.visibility = View.VISIBLE
+                viewHolder.avatar?.apply { visibility = View.VISIBLE }
             }
-        } else if (previous == null && next != null) { // First message
-            if (sent == next.isMe()) { // First in group
-                viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
-                viewHolder.avatar.visibility = View.INVISIBLE
-            } else { // Only in group
-                viewHolder.body.setBackgroundResource(R.drawable.message_only)
-                viewHolder.avatar.visibility = View.VISIBLE
-            }
-        } else { // Only message
-            viewHolder.body.setBackgroundResource(R.drawable.message_only)
-            viewHolder.avatar.visibility = View.VISIBLE
         }
-        
+
+        viewHolder.timestamp.visibility = if (diff >= 60) View.VISIBLE else View.GONE
+    }
+
+    private fun canGroup(first: Message, second: Message?): Boolean {
+        if (second == null) return false
+        val diff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(first.dateSent - second.dateSent))
+        return first.isMe() == second.isMe() && diff < 60
     }
 
     override fun getItemViewType(position: Int): Int {
