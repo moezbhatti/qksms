@@ -26,19 +26,13 @@ class SyncManager(val context: Context, val contacts: ContactRepository) {
                 .doOnNext {
                     // We need to set up realm on the io thread, and doOnSubscribe doesn't support setting a custom Scheduler
                     realm = Realm.getDefaultInstance()
-                    realm?.executeTransaction {
-                        it.delete(Conversation::class.java)
-                        it.delete(Message::class.java)
-                    }
+                    realm?.beginTransaction()
+                    realm?.deleteAll()
                 }
                 .flatMap { cursor -> cursor.asFlowable() }
                 .map { cursor -> Conversation(cursor, contacts) }
                 .distinct { conversation -> conversation.id }
-                .doOnNext { conversation ->
-                    realm?.beginTransaction()
-                    realm?.insertOrUpdate(conversation)
-                }
-                .doAfterNext { realm?.commitTransaction() }
+                .doOnNext { conversation -> realm?.insertOrUpdate(conversation) }
                 .map { conversation -> conversation.id }
                 .concatMap { threadId ->
                     val uri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
@@ -51,9 +45,14 @@ class SyncManager(val context: Context, val contacts: ContactRepository) {
                 .doOnNext { message -> realm?.insertOrUpdate(message) }
                 .count()
                 .toFlowable()
-                .doOnNext { realm?.close() }
+                .doOnNext {
+                    realm?.commitTransaction()
+                    realm?.close()
+                }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { completionListener.invoke() }
+                .subscribe({
+                    completionListener.invoke()
+                })
     }
 
 }
