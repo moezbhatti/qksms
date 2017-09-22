@@ -11,10 +11,9 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import io.realm.Realm
-import io.realm.Sort
 
 
-class NotificationHelper(val context: Context) {
+class NotificationManager(val context: Context) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
@@ -46,9 +45,9 @@ class NotificationHelper(val context: Context) {
             val style = NotificationCompat.MessagingStyle("Me")
             realm.where(Message::class.java)
                     .equalTo("threadId", conversation.id)
-                    .findAllSorted("date", Sort.DESCENDING)
-                    .take(2)
-                    .reversed()
+                    .equalTo("seen", false)
+                    .equalTo("read", false)
+                    .findAllSorted("date")
                     .forEach { message ->
                         val name = if (message.isMe()) null else conversation.getTitle()
                         style.addMessage(message.body, message.date, name)

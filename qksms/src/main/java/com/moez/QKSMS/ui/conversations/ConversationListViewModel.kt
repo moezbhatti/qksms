@@ -6,7 +6,7 @@ import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.sync.SyncManager
-import com.moez.QKSMS.util.NotificationHelper
+import com.moez.QKSMS.util.NotificationManager
 import io.reactivex.subjects.PublishSubject
 import io.realm.RealmResults
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ConversationListViewModel : ViewModel() {
 
     @Inject lateinit var syncManager: SyncManager
-    @Inject lateinit var notificationManager: NotificationHelper
+    @Inject lateinit var notificationManager: NotificationManager
     @Inject lateinit var conversationRepo: ConversationRepository
 
     val state: MutableLiveData<ConversationListViewState> = MutableLiveData()

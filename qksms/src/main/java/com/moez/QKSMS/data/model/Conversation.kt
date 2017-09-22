@@ -36,7 +36,7 @@ open class Conversation() : RealmObject() {
 
         snippet = cursor.getString(ConversationColumns.SNIPPET) ?: ""
         snippetCs = cursor.getString(ConversationColumns.SNIPPET_CS) ?: ""
-        read = cursor.getInt(ConversationColumns.READ) == 1
+        read = cursor.getInt(ConversationColumns.READ) != 0
         error = cursor.getInt(ConversationColumns.ERROR)
         hasAttachment = cursor.getInt(ConversationColumns.HAS_ATTACHMENT)
     }

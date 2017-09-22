@@ -7,7 +7,7 @@ import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.util.DateFormatter
-import com.moez.QKSMS.util.NotificationHelper
+import com.moez.QKSMS.util.NotificationManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -35,8 +35,8 @@ class AppModule(var application: Application) {
 
     @Provides
     @Singleton
-    fun provideNotificationHelper(context: Context): NotificationHelper {
-        return NotificationHelper(context)
+    fun provideNotificationHelper(context: Context): NotificationManager {
+        return NotificationManager(context)
     }
 
     @Provides
