@@ -5,6 +5,7 @@ import android.content.Context
 import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.util.DateFormatter
+import com.moez.QKSMS.util.NotificationHelper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -28,6 +29,12 @@ class AppModule(var application: Application) {
     @Singleton
     fun provideSyncManager(context: Context, contacts: ContactRepository): SyncManager {
         return SyncManager(context, contacts)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationHelper(context: Context): NotificationHelper {
+        return NotificationHelper(context)
     }
 
 }
