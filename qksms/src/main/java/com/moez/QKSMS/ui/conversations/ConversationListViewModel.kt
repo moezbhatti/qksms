@@ -31,7 +31,7 @@ class ConversationListViewModel : ViewModel() {
                 .scan(ConversationListViewState(), { previous, changes -> changes.reduce(previous) })
                 .subscribe { newState -> state.value = newState }
 
-        conversations = conversationRepo.getConversations()
+        conversations = conversationRepo.getConversationsAsync()
         partialStates.onNext(PartialState.ConversationsLoaded(conversations))
     }
 

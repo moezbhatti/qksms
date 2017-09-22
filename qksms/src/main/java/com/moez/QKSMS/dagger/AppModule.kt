@@ -35,8 +35,8 @@ class AppModule(var application: Application) {
 
     @Provides
     @Singleton
-    fun provideNotificationHelper(context: Context): NotificationManager {
-        return NotificationManager(context)
+    fun provideNotificationHelper(context: Context, conversationRepository: ConversationRepository, messageRepository: MessageRepository): NotificationManager {
+        return NotificationManager(context, conversationRepository, messageRepository)
     }
 
     @Provides

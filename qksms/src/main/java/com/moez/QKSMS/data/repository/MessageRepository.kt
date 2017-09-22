@@ -13,11 +13,20 @@ import io.realm.RealmResults
 
 class MessageRepository(val context: Context) {
 
-    fun getMessages(threadId: Long): RealmResults<Message> {
+    fun getMessagesAsync(threadId: Long): RealmResults<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
                 .findAllSortedAsync("date")
+    }
+
+    fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message> {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("threadId", threadId)
+                .equalTo("seen", false)
+                .equalTo("read", false)
+                .findAllSorted("date")
     }
 
     fun insertMessage(address: String, body: String, time: Long) {

@@ -8,12 +8,12 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.moez.QKSMS.R
-import com.moez.QKSMS.data.model.Conversation
-import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.data.repository.ConversationRepository
+import com.moez.QKSMS.data.repository.MessageRepository
 import io.realm.Realm
 
 
-class NotificationManager(val context: Context) {
+class NotificationManager(val context: Context, val conversationRepo: ConversationRepository, val messageRepo: MessageRepository) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
@@ -41,17 +41,12 @@ class NotificationManager(val context: Context) {
     fun update() {
         val realm = Realm.getDefaultInstance()
 
-        realm.where(Conversation::class.java).equalTo("read", false).findAllSorted("date").forEach { conversation ->
+        conversationRepo.getUnreadConversations().forEach { conversation ->
             val style = NotificationCompat.MessagingStyle("Me")
-            realm.where(Message::class.java)
-                    .equalTo("threadId", conversation.id)
-                    .equalTo("seen", false)
-                    .equalTo("read", false)
-                    .findAllSorted("date")
-                    .forEach { message ->
-                        val name = if (message.isMe()) null else conversation.getTitle()
-                        style.addMessage(message.body, message.date, name)
-                    }
+            messageRepo.getUnreadUnseenMessages(conversation.id).forEach { message ->
+                val name = if (message.isMe()) null else conversation.getTitle()
+                style.addMessage(message.body, message.date, name)
+            }
 
             val notification = NotificationCompat.Builder(context, "channel_1")
                     .setColor(context.resources.getColor(R.color.colorPrimary))

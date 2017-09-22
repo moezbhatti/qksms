@@ -36,11 +36,11 @@ class MessageListViewModel : ViewModel() {
     }
 
     private fun newThreadId() {
-        messages = messageRepo.getMessages(threadId)
+        messages = messageRepo.getMessagesAsync(threadId)
         messages?.let { partialStates.onNext(PartialState.MessagesLoaded(it)) }
 
         conversation?.removeAllChangeListeners()
-        conversation = conversationRepo.getConversation(threadId)
+        conversation = conversationRepo.getConversationAsync(threadId)
         conversation?.addChangeListener { realmResults ->
             when (realmResults.size) {
                 0 -> partialStates.onNext(PartialState.ConversationError(true))
