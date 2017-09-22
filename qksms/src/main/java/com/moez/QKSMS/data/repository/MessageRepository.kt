@@ -18,6 +18,7 @@ class MessageRepository(val context: Context) {
     fun getConversationsAsync(): RealmResults<Conversation> {
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
+                .isNotEmpty("messages")
                 .findAllAsync()
     }
 
