@@ -1,8 +1,8 @@
 package com.moez.QKSMS.ui.messages
 
-import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import io.realm.OrderedRealmCollection
+import io.realm.RealmResults
 
 data class MessageListViewState(
         val title: String = "",
@@ -17,9 +17,9 @@ sealed class PartialState {
 
     abstract fun reduce(previousState: MessageListViewState): MessageListViewState
 
-    data class ConversationLoaded(private val conversation: Conversation) : PartialState() {
+    data class ConversationLoaded(private val title: String, private val messages: RealmResults<Message>) : PartialState() {
         override fun reduce(previousState: MessageListViewState): MessageListViewState {
-            return previousState.copy(title = conversation.getTitle(), messages = conversation.messages)
+            return previousState.copy(title = title, messages = messages)
         }
     }
 

@@ -35,7 +35,11 @@ class MessageListViewModel : ViewModel() {
         conversation = messageRepo.getConversationAsync(threadId)
         conversation?.addChangeListener { conversation: Conversation ->
             when (conversation.isValid) {
-                true -> partialStates.onNext(PartialState.ConversationLoaded(conversation))
+                true -> {
+                    val title = conversation.getTitle()
+                    val messages = conversation.messages.sort("date")
+                    partialStates.onNext(PartialState.ConversationLoaded(title, messages))
+                }
                 false -> partialStates.onNext(PartialState.ConversationError(true))
             }
         }
