@@ -9,7 +9,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class, ContactModule::class, ConversationsModule::class, MessagesModule::class))
+@Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
 
     fun inject(receiver: SmsReceiver)
