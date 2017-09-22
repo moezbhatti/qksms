@@ -8,8 +8,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.ui.base.QkActivity
-import com.moez.QKSMS.util.observe
-import com.moez.QKSMS.util.setTint
+import com.moez.QKSMS.util.extensions.setTint
 import kotlinx.android.synthetic.main.message_list_activity.*
 
 class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
@@ -23,7 +22,7 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
 
         viewModel = ViewModelProviders.of(this)[MessageListViewModel::class.java]
         viewModel.threadId = intent.getLongExtra("thread_id", 0)
-        viewModel.state.observe(this)
+        viewModel.state.observe(this, this)
 
         messageList.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
 

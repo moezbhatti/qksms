@@ -12,7 +12,6 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.ui.base.QkActivity
-import com.moez.QKSMS.util.observe
 import kotlinx.android.synthetic.main.conversation_list_activity.*
 import timber.log.Timber
 
@@ -26,7 +25,7 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
         requestPermissions()
 
         viewModel = ViewModelProviders.of(this)[ConversationListViewModel::class.java]
-        viewModel.state.observe(this)
+        viewModel.state.observe(this, this)
 
         conversationList.layoutManager = LinearLayoutManager(this)
 

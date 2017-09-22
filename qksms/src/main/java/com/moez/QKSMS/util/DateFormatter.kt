@@ -4,6 +4,10 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import com.moez.QKSMS.R
+import com.moez.QKSMS.util.extensions.isDayAfter
+import com.moez.QKSMS.util.extensions.isSameDay
+import com.moez.QKSMS.util.extensions.isSameWeek
+import com.moez.QKSMS.util.extensions.isSameYear
 import java.text.SimpleDateFormat
 import java.util.*
 
