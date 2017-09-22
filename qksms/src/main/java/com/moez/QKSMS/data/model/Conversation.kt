@@ -16,7 +16,7 @@ open class Conversation() : RealmObject() {
     var contacts: RealmList<Contact> = RealmList()
     var snippet: String = ""
     var snippetCs: String = ""
-    var read: Int = 0
+    var read: Boolean = true
     var error: Int = 0
     var hasAttachment: Int = 0
 
@@ -36,7 +36,7 @@ open class Conversation() : RealmObject() {
 
         snippet = cursor.getString(ConversationColumns.SNIPPET) ?: ""
         snippetCs = cursor.getString(ConversationColumns.SNIPPET_CS) ?: ""
-        read = cursor.getInt(ConversationColumns.READ)
+        read = cursor.getInt(ConversationColumns.READ) == 1
         error = cursor.getInt(ConversationColumns.ERROR)
         hasAttachment = cursor.getInt(ConversationColumns.HAS_ATTACHMENT)
     }

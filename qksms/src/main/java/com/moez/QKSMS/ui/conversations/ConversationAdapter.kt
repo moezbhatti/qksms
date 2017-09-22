@@ -31,5 +31,6 @@ class ConversationAdapter(context: Context, data: OrderedRealmCollection<Convers
         viewHolder.avatar.contacts = conversation.contacts
         viewHolder.title.text = conversation.getTitle()
         viewHolder.snippet.text = conversation.snippet
+        viewHolder.snippet.setTextColor(context.resources.getColor(if (conversation.read) R.color.textTertiary else R.color.textPrimary))
     }
 }
