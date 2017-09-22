@@ -15,8 +15,8 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MessageAdapter(context: Context, data: OrderedRealmCollection<Message>?) :
-        RealmRecyclerViewAdapter<Message, MessageViewHolder>(context, data, true) {
+class MessageAdapter(val context: Context, data: OrderedRealmCollection<Message>?) :
+        RealmRecyclerViewAdapter<Message, MessageViewHolder>(data, true) {
 
     companion object {
         private val TIMESTAMP_THRESHOLD = 60

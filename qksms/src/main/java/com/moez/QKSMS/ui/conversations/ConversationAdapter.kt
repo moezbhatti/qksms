@@ -10,8 +10,8 @@ import com.moez.QKSMS.ui.messages.MessageListActivity
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
-class ConversationAdapter(context: Context, data: OrderedRealmCollection<Conversation>?) :
-        RealmRecyclerViewAdapter<Conversation, ConversationViewHolder>(context, data, true) {
+class ConversationAdapter(val context: Context, data: OrderedRealmCollection<Conversation>?) :
+        RealmRecyclerViewAdapter<Conversation, ConversationViewHolder>(data, true) {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ConversationViewHolder {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
