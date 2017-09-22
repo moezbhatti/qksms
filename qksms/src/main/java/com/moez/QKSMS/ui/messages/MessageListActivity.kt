@@ -34,7 +34,7 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
     override fun onChanged(state: MessageListViewState?) {
         state?.let {
             if (title != state.title) title = state.title
-            if (messageList.adapter == null) messageList.adapter = MessageAdapter(this, state.messages)
+            if (messageList.adapter == null && state.messages?.isValid == true) messageList.adapter = MessageAdapter(this, state.messages)
             if (message.text.toString() != state.draft) message.setText(state.draft)
             if (state.hasError) finish()
 

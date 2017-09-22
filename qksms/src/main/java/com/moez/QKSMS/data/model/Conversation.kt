@@ -1,45 +1,27 @@
 package com.moez.QKSMS.data.model
 
-import android.database.Cursor
-import com.moez.QKSMS.data.repository.ContactRepository
-import com.moez.QKSMS.data.sync.ConversationColumns
-import io.reactivex.Flowable
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class Conversation() : RealmObject() {
+open class Conversation : RealmObject() {
 
     @PrimaryKey var id: Long = 0
-    var date: Long = 0
-    var messageCount: Int = 0
     var contacts: RealmList<Contact> = RealmList()
-    var snippet: String = ""
-    var snippetCs: String = ""
-    var read: Boolean = true
-    var error: Int = 0
-    var hasAttachment: Int = 0
+    var messages: RealmList<Message> = RealmList()
 
-    /**
-     * Instantiates a Conversation from the Android SMS ContentProvider
-     */
-    constructor(cursor: Cursor, contacts: ContactRepository) : this() {
-        id = cursor.getLong(ConversationColumns.ID)
-        date = cursor.getLong(ConversationColumns.DATE)
-        messageCount = cursor.getInt(ConversationColumns.MESSAGE_COUNT)
+    @Ignore var date: Long = 0
+        get() = lastMessage?.date ?: 0
 
-        Flowable.fromIterable(cursor.getString(ConversationColumns.RECIPIENT_IDS).split(" "))
-                .map { id -> id.toLong() }
-                .map { id -> contacts.getContactBlocking(id) }
-                .filter { contact -> contact.recipientId != 0L }
-                .blockingSubscribe { contact -> this.contacts.add(contact) }
+    @Ignore var read: Boolean = true
+        get() = lastMessage?.read ?: true
 
-        snippet = cursor.getString(ConversationColumns.SNIPPET) ?: ""
-        snippetCs = cursor.getString(ConversationColumns.SNIPPET_CS) ?: ""
-        read = cursor.getInt(ConversationColumns.READ) != 0
-        error = cursor.getInt(ConversationColumns.ERROR)
-        hasAttachment = cursor.getInt(ConversationColumns.HAS_ATTACHMENT)
-    }
+    @Ignore var snippet: String = ""
+        get () = lastMessage?.body ?: ""
+
+    @Ignore private var lastMessage: Message? = null
+        get () = if (messages.size == 0) null else messages[0]
 
     fun getTitle(): String {
         var title = ""

@@ -3,7 +3,6 @@ package com.moez.QKSMS.dagger
 import android.app.Application
 import android.content.Context
 import com.moez.QKSMS.data.repository.ContactRepository
-import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.util.DateFormatter
@@ -35,14 +34,8 @@ class AppModule(var application: Application) {
 
     @Provides
     @Singleton
-    fun provideNotificationHelper(context: Context, conversationRepository: ConversationRepository, messageRepository: MessageRepository): NotificationManager {
-        return NotificationManager(context, conversationRepository, messageRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideConversationRepository(): ConversationRepository {
-        return ConversationRepository()
+    fun provideNotificationHelper(context: Context, messageRepository: MessageRepository): NotificationManager {
+        return NotificationManager(context, messageRepository)
     }
 
     @Singleton

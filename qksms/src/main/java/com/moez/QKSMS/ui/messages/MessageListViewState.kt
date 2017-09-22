@@ -19,19 +19,13 @@ sealed class PartialState {
 
     data class ConversationLoaded(private val conversation: Conversation) : PartialState() {
         override fun reduce(previousState: MessageListViewState): MessageListViewState {
-            return previousState.copy(title = conversation.getTitle())
+            return previousState.copy(title = conversation.getTitle(), messages = conversation.messages)
         }
     }
 
     data class ConversationError(private val hasError: Boolean) : PartialState() {
         override fun reduce(previousState: MessageListViewState): MessageListViewState {
             return previousState.copy(hasError = hasError)
-        }
-    }
-
-    data class MessagesLoaded(private val messages: OrderedRealmCollection<Message>) : PartialState() {
-        override fun reduce(previousState: MessageListViewState): MessageListViewState {
-            return previousState.copy(messages = messages)
         }
     }
 

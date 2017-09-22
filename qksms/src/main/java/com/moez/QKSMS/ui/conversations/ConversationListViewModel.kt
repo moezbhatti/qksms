@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Conversation
-import com.moez.QKSMS.data.repository.ConversationRepository
+import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.util.NotificationManager
 import io.reactivex.subjects.PublishSubject
@@ -15,7 +15,7 @@ class ConversationListViewModel : ViewModel() {
 
     @Inject lateinit var syncManager: SyncManager
     @Inject lateinit var notificationManager: NotificationManager
-    @Inject lateinit var conversationRepo: ConversationRepository
+    @Inject lateinit var messageRepo: MessageRepository
 
     val state: MutableLiveData<ConversationListViewState> = MutableLiveData()
 
@@ -31,7 +31,7 @@ class ConversationListViewModel : ViewModel() {
                 .scan(ConversationListViewState(), { previous, changes -> changes.reduce(previous) })
                 .subscribe { newState -> state.value = newState }
 
-        conversations = conversationRepo.getConversationsAsync()
+        conversations = messageRepo.getConversationsAsync()
         partialStates.onNext(PartialState.ConversationsLoaded(conversations))
     }
 

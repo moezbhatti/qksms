@@ -4,16 +4,12 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Conversation
-import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.repository.MessageRepository
 import io.reactivex.subjects.PublishSubject
-import io.realm.RealmResults
 import javax.inject.Inject
 
 class MessageListViewModel : ViewModel() {
 
-    @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var messageRepo: MessageRepository
 
     val state: MutableLiveData<MessageListViewState> = MutableLiveData()
@@ -24,8 +20,7 @@ class MessageListViewModel : ViewModel() {
         }
 
     private val partialStates: PublishSubject<PartialState> = PublishSubject.create()
-    private var conversation: RealmResults<Conversation>? = null
-    private var messages: RealmResults<Message>? = null
+    private var conversation: Conversation? = null
 
     init {
         AppComponentManager.appComponent.inject(this)
@@ -36,21 +31,18 @@ class MessageListViewModel : ViewModel() {
     }
 
     private fun newThreadId() {
-        messages = messageRepo.getMessagesAsync(threadId)
-        messages?.let { partialStates.onNext(PartialState.MessagesLoaded(it)) }
-
         conversation?.removeAllChangeListeners()
-        conversation = conversationRepo.getConversationAsync(threadId)
-        conversation?.addChangeListener { realmResults ->
-            when (realmResults.size) {
-                0 -> partialStates.onNext(PartialState.ConversationError(true))
-                else -> partialStates.onNext(PartialState.ConversationLoaded(realmResults[0]))
+        conversation = messageRepo.getConversationAsync(threadId)
+        conversation?.addChangeListener { conversation: Conversation ->
+            when (conversation.isValid) {
+                true -> partialStates.onNext(PartialState.ConversationLoaded(conversation))
+                false -> partialStates.onNext(PartialState.ConversationError(true))
             }
         }
     }
 
     fun sendMessage(body: String) {
-        conversation?.get(0)?.let { conversation ->
+        conversation?.takeIf { conversation -> conversation.isValid }?.let { conversation ->
             messageRepo.sendMessage(threadId, conversation.contacts[0].address, body)
             partialStates.onNext(PartialState.TextChanged(""))
         }

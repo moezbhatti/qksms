@@ -8,12 +8,10 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.moez.QKSMS.R
-import com.moez.QKSMS.data.repository.ConversationRepository
 import com.moez.QKSMS.data.repository.MessageRepository
-import io.realm.Realm
 
 
-class NotificationManager(val context: Context, val conversationRepo: ConversationRepository, val messageRepo: MessageRepository) {
+class NotificationManager(val context: Context, val messageRepo: MessageRepository) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
@@ -39,12 +37,11 @@ class NotificationManager(val context: Context, val conversationRepo: Conversati
 
     // https://developer.android.com/guide/topics/ui/notifiers/notifications.html
     fun update() {
-        val realm = Realm.getDefaultInstance()
+        messageRepo.getUnreadUnseenMessages().groupBy { message -> message.threadId }.forEach { conversation ->
 
-        conversationRepo.getUnreadConversations().forEach { conversation ->
             val style = NotificationCompat.MessagingStyle("Me")
-            messageRepo.getUnreadUnseenMessages(conversation.id).forEach { message ->
-                val name = if (message.isMe()) null else conversation.getTitle()
+            conversation.value.forEach { message ->
+                val name = if (message.isMe()) null else "Person"
                 style.addMessage(message.body, message.date, name)
             }
 
@@ -53,10 +50,8 @@ class NotificationManager(val context: Context, val conversationRepo: Conversati
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setStyle(style)
 
-            notificationManager.notify(conversation.id.toInt(), notification.build())
+            notificationManager.notify(conversation.key.toInt(), notification.build())
         }
-
-        realm.close()
     }
 
 }

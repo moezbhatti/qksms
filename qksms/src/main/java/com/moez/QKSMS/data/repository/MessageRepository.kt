@@ -6,24 +6,31 @@ import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.SmsManager
+import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.sync.MessageColumns
+import com.moez.QKSMS.data.sync.SyncManager
 import io.realm.Realm
 import io.realm.RealmResults
 
 class MessageRepository(val context: Context) {
 
-    fun getMessagesAsync(threadId: Long): RealmResults<Message> {
+    fun getConversationsAsync(): RealmResults<Conversation> {
         return Realm.getDefaultInstance()
-                .where(Message::class.java)
-                .equalTo("threadId", threadId)
-                .findAllSortedAsync("date")
+                .where(Conversation::class.java)
+                .findAllAsync()
     }
 
-    fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message> {
+    fun getConversationAsync(threadId: Long): Conversation {
+        return Realm.getDefaultInstance()
+                .where(Conversation::class.java)
+                .equalTo("id", threadId)
+                .findFirstAsync()
+    }
+
+    fun getUnreadUnseenMessages(): RealmResults<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
-                .equalTo("threadId", threadId)
                 .equalTo("seen", false)
                 .equalTo("read", false)
                 .findAllSorted("date")
@@ -71,7 +78,7 @@ class MessageRepository(val context: Context) {
 
             if (messageCursor.moveToFirst()) {
                 val columns = MessageColumns(messageCursor)
-                val message = Message(threadId, messageCursor, columns)
+                val message = SyncManager.messageFromCursor(threadId, messageCursor, columns)
                 val realm = Realm.getDefaultInstance()
                 realm.executeTransaction { it.insertOrUpdate(message) }
                 realm.close()
