@@ -1,8 +1,10 @@
 package com.moez.QKSMS.data.repository
 
+import android.app.PendingIntent
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.SmsManager
@@ -10,6 +12,8 @@ import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.sync.MessageColumns
 import com.moez.QKSMS.data.sync.SyncManager
+import com.moez.QKSMS.receiver.MessageDeliveredReceiver
+import com.moez.QKSMS.receiver.MessageSentReceiver
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -50,20 +54,26 @@ class MessageRepository(val context: Context) {
     }
 
     fun sendMessage(threadId: Long, address: String, body: String) {
-        val smsManager = SmsManager.getDefault()
-        smsManager.sendTextMessage(address, null, body, null, null)
-
         val values = ContentValues()
         values.put("address", address)
         values.put("body", body)
         values.put("date", System.currentTimeMillis())
-        values.put("read", 1)
-        values.put("type", 4)
+        values.put("read", true)
+        values.put("type", Telephony.TextBasedSmsColumns.MESSAGE_TYPE_OUTBOX)
         values.put("thread_id", threadId)
 
         val contentResolver = context.contentResolver
         val uri = contentResolver.insert(Uri.parse("content://sms/"), values)
         copyLatestMessageToRealm(uri, contentResolver)
+
+        val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("uri", uri.toString())
+        val sentPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val deliveredIntent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("uri", uri.toString())
+        val deliveredPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), deliveredIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val smsManager = SmsManager.getDefault()
+        smsManager.sendTextMessage(address, null, body, sentPI, deliveredPI)
     }
 
     // TODO this is really sloppy, it should be fixed
