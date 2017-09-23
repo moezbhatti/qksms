@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLight"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
@@ -17,21 +16,21 @@
         android:paddingTop="8dp"
         tools:listitem="@layout/message_list_item_out" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/list_separator" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/bubble"
-        android:elevation="2dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/attach"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:background="?selectableItemBackgroundBorderless"
-            android:padding="12dp"
+            android:padding="16dp"
             android:src="@drawable/ic_add_black_24dp"
             android:tint="@color/colorPrimary" />
 
@@ -39,7 +38,7 @@
             android:id="@+id/message"
             style="@style/TextPrimary"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="center_vertical"
@@ -48,10 +47,10 @@
 
         <ImageView
             android:id="@+id/send"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:background="?selectableItemBackgroundBorderless"
-            android:padding="12dp"
+            android:padding="16dp"
             android:src="@drawable/ic_send_black_24dp"
             android:tint="@color/textTertiary" />
 

@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:background="@drawable/message_only"
-                android:backgroundTint="@android:color/white"
+                android:backgroundTint="@color/bubbleLight"
                 android:gravity="start|center_vertical"
                 android:minHeight="36dp"
                 android:paddingBottom="8dp"

@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#0AA596</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="white">#FFFFFF</color>
+
     <color name="textPrimary">#49555F</color>
     <color name="textSecondary">#70808D</color>
     <color name="textTertiary">#B7B9C0</color>
@@ -11,6 +13,8 @@
     <color name="textPrimaryLight">#FFFFFFFF</color>
     <color name="textSecondaryLight">#ccffffff</color>
     <color name="textTertiaryLight">#80ffffff</color>
+
+    <color name="bubbleLight">#F4F4F4</color>
 
     <color name="backgroundLight">#f8f8f8</color>
 
