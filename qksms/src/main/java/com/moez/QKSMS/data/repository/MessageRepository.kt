@@ -23,8 +23,8 @@ class MessageRepository(val context: Context) {
     fun getConversationMessagesAsync(): RealmResults<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
+                .findAllSortedAsync("date", Sort.DESCENDING)
                 .distinctAsync("threadId")
-                .sort("date", Sort.DESCENDING)
     }
 
     fun getConversationAsync(threadId: Long): Conversation {
