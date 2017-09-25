@@ -9,6 +9,8 @@ import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.util.DateFormatter
+import com.moez.QKSMS.util.extensions.dpToPx
+import com.moez.QKSMS.util.extensions.setMargins
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import timber.log.Timber
@@ -66,20 +68,24 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
 
         when {
             !canGroupWithPrevious && canGroupWithNext -> {
+                viewHolder.message.setMargins(bottom = 2.dpToPx(context))
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
-                viewHolder.avatar?.apply { visibility = View.INVISIBLE }
+                viewHolder.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && canGroupWithNext -> {
+                viewHolder.message.setMargins(bottom = 2.dpToPx(context))
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
-                viewHolder.avatar?.apply { visibility = View.INVISIBLE }
+                viewHolder.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && !canGroupWithNext -> {
+                viewHolder.message.setMargins(bottom = 16.dpToPx(context))
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
-                viewHolder.avatar?.apply { visibility = View.VISIBLE }
+                viewHolder.avatar?.visibility = View.VISIBLE
             }
             else -> {
+                viewHolder.message.setMargins(bottom = 16.dpToPx(context))
                 viewHolder.body.setBackgroundResource(R.drawable.message_only)
-                viewHolder.avatar?.apply { visibility = View.VISIBLE }
+                viewHolder.avatar?.visibility = View.VISIBLE
             }
         }
     }
