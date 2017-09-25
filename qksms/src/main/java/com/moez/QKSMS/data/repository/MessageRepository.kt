@@ -1,7 +1,6 @@
 package com.moez.QKSMS.data.repository
 
 import android.app.PendingIntent
-import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -14,6 +13,7 @@ import com.moez.QKSMS.data.sync.MessageColumns
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.receiver.MessageDeliveredReceiver
 import com.moez.QKSMS.receiver.MessageSentReceiver
+import com.moez.QKSMS.util.extensions.insertOrUpdate
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -50,7 +50,7 @@ class MessageRepository(val context: Context) {
 
         val contentResolver = context.contentResolver
         val uri = contentResolver.insert(Uri.parse("content://sms/inbox"), cv)
-        copyLatestMessageToRealm(uri, contentResolver)
+        copyMessageToRealm(uri)
     }
 
     fun sendMessage(threadId: Long, address: String, body: String) {
@@ -64,7 +64,7 @@ class MessageRepository(val context: Context) {
 
         val contentResolver = context.contentResolver
         val uri = contentResolver.insert(Uri.parse("content://sms/"), values)
-        copyLatestMessageToRealm(uri, contentResolver)
+        copyMessageToRealm(uri)
 
         val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("uri", uri.toString())
         val sentPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -76,25 +76,12 @@ class MessageRepository(val context: Context) {
         smsManager.sendTextMessage(address, null, body, sentPI, deliveredPI)
     }
 
-    // TODO this is really sloppy, it should be fixed
-    private fun copyLatestMessageToRealm(uri: Uri, contentResolver: ContentResolver) {
-        val projection = arrayOf(Telephony.Sms.Conversations.THREAD_ID)
-        val cursor = contentResolver.query(uri, projection, null, null, null)
-
+    private fun copyMessageToRealm(uri: Uri) {
+        val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
         if (cursor.moveToFirst()) {
-            val threadId = cursor.getLong(0)
-
-            val threadUri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
-            val messageCursor = contentResolver.query(threadUri, MessageColumns.PROJECTION, null, null, "date DESC")
-
-            if (messageCursor.moveToFirst()) {
-                val columns = MessageColumns(messageCursor)
-                val message = SyncManager.messageFromCursor(threadId, messageCursor, columns)
-                val realm = Realm.getDefaultInstance()
-                realm.executeTransaction { it.insertOrUpdate(message) }
-                realm.close()
-            }
-            messageCursor.close()
+            val columns = MessageColumns(cursor)
+            val message = SyncManager.messageFromCursor(cursor, columns)
+            message.insertOrUpdate()
         }
         cursor.close()
     }

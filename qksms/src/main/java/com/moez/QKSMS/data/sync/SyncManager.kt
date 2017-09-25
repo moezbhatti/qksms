@@ -3,6 +3,7 @@ package com.moez.QKSMS.data.sync
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.provider.Telephony
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.ContactRepository
@@ -11,6 +12,8 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import timber.log.Timber
+import java.util.*
 
 class SyncManager(val context: Context, private val contactsRepo: ContactRepository) {
 
@@ -57,8 +60,9 @@ class SyncManager(val context: Context, private val contactsRepo: ContactReposit
             val uri = Uri.withAppendedPath(MessageColumns.URI, id.toString())
             val messagesCursor = contentResolver.query(uri, MessageColumns.PROJECTION, null, null, "date desc")
             val columnsMap = MessageColumns(messagesCursor)
+            Timber.d("Columns: ${Arrays.toString(messagesCursor.columnNames)}")
             messagesCursor.asFlowable()
-                    .map { cursor -> messageFromCursor(id, cursor, columnsMap) }
+                    .map { cursor -> messageFromCursor(cursor, columnsMap) }
                     .filter { message -> message.type == "sms" || message.type == "mms" }
                     .distinct { message -> message.id }
                     .doOnNext { message -> messages.add(message) }
@@ -68,29 +72,35 @@ class SyncManager(val context: Context, private val contactsRepo: ContactReposit
 
     // TODO take this out of the companion object
     companion object {
-        fun messageFromCursor(threadId: Long, cursor: Cursor, columnsMap: MessageColumns): Message {
+        fun messageFromCursor(cursor: Cursor, columnsMap: MessageColumns): Message {
             return Message().apply {
-                this.threadId = threadId
+                type = when (cursor.getColumnIndex(Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN)) {
+                    -1 -> "sms"
+                    else -> cursor.getString(columnsMap.msgType)
+                }
 
                 id = cursor.getLong(columnsMap.msgId)
-                type = cursor.getString(columnsMap.msgType)
-
-                val isMms = type == "mms"
                 body = cursor.getString(columnsMap.smsBody) ?: ""
-                errorType = cursor.getInt(columnsMap.mmsErrorType)
 
-                if (isMms) {
-                    boxId = cursor.getInt(columnsMap.mmsMessageBox)
-                    date = cursor.getLong(columnsMap.smsDate)
-                    dateSent = cursor.getLong(columnsMap.smsDateSent)
-                    seen = cursor.getInt(columnsMap.smsSeen) != 0
-                    read = cursor.getInt(columnsMap.smsRead) != 0
-                } else {
-                    boxId = cursor.getInt(columnsMap.smsType)
-                    date = cursor.getLong(columnsMap.mmsDate)
-                    dateSent = cursor.getLong(columnsMap.mmsDateSent)
-                    seen = cursor.getInt(columnsMap.mmsSeen) != 0
-                    read = cursor.getInt(columnsMap.mmsRead) != 0
+                when (type) {
+                    "sms" -> {
+                        threadId = cursor.getLong(columnsMap.smsThreadId)
+                        boxId = cursor.getInt(columnsMap.smsType)
+                        date = cursor.getLong(columnsMap.mmsDate)
+                        dateSent = cursor.getLong(columnsMap.mmsDateSent)
+                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
+                        read = cursor.getInt(columnsMap.mmsRead) != 0
+                    }
+
+                    "mms" -> {
+                        threadId = cursor.getLong(columnsMap.mmsThreadId)
+                        boxId = cursor.getInt(columnsMap.mmsMessageBox)
+                        date = cursor.getLong(columnsMap.smsDate)
+                        dateSent = cursor.getLong(columnsMap.smsDateSent)
+                        seen = cursor.getInt(columnsMap.smsSeen) != 0
+                        read = cursor.getInt(columnsMap.smsRead) != 0
+                        errorType = cursor.getInt(columnsMap.mmsErrorType)
+                    }
                 }
             }
         }
