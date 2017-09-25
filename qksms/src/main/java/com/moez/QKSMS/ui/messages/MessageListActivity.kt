@@ -21,7 +21,7 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProviders.of(this)[MessageListViewModel::class.java]
-        viewModel.threadId = intent.getLongExtra("thread_id", 0)
+        viewModel.threadId = intent.getLongExtra("threadId", 0)
         viewModel.state.observe(this, this)
 
         messageList.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
@@ -34,7 +34,7 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
     override fun onChanged(state: MessageListViewState?) {
         state?.let {
             if (title != state.title) title = state.title
-            if (messageList.adapter == null && state.messages?.isValid == true) messageList.adapter = MessageAdapter(this, state.messages)
+            if (messageList.adapter == null && state.messages?.isValid == true) messageList.adapter = MessageAdapter(state.messages)
             if (message.text.toString() != state.draft) message.setText(state.draft)
             if (state.hasError) finish()
 

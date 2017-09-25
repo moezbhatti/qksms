@@ -12,8 +12,6 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import timber.log.Timber
-import java.util.*
 
 class SyncManager(val context: Context, private val contactsRepo: ContactRepository) {
 
@@ -36,6 +34,16 @@ class SyncManager(val context: Context, private val contactsRepo: ContactReposit
                 .map { cursor -> conversationFromCursor(cursor) }
                 .distinct { conversation -> conversation.id }
                 .doOnNext { conversation -> realm?.insertOrUpdate(conversation) }
+                .map { conversation -> conversation.id }
+                .flatMap { threadId ->
+                    val uri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
+                    val messagesCursor = contentResolver.query(uri, MessageColumns.PROJECTION, null, null, "date desc")
+                    val columnsMap = MessageColumns(messagesCursor)
+                    messagesCursor.asFlowable().map { cursor -> messageFromCursor(cursor, columnsMap) }
+                }
+                .filter { message -> message.type == "sms" || message.type == "mms" }
+                .distinct { message -> message.id }
+                .doOnNext { message -> realm?.insertOrUpdate(message) }
                 .count()
                 .toFlowable()
                 .doOnNext {
@@ -55,18 +63,6 @@ class SyncManager(val context: Context, private val contactsRepo: ContactReposit
                     .map { id -> contactsRepo.getContactBlocking(id) }
                     .filter { contact -> contact.recipientId != 0L }
                     .forEach { contact -> contacts.add(contact) }
-
-            val contentResolver = context.contentResolver
-            val uri = Uri.withAppendedPath(MessageColumns.URI, id.toString())
-            val messagesCursor = contentResolver.query(uri, MessageColumns.PROJECTION, null, null, "date desc")
-            val columnsMap = MessageColumns(messagesCursor)
-            Timber.d("Columns: ${Arrays.toString(messagesCursor.columnNames)}")
-            messagesCursor.asFlowable()
-                    .map { cursor -> messageFromCursor(cursor, columnsMap) }
-                    .filter { message -> message.type == "sms" || message.type == "mms" }
-                    .distinct { message -> message.id }
-                    .doOnNext { message -> messages.add(message) }
-                    .blockingSubscribe()
         }
     }
 

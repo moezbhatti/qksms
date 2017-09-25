@@ -37,7 +37,7 @@ class MessageListViewModel : ViewModel() {
             when (conversation.isValid) {
                 true -> {
                     val title = conversation.getTitle()
-                    val messages = conversation.messages.sort("date")
+                    val messages = messageRepo.getMessages(threadId)
                     partialStates.onNext(PartialState.ConversationLoaded(title, messages))
                 }
                 false -> partialStates.onNext(PartialState.ConversationError(true))

@@ -15,8 +15,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MessageAdapter(val context: Context, data: OrderedRealmCollection<Message>?) :
-        RealmRecyclerViewAdapter<Message, MessageViewHolder>(data, true) {
+class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, MessageViewHolder>(data, true) {
 
     companion object {
         private val TIMESTAMP_THRESHOLD = 60
@@ -25,6 +24,7 @@ class MessageAdapter(val context: Context, data: OrderedRealmCollection<Message>
         private val VIEWTYPE_OUT = 1
     }
 
+    @Inject lateinit var context: Context
     @Inject lateinit var dateFormatter: DateFormatter
 
     init {

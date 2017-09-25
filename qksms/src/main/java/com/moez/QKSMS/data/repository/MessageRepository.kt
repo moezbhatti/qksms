@@ -16,14 +16,15 @@ import com.moez.QKSMS.receiver.MessageSentReceiver
 import com.moez.QKSMS.util.extensions.insertOrUpdate
 import io.realm.Realm
 import io.realm.RealmResults
+import io.realm.Sort
 
 class MessageRepository(val context: Context) {
 
-    fun getConversationsAsync(): RealmResults<Conversation> {
+    fun getConversationMessagesAsync(): RealmResults<Message> {
         return Realm.getDefaultInstance()
-                .where(Conversation::class.java)
-                .isNotEmpty("messages")
-                .findAllAsync()
+                .where(Message::class.java)
+                .distinctAsync("threadId")
+                .sort("date", Sort.DESCENDING)
     }
 
     fun getConversationAsync(threadId: Long): Conversation {
@@ -31,6 +32,20 @@ class MessageRepository(val context: Context) {
                 .where(Conversation::class.java)
                 .equalTo("id", threadId)
                 .findFirstAsync()
+    }
+
+    fun getConversation(threadId: Long): Conversation? {
+        return Realm.getDefaultInstance()
+                .where(Conversation::class.java)
+                .equalTo("id", threadId)
+                .findFirst()
+    }
+
+    fun getMessages(threadId: Long): RealmResults<Message> {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("threadId", threadId)
+                .findAllSorted("date")
     }
 
     fun getUnreadUnseenMessages(): RealmResults<Message> {

@@ -34,7 +34,9 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
 
     override fun onChanged(state: ConversationListViewState?) {
         state?.let {
-            if (conversationList.adapter == null) conversationList.adapter = ConversationAdapter(this, state.conversations)
+            if (conversationList.adapter == null && state.conversations?.isValid == true) {
+                conversationList.adapter = ConversationAdapter(state.conversations)
+            }
 
             swipeRefresh.isRefreshing = state.refreshing
         }

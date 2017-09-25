@@ -3,7 +3,7 @@ package com.moez.QKSMS.ui.conversations
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.moez.QKSMS.dagger.AppComponentManager
-import com.moez.QKSMS.data.model.Conversation
+import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.util.NotificationManager
@@ -20,7 +20,7 @@ class ConversationListViewModel : ViewModel() {
     val state: MutableLiveData<ConversationListViewState> = MutableLiveData()
 
     private val partialStates: PublishSubject<PartialState> = PublishSubject.create()
-    private val conversations: RealmResults<Conversation>
+    private val conversations: RealmResults<Message>
 
     init {
         AppComponentManager.appComponent.inject(this)
@@ -31,7 +31,7 @@ class ConversationListViewModel : ViewModel() {
                 .scan(ConversationListViewState(), { previous, changes -> changes.reduce(previous) })
                 .subscribe { newState -> state.value = newState }
 
-        conversations = messageRepo.getConversationsAsync()
+        conversations = messageRepo.getConversationMessagesAsync()
         partialStates.onNext(PartialState.ConversationsLoaded(conversations))
     }
 
