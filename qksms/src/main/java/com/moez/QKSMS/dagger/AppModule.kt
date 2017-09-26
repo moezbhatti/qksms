@@ -7,6 +7,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.util.DateFormatter
 import com.moez.QKSMS.util.NotificationManager
+import com.moez.QKSMS.util.ThemeManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -30,6 +31,12 @@ class AppModule(var application: Application) {
     @Singleton
     fun provideSyncManager(context: Context, contacts: ContactRepository): SyncManager {
         return SyncManager(context, contacts)
+    }
+
+    @Provides
+    @Singleton
+    fun provideThemeMaager(): ThemeManager {
+        return ThemeManager()
     }
 
     @Provides

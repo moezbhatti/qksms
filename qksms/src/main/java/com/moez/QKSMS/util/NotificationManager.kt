@@ -8,14 +8,20 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.moez.QKSMS.R
+import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.repository.MessageRepository
+import javax.inject.Inject
 
 
 class NotificationManager(val context: Context, val messageRepo: MessageRepository) {
 
+    @Inject lateinit var themeManager: ThemeManager
+
     private val notificationManager = NotificationManagerCompat.from(context)
 
     init {
+        AppComponentManager.appComponent.inject(this)
+
         if (Build.VERSION.SDK_INT >= 26) {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -46,7 +52,7 @@ class NotificationManager(val context: Context, val messageRepo: MessageReposito
             }
 
             val notification = NotificationCompat.Builder(context, "channel_1")
-                    .setColor(context.resources.getColor(R.color.colorPrimary))
+                    .setColor(themeManager.color)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setStyle(style)
 

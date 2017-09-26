@@ -9,6 +9,10 @@ fun ImageView.setTint(color: Int) {
     imageTintList = ColorStateList.valueOf(color)
 }
 
+fun View.setBackgroundTint(color: Int) {
+    backgroundTintList = ColorStateList.valueOf(color)
+}
+
 fun View.setMargins(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null) {
     val lp = layoutParams as? ViewGroup.MarginLayoutParams ?: return
 

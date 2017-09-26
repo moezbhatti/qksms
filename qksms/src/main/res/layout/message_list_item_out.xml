@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:background="@drawable/message_only"
-                android:backgroundTint="@color/colorPrimary"
                 android:gravity="start|center_vertical"
                 android:minHeight="36dp"
                 android:paddingBottom="8dp"
@@ -46,6 +45,7 @@
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
                 android:textColor="@color/textPrimaryLight"
+                tools:backgroundTint="#0BAE9F"
                 tools:text="Hey! How's it going?" />
 
         </LinearLayout>
@@ -57,8 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:textColor="@color/textTertiary"
         android:layout_marginRight="24dp"
+        android:textColor="@color/textTertiary"
         tools:text="Sending" />
 
 </LinearLayout>

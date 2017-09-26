@@ -9,7 +9,9 @@ import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.util.DateFormatter
+import com.moez.QKSMS.util.ThemeManager
 import com.moez.QKSMS.util.extensions.dpToPx
+import com.moez.QKSMS.util.extensions.setBackgroundTint
 import com.moez.QKSMS.util.extensions.setMargins
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
@@ -27,6 +29,7 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
     }
 
     @Inject lateinit var context: Context
+    @Inject lateinit var themeManager: ThemeManager
     @Inject lateinit var dateFormatter: DateFormatter
 
     init {
@@ -34,12 +37,23 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MessageViewHolder {
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layoutRes = when (viewType) {
-            VIEWTYPE_IN -> R.layout.message_list_item_in
-            else -> R.layout.message_list_item_out
+        val layoutRes: Int
+        val bubbleColor: Int
+        when (viewType) {
+            VIEWTYPE_IN -> {
+                layoutRes = R.layout.message_list_item_in
+                bubbleColor = themeManager.bubbleColor
+            }
+            else -> {
+                layoutRes = R.layout.message_list_item_out
+                bubbleColor = themeManager.color
+            }
         }
-        return MessageViewHolder(layoutInflater.inflate(layoutRes, parent, false))
+
+        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val viewHolder = MessageViewHolder(layoutInflater.inflate(layoutRes, parent, false))
+        viewHolder.body.setBackgroundTint(bubbleColor)
+        return viewHolder
     }
 
     override fun onBindViewHolder(viewHolder: MessageViewHolder, position: Int) {

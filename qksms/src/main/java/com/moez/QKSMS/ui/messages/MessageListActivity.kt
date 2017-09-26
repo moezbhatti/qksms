@@ -8,26 +8,33 @@ import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.moez.QKSMS.R
+import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.ui.base.QkActivity
+import com.moez.QKSMS.util.ThemeManager
 import com.moez.QKSMS.util.extensions.setTint
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_activity.*
+import javax.inject.Inject
 
 class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
 
-    private lateinit var viewModel: MessageListViewModel
+    @Inject lateinit var themeManager: ThemeManager
 
+    private lateinit var viewModel: MessageListViewModel
     private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppComponentManager.appComponent.inject(this)
         setContentView(R.layout.message_list_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProviders.of(this)[MessageListViewModel::class.java]
         viewModel.threadId = intent.getLongExtra("threadId", 0)
         viewModel.state.observe(this, this)
+
+        attach.setTint(themeManager.color)
 
         layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = true
@@ -45,7 +52,7 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
             if (message.text.toString() != state.draft) message.setText(state.draft)
             if (state.hasError) finish()
 
-            val color = if (state.canSend) R.color.colorPrimary else R.color.textTertiary
+            val color = if (state.canSend) themeManager.color else R.color.textTertiary
             send.setTint(resources.getColor(color))
             send.isEnabled = state.canSend
         }

@@ -31,8 +31,7 @@
             android:layout_height="56dp"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="16dp"
-            android:src="@drawable/ic_add_black_24dp"
-            android:tint="@color/colorPrimary" />
+            android:src="@drawable/ic_add_black_24dp" />
 
         <EditText
             android:id="@+id/message"

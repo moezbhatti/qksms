@@ -1,11 +1,12 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="AppBaseTheme" />
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <item name="android:fontFamily">@font/lato</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/statusLight</item>
     </style>
 
     <style name="TextPrimary">

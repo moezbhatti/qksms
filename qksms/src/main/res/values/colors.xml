@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0CB8A8</color>
-    <color name="colorPrimaryDark">#0AA596</color>
-    <color name="colorAccent">#FF4081</color>
-
     <color name="white">#FFFFFF</color>
 
     <color name="textPrimary">#49555F</color>
@@ -17,6 +13,7 @@
     <color name="bubbleLight">#F4F4F4</color>
 
     <color name="backgroundLight">#f8f8f8</color>
+    <color name="statusLight">#F1F1F1</color>
 
     <color name="list_separator">#F2F2F2</color>
 </resources>
