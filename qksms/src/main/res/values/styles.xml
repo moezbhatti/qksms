@@ -1,6 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:fontFamily">@font/lato</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
