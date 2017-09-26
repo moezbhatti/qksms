@@ -2,8 +2,9 @@
 
     <style name="AppTheme" parent="AppBaseTheme" />
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:fontFamily">@font/lato</item>
+        <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/statusLight</item>

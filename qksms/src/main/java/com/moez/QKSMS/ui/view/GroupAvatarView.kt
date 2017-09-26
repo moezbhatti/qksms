@@ -21,14 +21,14 @@ class GroupAvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
     constructor(context: Context) : this(context, null, 0)
 
     init {
-        if (!isInEditMode) {
-            View.inflate(context, R.layout.group_avatar_view, this)
-        }
+        View.inflate(context, R.layout.group_avatar_view, this)
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        updateView()
+        if (!isInEditMode) {
+            updateView()
+        }
     }
 
     private fun updateView() {
