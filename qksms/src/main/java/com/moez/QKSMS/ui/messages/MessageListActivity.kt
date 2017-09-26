@@ -52,8 +52,7 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
             if (message.text.toString() != state.draft) message.setText(state.draft)
             if (state.hasError) finish()
 
-            val color = if (state.canSend) themeManager.color else R.color.textTertiary
-            send.setTint(resources.getColor(color))
+            send.setTint(if (state.canSend) themeManager.color else resources.getColor(R.color.textTertiary))
             send.isEnabled = state.canSend
         }
     }
