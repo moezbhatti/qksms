@@ -2,26 +2,23 @@ package com.moez.QKSMS.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.moez.QKSMS.R
-import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.repository.MessageRepository
-import javax.inject.Inject
+import com.moez.QKSMS.receiver.MarkSeenReceiver
 
 
-class NotificationManager(val context: Context, val messageRepo: MessageRepository) {
-
-    @Inject lateinit var themeManager: ThemeManager
+class NotificationManager(private val context: Context, private val themeManager: ThemeManager) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
     init {
-        AppComponentManager.appComponent.inject(this)
-
         if (Build.VERSION.SDK_INT >= 26) {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -42,22 +39,28 @@ class NotificationManager(val context: Context, val messageRepo: MessageReposito
     }
 
     // https://developer.android.com/guide/topics/ui/notifiers/notifications.html
-    fun update() {
-        messageRepo.getUnreadUnseenMessages().groupBy { message -> message.threadId }.forEach { conversation ->
+    fun update(messageRepo: MessageRepository) {
+        messageRepo.getUnreadUnseenMessages()
+                .groupBy { message -> message.threadId }
+                .forEach { conversation ->
 
-            val style = NotificationCompat.MessagingStyle("Me")
-            conversation.value.forEach { message ->
-                val name = if (message.isMe()) null else "Person"
-                style.addMessage(message.body, message.date, name)
-            }
+                    val style = NotificationCompat.MessagingStyle("Me")
+                    conversation.value.forEach { message ->
+                        val name = if (message.isMe()) null else "Person"
+                        style.addMessage(message.body, message.date, name)
+                    }
 
-            val notification = NotificationCompat.Builder(context, "channel_1")
-                    .setColor(themeManager.color)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setStyle(style)
+                    val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", conversation.key)
+                    val seenPI = PendingIntent.getBroadcast(context, conversation.key.toInt(), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-            notificationManager.notify(conversation.key.toInt(), notification.build())
-        }
+                    val notification = NotificationCompat.Builder(context, "channel_1")
+                            .setColor(themeManager.color)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setDeleteIntent(seenPI)
+                            .setStyle(style)
+
+                    notificationManager.notify(conversation.key.toInt(), notification.build())
+                }
     }
 
 }

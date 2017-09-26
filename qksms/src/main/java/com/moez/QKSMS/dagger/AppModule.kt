@@ -41,14 +41,14 @@ class AppModule(var application: Application) {
 
     @Provides
     @Singleton
-    fun provideNotificationHelper(context: Context, messageRepository: MessageRepository): NotificationManager {
-        return NotificationManager(context, messageRepository)
+    fun provideNotificationHelper(context: Context, themeManager: ThemeManager): NotificationManager {
+        return NotificationManager(context, themeManager)
     }
 
     @Singleton
     @Provides
-    fun provideMessageRepository(context: Context): MessageRepository {
-        return MessageRepository(context)
+    fun provideMessageRepository(context: Context, notificationManager: NotificationManager): MessageRepository {
+        return MessageRepository(context, notificationManager)
     }
 
     @Provides

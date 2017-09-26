@@ -14,6 +14,7 @@ import com.moez.QKSMS.data.sync.MessageColumns
 import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.receiver.MessageDeliveredReceiver
 import com.moez.QKSMS.receiver.MessageSentReceiver
+import com.moez.QKSMS.util.NotificationManager
 import com.moez.QKSMS.util.extensions.asFlowable
 import com.moez.QKSMS.util.extensions.insertOrUpdate
 import io.reactivex.Flowable
@@ -22,7 +23,7 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 
-class MessageRepository(val context: Context) {
+class MessageRepository(val context: Context, val notificationManager: NotificationManager) {
 
     fun getConversationMessagesAsync(): RealmResults<Message> {
         return Realm.getDefaultInstance()
@@ -70,7 +71,10 @@ class MessageRepository(val context: Context) {
         Flowable.just(values)
                 .subscribeOn(Schedulers.io())
                 .map { contentResolver.insert(Sms.Inbox.CONTENT_URI, values) }
-                .subscribe { uri -> copyMessageToRealm(uri) }
+                .subscribe { uri ->
+                    copyMessageToRealm(uri)
+                    notificationManager.update(this)
+                }
     }
 
     fun markAllSeen() {
@@ -96,6 +100,41 @@ class MessageRepository(val context: Context) {
             val realm = Realm.getDefaultInstance()
             val messages = realm.where(Message::class.java).equalTo("seen", false).findAll()
             realm.executeTransaction { messages.forEach { message -> message.seen = true } }
+            realm.close()
+        }
+    }
+
+    fun markSeen(threadId: Long) {
+        // Messages in SMS ContentProvider
+        val projection = arrayOf(BaseColumns._ID)
+        val selection = "${Sms.THREAD_ID} = $threadId AND ${Sms.SEEN} = 0"
+        val contentResolver = context.contentResolver
+        contentResolver.query(Sms.Inbox.CONTENT_URI, projection, selection, null, null)
+                .asFlowable()
+                .subscribeOn(Schedulers.io())
+                .map { cursor -> cursor.getLong(0) }
+                .map { id -> Uri.withAppendedPath(Sms.CONTENT_URI, id.toString()) }
+                .subscribe { uri ->
+                    val values = ContentValues()
+                    values.put(Sms.SEEN, true)
+                    contentResolver.update(uri, values, null, null)
+                }
+
+        // TODO also need to mark MMS in ContentProvider as Seen
+
+        // Messages in Realm
+        Schedulers.io().scheduleDirect {
+            val realm = Realm.getDefaultInstance()
+            val messages = realm.where(Message::class.java)
+                    .equalTo("threadId", threadId)
+                    .equalTo("seen", false)
+                    .findAll()
+
+            realm.executeTransaction {
+                messages.forEach { message ->
+                    message.seen = true
+                }
+            }
             realm.close()
         }
     }
