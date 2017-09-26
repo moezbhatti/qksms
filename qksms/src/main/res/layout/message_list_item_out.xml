@@ -52,4 +52,13 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textColor="@color/textTertiary"
+        android:layout_marginRight="24dp"
+        tools:text="Sending" />
+
 </LinearLayout>

@@ -25,7 +25,7 @@ class SmsReceiver : BroadcastReceiver() {
                     .map { message -> message.displayMessageBody }
                     .reduce { body, new -> body + new }
 
-            messageRepo.insertMessage(address, body, time)
+            messageRepo.insertReceivedMessage(address, body, time)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.moez.QKSMS.dagger
 
+import com.moez.QKSMS.receiver.MessageSentReceiver
 import com.moez.QKSMS.receiver.SmsReceiver
 import com.moez.QKSMS.ui.conversations.ConversationAdapter
 import com.moez.QKSMS.ui.conversations.ConversationListViewModel
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(receiver: SmsReceiver)
+    fun inject(receiver: MessageSentReceiver)
 
     fun inject(viewModel: ConversationListViewModel)
     fun inject(viewModel: MessageListViewModel)

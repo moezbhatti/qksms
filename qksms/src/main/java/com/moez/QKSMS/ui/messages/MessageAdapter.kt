@@ -49,6 +49,12 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
 
         bindGrouping(viewHolder, position)
 
+        viewHolder.status?.text = when {
+            message.isSending() -> "..."
+            message.isFailedMessage() -> "fail"
+            else -> "sent"
+        }
+
         viewHolder.avatar?.apply { contact = Contact() }
         viewHolder.body.text = message.body
         viewHolder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)

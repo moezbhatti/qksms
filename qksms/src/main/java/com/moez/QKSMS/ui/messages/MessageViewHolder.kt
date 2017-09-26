@@ -10,6 +10,7 @@ class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     val timestamp: TextView = view.findViewById(R.id.timestamp)
     val message: View = view.findViewById(R.id.message)
+    val status: TextView? = view.findViewById(R.id.status)
     val avatar: AvatarView? = view.findViewById(R.id.avatar)
     val body: TextView = view.findViewById(R.id.body)
 
