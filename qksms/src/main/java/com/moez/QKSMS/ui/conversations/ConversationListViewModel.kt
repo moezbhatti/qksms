@@ -31,6 +31,8 @@ class ConversationListViewModel : ViewModel() {
 
         conversations = messageRepo.getConversationMessagesAsync()
         partialStates.onNext(PartialState.ConversationsLoaded(conversations))
+
+        messageRepo.markAllSeen()
     }
 
     fun onRefresh() {
