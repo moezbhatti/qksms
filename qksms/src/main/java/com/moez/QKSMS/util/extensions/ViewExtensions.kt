@@ -24,3 +24,7 @@ fun View.setMargins(left: Int? = null, top: Int? = null, right: Int? = null, bot
 
     layoutParams = lp
 }
+
+fun View.setPadding(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null) {
+    setPadding(left ?: paddingLeft, top ?: paddingTop, right ?: paddingRight, bottom ?: paddingBottom)
+}

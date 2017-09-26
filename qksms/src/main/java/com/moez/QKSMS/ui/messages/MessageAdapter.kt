@@ -12,7 +12,7 @@ import com.moez.QKSMS.util.DateFormatter
 import com.moez.QKSMS.util.ThemeManager
 import com.moez.QKSMS.util.extensions.dpToPx
 import com.moez.QKSMS.util.extensions.setBackgroundTint
-import com.moez.QKSMS.util.extensions.setMargins
+import com.moez.QKSMS.util.extensions.setPadding
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import timber.log.Timber
@@ -63,10 +63,14 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
 
         bindGrouping(viewHolder, position)
 
+        viewHolder.status?.visibility = when {
+            message.isSending() || message.isFailedMessage() -> View.VISIBLE
+            else -> View.GONE
+        }
         viewHolder.status?.text = when {
-            message.isSending() -> "..."
-            message.isFailedMessage() -> "fail"
-            else -> "sent"
+            message.isSending() -> "Sending..."
+            message.isFailedMessage() -> "Failed to send. Tap to try again"
+            else -> null
         }
 
         viewHolder.avatar?.apply { contact = Contact() }
@@ -88,22 +92,22 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
 
         when {
             !canGroupWithPrevious && canGroupWithNext -> {
-                viewHolder.message.setMargins(bottom = 2.dpToPx(context))
+                viewHolder.itemView.setPadding(bottom = 2.dpToPx(context))
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
                 viewHolder.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && canGroupWithNext -> {
-                viewHolder.message.setMargins(bottom = 2.dpToPx(context))
+                viewHolder.itemView.setPadding(bottom = 2.dpToPx(context))
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
                 viewHolder.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && !canGroupWithNext -> {
-                viewHolder.message.setMargins(bottom = 16.dpToPx(context))
+                viewHolder.itemView.setPadding(bottom = 16.dpToPx(context))
                 viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
                 viewHolder.avatar?.visibility = View.VISIBLE
             }
             else -> {
-                viewHolder.message.setMargins(bottom = 16.dpToPx(context))
+                viewHolder.itemView.setPadding(bottom = 16.dpToPx(context))
                 viewHolder.body.setBackgroundResource(R.drawable.message_only)
                 viewHolder.avatar?.visibility = View.VISIBLE
             }
