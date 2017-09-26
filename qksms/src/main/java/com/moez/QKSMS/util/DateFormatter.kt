@@ -2,9 +2,6 @@ package com.moez.QKSMS.util
 
 import android.content.Context
 import android.text.format.DateFormat
-import android.text.format.DateUtils
-import com.moez.QKSMS.R
-import com.moez.QKSMS.util.extensions.isDayAfter
 import com.moez.QKSMS.util.extensions.isSameDay
 import com.moez.QKSMS.util.extensions.isSameWeek
 import com.moez.QKSMS.util.extensions.isSameYear
@@ -16,27 +13,39 @@ class DateFormatter(val context: Context) {
     /**
      * Replace 12 hour format with 24 hour format if necessary
      */
-    private fun accountFor24HourTime(context: Context, input: SimpleDateFormat): SimpleDateFormat {
+    private fun getFormatter(pattern: String): SimpleDateFormat {
         val isUsing24HourTime = DateFormat.is24HourFormat(context)
 
-        return if (isUsing24HourTime) SimpleDateFormat(input.toPattern().replace('h', 'H').replace(" a".toRegex(), ""))
-        else input
+        return if (isUsing24HourTime) SimpleDateFormat(pattern.replace('h', 'H').replace(" a".toRegex(), ""), Locale.US)
+        else SimpleDateFormat(pattern, Locale.US)
     }
 
     fun getMessageTimestamp(date: Long): String {
+
+        val now = Calendar.getInstance()
         val then = Calendar.getInstance()
         then.timeInMillis = date
 
-        val now = Calendar.getInstance()
-
-        val time = ", " + accountFor24HourTime(context, SimpleDateFormat("h:mm a")).format(date)
         return when {
-            now.isSameDay(then) -> accountFor24HourTime(context, SimpleDateFormat("h:mm a")).format(date)
-            now.isDayAfter(then) -> context.getString(R.string.date_yesterday) + time
-            now.isSameWeek(then) -> DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY) + time
-            now.isSameYear(then) -> DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_NO_YEAR or DateUtils.FORMAT_ABBREV_MONTH) + time
-            else -> DateUtils.formatDateTime(context, date, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_MONTH) + time
-        }
+            now.isSameDay(then) -> getFormatter("h:mm a")
+            now.isSameWeek(then) -> getFormatter("E h:mm a")
+            now.isSameYear(then) -> getFormatter("MMM d, h:mm a")
+            else -> getFormatter("d/MM/yy h:mm a")
+        }.format(date)
+    }
+
+    fun getConversationTimestamp(date: Long): String {
+
+        val now = Calendar.getInstance()
+        val then = Calendar.getInstance()
+        then.timeInMillis = date
+
+        return when {
+            now.isSameDay(then) -> getFormatter("h:mm a")
+            now.isSameWeek(then) -> getFormatter("E")
+            now.isSameYear(then) -> getFormatter("MMM d")
+            else -> getFormatter("d/MM/yy")
+        }.format(date)
     }
 
 }

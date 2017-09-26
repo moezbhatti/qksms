@@ -57,7 +57,7 @@ class ConversationAdapter(data: OrderedRealmCollection<Message>?) : RealmRecycle
         viewHolder.avatar.contacts = conversation?.contacts ?: RealmList()
         viewHolder.title.text = conversation?.getTitle()
 
-        viewHolder.date.text = dateFormatter.getMessageTimestamp(message.date)
+        viewHolder.date.text = dateFormatter.getConversationTimestamp(message.date)
         viewHolder.date.setTextColor(dateColor)
 
         viewHolder.snippet.text = message.body

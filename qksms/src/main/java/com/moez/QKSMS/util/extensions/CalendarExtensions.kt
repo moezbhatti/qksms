@@ -13,8 +13,3 @@ fun Calendar.isSameWeek(other: Calendar): Boolean {
 fun Calendar.isSameYear(other: Calendar): Boolean {
     return get(Calendar.YEAR) == other.get(Calendar.YEAR)
 }
-
-fun Calendar.isDayAfter(other: Calendar): Boolean {
-    other.add(Calendar.DAY_OF_YEAR, 1)
-    return isSameDay(other)
-}
