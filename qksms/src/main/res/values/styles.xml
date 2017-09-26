@@ -21,4 +21,9 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextTertiary">
+        <item name="android:textColor">@color/textTertiary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

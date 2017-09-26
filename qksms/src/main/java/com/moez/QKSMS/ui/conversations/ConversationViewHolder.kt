@@ -10,6 +10,7 @@ class ConversationViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     val avatar: GroupAvatarView = view.findViewById(R.id.avatars)
     val title: TextView = view.findViewById(R.id.title)
+    val date: TextView = view.findViewById(R.id.date)
     val snippet: TextView = view.findViewById(R.id.snippet)
 
 }

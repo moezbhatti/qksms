@@ -9,6 +9,7 @@ import com.moez.QKSMS.dagger.AppComponentManager
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.ui.messages.MessageListActivity
+import com.moez.QKSMS.util.DateFormatter
 import com.moez.QKSMS.util.extensions.getColorCompat
 import io.realm.OrderedRealmCollection
 import io.realm.RealmList
@@ -19,6 +20,7 @@ class ConversationAdapter(data: OrderedRealmCollection<Message>?) : RealmRecycle
 
     @Inject lateinit var context: Context
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var dateFormatter: DateFormatter
 
     init {
         AppComponentManager.appComponent.inject(this)
@@ -38,9 +40,14 @@ class ConversationAdapter(data: OrderedRealmCollection<Message>?) : RealmRecycle
                     .putExtra("threadId", message.threadId))
         }
 
+        val textColor = context.getColorCompat(if (message.read) R.color.textTertiary else R.color.textPrimary)
+
         viewHolder.avatar.contacts = conversation?.contacts ?: RealmList()
         viewHolder.title.text = conversation?.getTitle()
+        viewHolder.date.text = dateFormatter.getMessageTimestamp(message.date)
+        viewHolder.date.setTextColor(textColor)
         viewHolder.snippet.text = message.body
-        viewHolder.snippet.setTextColor(context.getColorCompat(if (message.read) R.color.textTertiary else R.color.textPrimary))
+        viewHolder.snippet.setTextColor(textColor)
+        viewHolder.snippet.maxLines = if (message.read) 1 else 3
     }
 }
