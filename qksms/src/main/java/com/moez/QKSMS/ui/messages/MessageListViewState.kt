@@ -1,12 +1,11 @@
 package com.moez.QKSMS.ui.messages
 
 import com.moez.QKSMS.data.model.Message
-import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 
 data class MessageListViewState(
         val title: String = "",
-        val messages: OrderedRealmCollection<Message>? = null,
+        val messages: RealmResults<Message>? = null,
         val draft: String = "",
         val hasError: Boolean = false
 ) {
