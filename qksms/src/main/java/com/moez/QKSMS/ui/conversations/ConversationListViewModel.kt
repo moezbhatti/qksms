@@ -25,8 +25,6 @@ class ConversationListViewModel : ViewModel() {
     init {
         AppComponentManager.appComponent.inject(this)
 
-        notificationManager.update()
-
         partialStates
                 .scan(ConversationListViewState(), { previous, changes -> changes.reduce(previous) })
                 .subscribe { newState -> state.value = newState }
