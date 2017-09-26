@@ -42,16 +42,19 @@ class NotificationManager(private val context: Context, private val themeManager
     fun update(messageRepo: MessageRepository) {
         messageRepo.getUnreadUnseenMessages()
                 .groupBy { message -> message.threadId }
-                .forEach { conversation ->
+                .forEach { group ->
+                    val threadId = group.key
+                    val messages = group.value
+                    val conversation = messageRepo.getConversation(threadId)
 
-                    val style = NotificationCompat.MessagingStyle("Me")
-                    conversation.value.forEach { message ->
-                        val name = if (message.isMe()) null else "Person"
+                    val style = NotificationCompat.MessagingStyle("Me")f
+                    messages.forEach { message ->
+                        val name = if (message.isMe()) null else conversation?.getTitle() ?: ""
                         style.addMessage(message.body, message.date, name)
                     }
 
-                    val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", conversation.key)
-                    val seenPI = PendingIntent.getBroadcast(context, conversation.key.toInt(), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                    val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
+                    val seenPI = PendingIntent.getBroadcast(context, threadId.toInt(), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                     val notification = NotificationCompat.Builder(context, "channel_1")
                             .setColor(themeManager.color)
@@ -59,7 +62,7 @@ class NotificationManager(private val context: Context, private val themeManager
                             .setDeleteIntent(seenPI)
                             .setStyle(style)
 
-                    notificationManager.notify(conversation.key.toInt(), notification.build())
+                    notificationManager.notify(threadId.toInt(), notification.build())
                 }
     }
 
