@@ -47,7 +47,7 @@ class NotificationManager(private val context: Context, private val themeManager
                     val messages = group.value
                     val conversation = messageRepo.getConversation(threadId)
 
-                    val style = NotificationCompat.MessagingStyle("Me")f
+                    val style = NotificationCompat.MessagingStyle("Me")
                     messages.forEach { message ->
                         val name = if (message.isMe()) null else conversation?.getTitle() ?: ""
                         style.addMessage(message.body, message.date, name)
