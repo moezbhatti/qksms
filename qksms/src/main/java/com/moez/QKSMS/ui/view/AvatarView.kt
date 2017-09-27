@@ -38,6 +38,7 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
     override fun onFinishInflate() {
         super.onFinishInflate()
         setBackgroundResource(R.drawable.circle)
+        clipToOutline = true
         backgroundTintList = ColorStateList.valueOf(context.getColorCompat(R.color.bubbleLight))
 
         if (!isInEditMode) {
