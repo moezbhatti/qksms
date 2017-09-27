@@ -7,12 +7,6 @@
     tools:background="@color/list_separator"
     tools:parentTag="com.moez.QKSMS.ui.view.AvatarView">
 
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
-
     <TextView
         android:id="@+id/initial"
         style="@style/TextPrimary"
@@ -21,5 +15,11 @@
         android:gravity="center"
         android:textAllCaps="true"
         tools:text="M" />
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
 </merge>
