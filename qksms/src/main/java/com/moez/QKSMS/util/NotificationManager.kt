@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationManagerCompat
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.receiver.MarkSeenReceiver
+import com.moez.QKSMS.ui.conversations.ConversationListActivity
 
 
 class NotificationManager(private val context: Context, private val themeManager: ThemeManager) {
@@ -53,12 +54,18 @@ class NotificationManager(private val context: Context, private val themeManager
                         style.addMessage(message.body, message.date, name)
                     }
 
+                    val contentIntent = Intent(context, ConversationListActivity::class.java).putExtra("threadId", threadId)
+                    val contentPI = PendingIntent.getActivity(context, threadId.toInt() + 10000, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
                     val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
-                    val seenPI = PendingIntent.getBroadcast(context, threadId.toInt(), seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                    val seenPI = PendingIntent.getBroadcast(context, threadId.toInt() + 20000, seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                     val notification = NotificationCompat.Builder(context, "channel_1")
                             .setColor(themeManager.color)
                             .setSmallIcon(R.mipmap.ic_launcher)
+                            .setNumber(messages.size)
+                            .setAutoCancel(true)
+                            .setContentIntent(contentPI)
                             .setDeleteIntent(seenPI)
                             .setStyle(style)
 
