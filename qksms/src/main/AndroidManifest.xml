@@ -64,6 +64,8 @@
         <receiver android:name=".receiver.MessageSentReceiver" />
         <receiver android:name=".receiver.MessageDeliveredReceiver" />
         <receiver android:name=".receiver.MarkSeenReceiver" />
+        <receiver android:name=".receiver.MarkReadReceiver" />
+        <receiver android:name=".receiver.RemoteMessagingReceiver" />
 
         <service
             android:name=".service.HeadlessSmsSendService"

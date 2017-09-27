@@ -9,9 +9,12 @@ import android.graphics.Color
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import android.support.v4.app.RemoteInput
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
+import com.moez.QKSMS.receiver.RemoteMessagingReceiver
 import com.moez.QKSMS.ui.conversations.ConversationListActivity
 
 
@@ -39,7 +42,6 @@ class NotificationManager(private val context: Context, private val themeManager
         }
     }
 
-    // https://developer.android.com/guide/topics/ui/notifiers/notifications.html
     fun update(messageRepo: MessageRepository) {
         messageRepo.getUnreadUnseenMessages()
                 .groupBy { message -> message.threadId }
@@ -60,6 +62,10 @@ class NotificationManager(private val context: Context, private val themeManager
                     val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
                     val seenPI = PendingIntent.getBroadcast(context, threadId.toInt() + 20000, seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
+                    val readIntent = Intent(context, MarkReadReceiver::class.java).putExtra("threadId", threadId)
+                    val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                    val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
+
                     val notification = NotificationCompat.Builder(context, "channel_1")
                             .setColor(themeManager.color)
                             .setSmallIcon(R.mipmap.ic_launcher)
@@ -67,10 +73,34 @@ class NotificationManager(private val context: Context, private val themeManager
                             .setAutoCancel(true)
                             .setContentIntent(contentPI)
                             .setDeleteIntent(seenPI)
+                            .addAction(readAction)
                             .setStyle(style)
+
+                    if (Build.VERSION.SDK_INT >= 24 && conversation != null) {
+                        notification.addAction(getReplyAction(conversation.contacts[0].address, conversation.id))
+                    }
 
                     notificationManager.notify(threadId.toInt(), notification.build())
                 }
+    }
+
+    private fun getReplyAction(address: String, threadId: Long): NotificationCompat.Action {
+        val replyIntent = Intent(context, RemoteMessagingReceiver::class.java)
+                .putExtra("address", address)
+                .putExtra("threadId", threadId)
+        val replyPI = PendingIntent.getBroadcast(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val responseSet = arrayListOf("Hello", "Hey").toTypedArray().sortedArray()
+        val remoteInput = RemoteInput.Builder("body")
+                .setLabel(context.getString(R.string.notification_reply))
+                .setChoices(responseSet)
+                .build()
+
+        return NotificationCompat.Action.Builder(
+                R.drawable.ic_reply_black_24dp,
+                context.getString(R.string.notification_reply), replyPI)
+                .addRemoteInput(remoteInput)
+                .build()
     }
 
 }

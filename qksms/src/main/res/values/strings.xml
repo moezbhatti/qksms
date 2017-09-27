@@ -2,6 +2,9 @@
 
     <string name="app_name">QKSMS</string>
 
-    <string name="message_hint">Write a message</string>
+    <string name="compose_hint">Write a message</string>
+
+    <string name="notification_reply">Reply</string>
+    <string name="notification_read">Mark read</string>
 
 </resources>
