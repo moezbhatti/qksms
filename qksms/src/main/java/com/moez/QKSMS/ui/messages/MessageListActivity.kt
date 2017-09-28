@@ -62,6 +62,8 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
+                viewModel.dataChanged()
+
                 if (positionStart > 0) {
                     adapter.notifyItemChanged(positionStart - 1)
                 }

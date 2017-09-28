@@ -43,8 +43,6 @@ class MessageListViewModel : ViewModel() {
                 false -> partialStates.onNext(PartialState.ConversationError(true))
             }
         }
-
-        messageRepo.markRead(threadId)
     }
 
     fun sendMessage(body: String) {
@@ -52,6 +50,10 @@ class MessageListViewModel : ViewModel() {
             messageRepo.sendMessage(threadId, conversation.contacts[0].address, body)
             partialStates.onNext(PartialState.TextChanged(""))
         }
+    }
+
+    fun dataChanged() {
+        messageRepo.markRead(threadId)
     }
 
     fun textChanged(text: String) {
