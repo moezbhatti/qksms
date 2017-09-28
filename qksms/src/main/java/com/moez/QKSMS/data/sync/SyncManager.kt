@@ -81,6 +81,7 @@ class SyncManager(val context: Context, private val contactsRepo: ContactReposit
                 when (type) {
                     "sms" -> {
                         threadId = cursor.getLong(columnsMap.smsThreadId)
+                        address = cursor.getString(columnsMap.smsAddress)
                         boxId = cursor.getInt(columnsMap.smsType)
                         date = cursor.getLong(columnsMap.mmsDate)
                         dateSent = cursor.getLong(columnsMap.mmsDateSent)

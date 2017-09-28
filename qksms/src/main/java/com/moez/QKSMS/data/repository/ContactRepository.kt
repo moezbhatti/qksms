@@ -68,6 +68,15 @@ class ContactRepository(val context: Context) {
         return Contact()
     }
 
+    fun getContactFromCache(address: String): Contact? {
+        val realm = Realm.getDefaultInstance()
+        val contact = realm.where(Contact::class.java)
+                .equalTo("address", address)
+                .findFirst()
+        realm.close()
+        return contact
+    }
+
     // TODO cache the photos
     fun getAvatar(uriString: String): Maybe<Bitmap> {
         return Maybe.just(uriString)

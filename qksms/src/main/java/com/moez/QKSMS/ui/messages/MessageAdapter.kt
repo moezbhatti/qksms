@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.moez.QKSMS.R
 import com.moez.QKSMS.dagger.AppComponentManager
-import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.util.DateFormatter
 import com.moez.QKSMS.util.ThemeManager
 import com.moez.QKSMS.util.extensions.dpToPx
@@ -22,15 +22,16 @@ import javax.inject.Inject
 class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, MessageViewHolder>(data, true) {
 
     companion object {
+        private val VIEWTYPE_ME = -1
         private val TIMESTAMP_THRESHOLD = 60
-
-        private val VIEWTYPE_IN = 0
-        private val VIEWTYPE_OUT = 1
     }
 
     @Inject lateinit var context: Context
     @Inject lateinit var themeManager: ThemeManager
     @Inject lateinit var dateFormatter: DateFormatter
+    @Inject lateinit var contactRepo: ContactRepository
+
+    private val people = ArrayList<String>()
 
     init {
         AppComponentManager.appComponent.inject(this)
@@ -40,19 +41,24 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
         val layoutRes: Int
         val bubbleColor: Int
         when (viewType) {
-            VIEWTYPE_IN -> {
-                layoutRes = R.layout.message_list_item_in
-                bubbleColor = themeManager.bubbleColor
-            }
-            else -> {
+            VIEWTYPE_ME -> {
                 layoutRes = R.layout.message_list_item_out
                 bubbleColor = themeManager.color
             }
+            else -> {
+                layoutRes = R.layout.message_list_item_in
+                bubbleColor = themeManager.bubbleColor
+            }
         }
 
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layoutInflater = LayoutInflater.from(context)
         val viewHolder = MessageViewHolder(layoutInflater.inflate(layoutRes, parent, false))
         viewHolder.body.setBackgroundTint(bubbleColor)
+
+        if (viewType != VIEWTYPE_ME) {
+            viewHolder.avatar?.contact = contactRepo.getContactFromCache(people[viewType])
+        }
+
         return viewHolder
     }
 
@@ -73,7 +79,6 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
             else -> null
         }
 
-        viewHolder.avatar?.apply { contact = Contact() }
         viewHolder.body.text = message.body
         viewHolder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
@@ -122,6 +127,13 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
 
     override fun getItemViewType(position: Int): Int {
         val message = getItem(position)!!
-        return if (message.isMe()) VIEWTYPE_OUT else VIEWTYPE_IN
+        if (message.isMe()) {
+            return VIEWTYPE_ME
+        }
+
+        if (!people.contains(message.address)) {
+            people.add(message.address)
+        }
+        return people.indexOf(message.address)
     }
 }

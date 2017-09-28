@@ -8,6 +8,7 @@ open class Message : RealmObject() {
 
     @PrimaryKey var id: Long = 0
     var threadId: Long = 0
+    var address: String = ""
     var boxId: Int = 0
     var type: String = ""
     var body: String = ""
