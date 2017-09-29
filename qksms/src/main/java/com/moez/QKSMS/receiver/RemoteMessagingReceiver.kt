@@ -6,13 +6,11 @@ import android.content.Intent
 import android.support.v4.app.RemoteInput
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.data.repository.MessageRepository
-import com.moez.QKSMS.common.util.NotificationManager
 import javax.inject.Inject
 
 class RemoteMessagingReceiver : BroadcastReceiver() {
 
     @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
         AppComponentManager.appComponent.inject(this)

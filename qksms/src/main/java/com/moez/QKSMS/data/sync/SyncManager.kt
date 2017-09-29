@@ -4,16 +4,19 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.Telephony
+import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.ContactRepository
-import com.moez.QKSMS.common.util.extensions.asFlowable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SyncManager(val context: Context, private val contactsRepo: ContactRepository) {
+@Singleton
+class SyncManager @Inject constructor(val context: Context, private val contactsRepo: ContactRepository) {
 
     fun copyToRealm(completionListener: () -> Unit) {
 

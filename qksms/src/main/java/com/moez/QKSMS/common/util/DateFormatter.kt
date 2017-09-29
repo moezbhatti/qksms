@@ -7,8 +7,11 @@ import com.moez.QKSMS.common.util.extensions.isSameWeek
 import com.moez.QKSMS.common.util.extensions.isSameYear
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DateFormatter(val context: Context) {
+@Singleton
+class DateFormatter @Inject constructor(val context: Context) {
 
     /**
      * Replace 12 hour format with 24 hour format if necessary

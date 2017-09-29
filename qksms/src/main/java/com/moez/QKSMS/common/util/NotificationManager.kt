@@ -16,9 +16,13 @@ import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
 import com.moez.QKSMS.presentation.conversations.ConversationListActivity
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class NotificationManager(private val context: Context, private val themeManager: ThemeManager) {
+@Singleton
+class NotificationManager @Inject constructor(
+        private val context: Context,
+        private val themeManager: ThemeManager) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 

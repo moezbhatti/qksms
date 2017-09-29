@@ -11,6 +11,8 @@ import android.telephony.SmsManager
 import com.moez.QKSMS.common.util.NotificationManager
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
+import com.moez.QKSMS.data.datasource.native.NativeMessageTransaction
+import com.moez.QKSMS.data.datasource.realm.RealmMessageTransaction
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.sync.MessageColumns
@@ -22,8 +24,17 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MessageRepository(val context: Context, val notificationManager: NotificationManager) {
+@Singleton
+class MessageRepository @Inject constructor(
+        private val context: Context,
+        private val notificationManager: NotificationManager,
+        private val realmMessageTransaction: RealmMessageTransaction) {
+
+    // TODO figure out why injecting this in the constructor breaks Dagger
+    private val nativeMessageTransaction: NativeMessageTransaction = NativeMessageTransaction(context)
 
     fun getConversationMessagesAsync(): RealmResults<Message> {
         return Realm.getDefaultInstance()
@@ -140,44 +151,8 @@ class MessageRepository(val context: Context, val notificationManager: Notificat
     }
 
     fun markRead(threadId: Long) {
-        // Messages in SMS ContentProvider
-        val projection = arrayOf(BaseColumns._ID)
-        val selection = "${Sms.THREAD_ID} = $threadId AND (${Sms.SEEN} = 0 OR ${Sms.READ} = 0)"
-        val contentResolver = context.contentResolver
-        contentResolver.query(Sms.Inbox.CONTENT_URI, projection, selection, null, null)
-                .asFlowable()
-                .subscribeOn(Schedulers.io())
-                .map { cursor -> cursor.getLong(0) }
-                .map { id -> Uri.withAppendedPath(Sms.CONTENT_URI, id.toString()) }
-                .subscribe { uri ->
-                    val values = ContentValues()
-                    values.put(Sms.SEEN, true)
-                    values.put(Sms.READ, true)
-                    contentResolver.update(uri, values, null, null)
-                }
-
-        // TODO also need to mark MMS in ContentProvider as Read
-
-        // Messages in Realm
-        Schedulers.io().scheduleDirect {
-            val realm = Realm.getDefaultInstance()
-            val messages = realm.where(Message::class.java)
-                    .equalTo("threadId", threadId)
-                    .beginGroup()
-                    .equalTo("read", false)
-                    .or()
-                    .equalTo("seen", false)
-                    .endGroup()
-                    .findAll()
-
-            realm.executeTransaction {
-                messages.forEach { message ->
-                    message.seen = true
-                    message.read = true
-                }
-            }
-            realm.close()
-        }
+        nativeMessageTransaction.markRead(threadId)
+        realmMessageTransaction.markRead(threadId)
     }
 
     fun markSent(uri: Uri) {
