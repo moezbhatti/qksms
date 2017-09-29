@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 26
@@ -54,8 +55,4 @@ dependencies {
     kapt 'io.realm:realm-annotations:3.7.0'
     kapt 'io.realm:realm-annotations-processor:3.7.0'
     provided 'javax.annotation:jsr250-api:1.0'
-}
-
-kapt {
-    generateStubs = true
 }
