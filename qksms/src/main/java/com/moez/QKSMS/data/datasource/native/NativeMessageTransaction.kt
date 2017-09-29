@@ -13,12 +13,6 @@ import javax.inject.Named
 
 class NativeMessageTransaction @Inject @Named("Native") constructor(private val context: Context) : MessageTransaction {
 
-    override fun markSent(id: Long) {
-    }
-
-    override fun markFailed(id: Long) {
-    }
-
     override fun markSeen() {
         // TODO also need to mark MMS in ContentProvider as Seen
         val projection = arrayOf(BaseColumns._ID)
@@ -69,6 +63,12 @@ class NativeMessageTransaction @Inject @Named("Native") constructor(private val 
                     values.put(Telephony.Sms.READ, true)
                     contentResolver.update(uri, values, null, null)
                 }
+    }
+
+    override fun markSent(id: Long) {
+    }
+
+    override fun markFailed(id: Long) {
     }
 
 }

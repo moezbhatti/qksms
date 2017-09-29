@@ -7,12 +7,6 @@ import io.realm.Realm
 
 class RealmMessageTransaction : MessageTransaction {
 
-    override fun markSent(id: Long) {
-    }
-
-    override fun markFailed(id: Long) {
-    }
-
     override fun markSeen() {
         Schedulers.io().scheduleDirect {
             val realm = Realm.getDefaultInstance()
@@ -59,6 +53,12 @@ class RealmMessageTransaction : MessageTransaction {
             }
             realm.close()
         }
+    }
+
+    override fun markSent(id: Long) {
+    }
+
+    override fun markFailed(id: Long) {
     }
 
 }
