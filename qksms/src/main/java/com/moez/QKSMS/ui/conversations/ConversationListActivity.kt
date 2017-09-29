@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.jakewharton.rxbinding2.view.RxView
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -33,6 +34,9 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
         conversationList.layoutManager = LinearLayoutManager(this)
 
         swipeRefresh.setOnRefreshListener { viewModel.onRefresh() }
+        RxView.clicks(compose).subscribe {
+            // TODO: add entry point to compose view here
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
