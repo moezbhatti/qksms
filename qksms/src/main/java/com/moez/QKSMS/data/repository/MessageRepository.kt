@@ -9,8 +9,7 @@ import android.provider.Telephony.Sms
 import android.telephony.SmsManager
 import com.moez.QKSMS.common.util.NotificationManager
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
-import com.moez.QKSMS.data.datasource.native.NativeMessageTransaction
-import com.moez.QKSMS.data.datasource.realm.RealmMessageTransaction
+import com.moez.QKSMS.data.datasource.MessageTransaction
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.sync.MessageColumns
@@ -23,16 +22,15 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
 class MessageRepository @Inject constructor(
         private val context: Context,
         private val notificationManager: NotificationManager,
-        private val realmMessageTransaction: RealmMessageTransaction) {
-
-    // TODO figure out why injecting this in the constructor breaks Dagger
-    private val nativeMessageTransaction: NativeMessageTransaction = NativeMessageTransaction(context)
+        @Named("Realm") private val realmMessageTransaction: MessageTransaction,
+        @Named("Native") private val nativeMessageTransaction: MessageTransaction) {
 
     fun getConversationMessagesAsync(): RealmResults<Message> {
         return Realm.getDefaultInstance()

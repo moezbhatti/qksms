@@ -8,8 +8,10 @@ import android.provider.Telephony
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.datasource.MessageTransaction
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+import javax.inject.Named
 
-class NativeMessageTransaction(private val context: Context) : MessageTransaction {
+class NativeMessageTransaction @Inject @Named("Native") constructor(private val context: Context) : MessageTransaction {
 
     override fun markSent(id: Long) {
     }

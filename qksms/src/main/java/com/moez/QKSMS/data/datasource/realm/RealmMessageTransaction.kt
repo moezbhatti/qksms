@@ -4,11 +4,8 @@ import com.moez.QKSMS.data.datasource.MessageTransaction
 import com.moez.QKSMS.data.model.Message
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class RealmMessageTransaction @Inject constructor() : MessageTransaction {
+class RealmMessageTransaction : MessageTransaction {
 
     override fun markSent(id: Long) {
     }
