@@ -7,7 +7,7 @@ import android.provider.Telephony
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.ContactRepository
-import com.moez.QKSMS.util.extensions.asFlowable
+import com.moez.QKSMS.common.util.extensions.asFlowable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

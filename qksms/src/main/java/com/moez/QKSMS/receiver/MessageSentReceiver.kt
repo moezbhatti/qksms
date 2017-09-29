@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.telephony.SmsManager
-import com.moez.QKSMS.dagger.AppComponentManager
+import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.data.repository.MessageRepository
 import javax.inject.Inject
 
