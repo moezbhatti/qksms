@@ -18,13 +18,41 @@ class NativeMessageTransaction(private val context: Context) : MessageTransactio
     }
 
     override fun markSeen() {
+        // TODO also need to mark MMS in ContentProvider as Seen
+        val projection = arrayOf(BaseColumns._ID)
+        val selection = "${Telephony.Sms.SEEN} = 0"
+        val contentResolver = context.contentResolver
+        contentResolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, null, null)
+                .asFlowable()
+                .subscribeOn(Schedulers.io())
+                .map { cursor -> cursor.getLong(0) }
+                .map { id -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id.toString()) }
+                .subscribe { uri ->
+                    val values = ContentValues()
+                    values.put(Telephony.Sms.SEEN, true)
+                    contentResolver.update(uri, values, null, null)
+                }
     }
 
     override fun markSeen(threadId: Long) {
+        // TODO also need to mark MMS in ContentProvider as Seen
+        val projection = arrayOf(BaseColumns._ID)
+        val selection = "${Telephony.Sms.THREAD_ID} = $threadId AND ${Telephony.Sms.SEEN} = 0"
+        val contentResolver = context.contentResolver
+        contentResolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, null, null)
+                .asFlowable()
+                .subscribeOn(Schedulers.io())
+                .map { cursor -> cursor.getLong(0) }
+                .map { id -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id.toString()) }
+                .subscribe { uri ->
+                    val values = ContentValues()
+                    values.put(Telephony.Sms.SEEN, true)
+                    contentResolver.update(uri, values, null, null)
+                }
     }
 
     override fun markRead(threadId: Long) {
-        // Messages in SMS ContentProvider
+        // TODO also need to mark MMS in ContentProvider as Read
         val projection = arrayOf(BaseColumns._ID)
         val selection = "${Telephony.Sms.THREAD_ID} = $threadId AND (${Telephony.Sms.SEEN} = 0 OR ${Telephony.Sms.READ} = 0)"
         val contentResolver = context.contentResolver
@@ -39,8 +67,6 @@ class NativeMessageTransaction(private val context: Context) : MessageTransactio
                     values.put(Telephony.Sms.READ, true)
                     contentResolver.update(uri, values, null, null)
                 }
-
-        // TODO also need to mark MMS in ContentProvider as Read
     }
 
 }

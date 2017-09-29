@@ -17,9 +17,29 @@ class RealmMessageTransaction @Inject constructor() : MessageTransaction {
     }
 
     override fun markSeen() {
+        Schedulers.io().scheduleDirect {
+            val realm = Realm.getDefaultInstance()
+            val messages = realm.where(Message::class.java).equalTo("seen", false).findAll()
+            realm.executeTransaction { messages.forEach { message -> message.seen = true } }
+            realm.close()
+        }
     }
 
     override fun markSeen(threadId: Long) {
+        Schedulers.io().scheduleDirect {
+            val realm = Realm.getDefaultInstance()
+            val messages = realm.where(Message::class.java)
+                    .equalTo("threadId", threadId)
+                    .equalTo("seen", false)
+                    .findAll()
+
+            realm.executeTransaction {
+                messages.forEach { message ->
+                    message.seen = true
+                }
+            }
+            realm.close()
+        }
     }
 
     override fun markRead(threadId: Long) {
