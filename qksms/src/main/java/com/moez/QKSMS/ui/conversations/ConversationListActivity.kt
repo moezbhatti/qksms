@@ -34,7 +34,7 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
         conversationList.layoutManager = LinearLayoutManager(this)
 
         swipeRefresh.setOnRefreshListener { viewModel.onRefresh() }
-        RxView.clicks(fab).subscribe {
+        RxView.clicks(compose).subscribe {
             // TODO: add entry point to compose view here
         }
     }
