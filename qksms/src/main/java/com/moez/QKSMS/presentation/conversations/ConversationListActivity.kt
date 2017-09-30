@@ -41,7 +41,7 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        intent?.getLongExtra("threadId", -1)?.takeIf { threadId -> threadId != -1L }.let { threadId ->
+        intent?.getLongExtra("threadId", 0)?.takeIf { threadId -> threadId > 0 }?.let { threadId ->
             startActivity(Intent(this, MessageListActivity::class.java).putExtra("threadId", threadId))
         }
     }
