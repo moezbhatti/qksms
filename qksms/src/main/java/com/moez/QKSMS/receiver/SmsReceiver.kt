@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony.Sms
 import com.moez.QKSMS.common.di.AppComponentManager
-import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.domain.interactor.ReceiveMessage
 import timber.log.Timber
 import javax.inject.Inject
 
 class SmsReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var receiveMessage: ReceiveMessage
 
     override fun onReceive(context: Context, intent: Intent) {
         Timber.v("Received SMS: $intent")
@@ -25,7 +25,7 @@ class SmsReceiver : BroadcastReceiver() {
                     .map { message -> message.displayMessageBody }
                     .reduce { body, new -> body + new }
 
-            messageRepo.insertReceivedMessage(address, body, time)
+            receiveMessage.execute({}, ReceiveMessage.Params(address, body, time))
         }
     }
 

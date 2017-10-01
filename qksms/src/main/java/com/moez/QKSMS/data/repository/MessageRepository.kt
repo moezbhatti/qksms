@@ -68,22 +68,6 @@ class MessageRepository @Inject constructor(
                 .findAllSorted("date")
     }
 
-    fun insertReceivedMessage(address: String, body: String, time: Long) {
-        val values = ContentValues()
-        values.put(Sms.ADDRESS, address)
-        values.put(Sms.BODY, body)
-        values.put(Sms.DATE_SENT, time)
-
-        val contentResolver = context.contentResolver
-        Flowable.just(values)
-                .subscribeOn(Schedulers.io())
-                .map { contentResolver.insert(Sms.Inbox.CONTENT_URI, values) }
-                .subscribe { uri ->
-                    copyMessageToRealm(uri)
-                    notificationManager.update(this)
-                }
-    }
-
     fun markAllSeen() {
         nativeMessageTransaction.markSeen()
         realmMessageTransaction.markSeen()
@@ -139,7 +123,7 @@ class MessageRepository @Inject constructor(
                 }
     }
 
-    private fun updateMessage(values: ContentValues, uri: Uri) {
+    fun updateMessage(values: ContentValues, uri: Uri) {
         val contentResolver = context.contentResolver
         Flowable.just(values)
                 .subscribeOn(Schedulers.io())
@@ -147,7 +131,7 @@ class MessageRepository @Inject constructor(
                 .subscribe { copyMessageToRealm(uri) }
     }
 
-    private fun copyMessageToRealm(uri: Uri) {
+    fun copyMessageToRealm(uri: Uri) {
         val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
         if (cursor.moveToFirst()) {
             val columns = MessageColumns(cursor)
