@@ -25,7 +25,7 @@ class ReceiveMessage @Inject constructor(
         return Flowable.just(values)
                 .map { contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) }
                 .doOnNext { uri ->
-                    messageRepo.copyMessageToRealm(uri)
+                    messageRepo.addMessageFromUri(uri)
                     notificationManager.update(messageRepo)
                 }
                 .map { Unit }

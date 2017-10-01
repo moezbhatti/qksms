@@ -7,7 +7,6 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Telephony.Sms
 import android.telephony.SmsManager
-import com.moez.QKSMS.common.util.NotificationManager
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
 import com.moez.QKSMS.data.datasource.MessageTransaction
 import com.moez.QKSMS.data.model.Conversation
@@ -28,7 +27,6 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepository @Inject constructor(
         private val context: Context,
-        private val notificationManager: NotificationManager,
         @Named("Realm") private val realmMessageTransaction: MessageTransaction,
         @Named("Native") private val nativeMessageTransaction: MessageTransaction) {
 
@@ -83,19 +81,6 @@ class MessageRepository @Inject constructor(
         realmMessageTransaction.markRead(threadId)
     }
 
-    fun markSent(uri: Uri) {
-        val values = ContentValues()
-        values.put(Sms.TYPE, Sms.MESSAGE_TYPE_SENT)
-        updateMessage(values, uri)
-    }
-
-    fun markFailed(uri: Uri, resultCode: Int) {
-        val values = ContentValues()
-        values.put(Sms.TYPE, Sms.MESSAGE_TYPE_FAILED)
-        values.put(Sms.ERROR_CODE, resultCode)
-        updateMessage(values, uri)
-    }
-
     fun sendMessage(threadId: Long, address: String, body: String) {
         val values = ContentValues()
         values.put(Sms.ADDRESS, address)
@@ -110,7 +95,7 @@ class MessageRepository @Inject constructor(
                 .subscribeOn(Schedulers.io())
                 .map { contentResolver.insert(Sms.CONTENT_URI, values) }
                 .subscribe { uri ->
-                    copyMessageToRealm(uri)
+                    addMessageFromUri(uri)
 
                     val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("uri", uri.toString())
                     val sentPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -123,15 +108,15 @@ class MessageRepository @Inject constructor(
                 }
     }
 
-    fun updateMessage(values: ContentValues, uri: Uri) {
+    fun updateMessageFromUri(values: ContentValues, uri: Uri) {
         val contentResolver = context.contentResolver
         Flowable.just(values)
                 .subscribeOn(Schedulers.io())
                 .map { contentResolver.update(uri, values, null, null) }
-                .subscribe { copyMessageToRealm(uri) }
+                .subscribe { addMessageFromUri(uri) }
     }
 
-    fun copyMessageToRealm(uri: Uri) {
+    fun addMessageFromUri(uri: Uri) {
         val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
         if (cursor.moveToFirst()) {
             val columns = MessageColumns(cursor)
