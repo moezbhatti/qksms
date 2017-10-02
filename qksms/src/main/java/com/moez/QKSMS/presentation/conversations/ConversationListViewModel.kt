@@ -40,4 +40,9 @@ class ConversationListViewModel : ViewModel() {
         syncManager.copyToRealm { partialStates.onNext(PartialState.Refreshing(false)) }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        markAllSeen.dispose()
+    }
+
 }

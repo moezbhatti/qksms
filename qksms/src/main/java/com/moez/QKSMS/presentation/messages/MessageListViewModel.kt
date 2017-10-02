@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.domain.interactor.MarkRead
 import com.moez.QKSMS.domain.interactor.SendMessage
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -13,6 +14,7 @@ class MessageListViewModel : ViewModel() {
 
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var sendMessage: SendMessage
+    @Inject lateinit var markRead: MarkRead
 
     val state: MutableLiveData<MessageListViewState> = MutableLiveData()
     var threadId: Long = 0
@@ -56,7 +58,7 @@ class MessageListViewModel : ViewModel() {
     }
 
     fun dataChanged() {
-        messageRepo.markRead(threadId)
+        markRead.execute({}, threadId)
     }
 
     fun textChanged(text: String) {
@@ -66,6 +68,7 @@ class MessageListViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         sendMessage.dispose()
+        markRead.dispose()
         conversation?.removeAllChangeListeners()
     }
 
