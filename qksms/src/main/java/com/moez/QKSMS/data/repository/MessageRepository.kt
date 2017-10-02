@@ -3,8 +3,10 @@ package com.moez.QKSMS.data.repository
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.provider.BaseColumns
+import android.provider.Telephony
+import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
-import com.moez.QKSMS.data.datasource.MessageTransaction
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.sync.MessageColumns
@@ -15,14 +17,10 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-class MessageRepository @Inject constructor(
-        private val context: Context,
-        @Named("Realm") private val realmMessageTransaction: MessageTransaction,
-        @Named("Native") private val nativeMessageTransaction: MessageTransaction) {
+class MessageRepository @Inject constructor(private val context: Context) {
 
     fun getConversationMessagesAsync(): RealmResults<Message> {
         return Realm.getDefaultInstance()
@@ -61,16 +59,62 @@ class MessageRepository @Inject constructor(
     }
 
     fun markAllSeen() {
-        realmMessageTransaction.markSeen()
+        val realm = Realm.getDefaultInstance()
+        val messages = realm.where(Message::class.java).equalTo("seen", false).findAll()
+        realm.executeTransaction { messages.forEach { message -> message.seen = true } }
+        realm.close()
     }
 
     fun markSeen(threadId: Long) {
-        realmMessageTransaction.markSeen(threadId)
+        val realm = Realm.getDefaultInstance()
+        val messages = realm.where(Message::class.java)
+                .equalTo("threadId", threadId)
+                .equalTo("seen", false)
+                .findAll()
+
+        realm.executeTransaction {
+            messages.forEach { message ->
+                message.seen = true
+            }
+        }
+        realm.close()
     }
 
     fun markRead(threadId: Long) {
-        nativeMessageTransaction.markRead(threadId)
-        realmMessageTransaction.markRead(threadId)
+        // TODO also need to mark MMS in ContentProvider as Read
+        val projection = arrayOf(BaseColumns._ID)
+        val selection = "${Telephony.Sms.THREAD_ID} = $threadId AND (${Telephony.Sms.SEEN} = 0 OR ${Telephony.Sms.READ} = 0)"
+        val contentResolver = context.contentResolver
+        contentResolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, null, null)
+                .asFlowable()
+                .subscribeOn(Schedulers.io())
+                .map { cursor -> cursor.getLong(0) }
+                .map { id -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id.toString()) }
+                .subscribe { uri ->
+                    val values = ContentValues()
+                    values.put(Telephony.Sms.SEEN, true)
+                    values.put(Telephony.Sms.READ, true)
+                    contentResolver.update(uri, values, null, null)
+                }
+
+
+        val realm = Realm.getDefaultInstance()
+        val messages = realm.where(Message::class.java)
+                .equalTo("threadId", threadId)
+                .beginGroup()
+                .equalTo("read", false)
+                .or()
+                .equalTo("seen", false)
+                .endGroup()
+                .findAll()
+
+        realm.executeTransaction {
+            messages.forEach { message ->
+                message.seen = true
+                message.read = true
+            }
+        }
+        realm.close()
     }
 
     fun updateMessageFromUri(values: ContentValues, uri: Uri) {
