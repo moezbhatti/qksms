@@ -15,7 +15,7 @@ class ReceiveMessage @Inject constructor(
 
     data class Params(val address: String, val body: String, val sentTime: Long)
 
-    override fun buildUseCaseObservable(params: Params): Flowable<Unit> {
+    override fun buildObservable(params: Params): Flowable<Unit> {
         val values = ContentValues()
         values.put(Telephony.Sms.ADDRESS, params.address)
         values.put(Telephony.Sms.BODY, params.body)

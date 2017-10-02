@@ -11,7 +11,7 @@ class MarkFailed @Inject constructor(val messageRepo: MessageRepository) : Inter
 
     data class Params(val uri: Uri, val resultCode: Int)
 
-    override fun buildUseCaseObservable(params: Params): Flowable<Unit> {
+    override fun buildObservable(params: Params): Flowable<Unit> {
         return Flowable.just(Unit)
                 .doOnNext {
                     val values = ContentValues()

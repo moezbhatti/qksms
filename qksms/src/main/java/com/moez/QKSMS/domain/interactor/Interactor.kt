@@ -9,10 +9,10 @@ abstract class Interactor<T, in Params> {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-    abstract fun buildUseCaseObservable(params: Params): Flowable<T>
+    abstract fun buildObservable(params: Params): Flowable<T>
 
     fun execute(observer: ((T) -> Unit), params: Params) {
-        disposables.add(buildUseCaseObservable(params)
+        disposables.add(buildObservable(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer))

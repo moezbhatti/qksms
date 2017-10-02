@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class MarkSent @Inject constructor(val messageRepo: MessageRepository) : Interactor<Unit, Uri>() {
 
-    override fun buildUseCaseObservable(params: Uri): Flowable<Unit> {
+    override fun buildObservable(params: Uri): Flowable<Unit> {
         return Flowable.just(params)
                 .doOnNext {
                     val values = ContentValues()

@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class MarkAllSeen @Inject constructor(val messageRepo: MessageRepository) : Interactor<Unit, Unit>() {
 
-    override fun buildUseCaseObservable(params: Unit): Flowable<Unit> {
+    override fun buildObservable(params: Unit): Flowable<Unit> {
         return Flowable.just(Unit)
                 .doOnNext { messageRepo.markAllSeen() }
     }
