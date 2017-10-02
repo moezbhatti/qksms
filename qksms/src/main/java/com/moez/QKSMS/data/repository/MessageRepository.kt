@@ -7,10 +7,9 @@ import android.provider.BaseColumns
 import android.provider.Telephony
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
+import com.moez.QKSMS.data.mapper.CursorToMessageFlowable
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.data.sync.MessageColumns
-import com.moez.QKSMS.data.sync.SyncManager
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -127,12 +126,8 @@ class MessageRepository @Inject constructor(private val context: Context) {
 
     fun addMessageFromUri(uri: Uri) {
         val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
-        if (cursor.moveToFirst()) {
-            val columns = MessageColumns(cursor)
-            val message = SyncManager.messageFromCursor(cursor, columns)
-            message.insertOrUpdate()
-        }
-        cursor.close()
+        CursorToMessageFlowable.map(cursor)
+                .subscribe { message -> message.insertOrUpdate() }
     }
 
 }

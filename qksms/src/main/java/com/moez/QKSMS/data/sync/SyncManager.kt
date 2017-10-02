@@ -5,8 +5,8 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.Telephony
 import com.moez.QKSMS.common.util.extensions.asFlowable
+import com.moez.QKSMS.data.mapper.CursorToMessageFlowable
 import com.moez.QKSMS.data.model.Conversation
-import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.ContactRepository
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,7 +19,6 @@ import javax.inject.Singleton
 class SyncManager @Inject constructor(val context: Context, private val contactsRepo: ContactRepository) {
 
     fun copyToRealm(completionListener: () -> Unit) {
-
         val contentResolver = context.contentResolver
         val conversationsCursor = contentResolver.query(ConversationColumns.URI, ConversationColumns.PROJECTION, null, null, "date desc")
 
@@ -39,10 +38,9 @@ class SyncManager @Inject constructor(val context: Context, private val contacts
                 .doOnNext { conversation -> realm?.insertOrUpdate(conversation) }
                 .map { conversation -> conversation.id }
                 .flatMap { threadId ->
-                    val uri = Uri.withAppendedPath(MessageColumns.URI, threadId.toString())
-                    val messagesCursor = contentResolver.query(uri, MessageColumns.PROJECTION, null, null, "date desc")
-                    val columnsMap = MessageColumns(messagesCursor)
-                    messagesCursor.asFlowable().map { cursor -> messageFromCursor(cursor, columnsMap) }
+                    val uri = Uri.withAppendedPath(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId.toString())
+                    val messagesCursor = contentResolver.query(uri, CursorToMessageFlowable.CURSOR_PROJECTION, null, null, "date desc")
+                    CursorToMessageFlowable.map(messagesCursor)
                 }
                 .filter { message -> message.type == "sms" || message.type == "mms" }
                 .distinct { message -> message.id }
@@ -66,43 +64,6 @@ class SyncManager @Inject constructor(val context: Context, private val contacts
                     .map { id -> contactsRepo.getContactBlocking(id) }
                     .filter { contact -> contact.recipientId != 0L }
                     .forEach { contact -> contacts.add(contact) }
-        }
-    }
-
-    // TODO take this out of the companion object
-    companion object {
-        fun messageFromCursor(cursor: Cursor, columnsMap: MessageColumns): Message {
-            return Message().apply {
-                type = when (cursor.getColumnIndex(Telephony.MmsSms.TYPE_DISCRIMINATOR_COLUMN)) {
-                    -1 -> "sms"
-                    else -> cursor.getString(columnsMap.msgType)
-                }
-
-                id = cursor.getLong(columnsMap.msgId)
-                body = cursor.getString(columnsMap.smsBody) ?: ""
-
-                when (type) {
-                    "sms" -> {
-                        threadId = cursor.getLong(columnsMap.smsThreadId)
-                        address = cursor.getString(columnsMap.smsAddress)
-                        boxId = cursor.getInt(columnsMap.smsType)
-                        date = cursor.getLong(columnsMap.mmsDate)
-                        dateSent = cursor.getLong(columnsMap.mmsDateSent)
-                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
-                        read = cursor.getInt(columnsMap.mmsRead) != 0
-                    }
-
-                    "mms" -> {
-                        threadId = cursor.getLong(columnsMap.mmsThreadId)
-                        boxId = cursor.getInt(columnsMap.mmsMessageBox)
-                        date = cursor.getLong(columnsMap.smsDate)
-                        dateSent = cursor.getLong(columnsMap.smsDateSent)
-                        seen = cursor.getInt(columnsMap.smsSeen) != 0
-                        read = cursor.getInt(columnsMap.smsRead) != 0
-                        errorType = cursor.getInt(columnsMap.mmsErrorType)
-                    }
-                }
-            }
         }
     }
 }
