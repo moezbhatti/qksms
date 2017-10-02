@@ -4,7 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
-import android.provider.Telephony
+import android.provider.Telephony.Sms
+import android.provider.Telephony.TextBasedSmsColumns
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
 import com.moez.QKSMS.data.mapper.CursorToMessageFlowable
@@ -83,17 +84,17 @@ class MessageRepository @Inject constructor(private val context: Context) {
     fun markRead(threadId: Long) {
         // TODO also need to mark MMS in ContentProvider as Read
         val projection = arrayOf(BaseColumns._ID)
-        val selection = "${Telephony.Sms.THREAD_ID} = $threadId AND (${Telephony.Sms.SEEN} = 0 OR ${Telephony.Sms.READ} = 0)"
+        val selection = "${Sms.THREAD_ID} = $threadId AND (${Sms.SEEN} = 0 OR ${Sms.READ} = 0)"
         val contentResolver = context.contentResolver
-        contentResolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, null, null)
+        contentResolver.query(Sms.Inbox.CONTENT_URI, projection, selection, null, null)
                 .asFlowable()
                 .subscribeOn(Schedulers.io())
                 .map { cursor -> cursor.getLong(0) }
-                .map { id -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id.toString()) }
+                .map { id -> Uri.withAppendedPath(Sms.CONTENT_URI, id.toString()) }
                 .subscribe { uri ->
                     val values = ContentValues()
-                    values.put(Telephony.Sms.SEEN, true)
-                    values.put(Telephony.Sms.READ, true)
+                    values.put(Sms.SEEN, true)
+                    values.put(Sms.READ, true)
                     contentResolver.update(uri, values, null, null)
                 }
 
@@ -117,16 +118,22 @@ class MessageRepository @Inject constructor(private val context: Context) {
         realm.close()
     }
 
+    fun markSent(uri: Uri) {
+        val values = ContentValues()
+        values.put(Sms.TYPE, Sms.MESSAGE_TYPE_SENT)
+        updateMessageFromUri(uri, values)
+    }
+
     fun markFailed(uri: Uri, resultCode: Int) {
         val values = ContentValues()
-        values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_FAILED)
-        values.put(Telephony.Sms.ERROR_CODE, resultCode)
+        values.put(Sms.TYPE, Sms.MESSAGE_TYPE_FAILED)
+        values.put(Sms.ERROR_CODE, resultCode)
         updateMessageFromUri(uri, values)
     }
 
     fun markDelivered(uri: Uri) {
         val values = ContentValues()
-        values.put("status", Telephony.TextBasedSmsColumns.STATUS_COMPLETE)
+        values.put("status", TextBasedSmsColumns.STATUS_COMPLETE)
         values.put("date_sent", Calendar.getInstance().timeInMillis)
         values.put("read", true)
         updateMessageFromUri(uri, values)
@@ -134,7 +141,7 @@ class MessageRepository @Inject constructor(private val context: Context) {
 
     fun markDeliveryFailed(uri: Uri, resultCode: Int) {
         val values = ContentValues()
-        values.put("status", Telephony.TextBasedSmsColumns.STATUS_FAILED)
+        values.put("status", TextBasedSmsColumns.STATUS_FAILED)
         values.put("date_sent", Calendar.getInstance().timeInMillis)
         values.put("read", true)
         values.put("error_code", resultCode)
