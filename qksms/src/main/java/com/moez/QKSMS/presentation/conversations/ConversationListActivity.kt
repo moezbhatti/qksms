@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.RxView
 import com.karumi.dexter.Dexter
@@ -16,6 +17,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.presentation.base.QkActivity
 import com.moez.QKSMS.presentation.messages.MessageListActivity
 import kotlinx.android.synthetic.main.conversation_list_activity.*
+import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 
 class ConversationListActivity : QkActivity(), Observer<ConversationListViewState> {
@@ -25,6 +27,8 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.conversation_list_activity)
+        ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
+
         onNewIntent(intent)
         requestPermissions()
 
