@@ -25,6 +25,7 @@ class SendMessage @Inject constructor(
         values.put(Telephony.Sms.BODY, params.body)
         values.put(Telephony.Sms.DATE, System.currentTimeMillis())
         values.put(Telephony.Sms.READ, true)
+        values.put(Telephony.Sms.SEEN, true)
         values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
         values.put(Telephony.Sms.THREAD_ID, params.threadId)
 

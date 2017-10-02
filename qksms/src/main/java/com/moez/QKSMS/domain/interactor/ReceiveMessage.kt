@@ -20,14 +20,14 @@ class ReceiveMessage @Inject constructor(
         values.put(Telephony.Sms.ADDRESS, params.address)
         values.put(Telephony.Sms.BODY, params.body)
         values.put(Telephony.Sms.DATE_SENT, params.sentTime)
+        values.put(Telephony.Sms.READ, false)
+        values.put(Telephony.Sms.SEEN, false)
 
         val contentResolver = context.contentResolver
         return Flowable.just(values)
                 .map { contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) }
-                .doOnNext { uri ->
-                    messageRepo.addMessageFromUri(uri)
-                    notificationManager.update(messageRepo)
-                }
+                .doOnNext { uri -> messageRepo.addMessageFromUri(uri) }
+                .doOnNext { notificationManager.update(messageRepo) }
                 .map { Unit }
     }
 

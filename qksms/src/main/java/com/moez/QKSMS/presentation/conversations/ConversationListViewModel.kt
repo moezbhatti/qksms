@@ -6,6 +6,7 @@ import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.data.sync.SyncManager
+import com.moez.QKSMS.domain.interactor.MarkAllSeen
 import io.reactivex.subjects.PublishSubject
 import io.realm.RealmResults
 import javax.inject.Inject
@@ -14,6 +15,7 @@ class ConversationListViewModel : ViewModel() {
 
     @Inject lateinit var syncManager: SyncManager
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var markAllSeen: MarkAllSeen
 
     val state: MutableLiveData<ConversationListViewState> = MutableLiveData()
 
@@ -30,7 +32,7 @@ class ConversationListViewModel : ViewModel() {
         conversations = messageRepo.getConversationMessagesAsync()
         partialStates.onNext(PartialState.ConversationsLoaded(conversations))
 
-        messageRepo.markAllSeen()
+        markAllSeen.execute({}, Unit)
     }
 
     fun onRefresh() {

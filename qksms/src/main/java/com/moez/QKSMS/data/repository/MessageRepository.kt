@@ -61,12 +61,10 @@ class MessageRepository @Inject constructor(
     }
 
     fun markAllSeen() {
-        nativeMessageTransaction.markSeen()
         realmMessageTransaction.markSeen()
     }
 
     fun markSeen(threadId: Long) {
-        nativeMessageTransaction.markSeen(threadId)
         realmMessageTransaction.markSeen(threadId)
     }
 
