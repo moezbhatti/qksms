@@ -23,6 +23,7 @@ interface AppComponent {
     fun inject(manager: NotificationManager)
 
     fun inject(receiver: SmsReceiver)
+    fun inject(receiver: MessageDeliveredReceiver)
     fun inject(receiver: MessageSentReceiver)
     fun inject(receiver: MarkSeenReceiver)
     fun inject(receiver: MarkReadReceiver)

@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.MessageRepository
-import com.moez.QKSMS.data.sync.SyncManager
 import com.moez.QKSMS.domain.interactor.MarkAllSeen
 import com.moez.QKSMS.domain.interactor.SyncConversations
 import io.reactivex.subjects.PublishSubject

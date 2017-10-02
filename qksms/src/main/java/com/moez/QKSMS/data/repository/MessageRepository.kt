@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -116,7 +117,31 @@ class MessageRepository @Inject constructor(private val context: Context) {
         realm.close()
     }
 
-    fun updateMessageFromUri(values: ContentValues, uri: Uri) {
+    fun markFailed(uri: Uri, resultCode: Int) {
+        val values = ContentValues()
+        values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_FAILED)
+        values.put(Telephony.Sms.ERROR_CODE, resultCode)
+        updateMessageFromUri(uri, values)
+    }
+
+    fun markDelivered(uri: Uri) {
+        val values = ContentValues()
+        values.put("status", Telephony.TextBasedSmsColumns.STATUS_COMPLETE)
+        values.put("date_sent", Calendar.getInstance().timeInMillis)
+        values.put("read", true)
+        updateMessageFromUri(uri, values)
+    }
+
+    fun markDeliveryFailed(uri: Uri, resultCode: Int) {
+        val values = ContentValues()
+        values.put("status", Telephony.TextBasedSmsColumns.STATUS_FAILED)
+        values.put("date_sent", Calendar.getInstance().timeInMillis)
+        values.put("read", true)
+        values.put("error_code", resultCode)
+        updateMessageFromUri(uri, values)
+    }
+
+    fun updateMessageFromUri(uri: Uri, values: ContentValues) {
         val contentResolver = context.contentResolver
         Flowable.just(values)
                 .subscribeOn(Schedulers.io())

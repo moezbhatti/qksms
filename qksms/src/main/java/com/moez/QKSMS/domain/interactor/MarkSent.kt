@@ -14,7 +14,7 @@ class MarkSent @Inject constructor(val messageRepo: MessageRepository) : Interac
                 .doOnNext {
                     val values = ContentValues()
                     values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_SENT)
-                    messageRepo.updateMessageFromUri(values, params)
+                    messageRepo.updateMessageFromUri(params, values)
                 }
                 .map { Unit }
     }

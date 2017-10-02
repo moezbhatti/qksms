@@ -2,35 +2,27 @@ package com.moez.QKSMS.receiver
 
 import android.app.Activity
 import android.content.BroadcastReceiver
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.provider.Telephony
-import java.util.*
+import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.data.repository.MessageRepository
+import javax.inject.Inject
 
 class MessageDeliveredReceiver : BroadcastReceiver() {
 
+    @Inject lateinit var messageRepo: MessageRepository
+
     override fun onReceive(context: Context, intent: Intent) {
         val uri = Uri.parse(intent.getStringExtra("uri"))
+        AppComponentManager.appComponent.inject(this)
 
         when (resultCode) {
-            Activity.RESULT_OK -> { // TODO notify about delivery
-                val values = ContentValues()
-                values.put("status", Telephony.TextBasedSmsColumns.STATUS_COMPLETE)
-                values.put("date_sent", Calendar.getInstance().timeInMillis)
-                values.put("read", true)
-                context.contentResolver.update(uri, values, null, null)
-            }
+        // TODO notify about delivery
+            Activity.RESULT_OK -> messageRepo.markDelivered(uri)
 
-            Activity.RESULT_CANCELED -> { // TODO notify about delivery failure
-                val values = ContentValues()
-                values.put("status", Telephony.TextBasedSmsColumns.STATUS_FAILED)
-                values.put("date_sent", Calendar.getInstance().timeInMillis)
-                values.put("read", true)
-                values.put("error_code", resultCode)
-                context.contentResolver.update(uri, values, null, null)
-            }
+        // TODO notify about delivery failure
+            Activity.RESULT_CANCELED -> messageRepo.markDeliveryFailed(uri, resultCode)
         }
     }
 
