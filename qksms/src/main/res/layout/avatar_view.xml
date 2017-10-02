@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@color/list_separator"
-    tools:parentTag="com.moez.QKSMS.ui.view.AvatarView">
+    tools:parentTag="com.moez.QKSMS.presentation.view.AvatarView">
 
     <TextView
         android:id="@+id/initial"

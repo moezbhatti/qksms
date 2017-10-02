@@ -12,9 +12,11 @@ import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class ContactRepository(val context: Context) {
+@Singleton
+class ContactRepository @Inject constructor(val context: Context) {
 
     /**
      * Uri for the MMS-SMS recipients table, where there exists only one column (address)
