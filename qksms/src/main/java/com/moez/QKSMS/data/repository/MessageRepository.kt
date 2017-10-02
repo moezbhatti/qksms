@@ -126,7 +126,7 @@ class MessageRepository @Inject constructor(private val context: Context) {
 
     fun addMessageFromUri(uri: Uri) {
         val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
-        CursorToMessageFlowable.map(cursor)
+        CursorToMessageFlowable().map(cursor)
                 .subscribe { message -> message.insertOrUpdate() }
     }
 
