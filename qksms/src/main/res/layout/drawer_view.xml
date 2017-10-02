@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+    <LinearLayout
+        android:id="@+id/archived"
+        style="@style/DrawerRow">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_folder_black_24dp" />
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_archived" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scheduled"
+        style="@style/DrawerRow">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_event_black_24dp" />
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_scheduled" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/blocked"
+        style="@style/DrawerRow">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_block_black_24dp" />
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_blocked" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/list_separator" />
+
+    <LinearLayout
+        android:id="@+id/settings"
+        style="@style/DrawerRow">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_settings_black_24dp" />
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_settings" />
+
+    </LinearLayout>
+
+</LinearLayout>

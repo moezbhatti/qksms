@@ -56,12 +56,19 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/drawer"
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
-        android:orientation="vertical" />
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/drawer_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
 </android.support.v4.widget.DrawerLayout>

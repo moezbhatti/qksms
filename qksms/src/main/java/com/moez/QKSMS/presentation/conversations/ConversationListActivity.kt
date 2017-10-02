@@ -17,6 +17,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.presentation.base.QkActivity
 import com.moez.QKSMS.presentation.messages.MessageListActivity
 import kotlinx.android.synthetic.main.conversation_list_activity.*
+import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 
@@ -38,9 +39,12 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
         conversationList.layoutManager = LinearLayoutManager(this)
 
         swipeRefresh.setOnRefreshListener { viewModel.onRefresh() }
-        RxView.clicks(compose).subscribe {
-            // TODO: add entry point to compose view here
-        }
+        RxView.clicks(compose).subscribe { }
+        RxView.clicks(drawer).subscribe { }
+        RxView.clicks(archived).subscribe { }
+        RxView.clicks(scheduled).subscribe { }
+        RxView.clicks(blocked).subscribe { }
+        RxView.clicks(settings).subscribe { }
     }
 
     override fun onNewIntent(intent: Intent?) {
