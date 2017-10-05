@@ -50,10 +50,11 @@
             android:id="@+id/snippet"
             style="@style/TextSecondary"
             android:layout_width="wrap_content"
-            android:ellipsize="end"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             tools:text="Hey! How's it going?" />
 
     </LinearLayout>

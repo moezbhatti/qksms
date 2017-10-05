@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.DateFormatter
@@ -13,13 +14,15 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.ContactRepository
+import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
+import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, MessageViewHolder>(data, true) {
+class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, QkViewHolder>(data, true) {
 
     companion object {
         private val VIEWTYPE_ME = -1
@@ -37,7 +40,7 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
         AppComponentManager.appComponent.inject(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MessageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
         val layoutRes: Int
         val bubbleColor: Int
         when (viewType) {
@@ -52,69 +55,72 @@ class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerView
         }
 
         val layoutInflater = LayoutInflater.from(context)
-        val viewHolder = MessageViewHolder(layoutInflater.inflate(layoutRes, parent, false))
-        viewHolder.body.setBackgroundTint(bubbleColor)
+        val view = layoutInflater.inflate(layoutRes, parent, false)
+
+        view.body.setBackgroundTint(bubbleColor)
 
         if (viewType != VIEWTYPE_ME) {
-            viewHolder.avatar?.contact = contactRepo.getContactFromCache(people[viewType])
+            view.avatar?.contact = contactRepo.getContactFromCache(people[viewType])
         }
 
-        return viewHolder
+        return QkViewHolder(view)
     }
 
-    override fun onBindViewHolder(viewHolder: MessageViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val message = getItem(position)!!
+        val view = viewHolder.itemView
 
-        viewHolder.itemView.setOnClickListener { Timber.v(message.toString()) }
+        RxView.clicks(view).subscribe { Timber.v(message.toString()) }
+        bindGrouping(view, position)
 
-        bindGrouping(viewHolder, position)
-
-        viewHolder.status?.visibility = when {
+        view.status?.visibility = when {
             message.isSending() || message.isFailedMessage() -> View.VISIBLE
             else -> View.GONE
         }
-        viewHolder.status?.text = when {
+
+        view.status?.text = when {
             message.isSending() -> "Sending..."
             message.isFailedMessage() -> "Failed to send. Tap to try again"
             else -> null
         }
 
-        viewHolder.body.text = message.body
-        viewHolder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+        view.body.text = message.body
+        view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
 
-    private fun bindGrouping(viewHolder: MessageViewHolder, position: Int) {
+    private fun bindGrouping(view: View, position: Int) {
         val message = getItem(position)!!
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
 
         val diff = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
-        viewHolder.timestamp.visibility = if (diff < TIMESTAMP_THRESHOLD) View.GONE else View.VISIBLE
 
         val sent = message.isMe()
         val canGroupWithPrevious = canGroup(message, previous)
         val canGroupWithNext = canGroup(message, next)
 
+        view.timestamp.visibility = if (diff < TIMESTAMP_THRESHOLD) View.GONE else View.VISIBLE
+
         when {
             !canGroupWithPrevious && canGroupWithNext -> {
-                viewHolder.itemView.setPadding(bottom = 2.dpToPx(context))
-                viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
-                viewHolder.avatar?.visibility = View.INVISIBLE
+                view.setPadding(bottom = 2.dpToPx(context))
+                view.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
+                view.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && canGroupWithNext -> {
-                viewHolder.itemView.setPadding(bottom = 2.dpToPx(context))
-                viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
-                viewHolder.avatar?.visibility = View.INVISIBLE
+                view.setPadding(bottom = 2.dpToPx(context))
+                view.body.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
+                view.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && !canGroupWithNext -> {
-                viewHolder.itemView.setPadding(bottom = 16.dpToPx(context))
-                viewHolder.body.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
-                viewHolder.avatar?.visibility = View.VISIBLE
+                view.setPadding(bottom = 16.dpToPx(context))
+                view.body.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
+                view.avatar?.visibility = View.VISIBLE
             }
             else -> {
-                viewHolder.itemView.setPadding(bottom = 16.dpToPx(context))
-                viewHolder.body.setBackgroundResource(R.drawable.message_only)
-                viewHolder.avatar?.visibility = View.VISIBLE
+                view.setPadding(bottom = 16.dpToPx(context))
+                view.body.setBackgroundResource(R.drawable.message_only)
+                view.avatar?.visibility = View.VISIBLE
             }
         }
     }
