@@ -103,6 +103,13 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                // do not show animations when scroll is not idle because it looks weird
+                mAdapter.setAnimationsEnabled(newState == RecyclerView.SCROLL_STATE_IDLE);
+            }
+        });
 
         mFab.setColorNormal(ThemeManager.getColor());
         mFab.setColorPressed(ColorUtils.lighten(ThemeManager.getColor()));
@@ -244,6 +251,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     public void onItemClick(Conversation conversation, View view) {
         if (mAdapter.isInMultiSelectMode()) {
             mAdapter.toggleSelection(conversation.getThreadId(), conversation);
+            mAdapter.onItemClick(conversation, view);
         } else {
             MessageListActivity.launch(mContext, conversation.getThreadId(), -1, null, true);
         }
@@ -252,6 +260,7 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
     @Override
     public void onItemLongClick(final Conversation conversation, View view) {
         mAdapter.toggleSelection(conversation.getThreadId(), conversation);
+        mAdapter.onItemLongClick(conversation, view);
     }
 
     public void setPosition(int position) {

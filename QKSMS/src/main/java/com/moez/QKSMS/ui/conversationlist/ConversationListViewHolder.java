@@ -1,12 +1,18 @@
 package com.moez.QKSMS.ui.conversationlist;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.data.Contact;
 import com.moez.QKSMS.data.Conversation;
@@ -31,6 +37,7 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
     protected ImageView errorIndicator;
     protected AvatarView mAvatarView;
     protected ImageView mSelected;
+    private int mAvatarNoMultiSelectMargin;
 
     public ConversationListViewHolder(QKActivity context, View view) {
         super(context, view);
@@ -45,6 +52,8 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
         errorIndicator = (ImageView) view.findViewById(R.id.conversation_list_error);
         mAvatarView = (AvatarView) view.findViewById(R.id.conversation_list_avatar);
         mSelected = (ImageView) view.findViewById(R.id.selected);
+
+        mAvatarNoMultiSelectMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, -40, context.getResources().getDisplayMetrics());
     }
 
     @Override
@@ -110,5 +119,61 @@ public class ConversationListViewHolder extends ClickyViewHolder<Conversation> i
         }
 
         return buf;
+    }
+
+    /**
+     * Play the expand animation
+     */
+    public void expand() {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(mAvatarNoMultiSelectMargin, 0);
+        valueAnimator.addUpdateListener(animation -> {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mAvatarView.getLayoutParams();
+            layoutParams.leftMargin = (int) animation.getAnimatedValue();
+            mAvatarView.setLayoutParams(layoutParams);
+        });
+        valueAnimator
+                .setDuration(200)
+                .addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mSelected.setVisibility(View.VISIBLE);
+                    }
+                });
+
+        valueAnimator.start();
+    }
+
+    /**
+     * Expand using no animation
+     */
+    public void expandNoAnim() {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mAvatarView.getLayoutParams();
+        layoutParams.leftMargin = 0;
+        mAvatarView.setLayoutParams(layoutParams);
+    }
+
+    /**
+     * Play the collapse animation
+     */
+    public void collapse() {
+        mSelected.setVisibility(View.INVISIBLE);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mAvatarNoMultiSelectMargin);
+        valueAnimator.addUpdateListener(animation -> {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mAvatarView.getLayoutParams();
+            layoutParams.leftMargin = (int) animation.getAnimatedValue();
+            mAvatarView.setLayoutParams(layoutParams);
+        });
+        valueAnimator
+                .setDuration(200)
+                .start();
+    }
+
+    /**
+     * Expand using no animation
+     */
+    public void collapseNoAnim() {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mAvatarView.getLayoutParams();
+        layoutParams.leftMargin = mAvatarNoMultiSelectMargin;
+        mAvatarView.setLayoutParams(layoutParams);
     }
 }

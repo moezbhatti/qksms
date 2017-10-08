@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.FontManager;
@@ -23,6 +25,7 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
 
     private final SharedPreferences mPrefs;
+    private boolean mAnimationsEnabled = true;
 
     public ConversationListAdapter(QKActivity context) {
         super(context);
@@ -93,6 +96,11 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
         if (isInMultiSelectMode()) {
             holder.mSelected.setVisibility(View.VISIBLE);
+            if (mAnimationsEnabled) {
+                holder.expand();
+            } else {
+                holder.expandNoAnim();
+            }
             if (isSelected(conversation.getThreadId())) {
                 holder.mSelected.setImageResource(R.drawable.ic_selected);
                 holder.mSelected.setColorFilter(ThemeManager.getColor());
@@ -103,7 +111,12 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
                 holder.mSelected.setAlpha(0.5f);
             }
         } else {
-            holder.mSelected.setVisibility(View.GONE);
+            if (mAnimationsEnabled) {
+                holder.collapse();
+            } else {
+                holder.collapseNoAnim();
+            }
+            holder.mSelected.setVisibility(View.INVISIBLE);
         }
 
         LiveViewManager.registerView(QKPreference.HIDE_AVATAR_CONVERSATIONS, this, key -> {
@@ -124,5 +137,81 @@ public class ConversationListAdapter extends RecyclerCursorAdapter<ConversationL
 
         // Update the avatar and name
         holder.onUpdate(conversation.getRecipients().size() == 1 ? conversation.getRecipients().get(0) : null);
+    }
+
+    @Override
+    public void setSelected(long threadId, Conversation object) {
+        if (!mSelectedItems.containsKey(threadId)) {
+            mSelectedItems.put(threadId, object);
+
+            if (mMultiSelectListener != null) {
+                mMultiSelectListener.onItemAdded(threadId);
+
+                if (mSelectedItems.size() == 1) {
+                    mMultiSelectListener.onMultiSelectStateChanged(true);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setUnselected(long threadId) {
+        if (mSelectedItems.containsKey(threadId)) {
+            mSelectedItems.remove(threadId);
+
+            if (mMultiSelectListener != null) {
+                mMultiSelectListener.onItemRemoved(threadId);
+
+                if (mSelectedItems.size() == 0) {
+                    mMultiSelectListener.onMultiSelectStateChanged(false);
+                }
+            }
+        }
+    }
+
+    /**
+     * Enable or disable animations for expand or collapse items on long click
+     *
+     * @param animationsEnabled true for enabling or false otherwise
+     */
+    public void setAnimationsEnabled(boolean animationsEnabled) {
+        this.mAnimationsEnabled = animationsEnabled;
+    }
+
+    /**
+     * Called when an items was long clicked
+     *
+     * @param conversation which was clicked
+     * @param view         which was clicked
+     */
+    public void onItemLongClick(Conversation conversation, View view) {
+        // if this is the only item selected then we need to play the animations
+        if (mSelectedItems.size() == 1 && isSelected(conversation.getThreadId())) {
+            notifyDataSetChanged();
+        }
+        onItemClick(conversation, view);
+    }
+
+    /**
+     * Called when an item was clicked
+     *
+     * @param conversation which was clicked
+     * @param view         which was clicked
+     */
+    public void onItemClick(Conversation conversation, View view) {
+        ImageView chechmarkView = (ImageView) view.findViewById(R.id.selected);
+        if (isSelected(conversation.getThreadId())) {
+            chechmarkView.setImageResource(R.drawable.ic_selected);
+            chechmarkView.setColorFilter(ThemeManager.getColor());
+            chechmarkView.setAlpha(1f);
+        } else {
+            chechmarkView.setImageResource(R.drawable.ic_unselected);
+            chechmarkView.setColorFilter(ThemeManager.getTextOnBackgroundSecondary());
+            chechmarkView.setAlpha(0.5f);
+        }
+
+        if (mSelectedItems.size() == 0) {
+            notifyDataSetChanged();
+        }
     }
 }
