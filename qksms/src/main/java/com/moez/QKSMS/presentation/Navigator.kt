@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
+import com.moez.QKSMS.presentation.conversations.ConversationsViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
 import javax.inject.Inject
@@ -28,8 +29,14 @@ class Navigator @Inject constructor(val context: Context) {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return when (modelClass) {
+
+                ConversationsViewModel::class.java -> {
+                    ConversationsViewModel()
+                }
+
                 MessagesViewModel::class.java -> {
-                    MessagesViewModel(intent.getLongExtra("threadId", 0))
+                    val threadId = intent.getLongExtra("threadId", 0)
+                    MessagesViewModel(threadId)
                 }
 
                 else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")

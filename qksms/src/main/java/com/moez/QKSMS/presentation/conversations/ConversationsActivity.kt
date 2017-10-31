@@ -1,8 +1,6 @@
 package com.moez.QKSMS.presentation.conversations
 
 import android.Manifest
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
@@ -23,12 +21,11 @@ import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class ConversationsActivity : QkActivity(), ConversationsView {
+class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsState>(), ConversationsView {
 
     @Inject lateinit var navigator: Navigator
 
-    private lateinit var viewModel: ConversationsViewModel
-
+    override val viewModelClass = ConversationsViewModel::class
     override val composeIntent by lazy { compose.clicks() }
     override val archivedIntent by lazy { archived.clicks() }
     override val scheduledIntent by lazy { scheduled.clicks() }
@@ -41,9 +38,6 @@ class ConversationsActivity : QkActivity(), ConversationsView {
         setContentView(R.layout.conversation_list_activity)
         ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
         requestPermissions()
-
-        viewModel = ViewModelProviders.of(this)[ConversationsViewModel::class.java]
-        viewModel.state.observe(this, Observer { it?.let { render(it) } })
         viewModel.setView(this)
 
         conversationList.layoutManager = LinearLayoutManager(this)

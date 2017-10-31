@@ -1,7 +1,5 @@
 package com.moez.QKSMS.presentation.messages
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,19 +10,18 @@ import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_activity.*
 import javax.inject.Inject
 
-class MessagesActivity : QkActivity(), MessagesView {
+class MessagesActivity : QkActivity<MessagesViewModel, MessagesState>(), MessagesView {
 
     @Inject lateinit var themeManager: ThemeManager
 
     private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var viewModel: MessagesViewModel
 
+    override val viewModelClass = MessagesViewModel::class
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
     override val sendIntent by lazy { send.clicks() }
@@ -34,9 +31,6 @@ class MessagesActivity : QkActivity(), MessagesView {
         AppComponentManager.appComponent.inject(this)
         setContentView(R.layout.message_list_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        viewModel = ViewModelProviders.of(this, Navigator.ViewModelFactory(intent))[MessagesViewModel::class.java]
-        viewModel.state.observe(this, Observer { it?.let { render(it) } })
         viewModel.setView(this)
 
         attach.setTint(themeManager.color)
