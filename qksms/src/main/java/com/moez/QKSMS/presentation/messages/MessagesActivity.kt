@@ -5,8 +5,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import com.jakewharton.rxbinding2.view.RxView
-import com.jakewharton.rxbinding2.widget.RxTextView
+import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
@@ -22,8 +22,12 @@ class MessagesActivity : QkActivity(), MessagesView {
 
     @Inject lateinit var themeManager: ThemeManager
 
-    private lateinit var viewModel: MessagesViewModel
     private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var viewModel: MessagesViewModel
+
+    override val textChangedIntent by lazy { message.textChanges() }
+    override val attachIntent by lazy { attach.clicks() }
+    override val sendIntent by lazy { send.clicks() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,17 +37,13 @@ class MessagesActivity : QkActivity(), MessagesView {
 
         viewModel = ViewModelProviders.of(this, Navigator.ViewModelFactory(intent))[MessagesViewModel::class.java]
         viewModel.state.observe(this, Observer { it?.let { render(it) } })
-        viewModel.view = this
+        viewModel.setView(this)
 
         attach.setTint(themeManager.color)
 
         layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = true
         messageList.layoutManager = layoutManager
-
-        RxTextView.textChanges(message).subscribe { text -> viewModel.textChanged(text.toString()) }
-        RxView.clicks(attach).subscribe { }
-        RxView.clicks(send).subscribe { viewModel.sendMessage(message.text.toString()) }
     }
 
     override fun render(state: MessagesState) {

@@ -33,19 +33,22 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
         }
     }
 
-    fun sendMessage(body: String) {
-        conversation.takeIf { conversation -> conversation.isValid }?.let { conversation ->
-            sendMessage.execute(SendMessage.Params(threadId, conversation.contacts[0].address, body))
+    override fun bindIntents(view: MessagesView) {
+        super.bindIntents(view)
+
+        view.textChangedIntent.subscribe { text ->
+            newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
+        }
+
+        view.sendIntent.subscribe {
+            val previousState = state.value!!
+            sendMessage.execute(SendMessage.Params(threadId, conversation.contacts[0].address, previousState.draft))
             newState { it.copy(draft = "", canSend = false) }
         }
     }
 
     fun dataChanged() {
         markRead.execute(threadId)
-    }
-
-    fun textChanged(text: String) {
-        newState { it.copy(draft = text, canSend = text.isNotEmpty()) }
     }
 
     override fun onCleared() {

@@ -7,7 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
-import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.view.clicks
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -29,28 +29,30 @@ class ConversationsActivity : QkActivity(), ConversationsView {
 
     private lateinit var viewModel: ConversationsViewModel
 
+    override val composeIntent by lazy { compose.clicks() }
+    override val archivedIntent by lazy { archived.clicks() }
+    override val scheduledIntent by lazy { scheduled.clicks() }
+    override val blockedIntent by lazy { blocked.clicks() }
+    override val settingsIntent by lazy { settings.clicks() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppComponentManager.appComponent.inject(this)
         setContentView(R.layout.conversation_list_activity)
         ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
-
-        onNewIntent(intent)
         requestPermissions()
 
         viewModel = ViewModelProviders.of(this)[ConversationsViewModel::class.java]
         viewModel.state.observe(this, Observer { it?.let { render(it) } })
-        viewModel.view = this
+        viewModel.setView(this)
 
         conversationList.layoutManager = LinearLayoutManager(this)
 
-        swipeRefresh.setOnRefreshListener { viewModel.onRefresh() }
-        RxView.clicks(compose).subscribe { }
-        RxView.clicks(drawer).subscribe { }
-        RxView.clicks(archived).subscribe { }
-        RxView.clicks(scheduled).subscribe { }
-        RxView.clicks(blocked).subscribe { }
-        RxView.clicks(settings).subscribe { }
+        // Don't allow clicks to pass through the drawer layout
+        drawer.clicks().subscribe()
+
+        // Refresh support for debugging purposes
+        swipeRefresh.setOnRefreshListener { viewModel.onRefresh() } // TODO remove
     }
 
     override fun onNewIntent(intent: Intent?) {

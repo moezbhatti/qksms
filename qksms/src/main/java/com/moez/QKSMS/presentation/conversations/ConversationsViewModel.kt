@@ -26,6 +26,16 @@ class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState
         markAllSeen.execute(Unit)
     }
 
+    override fun bindIntents(view: ConversationsView) {
+        super.bindIntents(view)
+
+        view.composeIntent.subscribe()
+        view.archivedIntent.subscribe()
+        view.scheduledIntent.subscribe()
+        view.blockedIntent.subscribe()
+        view.settingsIntent.subscribe()
+    }
+
     fun onRefresh() {
         newState { it.copy(refreshing = true) }
         syncConversations.execute(Unit, {
