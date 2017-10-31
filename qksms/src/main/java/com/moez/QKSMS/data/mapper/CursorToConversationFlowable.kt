@@ -7,21 +7,24 @@ import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.repository.ContactRepository
 import io.reactivex.Flowable
+import io.reactivex.rxkotlin.toFlowable
 import javax.inject.Inject
 
-class CursorToConversationFlowable @Inject constructor(val contactsRepo: ContactRepository) : Mapper<Cursor, Flowable<Conversation>> {
+class CursorToConversationFlowable @Inject constructor(private val contactsRepo: ContactRepository) : Mapper<Cursor, Flowable<Conversation>> {
 
     override fun map(from: Cursor): Flowable<Conversation> {
         return from.asFlowable().map { cursor ->
-            Conversation().apply {
-                id = cursor.getLong(ID)
+            val conversation = Conversation()
 
-                cursor.getString(RECIPIENT_IDS).split(" ")
-                        .map { id -> id.toLong() }
-                        .map { id -> contactsRepo.getContactBlocking(id) }
-                        .filter { contact -> contact.recipientId != 0L }
-                        .forEach { contact -> contacts.add(contact) }
-            }
+            conversation.id = cursor.getLong(ID)
+
+            conversation.contacts.addAll(cursor.getString(RECIPIENT_IDS).split(" ").toFlowable()
+                    .map { id -> id.toLong() }
+                    .flatMap { id -> contactsRepo.getContact(id) }
+                    .filter { contact -> contact.recipientId != 0L }
+                    .blockingIterable())
+
+            conversation
         }
     }
 

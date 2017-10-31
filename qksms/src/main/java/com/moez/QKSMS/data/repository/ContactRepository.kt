@@ -8,6 +8,7 @@ import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.ContactsContract
 import com.moez.QKSMS.data.model.Contact
+import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,23 +24,25 @@ class ContactRepository @Inject constructor(val context: Context) {
      */
     private val URI = Uri.parse("content://mms-sms/canonical-address")
 
-    /**
-     * This function is not asynchronous, and potentially very slow. Make sure to
-     * execute off of the main thread. At the time of writing
-     */
-    fun getContactBlocking(recipientId: Long): Contact {
-        // First, try loading the conversation from Realm
+    fun getContact(recipientId: Long): Flowable<Contact> {
+       return Flowable.fromPublisher<Contact> { emitter ->
+            val contact = getContactFromRealm(recipientId) ?: getContactFromDb(recipientId)
+            contact?.let { emitter.onNext(it) }
+            emitter.onComplete()
+        }
+    }
+
+    private fun getContactFromRealm(recipientId: Long): Contact? {
         val realm = Realm.getDefaultInstance()
         val results = realm.where(Contact::class.java)
                 .equalTo("recipientId", recipientId)
                 .findAll()
 
-        if (results.size > 0) {
-            realm.close()
-            return results[0]
-        }
+        realm.close()
+        return results.getOrNull(0)
+    }
 
-        // If it's not found, then load from the Contacts ContentProvider instead
+    private fun getContactFromDb(recipientId: Long): Contact? {
         var contact: Contact? = null
 
         val recipientCursor = context.contentResolver.query(Uri.withAppendedPath(URI, recipientId.toString()), null, null, null, null)
@@ -51,7 +54,8 @@ class ContactRepository @Inject constructor(val context: Context) {
         val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact?.address))
         var contactCursor: Cursor? = null
         try {
-            contactCursor = context.contentResolver.query(contactUri, arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.Data.PHOTO_THUMBNAIL_URI), null, null, null)
+            val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.Data.PHOTO_THUMBNAIL_URI)
+            contactCursor = context.contentResolver.query(contactUri, projection, null, null, null)
             if (contactCursor.moveToFirst()) {
                 contact?.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME))
                 contact?.photoUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI))
@@ -61,13 +65,7 @@ class ContactRepository @Inject constructor(val context: Context) {
             contactCursor?.close()
         }
 
-        if (contact != null) {
-            realm.close()
-            return contact
-        }
-
-        // If it's still not found then return an empty Contact object
-        return Contact()
+        return contact
     }
 
     fun getContactFromCache(address: String): Contact? {
