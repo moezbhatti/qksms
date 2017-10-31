@@ -1,7 +1,6 @@
 package com.moez.QKSMS.data.repository
 
 import android.content.Context
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -25,7 +24,7 @@ class ContactRepository @Inject constructor(val context: Context) {
     private val URI = Uri.parse("content://mms-sms/canonical-address")
 
     fun getContact(recipientId: Long): Flowable<Contact> {
-       return Flowable.fromPublisher<Contact> { emitter ->
+        return Flowable.fromPublisher<Contact> { emitter ->
             val contact = getContactFromRealm(recipientId) ?: getContactFromDb(recipientId)
             contact?.let { emitter.onNext(it) }
             emitter.onComplete()
@@ -43,29 +42,23 @@ class ContactRepository @Inject constructor(val context: Context) {
     }
 
     private fun getContactFromDb(recipientId: Long): Contact? {
-        var contact: Contact? = null
-
         val recipientCursor = context.contentResolver.query(Uri.withAppendedPath(URI, recipientId.toString()), null, null, null, null)
         if (recipientCursor.moveToFirst()) {
-            contact = Contact(recipientId, recipientCursor.getString(0))
+            val contact = Contact(recipientId, recipientCursor.getString(0))
+
+            val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact.address))
+            val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.Data.PHOTO_THUMBNAIL_URI)
+            val contactCursor = context.contentResolver.query(contactUri, projection, null, null, null)
+            if (contactCursor.moveToFirst()) {
+                contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)).orEmpty()
+                contact.photoUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI)).orEmpty()
+            }
+            contactCursor.close()
+            return contact
         }
         recipientCursor.close()
 
-        val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact?.address))
-        var contactCursor: Cursor? = null
-        try {
-            val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.Data.PHOTO_THUMBNAIL_URI)
-            contactCursor = context.contentResolver.query(contactUri, projection, null, null, null)
-            if (contactCursor.moveToFirst()) {
-                contact?.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME))
-                contact?.photoUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI))
-            }
-        } catch (ignored: Exception) {
-        } finally {
-            contactCursor?.close()
-        }
-
-        return contact
+        return null
     }
 
     fun getContactFromCache(address: String): Contact? {
