@@ -40,6 +40,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.1.0'
     compile 'com.bugsnag:bugsnag-android:3.9.0'
+    compile 'com.github.bumptech.glide:glide:4.3.0'
     compile "com.google.dagger:dagger:2.11"
     compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
     compile 'com.jakewharton.timber:timber:4.5.1'

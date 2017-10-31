@@ -5,15 +5,12 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import com.bumptech.glide.Glide
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
-import com.moez.QKSMS.data.model.Contact
-import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.common.util.extensions.getColorCompat
-import io.reactivex.disposables.Disposable
+import com.moez.QKSMS.data.model.Contact
 import kotlinx.android.synthetic.main.avatar_view.view.*
-import javax.inject.Inject
-
 
 class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : FrameLayout(context, attrs, defStyleAttr) {
 
@@ -23,9 +20,6 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
             updateView()
         }
 
-    @Inject lateinit var contactRepo: ContactRepository
-
-    private var avatarRequest: Disposable? = null
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context) : this(context, null, 0)
@@ -47,12 +41,11 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
     }
 
     private fun updateView() {
-        avatarRequest?.dispose()
         photo.setImageDrawable(null)
         initial.text = "?"
 
         contact?.let { contact ->
-            avatarRequest = contactRepo.getAvatar(contact.photoUri).subscribe({ photo.setImageBitmap(it) }, {})
+            Glide.with(photo).load(contact.photoUri).into(photo)
             initial.text = if (contact.name.isNotEmpty()) contact.name.substring(0, 1) else "?"
         }
     }

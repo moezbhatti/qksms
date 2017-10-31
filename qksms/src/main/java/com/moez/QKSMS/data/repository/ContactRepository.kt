@@ -1,16 +1,11 @@
 package com.moez.QKSMS.data.repository
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.ContactsContract
 import com.moez.QKSMS.data.model.Contact
 import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -68,21 +63,6 @@ class ContactRepository @Inject constructor(val context: Context) {
                 .findFirst()
         realm.close()
         return contact
-    }
-
-    // TODO cache the photos
-    fun getAvatar(uriString: String): Maybe<Bitmap> {
-        return Maybe.just(uriString)
-                .subscribeOn(Schedulers.io())
-                .filter { string -> string.isNotEmpty() }
-                .map { string -> Uri.parse(string) }
-                .map { uri -> context.contentResolver.openAssetFileDescriptor(uri, "r") }
-                .map { assetFileDescriptor ->
-                    val bitmap = BitmapFactory.decodeFileDescriptor(assetFileDescriptor.fileDescriptor, null, null)
-                    assetFileDescriptor.close()
-                    bitmap
-                }
-                .observeOn(AndroidSchedulers.mainThread())
     }
 
 }
