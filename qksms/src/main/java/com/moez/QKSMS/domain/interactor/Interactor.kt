@@ -11,7 +11,7 @@ abstract class Interactor<T, in Params> {
 
     abstract fun buildObservable(params: Params): Flowable<T>
 
-    fun execute(observer: ((T) -> Unit), params: Params) {
+    fun execute(params: Params, observer: (T) -> Unit = {}) {
         disposables.add(buildObservable(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -32,12 +32,12 @@ class ConversationListViewModel : ViewModel() {
         conversations = messageRepo.getConversationMessagesAsync()
         partialStates.onNext(PartialState.ConversationsLoaded(conversations))
 
-        markAllSeen.execute({}, Unit)
+        markAllSeen.execute(Unit)
     }
 
     fun onRefresh() {
         partialStates.onNext(PartialState.Refreshing(true))
-        syncConversations.execute({ partialStates.onNext(PartialState.Refreshing(false)) }, Unit)
+        syncConversations.execute(Unit, { partialStates.onNext(PartialState.Refreshing(false)) })
     }
 
     override fun onCleared() {

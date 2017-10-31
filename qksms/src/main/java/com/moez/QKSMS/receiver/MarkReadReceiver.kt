@@ -15,7 +15,7 @@ class MarkReadReceiver : BroadcastReceiver() {
         AppComponentManager.appComponent.inject(this)
 
         val threadId = intent.getLongExtra("threadId", 0)
-        markRead.execute({}, threadId)
+        markRead.execute(threadId)
     }
 
 }

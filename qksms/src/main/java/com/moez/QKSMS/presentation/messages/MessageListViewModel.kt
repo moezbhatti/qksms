@@ -52,13 +52,13 @@ class MessageListViewModel : ViewModel() {
 
     fun sendMessage(body: String) {
         conversation?.takeIf { conversation -> conversation.isValid }?.let { conversation ->
-            sendMessage.execute({}, SendMessage.Params(threadId, conversation.contacts[0].address, body))
+            sendMessage.execute(SendMessage.Params(threadId, conversation.contacts[0].address, body))
             partialStates.onNext(PartialState.TextChanged(""))
         }
     }
 
     fun dataChanged() {
-        markRead.execute({}, threadId)
+        markRead.execute(threadId)
     }
 
     fun textChanged(text: String) {

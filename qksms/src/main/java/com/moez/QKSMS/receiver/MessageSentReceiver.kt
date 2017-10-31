@@ -22,12 +22,12 @@ class MessageSentReceiver : BroadcastReceiver() {
         val uri = Uri.parse(intent.getStringExtra("uri"))
 
         when (resultCode) {
-            Activity.RESULT_OK -> markSent.execute({}, uri)
+            Activity.RESULT_OK -> markSent.execute(uri)
 
             SmsManager.RESULT_ERROR_GENERIC_FAILURE,
             SmsManager.RESULT_ERROR_NO_SERVICE,
             SmsManager.RESULT_ERROR_NULL_PDU,
-            SmsManager.RESULT_ERROR_RADIO_OFF -> markFailed.execute({}, MarkFailed.Params(uri, resultCode))
+            SmsManager.RESULT_ERROR_RADIO_OFF -> markFailed.execute(MarkFailed.Params(uri, resultCode))
         }
     }
 }

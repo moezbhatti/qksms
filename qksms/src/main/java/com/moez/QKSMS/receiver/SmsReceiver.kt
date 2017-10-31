@@ -26,7 +26,7 @@ class SmsReceiver : BroadcastReceiver() {
                     .reduce { body, new -> body + new }
 
             val pendingResult = goAsync()
-            receiveMessage.execute({ pendingResult.finish() }, ReceiveMessage.Params(address, body, time))
+            receiveMessage.execute(ReceiveMessage.Params(address, body, time), { pendingResult.finish() })
         }
     }
 

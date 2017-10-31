@@ -23,8 +23,8 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
             val address = bundle.getString("address")
             val threadId = bundle.getLong("threadId")
             val body = remoteInput.getCharSequence("body").toString()
-            markRead.execute({}, threadId)
-            sendMessage.execute({}, SendMessage.Params(threadId, address, body))
+            markRead.execute(threadId)
+            sendMessage.execute(SendMessage.Params(threadId, address, body))
         }
     }
 }

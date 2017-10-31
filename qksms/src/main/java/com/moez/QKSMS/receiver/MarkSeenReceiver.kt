@@ -15,7 +15,7 @@ class MarkSeenReceiver : BroadcastReceiver() {
         AppComponentManager.appComponent.inject(this)
 
         val threadId = intent.getLongExtra("threadId", 0)
-        markSeen.execute({}, threadId)
+        markSeen.execute(threadId)
     }
 
 }
