@@ -21,7 +21,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MessageRepository @Inject constructor(private val context: Context) {
+class MessageRepository @Inject constructor(
+        private val context: Context,
+        private val cursorToMessageFlowable: CursorToMessageFlowable) {
 
     fun getConversationMessagesAsync(): RealmResults<Message> {
         return Realm.getDefaultInstance()
@@ -158,7 +160,7 @@ class MessageRepository @Inject constructor(private val context: Context) {
 
     fun addMessageFromUri(uri: Uri) {
         val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
-        CursorToMessageFlowable().map(cursor)
+        cursorToMessageFlowable.map(cursor)
                 .subscribe { message -> message.insertOrUpdate() }
     }
 

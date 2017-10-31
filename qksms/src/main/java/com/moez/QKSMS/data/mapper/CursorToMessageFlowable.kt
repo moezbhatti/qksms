@@ -1,5 +1,6 @@
 package com.moez.QKSMS.data.mapper
 
+import android.content.Context
 import android.database.Cursor
 import android.provider.Telephony.*
 import com.moez.QKSMS.common.util.extensions.asFlowable
@@ -8,7 +9,7 @@ import io.reactivex.Flowable
 import timber.log.Timber
 import javax.inject.Inject
 
-class CursorToMessageFlowable @Inject constructor() : Mapper<Cursor, Flowable<Message>> {
+class CursorToMessageFlowable @Inject constructor(val context: Context) : Mapper<Cursor, Flowable<Message>> {
 
     override fun map(from: Cursor): Flowable<Message> {
         val columnsMap = MessageColumns(from)
@@ -35,7 +36,7 @@ class CursorToMessageFlowable @Inject constructor() : Mapper<Cursor, Flowable<Me
 
                     "mms" -> {
                         threadId = cursor.getLong(columnsMap.mmsThreadId)
-                        boxId = cursor.getInt(columnsMap.mmsMessageBox)
+                        address = getMmsAddress(id)
                         date = cursor.getLong(columnsMap.smsDate)
                         dateSent = cursor.getLong(columnsMap.smsDateSent)
                         seen = cursor.getInt(columnsMap.smsSeen) != 0
@@ -45,6 +46,19 @@ class CursorToMessageFlowable @Inject constructor() : Mapper<Cursor, Flowable<Me
                 }
             }
         }
+    }
+
+    private fun getMmsAddress(messageId: Long): String {
+        val uri = Mms.CONTENT_URI.buildUpon().appendPath(messageId.toString()).appendPath("addr").build()
+        val projection = arrayOf(Mms.Addr.ADDRESS, Mms.Addr.CHARSET)
+        val selection = "${Mms.Addr.TYPE} = 137"
+
+        context.contentResolver.query(uri, projection, selection, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                return cursor.getString(0)
+            }
+        }
+        return ""
     }
 
     companion object {
@@ -65,6 +79,7 @@ class CursorToMessageFlowable @Inject constructor() : Mapper<Cursor, Flowable<Me
                 Sms.ERROR_CODE,
 
                 Mms.THREAD_ID,
+                Mms.Addr.ADDRESS,
                 Mms.SUBJECT,
                 Mms.SUBJECT_CHARSET,
                 Mms.DATE,
@@ -99,6 +114,7 @@ class CursorToMessageFlowable @Inject constructor() : Mapper<Cursor, Flowable<Me
         val smsErrorCode by lazy { getColumnIndex(Sms.ERROR_CODE) }
 
         val mmsThreadId by lazy { getColumnIndex(Mms.THREAD_ID) }
+        val mmsAddress by lazy { getColumnIndex(Mms.Addr.ADDRESS) }
         val mmsSubject by lazy { getColumnIndex(Mms.SUBJECT) }
         val mmsSubjectCharset by lazy { getColumnIndex(Mms.SUBJECT_CHARSET) }
         val mmsDate by lazy { getColumnIndex(Mms.DATE) }
