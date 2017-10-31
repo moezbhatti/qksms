@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.moez.QKSMS.presentation.conversations.ConversationListActivity"
+            android:name="com.moez.QKSMS.presentation.conversations.ConversationsActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,7 @@
                 <data android:scheme="sms_body" />
             </intent-filter>
         </activity>
-        <activity android:name="com.moez.QKSMS.presentation.messages.MessageListActivity" />
+        <activity android:name="com.moez.QKSMS.presentation.messages.MessagesActivity" />
 
         <receiver
             android:name=".receiver.SmsReceiver"

@@ -22,7 +22,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MessageAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, QkViewHolder>(data, true) {
+class MessagesAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, QkViewHolder>(data, true) {
 
     companion object {
         private val VIEWTYPE_ME = -1

@@ -15,7 +15,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
-import com.moez.QKSMS.presentation.conversations.ConversationListActivity
+import com.moez.QKSMS.presentation.conversations.ConversationsActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -60,7 +60,7 @@ class NotificationManager @Inject constructor(
                         style.addMessage(message.body, message.date, name)
                     }
 
-                    val contentIntent = Intent(context, ConversationListActivity::class.java).putExtra("threadId", threadId)
+                    val contentIntent = Intent(context, ConversationsActivity::class.java).putExtra("threadId", threadId)
                     val contentPI = PendingIntent.getActivity(context, threadId.toInt() + 10000, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                     val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)

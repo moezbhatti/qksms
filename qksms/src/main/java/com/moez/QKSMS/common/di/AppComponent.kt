@@ -1,11 +1,12 @@
 package com.moez.QKSMS.common.di
 
 import com.moez.QKSMS.common.util.NotificationManager
-import com.moez.QKSMS.presentation.conversations.ConversationAdapter
-import com.moez.QKSMS.presentation.conversations.ConversationListViewModel
-import com.moez.QKSMS.presentation.messages.MessageAdapter
-import com.moez.QKSMS.presentation.messages.MessageListActivity
-import com.moez.QKSMS.presentation.messages.MessageListViewModel
+import com.moez.QKSMS.presentation.conversations.ConversationsActivity
+import com.moez.QKSMS.presentation.conversations.ConversationsAdapter
+import com.moez.QKSMS.presentation.conversations.ConversationsViewModel
+import com.moez.QKSMS.presentation.messages.MessagesActivity
+import com.moez.QKSMS.presentation.messages.MessagesAdapter
+import com.moez.QKSMS.presentation.messages.MessagesViewModel
 import com.moez.QKSMS.presentation.view.AvatarView
 import com.moez.QKSMS.receiver.*
 import dagger.Component
@@ -15,10 +16,11 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
 
-    fun inject(activity: MessageListActivity)
+    fun inject(activity: ConversationsActivity)
+    fun inject(activity: MessagesActivity)
 
-    fun inject(adapter: MessageAdapter)
-    fun inject(adapter: ConversationAdapter)
+    fun inject(adapter: ConversationsAdapter)
+    fun inject(adapter: MessagesAdapter)
 
     fun inject(manager: NotificationManager)
 
@@ -31,7 +33,7 @@ interface AppComponent {
 
     fun inject(view: AvatarView)
 
-    fun inject(viewModel: ConversationListViewModel)
-    fun inject(viewModel: MessageListViewModel)
+    fun inject(viewModel: ConversationsViewModel)
+    fun inject(viewModel: MessagesViewModel)
 
 }

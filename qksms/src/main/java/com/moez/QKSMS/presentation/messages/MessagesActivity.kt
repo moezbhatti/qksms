@@ -9,19 +9,20 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
-import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.presentation.base.QkActivity
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setTint
+import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.presentation.Navigator
+import com.moez.QKSMS.presentation.base.QkActivity
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_activity.*
 import javax.inject.Inject
 
-class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
+class MessagesActivity : QkActivity(), MessagesView {
 
     @Inject lateinit var themeManager: ThemeManager
 
-    private lateinit var viewModel: MessageListViewModel
+    private lateinit var viewModel: MessagesViewModel
     private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +31,9 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
         setContentView(R.layout.message_list_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        viewModel = ViewModelProviders.of(this)[MessageListViewModel::class.java]
-        viewModel.threadId = intent.getLongExtra("threadId", 0)
-        viewModel.state.observe(this, this)
+        viewModel = ViewModelProviders.of(this, Navigator.ViewModelFactory(intent))[MessagesViewModel::class.java]
+        viewModel.state.observe(this, Observer { it?.let { render(it) } })
+        viewModel.view = this
 
         attach.setTint(themeManager.color)
 
@@ -45,20 +46,18 @@ class MessageListActivity : QkActivity(), Observer<MessageListViewState> {
         RxView.clicks(send).subscribe { viewModel.sendMessage(message.text.toString()) }
     }
 
-    override fun onChanged(state: MessageListViewState?) {
-        state?.let {
-            if (title != state.title) title = state.title
-            if (messageList.adapter == null && state.messages?.isValid == true) messageList.adapter = createAdapter(state.messages)
-            if (message.text.toString() != state.draft) message.setText(state.draft)
-            if (state.hasError) finish()
+    override fun render(state: MessagesState) {
+        if (title != state.title) title = state.title
+        if (messageList.adapter == null && state.messages?.isValid == true) messageList.adapter = createAdapter(state.messages)
+        if (message.text.toString() != state.draft) message.setText(state.draft)
+        if (state.hasError) finish()
 
-            send.setTint(if (state.canSend) themeManager.color else resources.getColor(R.color.textTertiary))
-            send.isEnabled = state.canSend
-        }
+        send.setTint(if (state.canSend) themeManager.color else resources.getColor(R.color.textTertiary))
+        send.isEnabled = state.canSend
     }
 
-    private fun createAdapter(messages: RealmResults<Message>): MessageAdapter {
-        val adapter = MessageAdapter(messages)
+    private fun createAdapter(messages: RealmResults<Message>): MessagesAdapter {
+        val adapter = MessagesAdapter(messages)
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)

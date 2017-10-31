@@ -9,7 +9,7 @@ import com.moez.QKSMS.presentation.base.QkViewModel
 import io.realm.RealmResults
 import javax.inject.Inject
 
-class ConversationListViewModel : QkViewModel<ConversationListViewState>(ConversationListViewState()) {
+class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState>(ConversationsState()) {
 
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var syncConversations: SyncConversations

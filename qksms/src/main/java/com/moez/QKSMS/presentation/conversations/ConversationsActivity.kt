@@ -14,27 +14,33 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
-import com.moez.QKSMS.presentation.messages.MessageListActivity
 import kotlinx.android.synthetic.main.conversation_list_activity.*
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
+import javax.inject.Inject
 
-class ConversationListActivity : QkActivity(), Observer<ConversationListViewState> {
+class ConversationsActivity : QkActivity(), ConversationsView {
 
-    private lateinit var viewModel: ConversationListViewModel
+    @Inject lateinit var navigator: Navigator
+
+    private lateinit var viewModel: ConversationsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppComponentManager.appComponent.inject(this)
         setContentView(R.layout.conversation_list_activity)
         ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
 
         onNewIntent(intent)
         requestPermissions()
 
-        viewModel = ViewModelProviders.of(this)[ConversationListViewModel::class.java]
-        viewModel.state.observe(this, this)
+        viewModel = ViewModelProviders.of(this)[ConversationsViewModel::class.java]
+        viewModel.state.observe(this, Observer { it?.let { render(it) } })
+        viewModel.view = this
 
         conversationList.layoutManager = LinearLayoutManager(this)
 
@@ -49,19 +55,17 @@ class ConversationListActivity : QkActivity(), Observer<ConversationListViewStat
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        intent?.getLongExtra("threadId", 0)?.takeIf { threadId -> threadId > 0 }?.let { threadId ->
-            startActivity(Intent(this, MessageListActivity::class.java).putExtra("threadId", threadId))
-        }
+        intent?.getLongExtra("threadId", 0)
+                ?.takeIf { threadId -> threadId > 0 }
+                ?.let { threadId -> navigator.showConversation(threadId) }
     }
 
-    override fun onChanged(state: ConversationListViewState?) {
-        state?.let {
-            if (conversationList.adapter == null && state.conversations?.isValid == true) {
-                conversationList.adapter = ConversationAdapter(state.conversations)
-            }
-
-            swipeRefresh.isRefreshing = state.refreshing
+    override fun render(state: ConversationsState) {
+        if (conversationList.adapter == null && state.conversations?.isValid == true) {
+            conversationList.adapter = ConversationsAdapter(state.conversations)
         }
+
+        swipeRefresh.isRefreshing = state.refreshing
     }
 
     private fun requestPermissions() {

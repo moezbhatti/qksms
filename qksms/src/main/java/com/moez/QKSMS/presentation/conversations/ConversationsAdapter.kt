@@ -1,7 +1,6 @@
 package com.moez.QKSMS.presentation.conversations
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
@@ -11,17 +10,18 @@ import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkViewHolder
-import com.moez.QKSMS.presentation.messages.MessageListActivity
 import io.realm.OrderedRealmCollection
 import io.realm.RealmList
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
-class ConversationAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, QkViewHolder>(data, true) {
+class ConversationsAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, QkViewHolder>(data, true) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var themeManager: ThemeManager
@@ -51,10 +51,7 @@ class ConversationAdapter(data: OrderedRealmCollection<Message>?) : RealmRecycle
         val conversation = messageRepo.getConversation(message.threadId)
         val view = viewHolder.itemView
 
-        RxView.clicks(view)
-                .map { Intent(context, MessageListActivity::class.java) }
-                .doOnNext { intent -> intent.putExtra("threadId", message.threadId) }
-                .subscribe { intent -> context.startActivity(intent) }
+        RxView.clicks(view).subscribe { navigator.showConversation(message.threadId) }
 
         view.avatars.contacts = conversation?.contacts ?: RealmList()
         view.title.text = conversation?.getTitle()
