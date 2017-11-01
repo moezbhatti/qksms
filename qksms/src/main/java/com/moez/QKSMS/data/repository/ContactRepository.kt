@@ -37,21 +37,21 @@ class ContactRepository @Inject constructor(val context: Context) {
     }
 
     private fun getContactFromDb(recipientId: Long): Contact? {
-        val recipientCursor = context.contentResolver.query(Uri.withAppendedPath(URI, recipientId.toString()), null, null, null, null)
-        if (recipientCursor.moveToFirst()) {
-            val contact = Contact(recipientId, recipientCursor.getString(0))
+        context.contentResolver.query(Uri.withAppendedPath(URI, recipientId.toString()), null, null, null, null)?.use { recipientCursor ->
+            if (recipientCursor.moveToFirst()) {
+                val contact = Contact(recipientId, recipientCursor.getString(0))
 
-            val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact.address))
-            val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.Data.PHOTO_THUMBNAIL_URI)
-            val contactCursor = context.contentResolver.query(contactUri, projection, null, null, null)
-            if (contactCursor.moveToFirst()) {
-                contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)).orEmpty()
-                contact.photoUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI)).orEmpty()
+                val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact.address))
+                val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.Data.PHOTO_THUMBNAIL_URI)
+                context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
+                    if (contactCursor.moveToFirst()) {
+                        contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)).orEmpty()
+                        contact.photoUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI)).orEmpty()
+                    }
+                }
+                return contact
             }
-            contactCursor.close()
-            return contact
         }
-        recipientCursor.close()
 
         return null
     }
