@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
+import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
 import com.jakewharton.rxbinding2.view.clicks
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -27,6 +29,7 @@ class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsSt
 
     override val viewModelClass = ConversationsViewModel::class
     override val composeIntent by lazy { compose.clicks() }
+    override val drawerOpenIntent by lazy { drawerLayout.drawerOpen(Gravity.START) }
     override val archivedIntent by lazy { archived.clicks() }
     override val scheduledIntent by lazy { scheduled.clicks() }
     override val blockedIntent by lazy { blocked.clicks() }
@@ -57,6 +60,9 @@ class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsSt
         if (conversationList.adapter == null && state.conversations?.isValid == true) {
             conversationList.adapter = ConversationsAdapter(state.conversations)
         }
+
+        if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
+        else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
     }
 
     private fun requestPermissions() {

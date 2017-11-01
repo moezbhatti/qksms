@@ -6,6 +6,7 @@ import io.reactivex.Observable
 interface ConversationsView : QkView<ConversationsState> {
 
     val composeIntent: Observable<Unit>
+    val drawerOpenIntent: Observable<Boolean>
     val archivedIntent: Observable<Unit>
     val scheduledIntent: Observable<Unit>
     val blockedIntent: Observable<Unit>

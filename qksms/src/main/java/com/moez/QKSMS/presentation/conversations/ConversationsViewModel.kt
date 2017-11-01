@@ -32,11 +32,30 @@ class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState
     override fun bindIntents(view: ConversationsView) {
         super.bindIntents(view)
 
-        intents += view.composeIntent.subscribe()
-        intents += view.archivedIntent.subscribe()
-        intents += view.scheduledIntent.subscribe()
-        intents += view.blockedIntent.subscribe()
-        intents += view.settingsIntent.subscribe { navigator.showSettings() }
+        intents += view.composeIntent.subscribe {
+            newState { it.copy(drawerOpen = false) }
+        }
+
+        intents += view.drawerOpenIntent.filter { it }.subscribe {
+            newState { it.copy(drawerOpen = true) }
+        }
+
+        intents += view.archivedIntent.subscribe {
+            newState { it.copy(drawerOpen = false) }
+        }
+
+        intents += view.scheduledIntent.subscribe {
+            newState { it.copy(drawerOpen = false) }
+        }
+
+        intents += view.blockedIntent.subscribe {
+            newState { it.copy(drawerOpen = false) }
+        }
+
+        intents += view.settingsIntent.subscribe {
+            navigator.showSettings()
+            newState { it.copy(drawerOpen = false) }
+        }
     }
 
 }

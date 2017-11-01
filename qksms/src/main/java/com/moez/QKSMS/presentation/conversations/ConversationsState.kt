@@ -5,5 +5,6 @@ import io.realm.OrderedRealmCollection
 
 data class ConversationsState(
         val conversations: OrderedRealmCollection<Message>? = null,
-        val refreshing: Boolean = false
+        val refreshing: Boolean = false,
+        val drawerOpen: Boolean = false
 )
