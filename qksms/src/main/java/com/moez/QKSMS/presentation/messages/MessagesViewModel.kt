@@ -15,26 +15,29 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
 
-    private var conversation: Conversation
+    private var conversation: Conversation? = null
 
     init {
         AppComponentManager.appComponent.inject(this)
 
         disposables += sendMessage.disposables
         disposables += markRead.disposables
+        disposables += messageRepo.getConversationAsync(threadId)
+                .asFlowable<Conversation>()
+                .filter { it.isLoaded }
+                .subscribe { conversation ->
+                    when (conversation.isValid) {
+                        true -> {
+                            this.conversation = conversation
+                            val title = conversation.getTitle()
+                            val messages = messageRepo.getMessages(threadId)
+                            newState { it.copy(title = title, messages = messages) }
+                        }
+                        false -> newState { it.copy(hasError = true) }
+                    }
+                }
 
         dataChanged()
-        conversation = messageRepo.getConversationAsync(threadId)
-        conversation.addChangeListener { conversation: Conversation ->
-            when (conversation.isValid) {
-                true -> {
-                    val title = conversation.getTitle()
-                    val messages = messageRepo.getMessages(threadId)
-                    newState { it.copy(title = title, messages = messages) }
-                }
-                false -> newState { it.copy(hasError = true) }
-            }
-        }
     }
 
     override fun bindIntents(view: MessagesView) {
@@ -46,18 +49,13 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
 
         intents += view.sendIntent.subscribe {
             val previousState = state.value!!
-            sendMessage.execute(SendMessage.Params(threadId, conversation.contacts[0]?.address.orEmpty(), previousState.draft))
+            sendMessage.execute(SendMessage.Params(threadId, conversation?.contacts?.get(0)?.address.orEmpty(), previousState.draft))
             newState { it.copy(draft = "", canSend = false) }
         }
     }
 
     fun dataChanged() {
         markRead.execute(threadId)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        conversation.removeAllChangeListeners()
     }
 
 }
