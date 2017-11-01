@@ -28,7 +28,7 @@ class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream
     }
 
     override fun buildLoadData(model: String?, width: Int, height: Int, options: Options?): ModelLoader.LoadData<InputStream> {
-        return ModelLoader.LoadData(ContactImageKey(model), ContactImageFetcher(context, model))
+        return ModelLoader.LoadData(ContactImageKey(model.orEmpty()), ContactImageFetcher(context, model.orEmpty()))
     }
 
     class Factory(val context: Context) : ModelLoaderFactory<String, InputStream> {
@@ -36,11 +36,11 @@ class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream
         override fun teardown() {} // nothing to do here
     }
 
-    class ContactImageKey(val address: String?) : Key {
-        override fun updateDiskCacheKey(digest: MessageDigest) = digest.update(address?.toByteArray())
+    class ContactImageKey(val address: String) : Key {
+        override fun updateDiskCacheKey(digest: MessageDigest) = digest.update(address.toByteArray())
     }
 
-    class ContactImageFetcher(val context: Context, val address: String?) : DataFetcher<InputStream> {
+    class ContactImageFetcher(val context: Context, val address: String) : DataFetcher<InputStream> {
 
         private var loadPhotoDisposable: Disposable? = null
 

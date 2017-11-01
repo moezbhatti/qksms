@@ -2,6 +2,7 @@ package com.moez.QKSMS.presentation.view
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.telephony.PhoneNumberUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -46,7 +47,7 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
 
         contact?.let { contact ->
             initial.text = if (contact.name.isNotEmpty()) contact.name.substring(0, 1) else "?"
-            GlideApp.with(photo).load(contact.address).into(photo)
+            GlideApp.with(photo).load(PhoneNumberUtils.stripSeparators(contact.address)).into(photo)
         }
     }
 }
