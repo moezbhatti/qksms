@@ -44,9 +44,6 @@ class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsSt
 
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
-
-        // Refresh support for debugging purposes
-        swipeRefresh.setOnRefreshListener { viewModel.onRefresh() } // TODO remove
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -60,8 +57,6 @@ class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsSt
         if (conversationList.adapter == null && state.conversations?.isValid == true) {
             conversationList.adapter = ConversationsAdapter(state.conversations)
         }
-
-        swipeRefresh.isRefreshing = state.refreshing
     }
 
     private fun requestPermissions() {

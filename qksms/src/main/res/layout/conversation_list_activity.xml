@@ -19,22 +19,15 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefresh"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/conversationList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/conversationList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    tools:listitem="@layout/conversation_list_item" />
-
-            </android.support.v4.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                tools:listitem="@layout/conversation_list_item" />
 
             <View
                 android:layout_width="match_parent"

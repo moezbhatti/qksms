@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.moez.QKSMS.presentation.messages.MessagesActivity" />
-        <activity android:name=".presentation.settings.SettingActivity" />
+        <activity android:name=".presentation.settings.SettingsActivity" />
 
         <receiver
             android:name=".receiver.SmsReceiver"

@@ -7,6 +7,7 @@ import com.moez.QKSMS.presentation.conversations.ConversationsViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesAdapter
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
+import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import com.moez.QKSMS.presentation.view.AvatarView
 import com.moez.QKSMS.receiver.*
 import dagger.Component
@@ -35,5 +36,6 @@ interface AppComponent {
 
     fun inject(viewModel: ConversationsViewModel)
     fun inject(viewModel: MessagesViewModel)
+    fun inject(viewModel: SettingsViewModel)
 
 }

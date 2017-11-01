@@ -7,7 +7,7 @@ import android.content.Intent
 import com.moez.QKSMS.presentation.conversations.ConversationsViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
-import com.moez.QKSMS.presentation.settings.SettingActivity
+import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,7 +27,7 @@ class Navigator @Inject constructor(val context: Context) {
     }
 
     fun showSettings() {
-        val intent = Intent(context, SettingActivity::class.java)
+        val intent = Intent(context, SettingsActivity::class.java)
         startActivity(intent)
     }
 

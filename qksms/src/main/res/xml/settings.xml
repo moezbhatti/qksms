@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="sync"
+        android:summary="@string/settings_sync_summary"
+        android:title="@string/settings_sync_title" />
+
+</PreferenceScreen>
