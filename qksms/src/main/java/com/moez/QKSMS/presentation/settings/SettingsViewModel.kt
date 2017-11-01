@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import com.moez.QKSMS.common.di.AppComponentManager
-import com.moez.QKSMS.domain.interactor.SyncConversations
+import com.moez.QKSMS.domain.interactor.FullSync
 import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
 import timber.log.Timber
@@ -13,12 +13,12 @@ import javax.inject.Inject
 class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
 
     @Inject lateinit var context: Context
-    @Inject lateinit var syncConversations: SyncConversations
+    @Inject lateinit var fullSync: FullSync
 
     init {
         AppComponentManager.appComponent.inject(this)
 
-        disposables += syncConversations.disposables
+        disposables += fullSync.disposables
     }
 
     override fun bindIntents(view: SettingsView) {
@@ -38,7 +38,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                 "sync" -> {
                     newState { it.copy(syncing = true) }
-                    syncConversations.execute(Unit, {
+                    fullSync.execute(Unit, {
                         newState { it.copy(syncing = false) }
                     })
                 }

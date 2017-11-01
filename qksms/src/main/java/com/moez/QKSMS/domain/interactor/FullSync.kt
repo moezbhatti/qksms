@@ -9,7 +9,7 @@ import io.reactivex.Flowable
 import io.realm.Realm
 import javax.inject.Inject
 
-class SyncConversations @Inject constructor(
+class FullSync @Inject constructor(
         private val context: Context,
         private val cursorToConversationFlowable: CursorToConversationFlowable,
         private val cursorToMessageFlowable: CursorToMessageFlowable) : Interactor<Long, Unit>() {
