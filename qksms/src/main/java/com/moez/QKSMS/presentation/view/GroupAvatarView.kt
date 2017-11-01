@@ -1,10 +1,12 @@
 package com.moez.QKSMS.presentation.view
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.extensions.getColorCompat
 import com.moez.QKSMS.data.model.Contact
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.group_avatar_view.view.*
@@ -26,6 +28,10 @@ class GroupAvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+        setBackgroundResource(R.drawable.circle)
+        clipToOutline = true
+        backgroundTintList = ColorStateList.valueOf(context.getColorCompat(R.color.bubbleLight))
+
         if (!isInEditMode) {
             updateView()
         }
