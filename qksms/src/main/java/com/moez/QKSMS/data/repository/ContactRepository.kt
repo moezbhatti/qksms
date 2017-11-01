@@ -43,12 +43,11 @@ class ContactRepository @Inject constructor(val context: Context) {
                 val contact = Contact(recipientId, recipientCursor.getString(0))
 
                 val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact.address))
-                val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.Data.PHOTO_URI)
+                val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME)
                 try {
                     context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
                         if (contactCursor.moveToFirst()) {
                             contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)).orEmpty()
-                            contact.photoUri = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.PHOTO_URI)).orEmpty()
                         }
                     }
                 } catch (e: Exception) {

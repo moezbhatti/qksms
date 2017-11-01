@@ -8,7 +8,6 @@ open class Contact() : RealmObject() {
     @PrimaryKey var recipientId: Long = 0
     var address: String = ""
     var name: String = ""
-    var photoUri: String = ""
 
     constructor(id: Long, address: String) : this() {
         this.recipientId = id

@@ -12,8 +12,8 @@ import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPadding
+import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
@@ -32,7 +32,6 @@ class MessagesAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerVie
     @Inject lateinit var context: Context
     @Inject lateinit var themeManager: ThemeManager
     @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var contactRepo: ContactRepository
 
     private val people = ArrayList<String>()
 
@@ -60,7 +59,9 @@ class MessagesAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerVie
         view.body.setBackgroundTint(bubbleColor)
 
         if (viewType != VIEWTYPE_ME) {
-            view.avatar?.contact = contactRepo.getContactFromCache(people[viewType])
+            val contact = Contact()
+            contact.address = people[viewType]
+            view.avatar.contact = contact
         }
 
         return QkViewHolder(view)

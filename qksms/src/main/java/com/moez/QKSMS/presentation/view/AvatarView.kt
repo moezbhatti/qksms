@@ -5,9 +5,9 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import com.bumptech.glide.Glide
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.extensions.getColorCompat
 import com.moez.QKSMS.data.model.Contact
 import kotlinx.android.synthetic.main.avatar_view.view.*
@@ -45,8 +45,8 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
         initial.text = "?"
 
         contact?.let { contact ->
-            Glide.with(photo).load(contact.photoUri).into(photo)
             initial.text = if (contact.name.isNotEmpty()) contact.name.substring(0, 1) else "?"
+            GlideApp.with(photo).load(contact.address).into(photo)
         }
     }
 }
