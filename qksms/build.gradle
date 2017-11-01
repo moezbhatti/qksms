@@ -53,7 +53,7 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:1.0.0-alpha9-1"
     kapt 'com.github.bumptech.glide:compiler:4.3.0'
     kapt "com.google.dagger:dagger-compiler:2.11"
-    kapt 'io.realm:realm-annotations:3.7.0'
-    kapt 'io.realm:realm-annotations-processor:3.7.0'
+    kapt 'io.realm:realm-annotations:4.1.1'
+    kapt 'io.realm:realm-annotations-processor:4.1.1'
     provided 'javax.annotation:jsr250-api:1.0'
 }

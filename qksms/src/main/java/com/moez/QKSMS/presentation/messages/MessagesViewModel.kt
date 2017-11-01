@@ -46,7 +46,7 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
 
         intents += view.sendIntent.subscribe {
             val previousState = state.value!!
-            sendMessage.execute(SendMessage.Params(threadId, conversation.contacts[0].address, previousState.draft))
+            sendMessage.execute(SendMessage.Params(threadId, conversation.contacts[0]?.address.orEmpty(), previousState.draft))
             newState { it.copy(draft = "", canSend = false) }
         }
     }

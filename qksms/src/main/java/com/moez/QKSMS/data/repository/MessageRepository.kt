@@ -29,6 +29,7 @@ class MessageRepository @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .findAllSortedAsync("date", Sort.DESCENDING)
+                .where()
                 .distinctAsync("threadId")
     }
 

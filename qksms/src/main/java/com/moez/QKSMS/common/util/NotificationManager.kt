@@ -81,7 +81,7 @@ class NotificationManager @Inject constructor(
                             .setStyle(style)
 
                     if (Build.VERSION.SDK_INT >= 24 && conversation != null) {
-                        notification.addAction(getReplyAction(conversation.contacts[0].address, conversation.id))
+                        notification.addAction(getReplyAction(conversation.contacts[0]?.address.orEmpty(), conversation.id))
                     }
 
                     notificationManager.notify(threadId.toInt(), notification.build())
