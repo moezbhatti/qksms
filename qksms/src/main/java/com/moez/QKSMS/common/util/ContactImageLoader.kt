@@ -59,7 +59,7 @@ class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                             { inputStream -> callback.onDataReady(inputStream) },
-                            { callback.onLoadFailed(Exception(it)) })
+                            { error -> callback.onLoadFailed(Exception(error)) })
         }
 
         override fun cancel() {
