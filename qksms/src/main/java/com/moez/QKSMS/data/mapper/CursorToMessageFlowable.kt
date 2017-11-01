@@ -37,6 +37,7 @@ class CursorToMessageFlowable @Inject constructor(val context: Context) : Mapper
                     "mms" -> {
                         threadId = cursor.getLong(columnsMap.mmsThreadId)
                         address = getMmsAddress(id)
+                        boxId = cursor.getInt(columnsMap.mmsMessageBox)
                         date = cursor.getLong(columnsMap.smsDate)
                         dateSent = cursor.getLong(columnsMap.smsDateSent)
                         seen = cursor.getInt(columnsMap.smsSeen) != 0
