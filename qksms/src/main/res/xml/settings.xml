@@ -2,6 +2,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
+        android:key="defaultSms"
+        android:title="@string/settings_default_sms_title" />
+
+    <Preference
         android:key="sync"
         android:summary="@string/settings_sync_summary"
         android:title="@string/settings_sync_title" />
