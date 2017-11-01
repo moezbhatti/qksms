@@ -5,12 +5,14 @@ import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.MarkAllSeen
 import com.moez.QKSMS.domain.interactor.SyncConversations
+import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkViewModel
 import io.realm.RealmResults
 import javax.inject.Inject
 
 class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState>(ConversationsState()) {
 
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var syncConversations: SyncConversations
     @Inject lateinit var markAllSeen: MarkAllSeen
@@ -33,7 +35,7 @@ class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState
         view.archivedIntent.subscribe()
         view.scheduledIntent.subscribe()
         view.blockedIntent.subscribe()
-        view.settingsIntent.subscribe()
+        view.settingsIntent.subscribe { navigator.showSettings() }
     }
 
     fun onRefresh() {

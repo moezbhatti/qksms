@@ -7,6 +7,8 @@ import android.content.Intent
 import com.moez.QKSMS.presentation.conversations.ConversationsViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
+import com.moez.QKSMS.presentation.settings.SettingActivity
+import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,6 +26,11 @@ class Navigator @Inject constructor(val context: Context) {
         startActivity(intent)
     }
 
+    fun showSettings() {
+        val intent = Intent(context, SettingActivity::class.java)
+        startActivity(intent)
+    }
+
     class ViewModelFactory(private val intent: Intent) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
@@ -37,6 +44,10 @@ class Navigator @Inject constructor(val context: Context) {
                 MessagesViewModel::class.java -> {
                     val threadId = intent.getLongExtra("threadId", 0)
                     MessagesViewModel(threadId)
+                }
+
+                SettingsViewModel::class.java -> {
+                    SettingsViewModel()
                 }
 
                 else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")
