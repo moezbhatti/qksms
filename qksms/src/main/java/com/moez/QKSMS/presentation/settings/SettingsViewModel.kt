@@ -6,6 +6,7 @@ import android.provider.Telephony
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.domain.interactor.SyncConversations
 import com.moez.QKSMS.presentation.base.QkViewModel
+import io.reactivex.rxkotlin.plusAssign
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,12 +17,14 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
     init {
         AppComponentManager.appComponent.inject(this)
+
+        disposables += syncConversations.disposables
     }
 
     override fun bindIntents(view: SettingsView) {
         super.bindIntents(view)
 
-        view.preferenceClickIntent.subscribe {
+        intents += view.preferenceClickIntent.subscribe {
             Timber.v("Preference click: ${it.key}")
 
             when (it.key) {
@@ -41,10 +44,5 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 }
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        syncConversations.dispose()
     }
 }

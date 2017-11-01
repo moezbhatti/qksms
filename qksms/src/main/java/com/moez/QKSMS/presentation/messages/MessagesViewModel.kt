@@ -6,6 +6,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.MarkRead
 import com.moez.QKSMS.domain.interactor.SendMessage
 import com.moez.QKSMS.presentation.base.QkViewModel
+import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, MessagesState>(MessagesState()) {
@@ -18,6 +19,9 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
 
     init {
         AppComponentManager.appComponent.inject(this)
+
+        disposables += sendMessage.disposables
+        disposables += markRead.disposables
 
         dataChanged()
         conversation = messageRepo.getConversationAsync(threadId)
@@ -36,11 +40,11 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
     override fun bindIntents(view: MessagesView) {
         super.bindIntents(view)
 
-        view.textChangedIntent.subscribe { text ->
+        intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
         }
 
-        view.sendIntent.subscribe {
+        intents += view.sendIntent.subscribe {
             val previousState = state.value!!
             sendMessage.execute(SendMessage.Params(threadId, conversation.contacts[0].address, previousState.draft))
             newState { it.copy(draft = "", canSend = false) }
@@ -53,8 +57,6 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
 
     override fun onCleared() {
         super.onCleared()
-        sendMessage.dispose()
-        markRead.dispose()
         conversation.removeAllChangeListeners()
     }
 

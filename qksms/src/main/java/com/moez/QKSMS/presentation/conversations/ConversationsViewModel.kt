@@ -6,6 +6,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.MarkAllSeen
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkViewModel
+import io.reactivex.rxkotlin.plusAssign
 import io.realm.RealmResults
 import javax.inject.Inject
 
@@ -20,6 +21,8 @@ class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState
     init {
         AppComponentManager.appComponent.inject(this)
 
+        disposables += markAllSeen.disposables
+
         conversations = messageRepo.getConversationMessagesAsync()
         newState { it.copy(conversations = conversations) }
 
@@ -29,16 +32,11 @@ class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState
     override fun bindIntents(view: ConversationsView) {
         super.bindIntents(view)
 
-        view.composeIntent.subscribe()
-        view.archivedIntent.subscribe()
-        view.scheduledIntent.subscribe()
-        view.blockedIntent.subscribe()
-        view.settingsIntent.subscribe { navigator.showSettings() }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        markAllSeen.dispose()
+        intents += view.composeIntent.subscribe()
+        intents += view.archivedIntent.subscribe()
+        intents += view.scheduledIntent.subscribe()
+        intents += view.blockedIntent.subscribe()
+        intents += view.settingsIntent.subscribe { navigator.showSettings() }
     }
 
 }

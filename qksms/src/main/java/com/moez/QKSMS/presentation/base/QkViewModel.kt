@@ -2,6 +2,8 @@ package com.moez.QKSMS.presentation.base
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.support.annotation.CallSuper
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 
 abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) : ViewModel() {
@@ -9,6 +11,9 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
     val state = MutableLiveData<State>()
 
     private val stateReducer: PublishSubject<(State) -> State> = PublishSubject.create()
+
+    protected val disposables =  CompositeDisposable()
+    protected val intents = CompositeDisposable()
 
     init {
         stateReducer
@@ -20,10 +25,19 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
         bindIntents(view)
     }
 
-    open fun bindIntents(view: View) {}
+    @CallSuper
+    open fun bindIntents(view: View) {
+        intents.clear()
+    }
 
     protected fun newState(reducer: (State) -> State) {
         stateReducer.onNext(reducer)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
+        intents.dispose()
     }
 
 }
