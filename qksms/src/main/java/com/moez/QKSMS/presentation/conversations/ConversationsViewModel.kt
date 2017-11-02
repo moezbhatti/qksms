@@ -21,7 +21,7 @@ class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState
     init {
         AppComponentManager.appComponent.inject(this)
 
-        disposables += markAllSeen.disposables
+        disposables += markAllSeen
 
         conversations = messageRepo.getConversationMessagesAsync()
         newState { it.copy(conversations = conversations) }

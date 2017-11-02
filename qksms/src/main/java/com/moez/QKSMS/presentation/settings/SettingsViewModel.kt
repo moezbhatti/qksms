@@ -18,7 +18,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
     init {
         AppComponentManager.appComponent.inject(this)
 
-        disposables += fullSync.disposables
+        disposables += fullSync
     }
 
     override fun bindIntents(view: SettingsView) {

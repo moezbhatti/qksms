@@ -3,11 +3,12 @@ package com.moez.QKSMS.domain.interactor
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class Interactor<T, in Params> {
+abstract class Interactor<T, in Params>: Disposable {
 
-    val disposables: CompositeDisposable = CompositeDisposable()
+    private val disposables: CompositeDisposable = CompositeDisposable()
 
     abstract fun buildObservable(params: Params): Flowable<T>
 
@@ -16,6 +17,14 @@ abstract class Interactor<T, in Params> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer))
+    }
+
+    override fun dispose() {
+        return disposables.dispose()
+    }
+
+    override fun isDisposed(): Boolean {
+        return disposables.isDisposed
     }
 
 }

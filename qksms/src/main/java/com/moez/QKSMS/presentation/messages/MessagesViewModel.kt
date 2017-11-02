@@ -20,8 +20,8 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
     init {
         AppComponentManager.appComponent.inject(this)
 
-        disposables += sendMessage.disposables
-        disposables += markRead.disposables
+        disposables += sendMessage
+        disposables += markRead
         disposables += messageRepo.getConversationAsync(threadId)
                 .asFlowable<Conversation>()
                 .filter { it.isLoaded }
