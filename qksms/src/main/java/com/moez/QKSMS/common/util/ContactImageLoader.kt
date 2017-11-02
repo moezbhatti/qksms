@@ -17,6 +17,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.io.InputStream
 import java.security.MessageDigest
+import javax.inject.Inject
 
 
 class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream> {
@@ -40,7 +41,7 @@ class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream
 
     class ContactImageFetcher(private val context: Context, private val address: String) : DataFetcher<InputStream> {
 
-        lateinit var contactRepo: ContactRepository
+        @Inject lateinit var contactRepo: ContactRepository
         private var loadPhotoDisposable: Disposable? = null
 
         init {
