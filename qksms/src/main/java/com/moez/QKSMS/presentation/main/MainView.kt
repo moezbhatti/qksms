@@ -7,6 +7,7 @@ interface MainView : QkView<MainState> {
 
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>
+    val inboxIntent: Observable<Unit>
     val archivedIntent: Observable<Unit>
     val scheduledIntent: Observable<Unit>
     val blockedIntent: Observable<Unit>

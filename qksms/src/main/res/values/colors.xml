@@ -16,4 +16,5 @@
     <color name="statusLight">#F1F1F1</color>
 
     <color name="list_separator">#F2F2F2</color>
+    <color name="row_selected">#F5F5F5</color>
 </resources>

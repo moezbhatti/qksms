@@ -7,10 +7,26 @@
     android:paddingTop="8dp">
 
     <LinearLayout
+        android:id="@+id/inbox"
+        style="@style/DrawerRow">
+
+        <ImageView
+            android:id="@+id/inboxIcon"
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_inbox_black_24dp" />
+
+        <TextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_inbox" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/archived"
         style="@style/DrawerRow">
 
         <ImageView
+            android:id="@+id/archivedIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_folder_black_24dp" />
 
@@ -25,6 +41,7 @@
         style="@style/DrawerRow">
 
         <ImageView
+            android:id="@+id/scheduledIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_event_black_24dp" />
 
@@ -39,6 +56,7 @@
         style="@style/DrawerRow">
 
         <ImageView
+            android:id="@+id/blockedIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_block_black_24dp" />
 

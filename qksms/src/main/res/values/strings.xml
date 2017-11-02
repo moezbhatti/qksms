@@ -6,6 +6,7 @@
 
     <string name="compose_hint">Write a message</string>
 
+    <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archived</string>
     <string name="drawer_scheduled">Scheduled</string>
     <string name="drawer_blocked">Blocked</string>

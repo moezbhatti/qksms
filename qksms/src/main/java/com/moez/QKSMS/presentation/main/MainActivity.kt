@@ -15,10 +15,12 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.util.ThemeManager
+import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
-import kotlinx.android.synthetic.main.conversation_list_activity.*
 import kotlinx.android.synthetic.main.drawer_view.*
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,10 +28,12 @@ import javax.inject.Inject
 class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
 
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var themeManager: ThemeManager
 
     override val viewModelClass = MainViewModel::class
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent by lazy { drawerLayout.drawerOpen(Gravity.START) }
+    override val inboxIntent by lazy { inbox.clicks() }
     override val archivedIntent by lazy { archived.clicks() }
     override val scheduledIntent by lazy { scheduled.clicks() }
     override val blockedIntent by lazy { blocked.clicks() }
@@ -38,7 +42,7 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppComponentManager.appComponent.inject(this)
-        setContentView(R.layout.conversation_list_activity)
+        setContentView(R.layout.main_activity)
         ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
         requestPermissions()
         viewModel.setView(this)
@@ -61,8 +65,25 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
             conversationList.adapter = state.adapter
         }
 
+        inbox.setBackgroundResource(getRowBackground(state.page == MainPage.INBOX))
+        inboxIcon.setTint(getIconColor(state.page == MainPage.INBOX))
+        archived.setBackgroundResource(getRowBackground(state.page == MainPage.ARCHIVED))
+        archivedIcon.setTint(getIconColor(state.page == MainPage.ARCHIVED))
+        scheduled.setBackgroundResource(getRowBackground(state.page == MainPage.SCHEDULED))
+        scheduledIcon.setTint(getIconColor(state.page == MainPage.SCHEDULED))
+        blocked.setBackgroundResource(getRowBackground(state.page == MainPage.BLOCKED))
+        blockedIcon.setTint(getIconColor(state.page == MainPage.BLOCKED))
+
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
+    }
+
+    private fun getIconColor(selected: Boolean): Int {
+        return if (selected) themeManager.color else themeManager.textSecondary
+    }
+
+    private fun getRowBackground(selected: Boolean): Int {
+        return if (selected) R.color.row_selected else R.drawable.ripple
     }
 
     private fun requestPermissions() {
