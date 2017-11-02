@@ -1,8 +1,8 @@
 package com.moez.QKSMS.common.di
 
 import com.moez.QKSMS.common.util.NotificationManager
-import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.ConversationsAdapter
+import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesAdapter

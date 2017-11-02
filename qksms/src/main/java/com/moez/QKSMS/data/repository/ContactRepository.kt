@@ -4,8 +4,10 @@ import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.ContactsContract
+import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.model.Contact
 import io.reactivex.Flowable
+import io.reactivex.Single
 import io.realm.Realm
 import timber.log.Timber
 import javax.inject.Inject
@@ -17,7 +19,16 @@ class ContactRepository @Inject constructor(val context: Context) {
     /**
      * Uri for the MMS-SMS recipients table, where there exists only one column (address)
      */
-    private val URI = Uri.parse("content://mms-sms/canonical-address")
+    private val URI = Uri.parse("content://mms-sms/canonical-contactUri")
+
+    fun findContactUri(address: String): Single<Uri> {
+        return Flowable.just(address)
+                .map { address -> Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address)) }
+                .flatMap { uri -> context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup._ID), null, null, null).asFlowable() }
+                .firstOrError()
+                .map { cursor -> cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID)) }
+                .map { id -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id) }
+    }
 
     fun getContact(recipientId: Long): Flowable<Contact> {
         return Flowable.fromPublisher<Contact> { emitter ->
@@ -63,7 +74,7 @@ class ContactRepository @Inject constructor(val context: Context) {
     fun getContactFromCache(address: String): Contact? {
         val realm = Realm.getDefaultInstance()
         val contact = realm.where(Contact::class.java)
-                .equalTo("address", address)
+                .equalTo("contactUri", address)
                 .findFirst()
         realm.close()
         return contact

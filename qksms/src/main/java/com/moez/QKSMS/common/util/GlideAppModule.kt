@@ -1,6 +1,7 @@
 package com.moez.QKSMS.common.util
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
@@ -17,7 +18,7 @@ class GlideAppModule : AppGlideModule() {
     }
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        registry.append(String::class.java, InputStream::class.java, ContactImageLoader.Factory(context))
+        registry.append(Uri::class.java, InputStream::class.java, ContactImageLoader.Factory(context))
     }
 
 }
