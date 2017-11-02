@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.conversations
+package com.moez.QKSMS.presentation.main
 
 import android.Manifest
 import android.content.Intent
@@ -23,11 +23,11 @@ import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsState>(), ConversationsView {
+class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
 
     @Inject lateinit var navigator: Navigator
 
-    override val viewModelClass = ConversationsViewModel::class
+    override val viewModelClass = MainViewModel::class
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent by lazy { drawerLayout.drawerOpen(Gravity.START) }
     override val archivedIntent by lazy { archived.clicks() }
@@ -56,7 +56,7 @@ class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsSt
                 ?.let { threadId -> navigator.showConversation(threadId) }
     }
 
-    override fun render(state: ConversationsState) {
+    override fun render(state: MainState) {
         if (conversationList.adapter != state.adapter) {
             conversationList.adapter = state.adapter
         }

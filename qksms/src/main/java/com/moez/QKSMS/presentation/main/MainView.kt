@@ -1,9 +1,9 @@
-package com.moez.QKSMS.presentation.conversations
+package com.moez.QKSMS.presentation.main
 
 import com.moez.QKSMS.presentation.base.QkView
 import io.reactivex.Observable
 
-interface ConversationsView : QkView<ConversationsState> {
+interface MainView : QkView<MainState> {
 
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>

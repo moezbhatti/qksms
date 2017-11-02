@@ -1,9 +1,9 @@
 package com.moez.QKSMS.common.di
 
 import com.moez.QKSMS.common.util.NotificationManager
-import com.moez.QKSMS.presentation.conversations.ConversationsActivity
-import com.moez.QKSMS.presentation.conversations.ConversationsAdapter
-import com.moez.QKSMS.presentation.conversations.ConversationsViewModel
+import com.moez.QKSMS.presentation.main.MainActivity
+import com.moez.QKSMS.presentation.main.ConversationsAdapter
+import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesAdapter
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class))
 interface AppComponent {
 
-    fun inject(activity: ConversationsActivity)
+    fun inject(activity: MainActivity)
     fun inject(activity: MessagesActivity)
 
     fun inject(adapter: ConversationsAdapter)
@@ -34,7 +34,7 @@ interface AppComponent {
 
     fun inject(view: AvatarView)
 
-    fun inject(viewModel: ConversationsViewModel)
+    fun inject(viewModel: MainViewModel)
     fun inject(viewModel: MessagesViewModel)
     fun inject(viewModel: SettingsViewModel)
 

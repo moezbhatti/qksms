@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.conversations
+package com.moez.QKSMS.presentation.main
 
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.data.repository.MessageRepository
@@ -8,7 +8,7 @@ import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
-class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState>(ConversationsState()) {
+class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var messageRepo: MessageRepository
@@ -24,7 +24,7 @@ class ConversationsViewModel : QkViewModel<ConversationsView, ConversationsState
         markAllSeen.execute(Unit)
     }
 
-    override fun bindIntents(view: ConversationsView) {
+    override fun bindIntents(view: MainView) {
         super.bindIntents(view)
 
         intents += view.composeIntent.subscribe {

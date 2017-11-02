@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
-import com.moez.QKSMS.presentation.conversations.ConversationsViewModel
+import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
@@ -37,8 +37,8 @@ class Navigator @Inject constructor(val context: Context) {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return when (modelClass) {
 
-                ConversationsViewModel::class.java -> {
-                    ConversationsViewModel()
+                MainViewModel::class.java -> {
+                    MainViewModel()
                 }
 
                 MessagesViewModel::class.java -> {
