@@ -58,8 +58,7 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
             loadContact = contactsRepo.findContactUri(contact.address)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            { uri -> GlideApp.with(photo).load(uri).into(photo) }, { })
+                    .subscribe({ uri -> GlideApp.with(photo).load(uri).into(photo) }, { })
         }
     }
 }
