@@ -57,8 +57,8 @@ class ConversationsActivity : QkActivity<ConversationsViewModel, ConversationsSt
     }
 
     override fun render(state: ConversationsState) {
-        if (conversationList.adapter == null && state.conversations?.isValid == true) {
-            conversationList.adapter = ConversationsAdapter(state.conversations)
+        if (conversationList.adapter != state.adapter) {
+            conversationList.adapter = state.adapter
         }
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
