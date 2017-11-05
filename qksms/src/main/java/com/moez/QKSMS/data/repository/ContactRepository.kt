@@ -19,7 +19,7 @@ class ContactRepository @Inject constructor(val context: Context) {
     /**
      * Uri for the MMS-SMS recipients table, where there exists only one column (address)
      */
-    private val URI = Uri.parse("content://mms-sms/canonical-contactUri")
+    private val URI = Uri.parse("content://mms-sms/canonical-address")
 
     fun findContactUri(address: String): Single<Uri> {
         return Flowable.just(address)
