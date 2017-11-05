@@ -3,6 +3,7 @@ package com.moez.QKSMS.presentation.main
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.MarkAllSeen
+import com.moez.QKSMS.domain.interactor.MarkArchived
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
@@ -13,6 +14,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var markAllSeen: MarkAllSeen
+    @Inject lateinit var markArchived: MarkArchived
 
     init {
         AppComponentManager.appComponent.inject(this)
@@ -75,6 +77,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
             navigator.showSettings()
             newState { it.copy(drawerOpen = false) }
         }
+
+        intents += view.archivedConversationIntent.subscribe { threadId ->
+            markArchived.execute(threadId)
+        }
+
     }
 
 }

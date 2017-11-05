@@ -8,6 +8,7 @@ open class Conversation : RealmObject() {
 
     @PrimaryKey var id: Long = 0
     var contacts: RealmList<Contact> = RealmList()
+    var archived: Boolean = false
 
     fun getTitle(): String {
         var title = ""

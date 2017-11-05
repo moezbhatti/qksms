@@ -62,6 +62,17 @@ class MessageRepository @Inject constructor(
                 .findAllSorted("date")
     }
 
+    fun markArchived(threadId: Long) {
+        val realm = Realm.getDefaultInstance()
+        val conversation = realm.where(Conversation::class.java)
+                .equalTo("id", threadId)
+                .equalTo("archived", false)
+                .findFirst()
+
+        conversation?.archived = true
+        realm.close()
+    }
+
     fun markAllSeen() {
         val realm = Realm.getDefaultInstance()
         val messages = realm.where(Message::class.java).equalTo("seen", false).findAll()
