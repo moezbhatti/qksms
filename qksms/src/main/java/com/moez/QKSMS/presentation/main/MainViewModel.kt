@@ -38,39 +38,20 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         }
 
         intents += view.inboxIntent.subscribe {
-            newState {
-                it.copy(
-                        page = MainPage.INBOX,
-                        adapter = ConversationsAdapter(messageRepo.getConversationMessagesAsync()),
-                        drawerOpen = false)
-            }
+            val adapter = ConversationsAdapter(messageRepo.getConversationMessagesAsync())
+            newState { it.copy(page = MainPage.INBOX, adapter = adapter, drawerOpen = false) }
         }
 
         intents += view.archivedIntent.subscribe {
-            newState {
-                it.copy(
-                        page = MainPage.ARCHIVED,
-                        adapter = null,
-                        drawerOpen = false)
-            }
+            newState { it.copy(page = MainPage.ARCHIVED, adapter = null, drawerOpen = false) }
         }
 
         intents += view.scheduledIntent.subscribe {
-            newState {
-                it.copy(
-                        page = MainPage.SCHEDULED,
-                        adapter = null,
-                        drawerOpen = false)
-            }
+            newState { it.copy(page = MainPage.SCHEDULED, adapter = null, drawerOpen = false) }
         }
 
         intents += view.blockedIntent.subscribe {
-            newState {
-                it.copy(
-                        page = MainPage.BLOCKED,
-                        adapter = null,
-                        drawerOpen = false)
-            }
+            newState { it.copy(page = MainPage.BLOCKED, adapter = null, drawerOpen = false) }
         }
 
         intents += view.settingsIntent.subscribe {
