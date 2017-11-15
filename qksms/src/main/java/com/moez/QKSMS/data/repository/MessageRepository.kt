@@ -10,8 +10,10 @@ import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
 import com.moez.QKSMS.data.mapper.CursorToMessageFlowable
 import com.moez.QKSMS.data.model.Conversation
+import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.model.Message
 import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
@@ -25,12 +27,29 @@ class MessageRepository @Inject constructor(
         private val context: Context,
         private val cursorToMessageFlowable: CursorToMessageFlowable) {
 
-    fun getConversationMessagesAsync(): RealmResults<Message> {
-        return Realm.getDefaultInstance()
-                .where(Message::class.java)
+    fun getConversations(archived: Boolean = false): Flowable<List<ConversationMessagePair>> {
+        val realm = Realm.getDefaultInstance()
+
+        val conversations = realm.where(Conversation::class.java)
+                .equalTo("archived", archived)
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .map { conversations -> conversations.associateBy { conversation -> conversation.id } }
+
+        val messages = realm.where(Message::class.java)
                 .findAllSortedAsync("date", Sort.DESCENDING)
                 .where()
                 .distinctAsync("threadId")
+                .asFlowable()
+                .filter { it.isLoaded }
+
+        return Flowable.combineLatest(conversations, messages, BiFunction { conversations, messages ->
+            messages.mapNotNull { message ->
+                val conversation = conversations[message.threadId]
+                if (conversation == null) null else ConversationMessagePair(conversation, message)
+            }
+        })
     }
 
     fun getConversationAsync(threadId: Long): Conversation {
@@ -69,7 +88,8 @@ class MessageRepository @Inject constructor(
                 .equalTo("archived", false)
                 .findFirst()
 
-        conversation?.archived = true
+        realm.executeTransaction { conversation?.archived = true }
+
         realm.close()
     }
 

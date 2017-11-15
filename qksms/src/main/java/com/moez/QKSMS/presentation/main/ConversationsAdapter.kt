@@ -8,17 +8,16 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.ThemeManager
-import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.presentation.Navigator
+import com.moez.QKSMS.presentation.base.QkAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
-import io.realm.OrderedRealmCollection
-import io.realm.RealmList
-import io.realm.RealmRecyclerViewAdapter
+import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
-class ConversationsAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, QkViewHolder>(data, true) {
+class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : QkAdapter<ConversationMessagePair, QkViewHolder>(flowable) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var navigator: Navigator
@@ -47,19 +46,19 @@ class ConversationsAdapter(data: OrderedRealmCollection<Message>?) : RealmRecycl
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val message = getItem(position)!!
-        val conversation = messageRepo.getConversation(message.threadId)
+        val conversation = getItem(position).conversation
+        val message = getItem(position).message
         val view = viewHolder.itemView
 
         RxView.clicks(view).subscribe { navigator.showConversation(message.threadId) }
 
-        view.avatars.contacts = conversation?.contacts ?: RealmList()
-        view.title.text = conversation?.getTitle()
+        view.avatars.contacts = conversation.contacts
+        view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(message.date)
         view.snippet.text = message.body
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position)!!.read) 0 else 1
+        return if (getItem(position).message.read) 0 else 1
     }
 }

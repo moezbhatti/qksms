@@ -13,6 +13,6 @@ interface MainView : QkView<MainState> {
     val scheduledIntent: Observable<Unit>
     val blockedIntent: Observable<Unit>
     val settingsIntent: Observable<Unit>
-    val archivedConversationIntent: PublishSubject<Long>
+    val conversationSwipedIntent: PublishSubject<Int>
 
 }

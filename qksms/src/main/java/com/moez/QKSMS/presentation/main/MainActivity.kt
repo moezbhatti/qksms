@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
@@ -21,7 +20,6 @@ import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -32,6 +30,7 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var themeManager: ThemeManager
+    @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
 
     override val viewModelClass = MainViewModel::class
     override val composeIntent by lazy { compose.clicks() }
@@ -41,7 +40,9 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
     override val scheduledIntent by lazy { scheduled.clicks() }
     override val blockedIntent by lazy { blocked.clicks() }
     override val settingsIntent by lazy { settings.clicks() }
-    override val archivedConversationIntent = PublishSubject.create<Long>()
+    override val conversationSwipedIntent by lazy { itemTouchCallback.swipes }
+
+    private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,9 +68,7 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
     override fun render(state: MainState) {
         if (conversationList.adapter != state.adapter) {
             conversationList.adapter = state.adapter
-            if (state.adapter is ConversationsAdapter) {
-                setConversationListItemTouchListener(state.adapter)
-            }
+            itemTouchHelper.attachToRecyclerView(if (state.page == MainPage.INBOX) conversationList else null)
         }
 
         inbox.setBackgroundResource(getRowBackground(state.page == MainPage.INBOX))
@@ -108,18 +107,4 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
                 .check()
     }
 
-    private fun setConversationListItemTouchListener(adapter: ConversationsAdapter) {
-        val itemTouchCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder?): Boolean {
-                return false
-            }
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.getItem(viewHolder.adapterPosition)?.threadId?.let { threadId ->
-                    archivedConversationIntent.onNext(threadId)
-                }
-            }
-        }
-        val itemTouchHelper = ItemTouchHelper(itemTouchCallBack)
-        itemTouchHelper.attachToRecyclerView(conversationList)
-    }
 }

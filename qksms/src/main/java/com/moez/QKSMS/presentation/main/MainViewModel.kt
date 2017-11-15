@@ -21,7 +21,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
         disposables += markAllSeen
 
-        newState { it.copy(page = MainPage.INBOX, adapter = ConversationsAdapter(messageRepo.getConversationMessagesAsync())) }
+        newState { it.copy(page = MainPage.INBOX, adapter = ConversationsAdapter(messageRepo.getConversations())) }
 
         markAllSeen.execute(Unit)
     }
@@ -38,12 +38,13 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         }
 
         intents += view.inboxIntent.subscribe {
-            val adapter = ConversationsAdapter(messageRepo.getConversationMessagesAsync())
+            val adapter = ConversationsAdapter(messageRepo.getConversations())
             newState { it.copy(page = MainPage.INBOX, adapter = adapter, drawerOpen = false) }
         }
 
         intents += view.archivedIntent.subscribe {
-            newState { it.copy(page = MainPage.ARCHIVED, adapter = null, drawerOpen = false) }
+            val adapter = ConversationsAdapter(messageRepo.getConversations(true))
+            newState { it.copy(page = MainPage.ARCHIVED, adapter = adapter, drawerOpen = false) }
         }
 
         intents += view.scheduledIntent.subscribe {
@@ -59,8 +60,15 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
             newState { it.copy(drawerOpen = false) }
         }
 
-        intents += view.archivedConversationIntent.subscribe { threadId ->
-            markArchived.execute(threadId)
+        intents += view.conversationSwipedIntent.subscribe { adapterPosition ->
+            state.value
+                    ?.takeIf { state -> state.page == MainPage.INBOX }
+                    ?.takeIf { state -> state.adapter is ConversationsAdapter }
+                    ?.let { state ->
+                        val adapter = state.adapter as ConversationsAdapter
+                        val conversation = adapter.getItem(adapterPosition).conversation
+                        markArchived.execute(conversation.id)
+                    }
         }
 
     }
