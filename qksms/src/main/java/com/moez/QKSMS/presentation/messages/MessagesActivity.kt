@@ -33,8 +33,6 @@ class MessagesActivity : QkActivity<MessagesViewModel, MessagesState>(), Message
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.setView(this)
 
-        attach.setTint(themeManager.color)
-
         layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = true
         messageList.layoutManager = layoutManager

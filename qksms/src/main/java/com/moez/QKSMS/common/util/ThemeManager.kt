@@ -7,7 +7,7 @@ import javax.inject.Singleton
 class ThemeManager @Inject constructor() {
 
     val color = 0xFF008389.toInt()
-    val bubbleColor = 0xFFF4F4F4.toInt()
+    val bubbleColor = 0xFFFFFFFF.toInt()
 
     val textPrimary = 0xFF49555F.toInt()
     val textSecondary = 0xFF70808D.toInt()
