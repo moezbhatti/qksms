@@ -1,10 +1,16 @@
 package com.moez.QKSMS.data.model
 
+import android.content.ContentUris
+import android.net.Uri
 import android.provider.Telephony.*
 import io.realm.RealmObject
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
 open class Message : RealmObject() {
+
+    enum class DeliveryStatus { NONE, INFO, FAILED, PENDING, RECEIVED }
+    enum class AttachmentType { TEXT, IMAGE, VIDEO, AUDIO, SLIDESHOW, NOT_LOADED }
 
     @PrimaryKey var id: Long = 0
     var threadId: Long = 0
@@ -16,7 +22,35 @@ open class Message : RealmObject() {
     var dateSent: Long = 0
     var seen: Boolean = false
     var read: Boolean = false
+    var locked: Boolean = false
+
+    @Ignore var deliveryStatus: DeliveryStatus = DeliveryStatus.NONE
+        get() = DeliveryStatus.valueOf(deliveryStatusString)
+    var deliveryStatusString: String = "NONE"
+        get() = deliveryStatus.toString()
+
+    // SMS only
+    var errorCode: Int = 0
+
+    // MMS only
+    @Ignore var attachmentType: AttachmentType = AttachmentType.NOT_LOADED
+        get() = AttachmentType.valueOf(attachmentTypeString)
+    var attachmentTypeString: String = "NOT_LOADED"
+        get() = attachmentType.toString()
+
+    var mmsDeliveryStatusString: String = ""
+    var readReportString: String = ""
     var errorType: Int = 0
+    var messageSize: Int = 0
+    var messageType: Int = 0
+    var mmsStatus: Int = 0
+    var subject: String = ""
+    var textContentType: String = ""
+
+    fun getUri(): Uri {
+        val baseUri = if (isMms()) Mms.CONTENT_URI else Sms.CONTENT_URI
+        return ContentUris.withAppendedId(baseUri, id)
+    }
 
     fun isMms(): Boolean = type == "mms"
 
@@ -47,5 +81,4 @@ open class Message : RealmObject() {
         val isFailedSms = isSms() && boxId == Sms.MESSAGE_TYPE_FAILED
         return isFailedMms || isFailedSms
     }
-
 }

@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.provider.Telephony.*
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.data.model.Message.DeliveryStatus
 import io.reactivex.Flowable
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,17 +22,29 @@ class CursorToMessageFlowable @Inject constructor(val context: Context) : Mapper
                 }
 
                 id = cursor.getLong(columnsMap.msgId)
-                body = cursor.getString(columnsMap.smsBody) ?: ""
 
                 when (type) {
                     "sms" -> {
                         threadId = cursor.getLong(columnsMap.smsThreadId)
-                        address = cursor.getString(columnsMap.smsAddress)
+                        address = cursor.getString(columnsMap.smsAddress) ?: ""
                         boxId = cursor.getInt(columnsMap.smsType)
                         date = cursor.getLong(columnsMap.mmsDate)
                         dateSent = cursor.getLong(columnsMap.mmsDateSent)
-                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
                         read = cursor.getInt(columnsMap.mmsRead) != 0
+                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
+                        locked = cursor.getInt(columnsMap.smsLocked) != 0
+
+                        val status = cursor.getLong(columnsMap.smsStatus)
+                        deliveryStatus = when {
+                            status == Sms.STATUS_NONE.toLong() -> DeliveryStatus.NONE
+                            status >= Sms.STATUS_FAILED -> DeliveryStatus.FAILED
+                            status >= Sms.STATUS_PENDING -> DeliveryStatus.PENDING
+                            else -> DeliveryStatus.RECEIVED
+                        }
+
+                        // SMS Specific
+                        body = cursor.getString(columnsMap.smsBody) ?: ""
+                        errorCode = cursor.getInt(columnsMap.smsErrorCode)
                     }
 
                     "mms" -> {
@@ -40,25 +53,46 @@ class CursorToMessageFlowable @Inject constructor(val context: Context) : Mapper
                         boxId = cursor.getInt(columnsMap.mmsMessageBox)
                         date = cursor.getLong(columnsMap.mmsDate) * 1000L
                         dateSent = cursor.getLong(columnsMap.mmsDateSent)
-                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
                         read = cursor.getInt(columnsMap.mmsRead) != 0
+                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
+                        locked = cursor.getInt(columnsMap.mmsLocked) != 0
+
+                        // MMS Specific
+                        attachmentType = when (cursor.getInt(columnsMap.mmsTextOnly)) {
+                            0 -> Message.AttachmentType.NOT_LOADED
+                            else -> Message.AttachmentType.TEXT
+                        }
+                        mmsDeliveryStatusString = cursor.getString(columnsMap.mmsDeliveryReport) ?: ""
                         errorType = cursor.getInt(columnsMap.mmsErrorType)
+                        messageSize = 0
+                        readReportString = cursor.getString(columnsMap.mmsReadReport) ?: ""
+                        messageType = cursor.getInt(columnsMap.mmsMessageType)
+                        mmsStatus = cursor.getInt(columnsMap.mmsStatus)
+                        subject = cursor.getString(columnsMap.mmsSubject) ?: ""
+                        textContentType = ""
                     }
                 }
             }
         }
     }
 
+
     private fun getMmsAddress(messageId: Long): String {
-        val uri = Mms.CONTENT_URI.buildUpon().appendPath(messageId.toString()).appendPath("addr").build()
+        val uri = Mms.CONTENT_URI.buildUpon()
+                .appendPath(messageId.toString())
+                .appendPath("addr").build()
+
+        //TODO: Use Charset to ensure address is decoded correctly
         val projection = arrayOf(Mms.Addr.ADDRESS, Mms.Addr.CHARSET)
         val selection = "${Mms.Addr.TYPE} = 137"
 
-        context.contentResolver.query(uri, projection, selection, null, null)?.use { cursor ->
+        val cursor = context.contentResolver.query(uri, projection, selection, null, null)
+        cursor?.use {
             if (cursor.moveToFirst()) {
                 return cursor.getString(0)
             }
         }
+
         return ""
     }
 
