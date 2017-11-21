@@ -6,10 +6,9 @@
     android:layout_height="56dp"
     android:background="@color/white"
     android:gravity="center_vertical"
-    android:background="@color/white"
     android:minHeight="56dp">
 
-    <TextView
+    <EditText
         android:id="@+id/toolbarTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +18,7 @@
         android:singleLine="true"
         android:textColor="@color/textPrimary"
         android:textColorHint="@color/textTertiary"
-        android:textSize="20sp"
-        tools:text="Conversations" />
+        android:textSize="16sp"
+        tools:hint="Search something" />
 
 </android.support.v7.widget.Toolbar>

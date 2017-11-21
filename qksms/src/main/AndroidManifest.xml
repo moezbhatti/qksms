@@ -46,6 +46,7 @@
         </activity>
         <activity android:name="com.moez.QKSMS.presentation.messages.MessagesActivity" />
         <activity android:name=".presentation.settings.SettingsActivity" />
+        <activity android:name=".presentation.compose.ComposeActivity" />
 
         <receiver
             android:name=".receiver.SmsReceiver"

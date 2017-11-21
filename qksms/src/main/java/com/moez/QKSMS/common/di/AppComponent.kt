@@ -1,7 +1,8 @@
 package com.moez.QKSMS.common.di
 
 import com.moez.QKSMS.common.util.ContactImageLoader
-import com.moez.QKSMS.common.util.NotificationManager
+import com.moez.QKSMS.presentation.compose.ComposeViewModel
+import com.moez.QKSMS.presentation.compose.DetailedChipView
 import com.moez.QKSMS.presentation.main.ConversationsAdapter
 import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
@@ -24,8 +25,6 @@ interface AppComponent {
     fun inject(adapter: ConversationsAdapter)
     fun inject(adapter: MessagesAdapter)
 
-    fun inject(manager: NotificationManager)
-
     fun inject(receiver: SmsReceiver)
     fun inject(receiver: MessageDeliveredReceiver)
     fun inject(receiver: MessageSentReceiver)
@@ -36,9 +35,12 @@ interface AppComponent {
     fun inject(view: AvatarView)
 
     fun inject(viewModel: MainViewModel)
+    fun inject(viewModel: ComposeViewModel)
     fun inject(viewModel: MessagesViewModel)
     fun inject(viewModel: SettingsViewModel)
 
     fun inject(fetcher: ContactImageLoader.ContactImageFetcher)
+
+    fun inject(view: DetailedChipView)
 
 }

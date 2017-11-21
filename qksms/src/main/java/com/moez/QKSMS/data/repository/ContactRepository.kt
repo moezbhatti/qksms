@@ -30,6 +30,17 @@ class ContactRepository @Inject constructor(val context: Context) {
                 .map { id -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id) }
     }
 
+    fun getContacts(): List<Contact> {
+        val realm = Realm.getDefaultInstance()
+        val results = realm.copyFromRealm(realm
+                .where(Contact::class.java)
+                .equalTo("inContactsTable", true)
+                .findAllSorted("name"))
+        realm.close()
+
+        return results
+    }
+
     fun getContact(recipientId: Long): Flowable<Contact> {
         return Flowable.fromPublisher<Contact> { emitter ->
             val contact = getContactFromRealm(recipientId) ?: getContactFromDb(recipientId)
@@ -58,7 +69,8 @@ class ContactRepository @Inject constructor(val context: Context) {
                 try {
                     context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
                         if (contactCursor.moveToFirst()) {
-                            contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME)).orEmpty()
+                            contact.inContactsTable = true
+                            contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).orEmpty()
                         }
                     }
                 } catch (e: Exception) {
@@ -69,15 +81,6 @@ class ContactRepository @Inject constructor(val context: Context) {
         }
 
         return null
-    }
-
-    fun getContactFromCache(address: String): Contact? {
-        val realm = Realm.getDefaultInstance()
-        val contact = realm.where(Contact::class.java)
-                .equalTo("contactUri", address)
-                .findFirst()
-        realm.close()
-        return contact
     }
 
 }

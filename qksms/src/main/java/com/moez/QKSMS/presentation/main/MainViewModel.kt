@@ -30,6 +30,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         super.bindIntents(view)
 
         intents += view.composeIntent.subscribe {
+            navigator.showCompose()
             newState { it.copy(drawerOpen = false) }
         }
 

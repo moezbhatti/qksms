@@ -29,7 +29,6 @@ abstract class QkAdapter<T, VH : RecyclerView.ViewHolder>(private val flowable: 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
         super.onAttachedToRecyclerView(recyclerView)
         disposable = flowable.subscribe { data = it }
-
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
@@ -37,7 +36,7 @@ abstract class QkAdapter<T, VH : RecyclerView.ViewHolder>(private val flowable: 
         disposable?.dispose()
     }
 
-    override final fun getItemCount(): Int {
+    override fun getItemCount(): Int {
         return data.size
     }
 

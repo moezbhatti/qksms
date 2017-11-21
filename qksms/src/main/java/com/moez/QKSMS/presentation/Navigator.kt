@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
+import com.moez.QKSMS.presentation.compose.ComposeActivity
+import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
@@ -18,6 +20,11 @@ class Navigator @Inject constructor(val context: Context) {
     private fun startActivity(intent: Intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
+    }
+
+    fun showCompose() {
+        val intent = Intent(context, ComposeActivity::class.java)
+        startActivity(intent)
     }
 
     fun showConversation(threadId: Long) {
@@ -39,6 +46,10 @@ class Navigator @Inject constructor(val context: Context) {
 
                 MainViewModel::class.java -> {
                     MainViewModel()
+                }
+
+                ComposeViewModel::class.java -> {
+                    ComposeViewModel()
                 }
 
                 MessagesViewModel::class.java -> {
