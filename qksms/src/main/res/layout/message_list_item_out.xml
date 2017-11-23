@@ -44,8 +44,8 @@
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
-                android:textColor="@color/textPrimaryLight"
-                tools:backgroundTint="#0BAE9F"
+                android:textColor="@color/textPrimary"
+                tools:backgroundTint="@color/white"
                 tools:text="Hey! How's it going?" />
 
         </LinearLayout>

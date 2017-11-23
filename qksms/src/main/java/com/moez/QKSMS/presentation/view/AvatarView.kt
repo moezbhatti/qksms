@@ -7,12 +7,16 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.GlideApp
-import com.moez.QKSMS.common.util.extensions.getColorCompat
+import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.data.model.Contact
 import kotlinx.android.synthetic.main.avatar_view.view.*
+import javax.inject.Inject
 
 class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : FrameLayout(context, attrs, defStyleAttr) {
+
+    @Inject lateinit var themeManager: ThemeManager
 
     var contact: Contact? = null
         set(value) {
@@ -25,13 +29,14 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
 
     init {
         View.inflate(context, R.layout.avatar_view, this)
+        AppComponentManager.appComponent.inject(this)
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
         setBackgroundResource(R.drawable.circle)
         clipToOutline = true
-        backgroundTintList = ColorStateList.valueOf(context.getColorCompat(R.color.bubbleLight))
+        backgroundTintList = ColorStateList.valueOf(themeManager.color)
 
         if (!isInEditMode) {
             updateView()

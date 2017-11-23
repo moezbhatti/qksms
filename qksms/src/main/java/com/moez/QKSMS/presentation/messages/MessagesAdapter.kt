@@ -49,11 +49,11 @@ class MessagesAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerVie
         when (viewType) {
             VIEWTYPE_ME -> {
                 layoutRes = R.layout.message_list_item_out
-                bubbleColor = themeManager.color
+                bubbleColor = themeManager.bubbleColor
             }
             else -> {
                 layoutRes = R.layout.message_list_item_in
-                bubbleColor = themeManager.bubbleColor
+                bubbleColor = themeManager.color
             }
         }
 

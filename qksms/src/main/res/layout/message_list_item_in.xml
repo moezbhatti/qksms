@@ -52,7 +52,9 @@
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
-                tools:text="Hey! How's it going?" />
+                android:textColor="@color/textPrimaryLight"
+                tools:backgroundTint="@color/tools_theme"
+                tools:text="@tools:sample/lorem/random" />
 
             <TextView
                 android:id="@+id/status"
