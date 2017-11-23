@@ -17,6 +17,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
+import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
@@ -53,6 +54,8 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
         viewModel.setView(this)
 
         conversationList.layoutManager = LinearLayoutManager(this)
+
+        compose.setBackgroundTint(themeManager.color)
 
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
