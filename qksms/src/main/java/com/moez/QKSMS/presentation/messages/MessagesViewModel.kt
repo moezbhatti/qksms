@@ -7,6 +7,7 @@ import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.domain.interactor.DeleteMessage
 import com.moez.QKSMS.domain.interactor.MarkRead
 import com.moez.QKSMS.domain.interactor.SendMessage
 import com.moez.QKSMS.presentation.base.QkViewModel
@@ -19,6 +20,7 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
+    @Inject lateinit var deleteMessage: DeleteMessage
 
     private var conversation: Conversation? = null
 
@@ -61,6 +63,10 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
         intents += view.copyTextIntent.subscribe { message ->
             ClipboardUtils.copy(context, message.body)
             context.makeToast(R.string.toast_copied)
+        }
+
+        intents += view.deleteMessageIntent.subscribe { message ->
+            deleteMessage.execute(message.id)
         }
     }
 

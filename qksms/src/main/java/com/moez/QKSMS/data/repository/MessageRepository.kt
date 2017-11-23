@@ -182,6 +182,15 @@ class MessageRepository @Inject constructor(
         updateMessageFromUri(uri, values)
     }
 
+    fun deleteMessage(messageId: Long) {
+        val realm = Realm.getDefaultInstance()
+        realm.where(Message::class.java).equalTo("id", messageId).findFirst()?.let { message ->
+            context.contentResolver.delete(message.getUri(), null, null)
+            realm.executeTransaction { message.deleteFromRealm() }
+        }
+        realm.close()
+    }
+
     fun updateMessageFromUri(uri: Uri, values: ContentValues) {
         val contentResolver = context.contentResolver
         Flowable.just(values)
