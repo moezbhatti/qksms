@@ -1,5 +1,6 @@
 package com.moez.QKSMS.presentation.messages
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,9 +12,12 @@ import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_activity.*
 import javax.inject.Inject
+
 
 class MessagesActivity : QkActivity<MessagesViewModel, MessagesState>(), MessagesView {
 
@@ -22,6 +26,9 @@ class MessagesActivity : QkActivity<MessagesViewModel, MessagesState>(), Message
     private lateinit var layoutManager: LinearLayoutManager
 
     override val viewModelClass = MessagesViewModel::class
+    override val copyTextIntent: Subject<Message> = PublishSubject.create()
+    override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
+    override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
     override val sendIntent by lazy { send.clicks() }
@@ -66,6 +73,19 @@ class MessagesActivity : QkActivity<MessagesViewModel, MessagesState>(), Message
                 }
             }
         })
+
+        adapter.longClicks.subscribe { message ->
+            AlertDialog.Builder(this)
+                    .setItems(R.array.message_options, { _, row ->
+                        when (row) {
+                            0 -> copyTextIntent.onNext(message)
+                            1 -> forwardMessageIntent.onNext(message)
+                            2 -> deleteMessageIntent.onNext(message)
+                        }
+                    })
+                    .show()
+        }
+
         return adapter
     }
 }

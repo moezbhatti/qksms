@@ -15,6 +15,8 @@ import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkViewHolder
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
@@ -32,6 +34,8 @@ class MessagesAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerVie
     @Inject lateinit var context: Context
     @Inject lateinit var themeManager: ThemeManager
     @Inject lateinit var dateFormatter: DateFormatter
+
+    val longClicks: Subject<Message> = PublishSubject.create<Message>()
 
     private val people = ArrayList<String>()
 
@@ -72,6 +76,8 @@ class MessagesAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerVie
         val view = viewHolder.itemView
 
         RxView.clicks(view).subscribe { Timber.v(message.toString()) }
+        RxView.longClicks(view).subscribe { longClicks.onNext(message) }
+
         bindGrouping(view, position)
 
         view.status?.visibility = when {

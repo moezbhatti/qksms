@@ -20,4 +20,12 @@
     <string name="notification_reply">Reply</string>
     <string name="notification_read">Mark read</string>
 
+    <string name="toast_copied">Copied</string>
+
+    <string-array name="message_options">
+        <item>Copy text</item>
+        <item>Forward</item>
+        <item>Delete</item>
+    </string-array>
+
 </resources>

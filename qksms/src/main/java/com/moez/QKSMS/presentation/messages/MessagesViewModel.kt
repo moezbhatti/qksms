@@ -1,6 +1,10 @@
 package com.moez.QKSMS.presentation.messages
 
+import android.content.Context
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.util.ClipboardUtils
+import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.MarkRead
@@ -11,6 +15,7 @@ import javax.inject.Inject
 
 class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, MessagesState>(MessagesState()) {
 
+    @Inject lateinit var context: Context
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
@@ -51,6 +56,11 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
             val previousState = state.value!!
             sendMessage.execute(SendMessage.Params(threadId, conversation?.contacts?.get(0)?.address.orEmpty(), previousState.draft))
             newState { it.copy(draft = "", canSend = false) }
+        }
+
+        intents += view.copyTextIntent.subscribe { message ->
+            ClipboardUtils.copy(context, message.body)
+            context.makeToast(R.string.toast_copied)
         }
     }
 
