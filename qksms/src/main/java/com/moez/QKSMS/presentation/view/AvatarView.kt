@@ -44,11 +44,16 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
     }
 
     private fun updateView() {
-        photo.setImageDrawable(null)
-        initial.text = "?"
+        if (contact?.name.orEmpty().isNotEmpty()) {
+            initial.text = contact?.name?.substring(0, 1)
+            icon.visibility = GONE
+        } else {
+            initial.text = null
+            icon.visibility = VISIBLE
+        }
 
+        photo.setImageDrawable(null)
         contact?.let { contact ->
-            initial.text = if (contact.name.isNotEmpty()) contact.name.substring(0, 1) else "?"
             GlideApp.with(photo).load(PhoneNumberUtils.stripSeparators(contact.address)).into(photo)
         }
     }

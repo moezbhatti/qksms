@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@color/tools_theme"
     tools:parentTag="com.moez.QKSMS.presentation.view.AvatarView">
 
     <TextView
@@ -14,7 +15,16 @@
         android:gravity="center"
         android:textAllCaps="true"
         android:textColor="@color/textPrimaryLight"
+        android:textSize="20sp"
         tools:text="M" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_person_black_24dp"
+        android:tint="@color/white" />
 
     <ImageView
         android:id="@+id/photo"
