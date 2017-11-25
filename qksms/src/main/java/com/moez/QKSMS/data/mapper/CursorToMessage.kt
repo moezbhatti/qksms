@@ -3,74 +3,72 @@ package com.moez.QKSMS.data.mapper
 import android.content.Context
 import android.database.Cursor
 import android.provider.Telephony.*
-import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.model.Message.DeliveryStatus
-import io.reactivex.Flowable
 import timber.log.Timber
 import javax.inject.Inject
 
-class CursorToMessageFlowable @Inject constructor(val context: Context) : Mapper<Cursor, Flowable<Message>> {
+class CursorToMessage @Inject constructor(val context: Context) : Mapper<Pair<Cursor, CursorToMessage.MessageColumns>, Message> {
 
-    override fun map(from: Cursor): Flowable<Message> {
-        val columnsMap = MessageColumns(from)
-        return from.asFlowable().map { cursor ->
-            Message().apply {
-                type = when (cursor.getColumnIndex(MmsSms.TYPE_DISCRIMINATOR_COLUMN)) {
-                    -1 -> "sms"
-                    else -> cursor.getString(columnsMap.msgType)
+    override fun map(from: Pair<Cursor, MessageColumns>): Message {
+        val cursor = from.first
+        val columnsMap = from.second
+
+        return Message().apply {
+            type = when (cursor.getColumnIndex(MmsSms.TYPE_DISCRIMINATOR_COLUMN)) {
+                -1 -> "sms"
+                else -> cursor.getString(columnsMap.msgType)
+            }
+
+            id = cursor.getLong(columnsMap.msgId)
+
+            when (type) {
+                "sms" -> {
+                    threadId = cursor.getLong(columnsMap.smsThreadId)
+                    address = cursor.getString(columnsMap.smsAddress) ?: ""
+                    boxId = cursor.getInt(columnsMap.smsType)
+                    date = cursor.getLong(columnsMap.smsDate)
+                    dateSent = cursor.getLong(columnsMap.smsDateSent)
+                    read = cursor.getInt(columnsMap.smsRead) != 0
+                    seen = cursor.getInt(columnsMap.smsSeen) != 0
+                    locked = cursor.getInt(columnsMap.smsLocked) != 0
+
+                    val status = cursor.getLong(columnsMap.smsStatus)
+                    deliveryStatus = when {
+                        status == Sms.STATUS_NONE.toLong() -> DeliveryStatus.NONE
+                        status >= Sms.STATUS_FAILED -> DeliveryStatus.FAILED
+                        status >= Sms.STATUS_PENDING -> DeliveryStatus.PENDING
+                        else -> DeliveryStatus.RECEIVED
+                    }
+
+                    // SMS Specific
+                    body = cursor.getString(columnsMap.smsBody) ?: ""
+                    errorCode = cursor.getInt(columnsMap.smsErrorCode)
                 }
 
-                id = cursor.getLong(columnsMap.msgId)
+                "mms" -> {
+                    threadId = cursor.getLong(columnsMap.mmsThreadId)
+                    address = getMmsAddress(id)
+                    boxId = cursor.getInt(columnsMap.mmsMessageBox)
+                    date = cursor.getLong(columnsMap.mmsDate) * 1000L
+                    dateSent = cursor.getLong(columnsMap.mmsDateSent)
+                    read = cursor.getInt(columnsMap.mmsRead) != 0
+                    seen = cursor.getInt(columnsMap.mmsSeen) != 0
+                    locked = cursor.getInt(columnsMap.mmsLocked) != 0
 
-                when (type) {
-                    "sms" -> {
-                        threadId = cursor.getLong(columnsMap.smsThreadId)
-                        address = cursor.getString(columnsMap.smsAddress) ?: ""
-                        boxId = cursor.getInt(columnsMap.smsType)
-                        date = cursor.getLong(columnsMap.mmsDate)
-                        dateSent = cursor.getLong(columnsMap.mmsDateSent)
-                        read = cursor.getInt(columnsMap.mmsRead) != 0
-                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
-                        locked = cursor.getInt(columnsMap.smsLocked) != 0
-
-                        val status = cursor.getLong(columnsMap.smsStatus)
-                        deliveryStatus = when {
-                            status == Sms.STATUS_NONE.toLong() -> DeliveryStatus.NONE
-                            status >= Sms.STATUS_FAILED -> DeliveryStatus.FAILED
-                            status >= Sms.STATUS_PENDING -> DeliveryStatus.PENDING
-                            else -> DeliveryStatus.RECEIVED
-                        }
-
-                        // SMS Specific
-                        body = cursor.getString(columnsMap.smsBody) ?: ""
-                        errorCode = cursor.getInt(columnsMap.smsErrorCode)
+                    // MMS Specific
+                    attachmentType = when (cursor.getInt(columnsMap.mmsTextOnly)) {
+                        0 -> Message.AttachmentType.NOT_LOADED
+                        else -> Message.AttachmentType.TEXT
                     }
-
-                    "mms" -> {
-                        threadId = cursor.getLong(columnsMap.mmsThreadId)
-                        address = getMmsAddress(id)
-                        boxId = cursor.getInt(columnsMap.mmsMessageBox)
-                        date = cursor.getLong(columnsMap.mmsDate) * 1000L
-                        dateSent = cursor.getLong(columnsMap.mmsDateSent)
-                        read = cursor.getInt(columnsMap.mmsRead) != 0
-                        seen = cursor.getInt(columnsMap.mmsSeen) != 0
-                        locked = cursor.getInt(columnsMap.mmsLocked) != 0
-
-                        // MMS Specific
-                        attachmentType = when (cursor.getInt(columnsMap.mmsTextOnly)) {
-                            0 -> Message.AttachmentType.NOT_LOADED
-                            else -> Message.AttachmentType.TEXT
-                        }
-                        mmsDeliveryStatusString = cursor.getString(columnsMap.mmsDeliveryReport) ?: ""
-                        errorType = cursor.getInt(columnsMap.mmsErrorType)
-                        messageSize = 0
-                        readReportString = cursor.getString(columnsMap.mmsReadReport) ?: ""
-                        messageType = cursor.getInt(columnsMap.mmsMessageType)
-                        mmsStatus = cursor.getInt(columnsMap.mmsStatus)
-                        subject = cursor.getString(columnsMap.mmsSubject) ?: ""
-                        textContentType = ""
-                    }
+                    mmsDeliveryStatusString = cursor.getString(columnsMap.mmsDeliveryReport) ?: ""
+                    errorType = cursor.getInt(columnsMap.mmsErrorType)
+                    messageSize = 0
+                    readReportString = cursor.getString(columnsMap.mmsReadReport) ?: ""
+                    messageType = cursor.getInt(columnsMap.mmsMessageType)
+                    mmsStatus = cursor.getInt(columnsMap.mmsStatus)
+                    subject = cursor.getString(columnsMap.mmsSubject) ?: ""
+                    textContentType = ""
                 }
             }
         }
@@ -131,7 +129,7 @@ class CursorToMessageFlowable @Inject constructor(val context: Context) : Mapper
                 Mms.TEXT_ONLY)
     }
 
-    private class MessageColumns(val cursor: Cursor) {
+    class MessageColumns(private val cursor: Cursor) {
 
         val msgType by lazy { getColumnIndex(MmsSms.TYPE_DISCRIMINATOR_COLUMN) }
         val msgId by lazy { getColumnIndex(MmsSms._ID) }
@@ -165,13 +163,11 @@ class CursorToMessageFlowable @Inject constructor(val context: Context) : Mapper
         val mmsStatus by lazy { getColumnIndex(Mms.STATUS) }
         val mmsTextOnly by lazy { getColumnIndex(Mms.TEXT_ONLY) }
 
-        private fun getColumnIndex(columnsName: String): Int {
-            return try {
-                cursor.getColumnIndexOrThrow(columnsName)
-            } catch (e: Exception) {
-                Timber.w(e)
-                -1
-            }
+        private fun getColumnIndex(columnsName: String) = try {
+            cursor.getColumnIndexOrThrow(columnsName)
+        } catch (e: Exception) {
+            Timber.w(e)
+            -1
         }
     }
 }

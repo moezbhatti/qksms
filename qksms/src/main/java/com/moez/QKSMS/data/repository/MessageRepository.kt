@@ -8,7 +8,7 @@ import android.provider.Telephony.Sms
 import android.provider.Telephony.TextBasedSmsColumns
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
-import com.moez.QKSMS.data.mapper.CursorToMessageFlowable
+import com.moez.QKSMS.data.mapper.CursorToMessage
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.model.Message
@@ -25,7 +25,7 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepository @Inject constructor(
         private val context: Context,
-        private val cursorToMessageFlowable: CursorToMessageFlowable) {
+        private val cursorToMessageFlowable: CursorToMessage) {
 
     fun getConversations(archived: Boolean = false): Flowable<List<ConversationMessagePair>> {
         val realm = Realm.getDefaultInstance()
@@ -201,8 +201,8 @@ class MessageRepository @Inject constructor(
 
     fun addMessageFromUri(uri: Uri) {
         val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
-        cursorToMessageFlowable.map(cursor)
-                .subscribe { message -> message.insertOrUpdate() }
+        val columnsMap = CursorToMessage.MessageColumns(cursor)
+        cursorToMessageFlowable.map(Pair(cursor, columnsMap)).insertOrUpdate()
     }
 
 }
