@@ -18,10 +18,11 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
+class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var contactsRepo: ContactRepository
@@ -80,19 +81,23 @@ class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeSta
                 view.chipSelectedIntent.map { contact ->
                     { contacts: List<Contact> -> contacts.toMutableList().apply { add(contact) } }
                 })
-                .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
-                .subscribe { contacts -> newState { it.copy(selectedContacts = contacts) } }
+                .scan(state.value!!.contacts, { previousState, reducer -> reducer(previousState) })
+                .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
+                .subscribe()
 
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
         }
 
-        intents += view.sendIntent.subscribe {
-            val previousState = state.value!!
-            val address = conversation?.contacts?.first()?.address.orEmpty()
-            sendMessage.execute(SendMessage.Params(threadId, address, previousState.draft))
-            newState { it.copy(draft = "", canSend = false) }
-        }
+        intents += view.sendIntent
+                .withLatestFrom(view.textChangedIntent, { _, body -> body })
+                .map { body -> body.toString() }
+                .subscribe { body ->
+                    val threadId = conversation?.id ?: 0
+                    val address = conversation?.contacts?.first()?.address.orEmpty()
+                    sendMessage.execute(SendMessage.Params(threadId, address, body))
+                    newState { it.copy(draft = "", canSend = false) }
+                }
 
         intents += view.copyTextIntent.subscribe { message ->
             ClipboardUtils.copy(context, message.body)
@@ -105,7 +110,9 @@ class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeSta
     }
 
     fun dataChanged() {
-        markRead.execute(threadId)
+        conversation?.id?.let { threadId ->
+            markRead.execute(threadId)
+        }
     }
 
 }
