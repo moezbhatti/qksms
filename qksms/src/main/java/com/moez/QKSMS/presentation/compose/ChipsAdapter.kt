@@ -19,14 +19,13 @@ import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.presentation.base.QkAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
-import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
 
 class ChipsAdapter(
         private val context: Context,
-        private val view: RecyclerView,
-        data: Flowable<List<Contact>>) : QkAdapter<Contact, QkViewHolder>(data) {
+        private val view: RecyclerView)
+    : QkAdapter<Contact, QkViewHolder>() {
 
     companion object {
         private val TYPE_EDIT_TEXT = 0

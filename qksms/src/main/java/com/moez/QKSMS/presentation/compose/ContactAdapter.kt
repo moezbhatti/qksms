@@ -8,12 +8,11 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.presentation.base.QkAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
-import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
-class ContactAdapter(private val context: Context, data: Flowable<List<Contact>>) : QkAdapter<Contact, QkViewHolder>(data) {
+class ContactAdapter(private val context: Context) : QkAdapter<Contact, QkViewHolder>() {
 
     val contactSelected: Subject<Contact> = PublishSubject.create()
 

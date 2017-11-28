@@ -15,12 +15,10 @@ import com.moez.QKSMS.domain.interactor.MarkRead
 import com.moez.QKSMS.domain.interactor.SendMessage
 import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
@@ -31,9 +29,6 @@ class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeSta
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
-
-    private val contactsSubject: Subject<List<Contact>> = BehaviorSubject.create()
-    private val selectedContactsReducer: Subject<(List<Contact>) -> List<Contact>> = BehaviorSubject.create()
 
     private val contacts: List<Contact>
 
@@ -60,14 +55,6 @@ class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeSta
 
         contacts = contactsRepo.getContacts()
 
-        val contactsFlowable = contactsSubject.toFlowable(BackpressureStrategy.BUFFER)
-
-        val selectedContacts: Flowable<List<Contact>> = selectedContactsReducer
-                .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
-                .toFlowable(BackpressureStrategy.BUFFER)
-
-        newState { it.copy(contacts = contactsFlowable, selectedContacts = selectedContacts) }
-
         dataChanged()
     }
 
@@ -84,15 +71,17 @@ class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeSta
                 }
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { contacts -> contactsSubject.onNext(contacts) }
+                .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
 
-        intents += view.chipSelectedIntent.subscribe { contact ->
-            selectedContactsReducer.onNext { it.toMutableList().apply { add(contact) } }
-        }
-
-        intents += view.chipDeletedIntent.subscribe { contact ->
-            selectedContactsReducer.onNext { it.filterNot { it == contact } }
-        }
+        intents += Observable.merge<(List<Contact>) -> List<Contact>>(
+                view.chipDeletedIntent.map { contact ->
+                    { contacts: List<Contact> -> contacts.filterNot { it == contact } }
+                },
+                view.chipSelectedIntent.map { contact ->
+                    { contacts: List<Contact> -> contacts.toMutableList().apply { add(contact) } }
+                })
+                .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
+                .subscribe { contacts -> newState { it.copy(selectedContacts = contacts) } }
 
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }

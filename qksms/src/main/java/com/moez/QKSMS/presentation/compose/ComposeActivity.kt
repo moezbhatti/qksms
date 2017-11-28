@@ -15,6 +15,7 @@ import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
@@ -30,15 +31,18 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     private lateinit var layoutManager: LinearLayoutManager
 
     override val viewModelClass = ComposeViewModel::class
-    override val queryChangedIntent: Subject<CharSequence> = PublishSubject.create()
-    override val chipSelectedIntent: Subject<Contact> = PublishSubject.create()
-    override val chipDeletedIntent: Subject<Contact> = PublishSubject.create()
+    override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
+    override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
+    override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
     override val sendIntent by lazy { send.clicks() }
+
+    private val chipsAdapter by lazy { ChipsAdapter(this, chips) }
+    private val contactsAdapter by lazy { ContactAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +52,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         viewModel.bindView(this)
 
         chips.layoutManager = FlexboxLayoutManager(this)
+        chips.adapter = chipsAdapter
+
         contacts.layoutManager = LinearLayoutManager(this)
+        contacts.adapter = contactsAdapter
 
         window.callback = ComposeWindowCallback(window.callback, this)
 
@@ -62,19 +69,12 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         chips.visibility = if (state.editingMode) View.VISIBLE else View.GONE
         contacts.visibility = if (state.editingMode) View.VISIBLE else View.GONE
 
-        if (chips.adapter == null && state.selectedContacts != null) {
-            val adapter = ChipsAdapter(this, chips, state.selectedContacts)
-            adapter.chipDeleted.subscribe { chipDeletedIntent.onNext(it) }
-            adapter.textChanges.subscribe { queryChangedIntent.onNext(it) }
-
-            chips.adapter = adapter
+        if (chipsAdapter.data !== state.selectedContacts) {
+            chipsAdapter.data = state.selectedContacts
         }
 
-        if (contacts.adapter == null && state.contacts != null) {
-            val adapter = ContactAdapter(this, state.contacts)
-            adapter.contactSelected.subscribe { chipSelectedIntent.onNext(it) }
-
-            contacts.adapter = adapter
+        if (contactsAdapter.data !== state.contacts) {
+            contactsAdapter.data = state.contacts
         }
 
         if (title != state.title) title = state.title

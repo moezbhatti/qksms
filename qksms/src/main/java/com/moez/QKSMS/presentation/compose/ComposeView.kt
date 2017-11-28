@@ -8,7 +8,7 @@ import io.reactivex.subjects.Subject
 
 interface ComposeView : QkView<ComposeState> {
 
-    val queryChangedIntent: Subject<CharSequence>
+    val queryChangedIntent: Observable<CharSequence>
     val chipSelectedIntent: Subject<Contact>
     val chipDeletedIntent: Subject<Contact>
     val copyTextIntent: Subject<Message>

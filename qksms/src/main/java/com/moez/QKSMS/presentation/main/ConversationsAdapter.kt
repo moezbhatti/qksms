@@ -11,13 +11,13 @@ import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.presentation.Navigator
-import com.moez.QKSMS.presentation.base.QkAdapter
+import com.moez.QKSMS.presentation.base.FlowableAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
-class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : QkAdapter<ConversationMessagePair, QkViewHolder>(flowable) {
+class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : FlowableAdapter<ConversationMessagePair, QkViewHolder>(flowable) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var navigator: Navigator
