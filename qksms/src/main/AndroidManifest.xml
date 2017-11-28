@@ -48,6 +48,11 @@
         <activity android:name=".presentation.settings.SettingsActivity" />
         <activity android:name=".presentation.compose.ComposeActivity" />
 
+        <receiver android:name=".receiver.DefaultSmsChangedReceiver">
+            <intent-filter>
+                <action android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED" />
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">

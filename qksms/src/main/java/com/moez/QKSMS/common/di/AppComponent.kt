@@ -25,6 +25,7 @@ interface AppComponent {
     fun inject(adapter: ConversationsAdapter)
     fun inject(adapter: MessagesAdapter)
 
+    fun inject(receiver: DefaultSmsChangedReceiver)
     fun inject(receiver: SmsReceiver)
     fun inject(receiver: MessageDeliveredReceiver)
     fun inject(receiver: MessageSentReceiver)
