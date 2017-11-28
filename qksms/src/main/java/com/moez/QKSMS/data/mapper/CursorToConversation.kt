@@ -26,12 +26,10 @@ class CursorToConversation @Inject constructor(private val contactsRepo: Contact
         val URI: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
         val PROJECTION = arrayOf(
                 Threads._ID,
-                Threads.RECIPIENT_IDS,
-                Threads.DATE)
+                Threads.RECIPIENT_IDS)
 
         val ID = 0
         val RECIPIENT_IDS = 1
-        val DATE = 2
     }
 
 }
