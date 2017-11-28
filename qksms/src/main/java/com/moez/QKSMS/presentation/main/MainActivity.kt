@@ -51,7 +51,7 @@ class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
         setContentView(R.layout.main_activity)
         ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
         requestPermissions()
-        viewModel.setView(this)
+        viewModel.bindView(this)
 
         conversationList.layoutManager = LinearLayoutManager(this)
 

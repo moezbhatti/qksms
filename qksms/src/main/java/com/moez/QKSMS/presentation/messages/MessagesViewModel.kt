@@ -47,8 +47,8 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
         dataChanged()
     }
 
-    override fun bindIntents(view: MessagesView) {
-        super.bindIntents(view)
+    override fun bindView(view: MessagesView) {
+        super.bindView(view)
 
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }

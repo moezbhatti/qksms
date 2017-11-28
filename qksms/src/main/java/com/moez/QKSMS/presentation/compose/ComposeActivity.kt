@@ -23,7 +23,7 @@ class ComposeActivity : QkActivity<ComposeViewModel, ComposeState>(), ComposeVie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compose_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        viewModel.setView(this)
+        viewModel.bindView(this)
 
         chips.layoutManager = FlexboxLayoutManager(this)
         contacts.layoutManager = LinearLayoutManager(this)

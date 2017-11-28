@@ -35,8 +35,8 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         markAllSeen.execute(Unit)
     }
 
-    override fun bindIntents(view: MainView) {
-        super.bindIntents(view)
+    override fun bindView(view: MainView) {
+        super.bindView(view)
 
         intents += view.composeIntent.subscribe {
             navigator.showCompose()

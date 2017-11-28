@@ -21,8 +21,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += fullSync
     }
 
-    override fun bindIntents(view: SettingsView) {
-        super.bindIntents(view)
+    override fun bindView(view: SettingsView) {
+        super.bindView(view)
 
         intents += view.preferenceClickIntent.subscribe {
             Timber.v("Preference click: ${it.key}")

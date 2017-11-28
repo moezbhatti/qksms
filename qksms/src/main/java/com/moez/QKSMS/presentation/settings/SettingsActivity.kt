@@ -27,7 +27,7 @@ class SettingsActivity : QkActivity<SettingsViewModel, SettingsState>(), Setting
         progressDialog.setCanceledOnTouchOutside(false)
 
         fragment = fragmentManager.findFragmentById(fragmentFrame.id) as? SettingsFragment ?: SettingsFragment()
-        viewModel.setView(this)
+        viewModel.bindView(this)
 
         fragmentManager.beginTransaction()
                 .replace(fragmentFrame.id, fragment)

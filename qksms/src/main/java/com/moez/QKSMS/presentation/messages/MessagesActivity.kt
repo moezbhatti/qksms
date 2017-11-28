@@ -38,7 +38,7 @@ class MessagesActivity : QkActivity<MessagesViewModel, MessagesState>(), Message
         AppComponentManager.appComponent.inject(this)
         setContentView(R.layout.message_list_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        viewModel.setView(this)
+        viewModel.bindView(this)
 
         layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = true

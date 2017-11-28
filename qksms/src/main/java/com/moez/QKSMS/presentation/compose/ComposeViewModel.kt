@@ -40,8 +40,8 @@ class ComposeViewModel : QkViewModel<ComposeView, ComposeState>(ComposeState()) 
         newState { it.copy(contacts = contactsFlowable, selectedContacts = selectedContacts) }
     }
 
-    override fun bindIntents(view: ComposeView) {
-        super.bindIntents(view)
+    override fun bindView(view: ComposeView) {
+        super.bindView(view)
 
         intents += view.queryChangedIntent
                 .toFlowable(BackpressureStrategy.LATEST)
