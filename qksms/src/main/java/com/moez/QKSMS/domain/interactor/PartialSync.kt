@@ -22,14 +22,12 @@ open class PartialSync @Inject constructor(
 
     override fun buildObservable(params: Unit): Flowable<Long> {
         val contentResolver = context.contentResolver
-        val conversationsCursor = contentResolver.query(CursorToConversation.URI, CursorToConversation.PROJECTION, null, null, "date desc")
-
         var realm: Realm? = null
 
         var lastSync = 0L
         var startTime = 0L
 
-        return Flowable.just(conversationsCursor)
+        return Flowable.just(params)
                 .doOnNext {
                     startTime = System.currentTimeMillis()
 
@@ -42,6 +40,7 @@ open class PartialSync @Inject constructor(
                     // Add a log entry for this sync
                     realm?.insert(SyncLog())
                 }
+                .map { contentResolver.query(CursorToConversation.URI, CursorToConversation.PROJECTION, "date >= ?", arrayOf(lastSync.toString()), "date desc") }
                 .flatMap { cursor -> cursor.asFlowable().map { cursorToConversation.map(it) } }
                 .distinct { conversation -> conversation.id }
                 .doOnNext { conversation -> realm?.insertOrUpdate(conversation) }
