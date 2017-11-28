@@ -1,11 +1,11 @@
-package com.moez.QKSMS.presentation.messages
+package com.moez.QKSMS.presentation.compose
 
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import io.reactivex.Flowable
 import io.realm.RealmResults
 
-data class MessagesState(
+data class ComposeState(
         val editingMode: Boolean = false,
         val contacts: Flowable<List<Contact>>? = null,
         val selectedContacts: Flowable<List<Contact>>? = null,

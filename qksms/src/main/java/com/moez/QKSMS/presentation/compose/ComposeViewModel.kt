@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.messages
+package com.moez.QKSMS.presentation.compose
 
 import android.content.Context
 import android.telephony.PhoneNumberUtils
@@ -23,7 +23,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
-class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, MessagesState>(MessagesState(editingMode = threadId == 0L)) {
+class ComposeViewModel(val threadId: Long) : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var contactsRepo: ContactRepository
@@ -71,7 +71,7 @@ class MessagesViewModel(val threadId: Long) : QkViewModel<MessagesView, Messages
         dataChanged()
     }
 
-    override fun bindView(view: MessagesView) {
+    override fun bindView(view: ComposeView) {
         super.bindView(view)
 
         intents += view.queryChangedIntent

@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.messages
+package com.moez.QKSMS.presentation.compose
 
 import android.content.Context
 import android.view.LayoutInflater

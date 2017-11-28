@@ -44,7 +44,7 @@
                 <data android:scheme="sms_body" />
             </intent-filter>
         </activity>
-        <activity android:name="com.moez.QKSMS.presentation.messages.MessagesActivity" />
+        <activity android:name="com.moez.QKSMS.presentation.compose.ComposeActivity" />
         <activity android:name=".presentation.settings.SettingsActivity" />
 
         <receiver android:name=".receiver.DefaultSmsChangedReceiver">

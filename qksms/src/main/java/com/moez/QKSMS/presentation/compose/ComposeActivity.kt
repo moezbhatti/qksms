@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.messages
+package com.moez.QKSMS.presentation.compose
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -15,24 +15,21 @@ import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
-import com.moez.QKSMS.presentation.compose.ChipsAdapter
-import com.moez.QKSMS.presentation.compose.ComposeWindowCallback
-import com.moez.QKSMS.presentation.compose.ContactAdapter
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.message_list_activity.*
+import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.toolbar_chips.*
 import javax.inject.Inject
 
 
-class MessagesActivity : QkActivity<MessagesViewModel>(), MessagesView {
+class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
     @Inject lateinit var themeManager: ThemeManager
 
     private lateinit var layoutManager: LinearLayoutManager
 
-    override val viewModelClass = MessagesViewModel::class
+    override val viewModelClass = ComposeViewModel::class
     override val queryChangedIntent: Subject<CharSequence> = PublishSubject.create()
     override val chipSelectedIntent: Subject<Contact> = PublishSubject.create()
     override val chipDeletedIntent: Subject<Contact> = PublishSubject.create()
@@ -46,7 +43,7 @@ class MessagesActivity : QkActivity<MessagesViewModel>(), MessagesView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppComponentManager.appComponent.inject(this)
-        setContentView(R.layout.message_list_activity)
+        setContentView(R.layout.compose_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
 
@@ -60,7 +57,7 @@ class MessagesActivity : QkActivity<MessagesViewModel>(), MessagesView {
         messageList.layoutManager = layoutManager
     }
 
-    override fun render(state: MessagesState) {
+    override fun render(state: ComposeState) {
         toolbarTitle.visibility = if (state.editingMode) View.GONE else View.VISIBLE
         chips.visibility = if (state.editingMode) View.VISIBLE else View.GONE
         contacts.visibility = if (state.editingMode) View.VISIBLE else View.GONE

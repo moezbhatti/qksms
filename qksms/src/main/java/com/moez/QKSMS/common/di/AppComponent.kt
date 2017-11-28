@@ -5,9 +5,9 @@ import com.moez.QKSMS.presentation.compose.DetailedChipView
 import com.moez.QKSMS.presentation.main.ConversationsAdapter
 import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
-import com.moez.QKSMS.presentation.messages.MessagesActivity
-import com.moez.QKSMS.presentation.messages.MessagesAdapter
-import com.moez.QKSMS.presentation.messages.MessagesViewModel
+import com.moez.QKSMS.presentation.compose.ComposeActivity
+import com.moez.QKSMS.presentation.compose.MessagesAdapter
+import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import com.moez.QKSMS.presentation.view.AvatarView
 import com.moez.QKSMS.receiver.*
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(activity: MainActivity)
-    fun inject(activity: MessagesActivity)
+    fun inject(activity: ComposeActivity)
 
     fun inject(adapter: ConversationsAdapter)
     fun inject(adapter: MessagesAdapter)
@@ -35,7 +35,7 @@ interface AppComponent {
     fun inject(view: AvatarView)
 
     fun inject(viewModel: MainViewModel)
-    fun inject(viewModel: MessagesViewModel)
+    fun inject(viewModel: ComposeViewModel)
     fun inject(viewModel: SettingsViewModel)
 
     fun inject(fetcher: ContactImageLoader.ContactImageFetcher)

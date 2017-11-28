@@ -4,9 +4,9 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
+import com.moez.QKSMS.presentation.compose.ComposeActivity
+import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.main.MainViewModel
-import com.moez.QKSMS.presentation.messages.MessagesActivity
-import com.moez.QKSMS.presentation.messages.MessagesViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import javax.inject.Inject
@@ -21,12 +21,12 @@ class Navigator @Inject constructor(val context: Context) {
     }
 
     fun showCompose() {
-        val intent = Intent(context, MessagesActivity::class.java)
+        val intent = Intent(context, ComposeActivity::class.java)
         startActivity(intent)
     }
 
     fun showConversation(threadId: Long) {
-        val intent = Intent(context, MessagesActivity::class.java)
+        val intent = Intent(context, ComposeActivity::class.java)
         intent.putExtra("threadId", threadId)
         startActivity(intent)
     }
@@ -46,9 +46,9 @@ class Navigator @Inject constructor(val context: Context) {
                     MainViewModel()
                 }
 
-                MessagesViewModel::class.java -> {
+                ComposeViewModel::class.java -> {
                     val threadId = intent.getLongExtra("threadId", 0)
-                    MessagesViewModel(threadId)
+                    ComposeViewModel(threadId)
                 }
 
                 SettingsViewModel::class.java -> {
