@@ -6,7 +6,9 @@
     android:background="@color/backgroundLight"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_chips" />
+    <include
+        layout="@layout/toolbar_chips"
+        tools:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -30,7 +32,8 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:paddingBottom="8dp"
-            android:paddingTop="8dp" />
+            android:paddingTop="8dp"
+            tools:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
@@ -45,6 +48,7 @@
         android:background="@color/list_separator" />
 
     <LinearLayout
+        android:id="@+id/composeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

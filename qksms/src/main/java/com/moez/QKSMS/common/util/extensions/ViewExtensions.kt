@@ -28,3 +28,7 @@ fun View.setMargins(left: Int? = null, top: Int? = null, right: Int? = null, bot
 fun View.setPadding(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null) {
     setPadding(left ?: paddingLeft, top ?: paddingTop, right ?: paddingRight, bottom ?: paddingBottom)
 }
+
+fun View.setVisible(visible: Boolean, invisible: Int = View.GONE) {
+    visibility = if (visible) View.VISIBLE else invisible
+}

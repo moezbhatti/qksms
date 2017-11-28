@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -12,6 +11,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setTint
+import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
@@ -65,9 +65,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     }
 
     override fun render(state: ComposeState) {
-        toolbarTitle.visibility = if (state.editingMode) View.GONE else View.VISIBLE
-        chips.visibility = if (state.editingMode) View.VISIBLE else View.GONE
-        contacts.visibility = if (state.editingMode) View.VISIBLE else View.GONE
+        toolbarTitle.setVisible(!state.editingMode)
+        chips.setVisible(state.editingMode)
+        contacts.setVisible(state.editingMode)
+        composeBar.setVisible(!state.editingMode || state.selectedContacts.isNotEmpty())
 
         if (chipsAdapter.data !== state.selectedContacts) {
             chipsAdapter.data = state.selectedContacts
