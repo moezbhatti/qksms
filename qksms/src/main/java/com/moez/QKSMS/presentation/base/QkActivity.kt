@@ -8,7 +8,7 @@ import com.moez.QKSMS.presentation.Navigator
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.reflect.KClass
 
-abstract class QkActivity<VM : QkViewModel<*, State>, State> : AppCompatActivity(), QkView<State> {
+abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
 
     protected abstract val viewModelClass: KClass<VM>
     protected val viewModel: VM by lazy {

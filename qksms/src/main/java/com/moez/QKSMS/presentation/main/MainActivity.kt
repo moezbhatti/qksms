@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainActivity : QkActivity<MainViewModel, MainState>(), MainView {
+class MainActivity : QkActivity<MainViewModel>(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var themeManager: ThemeManager

@@ -6,7 +6,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.presentation.base.QkActivity
 import kotlinx.android.synthetic.main.settings_activity.*
 
-class SettingsActivity : QkActivity<SettingsViewModel, SettingsState>(), SettingsView {
+class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
     override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent by lazy { fragment.preferenceClicks }

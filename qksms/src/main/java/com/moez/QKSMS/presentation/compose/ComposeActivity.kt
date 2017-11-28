@@ -11,7 +11,7 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.toolbar_chips.*
 
-class ComposeActivity : QkActivity<ComposeViewModel, ComposeState>(), ComposeView {
+class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
     override val viewModelClass = ComposeViewModel::class
 

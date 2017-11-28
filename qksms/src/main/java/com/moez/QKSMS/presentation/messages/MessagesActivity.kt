@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.message_list_activity.*
 import javax.inject.Inject
 
 
-class MessagesActivity : QkActivity<MessagesViewModel, MessagesState>(), MessagesView {
+class MessagesActivity : QkActivity<MessagesViewModel>(), MessagesView {
 
     @Inject lateinit var themeManager: ThemeManager
 
