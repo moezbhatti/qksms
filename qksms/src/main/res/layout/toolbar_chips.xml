@@ -5,12 +5,21 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center_vertical"
-    android:minHeight="56dp">
+    android:minHeight="56dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/toolbarTitle"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/textPrimary"
+        android:textColorHint="@color/textTertiary"
+        android:textSize="20sp"
+        tools:text="Conversations" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chips"

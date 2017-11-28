@@ -4,8 +4,6 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
-import com.moez.QKSMS.presentation.compose.ComposeActivity
-import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.messages.MessagesActivity
 import com.moez.QKSMS.presentation.messages.MessagesViewModel
@@ -23,7 +21,7 @@ class Navigator @Inject constructor(val context: Context) {
     }
 
     fun showCompose() {
-        val intent = Intent(context, ComposeActivity::class.java)
+        val intent = Intent(context, MessagesActivity::class.java)
         startActivity(intent)
     }
 
@@ -46,10 +44,6 @@ class Navigator @Inject constructor(val context: Context) {
 
                 MainViewModel::class.java -> {
                     MainViewModel()
-                }
-
-                ComposeViewModel::class.java -> {
-                    ComposeViewModel()
                 }
 
                 MessagesViewModel::class.java -> {

@@ -1,7 +1,6 @@
 package com.moez.QKSMS.common.di
 
 import com.moez.QKSMS.common.util.ContactImageLoader
-import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.compose.DetailedChipView
 import com.moez.QKSMS.presentation.main.ConversationsAdapter
 import com.moez.QKSMS.presentation.main.MainActivity
@@ -36,7 +35,6 @@ interface AppComponent {
     fun inject(view: AvatarView)
 
     fun inject(viewModel: MainViewModel)
-    fun inject(viewModel: ComposeViewModel)
     fun inject(viewModel: MessagesViewModel)
     fun inject(viewModel: SettingsViewModel)
 

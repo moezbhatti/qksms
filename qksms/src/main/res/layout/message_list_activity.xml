@@ -6,7 +6,7 @@
     android:background="@color/backgroundLight"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar_chips" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -22,6 +22,15 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             tools:listitem="@layout/message_list_item_out" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/contacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp" />
 
         <View
             android:layout_width="match_parent"
