@@ -13,6 +13,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+// TODO: This needs to be substantially faster
 open class PartialSync @Inject constructor(
         private val context: Context,
         private val cursorToConversation: CursorToConversation,
@@ -49,9 +50,10 @@ open class PartialSync @Inject constructor(
                 .map { threadUri -> contentResolver.query(threadUri, CursorToMessage.CURSOR_PROJECTION, null, null, "date desc") }
                 .flatMap { cursor ->
                     val columnsMap = CursorToMessage.MessageColumns(cursor)
-                    cursor.asFlowable().map { cursorToMessage.map(Pair(cursor, columnsMap)) }
+                    cursor.asFlowable()
+                            .map { cursorToMessage.map(Pair(cursor, columnsMap)) }
+                            .takeWhile { message -> message.date >= lastSync }
                 }
-                .takeWhile { message -> message.date >= lastSync }
                 .filter { message -> message.type == "sms" || message.type == "mms" }
                 .distinct { message -> message.id }
                 .doOnNext { message -> realm?.insertOrUpdate(message) }
