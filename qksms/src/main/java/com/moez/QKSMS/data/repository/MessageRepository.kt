@@ -6,13 +6,16 @@ import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.Telephony.Sms
 import android.provider.Telephony.TextBasedSmsColumns
+import com.moez.QKSMS.common.util.MessageUtils
 import com.moez.QKSMS.common.util.extensions.asFlowable
+import com.moez.QKSMS.common.util.extensions.asMaybe
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
 import com.moez.QKSMS.data.mapper.CursorToMessage
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.model.Message
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -64,6 +67,35 @@ class MessageRepository @Inject constructor(
                 .where(Conversation::class.java)
                 .equalTo("id", threadId)
                 .findFirst()
+    }
+
+    /**
+     * Gets an unmanaged conversation by the address
+     */
+    fun getOrCreateConversation(address: String) = getOrCreateConversation(listOf(address))
+
+    fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation> {
+        return Maybe.just(addresses)
+                .map { recipients ->
+                    recipients.map { address ->
+                        when (MessageUtils.isEmailAddress(address)) {
+                            true -> MessageUtils.extractAddrSpec(address)
+                            false -> address
+                        }
+                    }
+                }
+                .map { recipients ->
+                    Uri.parse("content://mms-sms/threadID").buildUpon().apply {
+                        recipients.forEach { recipient -> appendQueryParameter("recipient", recipient) }
+                    }
+                }
+                .flatMap { uriBuilder ->
+                    context.contentResolver.query(uriBuilder.build(), arrayOf(BaseColumns._ID), null, null, null).asMaybe()
+                }
+                .map { cursor -> cursor.getLong(0) }
+                .filter { threadId -> threadId != 0L }
+                .map { threadId -> getConversation(threadId) ?: Conversation() } // TODO create actual conversation
+                .onErrorReturn { Conversation() }
     }
 
     fun getMessages(threadId: Long): RealmResults<Message> {

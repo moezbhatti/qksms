@@ -2,6 +2,8 @@ package com.moez.QKSMS.common.util.extensions
 
 import android.database.Cursor
 import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.subjects.MaybeSubject
 
 fun Cursor.forEach(closeOnComplete: Boolean = true, method: (Cursor) -> Unit = {}) {
     moveToPosition(-1)
@@ -30,3 +32,19 @@ fun Cursor.asFlowable(): Flowable<Cursor> {
             }
             .doOnComplete { close() }
 }
+
+fun Cursor.asMaybe(): Maybe<Cursor> {
+    val subject = MaybeSubject.create<Cursor>()
+
+    if (moveToFirst()) {
+        subject.onSuccess(this)
+    } else {
+        subject.onError(IndexOutOfBoundsException("The cursor has no items"))
+    }
+
+    subject.doOnComplete { close() }
+    return subject
+}
+
+
+

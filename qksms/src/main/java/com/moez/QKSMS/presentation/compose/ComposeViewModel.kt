@@ -38,27 +38,30 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
 
     private val contacts: List<Contact>
 
-    private val selectedContacts: Observable<List<Contact>>
     private val conversation: Observable<Conversation>
 
     init {
         AppComponentManager.appComponent.inject(this)
 
-        selectedContacts = contactsReducer
+        // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
+        // stream of conversations
+        val selectedConversation = contactsReducer
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
                 .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
+                .map { contacts -> contacts.map { it.address } }
+                .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
         conversation = messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { conversation -> conversation.isLoaded }
                 .filter { conversation -> conversation.isValid }
+                .mergeWith(selectedConversation)
                 .distinctUntilChanged { conversation -> conversation.id }
                 .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
 
         disposables += sendMessage
         disposables += markRead
         disposables += conversation.subscribe()
-        disposables += selectedContacts.subscribe()
 
         // When the conversation changes, update the messages for the adapter
         // When the message list changes, make sure to mark them read
