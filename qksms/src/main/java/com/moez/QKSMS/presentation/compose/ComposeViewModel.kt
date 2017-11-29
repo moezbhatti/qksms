@@ -118,7 +118,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                     val threadId = conversation.id
                     val address = conversation.contacts.first()?.address.orEmpty()
                     sendMessage.execute(SendMessage.Params(threadId, address, body))
-                    newState { it.copy(draft = "", canSend = false) }
+                    newState { it.copy(editingMode = false, draft = "", canSend = false) }
                 })
                 .subscribe()
 
