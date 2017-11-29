@@ -54,6 +54,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         chips.layoutManager = FlexboxLayoutManager(this)
         chips.adapter = chipsAdapter
 
+        contacts.itemAnimator = null
         contacts.layoutManager = LinearLayoutManager(this)
         contacts.adapter = contactsAdapter
 
