@@ -29,6 +29,7 @@
             android:id="@+id/contacts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:paddingBottom="8dp"

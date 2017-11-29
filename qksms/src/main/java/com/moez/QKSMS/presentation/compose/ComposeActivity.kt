@@ -70,8 +70,8 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override fun render(state: ComposeState) {
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
-        contacts.setVisible(state.editingMode)
-        composeBar.setVisible(!state.editingMode || state.selectedContacts.isNotEmpty())
+        contacts.setVisible(state.contactsVisible)
+        composeBar.setVisible(!state.contactsVisible)
 
         if (chipsAdapter.data !== state.selectedContacts) {
             chipsAdapter.data = state.selectedContacts

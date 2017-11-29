@@ -7,6 +7,7 @@ import io.realm.RealmResults
 data class ComposeState(
         val editingMode: Boolean = false,
         val contacts: List<Contact> = ArrayList(),
+        val contactsVisible: Boolean = false,
         val selectedContacts: List<Contact> = ArrayList(),
         val title: String = "",
         val messages: RealmResults<Message>? = null,

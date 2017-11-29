@@ -18,6 +18,7 @@ import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
@@ -39,15 +40,18 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     private val contacts: List<Contact>
 
     private val conversation: Observable<Conversation>
+    private val selectedContacts: Observable<List<Contact>>
 
     init {
         AppComponentManager.appComponent.inject(this)
 
-        // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
-        // stream of conversations
-        val selectedConversation = contactsReducer
+        selectedContacts = contactsReducer
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
                 .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
+
+        // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
+        // stream of conversations
+        val selectedConversation = selectedContacts
                 .map { contacts -> contacts.map { it.address } }
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
@@ -80,6 +84,13 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
 
     override fun bindView(view: ComposeView) {
         super.bindView(view)
+
+        intents += Observables
+                .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
+                    selectedContacts.isEmpty() || query.isNotEmpty()
+                })
+                .distinctUntilChanged()
+                .subscribe { contactsVisible -> newState { it.copy(contactsVisible = contactsVisible && it.editingMode) } }
 
         intents += view.queryChangedIntent
                 .toFlowable(BackpressureStrategy.LATEST)
