@@ -10,6 +10,7 @@ import com.moez.QKSMS.common.util.MessageUtils
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.asMaybe
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
+import com.moez.QKSMS.data.mapper.CursorToConversation
 import com.moez.QKSMS.data.mapper.CursorToMessage
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.ConversationMessagePair
@@ -28,7 +29,8 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepository @Inject constructor(
         private val context: Context,
-        private val cursorToMessageFlowable: CursorToMessage) {
+        private val cursorToMessage: CursorToMessage,
+        private val cursorToConversation: CursorToConversation) {
 
     fun getConversations(archived: Boolean = false): Flowable<List<ConversationMessagePair>> {
         val realm = Realm.getDefaultInstance()
@@ -94,7 +96,11 @@ class MessageRepository @Inject constructor(
                 }
                 .map { cursor -> cursor.getLong(0) }
                 .filter { threadId -> threadId != 0L }
-                .map { threadId -> getConversation(threadId) ?: Conversation() } // TODO create actual conversation
+                .map { threadId ->
+                    getConversation(threadId)
+                            ?: getConversationFromCp(threadId)?.apply { insertOrUpdate() }
+                            ?: Conversation()
+                }
                 .onErrorReturn { Conversation() }
     }
 
@@ -223,6 +229,26 @@ class MessageRepository @Inject constructor(
         realm.close()
     }
 
+    fun getConversationFromCp(threadId: Long): Conversation? {
+        var conversation: Conversation? = null
+
+        val cursor = context.contentResolver.query(
+                CursorToConversation.URI,
+                CursorToConversation.PROJECTION,
+                "_id = ?",
+                arrayOf(threadId.toString()),
+                null)
+
+        if (cursor.moveToFirst()) {
+            conversation = cursorToConversation.map(cursor)
+            conversation.insertOrUpdate()
+        }
+
+        cursor.close()
+
+        return conversation
+    }
+
     fun updateMessageFromUri(uri: Uri, values: ContentValues) {
         val contentResolver = context.contentResolver
         Flowable.just(values)
@@ -236,7 +262,7 @@ class MessageRepository @Inject constructor(
         val columnsMap = CursorToMessage.MessageColumns(cursor)
 
         if (cursor.moveToFirst()) {
-            cursorToMessageFlowable.map(Pair(cursor, columnsMap)).insertOrUpdate()
+            cursorToMessage.map(Pair(cursor, columnsMap)).insertOrUpdate()
         }
 
         cursor.close()
