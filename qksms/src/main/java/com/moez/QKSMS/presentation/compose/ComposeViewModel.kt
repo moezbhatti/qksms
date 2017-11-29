@@ -15,7 +15,6 @@ import com.moez.QKSMS.domain.interactor.DeleteMessage
 import com.moez.QKSMS.domain.interactor.MarkRead
 import com.moez.QKSMS.domain.interactor.SendMessage
 import com.moez.QKSMS.presentation.base.QkViewModel
-import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
@@ -35,12 +34,10 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
 
+    private val contacts: List<Contact> by lazy { contactsRepo.getContacts() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
-
-    private val contacts: List<Contact>
-
-    private val conversation: Observable<Conversation>
     private val selectedContacts: Observable<List<Contact>>
+    private val conversation: Observable<Conversation>
 
     init {
         AppComponentManager.appComponent.inject(this)
@@ -78,8 +75,6 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                     messages
                 })
                 .subscribe()
-
-        contacts = contactsRepo.getContacts()
     }
 
     override fun bindView(view: ComposeView) {
@@ -92,14 +87,14 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .distinctUntilChanged()
                 .subscribe { contactsVisible -> newState { it.copy(contactsVisible = contactsVisible && it.editingMode) } }
 
-        intents += view.queryChangedIntent
-                .toFlowable(BackpressureStrategy.LATEST)
-                .map { query -> query.toString() }
-                .map { query ->
-                    contacts.filter { contact ->
-                        contact.name.contains(query, true) || PhoneNumberUtils.compare(contact.address, query)
-                    }
-                }
+        intents += Observables
+                .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
+                    contacts
+                            .filterNot { contact -> selectedContacts.contains(contact) }
+                            .filter { contact ->
+                                contact.name.contains(query, true) || PhoneNumberUtils.compare(contact.address, query.toString())
+                            }
+                })
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
