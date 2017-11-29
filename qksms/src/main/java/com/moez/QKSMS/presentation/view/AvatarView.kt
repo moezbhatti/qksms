@@ -30,13 +30,14 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
     init {
         View.inflate(context, R.layout.avatar_view, this)
         AppComponentManager.appComponent.inject(this)
+
+        setBackgroundResource(R.drawable.circle)
+        clipToOutline = true
+        backgroundTintList = ColorStateList.valueOf(themeManager.color)
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        setBackgroundResource(R.drawable.circle)
-        clipToOutline = true
-        backgroundTintList = ColorStateList.valueOf(themeManager.color)
 
         if (!isInEditMode) {
             updateView()

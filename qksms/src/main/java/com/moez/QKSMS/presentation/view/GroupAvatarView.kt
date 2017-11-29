@@ -1,12 +1,10 @@
 package com.moez.QKSMS.presentation.view
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.util.extensions.getColorCompat
 import com.moez.QKSMS.data.model.Contact
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.group_avatar_view.view.*
@@ -19,18 +17,23 @@ class GroupAvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
             updateView()
         }
 
+    private val avatars by lazy { listOf(avatar1, avatar2, avatar3) }
+
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context) : this(context, null, 0)
 
     init {
         View.inflate(context, R.layout.group_avatar_view, this)
+        setBackgroundResource(R.drawable.circle)
+        clipToOutline = true
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-        setBackgroundResource(R.drawable.circle)
-        clipToOutline = true
-        backgroundTintList = ColorStateList.valueOf(context.getColorCompat(R.color.bubbleLight))
+
+        avatars.forEach { avatar ->
+            avatar.setBackgroundResource(R.drawable.rectangle)
+        }
 
         if (!isInEditMode) {
             updateView()
@@ -38,12 +41,10 @@ class GroupAvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
     }
 
     private fun updateView() {
-        avatar1.visibility = if (contacts.size > 0) View.VISIBLE else View.GONE
-        avatar1.contact = if (contacts.size > 0) contacts[0] else null
-        avatar2.visibility = if (contacts.size > 1) View.VISIBLE else View.GONE
-        avatar2.contact = if (contacts.size > 1) contacts[1] else null
-        avatar3.visibility = if (contacts.size > 2) View.VISIBLE else View.GONE
-        avatar3.contact = if (contacts.size > 2) contacts[2] else null
+        avatars.forEachIndexed { index, avatar ->
+            avatar.visibility = if (contacts.size > index) View.VISIBLE else View.GONE
+            avatar.contact = if (contacts.size > index) contacts[index] else null
+        }
     }
 
 }
