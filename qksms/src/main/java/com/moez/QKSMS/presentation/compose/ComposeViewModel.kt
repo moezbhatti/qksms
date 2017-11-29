@@ -21,6 +21,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
@@ -32,12 +34,19 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
 
+    private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
+
     private val contacts: List<Contact>
 
+    private val selectedContacts: Observable<List<Contact>>
     private val conversation: Observable<Conversation>
 
     init {
         AppComponentManager.appComponent.inject(this)
+
+        selectedContacts = contactsReducer
+                .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
+                .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
 
         conversation = messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
@@ -49,6 +58,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
         disposables += sendMessage
         disposables += markRead
         disposables += conversation.subscribe()
+        disposables += selectedContacts.subscribe()
 
         // When the conversation changes, update the messages for the adapter
         // When the message list changes, make sure to mark them read
@@ -80,16 +90,13 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
 
-        intents += Observable.merge<(List<Contact>) -> List<Contact>>(
-                view.chipDeletedIntent.map { contact ->
-                    { contacts: List<Contact> -> contacts.filterNot { it == contact } }
-                },
-                view.chipSelectedIntent.map { contact ->
-                    { contacts: List<Contact> -> contacts.toMutableList().apply { add(contact) } }
-                })
-                .scan(state.value!!.contacts, { previousState, reducer -> reducer(previousState) })
-                .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
-                .subscribe()
+        intents += view.chipDeletedIntent.subscribe { contact ->
+            contactsReducer.onNext { contacts -> contacts.filterNot { it == contact } }
+        }
+
+        intents += view.chipSelectedIntent.subscribe { contact ->
+            contactsReducer.onNext { contacts -> contacts.toMutableList().apply { add(contact) } }
+        }
 
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
