@@ -15,6 +15,7 @@ abstract class QkAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter
             val diff = DiffUtil.calculateDiff(provideDiffUtilCallback(field, value))
             field = value
             diff.dispatchUpdatesTo(this)
+            onDatasetChanged()
         }
 
     fun getItem(position: Int): T {
@@ -23,6 +24,10 @@ abstract class QkAdapter<T, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter
 
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    open fun onDatasetChanged() {
+
     }
 
     /**

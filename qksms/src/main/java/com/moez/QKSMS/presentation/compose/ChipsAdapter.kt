@@ -16,6 +16,7 @@ import com.jakewharton.rxbinding2.view.keys
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.dpToPx
+import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.presentation.base.QkAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
@@ -64,6 +65,15 @@ class ChipsAdapter(
                 }
     }
 
+    override fun onDatasetChanged() {
+        editText.text = null
+        editText.hint = if (itemCount == 1) hint else null
+
+        if (itemCount != 2) {
+            editText.showKeyboard()
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         TYPE_EDIT_TEXT -> QkViewHolder(editText)
         else -> QkViewHolder(LayoutInflater.from(context).inflate(R.layout.contact_chip, parent, false))
@@ -71,18 +81,7 @@ class ChipsAdapter(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            TYPE_EDIT_TEXT -> {
-                if (itemCount == 1) {
-                    editText.hint = hint
-                } else {
-                    editText.hint = null
-                    editText.text = null
-                }
-
-                editText.requestFocus()
-            }
-
-            else -> {
+            TYPE_ITEM -> {
                 val contact = getItem(position)
                 val view = holder.itemView
 
@@ -119,5 +118,4 @@ class ChipsAdapter(
             detailedChipView.hide()
         }
     }
-
 }

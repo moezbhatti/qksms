@@ -12,6 +12,7 @@ import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
@@ -51,6 +52,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
 
+        chips.itemAnimator = null
         chips.layoutManager = FlexboxLayoutManager(this)
         chips.adapter = chipsAdapter
 
@@ -72,6 +74,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         chips.setVisible(state.editingMode)
         contacts.setVisible(state.contactsVisible)
         composeBar.setVisible(!state.contactsVisible)
+
+        if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
+            message.showKeyboard()
+        }
 
         if (chipsAdapter.data !== state.selectedContacts) {
             chipsAdapter.data = state.selectedContacts
