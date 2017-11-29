@@ -18,7 +18,6 @@ import com.moez.QKSMS.presentation.base.QkActivity
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.toolbar_chips.*
 import javax.inject.Inject
@@ -43,6 +42,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
     private val chipsAdapter by lazy { ChipsAdapter(this, chips) }
     private val contactsAdapter by lazy { ContactAdapter(this) }
+    private val messageAdapter by lazy { MessagesAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +57,13 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         contacts.layoutManager = LinearLayoutManager(this)
         contacts.adapter = contactsAdapter
 
-        window.callback = ComposeWindowCallback(window.callback, this)
+        setupMessagesAdapter()
 
-        layoutManager = LinearLayoutManager(this)
-        layoutManager.stackFromEnd = true
+        layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
         messageList.layoutManager = layoutManager
+        messageList.adapter = messageAdapter
+
+        window.callback = ComposeWindowCallback(window.callback, this)
     }
 
     override fun render(state: ComposeState) {
@@ -78,34 +80,35 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
             contactsAdapter.data = state.contacts
         }
 
+        if (messageAdapter.data !== state.messages) {
+            messageAdapter.updateData(state.messages)
+        }
+
         if (title != state.title) title = state.title
-        if (messageList.adapter == null && state.messages?.isValid == true) messageList.adapter = createAdapter(state.messages)
         if (message.text.toString() != state.draft) message.setText(state.draft)
 
         send.setTint(if (state.canSend) themeManager.color else resources.getColor(R.color.textTertiary))
         send.isEnabled = state.canSend
     }
 
-    private fun createAdapter(messages: RealmResults<Message>): MessagesAdapter {
-        val adapter = MessagesAdapter(messages)
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+    private fun setupMessagesAdapter() {
+        messageAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
-                viewModel.dataChanged()
 
                 if (positionStart > 0) {
-                    adapter.notifyItemChanged(positionStart - 1)
+                    messageAdapter.notifyItemChanged(positionStart - 1)
                 }
 
                 // If we're at the bottom, scroll down to show new messages
                 val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
-                if (positionStart >= adapter.itemCount - 1 && lastVisiblePosition == positionStart - 1) {
+                if (positionStart >= messageAdapter.itemCount - 1 && lastVisiblePosition == positionStart - 1) {
                     messageList.scrollToPosition(positionStart)
                 }
             }
         })
 
-        adapter.longClicks.subscribe { message ->
+        messageAdapter.longClicks.subscribe { message ->
             AlertDialog.Builder(this)
                     .setItems(R.array.message_options, { _, row ->
                         when (row) {
@@ -116,7 +119,5 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                     })
                     .show()
         }
-
-        return adapter
     }
 }

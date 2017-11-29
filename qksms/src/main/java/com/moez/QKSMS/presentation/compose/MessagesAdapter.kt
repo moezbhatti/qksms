@@ -17,14 +17,13 @@ import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MessagesAdapter(data: OrderedRealmCollection<Message>?) : RealmRecyclerViewAdapter<Message, QkViewHolder>(data, true) {
+class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
         private val VIEWTYPE_ME = -1

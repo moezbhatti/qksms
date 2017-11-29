@@ -5,6 +5,7 @@ import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ClipboardUtils
+import com.moez.QKSMS.common.util.extensions.asObservable
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Conversation
@@ -33,30 +34,35 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
 
     private val contacts: List<Contact>
 
-    private var conversation: Conversation? = null
+    private val conversation: Observable<Conversation>
 
     init {
         AppComponentManager.appComponent.inject(this)
 
+        conversation = messageRepo.getConversationAsync(threadId)
+                .asObservable<Conversation>()
+                .filter { conversation -> conversation.isLoaded }
+                .filter { conversation -> conversation.isValid }
+                .distinctUntilChanged { conversation -> conversation.id }
+                .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
+
         disposables += sendMessage
         disposables += markRead
-        disposables += messageRepo.getConversationAsync(threadId)
-                .asFlowable<Conversation>()
-                .filter { it.isLoaded }
-                .subscribe { conversation ->
-                    when (conversation.isValid) {
-                        true -> {
-                            this.conversation = conversation
-                            val title = conversation.getTitle()
-                            val messages = messageRepo.getMessages(threadId)
-                            newState { it.copy(title = title, messages = messages) }
-                        }
-                    }
-                }
+        disposables += conversation.subscribe()
+
+        // When the conversation changes, update the messages for the adapter
+        // When the message list changes, make sure to mark them read
+        disposables += conversation
+                .map { conversation -> messageRepo.getMessages(conversation.id) }
+                .doOnNext { messages -> newState { it.copy(messages = messages) } }
+                .flatMap { messages -> messages.asObservable() }
+                .withLatestFrom(conversation, { messages, conversation ->
+                    markRead.execute(conversation.id)
+                    messages
+                })
+                .subscribe()
 
         contacts = contactsRepo.getContacts()
-
-        dataChanged()
     }
 
     override fun bindView(view: ComposeView) {
@@ -92,12 +98,13 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
         intents += view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
                 .map { body -> body.toString() }
-                .subscribe { body ->
-                    val threadId = conversation?.id ?: 0
-                    val address = conversation?.contacts?.first()?.address.orEmpty()
+                .withLatestFrom(conversation, { body, conversation ->
+                    val threadId = conversation.id
+                    val address = conversation.contacts.first()?.address.orEmpty()
                     sendMessage.execute(SendMessage.Params(threadId, address, body))
                     newState { it.copy(draft = "", canSend = false) }
-                }
+                })
+                .subscribe()
 
         intents += view.copyTextIntent.subscribe { message ->
             ClipboardUtils.copy(context, message.body)
@@ -106,12 +113,6 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
 
         intents += view.deleteMessageIntent.subscribe { message ->
             deleteMessage.execute(message.id)
-        }
-    }
-
-    fun dataChanged() {
-        conversation?.id?.let { threadId ->
-            markRead.execute(threadId)
         }
     }
 
