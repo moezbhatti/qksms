@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center_vertical"
-    android:minHeight="56dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:minHeight="56dp">
 
     <TextView
         android:id="@+id/toolbarTitle"
@@ -24,6 +24,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chips"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp" />
 
 </android.support.v7.widget.Toolbar>
