@@ -99,13 +99,11 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
 
-        intents += view.chipDeletedIntent.subscribe { contact ->
-            contactsReducer.onNext { contacts -> contacts.filterNot { it == contact } }
-        }
 
-        intents += view.chipSelectedIntent.subscribe { contact ->
-            contactsReducer.onNext { contacts -> contacts.toMutableList().apply { add(contact) } }
-        }
+        intents += Observable.merge(
+                view.chipDeletedIntent.map { contact -> { contacts: List<Contact> -> contacts.filterNot { it == contact } } },
+                view.chipSelectedIntent.map { contact -> { contacts: List<Contact> -> contacts.toMutableList().apply { add(contact) } } })
+                .subscribe { reducer -> contactsReducer.onNext { reducer(it) } }
 
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
