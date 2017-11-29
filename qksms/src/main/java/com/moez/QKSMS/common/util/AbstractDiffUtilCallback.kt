@@ -15,7 +15,7 @@ class AbstractDiffUtilCallback<T>(
         DiffUtil.Callback() {
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return oldList[oldItemPosition] === newList[newItemPosition]
     }
 
     override fun getOldListSize(): Int {
