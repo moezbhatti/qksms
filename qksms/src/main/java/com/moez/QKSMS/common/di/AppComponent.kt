@@ -8,6 +8,7 @@ import com.moez.QKSMS.presentation.compose.MessagesAdapter
 import com.moez.QKSMS.presentation.main.ConversationsAdapter
 import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
+import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import com.moez.QKSMS.presentation.view.AvatarView
 import com.moez.QKSMS.receiver.*
@@ -20,6 +21,7 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
     fun inject(activity: ComposeActivity)
+    fun inject(activity: SettingsActivity)
 
     fun inject(adapter: ConversationsAdapter)
     fun inject(adapter: MessagesAdapter)

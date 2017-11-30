@@ -3,6 +3,7 @@ package com.moez.QKSMS.presentation.settings
 import android.app.ProgressDialog
 import android.os.Bundle
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.presentation.base.QkActivity
 import kotlinx.android.synthetic.main.settings_activity.*
 
@@ -16,6 +17,7 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
     private lateinit var progressDialog: ProgressDialog // TODO remove this
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppComponentManager.appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         setTitle(R.string.title_settings)
