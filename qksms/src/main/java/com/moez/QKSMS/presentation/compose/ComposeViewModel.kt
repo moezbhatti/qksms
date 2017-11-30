@@ -48,12 +48,13 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
                 .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
 
-        // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
-        // stream of conversations
+        // Map the selected contacts to a conversation so that we can display the message history
         val selectedConversation = selectedContacts
                 .map { contacts -> contacts.map { it.address } }
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
+        // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
+        // stream of conversations
         conversation = messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { conversation -> conversation.isLoaded }
@@ -84,6 +85,8 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     override fun bindView(view: ComposeView) {
         super.bindView(view)
 
+        // Set the contact suggestions list to visible at all times when in editing mode and there are no contacts
+        // selected yet, and also visible while in editing mode and there is text entered in the query field
         intents += Observables
                 .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
                     selectedContacts.isEmpty() || query.isNotEmpty()
@@ -91,6 +94,8 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .distinctUntilChanged()
                 .subscribe { contactsVisible -> newState { it.copy(contactsVisible = contactsVisible && it.editingMode) } }
 
+        // Update the list of contact suggestions based on the query input, while also filtering out any contacts
+        // that have already been selected
         intents += Observables
                 .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
                     contacts
@@ -103,6 +108,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
 
+        // Update the list of selected contacts when a new contact is selected or an existing one is deselected
         intents += Observable.merge(
                 view.chipDeletedIntent.doOnNext { contact ->
                     contactsReducer.onNext { contacts -> contacts.filterNot { it == contact } }
@@ -112,16 +118,19 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .subscribe()
 
+        // Open the phone dialer if the call button is clicked
         intents += view.callIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .map { conversation -> conversation.contacts.first() }
                 .map { contact -> contact.address }
                 .subscribe { address -> navigator.makePhoneCall(address) }
 
+        // Enable the send button when there is text input into the new message body, disable otherwise
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
         }
 
+        // Send a message when the send button is clicked, and disable editing mode if it's enabled
         intents += view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
                 .map { body -> body.toString() }
@@ -133,11 +142,13 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .subscribe()
 
+        // Copy the body of the selected message into the clipboard
         intents += view.copyTextIntent.subscribe { message ->
             ClipboardUtils.copy(context, message.body)
             context.makeToast(R.string.toast_copied)
         }
 
+        // Delete the selected message
         intents += view.deleteMessageIntent.subscribe { message ->
             deleteMessage.execute(message.id)
         }
