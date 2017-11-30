@@ -5,30 +5,27 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
-import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.toolbar_chips.*
-import javax.inject.Inject
 
 
 class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
-
-    @Inject lateinit var themeManager: ThemeManager
 
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -36,6 +33,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
+    override val callIntent: Subject<Unit> = PublishSubject.create()
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
@@ -47,11 +45,14 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     private val contactsAdapter by lazy { ContactAdapter(this) }
     private val messageAdapter by lazy { MessagesAdapter() }
 
-    private val disposables = CompositeDisposable()
+    private var pendingCallVisibility = false
+
+    init {
+        AppComponentManager.appComponent.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppComponentManager.appComponent.inject(this)
         setContentView(R.layout.compose_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
@@ -82,16 +83,19 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         window.callback = ComposeWindowCallback(window.callback, this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
-    }
-
     override fun render(state: ComposeState) {
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
         contacts.setVisible(state.contactsVisible)
         composeBar.setVisible(!state.contactsVisible)
+
+        menu?.findItem(R.id.call).let { menuItem ->
+            if (menuItem == null) {
+                pendingCallVisibility = state.canCall
+            } else {
+                menuItem.setVisible(state.canCall)
+            }
+        }
 
         if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
             message.showKeyboard()
@@ -144,4 +148,22 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                     .show()
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.compose, menu)
+        menu?.findItem(R.id.call)?.isVisible = pendingCallVisibility
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.call -> {
+                callIntent.onNext(Unit)
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 }

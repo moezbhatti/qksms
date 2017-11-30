@@ -10,7 +10,6 @@ import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import com.moez.QKSMS.presentation.view.AvatarView
-import com.moez.QKSMS.presentation.view.GroupAvatarView
 import com.moez.QKSMS.receiver.*
 import dagger.Component
 import javax.inject.Singleton

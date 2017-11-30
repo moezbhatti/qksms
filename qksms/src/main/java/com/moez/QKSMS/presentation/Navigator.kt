@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.main.MainViewModel
@@ -11,6 +12,8 @@ import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
+
+
 
 @Singleton
 class Navigator @Inject constructor(val context: Context) {
@@ -33,6 +36,11 @@ class Navigator @Inject constructor(val context: Context) {
 
     fun showSettings() {
         val intent = Intent(context, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun makePhoneCall(address: String) {
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$address"))
         startActivity(intent)
     }
 

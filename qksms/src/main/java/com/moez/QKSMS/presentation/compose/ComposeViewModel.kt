@@ -14,6 +14,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.DeleteMessage
 import com.moez.QKSMS.domain.interactor.MarkRead
 import com.moez.QKSMS.domain.interactor.SendMessage
+import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,6 +31,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var context: Context
     @Inject lateinit var contactsRepo: ContactRepository
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
@@ -58,7 +60,9 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .filter { conversation -> conversation.isValid }
                 .mergeWith(selectedConversation)
                 .distinctUntilChanged { conversation -> conversation.id }
-                .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
+                .doOnNext { conversation ->
+                    newState { it.copy(title = conversation.getTitle(), canCall = conversation.contacts.isNotEmpty()) }
+                }
 
         disposables += sendMessage
         disposables += markRead
@@ -107,6 +111,12 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                     contactsReducer.onNext { contacts -> contacts.toMutableList().apply { add(contact) } }
                 })
                 .subscribe()
+
+        intents += view.callIntent
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .map { conversation -> conversation.contacts.first() }
+                .map { contact -> contact.address }
+                .subscribe { address -> navigator.makePhoneCall(address) }
 
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }

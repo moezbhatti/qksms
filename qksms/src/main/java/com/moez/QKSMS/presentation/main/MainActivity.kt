@@ -18,11 +18,9 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
-import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
@@ -33,7 +31,6 @@ import javax.inject.Inject
 class MainActivity : QkActivity<MainViewModel>(), MainView {
 
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var themeManager: ThemeManager
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
 
     override val viewModelClass = MainViewModel::class
@@ -48,11 +45,12 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
 
-    private val disposables = CompositeDisposable()
+    init {
+        AppComponentManager.appComponent.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppComponentManager.appComponent.inject(this)
         setContentView(R.layout.main_activity)
         ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
         requestPermissions()
@@ -88,11 +86,6 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         archived.background = rowBackground()
         scheduled.background = rowBackground()
         blocked.background = rowBackground()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
     }
 
     override fun onNewIntent(intent: Intent?) {

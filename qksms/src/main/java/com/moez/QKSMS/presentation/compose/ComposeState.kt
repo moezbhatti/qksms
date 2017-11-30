@@ -10,6 +10,7 @@ data class ComposeState(
         val contactsVisible: Boolean = false,
         val selectedContacts: List<Contact> = ArrayList(),
         val title: String = "",
+        val canCall: Boolean = false,
         val messages: RealmResults<Message>? = null,
         val draft: String = "",
         val canSend: Boolean = false
