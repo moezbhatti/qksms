@@ -1,7 +1,6 @@
 package com.moez.QKSMS.presentation.view
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.telephony.PhoneNumberUtils
 import android.util.AttributeSet
 import android.view.View
@@ -11,12 +10,16 @@ import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.data.model.Contact
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
 
 class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : FrameLayout(context, attrs, defStyleAttr) {
 
     @Inject lateinit var themeManager: ThemeManager
+
+    private val disposables = CompositeDisposable()
 
     var contact: Contact? = null
         set(value) {
@@ -33,7 +36,17 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
 
         setBackgroundResource(R.drawable.circle)
         clipToOutline = true
-        backgroundTintList = ColorStateList.valueOf(themeManager.color)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        disposables += themeManager.color
+                .subscribe { color -> background.setTint(color) }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        disposables.clear()
     }
 
     override fun onFinishInflate() {

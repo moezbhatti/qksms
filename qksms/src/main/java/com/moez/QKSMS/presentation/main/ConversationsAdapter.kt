@@ -1,6 +1,7 @@
 package com.moez.QKSMS.presentation.main
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
@@ -14,6 +15,8 @@ import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.FlowableAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.reactivex.Flowable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
@@ -24,6 +27,8 @@ class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : 
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var themeManager: ThemeManager
+
+    private val disposables = CompositeDisposable()
 
     init {
         AppComponentManager.appComponent.inject(this)
@@ -39,10 +44,16 @@ class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : 
         val view = layoutInflater.inflate(layoutRes, parent, false)
 
         if (viewType == 1) {
-            view.date.setTextColor(themeManager.color)
+            disposables += themeManager.color
+                    .subscribe { color -> view.date.setTextColor(color) }
         }
 
         return QkViewHolder(view)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        disposables.clear()
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {

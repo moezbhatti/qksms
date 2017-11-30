@@ -1,6 +1,7 @@
 package com.moez.QKSMS.presentation.compose
 
 import android.content.Context
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkViewHolder
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmRecyclerViewAdapter
@@ -37,29 +40,28 @@ class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, tr
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
 
     private val people = ArrayList<String>()
+    private val disposables = CompositeDisposable()
 
     init {
         AppComponentManager.appComponent.inject(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
-        val layoutRes: Int
-        val bubbleColor: Int
-        when (viewType) {
-            VIEWTYPE_ME -> {
-                layoutRes = R.layout.message_list_item_out
-                bubbleColor = themeManager.bubbleColor
-            }
-            else -> {
-                layoutRes = R.layout.message_list_item_in
-                bubbleColor = themeManager.color
-            }
-        }
 
         val layoutInflater = LayoutInflater.from(context)
-        val view = layoutInflater.inflate(layoutRes, parent, false)
+        val view: View
 
-        view.body.setBackgroundTint(bubbleColor)
+        when (viewType) {
+            VIEWTYPE_ME -> {
+                view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
+                view.body.setBackgroundTint(themeManager.bubbleColor)
+            }
+            else -> {
+                view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
+                disposables += themeManager.color
+                        .subscribe { color -> view.body.setBackgroundTint(color) }
+            }
+        }
 
         if (viewType != VIEWTYPE_ME) {
             val contact = Contact()
@@ -68,6 +70,11 @@ class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, tr
         }
 
         return QkViewHolder(view)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        disposables.clear()
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {

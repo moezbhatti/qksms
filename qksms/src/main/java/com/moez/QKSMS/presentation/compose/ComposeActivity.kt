@@ -1,6 +1,7 @@
 package com.moez.QKSMS.presentation.compose
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,13 +11,14 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
@@ -45,6 +47,8 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     private val contactsAdapter by lazy { ContactAdapter(this) }
     private val messageAdapter by lazy { MessagesAdapter() }
 
+    private val disposables = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppComponentManager.appComponent.inject(this)
@@ -66,7 +70,21 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
 
+
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_enabled),
+                intArrayOf(-android.R.attr.state_enabled))
+
+        disposables += themeManager.color
+                .map { color -> ColorStateList(states, intArrayOf(color, themeManager.textTertiary)) }
+                .subscribe { tintList -> send.imageTintList = tintList }
+
         window.callback = ComposeWindowCallback(window.callback, this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     override fun render(state: ComposeState) {
@@ -94,7 +112,6 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         if (title != state.title) title = state.title
         if (message.text.toString() != state.draft) message.setText(state.draft)
 
-        send.setTint(if (state.canSend) themeManager.color else resources.getColor(R.color.textTertiary))
         send.isEnabled = state.canSend
     }
 

@@ -9,6 +9,8 @@ import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.data.model.Contact
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.contact_chip_detailed.view.*
 import javax.inject.Inject
 
@@ -17,17 +19,29 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
 
     @Inject lateinit var themeManager: ThemeManager
 
+    private val disposables = CompositeDisposable()
+
     init {
         View.inflate(context, R.layout.contact_chip_detailed, this)
         AppComponentManager.appComponent.inject(this)
 
-        card.setBackgroundTint(themeManager.color)
         setOnClickListener { hide() }
 
         visibility = View.GONE
 
         isFocusable = true
         isFocusableInTouchMode = true
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        disposables += themeManager.color
+                .subscribe { color -> card.setBackgroundTint(color) }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        disposables.clear()
     }
 
     fun setContact(contact: Contact) {

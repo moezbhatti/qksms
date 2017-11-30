@@ -2,6 +2,8 @@ package com.moez.QKSMS.presentation.main
 
 import android.Manifest
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
@@ -18,9 +20,10 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -45,6 +48,8 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
 
+    private val disposables = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppComponentManager.appComponent.inject(this)
@@ -55,10 +60,39 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
         conversationList.layoutManager = LinearLayoutManager(this)
 
-        compose.setBackgroundTint(themeManager.color)
-
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
+
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_selected),
+                intArrayOf(-android.R.attr.state_selected))
+
+        val rowBackground = {
+            StateListDrawable().apply {
+                addState(intArrayOf(android.R.attr.state_selected), getDrawable(R.color.row_selected))
+                addState(intArrayOf(-android.R.attr.state_selected), getDrawable(R.drawable.ripple))
+                mutate()
+            }
+        }
+
+        disposables += themeManager.color
+                .doOnNext { color -> compose.setBackgroundTint(color) }
+                .map { color -> ColorStateList(states, intArrayOf(color, themeManager.textSecondary)) }
+                .doOnNext { tintList -> inboxIcon.imageTintList = tintList }
+                .doOnNext { tintList -> archivedIcon.imageTintList = tintList }
+                .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }
+                .doOnNext { tintList -> blockedIcon.imageTintList = tintList }
+                .subscribe()
+
+        inbox.background = rowBackground()
+        archived.background = rowBackground()
+        scheduled.background = rowBackground()
+        blocked.background = rowBackground()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -74,25 +108,17 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             itemTouchHelper.attachToRecyclerView(if (state.page == MainPage.INBOX) conversationList else null)
         }
 
-        inbox.setBackgroundResource(getRowBackground(state.page == MainPage.INBOX))
-        inboxIcon.setTint(getIconColor(state.page == MainPage.INBOX))
-        archived.setBackgroundResource(getRowBackground(state.page == MainPage.ARCHIVED))
-        archivedIcon.setTint(getIconColor(state.page == MainPage.ARCHIVED))
-        scheduled.setBackgroundResource(getRowBackground(state.page == MainPage.SCHEDULED))
-        scheduledIcon.setTint(getIconColor(state.page == MainPage.SCHEDULED))
-        blocked.setBackgroundResource(getRowBackground(state.page == MainPage.BLOCKED))
-        blockedIcon.setTint(getIconColor(state.page == MainPage.BLOCKED))
+        inbox.isSelected = state.page == MainPage.INBOX
+        inboxIcon.isSelected = state.page == MainPage.INBOX
+        archived.isSelected = state.page == MainPage.ARCHIVED
+        archivedIcon.isSelected = state.page == MainPage.ARCHIVED
+        scheduled.isSelected = state.page == MainPage.SCHEDULED
+        scheduledIcon.isSelected = state.page == MainPage.SCHEDULED
+        blocked.isSelected = state.page == MainPage.BLOCKED
+        blockedIcon.isSelected = state.page == MainPage.BLOCKED
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
-    }
-
-    private fun getIconColor(selected: Boolean): Int {
-        return if (selected) themeManager.color else themeManager.textSecondary
-    }
-
-    private fun getRowBackground(selected: Boolean): Int {
-        return if (selected) R.color.row_selected else R.drawable.ripple
     }
 
     private fun requestPermissions() {

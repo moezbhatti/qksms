@@ -71,7 +71,7 @@ class NotificationManager @Inject constructor(
                     val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
 
                     val notification = NotificationCompat.Builder(context, "channel_1")
-                            .setColor(themeManager.color)
+                            .setColor(themeManager.color.blockingFirst())
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setNumber(messages.size)
                             .setAutoCancel(true)
