@@ -8,7 +8,7 @@ import io.reactivex.disposables.Disposable
  * Base RecyclerView.Adapter that provides some convenience when creating a new Adapter, such as
  * data list handing and item animations
  */
-abstract class FlowableAdapter<T, VH : RecyclerView.ViewHolder>(private val flowable: Flowable<List<T>>) : QkAdapter<T, VH>() {
+abstract class FlowableAdapter<T>(private val flowable: Flowable<List<T>>) : QkAdapter<T>() {
 
     private var disposable: Disposable? = null
 

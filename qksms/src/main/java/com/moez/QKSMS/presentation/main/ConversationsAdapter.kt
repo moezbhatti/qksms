@@ -17,7 +17,7 @@ import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
-class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : FlowableAdapter<ConversationMessagePair, QkViewHolder>(flowable) {
+class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : FlowableAdapter<ConversationMessagePair>(flowable) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var navigator: Navigator
@@ -60,5 +60,9 @@ class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : 
 
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position).message.read) 0 else 1
+    }
+
+    override fun areItemsTheSame(old: ConversationMessagePair, new: ConversationMessagePair): Boolean {
+        return old.conversation.id == new.conversation.id
     }
 }

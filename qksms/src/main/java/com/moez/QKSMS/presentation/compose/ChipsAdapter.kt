@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.contact_chip.view.*
 class ChipsAdapter(
         private val context: Context,
         private val view: RecyclerView)
-    : QkAdapter<Contact, QkViewHolder>() {
+    : QkAdapter<Contact>() {
 
     companion object {
         private val TYPE_EDIT_TEXT = 0
@@ -117,5 +117,9 @@ class ChipsAdapter(
             chipDeleted.onNext(contact)
             detailedChipView.hide()
         }
+    }
+
+    override fun areItemsTheSame(old: Contact, new: Contact): Boolean {
+        return old.recipientId == new.recipientId
     }
 }

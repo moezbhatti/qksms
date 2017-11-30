@@ -12,7 +12,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
-class ContactAdapter(private val context: Context) : QkAdapter<Contact, QkViewHolder>() {
+class ContactAdapter(private val context: Context) : QkAdapter<Contact>() {
 
     val contactSelected: Subject<Contact> = PublishSubject.create()
 
@@ -32,6 +32,10 @@ class ContactAdapter(private val context: Context) : QkAdapter<Contact, QkViewHo
         view.avatar.contact = contact
         view.name.text = contact.name
         view.address.text = contact.address
+    }
+
+    override fun areItemsTheSame(old: Contact, new: Contact): Boolean {
+        return old.recipientId == new.recipientId
     }
 
 }
