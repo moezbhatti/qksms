@@ -5,15 +5,19 @@ import android.preference.Preference
 import android.preference.PreferenceFragment
 import com.moez.QKSMS.R
 import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 
 class SettingsFragment : PreferenceFragment() {
 
-    val preferenceClicks: PublishSubject<Preference> = PublishSubject.create()
-    val preferenceChanges: PublishSubject<PreferenceChange> = PublishSubject.create()
+    val preferencesAdded: Subject<Unit> = PublishSubject.create()
+    val preferenceClicks: Subject<Preference> = PublishSubject.create()
+    val preferenceChanges: Subject<PreferenceChange> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.settings)
+
+        preferencesAdded.onNext(Unit)
 
         val clickListener = Preference.OnPreferenceClickListener {
             preferenceClicks.onNext(it)

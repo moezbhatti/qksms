@@ -3,6 +3,7 @@ package com.moez.QKSMS.presentation.settings
 import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.domain.interactor.FullSync
 import com.moez.QKSMS.presentation.base.QkViewModel
@@ -13,16 +14,28 @@ import javax.inject.Inject
 class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var prefs: RxSharedPreferences
     @Inject lateinit var fullSync: FullSync
 
     init {
         AppComponentManager.appComponent.inject(this)
 
         disposables += fullSync
+
+        disposables += prefs.getBoolean("defaultSms")
+                .asObservable()
+                .subscribe { isDefaultSmsApp ->
+                    newState { it.copy(isDefaultSmsApp = isDefaultSmsApp) }
+                }
     }
 
     override fun bindView(view: SettingsView) {
         super.bindView(view)
+
+        // Force update the view once we receive notification that the fragment's preference view has been created
+        intents += view.preferencesAddedIntent.subscribe {
+            newState { it.copy() }
+        }
 
         intents += view.preferenceClickIntent.subscribe {
             Timber.v("Preference click: ${it.key}")

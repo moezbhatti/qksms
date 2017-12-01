@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.settings_activity.*
 class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
     override val viewModelClass = SettingsViewModel::class
+    override val preferencesAddedIntent by lazy { fragment.preferencesAdded }
     override val preferenceClickIntent by lazy { fragment.preferenceClicks }
     override val preferenceChangeIntent by lazy { fragment.preferenceChanges }
 
@@ -39,6 +40,11 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
     override fun render(state: SettingsState) {
         if (progressDialog.isShowing && !state.syncing) progressDialog.hide()
         else if (!progressDialog.isShowing && state.syncing) progressDialog.show()
+
+        fragment.preferenceManager?.findPreference("defaultSms")?.setSummary(when (state.isDefaultSmsApp) {
+            true -> R.string.settings_default_sms_summary_true
+            else -> R.string.settings_default_sms_summary_false
+        })
     }
 
 }

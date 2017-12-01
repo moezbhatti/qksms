@@ -6,6 +6,7 @@ import io.reactivex.Observable
 
 interface SettingsView : QkView<SettingsState> {
 
+    val preferencesAddedIntent: Observable<Unit>
     val preferenceClickIntent: Observable<Preference>
     val preferenceChangeIntent: Observable<PreferenceChange>
 
