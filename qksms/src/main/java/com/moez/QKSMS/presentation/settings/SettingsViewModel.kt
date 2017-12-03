@@ -49,6 +49,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     context.startActivity(intent)
                 }
 
+                "theme" -> {
+                    newState { it.copy(selectingTheme = true) }
+                }
+
                 "sync" -> {
                     newState { it.copy(syncing = true) }
                     fullSync.execute(Unit, {
@@ -56,6 +60,11 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     })
                 }
             }
+        }
+
+        intents += view.themeSelectedIntent.subscribe { color ->
+            prefs.getInteger("theme").set(color)
+            newState { it.copy(selectingTheme = false) }
         }
     }
 }

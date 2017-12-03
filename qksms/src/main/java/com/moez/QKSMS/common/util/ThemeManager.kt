@@ -1,6 +1,6 @@
 package com.moez.QKSMS.common.util
 
-import android.animation.ValueAnimator
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ThemeManager @Inject constructor() {
+class ThemeManager @Inject constructor(prefs: RxSharedPreferences) {
 
     val color: Observable<Int>
 
@@ -23,19 +23,15 @@ class ThemeManager @Inject constructor() {
     init {
         val colorSubject: Subject<Int> = BehaviorSubject.createDefault(0xFF008389.toInt())
 
+        prefs.getInteger("theme").asObservable().subscribe {
+            colorSubject.onNext(it)
+        }
+
         color = colorSubject
                 .buffer(80, TimeUnit.MILLISECONDS)
                 .filter { it.isNotEmpty() }
                 .map { it.last() }
                 .observeOn(AndroidSchedulers.mainThread())
-
-        ValueAnimator.ofArgb(0xFF444444.toInt(), 0xFF008389.toInt()).run {
-            repeatMode = ValueAnimator.REVERSE
-            repeatCount = ValueAnimator.INFINITE
-            duration = 1500
-            addUpdateListener { animation -> colorSubject.onNext(animation.animatedValue as Int) }
-            start()
-        }
     }
 
 }

@@ -6,6 +6,10 @@
         android:title="@string/settings_default_sms_title" />
 
     <Preference
+        android:key="theme"
+        android:title="@string/settings_theme_title" />
+
+    <Preference
         android:key="sync"
         android:summary="@string/settings_sync_summary"
         android:title="@string/settings_sync_title" />

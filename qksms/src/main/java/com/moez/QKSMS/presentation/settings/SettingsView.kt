@@ -10,6 +10,8 @@ interface SettingsView : QkView<SettingsState> {
     val preferenceClickIntent: Observable<Preference>
     val preferenceChangeIntent: Observable<PreferenceChange>
 
+    val themeSelectedIntent: Observable<Int>
+
 }
 
 data class PreferenceChange(val preference: Preference, val newValue: Any)

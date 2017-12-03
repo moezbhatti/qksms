@@ -18,8 +18,11 @@
     <string name="settings_default_sms_title">Default SMS app</string>
     <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
     <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
+    <string name="settings_theme_title">Theme</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+
+    <string name="settings_dialog_theme_title">Theme</string>
 
     <string name="notification_reply">Reply</string>
     <string name="notification_read">Mark read</string>
