@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import android.telephony.SmsManager
+import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.receiver.MessageDeliveredReceiver
 import com.moez.QKSMS.receiver.MessageSentReceiver
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class SendMessage @Inject constructor(
         val context: Context,
+        val prefs: Preferences,
         val messageRepo: MessageRepository) : Interactor<Unit, SendMessage.Params>() {
 
     data class Params(val threadId: Long, val address: String, val body: String)
@@ -43,7 +45,7 @@ class SendMessage @Inject constructor(
                     val deliveredPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), deliveredIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                     val smsManager = SmsManager.getDefault()
-                    smsManager.sendTextMessage(params.address, null, params.body, sentPI, deliveredPI)
+                    smsManager.sendTextMessage(params.address, null, params.body, sentPI, if (prefs.delivery.get()) deliveredPI else null)
                 }
                 .map { Unit }
     }
