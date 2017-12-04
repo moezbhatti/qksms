@@ -22,12 +22,13 @@ import javax.inject.Singleton
 @Singleton
 class NotificationManager @Inject constructor(
         private val context: Context,
+        private val prefs: Preferences,
         private val colors: Colors) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
     init {
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             val id = "channel_1"
@@ -47,6 +48,8 @@ class NotificationManager @Inject constructor(
     }
 
     fun update(messageRepo: MessageRepository) {
+        if (!prefs.notifications.get()) return
+
         messageRepo.getUnreadUnseenMessages()
                 .groupBy { message -> message.threadId }
                 .forEach { group ->
