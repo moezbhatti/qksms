@@ -15,4 +15,10 @@
         android:visible="false"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/delete"
+        android:title="@string/menu_delete"
+        android:visible="false"
+        app:showAsAction="never" />
+
 </menu>

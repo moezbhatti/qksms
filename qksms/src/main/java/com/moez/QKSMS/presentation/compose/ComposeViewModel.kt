@@ -32,6 +32,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
+    @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
@@ -54,11 +55,17 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
         // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
-        // stream of conversations
+        // stream of conversations. If the conversation was deleted, notify the activity to shut down
         conversation = messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { conversation -> conversation.isLoaded }
-                .filter { conversation -> conversation.isValid }
+                .filter { conversation ->
+                    if (!conversation.isValid) {
+                        newState { it.copy(hasError = true) }
+                        return@filter false
+                    }
+                    return@filter true
+                }
                 .mergeWith(selectedConversation)
                 .distinctUntilChanged()
                 .doOnNext { conversation ->
@@ -69,6 +76,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
         disposables += markRead
         disposables += markArchived
         disposables += markUnarchived
+        disposables += deleteConversation
         disposables += conversation.subscribe()
 
         // When the conversation changes, update the messages for the adapter
@@ -121,6 +129,11 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .subscribe()
 
+        // When the menu is loaded, trigger a new state so that the menu options can be rendered correctly
+        intents += view.menuReadyIntent.subscribe {
+            newState { it.copy() }
+        }
+
         // Open the phone dialer if the call button is clicked
         intents += view.callIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
@@ -137,6 +150,11 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                         false -> markArchived.execute(conversation.id, { context.makeToast(R.string.toast_archived) })
                     }
                 }
+
+        // Delete the conversation
+        intents += view.deleteIntent
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .subscribe { conversation -> deleteConversation.execute(conversation.id) }
 
         // Enable the send button when there is text input into the new message body, disable otherwise
         intents += view.textChangedIntent.subscribe { text ->

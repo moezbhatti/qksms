@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
+import android.provider.Telephony
 import android.provider.Telephony.Sms
 import android.provider.Telephony.TextBasedSmsColumns
 import com.moez.QKSMS.common.util.MessageUtils
@@ -237,6 +238,23 @@ class MessageRepository @Inject constructor(
             realm.executeTransaction { message.deleteFromRealm() }
         }
         realm.close()
+    }
+
+    fun deleteConversation(threadId: Long) {
+        val realm = Realm.getDefaultInstance()
+
+        val conversation = realm.where(Conversation::class.java).equalTo("id", threadId).findAll()
+        val messages = realm.where(Message::class.java).equalTo("threadId", threadId).findAll()
+
+        realm.executeTransaction {
+            conversation.deleteAllFromRealm()
+            messages.deleteAllFromRealm()
+        }
+
+        realm.close()
+
+        val uri = Uri.withAppendedPath(Telephony.Threads.CONTENT_URI, threadId.toString())
+        context.contentResolver.delete(uri, null, null)
     }
 
     fun getConversationFromCp(threadId: Long): Conversation? {

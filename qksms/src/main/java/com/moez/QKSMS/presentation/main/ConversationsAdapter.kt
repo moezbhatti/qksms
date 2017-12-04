@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
-import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.presentation.Navigator

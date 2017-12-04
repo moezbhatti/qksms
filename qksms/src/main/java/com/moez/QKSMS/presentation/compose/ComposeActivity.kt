@@ -33,8 +33,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
+    override val menuReadyIntent: Subject<Unit> = PublishSubject.create()
     override val callIntent: Subject<Unit> = PublishSubject.create()
     override val archiveIntent: Subject<Unit> = PublishSubject.create()
+    override val deleteIntent: Subject<Unit> = PublishSubject.create()
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
@@ -45,10 +47,6 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     private val chipsAdapter by lazy { ChipsAdapter(this, chips) }
     private val contactsAdapter by lazy { ContactAdapter(this) }
     private val messageAdapter by lazy { MessagesAdapter() }
-
-    private var pendingCallVisibility = false
-    private var pendingArchiveVisibility = false
-    private var pendingArchiveTitle = ""
 
     init {
         appComponent.inject(this)
@@ -87,26 +85,27 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     }
 
     override fun render(state: ComposeState) {
+        if (state.hasError) {
+            finish()
+            return
+        }
+
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
         contacts.setVisible(state.contactsVisible)
         composeBar.setVisible(!state.contactsVisible)
 
-        menu?.findItem(R.id.call).let { menuItem ->
-            if (menuItem == null) {
-                pendingCallVisibility = !state.editingMode
-            } else {
-                menuItem.isVisible = !state.editingMode
-            }
+        menu?.findItem(R.id.call)?.run {
+            isVisible = !state.editingMode
         }
 
-        menu?.findItem(R.id.archive).let { menuItem ->
-            if (menuItem == null) {
-                pendingArchiveVisibility = !state.editingMode
-            } else {
-                menuItem.isVisible = !state.editingMode
-                menuItem.setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
-            }
+        menu?.findItem(R.id.archive)?.run {
+            isVisible = !state.editingMode
+            setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
+        }
+
+        menu?.findItem(R.id.delete)?.run {
+            isVisible = !state.editingMode
         }
 
         if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
@@ -163,28 +162,20 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.compose, menu)
-        menu?.findItem(R.id.call)?.isVisible = pendingCallVisibility
-        menu?.findItem(R.id.archive)?.run {
-            isVisible = pendingArchiveVisibility
-            title = pendingArchiveTitle
-        }
-        return super.onCreateOptionsMenu(menu)
+        val result = super.onCreateOptionsMenu(menu)
+        menuReadyIntent.onNext(Unit)
+        return result
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.call -> {
-                callIntent.onNext(Unit)
-                true
-            }
-
-            R.id.archive -> {
-                archiveIntent.onNext(Unit)
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.call -> callIntent.onNext(Unit)
+            R.id.archive -> archiveIntent.onNext(Unit)
+            R.id.delete -> deleteIntent.onNext(Unit)
+            else -> return super.onOptionsItemSelected(item)
         }
+
+        return true
     }
 
 }

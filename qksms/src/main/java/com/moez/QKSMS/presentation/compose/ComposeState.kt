@@ -5,6 +5,7 @@ import com.moez.QKSMS.data.model.Message
 import io.realm.RealmResults
 
 data class ComposeState(
+        val hasError: Boolean = false,
         val editingMode: Boolean = false,
         val contacts: List<Contact> = ArrayList(),
         val contactsVisible: Boolean = false,

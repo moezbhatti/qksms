@@ -8,6 +8,7 @@
     <string name="menu_call">Call</string>
     <string name="menu_archive">Archive</string>
     <string name="menu_unarchive">Unarchive</string>
+    <string name="menu_delete">Delete</string>
 
     <string name="compose_hint">Write a message</string>
 
