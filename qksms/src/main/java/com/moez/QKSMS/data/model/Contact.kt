@@ -6,6 +6,7 @@ import io.realm.annotations.PrimaryKey
 open class Contact() : RealmObject() {
 
     @PrimaryKey var recipientId: Long = 0
+    var lookupKey: String = ""
     var address: String = ""
     var name: String = ""
 

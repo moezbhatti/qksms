@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.ContactsContract
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.main.MainViewModel
@@ -12,6 +13,8 @@ import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
+
+
 
 
 

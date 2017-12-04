@@ -65,12 +65,13 @@ class ContactRepository @Inject constructor(val context: Context) {
                 val contact = Contact(recipientId, recipientCursor.getString(0))
 
                 val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact.address))
-                val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME)
+                val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
                 try {
                     context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
                         if (contactCursor.moveToFirst()) {
                             contact.inContactsTable = true
                             contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).orEmpty()
+                            contact.lookupKey = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY)).orEmpty()
                         }
                     }
                 } catch (e: Exception) {

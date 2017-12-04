@@ -1,15 +1,19 @@
 package com.moez.QKSMS.presentation.view
 
 import android.content.Context
+import android.net.Uri
+import android.provider.ContactsContract
 import android.telephony.PhoneNumberUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
-import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.data.model.Contact
+import com.moez.QKSMS.presentation.Navigator
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.avatar_view.view.*
@@ -18,6 +22,7 @@ import javax.inject.Inject
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var navigator: Navigator
 
     private val disposables = CompositeDisposable()
 
@@ -39,6 +44,14 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         super.onAttachedToWindow()
         disposables += colors.theme
                 .subscribe { color -> background.setTint(color) }
+
+        disposables += clicks().subscribe {
+            contact?.lookupKey?.takeIf { it.isNotEmpty() }?.let { key ->
+                val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key)
+                ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,
+                        ContactsContract.QuickContact.MODE_MEDIUM, null)
+            }
+        }
     }
 
     override fun onDetachedFromWindow() {
