@@ -3,7 +3,7 @@ package com.moez.QKSMS.presentation.compose
 import android.content.Context
 import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.extensions.asObservable
 import com.moez.QKSMS.common.util.extensions.makeToast
@@ -42,7 +42,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     private val conversation: Observable<Conversation>
 
     init {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         selectedContacts = contactsReducer
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })

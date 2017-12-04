@@ -5,7 +5,7 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.RelativeLayout
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.data.model.Contact
@@ -23,7 +23,7 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
 
     init {
         View.inflate(context, R.layout.contact_chip_detailed, this)
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         setOnClickListener { hide() }
 

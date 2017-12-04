@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.data.model.Contact
@@ -29,7 +29,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     init {
         View.inflate(context, R.layout.avatar_view, this)
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         setBackgroundResource(R.drawable.circle)
         clipToOutline = true

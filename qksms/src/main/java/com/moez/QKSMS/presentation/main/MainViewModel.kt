@@ -2,7 +2,7 @@ package com.moez.QKSMS.presentation.main
 
 import android.content.Context
 import android.provider.Telephony
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.MarkAllSeen
 import com.moez.QKSMS.domain.interactor.MarkArchived
@@ -22,7 +22,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var partialSync: PartialSync
 
     init {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         disposables += markAllSeen
 

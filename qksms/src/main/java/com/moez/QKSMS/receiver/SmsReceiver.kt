@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.provider.Telephony.Sms
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.domain.interactor.ReceiveMessage
 import timber.log.Timber
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class SmsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Timber.v("Received SMS: $intent")
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         val messages = Sms.Intents.getMessagesFromIntent(intent)
         messages?.takeIf { it.isNotEmpty() }?.let { messages ->

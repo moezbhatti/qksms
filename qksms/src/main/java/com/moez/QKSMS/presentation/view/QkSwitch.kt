@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.support.v7.widget.SwitchCompat
 import android.util.AttributeSet
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.withAlpha
 import io.reactivex.disposables.CompositeDisposable
@@ -19,7 +19,7 @@ class QkSwitch @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     private val disposables = CompositeDisposable()
 
     init {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
     }
 
     override fun onAttachedToWindow() {

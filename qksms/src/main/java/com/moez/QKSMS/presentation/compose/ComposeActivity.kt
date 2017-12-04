@@ -11,7 +11,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
@@ -48,7 +48,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     private var pendingCallVisibility = false
 
     init {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

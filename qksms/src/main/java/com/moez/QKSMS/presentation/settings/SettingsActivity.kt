@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.presentation.base.QkActivity
 import com.moez.QKSMS.presentation.view.PreferenceView
 import io.reactivex.subjects.PublishSubject
@@ -52,7 +52,7 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         setTitle(R.string.title_settings)

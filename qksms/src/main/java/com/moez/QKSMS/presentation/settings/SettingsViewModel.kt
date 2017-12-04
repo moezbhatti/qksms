@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.domain.interactor.FullSync
 import com.moez.QKSMS.presentation.base.QkViewModel
@@ -19,7 +19,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
     @Inject lateinit var fullSync: FullSync
 
     init {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         disposables += prefs.defaultSms
                 .asObservable()

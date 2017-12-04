@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.data.repository.MessageRepository
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class MessageDeliveredReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val uri = Uri.parse(intent.getStringExtra("uri"))
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         when (resultCode) {
         // TODO notify about delivery

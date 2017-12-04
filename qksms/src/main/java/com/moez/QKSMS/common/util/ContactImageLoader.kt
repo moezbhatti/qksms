@@ -11,7 +11,7 @@ import com.bumptech.glide.load.data.DataFetcher
 import com.bumptech.glide.load.model.ModelLoader
 import com.bumptech.glide.load.model.ModelLoaderFactory
 import com.bumptech.glide.load.model.MultiModelLoaderFactory
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.data.repository.ContactRepository
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -45,7 +45,7 @@ class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream
         private var loadPhotoDisposable: Disposable? = null
 
         init {
-            AppComponentManager.appComponent.inject(this)
+            appComponent.inject(this)
         }
 
         override fun cleanup() {}

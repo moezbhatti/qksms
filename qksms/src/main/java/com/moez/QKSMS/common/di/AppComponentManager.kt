@@ -2,10 +2,10 @@ package com.moez.QKSMS.common.di
 
 import com.moez.QKSMS.common.QKApplication
 
-internal object AppComponentManager {
+internal lateinit var appComponent: AppComponent
+    private set
 
-    internal lateinit var appComponent: AppComponent
-        private set
+internal object AppComponentManager {
 
     fun init(application: QKApplication) {
         appComponent = DaggerAppComponent.builder()

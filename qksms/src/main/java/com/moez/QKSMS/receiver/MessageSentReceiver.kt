@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.telephony.SmsManager
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.domain.interactor.MarkFailed
 import com.moez.QKSMS.domain.interactor.MarkSent
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class MessageSentReceiver : BroadcastReceiver() {
     @Inject lateinit var markFailed: MarkFailed
 
     override fun onReceive(context: Context, intent: Intent) {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         val uri = Uri.parse(intent.getStringExtra("uri"))
 

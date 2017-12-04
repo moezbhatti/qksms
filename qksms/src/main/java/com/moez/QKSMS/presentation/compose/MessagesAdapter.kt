@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.ThemeManager
 import com.moez.QKSMS.common.util.extensions.dpToPx
@@ -43,7 +43,7 @@ class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, tr
     private val disposables = CompositeDisposable()
 
     init {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {

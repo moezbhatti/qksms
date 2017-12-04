@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.RemoteInput
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.domain.interactor.MarkRead
 import com.moez.QKSMS.domain.interactor.SendMessage
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
     @Inject lateinit var markRead: MarkRead
 
     override fun onReceive(context: Context, intent: Intent) {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
 
         val remoteInput = RemoteInput.getResultsFromIntent(intent)
         val bundle = intent.extras

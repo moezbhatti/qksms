@@ -17,7 +17,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
@@ -46,7 +46,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
 
     init {
-        AppComponentManager.appComponent.inject(this)
+        appComponent.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
