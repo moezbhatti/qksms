@@ -21,13 +21,52 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
     init {
         AppComponentManager.appComponent.inject(this)
 
-        disposables += fullSync
-
         disposables += prefs.defaultSms
                 .asObservable()
                 .subscribe { isDefaultSmsApp ->
                     newState { it.copy(isDefaultSmsApp = isDefaultSmsApp) }
                 }
+
+        disposables += prefs.dark.asObservable().subscribe { darkModeEnabled ->
+            newState { it.copy(darkModeEnabled = darkModeEnabled) }
+        }
+
+        disposables += prefs.autoEmoji.asObservable().subscribe { autoEmojiEnabled ->
+            newState { it.copy(autoEmojiEnabled = autoEmojiEnabled) }
+        }
+
+        disposables += prefs.notifications.asObservable().subscribe { notificationsEnabled ->
+            newState { it.copy(notificationsEnabled = notificationsEnabled) }
+        }
+
+        disposables += prefs.vibration.asObservable().subscribe { vibrationEnabled ->
+            newState { it.copy(vibrationEnabled = vibrationEnabled) }
+        }
+
+        disposables += prefs.ringtone.asObservable().subscribe { ringtone ->
+        }
+
+        disposables += prefs.delivery.asObservable().subscribe { deliveryEnabled ->
+            newState { it.copy(deliveryEnabled = deliveryEnabled) }
+        }
+
+        disposables += prefs.split.asObservable().subscribe { splitSmsEnabled ->
+            newState { it.copy(splitSmsEnabled = splitSmsEnabled) }
+        }
+
+        disposables += prefs.unicode.asObservable().subscribe { stripUnicodeEnabled ->
+            newState { it.copy(stripUnicodeEnabled = stripUnicodeEnabled) }
+        }
+
+        disposables += prefs.mms.asObservable().subscribe { mmsEnabled ->
+            newState { it.copy(mmsEnabled = mmsEnabled) }
+        }
+
+        disposables += prefs.mmsSize.asObservable().subscribe { maxMmsSize ->
+            newState { it.copy(maxMmsSize = maxMmsSize.toString()) }
+        }
+
+        disposables += fullSync
     }
 
     override fun bindView(view: SettingsView) {
@@ -45,8 +84,28 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     context.startActivity(intent)
                 }
 
-                R.id.theme -> {
-                    newState { it.copy(selectingTheme = true) }
+                R.id.theme -> newState { it.copy(selectingTheme = true) }
+
+                R.id.dark -> prefs.dark.set(!prefs.dark.get())
+
+                R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
+
+                R.id.notifications -> prefs.notifications.set(!prefs.notifications.get())
+
+                R.id.vibration -> prefs.vibration.set(!prefs.vibration.get())
+
+                R.id.ringtone -> {
+                }
+
+                R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
+
+                R.id.split -> prefs.split.set(!prefs.split.get())
+
+                R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
+
+                R.id.mms -> prefs.mms.set(!prefs.mms.get())
+
+                R.id.mmsSize -> {
                 }
 
                 R.id.sync -> {

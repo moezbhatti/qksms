@@ -13,6 +13,7 @@ import com.moez.QKSMS.presentation.view.PreferenceView
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
+import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 
 class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
@@ -70,16 +71,34 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
     }
 
     override fun render(state: SettingsState) {
-        if (progressDialog.isShowing && !state.syncing) progressDialog.dismiss()
-        else if (!progressDialog.isShowing && state.syncing) progressDialog.show()
-
         if (themeDialog.isShowing && !state.selectingTheme) themeDialog.dismiss()
         else if (!themeDialog.isShowing && state.selectingTheme) themeDialog.show()
+
+        if (progressDialog.isShowing && !state.syncing) progressDialog.dismiss()
+        else if (!progressDialog.isShowing && state.syncing) progressDialog.show()
 
         defaultSms.summary = getString(when (state.isDefaultSmsApp) {
             true -> R.string.settings_default_sms_summary_true
             else -> R.string.settings_default_sms_summary_false
         })
+
+        dark.checkbox.isChecked = state.darkModeEnabled
+
+        autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
+
+        notifications.checkbox.isChecked = state.notificationsEnabled
+
+        vibration.checkbox.isChecked = state.vibrationEnabled
+
+        delivery.checkbox.isChecked = state.deliveryEnabled
+
+        split.checkbox.isChecked = state.splitSmsEnabled
+
+        unicode.checkbox.isChecked = state.stripUnicodeEnabled
+
+        mms.checkbox.isChecked = state.mmsEnabled
+
+        mmsSize.summary = state.maxMmsSize
     }
 
 }
