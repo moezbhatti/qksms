@@ -1,5 +1,7 @@
 package com.moez.QKSMS.common.util
 
+import android.content.Context
+import com.moez.QKSMS.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -9,9 +11,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ThemeManager @Inject constructor(prefs: Preferences) {
+class ThemeManager @Inject constructor(context: Context, prefs: Preferences) {
 
     val color: Observable<Int>
+
+    val switchThumbEnabled: Observable<Int>
+    val switchThumbDisabled: Observable<Int>
+    val switchTrackEnabled: Observable<Int>
+    val switchTrackDisabled: Observable<Int>
 
     val bubbleColor = 0xFFFFFFFF.toInt()
 
@@ -31,6 +38,42 @@ class ThemeManager @Inject constructor(prefs: Preferences) {
                 .filter { it.isNotEmpty() }
                 .map { it.last() }
                 .observeOn(AndroidSchedulers.mainThread())
+
+        switchThumbEnabled = prefs.dark.asObservable()
+                .map { dark ->
+                    when (dark) {
+                        true -> R.color.switch_thumb_enabled_dark
+                        false -> R.color.switch_thumb_enabled_light
+                    }
+                }
+                .map { res -> context.resources.getColor(res) }
+
+        switchThumbDisabled = prefs.dark.asObservable()
+                .map { dark ->
+                    when (dark) {
+                        true -> R.color.switch_thumb_disabled_dark
+                        false -> R.color.switch_thumb_disabled_light
+                    }
+                }
+                .map { res -> context.resources.getColor(res) }
+
+        switchTrackEnabled = prefs.dark.asObservable()
+                .map { dark ->
+                    when (dark) {
+                        true -> R.color.switch_track_enabled_dark
+                        false -> R.color.switch_track_enabled_light
+                    }
+                }
+                .map { res -> context.resources.getColor(res) }
+
+        switchTrackDisabled = prefs.dark.asObservable()
+                .map { dark ->
+                    when (dark) {
+                        true -> R.color.switch_track_disabled_dark
+                        false -> R.color.switch_track_disabled_light
+                    }
+                }
+                .map { res -> context.resources.getColor(res) }
     }
 
 }

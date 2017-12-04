@@ -11,6 +11,7 @@ import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
 import com.moez.QKSMS.presentation.view.AvatarView
+import com.moez.QKSMS.presentation.view.QkSwitch
 import com.moez.QKSMS.receiver.*
 import dagger.Component
 import javax.inject.Singleton
@@ -35,6 +36,7 @@ interface AppComponent {
     fun inject(receiver: RemoteMessagingReceiver)
 
     fun inject(view: AvatarView)
+    fun inject(view: QkSwitch)
 
     fun inject(viewModel: MainViewModel)
     fun inject(viewModel: ComposeViewModel)
