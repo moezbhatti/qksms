@@ -15,7 +15,7 @@ import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
 
-class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : FrameLayout(context, attrs, defStyleAttr) {
+class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     @Inject lateinit var themeManager: ThemeManager
 
@@ -26,9 +26,6 @@ class AvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : Fr
             field = value
             updateView()
         }
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context) : this(context, null, 0)
 
     init {
         View.inflate(context, R.layout.avatar_view, this)

@@ -4,11 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.TextView
 
-class TightTextView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyle: Int = 0)
-    : TextView(context, attrs, defStyle) {
+class TightTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : TextView(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)

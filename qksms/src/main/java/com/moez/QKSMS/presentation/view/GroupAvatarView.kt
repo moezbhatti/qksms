@@ -9,7 +9,7 @@ import com.moez.QKSMS.data.model.Contact
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.group_avatar_view.view.*
 
-class GroupAvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : ConstraintLayout(context, attrs, defStyleAttr) {
+class GroupAvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
 
     var contacts: RealmList<Contact> = RealmList()
         set(value) {
@@ -18,9 +18,6 @@ class GroupAvatarView(context: Context, attrs: AttributeSet?, defStyleAttr: Int)
         }
 
     private val avatars by lazy { listOf(avatar1, avatar2, avatar3) }
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context) : this(context, null, 0)
 
     init {
         View.inflate(context, R.layout.group_avatar_view, this)
