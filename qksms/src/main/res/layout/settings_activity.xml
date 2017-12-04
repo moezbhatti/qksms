@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,9 +8,42 @@
     <include layout="@layout/toolbar" />
 
     <FrameLayout
-        android:id="@+id/fragmentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/preferences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.moez.QKSMS.presentation.view.PreferenceView
+                    android:id="@+id/defaultSms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/settings_default_sms_title" />
+
+                <com.moez.QKSMS.presentation.view.PreferenceView
+                    android:id="@+id/theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/settings_theme_title" />
+
+                <com.moez.QKSMS.presentation.view.PreferenceView
+                    android:id="@+id/sync"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:summary="@string/settings_sync_summary"
+                    app:title="@string/settings_sync_title" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <View
             android:layout_width="match_parent"

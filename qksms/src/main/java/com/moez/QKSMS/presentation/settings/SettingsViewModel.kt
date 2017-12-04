@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import com.f2prateek.rx.preferences2.RxSharedPreferences
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
 import com.moez.QKSMS.domain.interactor.FullSync
 import com.moez.QKSMS.presentation.base.QkViewModel
@@ -32,16 +33,11 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
     override fun bindView(view: SettingsView) {
         super.bindView(view)
 
-        // Force update the view once we receive notification that the fragment's preference view has been created
-        intents += view.preferencesAddedIntent.subscribe {
-            newState { it.copy() }
-        }
-
         intents += view.preferenceClickIntent.subscribe {
-            Timber.v("Preference click: ${it.key}")
+            Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
 
-            when (it.key) {
-                "defaultSms" -> {
+            when (it.id) {
+                R.id.defaultSms -> {
                     val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
                     if (Telephony.Sms.getDefaultSmsPackage(context) != context.packageName) {
                         intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.packageName)
@@ -49,11 +45,11 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     context.startActivity(intent)
                 }
 
-                "theme" -> {
+                R.id.theme -> {
                     newState { it.copy(selectingTheme = true) }
                 }
 
-                "sync" -> {
+                R.id.sync -> {
                     newState { it.copy(syncing = true) }
                     fullSync.execute(Unit, {
                         newState { it.copy(syncing = false) }
