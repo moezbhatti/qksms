@@ -1,5 +1,6 @@
 package com.moez.QKSMS.common.util
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -12,10 +13,10 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
-import com.moez.QKSMS.presentation.main.MainActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,16 +29,16 @@ class NotificationManager @Inject constructor(
     private val notificationManager = NotificationManagerCompat.from(context)
 
     init {
+        @SuppressLint("NewApi")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
             val id = "channel_1"
             val name = "Message notifications"
-            val description = "Message notifications description"
-            val importance = NotificationManager.IMPORTANCE_MAX
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(id, name, importance)
 
-            channel.description = description
+            channel.description = "Message notifications description"
             channel.enableLights(true)
             channel.lightColor = Color.WHITE
             channel.enableVibration(true)
