@@ -1,4 +1,4 @@
-Disclaimer: The current condition of the codebase is quite poor *(I guess that's what happens when you start writing an app when you don't even know how to code yet)*. I'm in the process of rebuilding the app from scratch using Kotlin - I would recommend against making any pull requests until the new version is ready. ETA October 2017
+Disclaimer: The current condition of the codebase is quite poor *(I guess that's what happens when you start writing an app when you don't even know how to code yet)*. I'm in the process of rebuilding the app from scratch using Kotlin - I would recommend against making any pull requests until the new version is ready. ETA December 2017
 
 # QKSMS
 
