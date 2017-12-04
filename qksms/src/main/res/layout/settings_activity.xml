@@ -45,6 +45,7 @@
                     android:id="@+id/autoEmoji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:summary="@string/settings_auto_emoji_summary"
                     app:title="@string/settings_auto_emoji_title"
                     app:widget="@layout/settings_switch_widget" />
 
@@ -72,6 +73,7 @@
                     android:id="@+id/delivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:summary="@string/settings_delivery_summary"
                     app:title="@string/settings_delivery_title"
                     app:widget="@layout/settings_switch_widget" />
 
@@ -79,6 +81,7 @@
                     android:id="@+id/split"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:summary="@string/settings_split_summary"
                     app:title="@string/settings_split_title"
                     app:widget="@layout/settings_switch_widget" />
 
@@ -86,6 +89,7 @@
                     android:id="@+id/unicode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:summary="@string/settings_unicode_summary"
                     app:title="@string/settings_unicode_title"
                     app:widget="@layout/settings_switch_widget" />
 
