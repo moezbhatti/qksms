@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @Singleton
 class NotificationManager @Inject constructor(
         private val context: Context,
-        private val themeManager: ThemeManager) {
+        private val colors: Colors) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
@@ -71,7 +71,7 @@ class NotificationManager @Inject constructor(
                     val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
 
                     val notification = NotificationCompat.Builder(context, "channel_1")
-                            .setColor(themeManager.color.blockingFirst())
+                            .setColor(colors.theme.blockingFirst())
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setNumber(messages.size)
                             .setAutoCancel(true)

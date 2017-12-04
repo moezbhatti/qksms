@@ -73,9 +73,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             }
         }
 
-        disposables += themeManager.color
+        disposables += colors.theme
                 .doOnNext { color -> compose.setBackgroundTint(color) }
-                .map { color -> ColorStateList(states, intArrayOf(color, themeManager.textSecondary)) }
+                .map { color -> ColorStateList(states, intArrayOf(color, colors.textSecondary)) }
                 .doOnNext { tintList -> inboxIcon.imageTintList = tintList }
                 .doOnNext { tintList -> archivedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }

@@ -8,7 +8,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.ThemeManager
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.presentation.Navigator
@@ -26,7 +26,7 @@ class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var themeManager: ThemeManager
+    @Inject lateinit var colors: Colors
 
     private val disposables = CompositeDisposable()
 
@@ -44,7 +44,7 @@ class ConversationsAdapter(flowable: Flowable<List<ConversationMessagePair>>) : 
         val view = layoutInflater.inflate(layoutRes, parent, false)
 
         if (viewType == 1) {
-            disposables += themeManager.color
+            disposables += colors.theme
                     .subscribe { color -> view.date.setTextColor(color) }
         }
 

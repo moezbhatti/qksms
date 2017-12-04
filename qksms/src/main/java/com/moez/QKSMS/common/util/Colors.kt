@@ -11,9 +11,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ThemeManager @Inject constructor(context: Context, prefs: Preferences) {
+class Colors @Inject constructor(context: Context, prefs: Preferences) {
 
-    val color: Observable<Int>
+    val theme: Observable<Int>
 
     val switchThumbEnabled: Observable<Int>
     val switchThumbDisabled: Observable<Int>
@@ -33,7 +33,7 @@ class ThemeManager @Inject constructor(context: Context, prefs: Preferences) {
             colorSubject.onNext(it)
         }
 
-        color = colorSubject
+        theme = colorSubject
                 .buffer(80, TimeUnit.MILLISECONDS)
                 .filter { it.isNotEmpty() }
                 .map { it.last() }

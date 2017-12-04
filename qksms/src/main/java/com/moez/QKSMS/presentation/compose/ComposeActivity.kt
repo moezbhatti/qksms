@@ -76,8 +76,8 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                 intArrayOf(android.R.attr.state_enabled),
                 intArrayOf(-android.R.attr.state_enabled))
 
-        disposables += themeManager.color
-                .map { color -> ColorStateList(states, intArrayOf(color, themeManager.textTertiary)) }
+        disposables += colors.theme
+                .map { color -> ColorStateList(states, intArrayOf(color, colors.textTertiary)) }
                 .subscribe { tintList -> send.imageTintList = tintList }
 
         window.callback = ComposeWindowCallback(window.callback, this)

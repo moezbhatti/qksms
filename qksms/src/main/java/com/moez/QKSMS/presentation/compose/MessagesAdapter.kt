@@ -9,7 +9,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.ThemeManager
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPadding
@@ -34,7 +34,7 @@ class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, tr
     }
 
     @Inject lateinit var context: Context
-    @Inject lateinit var themeManager: ThemeManager
+    @Inject lateinit var colors: Colors
     @Inject lateinit var dateFormatter: DateFormatter
 
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
@@ -54,11 +54,11 @@ class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, tr
         when (viewType) {
             VIEWTYPE_ME -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
-                view.body.setBackgroundTint(themeManager.bubbleColor)
+                view.body.setBackgroundTint(colors.bubbleColor)
             }
             else -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
-                disposables += themeManager.color
+                disposables += colors.theme
                         .subscribe { color -> view.body.setBackgroundTint(color) }
             }
         }

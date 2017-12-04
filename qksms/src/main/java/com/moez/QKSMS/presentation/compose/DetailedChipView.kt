@@ -6,7 +6,7 @@ import android.view.animation.AlphaAnimation
 import android.widget.RelativeLayout
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
-import com.moez.QKSMS.common.util.ThemeManager
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.data.model.Contact
 import io.reactivex.disposables.CompositeDisposable
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class DetailedChipView(context: Context) : RelativeLayout(context) {
 
-    @Inject lateinit var themeManager: ThemeManager
+    @Inject lateinit var colors: Colors
 
     private val disposables = CompositeDisposable()
 
@@ -35,7 +35,7 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        disposables += themeManager.color
+        disposables += colors.theme
                 .subscribe { color -> card.setBackgroundTint(color) }
     }
 
