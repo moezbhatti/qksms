@@ -6,6 +6,8 @@
     <string name="title_compose">Type a name or number</string>
 
     <string name="menu_call">Call</string>
+    <string name="menu_archive">Archive</string>
+    <string name="menu_unarchive">Unarchive</string>
 
     <string name="compose_hint">Write a message</string>
 
@@ -42,6 +44,8 @@
     <string name="notification_read">Mark read</string>
 
     <string name="toast_copied">Copied</string>
+    <string name="toast_archived">Archived</string>
+    <string name="toast_unarchived">Moved to inbox</string>
 
     <string-array name="message_options">
         <item>Copy text</item>

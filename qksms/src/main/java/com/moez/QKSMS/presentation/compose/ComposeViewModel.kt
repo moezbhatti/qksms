@@ -11,9 +11,7 @@ import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.data.repository.MessageRepository
-import com.moez.QKSMS.domain.interactor.DeleteMessage
-import com.moez.QKSMS.domain.interactor.MarkRead
-import com.moez.QKSMS.domain.interactor.SendMessage
+import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.Observable
@@ -32,6 +30,8 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var contactsRepo: ContactRepository
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var markArchived: MarkArchived
+    @Inject lateinit var markUnarchived: MarkUnarchived
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
@@ -60,18 +60,21 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .filter { conversation -> conversation.isLoaded }
                 .filter { conversation -> conversation.isValid }
                 .mergeWith(selectedConversation)
-                .distinctUntilChanged { conversation -> conversation.id }
+                .distinctUntilChanged()
                 .doOnNext { conversation ->
-                    newState { it.copy(title = conversation.getTitle(), canCall = conversation.contacts.isNotEmpty()) }
+                    newState { it.copy(title = conversation.getTitle(), archived = conversation.archived) }
                 }
 
         disposables += sendMessage
         disposables += markRead
+        disposables += markArchived
+        disposables += markUnarchived
         disposables += conversation.subscribe()
 
         // When the conversation changes, update the messages for the adapter
         // When the message list changes, make sure to mark them read
         disposables += conversation
+                .distinctUntilChanged()
                 .map { conversation -> messageRepo.getMessages(conversation.id) }
                 .doOnNext { messages -> newState { it.copy(messages = messages) } }
                 .flatMap { messages -> messages.asObservable() }
@@ -124,6 +127,16 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .map { conversation -> conversation.contacts.first() }
                 .map { contact -> contact.address }
                 .subscribe { address -> navigator.makePhoneCall(address) }
+
+        // Toggle the archived state of the conversation
+        intents += view.archiveIntent
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .subscribe { conversation ->
+                    when (conversation.archived) {
+                        true -> markUnarchived.execute(conversation.id, { context.makeToast(R.string.toast_unarchived) })
+                        false -> markArchived.execute(conversation.id, { context.makeToast(R.string.toast_archived) })
+                    }
+                }
 
         // Enable the send button when there is text input into the new message body, disable otherwise
         intents += view.textChangedIntent.subscribe { text ->

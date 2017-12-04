@@ -34,6 +34,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val callIntent: Subject<Unit> = PublishSubject.create()
+    override val archiveIntent: Subject<Unit> = PublishSubject.create()
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
@@ -46,6 +47,8 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     private val messageAdapter by lazy { MessagesAdapter() }
 
     private var pendingCallVisibility = false
+    private var pendingArchiveVisibility = false
+    private var pendingArchiveTitle = ""
 
     init {
         appComponent.inject(this)
@@ -91,9 +94,18 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
         menu?.findItem(R.id.call).let { menuItem ->
             if (menuItem == null) {
-                pendingCallVisibility = state.canCall
+                pendingCallVisibility = !state.editingMode
             } else {
-                menuItem.setVisible(state.canCall)
+                menuItem.isVisible = !state.editingMode
+            }
+        }
+
+        menu?.findItem(R.id.archive).let { menuItem ->
+            if (menuItem == null) {
+                pendingArchiveVisibility = !state.editingMode
+            } else {
+                menuItem.isVisible = !state.editingMode
+                menuItem.setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
             }
         }
 
@@ -152,6 +164,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.compose, menu)
         menu?.findItem(R.id.call)?.isVisible = pendingCallVisibility
+        menu?.findItem(R.id.archive)?.run {
+            isVisible = pendingArchiveVisibility
+            title = pendingArchiveTitle
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -159,6 +175,11 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         return when (item.itemId) {
             R.id.call -> {
                 callIntent.onNext(Unit)
+                true
+            }
+
+            R.id.archive -> {
+                archiveIntent.onNext(Unit)
                 true
             }
 

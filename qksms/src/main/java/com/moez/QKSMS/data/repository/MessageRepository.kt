@@ -127,7 +127,17 @@ class MessageRepository @Inject constructor(
                 .findFirst()
 
         realm.executeTransaction { conversation?.archived = true }
+        realm.close()
+    }
 
+    fun markUnarchived(threadId: Long) {
+        val realm = Realm.getDefaultInstance()
+        val conversation = realm.where(Conversation::class.java)
+                .equalTo("id", threadId)
+                .equalTo("archived", true)
+                .findFirst()
+
+        realm.executeTransaction { conversation?.archived = false }
         realm.close()
     }
 

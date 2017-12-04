@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/call"
         android:icon="@drawable/ic_call_black_24dp"
         android:title="@string/menu_call"
         android:visible="false"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/archive"
+        android:title="@string/menu_archive"
+        android:visible="false"
+        app:showAsAction="never" />
+
 </menu>
