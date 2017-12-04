@@ -19,6 +19,16 @@
     <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
     <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
     <string name="settings_theme_title">Theme</string>
+    <string name="settings_dark_title">Dark mode</string>
+    <string name="settings_auto_emoji_title">Automatic emoji</string>
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_vibration_title">Vibration</string>
+    <string name="settings_ringtone_title">Ringtone</string>
+    <string name="settings_delivery_title">Delivery confirmations</string>
+    <string name="settings_split_title">Split long SMS</string>
+    <string name="settings_unicode_title">Strip unicode</string>
+    <string name="settings_mms_title">MMS enabled</string>
+    <string name="settings_mms_size_title">Max MMS attachment size</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
 
