@@ -1,6 +1,5 @@
 package com.moez.QKSMS.common.util
 
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -10,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ThemeManager @Inject constructor(prefs: RxSharedPreferences) {
+class ThemeManager @Inject constructor(prefs: Preferences) {
 
     val color: Observable<Int>
 
@@ -23,7 +22,7 @@ class ThemeManager @Inject constructor(prefs: RxSharedPreferences) {
     init {
         val colorSubject: Subject<Int> = BehaviorSubject.createDefault(0xFF008389.toInt())
 
-        prefs.getInteger("theme").asObservable().subscribe {
+        prefs.theme.asObservable().subscribe {
             colorSubject.onNext(it)
         }
 

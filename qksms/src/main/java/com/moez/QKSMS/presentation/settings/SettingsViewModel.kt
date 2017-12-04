@@ -3,9 +3,9 @@ package com.moez.QKSMS.presentation.settings
 import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.AppComponentManager
+import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.domain.interactor.FullSync
 import com.moez.QKSMS.presentation.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
 
     @Inject lateinit var context: Context
-    @Inject lateinit var prefs: RxSharedPreferences
+    @Inject lateinit var prefs: Preferences
     @Inject lateinit var fullSync: FullSync
 
     init {
@@ -23,7 +23,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
         disposables += fullSync
 
-        disposables += prefs.getBoolean("defaultSms")
+        disposables += prefs.defaultSms
                 .asObservable()
                 .subscribe { isDefaultSmsApp ->
                     newState { it.copy(isDefaultSmsApp = isDefaultSmsApp) }
@@ -59,7 +59,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         }
 
         intents += view.themeSelectedIntent.subscribe { color ->
-            prefs.getInteger("theme").set(color)
+            prefs.theme.set(color)
             newState { it.copy(selectingTheme = false) }
         }
     }
