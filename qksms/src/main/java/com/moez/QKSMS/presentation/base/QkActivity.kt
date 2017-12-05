@@ -45,6 +45,15 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         }
     }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+
+        disposables += colors.background
+                .doOnNext { color -> window.statusBarColor = color }
+                .doOnNext { color -> toolbar?.setBackgroundColor(color) }
+                .subscribe()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()

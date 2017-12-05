@@ -10,6 +10,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.presentation.base.QkActivity
 import com.moez.QKSMS.presentation.view.PreferenceView
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
@@ -58,6 +59,9 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         setTitle(R.string.title_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
+
+        disposables += colors.background
+                .subscribe { color -> window.decorView.setBackgroundColor(color) }
 
         // Listen to clicks for all of the preferences
         (0 until preferences.childCount)

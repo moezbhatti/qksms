@@ -66,6 +66,11 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
 
+        disposables += colors.background
+                .doOnNext { color -> window.decorView.setBackgroundColor(color) }
+                .doOnNext { color -> drawer.setBackgroundColor(color) }
+                .subscribe()
+
         val states = arrayOf(
                 intArrayOf(android.R.attr.state_selected),
                 intArrayOf(-android.R.attr.state_selected))
