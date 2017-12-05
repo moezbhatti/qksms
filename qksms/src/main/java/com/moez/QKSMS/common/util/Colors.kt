@@ -25,6 +25,18 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
             .map { dark -> if (dark) R.color.backgroundDark else R.color.backgroundLight }
             .map { res -> context.resources.getColor(res) }
 
+    val textPrimary: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.color.textPrimaryLight else R.color.textPrimary }
+            .map { res -> context.resources.getColor(res) }
+
+    val textSecondary: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.color.textSecondaryLight else R.color.textSecondary }
+            .map { res -> context.resources.getColor(res) }
+
+    val textTertiary: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.color.textTertiaryLight else R.color.textTertiary }
+            .map { res -> context.resources.getColor(res) }
+
     val bubble: Observable<Int> = prefs.dark.asObservable()
             .map { dark -> if (dark) R.color.bubbleDark else R.color.bubbleLight }
             .map { res -> context.resources.getColor(res) }
@@ -44,9 +56,5 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
     val switchTrackDisabled: Observable<Int> = prefs.dark.asObservable()
             .map { dark -> if (dark) R.color.switch_track_disabled_dark else R.color.switch_track_disabled_light }
             .map { res -> context.resources.getColor(res) }
-
-    val textPrimary = 0xFF49555F.toInt()
-    val textSecondary = 0xFF70808D.toInt()
-    val textTertiary = 0xFFB7B9C0.toInt()
 
 }

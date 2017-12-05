@@ -18,6 +18,7 @@ import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.presentation.base.QkActivity
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -76,8 +77,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                 intArrayOf(android.R.attr.state_enabled),
                 intArrayOf(-android.R.attr.state_enabled))
 
-        disposables += colors.theme
-                .map { color -> ColorStateList(states, intArrayOf(color, colors.textTertiary)) }
+        disposables += Observables
+                .combineLatest(colors.theme, colors.textTertiary, { theme, textTertiary ->
+                    ColorStateList(states, intArrayOf(theme, textTertiary))
+                })
                 .subscribe { tintList -> send.imageTintList = tintList }
 
         disposables += colors.background
