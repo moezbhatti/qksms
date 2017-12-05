@@ -1,10 +1,11 @@
 package com.moez.QKSMS.presentation.main
 
-import android.support.v7.widget.RecyclerView
+import com.moez.QKSMS.data.model.ConversationMessagePair
 
 data class MainState(
         val page: MainPage = MainPage.INBOX,
-        val adapter: RecyclerView.Adapter<*>? = null,
+        val conversations: List<ConversationMessagePair> = ArrayList(),
+        val archivedConversations: List<ConversationMessagePair> = ArrayList(),
         val refreshing: Boolean = false,
         val drawerOpen: Boolean = false
 )

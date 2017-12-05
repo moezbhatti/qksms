@@ -19,9 +19,12 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -41,7 +44,8 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override val scheduledIntent by lazy { scheduled.clicks() }
     override val blockedIntent by lazy { blocked.clicks() }
     override val settingsIntent by lazy { settings.clicks() }
-    override val conversationSwipedIntent by lazy { itemTouchCallback.swipes }
+    override val deleteConversationIntent: Subject<Conversation> = PublishSubject.create()
+    override val archiveConversationIntent by lazy { itemTouchCallback.swipes }
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
 
@@ -56,7 +60,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         requestPermissions()
         viewModel.bindView(this)
 
-        conversationList.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
@@ -96,9 +100,30 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     }
 
     override fun render(state: MainState) {
-        if (conversationList.adapter != state.adapter) {
-            conversationList.adapter = state.adapter
-            itemTouchHelper.attachToRecyclerView(if (state.page == MainPage.INBOX) conversationList else null)
+        when (state.page) {
+            MainPage.INBOX -> {
+                if (recyclerView.adapter !is ConversationsAdapter) recyclerView.adapter = ConversationsAdapter()
+                val adapter = recyclerView.adapter as ConversationsAdapter
+                if (adapter.data != state.conversations) adapter.data = state.conversations
+                itemTouchHelper.attachToRecyclerView(recyclerView)
+            }
+
+            MainPage.ARCHIVED -> {
+                if (recyclerView.adapter !is ConversationsAdapter) recyclerView.adapter = ConversationsAdapter()
+                val adapter = recyclerView.adapter as ConversationsAdapter
+                if (adapter.data != state.archivedConversations) adapter.data = state.archivedConversations
+                itemTouchHelper.attachToRecyclerView(null)
+            }
+
+            MainPage.SCHEDULED -> {
+                recyclerView.adapter = null
+                itemTouchHelper.attachToRecyclerView(null)
+            }
+
+            MainPage.BLOCKED -> {
+                recyclerView.adapter = null
+                itemTouchHelper.attachToRecyclerView(null)
+            }
         }
 
         inbox.isSelected = state.page == MainPage.INBOX

@@ -20,7 +20,7 @@
             android:layout_weight="1">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/conversationList"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false"
@@ -42,7 +42,7 @@
                 android:layout_margin="16dp"
                 android:src="@drawable/ic_add_black_24dp"
                 android:tint="@color/white"
-                app:layout_anchor="@+id/conversationList"
+                app:layout_anchor="@+id/recyclerView"
                 app:layout_anchorGravity="bottom|right|end"
                 tools:backgroundTint="@color/tools_theme" />
 

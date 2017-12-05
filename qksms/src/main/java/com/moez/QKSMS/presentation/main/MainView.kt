@@ -1,8 +1,9 @@
 package com.moez.QKSMS.presentation.main
 
+import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.presentation.base.QkView
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 
 interface MainView : QkView<MainState> {
 
@@ -13,6 +14,7 @@ interface MainView : QkView<MainState> {
     val scheduledIntent: Observable<Unit>
     val blockedIntent: Observable<Unit>
     val settingsIntent: Observable<Unit>
-    val conversationSwipedIntent: PublishSubject<Int>
+    val deleteConversationIntent: Subject<Conversation>
+    val archiveConversationIntent: Subject<Int>
 
 }
