@@ -10,10 +10,12 @@
     <color name="textSecondaryLight">#ccffffff</color>
     <color name="textTertiaryLight">#80ffffff</color>
 
-    <color name="bubbleLight">#F4F4F4</color>
+    <color name="bubbleLight">#FFFFFF</color>
+    <color name="bubbleDark">#333333</color>
 
     <color name="backgroundLight">#F2F2F2</color>
     <color name="backgroundDark">#212121</color>
+
     <color name="statusLight">#F1F1F1</color>
 
     <color name="list_separator">#F2F2F2</color>

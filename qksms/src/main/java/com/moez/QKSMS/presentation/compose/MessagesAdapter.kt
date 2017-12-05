@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
-import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPadding
@@ -54,7 +54,8 @@ class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, tr
         when (viewType) {
             VIEWTYPE_ME -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
-                view.body.setBackgroundTint(colors.bubbleColor)
+                disposables += colors.bubble
+                        .subscribe { color -> view.body.setBackgroundTint(color) }
             }
             else -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
