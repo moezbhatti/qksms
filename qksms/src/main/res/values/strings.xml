@@ -48,6 +48,10 @@
     <string name="toast_archived">Archived</string>
     <string name="toast_unarchived">Moved to inbox</string>
 
+    <string-array name="conversation_options">
+        <item>Delete</item>
+    </string-array>
+
     <string-array name="message_options">
         <item>Copy text</item>
         <item>Forward</item>

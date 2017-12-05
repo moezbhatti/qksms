@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.data.model.ConversationMessagePair
@@ -16,22 +15,22 @@ import com.moez.QKSMS.presentation.base.QkAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
-class ConversationsAdapter : QkAdapter<ConversationMessagePair>() {
+class ConversationsAdapter @Inject constructor(
+        val context: Context,
+        val navigator: Navigator,
+        val messageRepo: MessageRepository,
+        val dateFormatter: DateFormatter,
+        val colors: Colors
+) : QkAdapter<ConversationMessagePair>() {
 
-    @Inject lateinit var context: Context
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var colors: Colors
+    val longClicks: Subject<Long> = PublishSubject.create<Long>()
 
     private val disposables = CompositeDisposable()
-
-    init {
-        appComponent.inject(this)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
         val layoutRes = when (viewType) {
@@ -61,6 +60,7 @@ class ConversationsAdapter : QkAdapter<ConversationMessagePair>() {
         val view = viewHolder.itemView
 
         RxView.clicks(view).subscribe { navigator.showConversation(message.threadId) }
+        RxView.longClicks(view).subscribe { longClicks.onNext(conversation.id) }
 
         view.avatars.contacts = conversation.contacts
         view.title.text = conversation.getTitle()

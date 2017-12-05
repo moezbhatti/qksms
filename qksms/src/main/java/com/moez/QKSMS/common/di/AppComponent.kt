@@ -24,7 +24,6 @@ interface AppComponent {
     fun inject(activity: ComposeActivity)
     fun inject(activity: SettingsActivity)
 
-    fun inject(adapter: ConversationsAdapter)
     fun inject(adapter: MessagesAdapter)
 
     fun inject(receiver: DefaultSmsChangedReceiver)

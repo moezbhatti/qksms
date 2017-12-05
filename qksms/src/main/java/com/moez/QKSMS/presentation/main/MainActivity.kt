@@ -1,6 +1,7 @@
 package com.moez.QKSMS.presentation.main
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.StateListDrawable
@@ -19,7 +20,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.base.QkActivity
 import io.reactivex.rxkotlin.plusAssign
@@ -34,6 +34,7 @@ import javax.inject.Inject
 class MainActivity : QkActivity<MainViewModel>(), MainView {
 
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var conversationsAdapter: ConversationsAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
 
     override val viewModelClass = MainViewModel::class
@@ -44,7 +45,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override val scheduledIntent by lazy { scheduled.clicks() }
     override val blockedIntent by lazy { blocked.clicks() }
     override val settingsIntent by lazy { settings.clicks() }
-    override val deleteConversationIntent: Subject<Conversation> = PublishSubject.create()
+    override val deleteConversationIntent: Subject<Long> = PublishSubject.create()
     override val archiveConversationIntent by lazy { itemTouchCallback.swipes }
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
@@ -90,6 +91,16 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         archived.background = rowBackground()
         scheduled.background = rowBackground()
         blocked.background = rowBackground()
+
+        conversationsAdapter.longClicks.subscribe { threadId ->
+            AlertDialog.Builder(this)
+                    .setItems(R.array.conversation_options, { _, row ->
+                        when (row) {
+                            0 -> deleteConversationIntent.onNext(threadId)
+                        }
+                    })
+                    .show()
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -102,16 +113,14 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override fun render(state: MainState) {
         when (state.page) {
             MainPage.INBOX -> {
-                if (recyclerView.adapter !is ConversationsAdapter) recyclerView.adapter = ConversationsAdapter()
-                val adapter = recyclerView.adapter as ConversationsAdapter
-                if (adapter.data != state.conversations) adapter.data = state.conversations
+                if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                if (conversationsAdapter.data != state.conversations) conversationsAdapter.data = state.conversations
                 itemTouchHelper.attachToRecyclerView(recyclerView)
             }
 
             MainPage.ARCHIVED -> {
-                if (recyclerView.adapter !is ConversationsAdapter) recyclerView.adapter = ConversationsAdapter()
-                val adapter = recyclerView.adapter as ConversationsAdapter
-                if (adapter.data != state.archivedConversations) adapter.data = state.archivedConversations
+                if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                if (conversationsAdapter.data != state.archivedConversations) conversationsAdapter.data = state.archivedConversations
                 itemTouchHelper.attachToRecyclerView(null)
             }
 

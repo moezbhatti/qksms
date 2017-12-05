@@ -4,6 +4,7 @@ import android.content.Context
 import android.provider.Telephony
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.domain.interactor.DeleteConversation
 import com.moez.QKSMS.domain.interactor.MarkAllSeen
 import com.moez.QKSMS.domain.interactor.MarkArchived
 import com.moez.QKSMS.domain.interactor.PartialSync
@@ -19,6 +20,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState(page = MainPage
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var markAllSeen: MarkAllSeen
+    @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var partialSync: PartialSync
 
@@ -75,10 +77,13 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState(page = MainPage
             newState { it.copy(drawerOpen = false) }
         }
 
+        intents += view.deleteConversationIntent
+                .subscribe { threadId -> deleteConversation.execute(threadId) }
+
         intents += view.archiveConversationIntent
                 .withLatestFrom(state, { position, state -> state.conversations[position] })
                 .map { pair -> pair.conversation.id }
-                .subscribe { threadId -> markArchived.execute(threadId)}
+                .subscribe { threadId -> markArchived.execute(threadId) }
     }
 
 }
