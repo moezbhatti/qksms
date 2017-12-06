@@ -26,7 +26,6 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
     }
 
     protected val menu: Subject<Menu> = BehaviorSubject.create()
-
     protected var disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,12 +49,9 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         }).subscribe()
 
         disposables += colors.textTertiary
-                .subscribe { color ->
-                    toolbar?.navigationIcon?.run {
-                        setTint(color)
-                        toolbar.navigationIcon = this
-                    }
-                }
+                .doOnNext { color -> toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(color) } }
+                .doOnNext { color -> toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(color) } }
+                .subscribe()
 
         disposables += colors.background
                 .doOnNext { color -> window.statusBarColor = color }

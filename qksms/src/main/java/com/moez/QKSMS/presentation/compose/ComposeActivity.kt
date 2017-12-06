@@ -109,19 +109,17 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         contacts.setVisible(state.contactsVisible)
         composeBar.setVisible(!state.contactsVisible)
 
-        menu.take(1).subscribe { menu ->
-            menu.findItem(R.id.call)?.run {
-                isVisible = !state.editingMode
-            }
+        toolbar.menu.findItem(R.id.call)?.run {
+            isVisible = !state.editingMode
+        }
 
-            menu.findItem(R.id.archive)?.run {
-                isVisible = !state.editingMode
-                setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
-            }
+        toolbar.menu.findItem(R.id.archive)?.run {
+            isVisible = !state.editingMode
+            setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
+        }
 
-            menu.findItem(R.id.delete)?.run {
-                isVisible = !state.editingMode
-            }
+        toolbar.menu.findItem(R.id.delete)?.run {
+            isVisible = !state.editingMode
         }
 
         if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
