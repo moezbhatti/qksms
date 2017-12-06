@@ -12,6 +12,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
+import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
@@ -90,6 +91,9 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
         disposables += colors.composeBackground
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
+
+        disposables += colors.bubble
+                .subscribe { color -> message.setBackgroundTint(color) }
 
         window.callback = ComposeWindowCallback(window.callback, this)
     }
