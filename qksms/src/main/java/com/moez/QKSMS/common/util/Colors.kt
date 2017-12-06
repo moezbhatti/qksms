@@ -26,15 +26,30 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
             .map { res -> context.resources.getColor(res) }
 
     val textPrimary: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.textPrimaryLight else R.color.textPrimary }
+            .map { dark -> if (dark) R.color.textPrimaryDark else R.color.textPrimary }
             .map { res -> context.resources.getColor(res) }
 
     val textSecondary: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.textSecondaryLight else R.color.textSecondary }
+            .map { dark -> if (dark) R.color.textSecondaryDark else R.color.textSecondary }
             .map { res -> context.resources.getColor(res) }
 
     val textTertiary: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.textTertiaryLight else R.color.textTertiary }
+            .map { dark -> if (dark) R.color.textTertiaryDark else R.color.textTertiary }
+            .map { res -> context.resources.getColor(res) }
+
+    // TODO make this result depend on the theme color
+    val textPrimaryOnTheme: Observable<Int> = prefs.theme.asObservable()
+            .map { theme -> R.color.textPrimaryDark }
+            .map { res -> context.resources.getColor(res) }
+
+    // TODO make this result depend on the theme color
+    val textSecondaryOnTheme: Observable<Int> = prefs.dark.asObservable()
+            .map { theme -> R.color.textSecondaryDark }
+            .map { res -> context.resources.getColor(res) }
+
+    // TODO make this result depend on the theme color
+    val textTertiaryOnTheme: Observable<Int> = prefs.dark.asObservable()
+            .map { theme -> R.color.textTertiaryDark }
             .map { res -> context.resources.getColor(res) }
 
     val bubble: Observable<Int> = prefs.dark.asObservable()
@@ -42,19 +57,19 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
             .map { res -> context.resources.getColor(res) }
 
     val switchThumbEnabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switch_thumb_enabled_dark else R.color.switch_thumb_enabled_light }
+            .map { dark -> if (dark) R.color.switchThumbEnabledDark else R.color.switchThumbEnabledLight }
             .map { res -> context.resources.getColor(res) }
 
     val switchThumbDisabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switch_thumb_disabled_dark else R.color.switch_thumb_disabled_light }
+            .map { dark -> if (dark) R.color.switchThumbDisabledDark else R.color.switchThumbDisabledLight }
             .map { res -> context.resources.getColor(res) }
 
     val switchTrackEnabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switch_track_enabled_dark else R.color.switch_track_enabled_light }
+            .map { dark -> if (dark) R.color.switchTrackEnabledDark else R.color.switchTrackEnabledLight }
             .map { res -> context.resources.getColor(res) }
 
     val switchTrackDisabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switch_track_disabled_dark else R.color.switch_track_disabled_light }
+            .map { dark -> if (dark) R.color.switchTrackDisabledDark else R.color.switchTrackDisabledLight }
             .map { res -> context.resources.getColor(res) }
 
 }

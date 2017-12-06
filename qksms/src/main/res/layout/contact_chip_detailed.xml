@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/rounded_rectangle_2dp"
-        android:backgroundTint="@color/textSecondary"
         android:elevation="8dp"
         android:gravity="center_vertical">
 
@@ -27,27 +27,25 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
+            <com.moez.QKSMS.presentation.view.QkTextView
                 android:id="@+id/name"
+                style="@style/TextPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
-                android:textColor="@color/textPrimaryLight"
-                android:textSize="16sp"
                 tools:text="Moez Bhatti" />
 
-            <TextView
+            <com.moez.QKSMS.presentation.view.QkTextView
                 android:id="@+id/info"
+                style="@style/TextSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
-                android:textColor="@color/textSecondaryLight"
-                android:textSize="14sp"
                 tools:text="(123) 456-7890" />
 
         </LinearLayout>

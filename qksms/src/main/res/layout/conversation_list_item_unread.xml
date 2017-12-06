@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <com.moez.QKSMS.presentation.view.QkTextView
                 android:id="@+id/title"
                 style="@style/TextPrimary"
                 android:layout_width="0dp"
@@ -38,18 +39,18 @@
                 android:textStyle="bold"
                 tools:text="Moez Bhatti" />
 
-            <TextView
+            <com.moez.QKSMS.presentation.view.QkTextView
                 android:id="@+id/date"
                 style="@style/TextTertiary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textPrimary"
                 android:textStyle="bold"
+                app:textColor="primary"
                 tools:text="Oct 11" />
 
         </LinearLayout>
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             android:id="@+id/snippet"
             style="@style/TextSecondary"
             android:layout_width="wrap_content"
@@ -58,8 +59,8 @@
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="3"
-            android:textColor="@color/textPrimary"
             android:textStyle="bold"
+            app:textColor="primary"
             tools:text="Hey! How's it going?" />
 
     </LinearLayout>

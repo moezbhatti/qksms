@@ -6,23 +6,21 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/statusLight</item>
     </style>
 
     <style name="TextPrimary">
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:textColorHint">@color/textTertiary</item>
         <item name="android:textSize">16sp</item>
+        <item name="textColor">primary</item>
     </style>
 
     <style name="TextSecondary">
-        <item name="android:textColor">@color/textTertiary</item>
         <item name="android:textSize">14sp</item>
+        <item name="textColor">tertiary</item>
     </style>
 
     <style name="TextTertiary">
-        <item name="android:textColor">@color/textTertiary</item>
         <item name="android:textSize">12sp</item>
+        <item name="textColor">tertiary</item>
     </style>
 
     <style name="DrawerRow">
@@ -39,16 +37,15 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:lines">1</item>
-        <item name="android:textColor">@color/textPrimary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="textColor">primary</item>
     </style>
 
     <style name="DrawerIcon">
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_marginEnd">32dp</item>
-        <item name="android:tint">@color/textSecondary</item>
     </style>
 
 </resources>

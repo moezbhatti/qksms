@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge android:id="@+id/avatar"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@color/tools_theme"
     tools:parentTag="com.moez.QKSMS.presentation.view.AvatarView">
 
-    <TextView
+    <com.moez.QKSMS.presentation.view.QkTextView
         android:id="@+id/initial"
         style="@style/TextPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:textAllCaps="true"
-        android:textColor="@color/textPrimaryLight"
         android:textSize="20sp"
+        app:textColor="primaryOnTheme"
         tools:text="M" />
 
     <ImageView

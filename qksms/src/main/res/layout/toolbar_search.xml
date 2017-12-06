@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="56dp"
@@ -8,7 +9,7 @@
     android:gravity="center_vertical"
     android:minHeight="56dp">
 
-    <EditText
+    <com.moez.QKSMS.presentation.view.QkEditText
         android:id="@+id/toolbarTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,9 +17,9 @@
         android:gravity="left|center_vertical"
         android:maxLines="1"
         android:singleLine="true"
-        android:textColor="@color/textPrimary"
-        android:textColorHint="@color/textTertiary"
         android:textSize="16sp"
+        app:textColor="primary"
+        app:textColorHint="tertiary"
         tools:hint="Search something" />
 
 </android.support.v7.widget.Toolbar>

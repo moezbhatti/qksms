@@ -13,14 +13,14 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             android:id="@+id/titleView"
             style="@style/TextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Default SMS App" />
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             android:id="@+id/summaryView"
             style="@style/TextSecondary"
             android:layout_width="match_parent"

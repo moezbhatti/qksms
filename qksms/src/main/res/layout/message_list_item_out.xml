@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,7 +8,7 @@
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
-    <TextView
+    <com.moez.QKSMS.presentation.view.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="match_parent"
@@ -44,7 +45,6 @@
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
-                android:textColor="@color/textPrimary"
                 tools:backgroundTint="@color/white"
                 tools:text="Hey! How's it going?" />
 
@@ -52,14 +52,14 @@
 
     </LinearLayout>
 
-    <TextView
+    <com.moez.QKSMS.presentation.view.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_marginRight="12dp"
         android:paddingTop="4dp"
-        android:textColor="@color/textTertiary"
+        app:textColor="tertiary"
         tools:text="Sending..." />
 
 </LinearLayout>

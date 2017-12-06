@@ -1,12 +1,11 @@
 package com.moez.QKSMS.presentation.compose
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -34,7 +33,7 @@ class ChipsAdapter(
     }
 
     private val hint: String = context.getString(R.string.title_compose)
-    private val editText: EditText = AppCompatEditText(context)
+    private val editText = View.inflate(context, R.layout.chip_input_list_item, null) as EditText
 
     val chipDeleted: PublishSubject<Contact> = PublishSubject.create<Contact>()
     val textChanges = editText.textChanges()
@@ -48,8 +47,6 @@ class ChipsAdapter(
 
         editText.hint = hint
         editText.textSize = 16f
-        editText.setTextColor(ContextCompat.getColor(context, R.color.textPrimary))
-        editText.setHintTextColor(ContextCompat.getColor(context, R.color.textTertiary))
         editText.setBackgroundResource(android.R.color.transparent)
         editText.inputType = InputType.TYPE_TEXT_VARIATION_FILTER or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         editText.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI

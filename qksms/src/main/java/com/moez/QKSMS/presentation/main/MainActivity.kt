@@ -78,7 +78,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
         val rowBackground = {
             StateListDrawable().apply {
-                addState(intArrayOf(android.R.attr.state_selected), getDrawable(R.color.row_selected))
+                addState(intArrayOf(android.R.attr.state_selected), getDrawable(R.color.rowSelected))
                 addState(intArrayOf(-android.R.attr.state_selected), getDrawable(R.drawable.ripple))
                 mutate()
             }
@@ -96,6 +96,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 .doOnNext { tintList -> archivedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }
                 .doOnNext { tintList -> blockedIcon.imageTintList = tintList }
+                .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
                 .subscribe()
 
         inbox.background = rowBackground()

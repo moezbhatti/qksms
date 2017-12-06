@@ -81,7 +81,9 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                 .combineLatest(colors.theme, colors.textTertiary, { theme, textTertiary ->
                     ColorStateList(states, intArrayOf(theme, textTertiary))
                 })
-                .subscribe { tintList -> send.imageTintList = tintList }
+                .doOnNext { tintList -> attach.imageTintList = tintList }
+                .doOnNext { tintList -> send.imageTintList = tintList }
+                .subscribe()
 
         disposables += colors.background
                 .subscribe { color -> composeBar.setBackgroundColor(color) }

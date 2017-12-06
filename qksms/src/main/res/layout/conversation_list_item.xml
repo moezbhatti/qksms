@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <com.moez.QKSMS.presentation.view.QkTextView
                 android:id="@+id/title"
                 style="@style/TextPrimary"
                 android:layout_width="0dp"
@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 tools:text="Moez Bhatti" />
 
-            <TextView
+            <com.moez.QKSMS.presentation.view.QkTextView
                 android:id="@+id/date"
                 style="@style/TextTertiary"
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
 
         </LinearLayout>
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             android:id="@+id/snippet"
             style="@style/TextSecondary"
             android:layout_width="wrap_content"

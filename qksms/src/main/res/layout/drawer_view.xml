@@ -15,7 +15,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_inbox_black_24dp" />
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_inbox" />
 
@@ -30,7 +30,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_folder_black_24dp" />
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_archived" />
 
@@ -45,7 +45,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_event_black_24dp" />
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_scheduled" />
 
@@ -60,7 +60,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_block_black_24dp" />
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_blocked" />
 
@@ -71,17 +71,18 @@
         android:layout_height="1dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/list_separator" />
+        android:background="@color/listSeparator" />
 
     <LinearLayout
         android:id="@+id/settings"
         style="@style/DrawerRow">
 
         <ImageView
+            android:id="@+id/settingsIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_settings_black_24dp" />
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_settings" />
 

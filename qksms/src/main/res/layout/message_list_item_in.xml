@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/ripple"
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
-    <TextView
+    <com.moez.QKSMS.presentation.view.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="match_parent"
@@ -45,18 +46,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:background="@drawable/message_only"
-                android:backgroundTint="@color/bubbleLight"
                 android:gravity="start|center_vertical"
                 android:minHeight="36dp"
                 android:paddingBottom="8dp"
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
-                android:textColor="@color/textPrimaryLight"
+                app:textColor="primaryOnTheme"
                 tools:backgroundTint="@color/tools_theme"
                 tools:text="@tools:sample/lorem/random" />
 
-            <TextView
+            <com.moez.QKSMS.presentation.view.QkTextView
                 android:id="@+id/status"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

@@ -6,9 +6,9 @@
     <color name="textSecondary">#70808D</color>
     <color name="textTertiary">#B7B9C0</color>
 
-    <color name="textPrimaryLight">#FFFFFFFF</color>
-    <color name="textSecondaryLight">#ccffffff</color>
-    <color name="textTertiaryLight">#80ffffff</color>
+    <color name="textPrimaryDark">#FFFFFFFF</color>
+    <color name="textSecondaryDark">#ccffffff</color>
+    <color name="textTertiaryDark">#80ffffff</color>
 
     <color name="bubbleLight">#FFFFFF</color>
     <color name="bubbleDark">#333333</color>
@@ -16,19 +16,20 @@
     <color name="backgroundLight">#F2F2F2</color>
     <color name="backgroundDark">#212121</color>
 
-    <color name="statusLight">#F1F1F1</color>
+    <color name="listSeparator">#F2F2F2</color>
+    <color name="rowSelected">#F5F5F5</color>
 
-    <color name="list_separator">#F2F2F2</color>
-    <color name="row_selected">#F5F5F5</color>
+    <color name="switchThumbEnabledLight">#ECECEC</color>
+    <color name="switchThumbEnabledDark">#B9B9B9</color>
 
-    <color name="switch_thumb_enabled_light">#ECECEC</color>
-    <color name="switch_track_enabled_light">#A6A6A6</color>
-    <color name="switch_thumb_disabled_light">#B9B9B9</color>
-    <color name="switch_track_disabled_light">#D6D6D6</color>
-    <color name="switch_thumb_enabled_dark">#B9B9B9</color>
-    <color name="switch_track_enabled_dark">#646464</color>
-    <color name="switch_thumb_disabled_dark">#595959</color>
-    <color name="switch_track_disabled_dark">#383838</color>
+    <color name="switchTrackEnabledLight">#A6A6A6</color>
+    <color name="switchTrackEnabledDark">#646464</color>
+
+    <color name="switchThumbDisabledLight">#B9B9B9</color>
+    <color name="switchThumbDisabledDark">#595959</color>
+
+    <color name="switchTrackDisabledLight">#D6D6D6</color>
+    <color name="switchTrackDisabledDark">#383838</color>
 
     <!-- This colour should only ever be used for attrs with the tools tag -->
     <color name="tools_theme">#008389</color>

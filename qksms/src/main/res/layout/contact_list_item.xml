@@ -21,18 +21,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             android:id="@+id/name"
+            style="@style/TextPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textPrimary"
             tools:text="Moez Bhatti" />
 
-        <TextView
+        <com.moez.QKSMS.presentation.view.QkTextView
             android:id="@+id/address"
+            style="@style/TextSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textTertiary"
             tools:text="(123) 456-7890" />
 
     </LinearLayout>
