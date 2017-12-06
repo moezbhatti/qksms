@@ -33,6 +33,8 @@ import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class QKDialog extends DialogFragment {
     private final String TAG = "QKDialog";
@@ -51,6 +53,8 @@ public class QKDialog extends DialogFragment {
     private QKTextView mMessageView;
 
     private LinearLayout mCustomPanel;
+
+    private ArrayAdapter mAdapter;
 
     private boolean mCustomViewEnabled;
     private View mCustomView;
@@ -257,9 +261,9 @@ public class QKDialog extends DialogFragment {
     }
 
     public QKDialog setItems(String[] items, final OnItemClickListener onClickListener) {
-        ArrayAdapter adapter = new ArrayAdapter<>(mContext, R.layout.list_item_simple, items);
+        mAdapter = new ArrayAdapter<>(mContext, R.layout.list_item_simple, items);
         ListView listView = new ListView(mContext);
-        listView.setAdapter(adapter);
+        listView.setAdapter(mAdapter);
         listView.setDivider(null);
         listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
         listView.setOnItemClickListener(new OnItemClickListener() {
@@ -272,6 +276,35 @@ public class QKDialog extends DialogFragment {
             }
         });
         return setCustomView(listView);
+    }
+
+    public QKDialog setItems(boolean dismiss,
+                             List<String> items,
+                             final OnItemClickListener onClickListener) {
+        mAdapter = new ArrayAdapter<>(mContext, R.layout.list_item_simple, items);
+        ListView listView = new ListView(mContext);
+        listView.setAdapter(mAdapter);
+        listView.setDivider(null);
+        listView.setPadding(0, Units.dpToPx(mContext, 8), 0, Units.dpToPx(mContext, 8));
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent,
+                                    View view,
+                                    int position,
+                                    long id) {
+                if (onClickListener != null) {
+                    onClickListener.onItemClick(parent, view, position, id);
+                    if (dismiss)
+                        dismiss();
+                }
+            }
+        });
+        return setCustomView(listView);
+    }
+
+    public ArrayAdapter getListAdapter() {
+
+        return mAdapter;
     }
 
     public QKDialog setDoubleLineItems(int titles, int bodies, final OnItemClickListener onClickListener) {
@@ -342,6 +375,14 @@ public class QKDialog extends DialogFragment {
     }
 
     public QKDialog setPositiveButton(String text, final OnClickListener onClickListener) {
+        return setPositiveButton(true, text, onClickListener);
+    }
+
+    public QKDialog setPositiveButton(boolean dismiss, int title, final OnClickListener onClickListener) {
+        return setPositiveButton(dismiss, mResources.getString(title), onClickListener);
+    }
+
+    public QKDialog setPositiveButton(boolean dismiss, String text, final OnClickListener onClickListener) {
         mPositiveButtonEnabled = true;
         mPositiveButtonText = text;
         mPositiveButtonClickListener = new OnClickListener() {
@@ -349,8 +390,9 @@ public class QKDialog extends DialogFragment {
             public void onClick(View v) {
                 if (onClickListener != null) {
                     onClickListener.onClick(v);
+                    if (dismiss)
+                        dismiss();
                 }
-                dismiss();
             }
         };
         return this;
@@ -476,3 +518,4 @@ public class QKDialog extends DialogFragment {
         super.show(manager, tag);
     }
 }
+

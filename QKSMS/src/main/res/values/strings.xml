@@ -182,6 +182,7 @@
     <string name="pref_blocked_conversations_summary">Long-press on a conversation and block to move to blocked inbox and stop notifications</string>
     <string name="pref_block_future">Block future messages</string>
     <string name="pref_block_future_summary">Add additional phone numbers to block</string>
+
     <string name="pref_should_i_answer">Should I Answer? Integration</string>
     <string name="pref_should_i_answer_summary">Automatically delete incoming messages from numbers which are blocked through Should I Answer?</string>
     <string name="pref_mobile_only">Mobile numbers</string>
@@ -751,6 +752,30 @@
     <string name="date_just_now">Just now</string>
     <string name="compose_loading_attachment">Loading attachment</string>
     <string name="hint_no_messages">No messages yet.\nClick the + to send one!</string>
+
+
+    <string name="title_block_pattern">Block a pattern</string>
+    <string name="title_unblock_pattern">Unblock regex pattern</string>
+    <string name="pref_block_pattern">Patterns (Advanced!)</string>
+    <string name="pref_block_pattern_summary">Add more regex patterns to blacklist. Follows java regex rules. Click on an item to remove (advanced users only!)</string>
+    <string name="invalid_pattern">Invalid pattern! pattern must follow java regex rules.</string>
+    <string name="title_block_word">Blacklist a word</string>
+    <string name="title_unblock_word">Un-Blacklist word</string>
+    <string name="title_block_word_extreme">Blacklist a word (Extreme)</string>
+    <string name="title_unblock_word_extreme">Un-Blacklist word (Extreme)</string>
+    <string name="pref_block_word">Blacklist Words (Safe)</string>
+    <string name="pref_block_word_summary">Add more words to blacklist. Click on an item to remove.</string>
+    <string name="pref_block_word_extreme">Blacklist Words (Extreme)</string>
+    <string name="pref_block_word_extreme_summary">Add more words to blacklist. does NOT check word boundary.</string>
+    <string name="pref_block_skip_contact">Never block contacts</string>
+    <string name="pref_block_skip_contact_summary">Never block messages when they are received from known contacts</string>
+
+
+    <string name="title_block_number_prefix">Block a number prefix</string>
+    <string name="title_unblock_number_prefix">Unblock number prefix</string>
+    <string name="pref_block_number_prefix">Block number prefix</string>
+    <string name="pref_block_number_prefix_summary">Add more number prefixes to blacklist. Click on an item to remove. Any message received from a number whose prefix is in this list is blocked.</string>
+    <string name="invalid_number_prefix">Invalid number prefix! number prefix was added to the list but does not seem to be a valid number.</string>
 
     <string-array name="resend_menu">
         <item>Resend</item>
