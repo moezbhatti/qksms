@@ -25,11 +25,10 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.toolbar_chips.*
+import javax.inject.Inject
 
 
 class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
-
-    private lateinit var layoutManager: LinearLayoutManager
 
     override val viewModelClass = ComposeViewModel::class
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
@@ -46,9 +45,11 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val attachIntent by lazy { attach.clicks() }
     override val sendIntent by lazy { send.clicks() }
 
-    private val chipsAdapter by lazy { ChipsAdapter(this, chips) }
-    private val contactsAdapter by lazy { ContactAdapter(this) }
-    private val messageAdapter by lazy { MessagesAdapter() }
+    private val layoutManager by lazy { LinearLayoutManager(this).apply { stackFromEnd = true } }
+
+    @Inject lateinit var chipsAdapter: ChipsAdapter
+    @Inject lateinit var contactsAdapter: ContactAdapter
+    @Inject lateinit var messageAdapter: MessagesAdapter
 
     init {
         appComponent.inject(this)
@@ -60,6 +61,8 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
 
+        chipsAdapter.view = chips
+
         chips.itemAnimator = null
         chips.layoutManager = FlexboxLayoutManager(this)
         chips.adapter = chipsAdapter
@@ -70,7 +73,6 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
         setupMessagesAdapter()
 
-        layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
         messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
 

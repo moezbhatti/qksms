@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.dpToPx
@@ -26,25 +25,21 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MessagesAdapter : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
+class MessagesAdapter @Inject constructor(
+        private val context: Context,
+        private val colors: Colors,
+        private val dateFormatter: DateFormatter)
+    : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
         private val VIEWTYPE_ME = -1
         private val TIMESTAMP_THRESHOLD = 60
     }
 
-    @Inject lateinit var context: Context
-    @Inject lateinit var colors: Colors
-    @Inject lateinit var dateFormatter: DateFormatter
-
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
 
     private val people = ArrayList<String>()
     private val disposables = CompositeDisposable()
-
-    init {
-        appComponent.inject(this)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
 

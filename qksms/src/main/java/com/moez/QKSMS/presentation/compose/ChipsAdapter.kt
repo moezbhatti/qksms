@@ -21,11 +21,9 @@ import com.moez.QKSMS.presentation.base.QkAdapter
 import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
+import javax.inject.Inject
 
-class ChipsAdapter(
-        private val context: Context,
-        private val view: RecyclerView)
-    : QkAdapter<Contact>() {
+class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter<Contact>() {
 
     companion object {
         private val TYPE_EDIT_TEXT = 0
@@ -35,6 +33,7 @@ class ChipsAdapter(
     private val hint: String = context.getString(R.string.title_compose)
     private val editText = View.inflate(context, R.layout.chip_input_list_item, null) as EditText
 
+    var view: RecyclerView? = null
     val chipDeleted: PublishSubject<Contact> = PublishSubject.create<Contact>()
     val textChanges = editText.textChanges()
 
@@ -98,7 +97,7 @@ class ChipsAdapter(
         val detailedChipView = DetailedChipView(context)
         detailedChipView.setContact(contact)
 
-        val rootView = view.rootView as ViewGroup
+        val rootView = view?.rootView as ViewGroup
 
         val layoutParams = RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,

@@ -4,7 +4,6 @@ import com.moez.QKSMS.common.util.ContactImageLoader
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.compose.DetailedChipView
-import com.moez.QKSMS.presentation.compose.MessagesAdapter
 import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
@@ -15,14 +14,12 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AppModule::class))
+@Component(modules = [(AppModule::class)])
 interface AppComponent {
 
     fun inject(activity: MainActivity)
     fun inject(activity: ComposeActivity)
     fun inject(activity: SettingsActivity)
-
-    fun inject(adapter: MessagesAdapter)
 
     fun inject(receiver: DefaultSmsChangedReceiver)
     fun inject(receiver: SmsReceiver)

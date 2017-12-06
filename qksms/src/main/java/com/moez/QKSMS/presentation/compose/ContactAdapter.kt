@@ -11,8 +11,9 @@ import com.moez.QKSMS.presentation.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.contact_list_item.view.*
+import javax.inject.Inject
 
-class ContactAdapter(private val context: Context) : QkAdapter<Contact>() {
+class ContactAdapter @Inject constructor(private val context: Context) : QkAdapter<Contact>() {
 
     val contactSelected: Subject<Contact> = PublishSubject.create()
 
