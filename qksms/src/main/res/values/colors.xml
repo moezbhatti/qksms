@@ -16,7 +16,9 @@
     <color name="backgroundLight">#F2F2F2</color>
     <color name="backgroundDark">#212121</color>
 
-    <color name="listSeparator">#F2F2F2</color>
+    <color name="separatorLight">#F2F2F2</color>
+    <color name="separatorDark">#333333</color>
+
     <color name="rowSelected">#F5F5F5</color>
 
     <color name="switchThumbEnabledLight">#ECECEC</color>

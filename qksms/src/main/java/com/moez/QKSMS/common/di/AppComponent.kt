@@ -9,10 +9,7 @@ import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
-import com.moez.QKSMS.presentation.view.AvatarView
-import com.moez.QKSMS.presentation.view.QkEditText
-import com.moez.QKSMS.presentation.view.QkSwitch
-import com.moez.QKSMS.presentation.view.QkTextView
+import com.moez.QKSMS.presentation.view.*
 import com.moez.QKSMS.receiver.*
 import dagger.Component
 import javax.inject.Singleton
@@ -39,6 +36,7 @@ interface AppComponent {
     fun inject(view: QkEditText)
     fun inject(view: QkSwitch)
     fun inject(view: QkTextView)
+    fun inject(view: Separator)
 
     fun inject(viewModel: MainViewModel)
     fun inject(viewModel: ComposeViewModel)

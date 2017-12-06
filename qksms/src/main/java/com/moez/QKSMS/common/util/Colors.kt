@@ -25,6 +25,10 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
             .map { dark -> if (dark) R.color.backgroundDark else R.color.backgroundLight }
             .map { res -> context.resources.getColor(res) }
 
+    val separator: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.color.separatorDark else R.color.separatorLight }
+            .map { res -> context.resources.getColor(res) }
+
     val textPrimary: Observable<Int> = prefs.dark.asObservable()
             .map { dark -> if (dark) R.color.textPrimaryDark else R.color.textPrimary }
             .map { res -> context.resources.getColor(res) }

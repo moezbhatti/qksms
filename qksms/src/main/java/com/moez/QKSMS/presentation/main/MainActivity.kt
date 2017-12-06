@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
@@ -76,9 +77,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 intArrayOf(android.R.attr.state_selected),
                 intArrayOf(-android.R.attr.state_selected))
 
-        val rowBackground = {
+        val rowBackground = { separator: Int ->
             StateListDrawable().apply {
-                addState(intArrayOf(android.R.attr.state_selected), getDrawable(R.color.rowSelected))
+                addState(intArrayOf(android.R.attr.state_selected), ColorDrawable(separator))
                 addState(intArrayOf(-android.R.attr.state_selected), getDrawable(R.drawable.ripple))
                 mutate()
             }
@@ -99,10 +100,12 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
                 .subscribe()
 
-        inbox.background = rowBackground()
-        archived.background = rowBackground()
-        scheduled.background = rowBackground()
-        blocked.background = rowBackground()
+        disposables += colors.separator
+                .doOnNext { color -> inbox.background = rowBackground(color) }
+                .doOnNext { color -> archived.background = rowBackground(color) }
+                .doOnNext { color -> scheduled.background = rowBackground(color) }
+                .doOnNext { color -> blocked.background = rowBackground(color) }
+                .subscribe()
 
         conversationsAdapter.longClicks.subscribe { threadId ->
             AlertDialog.Builder(this)

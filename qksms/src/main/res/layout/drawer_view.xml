@@ -66,12 +66,11 @@
 
     </LinearLayout>
 
-    <View
+    <com.moez.QKSMS.presentation.view.Separator
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/listSeparator" />
+        android:layout_marginTop="8dp" />
 
     <LinearLayout
         android:id="@+id/settings"

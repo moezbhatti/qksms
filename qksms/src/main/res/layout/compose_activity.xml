@@ -43,10 +43,9 @@
 
     </FrameLayout>
 
-    <View
+    <com.moez.QKSMS.presentation.view.Separator
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/listSeparator" />
+        android:layout_height="1dp" />
 
     <LinearLayout
         android:id="@+id/composeBar"
