@@ -35,7 +35,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
-    override val menuReadyIntent: Subject<Unit> = PublishSubject.create()
+    override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val callIntent: Subject<Unit> = PublishSubject.create()
     override val archiveIntent: Subject<Unit> = PublishSubject.create()
     override val deleteIntent: Subject<Unit> = PublishSubject.create()
@@ -109,17 +109,19 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         contacts.setVisible(state.contactsVisible)
         composeBar.setVisible(!state.contactsVisible)
 
-        menu?.findItem(R.id.call)?.run {
-            isVisible = !state.editingMode
-        }
+        menu.take(1).subscribe { menu ->
+            menu.findItem(R.id.call)?.run {
+                isVisible = !state.editingMode
+            }
 
-        menu?.findItem(R.id.archive)?.run {
-            isVisible = !state.editingMode
-            setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
-        }
+            menu.findItem(R.id.archive)?.run {
+                isVisible = !state.editingMode
+                setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
+            }
 
-        menu?.findItem(R.id.delete)?.run {
-            isVisible = !state.editingMode
+            menu.findItem(R.id.delete)?.run {
+                isVisible = !state.editingMode
+            }
         }
 
         if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
@@ -176,9 +178,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.compose, menu)
-        val result = super.onCreateOptionsMenu(menu)
-        menuReadyIntent.onNext(Unit)
-        return result
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

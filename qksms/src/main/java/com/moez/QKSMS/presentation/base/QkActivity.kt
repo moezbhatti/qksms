@@ -1,7 +1,6 @@
 package com.moez.QKSMS.presentation.base
 
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -9,7 +8,10 @@ import android.view.MenuItem
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.presentation.Navigator
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import kotlin.reflect.KClass
@@ -23,30 +25,37 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         ViewModelProviders.of(this, Navigator.ViewModelFactory(intent))[viewModelClass.java]
     }
 
-    protected var menu: Menu? = null
+    protected val menu: Subject<Menu> = BehaviorSubject.create()
+
     protected var disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onNewIntent(intent)
-
-        // Update the colours of the menu items
-        disposables += colors.theme.subscribe { color ->
-            menu?.let { menu ->
-                (0 until menu.size())
-                        .map { position -> menu.getItem(position) }
-                        .forEach { menuItem ->
-                            menuItem.icon?.let { newIcon ->
-                                newIcon.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-                                menuItem.icon = newIcon
-                            }
-                        }
-            }
-        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
+
+        // Update the colours of the menu items
+        disposables += Observables.combineLatest(menu, colors.theme, { menu, color ->
+            (0 until menu.size())
+                    .map { position -> menu.getItem(position) }
+                    .forEach { menuItem ->
+                        menuItem?.icon?.run {
+                            setTint(color)
+                            menuItem.icon = this
+                        }
+                    }
+        }).subscribe()
+
+        disposables += colors.textTertiary
+                .subscribe { color ->
+                    toolbar?.navigationIcon?.run {
+                        setTint(color)
+                        toolbar.navigationIcon = this
+                    }
+                }
 
         disposables += colors.background
                 .doOnNext { color -> window.statusBarColor = color }
@@ -81,8 +90,11 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        this.menu = menu
-        return super.onCreateOptionsMenu(menu)
+        val result = super.onCreateOptionsMenu(menu)
+        if (menu != null) {
+            this.menu.onNext(menu)
+        }
+        return result
     }
 
 }
