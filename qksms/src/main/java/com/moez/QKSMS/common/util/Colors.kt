@@ -12,6 +12,16 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
     val theme: Observable<Int> = prefs.theme.asObservable()
             .distinctUntilChanged()
 
+    val statusBar: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.color.statusBarDark else R.color.statusBarLight }
+            .map { res -> context.resources.getColor(res) }
+            .distinctUntilChanged()
+
+    val toolbarColor: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.color.toolbarDark else R.color.toolbarLight }
+            .map { res -> context.resources.getColor(res) }
+            .distinctUntilChanged()
+
     val background: Observable<Int> = prefs.dark.asObservable()
             .map { dark -> if (dark) R.color.backgroundDark else R.color.white }
             .map { res -> context.resources.getColor(res) }

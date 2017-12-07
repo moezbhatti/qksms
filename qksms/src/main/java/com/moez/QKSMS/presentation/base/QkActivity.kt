@@ -53,8 +53,11 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
                 .doOnNext { color -> toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(color) } }
                 .subscribe()
 
-        disposables += colors.background
+        disposables += colors.statusBar
                 .doOnNext { color -> window.statusBarColor = color }
+                .subscribe()
+
+        disposables += colors.toolbarColor
                 .doOnNext { color -> toolbar?.setBackgroundColor(color) }
                 .subscribe()
     }
