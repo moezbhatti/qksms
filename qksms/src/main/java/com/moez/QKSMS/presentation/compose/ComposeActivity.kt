@@ -13,6 +13,7 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
@@ -84,9 +85,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                 .combineLatest(colors.theme, colors.textTertiary, { theme, textTertiary ->
                     ColorStateList(states, intArrayOf(theme, textTertiary))
                 })
-                .doOnNext { tintList -> attach.imageTintList = tintList }
-                .doOnNext { tintList -> send.imageTintList = tintList }
-                .subscribe()
+                .subscribe { tintList -> send.imageTintList = tintList }
+
+        disposables += colors.textSecondary
+                .subscribe { color -> attach.setTint(color) }
 
         disposables += colors.background
                 .subscribe { color -> composeBar.setBackgroundColor(color) }
