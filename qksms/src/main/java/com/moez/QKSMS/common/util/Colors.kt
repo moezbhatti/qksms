@@ -2,6 +2,7 @@ package com.moez.QKSMS.common.util
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.view.View
 import com.moez.QKSMS.R
@@ -11,6 +12,15 @@ import javax.inject.Singleton
 
 @Singleton
 class Colors @Inject constructor(context: Context, prefs: Preferences) {
+
+    companion object {
+        private val MINIMUM_CONTRAST_RATIO = 2
+    }
+
+    // Cache these values so they don't need to be recalculated
+    private val primaryTextLuminance = measureLuminance(context.resources.getColor(R.color.textPrimaryDark))
+    private val secondaryTextLuminance = measureLuminance(context.resources.getColor(R.color.textSecondaryDark))
+    private val tertiaryTextLuminance = measureLuminance(context.resources.getColor(R.color.textTertiaryDark))
 
     val theme: Observable<Int> = prefs.theme.asObservable()
             .distinctUntilChanged()
@@ -66,21 +76,27 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
             .map { res -> context.resources.getColor(res) }
             .distinctUntilChanged()
 
-    // TODO make this result depend on the theme color
     val textPrimaryOnTheme: Observable<Int> = prefs.theme.asObservable()
-            .map { theme -> R.color.textPrimaryDark }
+            .map { theme -> measureLuminance(theme) }
+            .map { themeLuminance -> primaryTextLuminance / themeLuminance }
+            .map { contrastRatio -> contrastRatio < MINIMUM_CONTRAST_RATIO }
+            .map { contrastRatio -> if (contrastRatio) R.color.textPrimary else R.color.textPrimaryDark }
             .map { res -> context.resources.getColor(res) }
             .distinctUntilChanged()
 
-    // TODO make this result depend on the theme color
-    val textSecondaryOnTheme: Observable<Int> = prefs.dark.asObservable()
-            .map { theme -> R.color.textSecondaryDark }
+    val textSecondaryOnTheme: Observable<Int> = prefs.theme.asObservable()
+            .map { theme -> measureLuminance(theme) }
+            .map { themeLuminance -> secondaryTextLuminance / themeLuminance }
+            .map { contrastRatio -> contrastRatio < MINIMUM_CONTRAST_RATIO }
+            .map { contrastRatio -> if (contrastRatio) R.color.textSecondary else R.color.textSecondaryDark }
             .map { res -> context.resources.getColor(res) }
             .distinctUntilChanged()
 
-    // TODO make this result depend on the theme color
-    val textTertiaryOnTheme: Observable<Int> = prefs.dark.asObservable()
-            .map { theme -> R.color.textTertiaryDark }
+    val textTertiaryOnTheme: Observable<Int> = prefs.theme.asObservable()
+            .map { theme -> measureLuminance(theme) }
+            .map { themeLuminance -> tertiaryTextLuminance / themeLuminance }
+            .map { contrastRatio -> contrastRatio < MINIMUM_CONTRAST_RATIO }
+            .map { contrastRatio -> if (contrastRatio) R.color.textTertiary else R.color.textTertiaryDark }
             .map { res -> context.resources.getColor(res) }
             .distinctUntilChanged()
 
@@ -108,5 +124,16 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
             .map { dark -> if (dark) R.color.switchTrackDisabledDark else R.color.switchTrackDisabledLight }
             .map { res -> context.resources.getColor(res) }
             .distinctUntilChanged()
+
+    /**
+     * Measures the luminance value of a color to be able to measure the contrast ratio between two colors
+     * Based on https://stackoverflow.com/a/9733420
+     */
+    private fun measureLuminance(color: Int): Double {
+        val array = intArrayOf(Color.red(color), Color.green(color), Color.blue(color))
+                .map { if (it < 0.03928) it / 12.92 else Math.pow((it + 0.055) / 1.055, 2.4) }
+
+        return 0.2126 * array[0] + 0.7152 * array[1] + 0.0722 * array[2] + 0.05
+    }
 
 }

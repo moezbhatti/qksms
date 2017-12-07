@@ -48,7 +48,7 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
     private val themeAdapter by lazy {
         ThemeAdapter(this@SettingsActivity).apply {
-            data = listOf(0xFF008389, 0xFF04CBC9, 0xFF00D99B, 0xFF00A3F3).map { it.toInt() }
+            data = listOf(0xFF008389, 0xFF04CBC9, 0xFF00D99B, 0xFF00A3F3, 0xFFF8BBD0).map { it.toInt() }
         }
     }
 
