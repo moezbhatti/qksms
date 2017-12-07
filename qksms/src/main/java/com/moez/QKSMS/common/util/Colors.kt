@@ -1,6 +1,9 @@
 package com.moez.QKSMS.common.util
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import android.view.View
 import com.moez.QKSMS.R
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -10,6 +13,12 @@ import javax.inject.Singleton
 class Colors @Inject constructor(context: Context, prefs: Preferences) {
 
     val theme: Observable<Int> = prefs.theme.asObservable()
+            .distinctUntilChanged()
+
+    @SuppressLint("InlinedApi")
+    val statusBarIcons: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> dark || Build.VERSION.SDK_INT < Build.VERSION_CODES.M }
+            .map { lightIcons -> if (lightIcons) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR }
             .distinctUntilChanged()
 
     val statusBar: Observable<Int> = prefs.dark.asObservable()
