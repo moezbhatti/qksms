@@ -27,6 +27,11 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
             .map { res -> context.resources.getColor(res) }
             .distinctUntilChanged()
 
+    val field: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.color.fieldDark else R.color.fieldLight }
+            .map { res -> context.resources.getColor(res) }
+            .distinctUntilChanged()
+
     val composeBackground: Observable<Int> = prefs.dark.asObservable()
             .map { dark -> if (dark) R.color.backgroundDark else R.color.backgroundLight }
             .map { res -> context.resources.getColor(res) }

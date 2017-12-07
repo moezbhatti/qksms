@@ -11,6 +11,9 @@
     <color name="backgroundLight">#F2F2F2</color>
     <color name="backgroundDark">#192025</color>
 
+    <color name="fieldLight">#0C000000</color>
+    <color name="fieldDark">#0CFFFFFF</color>
+
     <color name="textPrimary">#49555F</color>
     <color name="textSecondary">#70808D</color>
     <color name="textTertiary">#B7B9C0</color>
@@ -22,8 +25,8 @@
     <color name="bubbleLight">#FFFFFF</color>
     <color name="bubbleDark">#333333</color>
 
-    <color name="separatorLight">#F2F2F2</color>
-    <color name="separatorDark">#333333</color>
+    <color name="separatorLight">#0C000000</color>
+    <color name="separatorDark">#0CFFFFFF</color>
 
     <color name="rowSelected">#F5F5F5</color>
 
