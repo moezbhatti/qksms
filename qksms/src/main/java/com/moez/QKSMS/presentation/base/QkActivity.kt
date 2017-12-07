@@ -1,11 +1,15 @@
 package com.moez.QKSMS.presentation.base
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.presentation.Navigator
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Observables
@@ -19,6 +23,7 @@ import kotlin.reflect.KClass
 abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var prefs: Preferences
 
     protected abstract val viewModelClass: KClass<VM>
     protected val viewModel: VM by lazy {
@@ -28,9 +33,18 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
     protected val menu: Subject<Menu> = BehaviorSubject.create()
     protected var disposables = CompositeDisposable()
 
+    @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onNewIntent(intent)
+
+        disposables += prefs.dark.asObservable()
+                .map { dark -> dark || Build.VERSION.SDK_INT < Build.VERSION_CODES.M }
+                .map { lightIcons -> if (lightIcons) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR }
+                .subscribe { systemUiVisibility -> window.decorView.systemUiVisibility = systemUiVisibility }
+
+        disposables += colors.statusBar
+                .subscribe { color -> window.statusBarColor = color }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -53,13 +67,8 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
                 .doOnNext { color -> toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(color) } }
                 .subscribe()
 
-        disposables += colors.statusBar
-                .doOnNext { color -> window.statusBarColor = color }
-                .subscribe()
-
         disposables += colors.toolbarColor
-                .doOnNext { color -> toolbar?.setBackgroundColor(color) }
-                .subscribe()
+                .subscribe { color -> toolbar?.setBackgroundColor(color) }
     }
 
     override fun onDestroy() {
