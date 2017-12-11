@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
-    <com.moez.QKSMS.presentation.view.QkTextView
+    <com.moez.QKSMS.presentation.common.widget.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.moez.QKSMS.presentation.view.TightTextView
+            <com.moez.QKSMS.presentation.common.widget.TightTextView
                 android:id="@+id/body"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
 
     </LinearLayout>
 
-    <com.moez.QKSMS.presentation.view.QkTextView
+    <com.moez.QKSMS.presentation.common.widget.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

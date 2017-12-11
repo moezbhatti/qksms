@@ -7,7 +7,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.domain.interactor.FullSync
-import com.moez.QKSMS.presentation.base.QkViewModel
+import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
 import timber.log.Timber
 import javax.inject.Inject

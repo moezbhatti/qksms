@@ -22,26 +22,26 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/defaultSms"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_default_sms_title" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_theme_title" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/dark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_dark_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/autoEmoji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,27 +49,27 @@
                     app:title="@string/settings_auto_emoji_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/notifications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_notifications_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/vibration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_vibration_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/ringtone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_ringtone_title" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/delivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                     app:title="@string/settings_delivery_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/split"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                     app:title="@string/settings_split_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/unicode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,20 +93,20 @@
                     app:title="@string/settings_unicode_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/mms"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_mms_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/mmsSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_mms_size_title" />
 
-                <com.moez.QKSMS.presentation.view.PreferenceView
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/sync"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

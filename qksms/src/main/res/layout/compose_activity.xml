@@ -43,7 +43,7 @@
 
     </FrameLayout>
 
-    <com.moez.QKSMS.presentation.view.Separator
+    <com.moez.QKSMS.presentation.common.widget.Separator
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
@@ -61,7 +61,7 @@
             android:padding="16dp"
             android:src="@drawable/ic_add_circle_black_24dp" />
 
-        <com.moez.QKSMS.presentation.view.QkEditText
+        <com.moez.QKSMS.presentation.common.widget.QkEditText
             android:id="@+id/message"
             style="@style/TextPrimary"
             android:layout_width="0dp"

@@ -9,7 +9,7 @@ import com.moez.QKSMS.domain.interactor.MarkAllSeen
 import com.moez.QKSMS.domain.interactor.MarkArchived
 import com.moez.QKSMS.domain.interactor.PartialSync
 import com.moez.QKSMS.presentation.Navigator
-import com.moez.QKSMS.presentation.base.QkViewModel
+import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject

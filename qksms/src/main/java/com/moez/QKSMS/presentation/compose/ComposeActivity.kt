@@ -18,7 +18,7 @@ import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.presentation.base.QkActivity
+import com.moez.QKSMS.presentation.common.base.QkActivity
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign

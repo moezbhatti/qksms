@@ -1,6 +1,7 @@
 package com.moez.QKSMS.common.di
 
 import com.moez.QKSMS.common.util.ContactImageLoader
+import com.moez.QKSMS.presentation.common.widget.*
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.compose.DetailedChipView
@@ -8,7 +9,6 @@ import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
-import com.moez.QKSMS.presentation.view.*
 import com.moez.QKSMS.receiver.*
 import dagger.Component
 import javax.inject.Singleton

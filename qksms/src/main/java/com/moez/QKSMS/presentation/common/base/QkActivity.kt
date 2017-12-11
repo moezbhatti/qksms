@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.base
+package com.moez.QKSMS.presentation.common.base
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders

@@ -1,6 +1,6 @@
 package com.moez.QKSMS.presentation.main
 
-import com.moez.QKSMS.presentation.base.QkView
+import com.moez.QKSMS.presentation.common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 

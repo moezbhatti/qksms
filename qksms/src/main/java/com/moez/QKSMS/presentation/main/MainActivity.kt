@@ -22,7 +22,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.presentation.Navigator
-import com.moez.QKSMS.presentation.base.QkActivity
+import com.moez.QKSMS.presentation.common.base.QkActivity
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject

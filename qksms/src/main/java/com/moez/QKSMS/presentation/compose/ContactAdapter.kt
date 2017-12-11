@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.model.Contact
-import com.moez.QKSMS.presentation.base.QkAdapter
-import com.moez.QKSMS.presentation.base.QkViewHolder
+import com.moez.QKSMS.presentation.common.base.QkAdapter
+import com.moez.QKSMS.presentation.common.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.contact_list_item.view.*

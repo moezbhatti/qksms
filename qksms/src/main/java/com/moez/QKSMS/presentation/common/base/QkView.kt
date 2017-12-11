@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.base
+package com.moez.QKSMS.presentation.common.base
 
 interface QkView<in State> {
 

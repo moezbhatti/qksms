@@ -2,7 +2,7 @@ package com.moez.QKSMS.presentation.compose
 
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.presentation.base.QkView
+import com.moez.QKSMS.presentation.common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 

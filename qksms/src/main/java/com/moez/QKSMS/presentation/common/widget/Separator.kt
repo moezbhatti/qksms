@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.view
+package com.moez.QKSMS.presentation.common.widget
 
 import android.content.Context
 import android.util.AttributeSet

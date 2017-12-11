@@ -14,7 +14,7 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
-import com.moez.QKSMS.presentation.base.QkViewHolder
+import com.moez.QKSMS.presentation.common.base.QkViewHolder
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject

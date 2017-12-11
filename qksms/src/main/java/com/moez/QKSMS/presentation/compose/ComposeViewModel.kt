@@ -13,7 +13,7 @@ import com.moez.QKSMS.data.repository.ContactRepository
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
-import com.moez.QKSMS.presentation.base.QkViewModel
+import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables

@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.presentation.base.QkAdapter
-import com.moez.QKSMS.presentation.base.QkViewHolder
+import com.moez.QKSMS.presentation.common.base.QkAdapter
+import com.moez.QKSMS.presentation.common.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.theme_list_item.view.*

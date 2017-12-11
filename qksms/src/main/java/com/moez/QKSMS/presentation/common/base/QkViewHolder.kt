@@ -1,4 +1,4 @@
-package com.moez.QKSMS.presentation.base
+package com.moez.QKSMS.presentation.common.base
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

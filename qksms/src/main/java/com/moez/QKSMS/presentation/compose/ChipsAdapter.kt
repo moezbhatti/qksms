@@ -17,8 +17,8 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
-import com.moez.QKSMS.presentation.base.QkAdapter
-import com.moez.QKSMS.presentation.base.QkViewHolder
+import com.moez.QKSMS.presentation.common.base.QkAdapter
+import com.moez.QKSMS.presentation.common.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
 import javax.inject.Inject

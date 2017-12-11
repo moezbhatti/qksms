@@ -8,8 +8,8 @@ import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
-import com.moez.QKSMS.presentation.base.QkActivity
-import com.moez.QKSMS.presentation.view.PreferenceView
+import com.moez.QKSMS.presentation.common.base.QkActivity
+import com.moez.QKSMS.presentation.common.widget.PreferenceView
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
