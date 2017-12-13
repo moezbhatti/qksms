@@ -141,8 +141,8 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
         // Open the phone dialer if the call button is clicked
         intents += view.callIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
-                .map { conversation -> conversation.contacts.first() }
-                .map { contact -> contact.address }
+                .map { conversation -> conversation.recipients.first() }
+                .map { recipient -> recipient.address }
                 .subscribe { address -> navigator.makePhoneCall(address) }
 
         // Toggle the archived state of the conversation
@@ -171,7 +171,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .map { body -> body.toString() }
                 .withLatestFrom(conversation, { body, conversation ->
                     val threadId = conversation.id
-                    val address = conversation.contacts.first()?.address.orEmpty()
+                    val address = conversation.recipients.first()?.address.orEmpty()
                     sendMessage.execute(SendMessage.Params(threadId, address, body))
                     newState { it.copy(editingMode = false, draft = "", canSend = false) }
                 })

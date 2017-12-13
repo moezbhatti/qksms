@@ -6,12 +6,11 @@ import android.util.AttributeSet
 import android.view.View
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.model.Contact
-import io.realm.RealmList
 import kotlinx.android.synthetic.main.group_avatar_view.view.*
 
 class GroupAvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
 
-    var contacts: RealmList<Contact> = RealmList()
+    var contacts: List<Contact> = ArrayList()
         set(value) {
             field = value
             updateView()

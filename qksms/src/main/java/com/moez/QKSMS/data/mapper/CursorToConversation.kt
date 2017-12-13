@@ -4,21 +4,18 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.Telephony.Threads
 import com.moez.QKSMS.data.model.Conversation
-import com.moez.QKSMS.data.repository.ContactRepository
-import io.reactivex.rxkotlin.toFlowable
+import com.moez.QKSMS.data.model.Recipient
 import javax.inject.Inject
 
-class CursorToConversation @Inject constructor(private val contactsRepo: ContactRepository) : Mapper<Cursor, Conversation> {
+class CursorToConversation @Inject constructor() : Mapper<Cursor, Conversation> {
 
     override fun map(from: Cursor): Conversation {
         return Conversation().apply {
             id = from.getLong(ID)
-
-            contacts.addAll(from.getString(RECIPIENT_IDS).split(" ").toFlowable()
-                    .map { id -> id.toLong() }
-                    .flatMap { id -> contactsRepo.getContact(id) }
-                    .filter { contact -> contact.recipientId != 0L }
-                    .blockingIterable())
+            recipients.addAll(from.getString(RECIPIENT_IDS)
+                    .split(" ")
+                    .map { recipientId -> recipientId.toLong() }
+                    .map { recipientId -> Recipient().apply { id = recipientId } })
         }
     }
 

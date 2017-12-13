@@ -7,14 +7,14 @@ import io.realm.annotations.PrimaryKey
 open class Conversation : RealmObject() {
 
     @PrimaryKey var id: Long = 0
-    var contacts: RealmList<Contact> = RealmList()
+    var recipients: RealmList<Recipient> = RealmList()
     var archived: Boolean = false
 
     fun getTitle(): String {
         var title = ""
-        contacts.forEachIndexed { index, recipient ->
-            title += if (recipient.name.isNotEmpty()) recipient.name else recipient.address
-            if (index < contacts.size - 1) {
+        recipients.forEachIndexed { index, recipient ->
+            title += recipient.address
+            if (index < recipients.size - 1) {
                 title += ", "
             }
         }

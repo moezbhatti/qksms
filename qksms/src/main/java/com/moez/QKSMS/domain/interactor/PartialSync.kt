@@ -6,6 +6,7 @@ import android.provider.Telephony
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.mapper.CursorToConversation
 import com.moez.QKSMS.data.mapper.CursorToMessage
+import com.moez.QKSMS.data.model.Recipient
 import com.moez.QKSMS.data.model.SyncLog
 import io.reactivex.Flowable
 import io.realm.Realm
@@ -42,7 +43,6 @@ open class PartialSync @Inject constructor(
                 }
                 .map { contentResolver.query(CursorToConversation.URI, CursorToConversation.PROJECTION, "date >= ?", arrayOf(lastSync.toString()), "date desc") }
                 .flatMap { cursor -> cursor.asFlowable().map { cursorToConversation.map(it) } }
-                .distinct { conversation -> conversation.id }
                 .doOnNext { conversation -> realm?.insertOrUpdate(conversation) }
                 .map { conversation -> conversation.id }
                 .map { threadId -> Uri.withAppendedPath(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId.toString()) }
@@ -54,8 +54,18 @@ open class PartialSync @Inject constructor(
                             .takeWhile { message -> message.date >= lastSync }
                 }
                 .filter { message -> message.type == "sms" || message.type == "mms" }
-                .distinct { message -> message.id }
                 .doOnNext { message -> realm?.insertOrUpdate(message) }
+                .count()
+                .toFlowable()
+                .map { contentResolver.query(Uri.parse("content://mms-sms/canonical-addresses"), null, null, null, null) }
+                .flatMap { cursor -> cursor.asFlowable() }
+                .map { cursor ->
+                    Recipient().apply {
+                        id = cursor.getLong(0)
+                        address = cursor.getString(1)
+                    }
+                }
+                .doOnNext { recipient -> realm?.insertOrUpdate(recipient)}
                 .count()
                 .toFlowable()
                 .doOnNext {
