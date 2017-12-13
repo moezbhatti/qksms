@@ -12,7 +12,7 @@
         android:animateLayoutChanges="true"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar_search" />
 
         <FrameLayout
             android:layout_width="match_parent"

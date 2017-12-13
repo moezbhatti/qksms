@@ -3,6 +3,7 @@
     <string name="app_name">QKSMS</string>
 
     <string name="title_settings">Settings</string>
+    <string name="title_conversations">Search conversations…</string>
     <string name="title_compose">Type a name or number</string>
 
     <string name="menu_call">Call</string>

@@ -29,7 +29,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar_search.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -62,6 +62,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
         requestPermissions()
         viewModel.bindView(this)
+        toolbarSearch.setHint(R.string.title_conversations)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -176,6 +177,11 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                     }
                 })
                 .check()
+    }
+
+    override fun setTitle(title: CharSequence?) {
+        super.setTitle(title)
+        toolbarSearch.setText(title)
     }
 
 }
