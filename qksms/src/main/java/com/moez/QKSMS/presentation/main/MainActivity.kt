@@ -117,6 +117,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                     })
                     .show()
         }
+
+        /*val cursor = contentResolver.query(Uri.parse("content://mms-sms/complete-conversations"), CursorToConversation.PROJECTION, null, null, null)
+        Timber.d("Total message count: ${cursor.count}")*/
     }
 
     override fun onNewIntent(intent: Intent?) {

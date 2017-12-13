@@ -2,6 +2,7 @@ package com.moez.QKSMS.data.mapper
 
 import android.content.Context
 import android.database.Cursor
+import android.net.Uri
 import android.provider.Telephony.*
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.model.Message.DeliveryStatus
@@ -95,7 +96,8 @@ class CursorToMessage @Inject constructor(val context: Context) : Mapper<Pair<Cu
     }
 
     companion object {
-        val CURSOR_PROJECTION = arrayOf(
+        val URI = Uri.parse("content://mms-sms/complete-conversations")
+        val PROJECTION = arrayOf(
                 MmsSms.TYPE_DISCRIMINATOR_COLUMN,
                 MmsSms._ID,
 
