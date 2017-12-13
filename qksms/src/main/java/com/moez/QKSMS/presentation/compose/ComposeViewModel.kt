@@ -49,6 +49,11 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
                 .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
 
+        val initialConversation: Observable<Conversation> = when(threadId) {
+            0L -> Observable.empty()
+            else -> messageRepo.getConversationAsync(threadId).asObservable()
+        }
+
         // Map the selected contacts to a conversation so that we can display the message history
         val selectedConversation = selectedContacts
                 .map { contacts -> contacts.map { it.address } }
@@ -56,16 +61,15 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
 
         // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
         // stream of conversations. If the conversation was deleted, notify the activity to shut down
-        conversation = Observable.just(messageRepo.getConversation(threadId) ?: Conversation())
-                .filter { conversation -> conversation.id != 0L }
+        conversation = initialConversation
                 .filter { conversation -> conversation.isLoaded }
-                .filter { conversation ->
+                .doOnNext { conversation ->
                     if (!conversation.isValid) {
                         newState { it.copy(hasError = true) }
-                        return@filter false
                     }
-                    return@filter true
                 }
+                .filter { conversation -> conversation.isValid }
+                .take(1)
                 .mergeWith(selectedConversation)
                 .distinctUntilChanged()
                 .doOnNext { conversation ->
