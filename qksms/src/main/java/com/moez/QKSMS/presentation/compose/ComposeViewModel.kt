@@ -56,8 +56,8 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
 
         // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
         // stream of conversations. If the conversation was deleted, notify the activity to shut down
-        conversation = messageRepo.getConversationAsync(threadId)
-                .asObservable<Conversation>()
+        conversation = Observable.just(messageRepo.getConversation(threadId) ?: Conversation())
+                .filter { conversation -> conversation.id != 0L }
                 .filter { conversation -> conversation.isLoaded }
                 .filter { conversation ->
                     if (!conversation.isValid) {
