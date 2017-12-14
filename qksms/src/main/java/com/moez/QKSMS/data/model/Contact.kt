@@ -12,9 +12,4 @@ open class Contact() : RealmObject() {
 
     var inContactsTable: Boolean = false
 
-    constructor(id: Long, address: String) : this() {
-        this.recipientId = id
-        this.address = address
-    }
-
 }

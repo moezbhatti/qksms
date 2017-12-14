@@ -62,7 +62,10 @@ class ContactRepository @Inject constructor(val context: Context) {
     private fun getContactFromDb(recipientId: Long): Contact? {
         context.contentResolver.query(Uri.withAppendedPath(URI, recipientId.toString()), null, null, null, null)?.use { recipientCursor ->
             if (recipientCursor.moveToFirst()) {
-                val contact = Contact(recipientId, recipientCursor.getString(0))
+                val contact = Contact().apply {
+                    this.recipientId = recipientId
+                    this.address = recipientCursor.getString(0)
+                }
 
                 val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact.address))
                 val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
