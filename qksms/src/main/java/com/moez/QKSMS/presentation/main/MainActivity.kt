@@ -23,6 +23,7 @@ import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkActivity
+import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
@@ -48,7 +49,12 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override val blockedIntent by lazy { blocked.clicks() }
     override val settingsIntent by lazy { settings.clicks() }
     override val deleteConversationIntent: Subject<Long> = PublishSubject.create()
-    override val archiveConversationIntent by lazy { itemTouchCallback.swipes }
+    override val archiveConversationIntent: Observable<Long> by lazy {
+        itemTouchCallback.swipes
+                .map { position -> conversationsAdapter.getItem(position) }
+                .map { pair -> pair.conversation }
+                .map { conversation -> conversation.id }
+    }
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
 
@@ -128,37 +134,37 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
     override fun render(state: MainState) {
         when (state.page) {
-            MainPage.INBOX -> {
+            is Inbox -> {
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                if (conversationsAdapter.data != state.conversations) conversationsAdapter.data = state.conversations
+                if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
             }
 
-            MainPage.ARCHIVED -> {
+            is Archived -> {
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                if (conversationsAdapter.data != state.archivedConversations) conversationsAdapter.data = state.archivedConversations
+                if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
             }
 
-            MainPage.SCHEDULED -> {
+            is Scheduled -> {
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
             }
 
-            MainPage.BLOCKED -> {
+            is Blocked -> {
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
             }
         }
 
-        inbox.isSelected = state.page == MainPage.INBOX
-        inboxIcon.isSelected = state.page == MainPage.INBOX
-        archived.isSelected = state.page == MainPage.ARCHIVED
-        archivedIcon.isSelected = state.page == MainPage.ARCHIVED
-        scheduled.isSelected = state.page == MainPage.SCHEDULED
-        scheduledIcon.isSelected = state.page == MainPage.SCHEDULED
-        blocked.isSelected = state.page == MainPage.BLOCKED
-        blockedIcon.isSelected = state.page == MainPage.BLOCKED
+        inbox.isSelected = state.page is Inbox
+        inboxIcon.isSelected = state.page is Inbox
+        archived.isSelected = state.page is Archived
+        archivedIcon.isSelected = state.page is Archived
+        scheduled.isSelected = state.page is Scheduled
+        scheduledIcon.isSelected = state.page is Scheduled
+        blocked.isSelected = state.page is Blocked
+        blockedIcon.isSelected = state.page is Blocked
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)

@@ -11,10 +11,9 @@ import com.moez.QKSMS.domain.interactor.PartialSync
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
-class MainViewModel : QkViewModel<MainView, MainState>(MainState(page = MainPage.INBOX)) {
+class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var navigator: Navigator
@@ -28,14 +27,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState(page = MainPage
         appComponent.inject(this)
 
         disposables += markAllSeen
+        disposables += deleteConversation
+        disposables += markArchived
+        disposables += partialSync
 
-        disposables += messageRepo.getConversations().subscribe { conversations ->
-            newState { it.copy(conversations = conversations) }
-        }
-
-        disposables += messageRepo.getConversations(true).subscribe { conversations ->
-            newState { it.copy(archivedConversations = conversations) }
-        }
+        newState { it.copy(page = Inbox(messageRepo.getConversations())) }
 
         if (Telephony.Sms.getDefaultSmsPackage(context) != context.packageName) {
             partialSync.execute(Unit)
@@ -57,19 +53,19 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState(page = MainPage
         }
 
         intents += view.inboxIntent.subscribe {
-            newState { it.copy(page = MainPage.INBOX, drawerOpen = false) }
+            newState { it.copy(page = Inbox(messageRepo.getConversations()), drawerOpen = false) }
         }
 
         intents += view.archivedIntent.subscribe {
-            newState { it.copy(page = MainPage.ARCHIVED, drawerOpen = false) }
+            newState { it.copy(page = Archived(messageRepo.getConversations(true)), drawerOpen = false) }
         }
 
         intents += view.scheduledIntent.subscribe {
-            newState { it.copy(page = MainPage.SCHEDULED, drawerOpen = false) }
+            newState { it.copy(page = Scheduled(), drawerOpen = false) }
         }
 
         intents += view.blockedIntent.subscribe {
-            newState { it.copy(page = MainPage.BLOCKED, drawerOpen = false) }
+            newState { it.copy(page = Blocked(), drawerOpen = false) }
         }
 
         intents += view.settingsIntent.subscribe {
@@ -81,8 +77,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState(page = MainPage
                 .subscribe { threadId -> deleteConversation.execute(threadId) }
 
         intents += view.archiveConversationIntent
-                .withLatestFrom(state, { position, state -> state.conversations[position] })
-                .map { pair -> pair.conversation.id }
                 .subscribe { threadId -> markArchived.execute(threadId) }
     }
 

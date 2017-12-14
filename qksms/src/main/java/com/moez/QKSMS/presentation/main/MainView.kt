@@ -14,6 +14,6 @@ interface MainView : QkView<MainState> {
     val blockedIntent: Observable<Unit>
     val settingsIntent: Observable<Unit>
     val deleteConversationIntent: Subject<Long>
-    val archiveConversationIntent: Subject<Int>
+    val archiveConversationIntent: Observable<Long>
 
 }

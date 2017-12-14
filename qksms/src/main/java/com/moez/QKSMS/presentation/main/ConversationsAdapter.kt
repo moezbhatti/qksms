@@ -12,7 +12,7 @@ import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.ConversationMessagePair
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.presentation.Navigator
-import com.moez.QKSMS.presentation.common.base.QkAdapter
+import com.moez.QKSMS.presentation.common.base.FlowableAdapter
 import com.moez.QKSMS.presentation.common.base.QkViewHolder
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -27,7 +27,7 @@ class ConversationsAdapter @Inject constructor(
         val messageRepo: MessageRepository,
         val dateFormatter: DateFormatter,
         val colors: Colors
-) : QkAdapter<ConversationMessagePair>() {
+) : FlowableAdapter<ConversationMessagePair>() {
 
     val longClicks: Subject<Long> = PublishSubject.create<Long>()
 
@@ -50,7 +50,7 @@ class ConversationsAdapter @Inject constructor(
         return QkViewHolder(view)
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         disposables.clear()
     }
