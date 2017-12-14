@@ -14,7 +14,7 @@ import com.moez.QKSMS.common.util.extensions.insertOrUpdate
 import com.moez.QKSMS.data.mapper.CursorToConversation
 import com.moez.QKSMS.data.mapper.CursorToMessage
 import com.moez.QKSMS.data.model.Conversation
-import com.moez.QKSMS.data.model.ConversationMessagePair
+import com.moez.QKSMS.data.model.InboxItem
 import com.moez.QKSMS.data.model.Message
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -33,7 +33,7 @@ class MessageRepository @Inject constructor(
         private val cursorToMessage: CursorToMessage,
         private val cursorToConversation: CursorToConversation) {
 
-    fun getConversations(archived: Boolean = false): Flowable<List<ConversationMessagePair>> {
+    fun getConversations(archived: Boolean = false): Flowable<List<InboxItem>> {
         val realm = Realm.getDefaultInstance()
 
         val conversations = realm.where(Conversation::class.java)
@@ -53,7 +53,7 @@ class MessageRepository @Inject constructor(
         return Flowable.combineLatest(conversations, messages, BiFunction { conversations, messages ->
             messages.mapNotNull { message ->
                 val conversation = conversations[message.threadId]
-                if (conversation == null) null else ConversationMessagePair(conversation, message)
+                if (conversation == null) null else InboxItem(conversation, message)
             }
         })
     }

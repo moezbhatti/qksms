@@ -1,6 +1,6 @@
 package com.moez.QKSMS.presentation.main
 
-import com.moez.QKSMS.data.model.ConversationMessagePair
+import com.moez.QKSMS.data.model.InboxItem
 import io.reactivex.Flowable
 
 data class MainState(
@@ -10,9 +10,9 @@ data class MainState(
 
 sealed class MainPage
 
-data class Inbox(val data: Flowable<List<ConversationMessagePair>>?) : MainPage()
+data class Inbox(val data: Flowable<List<InboxItem>>?) : MainPage()
 
-data class Archived(val data: Flowable<List<ConversationMessagePair>>?) : MainPage()
+data class Archived(val data: Flowable<List<InboxItem>>?) : MainPage()
 
 data class Scheduled(val data: Any? = null) : MainPage()
 

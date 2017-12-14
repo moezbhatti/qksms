@@ -9,7 +9,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.data.model.Contact
-import com.moez.QKSMS.data.model.ConversationMessagePair
+import com.moez.QKSMS.data.model.InboxItem
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.FlowableAdapter
@@ -27,7 +27,7 @@ class ConversationsAdapter @Inject constructor(
         val messageRepo: MessageRepository,
         val dateFormatter: DateFormatter,
         val colors: Colors
-) : FlowableAdapter<ConversationMessagePair>() {
+) : FlowableAdapter<InboxItem>() {
 
     val longClicks: Subject<Long> = PublishSubject.create<Long>()
 
@@ -73,7 +73,7 @@ class ConversationsAdapter @Inject constructor(
         return if (getItem(position).message.read) 0 else 1
     }
 
-    override fun areItemsTheSame(old: ConversationMessagePair, new: ConversationMessagePair): Boolean {
+    override fun areItemsTheSame(old: InboxItem, new: InboxItem): Boolean {
         return old.conversation.id == new.conversation.id
     }
 }
