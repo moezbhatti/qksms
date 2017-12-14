@@ -117,9 +117,6 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                     })
                     .show()
         }
-
-        /*val cursor = contentResolver.query(Uri.parse("content://mms-sms/complete-conversations"), CursorToConversation.PROJECTION, null, null, null)
-        Timber.d("Total message count: ${cursor.count}")*/
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -180,11 +177,6 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                     }
                 })
                 .check()
-    }
-
-    override fun setTitle(title: CharSequence?) {
-        super.setTitle(title)
-        toolbarSearch.setText(title)
     }
 
 }
