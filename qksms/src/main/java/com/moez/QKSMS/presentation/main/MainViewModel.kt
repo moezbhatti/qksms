@@ -23,6 +23,8 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var partialSync: PartialSync
 
+    private val conversations by lazy { messageRepo.getConversations() }
+
     init {
         appComponent.inject(this)
 
@@ -43,6 +45,23 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     override fun bindView(view: MainView) {
         super.bindView(view)
 
+        intents += view.queryChangedIntent.subscribe { query ->
+            val filteredConversations = conversations.map { list ->
+                list.filter { inboxItem ->
+                    inboxItem.conversation.recipients.forEach { recipient ->
+                        when {
+                            recipient.contact?.name?.contains(query, true) == true -> return@filter true
+                            recipient.address.contains(query, true) == true -> return@filter true
+                        }
+                    }
+
+                    false
+                }
+            }
+
+            newState { it.copy(page = Inbox(filteredConversations)) }
+        }
+
         intents += view.composeIntent.subscribe {
             navigator.showCompose()
             newState { it.copy(drawerOpen = false) }
@@ -53,7 +72,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         }
 
         intents += view.inboxIntent.subscribe {
-            newState { it.copy(page = Inbox(messageRepo.getConversations()), drawerOpen = false) }
+            newState { it.copy(page = Inbox(conversations), drawerOpen = false) }
         }
 
         intents += view.archivedIntent.subscribe {

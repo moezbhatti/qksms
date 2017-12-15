@@ -13,6 +13,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
 import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.widget.textChanges
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -41,6 +42,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
 
     override val viewModelClass = MainViewModel::class
+    override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent by lazy { drawerLayout.drawerOpen(Gravity.START) }
     override val inboxIntent by lazy { inbox.clicks() }
