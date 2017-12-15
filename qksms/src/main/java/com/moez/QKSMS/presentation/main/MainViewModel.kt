@@ -57,7 +57,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { query ->
                     val filteredConversations = conversations.map { list ->
-                        list.filter { conversationFilter.filter(it.conversation, query.toString()) }
+                        list.filter { conversationFilter.filter(it.conversation, query) }
                     }
 
                     newState { it.copy(page = Inbox(filteredConversations)) }

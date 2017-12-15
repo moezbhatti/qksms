@@ -1,12 +1,12 @@
 package com.moez.QKSMS.presentation.compose
 
 import android.content.Context
-import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.extensions.asObservable
 import com.moez.QKSMS.common.util.extensions.makeToast
+import com.moez.QKSMS.common.util.filter.ContactFilter
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.repository.ContactRepository
@@ -27,6 +27,7 @@ import javax.inject.Inject
 class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var contactFilter: ContactFilter
     @Inject lateinit var contactsRepo: ContactRepository
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var navigator: Navigator
@@ -49,7 +50,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
                 .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
 
-        val initialConversation: Observable<Conversation> = when(threadId) {
+        val initialConversation: Observable<Conversation> = when (threadId) {
             0L -> Observable.empty()
             else -> messageRepo.getConversationAsync(threadId).asObservable()
         }
@@ -115,9 +116,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                 .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
                     contacts
                             .filterNot { contact -> selectedContacts.contains(contact) }
-                            .filter { contact ->
-                                contact.name.contains(query, true) || PhoneNumberUtils.compare(contact.numbers.firstOrNull()?.address, query.toString())
-                            }
+                            .filter { contact -> contactFilter.filter(contact, query) }
                 })
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
