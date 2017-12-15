@@ -13,7 +13,7 @@ open class Conversation : RealmObject() {
     fun getTitle(): String {
         var title = ""
         recipients.forEachIndexed { index, recipient ->
-            title += recipient.address
+            title += recipient.contact?.name ?: recipient.address
             if (index < recipients.size - 1) {
                 title += ", "
             }

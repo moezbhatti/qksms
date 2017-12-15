@@ -77,8 +77,8 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
         photo.setImageDrawable(null)
-        contact?.let { contact ->
-            GlideApp.with(photo).load(PhoneNumberUtils.stripSeparators(contact.address)).into(photo)
+        contact?.numbers?.firstOrNull()?.address?.let { address ->
+            GlideApp.with(photo).load(PhoneNumberUtils.stripSeparators(address)).into(photo)
         }
     }
 }

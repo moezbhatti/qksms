@@ -7,5 +7,7 @@ open class Recipient : RealmObject() {
 
     @PrimaryKey var id: Long = 0
     var address: String = ""
+    var contact: Contact? = null
+    var lastUpdate: Long = 0
 
 }

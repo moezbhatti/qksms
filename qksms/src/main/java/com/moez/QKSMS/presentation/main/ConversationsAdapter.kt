@@ -10,6 +10,7 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.InboxItem
+import com.moez.QKSMS.data.model.PhoneNumber
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.FlowableAdapter
@@ -63,7 +64,9 @@ class ConversationsAdapter @Inject constructor(
         RxView.clicks(view).subscribe { navigator.showConversation(message.threadId) }
         RxView.longClicks(view).subscribe { longClicks.onNext(conversation.id) }
 
-        view.avatars.contacts = conversation.recipients.map { recipient -> Contact().apply { address = recipient.address } }
+        view.avatars.contacts = conversation.recipients.map { recipient ->
+            recipient.contact ?: Contact().apply { numbers.add(PhoneNumber().apply { address = recipient.address }) }
+        }
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(message.date)
         view.snippet.text = message.body

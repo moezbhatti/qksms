@@ -56,7 +56,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
 
         // Map the selected contacts to a conversation so that we can display the message history
         val selectedConversation = selectedContacts
-                .map { contacts -> contacts.map { it.address } }
+                .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
         // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
@@ -116,7 +116,7 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
                     contacts
                             .filterNot { contact -> selectedContacts.contains(contact) }
                             .filter { contact ->
-                                contact.name.contains(query, true) || PhoneNumberUtils.compare(contact.address, query.toString())
+                                contact.name.contains(query, true) || PhoneNumberUtils.compare(contact.numbers.firstOrNull()?.address, query.toString())
                             }
                 })
                 .subscribeOn(Schedulers.computation())

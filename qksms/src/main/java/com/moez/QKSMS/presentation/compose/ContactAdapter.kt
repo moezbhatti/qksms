@@ -32,11 +32,11 @@ class ContactAdapter @Inject constructor(private val context: Context) : QkAdapt
 
         view.avatar.contact = contact
         view.name.text = contact.name
-        view.address.text = contact.address
+        view.address.text = contact.numbers.map { it.address }.toString()
     }
 
     override fun areItemsTheSame(old: Contact, new: Contact): Boolean {
-        return old.recipientId == new.recipientId
+        return old.lookupKey == new.lookupKey
     }
 
 }

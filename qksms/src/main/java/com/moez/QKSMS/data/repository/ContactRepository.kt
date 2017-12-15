@@ -6,6 +6,7 @@ import android.provider.BaseColumns
 import android.provider.ContactsContract
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.data.model.Contact
+import com.moez.QKSMS.data.model.PhoneNumber
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.realm.Realm
@@ -15,11 +16,6 @@ import javax.inject.Singleton
 
 @Singleton
 class ContactRepository @Inject constructor(val context: Context) {
-
-    /**
-     * Uri for the MMS-SMS recipients table, where there exists only one column (address)
-     */
-    private val URI = Uri.parse("content://mms-sms/canonical-address")
 
     fun findContactUri(address: String): Single<Uri> {
         return Flowable.just(address)
@@ -34,54 +30,49 @@ class ContactRepository @Inject constructor(val context: Context) {
         val realm = Realm.getDefaultInstance()
         val results = realm.copyFromRealm(realm
                 .where(Contact::class.java)
-                .equalTo("inContactsTable", true)
                 .findAllSorted("name"))
         realm.close()
 
         return results
     }
 
-    fun getContact(recipientId: Long): Flowable<Contact> {
+    fun getContact(address: String): Flowable<Contact> {
         return Flowable.fromPublisher<Contact> { emitter ->
-            val contact = getContactFromRealm(recipientId) ?: getContactFromDb(recipientId)
-            contact?.let { emitter.onNext(it) }
+            getContactBlocking(address)?.let { emitter.onNext(it) }
             emitter.onComplete()
         }
     }
 
-    private fun getContactFromRealm(recipientId: Long): Contact? {
+    fun getContactBlocking(address: String): Contact? {
+        return getContactFromRealm(address) ?: getContactFromDb(address)
+    }
+
+    private fun getContactFromRealm(address: String): Contact? {
         val realm = Realm.getDefaultInstance()
         val results = realm.where(Contact::class.java)
-                .equalTo("recipientId", recipientId)
+                .equalTo("numbers.address", address)
                 .findAll()
 
         realm.close()
         return results.getOrNull(0)
     }
 
-    private fun getContactFromDb(recipientId: Long): Contact? {
-        context.contentResolver.query(Uri.withAppendedPath(URI, recipientId.toString()), null, null, null, null)?.use { recipientCursor ->
-            if (recipientCursor.moveToFirst()) {
-                val contact = Contact().apply {
-                    this.recipientId = recipientId
-                    this.address = recipientCursor.getString(0)
-                }
-
-                val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(contact.address))
-                val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
-                try {
-                    context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
-                        if (contactCursor.moveToFirst()) {
-                            contact.inContactsTable = true
-                            contact.name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).orEmpty()
-                            contact.lookupKey = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY)).orEmpty()
-                        }
+    private fun getContactFromDb(address: String): Contact? {
+        val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
+        val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
+        try {
+            context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
+                if (contactCursor.moveToFirst()) {
+                    return Contact().apply {
+                        numbers.add(PhoneNumber().apply { this.address = address })
+                        name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).orEmpty()
+                        lookupKey = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY)).orEmpty()
+                        lastUpdate = System.currentTimeMillis()
                     }
-                } catch (e: Exception) {
-                    Timber.w(e)
                 }
-                return contact
             }
+        } catch (e: Exception) {
+            Timber.w(e)
         }
 
         return null

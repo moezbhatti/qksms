@@ -116,6 +116,6 @@ class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter
     }
 
     override fun areItemsTheSame(old: Contact, new: Contact): Boolean {
-        return old.recipientId == new.recipientId
+        return old.lookupKey == new.lookupKey
     }
 }

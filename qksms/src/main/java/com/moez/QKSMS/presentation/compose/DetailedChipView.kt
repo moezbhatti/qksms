@@ -47,7 +47,7 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
     fun setContact(contact: Contact) {
         avatar.contact = contact
         name.text = contact.name
-        info.text = contact.address
+        info.text = contact.numbers.map { it.address }.toString()
     }
 
     fun show() {

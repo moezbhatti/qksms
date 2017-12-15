@@ -29,6 +29,7 @@ open class PartialSync @Inject constructor(
 
         return Flowable.just(params)
                 .doOnNext {
+                    Timber.v("Starting sync")
                     startTime = System.currentTimeMillis()
 
                     // We need to set up realm on the io thread, and doOnSubscribe doesn't support setting a custom Scheduler
@@ -70,7 +71,7 @@ open class PartialSync @Inject constructor(
                 .doOnNext {
                     realm?.commitTransaction()
                     realm?.close()
-                    Timber.v("Performed sync in ${TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - startTime)} seconds")
+                    Timber.v("Completed sync in ${TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - startTime)} seconds")
                 }
                 .map { 0L }
     }

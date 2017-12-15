@@ -14,6 +14,7 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.data.model.PhoneNumber
 import com.moez.QKSMS.presentation.common.base.QkViewHolder
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -60,9 +61,9 @@ class MessagesAdapter @Inject constructor(
         }
 
         if (viewType != VIEWTYPE_ME) {
-            val contact = Contact()
-            contact.address = people[viewType]
-            view.avatar.contact = contact
+            view.avatar.contact = Contact().apply {
+                numbers.add(PhoneNumber().apply { address = people[viewType] })
+            }
         }
 
         return QkViewHolder(view)
