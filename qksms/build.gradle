@@ -17,10 +17,16 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField "String", "BUGSNAG_API_KEY", '""'
+            buildConfigField "String", "AMPLITUDE_API_KEY", '""'
+            buildConfigField "String", "MIXPANEL_API_KEY", '""'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            buildConfigField "String", "BUGSNAG_API_KEY", '""'
+            buildConfigField "String", "AMPLITUDE_API_KEY", '""'
+            buildConfigField "String", "MIXPANEL_API_KEY", '""'
             applicationIdSuffix ".debug"
         }
     }
@@ -36,6 +42,7 @@ dependencies {
     })
     compile "android.arch.lifecycle:extensions:1.0.0"
     compile "android.arch.lifecycle:runtime:1.0.3"
+    compile 'com.amplitude:android-sdk:2.16.0'
     compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:27.0.2'

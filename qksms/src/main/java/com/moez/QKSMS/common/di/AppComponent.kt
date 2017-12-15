@@ -1,5 +1,6 @@
 package com.moez.QKSMS.common.di
 
+import com.moez.QKSMS.common.QKApplication
 import com.moez.QKSMS.common.util.ContactImageLoader
 import com.moez.QKSMS.presentation.common.widget.*
 import com.moez.QKSMS.presentation.compose.ComposeActivity
@@ -16,6 +17,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [(AppModule::class)])
 interface AppComponent {
+
+    fun inject(application: QKApplication)
 
     fun inject(activity: MainActivity)
     fun inject(activity: ComposeActivity)

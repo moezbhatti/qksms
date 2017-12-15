@@ -19,7 +19,7 @@ class AppModule(private var application: Application) {
 
     @Provides
     @Singleton
-    fun provideRxPreferences(context: Context) : RxSharedPreferences {
+    fun provideRxPreferences(context: Context): RxSharedPreferences {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         return RxSharedPreferences.create(preferences)
     }
