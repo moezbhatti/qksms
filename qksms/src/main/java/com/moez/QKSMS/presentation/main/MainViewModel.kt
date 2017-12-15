@@ -63,35 +63,26 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                     newState { it.copy(page = Inbox(filteredConversations)) }
                 }
 
-        intents += view.composeIntent.subscribe {
-            navigator.showCompose()
-            newState { it.copy(drawerOpen = false) }
-        }
+        intents += view.composeIntent
+                .subscribe { navigator.showCompose() }
 
-        intents += view.drawerOpenIntent.filter { it }.subscribe {
-            newState { it.copy(drawerOpen = true) }
-        }
+        intents += view.drawerOpenIntent
+                .filter { it }
+                .subscribe { newState { it.copy(drawerOpen = true) } }
 
-        intents += view.inboxIntent.subscribe {
-            newState { it.copy(page = Inbox(conversations), drawerOpen = false) }
-        }
-
-        intents += view.archivedIntent.subscribe {
-            newState { it.copy(page = Archived(messageRepo.getConversations(true)), drawerOpen = false) }
-        }
-
-        intents += view.scheduledIntent.subscribe {
-            newState { it.copy(page = Scheduled(), drawerOpen = false) }
-        }
-
-        intents += view.blockedIntent.subscribe {
-            newState { it.copy(page = Blocked(), drawerOpen = false) }
-        }
-
-        intents += view.settingsIntent.subscribe {
-            navigator.showSettings()
-            newState { it.copy(drawerOpen = false) }
-        }
+        intents += view.drawerItemIntent
+                .doOnNext { newState { it.copy(drawerOpen = false) } }
+                .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
+                .distinctUntilChanged()
+                .doOnNext {
+                    when (it) {
+                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(conversations)) }
+                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
+                        DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
+                        DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
+                    }
+                }
+                .subscribe()
 
         intents += view.deleteConversationIntent
                 .subscribe { threadId -> deleteConversation.execute(threadId) }
