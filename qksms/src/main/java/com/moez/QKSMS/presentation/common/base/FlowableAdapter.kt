@@ -20,9 +20,6 @@ abstract class FlowableAdapter<T> : QkAdapter<T>() {
             // Stop listening for updates on the old flowable
             dispose()
 
-            // Wipe the data
-            data = ArrayList()
-
             // If we're attached to any RecyclerViews, then subscribe to updates
             if (recyclerViews.isNotEmpty()) {
                 subscribe()
