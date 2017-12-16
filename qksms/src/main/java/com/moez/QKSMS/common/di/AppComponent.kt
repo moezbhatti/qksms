@@ -33,6 +33,7 @@ interface AppComponent {
     fun inject(receiver: RemoteMessagingReceiver)
 
     fun inject(view: AvatarView)
+    fun inject(view: DetailedChipView)
     fun inject(view: QkEditText)
     fun inject(view: QkSwitch)
     fun inject(view: QkTextView)
@@ -43,7 +44,5 @@ interface AppComponent {
     fun inject(viewModel: SettingsViewModel)
 
     fun inject(fetcher: ContactImageLoader.ContactImageFetcher)
-
-    fun inject(view: DetailedChipView)
 
 }
