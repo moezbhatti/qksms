@@ -39,7 +39,10 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
         super.onAttachedToWindow()
 
         textColorObservable?.let { observable ->
-            disposables += observable.subscribe { color -> setTextColor(color) }
+            disposables += observable.subscribe { color ->
+                setTextColor(color)
+                setLinkTextColor(color)
+            }
         }
     }
 
