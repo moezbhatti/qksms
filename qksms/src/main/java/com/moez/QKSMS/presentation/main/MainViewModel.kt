@@ -34,8 +34,9 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         appComponent.inject(this)
 
         disposables += markAllSeen
-        disposables += deleteConversation
         disposables += markArchived
+        disposables += markUnarchived
+        disposables += deleteConversation
         disposables += partialSync
 
         newState { it.copy(page = Inbox(messageRepo.getConversations())) }
@@ -83,10 +84,16 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 }
                 .subscribe()
 
+        intents += view.archiveConversationIntent
+                .subscribe { threadId -> markArchived.execute(threadId) }
+
+        intents += view.unarchiveConversationIntent
+                .subscribe { threadId -> markUnarchived.execute(threadId) }
+
         intents += view.deleteConversationIntent
                 .subscribe { threadId -> deleteConversation.execute(threadId) }
 
-        val archivedConversation = view.archiveConversationIntent
+        val archivedConversation = view.swipeConversationIntent
                 .withLatestFrom(conversations.toObservable(), { position, conversations -> conversations[position] })
                 .map { pair -> pair.conversation }
                 .map { conversation -> conversation.id }
@@ -111,7 +118,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 })
                 .subscribe()
 
-        intents += view.unarchiveConversationIntent
+        intents += view.undoSwipeConversationIntent
                 .withLatestFrom(archivedConversation, { _, threadId -> threadId })
                 .subscribe { threadId -> markUnarchived.execute(threadId) }
     }

@@ -54,14 +54,16 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 blocked.clicks().map { DrawerItem.BLOCKED },
                 settings.clicks().map { DrawerItem.SETTINGS }))
     }
+    override val archiveConversationIntent: Subject<Long> = PublishSubject.create()
+    override val unarchiveConversationIntent: Subject<Long> = PublishSubject.create()
     override val deleteConversationIntent: Subject<Long> = PublishSubject.create()
-    override val archiveConversationIntent: Observable<Int> by lazy { itemTouchCallback.swipes }
-    override val unarchiveConversationIntent: Subject<Unit> = PublishSubject.create()
+    override val swipeConversationIntent: Observable<Int> by lazy { itemTouchCallback.swipes }
+    override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val archiveSnackbar by lazy {
         Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE).apply {
-            setAction(R.string.button_undo, { unarchiveConversationIntent.onNext(Unit) })
+            setAction(R.string.button_undo, { undoSwipeConversationIntent.onNext(Unit) })
         }
     }
 
@@ -125,7 +127,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             AlertDialog.Builder(this)
                     .setItems(R.array.conversation_options, { _, row ->
                         when (row) {
-                            0 -> deleteConversationIntent.onNext(threadId)
+                            0 -> archiveConversationIntent.onNext(threadId)
+                            1 -> unarchiveConversationIntent.onNext(threadId)
+                            2 -> deleteConversationIntent.onNext(threadId)
                         }
                     })
                     .show()
