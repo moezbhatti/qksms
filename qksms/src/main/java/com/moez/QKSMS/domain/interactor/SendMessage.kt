@@ -11,7 +11,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.receiver.MessageDeliveredReceiver
 import com.moez.QKSMS.receiver.MessageSentReceiver
 import io.reactivex.Flowable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxkotlin.toFlowable
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
@@ -23,32 +23,53 @@ class SendMessage @Inject constructor(
     data class Params(val threadId: Long, val address: String, val body: String)
 
     override fun buildObservable(params: Params): Flowable<Unit> {
-        val values = ContentValues()
-        values.put(Telephony.Sms.ADDRESS, params.address)
-        values.put(Telephony.Sms.BODY, params.body)
-        values.put(Telephony.Sms.DATE, System.currentTimeMillis())
-        values.put(Telephony.Sms.READ, true)
-        values.put(Telephony.Sms.SEEN, true)
-        values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
-        values.put(Telephony.Sms.THREAD_ID, params.threadId)
 
         val contentResolver = context.contentResolver
-        return Flowable.just(values)
-                .subscribeOn(Schedulers.io())
-                .map { contentResolver.insert(Telephony.Sms.CONTENT_URI, values) }
-                .doOnNext { uri ->
-                    messageRepo.addMessageFromUri(uri)
+        val smsManager = SmsManager.getDefault()
 
+        return Flowable.just(prefs.split.get())
+                .map { split ->
+                    when (split) {
+                        true -> smsManager.divideMessage(params.body)
+                        false -> arrayListOf(params.body)
+                    }
+                }
+                .flatMap { bodies -> bodies.toFlowable() }
+                .map { bodies -> createContentValues(params.threadId, params.address, bodies) }
+                .map { values -> Pair(values, contentResolver.insert(Telephony.Sms.CONTENT_URI, values)) }
+                .doOnNext { (_, uri) -> messageRepo.addMessageFromUri(uri) }
+                .map { (values, uri) ->
                     val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("uri", uri.toString())
                     val sentPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                     val deliveredIntent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("uri", uri.toString())
                     val deliveredPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), deliveredIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val smsManager = SmsManager.getDefault()
-                    smsManager.sendTextMessage(params.address, null, params.body, sentPI, if (prefs.delivery.get()) deliveredPI else null)
+                    Triple(values.getAsString(Telephony.Sms.BODY), sentPI, deliveredPI)
+                }
+                .toList().toFlowable()
+                .doOnNext { messages ->
+                    if (messages.size == 1) {
+                        smsManager.sendTextMessage(params.address, null, messages[0].first, messages[0].second, messages[0].third)
+                    } else {
+                        val parts = ArrayList(messages.map { it.first })
+                        val sentIntents = ArrayList(messages.map { it.second })
+                        val deliveredIntents = ArrayList(messages.map { it.third })
+
+                        smsManager.sendMultipartTextMessage(params.address, null, parts, sentIntents, deliveredIntents)
+                    }
                 }
                 .map { Unit }
+    }
+
+    private fun createContentValues(threadId: Long, address: String, body: String) = ContentValues().apply {
+        put(Telephony.Sms.ADDRESS, address)
+        put(Telephony.Sms.BODY, body)
+        put(Telephony.Sms.DATE, System.currentTimeMillis())
+        put(Telephony.Sms.READ, true)
+        put(Telephony.Sms.SEEN, true)
+        put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
+        put(Telephony.Sms.THREAD_ID, threadId)
     }
 
 }
