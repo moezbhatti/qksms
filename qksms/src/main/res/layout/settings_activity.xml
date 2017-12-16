@@ -45,6 +45,7 @@
                     android:id="@+id/autoEmoji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:summary="@string/settings_auto_emoji_summary"
                     app:title="@string/settings_auto_emoji_title"
                     app:widget="@layout/settings_switch_widget" />
@@ -97,6 +98,7 @@
                     android:id="@+id/mms"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:title="@string/settings_mms_title"
                     app:widget="@layout/settings_switch_widget" />
 
@@ -104,6 +106,7 @@
                     android:id="@+id/mmsSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:title="@string/settings_mms_size_title" />
 
                 <com.moez.QKSMS.presentation.common.widget.PreferenceView
