@@ -2,6 +2,7 @@ package com.moez.QKSMS.presentation.settings
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -9,6 +10,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.dpToPx
+import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.presentation.common.base.QkActivity
 import com.moez.QKSMS.presentation.common.widget.PreferenceView
 import io.reactivex.Observable
@@ -68,6 +70,10 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         setTitle(R.string.title_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
+
+        val supportsNotificationChannels = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+        vibration.setVisible(!supportsNotificationChannels)
+        ringtone.setVisible(!supportsNotificationChannels)
 
         disposables += colors.background
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
