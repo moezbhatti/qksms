@@ -7,6 +7,7 @@ import com.moez.QKSMS.data.mapper.CursorToRecipient
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.model.Recipient
+import com.moez.QKSMS.data.model.SyncLog
 import io.reactivex.Flowable
 import io.realm.Realm
 import javax.inject.Inject
@@ -24,6 +25,7 @@ class FullSync @Inject constructor(
             realm.delete(Conversation::class.java)
             realm.delete(Message::class.java)
             realm.delete(Recipient::class.java)
+            realm.delete(SyncLog::class.java)
         }
         realm.close()
 
