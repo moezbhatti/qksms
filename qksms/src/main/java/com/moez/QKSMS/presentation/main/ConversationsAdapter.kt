@@ -4,7 +4,8 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
@@ -30,7 +31,8 @@ class ConversationsAdapter @Inject constructor(
         val colors: Colors
 ) : FlowableAdapter<InboxItem>() {
 
-    val longClicks: Subject<Long> = PublishSubject.create<Long>()
+    val clicks: Subject<Long> = PublishSubject.create()
+    val longClicks: Subject<Long> = PublishSubject.create()
 
     private val disposables = CompositeDisposable()
 
@@ -61,8 +63,8 @@ class ConversationsAdapter @Inject constructor(
         val message = getItem(position).message
         val view = viewHolder.itemView
 
-        RxView.clicks(view).subscribe { navigator.showConversation(message.threadId) }
-        RxView.longClicks(view).subscribe { longClicks.onNext(conversation.id) }
+        view.clicks().subscribe { clicks.onNext(conversation.id) }
+        view.longClicks().subscribe { longClicks.onNext(conversation.id) }
 
         view.avatars.contacts = conversation.recipients.map { recipient ->
             recipient.contact ?: Contact().apply { numbers.add(PhoneNumber().apply { address = recipient.address }) }

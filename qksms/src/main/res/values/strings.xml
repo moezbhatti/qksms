@@ -10,8 +10,8 @@
     <string name="title_compose">Type a name or number</string>
 
     <string name="menu_call">Call</string>
-    <string name="menu_archive">Archive</string>
-    <string name="menu_unarchive">Unarchive</string>
+    <string name="menu_archive">Archive conversation</string>
+    <string name="menu_unarchive">Remove from archive</string>
     <string name="menu_delete">Delete</string>
 
     <string name="compose_hint">Write a message</string>
@@ -53,12 +53,6 @@
     <string name="toast_copied">Copied</string>
     <string name="toast_archived">Archived conversation</string>
     <string name="toast_unarchived">Moved to inbox</string>
-
-    <string-array name="conversation_options">
-        <item>Archive conversation</item>
-        <item>Remove from archive</item>
-        <item>Delete</item>
-    </string-array>
 
     <string-array name="message_options">
         <item>Copy text</item>

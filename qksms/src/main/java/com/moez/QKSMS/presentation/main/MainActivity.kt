@@ -23,8 +23,10 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
+import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.presentation.Navigator
+import com.moez.QKSMS.presentation.common.MenuItemAdapter
 import com.moez.QKSMS.presentation.common.base.QkActivity
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
@@ -42,6 +44,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
+    @Inject lateinit var menuItemAdapter: MenuItemAdapter
 
     override val viewModelClass = MainViewModel::class
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
@@ -55,16 +58,25 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 blocked.clicks().map { DrawerItem.BLOCKED },
                 settings.clicks().map { DrawerItem.SETTINGS }))
     }
-    override val archiveConversationIntent: Subject<Long> = PublishSubject.create()
-    override val unarchiveConversationIntent: Subject<Long> = PublishSubject.create()
-    override val deleteConversationIntent: Subject<Long> = PublishSubject.create()
-    override val swipeConversationIntent: Observable<Int> by lazy { itemTouchCallback.swipes }
+    override val conversationClickIntent by lazy { conversationsAdapter.clicks }
+    override val conversationLongClickIntent by lazy { conversationsAdapter.longClicks }
+    override val conversationMenuItemIntent by lazy { menuItemAdapter.menuItemClicks }
+    override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val archiveSnackbar by lazy {
         Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE).apply {
             setAction(R.string.button_undo, { undoSwipeConversationIntent.onNext(Unit) })
+        }
+    }
+    private val conversationMenuDialog by lazy {
+        val recyclerView = RecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = menuItemAdapter
+        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
+        AlertDialog.Builder(this).setView(recyclerView).create().apply {
+            setOnDismissListener { conversationMenuItemIntent.onNext(-1) }
         }
     }
 
@@ -138,18 +150,6 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 onItemRangeInserted(positionStart, itemCount)
             }
         })
-
-        conversationsAdapter.longClicks.subscribe { threadId ->
-            AlertDialog.Builder(this)
-                    .setItems(R.array.conversation_options, { _, row ->
-                        when (row) {
-                            0 -> archiveConversationIntent.onNext(threadId)
-                            1 -> unarchiveConversationIntent.onNext(threadId)
-                            2 -> deleteConversationIntent.onNext(threadId)
-                        }
-                    })
-                    .show()
-        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -165,22 +165,26 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
+                menuItemAdapter.data = state.page.menu
             }
 
             is Archived -> {
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
+                menuItemAdapter.data = state.page.menu
             }
 
             is Scheduled -> {
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
+                menuItemAdapter.data = ArrayList()
             }
 
             is Blocked -> {
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
+                menuItemAdapter.data = ArrayList()
             }
         }
 
@@ -200,6 +204,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
+
+        if (conversationMenuDialog.isShowing && menuItemAdapter.data.isEmpty()) conversationMenuDialog.dismiss()
+        else if (!conversationMenuDialog.isShowing && menuItemAdapter.data.isNotEmpty()) conversationMenuDialog.show()
     }
 
     private fun requestPermissions() {

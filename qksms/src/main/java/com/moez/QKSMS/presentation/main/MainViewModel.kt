@@ -2,8 +2,10 @@ package com.moez.QKSMS.presentation.main
 
 import android.content.Context
 import android.provider.Telephony
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.filter.ConversationFilter
+import com.moez.QKSMS.data.model.MenuItem
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
@@ -29,6 +31,10 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var partialSync: PartialSync
 
     private val conversations by lazy { messageRepo.getConversations() }
+
+    private val menuArchive = MenuItem(R.string.menu_archive, 0)
+    private val menuUnarchive = MenuItem(R.string.menu_unarchive, 1)
+    private val menuDelete = MenuItem(R.string.menu_delete, 2)
 
     init {
         appComponent.inject(this)
@@ -84,21 +90,53 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 }
                 .subscribe()
 
-        intents += view.archiveConversationIntent
-                .subscribe { threadId -> markArchived.execute(threadId) }
+        intents += view.conversationClickIntent
+                .subscribe { threadId -> navigator.showConversation(threadId) }
 
-        intents += view.unarchiveConversationIntent
-                .subscribe { threadId -> markUnarchived.execute(threadId) }
+        intents += view.conversationLongClickIntent
+                .withLatestFrom(state, { l, mainState ->
+                    when (mainState.page) {
+                        is Inbox -> {
+                            val page = mainState.page.copy(menu = listOf(menuArchive, menuDelete))
+                            newState { it.copy(page = page) }
+                        }
+                        is Archived -> {
+                            val page = mainState.page.copy(menu = listOf(menuUnarchive, menuDelete))
+                            newState { it.copy(page = page) }
+                        }
+                    }
+                })
+                .subscribe()
 
-        intents += view.deleteConversationIntent
-                .subscribe { threadId -> deleteConversation.execute(threadId) }
+        intents += view.conversationMenuItemIntent
+                .withLatestFrom(state, { actionId, mainState ->
+                    when (mainState.page) {
+                        is Inbox -> {
+                            val page = mainState.page.copy(menu = ArrayList())
+                            newState { it.copy(page = page) }
+                        }
+                        is Archived -> {
+                            val page = mainState.page.copy(menu = ArrayList())
+                            newState { it.copy(page = page) }
+                        }
+                    }
+                    actionId
+                })
+                .withLatestFrom(view.conversationLongClickIntent, { actionId, threadId ->
+                    when (actionId) {
+                        menuArchive.actionId -> markArchived.execute(threadId)
+                        menuUnarchive.actionId -> markUnarchived.execute(threadId)
+                        menuDelete.actionId -> deleteConversation.execute(threadId)
+                    }
+                })
+                .subscribe()
 
-        val archivedConversation = view.swipeConversationIntent
+        val swipedConversation = view.swipeConversationIntent
                 .withLatestFrom(conversations.toObservable(), { position, conversations -> conversations[position] })
                 .map { pair -> pair.conversation }
                 .map { conversation -> conversation.id }
 
-        intents += archivedConversation
+        intents += swipedConversation
                 .withLatestFrom(state, { threadId, state ->
                     markArchived.execute(threadId) {
                         if (state.page is Inbox) {
@@ -119,7 +157,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe()
 
         intents += view.undoSwipeConversationIntent
-                .withLatestFrom(archivedConversation, { _, threadId -> threadId })
+                .withLatestFrom(swipedConversation, { _, threadId -> threadId })
                 .subscribe { threadId -> markUnarchived.execute(threadId) }
     }
 

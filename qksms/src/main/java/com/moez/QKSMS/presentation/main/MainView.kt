@@ -10,9 +10,9 @@ interface MainView : QkView<MainState> {
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>
     val drawerItemIntent: Observable<DrawerItem>
-    val archiveConversationIntent: Subject<Long>
-    val unarchiveConversationIntent: Subject<Long>
-    val deleteConversationIntent: Subject<Long>
+    val conversationClickIntent: Observable<Long>
+    val conversationLongClickIntent: Observable<Long>
+    val conversationMenuItemIntent: Subject<Int>
     val swipeConversationIntent: Observable<Int>
     val undoSwipeConversationIntent: Subject<Unit>
 

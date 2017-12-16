@@ -1,6 +1,7 @@
 package com.moez.QKSMS.presentation.main
 
 import com.moez.QKSMS.data.model.InboxItem
+import com.moez.QKSMS.data.model.MenuItem
 import io.reactivex.Flowable
 
 data class MainState(
@@ -10,10 +11,17 @@ data class MainState(
 
 sealed class MainPage
 
-data class Inbox(val data: Flowable<List<InboxItem>>?, val showArchivedSnackbar: Boolean = false) : MainPage()
+data class Inbox(
+        val data: Flowable<List<InboxItem>>?,
+        val menu: List<MenuItem> = ArrayList(),
+        val showArchivedSnackbar: Boolean = false) : MainPage()
 
-data class Archived(val data: Flowable<List<InboxItem>>?) : MainPage()
+data class Archived(
+        val data: Flowable<List<InboxItem>>?,
+        val menu: List<MenuItem> = ArrayList()) : MainPage()
 
-data class Scheduled(val data: Any? = null) : MainPage()
+data class Scheduled(
+        val data: Any? = null) : MainPage()
 
-data class Blocked(val data: Any? = null) : MainPage()
+data class Blocked(
+        val data: Any? = null) : MainPage()
