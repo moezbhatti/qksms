@@ -24,7 +24,8 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
-class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
+class ComposeViewModel(threadId: Long, body: String)
+    : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L, draft = body)) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var contactFilter: ContactFilter
@@ -180,6 +181,11 @@ class ComposeViewModel(threadId: Long) : QkViewModel<ComposeView, ComposeState>(
         intents += view.copyTextIntent.subscribe { message ->
             ClipboardUtils.copy(context, message.body)
             context.makeToast(R.string.toast_copied)
+        }
+
+        // Forward the message
+        intents += view.forwardMessageIntent.subscribe { message ->
+            navigator.showCompose(message.body)
         }
 
         // Delete the selected message

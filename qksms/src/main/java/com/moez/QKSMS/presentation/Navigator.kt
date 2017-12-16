@@ -22,8 +22,9 @@ class Navigator @Inject constructor(val context: Context) {
         context.startActivity(intent)
     }
 
-    fun showCompose() {
+    fun showCompose(body: String? = null) {
         val intent = Intent(context, ComposeActivity::class.java)
+        intent.putExtra("body", body)
         startActivity(intent)
     }
 
@@ -55,7 +56,8 @@ class Navigator @Inject constructor(val context: Context) {
 
                 ComposeViewModel::class.java -> {
                     val threadId = intent.getLongExtra("threadId", 0)
-                    ComposeViewModel(threadId)
+                    val body = intent.getStringExtra("body") ?: ""
+                    ComposeViewModel(threadId, body)
                 }
 
                 SettingsViewModel::class.java -> {
