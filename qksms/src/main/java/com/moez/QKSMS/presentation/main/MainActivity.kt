@@ -46,11 +46,14 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent by lazy { drawerLayout.drawerOpen(Gravity.START) }
-    override val inboxIntent by lazy { inbox.clicks() }
-    override val archivedIntent by lazy { archived.clicks() }
-    override val scheduledIntent by lazy { scheduled.clicks() }
-    override val blockedIntent by lazy { blocked.clicks() }
-    override val settingsIntent by lazy { settings.clicks() }
+    override val drawerItemIntent: Observable<DrawerItem> by lazy {
+        Observable.merge(listOf(
+                inbox.clicks().map { DrawerItem.INBOX },
+                archived.clicks().map { DrawerItem.ARCHIVED },
+                scheduled.clicks().map { DrawerItem.SCHEDULED },
+                blocked.clicks().map { DrawerItem.BLOCKED },
+                settings.clicks().map { DrawerItem.SETTINGS }))
+    }
     override val deleteConversationIntent: Subject<Long> = PublishSubject.create()
     override val archiveConversationIntent: Observable<Long> by lazy {
         itemTouchCallback.swipes

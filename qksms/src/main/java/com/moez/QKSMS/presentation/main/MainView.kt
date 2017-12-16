@@ -9,12 +9,10 @@ interface MainView : QkView<MainState> {
     val queryChangedIntent: Observable<CharSequence>
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>
-    val inboxIntent: Observable<Unit>
-    val archivedIntent: Observable<Unit>
-    val scheduledIntent: Observable<Unit>
-    val blockedIntent: Observable<Unit>
-    val settingsIntent: Observable<Unit>
+    val drawerItemIntent: Observable<DrawerItem>
     val deleteConversationIntent: Subject<Long>
     val archiveConversationIntent: Observable<Long>
 
 }
+
+enum class DrawerItem { INBOX, ARCHIVED, SCHEDULED, BLOCKED, SETTINGS }
