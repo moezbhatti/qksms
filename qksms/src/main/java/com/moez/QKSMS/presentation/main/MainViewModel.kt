@@ -69,8 +69,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe { navigator.showCompose() }
 
         intents += view.drawerOpenIntent
-                .filter { it }
-                .subscribe { newState { it.copy(drawerOpen = true) } }
+                .subscribe { open -> newState { it.copy(drawerOpen = open) } }
 
         intents += view.drawerItemIntent
                 .doOnNext { newState { it.copy(drawerOpen = false) } }
