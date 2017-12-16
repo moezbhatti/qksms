@@ -11,7 +11,8 @@ interface MainView : QkView<MainState> {
     val drawerOpenIntent: Observable<Boolean>
     val drawerItemIntent: Observable<DrawerItem>
     val deleteConversationIntent: Subject<Long>
-    val archiveConversationIntent: Observable<Long>
+    val archiveConversationIntent: Observable<Int>
+    val unarchiveConversationIntent: Subject<Unit>
 
 }
 

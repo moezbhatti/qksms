@@ -55,15 +55,15 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 settings.clicks().map { DrawerItem.SETTINGS }))
     }
     override val deleteConversationIntent: Subject<Long> = PublishSubject.create()
-    override val archiveConversationIntent: Observable<Long> by lazy {
-        itemTouchCallback.swipes
-                .map { position -> conversationsAdapter.getItem(position) }
-                .map { pair -> pair.conversation }
-                .map { conversation -> conversation.id }
-    }
+    override val archiveConversationIntent: Observable<Int> by lazy { itemTouchCallback.swipes }
+    override val unarchiveConversationIntent: Subject<Unit> = PublishSubject.create()
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
-    private val archiveSnackbar by lazy { Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE) }
+    private val archiveSnackbar by lazy {
+        Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE).apply {
+            setAction(R.string.button_undo, { unarchiveConversationIntent.onNext(Unit) })
+        }
+    }
 
     init {
         appComponent.inject(this)

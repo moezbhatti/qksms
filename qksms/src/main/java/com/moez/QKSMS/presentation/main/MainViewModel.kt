@@ -5,10 +5,7 @@ import android.provider.Telephony
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.filter.ConversationFilter
 import com.moez.QKSMS.data.repository.MessageRepository
-import com.moez.QKSMS.domain.interactor.DeleteConversation
-import com.moez.QKSMS.domain.interactor.MarkAllSeen
-import com.moez.QKSMS.domain.interactor.MarkArchived
-import com.moez.QKSMS.domain.interactor.PartialSync
+import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.BackpressureStrategy
@@ -28,6 +25,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var markAllSeen: MarkAllSeen
     @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var markArchived: MarkArchived
+    @Inject lateinit var markUnarchived: MarkUnarchived
     @Inject lateinit var partialSync: PartialSync
 
     private val conversations by lazy { messageRepo.getConversations() }
@@ -88,7 +86,12 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         intents += view.deleteConversationIntent
                 .subscribe { threadId -> deleteConversation.execute(threadId) }
 
-        intents += view.archiveConversationIntent
+        val archivedConversation = view.archiveConversationIntent
+                .withLatestFrom(conversations.toObservable(), { position, conversations -> conversations[position] })
+                .map { pair -> pair.conversation }
+                .map { conversation -> conversation.id }
+
+        intents += archivedConversation
                 .withLatestFrom(state, { threadId, state ->
                     markArchived.execute(threadId) {
                         if (state.page is Inbox) {
@@ -107,6 +110,10 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                     }
                 })
                 .subscribe()
+
+        intents += view.unarchiveConversationIntent
+                .withLatestFrom(archivedConversation, { _, threadId -> threadId })
+                .subscribe { threadId -> markUnarchived.execute(threadId) }
     }
 
 }
