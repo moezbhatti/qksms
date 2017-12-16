@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.domain.interactor.MarkUnarchived
 import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
@@ -24,7 +25,9 @@ import javax.inject.Singleton
 class NotificationManager @Inject constructor(
         private val context: Context,
         private val prefs: Preferences,
-        private val colors: Colors) {
+        private val colors: Colors,
+        private val markUnarchived: MarkUnarchived
+) {
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
@@ -56,11 +59,15 @@ class NotificationManager @Inject constructor(
                 .forEach { group ->
                     val threadId = group.key
                     val messages = group.value
-                    val conversation = messageRepo.getConversation(threadId)
+                    val conversation = messageRepo.getConversation(threadId) ?: return
+
+                    if (conversation.archived) {
+                        markUnarchived.execute(threadId)
+                    }
 
                     val style = NotificationCompat.MessagingStyle("Me")
                     messages.forEach { message ->
-                        val name = if (message.isMe()) null else conversation?.getTitle() ?: ""
+                        val name = if (message.isMe()) null else conversation.getTitle()
                         style.addMessage(message.body, message.date, name)
                     }
 
@@ -84,7 +91,7 @@ class NotificationManager @Inject constructor(
                             .addAction(readAction)
                             .setStyle(style)
 
-                    if (Build.VERSION.SDK_INT >= 24 && conversation != null) {
+                    if (Build.VERSION.SDK_INT >= 24) {
                         notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), conversation.id))
                     }
 
