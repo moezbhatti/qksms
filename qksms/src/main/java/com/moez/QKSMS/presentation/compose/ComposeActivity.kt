@@ -46,8 +46,6 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val attachIntent by lazy { attach.clicks() }
     override val sendIntent by lazy { send.clicks() }
 
-    private val layoutManager by lazy { LinearLayoutManager(this).apply { stackFromEnd = true } }
-
     @Inject lateinit var chipsAdapter: ChipsAdapter
     @Inject lateinit var contactsAdapter: ContactAdapter
     @Inject lateinit var messageAdapter: MessagesAdapter
@@ -72,7 +70,33 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         contacts.layoutManager = LinearLayoutManager(this)
         contacts.adapter = contactsAdapter
 
-        setupMessagesAdapter()
+        val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
+
+        messageAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart > 0) {
+                    messageAdapter.notifyItemChanged(positionStart - 1)
+                }
+
+                // If we're at the bottom, scroll down to show new messages
+                val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                if (positionStart >= messageAdapter.itemCount - 1 && lastVisiblePosition == positionStart - 1) {
+                    messageList.scrollToPosition(positionStart)
+                }
+            }
+        })
+
+        messageAdapter.longClicks.subscribe { message ->
+            AlertDialog.Builder(this)
+                    .setItems(R.array.message_options, { _, row ->
+                        when (row) {
+                            0 -> copyTextIntent.onNext(message)
+                            1 -> forwardMessageIntent.onNext(message)
+                            2 -> deleteMessageIntent.onNext(message)
+                        }
+                    })
+                    .show()
+        }
 
         messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
@@ -146,36 +170,6 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         if (message.text.toString() != state.draft) message.setText(state.draft)
 
         send.isEnabled = state.canSend
-    }
-
-    private fun setupMessagesAdapter() {
-        messageAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                super.onItemRangeInserted(positionStart, itemCount)
-
-                if (positionStart > 0) {
-                    messageAdapter.notifyItemChanged(positionStart - 1)
-                }
-
-                // If we're at the bottom, scroll down to show new messages
-                val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
-                if (positionStart >= messageAdapter.itemCount - 1 && lastVisiblePosition == positionStart - 1) {
-                    messageList.scrollToPosition(positionStart)
-                }
-            }
-        })
-
-        messageAdapter.longClicks.subscribe { message ->
-            AlertDialog.Builder(this)
-                    .setItems(R.array.message_options, { _, row ->
-                        when (row) {
-                            0 -> copyTextIntent.onNext(message)
-                            1 -> forwardMessageIntent.onNext(message)
-                            2 -> deleteMessageIntent.onNext(message)
-                        }
-                    })
-                    .show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
