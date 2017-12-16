@@ -55,8 +55,8 @@
     <string name="toast_unarchived">Moved to inbox</string>
 
     <string-array name="conversation_options">
-        <item>Archive</item>
-        <item>Unarchive</item>
+        <item>Archive conversation</item>
+        <item>Remove from archive</item>
         <item>Delete</item>
     </string-array>
 
