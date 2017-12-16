@@ -6,13 +6,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class Interactor<T, in Params>: Disposable {
+abstract class Interactor<in Params, Result>: Disposable {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-    abstract fun buildObservable(params: Params): Flowable<T>
+    abstract fun buildObservable(params: Params): Flowable<Result>
 
-    fun execute(params: Params, observer: (T) -> Unit = {}) {
+    fun execute(params: Params, observer: (Result) -> Unit = {}) {
         disposables.add(buildObservable(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

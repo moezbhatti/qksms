@@ -15,9 +15,10 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
-        val context: Context,
-        val prefs: Preferences,
-        val messageRepo: MessageRepository) : Interactor<Unit, SendMessage.Params>() {
+        private val context: Context,
+        private val prefs: Preferences,
+        private val messageRepo: MessageRepository)
+    : Interactor<SendMessage.Params, Unit>() {
 
     data class Params(val threadId: Long, val address: String, val body: String)
 

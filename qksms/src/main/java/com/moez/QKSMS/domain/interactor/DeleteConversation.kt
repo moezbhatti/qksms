@@ -4,7 +4,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class DeleteConversation @Inject constructor(private val messageRepo: MessageRepository): Interactor<Unit, Long>() {
+class DeleteConversation @Inject constructor(private val messageRepo: MessageRepository): Interactor<Long, Unit>() {
 
     override fun buildObservable(params: Long): Flowable<Unit> {
         return Flowable.just(Unit)

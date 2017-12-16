@@ -5,7 +5,9 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class MarkFailed @Inject constructor(val messageRepo: MessageRepository) : Interactor<Unit, MarkFailed.Params>() {
+class MarkFailed @Inject constructor(
+        private val messageRepo: MessageRepository)
+    : Interactor<MarkFailed.Params, Unit>() {
 
     data class Params(val uri: Uri, val resultCode: Int)
 

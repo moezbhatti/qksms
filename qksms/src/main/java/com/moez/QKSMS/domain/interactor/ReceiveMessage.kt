@@ -9,10 +9,10 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class ReceiveMessage @Inject constructor(
-        val context: Context,
-        val messageRepo: MessageRepository,
-        val notificationManager: NotificationManager)
-    : Interactor<Unit, ReceiveMessage.Params>() {
+        private val context: Context,
+        private val messageRepo: MessageRepository,
+        private val notificationManager: NotificationManager)
+    : Interactor<ReceiveMessage.Params, Unit>() {
 
     data class Params(val address: String, val body: String, val sentTime: Long)
 

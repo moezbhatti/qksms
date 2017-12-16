@@ -18,7 +18,7 @@ open class PartialSync @Inject constructor(
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
         private val cursorToRecipient: CursorToRecipient)
-    : Interactor<Long, Unit>() {
+    : Interactor<Unit, Long>() {
 
     override fun buildObservable(params: Unit): Flowable<Long> {
         val contentResolver = context.contentResolver
