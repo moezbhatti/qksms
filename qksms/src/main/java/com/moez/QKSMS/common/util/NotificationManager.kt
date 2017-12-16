@@ -29,6 +29,10 @@ class NotificationManager @Inject constructor(
         private val markUnarchived: MarkUnarchived
 ) {
 
+    companion object {
+        val VIBRATE_PATTERN = longArrayOf(0, 200, 0, 200)
+    }
+
     private val notificationManager = NotificationManagerCompat.from(context)
 
     init {
@@ -45,7 +49,7 @@ class NotificationManager @Inject constructor(
             channel.enableLights(true)
             channel.lightColor = Color.WHITE
             channel.enableVibration(true)
-            channel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+            channel.vibrationPattern = VIBRATE_PATTERN
 
             notificationManager.createNotificationChannel(channel)
         }
@@ -90,6 +94,7 @@ class NotificationManager @Inject constructor(
                             .setDeleteIntent(seenPI)
                             .addAction(readAction)
                             .setStyle(style)
+                            .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
 
                     if (Build.VERSION.SDK_INT >= 24) {
                         notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), conversation.id))
