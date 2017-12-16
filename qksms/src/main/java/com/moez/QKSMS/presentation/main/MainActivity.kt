@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
@@ -122,6 +123,21 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 .doOnNext { color -> scheduled.background = rowBackground(color) }
                 .doOnNext { color -> blocked.background = rowBackground(color) }
                 .subscribe()
+
+        conversationsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                // If we're at the top, scroll up to show new conversations
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val firstVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+                if (firstVisiblePosition == 0) {
+                    recyclerView.scrollToPosition(positionStart)
+                }
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                onItemRangeInserted(positionStart, itemCount)
+            }
+        })
 
         conversationsAdapter.longClicks.subscribe { threadId ->
             AlertDialog.Builder(this)
