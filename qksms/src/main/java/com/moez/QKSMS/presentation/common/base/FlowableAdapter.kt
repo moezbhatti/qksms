@@ -13,6 +13,8 @@ abstract class FlowableAdapter<T> : QkAdapter<T>() {
 
     var flowable: Flowable<List<T>>? = null
         set(value) {
+            if (field == value) return
+
             field = value
 
             // Stop listening for updates on the old flowable

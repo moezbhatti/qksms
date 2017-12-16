@@ -12,8 +12,10 @@ import com.moez.QKSMS.domain.interactor.PartialSync
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.withLatestFrom
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -97,7 +99,24 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe { threadId -> deleteConversation.execute(threadId) }
 
         intents += view.archiveConversationIntent
-                .subscribe { threadId -> markArchived.execute(threadId) }
+                .withLatestFrom(state, { threadId, state ->
+                    markArchived.execute(threadId) {
+                        if (state.page is Inbox) {
+                            val page = state.page.copy(showArchivedSnackbar = true)
+                            newState { it.copy(page = page) }
+                        }
+                    }
+                })
+                .flatMap { Observable.timer(2750, TimeUnit.MILLISECONDS) }
+                .withLatestFrom(state, { threadId, state ->
+                    markArchived.execute(threadId) {
+                        if (state.page is Inbox) {
+                            val page = state.page.copy(showArchivedSnackbar = false)
+                            newState { it.copy(page = page) }
+                        }
+                    }
+                })
+                .subscribe()
     }
 
 }

@@ -10,7 +10,7 @@ data class MainState(
 
 sealed class MainPage
 
-data class Inbox(val data: Flowable<List<InboxItem>>?) : MainPage()
+data class Inbox(val data: Flowable<List<InboxItem>>?, val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(val data: Flowable<List<InboxItem>>?) : MainPage()
 

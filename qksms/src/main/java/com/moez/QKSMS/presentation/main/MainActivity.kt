@@ -7,6 +7,7 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -59,6 +60,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     }
 
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
+    private val archiveSnackbar by lazy { Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE) }
 
     init {
         appComponent.inject(this)
@@ -157,6 +159,11 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
             }
+        }
+
+        when (state.page is Inbox && state.page.showArchivedSnackbar) {
+            true -> archiveSnackbar.show()
+            false -> archiveSnackbar.dismiss()
         }
 
         inbox.isSelected = state.page is Inbox

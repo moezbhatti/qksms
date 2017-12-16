@@ -46,7 +46,7 @@
     <string name="notification_read">Mark read</string>
 
     <string name="toast_copied">Copied</string>
-    <string name="toast_archived">Archived</string>
+    <string name="toast_archived">Archived conversation</string>
     <string name="toast_unarchived">Moved to inbox</string>
 
     <string-array name="conversation_options">
