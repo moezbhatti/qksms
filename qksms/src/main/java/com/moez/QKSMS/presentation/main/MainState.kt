@@ -5,14 +5,15 @@ import com.moez.QKSMS.data.model.MenuItem
 import io.reactivex.Flowable
 
 data class MainState(
-        val page: MainPage = Inbox(null),
+        val page: MainPage = Inbox(),
         val drawerOpen: Boolean = false
 )
 
 sealed class MainPage
 
 data class Inbox(
-        val data: Flowable<List<InboxItem>>?,
+        val query: CharSequence = "",
+        val data: Flowable<List<InboxItem>>? = null,
         val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()
 

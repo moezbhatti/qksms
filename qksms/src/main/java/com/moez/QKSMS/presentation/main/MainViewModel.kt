@@ -10,9 +10,7 @@ import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkViewModel
-import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import java.util.concurrent.TimeUnit
@@ -45,7 +43,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         disposables += deleteConversation
         disposables += partialSync
 
-        newState { it.copy(page = Inbox(messageRepo.getConversations())) }
+        newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
 
         if (Telephony.Sms.getDefaultSmsPackage(context) != context.packageName) {
             partialSync.execute(Unit)
@@ -59,16 +57,17 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
         intents += view.queryChangedIntent
                 .skip(1)
-                .toFlowable(BackpressureStrategy.LATEST)
                 .debounce(200, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { query ->
-                    val filteredConversations = conversations.map { list ->
-                        list.filter { conversationFilter.filter(it.conversation, query) }
+                .withLatestFrom(state, { query, state ->
+                    if (state.page is Inbox) {
+                        val conversations = conversations.map { list ->
+                            list.filter { conversationFilter.filter(it.conversation, query) }
+                        }
+                        val page = state.page.copy(query = query, data = conversations)
+                        newState { it.copy(page = page) }
                     }
-
-                    newState { it.copy(page = Inbox(filteredConversations)) }
-                }
+                })
+                .subscribe()
 
         intents += view.composeIntent
                 .subscribe { navigator.showCompose() }
@@ -82,7 +81,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(conversations)) }
+                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(query = "", data = conversations)) }
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
@@ -91,7 +90,14 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe()
 
         intents += view.conversationClickIntent
-                .subscribe { threadId -> navigator.showConversation(threadId) }
+                .doOnNext { threadId -> navigator.showConversation(threadId) }
+                .withLatestFrom(state, { _, state ->
+                    if (state.page is Inbox && state.page.query != "") {
+                        val page = state.page.copy(query = "", data = conversations)
+                        newState { it.copy(page = page) }
+                    }
+                })
+                .subscribe()
 
         intents += view.conversationLongClickIntent
                 .withLatestFrom(state, { l, mainState ->

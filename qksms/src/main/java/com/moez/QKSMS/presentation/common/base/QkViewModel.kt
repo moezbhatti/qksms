@@ -2,6 +2,7 @@ package com.moez.QKSMS.presentation.common.base
 
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.BehaviorSubject
@@ -17,7 +18,9 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
     open fun bindView(view: View) {
         intents.clear()
 
-        intents += state.subscribe { view.render(it) }
+        intents += state
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { view.render(it) }
     }
 
     protected fun newState(reducer: (State) -> State) {

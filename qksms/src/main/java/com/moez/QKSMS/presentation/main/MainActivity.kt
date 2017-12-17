@@ -160,8 +160,12 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     }
 
     override fun render(state: MainState) {
+        toolbarSearch.isEnabled = state.page is Inbox
+        toolbarSearch.textSize = if (state.page is Inbox) 16f else 20f
+
         when (state.page) {
             is Inbox -> {
+                if (toolbarSearch.text.toString() != state.page.query.toString()) toolbarSearch.setText(state.page.query)
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
@@ -169,6 +173,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             }
 
             is Archived -> {
+                toolbarSearch.setText(R.string.title_archived)
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
@@ -176,12 +181,14 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             }
 
             is Scheduled -> {
+                toolbarSearch.setText(R.string.title_scheduled)
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
             }
 
             is Blocked -> {
+                toolbarSearch.setText(R.string.title_blocked)
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
