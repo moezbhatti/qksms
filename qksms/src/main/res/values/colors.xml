@@ -8,7 +8,7 @@
     <color name="toolbarLight">#FFFFFF</color>
     <color name="toolbarDark">#1d262b</color>
 
-    <color name="backgroundLight">#F2F2F2</color>
+    <color name="backgroundLight">#ECEFF1</color>
     <color name="backgroundDark">#192025</color>
 
     <color name="fieldLight">#0C000000</color>

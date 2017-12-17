@@ -2,6 +2,7 @@ package com.moez.QKSMS.presentation.compose
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -101,27 +102,29 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
 
+        messageBackground.backgroundTintMode = PorterDuff.Mode.MULTIPLY
+
         val states = arrayOf(
                 intArrayOf(android.R.attr.state_enabled),
                 intArrayOf(-android.R.attr.state_enabled))
 
         disposables += Observables
-                .combineLatest(colors.theme, colors.textTertiary, { theme, textTertiary ->
-                    ColorStateList(states, intArrayOf(theme, textTertiary))
+                .combineLatest(colors.textPrimaryOnTheme, colors.textTertiaryOnTheme, { primary, tertiary ->
+                    ColorStateList(states, intArrayOf(primary, tertiary))
                 })
-                .subscribe { tintList -> send.imageTintList = tintList }
+                .subscribe { tintList -> sendIcon.imageTintList = tintList }
+
+        disposables += colors.theme
+                .subscribe { color -> send.setBackgroundTint(color) }
 
         disposables += colors.textSecondary
                 .subscribe { color -> attach.setTint(color) }
 
-        disposables += colors.background
-                .subscribe { color -> composeBar.setBackgroundColor(color) }
+        disposables += colors.bubble
+                .subscribe { color -> messageBackground.setBackgroundTint(color) }
 
         disposables += colors.composeBackground
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
-
-        disposables += colors.field
-                .subscribe { color -> message.setBackgroundTint(color) }
 
         window.callback = ComposeWindowCallback(window.callback, this)
     }
@@ -170,6 +173,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         if (message.text.toString() != state.draft) message.setText(state.draft)
 
         send.isEnabled = state.canSend
+        sendIcon.isEnabled = state.canSend
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
