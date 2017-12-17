@@ -14,7 +14,7 @@
     <string name="menu_unarchive">Remove from archive</string>
     <string name="menu_delete">Delete</string>
 
-    <string name="compose_hint">Write a message</string>
+    <string name="compose_hint">Write a message…</string>
 
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archived</string>
