@@ -51,6 +51,12 @@
                     app:widget="@layout/settings_switch_widget" />
 
                 <com.moez.QKSMS.presentation.common.widget.PreferenceView
+                    android:id="@+id/notificationsO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/settings_notifications_title" />
+
+                <com.moez.QKSMS.presentation.common.widget.PreferenceView
                     android:id="@+id/notifications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

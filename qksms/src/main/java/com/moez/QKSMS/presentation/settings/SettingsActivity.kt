@@ -72,6 +72,8 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         viewModel.bindView(this)
 
         val supportsNotificationChannels = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+        notificationsO.setVisible(supportsNotificationChannels)
+        notifications.setVisible(!supportsNotificationChannels)
         vibration.setVisible(!supportsNotificationChannels)
         ringtone.setVisible(!supportsNotificationChannels)
 
