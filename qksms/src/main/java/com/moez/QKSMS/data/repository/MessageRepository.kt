@@ -13,12 +13,14 @@ import com.moez.QKSMS.common.util.extensions.asMaybe
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
 import com.moez.QKSMS.data.mapper.CursorToConversation
 import com.moez.QKSMS.data.mapper.CursorToMessage
+import com.moez.QKSMS.data.mapper.CursorToRecipient
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.InboxItem
 import com.moez.QKSMS.data.model.Message
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction
+import io.reactivex.rxkotlin.toFlowable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
@@ -31,7 +33,8 @@ import javax.inject.Singleton
 class MessageRepository @Inject constructor(
         private val context: Context,
         private val cursorToMessage: CursorToMessage,
-        private val cursorToConversation: CursorToConversation) {
+        private val cursorToConversation: CursorToConversation,
+        private val cursorToRecipient: CursorToRecipient) {
 
     fun getConversations(archived: Boolean = false): Flowable<List<InboxItem>> {
         val realm = Realm.getDefaultInstance()
@@ -71,11 +74,6 @@ class MessageRepository @Inject constructor(
                 .equalTo("id", threadId)
                 .findFirst()
     }
-
-    /**
-     * Gets an unmanaged conversation by the address
-     */
-    fun getOrCreateConversation(address: String) = getOrCreateConversation(listOf(address))
 
     fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation> {
         return Maybe.just(addresses)
@@ -257,7 +255,7 @@ class MessageRepository @Inject constructor(
         context.contentResolver.delete(uri, null, null)
     }
 
-    fun getConversationFromCp(threadId: Long): Conversation? {
+    private fun getConversationFromCp(threadId: Long): Conversation? {
         var conversation: Conversation? = null
 
         val cursor = context.contentResolver.query(
@@ -270,6 +268,13 @@ class MessageRepository @Inject constructor(
         if (cursor.moveToFirst()) {
             conversation = cursorToConversation.map(cursor)
             conversation.insertOrUpdate()
+
+            conversation.recipients.toFlowable()
+                    .map { recipient -> recipient.id.toString() }
+                    .map { id -> context.contentResolver.query(CursorToRecipient.URI, null, "_id = ?", arrayOf(id), null) }
+                    .flatMap { recipientCursor -> recipientCursor.asFlowable().map { cursor -> cursorToRecipient.map(cursor) } }
+                    .doOnNext { recipient -> recipient.insertOrUpdate() }
+                    .blockingSubscribe()
         }
 
         cursor.close()
@@ -290,7 +295,12 @@ class MessageRepository @Inject constructor(
         val columnsMap = CursorToMessage.MessageColumns(cursor)
 
         if (cursor.moveToFirst()) {
-            cursorToMessage.map(Pair(cursor, columnsMap)).insertOrUpdate()
+            val message = cursorToMessage.map(Pair(cursor, columnsMap))
+
+            // If the conversation isn't in Realm, add it
+            getConversation(message.threadId) ?: getConversationFromCp(message.threadId)
+
+            message.insertOrUpdate()
         }
 
         cursor.close()
