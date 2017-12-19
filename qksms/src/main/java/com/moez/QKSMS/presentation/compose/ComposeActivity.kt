@@ -124,7 +124,9 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                 .subscribe { color -> messageBackground.setBackgroundTint(color) }
 
         disposables += colors.composeBackground
-                .subscribe { color -> window.decorView.setBackgroundColor(color) }
+                .doOnNext { color -> composeBar.setBackgroundTint(color) }
+                .doOnNext { color -> window.decorView.setBackgroundColor(color) }
+                .subscribe()
 
         window.callback = ComposeWindowCallback(window.callback, this)
     }
