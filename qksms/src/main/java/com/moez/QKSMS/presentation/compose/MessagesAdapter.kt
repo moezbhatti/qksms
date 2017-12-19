@@ -12,6 +12,7 @@ import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPadding
+import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.data.model.Message
 import com.moez.QKSMS.data.model.PhoneNumber
@@ -83,16 +84,13 @@ class MessagesAdapter @Inject constructor(
 
         bindGrouping(view, position)
 
-        view.status?.visibility = when {
-            message.isSending() || message.isFailedMessage() -> View.VISIBLE
-            else -> View.GONE
-        }
-
         view.status?.text = when {
-            message.isSending() -> "Sending..."
-            message.isFailedMessage() -> "Failed to send. Tap to try again"
+            message.isSending() -> context.getString(R.string.message_status_sending)
+            message.isDelivered() -> context.getString(R.string.message_status_delivered)
+            message.isFailedMessage() -> context.getString(R.string.message_status_failed)
             else -> null
         }
+        view.status?.setVisible(!view.status?.text.isNullOrBlank())
 
         view.body.text = message.body
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)

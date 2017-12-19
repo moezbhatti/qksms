@@ -4,7 +4,6 @@ import android.content.ContentUris
 import android.net.Uri
 import android.provider.Telephony.*
 import io.realm.RealmObject
-import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
 open class Message : RealmObject() {
@@ -24,19 +23,23 @@ open class Message : RealmObject() {
     var read: Boolean = false
     var locked: Boolean = false
 
-    @Ignore var deliveryStatus: DeliveryStatus = DeliveryStatus.NONE
+    var deliveryStatusString: String = DeliveryStatus.NONE.toString()
+    var deliveryStatus: DeliveryStatus
         get() = DeliveryStatus.valueOf(deliveryStatusString)
-    var deliveryStatusString: String = "NONE"
-        get() = deliveryStatus.toString()
+        set(value) {
+            deliveryStatusString = value.toString()
+        }
 
     // SMS only
     var errorCode: Int = 0
 
     // MMS only
-    @Ignore var attachmentType: AttachmentType = AttachmentType.NOT_LOADED
+    var attachmentTypeString: String = AttachmentType.NOT_LOADED.toString()
+    var attachmentType: AttachmentType
         get() = AttachmentType.valueOf(attachmentTypeString)
-    var attachmentTypeString: String = "NOT_LOADED"
-        get() = attachmentType.toString()
+        set(value) {
+            attachmentTypeString = value.toString()
+        }
 
     var mmsDeliveryStatusString: String = ""
     var readReportString: String = ""
@@ -74,6 +77,12 @@ open class Message : RealmObject() {
 
     fun isSending(): Boolean {
         return !isFailedMessage() && isOutgoingMessage()
+    }
+
+    fun isDelivered(): Boolean {
+        val isDeliveredMms = false // TODO
+        val isDeliveredSms = deliveryStatus == DeliveryStatus.RECEIVED
+        return isDeliveredMms || isDeliveredSms
     }
 
     fun isFailedMessage(): Boolean {
