@@ -15,7 +15,6 @@ import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -108,6 +107,8 @@ class ComposeViewModel(threadId: Long, body: String)
                 .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
                     selectedContacts.isEmpty() || query.isNotEmpty()
                 })
+                .skipUntil(state.filter { state -> state.editingMode == true })
+                .takeUntil(state.filter { state -> state.editingMode == false })
                 .distinctUntilChanged()
                 .subscribe { contactsVisible -> newState { it.copy(contactsVisible = contactsVisible && it.editingMode) } }
 
@@ -119,8 +120,9 @@ class ComposeViewModel(threadId: Long, body: String)
                             .filterNot { contact -> selectedContacts.contains(contact) }
                             .filter { contact -> contactFilter.filter(contact, query) }
                 })
+                .skipUntil(state.filter { state -> state.editingMode == true })
+                .takeUntil(state.filter { state -> state.editingMode == false })
                 .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
 
         // Update the list of selected contacts when a new contact is selected or an existing one is deselected
@@ -131,6 +133,8 @@ class ComposeViewModel(threadId: Long, body: String)
                 view.chipSelectedIntent.doOnNext { contact ->
                     contactsReducer.onNext { contacts -> contacts.toMutableList().apply { add(contact) } }
                 })
+                .skipUntil(state.filter { state -> state.editingMode == true })
+                .takeUntil(state.filter { state -> state.editingMode == false })
                 .subscribe()
 
         // When the menu is loaded, trigger a new state so that the menu options can be rendered correctly

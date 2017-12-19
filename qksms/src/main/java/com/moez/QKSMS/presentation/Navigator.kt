@@ -1,10 +1,14 @@
 package com.moez.QKSMS.presentation
 
+import android.annotation.TargetApi
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import com.moez.QKSMS.common.util.NotificationManager
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.main.MainViewModel
@@ -41,6 +45,14 @@ class Navigator @Inject constructor(val context: Context) {
 
     fun makePhoneCall(address: String) {
         val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$address"))
+        startActivity(intent)
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    fun showNotificationSettings() {
+        val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, NotificationManager.DEFAULT_CHANNEL_ID)
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
         startActivity(intent)
     }
 

@@ -7,6 +7,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.domain.interactor.FullSync
+import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.rxkotlin.plusAssign
 import timber.log.Timber
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var prefs: Preferences
     @Inject lateinit var fullSync: FullSync
 
@@ -89,6 +91,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 R.id.dark -> prefs.dark.set(!prefs.dark.get())
 
                 R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
+
+                R.id.notificationsO -> navigator.showNotificationSettings()
 
                 R.id.notifications -> prefs.notifications.set(!prefs.notifications.get())
 

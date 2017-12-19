@@ -30,6 +30,8 @@ class NotificationManager @Inject constructor(
 ) {
 
     companion object {
+        val DEFAULT_CHANNEL_ID = "channel_1"
+
         val VIBRATE_PATTERN = longArrayOf(0, 200, 0, 200)
     }
 
@@ -40,16 +42,15 @@ class NotificationManager @Inject constructor(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            val id = "channel_1"
             val name = "Message notifications"
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(id, name, importance)
-
-            channel.description = "Message notifications description"
-            channel.enableLights(true)
-            channel.lightColor = Color.WHITE
-            channel.enableVibration(true)
-            channel.vibrationPattern = VIBRATE_PATTERN
+            val channel = NotificationChannel(DEFAULT_CHANNEL_ID, name, importance).apply {
+                description = "Message notifications description"
+                enableLights(true)
+                lightColor = Color.WHITE
+                enableVibration(true)
+                vibrationPattern = VIBRATE_PATTERN
+            }
 
             notificationManager.createNotificationChannel(channel)
         }

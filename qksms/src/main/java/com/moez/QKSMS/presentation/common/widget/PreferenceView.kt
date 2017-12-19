@@ -26,6 +26,7 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
     init {
         View.inflate(context, R.layout.preference_view, this)
         setBackgroundResource(R.drawable.ripple)
+        orientation = VERTICAL
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView)?.run {
             title = getString(R.styleable.PreferenceView_title)
