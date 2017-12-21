@@ -31,6 +31,7 @@ class ComposeViewModel(threadId: Long, body: String)
     @Inject lateinit var contactsRepo: ContactRepository
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var syncContacts: ContactSync
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
     @Inject lateinit var deleteConversation: DeleteConversation
@@ -96,6 +97,10 @@ class ComposeViewModel(threadId: Long, body: String)
                     messages
                 })
                 .subscribe()
+
+        if (threadId == 0L) {
+            syncContacts.execute(Unit)
+        }
     }
 
     override fun bindView(view: ComposeView) {
