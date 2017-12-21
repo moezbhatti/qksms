@@ -2,7 +2,7 @@
 
     <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/statusBarLight</item>
     </style>

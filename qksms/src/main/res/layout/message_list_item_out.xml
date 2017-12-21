@@ -27,40 +27,37 @@
         android:paddingStart="60dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/messageBackground"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="@drawable/message_only"
+            android:gravity="start"
+            android:minHeight="36dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            tools:backgroundTint="@color/white">
 
             <com.moez.QKSMS.presentation.common.widget.TightTextView
                 android:id="@+id/body"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
                 android:autoLink="all"
-                android:background="@drawable/message_only"
                 android:gravity="start|center_vertical"
-                android:minHeight="36dp"
-                android:paddingBottom="8dp"
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
-                tools:backgroundTint="@color/white"
                 tools:text="Hey! How's it going?" />
+
+            <com.moez.QKSMS.presentation.common.widget.QkTextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="tertiary"
+                tools:text="Sending..." />
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <com.moez.QKSMS.presentation.common.widget.QkTextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="12dp"
-        android:paddingTop="4dp"
-        app:textColor="tertiary"
-        tools:text="Sending..." />
 
 </LinearLayout>

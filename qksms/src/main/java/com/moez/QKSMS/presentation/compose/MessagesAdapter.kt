@@ -52,12 +52,12 @@ class MessagesAdapter @Inject constructor(
             VIEWTYPE_ME -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
                 disposables += colors.bubble
-                        .subscribe { color -> view.body.setBackgroundTint(color) }
+                        .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
             }
             else -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
                 disposables += colors.theme
-                        .subscribe { color -> view.body.setBackgroundTint(color) }
+                        .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
             }
         }
 
@@ -114,22 +114,22 @@ class MessagesAdapter @Inject constructor(
         when {
             !canGroupWithPrevious && canGroupWithNext -> {
                 view.setPadding(bottom = 2.dpToPx(context))
-                view.body.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
+                view.messageBackground.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
                 view.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && canGroupWithNext -> {
                 view.setPadding(bottom = 2.dpToPx(context))
-                view.body.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
+                view.messageBackground.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
                 view.avatar?.visibility = View.INVISIBLE
             }
             canGroupWithPrevious && !canGroupWithNext -> {
                 view.setPadding(bottom = 16.dpToPx(context))
-                view.body.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
+                view.messageBackground.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
                 view.avatar?.visibility = View.VISIBLE
             }
             else -> {
                 view.setPadding(bottom = 16.dpToPx(context))
-                view.body.setBackgroundResource(R.drawable.message_only)
+                view.messageBackground.setBackgroundResource(R.drawable.message_only)
                 view.avatar?.visibility = View.VISIBLE
             }
         }

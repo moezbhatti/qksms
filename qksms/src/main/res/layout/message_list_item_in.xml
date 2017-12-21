@@ -34,34 +34,32 @@
             android:layout_marginEnd="12dp" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/messageBackground"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="@drawable/message_only"
+            android:minHeight="36dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            tools:backgroundTint="@color/tools_theme">
 
             <com.moez.QKSMS.presentation.common.widget.TightTextView
                 android:id="@+id/body"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:autoLink="all"
-                android:background="@drawable/message_only"
                 android:gravity="start|center_vertical"
-                android:minHeight="36dp"
-                android:paddingBottom="8dp"
-                android:paddingEnd="12dp"
-                android:paddingStart="12dp"
-                android:paddingTop="8dp"
                 app:textColor="primaryOnTheme"
-                tools:backgroundTint="@color/tools_theme"
                 tools:text="@tools:sample/lorem/random" />
 
-            <com.moez.QKSMS.presentation.common.widget.QkTextView
+            <TextView
                 android:id="@+id/status"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:visibility="gone" />
+                android:layout_height="0dp" />
 
         </LinearLayout>
 
