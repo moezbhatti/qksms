@@ -33,7 +33,7 @@ class DateFormatter @Inject constructor(val context: Context) {
             now.isSameDay(then) -> getFormatter("h:mm a")
             now.isSameWeek(then) -> getFormatter("E h:mm a")
             now.isSameYear(then) -> getFormatter("MMM d, h:mm a")
-            else -> getFormatter("MMMM d yyyy, h:mm a")
+            else -> getFormatter("MMM d yyyy, h:mm a")
         }.format(date)
     }
 

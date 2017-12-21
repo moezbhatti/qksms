@@ -35,7 +35,7 @@ class MessagesAdapter @Inject constructor(
 
     companion object {
         private val VIEWTYPE_ME = -1
-        private val TIMESTAMP_THRESHOLD = 60
+        private val TIMESTAMP_THRESHOLD = 10
     }
 
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
@@ -84,9 +84,11 @@ class MessagesAdapter @Inject constructor(
 
         bindGrouping(view, position)
 
+        val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
+
         view.status?.text = when {
             message.isSending() -> context.getString(R.string.message_status_sending)
-            message.isDelivered() -> context.getString(R.string.message_status_delivered)
+            message.isDelivered() && age <= TIMESTAMP_THRESHOLD -> context.getString(R.string.message_status_delivered)
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
             else -> null
         }
