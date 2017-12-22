@@ -9,16 +9,6 @@ import javax.inject.Inject
 
 class CursorToConversation @Inject constructor() : Mapper<Cursor, Conversation> {
 
-    override fun map(from: Cursor): Conversation {
-        return Conversation().apply {
-            id = from.getLong(ID)
-            recipients.addAll(from.getString(RECIPIENT_IDS)
-                    .split(" ")
-                    .map { recipientId -> recipientId.toLong() }
-                    .map { recipientId -> Recipient().apply { id = recipientId } })
-        }
-    }
-
     companion object {
         val URI: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
         val PROJECTION = arrayOf(
@@ -27,6 +17,16 @@ class CursorToConversation @Inject constructor() : Mapper<Cursor, Conversation> 
 
         val ID = 0
         val RECIPIENT_IDS = 1
+    }
+
+    override fun map(from: Cursor): Conversation {
+        return Conversation().apply {
+            id = from.getLong(ID)
+            recipients.addAll(from.getString(RECIPIENT_IDS)
+                    .split(" ")
+                    .map { recipientId -> recipientId.toLong() }
+                    .map { recipientId -> Recipient().apply { id = recipientId } })
+        }
     }
 
 }
