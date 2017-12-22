@@ -44,40 +44,35 @@ class ContactRepository @Inject constructor(val context: Context) {
     }
 
     fun getContactBlocking(address: String): Contact? {
-        return getContactFromRealm(address) ?: getContactFromDb(address)
-    }
-
-    private fun getContactFromRealm(address: String): Contact? {
-        val realm = Realm.getDefaultInstance()
-        val results = realm.where(Contact::class.java)
-                .equalTo("numbers.address", address)
-                .findAll()
-
-        realm.close()
-        return results.getOrNull(0)
-    }
-
-    private fun getContactFromDb(address: String): Contact? {
         if (address.isEmpty()) return null
 
-        val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
-        val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
-        try {
-            context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
-                if (contactCursor.moveToFirst()) {
-                    return Contact().apply {
-                        numbers.add(PhoneNumber().apply { this.address = address })
-                        name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).orEmpty()
-                        lookupKey = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY)).orEmpty()
-                        lastUpdate = System.currentTimeMillis()
+        val realm = Realm.getDefaultInstance()
+        var contact = realm.where(Contact::class.java)
+                .equalTo("numbers.address", address)
+                .findFirst()
+
+        realm.close()
+
+        if (contact == null) {
+            val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
+            val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
+            try {
+                context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
+                    if (contactCursor.moveToFirst()) {
+                        contact = Contact().apply {
+                            numbers.add(PhoneNumber().apply { this.address = address })
+                            name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).orEmpty()
+                            lookupKey = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY)).orEmpty()
+                            lastUpdate = System.currentTimeMillis()
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Timber.w(e)
             }
-        } catch (e: Exception) {
-            Timber.w(e)
         }
 
-        return null
+        return contact
     }
 
 }
