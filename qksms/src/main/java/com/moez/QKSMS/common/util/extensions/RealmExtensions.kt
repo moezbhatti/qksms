@@ -2,10 +2,17 @@ package com.moez.QKSMS.common.util.extensions
 
 import io.reactivex.Observable
 import io.realm.Realm
+import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.RealmResults
 
-fun RealmObject.insertOrUpdate() {
+fun RealmModel.insertOrUpdate() {
+    val realm = Realm.getDefaultInstance()
+    realm.executeTransaction { realm.insertOrUpdate(this) }
+    realm.close()
+}
+
+fun <T : RealmModel> Collection<T>.insertOrUpdate() {
     val realm = Realm.getDefaultInstance()
     realm.executeTransaction { realm.insertOrUpdate(this) }
     realm.close()
