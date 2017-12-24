@@ -92,6 +92,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         viewModel.bindView(this)
         toolbarSearch.setHint(R.string.title_conversations)
 
+        recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Don't allow clicks to pass through the drawer layout

@@ -99,6 +99,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                     .show()
         }
 
+        messageList.setHasFixedSize(true)
         messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
 
