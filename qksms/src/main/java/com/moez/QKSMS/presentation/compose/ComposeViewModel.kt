@@ -15,6 +15,7 @@ import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -58,6 +59,7 @@ class ComposeViewModel(threadId: Long, body: String)
 
         // Map the selected contacts to a conversation so that we can display the message history
         val selectedConversation = selectedContacts
+                .observeOn(Schedulers.computation())
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
@@ -73,7 +75,6 @@ class ComposeViewModel(threadId: Long, body: String)
                 .filter { conversation -> conversation.isValid }
                 .take(1)
                 .mergeWith(selectedConversation)
-                .distinctUntilChanged()
                 .doOnNext { conversation ->
                     newState { it.copy(title = conversation.getTitle(), archived = conversation.archived) }
                 }
@@ -89,6 +90,7 @@ class ComposeViewModel(threadId: Long, body: String)
         // When the message list changes, make sure to mark them read
         disposables += conversation
                 .distinctUntilChanged()
+                .observeOn(AndroidSchedulers.mainThread())
                 .map { conversation -> messageRepo.getMessages(conversation.id) }
                 .doOnNext { messages -> newState { it.copy(messages = messages) } }
                 .flatMap { messages -> messages.asObservable() }
