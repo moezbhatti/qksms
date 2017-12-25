@@ -87,10 +87,11 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).syncState()
         requestPermissions()
         viewModel.bindView(this)
         toolbarSearch.setHint(R.string.title_conversations)
+
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0).apply { syncState() }
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -116,8 +117,10 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         }
 
         disposables += colors.theme
-                .doOnNext { color -> compose.setBackgroundTint(color) }
-                .subscribe()
+                .subscribe { color -> compose.setBackgroundTint(color) }
+
+        disposables += colors.textSecondary
+                .subscribe { color -> toggle.drawerArrowDrawable.color = color }
 
         disposables += Observables
                 .combineLatest(colors.theme, colors.textSecondary, { theme, textSecondary ->
