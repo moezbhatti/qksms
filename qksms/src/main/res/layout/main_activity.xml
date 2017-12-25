@@ -19,15 +19,29 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <com.moez.QKSMS.presentation.common.widget.QkTextView
+            <LinearLayout
                 android:id="@+id/syncing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="32dp"
                 android:gravity="center"
-                android:text="@string/main_syncing"
-                app:textColor="secondary" />
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/syncingProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp" />
+
+                <com.moez.QKSMS.presentation.common.widget.QkTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/main_syncing"
+                    app:textColor="tertiary" />
+
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

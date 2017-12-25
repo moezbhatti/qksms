@@ -118,7 +118,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         }
 
         disposables += colors.theme
-                .subscribe { color -> compose.setBackgroundTint(color) }
+                .doOnNext { color -> syncingProgress.indeterminateTintList = ColorStateList.valueOf(color) }
+                .doOnNext { color -> compose.setBackgroundTint(color) }
+                .subscribe()
 
         disposables += colors.textSecondary
                 .subscribe { color -> toggle.drawerArrowDrawable.color = color }
