@@ -171,6 +171,10 @@ class ComposeViewModel(threadId: Long, body: String)
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .subscribe { conversation -> deleteConversation.execute(conversation.id) }
 
+        // Add an attachment
+        intents += view.attachIntent
+                .subscribe { context.makeToast(R.string.compose_attach_unsupported) }
+
         // Enable the send button when there is text input into the new message body, disable otherwise
         intents += view.textChangedIntent.subscribe { text ->
             newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
