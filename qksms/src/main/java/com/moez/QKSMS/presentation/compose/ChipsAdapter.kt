@@ -12,7 +12,9 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.keys
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.dpToPx
+import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.presentation.common.base.QkAdapter
@@ -21,7 +23,7 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
 import javax.inject.Inject
 
-class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter<Contact>() {
+class ChipsAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<Contact>() {
 
     companion object {
         private val TYPE_EDIT_TEXT = 0
@@ -64,7 +66,13 @@ class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         TYPE_EDIT_TEXT -> QkViewHolder(editText)
-        else -> QkViewHolder(LayoutInflater.from(context).inflate(R.layout.contact_chip, parent, false))
+
+        else -> {
+            val view = LayoutInflater.from(context).inflate(R.layout.contact_chip, parent, false)
+            colors.composeBackground.subscribe { color -> view.content.setBackgroundTint(color) }
+
+            QkViewHolder(view)
+        }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {

@@ -122,6 +122,9 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         disposables += colors.bubble
                 .subscribe { color -> messageBackground.setBackgroundTint(color) }
 
+        disposables += colors.background
+                .subscribe { color -> contacts.setBackgroundTint(color) }
+
         disposables += colors.composeBackground
                 .doOnNext { color -> composeBar.setBackgroundTint(color) }
                 .doOnNext { color -> window.decorView.setBackgroundColor(color) }

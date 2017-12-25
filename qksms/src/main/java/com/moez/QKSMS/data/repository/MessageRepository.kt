@@ -77,6 +77,7 @@ class MessageRepository @Inject constructor(
 
     fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation> {
         return Maybe.just(addresses)
+                .subscribeOn(Schedulers.io())
                 .map { recipients ->
                     recipients.map { address ->
                         when (MessageUtils.isEmailAddress(address)) {
@@ -96,9 +97,10 @@ class MessageRepository @Inject constructor(
                 .map { cursor -> cursor.getLong(0) }
                 .filter { threadId -> threadId != 0L }
                 .map { threadId ->
-                    getConversation(threadId)
-                            ?: getConversationFromCp(threadId)?.apply { insertOrUpdate() }
-                            ?: Conversation()
+                    var conversation = getConversation(threadId)
+                    if (conversation != null) conversation = Realm.getDefaultInstance().copyFromRealm(conversation)
+
+                    conversation ?: getConversationFromCp(threadId)?.apply { insertOrUpdate() } ?: Conversation()
                 }
                 .onErrorReturn { Conversation() }
     }
