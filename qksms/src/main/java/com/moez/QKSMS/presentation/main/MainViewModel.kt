@@ -6,6 +6,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.filter.ConversationFilter
 import com.moez.QKSMS.data.model.MenuItem
+import com.moez.QKSMS.data.model.SyncLog
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.*
 import com.moez.QKSMS.presentation.Navigator
@@ -13,6 +14,7 @@ import com.moez.QKSMS.presentation.common.base.QkViewModel
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.realm.Realm
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -42,6 +44,17 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         disposables += markUnarchived
         disposables += deleteConversation
         disposables += partialSync
+
+        // If it's the first sync, reflect that in the ViewState
+        disposables += Realm.getDefaultInstance()
+                .where(SyncLog::class.java)
+                .findAll()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .map { it.size == 0 }
+                .doOnNext { if (it) partialSync.execute(Unit) }
+                .distinctUntilChanged()
+                .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
 
         newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
 

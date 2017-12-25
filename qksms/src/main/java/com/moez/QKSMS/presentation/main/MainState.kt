@@ -6,7 +6,8 @@ import io.reactivex.Flowable
 
 data class MainState(
         val page: MainPage = Inbox(),
-        val drawerOpen: Boolean = false
+        val drawerOpen: Boolean = false,
+        val syncing: Boolean = false
 )
 
 sealed class MainPage

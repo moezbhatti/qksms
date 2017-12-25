@@ -19,6 +19,16 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+            <com.moez.QKSMS.presentation.common.widget.QkTextView
+                android:id="@+id/syncing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="32dp"
+                android:gravity="center"
+                android:text="@string/main_syncing"
+                app:textColor="secondary" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"

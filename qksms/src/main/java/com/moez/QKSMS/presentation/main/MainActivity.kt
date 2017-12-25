@@ -25,6 +25,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.presentation.Navigator
 import com.moez.QKSMS.presentation.common.MenuItemAdapter
 import com.moez.QKSMS.presentation.common.base.QkActivity
@@ -166,6 +167,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override fun render(state: MainState) {
         toolbarSearch.isEnabled = state.page is Inbox
         toolbarSearch.textSize = if (state.page is Inbox) 16f else 20f
+
+        syncing.setVisible(state.syncing)
+        recyclerView.setVisible(!state.syncing)
 
         when (state.page) {
             is Inbox -> {
