@@ -15,9 +15,9 @@ android {
         versionName "3.0.0-beta01"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "AMPLITUDE_API_KEY", System.getenv("AMPLITUDE_API_KEY") ?: '""'
-        buildConfigField "String", "BUGSNAG_API_KEY", System.getenv("BUGSNAG_API_KEY") ?: '""'
-        buildConfigField "String", "MIXPANEL_API_KEY", System.getenv("MIXPANEL_API_KEY") ?: '""'
+        buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
+        buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
+        buildConfigField "String", "MIXPANEL_API_KEY", "\"${System.getenv("MIXPANEL_API_KEY")}\""
     }
     buildTypes {
         release {
