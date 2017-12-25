@@ -65,11 +65,9 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
         chips.itemAnimator = null
         chips.layoutManager = FlexboxLayoutManager(this)
-        chips.adapter = chipsAdapter
 
         contacts.itemAnimator = null
         contacts.layoutManager = LinearLayoutManager(this)
-        contacts.adapter = contactsAdapter
 
         val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
 
@@ -142,6 +140,10 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         chips.setVisible(state.editingMode)
         contacts.setVisible(state.contactsVisible)
         composeBar.setVisible(!state.contactsVisible)
+
+        // Don't set the adapters unless needed
+        if (state.editingMode && chips.adapter == null) chips.adapter = chipsAdapter
+        if (state.editingMode && contacts.adapter == null) contacts.adapter = contactsAdapter
 
         toolbar.menu.findItem(R.id.call)?.run {
             isVisible = !state.editingMode

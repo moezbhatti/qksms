@@ -2,12 +2,10 @@ package com.moez.QKSMS.presentation.compose
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.text.InputType
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RelativeLayout
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -45,12 +43,6 @@ class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter
         }
 
         editText.hint = hint
-        editText.textSize = 16f
-        editText.setBackgroundResource(android.R.color.transparent)
-        editText.inputType = InputType.TYPE_TEXT_VARIATION_FILTER or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        editText.imeOptions = EditorInfo.IME_FLAG_NO_EXTRACT_UI
-        editText.privateImeOptions = "nm"
-
         editText.keys()
                 .filter { event -> event.action == KeyEvent.ACTION_DOWN }
                 .filter { event -> event.keyCode == KeyEvent.KEYCODE_DEL }
