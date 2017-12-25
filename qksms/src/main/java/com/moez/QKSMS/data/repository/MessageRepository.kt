@@ -19,6 +19,7 @@ import com.moez.QKSMS.data.model.InboxItem
 import com.moez.QKSMS.data.model.Message
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.toFlowable
 import io.reactivex.schedulers.Schedulers
@@ -77,7 +78,6 @@ class MessageRepository @Inject constructor(
 
     fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation> {
         return Maybe.just(addresses)
-                .subscribeOn(Schedulers.io())
                 .map { recipients ->
                     recipients.map { address ->
                         when (MessageUtils.isEmailAddress(address)) {
@@ -103,6 +103,8 @@ class MessageRepository @Inject constructor(
                     conversation ?: getConversationFromCp(threadId)?.apply { insertOrUpdate() } ?: Conversation()
                 }
                 .onErrorReturn { Conversation() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getMessages(threadId: Long): RealmResults<Message> {

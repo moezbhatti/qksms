@@ -59,7 +59,6 @@ class ComposeViewModel(threadId: Long, body: String)
 
         // Map the selected contacts to a conversation so that we can display the message history
         val selectedConversation = selectedContacts
-                .observeOn(Schedulers.computation())
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
@@ -72,9 +71,9 @@ class ComposeViewModel(threadId: Long, body: String)
                         newState { it.copy(hasError = true) }
                     }
                 }
-                .filter { conversation -> conversation.isValid }
-                .take(1)
                 .mergeWith(selectedConversation)
+                .filter { conversation -> conversation.isValid }
+                .filter { conversation -> conversation.id != 0L }
                 .distinctUntilChanged()
                 .doOnNext { conversation ->
                     newState { it.copy(title = conversation.getTitle(), archived = conversation.archived) }
