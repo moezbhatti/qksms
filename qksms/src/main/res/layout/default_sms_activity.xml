@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.moez.QKSMS.presentation.common.widget.QkTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/default_sms_title"
+        android:textSize="20sp"
+        app:textColor="primary" />
+
+    <com.moez.QKSMS.presentation.common.widget.QkTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/default_sms_summary"
+        android:textSize="14sp"
+        app:textColor="tertiary" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <com.moez.QKSMS.presentation.common.widget.QkTextView
+            android:id="@+id/skip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple"
+            android:gravity="center"
+            android:text="@string/default_sms_skip"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:textColor="tertiary" />
+
+        <com.moez.QKSMS.presentation.common.widget.QkTextView
+            android:id="@+id/next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ripple"
+            android:gravity="center"
+            android:text="@string/default_sms_next"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:textColor="primary" />
+
+    </LinearLayout>
+
+</LinearLayout>

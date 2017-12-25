@@ -46,6 +46,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
 
         if (Telephony.Sms.getDefaultSmsPackage(context) != context.packageName) {
+            navigator.showDefaultSmsActivity()
             partialSync.execute(Unit)
         }
 

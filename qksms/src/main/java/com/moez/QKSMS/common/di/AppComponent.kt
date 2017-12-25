@@ -6,6 +6,7 @@ import com.moez.QKSMS.presentation.common.widget.*
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.compose.DetailedChipView
+import com.moez.QKSMS.presentation.defaultsms.DefaultSmsActivity
 import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
@@ -21,6 +22,7 @@ interface AppComponent {
     fun inject(application: QKApplication)
 
     fun inject(activity: MainActivity)
+    fun inject(activity: DefaultSmsActivity)
     fun inject(activity: ComposeActivity)
     fun inject(activity: SettingsActivity)
 

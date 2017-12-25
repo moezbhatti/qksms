@@ -46,6 +46,7 @@
         </activity>
         <activity android:name="com.moez.QKSMS.presentation.compose.ComposeActivity" />
         <activity android:name=".presentation.settings.SettingsActivity" />
+        <activity android:name=".presentation.defaultsms.DefaultSmsActivity" />
 
         <receiver android:name=".receiver.DefaultSmsChangedReceiver">
             <intent-filter>
