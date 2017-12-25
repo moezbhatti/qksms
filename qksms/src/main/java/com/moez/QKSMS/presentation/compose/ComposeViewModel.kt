@@ -75,6 +75,7 @@ class ComposeViewModel(threadId: Long, body: String)
                 .filter { conversation -> conversation.isValid }
                 .take(1)
                 .mergeWith(selectedConversation)
+                .distinctUntilChanged()
                 .doOnNext { conversation ->
                     newState { it.copy(title = conversation.getTitle(), archived = conversation.archived) }
                 }
