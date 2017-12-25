@@ -50,13 +50,13 @@ class SendMessage @Inject constructor(
                 .toList().toFlowable()
                 .doOnNext { messages ->
                     if (messages.size == 1) {
-                        smsManager.sendTextMessage(params.address, null, messages[0].first, messages[0].second, messages[0].third)
+                        smsManager.sendTextMessage(params.address, null, messages[0].first, messages[0].second, if (prefs.delivery.get()) messages[0].third else null)
                     } else {
                         val parts = ArrayList(messages.map { it.first })
                         val sentIntents = ArrayList(messages.map { it.second })
                         val deliveredIntents = ArrayList(messages.map { it.third })
 
-                        smsManager.sendMultipartTextMessage(params.address, null, parts, sentIntents, deliveredIntents)
+                        smsManager.sendMultipartTextMessage(params.address, null, parts, sentIntents, if (prefs.delivery.get()) deliveredIntents else null)
                     }
                 }
                 .map { Unit }
