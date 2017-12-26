@@ -7,6 +7,7 @@ import io.reactivex.subjects.Subject
 interface MainView : QkView<MainState> {
 
     val queryChangedIntent: Observable<CharSequence>
+    val queryCancelledIntent: Observable<*>
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>
     val drawerItemIntent: Observable<DrawerItem>

@@ -93,6 +93,15 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 })
                 .subscribe()
 
+        intents += view.queryCancelledIntent
+                .withLatestFrom(state, { _, state ->
+                    if (state.page is Inbox) {
+                        val page = state.page.copy(query = "")
+                        newState { it.copy(page = page) }
+                    }
+                })
+                .subscribe()
+
         intents += view.composeIntent
                 .subscribe { navigator.showCompose() }
 

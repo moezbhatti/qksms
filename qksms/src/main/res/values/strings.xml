@@ -14,6 +14,7 @@
     <string name="setup_skip">Skip</string>
     <string name="setup_next">Continue</string>
 
+    <string name="menu_clear">Clear</string>
     <string name="menu_call">Call</string>
     <string name="menu_archive">Archive conversation</string>
     <string name="menu_unarchive">Remove from archive</string>

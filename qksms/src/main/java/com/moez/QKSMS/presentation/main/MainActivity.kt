@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -42,6 +44,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
     override val viewModelClass = MainViewModel::class
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
+    override val queryCancelledIntent: PublishSubject<Unit> = PublishSubject.create()
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent by lazy { drawerLayout.drawerOpen(Gravity.START) }
     override val drawerItemIntent: Observable<DrawerItem> by lazy {
@@ -162,6 +165,10 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         toolbarSearch.isEnabled = state.page is Inbox
         toolbarSearch.textSize = if (state.page is Inbox) 16f else 20f
 
+        toolbar.menu.findItem(R.id.clear)?.run {
+            isVisible = state.page is Inbox && state.page.query.isNotEmpty()
+        }
+
         syncing.setVisible(state.syncing)
         recyclerView.setVisible(!state.syncing)
 
@@ -216,6 +223,20 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
         if (conversationMenuDialog.isShowing && menuItemAdapter.data.isEmpty()) conversationMenuDialog.dismiss()
         else if (!conversationMenuDialog.isShowing && menuItemAdapter.data.isNotEmpty()) conversationMenuDialog.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.clear -> queryCancelledIntent.onNext(Unit)
+            else -> return super.onOptionsItemSelected(item)
+        }
+
+        return true
     }
 
 }
