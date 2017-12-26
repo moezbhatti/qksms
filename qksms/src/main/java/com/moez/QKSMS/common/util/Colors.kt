@@ -25,6 +25,12 @@ class Colors @Inject constructor(context: Context, prefs: Preferences) {
     val theme: Observable<Int> = prefs.theme.asObservable()
             .distinctUntilChanged()
 
+    val appThemeResources: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.style.AppThemeDark else R.style.AppThemeLight }
+
+    val popupThemeResource: Observable<Int> = prefs.dark.asObservable()
+            .map { dark -> if (dark) R.style.PopupThemeDark else R.style.PopupThemeLight }
+
     @SuppressLint("InlinedApi")
     val statusBarIcons: Observable<Int> = prefs.dark.asObservable()
             .map { dark -> dark || Build.VERSION.SDK_INT < Build.VERSION_CODES.M }

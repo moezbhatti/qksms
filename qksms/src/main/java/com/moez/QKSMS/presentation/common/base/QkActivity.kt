@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.presentation.Navigator
 import io.reactivex.disposables.CompositeDisposable
@@ -35,6 +34,9 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         onNewIntent(intent)
 
+        disposables += colors.appThemeResources
+                .subscribe { res -> setTheme(res) }
+
         disposables += colors.statusBarIcons
                 .subscribe { systemUiVisibility -> window.decorView.systemUiVisibility = systemUiVisibility }
 
@@ -61,6 +63,9 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
                 .doOnNext { color -> toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(color) } }
                 .doOnNext { color -> toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(color) } }
                 .subscribe()
+
+        disposables += colors.popupThemeResource
+                .subscribe { res -> toolbar?.popupTheme = res }
 
         disposables += colors.toolbarColor
                 .subscribe { color -> toolbar?.setBackgroundColor(color) }

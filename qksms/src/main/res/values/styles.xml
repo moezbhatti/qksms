@@ -1,10 +1,19 @@
 <resources>
 
     <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/statusBarLight</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/backgroundDark</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="colorPrimary">@color/backgroundDark</item>
+        <item name="colorPrimaryDark">@color/statusBarDark</item>
+        <item name="windowActionBar">false</item>
     </style>
 
     <style name="TextPrimary">
@@ -45,6 +54,16 @@
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_marginEnd">32dp</item>
+    </style>
+
+    <style name="PopupThemeDark" parent="ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">@color/backgroundDark</item>
+        <item name="android:textColor">@color/textPrimaryDark</item>
+    </style>
+
+    <style name="PopupThemeLight" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@color/textPrimary</item>
     </style>
 
 </resources>
