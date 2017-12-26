@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.provider.Telephony
 import com.moez.QKSMS.common.util.NotificationManager
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
@@ -30,6 +31,14 @@ class Navigator @Inject constructor(val context: Context) {
 
     fun showSetupActivity() {
         val intent = Intent(context, SetupActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun showDefaultSmsDialog() {
+        val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
+        if (Telephony.Sms.getDefaultSmsPackage(context) != context.packageName) {
+            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.packageName)
+        }
         startActivity(intent)
     }
 
