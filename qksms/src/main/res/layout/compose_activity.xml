@@ -65,6 +65,7 @@
                     android:id="@+id/attach"
                     android:layout_width="44dp"
                     android:layout_height="44dp"
+                    android:background="@drawable/ripple"
                     android:padding="10dp"
                     android:src="@drawable/ic_insert_photo_black_24dp"
                     tools:tint="@color/textSecondary" />
