@@ -95,6 +95,9 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
 
+        scheduled.isEnabled = false
+        blocked.isEnabled = false
+
         disposables += colors.background
                 .doOnNext { color -> window.decorView.setBackgroundColor(color) }
                 .doOnNext { color -> drawer.setBackgroundColor(color) }

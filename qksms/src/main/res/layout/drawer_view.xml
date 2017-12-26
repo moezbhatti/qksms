@@ -38,7 +38,8 @@
 
     <LinearLayout
         android:id="@+id/scheduled"
-        style="@style/DrawerRow">
+        style="@style/DrawerRow"
+        android:alpha="0.5">
 
         <ImageView
             android:id="@+id/scheduledIcon"
@@ -53,7 +54,8 @@
 
     <LinearLayout
         android:id="@+id/blocked"
-        style="@style/DrawerRow">
+        style="@style/DrawerRow"
+        android:alpha="0.5">
 
         <ImageView
             android:id="@+id/blockedIcon"
