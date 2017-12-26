@@ -24,6 +24,7 @@ class CursorToConversation @Inject constructor() : Mapper<Cursor, Conversation> 
             id = from.getLong(ID)
             recipients.addAll(from.getString(RECIPIENT_IDS)
                     .split(" ")
+                    .filter { it.isNotBlank() }
                     .map { recipientId -> recipientId.toLong() }
                     .map { recipientId -> Recipient().apply { id = recipientId } })
         }
