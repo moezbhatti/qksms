@@ -20,7 +20,7 @@ import com.moez.QKSMS.data.model.Message
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
+import io.reactivex.rxkotlin.Flowables
 import io.reactivex.rxkotlin.toFlowable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -40,23 +40,30 @@ class MessageRepository @Inject constructor(
     fun getConversations(archived: Boolean = false): Flowable<List<InboxItem>> {
         val realm = Realm.getDefaultInstance()
 
-        val conversations = realm.where(Conversation::class.java)
+        val conversationFlowable = realm.where(Conversation::class.java)
                 .equalTo("archived", archived)
                 .findAllAsync()
                 .asFlowable()
                 .filter { it.isLoaded }
-                .map { conversations -> conversations.associateBy { conversation -> conversation.id } }
+                .map { realm.copyFromRealm(it) }
 
-        val messages = realm.where(Message::class.java)
+        // Adding the #distinct() call makes this call approx 20x slower
+        // With ~70,000 messages on a Google Pixel, it goes from 15ms -> 300ms
+        // This should be fixed by using Realm 4.3, but that breaks the build
+        // Will fix
+        val messageFlowable = realm.where(Message::class.java)
                 .findAllSortedAsync("date", Sort.DESCENDING)
                 .where()
                 .distinctAsync("threadId")
                 .asFlowable()
                 .filter { it.isLoaded }
+                .map { realm.copyFromRealm(it) }
 
-        return Flowable.combineLatest(conversations, messages, BiFunction { conversations, messages ->
+        return Flowables.combineLatest(conversationFlowable, messageFlowable, { conversations, messages ->
+            val conversationMap = conversations.associateBy { conversation -> conversation.id }
+
             messages.mapNotNull { message ->
-                val conversation = conversations[message.threadId]
+                val conversation = conversationMap[message.threadId]
                 if (conversation == null) null else InboxItem(conversation, message)
             }
         })
