@@ -178,10 +178,13 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         }
 
         if (title != state.title) title = state.title
-        if (message.text.toString() != state.draft) message.setText(state.draft)
 
         send.isEnabled = state.canSend
         sendIcon.isEnabled = state.canSend
+    }
+
+    override fun setDraft(draft: String) {
+        message.setText(draft)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

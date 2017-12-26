@@ -22,4 +22,6 @@ interface ComposeView : QkView<ComposeState> {
     val attachIntent: Observable<Unit>
     val sendIntent: Observable<Unit>
 
+    fun setDraft(draft: String)
+
 }

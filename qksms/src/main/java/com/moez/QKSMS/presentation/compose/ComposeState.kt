@@ -13,6 +13,5 @@ data class ComposeState(
         val title: String = "",
         val archived: Boolean = false,
         val messages: RealmResults<Message>? = null,
-        val draft: String = "",
         val canSend: Boolean = false
 )

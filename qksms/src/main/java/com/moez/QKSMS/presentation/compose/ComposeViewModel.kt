@@ -24,8 +24,8 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
-class ComposeViewModel(threadId: Long, body: String)
-    : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L, draft = body)) {
+class ComposeViewModel(threadId: Long, var draft: String)
+    : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var contactFilter: ContactFilter
@@ -108,6 +108,11 @@ class ComposeViewModel(threadId: Long, body: String)
     override fun bindView(view: ComposeView) {
         super.bindView(view)
 
+        if (draft.isNotEmpty()) {
+            view.setDraft(draft)
+            draft = ""
+        }
+
         // Set the contact suggestions list to visible at all times when in editing mode and there are no contacts
         // selected yet, and also visible while in editing mode and there is text entered in the query field
         intents += Observables
@@ -177,7 +182,7 @@ class ComposeViewModel(threadId: Long, body: String)
 
         // Enable the send button when there is text input into the new message body, disable otherwise
         intents += view.textChangedIntent.subscribe { text ->
-            newState { it.copy(draft = text.toString(), canSend = text.isNotEmpty()) }
+            newState { it.copy(canSend = text.isNotEmpty()) }
         }
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
@@ -188,7 +193,12 @@ class ComposeViewModel(threadId: Long, body: String)
                     val threadId = conversation.id
                     val address = conversation.recipients.first()?.address.orEmpty()
                     sendMessage.execute(SendMessage.Params(threadId, address, body))
-                    newState { it.copy(editingMode = false, draft = "", canSend = false) }
+                    view.setDraft("")
+                })
+                .withLatestFrom(state, {_, state ->
+                    if (state.editingMode) {
+                        newState { it.copy(editingMode = false) }
+                    }
                 })
                 .subscribe()
 
