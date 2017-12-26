@@ -12,6 +12,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.GlideApp
+import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.data.model.Contact
 import com.moez.QKSMS.presentation.Navigator
 import io.reactivex.disposables.CompositeDisposable
@@ -44,6 +45,9 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         super.onAttachedToWindow()
         disposables += colors.theme
                 .subscribe { color -> background.setTint(color) }
+
+        disposables += colors.textPrimaryOnTheme
+                .subscribe { color -> icon.setTint(color) }
 
         disposables += clicks().subscribe {
             contact?.lookupKey?.takeIf { it.isNotEmpty() }?.let { key ->
