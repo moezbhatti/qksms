@@ -9,10 +9,10 @@
     <string name="title_conversations">Search inbox…</string>
     <string name="title_compose">Type a name or number</string>
 
-    <string name="default_sms_title">Love texting again</string>
-    <string name="default_sms_summary">Make QKSMS your default SMS app</string>
-    <string name="default_sms_skip">Skip</string>
-    <string name="default_sms_next">Continue</string>
+    <string name="setup_title">Love texting again</string>
+    <string name="setup_summary">Make QKSMS your default SMS app</string>
+    <string name="setup_skip">Skip</string>
+    <string name="setup_next">Continue</string>
 
     <string name="menu_call">Call</string>
     <string name="menu_archive">Archive conversation</string>

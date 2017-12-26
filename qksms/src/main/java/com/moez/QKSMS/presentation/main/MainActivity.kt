@@ -1,6 +1,5 @@
 package com.moez.QKSMS.presentation.main
 
-import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -16,11 +15,6 @@ import android.view.Gravity
 import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.extensions.dpToPx
@@ -37,7 +31,6 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar_search.*
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : QkActivity<MainViewModel>(), MainView {
@@ -88,7 +81,6 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        requestPermissions()
         viewModel.bindView(this)
         toolbarSearch.setHint(R.string.title_conversations)
 
@@ -224,21 +216,6 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
         if (conversationMenuDialog.isShowing && menuItemAdapter.data.isEmpty()) conversationMenuDialog.dismiss()
         else if (!conversationMenuDialog.isShowing && menuItemAdapter.data.isNotEmpty()) conversationMenuDialog.show()
-    }
-
-    private fun requestPermissions() {
-        Dexter.withActivity(this)
-                .withPermissions(arrayListOf(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS))
-                .withListener(object : MultiplePermissionsListener {
-                    override fun onPermissionRationaleShouldBeShown(request: MutableList<PermissionRequest>, token: PermissionToken) {
-                    }
-
-                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                        for (response in report.grantedPermissionResponses) Timber.v("Permission granted: ${response.permissionName}")
-                        for (response in report.deniedPermissionResponses) Timber.v("Permission denied: ${response.permissionName}")
-                    }
-                })
-                .check()
     }
 
 }

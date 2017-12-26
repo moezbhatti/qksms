@@ -1,7 +1,10 @@
 package com.moez.QKSMS.presentation.main
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.provider.Telephony
+import android.support.v4.content.ContextCompat
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.common.util.filter.ConversationFilter
@@ -58,9 +61,16 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
         newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
 
-        if (Telephony.Sms.getDefaultSmsPackage(context) != context.packageName) {
-            navigator.showDefaultSmsActivity()
+        val isDefaultSms = Telephony.Sms.getDefaultSmsPackage(context) != context.packageName
+        val hasSmsPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+        val hasContactPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
+
+        if (isDefaultSms) {
             partialSync.execute(Unit)
+        }
+
+        if (isDefaultSms || !hasSmsPermission || !hasContactPermission) {
+            navigator.showSetupActivity()
         }
 
         markAllSeen.execute(Unit)

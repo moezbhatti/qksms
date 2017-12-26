@@ -11,11 +11,11 @@ import android.provider.Settings
 import com.moez.QKSMS.common.util.NotificationManager
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
-import com.moez.QKSMS.presentation.defaultsms.DefaultSmsActivity
-import com.moez.QKSMS.presentation.defaultsms.DefaultSmsViewModel
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
+import com.moez.QKSMS.presentation.setup.SetupActivity
+import com.moez.QKSMS.presentation.setup.SetupViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,8 +28,8 @@ class Navigator @Inject constructor(val context: Context) {
         context.startActivity(intent)
     }
 
-    fun showDefaultSmsActivity() {
-        val intent = Intent(context, DefaultSmsActivity::class.java)
+    fun showSetupActivity() {
+        val intent = Intent(context, SetupActivity::class.java)
         startActivity(intent)
     }
 
@@ -73,8 +73,8 @@ class Navigator @Inject constructor(val context: Context) {
                     MainViewModel()
                 }
 
-                DefaultSmsViewModel::class.java -> {
-                    DefaultSmsViewModel()
+                SetupViewModel::class.java -> {
+                    SetupViewModel()
                 }
 
                 ComposeViewModel::class.java -> {

@@ -6,11 +6,12 @@ import com.moez.QKSMS.presentation.common.widget.*
 import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.presentation.compose.ComposeViewModel
 import com.moez.QKSMS.presentation.compose.DetailedChipView
-import com.moez.QKSMS.presentation.defaultsms.DefaultSmsActivity
 import com.moez.QKSMS.presentation.main.MainActivity
 import com.moez.QKSMS.presentation.main.MainViewModel
 import com.moez.QKSMS.presentation.settings.SettingsActivity
 import com.moez.QKSMS.presentation.settings.SettingsViewModel
+import com.moez.QKSMS.presentation.setup.SetupActivity
+import com.moez.QKSMS.presentation.setup.SetupViewModel
 import com.moez.QKSMS.receiver.*
 import dagger.Component
 import javax.inject.Singleton
@@ -22,7 +23,7 @@ interface AppComponent {
     fun inject(application: QKApplication)
 
     fun inject(activity: MainActivity)
-    fun inject(activity: DefaultSmsActivity)
+    fun inject(activity: SetupActivity)
     fun inject(activity: ComposeActivity)
     fun inject(activity: SettingsActivity)
 
@@ -42,6 +43,7 @@ interface AppComponent {
     fun inject(view: Separator)
 
     fun inject(viewModel: MainViewModel)
+    fun inject(viewModel: SetupViewModel)
     fun inject(viewModel: ComposeViewModel)
     fun inject(viewModel: SettingsViewModel)
 

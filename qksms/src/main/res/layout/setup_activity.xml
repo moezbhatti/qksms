@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/default_sms_title"
+        android:text="@string/setup_title"
         android:textSize="20sp"
         app:textColor="primary" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:gravity="center"
-        android:text="@string/default_sms_summary"
+        android:text="@string/setup_summary"
         android:textSize="14sp"
         app:textColor="tertiary" />
 
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:background="@drawable/ripple"
             android:gravity="center"
-            android:text="@string/default_sms_skip"
+            android:text="@string/setup_skip"
             android:textAllCaps="true"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -57,7 +57,7 @@
             android:layout_weight="1"
             android:background="@drawable/ripple"
             android:gravity="center"
-            android:text="@string/default_sms_next"
+            android:text="@string/setup_next"
             android:textAllCaps="true"
             android:textSize="14sp"
             android:textStyle="bold"
