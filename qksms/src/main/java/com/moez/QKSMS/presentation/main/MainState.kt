@@ -13,7 +13,7 @@ data class MainState(
 sealed class MainPage
 
 data class Inbox(
-        val query: CharSequence = "",
+        val showClearButton: Boolean = false,
         val data: Flowable<List<InboxItem>>? = null,
         val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()

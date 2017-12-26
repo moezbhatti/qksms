@@ -17,6 +17,8 @@ interface MainView : QkView<MainState> {
     val swipeConversationIntent: Observable<Int>
     val undoSwipeConversationIntent: Subject<Unit>
 
+    fun clearSearch()
+
 }
 
 enum class DrawerItem { INBOX, ARCHIVED, SCHEDULED, BLOCKED, SETTINGS }

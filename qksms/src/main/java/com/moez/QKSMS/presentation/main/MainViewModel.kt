@@ -84,23 +84,19 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .withLatestFrom(state, { query, state ->
                     if (state.page is Inbox) {
-                        val conversations = conversations.map { list ->
-                            list.filter { conversationFilter.filter(it.conversation, query) }
+                        val conversations = when {
+                            query.isEmpty() -> conversations
+                            else -> conversations.map { list -> list.filter { conversationFilter.filter(it.conversation, query) } }
                         }
-                        val page = state.page.copy(query = query, data = conversations)
+
+                        val page = state.page.copy(showClearButton = query.isNotEmpty(), data = conversations)
                         newState { it.copy(page = page) }
                     }
                 })
                 .subscribe()
 
         intents += view.queryCancelledIntent
-                .withLatestFrom(state, { _, state ->
-                    if (state.page is Inbox) {
-                        val page = state.page.copy(query = "")
-                        newState { it.copy(page = page) }
-                    }
-                })
-                .subscribe()
+                .subscribe { view.clearSearch() }
 
         intents += view.composeIntent
                 .subscribe { navigator.showCompose() }
@@ -114,7 +110,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(query = "", data = conversations)) }
+                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
@@ -123,13 +119,8 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe()
 
         intents += view.conversationClickIntent
+                .doOnNext { view.clearSearch() }
                 .doOnNext { threadId -> navigator.showConversation(threadId) }
-                .withLatestFrom(state, { _, state ->
-                    if (state.page is Inbox && state.page.query != "") {
-                        val page = state.page.copy(query = "", data = conversations)
-                        newState { it.copy(page = page) }
-                    }
-                })
                 .subscribe()
 
         intents += view.conversationLongClickIntent

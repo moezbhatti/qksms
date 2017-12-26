@@ -166,7 +166,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         toolbarSearch.textSize = if (state.page is Inbox) 16f else 20f
 
         toolbar.menu.findItem(R.id.clear)?.run {
-            isVisible = state.page is Inbox && state.page.query.isNotEmpty()
+            isVisible = state.page is Inbox && state.page.showClearButton
         }
 
         syncing.setVisible(state.syncing)
@@ -174,7 +174,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
         when (state.page) {
             is Inbox -> {
-                if (toolbarSearch.text.toString() != state.page.query.toString()) toolbarSearch.setText(state.page.query)
+                if (!inbox.isSelected) toolbarSearch.text = null
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
@@ -182,7 +182,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             }
 
             is Archived -> {
-                toolbarSearch.setText(R.string.title_archived)
+                if (!archived.isSelected) toolbarSearch.setText(R.string.title_archived)
                 if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
@@ -190,14 +190,14 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             }
 
             is Scheduled -> {
-                toolbarSearch.setText(R.string.title_scheduled)
+                if (!scheduled.isSelected) toolbarSearch.setText(R.string.title_scheduled)
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
             }
 
             is Blocked -> {
-                toolbarSearch.setText(R.string.title_blocked)
+                if (!blocked.isSelected) toolbarSearch.setText(R.string.title_blocked)
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
@@ -223,6 +223,10 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
 
         if (conversationMenuDialog.isShowing && menuItemAdapter.data.isEmpty()) conversationMenuDialog.dismiss()
         else if (!conversationMenuDialog.isShowing && menuItemAdapter.data.isNotEmpty()) conversationMenuDialog.show()
+    }
+
+    override fun clearSearch() {
+        toolbarSearch.text = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
