@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+
+    <attr name="textColor" format="enum">
+        <enum name="primary" value="0" />
+        <enum name="secondary" value="1" />
+        <enum name="tertiary" value="2" />
+        <enum name="primaryOnTheme" value="3" />
+        <enum name="secondaryOnTheme" value="4" />
+        <enum name="tertiaryOnTheme" value="5" />
+    </attr>
+
+    <declare-styleable name="QkTextView">
+        <attr name="textColor" />
+    </declare-styleable>
+
+    <declare-styleable name="QkEditText">
+        <attr name="textColor" />
+        <attr name="textColorHint" format="enum">
+            <enum name="primary" value="0" />
+            <enum name="secondary" value="1" />
+            <enum name="tertiary" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="PreferenceView">
+        <attr name="title" format="string" />
+        <attr name="summary" format="string" />
+        <attr name="key" format="string" />
+        <attr name="widget" format="reference" />
+    </declare-styleable>
+
+</resources>

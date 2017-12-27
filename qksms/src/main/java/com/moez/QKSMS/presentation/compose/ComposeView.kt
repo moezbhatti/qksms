@@ -1,0 +1,45 @@
+/*
+ * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ *
+ * This file is part of QKSMS.
+ *
+ * QKSMS is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * QKSMS is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.moez.QKSMS.presentation.compose
+
+import com.moez.QKSMS.data.model.Contact
+import com.moez.QKSMS.data.model.Message
+import com.moez.QKSMS.presentation.common.base.QkView
+import io.reactivex.Observable
+import io.reactivex.subjects.Subject
+
+interface ComposeView : QkView<ComposeState> {
+
+    val queryChangedIntent: Observable<CharSequence>
+    val chipSelectedIntent: Subject<Contact>
+    val chipDeletedIntent: Subject<Contact>
+    val menuReadyIntent: Observable<Unit>
+    val callIntent: Subject<Unit>
+    val archiveIntent: Subject<Unit>
+    val deleteIntent: Subject<Unit>
+    val copyTextIntent: Subject<Message>
+    val forwardMessageIntent: Subject<Message>
+    val deleteMessageIntent: Subject<Message>
+    val textChangedIntent: Observable<CharSequence>
+    val attachIntent: Observable<Unit>
+    val sendIntent: Observable<Unit>
+
+    fun setDraft(draft: String)
+
+}

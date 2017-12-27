@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.2"
+    defaultConfig {
+        applicationId "com.moez.QKSMS"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 136
+        versionName "3.0.0-alpha01"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
+        buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
+        buildConfigField "String", "MIXPANEL_API_KEY", "\"${System.getenv("MIXPANEL_API_KEY")}\""
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "android.arch.lifecycle:extensions:1.0.0"
+    compile "android.arch.lifecycle:runtime:1.0.3"
+    compile 'com.amplitude:android-sdk:2.16.0'
+    compile 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:27.0.2'
+    compile 'com.bugsnag:bugsnag-android:4.1.1'
+    compile 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0-RC3'
+    compile 'com.github.bumptech.glide:glide:4.3.0'
+    compile 'com.google.android:flexbox:0.3.1'
+    compile "com.google.dagger:dagger:2.11"
+    compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0'
+    compile 'com.jakewharton.timber:timber:4.5.1'
+    compile 'com.mixpanel.android:mixpanel-android:5.2.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile "io.reactivex.rxjava2:rxjava:2.1.4"
+    compile 'io.reactivex.rxjava2:rxkotlin:2.1.0'
+    compile 'io.realm:android-adapters:2.1.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    kapt "android.arch.lifecycle:compiler:1.0.0"
+    kapt 'com.github.bumptech.glide:compiler:4.3.0'
+    kapt "com.google.dagger:dagger-compiler:2.11"
+    kapt 'io.realm:realm-annotations:4.1.1'
+    kapt 'io.realm:realm-annotations-processor:4.1.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    provided 'javax.annotation:jsr250-api:1.0'
+}

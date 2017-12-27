@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center_vertical"
+    android:minHeight="56dp">
+
+    <com.moez.QKSMS.presentation.common.widget.QkEditText
+        android:id="@+id/toolbarSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="16sp"
+        app:textColor="primary"
+        app:textColorHint="tertiary"
+        tools:hint="Search something" />
+
+</android.support.v7.widget.Toolbar>

@@ -1,0 +1,94 @@
+<!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+
+    <string name="app_name">QKSMS</string>
+
+    <string name="title_archived">Archived</string>
+    <string name="title_scheduled">Scheduled</string>
+    <string name="title_blocked">Blocked</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_conversations">Search inbox…</string>
+    <string name="title_compose">Type a name or number</string>
+
+    <string name="setup_title">Love texting again</string>
+    <string name="setup_summary">Make QKSMS your default SMS app</string>
+    <string name="setup_skip">Skip</string>
+    <string name="setup_next">Continue</string>
+
+    <string name="menu_clear">Clear</string>
+    <string name="menu_call">Call</string>
+    <string name="menu_archive">Archive conversation</string>
+    <string name="menu_unarchive">Remove from archive</string>
+    <string name="menu_delete">Delete</string>
+
+    <string name="main_syncing">Optimizing database, this might take a minute…</string>
+
+    <string name="compose_attach_unsupported">MMS support will be added shortly!</string>
+    <string name="compose_hint">Write a message…</string>
+
+    <string name="message_status_sending">Sending…</string>
+    <string name="message_status_delivered">Delivered</string>
+    <string name="message_status_failed">Failed to send. Tap to try again</string>
+
+    <string name="drawer_inbox">Inbox</string>
+    <string name="drawer_archived">Archived</string>
+    <string name="drawer_scheduled">Scheduled</string>
+    <string name="drawer_blocked">Blocked</string>
+    <string name="drawer_settings">Settings</string>
+
+    <string name="settings_default_sms_title">Default SMS app</string>
+    <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
+    <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_dark_title">Dark mode</string>
+    <string name="settings_auto_emoji_title">Automatic emoji</string>
+    <string name="settings_auto_emoji_summary">Convert text like :) to an emoji like 🙂</string>
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_vibration_title">Vibration</string>
+    <string name="settings_ringtone_title">Ringtone</string>
+    <string name="settings_delivery_title">Delivery confirmations</string>
+    <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_split_title">Split long SMS</string>
+    <string name="settings_split_summary">Split long messages into separate messages</string>
+    <string name="settings_unicode_title">Strip unicode</string>
+    <string name="settings_unicode_summary">Swap characters that are not supported in full-length messages for GSM compatible characters</string>
+    <string name="settings_mms_title">MMS enabled</string>
+    <string name="settings_mms_size_title">Max MMS attachment size</string>
+    <string name="settings_sync_title">Sync messages</string>
+    <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+
+    <string name="settings_dialog_theme_title">Theme</string>
+
+    <string name="notification_reply">Reply</string>
+    <string name="notification_read">Mark read</string>
+
+    <string name="button_undo">Undo</string>
+
+    <string name="toast_copied">Copied</string>
+    <string name="toast_archived">Archived conversation</string>
+    <string name="toast_unarchived">Moved to inbox</string>
+
+    <string-array name="message_options">
+        <item>Copy text</item>
+        <item>Forward</item>
+        <item>Delete</item>
+    </string-array>
+
+</resources>

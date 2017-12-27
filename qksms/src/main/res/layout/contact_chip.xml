@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<RelativeLayout android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_margin="4dp"
+        android:background="@drawable/chip_background"
+        android:orientation="horizontal">
+
+        <com.moez.QKSMS.presentation.common.widget.AvatarView
+            android:id="@+id/avatar"
+            android:layout_width="36dp"
+            android:layout_height="36dp" />
+
+        <com.moez.QKSMS.presentation.common.widget.QkTextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="12dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:textColor="primary"
+            tools:text="Moez Bhatti" />
+
+    </LinearLayout>
+
+</RelativeLayout>

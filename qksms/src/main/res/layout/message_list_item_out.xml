@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ripple"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <com.moez.QKSMS.presentation.common.widget.QkTextView
+        android:id="@+id/timestamp"
+        style="@style/TextSecondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        tools:text="Tue at 11:39pm" />
+
+    <LinearLayout
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end|bottom"
+        android:paddingEnd="12dp"
+        android:paddingStart="60dp">
+
+        <LinearLayout
+            android:id="@+id/messageBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/message_only"
+            android:gravity="start"
+            android:minHeight="36dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            tools:backgroundTint="@color/white">
+
+            <com.moez.QKSMS.presentation.common.widget.TightTextView
+                android:id="@+id/body"
+                style="@style/TextPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:gravity="start|center_vertical"
+                tools:text="Hey! How's it going?" />
+
+            <com.moez.QKSMS.presentation.common.widget.QkTextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="tertiary"
+                tools:text="Sending..." />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
