@@ -44,7 +44,9 @@
                 <data android:scheme="sms_body" />
             </intent-filter>
         </activity>
-        <activity android:name="com.moez.QKSMS.presentation.compose.ComposeActivity" />
+        <activity
+            android:name="com.moez.QKSMS.presentation.compose.ComposeActivity"
+            android:parentActivityName=".presentation.main.MainActivity" />
         <activity android:name=".presentation.settings.SettingsActivity" />
         <activity android:name=".presentation.setup.SetupActivity" />
 

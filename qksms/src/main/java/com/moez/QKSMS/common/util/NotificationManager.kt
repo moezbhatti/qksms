@@ -29,10 +29,11 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
+import android.support.v4.app.TaskStackBuilder
 import com.moez.QKSMS.R
 import com.moez.QKSMS.data.repository.MessageRepository
 import com.moez.QKSMS.domain.interactor.MarkUnarchived
-import com.moez.QKSMS.presentation.main.MainActivity
+import com.moez.QKSMS.presentation.compose.ComposeActivity
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
@@ -94,8 +95,11 @@ class NotificationManager @Inject constructor(
                         style.addMessage(message.body, message.date, name)
                     }
 
-                    val contentIntent = Intent(context, MainActivity::class.java).putExtra("threadId", threadId)
-                    val contentPI = PendingIntent.getActivity(context, threadId.toInt() + 10000, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                    val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
+                    val taskStackBuilder = TaskStackBuilder.create(context)
+                    taskStackBuilder.addParentStack(ComposeActivity::class.java)
+                    taskStackBuilder.addNextIntent(contentIntent)
+                    val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 10000, PendingIntent.FLAG_UPDATE_CURRENT)
 
                     val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
                     val seenPI = PendingIntent.getBroadcast(context, threadId.toInt() + 20000, seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -104,7 +108,7 @@ class NotificationManager @Inject constructor(
                     val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
                     val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
 
-                    val notification = NotificationCompat.Builder(context, "channel_1")
+                    val notification = NotificationCompat.Builder(context, DEFAULT_CHANNEL_ID)
                             .setColor(colors.theme.blockingFirst())
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setNumber(messages.size)
