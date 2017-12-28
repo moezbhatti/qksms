@@ -99,4 +99,9 @@ class ConversationsAdapter @Inject constructor(
     override fun areItemsTheSame(old: InboxItem, new: InboxItem): Boolean {
         return old.conversation.id == new.conversation.id
     }
+
+    override fun areContentsTheSame(old: InboxItem, new: InboxItem): Boolean {
+        return old.message.id == new.message.id &&
+                old.message.read == new.message.read
+    }
 }
