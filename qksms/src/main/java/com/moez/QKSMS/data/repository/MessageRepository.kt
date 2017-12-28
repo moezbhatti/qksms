@@ -321,7 +321,8 @@ class MessageRepository @Inject constructor(
         Flowable.just(values)
                 .subscribeOn(Schedulers.io())
                 .map { contentResolver.update(uri, values, null, null) }
-                .subscribe { addMessageFromUri(uri) }
+                .flatMap { addMessageFromUri(uri) }
+                .subscribe()
     }
 
     fun addMessageFromUri(uri: Uri): Flowable<Message> {

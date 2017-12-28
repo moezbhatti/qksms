@@ -55,7 +55,7 @@ class SendMessage @Inject constructor(
                 .flatMap { bodies -> bodies.toFlowable() }
                 .map { bodies -> createContentValues(params.threadId, params.address, bodies) }
                 .map { values -> Pair(values, contentResolver.insert(Telephony.Sms.CONTENT_URI, values)) }
-                .doOnNext { (_, uri) -> messageRepo.addMessageFromUri(uri) }
+                .doOnNext { (_, uri) -> messageRepo.addMessageFromUri(uri).blockingSubscribe() }
                 .map { (values, uri) ->
                     val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("uri", uri.toString())
                     val sentPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
