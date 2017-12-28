@@ -94,10 +94,6 @@ class NotificationManager @Inject constructor(
 
         val conversation = messageRepo.getConversation(threadId) ?: return
 
-        if (conversation.archived) {
-            markUnarchived.execute(threadId)
-        }
-
         val style = NotificationCompat.MessagingStyle("Me")
         messages.forEach { message ->
             val name = if (message.isMe()) null else conversation.getTitle()
@@ -129,7 +125,7 @@ class NotificationManager @Inject constructor(
                 .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
 
         if (Build.VERSION.SDK_INT >= 24) {
-            notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), conversation.id))
+            notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), threadId))
         }
 
         notificationManager.notify(threadId.toInt(), notification.build())

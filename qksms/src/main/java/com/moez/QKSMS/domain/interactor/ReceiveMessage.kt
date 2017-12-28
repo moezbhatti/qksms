@@ -22,6 +22,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.Telephony
 import com.moez.QKSMS.common.util.NotificationManager
+import com.moez.QKSMS.common.util.extensions.mapNotNull
 import com.moez.QKSMS.data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
@@ -44,11 +45,12 @@ class ReceiveMessage @Inject constructor(
 
         val contentResolver = context.contentResolver
         return Flowable.just(values)
-                .map { contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) }
-                .flatMap { uri -> messageRepo.addMessageFromUri(uri) }
-                .map { message -> message.threadId }
-                .doOnNext { threadId -> notificationManager.update(threadId) }
-                .map { Unit }
+                .map { contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) } // Add the message to the db
+                .flatMap { uri -> messageRepo.addMessageFromUri(uri) } // Copy message from realm to db
+                .mapNotNull { message -> messageRepo.getConversation(message.threadId) } // Map message to conversation
+                .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
+                .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
+                .map { }
     }
 
 }
