@@ -139,11 +139,16 @@ class MessageRepository @Inject constructor(
                 .findAllSorted("date")
     }
 
-    fun getUnreadUnseenMessages(): RealmResults<Message> {
+    /**
+     * Retrieves the list of messages which should be shown in the notification
+     * for a given conversation
+     */
+    fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("seen", false)
                 .equalTo("read", false)
+                .equalTo("threadId", threadId)
                 .findAllSorted("date")
     }
 
@@ -319,20 +324,15 @@ class MessageRepository @Inject constructor(
                 .subscribe { addMessageFromUri(uri) }
     }
 
-    fun addMessageFromUri(uri: Uri) {
+    fun addMessageFromUri(uri: Uri): Flowable<Message> {
         val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
         val columnsMap = CursorToMessage.MessageColumns(cursor)
 
-        if (cursor.moveToFirst()) {
-            val message = cursorToMessage.map(Pair(cursor, columnsMap))
-
-            // If the conversation isn't in Realm, add it
-            getConversation(message.threadId) ?: getConversationFromCp(message.threadId)
-
-            message.insertOrUpdate()
-        }
-
-        cursor.close()
+        // Map the cursor to a message
+        return cursor.asFlowable()
+                .map { cursorToMessage.map(Pair(it, columnsMap)) }
+                .doOnNext { message -> getConversation(message.threadId) ?: getConversationFromCp(message.threadId) }
+                .doOnNext { message -> message.insertOrUpdate() }
     }
 
 }

@@ -45,8 +45,9 @@ class ReceiveMessage @Inject constructor(
         val contentResolver = context.contentResolver
         return Flowable.just(values)
                 .map { contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) }
-                .doOnNext { uri -> messageRepo.addMessageFromUri(uri) }
-                .doOnNext { notificationManager.update(messageRepo) }
+                .flatMap { uri -> messageRepo.addMessageFromUri(uri) }
+                .map { message -> message.threadId }
+                .doOnNext { threadId -> notificationManager.update(threadId) }
                 .map { Unit }
     }
 

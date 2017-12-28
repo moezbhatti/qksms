@@ -45,12 +45,12 @@ class NotificationManager @Inject constructor(
         private val context: Context,
         private val prefs: Preferences,
         private val colors: Colors,
+        private val messageRepo: MessageRepository,
         private val markUnarchived: MarkUnarchived
 ) {
 
     companion object {
         val DEFAULT_CHANNEL_ID = "channel_1"
-
         val VIBRATE_PATTERN = longArrayOf(0, 200, 0, 200)
     }
 
@@ -75,56 +75,64 @@ class NotificationManager @Inject constructor(
         }
     }
 
-    fun update(messageRepo: MessageRepository) {
-        if (!prefs.notifications.get()) return
+    /**
+     * Updates the notification for a particular conversation
+     */
+    fun update(threadId: Long) {
+        // If notifications are disabled, don't do anything
+        if (!prefs.notifications.get()) {
+            return
+        }
 
-        messageRepo.getUnreadUnseenMessages()
-                .groupBy { message -> message.threadId }
-                .forEach { group ->
-                    val threadId = group.key
-                    val messages = group.value
-                    val conversation = messageRepo.getConversation(threadId) ?: return
+        val messages = messageRepo.getUnreadUnseenMessages(threadId)
 
-                    if (conversation.archived) {
-                        markUnarchived.execute(threadId)
-                    }
+        // If there are no messages to be displayed, make sure that the notification is dismissed
+        if (messages.isEmpty()) {
+            notificationManager.cancel(threadId.toInt())
+            return
+        }
 
-                    val style = NotificationCompat.MessagingStyle("Me")
-                    messages.forEach { message ->
-                        val name = if (message.isMe()) null else conversation.getTitle()
-                        style.addMessage(message.body, message.date, name)
-                    }
+        val conversation = messageRepo.getConversation(threadId) ?: return
 
-                    val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
-                    val taskStackBuilder = TaskStackBuilder.create(context)
-                    taskStackBuilder.addParentStack(ComposeActivity::class.java)
-                    taskStackBuilder.addNextIntent(contentIntent)
-                    val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 10000, PendingIntent.FLAG_UPDATE_CURRENT)
+        if (conversation.archived) {
+            markUnarchived.execute(threadId)
+        }
 
-                    val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
-                    val seenPI = PendingIntent.getBroadcast(context, threadId.toInt() + 20000, seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val style = NotificationCompat.MessagingStyle("Me")
+        messages.forEach { message ->
+            val name = if (message.isMe()) null else conversation.getTitle()
+            style.addMessage(message.body, message.date, name)
+        }
 
-                    val readIntent = Intent(context, MarkReadReceiver::class.java).putExtra("threadId", threadId)
-                    val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                    val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
+        val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
+        val taskStackBuilder = TaskStackBuilder.create(context)
+        taskStackBuilder.addParentStack(ComposeActivity::class.java)
+        taskStackBuilder.addNextIntent(contentIntent)
+        val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 10000, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val notification = NotificationCompat.Builder(context, DEFAULT_CHANNEL_ID)
-                            .setColor(colors.theme.blockingFirst())
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setNumber(messages.size)
-                            .setAutoCancel(true)
-                            .setContentIntent(contentPI)
-                            .setDeleteIntent(seenPI)
-                            .addAction(readAction)
-                            .setStyle(style)
-                            .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
+        val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
+        val seenPI = PendingIntent.getBroadcast(context, threadId.toInt() + 20000, seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    if (Build.VERSION.SDK_INT >= 24) {
-                        notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), conversation.id))
-                    }
+        val readIntent = Intent(context, MarkReadReceiver::class.java).putExtra("threadId", threadId)
+        val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
 
-                    notificationManager.notify(threadId.toInt(), notification.build())
-                }
+        val notification = NotificationCompat.Builder(context, DEFAULT_CHANNEL_ID)
+                .setColor(colors.theme.blockingFirst())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setNumber(messages.size)
+                .setAutoCancel(true)
+                .setContentIntent(contentPI)
+                .setDeleteIntent(seenPI)
+                .addAction(readAction)
+                .setStyle(style)
+                .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), conversation.id))
+        }
+
+        notificationManager.notify(threadId.toInt(), notification.build())
     }
 
     private fun getReplyAction(address: String, threadId: Long): NotificationCompat.Action {
