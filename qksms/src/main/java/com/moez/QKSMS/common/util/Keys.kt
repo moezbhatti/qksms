@@ -16,19 +16,40 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.domain.interactor
+package com.moez.QKSMS.common.util
 
-import com.moez.QKSMS.data.repository.MessageRepository
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.moez.QKSMS.data.model.Message
+import io.realm.Realm
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class MarkSent @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long, Any>() {
+/**
+ * Helper class for generating incrementing ids for messages
+ */
+@Singleton
+class Keys @Inject constructor() {
 
-    override fun buildObservable(params: Long): Flowable<Any> {
-        return Flowable.just(Unit)
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap { messageRepo.markSent(params) }
+    private var maxValue: Long = 0L
+
+    init {
+        refresh()
+    }
+
+    /**
+     * Should be called upon initialization, and after a sync
+     */
+    fun refresh() {
+        val realm = Realm.getDefaultInstance()
+        maxValue = realm.where(Message::class.java).max("id")?.toLong() ?: 0L
+        realm.close()
+    }
+
+    /**
+     * Returns a valid ID that can be used to store a new message
+     */
+    fun newId(): Long {
+        maxValue++
+        return maxValue
     }
 
 }

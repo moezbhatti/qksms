@@ -41,7 +41,7 @@ class SyncManager @Inject constructor(
 
     sealed class Status {
         class Idle : Status()
-        class Running(progress: Int = 0) : Status()
+        class Running : Status()
     }
 
     private val contentResolver = context.contentResolver

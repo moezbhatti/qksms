@@ -22,25 +22,35 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import com.moez.QKSMS.common.di.appComponent
-import com.moez.QKSMS.data.repository.MessageRepository
+import com.moez.QKSMS.domain.interactor.MarkDelivered
+import com.moez.QKSMS.domain.interactor.MarkDeliveryFailed
 import javax.inject.Inject
 
 class MessageDeliveredReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var markDelivered: MarkDelivered
+    @Inject lateinit var markDeliveryFailed: MarkDeliveryFailed
+
+    init {
+        appComponent.inject(this)
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
-        val uri = Uri.parse(intent.getStringExtra("uri"))
-        appComponent.inject(this)
+        val id = intent.getLongExtra("id", 0L)
 
         when (resultCode) {
         // TODO notify about delivery
-            Activity.RESULT_OK -> messageRepo.markDelivered(uri)
+            Activity.RESULT_OK -> {
+                val pendingResult = goAsync()
+                markDelivered.execute(id) { pendingResult.finish() }
+            }
 
         // TODO notify about delivery failure
-            Activity.RESULT_CANCELED -> messageRepo.markDeliveryFailed(uri, resultCode)
+            Activity.RESULT_CANCELED -> {
+                val pendingResult = goAsync()
+                markDeliveryFailed.execute(MarkDeliveryFailed.Params(id, resultCode)) { pendingResult.finish() }
+            }
         }
     }
 

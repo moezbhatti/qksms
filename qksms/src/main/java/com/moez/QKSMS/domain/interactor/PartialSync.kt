@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.domain.interactor
 
+import com.moez.QKSMS.common.util.Keys
 import com.moez.QKSMS.common.util.Permissions
 import com.moez.QKSMS.common.util.SyncManager
 import io.reactivex.Flowable
@@ -27,13 +28,15 @@ import javax.inject.Inject
 
 open class PartialSync @Inject constructor(
         private val syncManager: SyncManager,
-        private val permissions: Permissions
+        private val permissions: Permissions,
+        private val keys: Keys
 ) : Interactor<Unit, Long>() {
 
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())
                 .skipWhile { !permissions.hasSmsAndContacts() }
                 .doOnNext { syncManager.performSync() }
+                .doOnNext { keys.refresh() }
                 .map { startTime -> System.currentTimeMillis() - startTime }
                 .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
                 .doOnNext { seconds -> Timber.v("Completed sync in $seconds seconds") }

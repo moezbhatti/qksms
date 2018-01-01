@@ -19,10 +19,8 @@
 package com.moez.QKSMS.domain.interactor
 
 import android.app.PendingIntent
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.provider.Telephony
 import android.telephony.SmsManager
 import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.data.repository.MessageRepository
@@ -42,7 +40,6 @@ class SendMessage @Inject constructor(
 
     override fun buildObservable(params: Params): Flowable<Unit> {
 
-        val contentResolver = context.contentResolver
         val smsManager = SmsManager.getDefault()
 
         return Flowable.just(prefs.split.get())
@@ -53,17 +50,15 @@ class SendMessage @Inject constructor(
                     }
                 }
                 .flatMap { bodies -> bodies.toFlowable() }
-                .map { bodies -> createContentValues(params.threadId, params.address, bodies) }
-                .map { values -> Pair(values, contentResolver.insert(Telephony.Sms.CONTENT_URI, values)) }
-                .doOnNext { (_, uri) -> messageRepo.addMessageFromUri(uri).blockingSubscribe() }
-                .map { (values, uri) ->
-                    val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("uri", uri.toString())
-                    val sentPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                .map { body -> messageRepo.insertSentSms(params.threadId, params.address, body) }
+                .map { message ->
+                    val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("id", message.id)
+                    val sentPI = PendingIntent.getBroadcast(context, message.id.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val deliveredIntent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("uri", uri.toString())
-                    val deliveredPI = PendingIntent.getBroadcast(context, uri.lastPathSegment.toInt(), deliveredIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                    val deliveredIntent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("id", message.id)
+                    val deliveredPI = PendingIntent.getBroadcast(context, message.id.toInt(), deliveredIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    Triple(values.getAsString(Telephony.Sms.BODY), sentPI, deliveredPI)
+                    Triple(message.body, sentPI, deliveredPI)
                 }
                 .toList().toFlowable()
                 .doOnNext { messages ->
@@ -78,16 +73,6 @@ class SendMessage @Inject constructor(
                     }
                 }
                 .map { Unit }
-    }
-
-    private fun createContentValues(threadId: Long, address: String, body: String) = ContentValues().apply {
-        put(Telephony.Sms.ADDRESS, address)
-        put(Telephony.Sms.BODY, body)
-        put(Telephony.Sms.DATE, System.currentTimeMillis())
-        put(Telephony.Sms.READ, true)
-        put(Telephony.Sms.SEEN, true)
-        put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
-        put(Telephony.Sms.THREAD_ID, threadId)
     }
 
 }

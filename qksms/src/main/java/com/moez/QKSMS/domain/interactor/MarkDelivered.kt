@@ -23,12 +23,12 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-class MarkSent @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long, Any>() {
+class MarkDelivered @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long, Any>() {
 
     override fun buildObservable(params: Long): Flowable<Any> {
         return Flowable.just(Unit)
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap { messageRepo.markSent(params) }
+                .flatMap { messageRepo.markDelivered(params) }
     }
 
 }

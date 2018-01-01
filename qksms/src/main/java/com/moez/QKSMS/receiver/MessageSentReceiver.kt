@@ -22,7 +22,6 @@ import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.telephony.SmsManager
 import com.moez.QKSMS.common.di.appComponent
 import com.moez.QKSMS.domain.interactor.MarkFailed
@@ -37,15 +36,21 @@ class MessageSentReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         appComponent.inject(this)
 
-        val uri = Uri.parse(intent.getStringExtra("uri"))
+        val id = intent.getLongExtra("id", 0L)
 
         when (resultCode) {
-            Activity.RESULT_OK -> markSent.execute(uri)
+            Activity.RESULT_OK -> {
+                val pendingResult = goAsync()
+                markSent.execute(id) { pendingResult.finish() }
+            }
 
             SmsManager.RESULT_ERROR_GENERIC_FAILURE,
             SmsManager.RESULT_ERROR_NO_SERVICE,
             SmsManager.RESULT_ERROR_NULL_PDU,
-            SmsManager.RESULT_ERROR_RADIO_OFF -> markFailed.execute(MarkFailed.Params(uri, resultCode))
+            SmsManager.RESULT_ERROR_RADIO_OFF -> {
+                val pendingResult = goAsync()
+                markFailed.execute(MarkFailed.Params(id, resultCode)) { pendingResult.finish() }
+            }
         }
     }
 }

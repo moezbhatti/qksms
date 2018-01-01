@@ -18,20 +18,19 @@
  */
 package com.moez.QKSMS.domain.interactor
 
-import android.net.Uri
 import com.moez.QKSMS.data.repository.MessageRepository
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-class MarkFailed @Inject constructor(
-        private val messageRepo: MessageRepository)
-    : Interactor<MarkFailed.Params, Unit>() {
+class MarkFailed @Inject constructor(private val messageRepo: MessageRepository) : Interactor<MarkFailed.Params, Any>() {
 
-    data class Params(val uri: Uri, val resultCode: Int)
+    data class Params(val id: Long, val resultCode: Int)
 
-    override fun buildObservable(params: Params): Flowable<Unit> {
+    override fun buildObservable(params: Params): Flowable<Any> {
         return Flowable.just(Unit)
-                .doOnNext { messageRepo.markFailed(params.uri, params.resultCode) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap { messageRepo.markFailed(params.id, params.resultCode) }
     }
 
 }

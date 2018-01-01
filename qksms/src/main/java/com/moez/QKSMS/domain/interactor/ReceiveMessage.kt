@@ -18,9 +18,6 @@
  */
 package com.moez.QKSMS.domain.interactor
 
-import android.content.ContentValues
-import android.content.Context
-import android.provider.Telephony
 import com.moez.QKSMS.common.util.NotificationManager
 import com.moez.QKSMS.common.util.extensions.mapNotNull
 import com.moez.QKSMS.data.repository.MessageRepository
@@ -28,7 +25,6 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class ReceiveMessage @Inject constructor(
-        private val context: Context,
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager)
     : Interactor<ReceiveMessage.Params, Unit>() {
@@ -36,17 +32,8 @@ class ReceiveMessage @Inject constructor(
     data class Params(val address: String, val body: String, val sentTime: Long)
 
     override fun buildObservable(params: Params): Flowable<Unit> {
-        val values = ContentValues()
-        values.put(Telephony.Sms.ADDRESS, params.address)
-        values.put(Telephony.Sms.BODY, params.body)
-        values.put(Telephony.Sms.DATE_SENT, params.sentTime)
-        values.put(Telephony.Sms.READ, false)
-        values.put(Telephony.Sms.SEEN, false)
-
-        val contentResolver = context.contentResolver
-        return Flowable.just(values)
-                .map { contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) } // Add the message to the db
-                .flatMap { uri -> messageRepo.addMessageFromUri(uri) } // Copy message from realm to db
+        return Flowable.just(params)
+                .map { messageRepo.insertReceivedSms(params.address, params.body, params.sentTime) } // Add the message to the db
                 .mapNotNull { message -> messageRepo.getConversation(message.threadId) } // Map message to conversation
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification

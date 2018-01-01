@@ -25,12 +25,13 @@ import android.provider.BaseColumns
 import android.provider.Telephony
 import android.provider.Telephony.Sms
 import android.provider.Telephony.TextBasedSmsColumns
+import com.moez.QKSMS.common.util.Keys
 import com.moez.QKSMS.common.util.MessageUtils
 import com.moez.QKSMS.common.util.extensions.asFlowable
 import com.moez.QKSMS.common.util.extensions.asMaybe
 import com.moez.QKSMS.common.util.extensions.insertOrUpdate
+import com.moez.QKSMS.common.util.extensions.mapNotNull
 import com.moez.QKSMS.data.mapper.CursorToConversation
-import com.moez.QKSMS.data.mapper.CursorToMessage
 import com.moez.QKSMS.data.mapper.CursorToRecipient
 import com.moez.QKSMS.data.model.Conversation
 import com.moez.QKSMS.data.model.InboxItem
@@ -44,14 +45,13 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MessageRepository @Inject constructor(
         private val context: Context,
-        private val cursorToMessage: CursorToMessage,
+        private val messageIds: Keys,
         private val cursorToConversation: CursorToConversation,
         private val cursorToRecipient: CursorToRecipient) {
 
@@ -99,6 +99,10 @@ class MessageRepository @Inject constructor(
                 .where(Conversation::class.java)
                 .equalTo("id", threadId)
                 .findFirst()
+    }
+
+    fun getOrCreateConversation(address: String): Maybe<Conversation> {
+        return getOrCreateConversation(listOf(address))
     }
 
     fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation> {
@@ -233,41 +237,190 @@ class MessageRepository @Inject constructor(
         realm.close()
     }
 
-    fun markSent(uri: Uri) {
-        val values = ContentValues()
-        values.put(Sms.TYPE, Sms.MESSAGE_TYPE_SENT)
-        updateMessageFromUri(uri, values)
+    fun insertSentSms(threadId: Long, address: String, body: String): Message {
+
+        // Insert the message to Realm
+        val message = Message().apply {
+            this.threadId = threadId
+            this.address = address
+            this.body = body
+            this.date = System.currentTimeMillis()
+
+            id = messageIds.newId()
+            boxId = Sms.MESSAGE_TYPE_OUTBOX
+            type = "sms"
+            read = true
+            seen = true
+        }
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction { realm.insert(message) }
+        realm.close()
+
+        // Insert the message to the native content provider
+        val values = ContentValues().apply {
+            put(Telephony.Sms.ADDRESS, address)
+            put(Telephony.Sms.BODY, body)
+            put(Telephony.Sms.DATE, System.currentTimeMillis())
+            put(Telephony.Sms.READ, true)
+            put(Telephony.Sms.SEEN, true)
+            put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
+            put(Telephony.Sms.THREAD_ID, threadId)
+        }
+        context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
+
+        return message
     }
 
-    fun markFailed(uri: Uri, resultCode: Int) {
-        val values = ContentValues()
-        values.put(Sms.TYPE, Sms.MESSAGE_TYPE_FAILED)
-        values.put(Sms.ERROR_CODE, resultCode)
-        updateMessageFromUri(uri, values)
+    fun insertReceivedSms(address: String, body: String, sentTime: Long): Message {
+
+        // Insert the message to Realm
+        val realm = Realm.getDefaultInstance()
+        val message = Message().apply {
+            this.address = address
+            this.body = body
+            this.dateSent = sentTime
+            this.date = System.currentTimeMillis()
+
+            id = messageIds.newId()
+            threadId = getOrCreateConversation(address).blockingGet().id
+            boxId = Sms.MESSAGE_TYPE_INBOX
+            type = "sms"
+
+            realm.executeTransaction { realm.insert(this) }
+        }
+        realm.close()
+
+        // Insert the message to the native content provider
+        ContentValues().apply {
+            put(Telephony.Sms.ADDRESS, address)
+            put(Telephony.Sms.BODY, body)
+            put(Telephony.Sms.DATE_SENT, sentTime)
+            put(Telephony.Sms.READ, false)
+            put(Telephony.Sms.SEEN, false)
+
+            context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, this)
+        }
+
+        return message
     }
 
-    fun markDelivered(uri: Uri) {
-        val values = ContentValues()
-        values.put("status", TextBasedSmsColumns.STATUS_COMPLETE)
-        values.put("date_sent", Calendar.getInstance().timeInMillis)
-        values.put("read", true)
-        updateMessageFromUri(uri, values)
+    fun markSent(id: Long): Flowable<*> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Message::class.java).equalTo("id", id)
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .mapNotNull { it[0] }
+                .take(1)
+                .doOnNext { message ->
+                    // Update the message in realm
+                    realm.executeTransaction {
+                        message.boxId = Sms.MESSAGE_TYPE_SENT
+                    }
+                }
+                .map { message -> message.getUri() }
+                .observeOn(Schedulers.computation())
+                .doOnNext { uri ->
+                    // Update the message in the native ContentProvider
+                    val values = ContentValues()
+                    values.put(Sms.TYPE, Sms.MESSAGE_TYPE_SENT)
+                    context.contentResolver.update(uri, values, null, null)
+                }
     }
 
-    fun markDeliveryFailed(uri: Uri, resultCode: Int) {
-        val values = ContentValues()
-        values.put("status", TextBasedSmsColumns.STATUS_FAILED)
-        values.put("date_sent", Calendar.getInstance().timeInMillis)
-        values.put("read", true)
-        values.put("error_code", resultCode)
-        updateMessageFromUri(uri, values)
+    fun markFailed(id: Long, resultCode: Int): Flowable<*> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Message::class.java).equalTo("id", id)
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .mapNotNull { it[0] }
+                .take(1)
+                .doOnNext { message ->
+                    // Update the message in realm
+                    realm.executeTransaction {
+                        message.boxId = Sms.MESSAGE_TYPE_FAILED
+                        message.errorCode = resultCode
+                    }
+                }
+                .map { message -> message.getUri() }
+                .observeOn(Schedulers.computation())
+                .doOnNext { uri ->
+                    // Update the message in the native ContentProvider
+                    val values = ContentValues()
+                    values.put(Sms.TYPE, Sms.MESSAGE_TYPE_FAILED)
+                    values.put(Sms.ERROR_CODE, resultCode)
+                    context.contentResolver.update(uri, values, null, null)
+                }
+    }
+
+    fun markDelivered(id: Long): Flowable<*> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Message::class.java).equalTo("id", id)
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .mapNotNull { it[0] }
+                .take(1)
+                .doOnNext { message ->
+                    // Update the message in realm
+                    realm.executeTransaction {
+                        message.deliveryStatus = Message.DeliveryStatus.RECEIVED
+                        message.dateSent = System.currentTimeMillis()
+                        message.read = true
+                    }
+                }
+                .map { message -> message.getUri() }
+                .observeOn(Schedulers.computation())
+                .doOnNext { uri ->
+                    // Update the message in the native ContentProvider
+                    val values = ContentValues()
+                    values.put(Sms.STATUS, TextBasedSmsColumns.STATUS_COMPLETE)
+                    values.put(Sms.DATE_SENT, System.currentTimeMillis())
+                    values.put(Sms.READ, true)
+                    context.contentResolver.update(uri, values, null, null)
+                }
+    }
+
+    fun markDeliveryFailed(id: Long, resultCode: Int): Flowable<*> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Message::class.java).equalTo("id", id)
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .mapNotNull { it[0] }
+                .take(1)
+                .doOnNext { message ->
+                    // Update the message in realm
+                    realm.executeTransaction {
+                        message.deliveryStatus = Message.DeliveryStatus.FAILED
+                        message.dateSent = System.currentTimeMillis()
+                        message.read = true
+                        message.errorCode = resultCode
+                    }
+                }
+                .map { message -> message.getUri() }
+                .observeOn(Schedulers.computation())
+                .doOnNext { uri ->
+                    // Update the message in the native ContentProvider
+                    val values = ContentValues()
+                    values.put(Sms.STATUS, TextBasedSmsColumns.STATUS_FAILED)
+                    values.put(Sms.DATE_SENT, System.currentTimeMillis())
+                    values.put(Sms.READ, true)
+                    values.put(Sms.ERROR_CODE, resultCode)
+                    context.contentResolver.update(uri, values, null, null)
+                }
     }
 
     fun deleteMessage(messageId: Long) {
         val realm = Realm.getDefaultInstance()
         realm.where(Message::class.java).equalTo("id", messageId).findFirst()?.let { message ->
-            context.contentResolver.delete(message.getUri(), null, null)
             realm.executeTransaction { message.deleteFromRealm() }
+            context.contentResolver.delete(message.getUri(), null, null)
         }
         realm.close()
     }
@@ -314,26 +467,6 @@ class MessageRepository @Inject constructor(
         cursor.close()
 
         return conversation
-    }
-
-    fun updateMessageFromUri(uri: Uri, values: ContentValues) {
-        val contentResolver = context.contentResolver
-        Flowable.just(values)
-                .subscribeOn(Schedulers.io())
-                .map { contentResolver.update(uri, values, null, null) }
-                .flatMap { addMessageFromUri(uri) }
-                .subscribe()
-    }
-
-    fun addMessageFromUri(uri: Uri): Flowable<Message> {
-        val cursor = context.contentResolver.query(uri, null, null, null, "date DESC")
-        val columnsMap = CursorToMessage.MessageColumns(cursor)
-
-        // Map the cursor to a message
-        return cursor.asFlowable()
-                .map { cursorToMessage.map(Pair(it, columnsMap)) }
-                .doOnNext { message -> getConversation(message.threadId) ?: getConversationFromCp(message.threadId) }
-                .doOnNext { message -> message.insertOrUpdate() }
     }
 
 }
