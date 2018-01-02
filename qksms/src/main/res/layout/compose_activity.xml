@@ -88,13 +88,13 @@
                     android:src="@drawable/ic_insert_photo_black_24dp"
                     tools:tint="@color/textSecondary" />
 
-                <com.moez.QKSMS.presentation.common.widget.Separator
+                <presentation.common.widget.Separator
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp" />
 
-                <com.moez.QKSMS.presentation.common.widget.QkEditText
+                <presentation.common.widget.QkEditText
                     android:id="@+id/message"
                     style="@style/TextPrimary"
                     android:layout_width="0dp"

@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:parentTag="com.moez.QKSMS.presentation.common.widget.PreferenceView">
+    tools:parentTag="presentation.common.widget.PreferenceView">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,14 +38,14 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <com.moez.QKSMS.presentation.common.widget.QkTextView
+            <presentation.common.widget.QkTextView
                 android:id="@+id/titleView"
                 style="@style/TextPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Default SMS App" />
 
-            <com.moez.QKSMS.presentation.common.widget.QkTextView
+            <presentation.common.widget.QkTextView
                 android:id="@+id/summaryView"
                 style="@style/TextSecondary"
                 android:layout_width="match_parent"
@@ -62,7 +62,7 @@
 
     </LinearLayout>
 
-    <com.moez.QKSMS.presentation.common.widget.Separator
+    <presentation.common.widget.Separator
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 

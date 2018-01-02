@@ -26,7 +26,7 @@
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
-    <com.moez.QKSMS.presentation.common.widget.QkTextView
+    <presentation.common.widget.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
             android:paddingTop="8dp"
             tools:backgroundTint="@color/white">
 
-            <com.moez.QKSMS.presentation.common.widget.TightTextView
+            <presentation.common.widget.TightTextView
                 android:id="@+id/body"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                 android:gravity="start|center_vertical"
                 tools:text="Hey! How's it going?" />
 
-            <com.moez.QKSMS.presentation.common.widget.QkTextView
+            <presentation.common.widget.QkTextView
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

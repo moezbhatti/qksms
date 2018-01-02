@@ -29,7 +29,7 @@
     android:paddingStart="16dp"
     android:paddingTop="8dp">
 
-    <com.moez.QKSMS.presentation.common.widget.GroupAvatarView
+    <presentation.common.widget.GroupAvatarView
         android:id="@+id/avatars"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.moez.QKSMS.presentation.common.widget.QkTextView
+            <presentation.common.widget.QkTextView
                 android:id="@+id/title"
                 style="@style/TextPrimary"
                 android:layout_width="0dp"
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 tools:text="Moez Bhatti" />
 
-            <com.moez.QKSMS.presentation.common.widget.QkTextView
+            <presentation.common.widget.QkTextView
                 android:id="@+id/date"
                 style="@style/TextTertiary"
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
 
         </LinearLayout>
 
-        <com.moez.QKSMS.presentation.common.widget.QkTextView
+        <presentation.common.widget.QkTextView
             android:id="@+id/snippet"
             style="@style/TextSecondary"
             android:layout_width="wrap_content"

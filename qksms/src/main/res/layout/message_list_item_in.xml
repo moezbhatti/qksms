@@ -26,7 +26,7 @@
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
-    <com.moez.QKSMS.presentation.common.widget.QkTextView
+    <presentation.common.widget.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
         android:paddingEnd="60dp"
         android:paddingStart="12dp">
 
-        <com.moez.QKSMS.presentation.common.widget.AvatarView
+        <presentation.common.widget.AvatarView
             android:id="@+id/avatar"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -64,7 +64,7 @@
             android:paddingTop="8dp"
             tools:backgroundTint="@color/tools_theme">
 
-            <com.moez.QKSMS.presentation.common.widget.TightTextView
+            <presentation.common.widget.TightTextView
                 android:id="@+id/body"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"

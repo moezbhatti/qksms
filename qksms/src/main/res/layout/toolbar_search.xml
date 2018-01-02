@@ -29,7 +29,7 @@
     android:gravity="center_vertical"
     android:minHeight="56dp">
 
-    <com.moez.QKSMS.presentation.common.widget.QkEditText
+    <presentation.common.widget.QkEditText
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -23,7 +23,7 @@
     android:background="@drawable/ripple"
     android:orientation="vertical">
 
-    <com.moez.QKSMS.presentation.common.widget.QkTextView
+    <presentation.common.widget.QkTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="match_parent"

@@ -32,12 +32,12 @@
         android:background="@drawable/chip_background"
         android:orientation="horizontal">
 
-        <com.moez.QKSMS.presentation.common.widget.AvatarView
+        <presentation.common.widget.AvatarView
             android:id="@+id/avatar"
             android:layout_width="36dp"
             android:layout_height="36dp" />
 
-        <com.moez.QKSMS.presentation.common.widget.QkTextView
+        <presentation.common.widget.QkTextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

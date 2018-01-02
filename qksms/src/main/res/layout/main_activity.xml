@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp" />
 
-                <com.moez.QKSMS.presentation.common.widget.QkTextView
+                <presentation.common.widget.QkTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
