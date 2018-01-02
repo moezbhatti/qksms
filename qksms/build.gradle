@@ -56,14 +56,14 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile "io.reactivex.rxjava2:rxjava:2.1.4"
     compile 'io.reactivex.rxjava2:rxkotlin:2.1.0'
-    compile 'io.realm:android-adapters:2.1.0'
+    compile('io.realm:android-adapters:2.1.0') { transitive = false }
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile project(":google-mms")
     kapt "android.arch.lifecycle:compiler:1.0.0"
     kapt 'com.github.bumptech.glide:compiler:4.3.0'
     kapt "com.google.dagger:dagger-compiler:2.11"
-    kapt 'io.realm:realm-annotations:4.1.1'
-    kapt 'io.realm:realm-annotations-processor:4.1.1'
+    kapt 'io.realm:realm-annotations:4.3.1'
+    kapt 'io.realm:realm-annotations-processor:4.3.1'
     testCompile 'com.android.support.test:runner:1.0.1'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'

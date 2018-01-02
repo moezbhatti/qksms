@@ -30,12 +30,12 @@ import data.model.MenuItem
 import data.model.SyncLog
 import data.repository.MessageRepository
 import interactor.*
-import presentation.Navigator
-import presentation.common.base.QkViewModel
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.realm.Realm
+import presentation.Navigator
+import presentation.common.base.QkViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -77,7 +77,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
 
-        newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
+        newState { it.copy(page = Inbox(data = conversations)) }
 
         val isDefaultSms = Telephony.Sms.getDefaultSmsPackage(context) != context.packageName
         val hasSmsPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED

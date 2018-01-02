@@ -65,14 +65,10 @@ class MessageRepository @Inject constructor(
                 .filter { it.isLoaded }
                 .map { realm.copyFromRealm(it) }
 
-        // Adding the #distinct() call makes this call approx 20x slower
-        // With ~70,000 messages on a Google Pixel, it goes from 15ms -> 300ms
-        // This should be fixed by using Realm 4.3, but that breaks the build
-        // Will fix
         val messageFlowable = realm.where(Message::class.java)
-                .findAllSortedAsync("date", Sort.DESCENDING)
-                .where()
-                .distinctAsync("threadId")
+                .sort("date", Sort.DESCENDING)
+                .distinctValues("threadId")
+                .findAllAsync()
                 .asFlowable()
                 .filter { it.isLoaded }
                 .map { realm.copyFromRealm(it) }
