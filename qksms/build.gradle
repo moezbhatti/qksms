@@ -58,6 +58,7 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxkotlin:2.1.0'
     compile 'io.realm:android-adapters:2.1.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile project(":google-mms")
     kapt "android.arch.lifecycle:compiler:1.0.0"
     kapt 'com.github.bumptech.glide:compiler:4.3.0'
     kapt "com.google.dagger:dagger-compiler:2.11"
