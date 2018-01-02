@@ -39,6 +39,9 @@ captures/
 # Keystore files
 *.jks
 
+# Mac .DS_STORE files
+*.DS_STORE
+
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
