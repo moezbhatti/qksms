@@ -21,7 +21,7 @@
         android:theme="@style/AppThemeLight">
 
         <activity
-            android:name="presentation.main.MainActivity"
+            android:name="presentation.feature.main.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,39 +45,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="presentation.compose.ComposeActivity"
-            android:parentActivityName="presentation.main.MainActivity" />
-        <activity android:name="presentation.settings.SettingsActivity" />
-        <activity android:name="presentation.setup.SetupActivity" />
+            android:name="presentation.feature.compose.ComposeActivity"
+            android:parentActivityName="presentation.feature.main.MainActivity" />
+        <activity android:name="presentation.feature.settings.SettingsActivity" />
+        <activity android:name="presentation.feature.setup.SetupActivity" />
 
-        <receiver android:name="receiver.DefaultSmsChangedReceiver">
+        <receiver android:name="presentation.receiver.DefaultSmsChangedReceiver">
             <intent-filter>
                 <action android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="receiver.SmsReceiver"
+            android:name="presentation.receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="receiver.MmsReceiver"
+            android:name="presentation.receiver.MmsReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
-        <receiver android:name="receiver.MessageSentReceiver" />
-        <receiver android:name="receiver.MessageDeliveredReceiver" />
-        <receiver android:name="receiver.MarkSeenReceiver" />
-        <receiver android:name="receiver.MarkReadReceiver" />
-        <receiver android:name="receiver.RemoteMessagingReceiver" />
+        <receiver android:name="presentation.receiver.MessageSentReceiver" />
+        <receiver android:name="presentation.receiver.MessageDeliveredReceiver" />
+        <receiver android:name="presentation.receiver.MarkSeenReceiver" />
+        <receiver android:name="presentation.receiver.MarkReadReceiver" />
+        <receiver android:name="presentation.receiver.RemoteMessagingReceiver" />
 
         <service
-            android:name="service.HeadlessSmsSendService"
+            android:name="presentation.service.HeadlessSmsSendService"
             android:exported="true"
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
             <intent-filter>

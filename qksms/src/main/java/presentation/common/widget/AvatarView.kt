@@ -32,7 +32,7 @@ import common.util.Colors
 import common.util.GlideApp
 import common.util.extensions.setTint
 import data.model.Contact
-import presentation.Navigator
+import presentation.common.Navigator
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.avatar_view.view.*

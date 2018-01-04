@@ -21,16 +21,16 @@ package common.di
 import common.QKApplication
 import common.util.ContactImageLoader
 import presentation.common.widget.*
-import presentation.compose.ComposeActivity
-import presentation.compose.ComposeViewModel
-import presentation.compose.DetailedChipView
-import presentation.main.MainActivity
-import presentation.main.MainViewModel
-import presentation.settings.SettingsActivity
-import presentation.settings.SettingsViewModel
-import presentation.setup.SetupActivity
-import presentation.setup.SetupViewModel
-import receiver.*
+import presentation.feature.compose.ComposeActivity
+import presentation.feature.compose.ComposeViewModel
+import presentation.feature.compose.DetailedChipView
+import presentation.feature.main.MainActivity
+import presentation.feature.main.MainViewModel
+import presentation.feature.settings.SettingsActivity
+import presentation.feature.settings.SettingsViewModel
+import presentation.feature.setup.SetupActivity
+import presentation.feature.setup.SetupViewModel
+import presentation.receiver.*
 import dagger.Component
 import javax.inject.Singleton
 

@@ -24,8 +24,8 @@ import android.content.Intent
 import android.telephony.SmsManager
 import common.util.Preferences
 import data.repository.MessageRepository
-import receiver.MessageDeliveredReceiver
-import receiver.MessageSentReceiver
+import presentation.receiver.MessageDeliveredReceiver
+import presentation.receiver.MessageSentReceiver
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.toFlowable
 import javax.inject.Inject

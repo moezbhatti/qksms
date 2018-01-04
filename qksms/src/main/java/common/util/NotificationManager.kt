@@ -33,10 +33,10 @@ import android.support.v4.app.TaskStackBuilder
 import com.moez.QKSMS.R
 import data.repository.MessageRepository
 import interactor.MarkUnarchived
-import presentation.compose.ComposeActivity
-import receiver.MarkReadReceiver
-import receiver.MarkSeenReceiver
-import receiver.RemoteMessagingReceiver
+import presentation.feature.compose.ComposeActivity
+import presentation.receiver.MarkReadReceiver
+import presentation.receiver.MarkSeenReceiver
+import presentation.receiver.RemoteMessagingReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
 
