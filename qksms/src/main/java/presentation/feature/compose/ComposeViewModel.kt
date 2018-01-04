@@ -41,7 +41,6 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
-import timber.log.Timber
 import java.net.URLDecoder
 import javax.inject.Inject
 
@@ -69,35 +68,49 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     init {
         appComponent.inject(this)
 
+        draft = intent.extras?.getString("body") ?: ""
         val threadId = intent.extras?.getLong("threadId") ?: 0L
-        draft = intent.extras?.getString("draft") ?: ""
+        var address = ""
 
         intent.data?.let {
-            val data = URLDecoder.decode(it.toString(), "utf-8")
-            val scheme = it.scheme
-            val address = when {
-                scheme.startsWith("smsto") -> data.replace("smsto:", "")
-                scheme.startsWith("mmsto") -> data.replace("mmsto:", "")
-                scheme.startsWith("sms") -> data.replace("sms:", "")
-                scheme.startsWith("mms") -> data.replace("mms:", "")
+            val data = it.toString()
+            address = when {
+                it.scheme.startsWith("smsto") -> data.replace("smsto:", "")
+                it.scheme.startsWith("mmsto") -> data.replace("mmsto:", "")
+                it.scheme.startsWith("sms") -> data.replace("sms:", "")
+                it.scheme.startsWith("mms") -> data.replace("mms:", "")
                 else -> ""
             }
-            Timber.v("address: $address")
+
+            // The dialer app on Oreo sends a URL encoded string, make sure to decode it
+            if (address.contains('%')) address = URLDecoder.decode(address, "UTF-8")
         }
 
-        newState { ComposeState(editingMode = threadId == 0L) }
+        val initialConversation: Observable<Conversation> = when {
+            threadId != 0L -> {
+                newState { ComposeState(editingMode = false) }
+                messageRepo.getConversationAsync(threadId).asObservable()
+            }
+
+            address.isNotBlank() -> {
+                newState { ComposeState(editingMode = false) }
+                messageRepo.getOrCreateConversation(address).toObservable()
+            }
+
+            else -> {
+                newState { ComposeState(editingMode = true) }
+                Observable.empty()
+            }
+        }
 
         selectedContacts = contactsReducer
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
                 .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
 
-        val initialConversation: Observable<Conversation> = when (threadId) {
-            0L -> Observable.empty()
-            else -> messageRepo.getConversationAsync(threadId).asObservable()
-        }
-
         // Map the selected contacts to a conversation so that we can display the message history
         val selectedConversation = selectedContacts
+                .skipUntil(state.filter { state -> state.editingMode })
+                .takeUntil(state.filter { state -> !state.editingMode })
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
 
