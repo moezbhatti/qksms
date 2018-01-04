@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -103,6 +102,7 @@
                     android:background="@null"
                     android:gravity="center_vertical"
                     android:hint="@string/compose_hint"
+                    android:inputType="textLongMessage|textCapSentences"
                     android:minHeight="44dp"
                     android:padding="12dp"
                     app:textColorHint="tertiary" />
