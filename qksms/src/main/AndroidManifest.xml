@@ -27,15 +27,16 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="presentation.feature.compose.ComposeActivity"
+            android:parentActivityName="presentation.feature.main.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SENDTO" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.LAUNCHER" />
 
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
@@ -44,9 +45,6 @@
                 <data android:scheme="sms_body" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="presentation.feature.compose.ComposeActivity"
-            android:parentActivityName="presentation.feature.main.MainActivity" />
         <activity android:name="presentation.feature.settings.SettingsActivity" />
         <activity android:name="presentation.feature.setup.SetupActivity" />
 

@@ -19,7 +19,6 @@
 package presentation.feature.main
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.StateListDrawable
@@ -48,8 +47,8 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar_search.*
-import presentation.common.Navigator
 import presentation.common.MenuItemAdapter
+import presentation.common.Navigator
 import presentation.common.base.QkActivity
 import presentation.feature.conversations.ConversationItemTouchCallback
 import presentation.feature.conversations.ConversationsAdapter
@@ -175,13 +174,6 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 onItemRangeInserted(positionStart, itemCount)
             }
         })
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.getLongExtra("threadId", 0)
-                ?.takeIf { threadId -> threadId > 0 }
-                ?.let { threadId -> navigator.showConversation(threadId) }
     }
 
     override fun render(state: MainState) {

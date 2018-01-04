@@ -105,9 +105,7 @@ class Navigator @Inject constructor(val context: Context) {
                 }
 
                 ComposeViewModel::class.java -> {
-                    val threadId = intent.getLongExtra("threadId", 0)
-                    val body = intent.getStringExtra("body") ?: ""
-                    ComposeViewModel(threadId, body)
+                    ComposeViewModel(intent)
                 }
 
                 SettingsViewModel::class.java -> {

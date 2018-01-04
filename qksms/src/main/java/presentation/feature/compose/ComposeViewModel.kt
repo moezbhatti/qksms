@@ -19,6 +19,7 @@
 package presentation.feature.compose
 
 import android.content.Context
+import android.content.Intent
 import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.ClipboardUtils
@@ -30,8 +31,6 @@ import data.model.Conversation
 import data.repository.ContactRepository
 import data.repository.MessageRepository
 import interactor.*
-import presentation.common.Navigator
-import presentation.common.base.QkViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
@@ -40,10 +39,13 @@ import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import presentation.common.Navigator
+import presentation.common.base.QkViewModel
+import timber.log.Timber
+import java.net.URLDecoder
 import javax.inject.Inject
 
-class ComposeViewModel(threadId: Long, var draft: String)
-    : QkViewModel<ComposeView, ComposeState>(ComposeState(editingMode = threadId == 0L)) {
+class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(ComposeState()) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var contactFilter: ContactFilter
@@ -58,6 +60,7 @@ class ComposeViewModel(threadId: Long, var draft: String)
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
 
+    private var draft: String = ""
     private val contacts: List<Contact> by lazy { contactsRepo.getContacts() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Observable<List<Contact>>
@@ -65,6 +68,24 @@ class ComposeViewModel(threadId: Long, var draft: String)
 
     init {
         appComponent.inject(this)
+
+        val threadId = intent.extras?.getLong("threadId") ?: 0L
+        draft = intent.extras?.getString("draft") ?: ""
+
+        intent.data?.let {
+            val data = URLDecoder.decode(it.toString(), "utf-8")
+            val scheme = it.scheme
+            val address = when {
+                scheme.startsWith("smsto") -> data.replace("smsto:", "")
+                scheme.startsWith("mmsto") -> data.replace("mmsto:", "")
+                scheme.startsWith("sms") -> data.replace("sms:", "")
+                scheme.startsWith("mms") -> data.replace("mms:", "")
+                else -> ""
+            }
+            Timber.v("address: $address")
+        }
+
+        newState { ComposeState(editingMode = threadId == 0L) }
 
         selectedContacts = contactsReducer
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
@@ -213,7 +234,7 @@ class ComposeViewModel(threadId: Long, var draft: String)
                     sendMessage.execute(SendMessage.Params(threadId, address, body))
                     view.setDraft("")
                 })
-                .withLatestFrom(state, {_, state ->
+                .withLatestFrom(state, { _, state ->
                     if (state.editingMode) {
                         newState { it.copy(editingMode = false) }
                     }
