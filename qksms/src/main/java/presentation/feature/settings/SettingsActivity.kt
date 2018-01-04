@@ -18,8 +18,12 @@
  */
 package presentation.feature.settings
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Intent
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -29,20 +33,21 @@ import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.extensions.dpToPx
 import common.util.extensions.setVisible
-import presentation.common.base.QkActivity
-import presentation.common.widget.PreferenceView
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
+import presentation.common.base.QkActivity
+import presentation.common.widget.PreferenceView
 
 class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
     override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val themeSelectedIntent: Observable<Int> by lazy { themeAdapter.colorSelected }
+    override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
 
     // TODO remove this
     private val progressDialog by lazy {
@@ -154,6 +159,23 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         mms.checkbox.isChecked = state.mmsEnabled
 
         mmsSize.summary = state.maxMmsSize
+    }
+
+    override fun showRingtonePicker(default: Uri) {
+        val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, default)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
+        startActivityForResult(intent, 123)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
+            val uri: Uri? = data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+            uri?.let { ringtoneSelectedIntent.onNext(uri.toString()) }
+        }
     }
 
 }

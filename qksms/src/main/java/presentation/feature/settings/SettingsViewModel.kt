@@ -19,13 +19,14 @@
 package presentation.feature.settings
 
 import android.content.Context
+import android.net.Uri
 import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.Preferences
 import interactor.FullSync
+import io.reactivex.rxkotlin.plusAssign
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
-import io.reactivex.rxkotlin.plusAssign
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -59,9 +60,6 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
         disposables += prefs.vibration.asObservable().subscribe { vibrationEnabled ->
             newState { it.copy(vibrationEnabled = vibrationEnabled) }
-        }
-
-        disposables += prefs.ringtone.asObservable().subscribe { ringtone ->
         }
 
         disposables += prefs.delivery.asObservable().subscribe { deliveryEnabled ->
@@ -108,8 +106,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                 R.id.vibration -> prefs.vibration.set(!prefs.vibration.get())
 
-                R.id.ringtone -> {
-                }
+                R.id.ringtone -> view.showRingtonePicker(Uri.parse(prefs.ringtone.get()))
 
                 R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
@@ -134,6 +131,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         intents += view.themeSelectedIntent.subscribe { color ->
             prefs.theme.set(color)
             newState { it.copy(selectingTheme = false) }
+        }
+
+        intents += view.ringtoneSelectedIntent.subscribe { ringtone ->
+            prefs.ringtone.set(ringtone)
         }
     }
 }

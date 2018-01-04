@@ -18,12 +18,17 @@
  */
 package presentation.feature.settings
 
-import presentation.common.base.QkView
-import presentation.common.widget.PreferenceView
+import android.net.Uri
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
+import presentation.common.base.QkView
+import presentation.common.widget.PreferenceView
 
 interface SettingsView : QkView<SettingsState> {
+
     val preferenceClickIntent: Subject<PreferenceView>
     val themeSelectedIntent: Observable<Int>
+    val ringtoneSelectedIntent: Observable<String>
+
+    fun showRingtonePicker(default: Uri)
 }
