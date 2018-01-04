@@ -102,7 +102,7 @@
                     android:background="@null"
                     android:gravity="center_vertical"
                     android:hint="@string/compose_hint"
-                    android:inputType="textLongMessage|textCapSentences"
+                    android:inputType="textLongMessage|textCapSentences|textMultiLine"
                     android:minHeight="44dp"
                     android:padding="12dp"
                     app:textColorHint="tertiary" />
