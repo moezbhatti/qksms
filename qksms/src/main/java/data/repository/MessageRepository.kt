@@ -415,8 +415,9 @@ class MessageRepository @Inject constructor(
     fun deleteMessage(messageId: Long) {
         val realm = Realm.getDefaultInstance()
         realm.where(Message::class.java).equalTo("id", messageId).findFirst()?.let { message ->
+            val uri = message.getUri()
             realm.executeTransaction { message.deleteFromRealm() }
-            context.contentResolver.delete(message.getUri(), null, null)
+            context.contentResolver.delete(uri, null, null)
         }
         realm.close()
     }
