@@ -22,12 +22,16 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.Telephony.*
+import common.util.Keys
 import data.model.Message
 import data.model.Message.DeliveryStatus
 import timber.log.Timber
 import javax.inject.Inject
 
-class CursorToMessage @Inject constructor(val context: Context) : Mapper<Pair<Cursor, CursorToMessage.MessageColumns>, Message> {
+class CursorToMessage @Inject constructor(
+        private val context: Context,
+        private val keys: Keys
+) : Mapper<Pair<Cursor, CursorToMessage.MessageColumns>, Message> {
 
     override fun map(from: Pair<Cursor, MessageColumns>): Message {
         val cursor = from.first
@@ -39,7 +43,8 @@ class CursorToMessage @Inject constructor(val context: Context) : Mapper<Pair<Cu
                 else -> cursor.getString(columnsMap.msgType)
             }
 
-            id = cursor.getLong(columnsMap.msgId)
+            id = keys.newId()
+            contentId = cursor.getLong(columnsMap.msgId)
 
             when (type) {
                 "sms" -> {

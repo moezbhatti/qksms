@@ -36,7 +36,6 @@ open class PartialSync @Inject constructor(
         return Flowable.just(System.currentTimeMillis())
                 .skipWhile { !permissions.hasSmsAndContacts() }
                 .doOnNext { syncManager.performSync() }
-                .doOnNext { keys.refresh() }
                 .map { startTime -> System.currentTimeMillis() - startTime }
                 .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
                 .doOnNext { seconds -> Timber.v("Completed sync in $seconds seconds") }

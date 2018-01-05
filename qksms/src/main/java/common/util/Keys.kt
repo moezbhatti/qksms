@@ -32,16 +32,16 @@ class Keys @Inject constructor() {
     private var maxValue: Long = 0L
 
     init {
-        refresh()
-    }
-
-    /**
-     * Should be called upon initialization, and after a sync
-     */
-    fun refresh() {
         val realm = Realm.getDefaultInstance()
         maxValue = realm.where(Message::class.java).max("id")?.toLong() ?: 0L
         realm.close()
+    }
+
+    /**
+     * Should be called when a new sync is being started
+     */
+    fun reset() {
+        maxValue = 0L
     }
 
     /**

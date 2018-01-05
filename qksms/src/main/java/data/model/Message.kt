@@ -30,6 +30,12 @@ open class Message : RealmObject() {
     enum class AttachmentType { TEXT, IMAGE, VIDEO, AUDIO, SLIDESHOW, NOT_LOADED }
 
     @PrimaryKey var id: Long = 0
+
+    // The MMS-SMS content provider returns messages where duplicate ids can exist. This is because
+    // SMS and MMS are stored in separate tables. We can't use these ids as our realm message id
+    // since it's our primary key for the single message object, so we'll store the original id in
+    // case we need to access the original message item in the content provider
+    var contentId: Long = 0
     var threadId: Long = 0
     var address: String = ""
     var boxId: Int = 0
@@ -70,7 +76,7 @@ open class Message : RealmObject() {
 
     fun getUri(): Uri {
         val baseUri = if (isMms()) Mms.CONTENT_URI else Sms.CONTENT_URI
-        return ContentUris.withAppendedId(baseUri, id)
+        return ContentUris.withAppendedId(baseUri, contentId)
     }
 
     fun isMms(): Boolean = type == "mms"
