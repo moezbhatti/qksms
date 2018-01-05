@@ -20,12 +20,13 @@ package presentation.feature.compose
 
 import data.model.Contact
 import data.model.Message
-import presentation.common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
+import presentation.common.base.QkView
 
 interface ComposeView : QkView<ComposeState> {
 
+    val activityVisibleIntent: Observable<Boolean>
     val queryChangedIntent: Observable<CharSequence>
     val chipSelectedIntent: Subject<Contact>
     val chipDeletedIntent: Subject<Contact>

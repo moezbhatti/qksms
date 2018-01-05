@@ -37,7 +37,6 @@ import common.util.extensions.setVisible
 import common.util.extensions.showKeyboard
 import data.model.Contact
 import data.model.Message
-import presentation.common.base.QkActivity
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
@@ -45,12 +44,14 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.toolbar_chips.*
+import presentation.common.base.QkActivity
 import javax.inject.Inject
 
 
 class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
     override val viewModelClass = ComposeViewModel::class
+    override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
@@ -149,6 +150,16 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                 .subscribe()
 
         window.callback = ComposeWindowCallback(window.callback, this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        activityVisibleIntent.onNext(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activityVisibleIntent.onNext(false)
     }
 
     override fun render(state: ComposeState) {

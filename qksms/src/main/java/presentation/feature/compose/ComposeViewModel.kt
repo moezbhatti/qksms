@@ -28,6 +28,7 @@ import common.util.extensions.makeToast
 import common.util.filter.ContactFilter
 import data.model.Contact
 import data.model.Conversation
+import data.model.Message
 import data.repository.ContactRepository
 import data.repository.MessageRepository
 import interactor.*
@@ -64,6 +65,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Observable<List<Contact>>
     private val conversation: Observable<Conversation>
+    private val messages: Observable<List<Message>>
 
     init {
         appComponent.inject(this)
@@ -131,26 +133,21 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                     newState { it.copy(title = conversation.getTitle(), archived = conversation.archived) }
                 }
 
+        // When the conversation changes, update the messages for the adapter
+        messages = conversation
+                .distinctUntilChanged()
+                .observeOn(AndroidSchedulers.mainThread())
+                .map { conversation -> messageRepo.getMessages(conversation.id) }
+                .doOnNext { messages -> newState { it.copy(messages = messages) } }
+                .switchMap { messages -> messages.asObservable() }
+
         disposables += sendMessage
         disposables += markRead
         disposables += markArchived
         disposables += markUnarchived
         disposables += deleteConversation
         disposables += conversation.subscribe()
-
-        // When the conversation changes, update the messages for the adapter
-        // When the message list changes, make sure to mark them read
-        disposables += conversation
-                .distinctUntilChanged()
-                .observeOn(AndroidSchedulers.mainThread())
-                .map { conversation -> messageRepo.getMessages(conversation.id) }
-                .doOnNext { messages -> newState { it.copy(messages = messages) } }
-                .flatMap { messages -> messages.asObservable() }
-                .withLatestFrom(conversation, { messages, conversation ->
-                    markRead.execute(conversation.id)
-                    messages
-                })
-                .subscribe()
+        disposables += messages.subscribe()
 
         if (threadId == 0L) {
             syncContacts.execute(Unit)
@@ -227,6 +224,13 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         intents += view.deleteIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .subscribe { conversation -> deleteConversation.execute(conversation.id) }
+
+        // Mark the conversation read, if in foreground
+        intents += Observables.combineLatest(messages, view.activityVisibleIntent, { _, b -> b })
+                .withLatestFrom(conversation, { visible, conversation ->
+                    if (visible) markRead.execute(conversation.id)
+                })
+                .subscribe()
 
         // Add an attachment
         intents += view.attachIntent
