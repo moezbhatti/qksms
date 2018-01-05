@@ -249,8 +249,8 @@ class MessageRepository @Inject constructor(
             seen = true
         }
         val realm = Realm.getDefaultInstance()
-        realm.executeTransaction { realm.insert(message) }
-        realm.close()
+        var managedMessage: Message? = null
+        realm.executeTransaction { managedMessage = realm.copyToRealm(message) }
 
         // Insert the message to the native content provider
         val values = ContentValues().apply {
@@ -262,7 +262,11 @@ class MessageRepository @Inject constructor(
             put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
             put(Telephony.Sms.THREAD_ID, threadId)
         }
-        context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
+        val uri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
+
+        // Update the contentId after the message has been inserted to the content provider
+        realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
+        realm.close()
 
         return message
     }
@@ -270,7 +274,6 @@ class MessageRepository @Inject constructor(
     fun insertReceivedSms(address: String, body: String, sentTime: Long): Message {
 
         // Insert the message to Realm
-        val realm = Realm.getDefaultInstance()
         val message = Message().apply {
             this.address = address
             this.body = body
@@ -282,20 +285,24 @@ class MessageRepository @Inject constructor(
             boxId = Sms.MESSAGE_TYPE_INBOX
             type = "sms"
 
-            realm.executeTransaction { realm.insert(this) }
         }
-        realm.close()
+        val realm = Realm.getDefaultInstance()
+        var managedMessage: Message? = null
+        realm.executeTransaction { managedMessage = realm.copyToRealm(message) }
 
         // Insert the message to the native content provider
-        ContentValues().apply {
+        val values = ContentValues().apply {
             put(Telephony.Sms.ADDRESS, address)
             put(Telephony.Sms.BODY, body)
             put(Telephony.Sms.DATE_SENT, sentTime)
             put(Telephony.Sms.READ, false)
             put(Telephony.Sms.SEEN, false)
-
-            context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, this)
         }
+        val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
+
+        // Update the contentId after the message has been inserted to the content provider
+        realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
+        realm.close()
 
         return message
     }
