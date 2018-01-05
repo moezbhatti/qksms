@@ -64,14 +64,14 @@ class SyncManager @Inject constructor(
             realm.delete(SyncLog::class.java)
         }
 
-        val lastSync = realm.where(SyncLog::class.java)?.max("date")?.toLong() ?: 0
+        val lastSync = realm.where(Message::class.java)?.max("date")?.toLong() ?: 0
         realm.insert(SyncLog())
 
         // Sync conversations
         val conversationCursor = contentResolver.query(
                 CursorToConversation.URI,
                 CursorToConversation.PROJECTION,
-                "date >= ?", arrayOf(lastSync.toString()),
+                "date > ?", arrayOf(lastSync.toString()),
                 "date desc")
         val conversations = conversationCursor.map { cursor -> cursorToConversation.map(cursor) }
         realm.insertOrUpdate(conversations)
@@ -83,7 +83,7 @@ class SyncManager @Inject constructor(
         val messageColumns = CursorToMessage.MessageColumns(messageCursor)
         val messages = messageCursor.mapWhile(
                 { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) },
-                { message -> message.date >= lastSync })
+                { message -> message.date > lastSync })
         realm.insertOrUpdate(messages)
         messageCursor.close()
 

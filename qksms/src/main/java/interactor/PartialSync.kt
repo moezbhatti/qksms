@@ -18,7 +18,6 @@
  */
 package interactor
 
-import common.util.Keys
 import common.util.Permissions
 import common.util.SyncManager
 import io.reactivex.Flowable
@@ -28,8 +27,7 @@ import javax.inject.Inject
 
 open class PartialSync @Inject constructor(
         private val syncManager: SyncManager,
-        private val permissions: Permissions,
-        private val keys: Keys
+        private val permissions: Permissions
 ) : Interactor<Unit, Long>() {
 
     override fun buildObservable(params: Unit): Flowable<Long> {
