@@ -19,8 +19,8 @@
 package presentation.common.widget
 
 import android.content.Context
+import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
-import android.widget.TextView
 import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.Colors
@@ -29,7 +29,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
-open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : TextView(context, attrs) {
+open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
+    : AppCompatTextView(context, attrs) {
 
     @Inject lateinit var colors: Colors
 

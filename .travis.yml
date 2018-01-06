@@ -1,0 +1,20 @@
+language: android
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - extra
+
+    # The build tools used in the project
+    - build-tools-27.0.2
+
+    # The SDK used in the project
+    - android-27
+
+before_install:
+  - yes | sdkmanager "platforms;android-27"
+  - echo no | android create avd --force -n test -t android-27 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
