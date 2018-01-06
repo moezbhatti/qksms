@@ -19,8 +19,8 @@
 package presentation.common.widget
 
 import android.content.Context
-import android.support.v7.widget.AppCompatEditText
 import android.util.AttributeSet
+import android.widget.EditText
 import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.Colors
@@ -29,8 +29,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
-open class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
-    : AppCompatEditText(context, attrs) {
+/**
+ * Custom implementation of EditText to allow for dynamic text colors
+ *
+ * Beware of updating to extend AppCompatTextView, as this inexplicably breaks the view in
+ * the contacts chip view
+ */
+class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : EditText(context, attrs) {
 
     @Inject lateinit var colors: Colors
 
