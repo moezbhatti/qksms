@@ -1,4 +1,4 @@
-Disclaimer: The current condition of the codebase is quite poor *(I guess that's what happens when you start writing an app when you don't even know how to code yet)*. I'm in the process of rebuilding the app from scratch using Kotlin - I would recommend against making any pull requests until the new version is ready. ETA December 2017
+Disclaimer: The current condition of the codebase is quite poor *(I guess that's what happens when you start writing an app when you don't even know how to code yet)*. I'm in the process of rebuilding the app from scratch using Kotlin - pull requests will not be accepted during this time. Feel free to follow the progress here - https://github.com/moezbhatti/qksms/tree/qksms3
 
 # QKSMS
 
