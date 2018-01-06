@@ -62,7 +62,7 @@ class Navigator @Inject constructor(val context: Context) {
 
     fun showCompose(body: String? = null) {
         val intent = Intent(context, ComposeActivity::class.java)
-        intent.putExtra("body", body)
+        intent.putExtra(Intent.EXTRA_TEXT, body)
         startActivity(intent)
     }
 

@@ -70,7 +70,8 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     init {
         appComponent.inject(this)
 
-        draft = intent.extras?.getString("body") ?: ""
+        draft = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
+        intent.clipData
         val threadId = intent.extras?.getLong("threadId") ?: 0L
         var address = ""
 
