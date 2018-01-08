@@ -31,14 +31,14 @@ import data.model.Contact
 import data.model.InboxItem
 import data.model.PhoneNumber
 import data.repository.MessageRepository
-import presentation.common.Navigator
-import presentation.common.base.FlowableAdapter
-import presentation.common.base.QkViewHolder
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
+import presentation.common.Navigator
+import presentation.common.base.FlowableAdapter
+import presentation.common.base.QkViewHolder
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
@@ -89,7 +89,7 @@ class ConversationsAdapter @Inject constructor(
         }
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(message.date)
-        view.snippet.text = message.body
+        view.snippet.text = if (message.isMe()) "You: ${message.body}" else message.body
     }
 
     override fun getItemViewType(position: Int): Int {
