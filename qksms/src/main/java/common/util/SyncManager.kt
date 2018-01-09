@@ -24,10 +24,7 @@ import common.util.extensions.mapWhile
 import data.mapper.CursorToConversation
 import data.mapper.CursorToMessage
 import data.mapper.CursorToRecipient
-import data.model.Conversation
-import data.model.Message
-import data.model.Recipient
-import data.model.SyncLog
+import data.model.*
 import io.realm.Realm
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -60,6 +57,7 @@ class SyncManager @Inject constructor(
         if (fullSync) {
             realm.delete(Conversation::class.java)
             realm.delete(Message::class.java)
+            realm.delete(MmsPart::class.java)
             realm.delete(Recipient::class.java)
             realm.delete(SyncLog::class.java)
         }
