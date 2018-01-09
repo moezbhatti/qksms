@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.mms.pdu;
+package com.google.android.mms.pdu_alt;
 
 import android.util.Log;
 

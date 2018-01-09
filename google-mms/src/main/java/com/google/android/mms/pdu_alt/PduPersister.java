@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.mms.pdu;
+package com.google.android.mms.pdu_alt;
 import com.google.android.mms.ContentType;
 import com.google.android.mms.InvalidHeaderValueException;
 import com.google.android.mms.MmsException;
-import com.google.android.mms.util.DownloadDrmHelper;
-import com.google.android.mms.util.DrmConvertSession;
-import com.google.android.mms.util.PduCache;
-import com.google.android.mms.util.PduCacheEntry;
-import com.google.android.mms.util.SqliteWrapper;
+import com.google.android.mms.util_alt.DownloadDrmHelper;
+import com.google.android.mms.util_alt.DrmConvertSession;
+import com.google.android.mms.util_alt.PduCache;
+import com.google.android.mms.util_alt.PduCacheEntry;
+import com.google.android.mms.util_alt.SqliteWrapper;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -57,7 +57,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-import com.google.android.mms.pdu.EncodedStringValue;
+
 /**
  * This class is the high-level manager of PDU storage.
  */

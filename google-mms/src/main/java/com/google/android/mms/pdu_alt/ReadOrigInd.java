@@ -14,14 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.mms.pdu;
+package com.google.android.mms.pdu_alt;
 
 import com.google.android.mms.InvalidHeaderValueException;
 
-/**
- * M-Delivery.Ind Pdu.
- */
-public class DeliveryInd extends GenericPdu {
+public class ReadOrigInd extends GenericPdu {
     /**
      * Empty constructor.
      * Since the Pdu corresponding to this class is constructed
@@ -30,9 +27,9 @@ public class DeliveryInd extends GenericPdu {
      *
      * @throws InvalidHeaderValueException if error occurs.
      */
-    public DeliveryInd() throws InvalidHeaderValueException {
+    public ReadOrigInd() throws InvalidHeaderValueException {
         super();
-        setMessageType(PduHeaders.MESSAGE_TYPE_DELIVERY_IND);
+        setMessageType(PduHeaders.MESSAGE_TYPE_READ_ORIG_IND);
     }
 
     /**
@@ -40,7 +37,7 @@ public class DeliveryInd extends GenericPdu {
      *
      * @param headers Headers for this PDU.
      */
-    DeliveryInd(PduHeaders headers) {
+    ReadOrigInd(PduHeaders headers) {
         super(headers);
     }
 
@@ -63,6 +60,27 @@ public class DeliveryInd extends GenericPdu {
     }
 
     /**
+     * Get From value.
+     * From-value = Value-length
+     * (Address-present-token Encoded-string-value | Insert-address-token)
+     *
+     * @return the value
+     */
+    public EncodedStringValue getFrom() {
+        return mPduHeaders.getEncodedStringValue(PduHeaders.FROM);
+    }
+
+    /**
+     * Set From value.
+     *
+     * @param value the value
+     * @throws NullPointerException if the value is null.
+     */
+    public void setFrom(EncodedStringValue value) {
+        mPduHeaders.setEncodedStringValue(value, PduHeaders.FROM);
+    }
+
+    /**
      * Get Message-ID value.
      *
      * @return the value
@@ -74,7 +92,7 @@ public class DeliveryInd extends GenericPdu {
     /**
      * Set Message-ID value.
      *
-     * @param value the value, should not be null
+     * @param value the value
      * @throws NullPointerException if the value is null.
      */
     public void setMessageId(byte[] value) {
@@ -82,22 +100,22 @@ public class DeliveryInd extends GenericPdu {
     }
 
     /**
-     * Get Status value.
+     * Get X-MMS-Read-status value.
      *
      * @return the value
      */
-    public int getStatus() {
-        return mPduHeaders.getOctet(PduHeaders.STATUS);
+    public int getReadStatus() {
+        return mPduHeaders.getOctet(PduHeaders.READ_STATUS);
     }
 
     /**
-     * Set Status value.
+     * Set X-MMS-Read-status value.
      *
      * @param value the value
      * @throws InvalidHeaderValueException if the value is invalid.
      */
-    public void setStatus(int value) throws InvalidHeaderValueException {
-        mPduHeaders.setOctet(value, PduHeaders.STATUS);
+    public void setReadStatus(int value) throws InvalidHeaderValueException {
+        mPduHeaders.setOctet(value, PduHeaders.READ_STATUS);
     }
 
     /**
@@ -110,7 +128,7 @@ public class DeliveryInd extends GenericPdu {
     }
 
     /**
-     * set To value.
+     * Set To value.
      *
      * @param value the value
      * @throws NullPointerException if the value is null.
@@ -129,8 +147,5 @@ public class DeliveryInd extends GenericPdu {
      *
      *     public byte[] getReplyApplicId() {return 0x00;}
      *     public void setReplyApplicId(byte[] value) {}
-     *
-     *     public EncodedStringValue getStatusText() {return null;}
-     *     public void setStatusText(EncodedStringValue value) {}
      */
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2007 Esmertec AG.
- * Copyright (C) 2007 The Android Open Source Project
+ * Copyright (C) 2007-2008 Esmertec AG.
+ * Copyright (C) 2007-2008 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.android.mms.pdu;
+package com.google.android.mms.pdu_alt;
 
+import android.util.Log;
 import com.google.android.mms.InvalidHeaderValueException;
 
-/**
- * M-Retrive.conf Pdu.
- */
-public class RetrieveConf extends MultimediaMessagePdu {
-    /**
-     * Empty constructor.
-     * Since the Pdu corresponding to this class is constructed
-     * by the Proxy-Relay server, this class is only instantiated
-     * by the Pdu Parser.
-     *
-     * @throws InvalidHeaderValueException if error occurs.
-     */
-    public RetrieveConf() throws InvalidHeaderValueException {
+public class SendReq extends MultimediaMessagePdu {
+    private static final String TAG = "SendReq";
+
+    public SendReq() {
         super();
-        setMessageType(PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF);
+        try {
+            setMessageType(PduHeaders.MESSAGE_TYPE_SEND_REQ);
+            setMmsVersion(PduHeaders.CURRENT_MMS_VERSION);
+            // FIXME: Content-type must be decided according to whether
+            // SMIL part present.
+            setContentType("application/vnd.wap.multipart.related".getBytes());
+            setFrom(new EncodedStringValue(PduHeaders.FROM_INSERT_ADDRESS_TOKEN_STR.getBytes()));
+            setTransactionId(generateTransactionId());
+        } catch (InvalidHeaderValueException e) {
+            // Impossible to reach here since all headers we set above are valid.
+            Log.e(TAG, "Unexpected InvalidHeaderValueException.", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Constructor, used when composing a M-Send.req pdu.
+     *
+     * @param contentType   the content type value
+     * @param from          the from value
+     * @param mmsVersion    current viersion of mms
+     * @param transactionId the transaction-id value
+     * @throws InvalidHeaderValueException if parameters are invalid.
+     *                                     NullPointerException if contentType, form or transactionId is null.
+     */
+    public SendReq(byte[] contentType,
+                   EncodedStringValue from,
+                   int mmsVersion,
+                   byte[] transactionId) throws InvalidHeaderValueException {
+        super();
+        setMessageType(PduHeaders.MESSAGE_TYPE_SEND_REQ);
+        setContentType(contentType);
+        setFrom(from);
+        setMmsVersion(mmsVersion);
+        setTransactionId(transactionId);
     }
 
     /**
@@ -40,7 +66,7 @@ public class RetrieveConf extends MultimediaMessagePdu {
      *
      * @param headers Headers for this PDU.
      */
-    RetrieveConf(PduHeaders headers) {
+    SendReq(PduHeaders headers) {
         super(headers);
     }
 
@@ -50,8 +76,42 @@ public class RetrieveConf extends MultimediaMessagePdu {
      * @param headers Headers for this PDU.
      * @param body    Body of this PDu.
      */
-    RetrieveConf(PduHeaders headers, PduBody body) {
+    SendReq(PduHeaders headers, PduBody body) {
         super(headers, body);
+    }
+
+    private byte[] generateTransactionId() {
+        String transactionId = "T" + Long.toHexString(System.currentTimeMillis());
+        return transactionId.getBytes();
+    }
+
+    /**
+     * Get Bcc value.
+     *
+     * @return the value
+     */
+    public EncodedStringValue[] getBcc() {
+        return mPduHeaders.getEncodedStringValues(PduHeaders.BCC);
+    }
+
+    /**
+     * Set "BCC" value.
+     *
+     * @param value the value
+     * @throws NullPointerException if the value is null.
+     */
+    public void setBcc(EncodedStringValue[] value) {
+        mPduHeaders.setEncodedStringValues(value, PduHeaders.BCC);
+    }
+
+    /**
+     * Add a "BCC" value.
+     *
+     * @param value the value
+     * @throws NullPointerException if the value is null.
+     */
+    public void addBcc(EncodedStringValue value) {
+        mPduHeaders.appendEncodedStringValue(value, PduHeaders.BCC);
     }
 
     /**
@@ -61,6 +121,16 @@ public class RetrieveConf extends MultimediaMessagePdu {
      */
     public EncodedStringValue[] getCc() {
         return mPduHeaders.getEncodedStringValues(PduHeaders.CC);
+    }
+
+    /**
+     * Set "CC" value.
+     *
+     * @param value the value
+     * @throws NullPointerException if the value is null.
+     */
+    public void setCc(EncodedStringValue[] value) {
+        mPduHeaders.setEncodedStringValues(value, PduHeaders.CC);
     }
 
     /**
@@ -112,24 +182,44 @@ public class RetrieveConf extends MultimediaMessagePdu {
     }
 
     /**
-     * Get From value.
-     * From-value = Value-length
-     * (Address-present-token Encoded-string-value | Insert-address-token)
+     * Get X-Mms-Expiry value.
+     * <p>
+     * Expiry-value = Value-length
+     * (Absolute-token Date-value | Relative-token Delta-seconds-value)
      *
      * @return the value
      */
-    public EncodedStringValue getFrom() {
-        return mPduHeaders.getEncodedStringValue(PduHeaders.FROM);
+    public long getExpiry() {
+        return mPduHeaders.getLongInteger(PduHeaders.EXPIRY);
     }
 
     /**
-     * Set From value.
+     * Set X-Mms-Expiry value.
      *
      * @param value the value
-     * @throws NullPointerException if the value is null.
      */
-    public void setFrom(EncodedStringValue value) {
-        mPduHeaders.setEncodedStringValue(value, PduHeaders.FROM);
+    public void setExpiry(long value) {
+        mPduHeaders.setLongInteger(value, PduHeaders.EXPIRY);
+    }
+
+    /**
+     * Get X-Mms-MessageSize value.
+     * <p>
+     * Expiry-value = size of message
+     *
+     * @return the value
+     */
+    public long getMessageSize() {
+        return mPduHeaders.getLongInteger(PduHeaders.MESSAGE_SIZE);
+    }
+
+    /**
+     * Set X-Mms-MessageSize value.
+     *
+     * @param value the value
+     */
+    public void setMessageSize(long value) {
+        mPduHeaders.setLongInteger(value, PduHeaders.MESSAGE_SIZE);
     }
 
     /**
@@ -154,25 +244,6 @@ public class RetrieveConf extends MultimediaMessagePdu {
     }
 
     /**
-     * Get Message-ID value.
-     *
-     * @return the value
-     */
-    public byte[] getMessageId() {
-        return mPduHeaders.getTextString(PduHeaders.MESSAGE_ID);
-    }
-
-    /**
-     * Set Message-ID value.
-     *
-     * @param value the value
-     * @throws NullPointerException if the value is null.
-     */
-    public void setMessageId(byte[] value) {
-        mPduHeaders.setTextString(value, PduHeaders.MESSAGE_ID);
-    }
-
-    /**
      * Get X-Mms-Read-Report value.
      *
      * @return the value
@@ -192,54 +263,26 @@ public class RetrieveConf extends MultimediaMessagePdu {
     }
 
     /**
-     * Get X-Mms-Retrieve-Status value.
-     *
-     * @return the value
-     */
-    public int getRetrieveStatus() {
-        return mPduHeaders.getOctet(PduHeaders.RETRIEVE_STATUS);
-    }
-
-    /**
-     * Set X-Mms-Retrieve-Status value.
-     *
-     * @param value the value
-     * @throws InvalidHeaderValueException if the value is invalid.
-     */
-    public void setRetrieveStatus(int value) throws InvalidHeaderValueException {
-        mPduHeaders.setOctet(value, PduHeaders.RETRIEVE_STATUS);
-    }
-
-    /**
-     * Get X-Mms-Retrieve-Text value.
-     *
-     * @return the value
-     */
-    public EncodedStringValue getRetrieveText() {
-        return mPduHeaders.getEncodedStringValue(PduHeaders.RETRIEVE_TEXT);
-    }
-
-    /**
-     * Set X-Mms-Retrieve-Text value.
+     * Set "To" value.
      *
      * @param value the value
      * @throws NullPointerException if the value is null.
      */
-    public void setRetrieveText(EncodedStringValue value) {
-        mPduHeaders.setEncodedStringValue(value, PduHeaders.RETRIEVE_TEXT);
+    public void setTo(EncodedStringValue[] value) {
+        mPduHeaders.setEncodedStringValues(value, PduHeaders.TO);
     }
 
     /**
-     * Get X-Mms-Transaction-Id.
+     * Get X-Mms-Transaction-Id field value.
      *
-     * @return the value
+     * @return the X-Mms-Report-Allowed value
      */
     public byte[] getTransactionId() {
         return mPduHeaders.getTextString(PduHeaders.TRANSACTION_ID);
     }
 
     /**
-     * Set X-Mms-Transaction-Id.
+     * Set X-Mms-Transaction-Id field value.
      *
      * @param value the value
      * @throws NullPointerException if the value is null.
@@ -250,6 +293,9 @@ public class RetrieveConf extends MultimediaMessagePdu {
     /*
      * Optional, not supported header fields:
      *
+     *     public byte getAdaptationAllowed() {return 0};
+     *     public void setAdaptationAllowed(btye value) {};
+     *
      *     public byte[] getApplicId() {return null;}
      *     public void setApplicId(byte[] value) {}
      *
@@ -259,26 +305,17 @@ public class RetrieveConf extends MultimediaMessagePdu {
      *     public byte getContentClass() {return 0x00;}
      *     public void setApplicId(byte value) {}
      *
+     *     public long getDeliveryTime() {return 0};
+     *     public void setDeliveryTime(long value) {};
+     *
      *     public byte getDrmContent() {return 0x00;}
      *     public void setDrmContent(byte value) {}
-     *
-     *     public byte getDistributionIndicator() {return 0x00;}
-     *     public void setDistributionIndicator(byte value) {}
-     *
-     *     public PreviouslySentByValue getPreviouslySentBy() {return null;}
-     *     public void setPreviouslySentBy(PreviouslySentByValue value) {}
-     *
-     *     public PreviouslySentDateValue getPreviouslySentDate() {}
-     *     public void setPreviouslySentDate(PreviouslySentDateValue value) {}
      *
      *     public MmFlagsValue getMmFlags() {return null;}
      *     public void setMmFlags(MmFlagsValue value) {}
      *
      *     public MmStateValue getMmState() {return null;}
      *     public void getMmState(MmStateValue value) {}
-     *
-     *     public byte[] getReplaceId() {return 0x00;}
-     *     public void setReplaceId(byte[] value) {}
      *
      *     public byte[] getReplyApplicId() {return 0x00;}
      *     public void setReplyApplicId(byte[] value) {}
@@ -294,5 +331,11 @@ public class RetrieveConf extends MultimediaMessagePdu {
      *
      *     public long getReplyChargingSize() {return 0;}
      *     public void setReplyChargingSize(long value) {}
+     *
+     *     public byte[] getReplyApplicId() {return 0x00;}
+     *     public void setReplyApplicId(byte[] value) {}
+     *
+     *     public byte getStore() {return 0x00;}
+     *     public void setStore(byte value) {}
      */
 }
