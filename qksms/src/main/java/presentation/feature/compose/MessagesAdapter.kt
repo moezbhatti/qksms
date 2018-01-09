@@ -121,7 +121,7 @@ class MessagesAdapter @Inject constructor(
         bindGrouping(view, position)
 
         view.body.text = message.getText()
-        view.body.setVisible(message.isSms() || view.body.text.isNotBlank())
+        view.body.setVisible(message.isSms() || view.body.text.isNotEmpty() || message.parts.all { it.image == null })
 
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
