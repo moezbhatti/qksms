@@ -41,8 +41,11 @@ class DateFormatter @Inject constructor(val context: Context) {
         else SimpleDateFormat(pattern, Locale.US)
     }
 
-    fun getMessageTimestamp(date: Long): String {
+    fun getTimestamp(date: Long): String {
+        return getFormatter("h:mm a").format(date)
+    }
 
+    fun getMessageTimestamp(date: Long): String {
         val now = Calendar.getInstance()
         val then = Calendar.getInstance()
         then.timeInMillis = date
@@ -56,7 +59,6 @@ class DateFormatter @Inject constructor(val context: Context) {
     }
 
     fun getConversationTimestamp(date: Long): String {
-
         val now = Calendar.getInstance()
         val then = Calendar.getInstance()
         then.timeInMillis = date

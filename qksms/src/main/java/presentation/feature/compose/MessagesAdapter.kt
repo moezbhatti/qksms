@@ -62,6 +62,7 @@ class MessagesAdapter @Inject constructor(
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
 
     private val people = ArrayList<String>()
+    private val selected = ArrayList<Long>()
     private val disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
@@ -105,8 +106,24 @@ class MessagesAdapter @Inject constructor(
         val message = getItem(position)!!
         val view = viewHolder.itemView
 
-        RxView.clicks(view).subscribe { Timber.v(message.toString()) }
+        RxView.clicks(view).subscribe {
+            Timber.v(message.toString())
+            if (selected.contains(message.id)) selected.remove(message.id)
+            else selected.add(message.id)
+            notifyItemChanged(position)
+        }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
+
+        bindImages(view, position)
+        bindStatus(view, position)
+        bindGrouping(view, position)
+
+        view.body.text = message.getText()
+        view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+    }
+
+    private fun bindImages(view: View, position: Int) {
+        val message = getItem(position)!!
 
         // If it's an MMS and the parts haven't been loaded, kick off a load
         if (message.isMms() && message.parts.isEmpty()) {
@@ -118,21 +135,27 @@ class MessagesAdapter @Inject constructor(
             view.image.setVisible(true)
             GlideApp.with(context).load(part.image).into(view.image)
         }
+    }
 
-        bindGrouping(view, position)
-
+    private fun bindStatus(view: View, position: Int) {
+        val message = getItem(position)!!
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
+        val timestamp = dateFormatter.getTimestamp(message.date)
 
-        view.status?.text = when {
+        view.status.text = when {
             message.isSending() -> context.getString(R.string.message_status_sending)
-            message.isDelivered() && age <= TIMESTAMP_THRESHOLD -> context.getString(R.string.message_status_delivered)
+            message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
-            else -> null
+            else -> timestamp
         }
-        view.status?.setVisible(!view.status?.text.isNullOrBlank())
 
-        view.body.text = message.getText()
-        view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+        view.status.visibility = when {
+            selected.contains(message.id) -> View.VISIBLE
+            message.isSending() -> View.VISIBLE
+            message.isDelivered() && age <= TIMESTAMP_THRESHOLD -> View.VISIBLE
+            message.isFailedMessage() -> View.VISIBLE
+            else -> View.GONE
+        }
     }
 
     private fun bindGrouping(view: View, position: Int) {

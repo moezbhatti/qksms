@@ -77,15 +77,21 @@
                 android:autoLink="all"
                 android:gravity="start|center_vertical"
                 app:textColor="primaryOnTheme"
-                tools:text="@tools:sample/lorem/random" />
-
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="0dp"
-                android:layout_height="0dp" />
+                tools:text="@tools:sample/lorem" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <presentation.common.widget.QkTextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        app:textColor="secondary"
+        tools:text="Sending..." />
 
 </LinearLayout>

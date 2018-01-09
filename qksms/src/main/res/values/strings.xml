@@ -44,7 +44,7 @@
     <string name="compose_hint">Write a message…</string>
 
     <string name="message_status_sending">Sending…</string>
-    <string name="message_status_delivered">Delivered</string>
+    <string name="message_status_delivered">Delivered %s</string>
     <string name="message_status_failed">Failed to send. Tap to try again</string>
 
     <string name="drawer_inbox">Inbox</string>
