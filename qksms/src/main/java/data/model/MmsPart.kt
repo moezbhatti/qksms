@@ -26,7 +26,6 @@ open class MmsPart : RealmObject() {
     @PrimaryKey var id: Long = 0
     var messageId: Long = 0
     var type: String = ""
-    var data: String? = null
 
     var text: String? = null
     var image: String? = null

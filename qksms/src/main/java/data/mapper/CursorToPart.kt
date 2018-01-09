@@ -21,7 +21,8 @@ class CursorToPart @Inject constructor(private val context: Context) : Mapper<Cu
         id = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part._ID))
         messageId = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part.MSG_ID))
         type = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part.CONTENT_TYPE))
-        data = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part._DATA))
+
+        val data = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part._DATA))
 
         when {
             isImage() -> image = ContentUris.withAppendedId(CONTENT_URI, id).toString()
