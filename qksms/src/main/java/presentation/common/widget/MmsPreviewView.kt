@@ -15,18 +15,20 @@ class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: Attribut
     var parts: List<MmsPart> = ArrayList()
         set(value) {
             field = value
-
-            val images = value.mapNotNull { it.image }
-            setVisible(images.isNotEmpty())
-
-            images.firstOrNull()?.let {
-                GlideApp.with(context).load(it).fitCenter().into(image)
-            }
+            updateView()
         }
 
     init {
         View.inflate(context, R.layout.mms_preview_view, this)
     }
 
+    fun updateView() {
+        val images = parts.mapNotNull { it.image }
+        setVisible(images.isNotEmpty())
+
+        images.firstOrNull()?.let {
+            GlideApp.with(context).load(it).fitCenter().into(image)
+        }
+    }
 
 }
