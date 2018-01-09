@@ -43,7 +43,6 @@ import io.reactivex.subjects.Subject
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import presentation.common.base.QkViewHolder
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -109,7 +108,6 @@ class MessagesAdapter @Inject constructor(
         val view = viewHolder.itemView
 
         RxView.clicks(view).subscribe {
-            Timber.v(message.toString())
             if (selected.contains(message.id)) selected.remove(message.id)
             else selected.add(message.id)
             notifyItemChanged(position)
