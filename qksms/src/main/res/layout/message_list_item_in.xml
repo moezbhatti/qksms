@@ -64,6 +64,11 @@
             android:paddingTop="8dp"
             tools:backgroundTint="@color/tools_theme">
 
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="128dp"
+                android:layout_height="128dp" />
+
             <presentation.common.widget.TightTextView
                 android:id="@+id/body"
                 style="@style/TextPrimary"

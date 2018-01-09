@@ -27,15 +27,14 @@ import android.provider.Telephony.Sms
 import android.provider.Telephony.TextBasedSmsColumns
 import common.util.Keys
 import common.util.MessageUtils
-import common.util.extensions.asFlowable
-import common.util.extensions.asMaybe
-import common.util.extensions.insertOrUpdate
-import common.util.extensions.mapNotNull
+import common.util.extensions.*
 import data.mapper.CursorToConversation
+import data.mapper.CursorToPart
 import data.mapper.CursorToRecipient
 import data.model.Conversation
 import data.model.InboxItem
 import data.model.Message
+import data.model.MmsPart
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,6 +42,7 @@ import io.reactivex.rxkotlin.Flowables
 import io.reactivex.rxkotlin.toFlowable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.Sort
 import javax.inject.Inject
@@ -53,6 +53,7 @@ class MessageRepository @Inject constructor(
         private val context: Context,
         private val messageIds: Keys,
         private val cursorToConversation: CursorToConversation,
+        private val cursorToPart: CursorToPart,
         private val cursorToRecipient: CursorToRecipient) {
 
     fun getConversations(archived: Boolean = false): Flowable<List<InboxItem>> {
@@ -137,6 +138,20 @@ class MessageRepository @Inject constructor(
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
                 .findAllSorted("date")
+    }
+
+    fun loadParts(id: Long) {
+        Realm.getDefaultInstance()?.use { realm ->
+            realm.where(Message::class.java).equalTo("id", id).findFirst()?.let { message ->
+                realm.executeTransaction {
+                    val parts = realm.copyToRealmOrUpdate(context.contentResolver.query(CursorToPart.CONTENT_URI, null,
+                            "${Telephony.Mms.Part.MSG_ID} = ?", arrayOf(message.contentId.toString()), null)
+                            .map { cursorToPart.map(it) })
+
+                    message.parts = RealmList<MmsPart>().apply { addAll(parts) }
+                }
+            }
+        }
     }
 
     /**

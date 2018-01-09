@@ -21,6 +21,7 @@ package data.model
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.Telephony.*
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -73,6 +74,7 @@ open class Message : RealmObject() {
     var mmsStatus: Int = 0
     var subject: String = ""
     var textContentType: String = ""
+    var parts: RealmList<MmsPart> = RealmList()
 
     fun getUri(): Uri {
         val baseUri = if (isMms()) Mms.CONTENT_URI else Sms.CONTENT_URI

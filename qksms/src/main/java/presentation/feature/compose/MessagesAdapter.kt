@@ -27,6 +27,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
 import common.util.Colors
 import common.util.DateFormatter
+import common.util.GlideApp
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
@@ -34,13 +35,14 @@ import common.util.extensions.setVisible
 import data.model.Contact
 import data.model.Message
 import data.model.PhoneNumber
-import presentation.common.base.QkViewHolder
+import interactor.LoadMmsParts
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
+import presentation.common.base.QkViewHolder
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -48,7 +50,8 @@ import javax.inject.Inject
 class MessagesAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
-        private val dateFormatter: DateFormatter)
+        private val dateFormatter: DateFormatter,
+        private val loadMmsParts: LoadMmsParts)
     : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
@@ -88,7 +91,12 @@ class MessagesAdapter @Inject constructor(
         return QkViewHolder(view)
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        disposables += loadMmsParts
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         disposables.clear()
     }
@@ -99,6 +107,17 @@ class MessagesAdapter @Inject constructor(
 
         RxView.clicks(view).subscribe { Timber.v(message.toString()) }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
+
+        // If it's an MMS and the parts haven't been loaded, kick off a load
+        if (message.isMms() && message.parts.isEmpty()) {
+            loadMmsParts.execute(message.id)
+        }
+
+        view.image.setVisible(false)
+        message.parts.firstOrNull { it.image != null }?.let { part ->
+            view.image.setVisible(true)
+            GlideApp.with(context).load(part.image).into(view.image)
+        }
 
         bindGrouping(view, position)
 

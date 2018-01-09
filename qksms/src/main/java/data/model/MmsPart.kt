@@ -18,11 +18,26 @@
  */
 package data.model
 
-import android.net.Uri
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
-class MmsPart {
-    var name = ""
-    var mimeType = ""
-    var data: ByteArray? = null
-    var path: Uri? = null
+open class MmsPart : RealmObject() {
+
+    @PrimaryKey var id: Long = 0
+    var messageId: Long = 0
+    var type: String = ""
+    var data: String? = null
+
+    var text: String? = null
+    var image: String? = null
+
+    fun isImage()
+            = "image/jpeg" == type
+            || "image/bmp" == type
+            || "image/gif" == type
+            || "image/jpg" == type
+            || "image/png" == type
+
+    fun isText() = "text/plain" == type
+
 }
