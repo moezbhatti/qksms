@@ -20,7 +20,7 @@ class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: Attribut
             setVisible(images.isNotEmpty())
 
             images.firstOrNull()?.let {
-                GlideApp.with(context).load(it).into(image)
+                GlideApp.with(context).load(it).fitCenter().into(image)
             }
         }
 
