@@ -83,6 +83,8 @@ class MessagesAdapter @Inject constructor(
             }
         }
 
+        view.messageBackground.clipToOutline = true
+
         if (viewType != VIEWTYPE_ME) {
             view.avatar.contact = Contact().apply {
                 numbers.add(PhoneNumber().apply { address = people[viewType] })
@@ -119,6 +121,8 @@ class MessagesAdapter @Inject constructor(
         bindGrouping(view, position)
 
         view.body.text = message.getText()
+        view.body.setVisible(message.isSms() || view.body.text.isNotBlank())
+
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
 

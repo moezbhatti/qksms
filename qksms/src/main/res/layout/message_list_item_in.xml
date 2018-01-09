@@ -58,16 +58,12 @@
             android:background="@drawable/message_only"
             android:minHeight="36dp"
             android:orientation="vertical"
-            android:paddingBottom="8dp"
-            android:paddingEnd="12dp"
-            android:paddingStart="12dp"
-            android:paddingTop="8dp"
             tools:backgroundTint="@color/tools_theme">
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="128dp"
-                android:layout_height="128dp" />
+                android:layout_width="256dp"
+                android:layout_height="wrap_content" />
 
             <presentation.common.widget.TightTextView
                 android:id="@+id/body"
@@ -76,6 +72,10 @@
                 android:layout_height="wrap_content"
                 android:autoLink="all"
                 android:gravity="start|center_vertical"
+                android:paddingBottom="8dp"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
                 app:textColor="primaryOnTheme"
                 tools:text="@tools:sample/lorem" />
 
