@@ -89,7 +89,7 @@ class ConversationsAdapter @Inject constructor(
         }
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(message.date)
-        view.snippet.text = if (message.isMe()) "You: ${message.body}" else message.body
+        view.snippet.text = if (message.isMe()) "You: ${message.getText()}" else message.getText()
     }
 
     override fun getItemViewType(position: Int): Int {
