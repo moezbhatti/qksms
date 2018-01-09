@@ -22,7 +22,7 @@ class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: Attribut
         View.inflate(context, R.layout.mms_preview_view, this)
     }
 
-    fun updateView() {
+    private fun updateView() {
         val images = parts.mapNotNull { it.image }
         setVisible(images.isNotEmpty())
 
