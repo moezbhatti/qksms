@@ -131,7 +131,7 @@ class MessagesAdapter @Inject constructor(
         }
         view.status?.setVisible(!view.status?.text.isNullOrBlank())
 
-        view.body.text = message.body
+        view.body.text = message.getText()
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
 

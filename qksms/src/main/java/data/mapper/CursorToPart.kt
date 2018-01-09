@@ -24,30 +24,29 @@ class CursorToPart @Inject constructor(private val context: Context) : Mapper<Cu
         data = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part._DATA))
 
         when {
-            isImage() -> image = getMmsImage(id)
-            isText() -> text = getMmsText(id)
+            isImage() -> image = ContentUris.withAppendedId(CONTENT_URI, id).toString()
+
+            isText() -> {
+                text = if (data == null) {
+                    from.getString(from.getColumnIndexOrThrow("text"))
+                } else {
+                    val uri = ContentUris.withAppendedId(CONTENT_URI, id)
+                    val sb = StringBuilder()
+                    context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                        val isr = InputStreamReader(inputStream, "UTF-8")
+                        val reader = BufferedReader(isr)
+                        var temp = reader.readLine()
+                        while (temp != null) {
+                            sb.append(temp)
+                            temp = reader.readLine()
+                        }
+                    }
+                    sb.toString()
+                }
+            }
+
             else -> Timber.v("Unhandled type: $type")
         }
-    }
-
-    private fun getMmsText(id: Long): String {
-        val uri = ContentUris.withAppendedId(CONTENT_URI, id)
-        val sb = StringBuilder()
-        context.contentResolver.openInputStream(uri)?.use { inputStream ->
-            val isr = InputStreamReader(inputStream, "UTF-8")
-            val reader = BufferedReader(isr)
-            var temp = reader.readLine()
-            while (temp != null) {
-                sb.append(temp)
-                temp = reader.readLine()
-            }
-        }
-
-        return sb.toString()
-    }
-
-    private fun getMmsImage(id: Long): String? {
-        return ContentUris.withAppendedId(CONTENT_URI, id).toString()
     }
 
 }

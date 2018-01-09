@@ -101,6 +101,13 @@ open class Message : RealmObject() {
         return isOutgoingMms || isOutgoingSms
     }
 
+    fun getText() : String {
+        return when {
+            isSms() -> body
+            else -> parts.filter { it.isText() }.joinToString("") { it.text ?: "" }
+        }
+    }
+
     fun isSending(): Boolean {
         return !isFailedMessage() && isOutgoingMessage()
     }
