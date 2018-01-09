@@ -27,7 +27,6 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
 import common.util.Colors
 import common.util.DateFormatter
-import common.util.GlideApp
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
@@ -114,7 +113,7 @@ class MessagesAdapter @Inject constructor(
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
 
-        bindImages(view, position)
+        bindMmsPreview(view, position)
         bindStatus(view, position)
         bindGrouping(view, position)
 
@@ -124,7 +123,7 @@ class MessagesAdapter @Inject constructor(
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
     }
 
-    private fun bindImages(view: View, position: Int) {
+    private fun bindMmsPreview(view: View, position: Int) {
         val message = getItem(position)!!
 
         // If it's an MMS and the parts haven't been loaded, kick off a load
@@ -132,11 +131,7 @@ class MessagesAdapter @Inject constructor(
             loadMmsParts.execute(message.id)
         }
 
-        view.image.setVisible(false)
-        message.parts.firstOrNull { it.image != null }?.let { part ->
-            view.image.setVisible(true)
-            GlideApp.with(context).load(part.image).into(view.image)
-        }
+        view.mmsPreview.parts = message.parts
     }
 
     private fun bindStatus(view: View, position: Int) {

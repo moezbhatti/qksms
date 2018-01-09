@@ -60,8 +60,8 @@
             android:orientation="vertical"
             tools:backgroundTint="@color/tools_theme">
 
-            <ImageView
-                android:id="@+id/image"
+            <presentation.common.widget.MmsPreviewView
+                android:id="@+id/mmsPreview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@id/body"
