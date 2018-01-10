@@ -47,17 +47,19 @@ class CursorToMessage @Inject constructor(
 
             id = keys.newId()
             contentId = cursor.getLong(columnsMap.msgId)
+            threadId = cursor.getLong(columnsMap.threadId)
+            date = cursor.getLong(columnsMap.date)
+            dateSent = cursor.getLong(columnsMap.dateSent)
+            read = cursor.getInt(columnsMap.read) != 0
+            locked = cursor.getInt(columnsMap.locked) != 0
 
             when (type) {
                 "sms" -> {
-                    threadId = cursor.getLong(columnsMap.smsThreadId)
                     address = cursor.getString(columnsMap.smsAddress) ?: ""
                     boxId = cursor.getInt(columnsMap.smsType)
-                    date = cursor.getLong(columnsMap.smsDate)
-                    dateSent = cursor.getLong(columnsMap.smsDateSent)
-                    read = cursor.getInt(columnsMap.smsRead) != 0
                     seen = cursor.getInt(columnsMap.smsSeen) != 0
-                    locked = cursor.getInt(columnsMap.smsLocked) != 0
+                    body = cursor.getString(columnsMap.smsBody) ?: ""
+                    errorCode = cursor.getInt(columnsMap.smsErrorCode)
 
                     val status = cursor.getLong(columnsMap.smsStatus)
                     deliveryStatus = when {
@@ -66,27 +68,14 @@ class CursorToMessage @Inject constructor(
                         status >= Sms.STATUS_PENDING -> DeliveryStatus.PENDING
                         else -> DeliveryStatus.RECEIVED
                     }
-
-                    // SMS Specific
-                    body = cursor.getString(columnsMap.smsBody) ?: ""
-                    errorCode = cursor.getInt(columnsMap.smsErrorCode)
                 }
 
                 "mms" -> {
-                    threadId = cursor.getLong(columnsMap.mmsThreadId)
                     address = getMmsAddress(contentId)
                     boxId = cursor.getInt(columnsMap.mmsMessageBox)
-                    date = cursor.getLong(columnsMap.mmsDate) * 1000L
-                    dateSent = cursor.getLong(columnsMap.mmsDateSent)
-                    read = cursor.getInt(columnsMap.mmsRead) != 0
+                    date *= 1000L
+                    dateSent *= 1000L
                     seen = cursor.getInt(columnsMap.mmsSeen) != 0
-                    locked = cursor.getInt(columnsMap.mmsLocked) != 0
-
-                    // MMS Specific
-                    attachmentType = when (cursor.getInt(columnsMap.mmsTextOnly)) {
-                        0 -> Message.AttachmentType.NOT_LOADED
-                        else -> Message.AttachmentType.TEXT
-                    }
                     mmsDeliveryStatusString = cursor.getString(columnsMap.mmsDeliveryReport) ?: ""
                     errorType = if (columnsMap.mmsErrorType != -1) cursor.getInt(columnsMap.mmsErrorType) else 0
                     messageSize = 0
@@ -95,6 +84,11 @@ class CursorToMessage @Inject constructor(
                     mmsStatus = cursor.getInt(columnsMap.mmsStatus)
                     subject = cursor.getString(columnsMap.mmsSubject) ?: ""
                     textContentType = ""
+
+                    attachmentType = when (cursor.getInt(columnsMap.mmsTextOnly)) {
+                        0 -> Message.AttachmentType.NOT_LOADED
+                        else -> Message.AttachmentType.TEXT
+                    }
                 }
             }
         }
@@ -125,33 +119,28 @@ class CursorToMessage @Inject constructor(
         val PROJECTION = arrayOf(
                 MmsSms.TYPE_DISCRIMINATOR_COLUMN,
                 MmsSms._ID,
+                Mms.DATE,
+                Mms.DATE_SENT,
+                Mms.READ,
+                Mms.THREAD_ID,
+                Mms.LOCKED,
 
-                Sms.THREAD_ID,
                 Sms.ADDRESS,
                 Sms.BODY,
-                Sms.DATE,
-                Sms.DATE_SENT,
                 Sms.SEEN,
-                Sms.READ,
                 Sms.TYPE,
                 Sms.STATUS,
-                Sms.LOCKED,
                 Sms.ERROR_CODE,
 
-                Mms.THREAD_ID,
                 Mms.Addr.ADDRESS,
                 Mms.SUBJECT,
                 Mms.SUBJECT_CHARSET,
-                Mms.DATE,
-                Mms.DATE_SENT,
                 Mms.SEEN,
-                Mms.READ,
                 Mms.MESSAGE_TYPE,
                 Mms.MESSAGE_BOX,
                 Mms.DELIVERY_REPORT,
                 Mms.READ_REPORT,
                 MmsSms.PendingMessages.ERROR_TYPE,
-                Mms.LOCKED,
                 Mms.STATUS,
                 Mms.TEXT_ONLY)
     }
@@ -160,33 +149,28 @@ class CursorToMessage @Inject constructor(
 
         val msgType by lazy { getColumnIndex(MmsSms.TYPE_DISCRIMINATOR_COLUMN) }
         val msgId by lazy { getColumnIndex(MmsSms._ID) }
+        val date by lazy { getColumnIndex(Mms.DATE) }
+        val dateSent by lazy { getColumnIndex(Mms.DATE_SENT) }
+        val read by lazy { getColumnIndex(Mms.READ) }
+        val threadId by lazy { getColumnIndex(Mms.THREAD_ID) }
+        val locked by lazy { getColumnIndex(Mms.LOCKED) }
 
-        val smsThreadId by lazy { getColumnIndex(Sms.THREAD_ID) }
         val smsAddress by lazy { getColumnIndex(Sms.ADDRESS) }
         val smsBody by lazy { getColumnIndex(Sms.BODY) }
-        val smsDate by lazy { getColumnIndex(Sms.DATE) }
-        val smsDateSent by lazy { getColumnIndex(Sms.DATE_SENT) }
         val smsSeen by lazy { getColumnIndex(Sms.SEEN) }
-        val smsRead by lazy { getColumnIndex(Sms.READ) }
         val smsType by lazy { getColumnIndex(Sms.TYPE) }
         val smsStatus by lazy { getColumnIndex(Sms.STATUS) }
-        val smsLocked by lazy { getColumnIndex(Sms.LOCKED) }
         val smsErrorCode by lazy { getColumnIndex(Sms.ERROR_CODE) }
 
-        val mmsThreadId by lazy { getColumnIndex(Mms.THREAD_ID) }
         val mmsAddress by lazy { getColumnIndex(Mms.Addr.ADDRESS) }
         val mmsSubject by lazy { getColumnIndex(Mms.SUBJECT) }
         val mmsSubjectCharset by lazy { getColumnIndex(Mms.SUBJECT_CHARSET) }
-        val mmsDate by lazy { getColumnIndex(Mms.DATE) }
-        val mmsDateSent by lazy { getColumnIndex(Mms.DATE_SENT) }
         val mmsSeen by lazy { getColumnIndex(Mms.SEEN) }
-        val mmsRead by lazy { getColumnIndex(Mms.READ) }
         val mmsMessageType by lazy { getColumnIndex(Mms.MESSAGE_TYPE) }
         val mmsMessageBox by lazy { getColumnIndex(Mms.MESSAGE_BOX) }
         val mmsDeliveryReport by lazy { getColumnIndex(Mms.DELIVERY_REPORT) }
         val mmsReadReport by lazy { getColumnIndex(Mms.READ_REPORT) }
         val mmsErrorType by lazy { getColumnIndex(MmsSms.PendingMessages.ERROR_TYPE) }
-        val mmsLocked by lazy { getColumnIndex(Mms.LOCKED) }
         val mmsStatus by lazy { getColumnIndex(Mms.STATUS) }
         val mmsTextOnly by lazy { getColumnIndex(Mms.TEXT_ONLY) }
 
