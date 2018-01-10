@@ -1,1 +1,1 @@
-include ':qksms', ':google-mms'
+include ':qksms'

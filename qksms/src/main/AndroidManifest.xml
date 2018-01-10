@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
 
     <application
@@ -80,6 +81,9 @@
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="presentation.receiver.MmsReceivedReceiver"
+            android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
         <receiver android:name="presentation.receiver.MessageSentReceiver" />
         <receiver android:name="presentation.receiver.MessageDeliveredReceiver" />
         <receiver android:name="presentation.receiver.MarkSeenReceiver" />
