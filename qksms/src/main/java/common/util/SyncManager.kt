@@ -19,19 +19,25 @@
 package common.util
 
 import android.content.Context
+import android.net.Uri
+import common.util.extensions.asFlowable
+import common.util.extensions.insertOrUpdate
 import common.util.extensions.map
 import common.util.extensions.mapWhile
 import data.mapper.CursorToConversation
 import data.mapper.CursorToMessage
 import data.mapper.CursorToRecipient
 import data.model.*
+import data.repository.MessageRepository
+import io.reactivex.Flowable
 import io.realm.Realm
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SyncManager @Inject constructor(
-        context: Context,
+        private val context: Context,
+        private val messageRepo: MessageRepository,
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
         private val cursorToRecipient: CursorToRecipient) {
@@ -97,6 +103,17 @@ class SyncManager @Inject constructor(
         realm.close()
 
         status = Status.Idle()
+    }
+
+    fun syncMessage(uri: Uri): Flowable<Message> {
+        val cursor = context.contentResolver.query(uri, null, null, null, null)
+        val columnsMap = CursorToMessage.MessageColumns(cursor)
+
+        // Map the cursor to a message
+        return cursor.asFlowable()
+                .map { cursorToMessage.map(Pair(it, columnsMap)) }
+                .doOnNext { message -> messageRepo.getOrCreateConversation(message.threadId) }
+                .doOnNext { message -> message.insertOrUpdate() }
     }
 
 }

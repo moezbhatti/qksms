@@ -98,6 +98,10 @@ class MessageRepository @Inject constructor(
                 .findFirst()
     }
 
+    fun getOrCreateConversation(threadId: Long) {
+        getConversation(threadId) ?: getConversationFromCp(threadId)
+    }
+
     fun getOrCreateConversation(address: String): Maybe<Conversation> {
         return getOrCreateConversation(listOf(address))
     }

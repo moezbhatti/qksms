@@ -20,6 +20,7 @@ package common.di
 
 import common.QKApplication
 import common.util.ContactImageLoader
+import dagger.Component
 import presentation.common.widget.*
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
@@ -31,7 +32,6 @@ import presentation.feature.settings.SettingsViewModel
 import presentation.feature.setup.SetupActivity
 import presentation.feature.setup.SetupViewModel
 import presentation.receiver.*
-import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
@@ -51,6 +51,7 @@ interface AppComponent {
     fun inject(receiver: MessageSentReceiver)
     fun inject(receiver: MarkSeenReceiver)
     fun inject(receiver: MarkReadReceiver)
+    fun inject(receiver: MmsReceivedReceiver)
     fun inject(receiver: RemoteMessagingReceiver)
 
     fun inject(view: AvatarView)

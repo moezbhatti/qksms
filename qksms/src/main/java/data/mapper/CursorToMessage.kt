@@ -38,9 +38,11 @@ class CursorToMessage @Inject constructor(
         val columnsMap = from.second
 
         return Message().apply {
-            type = when (cursor.getColumnIndex(MmsSms.TYPE_DISCRIMINATOR_COLUMN)) {
-                -1 -> "sms"
-                else -> cursor.getString(columnsMap.msgType)
+            type = when {
+                cursor.getColumnIndex(MmsSms.TYPE_DISCRIMINATOR_COLUMN) != -1 -> cursor.getString(columnsMap.msgType)
+                cursor.getColumnIndex(Sms.ADDRESS) != -1 -> "sms"
+                cursor.getColumnIndex(Mms.SUBJECT) != -1 -> "mms"
+                else -> "unknown"
             }
 
             id = keys.newId()
@@ -72,7 +74,7 @@ class CursorToMessage @Inject constructor(
 
                 "mms" -> {
                     threadId = cursor.getLong(columnsMap.mmsThreadId)
-                    address = getMmsAddress(id)
+                    address = getMmsAddress(contentId)
                     boxId = cursor.getInt(columnsMap.mmsMessageBox)
                     date = cursor.getLong(columnsMap.mmsDate) * 1000L
                     dateSent = cursor.getLong(columnsMap.mmsDateSent)
@@ -86,7 +88,7 @@ class CursorToMessage @Inject constructor(
                         else -> Message.AttachmentType.TEXT
                     }
                     mmsDeliveryStatusString = cursor.getString(columnsMap.mmsDeliveryReport) ?: ""
-                    errorType = cursor.getInt(columnsMap.mmsErrorType)
+                    errorType = if (columnsMap.mmsErrorType != -1) cursor.getInt(columnsMap.mmsErrorType) else 0
                     messageSize = 0
                     readReportString = cursor.getString(columnsMap.mmsReadReport) ?: ""
                     messageType = cursor.getInt(columnsMap.mmsMessageType)
