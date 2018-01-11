@@ -24,7 +24,6 @@ import android.net.Uri
 import android.provider.Telephony.*
 import common.util.Keys
 import data.model.Message
-import data.model.Message.DeliveryStatus
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -60,14 +59,7 @@ class CursorToMessage @Inject constructor(
                     seen = cursor.getInt(columnsMap.smsSeen) != 0
                     body = cursor.getString(columnsMap.smsBody) ?: ""
                     errorCode = cursor.getInt(columnsMap.smsErrorCode)
-
-                    val status = cursor.getLong(columnsMap.smsStatus)
-                    deliveryStatus = when {
-                        status == Sms.STATUS_NONE.toLong() -> DeliveryStatus.NONE
-                        status >= Sms.STATUS_FAILED -> DeliveryStatus.FAILED
-                        status >= Sms.STATUS_PENDING -> DeliveryStatus.PENDING
-                        else -> DeliveryStatus.RECEIVED
-                    }
+                    deliveryStatus = cursor.getInt(columnsMap.smsStatus)
                 }
 
                 "mms" -> {

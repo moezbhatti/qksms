@@ -41,22 +41,16 @@ open class Message : RealmObject() {
     var address: String = ""
     var boxId: Int = 0
     var type: String = ""
-    var body: String = ""
     var date: Long = 0
     var dateSent: Long = 0
     var seen: Boolean = false
     var read: Boolean = false
     var locked: Boolean = false
 
-    var deliveryStatusString: String = DeliveryStatus.NONE.toString()
-    var deliveryStatus: DeliveryStatus
-        get() = DeliveryStatus.valueOf(deliveryStatusString)
-        set(value) {
-            deliveryStatusString = value.toString()
-        }
-
     // SMS only
+    var body: String = ""
     var errorCode: Int = 0
+    var deliveryStatus: Int = Sms.STATUS_NONE
 
     // MMS only
     var attachmentTypeString: String = AttachmentType.NOT_LOADED.toString()
@@ -114,7 +108,7 @@ open class Message : RealmObject() {
 
     fun isDelivered(): Boolean {
         val isDeliveredMms = false // TODO
-        val isDeliveredSms = deliveryStatus == DeliveryStatus.RECEIVED
+        val isDeliveredSms = deliveryStatus == Sms.STATUS_COMPLETE
         return isDeliveredMms || isDeliveredSms
     }
 

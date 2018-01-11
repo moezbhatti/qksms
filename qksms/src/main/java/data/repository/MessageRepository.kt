@@ -24,7 +24,6 @@ import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.Telephony
 import android.provider.Telephony.Sms
-import android.provider.Telephony.TextBasedSmsColumns
 import common.util.Keys
 import common.util.MessageUtils
 import common.util.extensions.*
@@ -389,7 +388,7 @@ class MessageRepository @Inject constructor(
                 .doOnNext { message ->
                     // Update the message in realm
                     realm.executeTransaction {
-                        message.deliveryStatus = Message.DeliveryStatus.RECEIVED
+                        message.deliveryStatus = Sms.STATUS_COMPLETE
                         message.dateSent = System.currentTimeMillis()
                         message.read = true
                     }
@@ -399,7 +398,7 @@ class MessageRepository @Inject constructor(
                 .doOnNext { uri ->
                     // Update the message in the native ContentProvider
                     val values = ContentValues()
-                    values.put(Sms.STATUS, TextBasedSmsColumns.STATUS_COMPLETE)
+                    values.put(Sms.STATUS, Sms.STATUS_COMPLETE)
                     values.put(Sms.DATE_SENT, System.currentTimeMillis())
                     values.put(Sms.READ, true)
                     context.contentResolver.update(uri, values, null, null)
@@ -418,7 +417,7 @@ class MessageRepository @Inject constructor(
                 .doOnNext { message ->
                     // Update the message in realm
                     realm.executeTransaction {
-                        message.deliveryStatus = Message.DeliveryStatus.FAILED
+                        message.deliveryStatus = Sms.STATUS_FAILED
                         message.dateSent = System.currentTimeMillis()
                         message.read = true
                         message.errorCode = resultCode
@@ -429,7 +428,7 @@ class MessageRepository @Inject constructor(
                 .doOnNext { uri ->
                     // Update the message in the native ContentProvider
                     val values = ContentValues()
-                    values.put(Sms.STATUS, TextBasedSmsColumns.STATUS_FAILED)
+                    values.put(Sms.STATUS, Sms.STATUS_FAILED)
                     values.put(Sms.DATE_SENT, System.currentTimeMillis())
                     values.put(Sms.READ, true)
                     values.put(Sms.ERROR_CODE, resultCode)
