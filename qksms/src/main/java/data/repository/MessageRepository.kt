@@ -39,7 +39,6 @@ import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Flowables
-import io.reactivex.rxkotlin.toFlowable
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmList
@@ -98,8 +97,8 @@ class MessageRepository @Inject constructor(
                 .findFirst()
     }
 
-    fun getOrCreateConversation(threadId: Long) {
-        getConversation(threadId) ?: getConversationFromCp(threadId)
+    fun getOrCreateConversation(threadId: Long): Conversation? {
+        return getConversation(threadId) ?: getConversationFromCp(threadId)
     }
 
     fun getOrCreateConversation(address: String): Maybe<Conversation> {
@@ -468,23 +467,21 @@ class MessageRepository @Inject constructor(
     private fun getConversationFromCp(threadId: Long): Conversation? {
         var conversation: Conversation? = null
 
-        val cursor = context.contentResolver.query(
-                CursorToConversation.URI,
-                CursorToConversation.PROJECTION,
-                "_id = ?",
-                arrayOf(threadId.toString()),
-                null)
+        val cursor = context.contentResolver.query(CursorToConversation.URI, CursorToConversation.PROJECTION,
+                "_id = ?", arrayOf(threadId.toString()), null)
 
         if (cursor.moveToFirst()) {
             conversation = cursorToConversation.map(cursor)
-            conversation.insertOrUpdate()
 
-            conversation.recipients.toFlowable()
+            val recipients = conversation.recipients
                     .map { recipient -> recipient.id.toString() }
                     .map { id -> context.contentResolver.query(CursorToRecipient.URI, null, "_id = ?", arrayOf(id), null) }
-                    .flatMap { recipientCursor -> recipientCursor.asFlowable().map { cursor -> cursorToRecipient.map(cursor) } }
-                    .doOnNext { recipient -> recipient.insertOrUpdate() }
-                    .blockingSubscribe()
+                    .map { recipientCursor -> recipientCursor.map { cursorToRecipient.map(recipientCursor) } }
+                    .flatten()
+
+            conversation.recipients.clear()
+            conversation.recipients.addAll(recipients)
+            conversation.insertOrUpdate()
         }
 
         cursor.close()

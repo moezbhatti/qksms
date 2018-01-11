@@ -34,7 +34,7 @@ class ReceiveMessage @Inject constructor(
     override fun buildObservable(params: Params): Flowable<Unit> {
         return Flowable.just(params)
                 .map { messageRepo.insertReceivedSms(params.address, params.body, params.sentTime) } // Add the message to the db
-                .mapNotNull { message -> messageRepo.getConversation(message.threadId) } // Map message to conversation
+                .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
                 .map { }
