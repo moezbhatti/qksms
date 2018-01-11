@@ -98,7 +98,7 @@ class NotificationManager @Inject constructor(
         val style = NotificationCompat.MessagingStyle("Me")
         messages.forEach { message ->
             val name = if (message.isMe()) null else conversation.getTitle()
-            style.addMessage(message.body, message.date, name)
+            style.addMessage(message.getSummary(), message.date, name)
         }
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)

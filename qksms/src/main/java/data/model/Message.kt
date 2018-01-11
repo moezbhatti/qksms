@@ -27,7 +27,6 @@ import io.realm.annotations.PrimaryKey
 
 open class Message : RealmObject() {
 
-    enum class DeliveryStatus { NONE, INFO, FAILED, PENDING, RECEIVED }
     enum class AttachmentType { TEXT, IMAGE, VIDEO, AUDIO, SLIDESHOW, NOT_LOADED }
 
     @PrimaryKey var id: Long = 0
@@ -95,10 +94,37 @@ open class Message : RealmObject() {
         return isOutgoingMms || isOutgoingSms
     }
 
-    fun getText() : String {
+    /**
+     * Returns the text that should be displayed in the messagelist view
+     * The returned text may be an empty string
+     */
+    fun getText(): String {
         return when {
             isSms() -> body
-            else -> parts.filter { it.isText() }.joinToString("") { it.text ?: "" }
+
+            else -> parts
+                    .mapNotNull { it.text }
+                    .joinToString("\n") { text -> text }
+        }
+    }
+
+    /**
+     * Returns the text that should be displayed when a preview of the message
+     * needs to be displayed, such as in the conversation view or in a notification
+     *
+     * TODO: Don't return a hardcoded string
+     */
+    fun getSummary(): String {
+        return when {
+            isSms() -> body
+
+            else -> parts
+                    .mapNotNull { it.text }
+                    .joinToString("\n") { text -> text }
+                    .takeIf { it.isNotEmpty() }
+                    ?: subject
+                    .takeIf { it.isNotEmpty() }
+                    ?: "An MMS message"
         }
     }
 
