@@ -21,23 +21,19 @@ package presentation.receiver
 import android.net.Uri
 import com.klinker.android.send_message.MmsReceivedReceiver
 import common.di.appComponent
-import interactor.SyncMessage
+import interactor.ReceiveMms
 import javax.inject.Inject
 
 class MmsReceivedReceiver : MmsReceivedReceiver() {
 
-    @Inject lateinit var syncMessage: SyncMessage
-
-    init {
-        appComponent.inject(this)
-    }
+    @Inject lateinit var receiveMms: ReceiveMms
 
     override fun onMessageReceived(messageUri: Uri?) {
-        super.onMessageReceived(messageUri)
+        appComponent.inject(this)
 
         messageUri?.let { uri ->
             val pendingResult = goAsync()
-            syncMessage.execute(uri) { pendingResult.finish() }
+            receiveMms.execute(uri) { pendingResult.finish() }
         }
     }
 
