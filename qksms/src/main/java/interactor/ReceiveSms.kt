@@ -18,26 +18,34 @@
  */
 package interactor
 
+import android.telephony.SmsMessage
 import common.util.NotificationManager
 import common.util.extensions.mapNotNull
+import data.model.Conversation
 import data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class ReceiveMessage @Inject constructor(
+class ReceiveSms @Inject constructor(
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager)
-    : Interactor<ReceiveMessage.Params, Unit>() {
+    : Interactor<Array<SmsMessage>, Conversation>() {
 
-    data class Params(val address: String, val body: String, val sentTime: Long)
-
-    override fun buildObservable(params: Params): Flowable<Unit> {
+    override fun buildObservable(params: Array<SmsMessage>): Flowable<Conversation> {
         return Flowable.just(params)
-                .map { messageRepo.insertReceivedSms(params.address, params.body, params.sentTime) } // Add the message to the db
+                .filter { it.isNotEmpty() }
+                .map { messages ->
+                    val address = messages[0].displayOriginatingAddress
+                    val time = messages[0].timestampMillis
+                    val body: String = messages
+                            .map { message -> message.displayMessageBody }
+                            .reduce { body, new -> body + new }
+
+                    messageRepo.insertReceivedSms(address, body, time) // Add the message to the db
+                }
                 .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
-                .map { }
     }
 
 }

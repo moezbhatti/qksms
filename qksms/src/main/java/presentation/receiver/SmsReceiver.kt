@@ -23,28 +23,19 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony.Sms
 import common.di.appComponent
-import interactor.ReceiveMessage
-import timber.log.Timber
+import interactor.ReceiveSms
 import javax.inject.Inject
 
 class SmsReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var receiveMessage: ReceiveMessage
+    @Inject lateinit var receiveMessage: ReceiveSms
 
     override fun onReceive(context: Context, intent: Intent) {
-        Timber.v("Received SMS: $intent")
         appComponent.inject(this)
 
-        val messages = Sms.Intents.getMessagesFromIntent(intent)
-        messages?.takeIf { it.isNotEmpty() }?.let { messages ->
-            val address = messages[0].displayOriginatingAddress
-            val time = messages[0].timestampMillis
-            val body: String = messages
-                    .map { message -> message.displayMessageBody }
-                    .reduce { body, new -> body + new }
-
+        Sms.Intents.getMessagesFromIntent(intent)?.let { messages ->
             val pendingResult = goAsync()
-            receiveMessage.execute(ReceiveMessage.Params(address, body, time), { pendingResult.finish() })
+            receiveMessage.execute(messages, { pendingResult.finish() })
         }
     }
 
