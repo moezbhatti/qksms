@@ -33,7 +33,6 @@ import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import com.moez.QKSMS.R
 import data.repository.MessageRepository
-import interactor.MarkUnarchived
 import presentation.feature.compose.ComposeActivity
 import presentation.receiver.MarkReadReceiver
 import presentation.receiver.MarkSeenReceiver
@@ -46,8 +45,7 @@ class NotificationManager @Inject constructor(
         private val context: Context,
         private val prefs: Preferences,
         private val colors: Colors,
-        private val messageRepo: MessageRepository,
-        private val markUnarchived: MarkUnarchived
+        private val messageRepo: MessageRepository
 ) {
 
     companion object {
@@ -116,6 +114,7 @@ class NotificationManager @Inject constructor(
 
         val notification = NotificationCompat.Builder(context, DEFAULT_CHANNEL_ID)
                 .setColor(colors.theme.blockingFirst())
+                .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setNumber(messages.size)
                 .setAutoCancel(true)
@@ -124,6 +123,7 @@ class NotificationManager @Inject constructor(
                 .addAction(readAction)
                 .setStyle(style)
                 .setSound(Uri.parse(prefs.ringtone.get()))
+                .setLights(Color.WHITE, 500, 2000)
                 .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
 
         if (Build.VERSION.SDK_INT >= 24) {
