@@ -82,6 +82,9 @@
             </intent-filter>
         </receiver>
         <receiver
+            android:name="presentation.receiver.MmsSentReceiver"
+            android:taskAffinity="com.klinker.android.messaging.MMS_SENT"/>
+        <receiver
             android:name="presentation.receiver.MmsReceivedReceiver"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
         <receiver android:name="presentation.receiver.MessageSentReceiver" />
@@ -90,6 +93,7 @@
         <receiver android:name="presentation.receiver.MarkReadReceiver" />
         <receiver android:name="presentation.receiver.RemoteMessagingReceiver" />
 
+        <service android:name="com.android.mms.transaction.TransactionService"/>
         <service
             android:name="presentation.service.HeadlessSmsSendService"
             android:exported="true"
