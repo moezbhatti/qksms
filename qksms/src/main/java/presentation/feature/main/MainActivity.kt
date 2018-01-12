@@ -72,7 +72,8 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 archived.clicks().map { DrawerItem.ARCHIVED },
                 scheduled.clicks().map { DrawerItem.SCHEDULED },
                 blocked.clicks().map { DrawerItem.BLOCKED },
-                settings.clicks().map { DrawerItem.SETTINGS }))
+                settings.clicks().map { DrawerItem.SETTINGS },
+                help.clicks().map { DrawerItem.HELP }))
     }
     override val conversationClickIntent by lazy { conversationsAdapter.clicks }
     override val conversationLongClickIntent by lazy { conversationsAdapter.longClicks }
@@ -134,14 +135,17 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             }
         }
 
+        // Set the theme color tint to the progressbar and FAB
         disposables += colors.theme
                 .doOnNext { color -> syncingProgress.indeterminateTintList = ColorStateList.valueOf(color) }
                 .doOnNext { color -> compose.setBackgroundTint(color) }
                 .subscribe()
 
+        // Set the hamburger icon color
         disposables += colors.textSecondary
                 .subscribe { color -> toggle.drawerArrowDrawable.color = color }
 
+        // Set the color for the drawer icons
         disposables += Observables
                 .combineLatest(colors.theme, colors.textSecondary, { theme, textSecondary ->
                     ColorStateList(states, intArrayOf(theme, textSecondary))
@@ -151,8 +155,10 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }
                 .doOnNext { tintList -> blockedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
+                .doOnNext { tintList -> helpIcon.imageTintList = tintList }
                 .subscribe()
 
+        // Set the background highlight for the drawer options
         disposables += colors.separator
                 .doOnNext { color -> inbox.background = rowBackground(color) }
                 .doOnNext { color -> archived.background = rowBackground(color) }

@@ -82,6 +82,13 @@ class Navigator @Inject constructor(val context: Context) {
         startActivity(intent)
     }
 
+    fun showSupport() {
+        val intent = Intent(Intent.ACTION_SENDTO)
+        intent.data = Uri.parse("mailto:")
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("team@qklabs.com"))
+        startActivity(intent)
+    }
+
     @TargetApi(Build.VERSION_CODES.O)
     fun showNotificationSettings() {
         val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
@@ -95,23 +102,10 @@ class Navigator @Inject constructor(val context: Context) {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return when (modelClass) {
-
-                MainViewModel::class.java -> {
-                    MainViewModel()
-                }
-
-                SetupViewModel::class.java -> {
-                    SetupViewModel()
-                }
-
-                ComposeViewModel::class.java -> {
-                    ComposeViewModel(intent)
-                }
-
-                SettingsViewModel::class.java -> {
-                    SettingsViewModel()
-                }
-
+                MainViewModel::class.java -> MainViewModel()
+                SetupViewModel::class.java -> SetupViewModel()
+                ComposeViewModel::class.java -> ComposeViewModel(intent)
+                SettingsViewModel::class.java -> SettingsViewModel()
                 else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")
             } as T
         }

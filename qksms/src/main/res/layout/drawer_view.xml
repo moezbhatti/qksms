@@ -89,8 +89,14 @@
     <presentation.common.widget.Separator
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp" />
+
+    <presentation.common.widget.QkTextView
+        style="@style/TextSecondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/drawer_more" />
 
     <LinearLayout
         android:id="@+id/settings"
@@ -104,6 +110,21 @@
         <presentation.common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_settings" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/help"
+        style="@style/DrawerRow">
+
+        <ImageView
+            android:id="@+id/helpIcon"
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_help_black_24dp" />
+
+        <presentation.common.widget.QkTextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_help" />
 
     </LinearLayout>
 

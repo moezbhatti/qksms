@@ -18,9 +18,9 @@
  */
 package presentation.feature.main
 
-import presentation.common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
+import presentation.common.base.QkView
 
 interface MainView : QkView<MainState> {
 
@@ -39,4 +39,4 @@ interface MainView : QkView<MainState> {
 
 }
 
-enum class DrawerItem { INBOX, ARCHIVED, SCHEDULED, BLOCKED, SETTINGS }
+enum class DrawerItem { INBOX, ARCHIVED, SCHEDULED, BLOCKED, SETTINGS, HELP }

@@ -125,6 +125,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         intents += view.drawerItemIntent
                 .doOnNext { newState { it.copy(drawerOpen = false) } }
                 .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
+                .doOnNext { if (it == DrawerItem.HELP) navigator.showSupport() }
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
