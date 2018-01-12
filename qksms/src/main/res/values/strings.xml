@@ -53,7 +53,7 @@
     <string name="drawer_blocked">Blocked</string>
     <string name="drawer_more">More</string>
     <string name="drawer_settings">Settings</string>
-    <string name="drawer_help">Help &amp; support</string>
+    <string name="drawer_help">Help &amp; feedback</string>
 
     <string name="settings_default_sms_title">Default SMS app</string>
     <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
