@@ -113,14 +113,17 @@ class MessagesAdapter @Inject constructor(
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
 
-        bindMmsPreview(view, position)
-        bindStatus(view, position)
-        bindGrouping(view, position)
+        view.subject.text = message.subject
+        view.subject.setVisible(view.subject.text.isNotBlank())
 
         view.body.text = message.getText()
         view.body.setVisible(message.isSms() || view.body.text.isNotEmpty() || message.parts.all { it.image == null })
 
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+
+        bindMmsPreview(view, position)
+        bindStatus(view, position)
+        bindGrouping(view, position)
     }
 
     private fun bindMmsPreview(view: View, position: Int) {

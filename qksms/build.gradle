@@ -45,7 +45,7 @@ dependencies {
     compile "android.arch.lifecycle:runtime:1.0.3"
     compile 'com.amplitude:android-sdk:2.16.0'
     compile 'com.android.support:appcompat-v7:27.0.2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
     compile 'com.android.support:design:27.0.2'
     compile 'com.bugsnag:bugsnag-android:4.1.1'
     compile 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0-RC3'
