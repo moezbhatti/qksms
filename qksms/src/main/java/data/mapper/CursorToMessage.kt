@@ -25,6 +25,7 @@ import android.provider.Telephony.*
 import common.util.Keys
 import data.model.Message
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class CursorToMessage @Inject constructor(
@@ -169,7 +170,7 @@ class CursorToMessage @Inject constructor(
         private fun getColumnIndex(columnsName: String) = try {
             cursor.getColumnIndexOrThrow(columnsName)
         } catch (e: Exception) {
-            Timber.w(e)
+            Timber.e("Couldn't find column \'$columnsName\' in ${Arrays.toString(cursor.columnNames)}")
             -1
         }
     }

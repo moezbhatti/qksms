@@ -20,6 +20,7 @@ package presentation.feature.compose
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -62,6 +63,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
+    override val attachmentDeletedIntent: Subject<Bitmap> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
     override val sendIntent by lazy { send.clicks() }
@@ -69,6 +71,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     @Inject lateinit var chipsAdapter: ChipsAdapter
     @Inject lateinit var contactsAdapter: ContactAdapter
     @Inject lateinit var messageAdapter: MessagesAdapter
+    @Inject lateinit var attachmentAdapter: AttachmentAdapter
 
     init {
         appComponent.inject(this)
@@ -119,6 +122,9 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         messageList.setHasFixedSize(true)
         messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
+
+        attachments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        attachments.adapter = attachmentAdapter
 
         messageBackground.backgroundTintMode = PorterDuff.Mode.MULTIPLY
 
@@ -204,6 +210,11 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
 
         if (messageAdapter.data !== state.messages) {
             messageAdapter.updateData(state.messages)
+        }
+
+        attachments.setVisible(state.attachments.isNotEmpty())
+        if (attachmentAdapter.data !== state.attachments) {
+            attachmentAdapter.data = state.attachments
         }
 
         if (title != state.title) title = state.title

@@ -40,7 +40,6 @@
 
     <string name="main_syncing">Optimizing database, this might take a minute…</string>
 
-    <string name="compose_attach_unsupported">MMS support will be added shortly!</string>
     <string name="compose_hint">Write a message…</string>
 
     <string name="message_status_sending">Sending…</string>

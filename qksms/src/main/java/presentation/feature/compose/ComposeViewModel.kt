@@ -20,6 +20,10 @@ package presentation.feature.compose
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import com.mlsdev.rximagepicker.RxImageConverters
+import com.mlsdev.rximagepicker.RxImagePicker
+import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.ClipboardUtils
@@ -38,6 +42,7 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import presentation.common.Navigator
@@ -61,6 +66,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var deleteMessage: DeleteMessage
 
     private var draft: String = ""
+    private val attachments: Subject<List<Bitmap>> = BehaviorSubject.createDefault(ArrayList())
     private val contacts: List<Contact> by lazy { contactsRepo.getContacts() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Observable<List<Contact>>
@@ -149,6 +155,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         disposables += deleteConversation
         disposables += conversation.subscribe()
         disposables += messages.subscribe()
+        disposables += attachments.subscribe { attachments -> newState { it.copy(attachments = attachments) } }
 
         if (threadId == 0L) {
             syncContacts.execute(Unit)
@@ -233,24 +240,36 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .subscribe()
 
-        // Add an attachment
+        // Attach a photo
         intents += view.attachIntent
-                .subscribe { context.makeToast(R.string.compose_attach_unsupported) }
+                .flatMap { RxImagePicker.with(context).requestImage(Sources.GALLERY) }
+                .flatMap { uri -> RxImageConverters.uriToBitmap(context, uri) }
+                .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
+                .subscribe { attachments.onNext(it) }
 
-        // Enable the send button when there is text input into the new message body, disable otherwise
-        intents += view.textChangedIntent.subscribe { text ->
-            newState { it.copy(canSend = text.isNotEmpty()) }
-        }
+        // Detach a photo
+        intents += view.attachmentDeletedIntent
+                .withLatestFrom(attachments, { bitmap, attachments -> attachments.filter { it !== bitmap } })
+                .subscribe { attachments.onNext(it) }
+
+        // Enable the send button when there is text input into the new message body or there's
+        // an attachment, disable otherwise
+        intents += Observables
+                .combineLatest(view.textChangedIntent, attachments, { text, attachments ->
+                    text.isNotBlank() || attachments.isNotEmpty()
+                })
+                .subscribe { canSend -> newState { it.copy(canSend = canSend) } }
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         intents += view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
                 .map { body -> body.toString() }
-                .withLatestFrom(conversation, { body, conversation ->
+                .withLatestFrom(attachments, conversation, { body, attachments, conversation ->
                     val threadId = conversation.id
                     val addresses = conversation.recipients.map { it.address }
-                    sendMessage.execute(SendMessage.Params(threadId, addresses, body))
+                    sendMessage.execute(SendMessage.Params(threadId, addresses, body, attachments))
                     view.setDraft("")
+                    newState { it.copy(attachments = ArrayList()) }
                 })
                 .withLatestFrom(state, { _, state ->
                     if (state.editingMode) {

@@ -21,6 +21,7 @@ package interactor
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.telephony.SmsManager
 import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
@@ -38,16 +39,16 @@ class SendMessage @Inject constructor(
         private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params, Unit>() {
 
-    data class Params(val threadId: Long, val addresses: List<String>, val body: String)
+    data class Params(val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Bitmap> = listOf())
 
     override fun buildObservable(params: Params): Flowable<Unit> {
         return Flowable.just(Unit)
                 .filter { params.addresses.isNotEmpty() }
                 .doOnNext {
-                    if (params.addresses.size == 1) {
+                    if (params.addresses.size == 1 && params.attachments.isEmpty()) {
                         sendSms(params.threadId, params.addresses.first(), params.body)
                     } else {
-                        sendMms(params.threadId, params.addresses, params.body)
+                        sendMms(params.threadId, params.addresses, params.body, params.attachments)
                     }
                 }
     }
@@ -72,13 +73,14 @@ class SendMessage @Inject constructor(
         smsManager.sendMultipartTextMessage(address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
     }
 
-    private fun sendMms(threadId: Long, addresses: List<String>, body: String) {
+    private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Bitmap>) {
         val settings = Settings().apply {
             useSystemSending = true
             group = true
         }
 
         val message = Message(body, addresses.toTypedArray())
+        attachments.forEach { message.addImage(it) }
 
         val transaction = Transaction(context, settings)
         transaction.sendNewMessage(message, threadId)
