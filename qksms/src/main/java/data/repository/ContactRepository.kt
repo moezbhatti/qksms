@@ -69,8 +69,6 @@ class ContactRepository @Inject constructor(val context: Context) {
                 .equalTo("numbers.address", address)
                 .findFirst()
 
-        realm.close()
-
         if (contact == null) {
             val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
             val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
@@ -88,7 +86,11 @@ class ContactRepository @Inject constructor(val context: Context) {
             } catch (e: Exception) {
                 Timber.w(e)
             }
+        } else {
+            contact = realm.copyFromRealm(contact)
         }
+
+        realm.close()
 
         return contact
     }
