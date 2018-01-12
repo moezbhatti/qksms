@@ -248,8 +248,8 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .map { body -> body.toString() }
                 .withLatestFrom(conversation, { body, conversation ->
                     val threadId = conversation.id
-                    val address = conversation.recipients.first()?.address.orEmpty()
-                    sendMessage.execute(SendMessage.Params(threadId, address, body))
+                    val addresses = conversation.recipients.map { it.address }
+                    sendMessage.execute(SendMessage.Params(threadId, addresses, body))
                     view.setDraft("")
                 })
                 .withLatestFrom(state, { _, state ->

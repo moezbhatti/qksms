@@ -22,8 +22,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.telephony.SmsManager
+import com.klinker.android.send_message.Message
+import com.klinker.android.send_message.Settings
+import com.klinker.android.send_message.Transaction
 import common.util.Preferences
-import data.model.Message
 import data.repository.MessageRepository
 import io.reactivex.Flowable
 import presentation.receiver.MessageDeliveredReceiver
@@ -33,32 +35,53 @@ import javax.inject.Inject
 class SendMessage @Inject constructor(
         private val context: Context,
         private val prefs: Preferences,
-        private val messageRepo: MessageRepository)
-    : Interactor<SendMessage.Params, Message>() {
+        private val messageRepo: MessageRepository
+) : Interactor<SendMessage.Params, Unit>() {
 
-    data class Params(val threadId: Long, val address: String, val body: String)
+    data class Params(val threadId: Long, val addresses: List<String>, val body: String)
 
-    override fun buildObservable(params: Params): Flowable<Message> {
+    override fun buildObservable(params: Params): Flowable<Unit> {
+        return Flowable.just(Unit)
+                .filter { params.addresses.isNotEmpty() }
+                .doOnNext {
+                    if (params.addresses.size == 1) {
+                        sendSms(params.threadId, params.addresses.first(), params.body)
+                    } else {
+                        sendMms(params.threadId, params.addresses, params.body)
+                    }
+                }
+    }
+
+    private fun sendSms(threadId: Long, address: String, body: String) {
         val smsManager = SmsManager.getDefault()
 
-        return Flowable.just(params)
-                .map { messageRepo.insertSentSms(params.threadId, params.address, params.body) }
-                .doOnNext { message ->
-                    val parts = smsManager.divideMessage(params.body)
+        val message = messageRepo.insertSentSms(threadId, address, body)
+        val parts = smsManager.divideMessage(body)
 
-                    val sentIntents = parts.map {
-                        val intent = Intent(context, MessageSentReceiver::class.java).putExtra("id", message.id)
-                        PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
-                    }
+        val sentIntents = parts.map {
+            val intent = Intent(context, MessageSentReceiver::class.java).putExtra("id", message.id)
+            PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
 
-                    val deliveredIntents = parts.map {
-                        val intent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("id", message.id)
-                        val pendingIntent = PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
-                        if (prefs.delivery.get()) pendingIntent else null
-                    }
+        val deliveredIntents = parts.map {
+            val intent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("id", message.id)
+            val pendingIntent = PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            if (prefs.delivery.get()) pendingIntent else null
+        }
 
-                    smsManager.sendMultipartTextMessage(params.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
-                }
+        smsManager.sendMultipartTextMessage(address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
+    }
+
+    private fun sendMms(threadId: Long, addresses: List<String>, body: String) {
+        val settings = Settings().apply {
+            useSystemSending = true
+            group = true
+        }
+
+        val message = Message(body, addresses.toTypedArray())
+
+        val transaction = Transaction(context, settings)
+        transaction.sendNewMessage(message, threadId)
     }
 
 }
