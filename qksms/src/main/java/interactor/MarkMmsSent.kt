@@ -16,28 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.receiver
+package interactor
 
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import com.klinker.android.send_message.MmsSentReceiver
-import common.di.appComponent
-import interactor.MarkMmsSent
+import common.util.SyncManager
+import data.model.Message
+import io.reactivex.Flowable
 import javax.inject.Inject
 
-class MmsSentReceiver : MmsSentReceiver() {
+class MarkMmsSent @Inject constructor(private val syncManager: SyncManager) : Interactor<Uri, Message>() {
 
-    @Inject lateinit var markMmsSent: MarkMmsSent
-
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-        appComponent.inject(this)
-
-        Uri.parse(intent.getStringExtra("content_uri"))?.let { uri ->
-            val pendingResult = goAsync()
-            markMmsSent.execute(uri) { pendingResult.finish() }
-        }
+    override fun buildObservable(params: Uri): Flowable<Message> {
+        return Flowable.just(params)
+                .flatMap { uri -> syncManager.syncMessage(uri) }
     }
 
 }

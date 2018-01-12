@@ -20,6 +20,7 @@ package common.util
 
 import android.content.Context
 import android.net.Uri
+import android.provider.Telephony
 import common.util.extensions.asFlowable
 import common.util.extensions.insertOrUpdate
 import common.util.extensions.map
@@ -106,7 +107,17 @@ class SyncManager @Inject constructor(
     }
 
     fun syncMessage(uri: Uri): Flowable<Message> {
-        val cursor = context.contentResolver.query(uri, null, null, null, null)
+        val id = uri.lastPathSegment
+        val isMms = uri.toString().contains("mms")
+
+        // The uri might be something like content://mms/inbox/id
+        // The box might change though, so we should just use the mms/id uri
+        val stableUri = when(isMms) {
+            true -> Uri.withAppendedPath(Telephony.Mms.CONTENT_URI, id)
+            false -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id)
+        }
+
+        val cursor = context.contentResolver.query(stableUri, null, null, null, null)
         val columnsMap = CursorToMessage.MessageColumns(cursor)
 
         // Map the cursor to a message
