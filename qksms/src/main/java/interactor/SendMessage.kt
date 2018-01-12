@@ -23,56 +23,42 @@ import android.content.Context
 import android.content.Intent
 import android.telephony.SmsManager
 import common.util.Preferences
+import data.model.Message
 import data.repository.MessageRepository
+import io.reactivex.Flowable
 import presentation.receiver.MessageDeliveredReceiver
 import presentation.receiver.MessageSentReceiver
-import io.reactivex.Flowable
-import io.reactivex.rxkotlin.toFlowable
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
         private val context: Context,
         private val prefs: Preferences,
         private val messageRepo: MessageRepository)
-    : Interactor<SendMessage.Params, Unit>() {
+    : Interactor<SendMessage.Params, Message>() {
 
     data class Params(val threadId: Long, val address: String, val body: String)
 
-    override fun buildObservable(params: Params): Flowable<Unit> {
-
+    override fun buildObservable(params: Params): Flowable<Message> {
         val smsManager = SmsManager.getDefault()
 
-        return Flowable.just(prefs.split.get())
-                .map { split ->
-                    when (split) {
-                        true -> smsManager.divideMessage(params.body)
-                        false -> arrayListOf(params.body)
+        return Flowable.just(params)
+                .map { messageRepo.insertSentSms(params.threadId, params.address, params.body) }
+                .doOnNext { message ->
+                    val parts = smsManager.divideMessage(params.body)
+
+                    val sentIntents = parts.map {
+                        val intent = Intent(context, MessageSentReceiver::class.java).putExtra("id", message.id)
+                        PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
                     }
-                }
-                .flatMap { bodies -> bodies.toFlowable() }
-                .map { body -> messageRepo.insertSentSms(params.threadId, params.address, body) }
-                .map { message ->
-                    val sentIntent = Intent(context, MessageSentReceiver::class.java).putExtra("id", message.id)
-                    val sentPI = PendingIntent.getBroadcast(context, message.id.toInt(), sentIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val deliveredIntent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("id", message.id)
-                    val deliveredPI = PendingIntent.getBroadcast(context, message.id.toInt(), deliveredIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-                    Triple(message.body, sentPI, deliveredPI)
-                }
-                .toList().toFlowable()
-                .doOnNext { messages ->
-                    if (messages.size == 1) {
-                        smsManager.sendTextMessage(params.address, null, messages[0].first, messages[0].second, if (prefs.delivery.get()) messages[0].third else null)
-                    } else {
-                        val parts = ArrayList(messages.map { it.first })
-                        val sentIntents = ArrayList(messages.map { it.second })
-                        val deliveredIntents = ArrayList(messages.map { it.third })
-
-                        smsManager.sendMultipartTextMessage(params.address, null, parts, sentIntents, if (prefs.delivery.get()) deliveredIntents else null)
+                    val deliveredIntents = parts.map {
+                        val intent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("id", message.id)
+                        val pendingIntent = PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                        if (prefs.delivery.get()) pendingIntent else null
                     }
+
+                    smsManager.sendMultipartTextMessage(params.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
                 }
-                .map { Unit }
     }
 
 }

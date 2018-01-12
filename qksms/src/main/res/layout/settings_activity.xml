@@ -103,14 +103,6 @@
                     app:widget="@layout/settings_switch_widget" />
 
                 <presentation.common.widget.PreferenceView
-                    android:id="@+id/split"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:summary="@string/settings_split_summary"
-                    app:title="@string/settings_split_title"
-                    app:widget="@layout/settings_switch_widget" />
-
-                <presentation.common.widget.PreferenceView
                     android:id="@+id/unicode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

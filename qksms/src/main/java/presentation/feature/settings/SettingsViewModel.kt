@@ -66,10 +66,6 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
             newState { it.copy(deliveryEnabled = deliveryEnabled) }
         }
 
-        disposables += prefs.split.asObservable().subscribe { splitSmsEnabled ->
-            newState { it.copy(splitSmsEnabled = splitSmsEnabled) }
-        }
-
         disposables += prefs.unicode.asObservable().subscribe { stripUnicodeEnabled ->
             newState { it.copy(stripUnicodeEnabled = stripUnicodeEnabled) }
         }
@@ -109,8 +105,6 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 R.id.ringtone -> view.showRingtonePicker(Uri.parse(prefs.ringtone.get()))
 
                 R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
-
-                R.id.split -> prefs.split.set(!prefs.split.get())
 
                 R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 

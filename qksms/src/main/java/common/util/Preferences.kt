@@ -34,7 +34,6 @@ class Preferences @Inject constructor(rxPrefs: RxSharedPreferences) {
     val vibration = rxPrefs.getBoolean("vibration", true)
     val ringtone = rxPrefs.getString("ringtone", Settings.System.DEFAULT_NOTIFICATION_URI.toString())
     val delivery = rxPrefs.getBoolean("delivery", false)
-    val split = rxPrefs.getBoolean("split", false)
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mms = rxPrefs.getBoolean("mms", true)
     val mmsSize = rxPrefs.getLong("mmsSize", -1)

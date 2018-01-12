@@ -152,8 +152,6 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
         delivery.checkbox.isChecked = state.deliveryEnabled
 
-        split.checkbox.isChecked = state.splitSmsEnabled
-
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
 
         mms.checkbox.isChecked = state.mmsEnabled
