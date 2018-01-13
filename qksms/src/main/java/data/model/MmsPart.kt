@@ -30,12 +30,9 @@ open class MmsPart : RealmObject() {
     var text: String? = null
     var image: String? = null
 
-    fun isImage()
-            = "image/jpeg" == type
-            || "image/bmp" == type
-            || "image/gif" == type
-            || "image/jpg" == type
-            || "image/png" == type
+    fun isSmil() = "application/smil" == type
+
+    fun isImage() = listOf("image/jpeg", "image/bmp", "image/gif", "image/jpg", "image/png").contains(type)
 
     fun isText() = "text/plain" == type
 

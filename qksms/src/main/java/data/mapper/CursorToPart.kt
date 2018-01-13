@@ -43,6 +43,10 @@ class CursorToPart @Inject constructor(private val context: Context) : Mapper<Cu
         val data = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part._DATA))
 
         when {
+            isSmil() -> {
+                // Do nothing
+            }
+
             isImage() -> image = ContentUris.withAppendedId(CONTENT_URI, id).toString()
 
             isText() -> {
