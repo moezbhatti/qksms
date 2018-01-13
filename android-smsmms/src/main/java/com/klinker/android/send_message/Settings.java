@@ -36,7 +36,6 @@ public class Settings {
     private String uaProfUrl;
     private String uaProfTagName;
     private boolean group;
-    private boolean useSystemSending;
 
     // SMS options
     private boolean deliveryReports;
@@ -114,7 +113,6 @@ public class Settings {
         this.preText = preText;
         this.sendLongAsMms = sendLongAsMms;
         this.sendLongAsMmsAfter = sendLongAsMmsAfter;
-        setUseSystemSending(useSystemSending);
 
         this.subscriptionId = subscriptionId != null ? subscriptionId : DEFAULT_SUBSCRIPTION_ID;
     }
@@ -249,18 +247,6 @@ public class Settings {
     }
 
     /**
-     * @param useSystemSending whether or not to use the system sending method on Lollipop+ devices
-     */
-    public void setUseSystemSending(boolean useSystemSending) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            this.useSystemSending = useSystemSending;
-        } else {
-            this.useSystemSending = false;
-            Log.e("Settings", "System sending only available on Lollipop+ devices");
-        }
-    }
-
-    /**
      * Set the subscription ID that should be used for sending. It isn't applied to receiving at this time.
      *
      * @param subscriptionId null if you do not want to use one.
@@ -371,13 +357,6 @@ public class Settings {
      */
     public int getSendLongAsMmsAfter() {
         return this.sendLongAsMmsAfter;
-    }
-
-    /**
-     * @return whether or not to use the system sending method on Lollipop+ devices
-     */
-    public boolean getUseSystemSending() {
-        return useSystemSending;
     }
 
     /**

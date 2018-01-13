@@ -338,16 +338,11 @@ public class MmsConfig {
         final TelephonyManager telephonyManager =
                 (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mUserAgent = telephonyManager.getMmsUserAgent();
-            mUaProfUrl = telephonyManager.getMmsUAProfUrl();
-            // defaults for nexus 6, seems to work well.
-            //mUserAgent = "nexus6";
-            //mUaProfUrl = "http://uaprof.motorola.com/phoneconfig/nexus6/Profile/nexus6.rdf";
-        } else {
-            mUserAgent = "Android Messaging";
-            mUaProfUrl = "http://www.gstatic.com/android/hangouts/hangouts_mms_ua_profile.xml";
-        }
+        mUserAgent = telephonyManager.getMmsUserAgent();
+        mUaProfUrl = telephonyManager.getMmsUAProfUrl();
+        // defaults for nexus 6, seems to work well.
+        //mUserAgent = "nexus6";
+        //mUaProfUrl = "http://uaprof.motorola.com/phoneconfig/nexus6/Profile/nexus6.rdf";
     }
 
     private void loadFromResources(Context context) {

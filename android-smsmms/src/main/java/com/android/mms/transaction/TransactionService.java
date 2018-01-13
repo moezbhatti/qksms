@@ -309,121 +309,16 @@ public class TransactionService extends Service implements Observer {
                         int msgType = cursor.getInt(columnIndexOfMsgType);
                         int transactionType = getTransactionType(msgType);
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            boolean useSystem = true;
-                            if (com.klinker.android.send_message.Transaction.settings != null) {
-                                useSystem = com.klinker.android.send_message.Transaction.settings
-                                        .getUseSystemSending();
-                            } else {
-                                useSystem = PreferenceManager.getDefaultSharedPreferences(this)
-                                        .getBoolean("system_mms_sending", useSystem);
-                            }
+                        try {
+                            Uri uri = ContentUris.withAppendedId(Mms.CONTENT_URI,
+                                    cursor.getLong(columnIndexOfMsgId));
+                            com.android.mms.transaction.DownloadManager.getInstance().
+                                    downloadMultimediaMessage(this, PushReceiver.getContentLocation(this, uri), uri, false);
 
-                            if (useSystem) {
-                                try {
-                                    Uri uri = ContentUris.withAppendedId(Mms.CONTENT_URI,
-                                            cursor.getLong(columnIndexOfMsgId));
-                                    com.android.mms.transaction.DownloadManager.getInstance().
-                                            downloadMultimediaMessage(this, PushReceiver.getContentLocation(this, uri), uri, false);
-
-                                    // can't handle many messages at once.
-                                    break;
-                                } catch (MmsException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                try {
-                                    Uri uri = ContentUris.withAppendedId(Mms.CONTENT_URI,
-                                            cursor.getLong(columnIndexOfMsgId));
-                                    MmsRequestManager requestManager = new MmsRequestManager(this);
-                                    DownloadRequest request = new DownloadRequest(requestManager,
-                                            Utils.getDefaultSubscriptionId(),
-                                            PushReceiver.getContentLocation(this, uri), uri, null, null,
-                                            null, this);
-                                    MmsNetworkManager manager = new MmsNetworkManager(this, Utils.getDefaultSubscriptionId());
-                                    request.execute(this, manager);
-
-                                    // can't handle many messages at once.
-                                    break;
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            continue;
-                        }
-
-                        if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                            Log.v(TAG, "onNewIntent: msgType=" + msgType + " transactionType=" +
-                                    transactionType);
-                        }
-                        if (noNetwork) {
-                            onNetworkUnavailable(serviceId, transactionType);
-                            return;
-                        }
-                        switch (transactionType) {
-                            case -1:
-                                break;
-                            case Transaction.RETRIEVE_TRANSACTION:
-                                // If it's a transiently failed transaction,
-                                // we should retry it in spite of current
-                                // downloading mode. If the user just turned on the auto-retrieve
-                                // option, we also retry those messages that don't have any errors.
-                                int failureType = cursor.getInt(
-                                        cursor.getColumnIndexOrThrow(
-                                                PendingMessages.ERROR_TYPE));
-                                try {
-                                    DownloadManager.init(this);
-                                    DownloadManager downloadManager = DownloadManager.getInstance();
-                                    boolean autoDownload = downloadManager.isAuto();
-                                    if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                                        Log.v(TAG, "onNewIntent: failureType=" + failureType +
-                                                " action=" + action + " isTransientFailure:" +
-                                                isTransientFailure(failureType) + " autoDownload=" +
-                                                autoDownload);
-                                    }
-                                    if (!autoDownload) {
-                                        // If autodownload is turned off, don't process the
-                                        // transaction.
-                                        if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                                            Log.v(TAG, "onNewIntent: skipping - autodownload off");
-                                        }
-                                        // Re-enable "download" button if auto-download is off
-                                        Uri uri = ContentUris.withAppendedId(Mms.CONTENT_URI,
-                                                cursor.getLong(columnIndexOfMsgId));
-                                        downloadManager.markState(uri,
-                                                DownloadManager.STATE_SKIP_RETRYING);
-                                        break;
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                                // Logic is twisty. If there's no failure or the failure
-                                // is a non-permanent failure, we want to process the transaction.
-                                // Otherwise, break out and skip processing this transaction.
-                                if (!(failureType == MmsSms.NO_ERROR ||
-                                        isTransientFailure(failureType))) {
-                                    if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                                        Log.v(TAG, "onNewIntent: skipping - permanent error");
-                                    }
-                                    break;
-                                }
-                                if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                                    Log.v(TAG, "onNewIntent: falling through and processing");
-                                }
-                               // fall-through
-                            default:
-                                Uri uri = ContentUris.withAppendedId(
-                                        Mms.CONTENT_URI,
-                                        cursor.getLong(columnIndexOfMsgId));
-                                TransactionBundle args = new TransactionBundle(
-                                        transactionType, uri.toString());
-                                // FIXME: We use the same startId for all MMs.
-                                if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                                    Log.v(TAG, "onNewIntent: launchTransaction uri=" + uri);
-                                }
-                                launchTransaction(serviceId, args, false);
-                                break;
+                            // can't handle many messages at once.
+                            break;
+                        } catch (MmsException e) {
+                            e.printStackTrace();
                         }
                     }
                 } finally {
@@ -847,29 +742,13 @@ public class TransactionService extends Service implements Observer {
                                         TransactionService.this, serviceId,
                                         transactionSettings, args.getUri());
 
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    Uri u = Uri.parse(args.getUri());
-                                    com.android.mms.transaction.DownloadManager.getInstance().
-                                            downloadMultimediaMessage(TransactionService.this,
-                                                    ((RetrieveTransaction) transaction).getContentLocation(TransactionService.this, u), u, false);
-                                    return;
-                                }
-
-                                break;
-                            case Transaction.SEND_TRANSACTION:
-                                transaction = new SendTransaction(
-                                        TransactionService.this, serviceId,
-                                        transactionSettings, args.getUri());
-                                break;
-                            case Transaction.READREC_TRANSACTION:
-                                transaction = new ReadRecTransaction(
-                                        TransactionService.this, serviceId,
-                                        transactionSettings, args.getUri());
-                                break;
-                            default:
-                                Log.w(TAG, "Invalid transaction type: " + serviceId);
-                                transaction = null;
+                                Uri u = Uri.parse(args.getUri());
+                                com.android.mms.transaction.DownloadManager.getInstance().
+                                        downloadMultimediaMessage(TransactionService.this,
+                                                ((RetrieveTransaction) transaction).getContentLocation(TransactionService.this, u), u, false);
                                 return;
+
+
                         }
 
                         if (!processTransaction(transaction)) {

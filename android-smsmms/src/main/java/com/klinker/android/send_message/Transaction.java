@@ -33,9 +33,6 @@ import android.text.TextUtils;
 import android.widget.Toast;
 import com.android.mms.MmsConfig;
 import com.android.mms.dom.smil.parser.SmilXmlSerializer;
-import com.android.mms.service_alt.MmsNetworkManager;
-import com.android.mms.service_alt.MmsRequestManager;
-import com.android.mms.service_alt.SendRequest;
 import com.android.mms.util.DownloadManager;
 import com.android.mms.util.RateController;
 import com.google.android.mms.ContentType;
@@ -393,23 +390,8 @@ public class Transaction {
         }
 
         Log.v(TAG, "using lollipop method for sending sms");
-
-        if (settings.getUseSystemSending()) {
-            Log.v(TAG, "using system method for sending");
-            sendMmsThroughSystem(context, subject, data, addresses, explicitSentMmsReceiver);
-        } else {
-            try {
-                MessageInfo info = getBytes(context, saveMessage, address.toString().split(" "),
-                        data.toArray(new MMSPart[data.size()]), subject);
-                MmsRequestManager requestManager = new MmsRequestManager(context, info.bytes);
-                SendRequest request = new SendRequest(requestManager, Utils.getDefaultSubscriptionId(),
-                        info.location, null, null, null, null);
-                MmsNetworkManager manager = new MmsNetworkManager(context, Utils.getDefaultSubscriptionId());
-                request.execute(context, manager);
-            } catch (Exception e) {
-                Log.e(TAG, "error sending mms", e);
-            }
-        }
+        Log.v(TAG, "using system method for sending");
+        sendMmsThroughSystem(context, subject, data, addresses, explicitSentMmsReceiver);
     }
 
     public static MessageInfo getBytes(Context context, boolean saveMessage, String[] recipients,

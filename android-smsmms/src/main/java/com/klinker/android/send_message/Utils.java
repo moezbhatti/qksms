@@ -64,11 +64,8 @@ public class Utils {
     public static <T> T ensureRouteToMmsNetwork(Context context, String url, String proxy, Task<T> task) throws IOException {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return ensureRouteToMmsNetworkMarshmallow(context, task);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return ensureRouteToMmsNetworkLollipop(context, task);
         } else {
-            ensureRouteToHost(context, url, proxy);
-            return task.run();
+            return ensureRouteToMmsNetworkLollipop(context, task);
         }
     }
 

@@ -10,13 +10,11 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
-
 import com.android.mms.MmsConfig;
 import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.BroadcastUtils;
@@ -122,10 +120,6 @@ public class DownloadManager {
     }
 
     private static boolean isNotificationExist(Context context, String location) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return true;
-        }
-
         String selection = Telephony.Mms.CONTENT_LOCATION + " = ?";
         String[] selectionArgs = new String[] { location };
         Cursor c = SqliteWrapper.query(
