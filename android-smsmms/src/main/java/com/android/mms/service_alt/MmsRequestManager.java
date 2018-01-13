@@ -19,10 +19,8 @@ package com.android.mms.service_alt;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.util.Log;
-
 import com.android.mms.transaction.NotificationTransaction;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.PduParser;
@@ -75,18 +73,11 @@ public class MmsRequestManager implements MmsRequest.RequestManager {
             }
 
             Uri msgUri;
-            boolean group;
-
-            try {
-                group = com.klinker.android.send_message.Transaction.settings.getGroup();
-            } catch (Exception e) {
-                group = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("group_message", true);
-            }
 
             // Store M-Retrieve.conf into Inbox
             PduPersister persister = PduPersister.getPduPersister(context);
             msgUri = persister.persist(retrieveConf, Telephony.Mms.Inbox.CONTENT_URI, true,
-                    group, null);
+                    true, null);
 
             // Use local time instead of PDU time
             ContentValues values = new ContentValues(2);

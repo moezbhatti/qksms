@@ -488,7 +488,7 @@ public class Transaction {
         if (saveMessage) {
             try {
                 PduPersister persister = PduPersister.getPduPersister(context);
-                info.location = persister.persist(sendRequest, Uri.parse("content://mms/outbox"), true, settings.getGroup(), null);
+                info.location = persister.persist(sendRequest, Uri.parse("content://mms/outbox"), true, true, null);
             } catch (Exception e) {
                 Log.v("sending_mms_library", "error saving mms message");
                 Log.e(TAG, "exception thrown", e);
@@ -527,7 +527,7 @@ public class Transaction {
             SendReq sendReq = buildPdu(context, addresses, subject, parts);
             PduPersister persister = PduPersister.getPduPersister(context);
             Uri messageUri = persister.persist(sendReq, Uri.parse("content://mms/outbox"),
-                    true, settings.getGroup(), null);
+                    true, true, null);
 
             Intent intent;
             if (explicitSentMmsReceiver == null) {
@@ -565,7 +565,7 @@ public class Transaction {
             }
 
             Bundle configOverrides = new Bundle();
-            configOverrides.putBoolean(SmsManager.MMS_CONFIG_GROUP_MMS_ENABLED, settings.getGroup());
+            configOverrides.putBoolean(SmsManager.MMS_CONFIG_GROUP_MMS_ENABLED, true);
             String httpParams = MmsConfig.getHttpParams();
             if (!TextUtils.isEmpty(httpParams)) {
                 configOverrides.putString(SmsManager.MMS_CONFIG_HTTP_PARAMS, httpParams);
@@ -828,7 +828,7 @@ public class Transaction {
         return message.getImages().length != 0 ||
                 (message.getParts().size() != 0) ||
                 (settings.getSendLongAsMms() && Utils.getNumPages(settings, message.getText()) > settings.getSendLongAsMmsAfter()) ||
-                (message.getAddresses().length > 1 && settings.getGroup()) ||
+                (message.getAddresses().length > 1) ||
                 message.getSubject() != null;
     }
 

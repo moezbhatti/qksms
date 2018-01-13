@@ -35,7 +35,6 @@ public class Settings {
     private String userAgent;
     private String uaProfUrl;
     private String uaProfTagName;
-    private boolean group;
 
     // SMS options
     private boolean deliveryReports;
@@ -68,7 +67,6 @@ public class Settings {
         this.userAgent = s.getAgent();
         this.uaProfUrl = s.getUserProfileUrl();
         this.uaProfTagName = s.getUaProfTagName();
-        this.group = s.getGroup();
         this.deliveryReports = s.getDeliveryReports();
         this.split = s.getSplit();
         this.splitCounter = s.getSplitCounter();
@@ -104,7 +102,6 @@ public class Settings {
         this.userAgent = "";
         this.uaProfUrl = "";
         this.uaProfTagName = "";
-        this.group = group;
         this.deliveryReports = deliveryReports;
         this.split = split;
         this.splitCounter = splitCounter;
@@ -164,15 +161,6 @@ public class Settings {
      * @param tagName the tag name to use
      */
     public void setUaProfTagName(String tagName) { this.uaProfTagName = tagName; }
-
-    /**
-     * Sets group MMS messages
-     *
-     * @param group is a boolean specifying whether or not to send messages with multiple recipients as a group MMS message
-     */
-    public void setGroup(boolean group) {
-        this.group = group;
-    }
 
     /**
      * Sets whether to receive delivery reports from SMS messages
@@ -295,13 +283,6 @@ public class Settings {
      * @return the user agent profile tag name
      */
     public String getUaProfTagName() { return this.uaProfTagName; }
-
-    /**
-     * @return whether or not to send Group MMS or multiple SMS/Voice messages
-     */
-    public boolean getGroup() {
-        return this.group;
-    }
 
     /**
      * @return whether or not to request delivery reports on SMS messages

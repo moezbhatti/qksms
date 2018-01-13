@@ -111,16 +111,8 @@ public class PushReceiver extends BroadcastReceiver {
                             break;
                         }
 
-                        boolean group;
-
-                        try {
-                            group = com.klinker.android.send_message.Transaction.settings.getGroup();
-                        } catch (Exception e) {
-                            group = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean("group_message", true);
-                        }
-
                         Uri uri = p.persist(pdu, Uri.parse("content://mms/inbox"), true,
-                                group, null);
+                                true, null);
                         // Update thread ID for ReadOrigInd & DeliveryInd.
                         ContentValues values = new ContentValues(1);
                         values.put(Mms.THREAD_ID, threadId);
@@ -148,17 +140,9 @@ public class PushReceiver extends BroadcastReceiver {
                             // Save the pdu. If we can start downloading the real pdu immediately,
                             // don't allow persist() to create a thread for the notificationInd
                             // because it causes UI jank.
-                            boolean group;
-
-                            try {
-                                group = com.klinker.android.send_message.Transaction.settings.getGroup();
-                            } catch (Exception e) {
-                                group = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean("group_message", true);
-                            }
-
                             Uri uri = p.persist(pdu, Inbox.CONTENT_URI,
                                     !NotificationTransaction.allowAutoDownload(mContext),
-                                    group,
+                                    true,
                                     null);
 
                             String location = getContentLocation(mContext, uri);

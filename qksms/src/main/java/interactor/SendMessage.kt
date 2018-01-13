@@ -75,7 +75,6 @@ class SendMessage @Inject constructor(
 
     private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Bitmap>) {
         val settings = Settings().apply {
-            group = true
         }
 
         val message = Message(body, addresses.toTypedArray())

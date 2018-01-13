@@ -16,21 +16,16 @@
 
 package com.android.mms.transaction;
 
-import java.io.IOException;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
-
-import com.android.mms.logs.LogTag;
 import com.android.mms.MmsConfig;
+import com.android.mms.logs.LogTag;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.AcknowledgeInd;
@@ -40,7 +35,10 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
+import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
+
+import java.io.IOException;
 
 /**
  * The RetrieveTransaction is responsible for retrieving multimedia
@@ -154,18 +152,10 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                     mTransactionState.setState(TransactionState.FAILED);
                     mTransactionState.setContentUri(mUri);
                 } else {
-                    boolean group;
-
-                    try {
-                        group = com.klinker.android.send_message.Transaction.settings.getGroup();
-                    } catch (Exception e) {
-                        group = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean("group_message", true);
-                    }
-
                     // Store M-Retrieve.conf into Inbox
                     PduPersister persister = PduPersister.getPduPersister(mContext);
                     msgUri = persister.persist(retrieveConf, Inbox.CONTENT_URI, true,
-                            group, null);
+                            true, null);
 
                     // Use local time instead of PDU time
                     ContentValues values = new ContentValues(2);

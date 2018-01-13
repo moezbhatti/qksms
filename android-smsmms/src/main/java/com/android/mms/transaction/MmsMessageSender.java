@@ -167,15 +167,8 @@ public class MmsMessageSender implements MessageSender {
 
             readRec.setDate(System.currentTimeMillis() / 1000);
 
-            boolean group;
-
-            try {
-                group = com.klinker.android.send_message.Transaction.settings.getGroup();
-            } catch (Exception e) {
-                group = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("group_message", true);
-            }
             PduPersister.getPduPersister(context).persist(readRec, Mms.Outbox.CONTENT_URI, true,
-                    group, null);
+                    true, null);
             context.startService(new Intent(context, TransactionService.class));
         } catch (InvalidHeaderValueException e) {
             Log.e(TAG, "Invalide header value", e);
