@@ -1,4 +1,15 @@
 language: android
+jdk: oraclejdk8
+sudo: false
+
+env:
+  global:
+    - COMPILE_API_LEVEL=27
+    - EMULATOR_API_LEVEL=24              # It seems emulator levels 25,26,27 from main repos have google_apis by default, and do not support armeabi-v7a. Check commit comment.
+    - EMULATOR_TAG=default               # Possible values are default, google_apis, android-tv, android-wear, android-wear-cn
+    - EMULATOR_ABI=armeabi-v7a           # Default is armeabi-v7a, possible options are: x86, x86_64, mips, arm64-v8a, armeabi-v7a. Note: check commit comment
+    - ANDROID_BUILD_TOOLS_VERSION=27.0.2 # Match build-tools version used in build.gradle
+
 android:
   components:
     - tools
@@ -7,14 +18,32 @@ android:
     - extra
 
     # The build tools used in the project
-    - build-tools-27.0.2
+    - build-tools-${ANDROID_BUILD_TOOLS_VERSION}
 
     # The SDK used in the project
-    - android-27
+    - android-${COMPILE_API_LEVEL}
+
+    # For running the emulator in Travis
+    - android-${EMULATOR_API_LEVEL}
+    - sys-img-${EMULATOR_ABI}-android-${EMULATOR_API_LEVEL}
 
 before_install:
-  - yes | sdkmanager "platforms;android-27"
-  - echo no | android create avd --force -n test -t android-27 --abi armeabi-v7a
+  - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
+  - ls -la $HOME/**/*
+
+  # List and delete unnecessary components to free space
+  - sdkmanager --list || true # Print out package list for debug purposes
+  - sdkmanager --uninstall "extras;google;google_play_services"
+  - yes | sdkmanager "tools" # Update tools
+  - yes | sdkmanager "platforms;android-${EMULATOR_API_LEVEL}"                                     # Android platform required by emulator
+  - yes | sdkmanager "platforms;android-${COMPILE_API_LEVEL}"                                      # Android platform required by compiler
+  - yes | sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"                                  # Android build tools
+  - yes | sdkmanager "system-images;android-${EMULATOR_API_LEVEL};${EMULATOR_TAG};${EMULATOR_ABI}" # Install emulator system image
+  - sdkmanager --list || true # Print out package list for debug purposes
+
+  # emulator instance
+  - echo no | android create avd --force -n test -t android-${EMULATOR_API_LEVEL} --abi ${EMULATOR_ABI}
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+
