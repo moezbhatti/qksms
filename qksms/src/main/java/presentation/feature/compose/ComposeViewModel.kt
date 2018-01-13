@@ -178,8 +178,8 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
                     selectedContacts.isEmpty() || query.isNotEmpty()
                 })
-                .skipUntil(state.filter { state -> state.editingMode == true })
-                .takeUntil(state.filter { state -> state.editingMode == false })
+                .skipUntil(state.filter { state -> state.editingMode })
+                .takeUntil(state.filter { state -> !state.editingMode })
                 .distinctUntilChanged()
                 .autoDisposable(view.scope())
                 .subscribe { contactsVisible -> newState { it.copy(contactsVisible = contactsVisible && it.editingMode) } }
@@ -192,8 +192,8 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                             .filterNot { contact -> selectedContacts.contains(contact) }
                             .filter { contact -> contactFilter.filter(contact, query) }
                 })
-                .skipUntil(state.filter { state -> state.editingMode == true })
-                .takeUntil(state.filter { state -> state.editingMode == false })
+                .skipUntil(state.filter { state -> state.editingMode })
+                .takeUntil(state.filter { state -> !state.editingMode })
                 .subscribeOn(Schedulers.computation())
                 .autoDisposable(view.scope())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
@@ -206,8 +206,8 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 view.chipSelectedIntent.doOnNext { contact ->
                     contactsReducer.onNext { contacts -> contacts.toMutableList().apply { add(contact) } }
                 })
-                .skipUntil(state.filter { state -> state.editingMode == true })
-                .takeUntil(state.filter { state -> state.editingMode == false })
+                .skipUntil(state.filter { state -> state.editingMode })
+                .takeUntil(state.filter { state -> !state.editingMode })
                 .autoDisposable(view.scope())
                 .subscribe()
 
