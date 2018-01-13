@@ -21,6 +21,8 @@ package presentation.feature.settings
 import android.content.Context
 import android.net.Uri
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Preferences
 import interactor.FullSync
@@ -84,51 +86,55 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
     override fun bindView(view: SettingsView) {
         super.bindView(view)
 
-        intents += view.preferenceClickIntent.subscribe {
-            Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
+        view.preferenceClickIntent
+                .autoDisposable(view.scope())
+                .subscribe {
+                    Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
 
-            when (it.id) {
-                R.id.defaultSms -> navigator.showDefaultSmsDialog()
+                    when (it.id) {
+                        R.id.defaultSms -> navigator.showDefaultSmsDialog()
 
-                R.id.theme -> newState { it.copy(selectingTheme = true) }
+                        R.id.theme -> newState { it.copy(selectingTheme = true) }
 
-                R.id.dark -> prefs.dark.set(!prefs.dark.get())
+                        R.id.dark -> prefs.dark.set(!prefs.dark.get())
 
-                R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
+                        R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
 
-                R.id.notificationsO -> navigator.showNotificationSettings()
+                        R.id.notificationsO -> navigator.showNotificationSettings()
 
-                R.id.notifications -> prefs.notifications.set(!prefs.notifications.get())
+                        R.id.notifications -> prefs.notifications.set(!prefs.notifications.get())
 
-                R.id.vibration -> prefs.vibration.set(!prefs.vibration.get())
+                        R.id.vibration -> prefs.vibration.set(!prefs.vibration.get())
 
-                R.id.ringtone -> view.showRingtonePicker(Uri.parse(prefs.ringtone.get()))
+                        R.id.ringtone -> view.showRingtonePicker(Uri.parse(prefs.ringtone.get()))
 
-                R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
+                        R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
-                R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
+                        R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 
-                R.id.mms -> prefs.mms.set(!prefs.mms.get())
+                        R.id.mms -> prefs.mms.set(!prefs.mms.get())
 
-                R.id.mmsSize -> {
+                        R.id.mmsSize -> {
+                        }
+
+                        R.id.sync -> {
+                            newState { it.copy(syncing = true) }
+                            fullSync.execute(Unit, {
+                                newState { it.copy(syncing = false) }
+                            })
+                        }
+                    }
                 }
 
-                R.id.sync -> {
-                    newState { it.copy(syncing = true) }
-                    fullSync.execute(Unit, {
-                        newState { it.copy(syncing = false) }
-                    })
+        view.themeSelectedIntent
+                .autoDisposable(view.scope())
+                .subscribe { color ->
+                    prefs.theme.set(color)
+                    newState { it.copy(selectingTheme = false) }
                 }
-            }
-        }
 
-        intents += view.themeSelectedIntent.subscribe { color ->
-            prefs.theme.set(color)
-            newState { it.copy(selectingTheme = false) }
-        }
-
-        intents += view.ringtoneSelectedIntent.subscribe { ringtone ->
-            prefs.ringtone.set(ringtone)
-        }
+        view.ringtoneSelectedIntent
+                .autoDisposable(view.scope())
+                .subscribe { ringtone -> prefs.ringtone.set(ringtone) }
     }
 }

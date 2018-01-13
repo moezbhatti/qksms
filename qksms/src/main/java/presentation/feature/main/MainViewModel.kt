@@ -24,6 +24,8 @@ import android.content.pm.PackageManager
 import android.provider.Telephony
 import android.support.v4.content.ContextCompat
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.filter.ConversationFilter
 import data.model.MenuItem
@@ -97,7 +99,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     override fun bindView(view: MainView) {
         super.bindView(view)
 
-        intents += view.queryChangedIntent
+        view.queryChangedIntent
                 .skip(1)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .withLatestFrom(state, { query, state ->
@@ -111,18 +113,22 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         newState { it.copy(page = page) }
                     }
                 })
+                .autoDisposable(view.scope())
                 .subscribe()
 
-        intents += view.queryCancelledIntent
+        view.queryCancelledIntent
+                .autoDisposable(view.scope())
                 .subscribe { view.clearSearch() }
 
-        intents += view.composeIntent
+        view.composeIntent
+                .autoDisposable(view.scope())
                 .subscribe { navigator.showCompose() }
 
-        intents += view.drawerOpenIntent
+        view.drawerOpenIntent
+                .autoDisposable(view.scope())
                 .subscribe { open -> newState { it.copy(drawerOpen = open) } }
 
-        intents += view.drawerItemIntent
+        view.drawerItemIntent
                 .doOnNext { newState { it.copy(drawerOpen = false) } }
                 .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
                 .doOnNext { if (it == DrawerItem.HELP) navigator.showSupport() }
@@ -135,14 +141,16 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
                     }
                 }
+                .autoDisposable(view.scope())
                 .subscribe()
 
-        intents += view.conversationClickIntent
+        view.conversationClickIntent
                 .doOnNext { view.clearSearch() }
                 .doOnNext { threadId -> navigator.showConversation(threadId) }
+                .autoDisposable(view.scope())
                 .subscribe()
 
-        intents += view.conversationLongClickIntent
+        view.conversationLongClickIntent
                 .withLatestFrom(state, { l, mainState ->
                     when (mainState.page) {
                         is Inbox -> {
@@ -155,9 +163,10 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         }
                     }
                 })
+                .autoDisposable(view.scope())
                 .subscribe()
 
-        intents += view.conversationMenuItemIntent
+        view.conversationMenuItemIntent
                 .withLatestFrom(state, { actionId, mainState ->
                     when (mainState.page) {
                         is Inbox -> {
@@ -178,6 +187,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         menuDelete.actionId -> deleteConversation.execute(threadId)
                     }
                 })
+                .autoDisposable(view.scope())
                 .subscribe()
 
         val swipedConversation = view.swipeConversationIntent
@@ -185,7 +195,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .map { pair -> pair.conversation }
                 .map { conversation -> conversation.id }
 
-        intents += swipedConversation
+        swipedConversation
                 .withLatestFrom(state, { threadId, state ->
                     markArchived.execute(threadId) {
                         if (state.page is Inbox) {
@@ -203,10 +213,12 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         }
                     }
                 })
+                .autoDisposable(view.scope())
                 .subscribe()
 
-        intents += view.undoSwipeConversationIntent
+        view.undoSwipeConversationIntent
                 .withLatestFrom(swipedConversation, { _, threadId -> threadId })
+                .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnarchived.execute(threadId) }
     }
 

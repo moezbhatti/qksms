@@ -25,6 +25,8 @@ import com.mlsdev.rximagepicker.RxImageConverters
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.ClipboardUtils
 import common.util.extensions.asObservable
@@ -172,18 +174,19 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
         // Set the contact suggestions list to visible at all times when in editing mode and there are no contacts
         // selected yet, and also visible while in editing mode and there is text entered in the query field
-        intents += Observables
+        Observables
                 .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
                     selectedContacts.isEmpty() || query.isNotEmpty()
                 })
                 .skipUntil(state.filter { state -> state.editingMode == true })
                 .takeUntil(state.filter { state -> state.editingMode == false })
                 .distinctUntilChanged()
+                .autoDisposable(view.scope())
                 .subscribe { contactsVisible -> newState { it.copy(contactsVisible = contactsVisible && it.editingMode) } }
 
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
         // that have already been selected
-        intents += Observables
+        Observables
                 .combineLatest(view.queryChangedIntent, contacts, selectedContacts, { query, contacts, selectedContacts ->
                     contacts
                             .filterNot { contact -> selectedContacts.contains(contact) }
@@ -192,10 +195,11 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .skipUntil(state.filter { state -> state.editingMode == true })
                 .takeUntil(state.filter { state -> state.editingMode == false })
                 .subscribeOn(Schedulers.computation())
+                .autoDisposable(view.scope())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
 
         // Update the list of selected contacts when a new contact is selected or an existing one is deselected
-        intents += Observable.merge(
+        Observable.merge(
                 view.chipDeletedIntent.doOnNext { contact ->
                     contactsReducer.onNext { contacts -> contacts.filterNot { it == contact } }
                 },
@@ -204,23 +208,26 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .skipUntil(state.filter { state -> state.editingMode == true })
                 .takeUntil(state.filter { state -> state.editingMode == false })
+                .autoDisposable(view.scope())
                 .subscribe()
 
         // When the menu is loaded, trigger a new state so that the menu options can be rendered correctly
-        intents += view.menuReadyIntent.subscribe {
-            newState { it.copy() }
-        }
+        view.menuReadyIntent
+                .autoDisposable(view.scope())
+                .subscribe { newState { it.copy() } }
 
         // Open the phone dialer if the call button is clicked
-        intents += view.callIntent
+        view.callIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .map { conversation -> conversation.recipients.first() }
                 .map { recipient -> recipient.address }
+                .autoDisposable(view.scope())
                 .subscribe { address -> navigator.makePhoneCall(address) }
 
         // Toggle the archived state of the conversation
-        intents += view.archiveIntent
+        view.archiveIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
+                .autoDisposable(view.scope())
                 .subscribe { conversation ->
                     when (conversation.archived) {
                         true -> markUnarchived.execute(conversation.id, { context.makeToast(R.string.toast_unarchived) })
@@ -229,39 +236,44 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 }
 
         // Delete the conversation
-        intents += view.deleteIntent
+        view.deleteIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
+                .autoDisposable(view.scope())
                 .subscribe { conversation -> deleteConversation.execute(conversation.id) }
 
         // Mark the conversation read, if in foreground
-        intents += Observables.combineLatest(messages, view.activityVisibleIntent, { _, b -> b })
+        Observables.combineLatest(messages, view.activityVisibleIntent, { _, b -> b })
                 .withLatestFrom(conversation, { visible, conversation ->
                     if (visible) markRead.execute(conversation.id)
                 })
+                .autoDisposable(view.scope())
                 .subscribe()
 
         // Attach a photo
-        intents += view.attachIntent
+        view.attachIntent
                 .flatMap { RxImagePicker.with(context).requestImage(Sources.GALLERY) }
                 .flatMap { uri -> RxImageConverters.uriToBitmap(context, uri) }
                 .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
+                .autoDisposable(view.scope())
                 .subscribe { attachments.onNext(it) }
 
         // Detach a photo
-        intents += view.attachmentDeletedIntent
+        view.attachmentDeletedIntent
                 .withLatestFrom(attachments, { bitmap, attachments -> attachments.filter { it !== bitmap } })
+                .autoDisposable(view.scope())
                 .subscribe { attachments.onNext(it) }
 
         // Enable the send button when there is text input into the new message body or there's
         // an attachment, disable otherwise
-        intents += Observables
+        Observables
                 .combineLatest(view.textChangedIntent, attachments, { text, attachments ->
                     text.isNotBlank() || attachments.isNotEmpty()
                 })
+                .autoDisposable(view.scope())
                 .subscribe { canSend -> newState { it.copy(canSend = canSend) } }
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
-        intents += view.sendIntent
+        view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
                 .map { body -> body.toString() }
                 .withLatestFrom(attachments, conversation, { body, attachments, conversation ->
@@ -276,23 +288,26 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                         newState { it.copy(editingMode = false) }
                     }
                 })
+                .autoDisposable(view.scope())
                 .subscribe()
 
         // Copy the body of the selected message into the clipboard
-        intents += view.copyTextIntent.subscribe { message ->
-            ClipboardUtils.copy(context, message.body)
-            context.makeToast(R.string.toast_copied)
-        }
+        view.copyTextIntent
+                .autoDisposable(view.scope())
+                .subscribe { message ->
+                    ClipboardUtils.copy(context, message.body)
+                    context.makeToast(R.string.toast_copied)
+                }
 
         // Forward the message
-        intents += view.forwardMessageIntent.subscribe { message ->
-            navigator.showCompose(message.body)
-        }
+        view.forwardMessageIntent
+                .autoDisposable(view.scope())
+                .subscribe { message -> navigator.showCompose(message.body) }
 
         // Delete the selected message
-        intents += view.deleteMessageIntent.subscribe { message ->
-            deleteMessage.execute(message.id)
-        }
+        view.deleteMessageIntent
+                .autoDisposable(view.scope())
+                .subscribe { message -> deleteMessage.execute(message.id) }
     }
 
 }

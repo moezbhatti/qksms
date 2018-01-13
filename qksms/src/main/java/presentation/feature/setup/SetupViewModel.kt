@@ -20,10 +20,11 @@ package presentation.feature.setup
 
 import android.content.Context
 import android.provider.Telephony
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Permissions
 import presentation.common.base.QkViewModel
-import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class SetupViewModel : QkViewModel<SetupView, SetupState>(SetupState()) {
@@ -38,7 +39,8 @@ class SetupViewModel : QkViewModel<SetupView, SetupState>(SetupState()) {
     override fun bindView(view: SetupView) {
         super.bindView(view)
 
-        intents += view.activityResumedIntent
+        view.activityResumedIntent
+                .autoDisposable(view.scope())
                 .subscribe {
                     val isDefault = Telephony.Sms.getDefaultSmsPackage(context) == context.packageName
 
@@ -46,9 +48,13 @@ class SetupViewModel : QkViewModel<SetupView, SetupState>(SetupState()) {
                     else if (isDefault) view.finish()
                 }
 
-        intents += view.skipIntent.subscribe { view.finish() }
+        view.skipIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.finish() }
 
-        intents += view.nextIntent.subscribe { view.requestDefaultSms() }
+        view.nextIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.requestDefaultSms() }
     }
 
 }

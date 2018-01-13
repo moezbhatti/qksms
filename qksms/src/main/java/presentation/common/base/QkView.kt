@@ -18,7 +18,9 @@
  */
 package presentation.common.base
 
-interface QkView<in State> {
+import android.arch.lifecycle.LifecycleOwner
+
+interface QkView<in State> : LifecycleOwner {
 
     fun render(state: State)
 

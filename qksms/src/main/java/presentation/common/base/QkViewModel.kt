@@ -20,9 +20,10 @@ package presentation.common.base
 
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.BehaviorSubject
 
 abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) : ViewModel() {
@@ -30,14 +31,12 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
     protected val state: BehaviorSubject<State> = BehaviorSubject.createDefault(initialState)
 
     protected val disposables = CompositeDisposable()
-    protected val intents = CompositeDisposable()
 
     @CallSuper
     open fun bindView(view: View) {
-        intents.clear()
-
-        intents += state
+        state
                 .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
                 .subscribe { view.render(it) }
     }
 
@@ -48,7 +47,6 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
     override fun onCleared() {
         super.onCleared()
         disposables.dispose()
-        intents.dispose()
     }
 
 }
