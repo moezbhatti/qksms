@@ -67,7 +67,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
     private var draft: String = ""
     private val attachments: Subject<List<Bitmap>> = BehaviorSubject.createDefault(ArrayList())
-    private val contacts: List<Contact> by lazy { contactsRepo.getContacts() }
+    private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Observable<List<Contact>>
     private val conversation: Observable<Conversation>
@@ -184,7 +184,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
         // that have already been selected
         intents += Observables
-                .combineLatest(view.queryChangedIntent, selectedContacts, { query, selectedContacts ->
+                .combineLatest(view.queryChangedIntent, contacts, selectedContacts, { query, contacts, selectedContacts ->
                     contacts
                             .filterNot { contact -> selectedContacts.contains(contact) }
                             .filter { contact -> contactFilter.filter(contact, query) }

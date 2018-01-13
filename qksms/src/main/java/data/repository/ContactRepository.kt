@@ -27,6 +27,8 @@ import data.model.Contact
 import data.model.PhoneNumber
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,21 +46,17 @@ class ContactRepository @Inject constructor(val context: Context) {
                 .map { id -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id) }
     }
 
-    fun getContacts(): List<Contact> {
+    fun getUnmanagedContacts(): Flowable<List<Contact>> {
         val realm = Realm.getDefaultInstance()
-        val results = realm.copyFromRealm(realm
-                .where(Contact::class.java)
-                .findAllSorted("name"))
-        realm.close()
-
-        return results
-    }
-
-    fun getContact(address: String): Flowable<Contact> {
-        return Flowable.fromPublisher<Contact> { emitter ->
-            getContactBlocking(address)?.let { emitter.onNext(it) }
-            emitter.onComplete()
-        }
+        return realm.where(Contact::class.java)
+                .sort("name")
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .map { realm.copyFromRealm(it) }
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
     }
 
     fun getContactBlocking(address: String): Contact? {
