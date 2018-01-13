@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ripple">
+
+    <presentation.common.widget.QkTextView
+        android:id="@+id/address"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="72dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:textSize="14sp"
+        app:textColor="secondary"
+        tools:text="(123) 456-7890"
+        tools:textColor="@color/textSecondary" />
+
+    <presentation.common.widget.QkTextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:textSize="14sp"
+        app:textColor="tertiary"
+        tools:text="Mobile"
+        tools:textColor="@color/textTertiary" />
+
+</LinearLayout>

@@ -20,15 +20,16 @@ package presentation.feature.compose
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import data.model.Contact
-import presentation.common.base.QkAdapter
-import presentation.common.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.contact_list_item.view.*
+import presentation.common.base.QkAdapter
+import presentation.common.base.QkViewHolder
 import javax.inject.Inject
 
 class ContactAdapter @Inject constructor(private val context: Context) : QkAdapter<Contact>() {
@@ -46,11 +47,34 @@ class ContactAdapter @Inject constructor(private val context: Context) : QkAdapt
         val contact = getItem(position)
         val view = holder.itemView
 
-        view.clicks().subscribe { contactSelected.onNext(contact) }
+        view.primary.clicks().subscribe { contactSelected.onNext(copyContact(contact, 0)) }
 
         view.avatar.contact = contact
         view.name.text = contact.name
-        view.address.text = contact.numbers.map { it.address }.toString()
+        view.address.text = contact.numbers.first()?.address ?: ""
+        view.type.text = contact.numbers.first()?.type ?: ""
+
+        view.addresses.removeAllViews()
+        contact.numbers.forEachIndexed { index, number ->
+            if (index != 0) {
+                val numberView = View.inflate(context, R.layout.contact_number_list_item, null)
+                numberView.clicks().subscribe { contactSelected.onNext(copyContact(contact, index)) }
+                numberView.address.text = number.address
+                numberView.type.text = number.type
+                view.addresses.addView(numberView)
+            }
+        }
+
+    }
+
+    /**
+     * Creates a copy of the contact with only one phone number, so that the chips
+     * view can still display the name/photo, and not get confused about which phone number to use
+     */
+    private fun copyContact(contact: Contact, numberIndex: Int) = Contact().apply {
+        lookupKey = contact.lookupKey
+        name = contact.name
+        numbers.add(contact.numbers[numberIndex])
     }
 
     override fun areItemsTheSame(old: Contact, new: Contact): Boolean {

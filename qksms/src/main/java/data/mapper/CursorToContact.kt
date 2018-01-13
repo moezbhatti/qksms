@@ -18,30 +18,32 @@
  */
 package data.mapper
 
+import android.content.Context
 import android.database.Cursor
-import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds.Phone.*
 import data.model.Contact
 import data.model.PhoneNumber
 import javax.inject.Inject
 
-class CursorToContact @Inject constructor() : Mapper<Cursor, Contact> {
+class CursorToContact @Inject constructor(private val context: Context) : Mapper<Cursor, Contact> {
 
     companion object {
-        val URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        val PROJECTION = arrayOf(
-                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY,
-                ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+        val URI = CONTENT_URI
+        val PROJECTION = arrayOf(LOOKUP_KEY, NUMBER, TYPE, DISPLAY_NAME)
 
-        val LOOKUP_KEY = 0
-        val NUMBER = 1
-        val DISPLAY_NAME = 2
+        val COLUMN_LOOKUP_KEY = 0
+        val COLUMN_NUMBER = 1
+        val COLUMN_TYPE = 2
+        val COLUMN_DISPLAY_NAME = 3
     }
 
     override fun map(from: Cursor) = Contact().apply {
-        lookupKey = from.getString(LOOKUP_KEY)
-        name = from.getString(DISPLAY_NAME)
-        numbers.add(PhoneNumber().apply { address = from.getString(NUMBER) })
+        lookupKey = from.getString(COLUMN_LOOKUP_KEY)
+        name = from.getString(COLUMN_DISPLAY_NAME)
+        numbers.add(PhoneNumber().apply {
+            address = from.getString(COLUMN_NUMBER)
+            type = context.getString(getTypeLabelResource(from.getInt(COLUMN_TYPE)))
+        })
         lastUpdate = System.currentTimeMillis()
     }
 

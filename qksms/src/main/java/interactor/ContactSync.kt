@@ -44,11 +44,11 @@ open class ContactSync @Inject constructor(
                 .groupBy { contact -> contact.lookupKey }
                 .flatMap { group -> group.toList().toFlowable() }
                 .map { contacts ->
-                    val numbers = contacts.map { it.numbers }.flatten()
-                    val contact = contacts.first()
-                    contact.numbers.clear()
-                    contact.numbers.addAll(numbers)
-                    contact
+                    val allNumbers = contacts.map { it.numbers }.flatten()
+                    contacts.first().apply {
+                        numbers.clear()
+                        numbers.addAll(allNumbers)
+                    }
                 }
                 .toList().toFlowable()
                 .doOnNext { contacts ->

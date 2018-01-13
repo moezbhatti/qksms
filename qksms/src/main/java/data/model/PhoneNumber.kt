@@ -23,6 +23,6 @@ import io.realm.RealmObject
 open class PhoneNumber : RealmObject() {
 
     var address: String = ""
-    var label: String = ""
+    var type: String = ""
 
 }
