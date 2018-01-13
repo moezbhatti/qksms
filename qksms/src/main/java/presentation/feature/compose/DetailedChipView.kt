@@ -23,12 +23,12 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.RelativeLayout
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
 import common.util.extensions.setBackgroundTint
 import data.model.Contact
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.contact_chip_detailed.view.*
 import javax.inject.Inject
 
@@ -36,8 +36,6 @@ import javax.inject.Inject
 class DetailedChipView(context: Context) : RelativeLayout(context) {
 
     @Inject lateinit var colors: Colors
-
-    private val disposables = CompositeDisposable()
 
     init {
         View.inflate(context, R.layout.contact_chip_detailed, this)
@@ -53,13 +51,10 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        disposables += colors.theme
-                .subscribe { color -> card.setBackgroundTint(color) }
-    }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        disposables.clear()
+        colors.theme
+                .autoDisposable(scope())
+                .subscribe { color -> card.setBackgroundTint(color) }
     }
 
     fun setContact(contact: Contact) {
