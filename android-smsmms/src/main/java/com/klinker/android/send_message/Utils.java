@@ -215,40 +215,22 @@ public class Utils {
      * @param enabled is whether to enable or disable data
      */
     public static void setMobileDataEnabled(Context context, boolean enabled) {
-        String methodName;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            try {
-                ConnectivityManager conman = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                Class conmanClass = Class.forName(conman.getClass().getName());
-                Field iConnectivityManagerField = conmanClass.getDeclaredField("mService");
-                iConnectivityManagerField.setAccessible(true);
-                Object iConnectivityManager = iConnectivityManagerField.get(conman);
-                Class iConnectivityManagerClass = Class.forName(iConnectivityManager.getClass().getName());
-                Method setMobileDataEnabledMethod = iConnectivityManagerClass.getDeclaredMethod("setMobileDataEnabled", Boolean.TYPE);
-                setMobileDataEnabledMethod.setAccessible(true);
-
-                setMobileDataEnabledMethod.invoke(iConnectivityManager, enabled);
-            } catch (Exception e) {
-                Log.e(TAG, "exception thrown", e);
-            }
-        } else {
-            // TODO find a better way to do this on lollipop!
-            // This will actually not work due to no permission for android.permission.MODIFY_PHONE_STATE, which
-            // is a system level permission and cannot be accessed for third party apps.
-            try {
-                TelephonyManager tm = (TelephonyManager) context
-                        .getSystemService(Context.TELEPHONY_SERVICE);
-                Class c = Class.forName(tm.getClass().getName());
-                Method m = c.getDeclaredMethod("getITelephony");
-                m.setAccessible(true);
-                Object telephonyService = m.invoke(tm);
-                c = Class.forName(telephonyService.getClass().getName());
-                m = c.getDeclaredMethod("setDataEnabled", Boolean.TYPE);
-                m.setAccessible(true);
-                m.invoke(telephonyService, enabled);
-            } catch (Exception e) {
-                Log.e(TAG, "error enabling data on lollipop", e);
-            }
+        // TODO find a better way to do this on lollipop!
+        // This will actually not work due to no permission for android.permission.MODIFY_PHONE_STATE, which
+        // is a system level permission and cannot be accessed for third party apps.
+        try {
+            TelephonyManager tm = (TelephonyManager) context
+                    .getSystemService(Context.TELEPHONY_SERVICE);
+            Class c = Class.forName(tm.getClass().getName());
+            Method m = c.getDeclaredMethod("getITelephony");
+            m.setAccessible(true);
+            Object telephonyService = m.invoke(tm);
+            c = Class.forName(telephonyService.getClass().getName());
+            m = c.getDeclaredMethod("setDataEnabled", Boolean.TYPE);
+            m.setAccessible(true);
+            m.invoke(telephonyService, enabled);
+        } catch (Exception e) {
+            Log.e(TAG, "error enabling data on lollipop", e);
         }
 
     }
@@ -309,8 +291,6 @@ public class Utils {
                     long id = cursor.getLong(0);
                     cursor.close();
                     return id;
-                } else {
-
                 }
             } finally {
                 cursor.close();
@@ -395,24 +375,13 @@ public class Utils {
     }
 
     /**
-     * Determines whether or not the user has Android 4.4 KitKat
-     * @return true if version code on device is >= kitkat
-     */
-    public static boolean hasKitKat() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-    }
-
-    /**
      * Determines whether or not the app is the default SMS app on a device
      * @param context
      * @return true if app is default
      */
     public static boolean isDefaultSmsApp(Context context) {
-        if (hasKitKat()) {
-            return context.getPackageName().equals(Telephony.Sms.getDefaultSmsPackage(context));
-        }
+        return context.getPackageName().equals(Telephony.Sms.getDefaultSmsPackage(context));
 
-        return true;
     }
 
     /**

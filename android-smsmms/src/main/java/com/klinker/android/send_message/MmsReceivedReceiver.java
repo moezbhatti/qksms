@@ -24,14 +24,12 @@ import android.os.AsyncTask;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.util.Log;
-
 import com.android.mms.service_alt.DownloadRequest;
 import com.android.mms.service_alt.MmsConfig;
 import com.android.mms.transaction.DownloadManager;
 import com.android.mms.transaction.HttpUtils;
 import com.android.mms.transaction.TransactionSettings;
 import com.android.mms.util.SendingProgressTokenManager;
-import com.google.android.mms.InvalidHeaderValueException;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.GenericPdu;
@@ -263,7 +261,7 @@ public class MmsReceivedReceiver extends BroadcastReceiver {
         @Override
         protected Void doInBackground(Void... params) {
             // Create the M-NotifyResp.ind
-            NotifyRespInd notifyRespInd = null;
+            NotifyRespInd notifyRespInd;
             try {
                 notifyRespInd = new NotifyRespInd(
                         PduHeaders.CURRENT_MMS_VERSION,
@@ -276,9 +274,7 @@ public class MmsReceivedReceiver extends BroadcastReceiver {
                 } else {
                     sendPdu(new PduComposer(mContext, notifyRespInd).make());
                 }
-            } catch (MmsException e) {
-                Log.e(TAG, "error", e);
-            } catch (IOException e) {
+            } catch (MmsException | IOException e) {
                 Log.e(TAG, "error", e);
             }
             return null;
@@ -302,7 +298,7 @@ public class MmsReceivedReceiver extends BroadcastReceiver {
             if (tranId != null) {
                 Log.v(TAG, "sending ACK to MMSC: " + mTransactionSettings.getMmscUrl());
                 // Create M-Acknowledge.ind
-                com.google.android.mms.pdu_alt.AcknowledgeInd acknowledgeInd = null;
+                com.google.android.mms.pdu_alt.AcknowledgeInd acknowledgeInd;
 
                 try {
                     acknowledgeInd = new com.google.android.mms.pdu_alt.AcknowledgeInd(
@@ -318,11 +314,7 @@ public class MmsReceivedReceiver extends BroadcastReceiver {
                     } else {
                         sendPdu(new PduComposer(mContext, acknowledgeInd).make());
                     }
-                } catch (InvalidHeaderValueException e) {
-                    Log.e(TAG, "error", e);
-                } catch (MmsException e) {
-                    Log.e(TAG, "error", e);
-                } catch (IOException e) {
+                } catch (IOException | MmsException e) {
                     Log.e(TAG, "error", e);
                 }
             }

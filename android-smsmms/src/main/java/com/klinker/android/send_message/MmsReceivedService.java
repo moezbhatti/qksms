@@ -5,10 +5,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
-
 import com.android.mms.service_alt.DownloadRequest;
 import com.android.mms.service_alt.MmsConfig;
 import com.android.mms.transaction.DownloadManager;
@@ -99,10 +97,6 @@ public class MmsReceivedService extends IntentService {
     }
 
     private static void handleHttpError(Context context, Intent intent) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return;
-        }
-        
         final int httpError = intent.getIntExtra(SmsManager.EXTRA_MMS_HTTP_STATUS, 0);
         if (httpError == 404 ||
                 httpError == 400) {
@@ -220,7 +214,7 @@ public class MmsReceivedService extends IntentService {
         @Override
         public void run() throws IOException {
             // Create the M-NotifyResp.ind
-            NotifyRespInd notifyRespInd = null;
+            NotifyRespInd notifyRespInd;
             try {
                 notifyRespInd = new NotifyRespInd(
                         PduHeaders.CURRENT_MMS_VERSION,
@@ -255,7 +249,7 @@ public class MmsReceivedService extends IntentService {
             byte[] tranId = mRetrieveConf.getTransactionId();
             if (tranId != null) {
                 // Create M-Acknowledge.ind
-                com.google.android.mms.pdu_alt.AcknowledgeInd acknowledgeInd = null;
+                com.google.android.mms.pdu_alt.AcknowledgeInd acknowledgeInd;
                 try {
                     acknowledgeInd = new com.google.android.mms.pdu_alt.AcknowledgeInd(
                             PduHeaders.CURRENT_MMS_VERSION, tranId);

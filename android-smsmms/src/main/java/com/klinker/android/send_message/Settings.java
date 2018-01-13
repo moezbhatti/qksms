@@ -16,9 +16,7 @@
 
 package com.klinker.android.send_message;
 
-import android.net.wifi.WifiInfo;
 import android.os.Build;
-
 import com.klinker.android.logger.Log;
 
 /**
