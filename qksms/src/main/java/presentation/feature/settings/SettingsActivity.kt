@@ -30,11 +30,12 @@ import android.support.v7.widget.RecyclerView
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.extensions.dpToPx
 import common.util.extensions.setVisible
 import io.reactivex.Observable
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
@@ -116,7 +117,8 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         vibration.setVisible(!supportsNotificationChannels)
         ringtone.setVisible(!supportsNotificationChannels)
 
-        disposables += colors.background
+        colors.background
+                .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
 
         // Listen to clicks for all of the preferences

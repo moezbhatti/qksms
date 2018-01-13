@@ -27,23 +27,21 @@ import android.view.View
 import android.widget.FrameLayout
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
 import common.util.GlideApp
 import common.util.extensions.setTint
 import data.model.Contact
-import presentation.common.Navigator
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.avatar_view.view.*
+import presentation.common.Navigator
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     @Inject lateinit var colors: Colors
     @Inject lateinit var navigator: Navigator
-
-    private val disposables = CompositeDisposable()
 
     var contact: Contact? = null
         set(value) {
@@ -61,24 +59,23 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        disposables += colors.theme
+        colors.theme
+                .autoDisposable(scope())
                 .subscribe { color -> background.setTint(color) }
 
-        disposables += colors.textPrimaryOnTheme
+        colors.textPrimaryOnTheme
+                .autoDisposable(scope())
                 .subscribe { color -> icon.setTint(color) }
 
-        disposables += clicks().subscribe {
-            contact?.lookupKey?.takeIf { it.isNotEmpty() }?.let { key ->
-                val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key)
-                ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,
-                        ContactsContract.QuickContact.MODE_MEDIUM, null)
-            }
-        }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        disposables.clear()
+        clicks()
+                .autoDisposable(scope())
+                .subscribe {
+                    contact?.lookupKey?.takeIf { it.isNotEmpty() }?.let { key ->
+                        val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key)
+                        ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,
+                                ContactsContract.QuickContact.MODE_MEDIUM, null)
+                    }
+                }
     }
 
     override fun onFinishInflate() {

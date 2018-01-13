@@ -23,13 +23,14 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
-import presentation.common.Navigator
-import presentation.common.base.QkActivity
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.setup_activity.*
+import presentation.common.Navigator
+import presentation.common.base.QkActivity
 import javax.inject.Inject
 
 class SetupActivity : QkActivity<SetupViewModel>(), SetupView {
@@ -50,7 +51,8 @@ class SetupActivity : QkActivity<SetupViewModel>(), SetupView {
         setContentView(R.layout.setup_activity)
         viewModel.bindView(this)
 
-        disposables += colors.background
+        colors.background
+                .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
     }
 

@@ -22,11 +22,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.EditText
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 /**
@@ -39,7 +39,6 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     @Inject lateinit var colors: Colors
 
-    private val disposables = CompositeDisposable()
     private var textColorObservable: Observable<Int>? = null
     private var textColorHintObservable: Observable<Int>? = null
 
@@ -69,19 +68,13 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        textColorObservable?.let { observable ->
-            disposables += observable.subscribe { color -> setTextColor(color) }
-        }
+        textColorObservable
+                ?.autoDisposable(scope())
+                ?.subscribe { color -> setTextColor(color) }
 
-        textColorHintObservable?.let { observable ->
-            disposables += observable.subscribe { color -> setHintTextColor(color) }
-        }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-
-        disposables.dispose()
+        textColorHintObservable
+                ?.autoDisposable(scope())
+                ?.subscribe { color -> setHintTextColor(color) }
     }
 
 }

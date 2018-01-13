@@ -19,19 +19,20 @@
 package presentation.common.base
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
-import presentation.common.Navigator
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Observables
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.toolbar.*
+import presentation.common.Navigator
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
@@ -45,20 +46,22 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
     }
 
     protected val menu: Subject<Menu> = BehaviorSubject.create()
-    protected var disposables = CompositeDisposable()
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onNewIntent(intent)
 
-        disposables += colors.appThemeResources
+        colors.appThemeResources
+                .autoDisposable(scope())
                 .subscribe { res -> setTheme(res) }
 
-        disposables += colors.statusBarIcons
+        colors.statusBarIcons
+                .autoDisposable(scope())
                 .subscribe { systemUiVisibility -> window.decorView.systemUiVisibility = systemUiVisibility }
 
-        disposables += colors.statusBar
+        colors.statusBar
+                .autoDisposable(scope())
                 .subscribe { color -> window.statusBarColor = color }
     }
 
@@ -66,7 +69,7 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         super.onPostCreate(savedInstanceState)
 
         // Update the colours of the menu items
-        disposables += Observables.combineLatest(menu, colors.theme, { menu, color ->
+        Observables.combineLatest(menu, colors.theme, { menu, color ->
             (0 until menu.size())
                     .map { position -> menu.getItem(position) }
                     .forEach { menuItem ->
@@ -75,23 +78,21 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
                             menuItem.icon = this
                         }
                     }
-        }).subscribe()
+        }).autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
 
-        disposables += colors.textTertiary
+        colors.textTertiary
                 .doOnNext { color -> toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(color) } }
                 .doOnNext { color -> toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(color) } }
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
-        disposables += colors.popupThemeResource
+        colors.popupThemeResource
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { res -> toolbar?.popupTheme = res }
 
-        disposables += colors.toolbarColor
+        colors.toolbarColor
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { color -> toolbar?.setBackgroundColor(color) }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.dispose()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

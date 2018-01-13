@@ -35,13 +35,14 @@ import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
@@ -118,9 +119,10 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         scheduled.isEnabled = false
         blocked.isEnabled = false
 
-        disposables += colors.background
+        colors.background
                 .doOnNext { color -> window.decorView.setBackgroundColor(color) }
                 .doOnNext { color -> drawer.setBackgroundColor(color) }
+                .autoDisposable(scope())
                 .subscribe()
 
         val states = arrayOf(
@@ -136,17 +138,19 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         }
 
         // Set the theme color tint to the progressbar and FAB
-        disposables += colors.theme
+        colors.theme
                 .doOnNext { color -> syncingProgress.indeterminateTintList = ColorStateList.valueOf(color) }
                 .doOnNext { color -> compose.setBackgroundTint(color) }
+                .autoDisposable(scope())
                 .subscribe()
 
         // Set the hamburger icon color
-        disposables += colors.textSecondary
+        colors.textSecondary
+                .autoDisposable(scope())
                 .subscribe { color -> toggle.drawerArrowDrawable.color = color }
 
         // Set the color for the drawer icons
-        disposables += Observables
+        Observables
                 .combineLatest(colors.theme, colors.textSecondary, { theme, textSecondary ->
                     ColorStateList(states, intArrayOf(theme, textSecondary))
                 })
@@ -156,14 +160,16 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 .doOnNext { tintList -> blockedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
                 .doOnNext { tintList -> helpIcon.imageTintList = tintList }
+                .autoDisposable(scope())
                 .subscribe()
 
         // Set the background highlight for the drawer options
-        disposables += colors.separator
+        colors.separator
                 .doOnNext { color -> inbox.background = rowBackground(color) }
                 .doOnNext { color -> archived.background = rowBackground(color) }
                 .doOnNext { color -> scheduled.background = rowBackground(color) }
                 .doOnNext { color -> blocked.background = rowBackground(color) }
+                .autoDisposable(scope())
                 .subscribe()
 
         conversationsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

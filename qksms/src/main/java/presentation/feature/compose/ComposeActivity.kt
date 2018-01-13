@@ -31,6 +31,8 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
@@ -40,7 +42,6 @@ import data.model.Contact
 import data.model.Message
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
@@ -132,27 +133,33 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
                 intArrayOf(android.R.attr.state_enabled),
                 intArrayOf(-android.R.attr.state_enabled))
 
-        disposables += Observables
+        Observables
                 .combineLatest(colors.textPrimaryOnTheme, colors.textTertiaryOnTheme, { primary, tertiary ->
                     ColorStateList(states, intArrayOf(primary, tertiary))
                 })
+                .autoDisposable(scope())
                 .subscribe { tintList -> sendIcon.imageTintList = tintList }
 
-        disposables += colors.theme
+        colors.theme
+                .autoDisposable(scope())
                 .subscribe { color -> send.setBackgroundTint(color) }
 
-        disposables += colors.textSecondary
+        colors.textSecondary
+                .autoDisposable(scope())
                 .subscribe { color -> attach.setTint(color) }
 
-        disposables += colors.bubble
+        colors.bubble
+                .autoDisposable(scope())
                 .subscribe { color -> messageBackground.setBackgroundTint(color) }
 
-        disposables += colors.background
+        colors.background
+                .autoDisposable(scope())
                 .subscribe { color -> contacts.setBackgroundColor(color) }
 
-        disposables += colors.composeBackground
+        colors.composeBackground
                 .doOnNext { color -> composeBar.setBackgroundTint(color) }
                 .doOnNext { color -> window.decorView.setBackgroundColor(color) }
+                .autoDisposable(scope())
                 .subscribe()
 
         window.callback = ComposeWindowCallback(window.callback, this)
