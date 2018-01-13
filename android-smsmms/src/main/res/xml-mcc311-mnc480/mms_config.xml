@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mms_config version="2">
+    <!-- In case of single segment M-Notification.ind, this indicates whether
+         TransactionID should be appended to URI or not. -->
+    <!-- TODO: check if this is correct for Passion -->
+    <bool name="enabledTransID">true</bool>
+
+    <!-- Send M-Acknowledge.ind and M-NotifyResp.ind to the URL received by the
+         M-Notification.ind (WAP-PUSH). -->
+    <bool name="enabledNotifyWapMMSC">true</bool>
+
+    <!-- Maximum message size in bytes for a MMS message -->
+    <int name="maxMessageSize">1258291</int>
+
+    <!-- UAProf parameter tag name -->
+    <string name="uaProfTagName">Profile</string>
+
+    <!-- Maximum number of recipients allowed per message. Use a value of -1
+         to indicate no limit. -->
+    <int name="recipientLimit">20</int>
+
+    <!-- Additional http parameters used in MMS http request.
+         Parameters are seperated by '|'. Optional. -->
+    <string name="httpParams">x-up-calling-line-id: 1##LINE1NOCOUNTRYCODE##|X-VzW-MDN: 1##LINE1NOCOUNTRYCODE##</string>
+
+    <!-- Maximum height for an attached image -->
+    <int name="maxImageHeight">1944</int>
+
+    <!-- Maximum width for an attached image -->
+    <int name="maxImageWidth">2592</int>
+
+    <!-- Email Gateway Number -->
+    <!-- TODO: check if this is correct for Passion -->
+    <string name="emailGatewayNumber">6245</string>
+
+    <!-- enable alias -->
+    <bool name="aliasEnabled">true</bool>
+
+    <!-- alias rule: min chars -->
+    <int name="aliasMinChars">2</int>
+
+    <!-- alias rule: max chars -->
+    <int name="aliasMaxChars">48</int>
+
+    <!-- disable the option to attach an audio attachment to an Mms message. Currently Verizon
+         doesn't support OGG files and the only audio picker in the system allowed for picking
+         ringtones. All of our ringtones are OGG files so it doesn't make sense to allow a user
+         to select an audio file that eventually can't be handled. Therefore, the ability
+         to select a ringtone to send is disabled. -->
+    <bool name="allowAttachAudio">false</bool>
+
+    <!-- Hide the MMS read reports UI in settings -->
+    <bool name="enableMMSReadReports">false</bool>
+
+    <!-- Maximum length in chars of mms subject field -->
+    <int name="maxSubjectLength">80</int>
+
+    <!-- If true, The text message over 160 characters will be sent in multi part.
+         If false, The text message over 160 characters will be sent
+         via multi media message. -->
+    <bool name="enableMultipartSMS">true</bool>
+
+    <!-- If enableMultipartSMS is true and smsToMmsTextThreshold > 1, then multi-part SMS messages
+         will be converted into a single mms message. For example, if the mms_config.xml file
+         specifies <int name="smsToMmsTextThreshold">7</int>, then on the 8th sms segment, the
+         message will be converted to an mms. -->
+    <int name="smsToMmsTextThreshold">7</int>
+</mms_config>
+

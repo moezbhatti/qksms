@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2009 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Version History
+        version 1 - initial version.
+        version 2 - added recipientLimit.
+        version 3 - added min/max recycler values.
+        version 4 - added sms to mms text threshold.
+-->
+
+<mms_config version="4">
+    <!-- Flag indicating whether MMS should be enabled -->
+    <bool name="enabledMMS">true</bool>
+
+    <!-- Maximum message size in bytes for a MMS message -->
+    <int name="maxMessageSize">1048576</int>
+
+    <!-- Maximum height for an attached image -->
+    <int name="maxImageHeight">2432</int>
+
+    <!-- Maximum width for an attached image -->
+    <int name="maxImageWidth">4320</int>
+
+    <!-- Maximum number of SMS message to save per thread before auto-delete kicks in.
+         This is the default value. -->
+    <int name="defaultSMSMessagesPerThread">500</int>
+
+    <!-- Maximum number of MMS message to save per thread before auto-delete kicks in.
+         This is the default value. -->
+    <int name="defaultMMSMessagesPerThread">50</int>
+
+    <!-- Minimum value for the number of messages kept per conversation. The user can never
+         set the limit below this value. -->
+    <int name="minMessageCountPerThread">10</int>
+
+    <!-- Maximum value for the number of messages kept per conversation. The user can never
+         set the limit above this value. -->
+    <int name="maxMessageCountPerThread">5000</int>
+
+    <!-- Maximum number of recipients allowed per message. Use a value of -1
+         to indicate no limit. -->
+    <int name="recipientLimit">20</int>
+
+    <!-- If true, The text message over 160 characters will be sent in multi part.
+         If false, The text message over 160 characters will be sent
+         via multi media message. -->
+    <bool name="enableMultipartSMS">true</bool>
+
+    <!-- If enableMultipartSMS is true and smsToMmsTextThreshold > 1, then multi-part SMS messages
+         will be converted into a single mms message. For example, if the mms_config.xml file
+         specifies <int name="smsToMmsTextThreshold">7</int>, then on the 8th sms segment, the
+         message will be converted to an mms. -->
+    <int name="smsToMmsTextThreshold">1</int>
+
+    <!-- If true, The mms support slide duration.
+         If false, The mms does not support slide duration and we have to
+         set duration value. -->
+    <bool name="enableSlideDuration">true</bool>
+
+    <!-- Maximum length for message text. Use a value of -1
+         to indicate default value -->
+    <int name="maxMessageTextSize">-1</int>
+
+    <!-- Maximum length in chars of mms subject field -->
+    <int name="maxSubjectLength">80</int>
+
+     <!-- Reference for additional http parameters used in MMS http request.
+          Parameters are seperated by '|'. Optional.  -->
+     <string name="httpParams">X-MDN: ##LINE1##</string>
+</mms_config>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2009 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Version History
+        version 1 - initial version.
+        version 2 - added recipientLimit.
+        version 3 - added min/max recycler values.
+        version 4 - added sms to mms text threshold.
+-->
+
+<mms_config version="4">
+    <!-- Flag indicating whether MMS should be enabled -->
+    <bool name="enabledMMS">true</bool>
+
+    <!-- Maximum message size in bytes for a MMS message -->
+    <int name="maxMessageSize">307200</int>
+
+    <!-- Maximum height for an attached image -->
+    <int name="maxImageHeight">480</int>
+
+    <!-- Maximum width for an attached image -->
+    <int name="maxImageWidth">640</int>
+
+    <!-- Maximum number of recipients allowed per message. Use a value of -1
+         to indicate no limit. -->
+    <int name="recipientLimit">-1</int>
+
+    <!-- If true, The text message over 160 characters will be sent in multi part.
+         If false, The text message over 160 characters will be sent
+         via multi media message. -->
+    <bool name="enableMultipartSMS">true</bool>
+
+    <!-- If enableMultipartSMS is true and smsToMmsTextThreshold > 1, then multi-part SMS messages
+         will be converted into a single mms message. For example, if the mms_config.xml file
+         specifies <int name="smsToMmsTextThreshold">7</int>, then on the 8th sms segment, the
+         message will be converted to an mms. -->
+    <int name="smsToMmsTextThreshold">-1</int>
+
+    <!-- Maximum length for message text. Use a value of -1
+         to indicate default value -->
+    <int name="maxMessageTextSize">-1</int>
+
+    <!--
+         User-Agent and UA Profile URL should be obtained via system API since Kitkat.
+         The following values provide a fallback in the rare case that system API
+         returns empty.
+    -->
+    <!-- User-Agent parameter used in MMS http request -->
+    <string name="userAgent">Android Messaging</string>
+
+    <!-- UAProf URL -->
+    <string name="uaProfUrl">http://www.gstatic.com/android/hangouts/hangouts_mms_ua_profile.xml</string>
+
+
+    <!-- UAProf parameter tag name -->
+    <!-- this is default to "x-wap-profile". Override if necessary. Optional -->
+    <!--
+    <string name="uaProfTagName">x-wap-profile</string>
+    -->
+
+    <!-- Reference for additional http parameters used in MMS http request.
+         Parameters are seperated by '|'. Optional.
+    -->
+    <!--
+    <string name="httpParams">
+        x-up-calling-line-id: ##LINE1##|x-carrier-magic: http://magic.google.com
+    </string>
+    -->
+
+    <!-- Suffix to the NAI header (encoded together with base64) -->
+    <!--
+    <string name="naiSuffix"></string>
+    -->
+</mms_config>

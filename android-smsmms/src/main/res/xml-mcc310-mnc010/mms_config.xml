@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<mms_config version="4">
+    <!-- Maximum message size in bytes for a MMS message -->
+    <int name="maxMessageSize">1048576</int>
+
+    <!-- Maximum height for an attached image -->
+    <int name="maxImageHeight">1944</int>
+
+    <!-- Maximum width for an attached image -->
+    <int name="maxImageWidth">2592</int>
+
+    <!-- If true, The text message over 160 characters will be sent in multi part.
+         If false, The text message over 160 characters will be sent
+         via multi media message or separate, independent SMS messages,
+         dependent on sendMultipartSMSAsSeparateMessages value. -->
+    <bool name="enableMultipartSMS">false</bool>
+
+    <!-- If this is true, The text message over 160 characters will be sent in separate,
+         independent messages after split into 160 character parts -->
+    <bool name="sendMultipartSmsAsSeparateMessages">true</bool>
+
+    <!-- If true, The mms support slide duration.
+         If false, The mms does not support slide duration and we have to
+         set duration value. -->
+    <bool name="enableSlideDuration">false</bool>
+
+    <!-- Maximum length for message text. Use a value of -1
+         to indicate default value -->
+    <int name="maxMessageTextSize">-1</int>
+
+    <bool name="enableMMSReadReports">false</bool>
+
+    <bool name="enableSMSDeliveryReports">false</bool>
+
+    <bool name="enableMMSDeliveryReports">false</bool>
+
+    <!-- If true, need to read content_disposition field of an MMS part -->
+    <bool name="supportMmsContentDisposition">false</bool>
+</mms_config>
+

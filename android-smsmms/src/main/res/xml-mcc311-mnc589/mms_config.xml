@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<mms_config version="2">
+    <!-- In case of single segment M-Notification.ind, this indicates whether
+         TransactionID should be appended to URI or not. -->
+    <bool name="enabledTransID">true</bool>
+
+    <!-- Send M-Acknowledge.ind and M-NotifyResp.ind to the URL received by the
+         M-Notification.ind (WAP-PUSH). -->
+    <bool name="enabledNotifyWapMMSC">true</bool>
+
+    <!-- Maximum message size in bytes for a MMS message -->
+    <int name="maxMessageSize">1048576</int>
+
+    <!-- UAProf parameter tag name -->
+    <string name="uaProfTagName">x-wap-profile</string>
+
+    <!-- Maximum number of recipients allowed per message. Use a value of -1
+         to indicate no limit. -->
+    <int name="recipientLimit">20</int>
+
+    <!-- Additional http parameters used in MMS http request.
+         Parameters are seperated by '|'. Optional. -->
+    <string name="httpParams">x-vzw-mdn: 1##LINE1NOCOUNTRYCODE##</string>
+
+    <!-- Maximum height for an attached image -->
+    <int name="maxImageHeight">1944</int>
+
+    <!-- Maximum width for an attached image -->
+    <int name="maxImageWidth">2592</int>
+
+    <!-- If true, The text message over 160 characters will be sent in multi part.
+         If false, The text message over 160 characters will be sent
+         via multi media message or separate, independent SMS messages,
+         dependent on sendMultipartSMSAsSeparateMessages value. -->
+    <bool name="enableMultipartSMS">false</bool>
+
+    <!-- Email Gateway Number -->
+    <!-- TODO: check if this is correct for Passion -->
+    <string name="emailGatewayNumber">6245</string>
+
+    <bool name="allowAttachAudio">true</bool>
+
+    <!-- Hide the MMS read reports UI in settings -->
+    <bool name="enableMMSReadReports">false</bool>
+
+    <!-- Maximum length in chars of mms subject field -->
+    <int name="maxSubjectLength">80</int>
+
+</mms_config>
+

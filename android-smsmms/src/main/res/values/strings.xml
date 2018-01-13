@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Copyright (C) 2013 Jacob Klinker
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <string name="message_delivered">Message Delivered</string>
+    <string name="message_not_delivered">Message Not Delivered</string>
+    <string name="error">Error</string>
+    <string name="invalid_destination">Invalid destination address.</string>
+    <string name="service_not_activated">Service not activated on network.</string>
+    <string name="service_message_not_found">Message expired or not available.</string>
+    <string name="service_network_problem">Couldn\'t send due to network problem.</string>
+    <string name="message_queued">Currently can\'t send your message. It will be sent when the service becomes available.</string>
+    <string name="download_later">Can\'t download right now. Try again later.</string>
+    <string name="no_apn">No APN specified for the app, you need to set it up in settings!</string>
+    <string name="no_subject">(No subject)</string>
+    <string name="unknown_sender">Unknown sender</string>
+    <string name="dl_failure_notification">Couldn\'t download message <xliff:g id="subject">%1$s</xliff:g> from <xliff:g id="from">%2$s</xliff:g>.</string>
+
+    <string name="auto_select_multiple_apns">Multiple different APNs were found for your carrier, which
+        will be listed after clicking the message below. If one of the following doesn\'t work for you, try another
+        and one of them should work correctly!\n\nRemember you can always get to this APN selection by going into
+        Settings, going to the MMS Settings page, and then selecting the \"Automatically Select APNs\" option.\n\nYou
+        also have the option under MMS settings to select from a list of preset APNs that could work instead of
+        these that have been automatically found.</string>
+    <string name="ok">OK</string>
+    <string name="auto_select_apn">Automatically Select APNs</string>
+    <string name="auto_select_failed">Auto-select APNs has failed, try picking your carrier from the preset list instead
+        in MMS settings</string>
+    <string name="write_settings_permission">Starting with Android Marshmallow, multimedia messaging applications can no longer directly request
+        to send messages over your mobile data, which is a requirement for sending things like pictures.\n\nTo be able to send messages, the app
+        will need the write settings permission, which must be explicitly granted. Without this, multimedia messages will fail to send.</string>
+
+</resources>

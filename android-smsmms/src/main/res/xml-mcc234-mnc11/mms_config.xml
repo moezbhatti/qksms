@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Version History
+        version 1 - initial version.
+-->
+
+<mms_config version="1">
+    <!-- If enableMultipartSMS is true and smsToMmsTextThreshold > 1, then multi-part SMS messages
+         will be converted into a single mms message. For example, if the mms_config.xml file
+         specifies <int name="smsToMmsTextThreshold">7</int>, then on the 8th sms segment, the
+         message will be converted to an mms. -->
+    <int name="smsToMmsTextThreshold">10</int>
+</mms_config>
