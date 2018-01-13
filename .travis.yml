@@ -9,6 +9,7 @@ env:
     - EMULATOR_TAG=default               # Possible values are default, google_apis, android-tv, android-wear, android-wear-cn
     - EMULATOR_ABI=armeabi-v7a           # Default is armeabi-v7a, possible options are: x86, x86_64, mips, arm64-v8a, armeabi-v7a. Note: check commit comment
     - ANDROID_BUILD_TOOLS_VERSION=27.0.2 # Match build-tools version used in build.gradle
+    - EMULATOR="system-images;android-${EMULATOR_API_LEVEL};${EMULATOR_TAG};${EMULATOR_ABI}" # Used to install/create emulator
 
 android:
   components:
@@ -32,17 +33,17 @@ before_install:
   - ls -la $HOME/**/*
 
   # List and delete unnecessary components to free space
-  - sdkmanager --list || true # Print out package list for debug purposes
+  - sdkmanager --list || true                                     # Print out package list for debug purposes
   - sdkmanager --uninstall "extras;google;google_play_services"
-  - yes | sdkmanager "tools" # Update tools
-  - yes | sdkmanager "platforms;android-${EMULATOR_API_LEVEL}"                                     # Android platform required by emulator
-  - yes | sdkmanager "platforms;android-${COMPILE_API_LEVEL}"                                      # Android platform required by compiler
-  - yes | sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"                                  # Android build tools
-  - yes | sdkmanager "system-images;android-${EMULATOR_API_LEVEL};${EMULATOR_TAG};${EMULATOR_ABI}" # Install emulator system image
-  - sdkmanager --list || true # Print out package list for debug purposes
+  - yes | sdkmanager "tools"                                      # Update tools
+  - yes | sdkmanager "platforms;android-${EMULATOR_API_LEVEL}"    # Android platform required by emulator
+  - yes | sdkmanager "platforms;android-${COMPILE_API_LEVEL}"     # Android platform required by compiler
+  - yes | sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" # Android build tools
+  - yes | sdkmanager "${EMULATOR}" # Install emulator system image
+  - sdkmanager --list || true                                     # Print out package list for debug purposes
 
   # emulator instance
-  - echo no | android create avd --force -n test -t android-${EMULATOR_API_LEVEL} --abi ${EMULATOR_ABI}
+  - echo no | android create avd --force -n test -k "${EMULATOR}"
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
