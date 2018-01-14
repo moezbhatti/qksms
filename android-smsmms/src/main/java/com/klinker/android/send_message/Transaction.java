@@ -75,9 +75,7 @@ public class Transaction {
     public static Settings settings;
     private Context context;
 
-    private Intent explicitSentSmsReceiver;
     private Intent explicitSentMmsReceiver;
-    private Intent explicitDeliveredSmsReceiver;
 
     private boolean saveMessage = true;
 
@@ -142,7 +140,10 @@ public class Transaction {
         //
         // then, send as MMS, else send as Voice or SMS
         if (checkMMS(message)) {
-            try { Looper.prepare(); } catch (Exception e) { }
+            try {
+                Looper.prepare();
+            } catch (Exception e) {
+            }
             RateController.init(context);
             DownloadManager.init(context);
             sendMmsMessage(message.getText(), message.getAddresses(), message.getImages(), message.getImageNames(), message.getParts(), message.getSubject());
@@ -194,27 +195,17 @@ public class Transaction {
                 Log.v("send_transaction", "message id: " + messageId);
 
                 // set up sent and delivered pending intents to be used with message request
-                Intent sentIntent;
-                if (explicitSentSmsReceiver == null) {
-                    sentIntent = new Intent(SMS_SENT);
-                    BroadcastUtils.addClassName(context, sentIntent, SMS_SENT);
-                } else {
-                    sentIntent = explicitSentSmsReceiver;
-                }
+                Intent sentIntent = new Intent(SMS_SENT);
+                BroadcastUtils.addClassName(context, sentIntent, SMS_SENT);
 
-                sentIntent.putExtra("message_uri", messageUri == null ? "" : messageUri.toString());
+                sentIntent.putExtra("message_uri", messageUri.toString());
                 PendingIntent sentPI = PendingIntent.getBroadcast(
                         context, messageId, sentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                Intent deliveredIntent;
-                if (explicitDeliveredSmsReceiver == null) {
-                    deliveredIntent = new Intent(SMS_DELIVERED);
-                    BroadcastUtils.addClassName(context, deliveredIntent, SMS_DELIVERED);
-                } else {
-                    deliveredIntent = explicitDeliveredSmsReceiver;
-                }
+                Intent deliveredIntent = new Intent(SMS_DELIVERED);
+                BroadcastUtils.addClassName(context, deliveredIntent, SMS_DELIVERED);
 
-                deliveredIntent.putExtra("message_uri", messageUri == null ? "" : messageUri.toString());
+                deliveredIntent.putExtra("message_uri", messageUri.toString());
                 PendingIntent deliveredPI = PendingIntent.getBroadcast(
                         context, messageId, deliveredIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -314,7 +305,8 @@ public class Transaction {
             public void run() {
                 try {
                     Thread.sleep(delay);
-                } catch (Exception e) { }
+                } catch (Exception e) {
+                }
 
                 if (checkIfMessageExistsAfterDelay(messageUri)) {
                     Log.v("send_transaction", "message sent after delay");
@@ -331,7 +323,7 @@ public class Transaction {
     }
 
     private boolean checkIfMessageExistsAfterDelay(Uri messageUti) {
-        Cursor query = context.getContentResolver().query(messageUti, new String[] {"_id"}, null, null, null);
+        Cursor query = context.getContentResolver().query(messageUti, new String[]{"_id"}, null, null, null);
         if (query != null && query.moveToFirst()) {
             query.close();
             return true;
@@ -394,9 +386,8 @@ public class Transaction {
         sendMmsThroughSystem(context, subject, data, addresses, explicitSentMmsReceiver);
     }
 
-    public static MessageInfo getBytes(Context context, boolean saveMessage, String[] recipients,
-                                       MMSPart[] parts, String subject)
-                throws MmsException {
+    public static MessageInfo getBytes(Context context, boolean saveMessage, String[] recipients, MMSPart[] parts,
+                                       String subject) throws MmsException {
         final SendReq sendRequest = new SendReq();
 
         // create send request addresses
@@ -499,7 +490,7 @@ public class Transaction {
         }
 
         try {
-            Cursor query = context.getContentResolver().query(info.location, new String[] {"thread_id"}, null, null, null);
+            Cursor query = context.getContentResolver().query(info.location, new String[]{"thread_id"}, null, null, null);
             if (query != null && query.moveToFirst()) {
                 info.token = query.getLong(query.getColumnIndex("thread_id"));
                 query.close();
@@ -518,8 +509,8 @@ public class Transaction {
     public static final long DEFAULT_EXPIRY_TIME = 7 * 24 * 60 * 60;
     public static final int DEFAULT_PRIORITY = PduHeaders.PRIORITY_NORMAL;
 
-    private static void sendMmsThroughSystem(Context context, String subject, List<MMSPart> parts,
-                                             String[] addresses, Intent explicitSentMmsReceiver) {
+    private static void sendMmsThroughSystem(Context context, String subject, List<MMSPart> parts, String[] addresses,
+                                             Intent explicitSentMmsReceiver) {
         try {
             final String fileName = "send." + String.valueOf(Math.abs(new Random().nextLong())) + ".dat";
             File mSendFile = new File(context.getCacheDir(), fileName);
@@ -640,7 +631,8 @@ public class Transaction {
             req.setDeliveryReport(PduHeaders.VALUE_NO);
             // Read report
             req.setReadReport(PduHeaders.VALUE_NO);
-        } catch (InvalidHeaderValueException e) {}
+        } catch (InvalidHeaderValueException e) {
+        }
 
         return req;
     }
