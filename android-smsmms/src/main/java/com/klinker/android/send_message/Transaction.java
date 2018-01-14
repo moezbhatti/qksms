@@ -75,8 +75,6 @@ public class Transaction {
     public static Settings settings;
     private Context context;
 
-    private Intent explicitSentMmsReceiver;
-
     private boolean saveMessage = true;
 
     public String SMS_SENT = ".SMS_SENT";
@@ -381,9 +379,8 @@ public class Transaction {
             data.add(part);
         }
 
-        Log.v(TAG, "using lollipop method for sending sms");
-        Log.v(TAG, "using system method for sending");
-        sendMmsThroughSystem(context, subject, data, addresses, explicitSentMmsReceiver);
+        Log.v(TAG, "sending mms");
+        sendMmsThroughSystem(context, subject, data, addresses);
     }
 
     public static MessageInfo getBytes(Context context, boolean saveMessage, String[] recipients, MMSPart[] parts,
@@ -509,8 +506,7 @@ public class Transaction {
     public static final long DEFAULT_EXPIRY_TIME = 7 * 24 * 60 * 60;
     public static final int DEFAULT_PRIORITY = PduHeaders.PRIORITY_NORMAL;
 
-    private static void sendMmsThroughSystem(Context context, String subject, List<MMSPart> parts, String[] addresses,
-                                             Intent explicitSentMmsReceiver) {
+    private static void sendMmsThroughSystem(Context context, String subject, List<MMSPart> parts, String[] addresses) {
         try {
             final String fileName = "send." + String.valueOf(Math.abs(new Random().nextLong())) + ".dat";
             File mSendFile = new File(context.getCacheDir(), fileName);
@@ -520,13 +516,8 @@ public class Transaction {
             Uri messageUri = persister.persist(sendReq, Uri.parse("content://mms/outbox"),
                     true, true, null);
 
-            Intent intent;
-            if (explicitSentMmsReceiver == null) {
-                intent = new Intent(MmsSentReceiver.MMS_SENT);
-                BroadcastUtils.addClassName(context, intent, MmsSentReceiver.MMS_SENT);
-            } else {
-                intent = explicitSentMmsReceiver;
-            }
+            Intent intent = new Intent(MmsSentReceiver.MMS_SENT);
+            BroadcastUtils.addClassName(context, intent, MmsSentReceiver.MMS_SENT);
 
             intent.putExtra(MmsSentReceiver.EXTRA_CONTENT_URI, messageUri.toString());
             intent.putExtra(MmsSentReceiver.EXTRA_FILE_PATH, mSendFile.getPath());
