@@ -682,8 +682,7 @@ public class PduPersister {
         return pdu;
     }
 
-    private void persistAddress(
-            long msgId, int type, EncodedStringValue[] array) {
+    private void persistAddress(long msgId, int type, EncodedStringValue[] array) {
         ContentValues values = new ContentValues(3);
 
         for (EncodedStringValue addr : array) {
@@ -1416,9 +1415,6 @@ public class PduPersister {
         // while saving the parts.
         long dummyId = System.currentTimeMillis(); // Dummy ID of the msg.
 
-        // Figure out if this PDU is a text-only message
-        boolean textOnly = true;
-
         // Sum up the total message size
         int messageSize = 0;
 
@@ -1427,32 +1423,14 @@ public class PduPersister {
             body = ((MultimediaMessagePdu) pdu).getBody();
             // Start saving parts if necessary.
             if (body != null) {
-                int partsNum = body.getPartsNum();
-                if (partsNum > 2) {
-                    // For a text-only message there will be two parts: 1-the SMIL, 2-the text.
-                    // Down a few lines below we're checking to make sure we've only got SMIL or
-                    // text. We also have to check then we don't have more than two parts.
-                    // Otherwise, a slideshow with two text slides would be marked as textOnly.
-                    textOnly = false;
-                }
-                for (int i = 0; i < partsNum; i++) {
+                for (int i = 0; i < body.getPartsNum(); i++) {
                     PduPart part = body.getPart(i);
                     messageSize += part.getDataLength();
                     persistPart(part, dummyId, preOpenedFiles);
-
-                    // If we've got anything besides text/plain or SMIL part, then we've got
-                    // an mms message with some other type of attachment.
-                    String contentType = getPartContentType(part);
-                    if (contentType != null && !ContentType.APP_SMIL.equals(contentType)
-                            && !ContentType.TEXT_PLAIN.equals(contentType)) {
-                        textOnly = false;
-                    }
                 }
             }
         }
-        // Record whether this mms message is a simple plain text or not. This is a hint for the
-        // UI.
-        // values.put(Mms.TEXT_ONLY, textOnly ? 1 : 0);
+
         // The message-size might already have been inserted when parsing the
         // PDU header. If not, then we insert the message size as well.
         if (values.getAsInteger(Mms.MESSAGE_SIZE) == null) {

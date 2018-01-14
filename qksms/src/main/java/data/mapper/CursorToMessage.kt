@@ -78,11 +78,7 @@ class CursorToMessage @Inject constructor(
                     mmsStatus = cursor.getInt(columnsMap.mmsStatus)
                     subject = cursor.getString(columnsMap.mmsSubject) ?: ""
                     textContentType = ""
-
-                    attachmentType = when (cursor.getInt(columnsMap.mmsTextOnly)) {
-                        0 -> Message.AttachmentType.NOT_LOADED
-                        else -> Message.AttachmentType.TEXT
-                    }
+                    attachmentType =  Message.AttachmentType.NOT_LOADED
                 }
             }
         }
@@ -135,8 +131,7 @@ class CursorToMessage @Inject constructor(
                 Mms.DELIVERY_REPORT,
                 Mms.READ_REPORT,
                 MmsSms.PendingMessages.ERROR_TYPE,
-                Mms.STATUS,
-                Mms.TEXT_ONLY)
+                Mms.STATUS)
     }
 
     class MessageColumns(private val cursor: Cursor) {
@@ -166,7 +161,6 @@ class CursorToMessage @Inject constructor(
         val mmsReadReport by lazy { getColumnIndex(Mms.READ_REPORT) }
         val mmsErrorType by lazy { getColumnIndex(MmsSms.PendingMessages.ERROR_TYPE) }
         val mmsStatus by lazy { getColumnIndex(Mms.STATUS) }
-        val mmsTextOnly by lazy { getColumnIndex(Mms.TEXT_ONLY) }
 
         private fun getColumnIndex(columnsName: String) = try {
             cursor.getColumnIndexOrThrow(columnsName)
