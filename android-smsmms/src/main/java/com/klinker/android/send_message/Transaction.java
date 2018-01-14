@@ -678,12 +678,6 @@ public class Transaction {
             recipients.addAll(Arrays.asList(to));
             long thread_id = Utils.getOrCreateThreadId(context, recipients);
 
-            // Create a dummy sms
-            ContentValues dummyValues = new ContentValues();
-            dummyValues.put("thread_id", thread_id);
-            dummyValues.put("body", " ");
-            Uri dummySms = context.getContentResolver().insert(Uri.parse("content://sms/sent"), dummyValues);
-
             // Create a new message entry
             long now = System.currentTimeMillis();
             ContentValues mmsValues = new ContentValues();
@@ -730,9 +724,6 @@ public class Transaction {
             }
 
             //res = Uri.parse(destUri + "/" + messageId);
-
-            // Delete dummy sms
-            context.getContentResolver().delete(dummySms, null, null);
 
             return res;
         } catch (Exception e) {
