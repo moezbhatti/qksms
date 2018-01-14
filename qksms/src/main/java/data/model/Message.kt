@@ -139,7 +139,7 @@ open class Message : RealmObject() {
     }
 
     fun isFailedMessage(): Boolean {
-        val isFailedMms = isMms() && errorType >= MmsSms.ERR_TYPE_GENERIC_PERMANENT
+        val isFailedMms = isMms() && (errorType >= MmsSms.ERR_TYPE_GENERIC_PERMANENT || boxId == Mms.MESSAGE_BOX_FAILED)
         val isFailedSms = isSms() && boxId == Sms.MESSAGE_TYPE_FAILED
         return isFailedMms || isFailedSms
     }

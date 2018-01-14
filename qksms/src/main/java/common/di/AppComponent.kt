@@ -53,6 +53,7 @@ interface AppComponent {
     fun inject(receiver: MarkReadReceiver)
     fun inject(receiver: MmsReceivedReceiver)
     fun inject(receiver: MmsSentReceiver)
+    fun inject(receiver: MmsUpdatedReceiver)
     fun inject(receiver: RemoteMessagingReceiver)
 
     fun inject(view: AvatarView)

@@ -134,7 +134,6 @@ class MessagesAdapter @Inject constructor(
         bindMmsPreview(view, position)
         bindStatus(view, position)
         bindGrouping(view, position)
-        view.messageBackground.invalidateOutline()
     }
 
     private fun bindMmsPreview(view: View, position: Int) {

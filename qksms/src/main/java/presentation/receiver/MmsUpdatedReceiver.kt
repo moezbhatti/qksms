@@ -18,25 +18,27 @@
  */
 package presentation.receiver
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.klinker.android.send_message.MmsSentReceiver
 import common.di.appComponent
 import interactor.SyncMessage
 import javax.inject.Inject
 
-class MmsSentReceiver : MmsSentReceiver() {
+class MmsUpdatedReceiver : BroadcastReceiver() {
+
+    companion object {
+        const val URI = "uri"
+    }
 
     @Inject lateinit var syncMessage: SyncMessage
 
     override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
         appComponent.inject(this)
-
-        Uri.parse(intent.getStringExtra("content_uri"))?.let { uri ->
+        intent.getStringExtra(URI)?.let { uriString ->
             val pendingResult = goAsync()
-            syncMessage.execute(uri) { pendingResult.finish() }
+            syncMessage.execute(Uri.parse(uriString)) { pendingResult.finish() }
         }
     }
 

@@ -18,6 +18,7 @@
  */
 package common.util
 
+import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
@@ -107,14 +108,28 @@ class SyncManager @Inject constructor(
     }
 
     fun syncMessage(uri: Uri): Flowable<Message> {
-        val id = uri.lastPathSegment
-        val isMms = uri.toString().contains("mms")
+        val id = ContentUris.parseId(uri)
+        val type = when {
+            uri.toString().contains("mms") -> "mms"
+            uri.toString().contains("sms") -> "sms"
+            else -> return Flowable.empty()
+        }
+
+        // Check if the message already exists, so we can reuse the id
+        val existingId = Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+            realm.where(Message::class.java)
+                    .equalTo("type", type)
+                    .equalTo("contentId", id)
+                    .findFirst()
+                    ?.id
+        }
 
         // The uri might be something like content://mms/inbox/id
         // The box might change though, so we should just use the mms/id uri
-        val stableUri = when(isMms) {
-            true -> Uri.withAppendedPath(Telephony.Mms.CONTENT_URI, id)
-            false -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id)
+        val stableUri = when (type) {
+            "mms" -> ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, id)
+            else -> ContentUris.withAppendedId(Telephony.Sms.CONTENT_URI, id)
         }
 
         val cursor = context.contentResolver.query(stableUri, null, null, null, null)
@@ -123,6 +138,10 @@ class SyncManager @Inject constructor(
         // Map the cursor to a message
         return cursor.asFlowable()
                 .map { cursorToMessage.map(Pair(it, columnsMap)) }
+                .map { message ->
+                    existingId?.let { message.id = it }
+                    message
+                }
                 .doOnNext { message -> messageRepo.getOrCreateConversation(message.threadId) }
                 .doOnNext { message -> message.insertOrUpdate() }
     }
