@@ -221,7 +221,7 @@ public class Transaction {
                     body = settings.getPreText() + " " + body;
                 }
 
-                SmsManager smsManager = SmsManagerFactory.createSmsManager(settings);
+                SmsManager smsManager = SmsManagerFactory.INSTANCE.createSmsManager(settings);
                 Log.v("send_transaction", "found sms manager");
 
                 if (settings.getSplit()) {
@@ -331,15 +331,6 @@ public class Transaction {
     }
 
     private void sendMmsMessage(String text, String[] addresses, Bitmap[] image, String[] imageNames, List<Message.Part> parts, String subject) {
-        // merge the string[] of addresses into a single string so they can be inserted into the database easier
-        StringBuilder address = new StringBuilder();
-
-        for (String address1 : addresses) {
-            address.append(address1).append(" ");
-        }
-
-        address = new StringBuilder(address.toString().trim());
-
         // create the parts to send
         ArrayList<MMSPart> data = new ArrayList<>();
 
@@ -555,7 +546,7 @@ public class Transaction {
             configOverrides.putInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE, MmsConfig.getMaxMessageSize());
 
             if (contentUri != null) {
-                SmsManagerFactory.createSmsManager(settings).sendMultimediaMessage(context,
+                SmsManagerFactory.INSTANCE.createSmsManager(settings).sendMultimediaMessage(context,
                         contentUri, null, configOverrides, pendingIntent);
             } else {
                 Log.e(TAG, "Error writing sending Mms");
