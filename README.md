@@ -1,6 +1,6 @@
 # QKSMS
 
-[![Build Status](https://travis-ci.org/moezbhatti/qksms.svg?branch=master)](https://travis-ci.org/moezbhatti/qksms)
+[![Build Status](https://travis-ci.org/moezbhatti/qksms.svg?branch=qksms3)](https://travis-ci.org/moezbhatti/qksms)
 
 QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the Google Play Store.
 
