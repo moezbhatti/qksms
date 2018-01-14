@@ -2,6 +2,11 @@ language: android
 jdk: oraclejdk8
 sudo: false
 
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
 env:
   global:
     - COMPILE_API_LEVEL=27
@@ -29,6 +34,7 @@ android:
     - android-${EMULATOR_API_LEVEL}
     - sys-img-${EMULATOR_ABI}-android-${EMULATOR_API_LEVEL}
 
+# Set up Android-sdk and the emulator
 before_install:
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
   - ls -lar $HOME/**/*
@@ -43,10 +49,34 @@ before_install:
   - yes | sdkmanager "${EMULATOR}" # Install emulator system image
   - sdkmanager --list || true                                     # Print out package list for debug purposes
 
+# Run the emulator
+install:
   # emulator instance
   - echo no | android create avd --force -n ${EMULATOR_NAME} -k "${EMULATOR}"
   # Run emulator in a subshell, this seems to solve the travis QT issue
-  - ( cd "$(dirname "$(which emulator)")" && ./emulator -avd ${EMULATOR_NAME} -engine auto -no-snapshot -version -verbose -show-kernel -no-audio -no-window -camera-back none -camera-front none & )
+  - ( cd "$(dirname "$(which emulator)")" && ./emulator -avd ${EMULATOR_NAME} -verbose -show-kernel -selinux permissive -no-audio -no-window -no-boot-anim -wipe-data & )
   - android-wait-for-emulator
+  - adb shell settings put global window_animation_scale 0 &
+  - adb shell settings put global transition_animation_scale 0 &
+  - adb shell settings put global animator_duration_scale 0 &
+  - sleep 30
   - adb shell input keyevent 82 &
+  - adb devices
+
+# Gradle setup
+before_script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - ./gradlew --version
+  - ./gradlew clean build
+
+# Build APK
+script:
+  - cd ${TRAVIS_BUILD_DIR}
+  - |
+    ./gradlew build assembleAndroidTest -PtestCoverageEnabled='true'
+    retval=$?
+    if [$retval -ne 0]; then
+      echo "error on assembling, exit code: "$retval
+      exit $retval
+    fi
 
