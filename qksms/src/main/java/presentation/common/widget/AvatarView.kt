@@ -70,7 +70,12 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         clicks()
                 .autoDisposable(scope())
                 .subscribe {
-                    contact?.lookupKey?.takeIf { it.isNotEmpty() }?.let { key ->
+                    if (contact?.lookupKey.isNullOrEmpty()) {
+                        contact?.numbers?.firstOrNull()?.let { number ->
+                            navigator.addContact(number.address)
+                        }
+                    } else {
+                        val key = contact?.lookupKey
                         val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key)
                         ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,
                                 ContactsContract.QuickContact.MODE_MEDIUM, null)

@@ -25,6 +25,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
 import common.util.NotificationManager
@@ -86,6 +87,12 @@ class Navigator @Inject constructor(val context: Context) {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:")
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("team@qklabs.com"))
+        startActivity(intent)
+    }
+
+    fun addContact(address: String) {
+        val uri = Uri.parse("tel: $address")
+        val intent = Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT, uri)
         startActivity(intent)
     }
 
