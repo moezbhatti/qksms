@@ -53,7 +53,7 @@ class MessagesAdapter @Inject constructor(
     : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
-        private val VIEWTYPE_ME = -1
+        private val VIEWTYPE_ME = 1
         private val TIMESTAMP_THRESHOLD = 10
     }
 
@@ -63,12 +63,20 @@ class MessagesAdapter @Inject constructor(
     private val selected = ArrayList<Long>()
     private val disposables = CompositeDisposable()
 
+    /**
+     * If the viewType is negative, then the viewHolder has an attachment. We'll consider
+     * this a unique viewType even though it uses the same view, so that regular messages
+     * don't need clipToOutline set to true, and they don't need to worry about images
+     */
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
 
         val layoutInflater = LayoutInflater.from(context)
         val view: View
 
-        when (viewType) {
+        val hasThumbnail = viewType < 0
+        val absViewType = Math.abs(viewType)
+
+        when (absViewType) {
             VIEWTYPE_ME -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
                 disposables += colors.bubble
@@ -81,11 +89,13 @@ class MessagesAdapter @Inject constructor(
             }
         }
 
-        view.messageBackground.clipToOutline = true
+        if (hasThumbnail) {
+            view.messageBackground.clipToOutline = true
+        }
 
-        if (viewType != VIEWTYPE_ME) {
+        if (absViewType != VIEWTYPE_ME) {
             view.avatar.contact = Contact().apply {
-                numbers.add(PhoneNumber().apply { address = people[viewType] })
+                numbers.add(PhoneNumber().apply { address = people[absViewType - 2] })
             }
         }
 
@@ -124,6 +134,7 @@ class MessagesAdapter @Inject constructor(
         bindMmsPreview(view, position)
         bindStatus(view, position)
         bindGrouping(view, position)
+        view.messageBackground.invalidateOutline()
     }
 
     private fun bindMmsPreview(view: View, position: Int) {
@@ -193,6 +204,8 @@ class MessagesAdapter @Inject constructor(
                 view.avatar?.visibility = View.VISIBLE
             }
         }
+
+        if (getItemViewType(position) < 0) view.messageBackground.setBackgroundResource(R.drawable.message_only)
     }
 
     private fun canGroup(message: Message, other: Message?): Boolean {
@@ -203,13 +216,21 @@ class MessagesAdapter @Inject constructor(
 
     override fun getItemViewType(position: Int): Int {
         val message = getItem(position)!!
-        if (message.isMe()) {
-            return VIEWTYPE_ME
+
+        var index = if (message.isMe()) {
+            VIEWTYPE_ME
+        } else {
+            if (!people.contains(message.address)) {
+                people.add(message.address)
+            }
+            2 + people.indexOf(message.address)
         }
 
-        if (!people.contains(message.address)) {
-            people.add(message.address)
+        // If it contains a thumbnail, then use the negative viewtype
+        if (message.parts.filter { it.isImage() }.any()) {
+            index *= -1
         }
-        return people.indexOf(message.address)
+
+        return index
     }
 }
