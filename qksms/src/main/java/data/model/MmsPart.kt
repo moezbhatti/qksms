@@ -18,6 +18,7 @@
  */
 package data.model
 
+import com.google.android.mms.ContentType
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -30,10 +31,10 @@ open class MmsPart : RealmObject() {
     var text: String? = null
     var image: String? = null
 
-    fun isSmil() = "application/smil" == type
+    fun isSmil() = ContentType.APP_SMIL == type
 
-    fun isImage() = listOf("image/jpeg", "image/bmp", "image/gif", "image/jpg", "image/png").contains(type)
+    fun isImage() = ContentType.isImageType(type)
 
-    fun isText() = "text/plain" == type
+    fun isText() = ContentType.isTextType(type)
 
 }
