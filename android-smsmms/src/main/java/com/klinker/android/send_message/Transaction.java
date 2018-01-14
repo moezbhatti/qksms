@@ -731,7 +731,7 @@ public class Transaction {
             mmsValues.put("exp", imageBytes);
 
             mmsValues.put("m_cls", "personal");
-            mmsValues.put("m_type", 128); // 132 (RETRIEVE CONF) 130 (NOTIF IND) 128 (SEND REQ)
+            mmsValues.put("m_type", PduHeaders.MESSAGE_TYPE_SEND_REQ); // 132 (RETRIEVE CONF) 130 (NOTIF IND) 128 (SEND REQ)
             mmsValues.put("v", 19);
             mmsValues.put("pri", 129);
             mmsValues.put("tr_id", "T" + Long.toHexString(now));
@@ -813,7 +813,7 @@ public class Transaction {
         ContentValues addrValues = new ContentValues();
         addrValues.put("address", addr);
         addrValues.put("charset", "106");
-        addrValues.put("type", 151); // TO
+        addrValues.put("type", PduHeaders.TO);
         Uri addrUri = Uri.parse("content://mms/" + id + "/addr");
         return context.getContentResolver().insert(addrUri, addrValues);
     }

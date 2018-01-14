@@ -22,6 +22,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.Telephony.*
+import com.google.android.mms.pdu_alt.PduHeaders
 import common.util.Keys
 import data.model.Message
 import timber.log.Timber
@@ -95,7 +96,7 @@ class CursorToMessage @Inject constructor(
 
         //TODO: Use Charset to ensure address is decoded correctly
         val projection = arrayOf(Mms.Addr.ADDRESS, Mms.Addr.CHARSET)
-        val selection = "${Mms.Addr.TYPE} = 137"
+        val selection = "${Mms.Addr.TYPE} = ${PduHeaders.FROM}"
 
         val cursor = context.contentResolver.query(uri, projection, selection, null, null)
         cursor?.use {
