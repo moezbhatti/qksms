@@ -36,7 +36,6 @@ class ReceiveMms @Inject constructor(
     override fun buildObservable(params: Uri): Flowable<Conversation> {
         return Flowable.just(params)
                 .flatMap { uri -> syncManager.syncMessage(uri) } // Sync the message
-                .doOnNext { message -> messageRepo.loadParts(message.id) } // Sync the message parts
                 .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification

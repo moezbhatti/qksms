@@ -34,7 +34,6 @@ import common.util.extensions.setVisible
 import data.model.Contact
 import data.model.Message
 import data.model.PhoneNumber
-import interactor.LoadMmsParts
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
@@ -48,8 +47,7 @@ import javax.inject.Inject
 class MessagesAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
-        private val dateFormatter: DateFormatter,
-        private val loadMmsParts: LoadMmsParts)
+        private val dateFormatter: DateFormatter)
     : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
@@ -102,11 +100,6 @@ class MessagesAdapter @Inject constructor(
         return QkViewHolder(view)
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        disposables += loadMmsParts
-    }
-
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         disposables.clear()
@@ -138,12 +131,6 @@ class MessagesAdapter @Inject constructor(
 
     private fun bindMmsPreview(view: View, position: Int) {
         val message = getItem(position)!!
-
-        // If it's an MMS and the parts haven't been loaded, kick off a load
-        if (message.isMms() && message.parts.isEmpty()) {
-            loadMmsParts.execute(message.id)
-        }
-
         view.mmsPreview.parts = message.parts
     }
 

@@ -142,20 +142,6 @@ class MessageRepository @Inject constructor(
                 .findAllSorted("date")
     }
 
-    fun loadParts(id: Long) {
-        Realm.getDefaultInstance()?.use { realm ->
-            realm.where(Message::class.java).equalTo("id", id).findFirst()?.let { message ->
-                realm.executeTransaction {
-                    val parts = realm.copyToRealmOrUpdate(context.contentResolver.query(CursorToPart.CONTENT_URI, null,
-                            "${Telephony.Mms.Part.MSG_ID} = ?", arrayOf(message.contentId.toString()), null)
-                            .map { cursorToPart.map(it) })
-
-                    message.parts = RealmList<MmsPart>().apply { addAll(parts) }
-                }
-            }
-        }
-    }
-
     /**
      * Retrieves the list of messages which should be shown in the notification
      * for a given conversation

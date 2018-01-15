@@ -21,17 +21,21 @@ package data.mapper
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.provider.Telephony
 import android.provider.Telephony.*
 import com.google.android.mms.pdu_alt.PduHeaders
 import common.util.Keys
+import common.util.extensions.map
 import data.model.Message
+import data.model.MmsPart
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
 class CursorToMessage @Inject constructor(
         private val context: Context,
-        private val keys: Keys
+        private val keys: Keys,
+        private val cursorToPart: CursorToPart
 ) : Mapper<Pair<Cursor, CursorToMessage.MessageColumns>, Message> {
 
     override fun map(from: Pair<Cursor, MessageColumns>): Message {
@@ -78,7 +82,9 @@ class CursorToMessage @Inject constructor(
                     mmsStatus = cursor.getInt(columnsMap.mmsStatus)
                     subject = cursor.getString(columnsMap.mmsSubject) ?: ""
                     textContentType = ""
-                    attachmentType =  Message.AttachmentType.NOT_LOADED
+                    attachmentType = Message.AttachmentType.NOT_LOADED
+
+                    parts.addAll(getMmsParts(contentId))
                 }
             }
         }
@@ -102,6 +108,12 @@ class CursorToMessage @Inject constructor(
         }
 
         return ""
+    }
+
+    private fun getMmsParts(contentId: Long): List<MmsPart> {
+        return context.contentResolver.query(CursorToPart.CONTENT_URI, null,
+                "${Telephony.Mms.Part.MSG_ID} = ?", arrayOf(contentId.toString()), null)
+                .map { cursorToPart.map(it) }
     }
 
     companion object {

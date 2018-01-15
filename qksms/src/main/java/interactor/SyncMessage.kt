@@ -33,11 +33,6 @@ class SyncMessage @Inject constructor(
     override fun buildObservable(params: Uri): Flowable<Message> {
         return Flowable.just(params)
                 .flatMap { uri -> syncManager.syncMessage(uri) }
-                .doOnNext { message ->
-                    if (message.isMms()) {
-                        messageRepo.loadParts(message.id)
-                    }
-                }
     }
 
 }
