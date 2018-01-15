@@ -20,8 +20,7 @@ package presentation.feature.compose
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import com.mlsdev.rximagepicker.RxImageConverters
+import android.net.Uri
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
@@ -68,7 +67,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var deleteMessage: DeleteMessage
 
     private var draft: String = ""
-    private val attachments: Subject<List<Bitmap>> = BehaviorSubject.createDefault(ArrayList())
+    private val attachments: Subject<List<Uri>> = BehaviorSubject.createDefault(ArrayList())
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Observable<List<Contact>>
@@ -252,7 +251,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // Attach a photo
         view.attachIntent
                 .flatMap { RxImagePicker.with(context).requestImage(Sources.GALLERY) }
-                .flatMap { uri -> RxImageConverters.uriToBitmap(context, uri) }
                 .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
                 .autoDisposable(view.scope())
                 .subscribe { attachments.onNext(it) }

@@ -18,7 +18,7 @@
  */
 package presentation.feature.compose
 
-import android.graphics.Bitmap
+import android.net.Uri
 import data.model.Contact
 import data.model.Message
 import io.realm.RealmResults
@@ -32,6 +32,6 @@ data class ComposeState(
         val title: String = "",
         val archived: Boolean = false,
         val messages: RealmResults<Message>? = null,
-        val attachments: List<Bitmap> = ArrayList(),
+        val attachments: List<Uri> = ArrayList(),
         val canSend: Boolean = false
 )

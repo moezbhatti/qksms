@@ -19,6 +19,7 @@
 package presentation.feature.compose
 
 import android.graphics.Bitmap
+import android.net.Uri
 import data.model.Contact
 import data.model.Message
 import io.reactivex.Observable
@@ -38,7 +39,7 @@ interface ComposeView : QkView<ComposeState> {
     val copyTextIntent: Subject<Message>
     val forwardMessageIntent: Subject<Message>
     val deleteMessageIntent: Subject<Message>
-    val attachmentDeletedIntent: Subject<Bitmap>
+    val attachmentDeletedIntent: Subject<Uri>
     val textChangedIntent: Observable<CharSequence>
     val attachIntent: Observable<Unit>
     val sendIntent: Observable<Unit>

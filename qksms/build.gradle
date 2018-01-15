@@ -69,6 +69,7 @@ dependencies {
     compile 'com.uber.autodispose:autodispose-android-archcomponents-test-kotlin:0.5.1'
     compile 'com.uber.autodispose:autodispose-android-kotlin:0.5.1'
     compile 'com.uber.autodispose:autodispose-kotlin:0.5.1'
+    compile 'id.zelory:compressor:2.1.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile "io.reactivex.rxjava2:rxjava:2.1.4"
     compile 'io.reactivex.rxjava2:rxkotlin:2.1.0'

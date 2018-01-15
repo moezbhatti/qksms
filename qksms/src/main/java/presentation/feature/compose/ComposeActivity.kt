@@ -22,6 +22,7 @@ import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -64,7 +65,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
-    override val attachmentDeletedIntent: Subject<Bitmap> by lazy { attachmentAdapter.attachmentDeleted }
+    override val attachmentDeletedIntent: Subject<Uri> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
     override val sendIntent by lazy { send.clicks() }

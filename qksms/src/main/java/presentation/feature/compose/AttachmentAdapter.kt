@@ -19,10 +19,11 @@
 package presentation.feature.compose
 
 import android.content.Context
-import android.graphics.Bitmap
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import common.util.Colors
@@ -40,9 +41,9 @@ import javax.inject.Inject
 class AttachmentAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors
-) : QkAdapter<Bitmap>() {
+) : QkAdapter<Uri>() {
 
-    val attachmentDeleted: Subject<Bitmap> = PublishSubject.create()
+    val attachmentDeleted: Subject<Uri> = PublishSubject.create()
 
     private val disposables = CompositeDisposable()
 
@@ -66,14 +67,14 @@ class AttachmentAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val bitmap = getItem(position)
+        val uri = getItem(position)
         val view = holder.itemView
 
         view.clicks().subscribe {
-            attachmentDeleted.onNext(bitmap)
+            attachmentDeleted.onNext(uri)
         }
 
-        view.thumbnail.setImageBitmap(bitmap)
+        Glide.with(context).load(uri).into(view.thumbnail)
     }
 
 }

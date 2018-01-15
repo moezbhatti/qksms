@@ -21,16 +21,19 @@ package interactor
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
+import android.net.Uri
 import android.telephony.SmsManager
 import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.Transaction
+import com.mlsdev.rximagepicker.RxImageConverters
 import common.util.Preferences
 import data.repository.MessageRepository
+import id.zelory.compressor.Compressor
 import io.reactivex.Flowable
 import presentation.receiver.MessageDeliveredReceiver
 import presentation.receiver.MessageSentReceiver
+import java.io.File
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
@@ -39,7 +42,7 @@ class SendMessage @Inject constructor(
         private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params, Unit>() {
 
-    data class Params(val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Bitmap> = listOf())
+    data class Params(val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Uri> = listOf())
 
     override fun buildObservable(params: Params): Flowable<Unit> {
         return Flowable.just(Unit)
@@ -73,12 +76,27 @@ class SendMessage @Inject constructor(
         smsManager.sendMultipartTextMessage(address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
     }
 
-    private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Bitmap>) {
+    private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Uri>) {
         val settings = Settings().apply {
         }
 
+
         val message = Message(body, addresses.toTypedArray())
-        attachments.forEach { message.addImage(it) }
+        attachments
+                .map { uri ->
+                    val file = File(context.cacheDir, "${System.currentTimeMillis()}.jpeg")
+                    RxImageConverters.uriToFile(context, uri, file).blockingFirst()
+                }
+                .map { file ->
+                    Compressor(context)
+                            .setMaxHeight(1920)
+                            .setMaxHeight(1920)
+                            .setQuality(60)
+                            .compressToBitmap(file)
+                }
+                .forEach { bitmap ->
+                    message.addImage(bitmap)
+                }
 
         val transaction = Transaction(context, settings)
         transaction.sendNewMessage(message, threadId)
