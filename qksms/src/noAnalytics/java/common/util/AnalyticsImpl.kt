@@ -18,8 +18,14 @@
  */
 package common.util
 
-interface Analytics {
+import javax.inject.Inject
+import javax.inject.Singleton
 
-    fun track(event: String)
+@Singleton
+class AnalyticsImpl @Inject constructor() : Analytics {
+
+    override fun track(event: String) {
+        // Do nothing
+    }
 
 }

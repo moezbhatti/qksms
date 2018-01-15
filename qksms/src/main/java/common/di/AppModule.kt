@@ -22,6 +22,8 @@ import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
 import com.f2prateek.rx.preferences2.RxSharedPreferences
+import common.util.Analytics
+import common.util.AnalyticsImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -40,6 +42,11 @@ class AppModule(private var application: Application) {
     fun provideRxPreferences(context: Context): RxSharedPreferences {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         return RxSharedPreferences.create(preferences)
+    }
+
+    @Provides
+    fun provideAnalytics(analytics: AnalyticsImpl): Analytics {
+        return analytics
     }
 
 }

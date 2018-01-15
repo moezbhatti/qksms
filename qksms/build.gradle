@@ -7,6 +7,8 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.2"
+    flavorDimensions "analytics"
+
     defaultConfig {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
@@ -19,6 +21,7 @@ android {
         buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
         buildConfigField "String", "MIXPANEL_API_KEY", "\"${System.getenv("MIXPANEL_API_KEY")}\""
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,12 +31,19 @@ android {
             applicationIdSuffix ".debug"
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     lintOptions {
         abortOnError false
+    }
+
+    productFlavors {
+        withAnalytics { dimension "analytics" }
+        noAnalytics { dimension "analytics" }
     }
 }
 
@@ -43,7 +53,6 @@ dependencies {
     })
     compile "android.arch.lifecycle:extensions:1.0.0"
     compile "android.arch.lifecycle:runtime:1.0.3"
-    compile 'com.amplitude:android-sdk:2.16.0'
     compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
     compile 'com.android.support:design:27.0.2'
@@ -55,7 +64,6 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0'
     compile 'com.jakewharton.timber:timber:4.5.1'
-    compile 'com.mixpanel.android:mixpanel-android:5.2.1'
     compile 'com.mlsdev.rximagepicker:library:2.0.2'
     compile 'com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.5.1'
     compile 'com.uber.autodispose:autodispose-android-archcomponents-test-kotlin:0.5.1'
@@ -76,4 +84,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
     provided 'javax.annotation:jsr250-api:1.0'
+    withAnalyticsCompile 'com.amplitude:android-sdk:2.16.0'
+    withAnalyticsCompile 'com.mixpanel.android:mixpanel-android:5.2.1'
 }

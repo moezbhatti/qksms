@@ -18,8 +18,26 @@
  */
 package common.util
 
-interface Analytics {
+import android.content.Context
+import com.amplitude.api.Amplitude
+import com.amplitude.api.AmplitudeClient
+import com.mixpanel.android.mpmetrics.MixpanelAPI
+import com.moez.QKSMS.BuildConfig
+import javax.inject.Inject
+import javax.inject.Singleton
 
-    fun track(event: String)
+@Singleton
+class AnalyticsImpl @Inject constructor(context: Context): Analytics {
+
+    private val amplitude: AmplitudeClient = Amplitude.getInstance().initialize(context, BuildConfig.AMPLITUDE_API_KEY)
+    private val mixpanel: MixpanelAPI = MixpanelAPI.getInstance(context, BuildConfig.MIXPANEL_API_KEY)
+
+    override fun track(event: String) {
+        amplitude.logEvent(event)
+
+        synchronized(mixpanel, {
+            mixpanel.track(event)
+        })
+    }
 
 }
