@@ -279,7 +279,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                     val addresses = conversation.recipients.map { it.address }
                     sendMessage.execute(SendMessage.Params(threadId, addresses, body, attachments))
                     view.setDraft("")
-                    newState { it.copy(attachments = ArrayList()) }
+                    this.attachments.onNext(ArrayList())
                 })
                 .withLatestFrom(state, { _, state ->
                     if (state.editingMode) {
