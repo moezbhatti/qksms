@@ -21,14 +21,23 @@ package interactor
 import android.net.Uri
 import common.util.SyncManager
 import data.model.Message
+import data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class SyncMessage @Inject constructor(private val syncManager: SyncManager): Interactor<Uri, Message>() {
+class SyncMessage @Inject constructor(
+        private val syncManager: SyncManager,
+        private val messageRepo: MessageRepository
+) : Interactor<Uri, Message>() {
 
     override fun buildObservable(params: Uri): Flowable<Message> {
         return Flowable.just(params)
                 .flatMap { uri -> syncManager.syncMessage(uri) }
+                .doOnNext { message ->
+                    if (message.isMms()) {
+                        messageRepo.loadParts(message.id)
+                    }
+                }
     }
 
 }
