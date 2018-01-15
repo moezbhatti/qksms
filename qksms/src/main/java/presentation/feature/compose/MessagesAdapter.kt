@@ -209,8 +209,9 @@ class MessagesAdapter @Inject constructor(
 
     private fun canGroup(message: Message, other: Message?): Boolean {
         if (other == null) return false
+        val samePerson = message.isMe() && other.isMe() || (!message.isMe() && !other.isMe() && message.address == other.address)
         val diff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(message.date - other.date))
-        return message.isMe() == other.isMe() && diff < TIMESTAMP_THRESHOLD
+        return samePerson && diff < TIMESTAMP_THRESHOLD
     }
 
     override fun getItemViewType(position: Int): Int {
