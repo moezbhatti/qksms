@@ -24,4 +24,12 @@ adb shell input keyevent 82 &
 # Print devices
 adb devices
 
+# Build APK test
+./gradlew build assembleAndroidTest -PtestCoverageEnabled='true'
+retval=$?
+if [$retval -ne 0]; then
+    echo "error on assembling, exit code: "$retval
+    exit $retval
+fi
+
 echo "Emulator tests not fully implemented!"
