@@ -47,7 +47,7 @@ android:
 
 # Set up Android-sdk and the emulator
 before_install:
-  - chmod a+x ~/.travis/*.sh
+  - for s in ~/.travis/* ; do chmod a+x $s ; done
 
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
   - ls -lar $HOME/**/*
