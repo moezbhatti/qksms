@@ -65,7 +65,7 @@ before_install:
 # Build APK
 install:
   # Let's start the emulation first
-  - ./.travis/emulate.sh
+  - ./.travis/emulator.sh
   # Build the debugPackage, run tests from qksms
   - ./.travis/build.sh
 
