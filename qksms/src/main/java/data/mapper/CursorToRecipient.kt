@@ -20,11 +20,11 @@ package data.mapper
 
 import android.database.Cursor
 import android.net.Uri
+import android.telephony.PhoneNumberUtils
 import data.model.Recipient
-import data.repository.ContactRepository
 import javax.inject.Inject
 
-class CursorToRecipient @Inject constructor(private val contactRepository: ContactRepository) : Mapper<Cursor, Recipient> {
+class CursorToRecipient @Inject constructor() : Mapper<Cursor, Recipient> {
 
     companion object {
         val URI = Uri.parse("content://mms-sms/canonical-addresses")
@@ -35,8 +35,7 @@ class CursorToRecipient @Inject constructor(private val contactRepository: Conta
 
     override fun map(from: Cursor) = Recipient().apply {
         id = from.getLong(COLUMN_ID)
-        address = from.getString(COLUMN_ADDRESS)
-        contact = contactRepository.getContactBlocking(address) // TODO do this lazily for faster syncs
+        address = PhoneNumberUtils.stripSeparators(from.getString(COLUMN_ADDRESS))
         lastUpdate = System.currentTimeMillis()
     }
 

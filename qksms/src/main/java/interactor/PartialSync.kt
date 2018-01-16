@@ -33,7 +33,7 @@ open class PartialSync @Inject constructor(
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())
                 .skipWhile { !permissions.hasSmsAndContacts() }
-                .doOnNext { syncManager.performSync() }
+                .doOnNext { syncManager.syncMessages() }
                 .map { startTime -> System.currentTimeMillis() - startTime }
                 .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
                 .doOnNext { seconds -> Timber.v("Completed sync in $seconds seconds") }

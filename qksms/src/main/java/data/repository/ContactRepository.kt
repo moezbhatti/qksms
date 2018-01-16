@@ -20,17 +20,14 @@ package data.repository
 
 import android.content.Context
 import android.net.Uri
-import android.provider.BaseColumns
 import android.provider.ContactsContract
 import common.util.extensions.asFlowable
 import data.model.Contact
-import data.model.PhoneNumber
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -57,40 +54,6 @@ class ContactRepository @Inject constructor(val context: Context) {
                 .map { realm.copyFromRealm(it) }
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
-    }
-
-    fun getContactBlocking(address: String): Contact? {
-        if (address.isEmpty()) return null
-
-        val realm = Realm.getDefaultInstance()
-        var contact = realm.where(Contact::class.java)
-                .equalTo("numbers.address", address)
-                .findFirst()
-
-        if (contact == null) {
-            val contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
-            val projection = arrayOf(BaseColumns._ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.LOOKUP_KEY)
-            try {
-                context.contentResolver.query(contactUri, projection, null, null, null).use { contactCursor ->
-                    if (contactCursor.moveToFirst()) {
-                        contact = Contact().apply {
-                            numbers.add(PhoneNumber().apply { this.address = address })
-                            name = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)).orEmpty()
-                            lookupKey = contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY)).orEmpty()
-                            lastUpdate = System.currentTimeMillis()
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Timber.w(e)
-            }
-        } else {
-            contact = realm.copyFromRealm(contact)
-        }
-
-        realm.close()
-
-        return contact
     }
 
 }

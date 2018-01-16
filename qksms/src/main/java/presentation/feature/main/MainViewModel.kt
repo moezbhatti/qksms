@@ -81,15 +81,15 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
         newState { it.copy(page = Inbox(data = conversations)) }
 
-        val isDefaultSms = Telephony.Sms.getDefaultSmsPackage(context) != context.packageName
+        val isNotDefaultSms = Telephony.Sms.getDefaultSmsPackage(context) != context.packageName
         val hasSmsPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
         val hasContactPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
 
-        if (isDefaultSms) {
+        if (isNotDefaultSms) {
             partialSync.execute(Unit)
         }
 
-        if (isDefaultSms || !hasSmsPermission || !hasContactPermission) {
+        if (isNotDefaultSms || !hasSmsPermission || !hasContactPermission) {
             navigator.showSetupActivity()
         }
 

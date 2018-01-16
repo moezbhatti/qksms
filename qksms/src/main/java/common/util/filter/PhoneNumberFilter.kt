@@ -24,8 +24,10 @@ import javax.inject.Inject
 class PhoneNumberFilter @Inject constructor() : Filter<String>() {
 
     override fun filter(item: String, query: CharSequence): Boolean {
-        return query.all { PhoneNumberUtils.isReallyDialable(it) } &&
-                PhoneNumberUtils.stripSeparators(item).contains(PhoneNumberUtils.stripSeparators(query.toString()))
+        val allCharactersDialable = query.all { PhoneNumberUtils.isReallyDialable(it) }
+
+        return allCharactersDialable && (PhoneNumberUtils.compare(item, query.toString()) ||
+                PhoneNumberUtils.stripSeparators(item).contains(PhoneNumberUtils.stripSeparators(query.toString())))
     }
 
 }

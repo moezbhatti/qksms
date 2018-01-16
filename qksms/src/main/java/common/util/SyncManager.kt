@@ -26,6 +26,8 @@ import common.util.extensions.asFlowable
 import common.util.extensions.insertOrUpdate
 import common.util.extensions.map
 import common.util.extensions.mapWhile
+import common.util.filter.ContactFilter
+import data.mapper.CursorToContact
 import data.mapper.CursorToConversation
 import data.mapper.CursorToMessage
 import data.mapper.CursorToRecipient
@@ -42,7 +44,9 @@ class SyncManager @Inject constructor(
         private val messageRepo: MessageRepository,
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
-        private val cursorToRecipient: CursorToRecipient) {
+        private val cursorToRecipient: CursorToRecipient,
+        private val cursorToContact: CursorToContact,
+        private val contactFilter: ContactFilter) {
 
     sealed class Status {
         class Idle : Status()
@@ -53,7 +57,7 @@ class SyncManager @Inject constructor(
     private var status: Status = Status.Idle()
 
     // TODO: This needs to be substantially faster
-    fun performSync(fullSync: Boolean = false) {
+    fun syncMessages(fullSync: Boolean = false) {
 
         // If the sync is already running, don't try to do another one
         if (status is Status.Running) return
@@ -100,9 +104,10 @@ class SyncManager @Inject constructor(
         realm.insertOrUpdate(recipients)
         recipientCursor.close()
 
-
         realm.commitTransaction()
         realm.close()
+
+        syncContacts()
 
         status = Status.Idle()
     }
@@ -144,6 +149,37 @@ class SyncManager @Inject constructor(
                 }
                 .doOnNext { message -> messageRepo.getOrCreateConversation(message.threadId) }
                 .doOnNext { message -> message.insertOrUpdate() }
+    }
+
+    fun syncContacts() {
+        // Load all the contacts
+        var contacts = context.contentResolver.query(CursorToContact.URI, CursorToContact.PROJECTION, null, null, null)
+                .map { cursor -> cursorToContact.map(cursor) }
+                .groupBy { contact -> contact.lookupKey }
+                .map { contacts ->
+                    val allNumbers = contacts.value.map { it.numbers }.flatten()
+                    contacts.value.first().apply {
+                        numbers.clear()
+                        numbers.addAll(allNumbers)
+                    }
+                }
+
+        val realm = Realm.getDefaultInstance()
+        val recipients = realm.where(Recipient::class.java).findAll()
+
+        realm.executeTransaction {
+            realm.delete(Contact::class.java)
+
+            contacts = realm.copyToRealm(contacts)
+
+            // Update all the recipients with the new contacts
+            val updatedRecipients = recipients.map { recipient ->
+                recipient.apply { contact = contacts.firstOrNull { contactFilter.filter(it, recipient.address) } }
+            }
+
+            realm.insertOrUpdate(updatedRecipients)
+        }
+        realm.close()
     }
 
 }

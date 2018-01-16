@@ -18,45 +18,20 @@
  */
 package interactor
 
-import android.content.Context
-import common.util.extensions.asFlowable
-import common.util.extensions.insertOrUpdate
-import data.mapper.CursorToContact
-import data.model.Contact
+import common.util.SyncManager
 import io.reactivex.Flowable
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-open class ContactSync @Inject constructor(
-        private val context: Context,
-        private val cursorToContact: CursorToContact)
-    : Interactor<Unit, List<Contact>>() {
+open class ContactSync @Inject constructor(private val syncManager: SyncManager) : Interactor<Unit, Long>() {
 
-    override fun buildObservable(params: Unit): Flowable<List<Contact>> {
-        val contentResolver = context.contentResolver
-
-        Timber.v("Starting contact sync")
-        val startTime = System.currentTimeMillis()
-
-        return contentResolver.query(CursorToContact.URI, CursorToContact.PROJECTION, null, null, null).asFlowable()
-                .map { cursor -> cursorToContact.map(cursor) }
-                .groupBy { contact -> contact.lookupKey }
-                .flatMap { group -> group.toList().toFlowable() }
-                .map { contacts ->
-                    val allNumbers = contacts.map { it.numbers }.flatten()
-                    contacts.first().apply {
-                        numbers.clear()
-                        numbers.addAll(allNumbers)
-                    }
-                }
-                .toList().toFlowable()
-                .doOnNext { contacts ->
-                    contacts.insertOrUpdate()
-
-                    val duration = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - startTime)
-                    Timber.v("Synced contacts in $duration seconds")
-                }
+    override fun buildObservable(params: Unit): Flowable<Long> {
+        return Flowable.just(System.currentTimeMillis())
+                .doOnNext { syncManager.syncContacts() }
+                .map { startTime -> System.currentTimeMillis() - startTime }
+                .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
+                .doOnNext { seconds -> Timber.v("Completed sync in $seconds seconds") }
     }
 
 }

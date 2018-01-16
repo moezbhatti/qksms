@@ -33,7 +33,7 @@ class FullSync @Inject constructor(
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())
                 .doOnNext { keys.reset() }
-                .doOnNext { syncManager.performSync(true) }
+                .doOnNext { syncManager.syncMessages(true) }
                 .map { startTime -> System.currentTimeMillis() - startTime }
                 .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
                 .doOnNext { seconds -> Timber.v("Completed sync in $seconds seconds") }
