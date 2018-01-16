@@ -64,22 +64,22 @@ before_install:
 
 # Build APK
 install:
-  - ./travis/build.sh
+  - ./.travis/build.sh
 
 deploy:
   # Deploy gh-pages if on master, or tagged release
   - provider: script
     skip_cleanup: true
-    script: .travis/gh-pages.sh
+    script: ~/.travis/gh-pages.sh
   # Emulate if on tagged release
   - provider: script
     skip_cleanup: true
-    script: .travis/emulate.sh
+    script: ~/.travis/emulate.sh
     on:
       tags: true
   # Deploy to GitHub if on tagged release
   - provider: script
     skip_cleanup: true
-    script: .travis/deploy.sh
+    script: ~/.travis/deploy.sh
     on:
       tags: true
