@@ -35,10 +35,10 @@ import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.showKeyboard
 import data.model.Contact
-import presentation.common.base.QkAdapter
-import presentation.common.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
+import presentation.common.base.QkAdapter
+import presentation.common.base.QkViewHolder
 import javax.inject.Inject
 
 class ChipsAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<Contact>() {
@@ -100,7 +100,14 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
                 val view = holder.itemView
 
                 view.avatar.contact = contact
-                view.name.text = contact.name
+
+                // If the contact's name is empty, try to display a phone number instead
+                // The contacts provided here should only have one number
+                view.name.text = if (contact.name.isNotBlank()) {
+                    contact.name
+                } else {
+                    contact.numbers.firstOrNull { it.address.isNotBlank() }?.address ?: ""
+                }
 
                 view.setOnClickListener { showDetailedChip(contact) }
             }

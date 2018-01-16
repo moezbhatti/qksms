@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import common.util.extensions.setVisible
 import data.model.Contact
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -51,6 +52,7 @@ class ContactAdapter @Inject constructor(private val context: Context) : QkAdapt
 
         view.avatar.contact = contact
         view.name.text = contact.name
+        view.name.setVisible(view.name.text.isNotEmpty())
         view.address.text = contact.numbers.first()?.address ?: ""
         view.type.text = contact.numbers.first()?.type ?: ""
 

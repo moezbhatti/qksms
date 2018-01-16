@@ -21,6 +21,7 @@ package presentation.feature.compose
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.telephony.PhoneNumberUtils
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
@@ -34,6 +35,7 @@ import common.util.filter.ContactFilter
 import data.model.Contact
 import data.model.Conversation
 import data.model.Message
+import data.model.PhoneNumber
 import data.repository.ContactRepository
 import data.repository.MessageRepository
 import interactor.*
@@ -46,6 +48,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import io.realm.RealmList
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
 import java.net.URLDecoder
@@ -78,7 +81,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         appComponent.inject(this)
 
         draft = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
-        intent.clipData
         val threadId = intent.extras?.getLong("threadId") ?: 0L
         var address = ""
 
@@ -187,9 +189,15 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // that have already been selected
         Observables
                 .combineLatest(view.queryChangedIntent, contacts, selectedContacts, { query, contacts, selectedContacts ->
-                    contacts
+                    var filteredContacts = contacts
                             .filterNot { contact -> selectedContacts.contains(contact) }
                             .filter { contact -> contactFilter.filter(contact, query) }
+
+                    if (PhoneNumberUtils.isWellFormedSmsAddress(query.toString())) {
+                        filteredContacts = listOf(Contact(numbers = RealmList(PhoneNumber(address = query.toString())))) + filteredContacts
+                    }
+
+                    filteredContacts
                 })
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
