@@ -17,6 +17,17 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=27.0.2 # Match build-tools version used in build.gradle
     - EMULATOR="system-images;android-${EMULATOR_API_LEVEL};${EMULATOR_TAG};${EMULATOR_ABI}" # Used to install/create emulator
 
+before_cache:
+  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/modules-2/modules-2.lock # Avoid to repack it due locks
+  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/classAnalysis/classAnalysis.lock
+  - rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/jarSnapshots/jarSnapshots.lock
+
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/gradle/caches/
+    - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
+    - ${TRAVIS_BUILD_DIR}/.android/build-cache
+
 android:
   components:
     - tools
@@ -36,6 +47,8 @@ android:
 
 # Set up Android-sdk and the emulator
 before_install:
+  - chmod a+x ~/.travis/*.sh
+
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
   - ls -lar $HOME/**/*
 
@@ -49,34 +62,24 @@ before_install:
   - yes | sdkmanager "${EMULATOR}" # Install emulator system image
   - sdkmanager --list || true                                     # Print out package list for debug purposes
 
-# Run the emulator
-install:
-  # emulator instance
-  - echo no | android create avd --force -n ${EMULATOR_NAME} -k "${EMULATOR}"
-  # Run emulator in a subshell, this seems to solve the travis QT issue
-  - ( cd "$(dirname "$(which emulator)")" && ./emulator -avd ${EMULATOR_NAME} -verbose -show-kernel -selinux permissive -no-audio -no-window -no-boot-anim -wipe-data & )
-  - android-wait-for-emulator
-  - adb shell settings put global window_animation_scale 0 &
-  - adb shell settings put global transition_animation_scale 0 &
-  - adb shell settings put global animator_duration_scale 0 &
-  - sleep 30
-  - adb shell input keyevent 82 &
-  - adb devices
-
-# Gradle setup
-before_script:
-  - cd ${TRAVIS_BUILD_DIR}
-  - ./gradlew --version
-  - ./gradlew clean build
-
 # Build APK
-script:
-  - cd ${TRAVIS_BUILD_DIR}
-  - |
-    ./gradlew build assembleAndroidTest -PtestCoverageEnabled='true'
-    retval=$?
-    if [$retval -ne 0]; then
-      echo "error on assembling, exit code: "$retval
-      exit $retval
-    fi
+install:
+  - ./travis/build.sh
 
+deploy:
+  # Deploy gh-pages if on master, or tagged release
+  - provider: script
+    skip_cleanup: true
+    script: .travis/gh-pages.sh
+  # Emulate if on tagged release
+  - provider: script
+    skip_cleanup: true
+    script: .travis/emulate.sh
+    on:
+      tags: true
+  # Deploy to GitHub if on tagged release
+  - provider: script
+    skip_cleanup: true
+    script: .travis/deploy.sh
+    on:
+      tags: true
