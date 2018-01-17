@@ -22,6 +22,7 @@ import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
+import android.telephony.PhoneNumberUtils
 import common.util.extensions.asFlowable
 import common.util.extensions.insertOrUpdate
 import common.util.extensions.map
@@ -174,7 +175,11 @@ class SyncManager @Inject constructor(
 
             // Update all the recipients with the new contacts
             val updatedRecipients = recipients.map { recipient ->
-                recipient.apply { contact = contacts.firstOrNull { contactFilter.filter(it, recipient.address) } }
+                recipient.apply {
+                    contact = contacts.firstOrNull {
+                        it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                    }
+                }
             }
 
             realm.insertOrUpdate(updatedRecipients)

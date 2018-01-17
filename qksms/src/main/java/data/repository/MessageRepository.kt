@@ -25,10 +25,10 @@ import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.Telephony
 import android.provider.Telephony.Sms
+import android.telephony.PhoneNumberUtils
 import common.util.Keys
 import common.util.MessageUtils
 import common.util.extensions.*
-import common.util.filter.ContactFilter
 import data.mapper.CursorToConversation
 import data.mapper.CursorToRecipient
 import data.model.Contact
@@ -51,8 +51,7 @@ class MessageRepository @Inject constructor(
         private val context: Context,
         private val messageIds: Keys,
         private val cursorToConversation: CursorToConversation,
-        private val cursorToRecipient: CursorToRecipient,
-        private val contactFilter: ContactFilter) {
+        private val cursorToRecipient: CursorToRecipient) {
 
     fun getConversations(archived: Boolean = false): Flowable<List<InboxItem>> {
         val realm = Realm.getDefaultInstance()
@@ -465,7 +464,11 @@ class MessageRepository @Inject constructor(
                     .map { recipientCursor -> recipientCursor.map { cursorToRecipient.map(recipientCursor) } }
                     .flatten()
                     .map { recipient ->
-                        recipient.apply { contact = contacts.firstOrNull { contactFilter.filter(it, recipient.address) } }
+                        recipient.apply {
+                            contact = contacts.firstOrNull {
+                                it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                            }
+                        }
                     }
 
             conversation.recipients.clear()
