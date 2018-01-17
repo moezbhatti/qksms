@@ -36,7 +36,7 @@ class ContactRepository @Inject constructor(val context: Context) {
 
     fun findContactUri(address: String): Single<Uri> {
         return Flowable.just(address)
-                .map { address -> Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address)) }
+                .map { Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address)) }
                 .flatMap { uri -> context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup._ID), null, null, null).asFlowable() }
                 .firstOrError()
                 .map { cursor -> cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID)) }

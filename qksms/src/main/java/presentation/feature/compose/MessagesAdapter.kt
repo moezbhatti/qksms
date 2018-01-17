@@ -38,6 +38,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import io.realm.RealmList
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import presentation.common.base.QkViewHolder
@@ -47,8 +48,8 @@ import javax.inject.Inject
 class MessagesAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
-        private val dateFormatter: DateFormatter)
-    : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
+        private val dateFormatter: DateFormatter
+) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
         private val VIEWTYPE_ME = 1
@@ -92,9 +93,8 @@ class MessagesAdapter @Inject constructor(
         }
 
         if (absViewType != VIEWTYPE_ME) {
-            view.avatar.contact = Contact().apply {
-                numbers.add(PhoneNumber().apply { address = people[absViewType - 2] })
-            }
+            val number = PhoneNumber(address = people[absViewType - 2])
+            view.avatar.contact = Contact(numbers = RealmList(number))
         }
 
         return QkViewHolder(view)

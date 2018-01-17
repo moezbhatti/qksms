@@ -27,5 +27,5 @@ fun Int.dpToPx(context: Context): Int {
 }
 
 fun Int.withAlpha(alpha: Int): Int {
-    return Color.argb(0x4D, Color.red(this), Color.green(this), Color.blue(this))
+    return Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
 }

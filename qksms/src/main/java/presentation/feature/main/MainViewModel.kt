@@ -139,6 +139,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
+                        else -> {} // Do nothing
                     }
                 }
                 .autoDisposable(view.scope())
@@ -151,7 +152,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe()
 
         view.conversationLongClickIntent
-                .withLatestFrom(state, { l, mainState ->
+                .withLatestFrom(state, { _, mainState ->
                     when (mainState.page) {
                         is Inbox -> {
                             val page = mainState.page.copy(menu = listOf(menuArchive, menuDelete))

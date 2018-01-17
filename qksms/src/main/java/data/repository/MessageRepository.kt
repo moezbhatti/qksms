@@ -138,7 +138,8 @@ class MessageRepository @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
-                .findAllSorted("date")
+                .sort("date")
+                .findAll()
     }
 
     /**
@@ -151,7 +152,8 @@ class MessageRepository @Inject constructor(
                 .equalTo("seen", false)
                 .equalTo("read", false)
                 .equalTo("threadId", threadId)
-                .findAllSorted("date")
+                .sort("date")
+                .findAll()
     }
 
     fun markArchived(threadId: Long) {
