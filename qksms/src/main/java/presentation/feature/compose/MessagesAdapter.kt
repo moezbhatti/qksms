@@ -52,8 +52,8 @@ class MessagesAdapter @Inject constructor(
 ) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
-        private val VIEWTYPE_ME = 1
-        private val TIMESTAMP_THRESHOLD = 10
+        private const val VIEW_TYPE_ME = 1
+        private const val TIMESTAMP_THRESHOLD = 10
     }
 
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
@@ -76,7 +76,7 @@ class MessagesAdapter @Inject constructor(
         val absViewType = Math.abs(viewType)
 
         when (absViewType) {
-            VIEWTYPE_ME -> {
+            VIEW_TYPE_ME -> {
                 view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
                 disposables += colors.bubble
                         .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
@@ -92,7 +92,7 @@ class MessagesAdapter @Inject constructor(
             view.messageBackground.clipToOutline = true
         }
 
-        if (absViewType != VIEWTYPE_ME) {
+        if (absViewType != VIEW_TYPE_ME) {
             val number = PhoneNumber(address = people[absViewType - 2])
             view.avatar.contact = Contact(numbers = RealmList(number))
         }
@@ -205,7 +205,7 @@ class MessagesAdapter @Inject constructor(
         val message = getItem(position)!!
 
         var index = if (message.isMe()) {
-            VIEWTYPE_ME
+            VIEW_TYPE_ME
         } else {
             if (!people.contains(message.address)) {
                 people.add(message.address)
