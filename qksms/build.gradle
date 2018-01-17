@@ -3,6 +3,7 @@ apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build wi
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.dokka-android' // for documentation
 
 android {
     compileSdkVersion 27
@@ -88,3 +89,19 @@ dependencies {
     withAnalyticsCompile 'com.amplitude:android-sdk:2.16.0'
     withAnalyticsCompile 'com.mixpanel.android:mixpanel-android:5.2.1'
 }
+
+dokka {
+    ext.branch = 'qksms3'
+
+    moduleName = 'qksms'
+
+    outputFormat = 'gfm' // Github Flavored Markdown
+    outputDirectory = "$rootDir/docs/docs"
+
+    linkMapping {
+        dir = "src"
+        url = "https://github.com/moezbhatti/qksms/blob/$branch/qksms/src"
+        suffix = "#L"
+    }
+}
+

@@ -1,0 +1,69 @@
+site_name: QKSms
+site_description: The most beautiful SMS messenger app for Android
+site_author: QK Labs
+#site_url: https://moezbhatti.github.io/qksms
+
+repo_name: moezbhatti/qksms
+repo_url: https://github.com/moezbhatti/qksms
+
+copyright: Copyright &copy; 2015-2018 QK Labs
+
+theme:
+    name: material
+    custom_dir: 'theme'
+    language: en
+    palette:
+        primary: 'indigo'
+        accent: 'indigo'
+    font:
+        text: Roboto
+        code: Roboto Mono
+    feature:
+        tabs: true
+    logo: 'assets/images/ic_launcher_logo.png'
+    favicon: 'assets/images/ic_launcher.png'
+
+extra:
+    social:
+        - type: github-alt
+          link: https://github.com/moezbhatti
+        - type: google-plus
+          link: https://plus.google.com/communities/104505769539048913485
+        - type: google
+          link: https://play.google.com/store/apps/details?id=com.moez.QKSMS
+        - type: android
+          link: https://f-droid.org/packages/com.moez.QKSMS/
+
+markdown_extensions:
+    - markdown.extensions.admonition
+    - markdown.extensions.codehilite:
+        guess_lang: false
+    - markdown.extensions.def_list
+    - markdown.extensions.footnotes
+    - markdown.extensions.meta
+    - markdown.extensions.toc:
+        permalink: true
+    - pymdownx.arithmatex
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+    - pymdownx.critic
+    - pymdownx.details
+    - pymdownx.emoji:
+        emoji_generator: !!python/name:pymdownx.emoji.to_svg
+    - pymdownx.inlinehilite
+    - pymdownx.keys
+    - pymdownx.magiclink
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.superfences
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde
+
+# WARNING: There should be no lines after the last entry to pages:, this is for the .travis/mkdocs_populate.sh
+pages:
+    - Home: index.md
+    - Contributing: contributing.md
+    - Development:
+        - 'Continuous Integration': ci.md

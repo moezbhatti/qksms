@@ -2,21 +2,28 @@
 
 buildscript {
     ext.kotlin_version = '1.2.10'
+    ext.dokka_version = '0.9.15'
     repositories {
-        maven { url 'https://maven.google.com' }
+        maven {
+            url 'https://maven.google.com'
+        }
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.realm:realm-gradle-plugin:4.3.1"
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:${dokka_version}"
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        maven { url 'https://maven.google.com' }
+        maven {
+            url 'https://dl.bintray.com/kotlin/kotlin-eap' // Load this before maven.google.com
+            url 'https://maven.google.com'
+        }
         mavenCentral()
     }
 }
