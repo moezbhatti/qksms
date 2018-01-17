@@ -25,6 +25,7 @@ import android.net.Uri
 import android.telephony.SmsManager
 import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
+import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
 import com.mlsdev.rximagepicker.RxImageConverters
 import common.util.Preferences
@@ -60,7 +61,7 @@ class SendMessage @Inject constructor(
         val smsManager = SmsManager.getDefault()
 
         val message = messageRepo.insertSentSms(threadId, address, body)
-        val parts = smsManager.divideMessage(body)
+        val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(body) else body)
 
         val sentIntents = parts.map {
             val intent = Intent(context, MessageSentReceiver::class.java).putExtra("id", message.id)
