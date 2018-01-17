@@ -10,6 +10,7 @@ copyright: Copyright &copy; 2015-2018 QK Labs
 
 theme:
     name: material
+    custom_dir: 'theme'
     language: en
     palette:
         primary: 'indigo'
@@ -60,6 +61,7 @@ markdown_extensions:
         custom_checkbox: true
     - pymdownx.tilde
 
+# WARNING: There should be no lines after the last entry to pages:, this is for the .travis/mkdocs_populate.sh
 pages:
     - Home: index.md
     - Contributing: contributing.md
