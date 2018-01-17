@@ -130,12 +130,12 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // stream of conversations. If the conversation was deleted, notify the activity to shut down
         conversation = initialConversation
                 .filter { conversation -> conversation.isLoaded }
+                .mergeWith(selectedConversation)
                 .doOnNext { conversation ->
                     if (!conversation.isValid) {
                         newState { it.copy(hasError = true) }
                     }
                 }
-                .mergeWith(selectedConversation)
                 .filter { conversation -> conversation.isValid }
                 .filter { conversation -> conversation.id != 0L }
                 .distinctUntilChanged()
@@ -251,7 +251,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // Mark the conversation read, if in foreground
         Observables.combineLatest(messages, view.activityVisibleIntent, { _, b -> b })
                 .withLatestFrom(conversation, { visible, conversation ->
-                    if (visible) markRead.execute(conversation.id)
+                    if (visible && conversation.isValid) markRead.execute(conversation.id)
                 })
                 .autoDisposable(view.scope())
                 .subscribe()

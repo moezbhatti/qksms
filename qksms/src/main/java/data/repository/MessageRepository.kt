@@ -18,6 +18,7 @@
  */
 package data.repository
 
+import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
@@ -33,14 +34,12 @@ import data.mapper.CursorToRecipient
 import data.model.Conversation
 import data.model.InboxItem
 import data.model.Message
-import data.model.MmsPart
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Flowables
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.Sort
 import javax.inject.Inject
@@ -433,19 +432,17 @@ class MessageRepository @Inject constructor(
     }
 
     fun deleteConversation(threadId: Long) {
-        val realm = Realm.getDefaultInstance()
+        Realm.getDefaultInstance().use { realm ->
+            val conversation = realm.where(Conversation::class.java).equalTo("id", threadId).findAll()
+            val messages = realm.where(Message::class.java).equalTo("threadId", threadId).findAll()
 
-        val conversation = realm.where(Conversation::class.java).equalTo("id", threadId).findAll()
-        val messages = realm.where(Message::class.java).equalTo("threadId", threadId).findAll()
-
-        realm.executeTransaction {
-            conversation.deleteAllFromRealm()
-            messages.deleteAllFromRealm()
+            realm.executeTransaction {
+                conversation.deleteAllFromRealm()
+                messages.deleteAllFromRealm()
+            }
         }
 
-        realm.close()
-
-        val uri = Uri.withAppendedPath(Telephony.Threads.CONTENT_URI, threadId.toString())
+        val uri = ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId)
         context.contentResolver.delete(uri, null, null)
     }
 
