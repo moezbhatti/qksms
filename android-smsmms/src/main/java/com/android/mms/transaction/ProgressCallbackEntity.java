@@ -19,9 +19,7 @@ package com.android.mms.transaction;
 
 import android.content.Context;
 import android.content.Intent;
-
 import com.klinker.android.send_message.BroadcastUtils;
-
 import org.apache.http.entity.ByteArrayEntity;
 
 import java.io.IOException;

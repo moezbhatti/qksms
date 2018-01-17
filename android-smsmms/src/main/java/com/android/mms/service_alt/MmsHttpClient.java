@@ -19,7 +19,6 @@ package com.android.mms.service_alt;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.android.mms.service_alt.exception.MmsHttpException;
 import com.squareup.okhttp.ConnectionPool;
 import com.squareup.okhttp.ConnectionSpec;
@@ -31,6 +30,9 @@ import com.squareup.okhttp.internal.Internal;
 import com.squareup.okhttp.internal.huc.HttpURLConnectionImpl;
 import com.squareup.okhttp.internal.huc.HttpsURLConnectionImpl;
 
+import javax.net.SocketFactory;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,9 +55,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.net.SocketFactory;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * MMS HTTP client for sending and downloading MMS messages

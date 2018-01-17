@@ -24,7 +24,6 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
 import android.provider.Telephony.Mms.Rate;
-
 import com.android.mms.logs.LogTag;
 import com.klinker.android.logger.Log;
 

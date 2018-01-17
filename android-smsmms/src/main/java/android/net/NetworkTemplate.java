@@ -21,7 +21,9 @@ import android.os.Parcelable;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Objects;
 
-import static android.net.ConnectivityManager.*;
+import static android.net.ConnectivityManager.TYPE_ETHERNET;
+import static android.net.ConnectivityManager.TYPE_WIFI;
+import static android.net.ConnectivityManager.TYPE_WIMAX;
 import static android.net.NetworkIdentity.COMBINE_SUBTYPE_ENABLED;
 import static android.net.NetworkIdentity.scrubSubscriberId;
 import static com.android.internal.util.ArrayUtils.contains;

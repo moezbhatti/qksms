@@ -23,16 +23,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
-
 import com.android.mms.service_alt.exception.MmsHttpException;
-
-import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.GenericPdu;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
@@ -40,6 +35,7 @@ import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.SendConf;
 import com.google.android.mms.pdu_alt.SendReq;
 import com.google.android.mms.util_alt.SqliteWrapper;
+import com.klinker.android.logger.Log;
 
 /**
  * Request to send an MMS

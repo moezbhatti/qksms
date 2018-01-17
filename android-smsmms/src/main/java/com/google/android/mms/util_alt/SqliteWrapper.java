@@ -23,8 +23,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
-import com.klinker.android.logger.Log;
 import android.widget.Toast;
+import com.klinker.android.logger.Log;
 
 public final class SqliteWrapper {
     private static final String TAG = "SqliteWrapper";

@@ -16,10 +16,9 @@
 
 package com.android.mms.layout;
 
-import com.android.mms.logs.LogTag;
-
 import android.content.Context;
 import android.content.res.Configuration;
+import com.android.mms.logs.LogTag;
 import com.klinker.android.logger.Log;
 
 /**

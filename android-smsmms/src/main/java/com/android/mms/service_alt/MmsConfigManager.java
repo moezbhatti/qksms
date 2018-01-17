@@ -24,7 +24,6 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
-import android.telephony.SubscriptionManager.OnSubscriptionsChangedListener;
 import android.util.ArrayMap;
 import com.klinker.android.logger.Log;
 

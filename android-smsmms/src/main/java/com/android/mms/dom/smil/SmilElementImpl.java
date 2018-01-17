@@ -17,10 +17,9 @@
 
 package com.android.mms.dom.smil;
 
+import com.android.mms.dom.ElementImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.smil.SMILElement;
-
-import com.android.mms.dom.ElementImpl;
 
 public class SmilElementImpl extends ElementImpl implements SMILElement {
     /**

@@ -16,7 +16,11 @@
 
 package com.google.android.collect;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Provides static methods for creating mutable {@code Set} instances easily and

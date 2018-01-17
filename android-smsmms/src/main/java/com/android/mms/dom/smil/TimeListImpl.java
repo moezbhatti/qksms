@@ -17,10 +17,10 @@
 
 package com.android.mms.dom.smil;
 
-import java.util.ArrayList;
-
 import org.w3c.dom.smil.Time;
 import org.w3c.dom.smil.TimeList;
+
+import java.util.ArrayList;
 
 public class TimeListImpl implements TimeList {
     private final ArrayList<Time> mTimes;

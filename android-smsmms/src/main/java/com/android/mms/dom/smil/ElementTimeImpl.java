@@ -17,16 +17,14 @@
 package com.android.mms.dom.smil;
 
 import com.android.mms.logs.LogTag;
-
-import java.util.ArrayList;
-
+import com.klinker.android.logger.Log;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.smil.ElementTime;
 import org.w3c.dom.smil.SMILElement;
 import org.w3c.dom.smil.Time;
 import org.w3c.dom.smil.TimeList;
 
-import com.klinker.android.logger.Log;
+import java.util.ArrayList;
 
 public abstract class ElementTimeImpl implements ElementTime {
     private static final String TAG = LogTag.TAG;

@@ -16,17 +16,15 @@
 
 package com.android.mms.dom.smil;
 
+import com.android.mms.dom.events.EventImpl;
+import com.android.mms.logs.LogTag;
+import com.klinker.android.logger.Log;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.events.DocumentEvent;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.smil.ElementTime;
 import org.w3c.dom.smil.SMILMediaElement;
 import org.w3c.dom.smil.TimeList;
-
-import com.klinker.android.logger.Log;
-
-import com.android.mms.logs.LogTag;
-import com.android.mms.dom.events.EventImpl;
 
 public class SmilMediaElementImpl extends SmilElementImpl implements
         SMILMediaElement {

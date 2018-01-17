@@ -16,16 +16,14 @@
 
 package com.android.mms.dom.smil.parser;
 
+import com.android.mms.dom.smil.SmilDocumentImpl;
+import com.android.mms.logs.LogTag;
+import com.klinker.android.logger.Log;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.smil.SMILDocument;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-
-import com.klinker.android.logger.Log;
-
-import com.android.mms.logs.LogTag;
-import com.android.mms.dom.smil.SmilDocumentImpl;
 
 public class SmilContentHandler extends DefaultHandler {
     private static final String TAG = LogTag.TAG;

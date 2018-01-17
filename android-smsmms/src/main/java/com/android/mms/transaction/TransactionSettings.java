@@ -20,13 +20,11 @@ import android.content.Context;
 import android.net.NetworkUtilsHelper;
 import android.provider.Telephony;
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
-
 import com.android.mms.MmsConfig;
+import com.android.mms.logs.LogTag;
+import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Transaction;
 import com.klinker.android.send_message.Utils;
-
-import com.android.mms.logs.LogTag;
 
 /**
  * Container of transaction settings. Instances of this class are contained

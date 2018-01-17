@@ -16,13 +16,14 @@
 
 package com.android.mms.transaction;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.net.SocketException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
-
+import android.content.Context;
+import android.net.http.AndroidHttpClient;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.util.Config;
+import com.android.mms.MmsConfig;
+import com.android.mms.logs.LogTag;
+import com.klinker.android.logger.Log;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
@@ -35,15 +36,12 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 
-import android.content.Context;
-import android.net.http.AndroidHttpClient;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
-import android.util.Config;
-import com.klinker.android.logger.Log;
-
-import com.android.mms.logs.LogTag;
-import com.android.mms.MmsConfig;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.SocketException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Locale;
 
 public class HttpUtils {
     private static final String TAG = LogTag.TRANSACTION;

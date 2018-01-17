@@ -17,11 +17,11 @@
 
 package com.android.mms.dom;
 
-import java.util.Vector;
-
 import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import java.util.Vector;
 
 public class NamedNodeMapImpl implements NamedNodeMap {
 

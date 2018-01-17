@@ -28,9 +28,8 @@ import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
 import android.provider.Telephony.Threads;
 import android.telephony.TelephonyManager;
-
-import com.android.mms.logs.LogTag;
 import com.android.mms.MmsConfig;
+import com.android.mms.logs.LogTag;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.GenericPdu;

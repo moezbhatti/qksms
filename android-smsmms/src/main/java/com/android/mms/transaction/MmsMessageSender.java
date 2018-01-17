@@ -26,8 +26,6 @@ import android.preference.PreferenceManager;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.MmsSms;
 import android.provider.Telephony.MmsSms.PendingMessages;
-import com.klinker.android.logger.Log;
-
 import com.android.mms.logs.LogTag;
 import com.android.mms.util.SendingProgressTokenManager;
 import com.google.android.mms.InvalidHeaderValueException;
@@ -39,6 +37,7 @@ import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.ReadRecInd;
 import com.google.android.mms.pdu_alt.SendReq;
 import com.google.android.mms.util_alt.SqliteWrapper;
+import com.klinker.android.logger.Log;
 
 public class MmsMessageSender implements MessageSender {
     private static final String TAG = LogTag.TAG;

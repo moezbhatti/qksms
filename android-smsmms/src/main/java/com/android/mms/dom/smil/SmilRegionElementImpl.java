@@ -17,12 +17,10 @@
 package com.android.mms.dom.smil;
 
 import com.android.mms.logs.LogTag;
-
+import com.klinker.android.logger.Log;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.smil.SMILDocument;
 import org.w3c.dom.smil.SMILRegionElement;
-
-import com.klinker.android.logger.Log;
 
 public class SmilRegionElementImpl extends SmilElementImpl implements
         SMILRegionElement {

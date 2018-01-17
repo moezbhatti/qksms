@@ -18,8 +18,8 @@ package com.google.android.mms.util_alt;
 import android.content.Context;
 import android.drm.DrmConvertedStatus;
 import android.drm.DrmManagerClient;
-import com.klinker.android.logger.Log;
 import android.provider.Downloads;
+import com.klinker.android.logger.Log;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
