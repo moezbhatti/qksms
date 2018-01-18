@@ -21,6 +21,7 @@ package interactor
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.telephony.SmsManager
 import com.klinker.android.send_message.Message
@@ -30,11 +31,10 @@ import com.klinker.android.send_message.Transaction
 import com.mlsdev.rximagepicker.RxImageConverters
 import common.util.Preferences
 import data.repository.MessageRepository
-import id.zelory.compressor.Compressor
 import io.reactivex.Flowable
 import presentation.receiver.MessageDeliveredReceiver
 import presentation.receiver.MessageSentReceiver
-import java.io.File
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
@@ -78,29 +78,39 @@ class SendMessage @Inject constructor(
     }
 
     private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Uri>) {
-        val settings = Settings().apply {
-        }
-
-
+        val settings = Settings()
         val message = Message(body, addresses.toTypedArray())
+
         attachments
-                .map { uri ->
-                    val file = File(context.cacheDir, "${System.currentTimeMillis()}.jpeg")
-                    RxImageConverters.uriToFile(context, uri, file).blockingFirst()
-                }
-                .map { file ->
-                    Compressor(context)
-                            .setMaxHeight(1920)
-                            .setMaxHeight(1920)
-                            .setQuality(60)
-                            .compressToBitmap(file)
-                }
-                .forEach { bitmap ->
-                    message.addImage(bitmap)
-                }
+                .map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
+                .map { bitmap -> shrink(bitmap, 1000 * 1024) }
+                .forEach { bitmap -> message.addMedia(bitmap, "image/jpeg") }
 
         val transaction = Transaction(context, settings)
         transaction.sendNewMessage(message, threadId)
+    }
+
+    private fun shrink(src: Bitmap, maxBytes: Long): ByteArray {
+        var step = 0.0
+        val factor = 0.5
+        val quality = 60
+
+        val height = src.height
+        val width = src.width
+
+        val stream = ByteArrayOutputStream()
+        src.compress(Bitmap.CompressFormat.JPEG, quality, stream)
+
+        while (maxBytes > 0 && stream.size() > maxBytes) {
+            step++
+            val scale = Math.pow(factor, step)
+
+            stream.reset()
+            Bitmap.createScaledBitmap(src, (width * scale).toInt(), (height * scale).toInt(), false)
+                    .compress(Bitmap.CompressFormat.JPEG, quality, stream)
+        }
+
+        return stream.toByteArray()
     }
 
 }
