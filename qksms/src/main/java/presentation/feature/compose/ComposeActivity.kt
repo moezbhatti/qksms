@@ -20,7 +20,6 @@ package presentation.feature.compose
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
@@ -217,7 +216,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
         }
 
         if (messageAdapter.data !== state.messages) {
-            messageAdapter.updateData(state.messages)
+            messageAdapter.data = state.messages
         }
 
         attachments.setVisible(state.attachments.isNotEmpty())

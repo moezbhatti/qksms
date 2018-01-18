@@ -20,6 +20,7 @@ package presentation.feature.compose
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
 import common.util.extensions.setVisible
 import data.model.Contact
+import data.model.Conversation
 import data.model.Message
 import data.model.PhoneNumber
 import io.reactivex.disposables.CompositeDisposable
@@ -40,6 +42,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmList
 import io.realm.RealmRecyclerViewAdapter
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import presentation.common.base.QkViewHolder
 import java.util.concurrent.TimeUnit
@@ -58,7 +61,16 @@ class MessagesAdapter @Inject constructor(
 
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
 
+    var data: Pair<Conversation, RealmResults<Message>>? = null
+        set(value) {
+            field = value
+            people.clear()
+            contactMap.clear()
+            updateData(value?.second)
+        }
+
     private val people = ArrayList<String>()
+    private val contactMap = HashMap<String, Contact>()
     private val selected = ArrayList<Long>()
     private val disposables = CompositeDisposable()
 
@@ -93,8 +105,16 @@ class MessagesAdapter @Inject constructor(
         }
 
         if (absViewType != VIEW_TYPE_ME) {
-            val number = PhoneNumber(address = people[absViewType - 2])
-            view.avatar.contact = Contact(numbers = RealmList(number))
+            val address = people[absViewType - 2]
+            if (!contactMap.containsKey(address)) {
+                val contact = data?.first?.recipients?.mapNotNull { it.contact } // Map the conversation to its contacts
+                        ?.firstOrNull { it.numbers.any { PhoneNumberUtils.compare(it.address, address) } } // See if any of the phone numbers match
+                        ?: Contact(numbers = RealmList(PhoneNumber(address = address))) // Fallback to a fake contact
+
+                contactMap.put(address, contact)
+            }
+
+            view.avatar.contact = contactMap[address]
         }
 
         return QkViewHolder(view)
@@ -143,6 +163,7 @@ class MessagesAdapter @Inject constructor(
             message.isSending() -> context.getString(R.string.message_status_sending)
             message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
+            !message.isMe() && data?.first?.recipients?.size ?: 0 > 1 -> "$timestamp • ${contactMap[message.address]?.name}"
             else -> timestamp
         }
 

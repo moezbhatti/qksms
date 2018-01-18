@@ -147,8 +147,11 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         messages = conversation
                 .distinctUntilChanged()
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { conversation -> messageRepo.getMessages(conversation.id) }
-                .doOnNext { messages -> newState { it.copy(messages = messages) } }
+                .map { conversation ->
+                    val messages = messageRepo.getMessages(conversation.id)
+                    newState { it.copy(messages = Pair(conversation, messages)) }
+                    messages
+                }
                 .switchMap { messages -> messages.asObservable() }
 
         disposables += sendMessage
