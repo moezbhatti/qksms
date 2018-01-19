@@ -114,8 +114,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.mms -> prefs.mms.set(!prefs.mms.get())
 
-                        R.id.mmsSize -> {
-                        }
+                        R.id.mmsSize -> view.showMmsSizePicker()
 
                         R.id.sync -> {
                             newState { it.copy(syncing = true) }

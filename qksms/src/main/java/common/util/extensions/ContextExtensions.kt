@@ -30,3 +30,7 @@ fun Context.getColorCompat(colorRes: Int): Int {
 fun Context.makeToast(@StringRes res: Int, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, res, duration).show()
 }
+
+fun Context.makeToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, text, duration).show()
+}

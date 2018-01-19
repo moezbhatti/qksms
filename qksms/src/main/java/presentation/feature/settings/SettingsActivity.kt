@@ -34,6 +34,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.extensions.dpToPx
+import common.util.extensions.makeToast
 import common.util.extensions.setVisible
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -49,6 +50,7 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val themeSelectedIntent: Observable<Int> by lazy { themeAdapter.colorSelected }
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
+    override val mmsSizeSelectedIntent: Subject<Int> = PublishSubject.create()
 
     // TODO remove this
     private val progressDialog by lazy {
@@ -168,6 +170,10 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, default)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
         startActivityForResult(intent, 123)
+    }
+
+    override fun showMmsSizePicker() {
+        makeToast("Max MMS size")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

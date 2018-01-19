@@ -29,6 +29,8 @@ interface SettingsView : QkView<SettingsState> {
     val preferenceClickIntent: Subject<PreferenceView>
     val themeSelectedIntent: Observable<Int>
     val ringtoneSelectedIntent: Observable<String>
+    val mmsSizeSelectedIntent: Observable<Int>
 
     fun showRingtonePicker(default: Uri)
+    fun showMmsSizePicker()
 }

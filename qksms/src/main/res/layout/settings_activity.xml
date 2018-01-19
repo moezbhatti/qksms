@@ -122,7 +122,7 @@
                     android:id="@+id/mmsSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:title="@string/settings_mms_size_title" />
 
                 <presentation.common.widget.PreferenceView
