@@ -36,6 +36,6 @@ class Preferences @Inject constructor(rxPrefs: RxSharedPreferences) {
     val delivery = rxPrefs.getBoolean("delivery", false)
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mms = rxPrefs.getBoolean("mms", true)
-    val mmsSize = rxPrefs.getLong("mmsSize", -1)
+    val mmsSize = rxPrefs.getInteger("mmsSize", 100)
 
 }

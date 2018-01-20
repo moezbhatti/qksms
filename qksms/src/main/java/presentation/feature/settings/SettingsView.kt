@@ -33,4 +33,5 @@ interface SettingsView : QkView<SettingsState> {
 
     fun showRingtonePicker(default: Uri)
     fun showMmsSizePicker()
+    fun dismissMmsSizePicker()
 }

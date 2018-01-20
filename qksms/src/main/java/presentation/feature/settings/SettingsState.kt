@@ -31,5 +31,5 @@ data class SettingsState(
         val splitSmsEnabled: Boolean = false,
         val stripUnicodeEnabled: Boolean = false,
         val mmsEnabled: Boolean = true,
-        val maxMmsSize: String = ""
+        val maxMmsSize: Int = 100
 )

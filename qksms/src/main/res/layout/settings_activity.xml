@@ -123,6 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="visible"
+                    app:summary="@string/settings_mms_size_summary"
                     app:title="@string/settings_mms_size_title" />
 
                 <presentation.common.widget.PreferenceView

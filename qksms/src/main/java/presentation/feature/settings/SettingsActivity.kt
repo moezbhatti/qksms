@@ -26,6 +26,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
@@ -34,23 +35,27 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.extensions.dpToPx
-import common.util.extensions.makeToast
 import common.util.extensions.setVisible
+import data.model.MenuItem
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
+import presentation.common.MenuItemAdapter
 import presentation.common.base.QkActivity
 import presentation.common.widget.PreferenceView
+import javax.inject.Inject
 
 class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
+
+    @Inject lateinit var menuItemAdapter: MenuItemAdapter
 
     override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val themeSelectedIntent: Observable<Int> by lazy { themeAdapter.colorSelected }
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
-    override val mmsSizeSelectedIntent: Subject<Int> = PublishSubject.create()
+    override val mmsSizeSelectedIntent: Subject<Int> by lazy { menuItemAdapter.menuItemClicks }
 
     // TODO remove this
     private val progressDialog by lazy {
@@ -103,6 +108,27 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
                     -0x50506, -0xa0a0b, -0x111112, -0x1f1f20, -0x424243, -0x616162, -0x8a8a8b, -0x9e9e9f, -0xbdbdbe, -0xdededf, -0x1000000, -0x1,
                     -0x13100f, -0x13100f, -0x4f413b, -0x6f5b52, -0x876f64, -0x9f8275, -0xab9186, -0xbaa59c, -0xc8b8b1, -0xd9cdc8)
         }
+    }
+
+    private val mmsSizeDialog by lazy {
+        menuItemAdapter.data = arrayListOf(
+                MenuItem(R.string.menu_mms_size_100kb, 100),
+                MenuItem(R.string.menu_mms_size_200kb, 200),
+                MenuItem(R.string.menu_mms_size_300kb, 300),
+                MenuItem(R.string.menu_mms_size_600kb, 600),
+                MenuItem(R.string.menu_mms_size_1000kb, 1000),
+                MenuItem(R.string.menu_mms_size_no_limit, 0))
+
+        val recyclerView = RecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = menuItemAdapter
+        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
+        AlertDialog.Builder(this)
+                .setTitle(R.string.settings_mms_size_title)
+                .setMessage(R.string.settings_mms_size_summary)
+                .setNegativeButton(R.string.button_cancel, null)
+                .setView(recyclerView)
+                .create()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,7 +186,7 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
         mms.checkbox.isChecked = state.mmsEnabled
 
-        mmsSize.summary = state.maxMmsSize
+        menuItemAdapter.selectedItem = state.maxMmsSize
     }
 
     override fun showRingtonePicker(default: Uri) {
@@ -172,9 +198,9 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         startActivityForResult(intent, 123)
     }
 
-    override fun showMmsSizePicker() {
-        makeToast("Max MMS size")
-    }
+    override fun showMmsSizePicker() = mmsSizeDialog.show()
+
+    override fun dismissMmsSizePicker() = mmsSizeDialog.dismiss()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

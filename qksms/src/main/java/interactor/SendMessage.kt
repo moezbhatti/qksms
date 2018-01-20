@@ -83,14 +83,14 @@ class SendMessage @Inject constructor(
 
         attachments
                 .map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
-                .map { bitmap -> shrink(bitmap, 1000 * 1024) }
+                .map { bitmap -> shrink(bitmap, prefs.mmsSize.get() * 1024) }
                 .forEach { bitmap -> message.addMedia(bitmap, "image/jpeg") }
 
         val transaction = Transaction(context, settings)
         transaction.sendNewMessage(message, threadId)
     }
 
-    private fun shrink(src: Bitmap, maxBytes: Long): ByteArray {
+    private fun shrink(src: Bitmap, maxBytes: Int): ByteArray {
         var step = 0.0
         val factor = 0.5
         val quality = 60

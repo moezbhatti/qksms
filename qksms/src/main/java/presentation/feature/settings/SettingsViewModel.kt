@@ -77,7 +77,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         }
 
         disposables += prefs.mmsSize.asObservable().subscribe { maxMmsSize ->
-            newState { it.copy(maxMmsSize = maxMmsSize.toString()) }
+            newState { it.copy(maxMmsSize = maxMmsSize) }
         }
 
         disposables += fullSync
@@ -135,5 +135,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         view.ringtoneSelectedIntent
                 .autoDisposable(view.scope())
                 .subscribe { ringtone -> prefs.ringtone.set(ringtone) }
+
+        view.mmsSizeSelectedIntent
+                .doOnNext { view.dismissMmsSizePicker() }
+                .autoDisposable(view.scope())
+                .subscribe { prefs.mmsSize.set(it) }
     }
 }
