@@ -23,6 +23,7 @@ import android.content.Intent
 import android.net.Uri
 import android.telephony.PhoneNumberUtils
 import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
@@ -210,16 +211,36 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
 
         // Backspaces should delete the most recent contact if there's no text input
+        // Close the activity if user presses back
         view.queryKeyEventIntent
                 .filter { event -> event.action == KeyEvent.ACTION_DOWN }
-                .filter { event -> event.keyCode == KeyEvent.KEYCODE_DEL }
-                .withLatestFrom(selectedContacts, view.queryChangedIntent, { _, contacts, query ->
-                    if (contacts.isNotEmpty() && query.isEmpty()) {
-                        contactsReducer.onNext { it.dropLast(1) }
+                .withLatestFrom(selectedContacts, view.queryChangedIntent, { event, contacts, query ->
+                    when (event.keyCode) {
+                        KeyEvent.KEYCODE_DEL -> {
+                            if (contacts.isNotEmpty() && query.isEmpty()) {
+                                contactsReducer.onNext { it.dropLast(1) }
+                            }
+                        }
+
+                        KeyEvent.KEYCODE_BACK -> {
+                            newState { it.copy(hasError = true) }
+                        }
                     }
+
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        // Enter the first contact suggestion if the enter button is pressed
+        view.queryEditorActionIntent
+                .filter { actionId -> actionId == EditorInfo.IME_ACTION_DONE }
+                .withLatestFrom(state, { _, state -> state })
+                .autoDisposable(view.scope())
+                .subscribe { state ->
+                    state.contacts.firstOrNull()?.let { contact ->
+                        contactsReducer.onNext { contacts -> contacts + contact }
+                    }
+                }
 
         // Update the list of selected contacts when a new contact is selected or an existing one is deselected
         Observable.merge(

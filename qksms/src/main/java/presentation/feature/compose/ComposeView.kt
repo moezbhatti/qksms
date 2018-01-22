@@ -31,6 +31,7 @@ interface ComposeView : QkView<ComposeState> {
     val activityVisibleIntent: Observable<Boolean>
     val queryChangedIntent: Observable<CharSequence>
     val queryKeyEventIntent: Observable<KeyEvent>
+    val queryEditorActionIntent: Observable<Int>
     val chipSelectedIntent: Subject<Contact>
     val chipDeletedIntent: Subject<Contact>
     val menuReadyIntent: Observable<Unit>

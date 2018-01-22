@@ -57,6 +57,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val queryKeyEventIntent: Observable<KeyEvent> by lazy { chipsAdapter.keyEvents }
+    override val queryEditorActionIntent: Observable<Int> by lazy { chipsAdapter.actions }
     override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }

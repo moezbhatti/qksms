@@ -27,6 +27,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.keys
+import com.jakewharton.rxbinding2.widget.editorActions
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import common.util.Colors
@@ -54,6 +55,7 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
     val chipDeleted: PublishSubject<Contact> = PublishSubject.create<Contact>()
     val textChanges = editText.textChanges()
     val keyEvents = editText.keys()
+    val actions = editText.editorActions()
 
     init {
         val wrap = ViewGroup.LayoutParams.WRAP_CONTENT
