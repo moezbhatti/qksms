@@ -20,7 +20,6 @@ package presentation.feature.compose
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +43,8 @@ import javax.inject.Inject
 class ChipsAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<Contact>() {
 
     companion object {
-        private val TYPE_EDIT_TEXT = 0
-        private val TYPE_ITEM = 1
+        private const val TYPE_EDIT_TEXT = 0
+        private const val TYPE_ITEM = 1
     }
 
     private val hint: String = context.getString(R.string.title_compose)
@@ -54,6 +53,7 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
     var view: RecyclerView? = null
     val chipDeleted: PublishSubject<Contact> = PublishSubject.create<Contact>()
     val textChanges = editText.textChanges()
+    val keyEvents = editText.keys()
 
     init {
         val wrap = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -63,14 +63,6 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
         }
 
         editText.hint = hint
-        editText.keys()
-                .filter { event -> event.action == KeyEvent.ACTION_DOWN }
-                .filter { event -> event.keyCode == KeyEvent.KEYCODE_DEL }
-                .subscribe {
-                    if (itemCount > 1 && editText.text.isEmpty()) {
-                        chipDeleted.onNext(getItem(itemCount - 2))
-                    }
-                }
     }
 
     override fun onDatasetChanged() {

@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.telephony.PhoneNumberUtils
+import android.view.KeyEvent
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
@@ -207,6 +208,18 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .subscribeOn(Schedulers.computation())
                 .autoDisposable(view.scope())
                 .subscribe { contacts -> newState { it.copy(contacts = contacts) } }
+
+        // Backspaces should delete the most recent contact if there's no text input
+        view.queryKeyEventIntent
+                .filter { event -> event.action == KeyEvent.ACTION_DOWN }
+                .filter { event -> event.keyCode == KeyEvent.KEYCODE_DEL }
+                .withLatestFrom(selectedContacts, view.queryChangedIntent, { _, contacts, query ->
+                    if (contacts.isNotEmpty() && query.isEmpty()) {
+                        contactsReducer.onNext { it.dropLast(1) }
+                    }
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
 
         // Update the list of selected contacts when a new contact is selected or an existing one is deselected
         Observable.merge(

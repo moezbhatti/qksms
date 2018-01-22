@@ -25,6 +25,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -55,6 +56,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val viewModelClass = ComposeViewModel::class
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
+    override val queryKeyEventIntent: Observable<KeyEvent> by lazy { chipsAdapter.keyEvents }
     override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }

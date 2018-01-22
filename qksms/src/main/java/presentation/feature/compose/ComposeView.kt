@@ -18,8 +18,8 @@
  */
 package presentation.feature.compose
 
-import android.graphics.Bitmap
 import android.net.Uri
+import android.view.KeyEvent
 import data.model.Contact
 import data.model.Message
 import io.reactivex.Observable
@@ -30,6 +30,7 @@ interface ComposeView : QkView<ComposeState> {
 
     val activityVisibleIntent: Observable<Boolean>
     val queryChangedIntent: Observable<CharSequence>
+    val queryKeyEventIntent: Observable<KeyEvent>
     val chipSelectedIntent: Subject<Contact>
     val chipDeletedIntent: Subject<Contact>
     val menuReadyIntent: Observable<Unit>
