@@ -25,10 +25,10 @@
     android:background="@drawable/ripple"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
+    android:paddingBottom="12dp"
     android:paddingEnd="16dp"
     android:paddingStart="16dp"
-    android:paddingTop="8dp">
+    android:paddingTop="12dp">
 
     <presentation.common.widget.GroupAvatarView
         android:id="@+id/avatars"
