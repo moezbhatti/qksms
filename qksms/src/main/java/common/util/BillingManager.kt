@@ -40,7 +40,6 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context).setListener(this).build()
     private var isServiceConnected = false
-    private var billingClientResponseCode: Int? = null
 
     init {
         startServiceConnection {
@@ -75,7 +74,6 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
                     isServiceConnected = true
                     onSuccess()
                 }
-                billingClientResponseCode = billingResponseCode
             }
 
             override fun onBillingServiceDisconnected() {
