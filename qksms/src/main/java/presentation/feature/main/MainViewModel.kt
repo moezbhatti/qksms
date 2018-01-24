@@ -27,6 +27,7 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import common.util.BillingManager
 import common.util.filter.ConversationFilter
 import data.model.MenuItem
 import data.model.SyncLog
@@ -38,12 +39,14 @@ import io.reactivex.rxkotlin.withLatestFrom
 import io.realm.Realm
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var billingManager: BillingManager
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationFilter: ConversationFilter
     @Inject lateinit var messageRepo: MessageRepository
@@ -94,6 +97,10 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         }
 
         markAllSeen.execute(Unit)
+
+        billingManager.purchases.subscribe { purchases -> Timber.v("Purchases: $purchases") }
+        billingManager.iabs.subscribe { iabs -> Timber.v("IABs: $iabs") }
+        billingManager.subs.subscribe { subs -> Timber.v("Subs: $subs") }
     }
 
     override fun bindView(view: MainView) {
@@ -139,7 +146,8 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
-                        else -> {} // Do nothing
+                        else -> {
+                        } // Do nothing
                     }
                 }
                 .autoDisposable(view.scope())
