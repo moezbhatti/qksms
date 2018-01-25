@@ -35,7 +35,7 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
     val subs: Observable<List<SkuDetails>> = BehaviorSubject.create()
 
     private val iabSkus = listOf("remove_ads")
-    private val subSkus = listOf("qksms_plus", "qksms_plus_5", "qksms_plus_10")
+    private val subSkus = listOf("qksms_plus_3", "qksms_plus_5", "qksms_plus_10")
     private val purchaseList = mutableListOf<Purchase>()
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context).setListener(this).build()
@@ -100,9 +100,9 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
         }
     }
 
-    fun initiatePurchaseFlow(activity: Activity, skuId: String, oldSkus: ArrayList<String>, @BillingClient.SkuType billingType: String) {
+    fun initiatePurchaseFlow(activity: Activity) {
         executeServiceRequest {
-            val params = BillingFlowParams.newBuilder().setSku(skuId).setType(billingType).setOldSkus(oldSkus)
+            val params = BillingFlowParams.newBuilder().setSku("qksms_plus_3").setType(SkuType.SUBS)
             billingClient.launchBillingFlow(activity, params.build())
         }
     }
