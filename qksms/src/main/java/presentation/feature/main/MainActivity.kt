@@ -206,6 +206,8 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 menuItemAdapter.data = state.page.menu
+                empty.setText(R.string.inbox_empty_text)
+                empty.setVisible(state.page.empty)
             }
 
             is Archived -> {
@@ -214,6 +216,8 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = state.page.menu
+                empty.setText(R.string.archived_empty_text)
+                empty.setVisible(state.page.empty)
             }
 
             is Scheduled -> {
@@ -221,6 +225,8 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
+                empty.setText(R.string.scheduled_empty_text)
+                empty.setVisible(state.page.empty)
             }
 
             is Blocked -> {
@@ -228,6 +234,8 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
+                empty.setText(R.string.blocked_empty_text)
+                empty.setVisible(state.page.empty)
             }
         }
 

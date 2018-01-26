@@ -33,15 +33,19 @@ sealed class MainPage
 data class Inbox(
         val showClearButton: Boolean = false,
         val data: Flowable<List<InboxItem>>? = null,
+        val empty: Boolean = false,
         val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(
         val data: Flowable<List<InboxItem>>?,
+        val empty: Boolean = false,
         val menu: List<MenuItem> = ArrayList()) : MainPage()
 
 data class Scheduled(
-        val data: Any? = null) : MainPage()
+        val data: Any? = null,
+        val empty: Boolean = false) : MainPage()
 
 data class Blocked(
-        val data: Any? = null) : MainPage()
+        val data: Any? = null,
+        val empty: Boolean = false) : MainPage()

@@ -60,6 +60,11 @@
     <string name="drawer_settings">Settings</string>
     <string name="drawer_help">Help &amp; feedback</string>
 
+    <string name="inbox_empty_text">Your conversations will appear here</string>
+    <string name="archived_empty_text">Your archived conversations will appear here</string>
+    <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
+    <string name="blocked_empty_text">Your blocked senders will appear here</string>
+
     <string name="settings_default_sms_title">Default SMS app</string>
     <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
     <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>

@@ -28,6 +28,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.BillingManager
+import common.util.extensions.toFlowable
 import common.util.filter.ConversationFilter
 import data.model.MenuItem
 import data.model.SyncLog
@@ -56,7 +57,25 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var markUnarchived: MarkUnarchived
     @Inject lateinit var partialSync: PartialSync
 
-    private val conversations by lazy { messageRepo.getConversations() }
+    private val conversations by lazy {
+        messageRepo.getConversations()
+                .withLatestFrom(state.toFlowable(), { conversations, state ->
+                    (state.page as? Inbox)?.let { page ->
+                        newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
+                    }
+                    conversations
+                })
+    }
+
+    private val archivedConversations by lazy {
+        messageRepo.getConversations(true)
+                .withLatestFrom(state.toFlowable(), { conversations, state ->
+                    (state.page as? Archived)?.let { page ->
+                        newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
+                    }
+                    conversations
+                })
+    }
 
     private val menuArchive = MenuItem(R.string.menu_archive, 0)
     private val menuUnarchive = MenuItem(R.string.menu_unarchive, 1)
@@ -143,7 +162,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .doOnNext {
                     when (it) {
                         DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
-                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
+                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(archivedConversations)) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
                         else -> {
