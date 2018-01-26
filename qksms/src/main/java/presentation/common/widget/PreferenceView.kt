@@ -23,10 +23,18 @@ import android.support.v7.widget.LinearLayoutCompat
 import android.util.AttributeSet
 import android.view.View
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.scope
+import com.uber.autodispose.kotlin.autoDisposable
+import common.di.appComponent
+import common.util.Colors
+import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.preference_view.view.*
+import javax.inject.Inject
 
 class PreferenceView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayoutCompat(context, attrs) {
+
+    @Inject lateinit var colors: Colors
 
     var title: String? = null
         set(value) {
@@ -42,6 +50,8 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
     init {
+        appComponent.inject(this)
+
         View.inflate(context, R.layout.preference_view, this)
         setBackgroundResource(R.drawable.ripple)
         orientation = VERTICAL
@@ -49,11 +59,27 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView)?.run {
             title = getString(R.styleable.PreferenceView_title)
             summary = getString(R.styleable.PreferenceView_summary)
-            getResourceId(R.styleable.PreferenceView_widget, -1).takeIf { it != -1 }?.run {
-                View.inflate(context, this, widgetFrame)
+
+            // If there's a custom view used for the preference's widget, inflate it
+            getResourceId(R.styleable.PreferenceView_widget, -1).takeIf { it != -1 }?.let { id ->
+                View.inflate(context, id, widgetFrame)
             }
+
+            // If an icon is being used, set up the icon view
+            getResourceId(R.styleable.PreferenceView_icon, -1).takeIf { it != -1 }?.let { id ->
+                icon.setVisible(true)
+                icon.setImageResource(id)
+            }
+
             recycle()
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        colors.textSecondary
+                .autoDisposable(scope())
+                .subscribe { icon.setTint(it) }
     }
 
 }

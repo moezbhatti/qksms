@@ -58,6 +58,7 @@ interface AppComponent {
 
     fun inject(view: AvatarView)
     fun inject(view: DetailedChipView)
+    fun inject(view: PreferenceView)
     fun inject(view: QkEditText)
     fun inject(view: QkSwitch)
     fun inject(view: QkTextView)
