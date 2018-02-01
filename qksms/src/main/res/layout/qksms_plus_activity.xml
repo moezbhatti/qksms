@@ -83,6 +83,49 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp" />
 
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/thanks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/rounded_rectangle_2dp"
+                android:padding="16dp"
+                tools:backgroundTint="@color/separatorLight">
+
+                <ImageView
+                    android:id="@+id/thanksIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_favorite_black_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <presentation.common.widget.QkTextView
+                    android:id="@+id/thanksTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/qksms_plus_thanks_title"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/thanksIcon"
+                    app:textColor="primary" />
+
+                <presentation.common.widget.QkTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qksms_plus_thanks_summary"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/thanksTitle"
+                    app:layout_constraintStart_toStartOf="@id/thanksTitle"
+                    app:layout_constraintTop_toBottomOf="@id/thanksTitle"
+                    app:textColor="secondary" />
+
+            </android.support.constraint.ConstraintLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -234,49 +277,6 @@
                 </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/thanks"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_rectangle_2dp"
-                android:padding="16dp"
-                tools:backgroundTint="@color/separatorLight">
-
-                <ImageView
-                    android:id="@+id/thanksIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_favorite_black_24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <presentation.common.widget.QkTextView
-                    android:id="@+id/thanksTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:text="@string/qksms_plus_thanks_title"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/thanksIcon"
-                    app:textColor="primary" />
-
-                <presentation.common.widget.QkTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/qksms_plus_thanks_summary"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="@id/thanksTitle"
-                    app:layout_constraintStart_toStartOf="@id/thanksTitle"
-                    app:layout_constraintTop_toBottomOf="@id/thanksTitle"
-                    app:textColor="secondary" />
-
-            </android.support.constraint.ConstraintLayout>
 
             <presentation.common.widget.Separator
                 android:layout_width="match_parent"
