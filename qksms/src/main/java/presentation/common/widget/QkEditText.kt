@@ -26,6 +26,7 @@ import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
+import common.util.FontProvider
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -38,12 +39,14 @@ import javax.inject.Inject
 class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : EditText(context, attrs) {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var fontProvider: FontProvider
 
     private var textColorObservable: Observable<Int>? = null
     private var textColorHintObservable: Observable<Int>? = null
 
     init {
         appComponent.inject(this)
+        fontProvider.getLato { setTypeface(it, typeface.style) }
 
         context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
             textColorObservable = when (getInt(R.styleable.QkEditText_textColor, -1)) {

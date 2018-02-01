@@ -18,6 +18,7 @@
  */
 package presentation.feature.plus
 
+import android.graphics.Typeface
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
@@ -25,14 +26,18 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.BillingManager
+import common.util.FontProvider
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
 import presentation.common.base.QkActivity
 import presentation.common.widget.QkTextView
+import javax.inject.Inject
 
 class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
+
+    @Inject lateinit var fontProvider: FontProvider
 
     override val viewModelClass = PlusViewModel::class
     override val supporterSelectedIntent by lazy { supporter.clicks() }
@@ -46,6 +51,12 @@ class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
         setTitle(R.string.title_qksms_plus)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
+
+        fontProvider.getLato {
+            val typeface = Typeface.create(it, Typeface.BOLD)
+            collapsingToolbar.setCollapsedTitleTypeface(typeface)
+            collapsingToolbar.setExpandedTitleTypeface(typeface)
+        }
 
         colors.textPrimary
                 .autoDisposable(scope())

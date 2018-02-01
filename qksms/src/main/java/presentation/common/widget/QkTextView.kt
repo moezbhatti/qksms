@@ -24,6 +24,7 @@ import android.util.AttributeSet
 import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.Colors
+import common.util.FontProvider
 import common.util.extensions.getColorCompat
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
@@ -42,6 +43,7 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var fontProvider: FontProvider
 
     private var textColorDisposable: Disposable? = null
     private var textColorObservable: Observable<Int>? = null
@@ -64,6 +66,7 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
+            fontProvider.getLato { setTypeface(it, typeface.style) }
         }
 
         context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
