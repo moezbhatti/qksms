@@ -16,38 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.common.widget
+package presentation.feature.themepicker
 
-import android.content.Context
-import android.util.AttributeSet
-import android.view.View
-import com.moez.QKSMS.R
-import com.uber.autodispose.android.scope
+import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
-import common.util.Colors
-import common.util.extensions.getColorCompat
+import common.util.Preferences
+import io.reactivex.rxkotlin.plusAssign
+import presentation.common.base.QkViewModel
 import javax.inject.Inject
 
-class Separator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class ThemePickerViewModel : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
 
-    @Inject lateinit var colors: Colors
+    @Inject lateinit var prefs: Preferences
 
     init {
-        if (!isInEditMode) {
-            appComponent.inject(this)
-        }
+        appComponent.inject(this)
+
+        disposables += prefs.theme.asObservable()
+                .subscribe { color -> newState { it.copy(selectedColor = color) } }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
+    override fun bindView(view: ThemePickerView) {
+        super.bindView(view)
 
-        if (isInEditMode) {
-            setBackgroundColor(context.getColorCompat(R.color.separatorLight))
-        } else {
-            colors.separator
-                    .autoDisposable(scope())
-                    .subscribe { color -> setBackgroundColor(color) }
-        }
+        view.themeSelectedIntent
+                .autoDisposable(view.scope())
+                .subscribe { color -> prefs.theme.set(color) }
     }
+
 }

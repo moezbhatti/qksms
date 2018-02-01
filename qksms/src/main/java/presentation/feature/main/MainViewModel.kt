@@ -27,7 +27,6 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
-import common.util.BillingManager
 import common.util.extensions.toFlowable
 import common.util.filter.ConversationFilter
 import data.model.MenuItem
@@ -40,14 +39,12 @@ import io.reactivex.rxkotlin.withLatestFrom
 import io.realm.Realm
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
     @Inject lateinit var context: Context
-    @Inject lateinit var billingManager: BillingManager
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationFilter: ConversationFilter
     @Inject lateinit var messageRepo: MessageRepository
@@ -116,10 +113,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         }
 
         markAllSeen.execute(Unit)
-
-        billingManager.purchases.subscribe { purchases -> Timber.v("Purchases: $purchases") }
-        billingManager.iabs.subscribe { iabs -> Timber.v("IABs: $iabs") }
-        billingManager.subs.subscribe { subs -> Timber.v("Subs: $subs") }
     }
 
     override fun bindView(view: MainView) {
@@ -157,6 +150,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         view.drawerItemIntent
                 .doOnNext { newState { it.copy(drawerOpen = false) } }
                 .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
+                .doOnNext { if (it == DrawerItem.PLUS) navigator.showQksmsPlusActivity() }
                 .doOnNext { if (it == DrawerItem.HELP) navigator.showSupport() }
                 .distinctUntilChanged()
                 .doOnNext {

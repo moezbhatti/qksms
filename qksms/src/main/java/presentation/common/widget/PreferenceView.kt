@@ -22,11 +22,13 @@ import android.content.Context
 import android.support.v7.widget.LinearLayoutCompat
 import android.util.AttributeSet
 import android.view.View
+import android.widget.TextView
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
+import common.util.extensions.getColorCompat
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.preference_view.view.*
@@ -39,18 +41,34 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
     var title: String? = null
         set(value) {
             field = value
-            titleView.text = value
+
+            if (isInEditMode) {
+                findViewById<TextView>(R.id.titleView).text = value
+            } else {
+                titleView.text = value
+            }
         }
 
     var summary: String? = null
         set(value) {
             field = value
-            summaryView.text = value
-            summaryView.setVisible(value?.isNotEmpty() == true)
+
+
+            if (isInEditMode) {
+                findViewById<TextView>(R.id.summaryView).run {
+                    text = value
+                    setVisible(value?.isNotEmpty() == true)
+                }
+            } else {
+                summaryView.text = value
+                summaryView.setVisible(value?.isNotEmpty() == true)
+            }
         }
 
     init {
-        appComponent.inject(this)
+        if (!isInEditMode) {
+            appComponent.inject(this)
+        }
 
         View.inflate(context, R.layout.preference_view, this)
         setBackgroundResource(R.drawable.ripple)
@@ -77,9 +95,14 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        colors.textSecondary
-                .autoDisposable(scope())
-                .subscribe { icon.setTint(it) }
+
+        if (isInEditMode) {
+            icon.setTint(context.getColorCompat(R.color.textSecondary))
+        } else {
+            colors.textSecondary
+                    .autoDisposable(scope())
+                    .subscribe { icon.setTint(it) }
+        }
     }
 
 }

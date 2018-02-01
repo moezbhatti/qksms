@@ -22,46 +22,101 @@ import android.content.Context
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import com.moez.QKSMS.R
-import com.uber.autodispose.android.scope
-import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
+import common.util.extensions.getColorCompat
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
     : AppCompatTextView(context, attrs) {
 
+    companion object {
+        const val COLOR_PRIMARY = 0
+        const val COLOR_SECONDARY = 1
+        const val COLOR_TERTIARY = 2
+        const val COLOR_PRIMARY_ON_THEME = 3
+        const val COLOR_SECONDARY_ON_THEME = 4
+        const val COLOR_TERTIARY_ON_THEME = 5
+    }
+
     @Inject lateinit var colors: Colors
 
+    private var textColorDisposable: Disposable? = null
     private var textColorObservable: Observable<Int>? = null
+        set(value) {
+            if (field !== value) {
+                field = value
+
+                if (isAttachedToWindow) {
+                    textColorDisposable?.let { disposable ->
+                        if (!disposable.isDisposed) {
+                            disposable.dispose()
+                        }
+                    }
+
+                    subscribeColorChanges()
+                }
+            }
+        }
 
     init {
-        appComponent.inject(this)
+        if (!isInEditMode) {
+            appComponent.inject(this)
+        }
 
         context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
-            textColorObservable = when (getInt(R.styleable.QkTextView_textColor, -1)) {
-                0 -> colors.textPrimary
-                1 -> colors.textSecondary
-                2 -> colors.textTertiary
-                3 -> colors.textPrimaryOnTheme
-                4 -> colors.textSecondaryOnTheme
-                5 -> colors.textTertiaryOnTheme
-                else -> null
+            val colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
+            if (isInEditMode) {
+                setTextColor(context.getColorCompat(when (colorAttr) {
+                    COLOR_PRIMARY -> R.color.textPrimary
+                    COLOR_SECONDARY -> R.color.textSecondary
+                    COLOR_TERTIARY -> R.color.textTertiary
+                    COLOR_PRIMARY_ON_THEME -> R.color.textPrimaryDark
+                    COLOR_SECONDARY_ON_THEME -> R.color.textSecondaryDark
+                    COLOR_TERTIARY_ON_THEME -> R.color.textTertiaryDark
+                    else -> R.color.textPrimary
+                }))
+            } else {
+                setColor(colorAttr)
             }
 
             recycle()
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        textColorObservable
-                ?.autoDisposable(scope())
+    fun setColor(colorAttr: Int) {
+        textColorObservable = when (colorAttr) {
+            COLOR_PRIMARY -> colors.textPrimary
+            COLOR_SECONDARY -> colors.textSecondary
+            COLOR_TERTIARY -> colors.textTertiary
+            COLOR_PRIMARY_ON_THEME -> colors.textPrimaryOnTheme
+            COLOR_SECONDARY_ON_THEME -> colors.textSecondaryOnTheme
+            COLOR_TERTIARY_ON_THEME -> colors.textTertiaryOnTheme
+            else -> null
+        }
+    }
+
+    private fun subscribeColorChanges() {
+        textColorDisposable = textColorObservable
                 ?.subscribe { color ->
                     setTextColor(color)
                     setLinkTextColor(color)
                 }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        if (textColorDisposable?.isDisposed != false) {
+            subscribeColorChanges()
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        textColorDisposable?.dispose()
     }
 
 }

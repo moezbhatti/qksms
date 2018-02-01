@@ -16,21 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.settings
+package presentation.feature.themepicker
 
-import android.net.Uri
 import io.reactivex.Observable
-import io.reactivex.subjects.Subject
 import presentation.common.base.QkView
-import presentation.common.widget.PreferenceView
 
-interface SettingsView : QkView<SettingsState> {
+interface ThemePickerView : QkView<ThemePickerState> {
 
-    val preferenceClickIntent: Subject<PreferenceView>
-    val ringtoneSelectedIntent: Observable<String>
-    val mmsSizeSelectedIntent: Observable<Int>
+    val themeSelectedIntent: Observable<Int>
 
-    fun showRingtonePicker(default: Uri)
-    fun showMmsSizePicker()
-    fun dismissMmsSizePicker()
 }

@@ -16,21 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.settings
+package presentation.feature.plus
 
-import android.net.Uri
+import common.util.BillingManager
 import io.reactivex.Observable
-import io.reactivex.subjects.Subject
 import presentation.common.base.QkView
-import presentation.common.widget.PreferenceView
 
-interface SettingsView : QkView<SettingsState> {
+interface PlusView : QkView<PlusState> {
 
-    val preferenceClickIntent: Subject<PreferenceView>
-    val ringtoneSelectedIntent: Observable<String>
-    val mmsSizeSelectedIntent: Observable<Int>
+    val supporterSelectedIntent: Observable<Unit>
+    val donorSelectedIntent: Observable<Unit>
+    val philanthropistSelectedIntent: Observable<Unit>
 
-    fun showRingtonePicker(default: Uri)
-    fun showMmsSizePicker()
-    fun dismissMmsSizePicker()
+    fun initiatePurchaseFlow(billingManager: BillingManager, sku: String)
+
 }

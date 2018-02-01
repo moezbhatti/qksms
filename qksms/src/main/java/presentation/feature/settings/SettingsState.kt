@@ -19,7 +19,6 @@
 package presentation.feature.settings
 
 data class SettingsState(
-        val selectingTheme: Boolean = false,
         val syncing: Boolean = false,
 
         val isDefaultSmsApp: Boolean = false,

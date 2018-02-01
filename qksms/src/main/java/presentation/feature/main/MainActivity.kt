@@ -74,6 +74,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 scheduled.clicks().map { DrawerItem.SCHEDULED },
                 blocked.clicks().map { DrawerItem.BLOCKED },
                 settings.clicks().map { DrawerItem.SETTINGS },
+                plus.clicks().map { DrawerItem.PLUS },
                 help.clicks().map { DrawerItem.HELP }))
     }
     override val conversationClickIntent by lazy { conversationsAdapter.clicks }
@@ -159,6 +160,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
                 .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }
                 .doOnNext { tintList -> blockedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
+                .doOnNext { tintList -> plusIcon.imageTintList = tintList }
                 .doOnNext { tintList -> helpIcon.imageTintList = tintList }
                 .autoDisposable(scope())
                 .subscribe()

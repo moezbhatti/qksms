@@ -17,25 +17,19 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <View
-        android:id="@+id/theme"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="center"
-        android:background="@drawable/circle"
-        tools:backgroundTint="@color/tools_theme" />
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/palette"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/check"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_check_black_24dp"
-        tools:tint="@color/textPrimaryDark" />
+    <presentation.common.widget.Separator
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
 
-</FrameLayout>
+</LinearLayout>

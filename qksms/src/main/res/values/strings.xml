@@ -24,8 +24,10 @@
     <string name="title_scheduled">Scheduled</string>
     <string name="title_blocked">Blocked</string>
     <string name="title_settings">Settings</string>
+    <string name="title_theme">Theme</string>
     <string name="title_conversations">Search inbox…</string>
     <string name="title_compose">Type a name or number</string>
+    <string name="title_qksms_plus">QKSMS+</string>
 
     <string name="setup_title">Love texting again</string>
     <string name="setup_summary">Make QKSMS your default SMS app</string>
@@ -58,6 +60,7 @@
     <string name="drawer_blocked">Blocked</string>
     <string name="drawer_more">More</string>
     <string name="drawer_settings">Settings</string>
+    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Help &amp; feedback</string>
 
     <string name="inbox_empty_text">Your conversations will appear here</string>
@@ -84,6 +87,36 @@
     <string name="settings_mms_size_summary">Compress the attachments in an MMS message</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+
+    <string name="qksms_plus_description_title">Pay what you like, unlock everything</string>
+    <string name="qksms_plus_description_summary">You can save a starving developer for as little as %s a year</string>
+    <string name="qksms_plus_option_supporter">Supporter</string>
+    <string name="qksms_plus_option_donor">Donor</string>
+    <string name="qksms_plus_option_philanthropist">Philanthropist</string>
+    <string name="qksms_plus_renewal_year">/year</string>
+    <string name="qksms_plus_upgrade">Upgrade to QKSMS+</string>
+    <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
+    <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
+    <string name="qksms_plus_themes_title">Premium themes</string>
+    <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
+    <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
+    <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
+    <string name="qksms_plus_backup_title">Message backup</string>
+    <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
+    <string name="qksms_plus_scheduled_title">Scheduled messages</string>
+    <string name="qksms_plus_scheduled_summary">Wait a few seconds before sending your message</string>
+    <string name="qksms_plus_delayed_title">Delayed sending</string>
+    <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
+    <string name="qksms_plus_night_title">Automatic night mode</string>
+    <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
+    <string name="qksms_plus_blacklist_title">Advanced blocking</string>
+    <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
+    <string name="qksms_plus_forward_title">Auto-forward</string>
+    <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
+    <string name="qksms_plus_respond_title">Auto-respond</string>
+    <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
+    <string name="qksms_plus_more_title">More</string>
+    <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
 
     <string name="settings_dialog_theme_title">Theme</string>
 

@@ -30,13 +30,21 @@ import javax.inject.Inject
 
 class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedListener {
 
-    val purchases: Observable<List<Purchase>> = BehaviorSubject.create()
-    val iabs: Observable<List<SkuDetails>> = BehaviorSubject.create()
-    val subs: Observable<List<SkuDetails>> = BehaviorSubject.create()
+    enum class UpgradeStatus { REGULAR, LEGACY, SUPPORTER, DONOR, PHILANTHROPIST }
 
-    private val iabSkus = listOf("remove_ads")
-    private val subSkus = listOf("qksms_plus_3", "qksms_plus_5", "qksms_plus_10")
+    companion object {
+        const val SKU_LEGACY = "remove_ads"
+        const val SKU_3 = "qksms_plus_3"
+        const val SKU_5 = "qksms_plus_5"
+        const val SKU_10 = "qksms_plus_10"
+    }
+
+    val subscriptions: Observable<List<SkuDetails>> = BehaviorSubject.create()
+    val plusStatus: Observable<UpgradeStatus>
+
+    private val subSkus = listOf(SKU_3, SKU_5, SKU_10)
     private val purchaseList = mutableListOf<Purchase>()
+    private val purchaseListObservable: Observable<List<Purchase>> = BehaviorSubject.create()
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context).setListener(this).build()
     private var isServiceConnected = false
@@ -46,6 +54,17 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
             queryPurchases()
             querySkuDetailsAsync()
         }
+
+        plusStatus = purchaseListObservable
+                .map { purchases ->
+                    when {
+                        purchases.any { it.sku == SKU_10 } -> UpgradeStatus.PHILANTHROPIST
+                        purchases.any { it.sku == SKU_5 } -> UpgradeStatus.DONOR
+                        purchases.any { it.sku == SKU_3 } -> UpgradeStatus.SUPPORTER
+                        purchases.any { it.sku == SKU_LEGACY } -> UpgradeStatus.LEGACY
+                        else -> UpgradeStatus.PHILANTHROPIST
+                    }
+                }
     }
 
     private fun queryPurchases() {
@@ -62,7 +81,7 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
             // Handle purchase result
             purchaseList.clear()
             purchaseList.addAll(purchasesResult.purchasesList)
-            (this.purchases as Subject).onNext(purchaseList)
+            (this.purchaseListObservable as Subject).onNext(purchaseList)
         }
     }
 
@@ -84,25 +103,22 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
 
     private fun querySkuDetailsAsync() {
         executeServiceRequest {
-            val iabParams = SkuDetailsParams.newBuilder().setSkusList(iabSkus).setType(BillingClient.SkuType.INAPP)
-            billingClient.querySkuDetailsAsync(iabParams.build()) { responseCode, skuDetailsList ->
-                if (responseCode == BillingResponse.OK) {
-                    (iabs as Subject).onNext(skuDetailsList)
-                }
-            }
-
             val subParams = SkuDetailsParams.newBuilder().setSkusList(subSkus).setType(BillingClient.SkuType.SUBS)
             billingClient.querySkuDetailsAsync(subParams.build()) { responseCode, skuDetailsList ->
                 if (responseCode == BillingResponse.OK) {
-                    (subs as Subject).onNext(skuDetailsList)
+                    (subscriptions as Subject).onNext(skuDetailsList)
                 }
             }
         }
     }
 
-    fun initiatePurchaseFlow(activity: Activity) {
+    fun initiatePurchaseFlow(activity: Activity, sku: String) {
         executeServiceRequest {
-            val params = BillingFlowParams.newBuilder().setSku("qksms_plus_3").setType(SkuType.SUBS)
+            val oldSkus = purchaseList
+                    .filter { product -> subSkus.contains(product.sku) }
+                    .map { product -> product.sku }
+
+            val params = BillingFlowParams.newBuilder().setSku(sku).setType(SkuType.SUBS).setOldSkus(ArrayList(oldSkus))
             billingClient.launchBillingFlow(activity, params.build())
         }
     }
@@ -117,8 +133,9 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
     override fun onPurchasesUpdated(resultCode: Int, purchases: List<Purchase>?) {
         when (resultCode) {
             BillingResponse.OK -> {
-                purchases?.forEach { purchaseList.add(it) }
-                (this.purchases as Subject).onNext(purchaseList)
+                purchaseList.clear()
+                purchases?.let { purchaseList.addAll(it) }
+                (this.purchaseListObservable as Subject).onNext(purchaseList)
             }
 
             else -> {

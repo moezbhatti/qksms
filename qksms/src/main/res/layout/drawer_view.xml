@@ -18,6 +18,7 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -110,6 +111,22 @@
         <presentation.common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_settings" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/plus"
+        style="@style/DrawerRow">
+
+        <ImageView
+            android:id="@+id/plusIcon"
+            style="@style/DrawerIcon"
+            android:src="@mipmap/ic_launcher"
+            tools:tint="@color/textSecondary" />
+
+        <presentation.common.widget.QkTextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_plus" />
 
     </LinearLayout>
 

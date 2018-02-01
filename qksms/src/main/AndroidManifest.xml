@@ -60,6 +60,8 @@
         </activity>
         <activity android:name="presentation.feature.settings.SettingsActivity" />
         <activity android:name="presentation.feature.setup.SetupActivity" />
+        <activity android:name="presentation.feature.themepicker.ThemePickerActivity" />
+        <activity android:name="presentation.feature.plus.PlusActivity" />
 
         <receiver android:name="presentation.receiver.DefaultSmsChangedReceiver">
             <intent-filter>

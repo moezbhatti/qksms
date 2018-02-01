@@ -49,6 +49,14 @@
         <item name="textColor">tertiary</item>
     </style>
 
+    <style name="CollapsingToolbarCollapsedText">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CollapsingToolbarExpandedText">
+        <item name="android:textSize">48sp</item>
+    </style>
+
     <style name="DrawerRow">
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>

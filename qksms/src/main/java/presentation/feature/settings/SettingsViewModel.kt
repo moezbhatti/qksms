@@ -94,7 +94,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     when (it.id) {
                         R.id.defaultSms -> navigator.showDefaultSmsDialog()
 
-                        R.id.theme -> newState { it.copy(selectingTheme = true) }
+                        R.id.theme -> navigator.showThemePicker()
 
                         R.id.dark -> prefs.dark.set(!prefs.dark.get())
 
@@ -123,13 +123,6 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                             })
                         }
                     }
-                }
-
-        view.themeSelectedIntent
-                .autoDisposable(view.scope())
-                .subscribe { color ->
-                    prefs.theme.set(color)
-                    newState { it.copy(selectingTheme = false) }
                 }
 
         view.ringtoneSelectedIntent
