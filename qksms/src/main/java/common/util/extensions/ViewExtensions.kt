@@ -20,11 +20,13 @@ package common.util.extensions
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import io.reactivex.Observable
 
 fun EditText.showKeyboard() {
     requestFocus()
@@ -58,4 +60,17 @@ fun View.setPadding(left: Int? = null, top: Int? = null, right: Int? = null, bot
 
 fun View.setVisible(visible: Boolean, invisible: Int = View.GONE) {
     visibility = if (visible) View.VISIBLE else invisible
+}
+
+data class PageScroll(val position: Int, val offset: Float)
+
+fun ViewPager.pageScrolled(): Observable<PageScroll> {
+    return Observable.create<PageScroll> { emitter ->
+        addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                emitter.onNext(PageScroll(position, positionOffset))
+            }
+        })
+    }
 }

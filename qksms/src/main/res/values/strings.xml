@@ -120,6 +120,9 @@
 
     <string name="settings_dialog_theme_title">Theme</string>
 
+    <string name="theme_material">Material</string>
+    <string name="theme_rgb">RGB</string>
+
     <string name="notification_reply">Reply</string>
     <string name="notification_read">Mark read</string>
 

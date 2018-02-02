@@ -29,3 +29,9 @@ fun Int.dpToPx(context: Context): Int {
 fun Int.withAlpha(alpha: Int): Int {
     return Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
 }
+
+fun Int.forEach(action: (Int) -> Unit) {
+    for (index in 0 until this) {
+        action(index)
+    }
+}

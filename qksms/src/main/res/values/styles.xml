@@ -49,6 +49,18 @@
         <item name="textColor">tertiary</item>
     </style>
 
+    <style name="TextTab">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/ripple</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingEnd">12sp</item>
+        <item name="android:paddingStart">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="CollapsingToolbarCollapsedText">
         <item name="android:textSize">20sp</item>
     </style>

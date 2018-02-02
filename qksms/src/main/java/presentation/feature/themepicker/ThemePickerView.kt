@@ -18,11 +18,13 @@
  */
 package presentation.feature.themepicker
 
+import common.util.extensions.PageScroll
 import io.reactivex.Observable
 import presentation.common.base.QkView
 
 interface ThemePickerView : QkView<ThemePickerState> {
 
+    val pageScrolledIntent: Observable<PageScroll>
     val themeSelectedIntent: Observable<Int>
 
 }

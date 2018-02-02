@@ -24,7 +24,7 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
-import io.reactivex.Observable
+import common.util.extensions.pageScrolled
 import kotlinx.android.synthetic.main.theme_picker_activity.*
 import presentation.common.base.QkActivity
 import javax.inject.Inject
@@ -32,9 +32,11 @@ import javax.inject.Inject
 class ThemePickerActivity : QkActivity<ThemePickerViewModel>(), ThemePickerView {
 
     override val viewModelClass = ThemePickerViewModel::class
-    override val themeSelectedIntent: Observable<Int> by lazy { themeAdapter.colorSelected }
+    override val themeSelectedIntent by lazy { themeAdapter.colorSelected }
+    override val pageScrolledIntent by lazy { pager.pageScrolled() }
 
     @Inject lateinit var themeAdapter: ThemeAdapter
+    @Inject lateinit var themePagerAdapter: ThemePagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent.inject(this)
@@ -44,6 +46,10 @@ class ThemePickerActivity : QkActivity<ThemePickerViewModel>(), ThemePickerView 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
 
+        pager.offscreenPageLimit = 1
+        pager.adapter = themePagerAdapter
+        tabs.pager = pager
+
         themeAdapter.data = colors.materialColors
 
         materialColors.layoutManager = LinearLayoutManager(this)
@@ -52,9 +58,15 @@ class ThemePickerActivity : QkActivity<ThemePickerViewModel>(), ThemePickerView 
         colors.background
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
+
+        colors.theme
+                .autoDisposable(scope())
+                .subscribe { color -> rgbPicker.setBackgroundColor(color) }
     }
 
     override fun render(state: ThemePickerState) {
+        rgbPicker.alpha = state.rgbAlpha
+
         themeAdapter.selectedColor = state.selectedColor
     }
 

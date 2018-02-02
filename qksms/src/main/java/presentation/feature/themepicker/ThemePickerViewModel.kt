@@ -24,6 +24,7 @@ import common.di.appComponent
 import common.util.Preferences
 import io.reactivex.rxkotlin.plusAssign
 import presentation.common.base.QkViewModel
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ThemePickerViewModel : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
@@ -39,6 +40,12 @@ class ThemePickerViewModel : QkViewModel<ThemePickerView, ThemePickerState>(Them
 
     override fun bindView(view: ThemePickerView) {
         super.bindView(view)
+
+        view.pageScrolledIntent
+                .throttleFirst(16, TimeUnit.MILLISECONDS)
+                .map { (position, positionOffset) -> if (position == 0) positionOffset * positionOffset else 1f }
+                .autoDisposable(view.scope())
+                .subscribe { alpha -> newState { it.copy(rgbAlpha = alpha) } }
 
         view.themeSelectedIntent
                 .autoDisposable(view.scope())
