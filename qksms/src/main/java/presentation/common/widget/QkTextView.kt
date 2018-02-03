@@ -22,12 +22,13 @@ import android.content.Context
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
 import common.util.FontProvider
 import common.util.extensions.getColorCompat
 import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
@@ -45,23 +46,7 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
     @Inject lateinit var colors: Colors
     @Inject lateinit var fontProvider: FontProvider
 
-    private var textColorDisposable: Disposable? = null
     private var textColorObservable: Observable<Int>? = null
-        set(value) {
-            if (field !== value) {
-                field = value
-
-                if (isAttachedToWindow) {
-                    textColorDisposable?.let { disposable ->
-                        if (!disposable.isDisposed) {
-                            disposable.dispose()
-                        }
-                    }
-
-                    subscribeColorChanges()
-                }
-            }
-        }
 
     init {
         if (!isInEditMode) {
@@ -82,44 +67,29 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
                     else -> R.color.textPrimary
                 }))
             } else {
-                setColor(colorAttr)
+                textColorObservable = when (colorAttr) {
+                    COLOR_PRIMARY -> colors.textPrimary
+                    COLOR_SECONDARY -> colors.textSecondary
+                    COLOR_TERTIARY -> colors.textTertiary
+                    COLOR_PRIMARY_ON_THEME -> colors.textPrimaryOnTheme
+                    COLOR_SECONDARY_ON_THEME -> colors.textSecondaryOnTheme
+                    COLOR_TERTIARY_ON_THEME -> colors.textTertiaryOnTheme
+                    else -> null
+                }
             }
 
             recycle()
         }
     }
 
-    fun setColor(colorAttr: Int) {
-        textColorObservable = when (colorAttr) {
-            COLOR_PRIMARY -> colors.textPrimary
-            COLOR_SECONDARY -> colors.textSecondary
-            COLOR_TERTIARY -> colors.textTertiary
-            COLOR_PRIMARY_ON_THEME -> colors.textPrimaryOnTheme
-            COLOR_SECONDARY_ON_THEME -> colors.textSecondaryOnTheme
-            COLOR_TERTIARY_ON_THEME -> colors.textTertiaryOnTheme
-            else -> null
-        }
-    }
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
 
-    private fun subscribeColorChanges() {
-        textColorDisposable = textColorObservable
+        textColorObservable
+                ?.autoDisposable(scope())
                 ?.subscribe { color ->
                     setTextColor(color)
                     setLinkTextColor(color)
                 }
     }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        if (textColorDisposable?.isDisposed != false) {
-            subscribeColorChanges()
-        }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        textColorDisposable?.dispose()
-    }
-
 }

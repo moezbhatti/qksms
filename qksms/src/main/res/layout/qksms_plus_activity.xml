@@ -152,7 +152,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:textColor="primary" />
+                        tools:textColor="@color/textPrimary" />
 
                     <presentation.common.widget.QkTextView
                         android:id="@+id/supporterPrice"
@@ -164,8 +164,8 @@
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/supporterName"
-                        app:textColor="primary"
-                        tools:text="$2.99" />
+                        tools:text="$2.99"
+                        tools:textColor="@color/textPrimary" />
 
                     <presentation.common.widget.QkTextView
                         android:id="@+id/supporterPeriod"
@@ -176,7 +176,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/supporterPrice"
                         app:layout_constraintTop_toBottomOf="@id/supporterName"
-                        app:textColor="secondary" />
+                        tools:textColor="@color/textSecondary" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -200,7 +200,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:textColor="primary" />
+                        tools:textColor="@color/textPrimary" />
 
                     <presentation.common.widget.QkTextView
                         android:id="@+id/donorPrice"
@@ -212,8 +212,8 @@
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/donorName"
-                        app:textColor="primary"
-                        tools:text="$2.99" />
+                        tools:text="$2.99"
+                        tools:textColor="@color/textPrimary" />
 
                     <presentation.common.widget.QkTextView
                         android:id="@+id/donorPeriod"
@@ -224,7 +224,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/donorPrice"
                         app:layout_constraintTop_toBottomOf="@id/donorName"
-                        app:textColor="secondary" />
+                        tools:textColor="@color/textSecondary" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -248,7 +248,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:textColor="primary" />
+                        tools:textColor="@color/textPrimary" />
 
                     <presentation.common.widget.QkTextView
                         android:id="@+id/philanthropistPrice"
@@ -260,8 +260,8 @@
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/philanthropistName"
-                        app:textColor="primary"
-                        tools:text="$2.99" />
+                        tools:text="$2.99"
+                        tools:textColor="@color/textPrimary" />
 
                     <presentation.common.widget.QkTextView
                         android:id="@+id/philanthropistPeriod"
@@ -272,7 +272,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/philanthropistPrice"
                         app:layout_constraintTop_toBottomOf="@id/philanthropistName"
-                        app:textColor="secondary" />
+                        tools:textColor="@color/textSecondary" />
 
                 </android.support.constraint.ConstraintLayout>
 

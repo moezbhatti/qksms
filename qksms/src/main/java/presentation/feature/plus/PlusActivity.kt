@@ -18,6 +18,7 @@
  */
 package presentation.feature.plus
 
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
@@ -30,9 +31,9 @@ import common.util.FontProvider
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
+import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
 import presentation.common.base.QkActivity
-import presentation.common.widget.QkTextView
 import javax.inject.Inject
 
 class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
@@ -81,6 +82,35 @@ class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
                     donor.setBackgroundTint(color)
                     philanthropist.setBackgroundTint(color)
                 }
+
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_selected),
+                intArrayOf(-android.R.attr.state_selected))
+
+        Observables
+                .combineLatest(colors.textPrimaryOnTheme, colors.textPrimary, { theme, textSecondary ->
+                    ColorStateList(states, intArrayOf(theme, textSecondary))
+                })
+                .autoDisposable(scope())
+                .subscribe { colorStateList ->
+                    supporterName.setTextColor(colorStateList)
+                    supporterPrice.setTextColor(colorStateList)
+                    donorName.setTextColor(colorStateList)
+                    donorPrice.setTextColor(colorStateList)
+                    philanthropistName.setTextColor(colorStateList)
+                    philanthropistPrice.setTextColor(colorStateList)
+                }
+
+        Observables
+                .combineLatest(colors.textSecondaryOnTheme, colors.textSecondary, { theme, textSecondary ->
+                    ColorStateList(states, intArrayOf(theme, textSecondary))
+                })
+                .autoDisposable(scope())
+                .subscribe { colorStateList ->
+                    supporterPeriod.setTextColor(colorStateList)
+                    donorPeriod.setTextColor(colorStateList)
+                    philanthropistPeriod.setTextColor(colorStateList)
+                }
     }
 
     override fun render(state: PlusState) {
@@ -91,31 +121,14 @@ class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
         val supportedSelected = state.currentPlan == BillingManager.UpgradeStatus.SUPPORTER
         supporter.isSelected = supportedSelected
         supporterPrice.text = state.supporterPrice
-        supporterName.setColor(getPrimaryTextColorAttr(supportedSelected))
-        supporterPrice.setColor(getPrimaryTextColorAttr(supportedSelected))
-        supporterPeriod.setColor(getSecondaryTextColorAttr(supportedSelected))
 
         val donorSelected = state.currentPlan == BillingManager.UpgradeStatus.DONOR
         donor.isSelected = donorSelected
         donorPrice.text = state.donorPrice
-        donorName.setColor(getPrimaryTextColorAttr(donorSelected))
-        donorPrice.setColor(getPrimaryTextColorAttr(donorSelected))
-        donorPeriod.setColor(getSecondaryTextColorAttr(donorSelected))
 
         val philanthropistSelected = state.currentPlan == BillingManager.UpgradeStatus.PHILANTHROPIST
         philanthropist.isSelected = philanthropistSelected
         philanthropistPrice.text = state.philanthropistPrice
-        philanthropistName.setColor(getPrimaryTextColorAttr(philanthropistSelected))
-        philanthropistPrice.setColor(getPrimaryTextColorAttr(philanthropistSelected))
-        philanthropistPeriod.setColor(getSecondaryTextColorAttr(philanthropistSelected))
-    }
-
-    private fun getPrimaryTextColorAttr(selected: Boolean): Int {
-        return if (selected) QkTextView.COLOR_PRIMARY_ON_THEME else QkTextView.COLOR_PRIMARY
-    }
-
-    private fun getSecondaryTextColorAttr(selected: Boolean): Int {
-        return if (selected) QkTextView.COLOR_SECONDARY_ON_THEME else QkTextView.COLOR_SECONDARY
     }
 
     override fun initiatePurchaseFlow(billingManager: BillingManager, sku: String) {
