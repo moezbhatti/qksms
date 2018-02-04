@@ -119,8 +119,8 @@
   <string name="pref_category_summary_about">Sürüm, değişenler, yazarlar, teşekkürler</string>
   <string name="pref_theme">Tema rengi</string>
   <string name="pref_theme_summary_alt">Temayı değiştirmek için dokunun</string>
-  <string name="pref_icon">Icon color</string>
-  <string name="pref_icon_summary">Tap to change the QKSMS icon color</string>
+  <string name="pref_icon">Simge rengi</string>
+  <string name="pref_icon_summary">QKSMS Simge rengini değiştirmek için dokunun</string>
   <string name="pref_status_tint">Renkli bildirim çubuğu</string>
   <string name="pref_navigation_tint">Renkli sistem çubuğu</string>
   <string name="pref_background">Arkaplan rengi</string>
@@ -149,10 +149,10 @@
   <string name="pref_message_count_summary">Her bir sohbet için mesajların sayısını göster</string>
   <string name="pref_sent_timestamps">Gönderilen damgaları</string>
   <string name="pref_sent_timestamps_summary">Bir iletinin gönderildiği zaman, almamış için zaman damgası göster</string>
-  <string name="pref_force_timestamps">Force timestamps</string>
-  <string name="pref_force_timestamps_summary">Enable timestamps for all messages</string>
-  <string name="pref_key_timestamp_delay">New timestamp delay</string>
-  <string name="pref_key_timestamp_delay_summary">The number of minutes which must elapse between two messages in order for a new timestamp to be shown.</string>
+  <string name="pref_force_timestamps">Zaman damgalamalarına zorla</string>
+  <string name="pref_force_timestamps_summary">Bütün mesajlar için zaman damgalamalarını etkinleştir</string>
+  <string name="pref_key_timestamp_delay">Yeni zaman damgası gecikmesi</string>
+  <string name="pref_key_timestamp_delay_summary">Yeni bir zaman damgasının gösterilmesi için iki ileti arasında geçmesi gereken dakika sayısı</string>
   <string name="pref_compose_favorites">Yıldız eklediğiniz kişiler</string>
   <string name="pref_compose_summary_favorites">Yıldızlı kişileri QK sohbet oluşturma ekranında göstermek onları sadece bir tık uzakta olmasını sağlar</string>
   <string name="pref_prox_sensor_call">Yakınlık sensörü</string>
@@ -163,12 +163,12 @@
   <string name="pref_delivery_toast_summary">Toast bildirimi ile iletim raporunu göster</string>
   <string name="pref_delivery_vibrate">Titreşim</string>
   <string name="pref_delivery_vibrate_summary">Mesaj iletildiğinde titre</string>
-  <string name="pref_delete_old_messages">Delete old messages</string>
-  <string name="pref_delete_old_messages_summary">Automatically delete messages once they\'re old enough</string>
-  <string name="pref_delete_old_messages_unread">Unread messages</string>
-  <string name="pref_delete_old_messages_unread_summary">Automatically delete unread messages after %s days</string>
-  <string name="pref_delete_old_messages_read">Read messages</string>
-  <string name="pref_delete_old_messages_read_summary">Automatically delete read messages after %s days</string>
+  <string name="pref_delete_old_messages">Eski mesajları sil</string>
+  <string name="pref_delete_old_messages_summary">Tarihi geçmiş mesajları otomatik olarak sil</string>
+  <string name="pref_delete_old_messages_unread">Okunmayan mesajlar</string>
+  <string name="pref_delete_old_messages_unread_summary">%s Gün sonra okunmamış mesajları otomatik olarak sil</string>
+  <string name="pref_delete_old_messages_read">Okunmuş mesajlar</string>
+  <string name="pref_delete_old_messages_read_summary">%s Gün sonra okunmuş mesajları otomatik olarak sil</string>
   <string name="pref_yappy">Yappy entegrasyonu</string>
   <string name="pref_endlessjabber_summary">Yappi için tam desteği etkinleştirme</string>
   <string name="pref_blocked_conversations">Engellenen sohbetler</string>
@@ -391,7 +391,7 @@
   <!-- Time and date a message is due to expire -->
   <string name="expire_on">"Son kullanma tarihi: <xliff:g id="date"> %s </xliff:g>"</string>
   <!-- Formatting for subject displayed inline, prepended to MMS message text -->
-  <string name="inline_subject">"&lt;Subject: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
+  <string name="inline_subject">"&lt;Konu: <xliff:g id="subject">%s</xliff:g>&gt;"</string>
   <!-- Text of a button appearing for MMS messages that have not yet been downloaded, causing the message to be downloaded (imperative verb) -->
   <string name="download">İndir</string>
   <!-- Message displayed in place of the "download message" button once it has been pressed, indicating that the download is in progress -->
@@ -553,12 +553,12 @@
   <!-- Dialog title for updating app icon color -->
   <string name="update_icon_title">Simge rengini güncelleştir</string>
   <!-- Dialog message for updating app icon color -->
-  <string name="update_icon_message">QKSMS must be restarted when changing the icon color</string>
+  <string name="update_icon_message">Simge rengini değiştirirken QKSMS yeniden başlatılmalıdır</string>
   <string name="dialog_conversation_details_title">Konuşma ayrıntıları</string>
   <string name="dialog_conversation_details_last_message_date">Son mesaj tarihi</string>
   <string name="dialog_conversation_details_message_count">Mesaj sayısı</string>
   <string name="dialog_conversation_details_recipients">Alıcılar (%s)</string>
-  <string name="dialog_should_i_answer_title">Should I Answer? not installed</string>
+  <string name="dialog_should_i_answer_title">Should I Answer? yüklü değil</string>
   <string name="dialog_should_i_answer_message">Google\'dan uygulaması Şimdi Oyna indirmek ister misiniz?</string>
   <string name="dialog_delete_old_messages">Are you sure you want to automatically delete old messages?</string>
   <!-- Title for audio file picker -->
@@ -603,8 +603,8 @@
   <!--Toast shown when Google Play Services is not available for purchasing a product-->
   <string name="toast_endlessjabber_not_installed">EndlessJabber yüklü değil, Google Play açılıyor</string>
   <string name="toast_changelog_error">Yenilikler yüklenemedi. Lütfen daha sonra yeniden deneyin</string>
-  <string name="toast_conversation_error">Couldn\'t open conversation</string>
-  <string name="toast_deleting_old_messages">Your old messages will be deleted shortly</string>
+  <string name="toast_conversation_error">Konuşma açılamadı</string>
+  <string name="toast_deleting_old_messages">Eski iletileriniz kısa bir süre içinde silinecek</string>
   <!--Toast shown to thank user for donating-->
   <string name="thanks_1">Bağışın için teşekkürler! Siz benim yeni dostumsunuz.</string>
   <!--Toast shown to thank user for donating-->
