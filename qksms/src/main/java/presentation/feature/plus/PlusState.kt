@@ -22,7 +22,7 @@ import common.util.BillingManager
 
 data class PlusState(
         val currentPlan: BillingManager.UpgradeStatus = BillingManager.UpgradeStatus.REGULAR,
-        val supporterPrice: String = "",
-        val donorPrice: String = "",
-        val philanthropistPrice: String = ""
+        val upgradePrice: String = "",
+        val upgradeDonatePrice: String = "",
+        val currency: String = ""
 )

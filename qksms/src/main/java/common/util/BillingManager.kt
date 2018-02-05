@@ -30,19 +30,17 @@ import javax.inject.Inject
 
 class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedListener {
 
-    enum class UpgradeStatus { REGULAR, LEGACY, SUPPORTER, DONOR, PHILANTHROPIST }
+    enum class UpgradeStatus { REGULAR, UPGRADED }
 
     companion object {
-        const val SKU_LEGACY = "remove_ads"
-        const val SKU_3 = "qksms_plus_3"
-        const val SKU_5 = "qksms_plus_5"
-        const val SKU_10 = "qksms_plus_10"
+        const val SKU_PLUS = "remove_ads"
+        const val SKU_PLUS_DONATE = "qksms_plus_donate"
     }
 
-    val subscriptions: Observable<List<SkuDetails>> = BehaviorSubject.create()
+    val products: Observable<List<SkuDetails>> = BehaviorSubject.create()
     val plusStatus: Observable<UpgradeStatus>
 
-    private val subSkus = listOf(SKU_3, SKU_5, SKU_10)
+    private val skus = listOf(SKU_PLUS, SKU_PLUS_DONATE)
     private val purchaseList = mutableListOf<Purchase>()
     private val purchaseListObservable: Observable<List<Purchase>> = BehaviorSubject.create()
 
@@ -58,11 +56,9 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
         plusStatus = purchaseListObservable
                 .map { purchases ->
                     when {
-                        purchases.any { it.sku == SKU_10 } -> UpgradeStatus.PHILANTHROPIST
-                        purchases.any { it.sku == SKU_5 } -> UpgradeStatus.DONOR
-                        purchases.any { it.sku == SKU_3 } -> UpgradeStatus.SUPPORTER
-                        purchases.any { it.sku == SKU_LEGACY } -> UpgradeStatus.LEGACY
-                        else -> UpgradeStatus.PHILANTHROPIST
+                        purchases.any { it.sku == SKU_PLUS } -> UpgradeStatus.UPGRADED
+                        purchases.any { it.sku == SKU_PLUS_DONATE } -> UpgradeStatus.UPGRADED
+                        else -> UpgradeStatus.REGULAR
                     }
                 }
     }
@@ -70,13 +66,6 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
     private fun queryPurchases() {
         executeServiceRequest {
             val purchasesResult = billingClient.queryPurchases(SkuType.INAPP)
-
-            if (billingClient.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == BillingResponse.OK) {
-                val subscriptionResult = billingClient.queryPurchases(SkuType.SUBS)
-                if (subscriptionResult.responseCode == BillingResponse.OK) {
-                    purchasesResult.purchasesList.addAll(subscriptionResult.purchasesList)
-                }
-            }
 
             // Handle purchase result
             purchaseList.clear()
@@ -103,10 +92,10 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
 
     private fun querySkuDetailsAsync() {
         executeServiceRequest {
-            val subParams = SkuDetailsParams.newBuilder().setSkusList(subSkus).setType(BillingClient.SkuType.SUBS)
+            val subParams = SkuDetailsParams.newBuilder().setSkusList(skus).setType(BillingClient.SkuType.INAPP)
             billingClient.querySkuDetailsAsync(subParams.build()) { responseCode, skuDetailsList ->
                 if (responseCode == BillingResponse.OK) {
-                    (subscriptions as Subject).onNext(skuDetailsList)
+                    (products as Subject).onNext(skuDetailsList)
                 }
             }
         }
@@ -114,11 +103,7 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
 
     fun initiatePurchaseFlow(activity: Activity, sku: String) {
         executeServiceRequest {
-            val oldSkus = purchaseList
-                    .filter { product -> subSkus.contains(product.sku) }
-                    .map { product -> product.sku }
-
-            val params = BillingFlowParams.newBuilder().setSku(sku).setType(SkuType.SUBS).setOldSkus(ArrayList(oldSkus))
+            val params = BillingFlowParams.newBuilder().setSku(sku).setType(SkuType.INAPP)
             billingClient.launchBillingFlow(activity, params.build())
         }
     }

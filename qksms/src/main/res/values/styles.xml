@@ -61,6 +61,17 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextButton">
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="CollapsingToolbarCollapsedText">
         <item name="android:textSize">20sp</item>
     </style>

@@ -18,7 +18,6 @@
  */
 package presentation.feature.plus
 
-import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
@@ -31,7 +30,6 @@ import common.util.FontProvider
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
-import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
 import presentation.common.base.QkActivity
 import javax.inject.Inject
@@ -41,9 +39,8 @@ class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
     @Inject lateinit var fontProvider: FontProvider
 
     override val viewModelClass = PlusViewModel::class
-    override val supporterSelectedIntent by lazy { supporter.clicks() }
-    override val donorSelectedIntent by lazy { donor.clicks() }
-    override val philanthropistSelectedIntent by lazy { philanthropist.clicks() }
+    override val upgradeIntent by lazy { upgrade.clicks() }
+    override val upgradeDonateIntent by lazy { upgradeDonate.clicks() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent.inject(this)
@@ -72,63 +69,27 @@ class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
 
         colors.separator
                 .autoDisposable(scope())
-                .subscribe { color -> thanks.setBackgroundTint(color) }
+                .subscribe { color ->
+                    upgradeDonate.setBackgroundTint(color)
+                    thanks.setBackgroundTint(color)
+                }
 
         colors.theme
                 .autoDisposable(scope())
                 .subscribe { color ->
+                    upgrade.setBackgroundTint(color)
                     thanksIcon.setTint(color)
-                    supporter.setBackgroundTint(color)
-                    donor.setBackgroundTint(color)
-                    philanthropist.setBackgroundTint(color)
-                }
-
-        val states = arrayOf(
-                intArrayOf(android.R.attr.state_selected),
-                intArrayOf(-android.R.attr.state_selected))
-
-        Observables
-                .combineLatest(colors.textPrimaryOnTheme, colors.textPrimary, { theme, textSecondary ->
-                    ColorStateList(states, intArrayOf(theme, textSecondary))
-                })
-                .autoDisposable(scope())
-                .subscribe { colorStateList ->
-                    supporterName.setTextColor(colorStateList)
-                    supporterPrice.setTextColor(colorStateList)
-                    donorName.setTextColor(colorStateList)
-                    donorPrice.setTextColor(colorStateList)
-                    philanthropistName.setTextColor(colorStateList)
-                    philanthropistPrice.setTextColor(colorStateList)
-                }
-
-        Observables
-                .combineLatest(colors.textSecondaryOnTheme, colors.textSecondary, { theme, textSecondary ->
-                    ColorStateList(states, intArrayOf(theme, textSecondary))
-                })
-                .autoDisposable(scope())
-                .subscribe { colorStateList ->
-                    supporterPeriod.setTextColor(colorStateList)
-                    donorPeriod.setTextColor(colorStateList)
-                    philanthropistPeriod.setTextColor(colorStateList)
                 }
     }
 
     override fun render(state: PlusState) {
-        description.text = getString(R.string.qksms_plus_description_summary, state.supporterPrice)
+        description.text = getString(R.string.qksms_plus_description_summary, state.upgradePrice)
+        upgrade.text = getString(R.string.qksms_plus_upgrade, state.upgradePrice, state.currency)
+        upgradeDonate.text = getString(R.string.qksms_plus_upgrade_donate, state.upgradeDonatePrice, state.currency)
 
+        upgrade.setVisible(state.currentPlan == BillingManager.UpgradeStatus.REGULAR)
+        upgradeDonate.setVisible(state.currentPlan == BillingManager.UpgradeStatus.REGULAR)
         thanks.setVisible(state.currentPlan != BillingManager.UpgradeStatus.REGULAR)
-
-        val supportedSelected = state.currentPlan == BillingManager.UpgradeStatus.SUPPORTER
-        supporter.isSelected = supportedSelected
-        supporterPrice.text = state.supporterPrice
-
-        val donorSelected = state.currentPlan == BillingManager.UpgradeStatus.DONOR
-        donor.isSelected = donorSelected
-        donorPrice.text = state.donorPrice
-
-        val philanthropistSelected = state.currentPlan == BillingManager.UpgradeStatus.PHILANTHROPIST
-        philanthropist.isSelected = philanthropistSelected
-        philanthropistPrice.text = state.philanthropistPrice
     }
 
     override fun initiatePurchaseFlow(billingManager: BillingManager, sku: String) {

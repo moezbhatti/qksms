@@ -39,13 +39,13 @@ class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {
                     newState { it.copy(currentPlan = plan) }
                 }
 
-        disposables += billingManager.subscriptions
-                .subscribe { subs ->
+        disposables += billingManager.products
+                .subscribe { products ->
                     newState {
-                        it.copy(
-                                supporterPrice = subs.firstOrNull { it.sku == BillingManager.SKU_3 }?.price ?: "",
-                                donorPrice = subs.firstOrNull { it.sku == BillingManager.SKU_5 }?.price ?: "",
-                                philanthropistPrice = subs.firstOrNull { it.sku == BillingManager.SKU_10 }?.price ?: "")
+                        val upgrade = products.firstOrNull { it.sku == BillingManager.SKU_PLUS }
+                        val upgradeDonate = products.firstOrNull { it.sku == BillingManager.SKU_PLUS_DONATE }
+                        it.copy(upgradePrice = upgrade?.price ?: "", upgradeDonatePrice = upgradeDonate?.price ?: "",
+                                currency = upgrade?.priceCurrencyCode ?: upgradeDonate?.priceCurrencyCode ?: "")
                     }
                 }
     }
@@ -54,9 +54,8 @@ class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {
         super.bindView(view)
 
         Observable.merge(
-                view.supporterSelectedIntent.map { BillingManager.SKU_3 },
-                view.donorSelectedIntent.map { BillingManager.SKU_5 },
-                view.philanthropistSelectedIntent.map { BillingManager.SKU_10 })
+                view.upgradeIntent.map { BillingManager.SKU_PLUS },
+                view.upgradeDonateIntent.map { BillingManager.SKU_PLUS_DONATE })
                 .autoDisposable(view.scope())
                 .subscribe { sku -> view.initiatePurchaseFlow(billingManager, sku) }
     }
