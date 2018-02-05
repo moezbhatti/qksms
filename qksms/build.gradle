@@ -50,6 +50,7 @@ dependencies {
     })
     compile "android.arch.lifecycle:extensions:1.0.0"
     compile "android.arch.lifecycle:runtime:1.0.3"
+    compile 'androidx.core:core-ktx:0.1'
     compile 'com.android.billingclient:billing:1.0'
     compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
