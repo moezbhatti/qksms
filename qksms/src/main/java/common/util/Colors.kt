@@ -64,60 +64,60 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
     val theme: Observable<Int> = prefs.theme.asObservable()
             .distinctUntilChanged()
 
-    val appThemeResources: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.style.AppThemeDark else R.style.AppThemeLight }
+    val appThemeResources: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.style.AppThemeDark else R.style.AppThemeLight }
 
-    val popupThemeResource: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.style.PopupThemeDark else R.style.PopupThemeLight }
+    val popupThemeResource: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.style.PopupThemeDark else R.style.PopupThemeLight }
 
     @SuppressLint("InlinedApi")
-    val statusBarIcons: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> dark || Build.VERSION.SDK_INT < Build.VERSION_CODES.M }
+    val statusBarIcons: Observable<Int> = prefs.night.asObservable()
+            .map { night -> night || Build.VERSION.SDK_INT < Build.VERSION_CODES.M }
             .map { lightIcons -> if (lightIcons) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR }
             .distinctUntilChanged()
 
-    val statusBar: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.statusBarDark else R.color.statusBarLight }
+    val statusBar: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.statusBarDark else R.color.statusBarLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val toolbarColor: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.toolbarDark else R.color.toolbarLight }
+    val toolbarColor: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.toolbarDark else R.color.toolbarLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val background: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.backgroundDark else R.color.white }
+    val background: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.backgroundDark else R.color.white }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val field: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.fieldDark else R.color.fieldLight }
+    val field: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.fieldDark else R.color.fieldLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val composeBackground: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.backgroundDark else R.color.backgroundLight }
+    val composeBackground: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.backgroundDark else R.color.backgroundLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val separator: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.separatorDark else R.color.separatorLight }
+    val separator: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.separatorDark else R.color.separatorLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val textPrimary: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.textPrimaryDark else R.color.textPrimary }
+    val textPrimary: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.textPrimaryDark else R.color.textPrimary }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val textSecondary: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.textSecondaryDark else R.color.textSecondary }
+    val textSecondary: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.textSecondaryDark else R.color.textSecondary }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val textTertiary: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.textTertiaryDark else R.color.textTertiary }
+    val textTertiary: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.textTertiaryDark else R.color.textTertiary }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
@@ -145,28 +145,28 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val bubble: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.bubbleDark else R.color.bubbleLight }
+    val bubble: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.bubbleDark else R.color.bubbleLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val switchThumbEnabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switchThumbEnabledDark else R.color.switchThumbEnabledLight }
+    val switchThumbEnabled: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.switchThumbEnabledDark else R.color.switchThumbEnabledLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val switchThumbDisabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switchThumbDisabledDark else R.color.switchThumbDisabledLight }
+    val switchThumbDisabled: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.switchThumbDisabledDark else R.color.switchThumbDisabledLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val switchTrackEnabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switchTrackEnabledDark else R.color.switchTrackEnabledLight }
+    val switchTrackEnabled: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.switchTrackEnabledDark else R.color.switchTrackEnabledLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val switchTrackDisabled: Observable<Int> = prefs.dark.asObservable()
-            .map { dark -> if (dark) R.color.switchTrackDisabledDark else R.color.switchTrackDisabledLight }
+    val switchTrackDisabled: Observable<Int> = prefs.night.asObservable()
+            .map { night -> if (night) R.color.switchTrackDisabledDark else R.color.switchTrackDisabledLight }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 

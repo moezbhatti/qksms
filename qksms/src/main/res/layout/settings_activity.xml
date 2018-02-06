@@ -19,6 +19,7 @@
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -36,6 +37,7 @@
 
             <LinearLayout
                 android:id="@+id/preferences"
+                android:animateLayoutChanges="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -53,11 +55,25 @@
                     app:title="@string/settings_theme_title" />
 
                 <presentation.common.widget.PreferenceView
-                    android:id="@+id/dark"
+                    android:id="@+id/night"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:title="@string/settings_dark_title"
-                    app:widget="@layout/settings_switch_widget" />
+                    app:title="@string/settings_night_title"
+                    tools:summary="Automatic" />
+
+                <presentation.common.widget.PreferenceView
+                    android:id="@+id/nightStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/settings_night_start_title"
+                    tools:summary="6:00PM" />
+
+                <presentation.common.widget.PreferenceView
+                    android:id="@+id/nightEnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/settings_night_end_title"
+                    tools:summary="9:00AM" />
 
                 <presentation.common.widget.PreferenceView
                     android:id="@+id/autoEmoji"
@@ -123,8 +139,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="visible"
-                    app:summary="@string/settings_mms_size_summary"
-                    app:title="@string/settings_mms_size_title" />
+                    app:title="@string/settings_mms_size_title"
+                    tools:summary="100KB" />
 
                 <presentation.common.widget.PreferenceView
                     android:id="@+id/sync"

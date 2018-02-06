@@ -74,9 +74,9 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 })
     }
 
-    private val menuArchive = MenuItem(R.string.menu_archive, 0)
-    private val menuUnarchive = MenuItem(R.string.menu_unarchive, 1)
-    private val menuDelete = MenuItem(R.string.menu_delete, 2)
+    private val menuArchive by lazy { MenuItem(context.getString(R.string.menu_archive), 0) }
+    private val menuUnarchive by lazy { MenuItem(context.getString(R.string.menu_unarchive), 1) }
+    private val menuDelete by lazy { MenuItem(context.getString(R.string.menu_delete), 2) }
 
     init {
         appComponent.inject(this)

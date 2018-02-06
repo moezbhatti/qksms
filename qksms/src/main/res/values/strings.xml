@@ -39,12 +39,6 @@
     <string name="menu_archive">Archive conversation</string>
     <string name="menu_unarchive">Remove from archive</string>
     <string name="menu_delete">Delete</string>
-    <string name="menu_mms_size_no_limit">No limit</string>
-    <string name="menu_mms_size_100kb">100KB</string>
-    <string name="menu_mms_size_200kb">200KB</string>
-    <string name="menu_mms_size_300kb">300KB</string>
-    <string name="menu_mms_size_600kb">600KB</string>
-    <string name="menu_mms_size_1000kb">1000KB</string>
 
     <string name="main_syncing">Optimizing database, this might take a minute…</string>
 
@@ -72,7 +66,9 @@
     <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
     <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
     <string name="settings_theme_title">Theme</string>
-    <string name="settings_dark_title">Dark mode</string>
+    <string name="settings_night_title">Night mode</string>
+    <string name="settings_night_start_title">Start time</string>
+    <string name="settings_night_end_title">End time</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
     <string name="settings_auto_emoji_summary">Convert text like :) to an emoji like 🙂</string>
     <string name="settings_notifications_title">Notifications</string>
@@ -84,7 +80,6 @@
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
     <string name="settings_mms_title">MMS enabled</string>
     <string name="settings_mms_size_title">Max MMS attachment size</string>
-    <string name="settings_mms_size_summary">Compress the attachments in an MMS message</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
 
@@ -135,5 +130,35 @@
         <item>Forward</item>
         <item>Delete</item>
     </string-array>
+
+    <string-array name="night_modes">
+        <item>Disabled</item>
+        <item>Always on</item>
+        <item>Automatic</item>
+    </string-array>
+    <string name="menu_mms_size_no_limit">No limit</string>
+    <string name="menu_mms_size_100kb">100KB</string>
+    <string name="menu_mms_size_200kb">200KB</string>
+    <string name="menu_mms_size_300kb">300KB</string>
+    <string name="menu_mms_size_600kb">600KB</string>
+    <string name="menu_mms_size_1000kb">1000KB</string>
+
+    <string-array name="mms_sizes">
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>No limit</item>
+    </string-array>
+
+    <integer-array name="mms_sizes_ids">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>600</item>
+        <item>1000</item>
+        <item>0</item>
+    </integer-array>
 
 </resources>

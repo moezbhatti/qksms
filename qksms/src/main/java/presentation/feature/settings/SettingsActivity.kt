@@ -21,6 +21,7 @@ package presentation.feature.settings
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
@@ -33,9 +34,9 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import common.util.Preferences
 import common.util.extensions.dpToPx
 import common.util.extensions.setVisible
-import data.model.MenuItem
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
@@ -47,12 +48,16 @@ import javax.inject.Inject
 
 class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
 
-    @Inject lateinit var menuItemAdapter: MenuItemAdapter
+    @Inject lateinit var nightModeAdapter: MenuItemAdapter
+    @Inject lateinit var mmsSizeAdapter: MenuItemAdapter
 
     override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
+    override val nightModeSelectedIntent by lazy { nightModeAdapter.menuItemClicks }
+    override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
+    override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
-    override val mmsSizeSelectedIntent: Subject<Int> by lazy { menuItemAdapter.menuItemClicks }
+    override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeAdapter.menuItemClicks }
 
     // TODO remove this
     private val progressDialog by lazy {
@@ -63,26 +68,8 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         }
     }
 
-    private val mmsSizeDialog by lazy {
-        menuItemAdapter.data = arrayListOf(
-                MenuItem(R.string.menu_mms_size_100kb, 100),
-                MenuItem(R.string.menu_mms_size_200kb, 200),
-                MenuItem(R.string.menu_mms_size_300kb, 300),
-                MenuItem(R.string.menu_mms_size_600kb, 600),
-                MenuItem(R.string.menu_mms_size_1000kb, 1000),
-                MenuItem(R.string.menu_mms_size_no_limit, 0))
-
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = menuItemAdapter
-        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-        AlertDialog.Builder(this)
-                .setTitle(R.string.settings_mms_size_title)
-                .setMessage(R.string.settings_mms_size_summary)
-                .setNegativeButton(R.string.button_cancel, null)
-                .setView(recyclerView)
-                .create()
-    }
+    private var nightModeDialog: AlertDialog? = null
+    private var mmsSizeDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent.inject(this)
@@ -97,6 +84,9 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         notifications.setVisible(!supportsNotificationChannels)
         vibration.setVisible(!supportsNotificationChannels)
         ringtone.setVisible(!supportsNotificationChannels)
+
+        nightModeAdapter.setData(R.array.night_modes)
+        mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
         colors.background
                 .autoDisposable(scope())
@@ -122,21 +112,50 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
             else -> R.string.settings_default_sms_summary_false
         })
 
-        dark.checkbox.isChecked = state.darkModeEnabled
+        night.summary = state.nightModeSummary
+        nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
+        nightStart.summary = state.nightStart
+        nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
+        nightEnd.summary = state.nightEnd
 
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
-
         notifications.checkbox.isChecked = state.notificationsEnabled
-
         vibration.checkbox.isChecked = state.vibrationEnabled
-
         delivery.checkbox.isChecked = state.deliveryEnabled
-
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
-
         mms.checkbox.isChecked = state.mmsEnabled
 
-        menuItemAdapter.selectedItem = state.maxMmsSize
+        mmsSize.summary = state.maxMmsSizeSummary
+        mmsSizeAdapter.selectedItem = state.maxMmsSizeId
+    }
+
+    // TODO change this to a PopupWindow
+    override fun showNightModeDialog() {
+        val recyclerView = RecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = nightModeAdapter
+        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
+        nightModeDialog = AlertDialog.Builder(this)
+                .setTitle(R.string.settings_night_title)
+                .setView(recyclerView)
+                .create().apply { show() }
+    }
+
+    override fun dismissNightModeDialog() {
+        nightModeDialog?.dismiss()
+        nightModeDialog = null
+    }
+
+    override fun showStartTimePicker(hour: Int, minute: Int) {
+        TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+            startTimeSelectedIntent.onNext(Pair(hour, minute))
+        }, hour, minute, false).show()
+    }
+
+    override fun showEndTimePicker(hour: Int, minute: Int) {
+        TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+            endTimeSelectedIntent.onNext(Pair(hour, minute))
+        }, hour, minute, false).show()
     }
 
     override fun showRingtonePicker(default: Uri) {
@@ -148,9 +167,22 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
         startActivityForResult(intent, 123)
     }
 
-    override fun showMmsSizePicker() = mmsSizeDialog.show()
+    override fun showMmsSizePicker() {
+        val recyclerView = RecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = mmsSizeAdapter
+        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
+        mmsSizeDialog = AlertDialog.Builder(this)
+                .setTitle(R.string.settings_mms_size_title)
+                .setNegativeButton(R.string.button_cancel, null)
+                .setView(recyclerView)
+                .create().apply { show() }
+    }
 
-    override fun dismissMmsSizePicker() = mmsSizeDialog.dismiss()
+    override fun dismissMmsSizePicker() {
+        mmsSizeDialog?.dismiss()
+        mmsSizeDialog = null
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

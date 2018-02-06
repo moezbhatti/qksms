@@ -19,6 +19,7 @@
 package presentation.common
 
 import android.content.Context
+import android.support.annotation.ArrayRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -54,6 +55,13 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
             new.let { notifyItemChanged(it) }
         }
 
+    fun setData(@ArrayRes titles: Int, @ArrayRes values: Int = -1) {
+        val valueInts = if (values != -1) context.resources.getIntArray(values) else null
+
+        data = context.resources.getStringArray(titles)
+                .mapIndexed { index, title -> MenuItem(title, valueInts?.getOrNull(index) ?: index) }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.menu_list_item, parent, false)
 
@@ -69,7 +77,7 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
 
         view.clicks().subscribe { menuItemClicks.onNext(menuItem.actionId) }
 
-        view.title.setText(menuItem.title)
+        view.title.text = menuItem.title
         view.check.setVisible(menuItem.actionId == selectedItem)
     }
 

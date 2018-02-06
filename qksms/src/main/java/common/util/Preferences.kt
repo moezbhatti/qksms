@@ -26,9 +26,18 @@ import javax.inject.Singleton
 @Singleton
 class Preferences @Inject constructor(rxPrefs: RxSharedPreferences) {
 
+    companion object {
+        const val NIGHT_MODE_OFF = 0
+        const val NIGHT_MODE_ON = 1
+        const val NIGHT_MODE_AUTO = 2
+    }
+
     val defaultSms = rxPrefs.getBoolean("defaultSms", false)
     val theme = rxPrefs.getInteger("theme", 0xFF008389.toInt())
-    val dark = rxPrefs.getBoolean("dark", false)
+    val night = rxPrefs.getBoolean("night", false)
+    val nightMode = rxPrefs.getInteger("nightModeSummary", NIGHT_MODE_OFF)
+    val nightStart = rxPrefs.getString("nightStart", "6:00 PM")
+    val nightEnd = rxPrefs.getString("nightEnd", "6:00 AM")
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val notifications = rxPrefs.getBoolean("notifications", true)
     val vibration = rxPrefs.getBoolean("vibration", true)

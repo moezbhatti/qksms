@@ -97,6 +97,7 @@
         <receiver android:name="presentation.receiver.MarkSeenReceiver" />
         <receiver android:name="presentation.receiver.MarkReadReceiver" />
         <receiver android:name="presentation.receiver.RemoteMessagingReceiver" />
+        <receiver android:name="presentation.receiver.NightModeReceiver" />
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service

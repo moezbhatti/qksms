@@ -22,6 +22,7 @@ import common.QKApplication
 import common.util.ContactImageLoader
 import dagger.Component
 import presentation.common.widget.*
+import presentation.receiver.NightModeReceiver
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
 import presentation.feature.compose.DetailedChipView
@@ -60,6 +61,7 @@ interface AppComponent {
     fun inject(receiver: MmsReceivedReceiver)
     fun inject(receiver: MmsSentReceiver)
     fun inject(receiver: MmsUpdatedReceiver)
+    fun inject(receiver: NightModeReceiver)
     fun inject(receiver: RemoteMessagingReceiver)
 
     fun inject(view: AvatarView)

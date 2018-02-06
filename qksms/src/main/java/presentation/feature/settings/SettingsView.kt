@@ -27,9 +27,16 @@ import presentation.common.widget.PreferenceView
 interface SettingsView : QkView<SettingsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
+    val nightModeSelectedIntent: Observable<Int>
+    val startTimeSelectedIntent: Subject<Pair<Int, Int>>
+    val endTimeSelectedIntent: Subject<Pair<Int, Int>>
     val ringtoneSelectedIntent: Observable<String>
     val mmsSizeSelectedIntent: Observable<Int>
 
+    fun showNightModeDialog()
+    fun dismissNightModeDialog()
+    fun showStartTimePicker(hour: Int, minute: Int)
+    fun showEndTimePicker(hour: Int, minute: Int)
     fun showRingtonePicker(default: Uri)
     fun showMmsSizePicker()
     fun dismissMmsSizePicker()

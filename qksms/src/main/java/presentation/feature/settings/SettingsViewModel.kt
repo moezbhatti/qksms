@@ -24,18 +24,23 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import common.util.DateFormatter
+import common.util.NightModeManager
 import common.util.Preferences
 import interactor.FullSync
 import io.reactivex.rxkotlin.plusAssign
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var nightModeManager: NightModeManager
     @Inject lateinit var prefs: Preferences
     @Inject lateinit var fullSync: FullSync
 
@@ -48,8 +53,17 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     newState { it.copy(isDefaultSmsApp = isDefaultSmsApp) }
                 }
 
-        disposables += prefs.dark.asObservable().subscribe { darkModeEnabled ->
-            newState { it.copy(darkModeEnabled = darkModeEnabled) }
+        val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
+        disposables += prefs.nightMode.asObservable().subscribe { nightMode ->
+            newState { it.copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
+        }
+
+        disposables += prefs.nightStart.asObservable().subscribe { nightStart ->
+            newState { it.copy(nightStart = nightStart) }
+        }
+
+        disposables += prefs.nightEnd.asObservable().subscribe { nightEnd ->
+            newState { it.copy(nightEnd = nightEnd) }
         }
 
         disposables += prefs.autoEmoji.asObservable().subscribe { autoEmojiEnabled ->
@@ -76,8 +90,11 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
             newState { it.copy(mmsEnabled = mmsEnabled) }
         }
 
+        val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
+        val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
         disposables += prefs.mmsSize.asObservable().subscribe { maxMmsSize ->
-            newState { it.copy(maxMmsSize = maxMmsSize) }
+            val index = mmsSizeIds.indexOf(maxMmsSize)
+            newState { it.copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
         }
 
         disposables += fullSync
@@ -96,7 +113,17 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.theme -> navigator.showThemePicker()
 
-                        R.id.dark -> prefs.dark.set(!prefs.dark.get())
+                        R.id.night -> view.showNightModeDialog()
+
+                        R.id.nightStart -> {
+                            val date = dateFormatter.parseTime(prefs.nightStart.get())
+                            view.showStartTimePicker(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE))
+                        }
+
+                        R.id.nightEnd -> {
+                            val date = dateFormatter.parseTime(prefs.nightEnd.get())
+                            view.showEndTimePicker(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE))
+                        }
 
                         R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
 
@@ -124,6 +151,23 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                         }
                     }
                 }
+
+        view.nightModeSelectedIntent
+                .doOnNext { view.dismissNightModeDialog() }
+                .autoDisposable(view.scope())
+                .subscribe { nightMode -> nightModeManager.updateNightMode(nightMode) }
+
+        view.startTimeSelectedIntent
+                .doOnNext { nightModeManager.updateAlarms() }
+                .map { dateFormatter.formatTime(it.first, it.second) }
+                .autoDisposable(view.scope())
+                .subscribe { prefs.nightStart.set(it) }
+
+        view.endTimeSelectedIntent
+                .doOnNext { nightModeManager.updateAlarms() }
+                .map { dateFormatter.formatTime(it.first, it.second) }
+                .autoDisposable(view.scope())
+                .subscribe { prefs.nightEnd.set(it) }
 
         view.ringtoneSelectedIntent
                 .autoDisposable(view.scope())
