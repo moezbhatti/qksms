@@ -24,8 +24,7 @@ import android.content.Intent
 import common.di.appComponent
 import common.util.DateFormatter
 import common.util.Preferences
-import timber.log.Timber
-import java.util.concurrent.TimeUnit
+import java.util.*
 import javax.inject.Inject
 
 class NightModeReceiver : BroadcastReceiver() {
@@ -38,19 +37,28 @@ class NightModeReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        Timber.v("onReceive")
-
         // If night mode is not on auto, then there's nothing to do here
         if (prefs.nightMode.get() != Preferences.NIGHT_MODE_AUTO) {
             return
         }
 
-        val dayMs = TimeUnit.DAYS.toMillis(1)
+        val nightStartTime = getPreviousInstanceOfTime(prefs.nightStart.get())
+        val nightEndTime = getPreviousInstanceOfTime(prefs.nightEnd.get())
 
-        val currentTime = (System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10)) % dayMs // add 10 mins in case receiver is called early
-        val nightEndTime = dateFormatter.parseTime(prefs.nightEnd.get()).timeInMillis % dayMs
-        val nightStartTime = dateFormatter.parseTime(prefs.nightStart.get()).timeInMillis % dayMs
+        // If the last nightStart was more recent than the last nightEnd, then it's night time
+        prefs.night.set(nightStartTime > nightEndTime)
+    }
 
-        prefs.night.set(currentTime in nightStartTime..nightEndTime)
+    /**
+     * Returns a Calendar set to the most recent occurrence of this time
+     */
+    private fun getPreviousInstanceOfTime(time: String): Calendar {
+        val calendar = dateFormatter.parseTime(time)
+
+        while (calendar.timeInMillis > System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+        }
+
+        return calendar
     }
 }
