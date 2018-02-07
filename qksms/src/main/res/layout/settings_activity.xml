@@ -37,9 +37,9 @@
 
             <LinearLayout
                 android:id="@+id/preferences"
-                android:animateLayoutChanges="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical">
 
                 <presentation.common.widget.PreferenceView
@@ -65,6 +65,7 @@
                     android:id="@+id/nightStart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:title="@string/settings_night_start_title"
                     tools:summary="6:00PM" />
 
@@ -72,6 +73,7 @@
                     android:id="@+id/nightEnd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:title="@string/settings_night_end_title"
                     tools:summary="9:00AM" />
 
