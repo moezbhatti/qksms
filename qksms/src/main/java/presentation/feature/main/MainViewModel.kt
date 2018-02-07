@@ -226,7 +226,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         }
                     }
                 })
-                .flatMap { Observable.timer(2750, TimeUnit.MILLISECONDS) }
+                .switchMap { Observable.timer(2750, TimeUnit.MILLISECONDS) }
                 .withLatestFrom(state, { threadId, state ->
                     markArchived.execute(threadId) {
                         if (state.page is Inbox) {
