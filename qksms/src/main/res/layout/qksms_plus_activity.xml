@@ -148,41 +148,6 @@
             <presentation.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_palette_black_24dp"
-                app:summary="@string/qksms_plus_themes_summary"
-                app:title="@string/qksms_plus_themes_title" />
-
-            <presentation.common.widget.PreferenceView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_favorite_black_24dp"
-                app:summary="@string/qksms_plus_emoji_summary"
-                app:title="@string/qksms_plus_emoji_title" />
-
-            <presentation.common.widget.PreferenceView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_backup_black_24dp"
-                app:summary="@string/qksms_plus_backup_summary"
-                app:title="@string/qksms_plus_backup_title" />
-
-            <presentation.common.widget.PreferenceView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_event_black_24dp"
-                app:summary="@string/qksms_plus_scheduled_summary"
-                app:title="@string/qksms_plus_scheduled_title" />
-
-            <presentation.common.widget.PreferenceView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_av_timer_black_24dp"
-                app:summary="@string/qksms_plus_delayed_summary"
-                app:title="@string/qksms_plus_delayed_title" />
-
-            <presentation.common.widget.PreferenceView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 app:icon="@drawable/ic_invert_colors_black_24dp"
                 app:summary="@string/qksms_plus_night_summary"
                 app:title="@string/qksms_plus_night_title" />
@@ -190,6 +155,54 @@
             <presentation.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_more_horiz_black_24dp"
+                app:summary="@string/qksms_plus_more_summary"
+                app:title="@string/qksms_plus_more_title" />
+
+            <presentation.common.widget.PreferenceView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.25"
+                app:icon="@drawable/ic_palette_black_24dp"
+                app:summary="@string/qksms_plus_themes_summary"
+                app:title="@string/qksms_plus_themes_title" />
+
+            <presentation.common.widget.PreferenceView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.25"
+                app:icon="@drawable/ic_favorite_black_24dp"
+                app:summary="@string/qksms_plus_emoji_summary"
+                app:title="@string/qksms_plus_emoji_title" />
+
+            <presentation.common.widget.PreferenceView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.25"
+                app:icon="@drawable/ic_backup_black_24dp"
+                app:summary="@string/qksms_plus_backup_summary"
+                app:title="@string/qksms_plus_backup_title" />
+
+            <presentation.common.widget.PreferenceView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.25"
+                app:icon="@drawable/ic_event_black_24dp"
+                app:summary="@string/qksms_plus_scheduled_summary"
+                app:title="@string/qksms_plus_scheduled_title" />
+
+            <presentation.common.widget.PreferenceView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.25"
+                app:icon="@drawable/ic_av_timer_black_24dp"
+                app:summary="@string/qksms_plus_delayed_summary"
+                app:title="@string/qksms_plus_delayed_title" />
+
+            <presentation.common.widget.PreferenceView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.25"
                 app:icon="@drawable/ic_block_black_24dp"
                 app:summary="@string/qksms_plus_blacklist_summary"
                 app:title="@string/qksms_plus_blacklist_title" />
@@ -197,6 +210,7 @@
             <presentation.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:alpha="0.25"
                 app:icon="@drawable/ic_forward_black_24dp"
                 app:summary="@string/qksms_plus_forward_summary"
                 app:title="@string/qksms_plus_forward_title" />
@@ -204,16 +218,10 @@
             <presentation.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:alpha="0.25"
                 app:icon="@drawable/ic_reply_black_24dp"
                 app:summary="@string/qksms_plus_respond_summary"
                 app:title="@string/qksms_plus_respond_title" />
-
-            <presentation.common.widget.PreferenceView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_more_horiz_black_24dp"
-                app:summary="@string/qksms_plus_more_summary"
-                app:title="@string/qksms_plus_more_title" />
 
         </LinearLayout>
 
