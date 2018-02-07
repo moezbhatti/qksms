@@ -120,10 +120,12 @@
 
     <string name="button_undo">Undo</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_more">More</string>
 
     <string name="toast_copied">Copied</string>
     <string name="toast_archived">Archived conversation</string>
     <string name="toast_unarchived">Moved to inbox</string>
+    <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
 
     <string-array name="message_options">
         <item>Copy text</item>

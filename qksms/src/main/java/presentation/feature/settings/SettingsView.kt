@@ -28,6 +28,7 @@ interface SettingsView : QkView<SettingsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
     val nightModeSelectedIntent: Observable<Int>
+    val viewQksmsPlusIntent: Subject<Unit>
     val startTimeSelectedIntent: Subject<Pair<Int, Int>>
     val endTimeSelectedIntent: Subject<Pair<Int, Int>>
     val ringtoneSelectedIntent: Observable<String>
@@ -35,6 +36,7 @@ interface SettingsView : QkView<SettingsState> {
 
     fun showNightModeDialog()
     fun dismissNightModeDialog()
+    fun showQksmsPlusSnackbar()
     fun showStartTimePicker(hour: Int, minute: Int)
     fun showEndTimePicker(hour: Int, minute: Int)
     fun showRingtonePicker(default: Uri)

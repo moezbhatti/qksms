@@ -27,6 +27,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
@@ -54,6 +55,7 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
     override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val nightModeSelectedIntent by lazy { nightModeAdapter.menuItemClicks }
+    override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
@@ -144,6 +146,13 @@ class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
     override fun dismissNightModeDialog() {
         nightModeDialog?.dismiss()
         nightModeDialog = null
+    }
+
+    override fun showQksmsPlusSnackbar() {
+        Snackbar.make(content, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
+            setAction(R.string.button_more, { viewQksmsPlusIntent.onNext(Unit) })
+            show()
+        }
     }
 
     override fun showStartTimePicker(hour: Int, minute: Int) {

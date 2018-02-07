@@ -24,11 +24,13 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import common.util.BillingManager
 import common.util.DateFormatter
 import common.util.NightModeManager
 import common.util.Preferences
 import interactor.FullSync
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.withLatestFrom
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
 import timber.log.Timber
@@ -38,6 +40,7 @@ import javax.inject.Inject
 class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var billingManager: BillingManager
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var nightModeManager: NightModeManager
@@ -148,8 +151,19 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
         view.nightModeSelectedIntent
                 .doOnNext { view.dismissNightModeDialog() }
+                .withLatestFrom(billingManager.plusStatus, { mode, plusStatus ->
+                    if (plusStatus == BillingManager.UpgradeStatus.REGULAR && mode == Preferences.NIGHT_MODE_AUTO) {
+                        view.showQksmsPlusSnackbar()
+                    } else {
+                        nightModeManager.updateNightMode(mode)
+                    }
+                })
                 .autoDisposable(view.scope())
-                .subscribe { nightMode -> nightModeManager.updateNightMode(nightMode) }
+                .subscribe()
+
+        view.viewQksmsPlusIntent
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showQksmsPlusActivity() }
 
         view.startTimeSelectedIntent
                 .doOnNext { nightModeManager.updateAlarms() }
