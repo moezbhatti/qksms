@@ -25,6 +25,7 @@ import common.di.appComponent
 import common.util.DateFormatter
 import common.util.Preferences
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class NightModeReceiver : BroadcastReceiver() {
@@ -54,8 +55,9 @@ class NightModeReceiver : BroadcastReceiver() {
      */
     private fun getPreviousInstanceOfTime(time: String): Calendar {
         val calendar = dateFormatter.parseTime(time)
+        val currentTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10)
 
-        while (calendar.timeInMillis > System.currentTimeMillis()) {
+        while (calendar.timeInMillis > currentTime) {
             calendar.add(Calendar.DAY_OF_YEAR, -1)
         }
 
