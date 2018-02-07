@@ -22,45 +22,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import common.di.appComponent
-import common.util.DateFormatter
-import common.util.Preferences
-import java.util.*
-import java.util.concurrent.TimeUnit
+import common.util.NightModeManager
 import javax.inject.Inject
 
 class NightModeReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var prefs: Preferences
+    @Inject lateinit var nightModeManager: NightModeManager
 
     init {
         appComponent.inject(this)
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        // If night mode is not on auto, then there's nothing to do here
-        if (prefs.nightMode.get() != Preferences.NIGHT_MODE_AUTO) {
-            return
-        }
-
-        val nightStartTime = getPreviousInstanceOfTime(prefs.nightStart.get())
-        val nightEndTime = getPreviousInstanceOfTime(prefs.nightEnd.get())
-
-        // If the last nightStart was more recent than the last nightEnd, then it's night time
-        prefs.night.set(nightStartTime > nightEndTime)
-    }
-
-    /**
-     * Returns a Calendar set to the most recent occurrence of this time
-     */
-    private fun getPreviousInstanceOfTime(time: String): Calendar {
-        val calendar = dateFormatter.parseTime(time)
-        val currentTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10)
-
-        while (calendar.timeInMillis > currentTime) {
-            calendar.add(Calendar.DAY_OF_YEAR, -1)
-        }
-
-        return calendar
+        nightModeManager.updateCurrentTheme()
     }
 }

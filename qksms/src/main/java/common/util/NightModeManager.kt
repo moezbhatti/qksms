@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import presentation.receiver.NightModeReceiver
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,6 +33,19 @@ class NightModeManager @Inject constructor(
         private val context: Context,
         private val dateFormatter: DateFormatter,
         private val prefs: Preferences) {
+
+    fun updateCurrentTheme() {
+        // If night mode is not on auto, then there's nothing to do here
+        if (prefs.nightMode.get() != Preferences.NIGHT_MODE_AUTO) {
+            return
+        }
+
+        val nightStartTime = getPreviousInstanceOfTime(prefs.nightStart.get())
+        val nightEndTime = getPreviousInstanceOfTime(prefs.nightEnd.get())
+
+        // If the last nightStart was more recent than the last nightEnd, then it's night time
+        prefs.night.set(nightStartTime > nightEndTime)
+    }
 
     fun updateNightMode(mode: Int) {
         prefs.nightMode.set(mode)
@@ -73,6 +87,20 @@ class NightModeManager @Inject constructor(
             set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY))
             set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
         }
+    }
+
+    /**
+     * Returns a Calendar set to the most recent occurrence of this time
+     */
+    private fun getPreviousInstanceOfTime(time: String): Calendar {
+        val currentTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10)
+        val calendar = dateFormatter.parseTime(time)
+
+        while (calendar.timeInMillis > currentTime) {
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+        }
+
+        return calendar
     }
 
 }
