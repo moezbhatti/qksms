@@ -54,48 +54,42 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 }
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
-        disposables += prefs.nightMode.asObservable().subscribe { nightMode ->
-            newState { it.copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
-        }
+        disposables += prefs.nightMode.asObservable()
+                .subscribe { nightMode ->
+                    newState { it.copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
+                }
 
-        disposables += prefs.nightStart.asObservable().subscribe { nightStart ->
-            newState { it.copy(nightStart = nightStart) }
-        }
+        disposables += prefs.nightStart.asObservable()
+                .subscribe { nightStart -> newState { it.copy(nightStart = nightStart) } }
 
-        disposables += prefs.nightEnd.asObservable().subscribe { nightEnd ->
-            newState { it.copy(nightEnd = nightEnd) }
-        }
+        disposables += prefs.nightEnd.asObservable()
+                .subscribe { nightEnd -> newState { it.copy(nightEnd = nightEnd) } }
 
-        disposables += prefs.autoEmoji.asObservable().subscribe { autoEmojiEnabled ->
-            newState { it.copy(autoEmojiEnabled = autoEmojiEnabled) }
-        }
+        disposables += prefs.autoEmoji.asObservable()
+                .subscribe { enabled -> newState { it.copy(autoEmojiEnabled = enabled) } }
 
-        disposables += prefs.notifications.asObservable().subscribe { notificationsEnabled ->
-            newState { it.copy(notificationsEnabled = notificationsEnabled) }
-        }
+        disposables += prefs.notifications.asObservable()
+                .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
 
-        disposables += prefs.vibration.asObservable().subscribe { vibrationEnabled ->
-            newState { it.copy(vibrationEnabled = vibrationEnabled) }
-        }
+        disposables += prefs.vibration.asObservable()
+                .subscribe { enabled -> newState { it.copy(vibrationEnabled = enabled) } }
 
-        disposables += prefs.delivery.asObservable().subscribe { deliveryEnabled ->
-            newState { it.copy(deliveryEnabled = deliveryEnabled) }
-        }
+        disposables += prefs.delivery.asObservable()
+                .subscribe { enabled -> newState { it.copy(deliveryEnabled = enabled) } }
 
-        disposables += prefs.unicode.asObservable().subscribe { stripUnicodeEnabled ->
-            newState { it.copy(stripUnicodeEnabled = stripUnicodeEnabled) }
-        }
+        disposables += prefs.unicode.asObservable()
+                .subscribe { enabled -> newState { it.copy(stripUnicodeEnabled = enabled) } }
 
-        disposables += prefs.mms.asObservable().subscribe { mmsEnabled ->
-            newState { it.copy(mmsEnabled = mmsEnabled) }
-        }
+        disposables += prefs.mms.asObservable()
+                .subscribe { enabled -> newState { it.copy(mmsEnabled = enabled) } }
 
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
-        disposables += prefs.mmsSize.asObservable().subscribe { maxMmsSize ->
-            val index = mmsSizeIds.indexOf(maxMmsSize)
-            newState { it.copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
-        }
+        disposables += prefs.mmsSize.asObservable()
+                .subscribe { maxMmsSize ->
+                    val index = mmsSizeIds.indexOf(maxMmsSize)
+                    newState { it.copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
+                }
 
         disposables += fullSync
     }
