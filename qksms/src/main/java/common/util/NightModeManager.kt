@@ -94,7 +94,7 @@ class NightModeManager @Inject constructor(
      */
     private fun getPreviousInstanceOfTime(time: String): Calendar {
         val currentTime = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10)
-        val calendar = dateFormatter.parseTime(time)
+        val calendar = createCalendar(time)
 
         while (calendar.timeInMillis > currentTime) {
             calendar.add(Calendar.DAY_OF_YEAR, -1)
