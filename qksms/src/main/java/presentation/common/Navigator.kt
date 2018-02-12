@@ -51,6 +51,14 @@ class Navigator @Inject constructor(val context: Context) {
         context.startActivity(intent)
     }
 
+    private fun startActivityExternal(intent: Intent) {
+        if (intent.resolveActivity(context.packageManager) != null) {
+            startActivity(intent)
+        } else {
+            startActivity(Intent.createChooser(intent, null))
+        }
+    }
+
     fun showSetupActivity() {
         val intent = Intent(context, SetupActivity::class.java)
         startActivity(intent)
@@ -93,20 +101,20 @@ class Navigator @Inject constructor(val context: Context) {
 
     fun makePhoneCall(address: String) {
         val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$address"))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun showSupport() {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:")
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("team@qklabs.com"))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun addContact(address: String) {
         val uri = Uri.parse("tel: $address")
         val intent = Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT, uri)
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     @TargetApi(Build.VERSION_CODES.O)
