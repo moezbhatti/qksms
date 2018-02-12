@@ -27,11 +27,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FontProvider @Inject constructor(private val context: Context) {
+class FontProvider @Inject constructor(context: Context) {
 
     private var lato: Typeface? = null
 
-    private val pendingCallbacks = ArrayList<(Typeface) -> Unit>()
+    private val pendingCallbacks = ArrayList<(Typeface?) -> Unit>()
 
     init {
         ResourcesCompat.getFont(context, R.font.lato, object : ResourcesCompat.FontCallback() {
@@ -48,11 +48,11 @@ class FontProvider @Inject constructor(private val context: Context) {
         }, null)
     }
 
-    fun getLato(callback: (Typeface) -> Unit) {
+    fun getLato(callback: (Typeface?) -> Unit) {
         lato?.run(callback)
 
         if (lato == null) {
-            pendingCallbacks += callback
+            pendingCallbacks.add(callback)
         }
     }
 
