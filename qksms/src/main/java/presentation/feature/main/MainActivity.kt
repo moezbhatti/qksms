@@ -89,15 +89,7 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
             setAction(R.string.button_undo, { undoSwipeConversationIntent.onNext(Unit) })
         }
     }
-    private val conversationMenuDialog by lazy {
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = menuItemAdapter
-        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-        AlertDialog.Builder(this).setView(recyclerView).create().apply {
-            setOnDismissListener { conversationMenuItemIntent.onNext(-1) }
-        }
-    }
+    private var conversationMenuDialog: AlertDialog? = null
 
     init {
         appComponent.inject(this)
@@ -258,8 +250,19 @@ class MainActivity : QkActivity<MainViewModel>(), MainView {
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
 
-        if (conversationMenuDialog.isShowing && menuItemAdapter.data.isEmpty()) conversationMenuDialog.dismiss()
-        else if (!conversationMenuDialog.isShowing && menuItemAdapter.data.isNotEmpty()) conversationMenuDialog.show()
+        if (conversationMenuDialog?.isShowing == true && menuItemAdapter.data.isEmpty()) {
+            conversationMenuDialog?.dismiss()
+            conversationMenuDialog = null
+        } else if (conversationMenuDialog?.isShowing != true && menuItemAdapter.data.isNotEmpty()) {
+            val recyclerView = RecyclerView(this)
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            recyclerView.adapter = menuItemAdapter
+            recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
+            conversationMenuDialog = AlertDialog.Builder(this).setView(recyclerView).create().apply {
+                setOnDismissListener { conversationMenuItemIntent.onNext(-1) }
+                show()
+            }
+        }
     }
 
     override fun clearSearch() {
