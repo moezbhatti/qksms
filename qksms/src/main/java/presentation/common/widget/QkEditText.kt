@@ -19,6 +19,7 @@
 package presentation.common.widget
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.widget.EditText
 import com.moez.QKSMS.R
@@ -46,7 +47,7 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     init {
         appComponent.inject(this)
-        fontProvider.getLato { setTypeface(it, typeface.style) }
+        fontProvider.getLato { setTypeface(it, typeface?.style ?: Typeface.NORMAL) }
 
         context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
             textColorObservable = when (getInt(R.styleable.QkEditText_textColor, -1)) {

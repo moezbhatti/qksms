@@ -19,6 +19,7 @@
 package presentation.common.widget
 
 import android.content.Context
+import android.graphics.Typeface
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import com.moez.QKSMS.R
@@ -51,7 +52,7 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
-            fontProvider.getLato { setTypeface(it, typeface.style) }
+            fontProvider.getLato { setTypeface(it, typeface?.style ?: Typeface.NORMAL) }
         }
 
         context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
