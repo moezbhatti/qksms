@@ -18,12 +18,16 @@
  */
 package interactor
 
+import common.util.NotificationManager
 import data.repository.MessageRepository
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-class MarkFailed @Inject constructor(private val messageRepo: MessageRepository) : Interactor<MarkFailed.Params, Any>() {
+class MarkFailed @Inject constructor(
+        private val messageRepo: MessageRepository,
+        private val notificationManager: NotificationManager
+) : Interactor<MarkFailed.Params, Any>() {
 
     data class Params(val id: Long, val resultCode: Int)
 
@@ -31,6 +35,7 @@ class MarkFailed @Inject constructor(private val messageRepo: MessageRepository)
         return Flowable.just(Unit)
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap { messageRepo.markFailed(params.id, params.resultCode) }
+                .doOnNext { notificationManager.notifyFailed(params.id) }
     }
 
 }

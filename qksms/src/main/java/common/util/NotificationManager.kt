@@ -133,6 +133,37 @@ class NotificationManager @Inject constructor(
         notificationManager.notify(threadId.toInt(), notification.build())
     }
 
+    fun notifyFailed(msgId: Long) {
+        val message = messageRepo.getMessage(msgId)
+
+        if (message == null || !message.isFailedMessage()) {
+            return
+        }
+
+        val threadId = message.threadId
+        val conversation = messageRepo.getConversation(threadId) ?: return
+
+        val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
+        val taskStackBuilder = TaskStackBuilder.create(context)
+        taskStackBuilder.addParentStack(ComposeActivity::class.java)
+        taskStackBuilder.addNextIntent(contentIntent)
+        val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 40000, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notification = NotificationCompat.Builder(context, DEFAULT_CHANNEL_ID)
+                .setContentTitle(context.getString(R.string.notification_message_failed_title))
+                .setContentText(context.getString(R.string.notification_message_failed_text, conversation.getTitle()))
+                .setColor(colors.theme.blockingFirst())
+                .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
+                .setSmallIcon(R.drawable.ic_notification_failed)
+                .setAutoCancel(true)
+                .setContentIntent(contentPI)
+                .setSound(Uri.parse(prefs.ringtone.get()))
+                .setLights(Color.WHITE, 500, 2000)
+                .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
+
+        notificationManager.notify(threadId.toInt() + 50000, notification.build())
+    }
+
     private fun getReplyAction(address: String, threadId: Long): NotificationCompat.Action {
         val replyIntent = Intent(context, RemoteMessagingReceiver::class.java)
                 .putExtra("address", address)

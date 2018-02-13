@@ -142,6 +142,13 @@ class MessageRepository @Inject constructor(
                 .findAll()
     }
 
+    fun getMessage(id: Long): Message? {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("id", id)
+                .findFirst()
+    }
+
     /**
      * Retrieves the list of messages which should be shown in the notification
      * for a given conversation

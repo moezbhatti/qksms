@@ -127,6 +127,9 @@
     <string name="toast_unarchived">Moved to inbox</string>
     <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
 
+    <string name="notification_message_failed_title">Message not sent</string>
+    <string name="notification_message_failed_text">The message to %s failed to send</string>
+
     <string-array name="message_options">
         <item>Copy text</item>
         <item>Forward</item>
