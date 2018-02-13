@@ -22,13 +22,20 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import common.di.appComponent
 import common.util.GlideApp
+import common.util.extensions.mapNotNull
 import common.util.extensions.setVisible
 import data.model.MmsPart
 import kotlinx.android.synthetic.main.mms_preview_view.view.*
+import presentation.common.Navigator
+import javax.inject.Inject
 
 class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
+
+    @Inject lateinit var navigator: Navigator
 
     var parts: List<MmsPart> = ArrayList()
         set(value) {
@@ -37,7 +44,14 @@ class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
     init {
+        appComponent.inject(this)
         View.inflate(context, R.layout.mms_preview_view, this)
+
+        image.clicks()
+                .mapNotNull { parts.firstOrNull { it.image != null } }
+                .map { part -> part.id }
+                .doOnNext { partId -> navigator.showImage(partId) }
+                .subscribe()
     }
 
     private fun updateView() {

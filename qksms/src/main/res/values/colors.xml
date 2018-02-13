@@ -19,6 +19,7 @@
   -->
 <resources>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
     <color name="statusBarLight">#F7F7F7</color>
     <color name="statusBarDark">#1a1e22</color>

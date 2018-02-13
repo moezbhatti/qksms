@@ -16,21 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
+package presentation.feature.gallery
 
-package common.util.extensions
-
-import common.util.Optional
-import io.reactivex.Flowable
 import io.reactivex.Observable
+import presentation.common.base.QkView
 
-fun <T, R> Flowable<T>.mapNotNull(mapper: (T) -> R?): Flowable<R>
-        = map { input -> Optional(mapper(input)) }
-        .filter { optional -> optional.notNull() }
-        .map { optional -> optional.value }
+interface GalleryView : QkView<GalleryState> {
 
-fun <T, R> Observable<T>.mapNotNull(mapper: (T) -> R?): Observable<R>
-        = map { input -> Optional(mapper(input)) }
-        .filter { optional -> optional.notNull() }
-        .map { optional -> optional.value }
+    val screenTouchedIntent: Observable<Unit>
 
-fun <T> Observable<T>.toFlowable(): Flowable<T> = this.toFlowable(io.reactivex.BackpressureStrategy.BUFFER)
+}

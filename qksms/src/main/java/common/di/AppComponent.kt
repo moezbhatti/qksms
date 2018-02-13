@@ -22,10 +22,11 @@ import common.QKApplication
 import common.util.ContactImageLoader
 import dagger.Component
 import presentation.common.widget.*
-import presentation.receiver.NightModeReceiver
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
 import presentation.feature.compose.DetailedChipView
+import presentation.feature.gallery.GalleryActivity
+import presentation.feature.gallery.GalleryViewModel
 import presentation.feature.main.MainActivity
 import presentation.feature.main.MainViewModel
 import presentation.feature.plus.PlusActivity
@@ -48,6 +49,7 @@ interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(activity: SetupActivity)
     fun inject(activity: ComposeActivity)
+    fun inject(activity: GalleryActivity)
     fun inject(activity: PlusActivity)
     fun inject(activity: SettingsActivity)
     fun inject(activity: ThemePickerActivity)
@@ -66,6 +68,7 @@ interface AppComponent {
 
     fun inject(view: AvatarView)
     fun inject(view: DetailedChipView)
+    fun inject(view: MmsPreviewView)
     fun inject(view: PagerTitleView)
     fun inject(view: PreferenceView)
     fun inject(view: QkEditText)
@@ -76,6 +79,7 @@ interface AppComponent {
     fun inject(viewModel: MainViewModel)
     fun inject(viewModel: SetupViewModel)
     fun inject(viewModel: ComposeViewModel)
+    fun inject(viewModel: GalleryViewModel)
     fun inject(viewModel: PlusViewModel)
     fun inject(viewModel: SettingsViewModel)
     fun inject(viewModel: ThemePickerViewModel)

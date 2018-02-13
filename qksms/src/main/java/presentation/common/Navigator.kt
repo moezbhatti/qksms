@@ -31,6 +31,8 @@ import android.provider.Telephony
 import common.util.NotificationManager
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
+import presentation.feature.gallery.GalleryActivity
+import presentation.feature.gallery.GalleryViewModel
 import presentation.feature.main.MainViewModel
 import presentation.feature.plus.PlusActivity
 import presentation.feature.plus.PlusViewModel
@@ -89,6 +91,12 @@ class Navigator @Inject constructor(val context: Context) {
         startActivity(intent)
     }
 
+    fun showImage(partId: Long) {
+        val intent = Intent(context, GalleryActivity::class.java)
+        intent.putExtra("partId", partId)
+        startActivity(intent)
+    }
+
     fun showSettings() {
         val intent = Intent(context, SettingsActivity::class.java)
         startActivity(intent)
@@ -134,6 +142,7 @@ class Navigator @Inject constructor(val context: Context) {
                 PlusViewModel::class.java -> PlusViewModel()
                 SetupViewModel::class.java -> SetupViewModel()
                 ComposeViewModel::class.java -> ComposeViewModel(intent)
+                GalleryViewModel::class.java -> GalleryViewModel(intent)
                 SettingsViewModel::class.java -> SettingsViewModel()
                 ThemePickerViewModel::class.java -> ThemePickerViewModel()
                 else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")

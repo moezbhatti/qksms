@@ -36,10 +36,7 @@ import common.util.Preferences
 import common.util.extensions.*
 import data.mapper.CursorToConversation
 import data.mapper.CursorToRecipient
-import data.model.Contact
-import data.model.Conversation
-import data.model.InboxItem
-import data.model.Message
+import data.model.*
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -153,6 +150,13 @@ class MessageRepository @Inject constructor(
     fun getMessage(id: Long): Message? {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
+                .equalTo("id", id)
+                .findFirst()
+    }
+
+    fun getPart(id: Long): MmsPart? {
+        return Realm.getDefaultInstance()
+                .where(MmsPart::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
