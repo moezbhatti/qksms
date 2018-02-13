@@ -67,6 +67,7 @@ class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
+    override val messageClickIntent: Subject<Message> by lazy { messageAdapter.clicks }
     override val attachmentDeletedIntent: Subject<Uri> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }

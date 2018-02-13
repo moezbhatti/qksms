@@ -68,6 +68,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var markUnarchived: MarkUnarchived
     @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var sendMessage: SendMessage
+    @Inject lateinit var retrySending: RetrySending
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
 
@@ -284,6 +285,12 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> deleteConversation.execute(conversation.id) }
+
+        view.messageClickIntent
+                .filter { message -> message.isFailedMessage() }
+                .doOnNext { message -> retrySending.execute(message) }
+                .autoDisposable(view.scope())
+                .subscribe()
 
         // Mark the conversation read, if in foreground
         Observables.combineLatest(messages, view.activityVisibleIntent, { _, b -> b })

@@ -18,16 +18,21 @@
  */
 package data.repository
 
+import android.app.PendingIntent
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.Telephony
 import android.provider.Telephony.Sms
 import android.telephony.PhoneNumberUtils
+import android.telephony.SmsManager
+import com.klinker.android.send_message.StripAccents
 import common.util.Keys
 import common.util.MessageUtils
+import common.util.Preferences
 import common.util.extensions.*
 import data.mapper.CursorToConversation
 import data.mapper.CursorToRecipient
@@ -43,6 +48,8 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
+import presentation.receiver.MessageDeliveredReceiver
+import presentation.receiver.MessageSentReceiver
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -51,7 +58,8 @@ class MessageRepository @Inject constructor(
         private val context: Context,
         private val messageIds: Keys,
         private val cursorToConversation: CursorToConversation,
-        private val cursorToRecipient: CursorToRecipient) {
+        private val cursorToRecipient: CursorToRecipient,
+        private val prefs: Preferences) {
 
     fun getConversations(archived: Boolean = false): Flowable<List<InboxItem>> {
         val realm = Realm.getDefaultInstance()
@@ -244,6 +252,36 @@ class MessageRepository @Inject constructor(
         realm.close()
     }
 
+    /**
+     * Persists the SMS and attempts to send it
+     */
+    fun sendSmsAndPersist(threadId: Long, address: String, body: String) {
+        val message = insertSentSms(threadId, address, body)
+        sendSms(message)
+    }
+
+    /**
+     * Attempts to send the SMS message. This can be called if the message has already been persisted
+     */
+    fun sendSms(message: Message) {
+        val smsManager = SmsManager.getDefault()
+
+        val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
+
+        val sentIntents = parts.map {
+            val intent = Intent(context, MessageSentReceiver::class.java).putExtra("id", message.id)
+            PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val deliveredIntents = parts.map {
+            val intent = Intent(context, MessageDeliveredReceiver::class.java).putExtra("id", message.id)
+            val pendingIntent = PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            if (prefs.delivery.get()) pendingIntent else null
+        }
+
+        smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
+    }
+
     fun insertSentSms(threadId: Long, address: String, body: String): Message {
 
         // Insert the message to Realm
@@ -316,6 +354,34 @@ class MessageRepository @Inject constructor(
         realm.close()
 
         return message
+    }
+
+    /**
+     * Marks the message as sending, in case we need to retry sending it
+     */
+    fun markSending(id: Long): Flowable<*> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Message::class.java).equalTo("id", id)
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .mapNotNull { it[0] }
+                .take(1)
+                .doOnNext { message ->
+                    // Update the message in realm
+                    realm.executeTransaction {
+                        message.boxId = Sms.MESSAGE_TYPE_OUTBOX
+                    }
+                }
+                .map { message -> message.getUri() }
+                .observeOn(Schedulers.computation())
+                .doOnNext { uri ->
+                    // Update the message in the native ContentProvider
+                    val values = ContentValues()
+                    values.put(Sms.TYPE, Sms.MESSAGE_TYPE_OUTBOX)
+                    context.contentResolver.update(uri, values, null, null)
+                }
     }
 
     fun markSent(id: Long): Flowable<*> {

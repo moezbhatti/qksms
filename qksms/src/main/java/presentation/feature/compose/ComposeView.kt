@@ -41,6 +41,7 @@ interface ComposeView : QkView<ComposeState> {
     val copyTextIntent: Subject<Message>
     val forwardMessageIntent: Subject<Message>
     val deleteMessageIntent: Subject<Message>
+    val messageClickIntent: Subject<Message>
     val attachmentDeletedIntent: Subject<Uri>
     val textChangedIntent: Observable<CharSequence>
     val attachIntent: Observable<Unit>

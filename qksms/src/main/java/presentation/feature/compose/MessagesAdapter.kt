@@ -59,6 +59,7 @@ class MessagesAdapter @Inject constructor(
         private const val TIMESTAMP_THRESHOLD = 10
     }
 
+    val clicks: Subject<Message> = PublishSubject.create<Message>()
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
 
     var data: Pair<Conversation, RealmResults<Message>>? = null
@@ -107,11 +108,9 @@ class MessagesAdapter @Inject constructor(
         if (absViewType != VIEW_TYPE_ME) {
             val address = people[absViewType - 2]
             if (!contactMap.containsKey(address)) {
-                val contact = data?.first?.recipients?.mapNotNull { it.contact } // Map the conversation to its contacts
+                contactMap[address] = data?.first?.recipients?.mapNotNull { it.contact } // Map the conversation to its contacts
                         ?.firstOrNull { it.numbers.any { PhoneNumberUtils.compare(it.address, address) } } // See if any of the phone numbers match
                         ?: Contact(numbers = RealmList(PhoneNumber(address = address))) // Fallback to a fake contact
-
-                contactMap.put(address, contact)
             }
 
             view.avatar.contact = contactMap[address]
@@ -130,6 +129,7 @@ class MessagesAdapter @Inject constructor(
         val view = viewHolder.itemView
 
         RxView.clicks(view).subscribe {
+            clicks.onNext(message)
             if (selected.contains(message.id)) selected.remove(message.id)
             else selected.add(message.id)
             notifyItemChanged(position)
