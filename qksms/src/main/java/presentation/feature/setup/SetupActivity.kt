@@ -30,10 +30,10 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.setup_activity.*
 import presentation.common.Navigator
-import presentation.common.base.QkActivity
+import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
 
-class SetupActivity : QkActivity<SetupViewModel>(), SetupView {
+class SetupActivity : QkThemedActivity<SetupViewModel>(), SetupView {
 
     override val viewModelClass = SetupViewModel::class
     override val activityResumedIntent: Subject<Unit> = PublishSubject.create()

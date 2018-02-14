@@ -26,10 +26,10 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.extensions.pageScrolled
 import kotlinx.android.synthetic.main.theme_picker_activity.*
-import presentation.common.base.QkActivity
+import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
 
-class ThemePickerActivity : QkActivity<ThemePickerViewModel>(), ThemePickerView {
+class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePickerView {
 
     override val viewModelClass = ThemePickerViewModel::class
     override val themeSelectedIntent by lazy { themeAdapter.colorSelected }

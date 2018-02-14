@@ -47,11 +47,11 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.toolbar_chips.*
-import presentation.common.base.QkActivity
+import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
 
 
-class ComposeActivity : QkActivity<ComposeViewModel>(), ComposeView {
+class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
     override val viewModelClass = ComposeViewModel::class
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()

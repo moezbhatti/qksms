@@ -50,12 +50,12 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar_search.*
 import presentation.common.MenuItemAdapter
 import presentation.common.Navigator
-import presentation.common.base.QkActivity
+import presentation.common.base.QkThemedActivity
 import presentation.feature.conversations.ConversationItemTouchCallback
 import presentation.feature.conversations.ConversationsAdapter
 import javax.inject.Inject
 
-class MainActivity : QkActivity<MainViewModel>(), MainView {
+class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter

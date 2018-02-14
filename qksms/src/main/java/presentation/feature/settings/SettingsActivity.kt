@@ -43,11 +43,11 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import presentation.common.MenuItemAdapter
-import presentation.common.base.QkActivity
+import presentation.common.base.QkThemedActivity
 import presentation.common.widget.PreferenceView
 import javax.inject.Inject
 
-class SettingsActivity : QkActivity<SettingsViewModel>(), SettingsView {
+class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
     @Inject lateinit var nightModeAdapter: MenuItemAdapter
     @Inject lateinit var mmsSizeAdapter: MenuItemAdapter

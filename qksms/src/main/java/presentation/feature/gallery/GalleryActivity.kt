@@ -21,7 +21,6 @@ package presentation.feature.gallery
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
-import common.di.appComponent
 import common.util.GlideApp
 import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.gallery_activity.*
@@ -33,7 +32,6 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
     override val screenTouchedIntent by lazy { image.clicks() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

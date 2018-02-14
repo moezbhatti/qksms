@@ -31,10 +31,10 @@ import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
-import presentation.common.base.QkActivity
+import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
 
-class PlusActivity : QkActivity<PlusViewModel>(), PlusView {
+class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
 
     @Inject lateinit var fontProvider: FontProvider
 
