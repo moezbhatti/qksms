@@ -113,7 +113,7 @@ class CursorToMessage @Inject constructor(
     private fun getMmsParts(contentId: Long): List<MmsPart> {
         return context.contentResolver.query(CursorToPart.CONTENT_URI, null,
                 "${Telephony.Mms.Part.MSG_ID} = ?", arrayOf(contentId.toString()), null)
-                .map { cursorToPart.map(it) }
+                ?.map { cursorToPart.map(it) } ?: listOf()
     }
 
     companion object {
