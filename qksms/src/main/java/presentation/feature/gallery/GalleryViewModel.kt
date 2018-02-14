@@ -37,13 +37,19 @@ class GalleryViewModel(intent: Intent) : QkViewModel<GalleryView, GalleryState>(
     init {
         appComponent.inject(this)
 
-        disposables += Flowable.just(intent)
+        val partIdFlowable = Flowable.just(intent)
                 .map { it.getLongExtra("partId", 0L) }
                 .filter { partId -> partId != 0L }
+
+        disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getPart(partId) }
                 .mapNotNull { part -> part.image }
-                .doOnNext { path -> newState { it.copy(imagePath = path) } }
-                .subscribe()
+                .subscribe { path -> newState { it.copy(imagePath = path) } }
+
+        disposables += partIdFlowable
+                .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }
+                .mapNotNull { message -> messageRepo.getConversation(message.threadId) }
+                .subscribe { conversation -> newState { it.copy(title = conversation.getTitle()) }  }
     }
 
     override fun bindView(view: GalleryView) {

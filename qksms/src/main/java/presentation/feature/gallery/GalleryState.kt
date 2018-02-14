@@ -20,5 +20,6 @@ package presentation.feature.gallery
 
 data class GalleryState(
         val navigationVisible: Boolean = true,
+        val title: String = "",
         val imagePath: String = ""
 )

@@ -154,6 +154,13 @@ class MessageRepository @Inject constructor(
                 .findFirst()
     }
 
+    fun getMessageForPart(id: Long): Message? {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("parts.id", id)
+                .findFirst()
+    }
+
     fun getPart(id: Long): MmsPart? {
         return Realm.getDefaultInstance()
                 .where(MmsPart::class.java)

@@ -35,12 +35,13 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        title = ""
         viewModel.bindView(this)
     }
 
     override fun render(state: GalleryState) {
         toolbar.setVisible(state.navigationVisible)
+
+        title = state.title
 
         if (image.drawable == null) {
             GlideApp.with(this).load(state.imagePath).into(image)
