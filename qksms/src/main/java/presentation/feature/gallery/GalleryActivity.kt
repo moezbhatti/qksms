@@ -36,6 +36,24 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
         setContentView(R.layout.gallery_activity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
+
+        // When calling the public setter, it doesn't allow the midscale to be the same as the
+        // maxscale or the minscale. We don't want 3 levels and we don't want to modify the library
+        // so let's celebrate the invention of reflection!
+        image.attacher.run {
+            javaClass.getDeclaredField("mMinScale").run {
+                isAccessible = true
+                setFloat(image.attacher, 1f)
+            }
+            javaClass.getDeclaredField("mMidScale").run {
+                isAccessible = true
+                setFloat(image.attacher, 1f)
+            }
+            javaClass.getDeclaredField("mMaxScale").run {
+                isAccessible = true
+                setFloat(image.attacher, 3f)
+            }
+        }
     }
 
     override fun render(state: GalleryState) {
