@@ -19,29 +19,36 @@
   -->
 <FrameLayout android:id="@+id/root"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="@color/black">
+    tools:context="presentation.feature.gallery.GalleryActivity">
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:id="@+id/navigation"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="56dp"
+        android:background="@color/toolbarTranslucent"
+        android:gravity="center_vertical"
+        android:minHeight="56dp">
 
-        <include layout="@layout/toolbar" />
-
-        <View
+        <presentation.common.widget.QkTextView
+            android:id="@+id/toolbarTitle"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow" />
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="left|center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/textPrimaryDark"
+            android:textSize="20sp"
+            tools:text="Conversations" />
 
-    </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
 </FrameLayout>

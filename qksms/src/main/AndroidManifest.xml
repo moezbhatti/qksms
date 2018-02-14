@@ -62,7 +62,9 @@
         <activity android:name="presentation.feature.setup.SetupActivity" />
         <activity android:name="presentation.feature.themepicker.ThemePickerActivity" />
         <activity android:name="presentation.feature.plus.PlusActivity" />
-        <activity android:name="presentation.feature.gallery.GalleryActivity" />
+        <activity
+            android:name="presentation.feature.gallery.GalleryActivity"
+            android:theme="@style/AppThemeBlack" />
 
         <receiver android:name="presentation.receiver.DefaultSmsChangedReceiver">
             <intent-filter>

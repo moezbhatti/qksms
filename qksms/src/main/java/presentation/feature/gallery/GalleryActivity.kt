@@ -40,7 +40,7 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
     }
 
     override fun render(state: GalleryState) {
-        navigation.setVisible(state.navigationVisible)
+        toolbar.setVisible(state.navigationVisible)
 
         if (image.drawable == null) {
             GlideApp.with(this).load(state.imagePath).into(image)

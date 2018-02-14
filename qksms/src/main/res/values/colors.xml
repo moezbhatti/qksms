@@ -26,6 +26,7 @@
 
     <color name="toolbarLight">#FFFFFF</color>
     <color name="toolbarDark">#1d262b</color>
+    <color name="toolbarTranslucent">#88000000</color>
 
     <color name="backgroundLight">#ECEFF1</color>
     <color name="backgroundDark">#192025</color>
