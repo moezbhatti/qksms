@@ -38,7 +38,9 @@ class CursorToPart @Inject constructor(private val context: Context) : Mapper<Cu
     override fun map(from: Cursor) = MmsPart().apply {
         id = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part._ID))
         messageId = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part.MSG_ID))
-        type = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part.CONTENT_TYPE))
+
+        // Type will sometimes return null, resulting in a crash if we don't default to an empty string
+        type = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part.CONTENT_TYPE)) ?: ""
 
         val data = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part._DATA))
 
