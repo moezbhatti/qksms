@@ -143,7 +143,8 @@
 
             <presentation.common.widget.Separator
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp" />
 
             <presentation.common.widget.PreferenceView
                 android:layout_width="match_parent"

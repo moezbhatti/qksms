@@ -21,57 +21,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     tools:parentTag="presentation.common.widget.PreferenceView">
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:visibility="gone" />
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <presentation.common.widget.QkTextView
+            android:id="@+id/titleView"
+            style="@style/TextPrimary"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="16dp">
+            tools:text="Default SMS App" />
 
-            <presentation.common.widget.QkTextView
-                android:id="@+id/titleView"
-                style="@style/TextPrimary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Default SMS App" />
-
-            <presentation.common.widget.QkTextView
-                android:id="@+id/summaryView"
-                style="@style/TextSecondary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="QKSMS is your default SMS app" />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/widgetFrame"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginRight="16dp" />
+        <presentation.common.widget.QkTextView
+            android:id="@+id/summaryView"
+            style="@style/TextSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="QKSMS is your default SMS app" />
 
     </LinearLayout>
 
-    <presentation.common.widget.Separator
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+    <FrameLayout
+        android:id="@+id/widgetFrame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="16dp" />
 
 </merge>

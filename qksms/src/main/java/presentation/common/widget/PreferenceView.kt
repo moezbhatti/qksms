@@ -21,6 +21,7 @@ package presentation.common.widget
 import android.content.Context
 import android.support.v7.widget.LinearLayoutCompat
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.moez.QKSMS.R
@@ -72,7 +73,8 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         View.inflate(context, R.layout.preference_view, this)
         setBackgroundResource(R.drawable.ripple)
-        orientation = VERTICAL
+        orientation = HORIZONTAL
+        gravity = Gravity.CENTER_VERTICAL
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView)?.run {
             title = getString(R.styleable.PreferenceView_title)
