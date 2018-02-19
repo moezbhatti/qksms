@@ -159,6 +159,18 @@
                 app:summary="@string/qksms_plus_more_summary"
                 app:title="@string/qksms_plus_more_title" />
 
+            <presentation.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/qksms_plus_coming_soon"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:textColor="primary" />
+
             <presentation.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
