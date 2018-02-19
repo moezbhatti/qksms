@@ -64,9 +64,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var syncContacts: ContactSync
-    @Inject lateinit var markArchived: MarkArchived
-    @Inject lateinit var markUnarchived: MarkUnarchived
-    @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var retrySending: RetrySending
     @Inject lateinit var markRead: MarkRead
@@ -159,9 +156,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
         disposables += sendMessage
         disposables += markRead
-        disposables += markArchived
-        disposables += markUnarchived
-        disposables += deleteConversation
         disposables += conversation.subscribe()
         disposables += messages.subscribe()
         disposables += attachments.subscribe { attachments -> newState { it.copy(attachments = attachments) } }
@@ -269,22 +263,11 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .autoDisposable(view.scope())
                 .subscribe { address -> navigator.makePhoneCall(address) }
 
-        // Toggle the archived state of the conversation
-        view.archiveIntent
+        // Open the conversation settings if info button is clicked
+        view.infoIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .autoDisposable(view.scope())
-                .subscribe { conversation ->
-                    when (conversation.archived) {
-                        true -> markUnarchived.execute(conversation.id, { context.makeToast(R.string.toast_unarchived) })
-                        false -> markArchived.execute(conversation.id, { context.makeToast(R.string.toast_archived) })
-                    }
-                }
-
-        // Delete the conversation
-        view.deleteIntent
-                .withLatestFrom(conversation, { _, conversation -> conversation })
-                .autoDisposable(view.scope())
-                .subscribe { conversation -> deleteConversation.execute(conversation.id) }
+                .subscribe { conversation -> navigator.showConversationInfo(conversation.id) }
 
         view.messageClickIntent
                 .filter { message -> message.isFailedMessage() }

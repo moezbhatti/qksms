@@ -36,8 +36,7 @@ interface ComposeView : QkView<ComposeState> {
     val chipDeletedIntent: Subject<Contact>
     val menuReadyIntent: Observable<Unit>
     val callIntent: Subject<Unit>
-    val archiveIntent: Subject<Unit>
-    val deleteIntent: Subject<Unit>
+    val infoIntent: Subject<Unit>
     val copyTextIntent: Subject<Message>
     val forwardMessageIntent: Subject<Message>
     val deleteMessageIntent: Subject<Message>

@@ -36,6 +36,7 @@
 
     <string name="menu_clear">Clear</string>
     <string name="menu_call">Call</string>
+    <string name="menu_info">Details</string>
     <string name="menu_archive">Archive conversation</string>
     <string name="menu_unarchive">Remove from archive</string>
     <string name="menu_delete">Delete</string>
@@ -61,6 +62,11 @@
     <string name="archived_empty_text">Your archived conversations will appear here</string>
     <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
     <string name="blocked_empty_text">Your blocked senders will appear here</string>
+
+    <string name="info_title">Details</string>
+    <string name="info_archive">Archive</string>
+    <string name="info_unarchive">Unarchive</string>
+    <string name="info_delete">Delete conversation</string>
 
     <string name="settings_default_sms_title">Default SMS app</string>
     <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>

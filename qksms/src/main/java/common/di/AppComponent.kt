@@ -25,6 +25,8 @@ import presentation.common.widget.*
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
 import presentation.feature.compose.DetailedChipView
+import presentation.feature.conversationinfo.ConversationInfoActivity
+import presentation.feature.conversationinfo.ConversationInfoViewModel
 import presentation.feature.gallery.GalleryActivity
 import presentation.feature.gallery.GalleryViewModel
 import presentation.feature.main.MainActivity
@@ -49,6 +51,7 @@ interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(activity: SetupActivity)
     fun inject(activity: ComposeActivity)
+    fun inject(activity: ConversationInfoActivity)
     fun inject(activity: GalleryActivity)
     fun inject(activity: PlusActivity)
     fun inject(activity: SettingsActivity)
@@ -79,6 +82,7 @@ interface AppComponent {
     fun inject(viewModel: MainViewModel)
     fun inject(viewModel: SetupViewModel)
     fun inject(viewModel: ComposeViewModel)
+    fun inject(viewModel: ConversationInfoViewModel)
     fun inject(viewModel: GalleryViewModel)
     fun inject(viewModel: PlusViewModel)
     fun inject(viewModel: SettingsViewModel)

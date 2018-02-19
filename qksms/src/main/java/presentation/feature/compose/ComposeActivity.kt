@@ -62,8 +62,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val callIntent: Subject<Unit> = PublishSubject.create()
-    override val archiveIntent: Subject<Unit> = PublishSubject.create()
-    override val deleteIntent: Subject<Unit> = PublishSubject.create()
+    override val infoIntent: Subject<Unit> = PublishSubject.create()
     override val copyTextIntent: Subject<Message> = PublishSubject.create()
     override val forwardMessageIntent: Subject<Message> = PublishSubject.create()
     override val deleteMessageIntent: Subject<Message> = PublishSubject.create()
@@ -194,18 +193,8 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
         if (state.editingMode && chips.adapter == null) chips.adapter = chipsAdapter
         if (state.editingMode && contacts.adapter == null) contacts.adapter = contactsAdapter
 
-        toolbar.menu.findItem(R.id.call)?.run {
-            isVisible = !state.editingMode
-        }
-
-        toolbar.menu.findItem(R.id.archive)?.run {
-            isVisible = !state.editingMode
-            setTitle(if (state.archived) R.string.menu_unarchive else R.string.menu_archive)
-        }
-
-        toolbar.menu.findItem(R.id.delete)?.run {
-            isVisible = !state.editingMode
-        }
+        toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode
+        toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode
 
         if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
             message.showKeyboard()
@@ -246,8 +235,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.call -> callIntent.onNext(Unit)
-            R.id.archive -> archiveIntent.onNext(Unit)
-            R.id.delete -> deleteIntent.onNext(Unit)
+            R.id.info -> infoIntent.onNext(Unit)
             else -> return super.onOptionsItemSelected(item)
         }
 

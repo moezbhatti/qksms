@@ -31,6 +31,8 @@ import android.provider.Telephony
 import common.util.NotificationManager
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
+import presentation.feature.conversationinfo.ConversationInfoActivity
+import presentation.feature.conversationinfo.ConversationInfoViewModel
 import presentation.feature.gallery.GalleryActivity
 import presentation.feature.gallery.GalleryViewModel
 import presentation.feature.main.MainViewModel
@@ -91,6 +93,12 @@ class Navigator @Inject constructor(val context: Context) {
         startActivity(intent)
     }
 
+    fun showConversationInfo(threadId: Long) {
+        val intent = Intent(context, ConversationInfoActivity::class.java)
+        intent.putExtra("threadId", threadId)
+        startActivity(intent)
+    }
+
     fun showImage(partId: Long) {
         val intent = Intent(context, GalleryActivity::class.java)
         intent.putExtra("partId", partId)
@@ -142,6 +150,7 @@ class Navigator @Inject constructor(val context: Context) {
                 PlusViewModel::class.java -> PlusViewModel()
                 SetupViewModel::class.java -> SetupViewModel()
                 ComposeViewModel::class.java -> ComposeViewModel(intent)
+                ConversationInfoViewModel::class.java -> ConversationInfoViewModel(intent)
                 GalleryViewModel::class.java -> GalleryViewModel(intent)
                 SettingsViewModel::class.java -> SettingsViewModel()
                 ThemePickerViewModel::class.java -> ThemePickerViewModel()
