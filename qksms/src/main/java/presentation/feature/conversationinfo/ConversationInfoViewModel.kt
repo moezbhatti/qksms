@@ -67,6 +67,12 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
         disposables += markUnarchived
         disposables += deleteConversation
 
+        // Update the recipients whenever they change
+        disposables += conversation
+                .map { conversation -> conversation.recipients }
+                .distinctUntilChanged()
+                .subscribe { recipients -> newState { it.copy(recipients = recipients) } }
+
         // Update the view's archived state whenever it changes
         disposables += conversation
                 .map { conversation -> conversation.archived }

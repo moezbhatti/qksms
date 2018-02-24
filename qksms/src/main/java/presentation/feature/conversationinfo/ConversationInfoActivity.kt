@@ -19,6 +19,7 @@
 package presentation.feature.conversationinfo
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
@@ -26,12 +27,15 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import kotlinx.android.synthetic.main.conversation_info_activity.*
 import presentation.common.base.QkThemedActivity
+import javax.inject.Inject
 
 class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), ConversationInfoView {
 
     override val viewModelClass = ConversationInfoViewModel::class
     override val archiveIntent by lazy { archive.clicks() }
     override val deleteIntent by lazy { delete.clicks() }
+
+    @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
 
     init {
         appComponent.inject(this)
@@ -47,6 +51,9 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
         colors.background
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
+
+        recipients.layoutManager = LinearLayoutManager(this)
+        recipients.adapter = recipientAdapter
     }
 
     override fun render(state: ConversationInfoState) {
@@ -54,6 +61,8 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
             finish()
             return
         }
+
+        recipientAdapter.data = state.recipients
 
         archive.title = getString(when(state.archived) {
             true -> R.string.info_unarchive
