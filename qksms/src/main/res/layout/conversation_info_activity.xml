@@ -34,20 +34,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recipients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout_height="72dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+                tools:layout_height="56dp"
                 tools:listitem="@layout/conversation_recipient_list_item" />
 
             <presentation.common.widget.Separator
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp" />
 
             <presentation.common.widget.PreferenceView
                 android:id="@+id/archive"

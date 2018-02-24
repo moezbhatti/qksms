@@ -24,7 +24,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/ripple"
     android:paddingBottom="8dp"
-    android:paddingEnd="8dp"
+    android:paddingEnd="16dp"
     android:paddingStart="24dp"
     android:paddingTop="8dp">
 
