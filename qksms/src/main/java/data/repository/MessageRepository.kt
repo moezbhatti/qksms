@@ -139,6 +139,20 @@ class MessageRepository @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
+    fun saveDraft(threadId: Long, draft: String) {
+        Realm.getDefaultInstance().use { realm ->
+            val conversation = realm.where(Conversation::class.java)
+                    .equalTo("id", threadId)
+                    .findFirst()
+
+            conversation?.let {
+                realm.executeTransaction {
+                    conversation.draft = draft
+                }
+            }
+        }
+    }
+
     fun getMessages(threadId: Long): RealmResults<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
@@ -395,29 +409,23 @@ class MessageRepository @Inject constructor(
                 }
     }
 
-    fun markSent(id: Long): Flowable<*> {
-        val realm = Realm.getDefaultInstance()
-        return realm.where(Message::class.java).equalTo("id", id)
-                .findAllAsync()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .filter { it.isValid }
-                .mapNotNull { it[0] }
-                .take(1)
-                .doOnNext { message ->
-                    // Update the message in realm
-                    realm.executeTransaction {
-                        message.boxId = Sms.MESSAGE_TYPE_SENT
-                    }
+    fun markSent(id: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+
+            val message = realm.where(Message::class.java).equalTo("id", id).findFirst()
+            message?.let {
+                // Update the message in realm
+                realm.executeTransaction {
+                    message.boxId = Sms.MESSAGE_TYPE_SENT
                 }
-                .map { message -> message.getUri() }
-                .observeOn(Schedulers.computation())
-                .doOnNext { uri ->
-                    // Update the message in the native ContentProvider
-                    val values = ContentValues()
-                    values.put(Sms.TYPE, Sms.MESSAGE_TYPE_SENT)
-                    context.contentResolver.update(uri, values, null, null)
-                }
+
+                // Update the message in the native ContentProvider
+                val values = ContentValues()
+                values.put(Sms.TYPE, Sms.MESSAGE_TYPE_SENT)
+                context.contentResolver.update(message.getUri(), values, null, null)
+            }
+        }
     }
 
     fun markFailed(id: Long, resultCode: Int): Flowable<*> {

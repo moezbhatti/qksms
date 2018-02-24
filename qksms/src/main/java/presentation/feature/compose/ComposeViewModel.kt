@@ -69,6 +69,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var deleteMessage: DeleteMessage
 
+    private var sharedText: String = ""
     private var draft: String = ""
     private val attachments: Subject<List<Uri>> = BehaviorSubject.createDefault(ArrayList())
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
@@ -80,7 +81,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     init {
         appComponent.inject(this)
 
-        draft = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
+        sharedText = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
         val threadId = intent.extras?.getLong("threadId") ?: 0L
         var address = ""
 
@@ -167,11 +168,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
     override fun bindView(view: ComposeView) {
         super.bindView(view)
-
-        if (draft.isNotEmpty()) {
-            view.setDraft(draft)
-            draft = ""
-        }
 
         // Set the contact suggestions list to visible at all times when in editing mode and there are no contacts
         // selected yet, and also visible while in editing mode and there is text entered in the query field
@@ -296,6 +292,23 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .autoDisposable(view.scope())
                 .subscribe { attachments.onNext(it) }
 
+        conversation
+                .map { conversation -> conversation.draft }
+                .distinctUntilChanged()
+                .autoDisposable(view.scope())
+                .subscribe { draft ->
+
+                    // If text was shared into the conversation, it should take priority over the
+                    // existing draft
+                    //
+                    // TODO: Show dialog warning user about overwriting draft
+                    if (sharedText.isNotBlank()) {
+                        view.setDraft(sharedText)
+                    } else {
+                        view.setDraft(draft)
+                    }
+                }
+
         // Enable the send button when there is text input into the new message body or there's
         // an attachment, disable otherwise
         Observables
@@ -304,6 +317,12 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .autoDisposable(view.scope())
                 .subscribe { canSend -> newState { it.copy(canSend = canSend) } }
+
+        // Update the draft whenever the text is changed
+        view.textChangedIntent
+                .map { draft -> draft.toString() }
+                .autoDisposable(view.scope())
+                .subscribe { draft -> this.draft = draft }
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
@@ -341,6 +360,16 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         view.deleteMessageIntent
                 .autoDisposable(view.scope())
                 .subscribe { message -> deleteMessage.execute(message.id) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        // Save the draft
+        val conversation = conversation.blockingLatest().firstOrNull { it.id != 0L }
+        conversation?.let {
+            messageRepo.saveDraft(conversation.id, draft)
+        }
     }
 
 }

@@ -27,6 +27,7 @@ open class Conversation : RealmObject() {
     @PrimaryKey var id: Long = 0
     var recipients: RealmList<Recipient> = RealmList()
     var archived: Boolean = false
+    var draft: String = ""
 
     fun getTitle(): String {
         var title = ""
