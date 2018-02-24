@@ -21,6 +21,7 @@ package presentation.common.base
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Lifecycle
 import android.os.Bundle
+import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
@@ -58,12 +59,16 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
         super.onPostCreate(savedInstanceState)
 
         // Update the colours of the menu items
-        Observables.combineLatest(menu, colors.theme, { menu, color ->
+        Observables.combineLatest(menu, colors.theme, colors.textTertiary, { menu, theme, textTertiary ->
             (0 until menu.size())
                     .map { position -> menu.getItem(position) }
                     .forEach { menuItem ->
                         menuItem?.icon?.run {
-                            setTint(color)
+                            setTint(when(menuItem.itemId) {
+                                R.id.info -> textTertiary
+                                else -> theme
+                            })
+
                             menuItem.icon = this
                         }
                     }
