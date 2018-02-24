@@ -21,8 +21,6 @@ package interactor
 import data.model.Message
 import data.repository.MessageRepository
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class RetrySending @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Message, Message>() {
@@ -42,8 +40,6 @@ class RetrySending @Inject constructor(private val messageRepo: MessageRepositor
         return Flowable.just(message)
                 .filter { message.isSms() } // TODO support resending failed MMS
                 .doOnNext { messageRepo.markSending(message.id) }
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
                 .doOnNext { messageRepo.sendSms(message) }
     }
 

@@ -20,19 +20,17 @@ package interactor
 
 import data.repository.MessageRepository
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 class MarkDeliveryFailed @Inject constructor(
         private val messageRepo: MessageRepository)
-    : Interactor<MarkDeliveryFailed.Params, Any>() {
+    : Interactor<MarkDeliveryFailed.Params, Unit>() {
 
     data class Params(val id: Long, val resultCode: Int)
 
-    override fun buildObservable(params: Params): Flowable<Any> {
+    override fun buildObservable(params: Params): Flowable<Unit> {
         return Flowable.just(Unit)
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap { messageRepo.markDeliveryFailed(params.id, params.resultCode) }
+                .doOnNext { messageRepo.markDeliveryFailed(params.id, params.resultCode) }
     }
 
 }
