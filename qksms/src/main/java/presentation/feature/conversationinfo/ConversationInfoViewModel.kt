@@ -34,6 +34,7 @@ import interactor.MarkUnarchived
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import presentation.common.Navigator
 import presentation.common.base.QkViewModel
 import javax.inject.Inject
 
@@ -44,6 +45,7 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var deleteConversation: DeleteConversation
 
     private val conversation: Observable<Conversation>
@@ -82,6 +84,12 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
 
     override fun bindView(view: ConversationInfoView) {
         super.bindView(view)
+
+        // Show the notifications settings for the conversation
+        view.notificationsIntent
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .autoDisposable(view.scope())
+                .subscribe { conversation -> navigator.showNotificationSettings(conversation.id) }
 
         // Toggle the archived state of the conversation
         view.archiveIntent

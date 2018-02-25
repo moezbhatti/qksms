@@ -49,21 +49,18 @@ class NotificationManager @Inject constructor(
 ) {
 
     companion object {
-        val DEFAULT_CHANNEL_ID = "channel_1"
+        const val DEFAULT_CHANNEL_ID = "notifications_default"
         val VIBRATE_PATTERN = longArrayOf(0, 200, 0, 200)
     }
 
-    private val notificationManager = NotificationManagerCompat.from(context)
+    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     init {
         @SuppressLint("NewApi")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            val name = "Message notifications"
+            val name = "Default"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(DEFAULT_CHANNEL_ID, name, importance).apply {
-                description = "Message notifications description"
                 enableLights(true)
                 lightColor = Color.WHITE
                 enableVibration(true)
@@ -112,7 +109,7 @@ class NotificationManager @Inject constructor(
         val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
 
-        val notification = NotificationCompat.Builder(context, DEFAULT_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setColor(colors.theme.blockingFirst())
                 .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -149,7 +146,7 @@ class NotificationManager @Inject constructor(
         taskStackBuilder.addNextIntent(contentIntent)
         val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 40000, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val notification = NotificationCompat.Builder(context, DEFAULT_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setContentTitle(context.getString(R.string.notification_message_failed_title))
                 .setContentText(context.getString(R.string.notification_message_failed_text, conversation.getTitle()))
                 .setColor(colors.theme.blockingFirst())
@@ -181,6 +178,74 @@ class NotificationManager @Inject constructor(
                 context.getString(R.string.notification_reply), replyPI)
                 .addRemoteInput(remoteInput)
                 .build()
+    }
+
+    /**
+     * Creates a notification channel for the given conversation
+     */
+    fun createNotificationChannel(threadId: Long) {
+
+        // Only proceed if the android version supports notification channels
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+
+        messageRepo.getConversation(threadId)?.let { conversation ->
+            val channelId = buildNotificationChannelId(threadId)
+            val name = conversation.getTitle()
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                enableLights(true)
+                lightColor = Color.WHITE
+                enableVibration(true)
+                vibrationPattern = VIBRATE_PATTERN
+            }
+
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    /**
+     * Returns the notification channel for the given conversation, or null if it doesn't exist
+     */
+    private fun getNotificationChannel(threadId: Long): NotificationChannel? {
+        val channelId = buildNotificationChannelId(threadId)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return notificationManager
+                    .notificationChannels
+                    .firstOrNull { channel -> channel.id == channelId }
+        }
+
+        return null
+    }
+
+    /**
+     * Returns the channel id that should be used for a notification based on the threadId
+     *
+     * If a notification channel for the conversation exists, use the id for that. Otherwise return
+     * the default channel id
+     */
+    private fun getChannelIdForNotification(threadId: Long): String {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = buildNotificationChannelId(threadId)
+
+            return notificationManager
+                    .notificationChannels
+                    .map { channel -> channel.id }
+                    .firstOrNull { id -> id == channelId }
+                    ?: DEFAULT_CHANNEL_ID
+        }
+
+        return DEFAULT_CHANNEL_ID
+    }
+
+    /**
+     * Formats a notification channel id for a given thread id, whether the channel exists or not
+     */
+    fun buildNotificationChannelId(threadId: Long): String {
+        return when (threadId) {
+            0L -> DEFAULT_CHANNEL_ID
+            else -> "notifications_$threadId"
+        }
     }
 
 }

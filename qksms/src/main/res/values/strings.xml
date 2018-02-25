@@ -64,6 +64,7 @@
     <string name="blocked_empty_text">Your blocked senders will appear here</string>
 
     <string name="info_title">Details</string>
+    <string name="info_notifications">Notifications</string>
     <string name="info_archive">Archive</string>
     <string name="info_unarchive">Unarchive</string>
     <string name="info_delete">Delete conversation</string>

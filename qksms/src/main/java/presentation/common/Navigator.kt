@@ -48,7 +48,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Navigator @Inject constructor(val context: Context) {
+class Navigator @Inject constructor(private val context: Context, private val notificationManager: NotificationManager) {
 
     private fun startActivity(intent: Intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -134,9 +134,14 @@ class Navigator @Inject constructor(val context: Context) {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    fun showNotificationSettings() {
+    fun showNotificationSettings(threadId: Long = 0) {
+        if (threadId != 0L) {
+            notificationManager.createNotificationChannel(threadId)
+        }
+
+        val channelId = notificationManager.buildNotificationChannelId(threadId)
         val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-        intent.putExtra(Settings.EXTRA_CHANNEL_ID, NotificationManager.DEFAULT_CHANNEL_ID)
+        intent.putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
         intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
         startActivity(intent)
     }

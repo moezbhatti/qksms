@@ -32,6 +32,7 @@ import javax.inject.Inject
 class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), ConversationInfoView {
 
     override val viewModelClass = ConversationInfoViewModel::class
+    override val notificationsIntent by lazy { notifications.clicks() }
     override val archiveIntent by lazy { archive.clicks() }
     override val deleteIntent by lazy { delete.clicks() }
 
