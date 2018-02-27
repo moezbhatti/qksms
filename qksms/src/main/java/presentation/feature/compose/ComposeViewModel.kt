@@ -54,6 +54,7 @@ import io.realm.RealmList
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
 import java.net.URLDecoder
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(ComposeState()) {
@@ -70,7 +71,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var deleteMessage: DeleteMessage
 
     private var sharedText: String = ""
-    private var draft: String = ""
     private val attachments: Subject<List<Uri>> = BehaviorSubject.createDefault(ArrayList())
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
@@ -148,13 +148,10 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .filter { conversation -> conversation.isValid }
                 .filter { conversation -> conversation.id != 0L }
                 .distinctUntilChanged()
-                .doOnNext { conversation ->
-                    newState { it.copy(title = conversation.getTitle(), archived = conversation.archived) }
-                }
 
         // When the conversation changes, update the messages for the adapter
         messages = conversation
-                .distinctUntilChanged()
+                .distinctUntilChanged { conversation -> conversation.id }
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { conversation ->
                     val messages = messageRepo.getMessages(conversation.id)
@@ -167,7 +164,23 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         disposables += markRead
         disposables += conversation.subscribe()
         disposables += messages.subscribe()
-        disposables += attachments.subscribe { attachments -> newState { it.copy(attachments = attachments) } }
+
+        disposables += conversation
+                .distinctUntilChanged { conversation -> conversation.getTitle() }
+                .subscribe { conversation ->
+                    newState { it.copy(title = conversation.getTitle()) }
+                }
+
+        disposables += conversation
+                .distinctUntilChanged { conversation -> conversation.archived }
+                .subscribe { conversation ->
+                    newState { it.copy(archived = conversation.archived) }
+                }
+
+        disposables += attachments
+                .subscribe { attachments ->
+                    newState { it.copy(attachments = attachments) }
+                }
 
         if (threadId == 0L) {
             syncContacts.execute(Unit)
@@ -328,9 +341,14 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
         // Update the draft whenever the text is changed
         view.textChangedIntent
+                .debounce(100, TimeUnit.MILLISECONDS)
                 .map { draft -> draft.toString() }
+                .observeOn(Schedulers.io())
+                .withLatestFrom(conversation.map { it.id }, { draft, threadId ->
+                    messageRepo.saveDraft(threadId, draft)
+                })
                 .autoDisposable(view.scope())
-                .subscribe { draft -> this.draft = draft }
+                .subscribe()
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
@@ -368,16 +386,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         view.deleteMessageIntent
                 .autoDisposable(view.scope())
                 .subscribe { message -> deleteMessage.execute(message.id) }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-
-        // Save the draft
-        val conversation = conversation.blockingLatest().firstOrNull { it.id != 0L }
-        conversation?.let {
-            messageRepo.saveDraft(conversation.id, draft)
-        }
     }
 
 }
