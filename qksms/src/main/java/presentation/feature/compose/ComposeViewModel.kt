@@ -82,6 +82,14 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         appComponent.inject(this)
 
         sharedText = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
+
+        // If there are any image attachments, we'll set those as the initial attachments for the
+        // conversation
+        val sharedImages = mutableListOf<Uri>()
+        intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.run { sharedImages += this }
+        intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.run { sharedImages += this }
+        attachments.onNext(sharedImages)
+
         val threadId = intent.extras?.getLong("threadId") ?: 0L
         var address = ""
 
