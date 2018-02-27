@@ -90,30 +90,10 @@
                     app:widget="@layout/settings_switch_widget" />
 
                 <presentation.common.widget.PreferenceView
-                    android:id="@+id/notificationsO"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_notifications_title" />
-
-                <presentation.common.widget.PreferenceView
                     android:id="@+id/notifications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:title="@string/settings_notifications_title"
-                    app:widget="@layout/settings_switch_widget" />
-
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/vibration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_vibration_title"
-                    app:widget="@layout/settings_switch_widget" />
-
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/ringtone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_ringtone_title" />
+                    app:title="@string/settings_notifications_title" />
 
                 <presentation.common.widget.PreferenceView
                     android:id="@+id/delivery"

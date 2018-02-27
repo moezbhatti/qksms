@@ -66,6 +66,7 @@
             android:name="presentation.feature.gallery.GalleryActivity"
             android:theme="@style/AppThemeBlack" />
         <activity android:name="presentation.feature.conversationinfo.ConversationInfoActivity" />
+        <activity android:name="presentation.feature.notificationprefs.NotificationPrefsActivity" />
 
         <receiver android:name="presentation.receiver.DefaultSmsChangedReceiver">
             <intent-filter>

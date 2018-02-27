@@ -18,14 +18,9 @@
  */
 package presentation.feature.settings
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
-import android.content.Intent
-import android.media.RingtoneManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
@@ -58,7 +53,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
-    override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
     override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeAdapter.menuItemClicks }
 
     // TODO remove this
@@ -80,12 +74,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         setTitle(R.string.title_settings)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
-
-        val supportsNotificationChannels = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-        notificationsO.setVisible(supportsNotificationChannels)
-        notifications.setVisible(!supportsNotificationChannels)
-        vibration.setVisible(!supportsNotificationChannels)
-        ringtone.setVisible(!supportsNotificationChannels)
 
         nightModeAdapter.setData(R.array.night_modes)
         mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
@@ -121,8 +109,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         nightEnd.summary = state.nightEnd
 
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
-        notifications.checkbox.isChecked = state.notificationsEnabled
-        vibration.checkbox.isChecked = state.vibrationEnabled
         delivery.checkbox.isChecked = state.deliveryEnabled
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
         mms.checkbox.isChecked = state.mmsEnabled
@@ -167,15 +153,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         }, hour, minute, false).show()
     }
 
-    override fun showRingtonePicker(default: Uri) {
-        val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, default)
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
-        startActivityForResult(intent, 123)
-    }
-
     override fun showMmsSizePicker() {
         val recyclerView = RecyclerView(this)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -191,14 +168,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     override fun dismissMmsSizePicker() {
         mmsSizeDialog?.dismiss()
         mmsSizeDialog = null
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
-            val uri: Uri? = data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
-            uri?.let { ringtoneSelectedIntent.onNext(uri.toString()) }
-        }
     }
 
 }

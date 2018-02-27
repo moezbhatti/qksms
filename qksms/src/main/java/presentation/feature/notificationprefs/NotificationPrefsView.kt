@@ -16,27 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.settings
+package presentation.feature.notificationprefs
 
+import android.net.Uri
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 import presentation.common.base.QkView
 import presentation.common.widget.PreferenceView
 
-interface SettingsView : QkView<SettingsState> {
+interface NotificationPrefsView : QkView<NotificationPrefsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
-    val nightModeSelectedIntent: Observable<Int>
-    val viewQksmsPlusIntent: Subject<Unit>
-    val startTimeSelectedIntent: Subject<Pair<Int, Int>>
-    val endTimeSelectedIntent: Subject<Pair<Int, Int>>
-    val mmsSizeSelectedIntent: Observable<Int>
+    val ringtoneSelectedIntent: Observable<String>
 
-    fun showNightModeDialog()
-    fun dismissNightModeDialog()
-    fun showQksmsPlusSnackbar()
-    fun showStartTimePicker(hour: Int, minute: Int)
-    fun showEndTimePicker(hour: Int, minute: Int)
-    fun showMmsSizePicker()
-    fun dismissMmsSizePicker()
+    fun showRingtonePicker(default: Uri)
 }

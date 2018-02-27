@@ -19,7 +19,6 @@
 package presentation.feature.settings
 
 import android.content.Context
-import android.net.Uri
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -124,13 +123,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
 
-                        R.id.notificationsO -> navigator.showNotificationSettings()
-
-                        R.id.notifications -> prefs.notifications.set(!prefs.notifications.get())
-
-                        R.id.vibration -> prefs.vibration.set(!prefs.vibration.get())
-
-                        R.id.ringtone -> view.showRingtonePicker(Uri.parse(prefs.ringtone.get()))
+                        R.id.notifications -> navigator.showNotificationSettings()
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
@@ -176,10 +169,6 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 .map { dateFormatter.formatTime(it.first, it.second) }
                 .autoDisposable(view.scope())
                 .subscribe { prefs.nightEnd.set(it) }
-
-        view.ringtoneSelectedIntent
-                .autoDisposable(view.scope())
-                .subscribe { ringtone -> prefs.ringtone.set(ringtone) }
 
         view.mmsSizeSelectedIntent
                 .doOnNext { view.dismissMmsSizePicker() }
