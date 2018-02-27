@@ -35,27 +35,31 @@ class QkSwitch @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     @Inject lateinit var colors: Colors
 
     init {
-        appComponent.inject(this)
+        if (!isInEditMode) {
+            appComponent.inject(this)
+        }
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        val states = arrayOf(
-                intArrayOf(-android.R.attr.state_enabled),
-                intArrayOf(android.R.attr.state_checked),
-                intArrayOf())
+        if (!isInEditMode) {
+            val states = arrayOf(
+                    intArrayOf(-android.R.attr.state_enabled),
+                    intArrayOf(android.R.attr.state_checked),
+                    intArrayOf())
 
-        Observables.combineLatest(colors.theme, colors.switchThumbEnabled, colors.switchThumbDisabled,
-                { color, enabled, disabled -> intArrayOf(disabled, color, enabled) })
-                .map { values -> ColorStateList(states, values) }
-                .autoDisposable(scope())
-                .subscribe { tintList -> thumbTintList = tintList }
+            Observables.combineLatest(colors.theme, colors.switchThumbEnabled, colors.switchThumbDisabled,
+                    { color, enabled, disabled -> intArrayOf(disabled, color, enabled) })
+                    .map { values -> ColorStateList(states, values) }
+                    .autoDisposable(scope())
+                    .subscribe { tintList -> thumbTintList = tintList }
 
-        Observables.combineLatest(colors.theme, colors.switchTrackEnabled, colors.switchTrackDisabled,
-                { color, enabled, disabled -> intArrayOf(disabled, color.withAlpha(0x4D), enabled) })
-                .map { values -> ColorStateList(states, values) }
-                .autoDisposable(scope())
-                .subscribe { tintList -> trackTintList = tintList }
+            Observables.combineLatest(colors.theme, colors.switchTrackEnabled, colors.switchTrackDisabled,
+                    { color, enabled, disabled -> intArrayOf(disabled, color.withAlpha(0x4D), enabled) })
+                    .map { values -> ColorStateList(states, values) }
+                    .autoDisposable(scope())
+                    .subscribe { tintList -> trackTintList = tintList }
+        }
     }
 }
