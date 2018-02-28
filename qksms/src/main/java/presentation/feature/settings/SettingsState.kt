@@ -30,7 +30,6 @@ data class SettingsState(
         val nightEnd: String = "",
         val autoEmojiEnabled: Boolean = true,
         val notificationsEnabled: Boolean = true,
-        val vibrationEnabled: Boolean = true,
         val deliveryEnabled: Boolean = false,
         val splitSmsEnabled: Boolean = false,
         val stripUnicodeEnabled: Boolean = false,

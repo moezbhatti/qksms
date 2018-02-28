@@ -76,7 +76,7 @@ class NotificationManager @Inject constructor(
      */
     fun update(threadId: Long) {
         // If notifications are disabled, don't do anything
-        if (!prefs.notifications.get()) {
+        if (!prefs.notifications(threadId).get()) {
             return
         }
 
@@ -119,9 +119,9 @@ class NotificationManager @Inject constructor(
                 .setDeleteIntent(seenPI)
                 .addAction(readAction)
                 .setStyle(style)
-                .setSound(Uri.parse(prefs.ringtone.get()))
+                .setSound(Uri.parse(prefs.ringtone(threadId).get()))
                 .setLights(Color.WHITE, 500, 2000)
-                .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
+                .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
 
         if (Build.VERSION.SDK_INT >= 24) {
             notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), threadId))
@@ -154,9 +154,9 @@ class NotificationManager @Inject constructor(
                 .setSmallIcon(R.drawable.ic_notification_failed)
                 .setAutoCancel(true)
                 .setContentIntent(contentPI)
-                .setSound(Uri.parse(prefs.ringtone.get()))
+                .setSound(Uri.parse(prefs.ringtone(threadId).get()))
                 .setLights(Color.WHITE, 500, 2000)
-                .setVibrate(if (prefs.vibration.get()) VIBRATE_PATTERN else longArrayOf(0))
+                .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
 
         notificationManager.notify(threadId.toInt() + 50000, notification.build())
     }

@@ -70,11 +70,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += prefs.autoEmoji.asObservable()
                 .subscribe { enabled -> newState { it.copy(autoEmojiEnabled = enabled) } }
 
-        disposables += prefs.notifications.asObservable()
+        disposables += prefs.notifications().asObservable()
                 .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
-
-        disposables += prefs.vibration.asObservable()
-                .subscribe { enabled -> newState { it.copy(vibrationEnabled = enabled) } }
 
         disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { it.copy(deliveryEnabled = enabled) } }

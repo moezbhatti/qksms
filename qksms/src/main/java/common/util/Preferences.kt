@@ -19,12 +19,13 @@
 package common.util
 
 import android.provider.Settings
+import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Preferences @Inject constructor(rxPrefs: RxSharedPreferences) {
+class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) {
 
     companion object {
         const val NIGHT_MODE_OFF = 0
@@ -39,12 +40,35 @@ class Preferences @Inject constructor(rxPrefs: RxSharedPreferences) {
     val nightStart = rxPrefs.getString("nightStart", "6:00 PM")
     val nightEnd = rxPrefs.getString("nightEnd", "6:00 AM")
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
-    val notifications = rxPrefs.getBoolean("notifications", true)
-    val vibration = rxPrefs.getBoolean("vibration", true)
-    val ringtone = rxPrefs.getString("ringtone", Settings.System.DEFAULT_NOTIFICATION_URI.toString())
     val delivery = rxPrefs.getBoolean("delivery", false)
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mms = rxPrefs.getBoolean("mms", true)
     val mmsSize = rxPrefs.getInteger("mmsSize", 100)
 
+    fun notifications(threadId: Long = 0): Preference<Boolean> {
+        val default = rxPrefs.getBoolean("notifications", true)
+
+        return when (threadId) {
+            0L -> default
+            else -> rxPrefs.getBoolean("notifications_$threadId", default.get())
+        }
+    }
+
+    fun vibration(threadId: Long = 0): Preference<Boolean> {
+        val default = rxPrefs.getBoolean("vibration", true)
+
+        return when (threadId) {
+            0L -> default
+            else -> rxPrefs.getBoolean("vibration$threadId", default.get())
+        }
+    }
+
+    fun ringtone(threadId: Long = 0): Preference<String> {
+        val default = rxPrefs.getString("ringtone", Settings.System.DEFAULT_NOTIFICATION_URI.toString())
+
+        return when (threadId) {
+            0L -> default
+            else -> rxPrefs.getString("ringtone_$threadId", default.get())
+        }
+    }
 }

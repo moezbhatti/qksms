@@ -18,7 +18,6 @@
  */
 package presentation.feature.conversationinfo
 
-import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
@@ -26,7 +25,6 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
-import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.conversation_info_activity.*
 import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
@@ -54,9 +52,6 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
         colors.background
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
-
-        val supportsNotificationChannels = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-        notifications.setVisible(supportsNotificationChannels)
 
         recipients.layoutManager = LinearLayoutManager(this)
         recipients.adapter = recipientAdapter
