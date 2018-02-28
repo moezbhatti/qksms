@@ -32,10 +32,12 @@ interface MainView : QkView<MainState> {
     val conversationClickIntent: Observable<Long>
     val conversationLongClickIntent: Observable<Long>
     val conversationMenuItemIntent: Subject<Int>
+    val confirmDeleteIntent: Subject<Unit>
     val swipeConversationIntent: Observable<Int>
     val undoSwipeConversationIntent: Subject<Unit>
 
     fun clearSearch()
+    fun showDeleteDialog()
 
 }
 

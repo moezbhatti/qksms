@@ -102,8 +102,13 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
                     }
                 }
 
-        // Delete the conversation
+        // Show the delete confirmation dialog
         view.deleteIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.showDeleteDialog() }
+
+        // Delete the conversation
+        view.confirmDeleteIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> deleteConversation.execute(conversation.id) }

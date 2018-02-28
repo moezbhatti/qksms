@@ -26,5 +26,8 @@ interface ConversationInfoView : QkView<ConversationInfoState> {
     val notificationsIntent: Observable<Unit>
     val archiveIntent: Observable<Unit>
     val deleteIntent: Observable<Unit>
+    val confirmDeleteIntent: Observable<Unit>
+
+    fun showDeleteDialog()
 
 }

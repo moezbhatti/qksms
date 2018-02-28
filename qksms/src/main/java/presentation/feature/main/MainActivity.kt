@@ -80,6 +80,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     override val conversationClickIntent by lazy { conversationsAdapter.clicks }
     override val conversationLongClickIntent by lazy { conversationsAdapter.longClicks }
     override val conversationMenuItemIntent by lazy { menuItemAdapter.menuItemClicks }
+    override val confirmDeleteIntent: Subject<Unit> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
 
@@ -267,6 +268,15 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
     override fun clearSearch() {
         toolbarSearch.text = null
+    }
+
+    override fun showDeleteDialog() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_title)
+                .setMessage(R.string.dialog_delete_message)
+                .setPositiveButton(R.string.button_delete, { _, _ -> confirmDeleteIntent.onNext(Unit) })
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

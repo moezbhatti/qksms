@@ -206,11 +206,17 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                     when (actionId) {
                         menuArchive.actionId -> markArchived.execute(threadId)
                         menuUnarchive.actionId -> markUnarchived.execute(threadId)
-                        menuDelete.actionId -> deleteConversation.execute(threadId)
+                        menuDelete.actionId -> view.showDeleteDialog()
                     }
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        // Delete the conversation
+        view.confirmDeleteIntent
+                .withLatestFrom(view.conversationLongClickIntent, { _, threadId -> threadId })
+                .autoDisposable(view.scope())
+                .subscribe { threadId -> deleteConversation.execute(threadId) }
 
         val swipedConversation = view.swipeConversationIntent
                 .withLatestFrom(conversations.toObservable(), { position, conversations -> conversations[position] })

@@ -19,12 +19,14 @@
 package presentation.feature.conversationinfo
 
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_info_activity.*
 import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
@@ -35,6 +37,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
     override val notificationsIntent by lazy { notifications.clicks() }
     override val archiveIntent by lazy { archive.clicks() }
     override val deleteIntent by lazy { delete.clicks() }
+    override val confirmDeleteIntent: PublishSubject<Unit> = PublishSubject.create()
 
     @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
 
@@ -65,10 +68,19 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
 
         recipientAdapter.data = state.recipients
 
-        archive.title = getString(when(state.archived) {
+        archive.title = getString(when (state.archived) {
             true -> R.string.info_unarchive
             false -> R.string.info_archive
         })
+    }
+
+    override fun showDeleteDialog() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_title)
+                .setMessage(R.string.dialog_delete_message)
+                .setPositiveButton(R.string.button_delete, { _, _ -> confirmDeleteIntent.onNext(Unit) })
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
     }
 
 }
