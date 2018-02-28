@@ -49,7 +49,7 @@ class GalleryViewModel(intent: Intent) : QkViewModel<GalleryView, GalleryState>(
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }
                 .mapNotNull { message -> messageRepo.getConversation(message.threadId) }
-                .subscribe { conversation -> newState { it.copy(title = conversation.getTitle()) }  }
+                .subscribe { conversation -> newState { it.copy(title = conversation.getTitle()) } }
     }
 
     override fun bindView(view: GalleryView) {

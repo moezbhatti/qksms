@@ -29,7 +29,11 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Preferences
+import common.util.extensions.mapNotNull
+import data.repository.MessageRepository
+import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
 import presentation.common.Navigator
 import presentation.common.base.QkViewModel
 import timber.log.Timber
@@ -38,6 +42,7 @@ import javax.inject.Inject
 class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState()) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var prefs: Preferences
 
@@ -53,6 +58,12 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
         notifications = prefs.notifications(threadId)
         vibration = prefs.vibration(threadId)
         ringtone = prefs.ringtone(threadId)
+
+        disposables += Flowable.just(threadId)
+                .mapNotNull { threadId -> messageRepo.getConversation(threadId) }
+                .map { conversation -> conversation.getTitle() }
+                .subscribeOn(Schedulers.io())
+                .subscribe { title -> newState { it.copy(conversationTitle = title) } }
 
         disposables += notifications.asObservable()
                 .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
