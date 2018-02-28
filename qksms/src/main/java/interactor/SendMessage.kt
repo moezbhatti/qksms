@@ -78,7 +78,7 @@ class SendMessage @Inject constructor(
         val width = src.width
 
         val stream = ByteArrayOutputStream()
-        src.compress(Bitmap.CompressFormat.JPEG, quality, stream)
+        src.compress(Bitmap.CompressFormat.JPEG, 100, stream)
 
         while (maxBytes > 0 && stream.size() > maxBytes) {
             step++
