@@ -19,6 +19,7 @@
 package presentation.feature.notificationprefs
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
@@ -31,7 +32,7 @@ import presentation.common.base.QkViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
-class NotificationPrefsViewModel : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState()) {
+class NotificationPrefsViewModel(private val intent: Intent) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState()) {
 
     @Inject lateinit var context: Context
     @Inject lateinit var navigator: Navigator

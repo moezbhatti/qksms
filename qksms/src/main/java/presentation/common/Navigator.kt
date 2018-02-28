@@ -18,7 +18,6 @@
  */
 package presentation.common
 
-import android.annotation.TargetApi
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
@@ -36,6 +35,8 @@ import presentation.feature.conversationinfo.ConversationInfoViewModel
 import presentation.feature.gallery.GalleryActivity
 import presentation.feature.gallery.GalleryViewModel
 import presentation.feature.main.MainViewModel
+import presentation.feature.notificationprefs.NotificationPrefsActivity
+import presentation.feature.notificationprefs.NotificationPrefsViewModel
 import presentation.feature.plus.PlusActivity
 import presentation.feature.plus.PlusViewModel
 import presentation.feature.settings.SettingsActivity
@@ -133,17 +134,22 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivityExternal(intent)
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
     fun showNotificationSettings(threadId: Long = 0) {
-        if (threadId != 0L) {
-            notificationManager.createNotificationChannel(threadId)
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (threadId != 0L) {
+                notificationManager.createNotificationChannel(threadId)
+            }
 
-        val channelId = notificationManager.buildNotificationChannelId(threadId)
-        val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-        intent.putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
-        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
-        startActivity(intent)
+            val channelId = notificationManager.buildNotificationChannelId(threadId)
+            val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+            intent.putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            startActivity(intent)
+        } else {
+            val intent = Intent(context, NotificationPrefsActivity::class.java)
+            intent.putExtra("threadId", threadId)
+            startActivity(intent)
+        }
     }
 
     class ViewModelFactory(private val intent: Intent) : ViewModelProvider.Factory {
@@ -157,6 +163,7 @@ class Navigator @Inject constructor(private val context: Context, private val no
                 ComposeViewModel::class.java -> ComposeViewModel(intent)
                 ConversationInfoViewModel::class.java -> ConversationInfoViewModel(intent)
                 GalleryViewModel::class.java -> GalleryViewModel(intent)
+                NotificationPrefsViewModel::class.java -> NotificationPrefsViewModel(intent)
                 SettingsViewModel::class.java -> SettingsViewModel()
                 ThemePickerViewModel::class.java -> ThemePickerViewModel()
                 else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")
