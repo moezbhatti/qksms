@@ -20,7 +20,9 @@ package presentation.feature.notificationprefs
 
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.net.Uri
+import androidx.net.toUri
 import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
@@ -57,6 +59,11 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
 
         disposables += vibration.asObservable()
                 .subscribe { enabled -> newState { it.copy(vibrationEnabled = enabled) } }
+
+        disposables += ringtone.asObservable()
+                .map { uri -> uri.toUri() }
+                .map { uri -> RingtoneManager.getRingtone(context, uri).getTitle(context) }
+                .subscribe { title -> newState { it.copy(ringtoneName = title) } }
     }
 
     override fun bindView(view: NotificationPrefsView) {

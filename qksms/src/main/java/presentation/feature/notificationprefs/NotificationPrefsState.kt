@@ -20,5 +20,6 @@ package presentation.feature.notificationprefs
 
 data class NotificationPrefsState(
         val notificationsEnabled: Boolean = true,
-        val vibrationEnabled: Boolean = true
+        val vibrationEnabled: Boolean = true,
+        val ringtoneName: String = ""
 )

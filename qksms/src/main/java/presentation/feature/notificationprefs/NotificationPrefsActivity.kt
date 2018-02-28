@@ -75,6 +75,7 @@ class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>()
     override fun render(state: NotificationPrefsState) {
         notifications.checkbox.isChecked = state.notificationsEnabled
         vibration.checkbox.isChecked = state.vibrationEnabled
+        ringtone.summary = state.ringtoneName
     }
 
     override fun showRingtonePicker(default: Uri) {
