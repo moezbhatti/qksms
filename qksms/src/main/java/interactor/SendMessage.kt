@@ -55,9 +55,14 @@ class SendMessage @Inject constructor(
         val settings = Settings()
         val message = Message(body, addresses.toTypedArray())
 
-        attachments
-                .map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
-                .map { bitmap -> shrink(bitmap, prefs.mmsSize.get() * 1024) }
+        val bitmaps = attachments.map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
+        val totalBytes = bitmaps.sumBy { it.allocationByteCount }
+
+        bitmaps
+                .map { bitmap ->
+                    val byteRatio = bitmap.allocationByteCount / totalBytes.toFloat()
+                    shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
+                }
                 .forEach { bitmap -> message.addMedia(bitmap, "image/jpeg") }
 
         val transaction = Transaction(context, settings)
