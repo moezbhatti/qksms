@@ -122,10 +122,19 @@ open class Message : RealmObject() {
                     .mapNotNull { it.text }
                     .joinToString("\n") { text -> text }
                     .takeIf { it.isNotEmpty() }
-                    ?: subject
+                    ?: getCleansedSubject()
                     .takeIf { it.isNotEmpty() }
                     ?: "An MMS message"
         }
+    }
+
+    /**
+     * Cleanses the subject in case it's useless, so that the UI doesn't have to show it
+     */
+    fun getCleansedSubject(): String {
+        val uselessSubjects = listOf("no subject")
+
+        return if (uselessSubjects.contains(subject)) "" else subject
     }
 
     fun isSending(): Boolean {

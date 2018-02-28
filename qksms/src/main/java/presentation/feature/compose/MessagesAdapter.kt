@@ -135,7 +135,7 @@ class MessagesAdapter @Inject constructor(
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
 
-        view.subject.text = message.subject
+        view.subject.text = message.getCleansedSubject()
         view.subject.setVisible(view.subject.text.isNotBlank())
 
         view.body.text = message.getText()
