@@ -72,7 +72,7 @@ class MessagesAdapter @Inject constructor(
 
     private val people = ArrayList<String>()
     private val contactMap = HashMap<String, Contact>()
-    private val selected = ArrayList<Long>()
+    private val selected = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
 
     /**
@@ -130,8 +130,7 @@ class MessagesAdapter @Inject constructor(
 
         RxView.clicks(view).subscribe {
             clicks.onNext(message)
-            if (selected.contains(message.id)) selected.remove(message.id)
-            else selected.add(message.id)
+            selected[message.id] = view.status.visibility != View.VISIBLE
             notifyItemChanged(position)
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
@@ -156,6 +155,8 @@ class MessagesAdapter @Inject constructor(
 
     private fun bindStatus(view: View, position: Int) {
         val message = getItem(position)!!
+        val next = if (position == itemCount - 1) null else getItem(position + 1)
+
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
         val timestamp = dateFormatter.getTimestamp(message.date)
 
@@ -163,17 +164,19 @@ class MessagesAdapter @Inject constructor(
             message.isSending() -> context.getString(R.string.message_status_sending)
             message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
-            !message.isMe() && data?.first?.recipients?.size ?: 0 > 1 -> "$timestamp • ${contactMap[message.address]?.name}"
+            !message.isMe() && data?.first?.recipients?.size ?: 0 > 1 -> "${contactMap[message.address]?.name} • $timestamp"
             else -> timestamp
         }
 
-        view.status.visibility = when {
-            selected.contains(message.id) -> View.VISIBLE
-            message.isSending() -> View.VISIBLE
-            message.isDelivered() && age <= TIMESTAMP_THRESHOLD -> View.VISIBLE
-            message.isFailedMessage() -> View.VISIBLE
-            else -> View.GONE
-        }
+        view.status.setVisible(when {
+            selected[message.id] == true -> true
+            message.isSending() -> true
+            message.isFailedMessage() -> true
+            selected[message.id] == false -> false
+            !message.isMe() && next?.compareSender(message) != true -> true
+            message.isDelivered() && age <= TIMESTAMP_THRESHOLD -> true
+            else -> false
+        })
     }
 
     private fun bindGrouping(view: View, position: Int) {
@@ -217,9 +220,8 @@ class MessagesAdapter @Inject constructor(
 
     private fun canGroup(message: Message, other: Message?): Boolean {
         if (other == null) return false
-        val samePerson = message.isMe() && other.isMe() || (!message.isMe() && !other.isMe() && message.address == other.address)
         val diff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(message.date - other.date))
-        return samePerson && diff < TIMESTAMP_THRESHOLD
+        return message.compareSender(other) && diff < TIMESTAMP_THRESHOLD
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -143,4 +143,8 @@ open class Message : RealmObject() {
         val isFailedSms = isSms() && boxId == Sms.MESSAGE_TYPE_FAILED
         return isFailedMms || isFailedSms
     }
+
+    fun compareSender(other: Message): Boolean {
+        return isMe() && other.isMe() || (!isMe() && !other.isMe() && address == other.address)
+    }
 }
