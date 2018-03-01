@@ -16,14 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.conversationinfo
+package presentation.common.widget
 
-import data.model.MmsPart
-import data.model.Recipient
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.ImageView
 
-data class ConversationInfoState(
-        val recipients: List<Recipient> = listOf(),
-        val archived: Boolean = false,
-        val media: List<MmsPart> = ArrayList(),
-        val hasError: Boolean = false
-)
+class SquareImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ImageView(context, attrs) {
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
+    }
+
+}

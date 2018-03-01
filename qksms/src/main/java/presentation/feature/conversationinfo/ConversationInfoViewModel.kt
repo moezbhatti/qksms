@@ -80,6 +80,12 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
                 .map { conversation -> conversation.archived }
                 .distinctUntilChanged()
                 .subscribe { archived -> newState { it.copy(archived = archived) } }
+
+        // Load the attachments from the conversation
+        disposables += messageRepo.getPartsForConversation(threadId)
+                .map { parts -> parts.filter { part -> part.isImage() } }
+                .map { parts -> parts.reversed() }
+                .subscribe { media -> newState { it.copy(media = media) } }
     }
 
     override fun bindView(view: ConversationInfoView) {

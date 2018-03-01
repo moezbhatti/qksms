@@ -20,7 +20,6 @@ package presentation.feature.conversationinfo
 
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
@@ -40,6 +39,8 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
     override val confirmDeleteIntent: PublishSubject<Unit> = PublishSubject.create()
 
     @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
+    @Inject lateinit var mediaAdapter: ConversationMediaAdapter
+    @Inject lateinit var itemDecoration: GridSpacingItemDecoration
 
     init {
         appComponent.inject(this)
@@ -56,8 +57,10 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
 
-        recipients.layoutManager = LinearLayoutManager(this)
         recipients.adapter = recipientAdapter
+
+        media.adapter = mediaAdapter
+        media.addItemDecoration(itemDecoration)
     }
 
     override fun render(state: ConversationInfoState) {
@@ -72,6 +75,8 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
             true -> R.string.info_unarchive
             false -> R.string.info_archive
         })
+
+        mediaAdapter.data = state.media
     }
 
     override fun showDeleteDialog() {

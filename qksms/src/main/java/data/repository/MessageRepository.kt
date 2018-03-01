@@ -33,15 +33,13 @@ import com.klinker.android.send_message.StripAccents
 import common.util.Keys
 import common.util.MessageUtils
 import common.util.Preferences
-import common.util.extensions.asFlowable
-import common.util.extensions.asMaybe
-import common.util.extensions.insertOrUpdate
-import common.util.extensions.map
+import common.util.extensions.*
 import data.mapper.CursorToConversation
 import data.mapper.CursorToRecipient
 import data.model.*
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Flowables
 import io.reactivex.schedulers.Schedulers
@@ -183,6 +181,17 @@ class MessageRepository @Inject constructor(
                 .where(MmsPart::class.java)
                 .equalTo("id", id)
                 .findFirst()
+    }
+
+    fun getPartsForConversation(threadId: Long): Observable<List<MmsPart>> {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("threadId", threadId)
+                .isNotEmpty("parts")
+                .sort("date")
+                .findAll()
+                .asObservable()
+                .map { messages -> messages.flatMap { it.parts } }
     }
 
     /**
