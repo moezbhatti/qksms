@@ -173,7 +173,7 @@ class MessagesAdapter @Inject constructor(
             message.isSending() -> true
             message.isFailedMessage() -> true
             selected[message.id] == false -> false
-            !message.isMe() && next?.compareSender(message) != true -> true
+            data?.first?.recipients?.size ?: 0 > 1 && !message.isMe() && next?.compareSender(message) != true -> true
             message.isDelivered() && age <= TIMESTAMP_THRESHOLD -> true
             else -> false
         })
