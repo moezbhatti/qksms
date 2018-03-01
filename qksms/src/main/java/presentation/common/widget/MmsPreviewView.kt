@@ -20,16 +20,12 @@ package presentation.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
-import com.jakewharton.rxbinding2.view.clicks
-import com.moez.QKSMS.R
 import common.di.appComponent
 import common.util.GlideApp
-import common.util.extensions.mapNotNull
 import common.util.extensions.setVisible
 import data.model.MmsPart
-import kotlinx.android.synthetic.main.mms_preview_view.view.*
 import presentation.common.Navigator
 import javax.inject.Inject
 
@@ -45,21 +41,23 @@ class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     init {
         appComponent.inject(this)
-        View.inflate(context, R.layout.mms_preview_view, this)
-
-        image.clicks()
-                .mapNotNull { parts.firstOrNull { it.image != null } }
-                .map { part -> part.id }
-                .doOnNext { partId -> navigator.showImage(partId) }
-                .subscribe()
+        orientation = LinearLayout.VERTICAL
     }
 
     private fun updateView() {
-        val images = parts.mapNotNull { it.image }
+        val images = parts.filter { it.image != null }
         setVisible(images.isNotEmpty())
 
-        images.firstOrNull()?.let {
-            GlideApp.with(context).load(it).fitCenter().into(image)
+        if (childCount > 0) {
+            removeAllViews()
+        }
+
+        images.forEach { image ->
+            addView(ImageView(context).apply {
+                layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+                GlideApp.with(context).load(image.image).fitCenter().into(this)
+                setOnClickListener { navigator.showImage(image.id) }
+            })
         }
     }
 
