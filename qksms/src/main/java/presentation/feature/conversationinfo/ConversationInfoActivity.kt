@@ -27,6 +27,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_info_activity.*
+import presentation.common.Navigator
 import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
 
@@ -38,6 +39,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
     override val deleteIntent by lazy { delete.clicks() }
     override val confirmDeleteIntent: PublishSubject<Unit> = PublishSubject.create()
 
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
     @Inject lateinit var mediaAdapter: ConversationMediaAdapter
     @Inject lateinit var itemDecoration: GridSpacingItemDecoration
@@ -56,6 +58,10 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
         colors.background
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
+
+        mediaAdapter.thumbnailClicks
+                .autoDisposable(scope())
+                .subscribe { view -> navigator.showImageAnimated(this, view) }
 
         recipients.adapter = recipientAdapter
 

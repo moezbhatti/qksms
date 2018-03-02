@@ -21,6 +21,7 @@ package presentation.feature.conversationinfo
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.moez.QKSMS.R
 import common.util.Colors
@@ -28,17 +29,18 @@ import common.util.GlideApp
 import data.model.MmsPart
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*
-import presentation.common.Navigator
 import presentation.common.base.QkAdapter
 import presentation.common.base.QkViewHolder
 import javax.inject.Inject
 
 class ConversationMediaAdapter @Inject constructor(
         private val context: Context,
-        private val colors: Colors,
-        private val navigator: Navigator
+        private val colors: Colors
 ) : QkAdapter<MmsPart>() {
+
+    val thumbnailClicks: PublishSubject<View> = PublishSubject.create()
 
     private val disposables = CompositeDisposable()
 
@@ -59,9 +61,8 @@ class ConversationMediaAdapter @Inject constructor(
                 .fitCenter()
                 .into(view.thumbnail)
 
-        view.thumbnail.setOnClickListener {
-            navigator.showImage(part.id)
-        }
+        view.thumbnail.transitionName = part.id.toString()
+        view.thumbnail.setOnClickListener { thumbnailClicks.onNext(it) }
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {

@@ -19,11 +19,15 @@
 package presentation.feature.gallery
 
 import android.os.Bundle
+import android.transition.ChangeBounds
+import android.transition.ChangeImageTransform
+import android.transition.TransitionSet
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import common.util.GlideApp
 import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.gallery_activity.*
+import presentation.common.GlideCompletionListener
 import presentation.common.base.QkActivity
 
 class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
@@ -34,8 +38,21 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_activity)
+        postponeEnterTransition()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel.bindView(this)
+
+        val transition = TransitionSet().apply {
+            duration = 100
+
+            addTransition(ChangeBounds())
+            addTransition(ChangeImageTransform())
+        }
+
+        window.sharedElementReturnTransition = transition
+        window.sharedElementEnterTransition = transition
+
+        image.transitionName = intent.getLongExtra("partId", 0L).toString()
 
         // When calling the public setter, it doesn't allow the midscale to be the same as the
         // maxscale or the minscale. We don't want 3 levels and we don't want to modify the library
@@ -62,7 +79,13 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
         title = state.title
 
         if (image.drawable == null) {
-            GlideApp.with(this).load(state.imagePath).into(image)
+            GlideApp.with(this)
+                    .load(state.imagePath)
+                    .dontAnimate()
+                    .listener(GlideCompletionListener {
+                        startPostponedEnterTransition()
+                    })
+                    .into(image)
         }
     }
 

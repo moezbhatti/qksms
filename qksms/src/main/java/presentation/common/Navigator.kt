@@ -18,6 +18,8 @@
  */
 package presentation.common
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
@@ -27,6 +29,7 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
+import android.view.View
 import common.util.NotificationManager
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
@@ -104,6 +107,18 @@ class Navigator @Inject constructor(private val context: Context, private val no
         val intent = Intent(context, GalleryActivity::class.java)
         intent.putExtra("partId", partId)
         startActivity(intent)
+    }
+
+    /**
+     * Shows the attachment full-screen
+     * The transitionName for the view should be the id of the image being displayed
+     */
+    fun showImageAnimated(from: Activity, view: View) {
+        val intent = Intent(context, GalleryActivity::class.java)
+        intent.putExtra("partId", view.transitionName.toLong())
+
+        val options = ActivityOptions.makeSceneTransitionAnimation(from, view, view.transitionName)
+        from.startActivity(intent, options.toBundle())
     }
 
     fun showSettings() {

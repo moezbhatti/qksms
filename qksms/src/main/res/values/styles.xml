@@ -20,6 +20,7 @@
 
     <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/statusBarLight</item>
@@ -28,6 +29,7 @@
 
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/backgroundDark</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
         <item name="colorPrimary">@color/backgroundDark</item>
         <item name="colorPrimaryDark">@color/statusBarDark</item>
@@ -36,6 +38,7 @@
 
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
