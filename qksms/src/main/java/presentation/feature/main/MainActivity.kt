@@ -83,6 +83,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     override val conversationLongClickIntent by lazy { conversationsAdapter.longClicks }
     override val conversationMenuItemIntent by lazy { menuItemAdapter.menuItemClicks }
     override val confirmDeleteIntent: Subject<Unit> = PublishSubject.create()
+    override val unblockIntent by lazy { blockedAdapter.unblock }
+    override val confirmUnblockIntent: Subject<Unit> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
 
@@ -204,6 +206,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.inbox_empty_text)
                 empty.setVisible(state.page.empty && !state.syncing)
+                compose.setVisible(true)
             }
 
             is Archived -> {
@@ -214,6 +217,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.archived_empty_text)
                 empty.setVisible(state.page.empty && !state.syncing)
+                compose.setVisible(true)
             }
 
             is Scheduled -> {
@@ -223,6 +227,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 menuItemAdapter.data = ArrayList()
                 empty.setText(R.string.scheduled_empty_text)
                 empty.setVisible(state.page.empty && !state.syncing)
+                compose.setVisible(false)
             }
 
             is Blocked -> {
@@ -233,6 +238,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 menuItemAdapter.data = ArrayList()
                 empty.setText(R.string.blocked_empty_text)
                 empty.setVisible(state.page.empty && !state.syncing)
+                compose.setVisible(false)
             }
         }
 
@@ -277,6 +283,15 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .setTitle(R.string.dialog_delete_title)
                 .setMessage(R.string.dialog_delete_message)
                 .setPositiveButton(R.string.button_delete, { _, _ -> confirmDeleteIntent.onNext(Unit) })
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
+    }
+
+    override fun showUnblockDialog() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_unblock_title)
+                .setMessage(R.string.dialog_unblock_message)
+                .setPositiveButton(R.string.button_unblock, { _, _ -> confirmUnblockIntent.onNext(Unit) })
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }

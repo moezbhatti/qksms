@@ -62,10 +62,12 @@
     <string name="inbox_empty_text">Your conversations will appear here</string>
     <string name="archived_empty_text">Your archived conversations will appear here</string>
     <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
-    <string name="blocked_empty_text">Your blocked senders will appear here</string>
+    <string name="blocked_empty_text">Your blocked conversations will appear here</string>
 
     <string name="dialog_delete_title">Delete</string>
     <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+    <string name="dialog_unblock_title">Unblock</string>
+    <string name="dialog_unblock_message">Would you like to unblock this conversation?</string>
 
     <string name="info_title">Details</string>
     <string name="info_notifications">Notifications</string>
@@ -135,6 +137,7 @@
     <string name="button_yes">Yes</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
+    <string name="button_unblock">Unblock</string>
     <string name="button_undo">Undo</string>
     <string name="button_more">More</string>
 

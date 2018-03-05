@@ -25,12 +25,15 @@ import com.moez.QKSMS.R
 import data.model.Contact
 import data.model.Conversation
 import data.model.PhoneNumber
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.blocked_list_item.view.*
 import presentation.common.base.FlowableAdapter
 import presentation.common.base.QkViewHolder
 import javax.inject.Inject
 
 class BlockedAdapter @Inject constructor(private val context: Context) : FlowableAdapter<Conversation>() {
+
+    val unblock = PublishSubject.create<Long>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
         return QkViewHolder(LayoutInflater.from(context).inflate(R.layout.blocked_list_item, parent, false))
@@ -39,6 +42,8 @@ class BlockedAdapter @Inject constructor(private val context: Context) : Flowabl
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val conversation = getItem(position)
         val view = holder.itemView
+
+        view.setOnClickListener { unblock.onNext(conversation.id) }
 
         view.avatars.contacts = conversation.recipients.map { recipient ->
             recipient.contact ?: Contact().apply { numbers.add(PhoneNumber().apply { address = recipient.address }) }

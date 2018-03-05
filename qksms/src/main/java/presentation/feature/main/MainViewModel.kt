@@ -52,6 +52,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
+    @Inject lateinit var markUnblocked: MarkUnblocked
     @Inject lateinit var partialSync: PartialSync
 
     private val conversations by lazy {
@@ -258,6 +259,17 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .withLatestFrom(swipedConversation, { _, threadId -> threadId })
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnarchived.execute(threadId) }
+
+        // Show confirm unblock conversation dialog
+        view.unblockIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.showUnblockDialog() }
+
+        // Unblock conversation
+        view.confirmUnblockIntent
+                .withLatestFrom(view.unblockIntent, { _, threadId -> threadId })
+                .autoDisposable(view.scope())
+                .subscribe { threadId -> markUnblocked.execute(threadId)}
     }
 
 }
