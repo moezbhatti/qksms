@@ -44,6 +44,7 @@ class ReceiveSms @Inject constructor(
                     messageRepo.insertReceivedSms(address, body, time) // Add the message to the db
                 }
                 .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
+                .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
     }
