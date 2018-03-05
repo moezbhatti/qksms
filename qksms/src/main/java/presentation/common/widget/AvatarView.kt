@@ -50,8 +50,11 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
     init {
+        if (!isInEditMode) {
+            appComponent.inject(this)
+        }
+
         View.inflate(context, R.layout.avatar_view, this)
-        appComponent.inject(this)
 
         setBackgroundResource(R.drawable.circle)
         clipToOutline = true
@@ -59,28 +62,31 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        colors.theme
-                .autoDisposable(scope())
-                .subscribe { color -> background.setTint(color) }
 
-        colors.textPrimaryOnTheme
-                .autoDisposable(scope())
-                .subscribe { color -> icon.setTint(color) }
+        if (!isInEditMode) {
+            colors.theme
+                    .autoDisposable(scope())
+                    .subscribe { color -> background.setTint(color) }
 
-        clicks()
-                .autoDisposable(scope())
-                .subscribe {
-                    if (contact?.lookupKey.isNullOrEmpty()) {
-                        contact?.numbers?.firstOrNull()?.let { number ->
-                            navigator.addContact(number.address)
+            colors.textPrimaryOnTheme
+                    .autoDisposable(scope())
+                    .subscribe { color -> icon.setTint(color) }
+
+            clicks()
+                    .autoDisposable(scope())
+                    .subscribe {
+                        if (contact?.lookupKey.isNullOrEmpty()) {
+                            contact?.numbers?.firstOrNull()?.let { number ->
+                                navigator.addContact(number.address)
+                            }
+                        } else {
+                            val key = contact?.lookupKey
+                            val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key)
+                            ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,
+                                    ContactsContract.QuickContact.MODE_MEDIUM, null)
                         }
-                    } else {
-                        val key = contact?.lookupKey
-                        val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key)
-                        ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,
-                                ContactsContract.QuickContact.MODE_MEDIUM, null)
                     }
-                }
+        }
     }
 
     override fun onFinishInflate() {
