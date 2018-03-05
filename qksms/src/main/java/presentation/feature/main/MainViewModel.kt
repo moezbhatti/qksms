@@ -74,6 +74,16 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 })
     }
 
+    private val blockedConversations by lazy {
+        messageRepo.getBlockedConversations()
+                .withLatestFrom(state.toFlowable(), { conversations, state ->
+                    (state.page as? Blocked)?.let { page ->
+                        newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
+                    }
+                    conversations
+                })
+    }
+
     private val menuArchive by lazy { MenuItem(context.getString(R.string.menu_archive), 0) }
     private val menuUnarchive by lazy { MenuItem(context.getString(R.string.menu_unarchive), 1) }
     private val menuDelete by lazy { MenuItem(context.getString(R.string.menu_delete), 2) }
@@ -158,7 +168,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(archivedConversations)) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
-                        DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
+                        DrawerItem.BLOCKED -> newState { it.copy(page = Blocked(blockedConversations)) }
                         else -> {
                         } // Do nothing
                     }

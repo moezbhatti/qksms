@@ -18,6 +18,7 @@
  */
 package presentation.feature.main
 
+import data.model.Conversation
 import data.model.InboxItem
 import data.model.MenuItem
 import io.reactivex.Flowable
@@ -47,5 +48,5 @@ data class Scheduled(
         val empty: Boolean = false) : MainPage()
 
 data class Blocked(
-        val data: Any? = null,
+        val data: Flowable<List<Conversation>>? = null,
         val empty: Boolean = false) : MainPage()

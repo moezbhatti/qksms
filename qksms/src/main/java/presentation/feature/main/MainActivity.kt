@@ -51,6 +51,7 @@ import kotlinx.android.synthetic.main.toolbar_search.*
 import presentation.common.MenuItemAdapter
 import presentation.common.Navigator
 import presentation.common.base.QkThemedActivity
+import presentation.feature.blocked.BlockedAdapter
 import presentation.feature.conversations.ConversationItemTouchCallback
 import presentation.feature.conversations.ConversationsAdapter
 import javax.inject.Inject
@@ -58,6 +59,7 @@ import javax.inject.Inject
 class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var blockedAdapter: BlockedAdapter
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var menuItemAdapter: MenuItemAdapter
@@ -111,7 +113,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         drawer.clicks().subscribe()
 
         scheduled.isEnabled = false
-        blocked.isEnabled = false
 
         colors.background
                 .doOnNext { color -> window.decorView.setBackgroundColor(color) }
@@ -197,8 +198,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         when (state.page) {
             is Inbox -> {
                 if (!inbox.isSelected) toolbarSearch.text = null
-                if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
+                if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.inbox_empty_text)
@@ -207,8 +208,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
             is Archived -> {
                 if (!archived.isSelected) toolbarSearch.setText(R.string.title_archived)
-                if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
+                if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.archived_empty_text)
@@ -226,7 +227,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
             is Blocked -> {
                 if (!blocked.isSelected) toolbarSearch.setText(R.string.title_blocked)
-                recyclerView.adapter = null
+                if (recyclerView.adapter != blockedAdapter) recyclerView.adapter = blockedAdapter
+                blockedAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
                 empty.setText(R.string.blocked_empty_text)

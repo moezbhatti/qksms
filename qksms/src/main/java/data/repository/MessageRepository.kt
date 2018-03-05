@@ -88,11 +88,14 @@ class MessageRepository @Inject constructor(
         })
     }
 
-    fun getBlockedConversations(): RealmResults<Conversation> {
+    fun getBlockedConversations(): Flowable<List<Conversation>> {
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
                 .equalTo("blocked", true)
-                .findAll()
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .map { it.toList() }
     }
 
     fun getConversationAsync(threadId: Long): Conversation {
