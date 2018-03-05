@@ -23,7 +23,7 @@ import data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class RetrySending @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Message, Message>() {
+class RetrySending @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Message>() {
 
     override fun buildObservable(params: Message): Flowable<Message> {
 

@@ -24,7 +24,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-open class ContactSync @Inject constructor(private val syncManager: SyncManager) : Interactor<Unit, Long>() {
+open class ContactSync @Inject constructor(private val syncManager: SyncManager) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())

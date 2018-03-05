@@ -22,19 +22,21 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 
-abstract class Interactor<in Params, Result>: Disposable {
+abstract class Interactor<in Params>: Disposable {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-    abstract fun buildObservable(params: Params): Flowable<Result>
+    abstract fun buildObservable(params: Params): Flowable<*>
 
-    fun execute(params: Params, observer: (Result) -> Unit = {}) {
-        disposables.add(buildObservable(params)
+    fun execute(params: Params, onComplete: () -> Unit = {}) {
+        disposables += buildObservable(params)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer))
+                .doOnComplete(onComplete)
+                .subscribe()
     }
 
     override fun dispose() {

@@ -35,7 +35,7 @@ class SendMessage @Inject constructor(
         private val context: Context,
         private val prefs: Preferences,
         private val messageRepo: MessageRepository
-) : Interactor<SendMessage.Params, Unit>() {
+) : Interactor<SendMessage.Params>() {
 
     data class Params(val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Uri> = listOf())
 

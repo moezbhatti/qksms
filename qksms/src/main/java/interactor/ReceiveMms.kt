@@ -31,7 +31,7 @@ class ReceiveMms @Inject constructor(
         private val syncManager: SyncManager,
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager
-) : Interactor<Uri, Conversation>() {
+) : Interactor<Uri>() {
 
     override fun buildObservable(params: Uri): Flowable<Conversation> {
         return Flowable.just(params)

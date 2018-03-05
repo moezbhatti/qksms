@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 class MarkDeliveryFailed @Inject constructor(
         private val messageRepo: MessageRepository)
-    : Interactor<MarkDeliveryFailed.Params, Unit>() {
+    : Interactor<MarkDeliveryFailed.Params>() {
 
     data class Params(val id: Long, val resultCode: Int)
 

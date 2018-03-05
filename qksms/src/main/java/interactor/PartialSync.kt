@@ -28,7 +28,7 @@ import javax.inject.Inject
 open class PartialSync @Inject constructor(
         private val syncManager: SyncManager,
         private val permissions: Permissions
-) : Interactor<Unit, Long>() {
+) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())

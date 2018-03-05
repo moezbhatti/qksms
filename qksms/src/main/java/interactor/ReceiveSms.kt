@@ -29,7 +29,7 @@ import javax.inject.Inject
 class ReceiveSms @Inject constructor(
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager)
-    : Interactor<Array<SmsMessage>, Conversation>() {
+    : Interactor<Array<SmsMessage>>() {
 
     override fun buildObservable(params: Array<SmsMessage>): Flowable<Conversation> {
         return Flowable.just(params)
