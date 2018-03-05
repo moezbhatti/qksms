@@ -381,8 +381,6 @@ class MessageRepository @Inject constructor(
             put(Telephony.Sms.ADDRESS, address)
             put(Telephony.Sms.BODY, body)
             put(Telephony.Sms.DATE_SENT, sentTime)
-            put(Telephony.Sms.READ, false)
-            put(Telephony.Sms.SEEN, false)
         }
         val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
 
