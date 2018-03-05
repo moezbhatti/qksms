@@ -35,6 +35,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
     override val viewModelClass = ConversationInfoViewModel::class
     override val notificationsIntent by lazy { notifications.clicks() }
     override val archiveIntent by lazy { archive.clicks() }
+    override val blockIntent by lazy { block.clicks() }
     override val deleteIntent by lazy { delete.clicks() }
     override val confirmDeleteIntent: PublishSubject<Unit> = PublishSubject.create()
 
@@ -74,6 +75,11 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
         archive.title = getString(when (state.archived) {
             true -> R.string.info_unarchive
             false -> R.string.info_archive
+        })
+
+        block.title = getString(when (state.blocked) {
+            true -> R.string.info_unblock
+            false -> R.string.info_block
         })
 
         mediaAdapter.data = state.media

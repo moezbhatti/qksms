@@ -70,6 +70,13 @@
                     app:title="@string/info_archive" />
 
                 <presentation.common.widget.PreferenceView
+                    android:id="@+id/block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:icon="@drawable/ic_block_black_24dp"
+                    app:title="@string/info_block" />
+
+                <presentation.common.widget.PreferenceView
                     android:id="@+id/delete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

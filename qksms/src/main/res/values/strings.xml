@@ -71,6 +71,8 @@
     <string name="info_notifications">Notifications</string>
     <string name="info_archive">Archive</string>
     <string name="info_unarchive">Unarchive</string>
+    <string name="info_block">Block</string>
+    <string name="info_unblock">Unblock</string>
     <string name="info_delete">Delete conversation</string>
 
     <string name="settings_default_sms_title">Default SMS app</string>
@@ -138,7 +140,6 @@
 
     <string name="toast_copied">Copied</string>
     <string name="toast_archived">Archived conversation</string>
-    <string name="toast_unarchived">Moved to inbox</string>
     <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
 
     <string name="notification_message_failed_title">Message not sent</string>

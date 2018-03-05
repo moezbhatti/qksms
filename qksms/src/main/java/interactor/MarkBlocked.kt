@@ -16,30 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package data.model
+package interactor
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import data.repository.MessageRepository
+import io.reactivex.Flowable
+import javax.inject.Inject
 
-open class Conversation : RealmObject() {
+class MarkBlocked @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long, Unit>() {
 
-    @PrimaryKey var id: Long = 0
-    var recipients: RealmList<Recipient> = RealmList()
-    var archived: Boolean = false
-    var blocked: Boolean = false
-    var draft: String = ""
-
-    fun getTitle(): String {
-        var title = ""
-        recipients.forEachIndexed { index, recipient ->
-            val name = recipient.contact?.name
-            title += if (name.isNullOrBlank()) recipient.address else name
-            if (index < recipients.size - 1) {
-                title += ", "
-            }
-        }
-
-        return title
+    override fun buildObservable(params: Long): Flowable<Unit> {
+        return Flowable.just(Unit)
+                .doOnNext { messageRepo.markBlocked(params) }
     }
+
 }
