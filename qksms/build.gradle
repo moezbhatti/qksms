@@ -22,10 +22,15 @@ android {
         buildConfigField "String", "MIXPANEL_API_KEY", "\"${System.getenv("MIXPANEL_API_KEY")}\""
     }
 
+    signingConfigs {
+        release
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -41,6 +46,13 @@ android {
     productFlavors {
         withAnalytics { dimension "analytics" }
         noAnalytics { dimension "analytics" }
+    }
+
+    if (System.getenv("CI") == "true") {
+        signingConfigs.release.storeFile = file("../keystore")
+        signingConfigs.release.storePassword = System.getenv("keystore_password")
+        signingConfigs.release.keyAlias = System.getenv("key_alias")
+        signingConfigs.release.keyPassword = System.getenv("key_password")
     }
 }
 
