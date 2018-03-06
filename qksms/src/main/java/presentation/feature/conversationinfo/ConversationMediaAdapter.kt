@@ -44,7 +44,7 @@ class ConversationMediaAdapter @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.conversation_media_list_item, parent, false)
 
         disposables += colors.separator.subscribe { color -> view.setBackgroundColor(color) }
@@ -65,7 +65,7 @@ class ConversationMediaAdapter @Inject constructor(
         view.thumbnail.setOnClickListener { thumbnailClicks.onNext(it) }
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         disposables.clear()
     }
 

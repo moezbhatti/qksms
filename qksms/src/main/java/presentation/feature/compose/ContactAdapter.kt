@@ -37,7 +37,7 @@ class ContactAdapter @Inject constructor(private val context: Context) : QkAdapt
 
     val contactSelected: Subject<Contact> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutRes = R.layout.contact_list_item
         val layoutInflater = LayoutInflater.from(context)
         val view = layoutInflater.inflate(layoutRes, parent, false)

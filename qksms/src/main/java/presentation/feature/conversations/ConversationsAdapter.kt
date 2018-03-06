@@ -54,7 +54,7 @@ class ConversationsAdapter @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutRes = when (viewType) {
             0 -> R.layout.conversation_list_item
             else -> R.layout.conversation_list_item_unread

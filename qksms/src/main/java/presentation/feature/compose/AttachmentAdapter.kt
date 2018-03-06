@@ -61,7 +61,7 @@ class AttachmentAdapter @Inject constructor(
         return QkViewHolder(view)
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         disposables.clear()
     }

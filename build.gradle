@@ -2,12 +2,13 @@
 
 buildscript {
     ext.autodispose_version = '0.5.1'
+    ext.constraintlayout_version = '1.1.0-beta5'
     ext.kotlin_version = '1.2.20'
-    ext.lifecycle_version = '1.0.0'
+    ext.lifecycle_version = '1.1.0'
     ext.realm_version = '4.3.1'
     ext.realm_adapters_version = '2.1.0'
     ext.rxbinding_version = '2.0.0'
-    ext.support_version = '27.0.2'
+    ext.support_version = '27.1.0'
 
 
     repositories {

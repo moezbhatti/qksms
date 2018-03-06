@@ -113,12 +113,12 @@ class ThemeAdapter @Inject constructor(
                 .forEach { theme -> view.palette.addView(theme) }
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         disposables += colors.textPrimaryOnTheme
                 .subscribe { color -> iconTint = color }
     }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView?) {
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         disposables.clear()
     }
 

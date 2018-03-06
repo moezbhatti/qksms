@@ -80,7 +80,7 @@ class MessagesAdapter @Inject constructor(
      * this a unique viewType even though it uses the same view, so that regular messages
      * don't need clipToOutline set to true, and they don't need to worry about images
      */
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
 
         val layoutInflater = LayoutInflater.from(context)
         val view: View

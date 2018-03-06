@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.2"
+    buildToolsVersion "27.0.3"
     flavorDimensions "analytics"
 
     defaultConfig {
@@ -52,6 +52,7 @@ dependencies {
 
     // support
     implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
     implementation "com.android.support:design:$support_version"
 
     // rxbinding
@@ -74,7 +75,6 @@ dependencies {
     })
     implementation "androidx.core:core-ktx:0.1"
     implementation "com.android.billingclient:billing:1.0"
-    implementation "com.android.support.constraint:constraint-layout:1.1.0-beta4"
     implementation "com.bugsnag:bugsnag-android:4.1.1"
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:2.0.0-RC3"
