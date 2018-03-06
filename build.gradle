@@ -1,11 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.autodispose_version = '0.5.1'
     ext.kotlin_version = '1.2.20'
+    ext.lifecycle_version = '1.0.0'
+    ext.realm_version = '4.3.1'
+    ext.realm_adapters_version = '2.1.0'
+    ext.rxbinding_version = '2.0.0'
+    ext.support_version = '27.0.2'
+
+
     repositories {
         maven { url 'https://maven.google.com' }
         jcenter()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
