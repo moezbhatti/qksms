@@ -22,7 +22,7 @@ import data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class DeleteMessage @Inject constructor(private val messageRepository: MessageRepository): Interactor<Long, Long>() {
+class DeleteMessage @Inject constructor(private val messageRepository: MessageRepository): Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<Long> {
         return Flowable.just(params)

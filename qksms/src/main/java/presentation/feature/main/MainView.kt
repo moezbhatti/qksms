@@ -19,7 +19,6 @@
 package presentation.feature.main
 
 import io.reactivex.Observable
-import io.reactivex.subjects.Subject
 import presentation.common.base.QkView
 
 interface MainView : QkView<MainState> {
@@ -31,10 +30,10 @@ interface MainView : QkView<MainState> {
     val drawerItemIntent: Observable<DrawerItem>
     val conversationClickIntent: Observable<Long>
     val conversationLongClickIntent: Observable<Long>
-    val conversationMenuItemIntent: Subject<Int>
-    val confirmDeleteIntent: Subject<Unit>
+    val conversationMenuItemIntent: Observable<Int>
+    val confirmDeleteIntent: Observable<Unit>
     val swipeConversationIntent: Observable<Int>
-    val undoSwipeConversationIntent: Subject<Unit>
+    val undoSwipeConversationIntent: Observable<Unit>
 
     fun clearSearch()
     fun showDeleteDialog()

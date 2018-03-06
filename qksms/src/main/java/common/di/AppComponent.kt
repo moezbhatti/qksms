@@ -22,6 +22,8 @@ import common.QKApplication
 import common.util.ContactImageLoader
 import dagger.Component
 import presentation.common.widget.*
+import presentation.feature.blocked.BlockedActivity
+import presentation.feature.blocked.BlockedViewModel
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
 import presentation.feature.compose.DetailedChipView
@@ -31,10 +33,10 @@ import presentation.feature.gallery.GalleryActivity
 import presentation.feature.gallery.GalleryViewModel
 import presentation.feature.main.MainActivity
 import presentation.feature.main.MainViewModel
-import presentation.feature.plus.PlusActivity
-import presentation.feature.plus.PlusViewModel
 import presentation.feature.notificationprefs.NotificationPrefsActivity
 import presentation.feature.notificationprefs.NotificationPrefsViewModel
+import presentation.feature.plus.PlusActivity
+import presentation.feature.plus.PlusViewModel
 import presentation.feature.settings.SettingsActivity
 import presentation.feature.settings.SettingsViewModel
 import presentation.feature.setup.SetupActivity
@@ -52,6 +54,7 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
     fun inject(activity: SetupActivity)
+    fun inject(activity: BlockedActivity)
     fun inject(activity: ComposeActivity)
     fun inject(activity: ConversationInfoActivity)
     fun inject(activity: GalleryActivity)
@@ -84,6 +87,7 @@ interface AppComponent {
 
     fun inject(viewModel: MainViewModel)
     fun inject(viewModel: SetupViewModel)
+    fun inject(viewModel: BlockedViewModel)
     fun inject(viewModel: ComposeViewModel)
     fun inject(viewModel: ConversationInfoViewModel)
     fun inject(viewModel: GalleryViewModel)

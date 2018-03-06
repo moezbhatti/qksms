@@ -16,30 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package data.model
+package presentation.feature.blocked
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import data.model.Conversation
+import io.reactivex.Flowable
 
-open class Conversation : RealmObject() {
-
-    @PrimaryKey var id: Long = 0
-    var recipients: RealmList<Recipient> = RealmList()
-    var archived: Boolean = false
-    var blocked: Boolean = false
-    var draft: String = ""
-
-    fun getTitle(): String {
-        var title = ""
-        recipients.forEachIndexed { index, recipient ->
-            val name = recipient.contact?.name
-            title += if (name.isNullOrBlank()) recipient.address else name
-            if (index < recipients.size - 1) {
-                title += ", "
-            }
-        }
-
-        return title
-    }
-}
+data class BlockedState(
+        val data: Flowable<List<Conversation>>? = null,
+        val empty: Boolean = false
+)

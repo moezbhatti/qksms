@@ -20,17 +20,13 @@ package presentation.feature.conversationinfo
 
 import android.content.Context
 import android.content.Intent
-import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.extensions.asObservable
-import common.util.extensions.makeToast
 import data.model.Conversation
 import data.repository.MessageRepository
-import interactor.DeleteConversation
-import interactor.MarkArchived
-import interactor.MarkUnarchived
+import interactor.*
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -45,6 +41,8 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
+    @Inject lateinit var markBlocked: MarkBlocked
+    @Inject lateinit var markUnblocked: MarkUnblocked
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var deleteConversation: DeleteConversation
 
@@ -67,6 +65,8 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
 
         disposables += markArchived
         disposables += markUnarchived
+        disposables += markBlocked
+        disposables += markUnblocked
         disposables += deleteConversation
 
         // Update the recipients whenever they change
@@ -80,6 +80,12 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
                 .map { conversation -> conversation.archived }
                 .distinctUntilChanged()
                 .subscribe { archived -> newState { it.copy(archived = archived) } }
+
+        // Update the view's blocked state whenever it changes
+        disposables += conversation
+                .map { conversation -> conversation.blocked }
+                .distinctUntilChanged()
+                .subscribe { blocked -> newState { it.copy(blocked = blocked) } }
 
         // Load the attachments from the conversation
         disposables += messageRepo.getPartsForConversation(threadId)
@@ -103,8 +109,19 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
                 .autoDisposable(view.scope())
                 .subscribe { conversation ->
                     when (conversation.archived) {
-                        true -> markUnarchived.execute(conversation.id, { context.makeToast(R.string.toast_unarchived) })
-                        false -> markArchived.execute(conversation.id, { context.makeToast(R.string.toast_archived) })
+                        true -> markUnarchived.execute(conversation.id)
+                        false -> markArchived.execute(conversation.id)
+                    }
+                }
+
+        // Toggle the blocked state of the conversation
+        view.blockIntent
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .autoDisposable(view.scope())
+                .subscribe { conversation ->
+                    when (conversation.blocked) {
+                        true -> markUnblocked.execute(conversation.id)
+                        false -> markBlocked.execute(conversation.id)
                     }
                 }
 

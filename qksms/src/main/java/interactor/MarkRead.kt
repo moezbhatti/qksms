@@ -26,7 +26,7 @@ import javax.inject.Inject
 class MarkRead @Inject constructor(
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager
-) : Interactor<Long, Unit>() {
+) : Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<Unit> {
         return Flowable.just(Unit)

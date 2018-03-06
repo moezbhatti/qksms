@@ -28,7 +28,7 @@ import javax.inject.Inject
 class FullSync @Inject constructor(
         private val syncManager: SyncManager,
         private val keys: Keys
-) : Interactor<Unit, Long>() {
+) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())

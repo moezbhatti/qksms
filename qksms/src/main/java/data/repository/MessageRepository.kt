@@ -64,6 +64,7 @@ class MessageRepository @Inject constructor(
 
         val conversationFlowable = realm.where(Conversation::class.java)
                 .equalTo("archived", archived)
+                .equalTo("blocked", false)
                 .findAllAsync()
                 .asFlowable()
                 .filter { it.isLoaded }
@@ -85,6 +86,16 @@ class MessageRepository @Inject constructor(
                 if (conversation == null) null else InboxItem(conversation, message)
             }
         })
+    }
+
+    fun getBlockedConversations(): Flowable<List<Conversation>> {
+        return Realm.getDefaultInstance()
+                .where(Conversation::class.java)
+                .equalTo("blocked", true)
+                .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .map { it.toList() }
     }
 
     fun getConversationAsync(threadId: Long): Conversation {
@@ -212,7 +223,6 @@ class MessageRepository @Inject constructor(
         val realm = Realm.getDefaultInstance()
         val conversation = realm.where(Conversation::class.java)
                 .equalTo("id", threadId)
-                .equalTo("archived", false)
                 .findFirst()
 
         realm.executeTransaction { conversation?.archived = true }
@@ -223,10 +233,29 @@ class MessageRepository @Inject constructor(
         val realm = Realm.getDefaultInstance()
         val conversation = realm.where(Conversation::class.java)
                 .equalTo("id", threadId)
-                .equalTo("archived", true)
                 .findFirst()
 
         realm.executeTransaction { conversation?.archived = false }
+        realm.close()
+    }
+
+    fun markBlocked(threadId: Long) {
+        val realm = Realm.getDefaultInstance()
+        val conversation = realm.where(Conversation::class.java)
+                .equalTo("id", threadId)
+                .findFirst()
+
+        realm.executeTransaction { conversation?.blocked = true }
+        realm.close()
+    }
+
+    fun markUnblocked(threadId: Long) {
+        val realm = Realm.getDefaultInstance()
+        val conversation = realm.where(Conversation::class.java)
+                .equalTo("id", threadId)
+                .findFirst()
+
+        realm.executeTransaction { conversation?.blocked = false }
         realm.close()
     }
 

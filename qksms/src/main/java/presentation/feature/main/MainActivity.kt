@@ -72,7 +72,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 inbox.clicks().map { DrawerItem.INBOX },
                 archived.clicks().map { DrawerItem.ARCHIVED },
                 scheduled.clicks().map { DrawerItem.SCHEDULED },
-                blocked.clicks().map { DrawerItem.BLOCKED },
                 settings.clicks().map { DrawerItem.SETTINGS },
                 plus.clicks().map { DrawerItem.PLUS },
                 help.clicks().map { DrawerItem.HELP }))
@@ -111,7 +110,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         drawer.clicks().subscribe()
 
         scheduled.isEnabled = false
-        blocked.isEnabled = false
 
         colors.background
                 .doOnNext { color -> window.decorView.setBackgroundColor(color) }
@@ -151,7 +149,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .doOnNext { tintList -> inboxIcon.imageTintList = tintList }
                 .doOnNext { tintList -> archivedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }
-                .doOnNext { tintList -> blockedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
                 .doOnNext { tintList -> plusIcon.imageTintList = tintList }
                 .doOnNext { tintList -> helpIcon.imageTintList = tintList }
@@ -163,7 +160,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .doOnNext { color -> inbox.background = rowBackground(color) }
                 .doOnNext { color -> archived.background = rowBackground(color) }
                 .doOnNext { color -> scheduled.background = rowBackground(color) }
-                .doOnNext { color -> blocked.background = rowBackground(color) }
                 .autoDisposable(scope())
                 .subscribe()
 
@@ -197,22 +193,24 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         when (state.page) {
             is Inbox -> {
                 if (!inbox.isSelected) toolbarSearch.text = null
-                if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
+                if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.inbox_empty_text)
                 empty.setVisible(state.page.empty && !state.syncing)
+                compose.setVisible(true)
             }
 
             is Archived -> {
                 if (!archived.isSelected) toolbarSearch.setText(R.string.title_archived)
-                if (recyclerView.adapter != conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                if (conversationsAdapter.flowable != state.page.data) conversationsAdapter.flowable = state.page.data
+                if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.archived_empty_text)
                 empty.setVisible(state.page.empty && !state.syncing)
+                compose.setVisible(true)
             }
 
             is Scheduled -> {
@@ -222,15 +220,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 menuItemAdapter.data = ArrayList()
                 empty.setText(R.string.scheduled_empty_text)
                 empty.setVisible(state.page.empty && !state.syncing)
-            }
-
-            is Blocked -> {
-                if (!blocked.isSelected) toolbarSearch.setText(R.string.title_blocked)
-                recyclerView.adapter = null
-                itemTouchHelper.attachToRecyclerView(null)
-                menuItemAdapter.data = ArrayList()
-                empty.setText(R.string.blocked_empty_text)
-                empty.setVisible(state.page.empty && !state.syncing)
+                compose.setVisible(false)
             }
         }
 
@@ -245,8 +235,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         archivedIcon.isSelected = state.page is Archived
         scheduled.isSelected = state.page is Scheduled
         scheduledIcon.isSelected = state.page is Scheduled
-        blocked.isSelected = state.page is Blocked
-        blockedIcon.isSelected = state.page is Blocked
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)

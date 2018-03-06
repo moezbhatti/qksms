@@ -158,7 +158,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(archivedConversations)) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
-                        DrawerItem.BLOCKED -> newState { it.copy(page = Blocked()) }
                         else -> {
                         } // Do nothing
                     }

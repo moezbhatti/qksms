@@ -22,7 +22,6 @@
 
     <string name="title_archived">Archived</string>
     <string name="title_scheduled">Scheduled</string>
-    <string name="title_blocked">Blocked</string>
     <string name="title_settings">Settings</string>
     <string name="title_notification_prefs">Notifications</string>
     <string name="title_theme">Theme</string>
@@ -62,7 +61,6 @@
     <string name="inbox_empty_text">Your conversations will appear here</string>
     <string name="archived_empty_text">Your archived conversations will appear here</string>
     <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
-    <string name="blocked_empty_text">Your blocked senders will appear here</string>
 
     <string name="dialog_delete_title">Delete</string>
     <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
@@ -71,6 +69,8 @@
     <string name="info_notifications">Notifications</string>
     <string name="info_archive">Archive</string>
     <string name="info_unarchive">Unarchive</string>
+    <string name="info_block">Block</string>
+    <string name="info_unblock">Unblock</string>
     <string name="info_delete">Delete conversation</string>
 
     <string name="settings_default_sms_title">Default SMS app</string>
@@ -82,9 +82,10 @@
     <string name="settings_night_end_title">End time</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
     <string name="settings_auto_emoji_summary">Convert text like :) to an emoji like 🙂</string>
-    <string name="settings_notifications_title">Message notifications</string>
+    <string name="settings_notifications_title">Notifications</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
+    <string name="settings_blocking_title">Blocked</string>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
     <string name="settings_unicode_title">Strip accents</string>
@@ -93,6 +94,11 @@
     <string name="settings_mms_size_title">Max MMS attachment size</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+
+    <string name="blocked_title">Blocked</string>
+    <string name="blocked_empty">Your blocked conversations will appear here</string>
+    <string name="blocked_unblock_dialog_title">Unblock</string>
+    <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
 
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
@@ -133,12 +139,12 @@
     <string name="button_yes">Yes</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
+    <string name="button_unblock">Unblock</string>
     <string name="button_undo">Undo</string>
     <string name="button_more">More</string>
 
     <string name="toast_copied">Copied</string>
     <string name="toast_archived">Archived conversation</string>
-    <string name="toast_unarchived">Moved to inbox</string>
     <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
 
     <string name="notification_message_failed_title">Message not sent</string>

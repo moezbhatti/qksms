@@ -25,6 +25,7 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import common.util.extensions.setVisible
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_info_activity.*
 import presentation.common.Navigator
@@ -36,6 +37,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
     override val viewModelClass = ConversationInfoViewModel::class
     override val notificationsIntent by lazy { notifications.clicks() }
     override val archiveIntent by lazy { archive.clicks() }
+    override val blockIntent by lazy { block.clicks() }
     override val deleteIntent by lazy { delete.clicks() }
     override val confirmDeleteIntent: PublishSubject<Unit> = PublishSubject.create()
 
@@ -77,9 +79,17 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
 
         recipientAdapter.data = state.recipients
 
+        notifications.setVisible(!state.blocked)
+
+        archive.setVisible(!state.blocked)
         archive.title = getString(when (state.archived) {
             true -> R.string.info_unarchive
             false -> R.string.info_archive
+        })
+
+        block.title = getString(when (state.blocked) {
+            true -> R.string.info_unblock
+            false -> R.string.info_block
         })
 
         mediaAdapter.data = state.media

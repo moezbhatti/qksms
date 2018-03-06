@@ -22,7 +22,7 @@ import data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class MarkSent @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long, Unit>() {
+class MarkSent @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<Unit> {
         return Flowable.just(Unit)

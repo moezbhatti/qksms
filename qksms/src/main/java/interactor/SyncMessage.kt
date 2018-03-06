@@ -28,7 +28,7 @@ import javax.inject.Inject
 class SyncMessage @Inject constructor(
         private val syncManager: SyncManager,
         private val messageRepo: MessageRepository
-) : Interactor<Uri, Message>() {
+) : Interactor<Uri>() {
 
     override fun buildObservable(params: Uri): Flowable<Message> {
         return Flowable.just(params)
