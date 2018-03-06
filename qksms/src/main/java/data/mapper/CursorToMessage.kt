@@ -63,7 +63,7 @@ class CursorToMessage @Inject constructor(
                     address = cursor.getString(columnsMap.smsAddress) ?: ""
                     boxId = cursor.getInt(columnsMap.smsType)
                     seen = cursor.getInt(columnsMap.smsSeen) != 0
-                    body = cursor.getString(columnsMap.smsBody) ?: ""
+                    body = if (columnsMap.smsBody != -1) cursor.getString(columnsMap.smsBody) else null ?: ""
                     errorCode = cursor.getInt(columnsMap.smsErrorCode)
                     deliveryStatus = cursor.getInt(columnsMap.smsStatus)
                 }
