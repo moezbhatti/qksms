@@ -47,8 +47,7 @@ android {
 dependencies {
     // lifecycle
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
-    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
     // support
     implementation "com.android.support:appcompat-v7:$support_version"
