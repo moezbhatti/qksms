@@ -56,21 +56,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/blocked"
-        style="@style/DrawerRow">
-
-        <ImageView
-            android:id="@+id/blockedIcon"
-            style="@style/DrawerIcon"
-            android:src="@drawable/ic_block_black_24dp" />
-
-        <presentation.common.widget.QkTextView
-            style="@style/DrawerText"
-            android:text="@string/drawer_blocked" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/scheduled"
         style="@style/DrawerRow"
         android:alpha="0.5">

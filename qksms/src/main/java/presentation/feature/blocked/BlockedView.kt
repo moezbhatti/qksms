@@ -16,28 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.main
+package presentation.feature.blocked
 
 import io.reactivex.Observable
 import presentation.common.base.QkView
 
-interface MainView : QkView<MainState> {
+interface BlockedView : QkView<BlockedState> {
 
-    val queryChangedIntent: Observable<CharSequence>
-    val queryCancelledIntent: Observable<*>
-    val composeIntent: Observable<Unit>
-    val drawerOpenIntent: Observable<Boolean>
-    val drawerItemIntent: Observable<DrawerItem>
-    val conversationClickIntent: Observable<Long>
-    val conversationLongClickIntent: Observable<Long>
-    val conversationMenuItemIntent: Observable<Int>
-    val confirmDeleteIntent: Observable<Unit>
-    val swipeConversationIntent: Observable<Int>
-    val undoSwipeConversationIntent: Observable<Unit>
+    val unblockIntent: Observable<Long>
+    val confirmUnblockIntent: Observable<Unit>
 
-    fun clearSearch()
-    fun showDeleteDialog()
+    fun showUnblockDialog()
 
 }
-
-enum class DrawerItem { INBOX, ARCHIVED, SCHEDULED, BLOCKED, SETTINGS, PLUS, HELP }

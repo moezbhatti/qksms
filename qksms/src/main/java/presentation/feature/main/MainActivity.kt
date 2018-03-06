@@ -51,7 +51,6 @@ import kotlinx.android.synthetic.main.toolbar_search.*
 import presentation.common.MenuItemAdapter
 import presentation.common.Navigator
 import presentation.common.base.QkThemedActivity
-import presentation.feature.blocked.BlockedAdapter
 import presentation.feature.conversations.ConversationItemTouchCallback
 import presentation.feature.conversations.ConversationsAdapter
 import javax.inject.Inject
@@ -59,7 +58,6 @@ import javax.inject.Inject
 class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var blockedAdapter: BlockedAdapter
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var menuItemAdapter: MenuItemAdapter
@@ -74,7 +72,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 inbox.clicks().map { DrawerItem.INBOX },
                 archived.clicks().map { DrawerItem.ARCHIVED },
                 scheduled.clicks().map { DrawerItem.SCHEDULED },
-                blocked.clicks().map { DrawerItem.BLOCKED },
                 settings.clicks().map { DrawerItem.SETTINGS },
                 plus.clicks().map { DrawerItem.PLUS },
                 help.clicks().map { DrawerItem.HELP }))
@@ -83,8 +80,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     override val conversationLongClickIntent by lazy { conversationsAdapter.longClicks }
     override val conversationMenuItemIntent by lazy { menuItemAdapter.menuItemClicks }
     override val confirmDeleteIntent: Subject<Unit> = PublishSubject.create()
-    override val unblockIntent by lazy { blockedAdapter.unblock }
-    override val confirmUnblockIntent: Subject<Unit> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
 
@@ -154,7 +149,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .doOnNext { tintList -> inboxIcon.imageTintList = tintList }
                 .doOnNext { tintList -> archivedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }
-                .doOnNext { tintList -> blockedIcon.imageTintList = tintList }
                 .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
                 .doOnNext { tintList -> plusIcon.imageTintList = tintList }
                 .doOnNext { tintList -> helpIcon.imageTintList = tintList }
@@ -166,7 +160,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .doOnNext { color -> inbox.background = rowBackground(color) }
                 .doOnNext { color -> archived.background = rowBackground(color) }
                 .doOnNext { color -> scheduled.background = rowBackground(color) }
-                .doOnNext { color -> blocked.background = rowBackground(color) }
                 .autoDisposable(scope())
                 .subscribe()
 
@@ -229,17 +222,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 empty.setVisible(state.page.empty && !state.syncing)
                 compose.setVisible(false)
             }
-
-            is Blocked -> {
-                if (!blocked.isSelected) toolbarSearch.setText(R.string.title_blocked)
-                if (recyclerView.adapter != blockedAdapter) recyclerView.adapter = blockedAdapter
-                blockedAdapter.flowable = state.page.data
-                itemTouchHelper.attachToRecyclerView(null)
-                menuItemAdapter.data = ArrayList()
-                empty.setText(R.string.blocked_empty_text)
-                empty.setVisible(state.page.empty && !state.syncing)
-                compose.setVisible(false)
-            }
         }
 
         when (state.page is Inbox && state.page.showArchivedSnackbar) {
@@ -253,8 +235,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         archivedIcon.isSelected = state.page is Archived
         scheduled.isSelected = state.page is Scheduled
         scheduledIcon.isSelected = state.page is Scheduled
-        blocked.isSelected = state.page is Blocked
-        blockedIcon.isSelected = state.page is Blocked
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
@@ -283,15 +263,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .setTitle(R.string.dialog_delete_title)
                 .setMessage(R.string.dialog_delete_message)
                 .setPositiveButton(R.string.button_delete, { _, _ -> confirmDeleteIntent.onNext(Unit) })
-                .setNegativeButton(R.string.button_cancel, null)
-                .show()
-    }
-
-    override fun showUnblockDialog() {
-        AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_unblock_title)
-                .setMessage(R.string.dialog_unblock_message)
-                .setPositiveButton(R.string.button_unblock, { _, _ -> confirmUnblockIntent.onNext(Unit) })
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }

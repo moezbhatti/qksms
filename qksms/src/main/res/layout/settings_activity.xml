@@ -96,6 +96,12 @@
                     app:title="@string/settings_notifications_title" />
 
                 <presentation.common.widget.PreferenceView
+                    android:id="@+id/blocked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/settings_blocking_title" />
+
+                <presentation.common.widget.PreferenceView
                     android:id="@+id/delivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

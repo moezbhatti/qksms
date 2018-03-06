@@ -52,7 +52,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
-    @Inject lateinit var markUnblocked: MarkUnblocked
     @Inject lateinit var partialSync: PartialSync
 
     private val conversations by lazy {
@@ -69,16 +68,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         messageRepo.getConversations(true)
                 .withLatestFrom(state.toFlowable(), { conversations, state ->
                     (state.page as? Archived)?.let { page ->
-                        newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
-                    }
-                    conversations
-                })
-    }
-
-    private val blockedConversations by lazy {
-        messageRepo.getBlockedConversations()
-                .withLatestFrom(state.toFlowable(), { conversations, state ->
-                    (state.page as? Blocked)?.let { page ->
                         newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
                     }
                     conversations
@@ -169,7 +158,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                         DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(archivedConversations)) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
-                        DrawerItem.BLOCKED -> newState { it.copy(page = Blocked(blockedConversations)) }
                         else -> {
                         } // Do nothing
                     }
@@ -259,17 +247,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .withLatestFrom(swipedConversation, { _, threadId -> threadId })
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnarchived.execute(threadId) }
-
-        // Show confirm unblock conversation dialog
-        view.unblockIntent
-                .autoDisposable(view.scope())
-                .subscribe { view.showUnblockDialog() }
-
-        // Unblock conversation
-        view.confirmUnblockIntent
-                .withLatestFrom(view.unblockIntent, { _, threadId -> threadId })
-                .autoDisposable(view.scope())
-                .subscribe { threadId -> markUnblocked.execute(threadId)}
     }
 
 }

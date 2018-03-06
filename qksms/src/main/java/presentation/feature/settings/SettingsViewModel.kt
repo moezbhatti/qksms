@@ -122,6 +122,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.notifications -> navigator.showNotificationSettings()
 
+                        R.id.blocked -> navigator.showBlockedConversations()
+
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())

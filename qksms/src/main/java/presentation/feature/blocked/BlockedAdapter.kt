@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 class BlockedAdapter @Inject constructor(private val context: Context) : FlowableAdapter<Conversation>() {
 
-    val unblock = PublishSubject.create<Long>()
+    val unblock: PublishSubject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): QkViewHolder {
         return QkViewHolder(LayoutInflater.from(context).inflate(R.layout.blocked_list_item, parent, false))

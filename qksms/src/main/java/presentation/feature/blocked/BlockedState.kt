@@ -16,33 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.main
+package presentation.feature.blocked
 
 import data.model.Conversation
-import data.model.InboxItem
-import data.model.MenuItem
 import io.reactivex.Flowable
 
-data class MainState(
-        val page: MainPage = Inbox(),
-        val drawerOpen: Boolean = false,
-        val syncing: Boolean = false
+data class BlockedState(
+        val data: Flowable<List<Conversation>>? = null,
+        val empty: Boolean = false
 )
-
-sealed class MainPage
-
-data class Inbox(
-        val showClearButton: Boolean = false,
-        val data: Flowable<List<InboxItem>>? = null,
-        val empty: Boolean = false,
-        val menu: List<MenuItem> = ArrayList(),
-        val showArchivedSnackbar: Boolean = false) : MainPage()
-
-data class Archived(
-        val data: Flowable<List<InboxItem>>?,
-        val empty: Boolean = false,
-        val menu: List<MenuItem> = ArrayList()) : MainPage()
-
-data class Scheduled(
-        val data: Any? = null,
-        val empty: Boolean = false) : MainPage()

@@ -28,6 +28,8 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
 import common.util.NotificationManager
+import presentation.feature.blocked.BlockedActivity
+import presentation.feature.blocked.BlockedViewModel
 import presentation.feature.compose.ComposeActivity
 import presentation.feature.compose.ComposeViewModel
 import presentation.feature.conversationinfo.ConversationInfoActivity
@@ -111,6 +113,11 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivity(intent)
     }
 
+    fun showBlockedConversations() {
+        val intent = Intent(context, BlockedActivity::class.java)
+        startActivity(intent)
+    }
+
     fun showThemePicker() {
         val intent = Intent(context, ThemePickerActivity::class.java)
         startActivity(intent)
@@ -165,6 +172,7 @@ class Navigator @Inject constructor(private val context: Context, private val no
                 GalleryViewModel::class.java -> GalleryViewModel(intent)
                 NotificationPrefsViewModel::class.java -> NotificationPrefsViewModel(intent)
                 SettingsViewModel::class.java -> SettingsViewModel()
+                BlockedViewModel::class.java -> BlockedViewModel()
                 ThemePickerViewModel::class.java -> ThemePickerViewModel()
                 else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")
             } as T

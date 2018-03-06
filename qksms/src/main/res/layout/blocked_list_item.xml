@@ -47,6 +47,6 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/avatars"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Moez Bhatti" />
+        tools:text="@tools:sample/full_names" />
 
 </android.support.constraint.ConstraintLayout>
