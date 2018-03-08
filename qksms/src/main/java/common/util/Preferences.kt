@@ -34,7 +34,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     }
 
     val defaultSms = rxPrefs.getBoolean("defaultSms", false)
-    val theme = rxPrefs.getInteger("theme", 0xFF008389.toInt())
+    val theme = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
     val night = rxPrefs.getBoolean("night", false)
     val nightMode = rxPrefs.getInteger("nightModeSummary", NIGHT_MODE_OFF)
     val nightStart = rxPrefs.getString("nightStart", "6:00 PM")
