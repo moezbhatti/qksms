@@ -76,7 +76,7 @@ before_script:
 script:
   - cd ${TRAVIS_BUILD_DIR}
   - |
-    ./gradlew build assembleAndroidTest -PtestCoverageEnabled='true'
+    ./gradlew assembleWithAnalyticsRelease assembleAndroidTest -PtestCoverageEnabled='true'
     retval=$?
     if [$retval -ne 0]; then
       echo "error on assembling, exit code: "$retval
