@@ -142,14 +142,14 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     }
 
     override fun showStartTimePicker(hour: Int, minute: Int) {
-        TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-            startTimeSelectedIntent.onNext(Pair(hour, minute))
+        TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
+            startTimeSelectedIntent.onNext(Pair(newHour, newMinute))
         }, hour, minute, false).show()
     }
 
     override fun showEndTimePicker(hour: Int, minute: Int) {
-        TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-            endTimeSelectedIntent.onNext(Pair(hour, minute))
+        TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
+            endTimeSelectedIntent.onNext(Pair(newHour, newMinute))
         }, hour, minute, false).show()
     }
 
