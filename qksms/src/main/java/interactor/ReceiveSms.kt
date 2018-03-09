@@ -21,17 +21,17 @@ package interactor
 import android.telephony.SmsMessage
 import common.util.NotificationManager
 import common.util.extensions.mapNotNull
-import data.model.Conversation
 import data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class ReceiveSms @Inject constructor(
         private val messageRepo: MessageRepository,
-        private val notificationManager: NotificationManager)
-    : Interactor<Array<SmsMessage>>() {
+        private val notificationManager: NotificationManager,
+        private val updateBadge: UpdateBadge
+) : Interactor<Array<SmsMessage>>() {
 
-    override fun buildObservable(params: Array<SmsMessage>): Flowable<Conversation> {
+    override fun buildObservable(params: Array<SmsMessage>): Flowable<*> {
         return Flowable.just(params)
                 .filter { it.isNotEmpty() }
                 .map { messages ->
@@ -47,6 +47,7 @@ class ReceiveSms @Inject constructor(
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
+                .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 
 }

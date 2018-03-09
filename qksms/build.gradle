@@ -97,6 +97,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
     implementation "io.reactivex.rxjava2:rxjava:2.1.4"
     implementation "io.reactivex.rxjava2:rxkotlin:2.1.0"
+    implementation "me.leolin:ShortcutBadger:1.1.21"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation project(":android-smsmms")
     kapt "com.github.bumptech.glide:compiler:4.3.0"

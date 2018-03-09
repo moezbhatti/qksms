@@ -22,7 +22,6 @@ import android.net.Uri
 import common.util.NotificationManager
 import common.util.SyncManager
 import common.util.extensions.mapNotNull
-import data.model.Conversation
 import data.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
@@ -30,16 +29,18 @@ import javax.inject.Inject
 class ReceiveMms @Inject constructor(
         private val syncManager: SyncManager,
         private val messageRepo: MessageRepository,
-        private val notificationManager: NotificationManager
+        private val notificationManager: NotificationManager,
+        private val updateBadge: UpdateBadge
 ) : Interactor<Uri>() {
 
-    override fun buildObservable(params: Uri): Flowable<Conversation> {
+    override fun buildObservable(params: Uri): Flowable<*> {
         return Flowable.just(params)
                 .flatMap { uri -> syncManager.syncMessage(uri) } // Sync the message
                 .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
+                .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 
 }

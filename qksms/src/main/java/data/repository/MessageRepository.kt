@@ -187,6 +187,13 @@ class MessageRepository @Inject constructor(
                 .findFirst()
     }
 
+    fun getUnreadMessageCount(): Long {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("read", false)
+                .count()
+    }
+
     fun getPart(id: Long): MmsPart? {
         return Realm.getDefaultInstance()
                 .where(MmsPart::class.java)

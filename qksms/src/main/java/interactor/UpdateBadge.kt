@@ -18,22 +18,22 @@
  */
 package interactor
 
-import common.util.NotificationManager
+import android.content.Context
 import data.repository.MessageRepository
 import io.reactivex.Flowable
+import me.leolin.shortcutbadger.ShortcutBadger
 import javax.inject.Inject
 
-class MarkRead @Inject constructor(
-        private val messageRepo: MessageRepository,
-        private val notificationManager: NotificationManager,
-        private val updateBadge: UpdateBadge
-) : Interactor<Long>() {
+class UpdateBadge @Inject constructor(
+        private val context: Context,
+        private val messageRepo: MessageRepository
+) : Interactor<Unit>() {
 
-    override fun buildObservable(params: Long): Flowable<*> {
-        return Flowable.just(Unit)
-                .doOnNext { messageRepo.markRead(params) }
-                .doOnNext { notificationManager.update(params) }
-                .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
+    override fun buildObservable(params: Unit): Flowable<*> {
+        return Flowable.just(params)
+                .map { messageRepo.getUnreadMessageCount() }
+                .map { count -> count.toInt() }
+                .doOnNext { count -> ShortcutBadger.applyCount(context, count) }
     }
 
 }
