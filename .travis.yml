@@ -70,11 +70,10 @@ install:
 before_script:
   - cd ${TRAVIS_BUILD_DIR}
   - ./gradlew --version
-  - ./gradlew clean build
+  - ./gradlew clean
 
 # Build APK
 script:
-  - cd ${TRAVIS_BUILD_DIR}
   - |
     ./gradlew assembleWithAnalyticsRelease assembleAndroidTest -PtestCoverageEnabled='true'
     retval=$?
