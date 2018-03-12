@@ -47,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@id/snippet"
+        app:layout_constraintEnd_toStartOf="@id/date"
         app:layout_constraintStart_toEndOf="@id/avatars"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
@@ -57,12 +57,13 @@
     <presentation.common.widget.QkTextView
         android:id="@+id/snippet"
         style="@style/TextSecondary"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="@tools:sample/lorem/random" />
@@ -70,13 +71,13 @@
     <presentation.common.widget.QkTextView
         android:id="@+id/date"
         style="@style/TextTertiary"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="100"
-        app:layout_constraintStart_toEndOf="@id/title"
+        app:layout_constraintWidth_default="wrap"
         tools:text="Oct 11" />
 
 </android.support.constraint.ConstraintLayout>
