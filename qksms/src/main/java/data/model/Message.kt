@@ -23,6 +23,7 @@ import android.net.Uri
 import android.provider.Telephony.*
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.annotations.Index
 import io.realm.annotations.PrimaryKey
 
 open class Message : RealmObject() {
@@ -36,7 +37,7 @@ open class Message : RealmObject() {
     // since it's our primary key for the single message object, so we'll store the original id in
     // case we need to access the original message item in the content provider
     var contentId: Long = 0
-    var threadId: Long = 0
+    @Index var threadId: Long = 0
     var address: String = ""
     var boxId: Int = 0
     var type: String = ""
