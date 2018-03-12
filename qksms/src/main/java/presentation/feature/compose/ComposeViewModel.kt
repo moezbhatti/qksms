@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.telephony.PhoneNumberUtils
+import android.telephony.SmsMessage
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import com.mlsdev.rximagepicker.RxImagePicker
@@ -338,6 +339,24 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .autoDisposable(view.scope())
                 .subscribe { canSend -> newState { it.copy(canSend = canSend) } }
+
+        // Show the remaining character counter when necessary
+        view.textChangedIntent
+                .observeOn(Schedulers.computation())
+                .map { draft -> SmsMessage.calculateLength(draft, false) }
+                .map { array ->
+                    val messages = array[0]
+                    val remaining = array[2]
+
+                    when {
+                        messages <= 1 && remaining > 10 -> ""
+                        messages <= 1 && remaining <= 10 -> "$remaining"
+                        else -> "$remaining / $messages"
+                    }
+                }
+                .distinctUntilChanged()
+                .autoDisposable(view.scope())
+                .subscribe { remaining -> newState { it.copy(remaining = remaining) } }
 
         // Update the draft whenever the text is changed
         view.textChangedIntent

@@ -66,7 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@drawable/compose_bar_background"
-            android:gravity="center_vertical">
+            android:gravity="bottom"
+            tools:backgroundTint="@color/backgroundLight">
 
             <LinearLayout
                 android:id="@+id/messageBackground"
@@ -126,24 +127,42 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/send"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/circle"
-                android:elevation="4dp"
-                tools:backgroundTint="@color/tools_theme">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/sendIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_send_black_24dp"
-                    tools:tint="@color/textPrimaryDark" />
+                <presentation.common.widget.QkTextView
+                    android:id="@+id/counter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    app:textColor="secondary"
+                    tools:text="108 / 2" />
 
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/send"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/circle"
+                    android:elevation="4dp"
+                    tools:backgroundTint="@color/tools_theme">
+
+                    <ImageView
+                        android:id="@+id/sendIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_send_black_24dp"
+                        tools:tint="@color/textPrimaryDark" />
+
+                </FrameLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -219,6 +219,9 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
         if (title != state.title) title = state.title
 
+        counter.text = state.remaining
+        counter.setVisible(counter.text.isNotBlank())
+
         send.isEnabled = state.canSend
         sendIcon.isEnabled = state.canSend
     }
