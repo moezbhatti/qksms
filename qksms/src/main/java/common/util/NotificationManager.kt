@@ -112,7 +112,7 @@ class NotificationManager @Inject constructor(
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setColor(colors.theme.blockingFirst())
                 .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
                 .setAutoCancel(true)
                 .setContentIntent(contentPI)
