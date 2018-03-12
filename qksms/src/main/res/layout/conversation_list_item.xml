@@ -53,7 +53,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                tools:text="Moez Bhatti" />
+                tools:text="@tools:sample/full_names" />
 
             <presentation.common.widget.QkTextView
                 android:id="@+id/date"
@@ -73,7 +73,7 @@
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
-            tools:text="Hey! How's it going?" />
+            tools:text="@tools:sample/lorem/random" />
 
     </LinearLayout>
 

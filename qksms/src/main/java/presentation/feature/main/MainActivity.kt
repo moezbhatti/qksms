@@ -47,7 +47,6 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.toolbar_search.*
 import presentation.common.MenuItemAdapter
 import presentation.common.Navigator
 import presentation.common.base.QkThemedActivity

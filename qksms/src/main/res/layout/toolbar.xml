@@ -18,24 +18,13 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+    style="@style/Toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:gravity="center_vertical"
-    android:minHeight="56dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <presentation.common.widget.QkTextView
         android:id="@+id/toolbarTitle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@null"
-        android:gravity="left|center_vertical"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:textSize="20sp"
-        app:textColor="primary"
+        style="@style/ToolbarText"
         tools:text="Conversations" />
 
 </android.support.v7.widget.Toolbar>
