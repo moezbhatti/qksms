@@ -28,6 +28,7 @@ data class SettingsState(
         val nightModeId: Int = Preferences.NIGHT_MODE_OFF,
         val nightStart: String = "",
         val nightEnd: String = "",
+        val black: Boolean = false,
         val autoEmojiEnabled: Boolean = true,
         val notificationsEnabled: Boolean = true,
         val deliveryEnabled: Boolean = false,

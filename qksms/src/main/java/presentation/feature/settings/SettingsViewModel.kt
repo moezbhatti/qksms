@@ -67,6 +67,9 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += prefs.nightEnd.asObservable()
                 .subscribe { nightEnd -> newState { it.copy(nightEnd = nightEnd) } }
 
+        disposables += prefs.black.asObservable()
+                .subscribe { black -> newState { it.copy(black = black) } }
+
         disposables += prefs.autoEmoji.asObservable()
                 .subscribe { enabled -> newState { it.copy(autoEmojiEnabled = enabled) } }
 
@@ -117,6 +120,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                             val date = dateFormatter.parseTime(prefs.nightEnd.get())
                             view.showEndTimePicker(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE))
                         }
+
+                        R.id.black -> prefs.black.set(!prefs.black.get())
 
                         R.id.autoEmoji -> prefs.autoEmoji.set(!prefs.autoEmoji.get())
 

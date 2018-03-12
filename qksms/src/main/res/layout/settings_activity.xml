@@ -81,6 +81,13 @@
                     tools:summary="9:00AM" />
 
                 <presentation.common.widget.PreferenceView
+                    android:id="@+id/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="@string/settings_black_title"
+                    app:widget="@layout/settings_switch_widget" />
+
+                <presentation.common.widget.PreferenceView
                     android:id="@+id/autoEmoji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

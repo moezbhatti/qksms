@@ -78,6 +78,7 @@
     <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
     <string name="settings_theme_title">Theme</string>
     <string name="settings_night_title">Night mode</string>
+    <string name="settings_black_title">Pure black night mode</string>
     <string name="settings_night_start_title">Start time</string>
     <string name="settings_night_end_title">End time</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>

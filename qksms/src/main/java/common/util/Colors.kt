@@ -26,6 +26,7 @@ import android.support.annotation.ColorRes
 import android.view.View
 import com.moez.QKSMS.R
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.Observables
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -64,11 +65,23 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
     val theme: Observable<Int> = prefs.theme.asObservable()
             .distinctUntilChanged()
 
-    val appThemeResources: Observable<Int> = prefs.night.asObservable()
-            .map { night -> if (night) R.style.AppThemeDark else R.style.AppThemeLight }
+    val appThemeResources = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.style.AppThemeBlack
+                    night && !black -> R.style.AppThemeDark
+                    else -> R.style.AppThemeLight
+                }
+            })
 
-    val popupThemeResource: Observable<Int> = prefs.night.asObservable()
-            .map { night -> if (night) R.style.PopupThemeDark else R.style.PopupThemeLight }
+    val popupThemeResource = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.style.PopupThemeBlack
+                    night && !black -> R.style.PopupThemeDark
+                    else -> R.style.PopupThemeLight
+                }
+            })
 
     @SuppressLint("InlinedApi")
     val statusBarIcons: Observable<Int> = prefs.night.asObservable()
@@ -76,18 +89,36 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
             .map { lightIcons -> if (lightIcons) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR }
             .distinctUntilChanged()
 
-    val statusBar: Observable<Int> = prefs.night.asObservable()
-            .map { night -> if (night) R.color.statusBarDark else R.color.statusBarLight }
+    val statusBar: Observable<Int> = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.color.black
+                    night && !black -> R.color.statusBarDark
+                    else -> R.color.statusBarLight
+                }
+            })
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val toolbarColor: Observable<Int> = prefs.night.asObservable()
-            .map { night -> if (night) R.color.toolbarDark else R.color.toolbarLight }
+    val toolbarColor: Observable<Int> = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.color.black
+                    night && !black -> R.color.toolbarDark
+                    else -> R.color.toolbarLight
+                }
+            })
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val background: Observable<Int> = prefs.night.asObservable()
-            .map { night -> if (night) R.color.backgroundDark else R.color.white }
+    val background: Observable<Int> = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.color.black
+                    night && !black -> R.color.backgroundDark
+                    else -> R.color.white
+                }
+            })
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
@@ -96,8 +127,14 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val composeBackground: Observable<Int> = prefs.night.asObservable()
-            .map { night -> if (night) R.color.backgroundDark else R.color.backgroundLight }
+    val composeBackground: Observable<Int> = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.color.black
+                    night && !black -> R.color.backgroundDark
+                    else -> R.color.backgroundLight
+                }
+            })
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
