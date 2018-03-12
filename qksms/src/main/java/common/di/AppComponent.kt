@@ -64,7 +64,6 @@ interface AppComponent {
     fun inject(activity: ThemePickerActivity)
 
     fun inject(receiver: DefaultSmsChangedReceiver)
-    fun inject(receiver: SmsReceiver)
     fun inject(receiver: MessageDeliveredReceiver)
     fun inject(receiver: MessageSentReceiver)
     fun inject(receiver: MarkSeenReceiver)
@@ -74,6 +73,8 @@ interface AppComponent {
     fun inject(receiver: MmsUpdatedReceiver)
     fun inject(receiver: NightModeReceiver)
     fun inject(receiver: RemoteMessagingReceiver)
+    fun inject(receiver: SmsProviderChangedReceiver)
+    fun inject(receiver: SmsReceiver)
 
     fun inject(view: AvatarView)
     fun inject(view: DetailedChipView)

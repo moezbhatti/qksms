@@ -103,6 +103,11 @@
         <receiver android:name="presentation.receiver.MarkReadReceiver" />
         <receiver android:name="presentation.receiver.RemoteMessagingReceiver" />
         <receiver android:name="presentation.receiver.NightModeReceiver" />
+        <receiver android:name="presentation.receiver.SmsProviderChangedReceiver">
+            <intent-filter>
+                <action android:name="android.provider.action.EXTERNAL_PROVIDER_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service
