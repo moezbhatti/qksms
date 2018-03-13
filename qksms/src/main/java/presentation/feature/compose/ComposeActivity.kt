@@ -147,7 +147,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
                     ColorStateList(states, intArrayOf(primary, tertiary))
                 })
                 .autoDisposable(scope())
-                .subscribe { tintList -> sendIcon.imageTintList = tintList }
+                .subscribe { tintList -> send.imageTintList = tintList }
 
         theme
                 .autoDisposable(scope())
@@ -231,7 +231,6 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
         counter.setVisible(counter.text.isNotBlank())
 
         send.isEnabled = state.canSend
-        sendIcon.isEnabled = state.canSend
     }
 
     override fun setDraft(draft: String) {
