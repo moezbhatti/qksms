@@ -38,8 +38,11 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
     @Inject lateinit var themeAdapter: ThemeAdapter
     @Inject lateinit var themePagerAdapter: ThemePagerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    init {
         appComponent.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.theme_picker_activity)
         setTitle(R.string.title_theme)
@@ -58,14 +61,11 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         colors.background
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
-
-        colors.theme
-                .autoDisposable(scope())
-                .subscribe { color -> rgbPicker.setBackgroundColor(color) }
     }
 
     override fun render(state: ThemePickerState) {
         rgbPicker.alpha = state.rgbAlpha
+        rgbPicker.setBackgroundColor(state.selectedColor)
 
         themeAdapter.selectedColor = state.selectedColor
     }

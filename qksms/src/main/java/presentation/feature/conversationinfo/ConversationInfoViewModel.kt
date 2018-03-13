@@ -103,6 +103,12 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> navigator.showNotificationSettings(conversation.id) }
 
+        // Show the theme settings for the conversation
+        view.themeIntent
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .autoDisposable(view.scope())
+                .subscribe { conversation -> navigator.showThemePicker(conversation.id) }
+
         // Toggle the archived state of the conversation
         view.archiveIntent
                 .withLatestFrom(conversation, { _, conversation -> conversation })

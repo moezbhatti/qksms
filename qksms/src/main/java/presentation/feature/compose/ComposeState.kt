@@ -29,6 +29,7 @@ data class ComposeState(
         val editingMode: Boolean = false,
         val contacts: List<Contact> = ArrayList(),
         val contactsVisible: Boolean = false,
+        val selectedConversation: Long = 0,
         val selectedContacts: List<Contact> = ArrayList(),
         val title: String = "",
         val archived: Boolean = false,

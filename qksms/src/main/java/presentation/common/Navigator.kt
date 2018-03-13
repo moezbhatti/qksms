@@ -133,8 +133,9 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivity(intent)
     }
 
-    fun showThemePicker() {
+    fun showThemePicker(threadId: Long = 0) {
         val intent = Intent(context, ThemePickerActivity::class.java)
+        intent.putExtra("threadId", threadId)
         startActivity(intent)
     }
 
@@ -188,7 +189,7 @@ class Navigator @Inject constructor(private val context: Context, private val no
                 NotificationPrefsViewModel::class.java -> NotificationPrefsViewModel(intent)
                 SettingsViewModel::class.java -> SettingsViewModel()
                 BlockedViewModel::class.java -> BlockedViewModel()
-                ThemePickerViewModel::class.java -> ThemePickerViewModel()
+                ThemePickerViewModel::class.java -> ThemePickerViewModel(intent)
                 else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")
             } as T
         }

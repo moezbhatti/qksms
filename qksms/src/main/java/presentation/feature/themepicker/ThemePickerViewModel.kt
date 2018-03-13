@@ -18,6 +18,8 @@
  */
 package presentation.feature.themepicker
 
+import android.content.Intent
+import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
@@ -27,14 +29,19 @@ import presentation.common.base.QkViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class ThemePickerViewModel : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
+class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
 
     @Inject lateinit var prefs: Preferences
+
+    private val threadId = intent.extras?.getLong("threadId") ?: 0L
+    private val theme: Preference<Int>
 
     init {
         appComponent.inject(this)
 
-        disposables += prefs.theme.asObservable()
+        theme = prefs.theme(threadId)
+
+        disposables += theme.asObservable()
                 .subscribe { color -> newState { it.copy(selectedColor = color) } }
     }
 
@@ -49,7 +56,7 @@ class ThemePickerViewModel : QkViewModel<ThemePickerView, ThemePickerState>(Them
 
         view.themeSelectedIntent
                 .autoDisposable(view.scope())
-                .subscribe { color -> prefs.theme.set(color) }
+                .subscribe { color -> theme.set(color) }
     }
 
 }

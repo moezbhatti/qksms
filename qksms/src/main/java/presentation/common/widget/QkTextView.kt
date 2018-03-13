@@ -23,13 +23,12 @@ import android.graphics.Typeface
 import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import com.moez.QKSMS.R
-import com.uber.autodispose.android.scope
-import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
 import common.util.Colors
 import common.util.FontProvider
 import common.util.extensions.getColorCompat
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
@@ -47,7 +46,17 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
     @Inject lateinit var colors: Colors
     @Inject lateinit var fontProvider: FontProvider
 
-    private var textColorObservable: Observable<Int>? = null
+    var textColorObservable: Observable<Int>? = null
+        set(value) {
+            field = value
+            updateSubscription()
+        }
+
+    private var textColorDisposable: Disposable? = null
+        set(value) {
+            field?.dispose()
+            field = value
+        }
 
     init {
         if (!isInEditMode) {
@@ -83,14 +92,22 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
         }
     }
 
+    private fun updateSubscription() {
+        if (isAttachedToWindow) {
+            textColorDisposable = textColorObservable?.subscribe { color ->
+                setTextColor(color)
+                setLinkTextColor(color)
+            }
+        }
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        updateSubscription()
+    }
 
-        textColorObservable
-                ?.autoDisposable(scope())
-                ?.subscribe { color ->
-                    setTextColor(color)
-                    setLinkTextColor(color)
-                }
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        textColorDisposable?.dispose()
     }
 }

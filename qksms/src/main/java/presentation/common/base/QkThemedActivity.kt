@@ -26,6 +26,8 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -38,6 +40,19 @@ import javax.inject.Inject
 abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
 
     @Inject lateinit var colors: Colors
+
+    /**
+     * In case the activity should be themed for a specific conversation, the selected conversation
+     * can be changed by pushing the threadId to this subject
+     */
+    protected val threadId: Subject<Long> = BehaviorSubject.createDefault(0)
+
+    /**
+     * Switch the theme if the threadId changes
+     */
+    protected val theme = threadId
+            .distinctUntilChanged()
+            .switchMap { threadId -> colors.themeForConversation(threadId) }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,12 +74,12 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
         super.onPostCreate(savedInstanceState)
 
         // Update the colours of the menu items
-        Observables.combineLatest(menu, colors.theme, colors.textTertiary, { menu, theme, textTertiary ->
+        Observables.combineLatest(menu, theme, colors.textTertiary, { menu, theme, textTertiary ->
             (0 until menu.size())
                     .map { position -> menu.getItem(position) }
                     .forEach { menuItem ->
                         menuItem?.icon?.run {
-                            setTint(when(menuItem.itemId) {
+                            setTint(when (menuItem.itemId) {
                                 R.id.info -> textTertiary
                                 else -> theme
                             })

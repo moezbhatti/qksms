@@ -31,7 +31,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Colors @Inject constructor(private val context: Context, prefs: Preferences) {
+class Colors @Inject constructor(private val context: Context, private val prefs: Preferences) {
 
     val materialColors = listOf(
             listOf(0xffffebee, 0xffffcdd2, 0xffef9a9a, 0xffe57373, 0xffef5350, 0xfff44336, 0xffe53935, 0xffd32f2f, 0xffc62828, 0xffb71c1c),
@@ -62,8 +62,7 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
     private val secondaryTextLuminance = measureLuminance(getColor(R.color.textSecondaryDark))
     private val tertiaryTextLuminance = measureLuminance(getColor(R.color.textTertiaryDark))
 
-    val theme: Observable<Int> = prefs.theme.asObservable()
-            .distinctUntilChanged()
+    val theme = themeForConversation()
 
     val appThemeResources = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
             { night, black ->
@@ -158,29 +157,11 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
-    val textPrimaryOnTheme: Observable<Int> = prefs.theme.asObservable()
-            .map { theme -> measureLuminance(theme) }
-            .map { themeLuminance -> primaryTextLuminance / themeLuminance }
-            .map { contrastRatio -> contrastRatio < minimumContrastRatio }
-            .map { contrastRatio -> if (contrastRatio) R.color.textPrimary else R.color.textPrimaryDark }
-            .map { res -> getColor(res) }
-            .distinctUntilChanged()
+    val textPrimaryOnTheme = textPrimaryOnThemeForConversation()
 
-    val textSecondaryOnTheme: Observable<Int> = prefs.theme.asObservable()
-            .map { theme -> measureLuminance(theme) }
-            .map { themeLuminance -> secondaryTextLuminance / themeLuminance }
-            .map { contrastRatio -> contrastRatio < minimumContrastRatio }
-            .map { contrastRatio -> if (contrastRatio) R.color.textSecondary else R.color.textSecondaryDark }
-            .map { res -> getColor(res) }
-            .distinctUntilChanged()
+    val textSecondaryOnTheme = textSecondaryOnThemeForConversation()
 
-    val textTertiaryOnTheme: Observable<Int> = prefs.theme.asObservable()
-            .map { theme -> measureLuminance(theme) }
-            .map { themeLuminance -> tertiaryTextLuminance / themeLuminance }
-            .map { contrastRatio -> contrastRatio < minimumContrastRatio }
-            .map { contrastRatio -> if (contrastRatio) R.color.textTertiary else R.color.textTertiaryDark }
-            .map { res -> getColor(res) }
-            .distinctUntilChanged()
+    val textTertiaryOnTheme = textTertiaryOnThemeForConversation()
 
     val bubble: Observable<Int> = prefs.night.asObservable()
             .map { night -> if (night) R.color.bubbleDark else R.color.bubbleLight }
@@ -204,6 +185,34 @@ class Colors @Inject constructor(private val context: Context, prefs: Preference
 
     val switchTrackDisabled: Observable<Int> = prefs.night.asObservable()
             .map { night -> if (night) R.color.switchTrackDisabledDark else R.color.switchTrackDisabledLight }
+            .map { res -> getColor(res) }
+            .distinctUntilChanged()
+
+    fun themeForConversation(threadId: Long = 0): Observable<Int> = prefs.theme(threadId)
+            .asObservable()
+            .distinctUntilChanged()
+
+    fun textPrimaryOnThemeForConversation(threadId: Long = 0): Observable<Int> = themeForConversation(threadId)
+            .map { theme -> measureLuminance(theme) }
+            .map { themeLuminance -> primaryTextLuminance / themeLuminance }
+            .map { contrastRatio -> contrastRatio < minimumContrastRatio }
+            .map { contrastRatio -> if (contrastRatio) R.color.textPrimary else R.color.textPrimaryDark }
+            .map { res -> getColor(res) }
+            .distinctUntilChanged()
+
+    fun textSecondaryOnThemeForConversation(threadId: Long = 0): Observable<Int> = themeForConversation(threadId)
+            .map { theme -> measureLuminance(theme) }
+            .map { themeLuminance -> secondaryTextLuminance / themeLuminance }
+            .map { contrastRatio -> contrastRatio < minimumContrastRatio }
+            .map { contrastRatio -> if (contrastRatio) R.color.textSecondary else R.color.textSecondaryDark }
+            .map { res -> getColor(res) }
+            .distinctUntilChanged()
+
+    fun textTertiaryOnThemeForConversation(threadId: Long = 0): Observable<Int> = themeForConversation(threadId)
+            .map { theme -> measureLuminance(theme) }
+            .map { themeLuminance -> tertiaryTextLuminance / themeLuminance }
+            .map { contrastRatio -> contrastRatio < minimumContrastRatio }
+            .map { contrastRatio -> if (contrastRatio) R.color.textTertiary else R.color.textTertiaryDark }
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 

@@ -68,6 +68,13 @@
                 app:title="@string/info_notifications" />
 
             <presentation.common.widget.PreferenceView
+                android:id="@+id/themePrefs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_palette_black_24dp"
+                app:title="@string/info_theme" />
+
+            <presentation.common.widget.PreferenceView
                 android:id="@+id/archive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -67,6 +67,7 @@
 
     <string name="info_title">Details</string>
     <string name="info_notifications">Notifications</string>
+    <string name="info_theme">Theme</string>
     <string name="info_archive">Archive</string>
     <string name="info_unarchive">Unarchive</string>
     <string name="info_block">Block</string>

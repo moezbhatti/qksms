@@ -46,8 +46,11 @@ class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>()
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    init {
         appComponent.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.notification_prefs_activity)
         setTitle(R.string.title_notification_prefs)

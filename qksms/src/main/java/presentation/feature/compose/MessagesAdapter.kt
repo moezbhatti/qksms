@@ -67,6 +67,12 @@ class MessagesAdapter @Inject constructor(
             field = value
             people.clear()
             contactMap.clear()
+
+            // Update the theme
+            val threadId = value?.first?.id ?: 0
+            theme = colors.themeForConversation(threadId)
+            textPrimaryOnTheme = colors.textPrimaryOnThemeForConversation(threadId)
+
             updateData(value?.second)
         }
 
@@ -74,6 +80,9 @@ class MessagesAdapter @Inject constructor(
     private val contactMap = HashMap<String, Contact>()
     private val selected = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
+
+    private var theme = colors.theme
+    private var textPrimaryOnTheme = colors.textPrimaryOnTheme
 
     /**
      * If the viewType is negative, then the viewHolder has an attachment. We'll consider
@@ -88,17 +97,16 @@ class MessagesAdapter @Inject constructor(
         val hasThumbnail = viewType < 0
         val absViewType = Math.abs(viewType)
 
-        when (absViewType) {
-            VIEW_TYPE_ME -> {
-                view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
-                disposables += colors.bubble
-                        .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
-            }
-            else -> {
-                view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
-                disposables += colors.theme
-                        .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
-            }
+        if (absViewType == VIEW_TYPE_ME) {
+            view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
+            disposables += colors.bubble
+                    .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
+        } else {
+            view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
+            view.subject.textColorObservable = textPrimaryOnTheme
+            view.body.textColorObservable = textPrimaryOnTheme
+            disposables += theme
+                    .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
         }
 
         if (hasThumbnail) {

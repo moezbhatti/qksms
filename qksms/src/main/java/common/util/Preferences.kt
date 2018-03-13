@@ -34,7 +34,6 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     }
 
     val defaultSms = rxPrefs.getBoolean("defaultSms", false)
-    val theme = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
     val night = rxPrefs.getBoolean("night", false)
     val nightMode = rxPrefs.getInteger("nightModeSummary", NIGHT_MODE_OFF)
     val nightStart = rxPrefs.getString("nightStart", "6:00 PM")
@@ -45,6 +44,15 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mms = rxPrefs.getBoolean("mms", true)
     val mmsSize = rxPrefs.getInteger("mmsSize", 100)
+
+    fun theme(threadId: Long = 0): Preference<Int> {
+        val default = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
+
+        return when (threadId) {
+            0L -> default
+            else -> rxPrefs.getInteger("theme_$threadId", default.get())
+        }
+    }
 
     fun notifications(threadId: Long = 0): Preference<Boolean> {
         val default = rxPrefs.getBoolean("notifications", true)

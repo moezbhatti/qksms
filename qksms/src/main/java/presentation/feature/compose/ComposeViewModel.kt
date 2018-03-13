@@ -110,17 +110,17 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
         val initialConversation: Observable<Conversation> = when {
             threadId != 0L -> {
-                newState { ComposeState(editingMode = false) }
+                newState { it.copy(selectedConversation = threadId, editingMode = false) }
                 messageRepo.getConversationAsync(threadId).asObservable()
             }
 
             address.isNotBlank() -> {
-                newState { ComposeState(editingMode = false) }
+                newState { it.copy(editingMode = false) }
                 messageRepo.getOrCreateConversation(address).toObservable()
             }
 
             else -> {
-                newState { ComposeState(editingMode = true) }
+                newState { it.copy(editingMode = true) }
                 Observable.empty()
             }
         }
@@ -129,18 +129,15 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
                 .doOnNext { contacts -> newState { it.copy(selectedContacts = contacts) } }
 
-        // Map the selected contacts to a conversation so that we can display the message history
-        val selectedConversation = selectedContacts
+        // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
+        // stream of conversations. If the conversation was deleted, notify the activity to shut down
+        conversation = selectedContacts
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
                 .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
-
-        // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
-        // stream of conversations. If the conversation was deleted, notify the activity to shut down
-        conversation = initialConversation
+                .mergeWith(initialConversation)
                 .filter { conversation -> conversation.isLoaded }
-                .mergeWith(selectedConversation)
                 .doOnNext { conversation ->
                     if (!conversation.isValid) {
                         newState { it.copy(hasError = true) }
@@ -150,13 +147,13 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .filter { conversation -> conversation.id != 0L }
                 .distinctUntilChanged()
 
-        // When the conversation changes, update the messages for the adapter
+        // When the conversation changes, update the threadId and the messages for the adapter
         messages = conversation
                 .distinctUntilChanged { conversation -> conversation.id }
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { conversation ->
                     val messages = messageRepo.getMessages(conversation.id)
-                    newState { it.copy(messages = Pair(conversation, messages)) }
+                    newState { it.copy(selectedConversation = conversation.id, messages = Pair(conversation, messages)) }
                     messages
                 }
                 .switchMap { messages -> messages.asObservable() }

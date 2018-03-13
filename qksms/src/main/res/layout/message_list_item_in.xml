@@ -88,7 +88,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mmsPreview"
                 app:layout_goneMarginBottom="8dp"
-                app:textColor="primaryOnTheme"
                 tools:text="@tools:sample/lorem" />
 
             <presentation.common.widget.TightTextView
@@ -108,7 +107,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/subject"
                 app:layout_goneMarginTop="8dp"
-                app:textColor="primaryOnTheme"
                 tools:text="@tools:sample/lorem" />
 
         </android.support.constraint.ConstraintLayout>

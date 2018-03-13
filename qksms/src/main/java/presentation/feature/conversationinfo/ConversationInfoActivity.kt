@@ -36,6 +36,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
 
     override val viewModelClass = ConversationInfoViewModel::class
     override val notificationsIntent by lazy { notifications.clicks() }
+    override val themeIntent by lazy { themePrefs.clicks() }
     override val archiveIntent by lazy { archive.clicks() }
     override val blockIntent by lazy { block.clicks() }
     override val deleteIntent by lazy { delete.clicks() }

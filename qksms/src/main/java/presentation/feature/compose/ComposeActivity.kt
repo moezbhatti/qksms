@@ -136,14 +136,22 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
                 intArrayOf(android.R.attr.state_enabled),
                 intArrayOf(-android.R.attr.state_enabled))
 
+        val iconEnabled = threadId
+                .distinctUntilChanged()
+                .switchMap { threadId -> colors.textPrimaryOnThemeForConversation(threadId) }
+
+        val iconDisabled = threadId
+                .distinctUntilChanged()
+                .switchMap { threadId -> colors.textTertiaryOnThemeForConversation(threadId) }
+
         Observables
-                .combineLatest(colors.textPrimaryOnTheme, colors.textTertiaryOnTheme, { primary, tertiary ->
+                .combineLatest(iconEnabled, iconDisabled, { primary, tertiary ->
                     ColorStateList(states, intArrayOf(primary, tertiary))
                 })
                 .autoDisposable(scope())
                 .subscribe { tintList -> sendIcon.imageTintList = tintList }
 
-        colors.theme
+        theme
                 .autoDisposable(scope())
                 .subscribe { color -> send.setBackgroundTint(color) }
 
@@ -183,6 +191,8 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
             finish()
             return
         }
+
+        threadId.onNext(state.selectedConversation)
 
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
