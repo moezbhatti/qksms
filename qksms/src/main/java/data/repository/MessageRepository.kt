@@ -170,7 +170,7 @@ class MessageRepository @Inject constructor(
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
                 .sort("date")
-                .findAll()
+                .findAllAsync()
     }
 
     fun getMessage(id: Long): Message? {
