@@ -16,156 +16,204 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
     tools:background="@color/backgroundLight">
 
-    <include
-        layout="@layout/toolbar_chips"
-        tools:visibility="gone" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/toolbarLight">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipChildren="false"
-        android:clipToPadding="false">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/messageList"
+        <presentation.common.widget.QkTextView
+            android:id="@+id/toolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingBottom="60dp"
-            android:paddingTop="8dp"
-            tools:listitem="@layout/message_list_item_in" />
+            android:background="@null"
+            android:gravity="start|center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="20sp"
+            app:textColor="primary"
+            tools:text="Conversations" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/contacts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            tools:visibility="gone" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow" />
-
-        <LinearLayout
-            android:id="@+id/composeBar"
+            android:id="@+id/chips"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/compose_bar_background"
-            android:gravity="bottom"
-            tools:backgroundTint="@color/backgroundLight">
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            tools:visibility="gone" />
 
-            <LinearLayout
-                android:id="@+id/messageBackground"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_rectangle_shadow"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+    </android.support.v7.widget.Toolbar>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/attachments"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingTop="8dp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messageList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="60dp"
+        android:paddingTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:listitem="@layout/message_list_item_in" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/contacts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:listitem="@layout/contact_list_item"
+        tools:visibility="gone" />
 
-                    <ImageView
-                        android:id="@+id/attach"
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:background="@drawable/ripple"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_insert_photo_black_24dp"
-                        tools:tint="@color/textSecondary" />
+    <android.support.constraint.Group
+        android:id="@+id/composeBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="composeBackground, messageBackground, attachments, attach, attachSeparator, message, counter, send, sendIcon" />
 
-                    <presentation.common.widget.Separator
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp" />
+    <View
+        android:id="@+id/composeBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/compose_bar_background"
+        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/messageBackground"
+        tools:backgroundTint="@color/backgroundLight" />
 
-                    <presentation.common.widget.QkEditText
-                        android:id="@+id/message"
-                        style="@style/TextPrimary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="center_vertical"
-                        android:hint="@string/compose_hint"
-                        android:inputType="textLongMessage|textCapSentences|textMultiLine"
-                        android:minHeight="44dp"
-                        android:padding="12dp"
-                        app:textColorHint="tertiary" />
+    <View
+        android:id="@+id/messageBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/rounded_rectangle_shadow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/attachments" />
 
-                </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/attachments"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        app:layout_constraintBottom_toTopOf="@id/message"
+        app:layout_constraintEnd_toEndOf="@id/messageBackground"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintStart_toStartOf="@id/messageBackground"
+        app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
-            </LinearLayout>
+    <ImageView
+        android:id="@+id/attach"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ripple"
+        android:padding="10dp"
+        android:src="@drawable/ic_insert_photo_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/message"
+        app:layout_constraintStart_toStartOf="@id/messageBackground"
+        tools:tint="@color/textSecondary" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical">
+    <presentation.common.widget.Separator
+        android:id="@+id/attachSeparator"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/message"
+        app:layout_constraintStart_toEndOf="@id/attach"
+        app:layout_constraintTop_toBottomOf="@id/attachments" />
 
-                <presentation.common.widget.QkTextView
-                    android:id="@+id/counter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    app:textColor="secondary"
-                    tools:text="108 / 2" />
+    <presentation.common.widget.QkEditText
+        android:id="@+id/message"
+        style="@style/TextPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="@string/compose_hint"
+        android:inputType="textLongMessage|textCapSentences|textMultiLine"
+        android:minHeight="44dp"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
+        app:layout_constraintEnd_toEndOf="@id/messageBackground"
+        app:layout_constraintStart_toEndOf="@id/attachSeparator"
+        app:textColorHint="tertiary" />
 
-                <FrameLayout
-                    android:id="@+id/send"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/circle"
-                    android:elevation="4dp"
-                    tools:backgroundTint="@color/tools_theme">
+    <presentation.common.widget.QkTextView
+        android:id="@+id/counter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/send"
+        app:layout_constraintEnd_toEndOf="@id/send"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintStart_toStartOf="@id/send"
+        app:textColor="secondary"
+        tools:text="108 / 2" />
 
-                    <ImageView
-                        android:id="@+id/sendIcon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_send_black_24dp"
-                        tools:tint="@color/textPrimaryDark" />
+    <FrameLayout
+        android:id="@+id/send"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/circle"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:backgroundTint="@color/tools_theme">
 
-                </FrameLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/sendIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_send_black_24dp"
+            tools:tint="@color/textPrimaryDark" />
 
     </FrameLayout>
 
-</LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:background="@drawable/ab_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+</android.support.constraint.ConstraintLayout>

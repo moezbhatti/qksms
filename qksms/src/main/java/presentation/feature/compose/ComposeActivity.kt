@@ -46,10 +46,8 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
-import kotlinx.android.synthetic.main.toolbar_chips.*
 import presentation.common.base.QkThemedActivity
 import javax.inject.Inject
-
 
 class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
@@ -168,7 +166,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
                 .subscribe { color -> contacts.setBackgroundColor(color) }
 
         colors.composeBackground
-                .doOnNext { color -> composeBar.setBackgroundTint(color) }
+                .doOnNext { color -> composeBackground.setBackgroundTint(color) }
                 .doOnNext { color -> window.decorView.setBackgroundColor(color) }
                 .autoDisposable(scope())
                 .subscribe()
