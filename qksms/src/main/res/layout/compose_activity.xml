@@ -80,6 +80,7 @@
         android:clipToPadding="false"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,14 +123,17 @@
         android:layout_marginStart="8dp"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:orientation="horizontal"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="@id/messageBackground"
-        app:layout_constraintTop_toTopOf="@id/messageBackground" />
+        app:layout_constraintTop_toTopOf="@id/messageBackground"
+        tools:listitem="@layout/attachment_list_item" />
 
     <ImageView
         android:id="@+id/attach"

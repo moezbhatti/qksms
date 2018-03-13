@@ -87,11 +87,9 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
         chipsAdapter.view = chips
 
+        contacts.itemAnimator = null
         chips.itemAnimator = null
         chips.layoutManager = FlexboxLayoutManager(this)
-
-        contacts.itemAnimator = null
-        contacts.layoutManager = LinearLayoutManager(this)
 
         val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
 
@@ -125,7 +123,6 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
         messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
 
-        attachments.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         attachments.adapter = attachmentAdapter
 
         messageBackground.backgroundTintMode = PorterDuff.Mode.MULTIPLY
