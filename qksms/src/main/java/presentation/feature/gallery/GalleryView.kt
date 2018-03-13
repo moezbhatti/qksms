@@ -24,5 +24,6 @@ import presentation.common.base.QkView
 interface GalleryView : QkView<GalleryState> {
 
     val screenTouchedIntent: Observable<Unit>
+    val optionsItemSelectedIntent: Observable<Int>
 
 }

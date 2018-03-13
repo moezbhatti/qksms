@@ -22,10 +22,14 @@ import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.ChangeImageTransform
 import android.transition.TransitionSet
+import android.view.Menu
+import android.view.MenuItem
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import common.util.GlideApp
 import common.util.extensions.setVisible
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.gallery_activity.*
 import presentation.common.GlideCompletionListener
 import presentation.common.base.QkActivity
@@ -34,6 +38,7 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
 
     override val viewModelClass = GalleryViewModel::class
     override val screenTouchedIntent by lazy { image.clicks() }
+    override val optionsItemSelectedIntent: Subject<Int> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +92,16 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
                     })
                     .into(image)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.gallery, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        optionsItemSelectedIntent.onNext(item.itemId)
+        return true
     }
 
 }

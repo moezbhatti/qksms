@@ -18,12 +18,16 @@
  */
 package presentation.feature.gallery
 
+import android.content.Context
 import android.content.Intent
+import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import common.util.extensions.makeToast
 import common.util.extensions.mapNotNull
 import data.repository.MessageRepository
+import interactor.SaveImage
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -32,14 +36,16 @@ import javax.inject.Inject
 
 class GalleryViewModel(intent: Intent) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
 
+    @Inject lateinit var context: Context
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var saveImage: SaveImage
+
+    private val partIdFlowable = Flowable.just(intent)
+            .map { it.getLongExtra("partId", 0L) }
+            .filter { partId -> partId != 0L }
 
     init {
         appComponent.inject(this)
-
-        val partIdFlowable = Flowable.just(intent)
-                .map { it.getLongExtra("partId", 0L) }
-                .filter { partId -> partId != 0L }
 
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getPart(partId) }
@@ -61,6 +67,13 @@ class GalleryViewModel(intent: Intent) : QkViewModel<GalleryView, GalleryState>(
                 .map { navigationVisible -> !navigationVisible }
                 .autoDisposable(view.scope())
                 .subscribe { navigationVisible -> newState { it.copy(navigationVisible = navigationVisible) } }
+
+        // Save image to device
+        view.optionsItemSelectedIntent
+                .filter { itemId -> itemId == R.id.save }
+                .withLatestFrom(partIdFlowable.toObservable(), { _, partId -> partId })
+                .autoDisposable(view.scope())
+                .subscribe { partId -> saveImage.execute(partId) { context.makeToast(R.string.gallery_toast_saved) } }
     }
 
 }
