@@ -79,6 +79,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
         }
 
         recipientAdapter.data = state.recipients
+        recipientAdapter.threadId = state.threadId
 
         notifications.setVisible(!state.blocked)
 

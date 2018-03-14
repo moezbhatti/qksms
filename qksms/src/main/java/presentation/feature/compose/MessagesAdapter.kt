@@ -121,6 +121,7 @@ class MessagesAdapter @Inject constructor(
                         ?: Contact(numbers = RealmList(PhoneNumber(address = address))) // Fallback to a fake contact
             }
 
+            view.avatar.threadId = data?.first?.id ?: 0
             view.avatar.contact = contactMap[address]
         }
 

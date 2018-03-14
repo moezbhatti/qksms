@@ -52,6 +52,8 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
         appComponent.inject(this)
         val threadId = intent.extras?.getLong("threadId") ?: 0L
 
+        newState { it.copy(threadId = threadId) }
+
         conversation = messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { conversation -> conversation.isLoaded }

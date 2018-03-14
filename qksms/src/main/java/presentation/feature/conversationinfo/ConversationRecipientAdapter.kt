@@ -41,6 +41,8 @@ class ConversationRecipientAdapter @Inject constructor(
         private val navigator: Navigator
 ) : QkAdapter<Recipient>() {
 
+    var threadId: Long = 0L
+
     private val disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
@@ -65,6 +67,7 @@ class ConversationRecipientAdapter @Inject constructor(
             }
         }
 
+        view.avatar.threadId = threadId
         view.avatar.contact = recipient.contact
 
         view.name.text = recipient.contact?.name ?: recipient.address

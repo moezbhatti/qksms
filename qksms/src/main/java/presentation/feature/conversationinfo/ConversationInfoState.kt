@@ -23,6 +23,7 @@ import data.model.Recipient
 
 data class ConversationInfoState(
         val recipients: List<Recipient> = listOf(),
+        val threadId: Long = 0,
         val archived: Boolean = false,
         val blocked: Boolean = false,
         val media: List<MmsPart> = ArrayList(),

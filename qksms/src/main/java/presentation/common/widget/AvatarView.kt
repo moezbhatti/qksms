@@ -43,6 +43,11 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     @Inject lateinit var colors: Colors
     @Inject lateinit var navigator: Navigator
 
+    /**
+     * This value can be changes if we should use the theme from a particular conversation
+     */
+    var threadId: Long = 0
+
     var contact: Contact? = null
         set(value) {
             field = value
@@ -64,7 +69,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         super.onAttachedToWindow()
 
         if (!isInEditMode) {
-            colors.theme
+            colors.themeForConversation(threadId)
                     .autoDisposable(scope())
                     .subscribe { color -> background.setTint(color) }
 
