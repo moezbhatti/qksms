@@ -166,12 +166,6 @@
         <item>Always on</item>
         <item>Automatic</item>
     </string-array>
-    <string name="menu_mms_size_no_limit">No limit</string>
-    <string name="menu_mms_size_100kb">100KB</string>
-    <string name="menu_mms_size_200kb">200KB</string>
-    <string name="menu_mms_size_300kb">300KB</string>
-    <string name="menu_mms_size_600kb">600KB</string>
-    <string name="menu_mms_size_1000kb">1000KB</string>
 
     <string-array name="mms_sizes">
         <item>100KB</item>
@@ -179,6 +173,7 @@
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
+        <item>2000KB</item>
         <item>No limit</item>
     </string-array>
 
@@ -188,6 +183,7 @@
         <item>300</item>
         <item>600</item>
         <item>1000</item>
+        <item>2000</item>
         <item>0</item>
     </integer-array>
 
