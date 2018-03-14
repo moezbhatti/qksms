@@ -24,7 +24,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
-class ConversationItemTouchCallback @Inject constructor() : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+class ConversationItemTouchCallback @Inject constructor() : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
     val swipes: Subject<Int> = PublishSubject.create()
 
