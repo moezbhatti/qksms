@@ -27,7 +27,6 @@ import common.util.extensions.asFlowable
 import common.util.extensions.insertOrUpdate
 import common.util.extensions.map
 import common.util.extensions.mapWhile
-import common.util.filter.ContactFilter
 import data.mapper.CursorToContact
 import data.mapper.CursorToConversation
 import data.mapper.CursorToMessage
@@ -46,8 +45,7 @@ class SyncManager @Inject constructor(
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
         private val cursorToRecipient: CursorToRecipient,
-        private val cursorToContact: CursorToContact,
-        private val contactFilter: ContactFilter) {
+        private val cursorToContact: CursorToContact) {
 
     sealed class Status {
         class Idle : Status()
@@ -82,7 +80,7 @@ class SyncManager @Inject constructor(
         val conversationCursor = contentResolver.query(
                 CursorToConversation.URI,
                 CursorToConversation.PROJECTION,
-                "date > ?", arrayOf(lastSync.toString()),
+                "date > $lastSync AND ${Telephony.Threads.MESSAGE_COUNT} > 0", null,
                 "date desc")
         val conversations = conversationCursor.map { cursor -> cursorToConversation.map(cursor) }
         realm.insertOrUpdate(conversations)
