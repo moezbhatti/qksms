@@ -33,16 +33,9 @@ open class Conversation : RealmObject() {
     @Index var blocked: Boolean = false
     var draft: String = ""
 
-    fun getTitle(): String {
-        var title = ""
-        recipients.forEachIndexed { index, recipient ->
-            val name = recipient.contact?.name?.takeIf { it.isNotBlank() }
-            title += name ?: PhoneNumberUtils.formatNumber(recipient.address, Locale.getDefault().country)
-            if (index < recipients.size - 1) {
-                title += ", "
-            }
-        }
-
-        return title
+    fun getTitle() = recipients.joinToString { recipient ->
+        recipient.contact?.name?.takeIf { it.isNotBlank() }
+                ?: PhoneNumberUtils.formatNumber(recipient.address, Locale.getDefault().country)
+                ?: recipient.address
     }
 }
