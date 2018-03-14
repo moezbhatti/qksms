@@ -47,6 +47,12 @@ class ThemeAdapter @Inject constructor(
         private val colors: Colors
 ) : QkAdapter<List<Int>>() {
 
+    var threadId: Long = 0
+        set(value) {
+            field = value
+            threadIdChanged()
+        }
+
     val colorSelected: Subject<Int> = PublishSubject.create()
 
     var selectedColor: Int = -1
@@ -113,9 +119,11 @@ class ThemeAdapter @Inject constructor(
                 .forEach { theme -> view.palette.addView(theme) }
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        disposables += colors.textPrimaryOnTheme
+    private fun threadIdChanged() {
+        disposables.clear()
+        disposables += colors.textPrimaryOnThemeForConversation(threadId)
                 .subscribe { color -> iconTint = color }
+
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {

@@ -19,6 +19,7 @@
 package presentation.feature.themepicker
 
 data class ThemePickerState(
+        val threadId: Long = 0,
         val selectedColor: Int = -1,
         val rgbAlpha: Float = 0f
 )

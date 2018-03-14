@@ -67,6 +67,7 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         rgbPicker.alpha = state.rgbAlpha
         rgbPicker.setBackgroundColor(state.selectedColor)
 
+        themeAdapter.threadId = state.threadId
         themeAdapter.selectedColor = state.selectedColor
     }
 

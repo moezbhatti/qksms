@@ -39,6 +39,8 @@ class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemeP
     init {
         appComponent.inject(this)
 
+        newState { it.copy(threadId = threadId) }
+
         theme = prefs.theme(threadId)
 
         disposables += theme.asObservable()
