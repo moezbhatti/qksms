@@ -27,6 +27,7 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.di.appComponent
+import common.util.Preferences
 import common.util.extensions.toFlowable
 import common.util.filter.ConversationFilter
 import data.model.MenuItem
@@ -52,7 +53,9 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
+    @Inject lateinit var migratePreferences: MigratePreferences
     @Inject lateinit var partialSync: PartialSync
+    @Inject lateinit var prefs: Preferences
 
     private val conversations by lazy {
         messageRepo.getConversations()
@@ -81,10 +84,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     init {
         appComponent.inject(this)
 
+        disposables += deleteConversation
         disposables += markAllSeen
         disposables += markArchived
         disposables += markUnarchived
-        disposables += deleteConversation
+        disposables += migratePreferences
         disposables += partialSync
 
         // If it's the first sync, reflect that in the ViewState
@@ -99,6 +103,9 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
 
         newState { it.copy(page = Inbox(data = conversations)) }
+
+        // Migrate the preferences from 2.7.3 if necessary
+        migratePreferences.execute(Unit)
 
         val isNotDefaultSms = Telephony.Sms.getDefaultSmsPackage(context) != context.packageName
         val hasSmsPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
