@@ -169,6 +169,7 @@
         android:gravity="center_vertical"
         android:hint="@string/compose_hint"
         android:inputType="textLongMessage|textCapSentences|textMultiLine"
+        android:maxLines="6"
         android:minHeight="44dp"
         android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
