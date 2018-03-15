@@ -65,6 +65,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
     implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:support-emoji-appcompat:$support_version"
 
     // rxbinding
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"

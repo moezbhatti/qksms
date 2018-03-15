@@ -20,7 +20,7 @@ package presentation.common.widget
 
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v7.widget.AppCompatTextView
+import android.support.text.emoji.widget.EmojiAppCompatTextView
 import android.util.AttributeSet
 import com.moez.QKSMS.R
 import common.di.appComponent
@@ -32,7 +32,7 @@ import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
-    : AppCompatTextView(context, attrs) {
+    : EmojiAppCompatTextView(context, attrs) {
 
     companion object {
         const val COLOR_PRIMARY = 0

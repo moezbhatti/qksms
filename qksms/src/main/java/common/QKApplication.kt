@@ -19,8 +19,12 @@
 package common
 
 import android.app.Application
+import android.support.text.emoji.EmojiCompat
+import android.support.text.emoji.FontRequestEmojiCompatConfig
+import android.support.v4.provider.FontRequest
 import com.bugsnag.android.Bugsnag
 import com.moez.QKSMS.BuildConfig
+import com.moez.QKSMS.R
 import common.di.AppComponentManager
 import common.di.appComponent
 import common.util.Analytics
@@ -51,6 +55,14 @@ class QKApplication : Application() {
                 .compactOnLaunch()
                 .deleteRealmIfMigrationNeeded()
                 .build())
+
+        val fontRequest = FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "Noto Color Emoji Compat",
+                R.array.com_google_android_gms_fonts_certs)
+
+        EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
         Timber.plant(Timber.DebugTree())
     }
