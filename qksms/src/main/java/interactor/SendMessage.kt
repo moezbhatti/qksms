@@ -49,6 +49,7 @@ class SendMessage @Inject constructor(
                         sendMms(params.threadId, params.addresses, params.body, params.attachments)
                     }
                 }
+                .doOnNext { messageRepo.markUnarchived(params.threadId) }
     }
 
     private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Uri>) {
