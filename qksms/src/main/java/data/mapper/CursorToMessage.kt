@@ -134,7 +134,6 @@ class CursorToMessage @Inject constructor(
                 Sms.STATUS,
                 Sms.ERROR_CODE,
 
-                Mms.Addr.ADDRESS,
                 Mms.SUBJECT,
                 Mms.SUBJECT_CHARSET,
                 Mms.SEEN,
@@ -163,7 +162,6 @@ class CursorToMessage @Inject constructor(
         val smsStatus by lazy { getColumnIndex(Sms.STATUS) }
         val smsErrorCode by lazy { getColumnIndex(Sms.ERROR_CODE) }
 
-        val mmsAddress by lazy { getColumnIndex(Mms.Addr.ADDRESS) }
         val mmsSubject by lazy { getColumnIndex(Mms.SUBJECT) }
         val mmsSubjectCharset by lazy { getColumnIndex(Mms.SUBJECT_CHARSET) }
         val mmsSeen by lazy { getColumnIndex(Mms.SEEN) }
