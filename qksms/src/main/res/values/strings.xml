@@ -77,6 +77,8 @@
 
     <string name="gallery_toast_saved">Saved image</string>
 
+    <string name="settings_category_appearance">Appearance</string>
+    <string name="settings_category_general">General</string>
     <string name="settings_default_sms_title">Default SMS app</string>
     <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
     <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>

@@ -138,7 +138,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     }
 
     override fun showQksmsPlusSnackbar() {
-        Snackbar.make(content, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
+        Snackbar.make(window.decorView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
             setAction(R.string.button_more, { viewQksmsPlusIntent.onNext(Unit) })
             show()
         }

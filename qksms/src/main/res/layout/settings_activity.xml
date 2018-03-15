@@ -17,145 +17,177 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/white">
 
-    <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
+        <presentation.common.widget.QkTextView
+            android:id="@+id/toolbarTitle"
+            style="@style/ToolbarText"
+            tools:text="Conversations" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/preferences"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
 
-            <LinearLayout
-                android:id="@+id/preferences"
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/defaultSms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:orientation="vertical"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp">
+                app:title="@string/settings_default_sms_title" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/defaultSms"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_default_sms_title" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_notifications_title" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/theme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_theme_title" />
+            <presentation.common.widget.Separator
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/night"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_night_title"
-                    tools:summary="Automatic" />
+            <presentation.common.widget.QkTextView
+                style="@style/PreferenceCategory"
+                android:text="@string/settings_category_appearance" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/nightStart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:title="@string/settings_night_start_title"
-                    tools:summary="6:00PM" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_theme_title" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/nightEnd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:title="@string/settings_night_end_title"
-                    tools:summary="9:00AM" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/night"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_night_title"
+                tools:summary="Automatic" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_black_title"
-                    app:widget="@layout/settings_switch_widget" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/nightStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:title="@string/settings_night_start_title"
+                tools:summary="6:00PM" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/autoEmoji"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:summary="@string/settings_auto_emoji_summary"
-                    app:title="@string/settings_auto_emoji_title"
-                    app:widget="@layout/settings_switch_widget" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/nightEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:title="@string/settings_night_end_title"
+                tools:summary="9:00AM" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/notifications"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_notifications_title" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_black_title"
+                app:widget="@layout/settings_switch_widget" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/blocked"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_blocking_title" />
+            <presentation.common.widget.Separator
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/delivery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:summary="@string/settings_delivery_summary"
-                    app:title="@string/settings_delivery_title"
-                    app:widget="@layout/settings_switch_widget" />
+            <presentation.common.widget.QkTextView
+                style="@style/PreferenceCategory"
+                android:text="@string/settings_category_general" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/unicode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:summary="@string/settings_unicode_summary"
-                    app:title="@string/settings_unicode_title"
-                    app:widget="@layout/settings_switch_widget" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/autoEmoji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:summary="@string/settings_auto_emoji_summary"
+                app:title="@string/settings_auto_emoji_title"
+                app:widget="@layout/settings_switch_widget" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/mms"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:title="@string/settings_mms_title"
-                    app:widget="@layout/settings_switch_widget" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/blocked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_blocking_title" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/mmsSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    app:title="@string/settings_mms_size_title"
-                    tools:summary="100KB" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:summary="@string/settings_delivery_summary"
+                app:title="@string/settings_delivery_title"
+                app:widget="@layout/settings_switch_widget" />
 
-                <presentation.common.widget.PreferenceView
-                    android:id="@+id/sync"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:summary="@string/settings_sync_summary"
-                    app:title="@string/settings_sync_title" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/unicode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:summary="@string/settings_unicode_summary"
+                app:title="@string/settings_unicode_title"
+                app:widget="@layout/settings_switch_widget" />
 
-            </LinearLayout>
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/mms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:title="@string/settings_mms_title"
+                app:widget="@layout/settings_switch_widget" />
 
-        </ScrollView>
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/mmsSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:title="@string/settings_mms_size_title"
+                tools:summary="100KB" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow" />
+            <presentation.common.widget.PreferenceView
+                android:id="@+id/sync"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:summary="@string/settings_sync_summary"
+                app:title="@string/settings_sync_title" />
 
-    </FrameLayout>
+        </LinearLayout>
 
-</LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:background="@drawable/ab_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+</android.support.constraint.ConstraintLayout>
