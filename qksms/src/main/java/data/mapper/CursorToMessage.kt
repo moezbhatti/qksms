@@ -45,8 +45,8 @@ class CursorToMessage @Inject constructor(
         return Message().apply {
             type = when {
                 cursor.getColumnIndex(MmsSms.TYPE_DISCRIMINATOR_COLUMN) != -1 -> cursor.getString(columnsMap.msgType)
-                cursor.getColumnIndex(Sms.ADDRESS) != -1 -> "sms"
                 cursor.getColumnIndex(Mms.SUBJECT) != -1 -> "mms"
+                cursor.getColumnIndex(Sms.ADDRESS) != -1 -> "sms"
                 else -> "unknown"
             }
 
