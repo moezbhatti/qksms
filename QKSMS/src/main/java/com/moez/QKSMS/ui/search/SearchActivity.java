@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.utils.KeyboardUtils;
 import com.moez.QKSMS.ui.base.QKSwipeBackActivity;
 
 public class SearchActivity extends QKSwipeBackActivity {
@@ -31,5 +32,11 @@ public class SearchActivity extends QKSwipeBackActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.search, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        KeyboardUtils.hide(this);
     }
 }
