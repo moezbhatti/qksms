@@ -95,7 +95,7 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
         exclude group: "com.android.support", module: "support-annotations"
     })
-    implementation "androidx.core:core-ktx:0.1"
+    implementation "androidx.core:core-ktx:0.2"
     implementation "com.android.billingclient:billing:1.0"
     implementation "com.bugsnag:bugsnag-android:4.1.1"
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
