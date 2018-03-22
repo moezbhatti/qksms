@@ -1,4 +1,4 @@
-/*
+package common/*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
@@ -16,8 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package common
-
 import android.app.Application
 import android.support.text.emoji.EmojiCompat
 import android.support.text.emoji.FontRequestEmojiCompatConfig
@@ -25,14 +23,13 @@ import android.support.v4.provider.FontRequest
 import com.bugsnag.android.Bugsnag
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import common.di.AppComponentManager
-import common.di.appComponent
-import manager.AnalyticsManager
+import injection.AppComponentManager
+import injection.appComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import manager.AnalyticsManager
 import timber.log.Timber
 import javax.inject.Inject
-
 
 class QKApplication : Application() {
 

@@ -29,7 +29,7 @@ import com.bumptech.glide.load.data.DataFetcher
 import com.bumptech.glide.load.model.ModelLoader
 import com.bumptech.glide.load.model.ModelLoaderFactory
 import com.bumptech.glide.load.model.MultiModelLoaderFactory
-import common.di.appComponent
+import injection.appComponent
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import repository.ContactRepository
