@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 27
+    }
+}
+
+dependencies {
+
+    // support
+    implementation "com.android.support:appcompat-v7:$support_version"
+
+    // dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    provided "javax.annotation:jsr250-api:1.0"
+
+    // rxjava
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+
+    implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
+    implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "me.leolin:ShortcutBadger:1.1.21"
+    implementation project(":android-smsmms")
+    implementation project(':domain')
+}
+
+repositories {
+    mavenCentral()
+}

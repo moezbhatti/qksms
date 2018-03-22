@@ -1,0 +1,127 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    flavorDimensions "analytics"
+
+    defaultConfig {
+        applicationId "com.moez.QKSMS"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 150
+        versionName "3.0 Beta 7"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
+        buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
+        buildConfigField "String", "MIXPANEL_API_KEY", "\"${System.getenv("MIXPANEL_API_KEY")}\""
+    }
+
+    signingConfigs {
+        release
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    productFlavors {
+        withAnalytics { dimension "analytics" }
+        noAnalytics { dimension "analytics" }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a'
+            universalApk true
+        }
+    }
+
+    if (System.getenv("CI") == "true") {
+        signingConfigs.release.storeFile = file("../keystore")
+        signingConfigs.release.storePassword = System.getenv("keystore_password")
+        signingConfigs.release.keyAlias = System.getenv("key_alias")
+        signingConfigs.release.keyPassword = System.getenv("key_password")
+    }
+}
+
+dependencies {
+    // lifecycle
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+
+    // support
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:support-emoji-appcompat:$support_version"
+
+    // rxbinding
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbinding_version"
+
+    // autodispose
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-test-kotlin:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android-kotlin:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-kotlin:$autodispose_version"
+
+    // dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    provided "javax.annotation:jsr250-api:1.0"
+
+    // realm
+    implementation("io.realm:android-adapters:$realm_adapters_version") { transitive = false }
+    kapt "io.realm:realm-annotations:$realm_version"
+    kapt "io.realm:realm-annotations-processor:$realm_version"
+
+    // rxjava
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
+        exclude group: "com.android.support", module: "support-annotations"
+    })
+    implementation "androidx.core:core-ktx:$ktx_version"
+    implementation "com.android.billingclient:billing:1.0"
+    implementation "com.bugsnag:bugsnag-android:4.1.1"
+    implementation "com.github.chrisbanes:PhotoView:2.0.0"
+    implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
+    implementation "com.github.bumptech.glide:glide:4.3.0"
+    implementation "com.google.android:flexbox:0.3.1"
+    implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "com.mlsdev.rximagepicker:library:2.0.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation project(":android-smsmms")
+    implementation project(':data')
+    implementation project(':domain')
+    kapt "com.github.bumptech.glide:compiler:4.3.0"
+    testCompile "com.android.support.test:runner:1.0.1"
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.10.19"
+    withAnalyticsCompile "com.amplitude:android-sdk:2.16.0"
+    withAnalyticsCompile "com.mixpanel.android:mixpanel-android:5.2.1"
+}
