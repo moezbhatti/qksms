@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/toolbarLight">
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             android:id="@+id/toolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -147,7 +147,7 @@
         app:layout_constraintStart_toStartOf="@id/messageBackground"
         tools:tint="@color/textSecondary" />
 
-    <presentation.common.widget.Separator
+    <common.widget.Separator
         android:id="@+id/attachSeparator"
         android:layout_width="1dp"
         android:layout_height="0dp"
@@ -157,7 +157,7 @@
         app:layout_constraintStart_toEndOf="@id/attach"
         app:layout_constraintTop_toBottomOf="@id/attachments" />
 
-    <presentation.common.widget.QkEditText
+    <common.widget.QkEditText
         android:id="@+id/message"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -177,7 +177,7 @@
         app:layout_constraintStart_toEndOf="@id/attachSeparator"
         app:textColorHint="tertiary" />
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/counter"
         android:layout_width="0dp"
         android:layout_height="0dp"

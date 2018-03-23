@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.plus
+package feature.plus
 
 import common.util.BillingManager
 import io.reactivex.Observable
-import presentation.common.base.QkView
+import common.base.QkView
 
 interface PlusView : QkView<PlusState> {
 

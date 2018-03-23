@@ -28,7 +28,7 @@
     android:paddingStart="16dp"
     android:paddingTop="8dp">
 
-    <presentation.common.widget.GroupAvatarView
+    <common.widget.GroupAvatarView
         android:id="@+id/avatars"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -36,7 +36,7 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="0dp"

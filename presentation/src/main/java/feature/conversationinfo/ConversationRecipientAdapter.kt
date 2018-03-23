@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.conversationinfo
+package feature.conversationinfo
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -30,9 +30,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.conversation_recipient_list_item.view.*
 import model.Recipient
-import presentation.common.Navigator
-import presentation.common.base.QkAdapter
-import presentation.common.base.QkViewHolder
+import common.Navigator
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ConversationRecipientAdapter @Inject constructor(

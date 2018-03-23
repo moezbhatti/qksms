@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/empty"
         style="@style/TextSecondary"
         android:layout_width="0dp"

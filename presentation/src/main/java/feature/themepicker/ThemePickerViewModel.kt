@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.themepicker
+package feature.themepicker
 
 import android.content.Intent
 import com.f2prateek.rx.preferences2.Preference
@@ -25,7 +25,9 @@ import com.uber.autodispose.kotlin.autoDisposable
 import injection.appComponent
 import util.Preferences
 import io.reactivex.rxkotlin.plusAssign
-import presentation.common.base.QkViewModel
+import common.base.QkViewModel
+import feature.themepicker.ThemePickerState
+import feature.themepicker.ThemePickerView
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

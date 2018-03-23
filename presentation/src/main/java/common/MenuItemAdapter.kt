@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.common
+package common
 
 import android.content.Context
 import android.support.annotation.ArrayRes
@@ -33,8 +33,8 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.menu_list_item.view.*
-import presentation.common.base.QkAdapter
-import presentation.common.base.QkViewHolder
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import javax.inject.Inject
 
 data class MenuItem(val title: String, val actionId: Int)

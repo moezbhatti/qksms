@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.notificationprefs
+package feature.notificationprefs
 
 import android.app.Activity
 import android.content.Intent
@@ -32,9 +32,9 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.notification_prefs_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
-import presentation.common.MenuItemAdapter
-import presentation.common.base.QkThemedActivity
-import presentation.common.widget.PreferenceView
+import common.MenuItemAdapter
+import common.base.QkThemedActivity
+import common.widget.PreferenceView
 import javax.inject.Inject
 
 class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>(), NotificationPrefsView {

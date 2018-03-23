@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.common.base
+package common.base
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
@@ -27,7 +27,7 @@ import android.view.MenuItem
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.toolbar.*
-import presentation.common.Navigator
+import common.Navigator
 import kotlin.reflect.KClass
 
 abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.blocked
+package feature.blocked
 
 import io.reactivex.Flowable
 import model.Conversation

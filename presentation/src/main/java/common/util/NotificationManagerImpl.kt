@@ -32,10 +32,10 @@ import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import com.moez.QKSMS.R
-import presentation.feature.compose.ComposeActivity
-import presentation.receiver.MarkReadReceiver
-import presentation.receiver.MarkSeenReceiver
-import presentation.receiver.RemoteMessagingReceiver
+import feature.compose.ComposeActivity
+import receiver.MarkReadReceiver
+import receiver.MarkSeenReceiver
+import receiver.RemoteMessagingReceiver
 import repository.MessageRepository
 import util.Preferences
 import javax.inject.Inject

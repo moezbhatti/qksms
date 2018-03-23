@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.conversationinfo
+package feature.conversationinfo
 
 import android.content.Context
 import android.content.Intent
@@ -32,8 +32,8 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import model.Conversation
-import presentation.common.Navigator
-import presentation.common.base.QkViewModel
+import common.Navigator
+import common.base.QkViewModel
 import repository.MessageRepository
 import util.extensions.asObservable
 import util.extensions.isImage

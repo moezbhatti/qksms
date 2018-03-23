@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.conversations
+package feature.conversations
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -36,9 +36,9 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.PhoneNumber
-import presentation.common.Navigator
-import presentation.common.base.FlowableAdapter
-import presentation.common.base.QkViewHolder
+import common.Navigator
+import common.base.FlowableAdapter
+import common.base.QkViewHolder
 import repository.MessageRepository
 import javax.inject.Inject
 

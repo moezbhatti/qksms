@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.common.base
+package common.base
 
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.CallSuper

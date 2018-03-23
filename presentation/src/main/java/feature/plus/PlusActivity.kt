@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.plus
+package feature.plus
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -31,7 +31,7 @@ import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
-import presentation.common.base.QkThemedActivity
+import common.base.QkThemedActivity
 import javax.inject.Inject
 
 class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {

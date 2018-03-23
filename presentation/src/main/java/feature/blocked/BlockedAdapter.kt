@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.blocked
+package feature.blocked
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -27,8 +27,8 @@ import kotlinx.android.synthetic.main.blocked_list_item.view.*
 import model.Contact
 import model.Conversation
 import model.PhoneNumber
-import presentation.common.base.FlowableAdapter
-import presentation.common.base.QkViewHolder
+import common.base.FlowableAdapter
+import common.base.QkViewHolder
 import javax.inject.Inject
 
 class BlockedAdapter @Inject constructor(private val context: Context) : FlowableAdapter<Conversation>() {

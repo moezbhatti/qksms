@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.main
+package feature.main
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
@@ -37,21 +37,21 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.MenuItemAdapter
+import common.Navigator
+import common.base.QkThemedActivity
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
+import feature.conversations.ConversationItemTouchCallback
+import feature.conversations.ConversationsAdapter
+import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
-import presentation.common.MenuItemAdapter
-import presentation.common.Navigator
-import presentation.common.base.QkThemedActivity
-import presentation.feature.conversations.ConversationItemTouchCallback
-import presentation.feature.conversations.ConversationsAdapter
 import javax.inject.Inject
 
 class MainActivity : QkThemedActivity<MainViewModel>(), MainView {

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.conversationinfo
+package feature.conversationinfo
 
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -28,8 +28,8 @@ import injection.appComponent
 import common.util.extensions.setVisible
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_info_activity.*
-import presentation.common.Navigator
-import presentation.common.base.QkThemedActivity
+import common.Navigator
+import common.base.QkThemedActivity
 import javax.inject.Inject
 
 class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), ConversationInfoView {

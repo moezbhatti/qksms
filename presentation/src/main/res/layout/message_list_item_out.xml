@@ -26,7 +26,7 @@
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:orientation="vertical"
             tools:backgroundTint="@color/white">
 
-            <presentation.common.widget.MmsPreviewView
+            <common.widget.MmsPreviewView
                 android:id="@+id/mmsPreview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintWidth_min="192dp" />
 
-            <presentation.common.widget.TightTextView
+            <common.widget.TightTextView
                 android:id="@+id/subject"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                 app:layout_goneMarginBottom="8dp"
                 tools:text="Subject" />
 
-            <presentation.common.widget.TightTextView
+            <common.widget.TightTextView
                 android:id="@+id/body"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
 
     </LinearLayout>
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

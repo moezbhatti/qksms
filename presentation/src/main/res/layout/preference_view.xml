@@ -21,7 +21,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="presentation.common.widget.PreferenceView">
+    tools:parentTag="common.widget.PreferenceView">
 
     <ImageView
         android:id="@+id/icon"
@@ -42,14 +42,14 @@
         android:paddingRight="24dp"
         android:paddingTop="16dp">
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             android:id="@+id/titleView"
             style="@style/TextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Default SMS App" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             android:id="@+id/summaryView"
             style="@style/TextSecondary"
             android:layout_width="match_parent"

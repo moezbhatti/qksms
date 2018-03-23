@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.setup
+package feature.setup
 
 import android.Manifest
 import android.os.Bundle
@@ -29,8 +29,8 @@ import injection.appComponent
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.setup_activity.*
-import presentation.common.Navigator
-import presentation.common.base.QkThemedActivity
+import common.Navigator
+import common.base.QkThemedActivity
 import javax.inject.Inject
 
 class SetupActivity : QkThemedActivity<SetupViewModel>(), SetupView {

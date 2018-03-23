@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.compose
+package feature.compose
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
@@ -46,7 +46,7 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import model.Contact
 import model.Message
-import presentation.common.base.QkThemedActivity
+import common.base.QkThemedActivity
 import javax.inject.Inject
 
 class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {

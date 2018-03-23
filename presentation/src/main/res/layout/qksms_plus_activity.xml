@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <presentation.common.widget.QkTextView
+            <common.widget.QkTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="32dp"
@@ -67,7 +67,7 @@
                 android:textStyle="bold"
                 app:textColor="primary" />
 
-            <presentation.common.widget.QkTextView
+            <common.widget.QkTextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <presentation.common.widget.QkTextView
+                <common.widget.QkTextView
                     android:id="@+id/thanksTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                     app:layout_constraintStart_toEndOf="@id/thanksIcon"
                     app:textColor="primary" />
 
-                <presentation.common.widget.QkTextView
+                <common.widget.QkTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/qksms_plus_thanks_summary"
@@ -118,7 +118,7 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <presentation.common.widget.QkTextView
+            <common.widget.QkTextView
                 android:id="@+id/upgrade"
                 style="@style/TextButton"
                 android:layout_marginLeft="32dp"
@@ -129,7 +129,7 @@
                 app:textColor="primaryOnTheme"
                 tools:backgroundTint="@color/tools_theme" />
 
-            <presentation.common.widget.QkTextView
+            <common.widget.QkTextView
                 android:id="@+id/upgradeDonate"
                 style="@style/TextButton"
                 android:layout_marginBottom="32dp"
@@ -141,26 +141,26 @@
                 app:textColor="primary"
                 tools:backgroundTint="@color/separatorLight" />
 
-            <presentation.common.widget.Separator
+            <common.widget.Separator
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="8dp" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_invert_colors_black_24dp"
                 app:summary="@string/qksms_plus_night_summary"
                 app:title="@string/qksms_plus_night_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_more_horiz_black_24dp"
                 app:summary="@string/qksms_plus_more_summary"
                 app:title="@string/qksms_plus_more_title" />
 
-            <presentation.common.widget.QkTextView
+            <common.widget.QkTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -172,7 +172,7 @@
                 android:textStyle="bold"
                 app:textColor="primary" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -180,7 +180,7 @@
                 app:summary="@string/qksms_plus_themes_summary"
                 app:title="@string/qksms_plus_themes_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -188,7 +188,7 @@
                 app:summary="@string/qksms_plus_emoji_summary"
                 app:title="@string/qksms_plus_emoji_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -196,7 +196,7 @@
                 app:summary="@string/qksms_plus_backup_summary"
                 app:title="@string/qksms_plus_backup_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -204,7 +204,7 @@
                 app:summary="@string/qksms_plus_scheduled_summary"
                 app:title="@string/qksms_plus_scheduled_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -212,7 +212,7 @@
                 app:summary="@string/qksms_plus_delayed_summary"
                 app:title="@string/qksms_plus_delayed_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -220,7 +220,7 @@
                 app:summary="@string/qksms_plus_blacklist_summary"
                 app:title="@string/qksms_plus_blacklist_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -228,7 +228,7 @@
                 app:summary="@string/qksms_plus_forward_summary"
                 app:title="@string/qksms_plus_forward_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"

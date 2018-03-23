@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/white">
 
-            <presentation.common.widget.QkEditText
+            <common.widget.QkEditText
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
                 app:textColorHint="tertiary"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             android:id="@+id/syncingLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             app:layout_constraintTop_toBottomOf="@id/syncingProgress"
             app:textColor="tertiary" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             android:id="@+id/empty"
             style="@style/TextSecondary"
             android:layout_width="0dp"

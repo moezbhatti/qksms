@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.compose
+package feature.compose
 
 import android.net.Uri
 import android.view.KeyEvent
@@ -24,7 +24,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 import model.Contact
 import model.Message
-import presentation.common.base.QkView
+import common.base.QkView
 
 interface ComposeView : QkView<ComposeState> {
 

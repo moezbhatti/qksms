@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.blocked
+package feature.blocked
 
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import injection.appComponent
 import interactor.MarkUnblocked
 import io.reactivex.rxkotlin.withLatestFrom
-import presentation.common.base.QkViewModel
+import common.base.QkViewModel
 import repository.MessageRepository
 import javax.inject.Inject
 

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.common
+package common
 
 import android.app.Activity
 import android.app.ActivityOptions
@@ -31,25 +31,25 @@ import android.provider.Settings
 import android.provider.Telephony
 import android.view.View
 import manager.NotificationManager
-import presentation.feature.blocked.BlockedActivity
-import presentation.feature.blocked.BlockedViewModel
-import presentation.feature.compose.ComposeActivity
-import presentation.feature.compose.ComposeViewModel
-import presentation.feature.conversationinfo.ConversationInfoActivity
-import presentation.feature.conversationinfo.ConversationInfoViewModel
-import presentation.feature.gallery.GalleryActivity
-import presentation.feature.gallery.GalleryViewModel
-import presentation.feature.main.MainViewModel
-import presentation.feature.notificationprefs.NotificationPrefsActivity
-import presentation.feature.notificationprefs.NotificationPrefsViewModel
-import presentation.feature.plus.PlusActivity
-import presentation.feature.plus.PlusViewModel
-import presentation.feature.settings.SettingsActivity
-import presentation.feature.settings.SettingsViewModel
-import presentation.feature.setup.SetupActivity
-import presentation.feature.setup.SetupViewModel
-import presentation.feature.themepicker.ThemePickerActivity
-import presentation.feature.themepicker.ThemePickerViewModel
+import feature.blocked.BlockedActivity
+import feature.blocked.BlockedViewModel
+import feature.compose.ComposeActivity
+import feature.compose.ComposeViewModel
+import feature.conversationinfo.ConversationInfoActivity
+import feature.conversationinfo.ConversationInfoViewModel
+import feature.gallery.GalleryActivity
+import feature.gallery.GalleryViewModel
+import feature.main.MainViewModel
+import feature.notificationprefs.NotificationPrefsActivity
+import feature.notificationprefs.NotificationPrefsViewModel
+import feature.plus.PlusActivity
+import feature.plus.PlusViewModel
+import feature.settings.SettingsActivity
+import feature.settings.SettingsViewModel
+import feature.setup.SetupActivity
+import feature.setup.SetupViewModel
+import feature.themepicker.ThemePickerActivity
+import feature.themepicker.ThemePickerViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
 

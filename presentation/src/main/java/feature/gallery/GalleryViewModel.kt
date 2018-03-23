@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.gallery
+package feature.gallery
 
 import android.content.Context
 import android.content.Intent
@@ -29,7 +29,7 @@ import interactor.SaveImage
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
-import presentation.common.base.QkViewModel
+import common.base.QkViewModel
 import repository.MessageRepository
 import util.extensions.mapNotNull
 import javax.inject.Inject

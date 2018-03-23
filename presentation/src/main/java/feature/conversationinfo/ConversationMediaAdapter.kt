@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.conversationinfo
+package feature.conversationinfo
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -31,8 +31,8 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*
 import model.MmsPart
-import presentation.common.base.QkAdapter
-import presentation.common.base.QkViewHolder
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ConversationMediaAdapter @Inject constructor(

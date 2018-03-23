@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.settings
+package feature.settings
 
 import android.content.Context
 import com.moez.QKSMS.R
@@ -30,8 +30,8 @@ import util.Preferences
 import interactor.FullSync
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
-import presentation.common.Navigator
-import presentation.common.base.QkViewModel
+import common.Navigator
+import common.base.QkViewModel
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.common.widget
+package common.widget
 
 import android.content.Context
 import android.net.Uri
@@ -35,7 +35,7 @@ import common.util.GlideApp
 import common.util.extensions.setTint
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import model.Contact
-import presentation.common.Navigator
+import common.Navigator
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {

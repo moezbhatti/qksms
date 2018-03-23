@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.gallery
+package feature.gallery
 
 import android.os.Bundle
 import android.transition.ChangeBounds
@@ -31,8 +31,8 @@ import common.util.extensions.setVisible
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.gallery_activity.*
-import presentation.common.GlideCompletionListener
-import presentation.common.base.QkActivity
+import common.GlideCompletionListener
+import common.base.QkActivity
 
 class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
 

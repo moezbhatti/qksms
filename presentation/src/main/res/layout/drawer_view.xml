@@ -33,7 +33,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_inbox_black_24dp" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_inbox" />
 
@@ -48,7 +48,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_folder_black_24dp" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_archived" />
 
@@ -64,18 +64,18 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_event_black_24dp" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_scheduled" />
 
     </LinearLayout>
 
-    <presentation.common.widget.Separator
+    <common.widget.Separator
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp" />
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         style="@style/TextSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_settings_black_24dp" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_settings" />
 
@@ -106,7 +106,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_star_black_24dp" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_plus" />
 
@@ -121,7 +121,7 @@
             style="@style/DrawerIcon"
             android:src="@drawable/ic_help_black_24dp" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             style="@style/DrawerText"
             android:text="@string/drawer_help" />
 

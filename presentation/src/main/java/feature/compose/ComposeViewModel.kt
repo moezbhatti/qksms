@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.compose
+package feature.compose
 
 import android.content.Context
 import android.content.Intent
@@ -53,8 +53,8 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.PhoneNumber
-import presentation.common.Navigator
-import presentation.common.base.QkViewModel
+import common.Navigator
+import common.base.QkViewModel
 import repository.ContactRepository
 import repository.MessageRepository
 import util.extensions.asObservable

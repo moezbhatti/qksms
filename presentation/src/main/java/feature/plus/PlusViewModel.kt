@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.plus
+package feature.plus
 
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -24,7 +24,7 @@ import injection.appComponent
 import common.util.BillingManager
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
-import presentation.common.base.QkViewModel
+import common.base.QkViewModel
 import javax.inject.Inject
 
 class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {

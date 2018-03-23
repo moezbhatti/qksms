@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/white">
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             android:id="@+id/toolbarTitle"
             style="@style/ToolbarText"
             tools:text="Conversations" />
@@ -57,42 +57,42 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp">
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/defaultSms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_default_sms_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_notifications_title" />
 
-            <presentation.common.widget.Separator
+            <common.widget.Separator
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp" />
 
-            <presentation.common.widget.QkTextView
+            <common.widget.QkTextView
                 style="@style/PreferenceCategory"
                 android:text="@string/settings_category_appearance" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_theme_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/night"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_night_title"
                 tools:summary="Automatic" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/nightStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 app:title="@string/settings_night_start_title"
                 tools:summary="6:00PM" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/nightEnd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,24 +108,24 @@
                 app:title="@string/settings_night_end_title"
                 tools:summary="9:00AM" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_black_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <presentation.common.widget.Separator
+            <common.widget.Separator
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp" />
 
-            <presentation.common.widget.QkTextView
+            <common.widget.QkTextView
                 style="@style/PreferenceCategory"
                 android:text="@string/settings_category_general" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/autoEmoji"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,13 +134,13 @@
                 app:title="@string/settings_auto_emoji_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/blocked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_blocking_title" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                 app:title="@string/settings_delivery_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/unicode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
                 app:title="@string/settings_unicode_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/mms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
                 app:title="@string/settings_mms_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/mmsSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                 app:title="@string/settings_mms_size_title"
                 tools:summary="100KB" />
 
-            <presentation.common.widget.PreferenceView
+            <common.widget.PreferenceView
                 android:id="@+id/sync"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

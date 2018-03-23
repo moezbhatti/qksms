@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.themepicker
+package feature.themepicker
 
 import common.util.extensions.PageScroll
 import io.reactivex.Observable
-import presentation.common.base.QkView
+import common.base.QkView
+import feature.themepicker.ThemePickerState
 
 interface ThemePickerView : QkView<ThemePickerState> {
 

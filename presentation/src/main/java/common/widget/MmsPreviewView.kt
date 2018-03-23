@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.common.widget
+package common.widget
 
 import android.content.Context
 import android.util.AttributeSet
@@ -26,7 +26,7 @@ import injection.appComponent
 import common.util.GlideApp
 import common.util.extensions.setVisible
 import model.MmsPart
-import presentation.common.Navigator
+import common.Navigator
 import javax.inject.Inject
 
 class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {

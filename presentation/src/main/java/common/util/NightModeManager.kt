@@ -22,7 +22,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import presentation.receiver.NightModeReceiver
+import receiver.NightModeReceiver
 import util.Preferences
 import java.util.*
 import java.util.concurrent.TimeUnit

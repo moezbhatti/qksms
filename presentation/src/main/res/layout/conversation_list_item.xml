@@ -30,7 +30,7 @@
     android:paddingStart="16dp"
     android:paddingTop="12dp">
 
-    <presentation.common.widget.GroupAvatarView
+    <common.widget.GroupAvatarView
         android:id="@+id/avatars"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -54,7 +54,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="@tools:sample/full_names" />
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/snippet"
         style="@style/TextSecondary"
         android:layout_width="0dp"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="@tools:sample/lorem/random" />
 
-    <presentation.common.widget.QkTextView
+    <common.widget.QkTextView
         android:id="@+id/date"
         style="@style/TextTertiary"
         android:layout_width="0dp"

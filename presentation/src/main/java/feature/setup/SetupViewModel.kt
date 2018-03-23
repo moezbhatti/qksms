@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.setup
+package feature.setup
 
 import android.content.Context
 import android.provider.Telephony
@@ -24,7 +24,9 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import injection.appComponent
 import manager.PermissionManager
-import presentation.common.base.QkViewModel
+import common.base.QkViewModel
+import feature.setup.SetupState
+import feature.setup.SetupView
 import javax.inject.Inject
 
 class SetupViewModel : QkViewModel<SetupView, SetupState>(SetupState()) {

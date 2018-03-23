@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.compose
+package feature.compose
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -37,8 +37,8 @@ import common.util.extensions.showKeyboard
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
 import model.Contact
-import presentation.common.base.QkAdapter
-import presentation.common.base.QkViewHolder
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ChipsAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<Contact>() {

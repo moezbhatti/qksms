@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.themepicker
+package feature.themepicker
 
 import android.content.Context
 import android.content.res.Resources
@@ -38,8 +38,8 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.theme_list_item.view.*
 import kotlinx.android.synthetic.main.theme_palette_list_item.view.*
-import presentation.common.base.QkAdapter
-import presentation.common.base.QkViewHolder
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ThemeAdapter @Inject constructor(

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.main
+package feature.main
 
 import android.Manifest
 import android.content.Context
@@ -39,9 +39,9 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.realm.Realm
 import model.SyncLog
-import presentation.common.MenuItem
-import presentation.common.Navigator
-import presentation.common.base.QkViewModel
+import common.MenuItem
+import common.Navigator
+import common.base.QkViewModel
 import repository.MessageRepository
 import util.Preferences
 import util.extensions.toFlowable

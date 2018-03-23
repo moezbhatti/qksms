@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.receiver
+package receiver
 
 import android.app.Activity
 import android.content.BroadcastReceiver

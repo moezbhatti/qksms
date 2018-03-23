@@ -44,21 +44,21 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp">
 
-                <presentation.common.widget.PreferenceView
+                <common.widget.PreferenceView
                     android:id="@+id/notifications"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_notifications_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <presentation.common.widget.PreferenceView
+                <common.widget.PreferenceView
                     android:id="@+id/vibration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:title="@string/settings_vibration_title"
                     app:widget="@layout/settings_switch_widget" />
 
-                <presentation.common.widget.PreferenceView
+                <common.widget.PreferenceView
                     android:id="@+id/ringtone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

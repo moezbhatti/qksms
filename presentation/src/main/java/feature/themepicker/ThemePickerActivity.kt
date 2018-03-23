@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.themepicker
+package feature.themepicker
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -26,7 +26,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import injection.appComponent
 import common.util.extensions.pageScrolled
 import kotlinx.android.synthetic.main.theme_picker_activity.*
-import presentation.common.base.QkThemedActivity
+import common.base.QkThemedActivity
 import javax.inject.Inject
 
 class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePickerView {

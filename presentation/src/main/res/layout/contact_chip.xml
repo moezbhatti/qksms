@@ -32,12 +32,12 @@
         android:background="@drawable/chip_background"
         android:orientation="horizontal">
 
-        <presentation.common.widget.AvatarView
+        <common.widget.AvatarView
             android:id="@+id/avatar"
             android:layout_width="36dp"
             android:layout_height="36dp" />
 
-        <presentation.common.widget.QkTextView
+        <common.widget.QkTextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

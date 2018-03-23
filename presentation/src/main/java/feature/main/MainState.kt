@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.main
+package feature.main
 
 import io.reactivex.Flowable
 import model.Conversation
 import model.Message
-import presentation.common.MenuItem
+import common.MenuItem
 
 data class MainState(
         val page: MainPage = Inbox(),

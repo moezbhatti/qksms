@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package presentation.feature.notificationprefs
+package feature.notificationprefs
 
 import android.net.Uri
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
-import presentation.common.base.QkView
-import presentation.common.widget.PreferenceView
+import common.base.QkView
+import common.widget.PreferenceView
 
 interface NotificationPrefsView : QkView<NotificationPrefsState> {
 
