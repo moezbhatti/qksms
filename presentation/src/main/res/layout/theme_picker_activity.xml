@@ -29,9 +29,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:paddingEnd="12dp"
-        android:paddingStart="12dp" />
+        android:paddingStart="12dp"
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -48,12 +48,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <FrameLayout
+            <include
                 android:id="@+id/rgbPicker"
+                layout="@layout/theme_picker_hsl"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </FrameLayout>
+                android:layout_height="match_parent" />
 
         </android.support.v4.view.ViewPager>
 

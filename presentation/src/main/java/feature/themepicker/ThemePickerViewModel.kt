@@ -19,16 +19,14 @@
 package feature.themepicker
 
 import android.content.Intent
+import android.support.v4.graphics.ColorUtils
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
-import util.Preferences
-import io.reactivex.rxkotlin.plusAssign
 import common.base.QkViewModel
-import feature.themepicker.ThemePickerState
-import feature.themepicker.ThemePickerView
-import java.util.concurrent.TimeUnit
+import injection.appComponent
+import io.reactivex.rxkotlin.plusAssign
+import util.Preferences
 import javax.inject.Inject
 
 class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
@@ -46,17 +44,20 @@ class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemeP
         theme = prefs.theme(threadId)
 
         disposables += theme.asObservable()
-                .subscribe { color -> newState { it.copy(selectedColor = color) } }
+                .doOnNext { color -> newState { it.copy(selectedColor = color) } }
+                .map { color -> FloatArray(3).apply { ColorUtils.colorToHSL(color, this) } }
+                .map { hsl ->
+                    hsl.apply {
+                        this[1] = 1f
+                        this[2] = 0.5f
+                    }
+                }
+                .map { hsl -> ColorUtils.HSLToColor(hsl) }
+                .subscribe { hue -> newState { it.copy(hue = hue) } }
     }
 
     override fun bindView(view: ThemePickerView) {
         super.bindView(view)
-
-        view.pageScrolledIntent
-                .throttleFirst(16, TimeUnit.MILLISECONDS)
-                .map { (position, positionOffset) -> if (position == 0) positionOffset * positionOffset else 1f }
-                .autoDisposable(view.scope())
-                .subscribe { alpha -> newState { it.copy(rgbAlpha = alpha) } }
 
         view.themeSelectedIntent
                 .autoDisposable(view.scope())

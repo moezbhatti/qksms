@@ -23,17 +23,17 @@ import android.support.v7.widget.LinearLayoutManager
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
-import common.util.extensions.pageScrolled
-import kotlinx.android.synthetic.main.theme_picker_activity.*
 import common.base.QkThemedActivity
+import common.util.extensions.setBackgroundTint
+import injection.appComponent
+import kotlinx.android.synthetic.main.theme_picker_activity.*
+import kotlinx.android.synthetic.main.theme_picker_hsl.*
 import javax.inject.Inject
 
 class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePickerView {
 
     override val viewModelClass = ThemePickerViewModel::class
     override val themeSelectedIntent by lazy { themeAdapter.colorSelected }
-    override val pageScrolledIntent by lazy { pager.pageScrolled() }
 
     @Inject lateinit var themeAdapter: ThemeAdapter
     @Inject lateinit var themePagerAdapter: ThemePagerAdapter
@@ -64,8 +64,7 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
     }
 
     override fun render(state: ThemePickerState) {
-        rgbPicker.alpha = state.rgbAlpha
-        rgbPicker.setBackgroundColor(state.selectedColor)
+        hue.setBackgroundTint(state.hue)
 
         themeAdapter.threadId = state.threadId
         themeAdapter.selectedColor = state.selectedColor
