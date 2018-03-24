@@ -1,54 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/saturation"
+    <feature.themepicker.HSLPickerView
+        android:id="@+id/picker"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/color_picker_gradient"
-        app:layout_constraintDimensionRatio="1"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:backgroundTint="@color/tools_theme" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/color_picker_gradient"
-        android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="@id/saturation"
-        app:layout_constraintEnd_toEndOf="@id/saturation"
-        app:layout_constraintStart_toStartOf="@id/saturation"
-        app:layout_constraintTop_toTopOf="@id/saturation" />
-
-    <FrameLayout
-        android:id="@+id/swatch"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:background="@drawable/circle"
-        android:padding="1dp"
-        android:layout_margin="18dp"
-        app:layout_constraintBottom_toBottomOf="@id/saturation"
-        app:layout_constraintEnd_toEndOf="@id/saturation"
-        app:layout_constraintStart_toStartOf="@id/saturation"
-        app:layout_constraintTop_toTopOf="@id/saturation">
-
-        <View
-            android:id="@+id/swatchPreview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/tools_theme" />
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

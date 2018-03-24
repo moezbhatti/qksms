@@ -19,7 +19,6 @@
 package feature.themepicker
 
 import android.content.Intent
-import android.support.v4.graphics.ColorUtils
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -44,16 +43,7 @@ class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemeP
         theme = prefs.theme(threadId)
 
         disposables += theme.asObservable()
-                .doOnNext { color -> newState { it.copy(selectedColor = color) } }
-                .map { color -> FloatArray(3).apply { ColorUtils.colorToHSL(color, this) } }
-                .map { hsl ->
-                    hsl.apply {
-                        this[1] = 1f
-                        this[2] = 0.5f
-                    }
-                }
-                .map { hsl -> ColorUtils.HSLToColor(hsl) }
-                .subscribe { hue -> newState { it.copy(hue = hue) } }
+                .subscribe { color -> newState { it.copy(selectedColor = color) } }
     }
 
     override fun bindView(view: ThemePickerView) {

@@ -20,6 +20,5 @@ package feature.themepicker
 
 data class ThemePickerState(
         val threadId: Long = 0,
-        val selectedColor: Int = -1,
-        val hue: Int = -1
+        val selectedColor: Int = -1
 )
