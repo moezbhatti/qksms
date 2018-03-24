@@ -32,11 +32,10 @@
 
     <FrameLayout
         android:id="@+id/swatch"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_margin="18dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:background="@drawable/circle"
-        android:padding="1dp"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="@id/saturation"
         app:layout_constraintEnd_toEndOf="@id/saturation"
         app:layout_constraintStart_toStartOf="@id/saturation"
