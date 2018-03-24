@@ -20,6 +20,7 @@ package feature.themepicker
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -31,6 +32,9 @@ import common.util.extensions.within
 import kotlinx.android.synthetic.main.hsv_picker_view.view.*
 
 class HSVPickerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
+
+    private val hues = arrayOf(0xFFFF0000, 0xFFFFFF00, 0xFF00FF00, 0xFF00FFFF, 0xFF0000FF, 0xFFFF00FF, 0xFFFF0000)
+            .map { it.toInt() }.toIntArray()
 
     private var min: Float = 0f
     private var max = 0f
@@ -72,6 +76,9 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
             }
             true
         }
+
+        hueBackground.clipToOutline = true
+        hueBackground.setImageDrawable(GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, hues))
     }
 
     private fun setupBounds() {
