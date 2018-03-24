@@ -29,4 +29,26 @@
         app:layout_constraintStart_toStartOf="@id/hue"
         app:layout_constraintTop_toTopOf="@id/hue" />
 
+    <FrameLayout
+        android:id="@+id/swatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="18dp">
+
+        <View
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle" />
+
+        <View
+            android:id="@+id/swatchPreview"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle"
+            tools:backgroundTint="@color/tools_theme" />
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -20,6 +20,7 @@ package feature.themepicker
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MotionEvent
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -29,6 +30,7 @@ import injection.appComponent
 import kotlinx.android.synthetic.main.theme_picker_activity.*
 import kotlinx.android.synthetic.main.theme_picker_hsl.*
 import javax.inject.Inject
+
 
 class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePickerView {
 
@@ -61,13 +63,41 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         colors.background
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
+
+        var dX = 0f
+        var dY = 0f
+
+        hue.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    dX = swatch.x - event.rawX
+                    dY = swatch.y - event.rawY
+
+                    swatch.animate()
+                            .x(event.rawX + dX)
+                            .y(event.rawY + dY)
+                            .setDuration(0)
+                            .start()
+                }
+
+                MotionEvent.ACTION_MOVE ->
+                    swatch.animate()
+                            .x(event.rawX + dX)
+                            .y(event.rawY + dY)
+                            .setDuration(0)
+                            .start()
+
+                else -> return@setOnTouchListener false
+            }
+            true
+        }
     }
 
     override fun render(state: ThemePickerState) {
-        hue.setBackgroundTint(state.hue)
-
         themeAdapter.threadId = state.threadId
         themeAdapter.selectedColor = state.selectedColor
-    }
 
+        hue.setBackgroundTint(state.hue)
+        swatchPreview.setBackgroundTint(state.selectedColor)
+    }
 }
