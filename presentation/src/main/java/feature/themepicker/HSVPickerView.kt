@@ -26,6 +26,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.moez.QKSMS.R
 import common.util.extensions.setBackgroundTint
+import common.util.extensions.setTint
 import common.util.extensions.within
 import kotlinx.android.synthetic.main.hsv_picker_view.view.*
 
@@ -64,7 +65,7 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
 
                     val range = max - min
                     val hsv = floatArrayOf(hue, (x - min) / range, 1 - (y - min) / range)
-                    swatchPreview.setBackgroundTint(Color.HSVToColor(hsv))
+                    swatch.setTint(Color.HSVToColor(hsv))
                 }
 
                 else -> return@setOnTouchListener false
@@ -81,7 +82,7 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     fun setColor(color: Int) {
-        swatchPreview.setBackgroundTint(color)
+        swatch.setTint(color)
 
         // Convert the rgb color to HSV
         val hsv = FloatArray(3).apply {

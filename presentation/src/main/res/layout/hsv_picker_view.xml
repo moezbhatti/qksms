@@ -7,6 +7,17 @@
     tools:parentTag="feature.themepicker.HSVPickerView">
 
     <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/rounded_rectangle_4dp"
+        android:backgroundTint="@color/white"
+        android:rotation="90"
+        app:layout_constraintBottom_toBottomOf="@id/saturation"
+        app:layout_constraintEnd_toEndOf="@id/saturation"
+        app:layout_constraintStart_toStartOf="@id/saturation"
+        app:layout_constraintTop_toTopOf="@id/saturation" />
+
+    <View
         android:id="@+id/saturation"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -30,25 +41,13 @@
         app:layout_constraintStart_toStartOf="@id/saturation"
         app:layout_constraintTop_toTopOf="@id/saturation" />
 
-    <FrameLayout
+    <ImageView
         android:id="@+id/swatch"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:background="@drawable/circle"
         android:padding="2dp"
-        app:layout_constraintBottom_toBottomOf="@id/saturation"
-        app:layout_constraintEnd_toEndOf="@id/saturation"
-        app:layout_constraintStart_toStartOf="@id/saturation"
-        app:layout_constraintTop_toTopOf="@id/saturation">
-
-        <View
-            android:id="@+id/swatchPreview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/tools_theme" />
-
-    </FrameLayout>
+        android:src="@drawable/circle"
+        tools:tint="@color/tools_theme" />
 
 </merge>
