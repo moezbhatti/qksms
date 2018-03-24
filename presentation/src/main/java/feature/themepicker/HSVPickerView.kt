@@ -19,25 +19,29 @@
 package feature.themepicker
 
 import android.content.Context
+import android.graphics.Color
 import android.support.constraint.ConstraintLayout
-import android.support.v4.graphics.ColorUtils
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.moez.QKSMS.R
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.within
-import kotlinx.android.synthetic.main.hsl_picker_view.view.*
+import kotlinx.android.synthetic.main.hsv_picker_view.view.*
 
-class HSLPickerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
+class HSVPickerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
 
-    private var swatchX = 0f
-    private var swatchY = 0f
+    private var min: Float = 0f
+    private var max = 0f
 
     init {
-        View.inflate(context, R.layout.hsl_picker_view, this)
+        View.inflate(context, R.layout.hsv_picker_view, this)
+
+        var swatchX = 0f
+        var swatchY = 0f
 
         saturation.setOnTouchListener { _, event ->
+            setupBounds()
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     swatchX = event.x - event.rawX
@@ -45,9 +49,6 @@ class HSLPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
                 }
 
                 MotionEvent.ACTION_MOVE -> {
-                    val min = saturation.x - swatch.width / 2
-                    val max = min + saturation.width
-
                     swatch.x = (event.rawX + swatchX + min).within(min, max)
                     swatch.y = (event.rawY + swatchY + min).within(min, max)
                 }
@@ -58,16 +59,30 @@ class HSLPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     }
 
-    fun setColor(color: Int) {
-        swatchPreview.setBackgroundTint(color)
-
-        val hsl = FloatArray(3).apply {
-            ColorUtils.colorToHSL(color, this)
-            this[1] = 1f
-            this[2] = 0.5f
+    private fun setupBounds() {
+        if (min == 0f || max == 0f) {
+            min = saturation.x - swatch.width / 2
+            max = min + saturation.width
         }
+    }
 
-        saturation.setBackgroundTint(ColorUtils.HSLToColor(hsl))
+    fun setColor(color: Int) {
+
+        // Convert the rgb color to HSV
+        val hsv = FloatArray(3).apply { Color.colorToHSV(color, this) }
+
+        // Set the position of the swatch
+        setupBounds()
+        val range = max - min
+        swatch.x = range * hsv[1] + min
+        swatch.y = range * (1 - hsv[2]) + min
+
+        // Change the HSV saturation and lightness, for tinting the gradient
+        hsv[1] = 1f
+        hsv[2] = 1f
+
+        swatchPreview.setBackgroundTint(color)
+        saturation.setBackgroundTint(Color.HSVToColor(hsv))
     }
 
 }

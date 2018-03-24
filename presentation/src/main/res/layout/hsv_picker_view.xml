@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="feature.themepicker.HSLPickerView">
+    tools:parentTag="feature.themepicker.HSVPickerView">
 
     <View
         android:id="@+id/saturation"

@@ -26,7 +26,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import injection.appComponent
 import kotlinx.android.synthetic.main.theme_picker_activity.*
-import kotlinx.android.synthetic.main.theme_picker_hsl.*
+import kotlinx.android.synthetic.main.theme_picker_hsv.*
 import javax.inject.Inject
 
 

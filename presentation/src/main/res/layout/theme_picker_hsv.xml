@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <feature.themepicker.HSLPickerView
+    <feature.themepicker.HSVPickerView
         android:id="@+id/picker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

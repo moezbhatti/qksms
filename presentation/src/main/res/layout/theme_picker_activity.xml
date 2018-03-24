@@ -50,7 +50,7 @@
 
             <include
                 android:id="@+id/rgbPicker"
-                layout="@layout/theme_picker_hsl"
+                layout="@layout/theme_picker_hsv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
