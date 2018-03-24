@@ -71,7 +71,7 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         var dX = 0f
         var dY = 0f
 
-        hue.setOnTouchListener { _, event ->
+        saturation.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     dX = event.x - event.rawX
@@ -79,8 +79,8 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
                 }
 
                 MotionEvent.ACTION_MOVE -> {
-                    val min = hue.x - swatch.width / 2
-                    val max = min + hue.width
+                    val min = saturation.x - swatch.width / 2
+                    val max = min + saturation.width
 
                     swatch.x = (event.rawX + dX + swatchPadding).within(min, max)
                     swatch.y = (event.rawY + dY + swatchPadding).within(min, max)
@@ -96,7 +96,7 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         themeAdapter.threadId = state.threadId
         themeAdapter.selectedColor = state.selectedColor
 
-        hue.setBackgroundTint(state.hue)
+        saturation.setBackgroundTint(state.hue)
         swatchPreview.setBackgroundTint(state.selectedColor)
     }
 }

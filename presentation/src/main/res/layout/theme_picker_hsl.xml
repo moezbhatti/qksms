@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/hue"
+        android:id="@+id/saturation"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="24dp"
@@ -24,10 +24,10 @@
         android:layout_height="0dp"
         android:background="@drawable/color_picker_gradient"
         android:rotation="90"
-        app:layout_constraintBottom_toBottomOf="@id/hue"
-        app:layout_constraintEnd_toEndOf="@id/hue"
-        app:layout_constraintStart_toStartOf="@id/hue"
-        app:layout_constraintTop_toTopOf="@id/hue" />
+        app:layout_constraintBottom_toBottomOf="@id/saturation"
+        app:layout_constraintEnd_toEndOf="@id/saturation"
+        app:layout_constraintStart_toStartOf="@id/saturation"
+        app:layout_constraintTop_toTopOf="@id/saturation" />
 
     <FrameLayout
         android:id="@+id/swatch"
@@ -36,10 +36,10 @@
         android:background="@drawable/circle"
         android:padding="1dp"
         android:layout_margin="18dp"
-        app:layout_constraintBottom_toBottomOf="@id/hue"
-        app:layout_constraintEnd_toEndOf="@id/hue"
-        app:layout_constraintStart_toStartOf="@id/hue"
-        app:layout_constraintTop_toTopOf="@id/hue">
+        app:layout_constraintBottom_toBottomOf="@id/saturation"
+        app:layout_constraintEnd_toEndOf="@id/saturation"
+        app:layout_constraintStart_toStartOf="@id/saturation"
+        app:layout_constraintTop_toTopOf="@id/saturation">
 
         <View
             android:id="@+id/swatchPreview"
