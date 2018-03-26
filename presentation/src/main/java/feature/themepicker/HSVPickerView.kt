@@ -61,14 +61,11 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
 
                 MotionEvent.ACTION_MOVE -> {
                     // Calculate the new x/y position
-                    val x = (event.rawX + swatchX + min).within(min, max)
-                    val y = (event.rawY + swatchY + min).within(min, max)
-
-                    swatch.x = x
-                    swatch.y = y
+                    swatch.x = (event.rawX + swatchX + min).within(min, max)
+                    swatch.y = (event.rawY + swatchY + min).within(min, max)
 
                     val range = max - min
-                    val hsv = floatArrayOf(hue, (x - min) / range, 1 - (y - min) / range)
+                    val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
                     swatch.setTint(Color.HSVToColor(hsv))
                 }
 
@@ -87,7 +84,14 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
                 }
 
                 MotionEvent.ACTION_MOVE -> {
-                    hueThumb.x = (event.rawX + hueThumbX + hueThumb.width / 2).within(min, max)
+                    val x = (event.rawX + hueThumbX + min).within(min, max)
+
+                    hueThumb.x = x
+                    hue = (hueThumb.x - min) / (max - min) * 360
+
+                    val range = max - min
+                    val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
+                    swatch.setTint(Color.HSVToColor(hsv))
                 }
 
                 else -> return@setOnTouchListener false
@@ -118,6 +122,8 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
         // Set the position of the swatch
         setupBounds()
         val range = max - min
+
+        hueThumb.x = range * hsv[0] / 360 + min
         swatch.x = range * hsv[1] + min
         swatch.y = range * (1 - hsv[2]) + min
     }
