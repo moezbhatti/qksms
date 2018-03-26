@@ -52,18 +52,21 @@
         tools:tint="@color/tools_theme" />
 
     <FrameLayout
+        android:id="@+id/hueGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingBottom="16dp"
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp"
         android:paddingTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/saturation"
-        app:layout_constraintStart_toStartOf="@id/saturation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/saturation">
 
         <ImageView
-            android:id="@+id/hueBackground"
+            android:id="@+id/hueTrack"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_gravity="center_vertical"

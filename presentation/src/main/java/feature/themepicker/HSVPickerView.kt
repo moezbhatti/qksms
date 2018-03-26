@@ -79,14 +79,15 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
 
         var hueThumbX = 0f
 
-        hueBackground.setOnTouchListener { _, event ->
+        hueGroup.setOnTouchListener { _, event ->
+            setupBounds()
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     hueThumbX = event.x - event.rawX
                 }
 
                 MotionEvent.ACTION_MOVE -> {
-                    hueThumb.x = (event.rawX + hueThumbX + hueThumb.width / 2).within(0f, width - hueThumb.width.toFloat())
+                    hueThumb.x = (event.rawX + hueThumbX + hueThumb.width / 2).within(min, max)
                 }
 
                 else -> return@setOnTouchListener false
@@ -94,8 +95,8 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
             true
         }
 
-        hueBackground.clipToOutline = true
-        hueBackground.setImageDrawable(GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, hues))
+        hueTrack.clipToOutline = true
+        hueTrack.setImageDrawable(GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, hues))
     }
 
     private fun setupBounds() {
