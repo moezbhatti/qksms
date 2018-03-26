@@ -57,6 +57,7 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
                 MotionEvent.ACTION_DOWN -> {
                     swatchX = event.x - event.rawX
                     swatchY = event.y - event.rawY
+                    parent.requestDisallowInterceptTouchEvent(true)
                 }
 
                 MotionEvent.ACTION_MOVE -> {
@@ -67,6 +68,10 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
                     val range = max - min
                     val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
                     swatch.setTint(Color.HSVToColor(hsv))
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    parent.requestDisallowInterceptTouchEvent(false)
                 }
 
                 else -> return@setOnTouchListener false
@@ -81,6 +86,7 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     hueThumbX = event.x - event.rawX
+                    parent.requestDisallowInterceptTouchEvent(true)
                 }
 
                 MotionEvent.ACTION_MOVE -> {
@@ -92,6 +98,10 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
                     val range = max - min
                     val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
                     swatch.setTint(Color.HSVToColor(hsv))
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    parent.requestDisallowInterceptTouchEvent(false)
                 }
 
                 else -> return@setOnTouchListener false

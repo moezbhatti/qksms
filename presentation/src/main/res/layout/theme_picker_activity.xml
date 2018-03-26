@@ -30,8 +30,7 @@
         android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingEnd="12dp"
-        android:paddingStart="12dp"
-        android:visibility="gone" />
+        android:paddingStart="12dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
