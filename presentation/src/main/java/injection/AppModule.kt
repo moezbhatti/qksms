@@ -19,6 +19,7 @@
 package injection
 
 import android.app.Application
+import android.content.ContentResolver
 import android.content.Context
 import android.preference.PreferenceManager
 import com.f2prateek.rx.preferences2.RxSharedPreferences
@@ -59,6 +60,11 @@ class AppModule(private var application: Application) {
     @Singleton
     fun provideContext(): Context {
         return application
+    }
+
+    @Provides
+    fun provideContentResolver(context: Context): ContentResolver {
+        return context.contentResolver
     }
 
     @Provides

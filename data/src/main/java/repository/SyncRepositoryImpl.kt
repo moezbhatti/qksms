@@ -18,8 +18,8 @@
  */
 package repository
 
+import android.content.ContentResolver
 import android.content.ContentUris
-import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
@@ -44,7 +44,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SyncRepositoryImpl @Inject constructor(
-        private val context: Context,
+        private val contentResolver: ContentResolver,
         private val messageRepo: MessageRepository,
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
@@ -57,7 +57,11 @@ class SyncRepositoryImpl @Inject constructor(
         class Running : Status()
     }
 
-    private val contentResolver = context.contentResolver
+    /**
+     * Holds data that should be persisted across full syncs
+     */
+    private data class PersistedData(val id: Long, val archived: Boolean, val blocked: Boolean)
+
     private var status: Status = Status.Idle()
 
     override fun syncMessages(fullSync: Boolean) {
@@ -69,7 +73,20 @@ class SyncRepositoryImpl @Inject constructor(
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
 
+        var persistedData: List<PersistedData>? = null
+
         if (fullSync) {
+            persistedData = realm.where(Conversation::class.java)
+                    .beginGroup()
+                    .equalTo("archived", true)
+                    .or()
+                    .equalTo("blocked", true)
+                    .endGroup()
+                    .findAll()
+                    .map { conversation ->
+                        PersistedData(conversation.id, conversation.archived, conversation.blocked)
+                    }
+
             realm.delete(Conversation::class.java)
             realm.delete(Message::class.java)
             realm.delete(MmsPart::class.java)
@@ -82,7 +99,15 @@ class SyncRepositoryImpl @Inject constructor(
 
         // Sync conversations
         val conversationCursor = cursorToConversation.getConversationsCursor()
-        val conversations = conversationCursor.map { cursor -> cursorToConversation.map(cursor) }
+        val conversations = conversationCursor
+                .map { cursor -> cursorToConversation.map(cursor) }
+
+        persistedData?.forEach { data ->
+            val conversation = conversations.firstOrNull { conversation -> conversation.id == data.id }
+            conversation?.archived = data.archived
+            conversation?.blocked = data.blocked
+        }
+
         realm.insertOrUpdate(conversations)
         conversationCursor.close()
 
@@ -136,7 +161,7 @@ class SyncRepositoryImpl @Inject constructor(
             else -> ContentUris.withAppendedId(Telephony.Sms.CONTENT_URI, id)
         }
 
-        val cursor = context.contentResolver.query(stableUri, null, null, null, null)
+        val cursor = contentResolver.query(stableUri, null, null, null, null)
         val columnsMap = CursorToMessage.MessageColumns(cursor)
 
         // Map the cursor to a message
