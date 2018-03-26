@@ -77,6 +77,23 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
             true
         }
 
+        var hueThumbX = 0f
+
+        hueBackground.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    hueThumbX = event.x - event.rawX
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    hueThumb.x = (event.rawX + hueThumbX + hueThumb.width / 2).within(0f, width - hueThumb.width.toFloat())
+                }
+
+                else -> return@setOnTouchListener false
+            }
+            true
+        }
+
         hueBackground.clipToOutline = true
         hueBackground.setImageDrawable(GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, hues))
     }
