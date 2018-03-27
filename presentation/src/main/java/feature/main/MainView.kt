@@ -18,8 +18,8 @@
  */
 package feature.main
 
-import io.reactivex.Observable
 import common.base.QkView
+import io.reactivex.Observable
 
 interface MainView : QkView<MainState> {
 
@@ -32,7 +32,7 @@ interface MainView : QkView<MainState> {
     val conversationLongClickIntent: Observable<Long>
     val conversationMenuItemIntent: Observable<Int>
     val confirmDeleteIntent: Observable<Unit>
-    val swipeConversationIntent: Observable<Int>
+    val swipeConversationIntent: Observable<Long>
     val undoSwipeConversationIntent: Observable<Unit>
 
     fun clearSearch()

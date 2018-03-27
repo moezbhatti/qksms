@@ -31,6 +31,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -181,6 +182,12 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
                 onItemRangeInserted(positionStart, itemCount)
             }
+
+            override fun onChanged() {
+                if (conversationsAdapter.isAttachedToRecyclerView()) {
+                    empty.setVisible(conversationsAdapter.itemCount == 0, View.INVISIBLE)
+                }
+            }
         })
     }
 
@@ -203,7 +210,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.inbox_empty_text)
-                empty.setVisible(state.page.empty && !state.syncing)
                 compose.setVisible(true)
             }
 
@@ -214,7 +220,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.archived_empty_text)
-                empty.setVisible(state.page.empty && !state.syncing)
                 compose.setVisible(true)
             }
 
@@ -224,7 +229,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = ArrayList()
                 empty.setText(R.string.scheduled_empty_text)
-                empty.setVisible(state.page.empty && !state.syncing)
                 compose.setVisible(false)
             }
         }

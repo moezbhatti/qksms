@@ -26,14 +26,14 @@ import javax.inject.Inject
 
 class ConversationItemTouchCallback @Inject constructor() : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-    val swipes: Subject<Int> = PublishSubject.create()
+    val swipes: Subject<Long> = PublishSubject.create()
 
     override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
         return false
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        swipes.onNext(viewHolder.adapterPosition)
+        swipes.onNext(viewHolder.itemId)
     }
 
 }

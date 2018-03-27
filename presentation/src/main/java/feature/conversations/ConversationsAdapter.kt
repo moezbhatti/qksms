@@ -49,6 +49,11 @@ class ConversationsAdapter @Inject constructor(
     val longClicks: Subject<Long> = PublishSubject.create()
 
     private val disposables = CompositeDisposable()
+    private var attachedRecyclerViews = 0
+
+    init {
+        setHasStableIds(true)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutRes = when (viewType) {
@@ -67,8 +72,16 @@ class ConversationsAdapter @Inject constructor(
         return QkViewHolder(view)
     }
 
+    fun isAttachedToRecyclerView() = attachedRecyclerViews > 0
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        attachedRecyclerViews++
+    }
+
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
+        attachedRecyclerViews--
         disposables.clear()
     }
 
@@ -86,6 +99,10 @@ class ConversationsAdapter @Inject constructor(
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(message.date)
         view.snippet.text = if (message.isMe()) "You: ${message.getSummary()}" else message.getSummary()
+    }
+
+    override fun getItemId(index: Int): Long {
+        return getItem(index)!!.conversation!!.id
     }
 
     override fun getItemViewType(position: Int): Int {

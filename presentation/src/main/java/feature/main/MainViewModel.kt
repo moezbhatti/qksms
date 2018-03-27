@@ -44,9 +44,6 @@ import io.realm.Realm
 import model.SyncLog
 import repository.MessageRepository
 import util.Preferences
-import util.extensions.asObservable
-import util.extensions.mapNotNull
-import util.extensions.toFlowable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -63,30 +60,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var migratePreferences: MigratePreferences
     @Inject lateinit var partialSync: PartialSync
     @Inject lateinit var prefs: Preferences
-
-    private val conversations by lazy {
-        messageRepo.getConversations().also {
-            it.asFlowable()
-                    .withLatestFrom(state.toFlowable(), { conversations, state ->
-                        (state.page as? Inbox)?.let { page ->
-                            newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
-                        }
-                        conversations
-                    })
-        }
-    }
-
-    private val archivedConversations by lazy {
-        messageRepo.getConversations(true).also {
-            it.asFlowable()
-                    .withLatestFrom(state.toFlowable(), { conversations, state ->
-                        (state.page as? Archived)?.let { page ->
-                            newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
-                        }
-                        conversations
-                    })
-        }
-    }
 
     private val menuArchive by lazy { MenuItem(context.getString(R.string.menu_archive), 0) }
     private val menuUnarchive by lazy { MenuItem(context.getString(R.string.menu_unarchive), 1) }
@@ -113,7 +86,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
 
-        newState { it.copy(page = Inbox(data = conversations)) }
+        newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
 
         // Migrate the preferences from 2.7.3 if necessary
         migratePreferences.execute(Unit)
@@ -141,13 +114,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .withLatestFrom(state, { query, state ->
                     if (state.page is Inbox) {
-                        val conversations = when {
-                            query.isEmpty() -> conversations
-                            else -> conversations.filter { conversationFilter.filter(it, query) }
-                        }
+                        /*val conversations = messageRepo.getConversationsSnapshot()
+                                .filter { conversationFilter.filter(it, query) }
 
-                        //val page = state.page.copy(showClearButton = query.isNotEmpty(), data = conversations)
-                        //newState { it.copy(page = page) }
+                        val page = state.page.copy(showClearButton = query.isNotEmpty(), data = conversations)
+                        newState { it.copy(page = page) }*/
                     }
                 })
                 .autoDisposable(view.scope())
@@ -173,8 +144,8 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
-                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(archivedConversations)) }
+                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
+                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         else -> {
                         } // Do nothing
@@ -235,11 +206,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> deleteConversation.execute(threadId) }
 
-        val swipedConversation = view.swipeConversationIntent
-                .withLatestFrom(conversations.asObservable(), { position, conversations -> conversations[position] })
-                .mapNotNull { message -> message?.conversation?.id }
-
-        swipedConversation
+        view.swipeConversationIntent
                 .withLatestFrom(state, { threadId, state ->
                     markArchived.execute(threadId) {
                         if (state.page is Inbox) {
@@ -261,7 +228,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe()
 
         view.undoSwipeConversationIntent
-                .withLatestFrom(swipedConversation, { _, threadId -> threadId })
+                .withLatestFrom(view.swipeConversationIntent, { _, threadId -> threadId })
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnarchived.execute(threadId) }
     }

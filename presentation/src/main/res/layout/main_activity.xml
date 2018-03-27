@@ -96,7 +96,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:text="Your conversations will appear here"
-            tools:visibility="gone" />
+            tools:visibility="invisible" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

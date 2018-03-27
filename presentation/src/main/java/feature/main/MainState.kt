@@ -33,15 +33,12 @@ sealed class MainPage
 data class Inbox(
         val showClearButton: Boolean = false,
         val data: RealmResults<Message>? = null,
-        val empty: Boolean = false,
         val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(
         val data: RealmResults<Message>? = null,
-        val empty: Boolean = false,
         val menu: List<MenuItem> = ArrayList()) : MainPage()
 
 data class Scheduled(
-        val data: Any? = null,
-        val empty: Boolean = false) : MainPage()
+        val data: Any? = null) : MainPage()
