@@ -70,6 +70,10 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
             addView(view)
         }
 
+        childCount.forEach { index ->
+            getChildAt(index).isSelected = index == pager?.currentItem
+        }
+
         pager?.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 childCount.forEach { index ->
