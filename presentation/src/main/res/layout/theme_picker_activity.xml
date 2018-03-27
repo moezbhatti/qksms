@@ -17,9 +17,11 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/contentView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -48,7 +50,7 @@
                 android:layout_height="match_parent" />
 
             <include
-                android:id="@+id/rgbPicker"
+                android:id="@+id/hsvPicker"
                 layout="@layout/theme_picker_hsv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

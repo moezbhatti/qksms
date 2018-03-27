@@ -19,6 +19,7 @@
 package feature.themepicker
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
@@ -29,10 +30,11 @@ import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import injection.appComponent
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.theme_picker_activity.*
 import kotlinx.android.synthetic.main.theme_picker_hsv.*
 import javax.inject.Inject
-
 
 class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePickerView {
 
@@ -41,6 +43,7 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
     override val hsvThemeSelectedIntent by lazy { picker.selectedColor }
     override val hsvThemeClearedIntent by lazy { clear.clicks() }
     override val hsvThemeAppliedIntent by lazy { apply.clicks() }
+    override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
 
     @Inject lateinit var themeAdapter: ThemeAdapter
     @Inject lateinit var themePagerAdapter: ThemePagerAdapter
@@ -72,6 +75,13 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         colors.textSecondary
                 .autoDisposable(scope())
                 .subscribe { color -> clear.setTint(color) }
+    }
+
+    override fun showQksmsPlusSnackbar() {
+        Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
+            setAction(R.string.button_more, { viewQksmsPlusIntent.onNext(Unit) })
+            show()
+        }
     }
 
     override fun render(state: ThemePickerState) {

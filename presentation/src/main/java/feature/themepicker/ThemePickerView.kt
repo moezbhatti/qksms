@@ -20,6 +20,7 @@ package feature.themepicker
 
 import common.base.QkView
 import io.reactivex.Observable
+import io.reactivex.subjects.Subject
 
 interface ThemePickerView : QkView<ThemePickerState> {
 
@@ -27,7 +28,9 @@ interface ThemePickerView : QkView<ThemePickerState> {
     val hsvThemeSelectedIntent: Observable<Int>
     val hsvThemeClearedIntent: Observable<*>
     val hsvThemeAppliedIntent: Observable<*>
+    val viewQksmsPlusIntent: Subject<Unit>
 
     fun setCurrentTheme(color: Int)
+    fun showQksmsPlusSnackbar()
 
 }

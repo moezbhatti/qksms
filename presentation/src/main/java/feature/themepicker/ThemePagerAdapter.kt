@@ -29,14 +29,14 @@ class ThemePagerAdapter @Inject constructor(private val context: Context) : Page
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         return when (position) {
-            1 -> container.findViewById(R.id.rgbPicker)
+            1 -> container.findViewById(R.id.hsvPicker)
             else -> container.findViewById(R.id.materialColors)
         }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            1 -> context.getString(R.string.theme_rgb)
+            1 -> context.getString(R.string.theme_plus)
             else -> context.getString(R.string.theme_material)
         }
     }

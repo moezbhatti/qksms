@@ -149,6 +149,13 @@
             <common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_palette_black_24dp"
+                app:summary="@string/qksms_plus_themes_summary"
+                app:title="@string/qksms_plus_themes_title" />
+
+            <common.widget.PreferenceView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:icon="@drawable/ic_invert_colors_black_24dp"
                 app:summary="@string/qksms_plus_night_summary"
                 app:title="@string/qksms_plus_night_title" />
@@ -171,14 +178,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:textColor="primary" />
-
-            <common.widget.PreferenceView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.25"
-                app:icon="@drawable/ic_palette_black_24dp"
-                app:summary="@string/qksms_plus_themes_summary"
-                app:title="@string/qksms_plus_themes_title" />
 
             <common.widget.PreferenceView
                 android:layout_width="match_parent"

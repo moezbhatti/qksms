@@ -22,7 +22,9 @@ import android.content.Intent
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.Navigator
 import common.base.QkViewModel
+import common.util.BillingManager
 import common.util.Colors
 import injection.appComponent
 import io.reactivex.rxkotlin.Observables
@@ -32,7 +34,9 @@ import javax.inject.Inject
 
 class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
 
+    @Inject lateinit var billingManager: BillingManager
     @Inject lateinit var colors: Colors
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var prefs: Preferences
 
     private val threadId = intent.extras?.getLong("threadId") ?: 0L
@@ -74,8 +78,20 @@ class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemeP
         // Update the theme, when apply is clicked
         view.hsvThemeAppliedIntent
                 .withLatestFrom(view.hsvThemeSelectedIntent, { _, color -> color })
+                .withLatestFrom(billingManager.plusStatus, { color, upgradeStatus ->
+                    if (upgradeStatus == BillingManager.UpgradeStatus.REGULAR) {
+                        view.showQksmsPlusSnackbar()
+                    } else {
+                        theme.set(color)
+                    }
+                })
                 .autoDisposable(view.scope())
-                .subscribe { color -> theme.set(color) }
+                .subscribe()
+
+        // Show QKSMS+ activity
+        view.viewQksmsPlusIntent
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showQksmsPlusActivity() }
 
         // Reset the theme
         view.hsvThemeClearedIntent

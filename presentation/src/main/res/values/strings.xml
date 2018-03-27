@@ -141,7 +141,7 @@
     <string name="widget_more">View more conversations</string>
 
     <string name="theme_material">Material</string>
-    <string name="theme_rgb">RGB</string>
+    <string name="theme_plus">QKSMS+</string>
     <string name="theme_apply">Apply</string>
 
     <string name="notification_reply">Reply</string>
