@@ -42,6 +42,7 @@ import common.Navigator
 import common.base.QkThemedActivity
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
+import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import feature.conversations.ConversationItemTouchCallback
 import feature.conversations.ConversationsAdapter
@@ -134,6 +135,11 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .doOnNext { color -> compose.setBackgroundTint(color) }
                 .autoDisposable(scope())
                 .subscribe()
+
+        // Set the FAB compose icon color
+        colors.textPrimaryOnTheme
+                .autoDisposable(scope())
+                .subscribe { color -> compose.setTint(color) }
 
         // Set the hamburger icon color
         colors.textSecondary
