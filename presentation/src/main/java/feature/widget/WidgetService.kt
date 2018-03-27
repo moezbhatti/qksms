@@ -16,20 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package manager
 
-import android.content.Context
+package feature.widget
+
 import android.content.Intent
-import com.klinker.android.send_message.BroadcastUtils
-import me.leolin.shortcutbadger.ShortcutBadger
-import javax.inject.Inject
+import android.widget.RemoteViewsService
 
-class WidgetManagerImpl @Inject constructor(private val context: Context) : WidgetManager {
+class WidgetService : RemoteViewsService() {
 
-    override fun updateUnreadCount(count: Int) {
-        ShortcutBadger.applyCount(context, count)
-
-        BroadcastUtils.sendExplicitBroadcast(context, Intent(), WidgetManager.ACTION_NOTIFY_DATASET_CHANGED)
+    override fun onGetViewFactory(intent: Intent): RemoteViewsService.RemoteViewsFactory {
+        return WidgetAdapter(intent)
     }
 
 }

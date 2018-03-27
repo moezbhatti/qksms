@@ -93,6 +93,27 @@ class MessageRepositoryImpl @Inject constructor(
         })
     }
 
+    override fun getConversationsForWidget(): List<Pair<Conversation, Message>> {
+        val realm = Realm.getDefaultInstance()
+
+        val conversations = realm.copyFromRealm(realm.where(Conversation::class.java)
+                .equalTo("archived", false)
+                .equalTo("blocked", false)
+                .findAll())
+
+        val messages = realm.copyFromRealm(realm.where(Message::class.java)
+                .sort("date", Sort.DESCENDING)
+                .distinctValues("threadId")
+                .findAll())
+
+        val conversationMap = conversations.associateBy { conversation -> conversation.id }
+
+        return messages.mapNotNull { message ->
+            val conversation = conversationMap[message.threadId]
+            if (conversation == null) null else Pair(conversation, message)
+        }
+    }
+
     override fun getBlockedConversations(): Flowable<List<Conversation>> {
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)

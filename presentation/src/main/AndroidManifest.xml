@@ -112,6 +112,18 @@
                 <action android:name="android.provider.action.EXTERNAL_PROVIDER_CHANGE" />
             </intent-filter>
         </receiver>
+        <receiver android:name="feature.widget.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.moez.QKSMS.intent.action.ACTION_NOTIFY_DATASET_CHANGED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service
@@ -128,6 +140,9 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
+        <service
+            android:name="feature.widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <meta-data
             android:name="preloaded_fonts"

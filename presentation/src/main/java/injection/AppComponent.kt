@@ -20,7 +20,6 @@ package injection
 
 import common.QKApplication
 import common.util.ContactImageLoader
-import dagger.Component
 import common.widget.AvatarView
 import common.widget.MmsPreviewView
 import common.widget.PagerTitleView
@@ -29,6 +28,7 @@ import common.widget.QkEditText
 import common.widget.QkSwitch
 import common.widget.QkTextView
 import common.widget.Separator
+import dagger.Component
 import feature.blocked.BlockedActivity
 import feature.blocked.BlockedViewModel
 import feature.compose.ComposeActivity
@@ -50,6 +50,8 @@ import feature.setup.SetupActivity
 import feature.setup.SetupViewModel
 import feature.themepicker.ThemePickerActivity
 import feature.themepicker.ThemePickerViewModel
+import feature.widget.WidgetAdapter
+import feature.widget.WidgetProvider
 import receiver.DefaultSmsChangedReceiver
 import receiver.MarkReadReceiver
 import receiver.MarkSeenReceiver
@@ -93,6 +95,9 @@ interface AppComponent {
     fun inject(receiver: RemoteMessagingReceiver)
     fun inject(receiver: SmsProviderChangedReceiver)
     fun inject(receiver: SmsReceiver)
+    fun inject(receiver: WidgetProvider)
+
+    fun inject(service: WidgetAdapter)
 
     fun inject(view: AvatarView)
     fun inject(view: DetailedChipView)

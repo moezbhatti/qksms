@@ -30,6 +30,8 @@ interface MessageRepository {
 
     fun getConversations(archived: Boolean = false): Flowable<List<Pair<Conversation, Message>>>
 
+    fun getConversationsForWidget(): List<Pair<Conversation, Message>>
+
     fun getBlockedConversations(): Flowable<List<Conversation>>
 
     fun getConversationAsync(threadId: Long): Conversation

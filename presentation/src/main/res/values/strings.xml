@@ -137,6 +137,9 @@
 
     <string name="settings_dialog_theme_title">Theme</string>
 
+    <string name="widget_loading">Loading…</string>
+    <string name="widget_more">View more conversations</string>
+
     <string name="theme_material">Material</string>
     <string name="theme_rgb">RGB</string>
 

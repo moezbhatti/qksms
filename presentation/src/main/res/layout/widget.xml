@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background card. Needs to be an ImageView because nothing else supports tinting -->
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/rounded_rectangle_4dp" />
+
+    <!-- Apply the background card -->
+    <ImageView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:src="@drawable/rounded_rectangle_top_4dp" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@id/toolbar"
+        android:layout_toStartOf="@id/compose"
+        android:background="@drawable/ripple"
+        android:gravity="center_vertical"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/app_name"
+        android:textSize="18sp"
+        tools:textColor="@color/textPrimary" />
+
+    <ImageView
+        android:id="@+id/compose"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/toolbar"
+        android:background="@drawable/ripple"
+        android:padding="12dp"
+        android:src="@drawable/ic_add_black_24dp"
+        tools:tint="@color/tools_theme" />
+
+    <ListView
+        android:id="@+id/conversations"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/toolbar"
+        android:cacheColorHint="#00000000"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        tools:listitem="@layout/widget_list_item" />
+
+    <!-- This needs to be a FrameLayout, since Views are not supported-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/ab_shadow" />
+
+</RelativeLayout>
