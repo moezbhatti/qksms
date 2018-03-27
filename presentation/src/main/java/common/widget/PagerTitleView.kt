@@ -28,16 +28,20 @@ import android.widget.TextView
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
 import common.util.Colors
 import common.util.extensions.forEach
+import injection.appComponent
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.tab_view.view.*
 import javax.inject.Inject
 
 class PagerTitleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
 
     @Inject lateinit var colors: Colors
+
+    private val threadId: Subject<Long> = BehaviorSubject.create()
 
     var pager: ViewPager? = null
         set(value) {
@@ -49,6 +53,10 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     init {
         if (!isInEditMode) appComponent.inject(this)
+    }
+
+    fun setThreadId(id: Long) {
+        threadId.onNext(id)
     }
 
     private fun recreate() {
@@ -78,8 +86,12 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
                 intArrayOf(android.R.attr.state_selected),
                 intArrayOf(-android.R.attr.state_selected))
 
+        val theme = threadId
+                .distinctUntilChanged()
+                .switchMap { threadId -> colors.themeForConversation(threadId) }
+
         Observables
-                .combineLatest(colors.theme, colors.textSecondary, { theme, textSecondary ->
+                .combineLatest(theme, colors.textSecondary, { theme, textSecondary ->
                     ColorStateList(states, intArrayOf(theme, textSecondary))
                 })
                 .autoDisposable(scope())

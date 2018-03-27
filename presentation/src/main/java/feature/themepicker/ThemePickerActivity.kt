@@ -75,6 +75,8 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
     }
 
     override fun render(state: ThemePickerState) {
+        tabs.setThreadId(state.threadId)
+
         themeAdapter.threadId = state.threadId
 
         applyGroup.setVisible(state.applyThemeVisible)
@@ -84,5 +86,6 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
 
     override fun setCurrentTheme(color: Int) {
         picker.setColor(color)
+        themeAdapter.selectedColor = color
     }
 }
