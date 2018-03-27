@@ -28,9 +28,9 @@ import model.MmsPart
 
 interface MessageRepository {
 
-    fun getConversations(archived: Boolean = false): Flowable<List<Pair<Conversation, Message>>>
+    fun getConversations(archived: Boolean = false): RealmResults<Message>
 
-    fun getConversationsForWidget(): List<Pair<Conversation, Message>>
+    fun getConversationsForWidget(): List<Message>
 
     fun getBlockedConversations(): Flowable<List<Conversation>>
 

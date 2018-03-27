@@ -18,10 +18,9 @@
  */
 package feature.main
 
-import io.reactivex.Flowable
-import model.Conversation
-import model.Message
 import common.MenuItem
+import io.realm.RealmResults
+import model.Message
 
 data class MainState(
         val page: MainPage = Inbox(),
@@ -33,13 +32,13 @@ sealed class MainPage
 
 data class Inbox(
         val showClearButton: Boolean = false,
-        val data: Flowable<List<Pair<Conversation, Message>>>? = null,
+        val data: RealmResults<Message>? = null,
         val empty: Boolean = false,
         val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(
-        val data: Flowable<List<Pair<Conversation, Message>>>?,
+        val data: RealmResults<Message>? = null,
         val empty: Boolean = false,
         val menu: List<MenuItem> = ArrayList()) : MainPage()
 

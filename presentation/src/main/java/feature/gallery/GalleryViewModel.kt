@@ -23,13 +23,13 @@ import android.content.Intent
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.base.QkViewModel
 import common.util.extensions.makeToast
+import injection.appComponent
 import interactor.SaveImage
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
-import common.base.QkViewModel
 import repository.MessageRepository
 import util.extensions.mapNotNull
 import javax.inject.Inject
@@ -54,7 +54,7 @@ class GalleryViewModel(intent: Intent) : QkViewModel<GalleryView, GalleryState>(
 
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }
-                .mapNotNull { message -> messageRepo.getConversation(message.threadId) }
+                .mapNotNull { message -> message.conversation }
                 .subscribe { conversation -> newState { it.copy(title = conversation.getTitle()) } }
     }
 

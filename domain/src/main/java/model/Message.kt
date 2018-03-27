@@ -32,12 +32,26 @@ open class Message : RealmObject() {
 
     @PrimaryKey var id: Long = 0
 
+    var conversation: Conversation? = null
+        set(value) {
+            field = value
+            threadId = value?.id ?: 0
+        }
+
+    /**
+     * This is a hack so that we can index by the threadId, and return distinct threadIds when
+     * querying for all conversations for the MainActivity
+     */
+    @Index
+    @Deprecated("This is only here for Realm to access - it should be ignored in our codebase")
+    var threadId: Long = 0
+        get() = conversation?.id ?: 0
+
     // The MMS-SMS content provider returns messages where duplicate ids can exist. This is because
     // SMS and MMS are stored in separate tables. We can't use these ids as our realm message id
     // since it's our primary key for the single message object, so we'll store the original id in
     // case we need to access the original message item in the content provider
     var contentId: Long = 0
-    @Index var threadId: Long = 0
     var address: String = ""
     var boxId: Int = 0
     var type: String = ""

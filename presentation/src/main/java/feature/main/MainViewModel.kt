@@ -26,8 +26,11 @@ import android.support.v4.content.ContextCompat
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.MenuItem
+import common.Navigator
+import common.base.QkViewModel
 import common.util.filter.ConversationFilter
+import injection.appComponent
 import interactor.DeleteConversation
 import interactor.MarkAllSeen
 import interactor.MarkArchived
@@ -39,11 +42,10 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.realm.Realm
 import model.SyncLog
-import common.MenuItem
-import common.Navigator
-import common.base.QkViewModel
 import repository.MessageRepository
 import util.Preferences
+import util.extensions.asObservable
+import util.extensions.mapNotNull
 import util.extensions.toFlowable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -63,23 +65,27 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var prefs: Preferences
 
     private val conversations by lazy {
-        messageRepo.getConversations()
-                .withLatestFrom(state.toFlowable(), { conversations, state ->
-                    (state.page as? Inbox)?.let { page ->
-                        newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
-                    }
-                    conversations
-                })
+        messageRepo.getConversations().also {
+            it.asFlowable()
+                    .withLatestFrom(state.toFlowable(), { conversations, state ->
+                        (state.page as? Inbox)?.let { page ->
+                            newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
+                        }
+                        conversations
+                    })
+        }
     }
 
     private val archivedConversations by lazy {
-        messageRepo.getConversations(true)
-                .withLatestFrom(state.toFlowable(), { conversations, state ->
-                    (state.page as? Archived)?.let { page ->
-                        newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
-                    }
-                    conversations
-                })
+        messageRepo.getConversations(true).also {
+            it.asFlowable()
+                    .withLatestFrom(state.toFlowable(), { conversations, state ->
+                        (state.page as? Archived)?.let { page ->
+                            newState { it.copy(page = page.copy(empty = conversations.isEmpty())) }
+                        }
+                        conversations
+                    })
+        }
     }
 
     private val menuArchive by lazy { MenuItem(context.getString(R.string.menu_archive), 0) }
@@ -137,11 +143,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                     if (state.page is Inbox) {
                         val conversations = when {
                             query.isEmpty() -> conversations
-                            else -> conversations.map { list -> list.filter { conversationFilter.filter(it.first, query) } }
+                            else -> conversations.filter { conversationFilter.filter(it, query) }
                         }
 
-                        val page = state.page.copy(showClearButton = query.isNotEmpty(), data = conversations)
-                        newState { it.copy(page = page) }
+                        //val page = state.page.copy(showClearButton = query.isNotEmpty(), data = conversations)
+                        //newState { it.copy(page = page) }
                     }
                 })
                 .autoDisposable(view.scope())
@@ -230,9 +236,8 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .subscribe { threadId -> deleteConversation.execute(threadId) }
 
         val swipedConversation = view.swipeConversationIntent
-                .withLatestFrom(conversations.toObservable(), { position, conversations -> conversations[position] })
-                .map { pair -> pair.first }
-                .map { conversation -> conversation.id }
+                .withLatestFrom(conversations.asObservable(), { position, conversations -> conversations[position] })
+                .mapNotNull { message -> message?.conversation?.id }
 
         swipedConversation
                 .withLatestFrom(state, { threadId, state ->

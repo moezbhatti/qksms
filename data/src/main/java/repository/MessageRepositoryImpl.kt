@@ -34,7 +34,6 @@ import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Flowables
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
@@ -64,54 +63,24 @@ class MessageRepositoryImpl @Inject constructor(
         private val cursorToRecipient: CursorToRecipient,
         private val prefs: Preferences) : MessageRepository {
 
-    override fun getConversations(archived: Boolean): Flowable<List<Pair<Conversation, Message>>> {
-        val realm = Realm.getDefaultInstance()
-
-        val conversationFlowable = realm.where(Conversation::class.java)
-                .equalTo("archived", archived)
-                .equalTo("blocked", false)
-                .findAllAsync()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .map { realm.copyFromRealm(it) }
-
-        val messageFlowable = realm.where(Message::class.java)
-                .sort("date", Sort.DESCENDING)
+    override fun getConversations(archived: Boolean): RealmResults<Message> {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
                 .distinctValues("threadId")
+                .equalTo("conversation.archived", archived)
+                .equalTo("conversation.blocked", false)
+                .sort("date", Sort.DESCENDING)
                 .findAllAsync()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .map { realm.copyFromRealm(it) }
-
-        return Flowables.combineLatest(conversationFlowable, messageFlowable, { conversations, messages ->
-            val conversationMap = conversations.associateBy { conversation -> conversation.id }
-
-            messages.mapNotNull { message ->
-                val conversation = conversationMap[message.threadId]
-                if (conversation == null) null else Pair(conversation, message)
-            }
-        })
     }
 
-    override fun getConversationsForWidget(): List<Pair<Conversation, Message>> {
+    override fun getConversationsForWidget(): List<Message> {
         val realm = Realm.getDefaultInstance()
-
-        val conversations = realm.copyFromRealm(realm.where(Conversation::class.java)
-                .equalTo("archived", false)
-                .equalTo("blocked", false)
-                .findAll())
-
-        val messages = realm.copyFromRealm(realm.where(Message::class.java)
-                .sort("date", Sort.DESCENDING)
+        return realm.copyFromRealm(realm.where(Message::class.java)
                 .distinctValues("threadId")
-                .findAll())
-
-        val conversationMap = conversations.associateBy { conversation -> conversation.id }
-
-        return messages.mapNotNull { message ->
-            val conversation = conversationMap[message.threadId]
-            if (conversation == null) null else Pair(conversation, message)
-        }
+                .equalTo("conversation.archived", false)
+                .equalTo("conversation.blocked", false)
+                .sort("date", Sort.DESCENDING)
+                .findAllAsync())
     }
 
     override fun getBlockedConversations(): Flowable<List<Conversation>> {
@@ -383,7 +352,6 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Insert the message to Realm
         val message = Message().apply {
-            this.threadId = threadId
             this.address = address
             this.body = body
             this.date = System.currentTimeMillis()
@@ -393,10 +361,12 @@ class MessageRepositoryImpl @Inject constructor(
             type = "sms"
             read = true
             seen = true
+
+            conversation = getOrCreateConversation(threadId)
         }
         val realm = Realm.getDefaultInstance()
         var managedMessage: Message? = null
-        realm.executeTransaction { managedMessage = realm.copyToRealm(message) }
+        realm.executeTransaction { managedMessage = realm.copyToRealmOrUpdate(message) }
 
         // Insert the message to the native content provider
         val values = ContentValues().apply {
@@ -427,14 +397,14 @@ class MessageRepositoryImpl @Inject constructor(
             this.date = System.currentTimeMillis()
 
             id = messageIds.newId()
-            threadId = getOrCreateConversation(address).blockingGet().id
             boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
             type = "sms"
 
+            conversation = getOrCreateConversation(address).blockingGet()
         }
         val realm = Realm.getDefaultInstance()
         var managedMessage: Message? = null
-        realm.executeTransaction { managedMessage = realm.copyToRealm(message) }
+        realm.executeTransaction { managedMessage = realm.copyToRealmOrUpdate(message) }
 
         // Insert the message to the native content provider
         val values = ContentValues().apply {

@@ -138,8 +138,8 @@ class NotificationManagerImpl @Inject constructor(
             return
         }
 
-        val threadId = message.threadId
-        val conversation = messageRepo.getConversation(threadId) ?: return
+        val conversation = message.conversation ?: return
+        val threadId = conversation.id
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)

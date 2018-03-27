@@ -25,20 +25,19 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
+import common.Navigator
+import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import model.Contact
-import model.Conversation
 import model.Message
 import model.PhoneNumber
-import common.Navigator
-import common.base.FlowableAdapter
-import common.base.QkViewHolder
 import repository.MessageRepository
 import javax.inject.Inject
 
@@ -48,7 +47,7 @@ class ConversationsAdapter @Inject constructor(
         val messageRepo: MessageRepository,
         val dateFormatter: DateFormatter,
         val colors: Colors
-) : FlowableAdapter<Pair<Conversation, Message>>() {
+) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     val clicks: Subject<Long> = PublishSubject.create()
     val longClicks: Subject<Long> = PublishSubject.create()
@@ -78,8 +77,8 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val conversation = getItem(position).first
-        val message = getItem(position).second
+        val message = getItem(position)!!
+        val conversation = message.conversation!!
         val view = viewHolder.itemView
 
         view.clicks().subscribe { clicks.onNext(conversation.id) }
@@ -94,16 +93,6 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).second.read) 0 else 1
-    }
-
-    override fun areItemsTheSame(old: Pair<Conversation, Message>, new: Pair<Conversation, Message>): Boolean {
-        return old.first.id == new.first.id
-    }
-
-    override fun areContentsTheSame(old: Pair<Conversation, Message>, new: Pair<Conversation, Message>): Boolean {
-        return old.second.id == new.second.id &&
-                old.second.read == new.second.read &&
-                old.first.recipients == new.first.recipients
+        return if (getItem(position)!!.read) 0 else 1
     }
 }

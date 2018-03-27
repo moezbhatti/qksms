@@ -97,6 +97,17 @@ class SyncRepositoryImpl @Inject constructor(
         val lastSync = realm.where(Message::class.java)?.max("date")?.toLong() ?: 0
         realm.insert(SyncLog())
 
+
+        // Sync messages
+        val messageCursor = cursorToMessage.getMessagesCursor()
+        val messageColumns = CursorToMessage.MessageColumns(messageCursor)
+        val messages = messageCursor.mapWhile(
+                { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) },
+                { message -> message.date > lastSync })
+        realm.insertOrUpdate(messages)
+        messageCursor.close()
+
+
         // Sync conversations
         val conversationCursor = cursorToConversation.getConversationsCursor()
         val conversations = conversationCursor
@@ -110,16 +121,6 @@ class SyncRepositoryImpl @Inject constructor(
 
         realm.insertOrUpdate(conversations)
         conversationCursor.close()
-
-
-        // Sync messages
-        val messageCursor = cursorToMessage.getMessagesCursor()
-        val messageColumns = CursorToMessage.MessageColumns(messageCursor)
-        val messages = messageCursor.mapWhile(
-                { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) },
-                { message -> message.date > lastSync })
-        realm.insertOrUpdate(messages)
-        messageCursor.close()
 
 
         // Sync recipients
@@ -167,11 +168,11 @@ class SyncRepositoryImpl @Inject constructor(
         // Map the cursor to a message
         return cursor.asFlowable()
                 .map { cursorToMessage.map(Pair(it, columnsMap)) }
-                .map { message ->
-                    existingId?.let { message.id = it }
-                    message
+                .doOnNext { message -> existingId?.let { message.id = it } }
+                .doOnNext { message ->
+                    val threadId = message.conversation?.id
+                    message.conversation = threadId?.let { messageRepo.getOrCreateConversation(threadId) }
                 }
-                .doOnNext { message -> messageRepo.getOrCreateConversation(message.threadId) }
                 .doOnNext { message -> message.insertOrUpdate() }
     }
 

@@ -38,7 +38,6 @@ import common.util.extensions.dpToPx
 import feature.main.MainActivity
 import injection.appComponent
 import model.Contact
-import model.Conversation
 import model.Message
 import model.PhoneNumber
 import repository.MessageRepository
@@ -57,7 +56,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
     private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
     private val smallWidget = intent.getBooleanExtra("small_widget", false)
-    private var conversations: List<Pair<Conversation, Message>> = listOf()
+    private var conversations: List<Message> = listOf()
     private val appWidgetManager by lazy { AppWidgetManager.getInstance(context) }
 
     // Cache colors, load lazily. This entire class is recreated when the widget is recreated,
@@ -98,8 +97,8 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
     }
 
     private fun getConversationView(position: Int): RemoteViews {
-        val conversation = conversations[position].first
-        val message = conversations[position].second
+        val message = conversations[position]
+        val conversation = message.conversation!!
 
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_list_item)
 
