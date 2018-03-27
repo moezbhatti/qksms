@@ -30,7 +30,7 @@ interface MessageRepository {
 
     fun getConversations(archived: Boolean = false): RealmResults<Message>
 
-    fun getConversationsForWidget(): List<Message>
+    fun getConversationsSnapshot(): List<Message>
 
     fun getBlockedConversations(): Flowable<List<Conversation>>
 

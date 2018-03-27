@@ -74,7 +74,7 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAllAsync()
     }
 
-    override fun getConversationsForWidget(): List<Message> {
+    override fun getConversationsSnapshot(): List<Message> {
         val realm = Realm.getDefaultInstance()
         return realm.copyFromRealm(realm.where(Message::class.java)
                 .distinctValues("threadId")
