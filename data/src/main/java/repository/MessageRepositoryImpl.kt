@@ -82,7 +82,7 @@ class MessageRepositoryImpl @Inject constructor(
                 .equalTo("conversation.archived", false)
                 .equalTo("conversation.blocked", false)
                 .sort("date", Sort.DESCENDING)
-                .findAllAsync())
+                .findAll())
     }
 
     override fun getBlockedConversations(): Flowable<List<Conversation>> {
