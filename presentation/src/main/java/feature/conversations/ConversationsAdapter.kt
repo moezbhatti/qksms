@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
-import common.Navigator
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
@@ -38,15 +37,12 @@ import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import model.Contact
 import model.Message
 import model.PhoneNumber
-import repository.MessageRepository
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
-        val context: Context,
-        val navigator: Navigator,
-        val messageRepo: MessageRepository,
-        val dateFormatter: DateFormatter,
-        val colors: Colors
+        private val context: Context,
+        private val dateFormatter: DateFormatter,
+        private val colors: Colors
 ) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     val clicks: Subject<Long> = PublishSubject.create()
