@@ -49,7 +49,9 @@
         android:elevation="4dp"
         android:padding="2dp"
         android:src="@drawable/circle"
-        tools:tint="@color/tools_theme" />
+        tools:tint="@color/tools_theme"
+        tools:translationX="240dp"
+        tools:translationY="120dp" />
 
     <FrameLayout
         android:id="@+id/hueGroup"

@@ -20,10 +20,14 @@ package feature.themepicker
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
+import common.util.extensions.setBackgroundTint
+import common.util.extensions.setTint
+import common.util.extensions.setVisible
 import injection.appComponent
 import kotlinx.android.synthetic.main.theme_picker_activity.*
 import kotlinx.android.synthetic.main.theme_picker_hsv.*
@@ -34,6 +38,9 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
 
     override val viewModelClass = ThemePickerViewModel::class
     override val themeSelectedIntent by lazy { themeAdapter.colorSelected }
+    override val hsvThemeSelectedIntent by lazy { picker.selectedColor }
+    override val hsvThemeClearedIntent by lazy { clear.clicks() }
+    override val hsvThemeAppliedIntent by lazy { apply.clicks() }
 
     @Inject lateinit var themeAdapter: ThemeAdapter
     @Inject lateinit var themePagerAdapter: ThemePagerAdapter
@@ -61,12 +68,21 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         colors.background
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
+
+        colors.textSecondary
+                .autoDisposable(scope())
+                .subscribe { color -> clear.setTint(color) }
     }
 
     override fun render(state: ThemePickerState) {
         themeAdapter.threadId = state.threadId
-        themeAdapter.selectedColor = state.selectedColor
 
-        picker.setColor(state.selectedColor)
+        applyGroup.setVisible(state.applyThemeVisible)
+        apply.setBackgroundTint(state.newColor)
+        apply.setTextColor(state.newTextColor)
+    }
+
+    override fun setCurrentTheme(color: Int) {
+        picker.setColor(color)
     }
 }

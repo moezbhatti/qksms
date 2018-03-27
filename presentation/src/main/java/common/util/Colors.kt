@@ -194,6 +194,9 @@ class Colors @Inject constructor(private val context: Context, private val prefs
             .distinctUntilChanged()
 
     fun textPrimaryOnThemeForConversation(threadId: Long = 0): Observable<Int> = themeForConversation(threadId)
+            .switchMap { color -> textPrimaryOnThemeForColor(color) }
+
+    fun textPrimaryOnThemeForColor(color: Int): Observable<Int> = Observable.just(color)
             .map { theme -> measureLuminance(theme) }
             .map { themeLuminance -> primaryTextLuminance / themeLuminance }
             .map { contrastRatio -> contrastRatio < minimumContrastRatio }
@@ -202,6 +205,9 @@ class Colors @Inject constructor(private val context: Context, private val prefs
             .distinctUntilChanged()
 
     fun textSecondaryOnThemeForConversation(threadId: Long = 0): Observable<Int> = themeForConversation(threadId)
+            .switchMap { color -> textSecondaryOnThemeForColor(color) }
+
+    fun textSecondaryOnThemeForColor(color: Int): Observable<Int> = Observable.just(color)
             .map { theme -> measureLuminance(theme) }
             .map { themeLuminance -> secondaryTextLuminance / themeLuminance }
             .map { contrastRatio -> contrastRatio < minimumContrastRatio }
@@ -210,6 +216,9 @@ class Colors @Inject constructor(private val context: Context, private val prefs
             .distinctUntilChanged()
 
     fun textTertiaryOnThemeForConversation(threadId: Long = 0): Observable<Int> = themeForConversation(threadId)
+            .switchMap { color -> textTertiaryOnThemeForColor(color) }
+
+    fun textTertiaryOnThemeForColor(color: Int): Observable<Int> = Observable.just(color)
             .map { theme -> measureLuminance(theme) }
             .map { themeLuminance -> tertiaryTextLuminance / themeLuminance }
             .map { contrastRatio -> contrastRatio < minimumContrastRatio }

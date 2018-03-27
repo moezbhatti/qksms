@@ -23,13 +23,16 @@ import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkViewModel
+import common.util.Colors
 import injection.appComponent
-import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.Observables
+import io.reactivex.rxkotlin.withLatestFrom
 import util.Preferences
 import javax.inject.Inject
 
 class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
 
+    @Inject lateinit var colors: Colors
     @Inject lateinit var prefs: Preferences
 
     private val threadId = intent.extras?.getLong("threadId") ?: 0L
@@ -41,17 +44,44 @@ class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemeP
         newState { it.copy(threadId = threadId) }
 
         theme = prefs.theme(threadId)
-
-        disposables += theme.asObservable()
-                .subscribe { color -> newState { it.copy(selectedColor = color) } }
     }
 
     override fun bindView(view: ThemePickerView) {
         super.bindView(view)
 
+        theme.asObservable()
+                .autoDisposable(view.scope())
+                .subscribe { color -> view.setCurrentTheme(color) }
+
+        // Update the theme when a material theme is clicked
         view.themeSelectedIntent
                 .autoDisposable(view.scope())
                 .subscribe { color -> theme.set(color) }
+
+        // Update the color of the apply button
+        view.hsvThemeSelectedIntent
+                .doOnNext { color -> newState { it.copy(newColor = color) } }
+                .switchMap { color -> colors.textPrimaryOnThemeForColor(color) }
+                .doOnNext { color -> newState { it.copy(newTextColor = color) } }
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        // Toggle the visibility of the apply group
+        Observables.combineLatest(theme.asObservable(), view.hsvThemeSelectedIntent, { old, new -> old != new })
+                .autoDisposable(view.scope())
+                .subscribe { themeChanged -> newState { it.copy(applyThemeVisible = themeChanged) } }
+
+        // Update the theme, when apply is clicked
+        view.hsvThemeAppliedIntent
+                .withLatestFrom(view.hsvThemeSelectedIntent, { _, color -> color })
+                .autoDisposable(view.scope())
+                .subscribe { color -> theme.set(color) }
+
+        // Reset the theme
+        view.hsvThemeClearedIntent
+                .withLatestFrom(theme.asObservable(), { _, color -> color })
+                .autoDisposable(view.scope())
+                .subscribe { color -> view.setCurrentTheme(color) }
     }
 
 }

@@ -142,6 +142,7 @@
 
     <string name="theme_material">Material</string>
     <string name="theme_rgb">RGB</string>
+    <string name="theme_apply">Apply</string>
 
     <string name="notification_reply">Reply</string>
     <string name="notification_read">Mark read</string>

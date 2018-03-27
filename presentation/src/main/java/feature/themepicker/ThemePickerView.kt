@@ -24,5 +24,10 @@ import io.reactivex.Observable
 interface ThemePickerView : QkView<ThemePickerState> {
 
     val themeSelectedIntent: Observable<Int>
+    val hsvThemeSelectedIntent: Observable<Int>
+    val hsvThemeClearedIntent: Observable<*>
+    val hsvThemeAppliedIntent: Observable<*>
+
+    fun setCurrentTheme(color: Int)
 
 }

@@ -29,9 +29,13 @@ import com.moez.QKSMS.R
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.within
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.hsv_picker_view.view.*
 
 class HSVPickerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
+
+    val selectedColor: Subject<Int> = BehaviorSubject.create()
 
     private val hues = arrayOf(0xFFFF0000, 0xFFFFFF00, 0xFF00FF00, 0xFF00FFFF, 0xFF0000FF, 0xFFFF00FF, 0xFFFF0000)
             .map { it.toInt() }.toIntArray()
@@ -65,9 +69,7 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
                     swatch.x = (event.rawX + swatchX + min).within(min, max)
                     swatch.y = (event.rawY + swatchY + min).within(min, max)
 
-                    val range = max - min
-                    val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
-                    swatch.setTint(Color.HSVToColor(hsv))
+                    updateSelectedColor()
                 }
 
                 MotionEvent.ACTION_UP -> {
@@ -95,9 +97,7 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
                     hueThumb.x = x
                     hue = (hueThumb.x - min) / (max - min) * 360
 
-                    val range = max - min
-                    val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
-                    swatch.setTint(Color.HSVToColor(hsv))
+                    updateSelectedColor()
                 }
 
                 MotionEvent.ACTION_UP -> {
@@ -120,9 +120,18 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     }
 
-    fun setColor(color: Int) {
-        swatch.setTint(color)
+    private fun updateSelectedColor() {
+        setupBounds()
 
+        val range = max - min
+        val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
+        val color = Color.HSVToColor(hsv)
+
+        swatch.setTint(color)
+        selectedColor.onNext(color)
+    }
+
+    fun setColor(color: Int) {
         // Convert the rgb color to HSV
         val hsv = FloatArray(3).apply {
             Color.colorToHSV(color, this)
@@ -130,12 +139,16 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
         }
 
         // Set the position of the swatch
-        setupBounds()
-        val range = max - min
+        post {
+            setupBounds()
+            val range = max - min
 
-        hueThumb.x = range * hsv[0] / 360 + min
-        swatch.x = range * hsv[1] + min
-        swatch.y = range * (1 - hsv[2]) + min
+            hueThumb.x = range * hsv[0] / 360 + min
+            swatch.x = range * hsv[1] + min
+            swatch.y = range * (1 - hsv[2]) + min
+
+            updateSelectedColor()
+        }
     }
 
     private fun updateHue() {
