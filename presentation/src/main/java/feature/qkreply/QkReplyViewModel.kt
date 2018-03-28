@@ -23,6 +23,7 @@ import android.telephony.SmsMessage
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.Navigator
 import common.base.QkViewModel
 import injection.appComponent
 import interactor.MarkRead
@@ -33,6 +34,7 @@ import io.reactivex.schedulers.Schedulers
 import model.Conversation
 import repository.MessageRepository
 import util.extensions.asObservable
+import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -40,6 +42,7 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
 
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var sendMessage: SendMessage
 
     private val conversation by lazy {
@@ -74,6 +77,15 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markRead.execute(threadId) { view.finish() } }
 
+        // Call
+        view.menuItemIntent
+                .filter { id -> id == R.id.call }
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .mapNotNull { conversation -> conversation.recipients.first()?.address }
+                .doOnNext { address -> navigator.makePhoneCall(address) }
+                .autoDisposable(view.scope())
+                .subscribe { view.finish() }
+
         // Show all messages
         view.menuItemIntent
                 .filter { id -> id == R.id.expand }
@@ -89,6 +101,15 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .map { conversation -> Pair(conversation, messageRepo.getUnreadMessages(conversation.id)) }
                 .autoDisposable(view.scope())
                 .subscribe { data -> newState { it.copy(expanded = false, data = data) } }
+
+        // View conversation
+        view.menuItemIntent
+                .filter { id -> id == R.id.view }
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .mapNotNull { conversation -> conversation.id }
+                .doOnNext { threadId -> navigator.showConversation(threadId) }
+                .autoDisposable(view.scope())
+                .subscribe { view.finish() }
 
         // Enable the send button when there is text input into the new message body or there's
         // an attachment, disable otherwise

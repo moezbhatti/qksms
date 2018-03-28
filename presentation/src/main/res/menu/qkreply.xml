@@ -26,6 +26,10 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/call"
+        android:title="@string/qkreply_menu_call" />
+
+    <item
         android:id="@+id/expand"
         android:title="@string/qkreply_menu_expand" />
 
@@ -33,5 +37,9 @@
         android:id="@+id/collapse"
         android:title="@string/qkreply_menu_collapse"
         android:visible="false" />
+
+    <item
+        android:id="@+id/view"
+        android:title="@string/qkreply_menu_view" />
 
 </menu>
