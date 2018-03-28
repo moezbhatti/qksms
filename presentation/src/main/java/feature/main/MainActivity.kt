@@ -31,7 +31,6 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.jakewharton.rxbinding2.support.v4.widget.drawerOpen
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -171,13 +170,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .subscribe()
 
         conversationsAdapter.autoScrollToStart(recyclerView)
-        conversationsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                if (conversationsAdapter.isAttachedToRecyclerView()) {
-                    empty.setVisible(conversationsAdapter.itemCount == 0, View.INVISIBLE)
-                }
-            }
-        })
+        conversationsAdapter.emptyView = empty
     }
 
     override fun render(state: MainState) {

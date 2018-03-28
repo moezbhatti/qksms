@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
+import common.base.QkRealmAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
@@ -32,7 +33,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import model.Contact
 import model.Message
@@ -43,7 +43,7 @@ class ConversationsAdapter @Inject constructor(
         private val context: Context,
         private val dateFormatter: DateFormatter,
         private val colors: Colors
-) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
+) : QkRealmAdapter<Message>() {
 
     val clicks: Subject<Long> = PublishSubject.create()
     val longClicks: Subject<Long> = PublishSubject.create()
