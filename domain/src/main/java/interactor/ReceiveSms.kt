@@ -23,6 +23,7 @@ import io.reactivex.Flowable
 import manager.NotificationManager
 import repository.MessageRepository
 import util.extensions.mapNotNull
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ReceiveSms @Inject constructor(
@@ -46,6 +47,7 @@ class ReceiveSms @Inject constructor(
                 .mapNotNull { message -> message.conversation } // Map message to conversation
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
+                .delay(1, TimeUnit.SECONDS) // Wait one second before trying to notify, in case the foreground app marks it as read first
                 .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
