@@ -83,34 +83,49 @@
             app:layout_constraintTop_toBottomOf="@id/syncingProgress"
             app:textColor="tertiary" />
 
-        <common.widget.QkTextView
-            android:id="@+id/empty"
-            style="@style/TextSecondary"
+        <FrameLayout
+            android:id="@+id/synced"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:text="Your conversations will appear here"
-            tools:visibility="invisible" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:listitem="@layout/conversation_list_item" />
+            <common.widget.QkTextView
+                android:id="@+id/empty"
+                style="@style/TextSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="56dp"
+                tools:text="Your conversations will appear here"
+                tools:visibility="invisible" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                tools:listitem="@layout/conversation_list_item" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/compose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_add_black_24dp"
+                android:tint="@color/white"
+                app:layout_anchor="@+id/recyclerView"
+                app:layout_anchorGravity="bottom|right|end"
+                tools:backgroundTint="@color/tools_theme" />
+
+        </FrameLayout>
 
         <View
             android:layout_width="0dp"
@@ -119,19 +134,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/compose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_add_black_24dp"
-            android:tint="@color/white"
-            app:layout_anchor="@+id/recyclerView"
-            app:layout_anchorGravity="bottom|right|end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:backgroundTint="@color/tools_theme" />
 
     </android.support.constraint.ConstraintLayout>
 

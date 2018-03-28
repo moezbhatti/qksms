@@ -200,7 +200,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         }
 
         syncing.setVisible(state.syncing)
-        recyclerView.setVisible(!state.syncing)
+        synced.setVisible(!state.syncing)
 
         when (state.page) {
             is Inbox -> {
