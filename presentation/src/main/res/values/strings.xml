@@ -95,6 +95,8 @@
     <string name="settings_blocking_title">Blocked</string>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_qkreply_title">QK Reply</string>
+    <string name="settings_qkreply_summary">Popup for new messages</string>
     <string name="settings_unicode_title">Strip accents</string>
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
     <string name="settings_mms_title">MMS enabled</string>

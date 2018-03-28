@@ -18,6 +18,7 @@
  */
 package util
 
+import android.os.Build
 import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
@@ -41,6 +42,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val black = rxPrefs.getBoolean("black", false)
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val delivery = rxPrefs.getBoolean("delivery", false)
+    val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mms = rxPrefs.getBoolean("mms", true)
     val mmsSize = rxPrefs.getInteger("mmsSize", 100)

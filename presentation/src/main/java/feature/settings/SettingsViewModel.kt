@@ -22,17 +22,17 @@ import android.content.Context
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.Navigator
+import common.base.QkViewModel
 import common.util.BillingManager
 import common.util.DateFormatter
 import common.util.NightModeManager
-import util.Preferences
+import injection.appComponent
 import interactor.FullSync
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
-import common.Navigator
-import common.base.QkViewModel
 import timber.log.Timber
+import util.Preferences
 import java.util.*
 import javax.inject.Inject
 
@@ -78,6 +78,9 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
         disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { it.copy(deliveryEnabled = enabled) } }
+
+        disposables += prefs.qkreply.asObservable()
+                .subscribe { enabled -> newState { it.copy(qkReplyEnabled = enabled) } }
 
         disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { it.copy(stripUnicodeEnabled = enabled) } }
@@ -130,6 +133,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                         R.id.blocked -> navigator.showBlockedConversations()
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
+
+                        R.id.qkreply -> prefs.qkreply.set(!prefs.qkreply.get())
 
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 

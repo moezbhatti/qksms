@@ -48,7 +48,7 @@ class NotificationManagerImpl @Inject constructor(
         private val prefs: Preferences,
         private val colors: Colors,
         private val messageRepo: MessageRepository
-): manager.NotificationManager {
+) : manager.NotificationManager {
 
     companion object {
         const val DEFAULT_CHANNEL_ID = "notifications_default"
@@ -92,14 +92,18 @@ class NotificationManagerImpl @Inject constructor(
 
         val conversation = messageRepo.getConversation(threadId) ?: return
 
+        // If QK Reply is enabled, use the default importance so that we don't have a notification
+        // card in addition to the popup. Otherwise, use max importance
+        val importance = when (prefs.qkreply.get()) {
+            true -> NotificationManagerCompat.IMPORTANCE_DEFAULT
+            false -> NotificationManagerCompat.IMPORTANCE_MAX
+        }
+
         val style = NotificationCompat.MessagingStyle("Me")
         messages.forEach { message ->
             val name = if (message.isMe()) null else conversation.getTitle()
             style.addMessage(message.getSummary(), message.date, name)
         }
-
-        val intent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)
@@ -116,7 +120,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setColor(colors.themeForConversation(threadId).blockingFirst())
-                .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
+                .setPriority(importance)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
                 .setAutoCancel(true)
@@ -130,6 +134,14 @@ class NotificationManagerImpl @Inject constructor(
 
         if (Build.VERSION.SDK_INT >= 24) {
             notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), threadId))
+        }
+
+        if (prefs.qkreply.get()) {
+            val intent = Intent(context, QkReplyActivity::class.java)
+                    .putExtra("threadId", threadId)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            context.startActivity(intent)
         }
 
         notificationManager.notify(threadId.toInt(), notification.build())

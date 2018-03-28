@@ -29,17 +29,17 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
-import util.Preferences
+import common.MenuItemAdapter
+import common.base.QkThemedActivity
 import common.util.extensions.dpToPx
 import common.util.extensions.setVisible
+import common.widget.PreferenceView
+import injection.appComponent
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
-import common.MenuItemAdapter
-import common.base.QkThemedActivity
-import common.widget.PreferenceView
+import util.Preferences
 import javax.inject.Inject
 
 class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
@@ -113,6 +113,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
         delivery.checkbox.isChecked = state.deliveryEnabled
+        qkreply.checkbox.isChecked = state.qkReplyEnabled
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
         mms.checkbox.isChecked = state.mmsEnabled
 

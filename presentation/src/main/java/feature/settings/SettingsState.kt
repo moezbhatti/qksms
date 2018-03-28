@@ -18,6 +18,7 @@
  */
 package feature.settings
 
+import android.os.Build
 import util.Preferences
 
 data class SettingsState(
@@ -32,6 +33,7 @@ data class SettingsState(
         val autoEmojiEnabled: Boolean = true,
         val notificationsEnabled: Boolean = true,
         val deliveryEnabled: Boolean = false,
+        val qkReplyEnabled: Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.N,
         val splitSmsEnabled: Boolean = false,
         val stripUnicodeEnabled: Boolean = false,
         val mmsEnabled: Boolean = true,
