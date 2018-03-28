@@ -22,11 +22,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.LinearLayout
-import injection.appComponent
+import common.Navigator
 import common.util.GlideApp
 import common.util.extensions.setVisible
+import injection.appComponent
 import model.MmsPart
-import common.Navigator
 import javax.inject.Inject
 
 class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {

@@ -24,9 +24,9 @@ import android.view.View
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
 import common.util.Colors
 import common.util.extensions.getColorCompat
+import injection.appComponent
 import javax.inject.Inject
 
 class Separator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {

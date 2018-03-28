@@ -27,11 +27,11 @@ import android.widget.TextView
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
 import common.util.Colors
 import common.util.extensions.getColorCompat
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
+import injection.appComponent
 import kotlinx.android.synthetic.main.preference_view.view.*
 import javax.inject.Inject
 

@@ -25,6 +25,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import common.util.Colors
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
@@ -33,8 +35,6 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.menu_list_item.view.*
-import common.base.QkAdapter
-import common.base.QkViewHolder
 import javax.inject.Inject
 
 data class MenuItem(val title: String, val actionId: Int)

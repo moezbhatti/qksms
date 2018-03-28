@@ -24,10 +24,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import common.Navigator
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.toolbar.*
-import common.Navigator
 import kotlin.reflect.KClass
 
 abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {

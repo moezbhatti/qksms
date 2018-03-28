@@ -47,7 +47,11 @@ import model.Message
 import model.MmsPart
 import util.MessageUtils
 import util.Preferences
-import util.extensions.*
+import util.extensions.asFlowable
+import util.extensions.asMaybe
+import util.extensions.asObservable
+import util.extensions.insertOrUpdate
+import util.extensions.map
 import javax.inject.Inject
 import javax.inject.Singleton
 

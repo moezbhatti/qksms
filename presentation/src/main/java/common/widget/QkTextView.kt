@@ -23,10 +23,10 @@ import android.graphics.Typeface
 import android.support.text.emoji.widget.EmojiAppCompatTextView
 import android.util.AttributeSet
 import com.moez.QKSMS.R
-import injection.appComponent
 import common.util.Colors
 import common.util.FontProvider
 import common.util.extensions.getColorCompat
+import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject

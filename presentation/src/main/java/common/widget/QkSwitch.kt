@@ -24,9 +24,9 @@ import android.support.v7.widget.SwitchCompat
 import android.util.AttributeSet
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
 import common.util.Colors
 import common.util.extensions.withAlpha
+import injection.appComponent
 import io.reactivex.rxkotlin.Observables
 import javax.inject.Inject
 

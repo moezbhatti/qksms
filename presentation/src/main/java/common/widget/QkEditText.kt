@@ -25,9 +25,9 @@ import android.widget.EditText
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
 import common.util.Colors
 import common.util.FontProvider
+import injection.appComponent
 import io.reactivex.Observable
 import javax.inject.Inject
 

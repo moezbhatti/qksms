@@ -30,7 +30,6 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
 import android.view.View
-import manager.NotificationManager
 import feature.blocked.BlockedActivity
 import feature.blocked.BlockedViewModel
 import feature.compose.ComposeActivity
@@ -50,6 +49,7 @@ import feature.setup.SetupActivity
 import feature.setup.SetupViewModel
 import feature.themepicker.ThemePickerActivity
 import feature.themepicker.ThemePickerViewModel
+import manager.NotificationManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

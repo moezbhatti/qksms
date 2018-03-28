@@ -29,13 +29,13 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.Navigator
 import common.util.Colors
 import common.util.GlideApp
 import common.util.extensions.setTint
+import injection.appComponent
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import model.Contact
-import common.Navigator
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
