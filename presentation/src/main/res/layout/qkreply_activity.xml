@@ -29,6 +29,8 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:elevation="8dp"
+    android:maxHeight="320dp"
+    android:maxWidth="320dp"
     tools:context="feature.qkreply.QkReplyActivity">
 
     <android.support.v7.widget.RecyclerView
