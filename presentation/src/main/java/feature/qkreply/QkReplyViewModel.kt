@@ -106,7 +106,7 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
         view.menuItemIntent
                 .filter { id -> id == R.id.view }
                 .withLatestFrom(conversation, { _, conversation -> conversation })
-                .mapNotNull { conversation -> conversation.id }
+                .map { conversation -> conversation.id }
                 .doOnNext { threadId -> navigator.showConversation(threadId) }
                 .autoDisposable(view.scope())
                 .subscribe { view.finish() }
