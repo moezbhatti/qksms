@@ -225,6 +225,15 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAll()
     }
 
+    override fun getUnreadMessages(threadId: Long): RealmResults<Message> {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("read", false)
+                .equalTo("threadId", threadId)
+                .sort("date")
+                .findAll()
+    }
+
     override fun markArchived(threadId: Long) {
         val realm = Realm.getDefaultInstance()
         val conversation = realm.where(Conversation::class.java)

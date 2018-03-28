@@ -64,6 +64,12 @@ interface MessageRepository {
      */
     fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message>
 
+    /**
+     * Retrieves the list of messages which should be shown in the quickreply popup
+     * for a given conversation
+     */
+    fun getUnreadMessages(threadId: Long): RealmResults<Message>
+
     fun markArchived(threadId: Long)
 
     fun markUnarchived(threadId: Long)

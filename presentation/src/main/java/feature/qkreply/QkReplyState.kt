@@ -19,9 +19,10 @@
 package feature.qkreply
 
 import io.realm.RealmResults
+import model.Conversation
 import model.Message
 
 data class QkReplyState(
         val title: String = "",
-        val data: RealmResults<Message>? = null
+        val data: Pair<Conversation, RealmResults<Message>>? = null
 )

@@ -40,7 +40,11 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .asObservable<Conversation>()
                 .filter { it.isLoaded }
                 .filter { it.isValid }
-                .subscribe { conversation -> newState { it.copy(title = conversation.getTitle()) } }
+                .distinctUntilChanged()
+                .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
+                .map { conversation -> Pair(conversation, messageRepo.getUnreadMessages(conversation.id)) }
+                .doOnNext { data -> newState { it.copy(data = data) } }
+                .subscribe()
     }
 
 }

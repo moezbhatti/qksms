@@ -26,6 +26,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
+import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
 import common.util.extensions.dpToPx
@@ -44,7 +45,6 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.PhoneNumber
-import common.base.QkViewHolder
 import util.extensions.isImage
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -65,6 +65,8 @@ class MessagesAdapter @Inject constructor(
 
     var data: Pair<Conversation, RealmResults<Message>>? = null
         set(value) {
+            if (field === value) return
+
             field = value
             people.clear()
             contactMap.clear()

@@ -19,6 +19,7 @@
 package feature.qkreply
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
@@ -27,12 +28,16 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.extensions.setBackgroundTint
+import feature.compose.MessagesAdapter
 import injection.appComponent
 import kotlinx.android.synthetic.main.qkreply_activity.*
+import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
 
     override val viewModelClass = QkReplyViewModel::class
+
+    @Inject lateinit var adapter: MessagesAdapter
 
     init {
         appComponent.inject(this)
@@ -48,16 +53,22 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewModel.bindView(this)
 
-
-        toolbar.clipToOutline = true
-
         colors.composeBackground
                 .autoDisposable(scope())
                 .subscribe { color -> background.setBackgroundTint(color) }
+
+        toolbar.clipToOutline = true
+
+        val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
+
+        messages.layoutManager = layoutManager
+        messages.adapter = adapter
     }
 
     override fun render(state: QkReplyState) {
         title = state.title
+
+        adapter.data = state.data
     }
 
     override fun getAppThemeResourcesObservable() = colors.appDialogThemeResources
