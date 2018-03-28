@@ -72,7 +72,7 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .map { conversation -> conversation.id }
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> markRead.execute(threadId) }
+                .subscribe { threadId -> markRead.execute(threadId) { view.finish() } }
 
         // Show all messages
         view.menuItemIntent
@@ -133,8 +133,11 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .withLatestFrom(conversation, { body, conversation ->
                     val threadId = conversation.id
                     val addresses = conversation.recipients.map { it.address }
-                    sendMessage.execute(SendMessage.Params(threadId, addresses, body, listOf()))
+
                     view.setDraft("")
+                    sendMessage.execute(SendMessage.Params(threadId, addresses, body, listOf())) {
+                        view.finish()
+                    }
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
