@@ -136,7 +136,9 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
 
                     view.setDraft("")
                     sendMessage.execute(SendMessage.Params(threadId, addresses, body, listOf())) {
-                        view.finish()
+                        markRead.execute(threadId) {
+                            view.finish()
+                        }
                     }
                 })
                 .autoDisposable(view.scope())
