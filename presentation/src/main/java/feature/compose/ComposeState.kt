@@ -32,7 +32,6 @@ data class ComposeState(
         val selectedConversation: Long = 0,
         val selectedContacts: List<Contact> = ArrayList(),
         val title: String = "",
-        val archived: Boolean = false,
         val messages: Pair<Conversation, RealmResults<Message>>? = null,
         val attachments: List<Uri> = ArrayList(),
         val remaining: String = "",

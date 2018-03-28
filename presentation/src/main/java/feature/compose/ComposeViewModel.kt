@@ -30,10 +30,12 @@ import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.Navigator
+import common.base.QkViewModel
 import common.util.ClipboardUtils
 import common.util.extensions.makeToast
 import common.util.filter.ContactFilter
+import injection.appComponent
 import interactor.ContactSync
 import interactor.DeleteMessage
 import interactor.MarkRead
@@ -53,8 +55,6 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.PhoneNumber
-import common.Navigator
-import common.base.QkViewModel
 import repository.ContactRepository
 import repository.MessageRepository
 import util.extensions.asObservable
@@ -171,12 +171,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .distinctUntilChanged { conversation -> conversation.getTitle() }
                 .subscribe { conversation ->
                     newState { it.copy(title = conversation.getTitle()) }
-                }
-
-        disposables += conversation
-                .distinctUntilChanged { conversation -> conversation.archived }
-                .subscribe { conversation ->
-                    newState { it.copy(archived = conversation.archived) }
                 }
 
         disposables += attachments
