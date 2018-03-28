@@ -19,7 +19,6 @@
 package interactor
 
 import io.reactivex.Flowable
-import model.Conversation
 import model.Message
 import repository.MessageRepository
 import javax.inject.Inject
@@ -33,7 +32,6 @@ class RetrySending @Inject constructor(private val messageRepo: MessageRepositor
         val message = Message().apply {
             id = params.id
             type = params.type
-            conversation = params.conversation?.id?.let { threadId -> Conversation().apply { id = threadId } }
             address = params.address
             body = params.body
         }
