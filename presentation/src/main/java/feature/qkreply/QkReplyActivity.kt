@@ -18,8 +18,10 @@
  */
 package feature.qkreply
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
@@ -30,6 +32,7 @@ import common.base.QkThemedActivity
 import common.util.extensions.setBackgroundTint
 import feature.compose.MessagesAdapter
 import injection.appComponent
+import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.qkreply_activity.*
 import javax.inject.Inject
 
@@ -53,13 +56,53 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewModel.bindView(this)
 
-        colors.composeBackground
+        colors.background
+                .doOnNext { color -> background.setBackgroundTint(color) }
+                .doOnNext { color -> composeGradient.setBackgroundTint(color) }
+                .doOnNext { color -> composeBackground.setBackgroundTint(color) }
                 .autoDisposable(scope())
-                .subscribe { color -> background.setBackgroundTint(color) }
+                .subscribe()
+
+        theme
+                .autoDisposable(scope())
+                .subscribe { color -> send.setBackgroundTint(color) }
+
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_enabled),
+                intArrayOf(-android.R.attr.state_enabled))
+
+        val iconEnabled = threadId
+                .distinctUntilChanged()
+                .switchMap { threadId -> colors.textPrimaryOnThemeForConversation(threadId) }
+
+        val iconDisabled = threadId
+                .distinctUntilChanged()
+                .switchMap { threadId -> colors.textTertiaryOnThemeForConversation(threadId) }
+
+        Observables
+                .combineLatest(iconEnabled, iconDisabled, { primary, tertiary ->
+                    ColorStateList(states, intArrayOf(primary, tertiary))
+                })
+                .autoDisposable(scope())
+                .subscribe { tintList -> send.imageTintList = tintList }
 
         toolbar.clipToOutline = true
 
         val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart > 0) {
+                    adapter.notifyItemChanged(positionStart - 1)
+                }
+
+                // If we're at the bottom, scroll down to show new messages
+                val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                if (positionStart >= adapter.itemCount - 1 && lastVisiblePosition == positionStart - 1) {
+                    messages.scrollToPosition(positionStart)
+                }
+            }
+        })
 
         messages.layoutManager = layoutManager
         messages.adapter = adapter
@@ -67,6 +110,7 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
 
     override fun render(state: QkReplyState) {
         title = state.title
+        threadId.onNext(state.data?.first?.id ?: 0)
 
         adapter.data = state.data
     }
