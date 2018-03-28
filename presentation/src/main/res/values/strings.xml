@@ -141,8 +141,8 @@
     <string name="widget_more">View more conversations</string>
 
     <string name="qkreply_menu_read">Mark read</string>
-    <string name="qkreply_menu_expand">Expand</string>
-    <string name="qkreply_menu_collapse">Collapse</string>
+    <string name="qkreply_menu_expand">Show more</string>
+    <string name="qkreply_menu_collapse">Show less</string>
 
     <string name="theme_material">Material</string>
     <string name="theme_plus">QKSMS+</string>
