@@ -47,11 +47,7 @@ import model.Message
 import model.MmsPart
 import util.MessageUtils
 import util.Preferences
-import util.extensions.asFlowable
-import util.extensions.asMaybe
-import util.extensions.asObservable
-import util.extensions.insertOrUpdate
-import util.extensions.map
+import util.extensions.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -70,6 +66,7 @@ class MessageRepositoryImpl @Inject constructor(
                 .notEqualTo("threadId", 0L)
                 .equalTo("conversation.archived", archived)
                 .equalTo("conversation.blocked", false)
+                .isNotEmpty("conversation.recipients")
                 .sort("date", Sort.DESCENDING)
                 .findAllAsync()
     }
@@ -81,6 +78,7 @@ class MessageRepositoryImpl @Inject constructor(
                 .notEqualTo("threadId", 0L)
                 .equalTo("conversation.archived", false)
                 .equalTo("conversation.blocked", false)
+                .isNotEmpty("conversation.recipients")
                 .sort("date", Sort.DESCENDING)
                 .findAll())
     }
