@@ -41,6 +41,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.MenuItemAdapter
 import common.Navigator
 import common.base.QkThemedActivity
+import common.util.extensions.autoScrollToStart
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
@@ -169,20 +170,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .autoDisposable(scope())
                 .subscribe()
 
+        conversationsAdapter.autoScrollToStart(recyclerView)
         conversationsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                // If we're at the top, scroll up to show new conversations
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val firstVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
-                if (firstVisiblePosition == 0) {
-                    recyclerView.scrollToPosition(positionStart)
-                }
-            }
-
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                onItemRangeInserted(positionStart, itemCount)
-            }
-
             override fun onChanged() {
                 if (conversationsAdapter.isAttachedToRecyclerView()) {
                     empty.setVisible(conversationsAdapter.itemCount == 0, View.INVISIBLE)

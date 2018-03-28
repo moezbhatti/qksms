@@ -21,7 +21,6 @@ package feature.qkreply
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
@@ -29,6 +28,7 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
+import common.util.extensions.autoScrollToStart
 import common.util.extensions.setBackgroundTint
 import feature.compose.MessagesAdapter
 import injection.appComponent
@@ -88,23 +88,9 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
 
         toolbar.clipToOutline = true
 
-        val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
+        adapter.autoScrollToStart(messages)
 
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                if (positionStart > 0) {
-                    adapter.notifyItemChanged(positionStart - 1)
-                }
-
-                // If we're at the bottom, scroll down to show new messages
-                val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
-                if (positionStart >= adapter.itemCount - 1 && lastVisiblePosition == positionStart - 1) {
-                    messages.scrollToPosition(positionStart)
-                }
-            }
-        })
-
-        messages.layoutManager = layoutManager
+        messages.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
         messages.adapter = adapter
     }
 

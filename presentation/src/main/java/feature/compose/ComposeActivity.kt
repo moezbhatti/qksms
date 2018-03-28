@@ -47,6 +47,7 @@ import kotlinx.android.synthetic.main.compose_activity.*
 import model.Contact
 import model.Message
 import common.base.QkThemedActivity
+import common.util.extensions.autoScrollToStart
 import javax.inject.Inject
 
 class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
@@ -93,20 +94,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
         val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
 
-        messageAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                if (positionStart > 0) {
-                    messageAdapter.notifyItemChanged(positionStart - 1)
-                }
-
-                // If we're at the bottom, scroll down to show new messages
-                val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
-                if (positionStart >= messageAdapter.itemCount - 1 && lastVisiblePosition == positionStart - 1) {
-                    messageList.scrollToPosition(positionStart)
-                }
-            }
-        })
-
+        messageAdapter.autoScrollToStart(messageList)
         messageAdapter.longClicks.subscribe { message ->
             AlertDialog.Builder(this)
                     .setItems(R.array.message_options, { _, row ->
