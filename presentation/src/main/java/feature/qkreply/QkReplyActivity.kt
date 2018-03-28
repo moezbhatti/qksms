@@ -66,12 +66,13 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewModel.bindView(this)
 
-        colors.background
-                .doOnNext { color -> background.setBackgroundTint(color) }
-                .doOnNext { color -> composeGradient.setBackgroundTint(color) }
-                .doOnNext { color -> composeBackground.setBackgroundTint(color) }
+        colors.composeBackground
                 .autoDisposable(scope())
-                .subscribe()
+                .subscribe { color -> background.setBackgroundTint(color) }
+
+        colors.bubble
+                .autoDisposable(scope())
+                .subscribe { color -> message.setBackgroundTint(color) }
 
         theme
                 .autoDisposable(scope())

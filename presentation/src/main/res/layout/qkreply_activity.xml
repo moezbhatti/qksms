@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -31,6 +30,7 @@
     android:elevation="8dp"
     android:maxHeight="320dp"
     android:maxWidth="320dp"
+    tools:backgroundTint="@color/backgroundLight"
     tools:context="feature.qkreply.QkReplyActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -47,40 +47,21 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/message_list_item_in" />
 
-    <View
-        android:id="@+id/composeBackground"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/rounded_rectangle_bottom_4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/message"
-        tools:backgroundTint="@color/white" />
-
-    <View
-        android:id="@+id/composeGradient"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@drawable/compose_bar_background"
-        app:layout_constraintBottom_toTopOf="@id/message"
-        tools:backgroundTint="@color/white" />
-
     <common.widget.QkEditText
         android:id="@+id/message"
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@null"
+        android:background="@drawable/rounded_rectangle_shadow"
+        android:backgroundTintMode="multiply"
         android:gravity="center_vertical"
         android:hint="@string/compose_hint"
         android:inputType="textLongMessage|textCapSentences|textMultiLine"
         android:maxLines="6"
         android:minHeight="44dp"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/send"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
         app:layout_constraintEnd_toStartOf="@id/send"
         app:layout_constraintStart_toStartOf="parent"
