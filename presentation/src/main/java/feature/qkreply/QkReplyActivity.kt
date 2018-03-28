@@ -21,6 +21,8 @@ package feature.qkreply
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
@@ -33,12 +35,15 @@ import common.util.extensions.setBackgroundTint
 import feature.compose.MessagesAdapter
 import injection.appComponent
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.qkreply_activity.*
 import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
 
     override val viewModelClass = QkReplyViewModel::class
+    override val menuItemIntent: Subject<Int> = PublishSubject.create()
 
     @Inject lateinit var adapter: MessagesAdapter
 
@@ -95,10 +100,24 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
     }
 
     override fun render(state: QkReplyState) {
-        title = state.title
         threadId.onNext(state.data?.first?.id ?: 0)
 
+        title = state.title
+
+        toolbar.menu.findItem(R.id.expand)?.isVisible = !state.expanded
+        toolbar.menu.findItem(R.id.collapse)?.isVisible = state.expanded
+
         adapter.data = state.data
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.qkreply, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        menuItemIntent.onNext(item.itemId)
+        return true
     }
 
     override fun getAppThemeResourcesObservable() = colors.appDialogThemeResources

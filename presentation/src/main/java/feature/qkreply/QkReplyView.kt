@@ -18,6 +18,12 @@
  */
 package feature.qkreply
 
+import android.view.MenuItem
 import common.base.QkView
+import io.reactivex.Observable
 
-interface QkReplyView : QkView<QkReplyState>
+interface QkReplyView : QkView<QkReplyState> {
+
+    val menuItemIntent: Observable<Int>
+
+}
