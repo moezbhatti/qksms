@@ -19,23 +19,28 @@
 package feature.qkreply
 
 import android.content.Intent
+import android.telephony.SmsMessage
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkViewModel
 import injection.appComponent
 import interactor.MarkRead
+import interactor.SendMessage
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.schedulers.Schedulers
 import model.Conversation
 import repository.MessageRepository
 import util.extensions.asObservable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
 
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var sendMessage: SendMessage
 
     private val conversation by lazy {
         messageRepo.getConversationAsync(intent.getLongExtra("threadId", -1))
@@ -49,6 +54,7 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
         appComponent.inject(this)
 
         disposables += markRead
+        disposables += sendMessage
 
         disposables += conversation
                 .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
@@ -83,6 +89,55 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .map { conversation -> Pair(conversation, messageRepo.getUnreadMessages(conversation.id)) }
                 .autoDisposable(view.scope())
                 .subscribe { data -> newState { it.copy(expanded = false, data = data) } }
+
+        // Enable the send button when there is text input into the new message body or there's
+        // an attachment, disable otherwise
+        view.textChangedIntent
+                .map { text -> text.isNotBlank() }
+                .autoDisposable(view.scope())
+                .subscribe { canSend -> newState { it.copy(canSend = canSend) } }
+
+        // Show the remaining character counter when necessary
+        view.textChangedIntent
+                .observeOn(Schedulers.computation())
+                .map { draft -> SmsMessage.calculateLength(draft, false) }
+                .map { array ->
+                    val messages = array[0]
+                    val remaining = array[2]
+
+                    when {
+                        messages <= 1 && remaining > 10 -> ""
+                        messages <= 1 && remaining <= 10 -> "$remaining"
+                        else -> "$remaining / $messages"
+                    }
+                }
+                .distinctUntilChanged()
+                .autoDisposable(view.scope())
+                .subscribe { remaining -> newState { it.copy(remaining = remaining) } }
+
+        // Update the draft whenever the text is changed
+        view.textChangedIntent
+                .debounce(100, TimeUnit.MILLISECONDS)
+                .map { draft -> draft.toString() }
+                .observeOn(Schedulers.io())
+                .withLatestFrom(conversation.map { it.id }, { draft, threadId ->
+                    messageRepo.saveDraft(threadId, draft)
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        // Send a message when the send button is clicked, and disable editing mode if it's enabled
+        view.sendIntent
+                .withLatestFrom(view.textChangedIntent, { _, body -> body })
+                .map { body -> body.toString() }
+                .withLatestFrom(conversation, { body, conversation ->
+                    val threadId = conversation.id
+                    val addresses = conversation.recipients.map { it.address }
+                    sendMessage.execute(SendMessage.Params(threadId, addresses, body, listOf()))
+                    view.setDraft("")
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
     }
 
 }

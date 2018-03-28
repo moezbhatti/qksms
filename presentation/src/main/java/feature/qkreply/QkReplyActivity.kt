@@ -26,12 +26,15 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
 import common.util.extensions.setBackgroundTint
+import common.util.extensions.setVisible
 import feature.compose.MessagesAdapter
 import injection.appComponent
 import io.reactivex.rxkotlin.Observables
@@ -44,6 +47,8 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
 
     override val viewModelClass = QkReplyViewModel::class
     override val menuItemIntent: Subject<Int> = PublishSubject.create()
+    override val textChangedIntent by lazy { message.textChanges() }
+    override val sendIntent by lazy { send.clicks() }
 
     @Inject lateinit var adapter: MessagesAdapter
 
@@ -108,6 +113,15 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
         toolbar.menu.findItem(R.id.collapse)?.isVisible = state.expanded
 
         adapter.data = state.data
+
+        counter.text = state.remaining
+        counter.setVisible(counter.text.isNotBlank())
+
+        send.isEnabled = state.canSend
+    }
+
+    override fun setDraft(draft: String) {
+        message.setText(draft)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
