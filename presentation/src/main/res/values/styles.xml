@@ -27,6 +27,12 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="AppThemeLightDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/backgroundDark</item>
         <item name="android:windowContentTransitions">true</item>
@@ -36,12 +42,24 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="AppThemeDarkDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
     <style name="AppThemeBlack" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/black</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="AppThemeBlackDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeBlack</item>
         <item name="windowActionBar">false</item>
     </style>
 
@@ -86,6 +104,10 @@
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
+
+        <!-- This needs to be set so that we can tint the toolbar and not change the background
+         resource. This is mainly so that QkReplyActivity can call setClipToOutline -->
+        <item name="android:background">@color/black</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 

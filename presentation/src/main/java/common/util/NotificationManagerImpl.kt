@@ -33,6 +33,7 @@ import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import com.moez.QKSMS.R
 import feature.compose.ComposeActivity
+import feature.qkreply.QkReplyActivity
 import receiver.MarkReadReceiver
 import receiver.MarkSeenReceiver
 import receiver.RemoteMessagingReceiver
@@ -96,6 +97,9 @@ class NotificationManagerImpl @Inject constructor(
             val name = if (message.isMe()) null else conversation.getTitle()
             style.addMessage(message.getSummary(), message.date, name)
         }
+
+        val intent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)

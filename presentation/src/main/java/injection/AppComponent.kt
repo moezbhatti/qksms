@@ -44,6 +44,8 @@ import feature.notificationprefs.NotificationPrefsActivity
 import feature.notificationprefs.NotificationPrefsViewModel
 import feature.plus.PlusActivity
 import feature.plus.PlusViewModel
+import feature.qkreply.QkReplyActivity
+import feature.qkreply.QkReplyViewModel
 import feature.settings.SettingsActivity
 import feature.settings.SettingsViewModel
 import feature.setup.SetupActivity
@@ -80,6 +82,7 @@ interface AppComponent {
     fun inject(activity: GalleryActivity)
     fun inject(activity: NotificationPrefsActivity)
     fun inject(activity: PlusActivity)
+    fun inject(activity: QkReplyActivity)
     fun inject(activity: SettingsActivity)
     fun inject(activity: ThemePickerActivity)
 
@@ -117,6 +120,7 @@ interface AppComponent {
     fun inject(viewModel: GalleryViewModel)
     fun inject(viewModel: NotificationPrefsViewModel)
     fun inject(viewModel: PlusViewModel)
+    fun inject(viewModel: QkReplyViewModel)
     fun inject(viewModel: SettingsViewModel)
     fun inject(viewModel: ThemePickerViewModel)
 

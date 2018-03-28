@@ -74,6 +74,15 @@ class Colors @Inject constructor(private val context: Context, private val prefs
                 }
             })
 
+    val appDialogThemeResources = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.style.AppThemeBlackDialog
+                    night && !black -> R.style.AppThemeDarkDialog
+                    else -> R.style.AppThemeLightDialog
+                }
+            })
+
     val popupThemeResource = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
             { night, black ->
                 when {

@@ -43,6 +43,7 @@ import feature.notificationprefs.NotificationPrefsActivity
 import feature.notificationprefs.NotificationPrefsViewModel
 import feature.plus.PlusActivity
 import feature.plus.PlusViewModel
+import feature.qkreply.QkReplyViewModel
 import feature.settings.SettingsActivity
 import feature.settings.SettingsViewModel
 import feature.setup.SetupActivity
@@ -187,6 +188,7 @@ class Navigator @Inject constructor(private val context: Context, private val no
                 ConversationInfoViewModel::class.java -> ConversationInfoViewModel(intent)
                 GalleryViewModel::class.java -> GalleryViewModel(intent)
                 NotificationPrefsViewModel::class.java -> NotificationPrefsViewModel(intent)
+                QkReplyViewModel::class.java -> QkReplyViewModel(intent)
                 SettingsViewModel::class.java -> SettingsViewModel()
                 BlockedViewModel::class.java -> BlockedViewModel()
                 ThemePickerViewModel::class.java -> ThemePickerViewModel(intent)

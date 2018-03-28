@@ -27,10 +27,10 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/Toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:minHeight="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

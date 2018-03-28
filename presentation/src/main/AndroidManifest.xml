@@ -67,6 +67,11 @@
         <activity android:name="feature.conversationinfo.ConversationInfoActivity" />
         <activity android:name="feature.notificationprefs.NotificationPrefsActivity" />
         <activity android:name="feature.blocked.BlockedActivity" />
+        <activity
+            android:name="feature.qkreply.QkReplyActivity"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@style/AppThemeLightDialog" />
 
         <receiver android:name="receiver.DefaultSmsChangedReceiver">
             <intent-filter>

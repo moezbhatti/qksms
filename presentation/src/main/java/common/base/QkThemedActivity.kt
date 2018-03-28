@@ -25,6 +25,7 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
+import common.util.extensions.setBackgroundTint
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -57,7 +58,8 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        colors.appThemeResources
+
+        getAppThemeResourcesObservable()
                 .autoDisposable(scope())
                 .subscribe { res -> setTheme(res) }
 
@@ -101,7 +103,12 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
 
         colors.toolbarColor
                 .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
-                .subscribe { color -> toolbar?.setBackgroundColor(color) }
+                .subscribe { color -> toolbar?.setBackgroundTint(color) }
     }
+
+    /**
+     * This can be overridden in case an activity does not want to use the default themes
+     */
+    open fun getAppThemeResourcesObservable() = colors.appThemeResources
 
 }
