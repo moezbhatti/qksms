@@ -92,7 +92,7 @@
         android:id="@+id/composeBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="composeBackground, messageBackground, attachments, attach, attachSeparator, message, counter, send, sendIcon" />
+        app:constraint_referenced_ids="composeBackground, messageBackground, attachments, attach, attachSeparator, message, counter, send" />
 
     <View
         android:id="@+id/composeBackground"
