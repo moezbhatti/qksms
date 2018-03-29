@@ -20,7 +20,7 @@ package feature.main
 
 import common.MenuItem
 import io.realm.RealmResults
-import model.Message
+import model.Conversation
 
 data class MainState(
         val page: MainPage = Inbox(),
@@ -32,12 +32,12 @@ sealed class MainPage
 
 data class Inbox(
         val showClearButton: Boolean = false,
-        val data: RealmResults<Message>? = null,
+        val data: RealmResults<Conversation>? = null,
         val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(
-        val data: RealmResults<Message>? = null,
+        val data: RealmResults<Conversation>? = null,
         val menu: List<MenuItem> = ArrayList()) : MainPage()
 
 data class Scheduled(

@@ -44,11 +44,13 @@ class ReceiveSms @Inject constructor(
 
                     messageRepo.insertReceivedSms(address, body, time) // Add the message to the db
                 }
-                .mapNotNull { message -> message.conversation } // Map message to conversation
+                .doOnNext { message -> messageRepo.updateConversation(message.threadId) } // Update the conversation
+                .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
+                .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
                 .delay(1, TimeUnit.SECONDS) // Wait one second before trying to notify, in case the foreground app marks it as read first
-                .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
+                .doOnNext { threadId -> notificationManager.update(threadId) } // Update the notification
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

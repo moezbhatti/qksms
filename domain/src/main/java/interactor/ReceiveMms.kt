@@ -24,6 +24,7 @@ import manager.NotificationManager
 import repository.MessageRepository
 import repository.SyncRepository
 import util.extensions.mapNotNull
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ReceiveMms @Inject constructor(
@@ -36,10 +37,13 @@ class ReceiveMms @Inject constructor(
     override fun buildObservable(params: Uri): Flowable<*> {
         return Flowable.just(params)
                 .flatMap { uri -> syncManager.syncMessage(uri) } // Sync the message
-                .mapNotNull { message -> message.conversation } // Map message to conversation
+                .doOnNext { message -> messageRepo.updateConversation(message.threadId) } // Update the conversation
+                .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
-                .doOnNext { conversation -> notificationManager.update(conversation.id) } // Update the notification
+                .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
+                .delay(1, TimeUnit.SECONDS) // Wait one second before trying to notify, in case the foreground app marks it as read first
+                .doOnNext { threadId -> notificationManager.update(threadId) } // Update the notification
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

@@ -154,7 +154,7 @@ class NotificationManagerImpl @Inject constructor(
             return
         }
 
-        val conversation = message.conversation ?: return
+        val conversation = messageRepo.getConversation(message.threadId) ?: return
         val threadId = conversation.id
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)

@@ -18,13 +18,13 @@
  */
 package common.util.filter
 
-import model.Message
+import model.Conversation
 import javax.inject.Inject
 
-class ConversationFilter @Inject constructor(private val recipientFilter: RecipientFilter) : Filter<Message>() {
+class ConversationFilter @Inject constructor(private val recipientFilter: RecipientFilter) : Filter<Conversation>() {
 
-    override fun filter(item: Message, query: CharSequence): Boolean {
-        return item.conversation?.recipients?.any { recipient -> recipientFilter.filter(recipient, query) } ?: false
+    override fun filter(item: Conversation, query: CharSequence): Boolean {
+        return item.recipients.any { recipient -> recipientFilter.filter(recipient, query) }
     }
 
 }

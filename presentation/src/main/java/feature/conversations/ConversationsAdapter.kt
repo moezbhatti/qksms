@@ -19,7 +19,6 @@
 package feature.conversations
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
@@ -35,7 +34,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import model.Contact
-import model.Message
+import model.Conversation
 import model.PhoneNumber
 import javax.inject.Inject
 
@@ -43,13 +42,12 @@ class ConversationsAdapter @Inject constructor(
         private val context: Context,
         private val dateFormatter: DateFormatter,
         private val colors: Colors
-) : QkRealmAdapter<Message>() {
+) : QkRealmAdapter<Conversation>() {
 
     val clicks: Subject<Long> = PublishSubject.create()
     val longClicks: Subject<Long> = PublishSubject.create()
 
     private val disposables = CompositeDisposable()
-    private var attachedRecyclerViews = 0
 
     init {
         setHasStableIds(true)
@@ -72,22 +70,8 @@ class ConversationsAdapter @Inject constructor(
         return QkViewHolder(view)
     }
 
-    fun isAttachedToRecyclerView() = attachedRecyclerViews > 0
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        attachedRecyclerViews++
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        attachedRecyclerViews--
-        disposables.clear()
-    }
-
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val message = getItem(position)!!
-        val conversation = message.conversation!!
+        val conversation = getItem(position)!!
         val view = viewHolder.itemView
 
         view.clicks().subscribe { clicks.onNext(conversation.id) }
@@ -97,12 +81,12 @@ class ConversationsAdapter @Inject constructor(
             recipient.contact ?: Contact().apply { numbers.add(PhoneNumber().apply { address = recipient.address }) }
         }
         view.title.text = conversation.getTitle()
-        view.date.text = dateFormatter.getConversationTimestamp(message.date)
-        view.snippet.text = if (message.isMe()) "You: ${message.getSummary()}" else message.getSummary()
+        view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
+        view.snippet.text = if (conversation.me) "You: ${conversation.snippet}" else conversation.snippet
     }
 
     override fun getItemId(index: Int): Long {
-        return getItem(index)!!.conversation!!.id
+        return getItem(index)!!.id
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -169,10 +169,7 @@ class SyncRepositoryImpl @Inject constructor(
         return cursor.asFlowable()
                 .map { cursorToMessage.map(Pair(it, columnsMap)) }
                 .doOnNext { message -> existingId?.let { message.id = it } }
-                .doOnNext { message ->
-                    val threadId = message.conversation?.id
-                    message.conversation = threadId?.let { messageRepo.getOrCreateConversation(threadId) }
-                }
+                .doOnNext { message -> messageRepo.getOrCreateConversation(message.threadId) }
                 .doOnNext { message -> message.insertOrUpdate() }
     }
 

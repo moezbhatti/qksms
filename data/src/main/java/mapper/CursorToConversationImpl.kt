@@ -33,20 +33,29 @@ class CursorToConversationImpl @Inject constructor(private val context: Context)
         val URI: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
         val PROJECTION = arrayOf(
                 Threads._ID,
-                Threads.RECIPIENT_IDS)
+                Threads.DATE,
+                Threads.RECIPIENT_IDS,
+                Threads.READ,
+                Threads.SNIPPET)
 
-        val ID = 0
-        val RECIPIENT_IDS = 1
+        const val ID = 0
+        const val DATE = 1
+        const val RECIPIENT_IDS = 2
+        const val READ = 3
+        const val SNIPPET = 4
     }
 
     override fun map(from: Cursor): Conversation {
         return Conversation().apply {
             id = from.getLong(ID)
+            date = from.getLong(DATE)
             recipients.addAll(from.getString(RECIPIENT_IDS)
                     .split(" ")
                     .filter { it.isNotBlank() }
                     .map { recipientId -> recipientId.toLong() }
                     .map { recipientId -> Recipient().apply { id = recipientId } })
+            read = from.getInt(READ) == 1
+            snippet = from.getString(SNIPPET) ?: ""
         }
     }
 

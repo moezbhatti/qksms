@@ -24,7 +24,6 @@ import android.net.Uri
 import android.provider.Telephony.*
 import com.google.android.mms.pdu_alt.PduHeaders
 import manager.KeyManager
-import model.Conversation
 import model.Message
 import util.extensions.map
 import javax.inject.Inject
@@ -77,13 +76,12 @@ class CursorToMessageImpl @Inject constructor(
             }
 
             id = keys.newId()
+            threadId = cursor.getLong(columnsMap.threadId)
             contentId = cursor.getLong(columnsMap.msgId)
             date = cursor.getLong(columnsMap.date)
             dateSent = cursor.getLong(columnsMap.dateSent)
             read = cursor.getInt(columnsMap.read) != 0
             locked = cursor.getInt(columnsMap.locked) != 0
-
-            conversation = Conversation().apply { id = cursor.getLong(columnsMap.threadId) }
 
             when (type) {
                 "sms" -> {

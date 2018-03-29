@@ -28,9 +28,9 @@ import model.MmsPart
 
 interface MessageRepository {
 
-    fun getConversations(archived: Boolean = false): RealmResults<Message>
+    fun getConversations(archived: Boolean = false): RealmResults<Conversation>
 
-    fun getConversationsSnapshot(): List<Message>
+    fun getConversationsSnapshot(): List<Conversation>
 
     fun getBlockedConversations(): Flowable<List<Conversation>>
 
@@ -52,7 +52,7 @@ interface MessageRepository {
 
     fun getMessageForPart(id: Long): Message?
 
-    fun getUnreadMessageCount(): Long
+    fun getUnreadCount(): Long
 
     fun getPart(id: Long): MmsPart?
 
@@ -69,6 +69,11 @@ interface MessageRepository {
      * for a given conversation
      */
     fun getUnreadMessages(threadId: Long): RealmResults<Message>
+
+    /**
+     * Updates message-related fields in the conversation, like the date and snippet
+     */
+    fun updateConversation(threadId: Long)
 
     fun markArchived(threadId: Long)
 

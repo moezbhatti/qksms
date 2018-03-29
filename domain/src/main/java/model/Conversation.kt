@@ -28,9 +28,13 @@ import java.util.*
 open class Conversation : RealmObject() {
 
     @PrimaryKey var id: Long = 0
-    var recipients: RealmList<Recipient> = RealmList()
     @Index var archived: Boolean = false
     @Index var blocked: Boolean = false
+    var recipients: RealmList<Recipient> = RealmList()
+    var date: Long = 0
+    var snippet: String = ""
+    var read: Boolean = true
+    var me: Boolean = false
     var draft: String = ""
 
     fun getTitle() = recipients.joinToString { recipient ->

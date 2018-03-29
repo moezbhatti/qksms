@@ -49,6 +49,7 @@ class SendMessage @Inject constructor(
                         sendMms(params.threadId, params.addresses, params.body, params.attachments)
                     }
                 }
+                .doOnNext { messageRepo.updateConversation(params.threadId) }
                 .doOnNext { messageRepo.markUnarchived(params.threadId) }
     }
 

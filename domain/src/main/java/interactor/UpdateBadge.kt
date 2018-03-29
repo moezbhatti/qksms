@@ -30,7 +30,7 @@ class UpdateBadge @Inject constructor(
 
     override fun buildObservable(params: Unit): Flowable<*> {
         return Flowable.just(params)
-                .map { messageRepo.getUnreadMessageCount() }
+                .map { messageRepo.getUnreadCount() }
                 .map { count -> count.toInt() }
                 .doOnNext { count -> widgetManager.updateUnreadCount(count) }
     }

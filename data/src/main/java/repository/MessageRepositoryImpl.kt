@@ -63,26 +63,24 @@ class MessageRepositoryImpl @Inject constructor(
         private val cursorToRecipient: CursorToRecipient,
         private val prefs: Preferences) : MessageRepository {
 
-    override fun getConversations(archived: Boolean): RealmResults<Message> {
+    override fun getConversations(archived: Boolean): RealmResults<Conversation> {
         return Realm.getDefaultInstance()
-                .where(Message::class.java)
-                .distinctValues("threadId")
-                .notEqualTo("threadId", 0L)
-                .equalTo("conversation.archived", archived)
-                .equalTo("conversation.blocked", false)
-                .isNotEmpty("conversation.recipients")
+                .where(Conversation::class.java)
+                .notEqualTo("id", 0L)
+                .equalTo("archived", archived)
+                .equalTo("blocked", false)
+                .isNotEmpty("recipients")
                 .sort("date", Sort.DESCENDING)
                 .findAllAsync()
     }
 
-    override fun getConversationsSnapshot(): List<Message> {
+    override fun getConversationsSnapshot(): List<Conversation> {
         val realm = Realm.getDefaultInstance()
-        return realm.copyFromRealm(realm.where(Message::class.java)
-                .distinctValues("threadId")
-                .notEqualTo("threadId", 0L)
-                .equalTo("conversation.archived", false)
-                .equalTo("conversation.blocked", false)
-                .isNotEmpty("conversation.recipients")
+        return realm.copyFromRealm(realm.where(Conversation::class.java)
+                .notEqualTo("id", 0L)
+                .equalTo("archived", false)
+                .equalTo("blocked", false)
+                .isNotEmpty("recipients")
                 .sort("date", Sort.DESCENDING)
                 .findAll())
     }
@@ -186,9 +184,9 @@ class MessageRepositoryImpl @Inject constructor(
                 .findFirst()
     }
 
-    override fun getUnreadMessageCount(): Long {
+    override fun getUnreadCount(): Long {
         return Realm.getDefaultInstance()
-                .where(Message::class.java)
+                .where(Conversation::class.java)
                 .equalTo("read", false)
                 .count()
     }
@@ -232,6 +230,30 @@ class MessageRepositoryImpl @Inject constructor(
                 .equalTo("threadId", threadId)
                 .sort("date")
                 .findAll()
+    }
+
+    override fun updateConversation(threadId: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+
+            val conversation = realm
+                    .where(Conversation::class.java)
+                    .equalTo("id", threadId)
+                    .findFirst() ?: return
+
+            val message = realm
+                    .where(Message::class.java)
+                    .equalTo("threadId", threadId)
+                    .sort("date", Sort.DESCENDING)
+                    .findAll().first() ?: return
+
+            realm.executeTransaction {
+                conversation.date = message.date
+                conversation.snippet = message.getSummary()
+                conversation.read = message.read
+                conversation.me = message.isMe()
+            }
+        }
     }
 
     override fun markArchived(threadId: Long) {
@@ -365,6 +387,7 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Insert the message to Realm
         val message = Message().apply {
+            this.threadId = threadId
             this.address = address
             this.body = body
             this.date = System.currentTimeMillis()
@@ -374,8 +397,6 @@ class MessageRepositoryImpl @Inject constructor(
             type = "sms"
             read = true
             seen = true
-
-            conversation = getOrCreateConversation(threadId)
         }
         val realm = Realm.getDefaultInstance()
         var managedMessage: Message? = null
@@ -410,10 +431,9 @@ class MessageRepositoryImpl @Inject constructor(
             this.date = System.currentTimeMillis()
 
             id = messageIds.newId()
+            threadId = getOrCreateConversation(address).blockingGet().id
             boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
             type = "sms"
-
-            conversation = getOrCreateConversation(address).blockingGet()
         }
         val realm = Realm.getDefaultInstance()
         var managedMessage: Message? = null

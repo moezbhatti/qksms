@@ -38,7 +38,7 @@ import common.util.extensions.dpToPx
 import feature.main.MainActivity
 import injection.appComponent
 import model.Contact
-import model.Message
+import model.Conversation
 import model.PhoneNumber
 import repository.MessageRepository
 import javax.inject.Inject
@@ -56,7 +56,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
     private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
     private val smallWidget = intent.getBooleanExtra("small_widget", false)
-    private var conversations: List<Message> = listOf()
+    private var conversations: List<Conversation> = listOf()
     private val appWidgetManager by lazy { AppWidgetManager.getInstance(context) }
 
     // Cache colors, load lazily. This entire class is recreated when the widget is recreated,
@@ -97,8 +97,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
     }
 
     private fun getConversationView(position: Int): RemoteViews {
-        val message = conversations[position]
-        val conversation = message.conversation!!
+        val conversation = conversations[position]
 
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_list_item)
 
@@ -138,15 +137,15 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
         // Name
         remoteViews.setTextColor(R.id.name, textPrimary)
-        remoteViews.setTextViewText(R.id.name, boldText(conversation.getTitle(), !message.read))
+        remoteViews.setTextViewText(R.id.name, boldText(conversation.getTitle(), !conversation.read))
 
         // Date
-        remoteViews.setTextColor(R.id.date, if (message.read) textTertiary else textPrimary)
-        remoteViews.setTextViewText(R.id.date, boldText(dateFormatter.getConversationTimestamp(message.date), !message.read))
+        remoteViews.setTextColor(R.id.date, if (conversation.read) textTertiary else textPrimary)
+        remoteViews.setTextViewText(R.id.date, boldText(dateFormatter.getConversationTimestamp(conversation.date), !conversation.read))
 
         // Snippet
-        remoteViews.setTextColor(R.id.snippet, if (message.read) textTertiary else textPrimary)
-        remoteViews.setTextViewText(R.id.snippet, boldText(message.getSummary(), !message.read))
+        remoteViews.setTextColor(R.id.snippet, if (conversation.read) textTertiary else textPrimary)
+        remoteViews.setTextViewText(R.id.snippet, boldText(conversation.snippet, !conversation.read))
 
         // Launch conversation on click
         val clickIntent = Intent().putExtra("threadId", conversation.id)

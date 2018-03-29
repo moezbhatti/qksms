@@ -23,13 +23,18 @@ import repository.MessageRepository
 import javax.inject.Inject
 
 class DeleteMessage @Inject constructor(
-        private val messageRepository: MessageRepository,
+        private val messageRepo: MessageRepository,
         private val updateBadge: UpdateBadge
 ) : Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<*> {
         return Flowable.just(params)
-                .doOnNext { messageId -> messageRepository.deleteMessage(messageId) }
+                .doOnNext { messageId ->
+                    val threadId = messageRepo.getMessage(messageId)?.threadId
+                    messageRepo.deleteMessage(messageId)
+                    threadId?.let { messageRepo.updateConversation(it) }
+                }
+                .doOnNext { messageRepo.updateConversation(params) } // Update the conversation
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 
