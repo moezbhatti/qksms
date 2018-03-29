@@ -133,14 +133,17 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         // Set the theme color tint to the progressbar and FAB
         colors.theme
                 .doOnNext { color -> syncingProgress.indeterminateTintList = ColorStateList.valueOf(color) }
+                .doOnNext { color -> itemTouchCallback.color = color }
                 .doOnNext { color -> compose.setBackgroundTint(color) }
                 .autoDisposable(scope())
                 .subscribe()
 
         // Set the FAB compose icon color
         colors.textPrimaryOnTheme
+                .doOnNext { color -> compose.setTint(color) }
+                .doOnNext { color -> itemTouchCallback.iconColor = color}
                 .autoDisposable(scope())
-                .subscribe { color -> compose.setTint(color) }
+                .subscribe()
 
         // Set the hamburger icon color
         colors.textSecondary

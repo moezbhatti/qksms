@@ -46,7 +46,7 @@
         <ImageView
             android:id="@+id/archivedIcon"
             style="@style/DrawerIcon"
-            android:src="@drawable/ic_folder_black_24dp" />
+            android:src="@drawable/ic_archive_black_24dp" />
 
         <common.widget.QkTextView
             style="@style/DrawerText"
