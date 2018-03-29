@@ -188,7 +188,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
             is Inbox -> {
                 if (!inbox.isSelected) toolbarSearch.text = null
                 if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                conversationsAdapter.updateData(state.page.data)
+                conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.inbox_empty_text)
@@ -198,7 +198,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
             is Archived -> {
                 if (!archived.isSelected) toolbarSearch.setText(R.string.title_archived)
                 if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                conversationsAdapter.updateData(state.page.data)
+                conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
                 menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.archived_empty_text)

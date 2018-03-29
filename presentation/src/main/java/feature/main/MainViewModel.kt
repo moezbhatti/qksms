@@ -114,11 +114,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .withLatestFrom(state, { query, state ->
                     if (state.page is Inbox) {
-                        /*val conversations = messageRepo.getConversationsSnapshot()
-                                .filter { conversationFilter.filter(it, query) }
+                        val conversations = state.page.data
+                                ?.map { conversations -> conversations.filter { conversationFilter.filter(it, query) } }
 
                         val page = state.page.copy(showClearButton = query.isNotEmpty(), data = conversations)
-                        newState { it.copy(page = page) }*/
+                        newState { it.copy(page = page) }
                     }
                 })
                 .autoDisposable(view.scope())

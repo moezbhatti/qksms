@@ -28,7 +28,7 @@ import model.MmsPart
 
 interface MessageRepository {
 
-    fun getConversations(archived: Boolean = false): RealmResults<Conversation>
+    fun getConversations(archived: Boolean = false): Flowable<List<Conversation>>
 
     fun getConversationsSnapshot(): List<Conversation>
 

@@ -24,7 +24,7 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
-import common.base.QkRealmAdapter
+import common.base.FlowableAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
@@ -42,7 +42,7 @@ class ConversationsAdapter @Inject constructor(
         private val context: Context,
         private val dateFormatter: DateFormatter,
         private val colors: Colors
-) : QkRealmAdapter<Conversation>() {
+) : FlowableAdapter<Conversation>() {
 
     val clicks: Subject<Long> = PublishSubject.create()
     val longClicks: Subject<Long> = PublishSubject.create()
@@ -71,7 +71,7 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val conversation = getItem(position)!!
+        val conversation = getItem(position)
         val view = viewHolder.itemView
 
         view.clicks().subscribe { clicks.onNext(conversation.id) }
@@ -86,10 +86,10 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun getItemId(index: Int): Long {
-        return getItem(index)!!.id
+        return getItem(index).id
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position)!!.read) 0 else 1
+        return if (getItem(position).read) 0 else 1
     }
 }

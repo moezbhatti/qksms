@@ -63,8 +63,9 @@ class MessageRepositoryImpl @Inject constructor(
         private val cursorToRecipient: CursorToRecipient,
         private val prefs: Preferences) : MessageRepository {
 
-    override fun getConversations(archived: Boolean): RealmResults<Conversation> {
-        return Realm.getDefaultInstance()
+    override fun getConversations(archived: Boolean): Flowable<List<Conversation>> {
+        val realm = Realm.getDefaultInstance()
+        return realm
                 .where(Conversation::class.java)
                 .notEqualTo("id", 0L)
                 .equalTo("archived", archived)
@@ -72,6 +73,10 @@ class MessageRepositoryImpl @Inject constructor(
                 .isNotEmpty("recipients")
                 .sort("date", Sort.DESCENDING)
                 .findAllAsync()
+                .asFlowable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .map { conversations -> realm.copyFromRealm(conversations) }
     }
 
     override fun getConversationsSnapshot(): List<Conversation> {

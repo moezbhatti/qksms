@@ -20,6 +20,8 @@ package common.base
 
 import android.support.annotation.CallSuper
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import common.util.extensions.setVisible
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 
@@ -29,9 +31,19 @@ import io.reactivex.disposables.Disposable
  */
 abstract class FlowableAdapter<T> : QkAdapter<T>() {
 
+    /**
+     * This view can be set, and the adapter will automatically control the visibility of this view
+     * based on the data
+     */
+    var emptyView: View? = null
+        set(value) {
+            field = value
+            value?.setVisible(false)
+        }
+
     var flowable: Flowable<List<T>>? = null
         set(value) {
-            if (field == value) return
+            if (field === value) return
 
             field = value
 
@@ -69,7 +81,10 @@ abstract class FlowableAdapter<T> : QkAdapter<T>() {
     }
 
     private fun subscribe() {
-        disposable = flowable?.subscribe { data = it }
+        disposable = flowable?.subscribe {
+            data = it
+            emptyView?.setVisible(data.isEmpty())
+        }
     }
 
     private fun dispose() {

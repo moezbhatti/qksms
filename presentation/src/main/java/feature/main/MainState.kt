@@ -19,7 +19,7 @@
 package feature.main
 
 import common.MenuItem
-import io.realm.RealmResults
+import io.reactivex.Flowable
 import model.Conversation
 
 data class MainState(
@@ -32,12 +32,12 @@ sealed class MainPage
 
 data class Inbox(
         val showClearButton: Boolean = false,
-        val data: RealmResults<Conversation>? = null,
+        val data: Flowable<List<Conversation>>? = null,
         val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(
-        val data: RealmResults<Conversation>? = null,
+        val data: Flowable<List<Conversation>>? = null,
         val menu: List<MenuItem> = ArrayList()) : MainPage()
 
 data class Scheduled(
