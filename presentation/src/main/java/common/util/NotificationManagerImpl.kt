@@ -116,7 +116,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val readIntent = Intent(context, MarkReadReceiver::class.java).putExtra("threadId", threadId)
         val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val readAction = NotificationCompat.Action(R.drawable.ic_done_black_24dp, context.getString(R.string.notification_read), readPI)
+        val readAction = NotificationCompat.Action(R.drawable.ic_check_white_24dp, context.getString(R.string.notification_read), readPI)
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setColor(colors.themeForConversation(threadId).blockingFirst())
@@ -191,7 +191,7 @@ class NotificationManagerImpl @Inject constructor(
                 .build()
 
         return NotificationCompat.Action.Builder(
-                R.drawable.ic_reply_black_24dp,
+                R.drawable.ic_reply_white_24dp,
                 context.getString(R.string.notification_reply), replyPI)
                 .addRemoteInput(remoteInput)
                 .build()

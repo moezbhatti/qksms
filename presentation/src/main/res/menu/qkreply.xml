@@ -21,7 +21,7 @@
 
     <item
         android:id="@+id/read"
-        android:icon="@drawable/ic_check_black_24dp"
+        android:icon="@drawable/ic_check_white_24dp"
         android:title="@string/qkreply_menu_read"
         app:showAsAction="ifRoom" />
 

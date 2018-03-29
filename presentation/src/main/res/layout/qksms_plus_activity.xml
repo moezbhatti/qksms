@@ -231,7 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
-                app:icon="@drawable/ic_reply_black_24dp"
+                app:icon="@drawable/ic_reply_white_24dp"
                 app:summary="@string/qksms_plus_respond_summary"
                 app:title="@string/qksms_plus_respond_title" />
 
