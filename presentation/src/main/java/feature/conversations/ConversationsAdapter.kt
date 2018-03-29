@@ -19,6 +19,7 @@
 package feature.conversations
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
@@ -28,8 +29,6 @@ import common.base.FlowableAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
@@ -47,24 +46,23 @@ class ConversationsAdapter @Inject constructor(
     val clicks: Subject<Long> = PublishSubject.create()
     val longClicks: Subject<Long> = PublishSubject.create()
 
-    private val disposables = CompositeDisposable()
-
     init {
         setHasStableIds(true)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val layoutRes = when (viewType) {
-            0 -> R.layout.conversation_list_item
-            else -> R.layout.conversation_list_item_unread
-        }
-
         val layoutInflater = LayoutInflater.from(context)
-        val view = layoutInflater.inflate(layoutRes, parent, false)
+        val view = layoutInflater.inflate(R.layout.conversation_list_item, parent, false)
 
         if (viewType == 1) {
-            disposables += colors.theme
-                    .subscribe { color -> view.date.setTextColor(color) }
+            view.title.setTypeface(view.title.typeface, Typeface.BOLD)
+
+            view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
+            view.snippet.textColorObservable = colors.textPrimary
+            view.snippet.maxLines = 5
+
+            view.date.setTypeface(view.date.typeface, Typeface.BOLD)
+            view.date.textColorObservable = colors.textPrimary
         }
 
         return QkViewHolder(view)
