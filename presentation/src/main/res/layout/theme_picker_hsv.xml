@@ -15,6 +15,62 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <common.widget.QkTextView
+        android:id="@+id/hexLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="@string/theme_hex"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/picker"
+        app:textColor="tertiary" />
+
+    <common.widget.Separator
+        android:id="@+id/hexSeparator"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/hexLabel"
+        app:layout_constraintStart_toEndOf="@id/hexLabel"
+        app:layout_constraintTop_toTopOf="@id/hexLabel" />
+
+    <common.widget.QkTextView
+        android:id="@+id/hexSign"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="#"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/hexLabel"
+        app:layout_constraintStart_toEndOf="@id/hexSeparator"
+        app:layout_constraintTop_toTopOf="@id/hexLabel"
+        app:textColor="primary"
+        tools:ignore="HardcodedText" />
+
+    <common.widget.QkEditText
+        android:id="@+id/hex"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:gravity="center"
+        android:paddingEnd="16dp"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/hexLabel"
+        app:layout_constraintStart_toEndOf="@id/hexSign"
+        app:layout_constraintTop_toTopOf="@id/hexLabel"
+        app:textColor="primary"
+        tools:text="1B8AE8" />
+
     <android.support.constraint.Group
         android:id="@+id/applyGroup"
         android:layout_width="wrap_content"

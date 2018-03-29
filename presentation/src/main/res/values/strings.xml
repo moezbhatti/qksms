@@ -150,6 +150,7 @@
 
     <string name="theme_material">Material</string>
     <string name="theme_plus">QKSMS+</string>
+    <string name="theme_hex">HEX</string>
     <string name="theme_apply">Apply</string>
 
     <string name="notification_reply">Reply</string>

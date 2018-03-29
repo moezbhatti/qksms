@@ -89,6 +89,8 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
 
         themeAdapter.threadId = state.threadId
 
+        hex.setText(Integer.toHexString(state.newColor).takeLast(6))
+
         applyGroup.setVisible(state.applyThemeVisible)
         apply.setBackgroundTint(state.newColor)
         apply.setTextColor(state.newTextColor)
