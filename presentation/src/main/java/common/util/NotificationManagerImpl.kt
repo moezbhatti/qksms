@@ -184,7 +184,7 @@ class NotificationManagerImpl @Inject constructor(
                 .putExtra("threadId", threadId)
         val replyPI = PendingIntent.getBroadcast(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val responseSet = arrayListOf("Hello", "Hey").toTypedArray().sortedArray()
+        val responseSet = context.resources.getStringArray(R.array.qk_responses)
         val remoteInput = RemoteInput.Builder("body")
                 .setLabel(context.getString(R.string.notification_reply))
                 .setChoices(responseSet)
