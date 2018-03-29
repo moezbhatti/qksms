@@ -61,13 +61,19 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
 
         disposables += conversation
                 .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
-                .take(1) // We only need to set the messages once
+                .distinctUntilChanged { conversation -> conversation.id } // We only need to set the messages once
                 .map { conversation -> Pair(conversation, messageRepo.getUnreadMessages(conversation.id)) }
                 .subscribe { data -> newState { it.copy(data = data) } }
     }
 
     override fun bindView(view: QkReplyView) {
         super.bindView(view)
+
+        conversation
+                .map { conversation -> conversation.draft }
+                .distinctUntilChanged()
+                .autoDisposable(view.scope())
+                .subscribe { draft -> view.setDraft(draft) }
 
         // Mark read
         view.menuItemIntent
