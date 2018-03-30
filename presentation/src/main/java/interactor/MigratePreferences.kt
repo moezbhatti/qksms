@@ -20,8 +20,8 @@ package interactor
 
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import common.util.NightModeManager
-import util.Preferences
 import io.reactivex.Flowable
+import util.Preferences
 import javax.inject.Inject
 
 /**
@@ -59,6 +59,9 @@ class MigratePreferences @Inject constructor(
                 .doOnNext {
                     // Delivery
                     prefs.delivery.set(rxPrefs.getBoolean("pref_key_delivery", prefs.delivery.get()).get())
+                }
+                .doOnNext {
+                    prefs.qkreply.set(rxPrefs.getBoolean("pref_key_quickreply_enabled", prefs.qkreply.get()).get())
                 }
                 .doOnNext {
                     // Unicode
