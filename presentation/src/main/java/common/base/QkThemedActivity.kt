@@ -65,13 +65,17 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
                 .autoDisposable(scope())
                 .subscribe { res -> setTheme(res) }
 
-        colors.statusBarIcons
+        colors.systemBarIcons
                 .autoDisposable(scope())
                 .subscribe { systemUiVisibility -> window.decorView.systemUiVisibility = systemUiVisibility }
 
         colors.statusBar
                 .autoDisposable(scope())
                 .subscribe { color -> window.statusBarColor = color }
+
+        colors.background
+                .autoDisposable(scope())
+                .subscribe { color -> window.navigationBarColor = color }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -105,7 +109,8 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
 
         colors.toolbarColor
                 .doOnNext { color -> toolbar?.setBackgroundTint(color) }
-                .doOnNext { color -> // Set the color for the recent apps title
+                .doOnNext { color ->
+                    // Set the color for the recent apps title
                     val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
                     val taskDesc = ActivityManager.TaskDescription(getString(R.string.app_name), icon, color)
                     setTaskDescription(taskDesc)

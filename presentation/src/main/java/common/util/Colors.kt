@@ -93,9 +93,9 @@ class Colors @Inject constructor(private val context: Context, private val prefs
             })
 
     @SuppressLint("InlinedApi")
-    val statusBarIcons: Observable<Int> = prefs.night.asObservable()
+    val systemBarIcons: Observable<Int> = prefs.night.asObservable()
             .map { night -> night || Build.VERSION.SDK_INT < Build.VERSION_CODES.M }
-            .map { lightIcons -> if (lightIcons) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR }
+            .map { lightIcons -> if (lightIcons) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR}
             .distinctUntilChanged()
 
     val statusBar: Observable<Int> = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
