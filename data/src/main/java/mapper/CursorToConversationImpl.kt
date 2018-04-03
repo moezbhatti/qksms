@@ -21,7 +21,6 @@ package mapper
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.provider.Telephony
 import android.provider.Telephony.Threads
 import model.Conversation
 import model.Recipient
@@ -35,14 +34,16 @@ class CursorToConversationImpl @Inject constructor(private val context: Context)
                 Threads._ID,
                 Threads.DATE,
                 Threads.RECIPIENT_IDS,
+                Threads.MESSAGE_COUNT,
                 Threads.READ,
                 Threads.SNIPPET)
 
         const val ID = 0
         const val DATE = 1
         const val RECIPIENT_IDS = 2
-        const val READ = 3
-        const val SNIPPET = 4
+        const val MESSAGE_COUNT = 3
+        const val READ = 4
+        const val SNIPPET = 5
     }
 
     override fun map(from: Cursor): Conversation {
@@ -54,6 +55,7 @@ class CursorToConversationImpl @Inject constructor(private val context: Context)
                     .filter { it.isNotBlank() }
                     .map { recipientId -> recipientId.toLong() }
                     .map { recipientId -> Recipient().apply { id = recipientId } })
+            count = from.getInt(MESSAGE_COUNT)
             read = from.getInt(READ) == 1
             snippet = from.getString(SNIPPET) ?: ""
         }
@@ -61,7 +63,7 @@ class CursorToConversationImpl @Inject constructor(private val context: Context)
 
     override fun getConversationsCursor(lastSync: Long): Cursor {
         return context.contentResolver.query(URI, PROJECTION,
-                "date > $lastSync AND ${Telephony.Threads.MESSAGE_COUNT} > 0", null,
+                "date > $lastSync", null,
                 "date desc")
     }
 
