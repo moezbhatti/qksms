@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- On Oreo, use the light status and navigation bars -->
+    <style name="AppThemeLight" parent="AppBaseThemeLight">
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/statusBarLight</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+</resources>

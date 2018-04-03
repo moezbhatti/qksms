@@ -73,7 +73,7 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
                 .autoDisposable(scope())
                 .subscribe { color -> window.statusBarColor = color }
 
-        colors.background
+        colors.navigationBar
                 .autoDisposable(scope())
                 .subscribe { color -> window.navigationBarColor = color }
     }
