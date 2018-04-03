@@ -34,7 +34,6 @@
         android:gravity="center"
         android:textAllCaps="true"
         android:textSize="20sp"
-        app:textColor="primaryOnTheme"
         tools:text="M" />
 
     <ImageView
