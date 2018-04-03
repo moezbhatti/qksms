@@ -250,7 +250,7 @@ class MessageRepositoryImpl @Inject constructor(
                     .where(Message::class.java)
                     .equalTo("threadId", threadId)
                     .sort("date", Sort.DESCENDING)
-                    .findAll().first() ?: return
+                    .findAll().firstOrNull() ?: return
 
             realm.executeTransaction {
                 conversation.date = message.date
