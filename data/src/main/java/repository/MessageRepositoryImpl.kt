@@ -222,6 +222,7 @@ class MessageRepositoryImpl @Inject constructor(
      */
     override fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message> {
         return Realm.getDefaultInstance()
+                .also { it.refresh() }
                 .where(Message::class.java)
                 .equalTo("seen", false)
                 .equalTo("read", false)
