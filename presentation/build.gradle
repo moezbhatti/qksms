@@ -66,6 +66,17 @@ android {
     }
 }
 
+import com.android.build.OutputFile
+
+// For each APK output variant, override versionCode with one that is unique
+// https://developer.android.com/studio/build/gradle-tips.html#configure-dynamic-version-codes
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def baseAbiVersionCode = abiCodes.get(output.getFilter(OutputFile.ABI), 0)
+        output.versionCodeOverride = baseAbiVersionCode * 1000 + variant.versionCode
+    }
+}
+
 dependencies {
     // lifecycle
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
