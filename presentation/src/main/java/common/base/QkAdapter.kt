@@ -63,11 +63,11 @@ abstract class QkAdapter<T> : RecyclerView.Adapter<QkViewHolder>() {
         }
     }
 
-    open protected fun areItemsTheSame(old: T, new: T): Boolean {
+    protected open fun areItemsTheSame(old: T, new: T): Boolean {
         return old == new
     }
 
-    open protected fun areContentsTheSame(old: T, new: T): Boolean {
+    protected open fun areContentsTheSame(old: T, new: T): Boolean {
         return old == new
     }
 
