@@ -19,7 +19,9 @@
 package common.base
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.arch.lifecycle.Lifecycle
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
@@ -63,13 +65,17 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
                 .autoDisposable(scope())
                 .subscribe { res -> setTheme(res) }
 
-        colors.statusBarIcons
+        colors.systemBarIcons
                 .autoDisposable(scope())
                 .subscribe { systemUiVisibility -> window.decorView.systemUiVisibility = systemUiVisibility }
 
         colors.statusBar
                 .autoDisposable(scope())
                 .subscribe { color -> window.statusBarColor = color }
+
+        colors.navigationBar
+                .autoDisposable(scope())
+                .subscribe { color -> window.navigationBarColor = color }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -102,6 +108,13 @@ abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
                 .subscribe { res -> toolbar?.popupTheme = res }
 
         colors.toolbarColor
+                .doOnNext { color -> toolbar?.setBackgroundTint(color) }
+                .doOnNext { color ->
+                    // Set the color for the recent apps title
+                    val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+                    val taskDesc = ActivityManager.TaskDescription(getString(R.string.app_name), icon, color)
+                    setTaskDescription(taskDesc)
+                }
                 .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { color -> toolbar?.setBackgroundTint(color) }
     }

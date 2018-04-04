@@ -20,6 +20,7 @@ package feature.compose
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,15 +31,16 @@ import com.jakewharton.rxbinding2.view.keys
 import com.jakewharton.rxbinding2.widget.editorActions
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import common.util.Colors
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.showKeyboard
+import io.reactivex.functions.Predicate
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
 import model.Contact
-import common.base.QkAdapter
-import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ChipsAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<Contact>() {
@@ -54,8 +56,16 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
     var view: RecyclerView? = null
     val chipDeleted: PublishSubject<Contact> = PublishSubject.create<Contact>()
     val textChanges = editText.textChanges()
-    val keyEvents = editText.keys()
     val actions = editText.editorActions()
+
+    /**
+     * On certain devices, not returning false in this predicate for number entry will result in
+     * the user not being able to enter numbers into the text field. As a result, we have to only
+     * pass the events that we're looking for
+     */
+    val keyEvents = editText.keys(Predicate { event ->
+        event.keyCode == KeyEvent.KEYCODE_BACK || event.keyCode == KeyEvent.KEYCODE_DEL
+    })
 
     init {
         val wrap = ViewGroup.LayoutParams.WRAP_CONTENT

@@ -73,9 +73,13 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                     .autoDisposable(scope())
                     .subscribe { color -> background.setTint(color) }
 
-            colors.textPrimaryOnTheme
-                    .autoDisposable(scope())
-                    .subscribe { color -> icon.setTint(color) }
+            colors.textPrimaryOnThemeForConversation(threadId).let { observable ->
+                initial.textColorObservable = observable
+
+                observable
+                        .autoDisposable(scope())
+                        .subscribe { color -> icon.setTint(color) }
+            }
 
             clicks()
                     .autoDisposable(scope())

@@ -31,7 +31,11 @@ import interactor.SendMessage
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
+import io.realm.RealmResults
 import model.Conversation
+import model.Message
 import repository.MessageRepository
 import util.extensions.asObservable
 import util.extensions.mapNotNull
@@ -53,17 +57,31 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .distinctUntilChanged()
     }
 
+    private val messages: Subject<RealmResults<Message>> = PublishSubject.create()
+
     init {
         appComponent.inject(this)
 
         disposables += markRead
         disposables += sendMessage
 
+        // When the set of messages changes, update the state
+        // If we're ever showing an empty set of messages, then it's time to shut down to activity
+        disposables += messages
+                .withLatestFrom(conversation, { messages, conversation -> Pair(conversation, messages) })
+                .doOnNext { data -> newState { it.copy(data = data) } }
+                .map { data -> data.second }
+                .switchMap { messages -> messages.asObservable() }
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .filter { it.isEmpty() }
+                .subscribe { newState { it.copy(hasError = true) } }
+
         disposables += conversation
                 .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
                 .distinctUntilChanged { conversation -> conversation.id } // We only need to set the messages once
-                .map { conversation -> Pair(conversation, messageRepo.getUnreadMessages(conversation.id)) }
-                .subscribe { data -> newState { it.copy(data = data) } }
+                .map { conversation -> messageRepo.getUnreadMessages(conversation.id) }
+                .subscribe { messages.onNext(it) }
     }
 
     override fun bindView(view: QkReplyView) {
@@ -81,7 +99,9 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .map { conversation -> conversation.id }
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> markRead.execute(threadId) { view.finish() } }
+                .subscribe { threadId ->
+                    markRead.execute(threadId) { newState { it.copy(hasError = true) } }
+                }
 
         // Call
         view.menuItemIntent
@@ -90,23 +110,25 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .mapNotNull { conversation -> conversation.recipients.first()?.address }
                 .doOnNext { address -> navigator.makePhoneCall(address) }
                 .autoDisposable(view.scope())
-                .subscribe { view.finish() }
+                .subscribe { newState { it.copy(hasError = true) } }
 
         // Show all messages
         view.menuItemIntent
                 .filter { id -> id == R.id.expand }
                 .withLatestFrom(conversation, { _, conversation -> conversation })
-                .map { conversation -> Pair(conversation, messageRepo.getMessages(conversation.id)) }
+                .map { conversation -> messageRepo.getMessages(conversation.id) }
+                .doOnNext { messages.onNext(it) }
                 .autoDisposable(view.scope())
-                .subscribe { data -> newState { it.copy(expanded = true, data = data) } }
+                .subscribe { newState { it.copy(expanded = true) } }
 
         // Show unread messages only
         view.menuItemIntent
                 .filter { id -> id == R.id.collapse }
                 .withLatestFrom(conversation, { _, conversation -> conversation })
-                .map { conversation -> Pair(conversation, messageRepo.getUnreadMessages(conversation.id)) }
+                .map { conversation -> messageRepo.getUnreadMessages(conversation.id) }
+                .doOnNext { messages.onNext(it) }
                 .autoDisposable(view.scope())
-                .subscribe { data -> newState { it.copy(expanded = false, data = data) } }
+                .subscribe { newState { it.copy(expanded = false) } }
 
         // View conversation
         view.menuItemIntent
@@ -115,7 +137,7 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
                 .map { conversation -> conversation.id }
                 .doOnNext { threadId -> navigator.showConversation(threadId) }
                 .autoDisposable(view.scope())
-                .subscribe { view.finish() }
+                .subscribe { newState { it.copy(hasError = true) } }
 
         // Enable the send button when there is text input into the new message body or there's
         // an attachment, disable otherwise
@@ -163,11 +185,15 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
 
                     view.setDraft("")
                     sendMessage.execute(SendMessage.Params(threadId, addresses, body, listOf())) {
-                        markRead.execute(threadId) {
-                            view.finish()
-                        }
                     }
+
+                    threadId
                 })
+                .doOnNext { threadId ->
+                    markRead.execute(threadId) {
+                        newState { it.copy(hasError = true) }
+                    }
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
     }

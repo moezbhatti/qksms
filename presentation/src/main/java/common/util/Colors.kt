@@ -92,10 +92,25 @@ class Colors @Inject constructor(private val context: Context, private val prefs
                 }
             })
 
+    /**
+     * Returns the flags to be used for the system bars. This is used for tinting the icons
+     * according to the colour of the system bars (light or dark)
+     *
+     * If night mode, or no dark icons supported, use light icons
+     *
+     * If night mode and only dark status icons supported, use dark status icons
+     *
+     * If night mode and all dark icons supported, use all dark icons
+     */
     @SuppressLint("InlinedApi")
-    val statusBarIcons: Observable<Int> = prefs.night.asObservable()
-            .map { night -> night || Build.VERSION.SDK_INT < Build.VERSION_CODES.M }
-            .map { lightIcons -> if (lightIcons) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR }
+    val systemBarIcons: Observable<Int> = prefs.night.asObservable()
+            .map { night ->
+                when {
+                    night || Build.VERSION.SDK_INT < Build.VERSION_CODES.M -> 0
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.O -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    else -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                }
+            }
             .distinctUntilChanged()
 
     val statusBar: Observable<Int> = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
@@ -103,7 +118,20 @@ class Colors @Inject constructor(private val context: Context, private val prefs
                 when {
                     night && black -> R.color.black
                     night && !black -> R.color.statusBarDark
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.M -> R.color.black
                     else -> R.color.statusBarLight
+                }
+            })
+            .map { res -> getColor(res) }
+            .distinctUntilChanged()
+
+    val navigationBar: Observable<Int> = Observables.combineLatest(prefs.night.asObservable(), prefs.black.asObservable(),
+            { night, black ->
+                when {
+                    night && black -> R.color.black
+                    night && !black -> R.color.backgroundDark
+                    Build.VERSION.SDK_INT < Build.VERSION_CODES.O -> R.color.black
+                    else -> R.color.white
                 }
             })
             .map { res -> getColor(res) }

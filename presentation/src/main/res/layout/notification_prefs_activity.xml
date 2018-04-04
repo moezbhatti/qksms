@@ -73,6 +73,11 @@
             android:layout_height="8dp"
             android:background="@drawable/ab_shadow" />
 
+        <common.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom" />
+
     </FrameLayout>
 
 </LinearLayout>

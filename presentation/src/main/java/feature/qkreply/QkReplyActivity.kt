@@ -106,6 +106,10 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
     }
 
     override fun render(state: QkReplyState) {
+        if (state.hasError) {
+            finish()
+        }
+
         threadId.onNext(state.data?.first?.id ?: 0)
 
         title = state.title

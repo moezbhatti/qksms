@@ -37,7 +37,7 @@ class DateFormatter @Inject constructor(val context: Context) {
     private fun getFormatter(pattern: String): SimpleDateFormat {
         val isUsing24HourTime = DateFormat.is24HourFormat(context)
 
-        return if (isUsing24HourTime) SimpleDateFormat(pattern.replace('h', 'H').replace(" a".toRegex(), ""), Locale.US)
+        return if (isUsing24HourTime) SimpleDateFormat(pattern.replace("h", "HH").replace(" a".toRegex(), ""), Locale.US)
         else SimpleDateFormat(pattern, Locale.US)
     }
 

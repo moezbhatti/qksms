@@ -31,6 +31,7 @@ open class Conversation : RealmObject() {
     @Index var archived: Boolean = false
     @Index var blocked: Boolean = false
     var recipients: RealmList<Recipient> = RealmList()
+    var count: Int = 0
     var date: Long = 0
     var snippet: String = ""
     var read: Boolean = true

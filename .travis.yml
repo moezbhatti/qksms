@@ -90,9 +90,9 @@ deploy:
   api_key:
     secure: XF7V/I02gpyOzCAFXEFyrThXVUUnKjSaWQ8lppO50mVtdugimjWIPtHrcYASaJQf9INhqo0lamk+khPxtKxc1BSCp8o+c22UKcpczyjD4kK27a3zKfuNQWteBRjCH34vIGnrRFSHSWYLIgeuoIK3q5Lq4IBK/Od3mfpRaDt1ER+IqMzR3L205x1H8dW3MVuxXgdnq3jHlRpq86oOe293+dnblVCtWUvAzwhZPnnbBc4JUaNomMI7dLJ/pAigByCoHHmG9pc2Cky1yyWVAnTZFAlf2PbzPDLRRnXmHuYKfHxiZgd/l8JTiZdhky9cXgFoSxvJyDABRqqLxVNfXt2ZwgdtiulZml8RB1FB0L37qL72mxWgi6y9IbQgt/FG20K2QpSBglk0bCGLS+h5Yz3kV4fhsBY7llpWGw14BvlAx9sUfl3Ej+IUsWoJgA00TFNGDG8sMyOFoCQVz/sB4Dv4h+JfynJZcmm8okcfYrWBHOoHY7cH3chBWp/2A736f2A/aqnBd6z8a03toe2ILC9eSOiIhrVxPyqLmEKBD1rCduVFNteqGwm9G9YwKpvFibTqu0gqEtfF7cmuMH6M5PYExI5EzoewZTYmgp02+lBuFAEMvycVvXcu8VfeeT6cgeLlmz2hsbo93UfoSQyP+gSojMOOkVUsl6mIp1STLiJ5IRY=
   file:
-    - /home/travis/build/moezbhatti/qksms/qksms/build/outputs/apk/withAnalytics/release/qksms-withAnalytics-arm64-v8a-release.apk
-    - /home/travis/build/moezbhatti/qksms/qksms/build/outputs/apk/withAnalytics/release/qksms-withAnalytics-armeabi-v7a-release.apk
-    - /home/travis/build/moezbhatti/qksms/qksms/build/outputs/apk/withAnalytics/release/qksms-withAnalytics-universal-release.apk
+    - /home/travis/build/moezbhatti/qksms/presentation/build/outputs/apk/withAnalytics/release/presentation-withAnalytics-arm64-v8a-release.apk
+    - /home/travis/build/moezbhatti/qksms/presentation/build/outputs/apk/withAnalytics/release/presentation-withAnalytics-armeabi-v7a-release.apk
+    - /home/travis/build/moezbhatti/qksms/presentation/build/outputs/apk/withAnalytics/release/presentation-withAnalytics-universal-release.apk
   on:
     repo: moezbhatti/qksms
     tags: true

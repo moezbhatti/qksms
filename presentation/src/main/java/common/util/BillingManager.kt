@@ -48,7 +48,7 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
 
     private val skus = listOf(SKU_PLUS, SKU_PLUS_DONATE)
     private val purchaseList = mutableListOf<Purchase>()
-    private val purchaseListObservable: Observable<List<Purchase>> = BehaviorSubject.create()
+    private val purchaseListObservable: Observable<List<Purchase>> = BehaviorSubject.createDefault(listOf())
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context).setListener(this).build()
     private var isServiceConnected = false

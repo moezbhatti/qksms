@@ -68,6 +68,7 @@ class MessageRepositoryImpl @Inject constructor(
         return realm
                 .where(Conversation::class.java)
                 .notEqualTo("id", 0L)
+                .greaterThan("count", 0)
                 .equalTo("archived", archived)
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
@@ -83,6 +84,7 @@ class MessageRepositoryImpl @Inject constructor(
         val realm = Realm.getDefaultInstance()
         return realm.copyFromRealm(realm.where(Conversation::class.java)
                 .notEqualTo("id", 0L)
+                .greaterThan("count", 0)
                 .equalTo("archived", false)
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
@@ -220,6 +222,7 @@ class MessageRepositoryImpl @Inject constructor(
      */
     override fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message> {
         return Realm.getDefaultInstance()
+                .also { it.refresh() }
                 .where(Message::class.java)
                 .equalTo("seen", false)
                 .equalTo("read", false)
@@ -246,17 +249,20 @@ class MessageRepositoryImpl @Inject constructor(
                     .equalTo("id", threadId)
                     .findFirst() ?: return
 
-            val message = realm
+            val messages = realm
                     .where(Message::class.java)
                     .equalTo("threadId", threadId)
                     .sort("date", Sort.DESCENDING)
-                    .findAll().first() ?: return
+                    .findAll()
+
+            val message = messages.firstOrNull()
 
             realm.executeTransaction {
-                conversation.date = message.date
-                conversation.snippet = message.getSummary()
-                conversation.read = message.read
-                conversation.me = message.isMe()
+                conversation.count = messages.size
+                conversation.date = message?.date ?: 0
+                conversation.snippet = message?.getSummary() ?: ""
+                conversation.read = message?.read ?: true
+                conversation.me = message?.isMe() ?: false
             }
         }
     }

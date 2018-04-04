@@ -56,7 +56,8 @@ class MessagesAdapter @Inject constructor(
 ) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
 
     companion object {
-        private const val VIEW_TYPE_ME = 1
+        private const val VIEW_TYPE_MESSAGE_IN = 0
+        private const val VIEW_TYPE_MESSAGE_OUT = 1
         private const val TIMESTAMP_THRESHOLD = 10
     }
 
@@ -68,7 +69,6 @@ class MessagesAdapter @Inject constructor(
             if (field === value) return
 
             field = value
-            people.clear()
             contactMap.clear()
 
             // Update the theme
@@ -79,7 +79,6 @@ class MessagesAdapter @Inject constructor(
             updateData(value?.second)
         }
 
-    private val people = ArrayList<String>()
     private val contactMap = HashMap<String, Contact>()
     private val selected = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
@@ -97,35 +96,17 @@ class MessagesAdapter @Inject constructor(
         val layoutInflater = LayoutInflater.from(context)
         val view: View
 
-        val hasThumbnail = viewType < 0
-        val absViewType = Math.abs(viewType)
-
-        if (absViewType == VIEW_TYPE_ME) {
+        if (viewType == VIEW_TYPE_MESSAGE_OUT) {
             view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
             disposables += colors.bubble
                     .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
         } else {
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
+            view.avatar.threadId = data?.first?.id ?: 0
             view.subject.textColorObservable = textPrimaryOnTheme
             view.body.textColorObservable = textPrimaryOnTheme
             disposables += theme
                     .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
-        }
-
-        if (hasThumbnail) {
-            view.messageBackground.clipToOutline = true
-        }
-
-        if (absViewType != VIEW_TYPE_ME) {
-            val address = people[absViewType - 2]
-            if (!contactMap.containsKey(address)) {
-                contactMap[address] = data?.first?.recipients?.mapNotNull { it.contact } // Map the conversation to its contacts
-                        ?.firstOrNull { it.numbers.any { PhoneNumberUtils.compare(it.address, address) } } // See if any of the phone numbers match
-                        ?: Contact(numbers = RealmList(PhoneNumber(address = address))) // Fallback to a fake contact
-            }
-
-            view.avatar.threadId = data?.first?.id ?: 0
-            view.avatar.contact = contactMap[address]
         }
 
         return QkViewHolder(view)
@@ -155,14 +136,33 @@ class MessagesAdapter @Inject constructor(
 
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
 
+        bindAvatar(view, position)
         bindMmsPreview(view, position)
         bindStatus(view, position)
         bindGrouping(view, position)
     }
 
+    private fun bindAvatar(view: View, position: Int) {
+        val message = getItem(position)!!
+        if (message.isMe()) return
+
+        val address = message.address
+        if (contactMap[address]?.isValid != true) {
+            contactMap[address] = data?.first?.recipients?.mapNotNull { it.contact } // Map the conversation to its contacts
+                    ?.firstOrNull { it.numbers.any { PhoneNumberUtils.compare(it.address, address) } } // See if any of the phone numbers match
+                    ?: Contact(numbers = RealmList(PhoneNumber(address = address))) // Fallback to a fake contact
+        }
+
+        view.avatar.threadId = data?.first?.id ?: 0
+        view.avatar.contact = contactMap[address]
+    }
+
     private fun bindMmsPreview(view: View, position: Int) {
         val message = getItem(position)!!
         view.mmsPreview.parts = message.parts
+
+        // If we're showing any thumbnails, set clipToOutline to true
+        view.messageBackground.clipToOutline = message.parts.filter { it.isImage() }.any()
     }
 
     private fun bindStatus(view: View, position: Int) {
@@ -238,21 +238,9 @@ class MessagesAdapter @Inject constructor(
 
     override fun getItemViewType(position: Int): Int {
         val message = getItem(position)!!
-
-        var index = if (message.isMe()) {
-            VIEW_TYPE_ME
-        } else {
-            if (!people.contains(message.address)) {
-                people.add(message.address)
-            }
-            2 + people.indexOf(message.address)
+        return when (message.isMe()) {
+            true -> VIEW_TYPE_MESSAGE_OUT
+            false -> VIEW_TYPE_MESSAGE_IN
         }
-
-        // If it contains a thumbnail, then use the negative viewtype
-        if (message.parts.filter { it.isImage() }.any()) {
-            index *= -1
-        }
-
-        return index
     }
 }
