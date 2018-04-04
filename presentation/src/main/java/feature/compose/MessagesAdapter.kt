@@ -147,7 +147,7 @@ class MessagesAdapter @Inject constructor(
         if (message.isMe()) return
 
         val address = message.address
-        if (!contactMap.containsKey(address)) {
+        if (contactMap[address]?.isValid != true) {
             contactMap[address] = data?.first?.recipients?.mapNotNull { it.contact } // Map the conversation to its contacts
                     ?.firstOrNull { it.numbers.any { PhoneNumberUtils.compare(it.address, address) } } // See if any of the phone numbers match
                     ?: Contact(numbers = RealmList(PhoneNumber(address = address))) // Fallback to a fake contact
