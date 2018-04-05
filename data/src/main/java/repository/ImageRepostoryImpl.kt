@@ -16,7 +16,25 @@ class ImageRepostoryImpl @Inject constructor(private val context: Context) : Ima
 
     override fun saveImage(uri: Uri) {
         val bitmap = tryOrNull { MediaStore.Images.Media.getBitmap(context.contentResolver, uri) }
-        insertImage(context.contentResolver, bitmap, "title", "description")
+
+        var title = ""
+        var description = ""
+
+        when (uri.scheme) {
+            "file" -> title = uri.lastPathSegment
+
+            "content" -> {
+                val projection = arrayOf(Images.Media.TITLE, Images.Media.DESCRIPTION)
+                context.contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        title = cursor.getString(0)
+                        description = cursor.getString(1)
+                    }
+                }
+            }
+        }
+
+        insertImage(context.contentResolver, bitmap, title, description)
     }
 
     /**
