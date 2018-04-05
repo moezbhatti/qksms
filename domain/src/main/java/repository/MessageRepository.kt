@@ -20,7 +20,6 @@ package repository
 
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Observable
 import io.realm.RealmResults
 import model.Conversation
 import model.Message
@@ -56,7 +55,7 @@ interface MessageRepository {
 
     fun getPart(id: Long): MmsPart?
 
-    fun getPartsForConversation(threadId: Long): Observable<List<MmsPart>>
+    fun getPartsForConversation(threadId: Long): RealmResults<MmsPart>
 
     /**
      * Retrieves the list of messages which should be shown in the notification

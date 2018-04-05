@@ -22,6 +22,8 @@ import android.content.Context
 import android.content.Intent
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.Navigator
+import common.base.QkViewModel
 import injection.appComponent
 import interactor.DeleteConversation
 import interactor.MarkArchived
@@ -32,11 +34,8 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import model.Conversation
-import common.Navigator
-import common.base.QkViewModel
 import repository.MessageRepository
 import util.extensions.asObservable
-import util.extensions.isImage
 import javax.inject.Inject
 
 class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoView,
@@ -58,6 +57,9 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
         val threadId = intent.extras?.getLong("threadId") ?: 0L
 
         newState { it.copy(threadId = threadId) }
+
+        // Load the attachments from the conversation
+        newState { it.copy(media = messageRepo.getPartsForConversation(threadId)) }
 
         conversation = messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
@@ -93,12 +95,6 @@ class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoVi
                 .map { conversation -> conversation.blocked }
                 .distinctUntilChanged()
                 .subscribe { blocked -> newState { it.copy(blocked = blocked) } }
-
-        // Load the attachments from the conversation
-        disposables += messageRepo.getPartsForConversation(threadId)
-                .map { parts -> parts.filter { part -> part.isImage() } }
-                .map { parts -> parts.reversed() }
-                .subscribe { media -> newState { it.copy(media = media) } }
     }
 
     override fun bindView(view: ConversationInfoView) {

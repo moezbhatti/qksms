@@ -94,7 +94,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
             false -> R.string.info_block
         })
 
-        mediaAdapter.data = state.media
+        mediaAdapter.updateData(state.media)
     }
 
     override fun showDeleteDialog() {

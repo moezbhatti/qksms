@@ -32,7 +32,6 @@ import com.klinker.android.send_message.BroadcastUtils
 import com.klinker.android.send_message.StripAccents
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -50,7 +49,6 @@ import util.MessageUtils
 import util.Preferences
 import util.extensions.asFlowable
 import util.extensions.asMaybe
-import util.extensions.asObservable
 import util.extensions.insertOrUpdate
 import util.extensions.map
 import javax.inject.Inject
@@ -207,15 +205,14 @@ class MessageRepositoryImpl @Inject constructor(
                 .findFirst()
     }
 
-    override fun getPartsForConversation(threadId: Long): Observable<List<MmsPart>> {
+    override fun getPartsForConversation(threadId: Long): RealmResults<MmsPart> {
         return Realm.getDefaultInstance()
-                .where(Message::class.java)
-                .equalTo("threadId", threadId)
-                .isNotEmpty("parts")
-                .sort("date")
-                .findAll()
-                .asObservable()
-                .map { messages -> messages.flatMap { it.parts } }
+                .where(MmsPart::class.java)
+                .equalTo("messages.threadId", threadId)
+                .contains("type", "image/")
+                .isNotEmpty("image")
+                .sort("id", Sort.DESCENDING)
+                .findAllAsync()
     }
 
     /**

@@ -40,7 +40,6 @@ class CursorToPartImpl @Inject constructor(private val context: Context) : Curso
 
     override fun map(from: Cursor) = MmsPart().apply {
         id = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part._ID))
-        messageId = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part.MSG_ID))
 
         // Type will sometimes return null, resulting in a crash if we don't default to an empty string
         type = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part.CONTENT_TYPE)) ?: ""

@@ -24,6 +24,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.moez.QKSMS.R
+import common.base.QkRealmAdapter
+import common.base.QkViewHolder
 import common.util.Colors
 import common.util.GlideApp
 import io.reactivex.disposables.CompositeDisposable
@@ -31,14 +33,12 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*
 import model.MmsPart
-import common.base.QkAdapter
-import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ConversationMediaAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors
-) : QkAdapter<MmsPart>() {
+) : QkRealmAdapter<MmsPart>() {
 
     val thumbnailClicks: PublishSubject<View> = PublishSubject.create()
 
@@ -53,7 +53,7 @@ class ConversationMediaAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val part = getItem(position)
+        val part = getItem(position)!!
         val view = holder.itemView
 
         GlideApp.with(context)
