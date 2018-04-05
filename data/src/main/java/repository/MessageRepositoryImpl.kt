@@ -194,6 +194,8 @@ class MessageRepositoryImpl @Inject constructor(
     override fun getUnreadCount(): Long {
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
+                .equalTo("archived", false)
+                .equalTo("blocked", false)
                 .equalTo("read", false)
                 .count()
     }
