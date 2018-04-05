@@ -88,7 +88,11 @@ class CursorToMessageImpl @Inject constructor(
                     address = cursor.getString(columnsMap.smsAddress) ?: ""
                     boxId = cursor.getInt(columnsMap.smsType)
                     seen = cursor.getInt(columnsMap.smsSeen) != 0
-                    body = if (columnsMap.smsBody != -1) cursor.getString(columnsMap.smsBody) else null ?: ""
+
+                    body = columnsMap.smsBody
+                            .takeIf { column -> column != -1 } // The column may not be set
+                            ?.let { column -> cursor.getString(column) } ?: "" // cursor.getString() may return null
+
                     errorCode = cursor.getInt(columnsMap.smsErrorCode)
                     deliveryStatus = cursor.getInt(columnsMap.smsStatus)
                 }
