@@ -44,7 +44,8 @@ class SmsProviderChangedReceiver : BroadcastReceiver() {
         appComponent.inject(this)
 
         // Obtain the uri for the changed data
-        val uri = intent.data
+        // If the value is null, don't continue
+        val uri = intent.data ?: return
 
         // Sync the message to our realm
         val pendingResult = goAsync()
