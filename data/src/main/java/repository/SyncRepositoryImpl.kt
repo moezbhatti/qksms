@@ -39,6 +39,7 @@ import util.extensions.asFlowable
 import util.extensions.insertOrUpdate
 import util.extensions.map
 import util.extensions.mapWhile
+import util.tryOrNull
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -138,12 +139,13 @@ class SyncRepositoryImpl @Inject constructor(
     }
 
     override fun syncMessage(uri: Uri): Flowable<Message> {
-        val id = ContentUris.parseId(uri)
         val type = when {
             uri.toString().contains("mms") -> "mms"
             uri.toString().contains("sms") -> "sms"
             else -> return Flowable.empty()
         }
+
+        val id = tryOrNull { ContentUris.parseId(uri) }
 
         // Check if the message already exists, so we can reuse the id
         val existingId = Realm.getDefaultInstance().use { realm ->
