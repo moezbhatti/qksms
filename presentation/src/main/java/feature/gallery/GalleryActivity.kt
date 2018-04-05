@@ -26,13 +26,13 @@ import android.view.Menu
 import android.view.MenuItem
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import common.GlideCompletionListener
+import common.base.QkActivity
 import common.util.GlideApp
 import common.util.extensions.setVisible
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.gallery_activity.*
-import common.GlideCompletionListener
-import common.base.QkActivity
 
 class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
 
@@ -100,7 +100,10 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        optionsItemSelectedIntent.onNext(item.itemId)
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
+            else -> optionsItemSelectedIntent.onNext(item.itemId)
+        }
         return true
     }
 
