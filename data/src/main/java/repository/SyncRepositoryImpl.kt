@@ -145,7 +145,7 @@ class SyncRepositoryImpl @Inject constructor(
             else -> return Flowable.empty()
         }
 
-        val id = tryOrNull { ContentUris.parseId(uri) }
+        val id = tryOrNull { ContentUris.parseId(uri) } ?: return Flowable.empty()
 
         // Check if the message already exists, so we can reuse the id
         val existingId = Realm.getDefaultInstance().use { realm ->
