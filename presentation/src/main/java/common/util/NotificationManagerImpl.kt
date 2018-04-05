@@ -110,8 +110,13 @@ class NotificationManagerImpl @Inject constructor(
 
         val avatar = conversation.recipients.takeIf { it.size == 1 }
                 ?.first()?.address
-                ?.let { address -> GlideApp.with(context).asBitmap().load(PhoneNumberUtils.stripSeparators(address)) }
-                ?.let { request -> request.submit(64.dpToPx(context), 64.dpToPx(context)) }
+                ?.let { address ->
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .circleCrop()
+                            .load(PhoneNumberUtils.stripSeparators(address))
+                            .submit(64.dpToPx(context), 64.dpToPx(context))
+                }
                 ?.let { futureGet -> tryOrNull { futureGet.get() } }
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
