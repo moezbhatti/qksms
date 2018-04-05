@@ -18,11 +18,12 @@
  */
 package feature.conversationinfo
 
+import io.realm.RealmList
 import model.MmsPart
 import model.Recipient
 
 data class ConversationInfoState(
-        val recipients: List<Recipient> = listOf(),
+        val recipients: RealmList<Recipient>? = null,
         val threadId: Long = 0,
         val archived: Boolean = false,
         val blocked: Boolean = false,

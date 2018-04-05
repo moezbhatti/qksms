@@ -23,6 +23,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
+import common.Navigator
+import common.base.QkRealmAdapter
+import common.base.QkViewHolder
 import common.util.Colors
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
@@ -30,16 +33,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.conversation_recipient_list_item.view.*
 import model.Recipient
-import common.Navigator
-import common.base.QkAdapter
-import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ConversationRecipientAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
         private val navigator: Navigator
-) : QkAdapter<Recipient>() {
+) : QkRealmAdapter<Recipient>() {
 
     var threadId: Long = 0L
 
@@ -56,7 +56,7 @@ class ConversationRecipientAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val recipient = getItem(position)
+        val recipient = getItem(position)!!
         val view = holder.itemView
 
         view.setOnClickListener {

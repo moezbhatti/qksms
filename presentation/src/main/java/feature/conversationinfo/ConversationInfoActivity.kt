@@ -24,12 +24,12 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
-import common.util.extensions.setVisible
-import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.conversation_info_activity.*
 import common.Navigator
 import common.base.QkThemedActivity
+import common.util.extensions.setVisible
+import injection.appComponent
+import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.conversation_info_activity.*
 import javax.inject.Inject
 
 class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), ConversationInfoView {
@@ -78,7 +78,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
             return
         }
 
-        recipientAdapter.data = state.recipients
+        recipientAdapter.updateData(state.recipients)
         recipientAdapter.threadId = state.threadId
 
         notifications.setVisible(!state.blocked)
