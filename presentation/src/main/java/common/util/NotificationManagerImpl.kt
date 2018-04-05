@@ -31,7 +31,9 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
+import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.R
+import common.util.extensions.dpToPx
 import feature.compose.ComposeActivity
 import feature.qkreply.QkReplyActivity
 import receiver.MarkReadReceiver
@@ -39,6 +41,7 @@ import receiver.MarkSeenReceiver
 import receiver.RemoteMessagingReceiver
 import repository.MessageRepository
 import util.Preferences
+import util.tryOrNull
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -105,6 +108,12 @@ class NotificationManagerImpl @Inject constructor(
             style.addMessage(message.getSummary(), message.date, name)
         }
 
+        val avatar = conversation.recipients.takeIf { it.size == 1 }
+                ?.first()?.address
+                ?.let { address -> GlideApp.with(context).asBitmap().load(PhoneNumberUtils.stripSeparators(address)) }
+                ?.let { request -> request.submit(64.dpToPx(context), 64.dpToPx(context)) }
+                ?.let { futureGet -> tryOrNull { futureGet.get() } }
+
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)
         taskStackBuilder.addParentStack(ComposeActivity::class.java)
@@ -121,6 +130,7 @@ class NotificationManagerImpl @Inject constructor(
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setColor(colors.themeForConversation(threadId).blockingFirst())
                 .setPriority(importance)
+                .setLargeIcon(avatar)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
                 .setAutoCancel(true)
