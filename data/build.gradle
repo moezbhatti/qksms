@@ -18,7 +18,7 @@ dependencies {
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    provided "javax.annotation:jsr250-api:1.0"
+    compileOnly "javax.annotation:jsr250-api:1.0"
 
     // rxjava
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
