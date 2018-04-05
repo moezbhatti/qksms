@@ -206,8 +206,10 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                             .filterNot { contact -> selectedContacts.contains(contact) }
                             .filter { contact -> contactFilter.filter(contact, query) }
 
+                    // If the entry is a valid destination, allow it as a recipient
                     if (PhoneNumberUtils.isWellFormedSmsAddress(query.toString())) {
-                        filteredContacts = listOf(Contact(numbers = RealmList(PhoneNumber(address = query.toString())))) + filteredContacts
+                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = query.toString())))
+                        filteredContacts = listOf(newContact) + filteredContacts
                     }
 
                     filteredContacts
