@@ -133,6 +133,7 @@ class NotificationManagerImpl @Inject constructor(
         val readAction = NotificationCompat.Action(R.drawable.ic_check_white_24dp, context.getString(R.string.notification_read), readPI)
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(colors.themeForConversation(threadId).blockingFirst())
                 .setPriority(importance)
                 .setLargeIcon(avatar)
@@ -146,6 +147,12 @@ class NotificationManagerImpl @Inject constructor(
                 .setSound(Uri.parse(prefs.ringtone(threadId).get()))
                 .setLights(Color.WHITE, 500, 2000)
                 .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
+
+        // Add all of the people from this conversation to the notification, so that the system can
+        // appropriately bypass DND mode
+        conversation.recipients
+                .mapNotNull { recipient -> recipient.contact?.lookupKey }
+                .forEach { uri -> notification.addPerson(uri) }
 
         if (Build.VERSION.SDK_INT >= 24) {
             notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), threadId))
