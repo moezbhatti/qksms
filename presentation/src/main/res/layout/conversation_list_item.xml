@@ -71,13 +71,12 @@
     <common.widget.QkTextView
         android:id="@+id/date"
         style="@style/TextTertiary"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="100"
-        app:layout_constraintWidth_default="wrap"
         tools:text="Oct 11" />
 
 </android.support.constraint.ConstraintLayout>
