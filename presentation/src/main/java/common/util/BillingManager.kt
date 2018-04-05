@@ -75,7 +75,7 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
 
             // Handle purchase result
             purchaseList.clear()
-            purchaseList.addAll(purchasesResult.purchasesList)
+            purchaseList.addAll(purchasesResult.purchasesList.orEmpty())
             (this.purchaseListObservable as Subject).onNext(purchaseList)
         }
     }
