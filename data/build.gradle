@@ -25,6 +25,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
 
+    implementation "androidx.core:core-ktx:$ktx_version"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

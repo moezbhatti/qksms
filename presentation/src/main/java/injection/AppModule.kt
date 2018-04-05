@@ -28,6 +28,8 @@ import common.util.NotificationManagerImpl
 import dagger.Module
 import dagger.Provides
 import manager.AnalyticsManager
+import manager.ExternalBlockingManager
+import manager.ExternalBlockingManagerImpl
 import manager.KeyManager
 import manager.KeyManagerImpl
 import manager.NotificationManager
@@ -78,6 +80,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideAnalyticsManager(manager: AnalyticsManagerImpl): AnalyticsManager = manager
+
+    @Provides
+    fun externalBlockingManager(manager: ExternalBlockingManagerImpl): ExternalBlockingManager = manager
 
     @Provides
     fun provideKeyManager(manager: KeyManagerImpl): KeyManager = manager
