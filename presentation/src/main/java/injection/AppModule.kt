@@ -49,6 +49,8 @@ import mapper.CursorToRecipienImpl
 import mapper.CursorToRecipient
 import repository.ContactRepository
 import repository.ContactRepositoryImpl
+import repository.ImageRepository
+import repository.ImageRepostoryImpl
 import repository.MessageRepository
 import repository.MessageRepositoryImpl
 import repository.SyncRepository
@@ -119,6 +121,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideContactRepository(repository: ContactRepositoryImpl): ContactRepository = repository
+
+    @Provides
+    fun provideImageRepository(repository: ImageRepostoryImpl): ImageRepository = repository
 
     @Provides
     fun provideMessageRepository(repository: MessageRepositoryImpl): MessageRepository = repository

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -21,7 +20,6 @@
 
     <item
         android:id="@+id/save"
-        android:title="@string/menu_save"
-        android:visible="false" />
+        android:title="@string/menu_save" />
 
 </menu>

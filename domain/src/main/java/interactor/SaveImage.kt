@@ -18,15 +18,14 @@
  */
 package interactor
 
-import android.content.Context
-import android.provider.MediaStore
 import androidx.net.toUri
 import io.reactivex.Flowable
+import repository.ImageRepository
 import repository.MessageRepository
 import javax.inject.Inject
 
 class SaveImage @Inject constructor(
-        private val context: Context,
+        private val imageRepository: ImageRepository,
         private val messageRepo: MessageRepository
 ) : Interactor<Long>() {
 
@@ -35,8 +34,7 @@ class SaveImage @Inject constructor(
                 .map { partId -> messageRepo.getPart(partId) }
                 .map { part -> part.image }
                 .map { uriString -> uriString.toUri() }
-                .map { uri -> MediaStore.Images.Media.getBitmap(context.contentResolver, uri) }
-                .doOnNext { bitmap -> MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "title", "description") }
+                .doOnNext { uri -> imageRepository.saveImage(uri) }
     }
 
 }
