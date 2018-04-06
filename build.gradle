@@ -5,7 +5,7 @@ buildscript {
     ext.constraintlayout_version = '1.1.0-beta5'
     ext.dagger_version = "2.11"
     ext.glide_version = "4.3.0"
-    ext.kotlin_version = '1.2.20'
+    ext.kotlin_version = '1.2.31'
     ext.ktx_version = "0.2"
     ext.lifecycle_version = '1.1.0'
     ext.realm_version = '4.3.1'
