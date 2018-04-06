@@ -23,7 +23,6 @@ import android.content.ContentUris
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
-import io.reactivex.Flowable
 import io.realm.Realm
 import mapper.CursorToContact
 import mapper.CursorToConversation
@@ -35,7 +34,6 @@ import model.Message
 import model.MmsPart
 import model.Recipient
 import model.SyncLog
-import util.extensions.asFlowable
 import util.extensions.insertOrUpdate
 import util.extensions.map
 import util.extensions.mapWhile
@@ -138,14 +136,17 @@ class SyncRepositoryImpl @Inject constructor(
         status = Status.Idle()
     }
 
-    override fun syncMessage(uri: Uri): Flowable<Message> {
+    override fun syncMessage(uri: Uri): Message? {
+
+        // If we don't have a valid type, return null
         val type = when {
             uri.toString().contains("mms") -> "mms"
             uri.toString().contains("sms") -> "sms"
-            else -> return Flowable.empty()
+            else -> return null
         }
 
-        val id = tryOrNull { ContentUris.parseId(uri) } ?: return Flowable.empty()
+        // If we don't have a valid id, return null
+        val id = tryOrNull { ContentUris.parseId(uri) } ?: return null
 
         // Check if the message already exists, so we can reuse the id
         val existingId = Realm.getDefaultInstance().use { realm ->
@@ -164,15 +165,19 @@ class SyncRepositoryImpl @Inject constructor(
             else -> ContentUris.withAppendedId(Telephony.Sms.CONTENT_URI, id)
         }
 
-        val cursor = contentResolver.query(stableUri, null, null, null, null)
-        val columnsMap = CursorToMessage.MessageColumns(cursor)
+        return contentResolver.query(stableUri, null, null, null, null)?.use { cursor ->
 
-        // Map the cursor to a message
-        return cursor.asFlowable()
-                .map { cursorToMessage.map(Pair(it, columnsMap)) }
-                .doOnNext { message -> existingId?.let { message.id = it } }
-                .doOnNext { message -> messageRepo.getOrCreateConversation(message.threadId) }
-                .doOnNext { message -> message.insertOrUpdate() }
+            // If there are no rows, return null. Otherwise, we've moved to the first row
+            if (!cursor.moveToFirst()) return null
+
+            val columnsMap = CursorToMessage.MessageColumns(cursor)
+            cursorToMessage.map(Pair(cursor, columnsMap)).apply {
+                existingId?.let { this.id = it }
+
+                messageRepo.getOrCreateConversation(threadId)
+                insertOrUpdate()
+            }
+        }
     }
 
     override fun syncContacts() {

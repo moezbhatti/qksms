@@ -19,14 +19,13 @@
 package repository
 
 import android.net.Uri
-import io.reactivex.Flowable
 import model.Message
 
 interface SyncRepository {
 
     fun syncMessages(fullSync: Boolean = false)
 
-    fun syncMessage(uri: Uri): Flowable<Message>
+    fun syncMessage(uri: Uri): Message?
 
     fun syncContacts()
 

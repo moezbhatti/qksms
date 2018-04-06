@@ -38,7 +38,7 @@ class ReceiveMms @Inject constructor(
 
     override fun buildObservable(params: Uri): Flowable<*> {
         return Flowable.just(params)
-                .flatMap { uri -> syncManager.syncMessage(uri) } // Sync the message
+                .mapNotNull { uri -> syncManager.syncMessage(uri) } // Sync the message
                 .filter { message ->
                     // Because we use the smsmms library for receiving and storing MMS, we'll need
                     // to check if it should be blocked after we've pulled it into realm. If it
