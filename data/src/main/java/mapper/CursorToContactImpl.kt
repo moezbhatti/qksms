@@ -47,7 +47,7 @@ class CursorToContactImpl @Inject constructor(private val context: Context) : Cu
         lastUpdate = System.currentTimeMillis()
     }
 
-    override fun getContactsCursor(): Cursor {
+    override fun getContactsCursor(): Cursor? {
         return context.contentResolver.query(URI, PROJECTION, null, null, null)
     }
 

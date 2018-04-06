@@ -61,13 +61,13 @@ class CursorToConversationImpl @Inject constructor(private val context: Context)
         }
     }
 
-    override fun getConversationsCursor(lastSync: Long): Cursor {
+    override fun getConversationsCursor(lastSync: Long): Cursor? {
         return context.contentResolver.query(URI, PROJECTION,
                 "date > $lastSync", null,
                 "date desc")
     }
 
-    override fun getConversationCursor(threadId: Long): Cursor {
+    override fun getConversationCursor(threadId: Long): Cursor? {
         return context.contentResolver.query(URI, PROJECTION,
                 "_id = ?", arrayOf(threadId.toString()), null)
     }

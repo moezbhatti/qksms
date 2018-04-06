@@ -23,6 +23,6 @@ import model.Contact
 
 interface CursorToContact : Mapper<Cursor, Contact> {
 
-    fun getContactsCursor(): Cursor
+    fun getContactsCursor(): Cursor?
 
 }

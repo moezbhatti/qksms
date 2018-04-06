@@ -37,7 +37,6 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
-import manager.ExternalBlockingManager
 import manager.KeyManager
 import mapper.CursorToConversation
 import mapper.CursorToRecipient
@@ -598,38 +597,37 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     private fun getConversationFromCp(threadId: Long): Conversation? {
-        var conversation: Conversation? = null
+        return cursorToConversation.getConversationCursor(threadId)
+                ?.takeIf { cursor -> cursor.moveToFirst() }
+                ?.use { cursor ->
+                    val conversation = cursorToConversation.map(cursor)
 
-        val cursor = cursorToConversation.getConversationCursor(threadId)
+                    val realm = Realm.getDefaultInstance()
+                    val contacts = realm.copyFromRealm(realm.where(Contact::class.java).findAll())
 
-        if (cursor.moveToFirst()) {
-            conversation = cursorToConversation.map(cursor)
-
-            val realm = Realm.getDefaultInstance()
-            val contacts = realm.copyFromRealm(realm.where(Contact::class.java).findAll())
-
-            val recipients = conversation.recipients
-                    .map { recipient -> recipient.id }
-                    .map { id -> cursorToRecipient.getRecipientCursor(id) }
-                    .map { recipientCursor -> recipientCursor.map { cursorToRecipient.map(recipientCursor) } }
-                    .flatten()
-                    .map { recipient ->
-                        recipient.apply {
-                            contact = contacts.firstOrNull {
-                                it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                    val recipients = conversation.recipients
+                            .map { recipient -> recipient.id }
+                            .map { id -> cursorToRecipient.getRecipientCursor(id) }
+                            .mapNotNull { recipientCursor ->
+                                // Map the recipient cursor to a list of recipients
+                                recipientCursor?.use { recipientCursor.map { cursorToRecipient.map(recipientCursor) } }
                             }
-                        }
-                    }
+                            .flatten()
+                            .map { recipient ->
+                                recipient.apply {
+                                    contact = contacts.firstOrNull {
+                                        it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                                    }
+                                }
+                            }
 
-            conversation.recipients.clear()
-            conversation.recipients.addAll(recipients)
-            conversation.insertOrUpdate()
-            realm.close()
-        }
+                    conversation.recipients.clear()
+                    conversation.recipients.addAll(recipients)
+                    conversation.insertOrUpdate()
+                    realm.close()
 
-        cursor.close()
-
-        return conversation
+                    conversation
+                }
     }
 
 }

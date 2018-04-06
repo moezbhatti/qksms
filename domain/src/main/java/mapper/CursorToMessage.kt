@@ -26,9 +26,9 @@ import java.util.*
 
 interface CursorToMessage : Mapper<Pair<Cursor, CursorToMessage.MessageColumns>, Message> {
 
-    fun getMessagesCursor(): Cursor
+    fun getMessagesCursor(): Cursor?
 
-    fun getMessageCursor(id: Long): Cursor
+    fun getMessageCursor(id: Long): Cursor?
 
     class MessageColumns(private val cursor: Cursor) {
 

@@ -39,11 +39,11 @@ class CursorToRecipienImpl @Inject constructor(private val context: Context) : C
         lastUpdate = System.currentTimeMillis()
     }
 
-    override fun getRecipientCursor(): Cursor {
+    override fun getRecipientCursor(): Cursor? {
         return context.contentResolver.query(URI, null, null, null, null)
     }
 
-    override fun getRecipientCursor(id: Long): Cursor {
+    override fun getRecipientCursor(id: Long): Cursor? {
         return context.contentResolver.query(URI, null, "_id = ?", arrayOf(id.toString()), null)
     }
 

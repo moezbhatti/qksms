@@ -100,35 +100,35 @@ class SyncRepositoryImpl @Inject constructor(
 
 
         // Sync messages
-        val messageCursor = cursorToMessage.getMessagesCursor()
-        val messageColumns = CursorToMessage.MessageColumns(messageCursor)
-        val messages = messageCursor.mapWhile(
-                { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) },
-                { message -> message.date > lastSync })
-        realm.insertOrUpdate(messages)
-        messageCursor.close()
+        cursorToMessage.getMessagesCursor()?.use { messageCursor ->
+            val messageColumns = CursorToMessage.MessageColumns(messageCursor)
+            val messages = messageCursor.mapWhile(
+                    { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) },
+                    { message -> message.date > lastSync })
+            realm.insertOrUpdate(messages)
+        }
 
 
         // Sync conversations
-        val conversationCursor = cursorToConversation.getConversationsCursor()
-        val conversations = conversationCursor
-                .map { cursor -> cursorToConversation.map(cursor) }
+        cursorToConversation.getConversationsCursor()?.use { conversationCursor ->
+            val conversations = conversationCursor
+                    .map { cursor -> cursorToConversation.map(cursor) }
 
-        persistedData?.forEach { data ->
-            val conversation = conversations.firstOrNull { conversation -> conversation.id == data.id }
-            conversation?.archived = data.archived
-            conversation?.blocked = data.blocked
+            persistedData?.forEach { data ->
+                val conversation = conversations.firstOrNull { conversation -> conversation.id == data.id }
+                conversation?.archived = data.archived
+                conversation?.blocked = data.blocked
+            }
+
+            realm.insertOrUpdate(conversations)
         }
-
-        realm.insertOrUpdate(conversations)
-        conversationCursor.close()
 
 
         // Sync recipients
-        val recipientCursor = cursorToRecipient.getRecipientCursor()
-        val recipients = recipientCursor.map { cursor -> cursorToRecipient.map(cursor) }
-        realm.insertOrUpdate(recipients)
-        recipientCursor.close()
+        cursorToRecipient.getRecipientCursor()?.use { recipientCursor ->
+            val recipients = recipientCursor.map { cursor -> cursorToRecipient.map(cursor) }
+            realm.insertOrUpdate(recipients)
+        }
 
         realm.commitTransaction()
         realm.close()
@@ -178,15 +178,15 @@ class SyncRepositoryImpl @Inject constructor(
     override fun syncContacts() {
         // Load all the contacts
         var contacts = cursorToContact.getContactsCursor()
-                .map { cursor -> cursorToContact.map(cursor) }
-                .groupBy { contact -> contact.lookupKey }
-                .map { contacts ->
+                ?.map { cursor -> cursorToContact.map(cursor) }
+                ?.groupBy { contact -> contact.lookupKey }
+                ?.map { contacts ->
                     val allNumbers = contacts.value.map { it.numbers }.flatten()
                     contacts.value.first().apply {
                         numbers.clear()
                         numbers.addAll(allNumbers)
                     }
-                }
+                } ?: listOf()
 
         val realm = Realm.getDefaultInstance()
         val recipients = realm.where(Recipient::class.java).findAll()

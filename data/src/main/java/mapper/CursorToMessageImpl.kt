@@ -119,11 +119,11 @@ class CursorToMessageImpl @Inject constructor(
         }
     }
 
-    override fun getMessagesCursor(): Cursor {
+    override fun getMessagesCursor(): Cursor? {
         return context.contentResolver.query(URI, PROJECTION, null, null, "normalized_date desc")
     }
 
-    override fun getMessageCursor(id: Long): Cursor {
+    override fun getMessageCursor(id: Long): Cursor? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
