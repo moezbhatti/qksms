@@ -22,16 +22,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
+import common.base.QkRealmAdapter
+import common.base.QkViewHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.blocked_list_item.view.*
 import model.Contact
 import model.Conversation
 import model.PhoneNumber
-import common.base.FlowableAdapter
-import common.base.QkViewHolder
 import javax.inject.Inject
 
-class BlockedAdapter @Inject constructor(private val context: Context) : FlowableAdapter<Conversation>() {
+class BlockedAdapter @Inject constructor(private val context: Context) : QkRealmAdapter<Conversation>() {
 
     val unblock: PublishSubject<Long> = PublishSubject.create()
 
@@ -40,7 +40,7 @@ class BlockedAdapter @Inject constructor(private val context: Context) : Flowabl
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val conversation = getItem(position)
+        val conversation = getItem(position)!!
         val view = holder.itemView
 
         view.setOnClickListener { unblock.onNext(conversation.id) }

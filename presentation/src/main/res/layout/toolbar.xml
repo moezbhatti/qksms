@@ -20,7 +20,8 @@
 <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
     style="@style/Toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/white">
 
     <common.widget.QkTextView
         android:id="@+id/toolbarTitle"

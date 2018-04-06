@@ -18,10 +18,10 @@
  */
 package feature.blocked
 
-import io.reactivex.Flowable
+import io.realm.RealmResults
 import model.Conversation
 
 data class BlockedState(
-        val data: Flowable<List<Conversation>>? = null,
-        val empty: Boolean = false
+        val siaEnabled: Boolean = false,
+        val data: RealmResults<Conversation>? = null
 )

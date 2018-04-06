@@ -30,10 +30,14 @@ import androidx.os.bundleOf
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
 import timber.log.Timber
+import util.Preferences
 import util.tryOrNull
 import javax.inject.Inject
 
-class ExternalBlockingManagerImpl @Inject constructor(private val context: Context) : ExternalBlockingManager {
+class ExternalBlockingManagerImpl @Inject constructor(
+        private val context: Context,
+        private val prefs: Preferences
+) : ExternalBlockingManager {
 
     companion object {
         const val RATING_UNKNOWN = 0
@@ -48,23 +52,33 @@ class ExternalBlockingManagerImpl @Inject constructor(private val context: Conte
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
      */
     override fun shouldBlock(address: String): Single<Boolean> {
-        return Binder(context, address).shouldBlock()
+        return Binder(context, prefs, address).shouldBlock()
     }
 
-    private class Binder(private val context: Context, private val address: String) : ServiceConnection {
+    private class Binder(
+            private val context: Context,
+            private val prefs: Preferences,
+            private val address: String
+    ) : ServiceConnection {
 
         private val subject: SingleSubject<Boolean> = SingleSubject.create()
         private var serviceMessenger: Messenger? = null
         private var isBound: Boolean = false
 
         fun shouldBlock(): Single<Boolean> {
-            // If either version of Should I Answer? is installed, build the intent to request a rating
-            val intent = tryOrNull {
-                context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled
-                Intent("org.mistergroup.shouldianswerpersonal.PublicService").setPackage("org.mistergroup.shouldianswerpersonal")
-            } ?: tryOrNull {
-                context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled
-                Intent("org.mistergroup.muzutozvednout.PublicService").setPackage("org.mistergroup.muzutozvednout")
+
+            var intent: Intent? = null
+
+            // If either version of Should I Answer? is installed and SIA is enabled, build the
+            // intent to request a rating
+            if (prefs.sia.get()) {
+                intent = tryOrNull {
+                    context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled
+                    Intent("org.mistergroup.shouldianswerpersonal.PublicService").setPackage("org.mistergroup.shouldianswerpersonal")
+                } ?: tryOrNull {
+                    context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled
+                    Intent("org.mistergroup.muzutozvednout.PublicService").setPackage("org.mistergroup.muzutozvednout")
+                }
             }
 
             // If the intent isn't null, bind the service and wait for a result. Otherwise, don't block

@@ -92,7 +92,10 @@
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
-    <string name="settings_blocking_title">Blocked</string>
+    <string name="settings_blocking_title">Blocking</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">Should I Answer?</string>
+    <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
     <string name="settings_qkreply_title">QK Reply</string>
@@ -105,7 +108,7 @@
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
 
-    <string name="blocked_title">Blocked</string>
+    <string name="blocked_title">Blocking</string>
     <string name="blocked_empty">Your blocked conversations will appear here</string>
     <string name="blocked_unblock_dialog_title">Unblock</string>
     <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>

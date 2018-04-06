@@ -20,15 +20,16 @@ package feature.blocked
 
 import android.app.AlertDialog
 import android.os.Bundle
+import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.base.QkThemedActivity
 import injection.appComponent
-import common.util.extensions.setVisible
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.blocked_activity.*
-import common.base.QkThemedActivity
+import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import javax.inject.Inject
 
 class BlockedActivity : QkThemedActivity<BlockedViewModel>(), BlockedView {
@@ -36,6 +37,7 @@ class BlockedActivity : QkThemedActivity<BlockedViewModel>(), BlockedView {
     @Inject lateinit var blockedAdapter: BlockedAdapter
 
     override val viewModelClass = BlockedViewModel::class
+    override val siaClickedIntent by lazy { shouldIAnswer.clicks() }
     override val unblockIntent by lazy { blockedAdapter.unblock }
     override val confirmUnblockIntent: Subject<Unit> = PublishSubject.create()
 
@@ -54,12 +56,14 @@ class BlockedActivity : QkThemedActivity<BlockedViewModel>(), BlockedView {
                 .autoDisposable(scope())
                 .subscribe { color -> window.decorView.setBackgroundColor(color) }
 
+        blockedAdapter.emptyView = empty
         conversations.adapter = blockedAdapter
     }
 
     override fun render(state: BlockedState) {
-        blockedAdapter.flowable = state.data
-        empty.setVisible(state.empty)
+        shouldIAnswer.checkbox.isChecked = state.siaEnabled
+
+        blockedAdapter.updateData(state.data)
     }
 
     override fun showUnblockDialog() {

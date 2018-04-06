@@ -18,13 +18,14 @@
  */
 package feature.blocked
 
-import io.reactivex.Observable
 import common.base.QkView
+import io.reactivex.Observable
 
 interface BlockedView : QkView<BlockedState> {
 
+    val siaClickedIntent: Observable<*>
     val unblockIntent: Observable<Long>
-    val confirmUnblockIntent: Observable<Unit>
+    val confirmUnblockIntent: Observable<*>
 
     fun showUnblockDialog()
 

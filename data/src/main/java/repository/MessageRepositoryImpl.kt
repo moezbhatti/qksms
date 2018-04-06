@@ -91,14 +91,11 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAll())
     }
 
-    override fun getBlockedConversations(): Flowable<List<Conversation>> {
+    override fun getBlockedConversations(): RealmResults<Conversation> {
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
                 .equalTo("blocked", true)
                 .findAllAsync()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .map { it.toList() }
     }
 
     override fun getConversationAsync(threadId: Long): Conversation {

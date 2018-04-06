@@ -31,7 +31,7 @@ interface MessageRepository {
 
     fun getConversationsSnapshot(): List<Conversation>
 
-    fun getBlockedConversations(): Flowable<List<Conversation>>
+    fun getBlockedConversations(): RealmResults<Conversation>
 
     fun getConversationAsync(threadId: Long): Conversation
 

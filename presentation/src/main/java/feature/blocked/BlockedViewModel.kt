@@ -18,31 +18,50 @@
  */
 package feature.blocked
 
+import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.Navigator
+import common.base.QkViewModel
 import injection.appComponent
 import interactor.MarkUnblocked
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
-import common.base.QkViewModel
 import repository.MessageRepository
+import util.Preferences
+import util.tryOrNull
 import javax.inject.Inject
 
 class BlockedViewModel : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
 
+    @Inject lateinit var context: Context
     @Inject lateinit var markUnblocked: MarkUnblocked
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var navigator: Navigator
+    @Inject lateinit var prefs: Preferences
 
     init {
         appComponent.inject(this)
 
-        val conversations = messageRepo.getBlockedConversations()
-                .doOnNext { conversations -> newState { it.copy(empty = conversations.isEmpty()) } }
+        newState { it.copy(data = messageRepo.getBlockedConversations()) }
 
-        newState { it.copy(data = conversations) }
+        disposables += prefs.sia.asObservable()
+                .subscribe { enabled -> newState { it.copy(siaEnabled = enabled) } }
     }
 
     override fun bindView(view: BlockedView) {
         super.bindView(view)
+
+        view.siaClickedIntent
+                .map {
+                    tryOrNull { context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled }
+                            ?: tryOrNull { context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled }
+                            ?: false
+                }
+                .doOnNext { installed -> if (!installed) navigator.showSia() }
+                .withLatestFrom(prefs.sia.asObservable(), { installed, enabled -> installed && !enabled })
+                .autoDisposable(view.scope())
+                .subscribe { shouldEnable -> prefs.sia.set(shouldEnable) }
 
         // Show confirm unblock conversation dialog
         view.unblockIntent

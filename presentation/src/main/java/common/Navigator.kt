@@ -145,6 +145,15 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivityExternal(intent)
     }
 
+    /**
+     * Launch the Play Store and display the Should I Answer? listing
+     */
+    fun showSia() {
+        val url = "https://play.google.com/store/apps/details?id=org.mistergroup.shouldianswerpersonal"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
+    }
+
     fun showSupport() {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:")
