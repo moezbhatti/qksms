@@ -128,6 +128,8 @@ class MessagesAdapter @Inject constructor(
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
 
+        view.mmsPreview.parts = message.parts
+
         view.subject.text = message.getCleansedSubject()
         view.subject.setVisible(view.subject.text.isNotBlank())
 
@@ -137,7 +139,6 @@ class MessagesAdapter @Inject constructor(
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
 
         bindAvatar(view, position)
-        bindMmsPreview(view, position)
         bindStatus(view, position)
         bindGrouping(view, position)
     }
@@ -155,14 +156,6 @@ class MessagesAdapter @Inject constructor(
 
         view.avatar.threadId = data?.first?.id ?: 0
         view.avatar.contact = contactMap[address]
-    }
-
-    private fun bindMmsPreview(view: View, position: Int) {
-        val message = getItem(position)!!
-        view.mmsPreview.parts = message.parts
-
-        // If we're showing any thumbnails, set clipToOutline to true
-        view.messageBackground.clipToOutline = message.parts.filter { it.isImage() }.any()
     }
 
     private fun bindStatus(view: View, position: Int) {
@@ -227,7 +220,13 @@ class MessagesAdapter @Inject constructor(
             }
         }
 
-        if (getItemViewType(position) < 0) view.messageBackground.setBackgroundResource(R.drawable.message_only)
+        // If we're showing any thumbnails, set clipToOutline to true
+        val hasImages = message.parts.filter { it.isImage() }.any()
+        view.messageBackground.clipToOutline = hasImages
+
+        // setClipToOutline doesn't work unless all of the corners have the same radius, so we have
+        // to use the message_only bubble
+        if (hasImages) view.messageBackground.setBackgroundResource(R.drawable.message_only)
     }
 
     private fun canGroup(message: Message, other: Message?): Boolean {
