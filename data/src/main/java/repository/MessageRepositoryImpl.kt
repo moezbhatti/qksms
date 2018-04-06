@@ -23,6 +23,7 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.Telephony
@@ -331,7 +332,7 @@ class MessageRepositoryImpl @Inject constructor(
         val selection = "${Telephony.Sms.THREAD_ID} = $threadId AND (${Telephony.Sms.SEEN} = 0 OR ${Telephony.Sms.READ} = 0)"
         val contentResolver = context.contentResolver
         contentResolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, null, null)
-                .asFlowable()
+                ?.asFlowable() ?: Flowable.empty<Cursor>()
                 .subscribeOn(Schedulers.io())
                 .map { cursor -> cursor.getLong(0) }
                 .map { id -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id.toString()) }
