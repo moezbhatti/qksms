@@ -28,6 +28,7 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import model.Contact
 import util.extensions.asFlowable
+import util.extensions.mapNotNull
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,7 +38,8 @@ class ContactRepositoryImpl @Inject constructor(val context: Context) : ContactR
     override fun findContactUri(address: String): Single<Uri> {
         return Flowable.just(address)
                 .map { Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address)) }
-                .flatMap { uri -> context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup._ID), null, null, null).asFlowable() }
+                .mapNotNull { uri -> context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup._ID), null, null, null) }
+                .flatMap { cursor -> cursor.asFlowable() }
                 .firstOrError()
                 .map { cursor -> cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID)) }
                 .map { id -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id) }
