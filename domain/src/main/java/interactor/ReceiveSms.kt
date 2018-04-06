@@ -20,6 +20,7 @@ package interactor
 
 import android.telephony.SmsMessage
 import io.reactivex.Flowable
+import manager.ExternalBlockingManager
 import manager.NotificationManager
 import repository.MessageRepository
 import util.extensions.mapNotNull
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ReceiveSms @Inject constructor(
+        private val externalBlockingManager: ExternalBlockingManager,
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager,
         private val updateBadge: UpdateBadge
@@ -35,6 +37,10 @@ class ReceiveSms @Inject constructor(
     override fun buildObservable(params: Array<SmsMessage>): Flowable<*> {
         return Flowable.just(params)
                 .filter { it.isNotEmpty() }
+                .filter { messages -> // Don't continue if the sender is blocked
+                    val address = messages[0].displayOriginatingAddress
+                    !externalBlockingManager.shouldBlock(address).blockingGet()
+                }
                 .map { messages ->
                     val address = messages[0].displayOriginatingAddress
                     val time = messages[0].timestampMillis

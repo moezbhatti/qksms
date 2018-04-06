@@ -60,7 +60,6 @@ class MessageRepositoryImpl @Inject constructor(
         private val messageIds: KeyManager,
         private val cursorToConversation: CursorToConversation,
         private val cursorToRecipient: CursorToRecipient,
-        private val externalBlockingManager: ExternalBlockingManager,
         private val prefs: Preferences) : MessageRepository {
 
     override fun getConversations(archived: Boolean): Flowable<List<Conversation>> {
@@ -624,11 +623,6 @@ class MessageRepositoryImpl @Inject constructor(
                             }
                         }
                     }
-
-            // If any of the addresses here should be blocked, then block the conversation
-            conversation.blocked = recipients.map { it.address }.any { address ->
-                externalBlockingManager.shouldBlock(address).blockingGet()
-            }
 
             conversation.recipients.clear()
             conversation.recipients.addAll(recipients)

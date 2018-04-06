@@ -20,6 +20,7 @@ package interactor
 
 import android.net.Uri
 import io.reactivex.Flowable
+import manager.ExternalBlockingManager
 import manager.NotificationManager
 import repository.MessageRepository
 import repository.SyncRepository
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ReceiveMms @Inject constructor(
+        private val externalBlockingManager: ExternalBlockingManager,
         private val syncManager: SyncRepository,
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager,
@@ -37,6 +39,15 @@ class ReceiveMms @Inject constructor(
     override fun buildObservable(params: Uri): Flowable<*> {
         return Flowable.just(params)
                 .flatMap { uri -> syncManager.syncMessage(uri) } // Sync the message
+                .filter { message ->
+                    // Because we use the smsmms library for receiving and storing MMS, we'll need
+                    // to check if it should be blocked after we've pulled it into realm. If it
+                    // turns out that it should be blocked, then delete it
+                    // TODO Don't store blocked messages in the first place
+                    !externalBlockingManager.shouldBlock(message.address).blockingGet().also { blocked ->
+                        if (blocked) messageRepo.deleteMessage(message.id)
+                    }
+                }
                 .doOnNext { message -> messageRepo.updateConversation(message.threadId) } // Update the conversation
                 .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
