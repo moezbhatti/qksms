@@ -18,11 +18,10 @@
  */
 package feature.settings
 
-import io.reactivex.Observable
-import io.reactivex.subjects.Subject
 import common.base.QkView
 import common.widget.PreferenceView
-import feature.settings.SettingsState
+import io.reactivex.Observable
+import io.reactivex.subjects.Subject
 
 interface SettingsView : QkView<SettingsState> {
 
@@ -31,6 +30,7 @@ interface SettingsView : QkView<SettingsState> {
     val viewQksmsPlusIntent: Subject<Unit>
     val startTimeSelectedIntent: Subject<Pair<Int, Int>>
     val endTimeSelectedIntent: Subject<Pair<Int, Int>>
+    val textSizeSelectedIntent: Subject<Int>
     val mmsSizeSelectedIntent: Observable<Int>
 
     fun showNightModeDialog()
@@ -38,6 +38,8 @@ interface SettingsView : QkView<SettingsState> {
     fun showQksmsPlusSnackbar()
     fun showStartTimePicker(hour: Int, minute: Int)
     fun showEndTimePicker(hour: Int, minute: Int)
+    fun showTextSizePicker()
+    fun dismissTextSizePicker()
     fun showMmsSizePicker()
     fun dismissMmsSizePicker()
 }

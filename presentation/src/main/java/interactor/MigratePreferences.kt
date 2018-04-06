@@ -61,7 +61,12 @@ class MigratePreferences @Inject constructor(
                     prefs.delivery.set(rxPrefs.getBoolean("pref_key_delivery", prefs.delivery.get()).get())
                 }
                 .doOnNext {
+                    // Quickreply
                     prefs.qkreply.set(rxPrefs.getBoolean("pref_key_quickreply_enabled", prefs.qkreply.get()).get())
+                }
+                .doOnNext {
+                    // Font size
+                    prefs.textSize.set(rxPrefs.getString("pref_key_font_size", "${prefs.textSize.get()}").get().toInt())
                 }
                 .doOnNext {
                     // Unicode

@@ -23,12 +23,18 @@ import android.graphics.Typeface
 import android.support.text.emoji.widget.EmojiAppCompatTextView
 import android.util.AttributeSet
 import com.moez.QKSMS.R
+import com.uber.autodispose.android.scope
+import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
 import common.util.FontProvider
 import common.util.extensions.getColorCompat
 import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.Observables
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
+import util.Preferences
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
@@ -41,10 +47,16 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
         const val COLOR_PRIMARY_ON_THEME = 3
         const val COLOR_SECONDARY_ON_THEME = 4
         const val COLOR_TERTIARY_ON_THEME = 5
+
+        const val SIZE_PRIMARY = 0
+        const val SIZE_SECONDARY = 1
+        const val SIZE_TERTIARY = 2
+        const val SIZE_TOOLBAR = 3
     }
 
     @Inject lateinit var colors: Colors
     @Inject lateinit var fontProvider: FontProvider
+    @Inject lateinit var prefs: Preferences
 
     var textColorObservable: Observable<Int>? = null
         set(value) {
@@ -58,6 +70,8 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
             field = value
         }
 
+    private var textSizeAttrSubject: Subject<Int> = BehaviorSubject.create()
+
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
@@ -66,6 +80,8 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
 
         context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
             val colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
+            val textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
+
             if (isInEditMode) {
                 setTextColor(context.getColorCompat(when (colorAttr) {
                     COLOR_PRIMARY -> R.color.textPrimary
@@ -76,6 +92,14 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
                     COLOR_TERTIARY_ON_THEME -> R.color.textTertiaryDark
                     else -> R.color.textPrimary
                 }))
+
+                textSize = when (textSizeAttr) {
+                    SIZE_PRIMARY -> 16f
+                    SIZE_SECONDARY -> 14f
+                    SIZE_TERTIARY -> 12f
+                    SIZE_TOOLBAR -> 20f
+                    else -> textSize
+                }
             } else {
                 textColorObservable = when (colorAttr) {
                     COLOR_PRIMARY -> colors.textPrimary
@@ -86,10 +110,22 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
                     COLOR_TERTIARY_ON_THEME -> colors.textTertiaryOnTheme
                     else -> null
                 }
+
+                setTextSize(textSizeAttr)
             }
 
             recycle()
         }
+    }
+
+    /**
+     * @see SIZE_PRIMARY
+     * @see SIZE_SECONDARY
+     * @see SIZE_TERTIARY
+     * @see SIZE_TOOLBAR
+     */
+    fun setTextSize(size: Int) {
+        textSizeAttrSubject.onNext(size)
     }
 
     private fun updateSubscription() {
@@ -103,7 +139,48 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        if (isInEditMode) return
+
         updateSubscription()
+
+        Observables
+                .combineLatest(prefs.textSize.asObservable(), textSizeAttrSubject, { textSizePref, textSizeAttr ->
+                    when (textSizeAttr) {
+                        SIZE_PRIMARY -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 14f
+                            Preferences.TEXT_SIZE_NORMAL -> 16f
+                            Preferences.TEXT_SIZE_LARGE -> 18f
+                            Preferences.TEXT_SIZE_LARGER -> 20f
+                            else -> 16f
+                        }
+
+                        SIZE_SECONDARY -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 12f
+                            Preferences.TEXT_SIZE_NORMAL -> 14f
+                            Preferences.TEXT_SIZE_LARGE -> 16f
+                            Preferences.TEXT_SIZE_LARGER -> 18f
+                            else -> 14f
+                        }
+
+                        SIZE_TERTIARY -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 10f
+                            Preferences.TEXT_SIZE_NORMAL -> 12f
+                            Preferences.TEXT_SIZE_LARGE -> 14f
+                            Preferences.TEXT_SIZE_LARGER -> 16f
+                            else -> 12f
+                        }
+
+                        SIZE_TOOLBAR -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 18f
+                            Preferences.TEXT_SIZE_NORMAL -> 20f
+                            Preferences.TEXT_SIZE_LARGE -> 22f
+                            Preferences.TEXT_SIZE_LARGER -> 26f
+                            else -> 20f
+                        }
+                    }
+                })
+                .autoDisposable(scope())
+                .subscribe()
     }
 
     override fun onDetachedFromWindow() {

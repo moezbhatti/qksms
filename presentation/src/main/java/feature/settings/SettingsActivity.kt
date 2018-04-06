@@ -45,6 +45,7 @@ import javax.inject.Inject
 class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
     @Inject lateinit var nightModeAdapter: MenuItemAdapter
+    @Inject lateinit var textSizeAdapter: MenuItemAdapter
     @Inject lateinit var mmsSizeAdapter: MenuItemAdapter
 
     override val viewModelClass = SettingsViewModel::class
@@ -53,6 +54,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
+    override val textSizeSelectedIntent by lazy { textSizeAdapter.menuItemClicks }
     override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeAdapter.menuItemClicks }
 
     // TODO remove this
@@ -65,6 +67,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     }
 
     private var nightModeDialog: AlertDialog? = null
+    private var textSizeDialog: AlertDialog? = null
     private var mmsSizeDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +79,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         viewModel.bindView(this)
 
         nightModeAdapter.setData(R.array.night_modes)
+        textSizeAdapter.setData(R.array.text_sizes)
         mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
         colors.background
@@ -114,6 +118,9 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
         delivery.checkbox.isChecked = state.deliveryEnabled
         qkreply.checkbox.isChecked = state.qkReplyEnabled
+
+        textSize.summary = state.textSizeSummary
+
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
         mms.checkbox.isChecked = state.mmsEnabled
 
@@ -155,6 +162,22 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
             endTimeSelectedIntent.onNext(Pair(newHour, newMinute))
         }, hour, minute, false).show()
+    }
+
+    override fun showTextSizePicker() {
+        val recyclerView = RecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = textSizeAdapter
+        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
+        textSizeDialog = AlertDialog.Builder(this)
+                .setTitle(R.string.settings_text_size_title)
+                .setView(recyclerView)
+                .create().apply { show() }
+    }
+
+    override fun dismissTextSizePicker() {
+        textSizeDialog?.dismiss()
+        textSizeDialog = null
     }
 
     override fun showMmsSizePicker() {

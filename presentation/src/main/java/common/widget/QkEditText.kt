@@ -27,8 +27,16 @@ import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
 import common.util.FontProvider
+import common.widget.QkTextView.Companion.SIZE_PRIMARY
+import common.widget.QkTextView.Companion.SIZE_SECONDARY
+import common.widget.QkTextView.Companion.SIZE_TERTIARY
+import common.widget.QkTextView.Companion.SIZE_TOOLBAR
 import injection.appComponent
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.Observables
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
+import util.Preferences
 import javax.inject.Inject
 
 /**
@@ -39,38 +47,76 @@ import javax.inject.Inject
  */
 class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : EditText(context, attrs) {
 
+    companion object {
+        const val COLOR_PRIMARY = 0
+        const val COLOR_SECONDARY = 1
+        const val COLOR_TERTIARY = 2
+        const val COLOR_PRIMARY_ON_THEME = 3
+        const val COLOR_SECONDARY_ON_THEME = 4
+        const val COLOR_TERTIARY_ON_THEME = 5
+
+        const val SIZE_PRIMARY = 0
+        const val SIZE_SECONDARY = 1
+        const val SIZE_TERTIARY = 2
+        const val SIZE_TOOLBAR = 3
+    }
+
     @Inject lateinit var colors: Colors
     @Inject lateinit var fontProvider: FontProvider
+    @Inject lateinit var prefs: Preferences
 
     private var textColorObservable: Observable<Int>? = null
     private var textColorHintObservable: Observable<Int>? = null
 
-    init {
-        appComponent.inject(this)
-        fontProvider.getLato { setTypeface(it, typeface?.style ?: Typeface.NORMAL) }
+    private var textSizeAttrSubject: Subject<Int> = BehaviorSubject.create()
 
-        context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
-            textColorObservable = when (getInt(R.styleable.QkEditText_textColor, -1)) {
-                0 -> colors.textPrimary
-                1 -> colors.textSecondary
-                2 -> colors.textTertiary
-                3 -> colors.textPrimaryOnTheme
-                4 -> colors.textSecondaryOnTheme
-                5 -> colors.textTertiaryOnTheme
-                else -> null
+    init {
+        if (!isInEditMode) {
+            appComponent.inject(this)
+            fontProvider.getLato { setTypeface(it, typeface?.style ?: Typeface.NORMAL) }
+
+            context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
+                val colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
+                val colorHintAttr = getInt(R.styleable.QkEditText_textColorHint, -1)
+                val textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
+
+                textColorObservable = when (colorAttr) {
+                    COLOR_PRIMARY -> colors.textPrimary
+                    COLOR_SECONDARY -> colors.textSecondary
+                    COLOR_TERTIARY -> colors.textTertiary
+                    COLOR_PRIMARY_ON_THEME -> colors.textPrimaryOnTheme
+                    COLOR_SECONDARY_ON_THEME -> colors.textSecondaryOnTheme
+                    COLOR_TERTIARY_ON_THEME -> colors.textTertiaryOnTheme
+                    else -> null
+                }
+
+                textColorHintObservable = when (colorHintAttr) {
+                    COLOR_PRIMARY -> colors.textPrimary
+                    COLOR_SECONDARY -> colors.textSecondary
+                    COLOR_TERTIARY -> colors.textTertiary
+                    else -> null
+                }
+
+                setTextSize(textSizeAttr)
+
+                recycle()
             }
-            textColorHintObservable = when (getInt(R.styleable.QkEditText_textColorHint, -1)) {
-                0 -> colors.textPrimary
-                1 -> colors.textSecondary
-                2 -> colors.textTertiary
-                else -> null
-            }
-            recycle()
         }
+    }
+
+    /**
+     * @see SIZE_PRIMARY
+     * @see SIZE_SECONDARY
+     * @see SIZE_TERTIARY
+     * @see SIZE_TOOLBAR
+     */
+    fun setTextSize(size: Int) {
+        textSizeAttrSubject.onNext(size)
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        if (isInEditMode) return
 
         textColorObservable
                 ?.autoDisposable(scope())
@@ -79,6 +125,45 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
         textColorHintObservable
                 ?.autoDisposable(scope())
                 ?.subscribe { color -> setHintTextColor(color) }
+
+        Observables
+                .combineLatest(prefs.textSize.asObservable(), textSizeAttrSubject, { textSizePref, textSizeAttr ->
+                    when (textSizeAttr) {
+                        SIZE_PRIMARY -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 14f
+                            Preferences.TEXT_SIZE_NORMAL -> 16f
+                            Preferences.TEXT_SIZE_LARGE -> 18f
+                            Preferences.TEXT_SIZE_LARGER -> 20f
+                            else -> 16f
+                        }
+
+                        SIZE_SECONDARY -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 12f
+                            Preferences.TEXT_SIZE_NORMAL -> 14f
+                            Preferences.TEXT_SIZE_LARGE -> 16f
+                            Preferences.TEXT_SIZE_LARGER -> 18f
+                            else -> 14f
+                        }
+
+                        SIZE_TERTIARY -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 10f
+                            Preferences.TEXT_SIZE_NORMAL -> 12f
+                            Preferences.TEXT_SIZE_LARGE -> 14f
+                            Preferences.TEXT_SIZE_LARGER -> 16f
+                            else -> 12f
+                        }
+
+                        SIZE_TOOLBAR -> textSize = when (textSizePref) {
+                            Preferences.TEXT_SIZE_SMALL -> 18f
+                            Preferences.TEXT_SIZE_NORMAL -> 20f
+                            Preferences.TEXT_SIZE_LARGE -> 22f
+                            Preferences.TEXT_SIZE_LARGER -> 26f
+                            else -> 20f
+                        }
+                    }
+                })
+                .autoDisposable(scope())
+                .subscribe()
     }
 
 }

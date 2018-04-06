@@ -82,6 +82,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += prefs.qkreply.asObservable()
                 .subscribe { enabled -> newState { it.copy(qkReplyEnabled = enabled) } }
 
+        val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
+        disposables += prefs.textSize.asObservable()
+                .subscribe { textSize -> newState { it.copy(textSizeSummary = textSizeLabels[textSize]) } }
+
         disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { it.copy(stripUnicodeEnabled = enabled) } }
 
@@ -136,6 +140,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.qkreply -> prefs.qkreply.set(!prefs.qkreply.get())
 
+                        R.id.textSize -> view.showTextSizePicker()
+
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 
                         R.id.mms -> prefs.mms.set(!prefs.mms.get())
@@ -178,6 +184,11 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 .map { dateFormatter.formatTime(it.first, it.second) }
                 .autoDisposable(view.scope())
                 .subscribe { prefs.nightEnd.set(it) }
+
+        view.textSizeSelectedIntent
+                .doOnNext { view.dismissTextSizePicker() }
+                .autoDisposable(view.scope())
+                .subscribe { prefs.textSize.set(it) }
 
         view.mmsSizeSelectedIntent
                 .doOnNext { view.dismissMmsSizePicker() }

@@ -97,6 +97,7 @@
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
     <string name="settings_qkreply_title">QK Reply</string>
     <string name="settings_qkreply_summary">Popup for new messages</string>
+    <string name="settings_text_size_title">Font size</string>
     <string name="settings_unicode_title">Strip accents</string>
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
     <string name="settings_mms_title">MMS enabled</string>
@@ -180,6 +181,13 @@
         <item>Disabled</item>
         <item>Always on</item>
         <item>Automatic</item>
+    </string-array>
+
+    <string-array name="text_sizes">
+        <item>Small</item>
+        <item>Normal</item>
+        <item>Large</item>
+        <item>Larger</item>
     </string-array>
 
     <string-array name="mms_sizes">

@@ -63,9 +63,9 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:text="@string/qksms_plus_description_title"
-                android:textSize="16sp"
                 android:textStyle="bold"
-                app:textColor="primary" />
+                app:textColor="primary"
+                app:textSize="primary" />
 
             <common.widget.QkTextView
                 android:id="@+id/description"
@@ -74,8 +74,8 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:text="@string/qksms_plus_description_summary"
-                android:textSize="14sp"
-                app:textColor="secondary" />
+                app:textColor="secondary"
+                app:textSize="secondary" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/thanks"
@@ -100,21 +100,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:text="@string/qksms_plus_thanks_title"
-                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/thanksIcon"
-                    app:textColor="primary" />
+                    app:textColor="primary"
+                    app:textSize="secondary" />
 
                 <common.widget.QkTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/qksms_plus_thanks_summary"
-                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@id/thanksTitle"
                     app:layout_constraintStart_toStartOf="@id/thanksTitle"
                     app:layout_constraintTop_toBottomOf="@id/thanksTitle"
-                    app:textColor="secondary" />
+                    app:textColor="secondary"
+                    app:textSize="secondary" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -175,9 +175,9 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/qksms_plus_coming_soon"
-                android:textSize="16sp"
                 android:textStyle="bold"
-                app:textColor="primary" />
+                app:textColor="primary"
+                app:textSize="primary" />
 
             <common.widget.PreferenceView
                 android:layout_width="match_parent"

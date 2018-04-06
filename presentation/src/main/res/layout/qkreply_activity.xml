@@ -74,11 +74,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:gravity="center"
-        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/send"
         app:layout_constraintEnd_toEndOf="@id/send"
         app:layout_constraintStart_toStartOf="@id/send"
         app:textColor="secondary"
+        app:textSize="tertiary"
         tools:text="108 / 2" />
 
     <ImageView

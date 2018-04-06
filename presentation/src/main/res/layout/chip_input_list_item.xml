@@ -25,6 +25,6 @@
     android:imeOptions="flagNoExtractUi"
     android:inputType="textFilter|textNoSuggestions"
     android:privateImeOptions="nm"
-    android:textSize="16sp"
     app:textColor="primary"
-    app:textColorHint="tertiary" />
+    app:textColorHint="tertiary"
+    app:textSize="primary" />

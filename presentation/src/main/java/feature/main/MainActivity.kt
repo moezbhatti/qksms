@@ -45,6 +45,7 @@ import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
+import common.widget.QkEditText
 import feature.conversations.ConversationItemTouchCallback
 import feature.conversations.ConversationsAdapter
 import injection.appComponent
@@ -178,7 +179,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
     override fun render(state: MainState) {
         toolbarSearch.isEnabled = state.page is Inbox
-        toolbarSearch.textSize = if (state.page is Inbox) 16f else 20f
+        toolbarSearch.setTextSize(if (state.page is Inbox) QkEditText.SIZE_PRIMARY else QkEditText.SIZE_TOOLBAR)
 
         toolbar.menu.findItem(R.id.clear)?.run {
             isVisible = state.page is Inbox && state.page.showClearButton

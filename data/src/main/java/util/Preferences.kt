@@ -32,6 +32,11 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val NIGHT_MODE_OFF = 0
         const val NIGHT_MODE_ON = 1
         const val NIGHT_MODE_AUTO = 2
+
+        const val TEXT_SIZE_SMALL = 0
+        const val TEXT_SIZE_NORMAL = 1
+        const val TEXT_SIZE_LARGE = 2
+        const val TEXT_SIZE_LARGER = 3
     }
 
     val defaultSms = rxPrefs.getBoolean("defaultSms", false)
@@ -42,6 +47,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val black = rxPrefs.getBoolean("black", false)
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val delivery = rxPrefs.getBoolean("delivery", false)
+    val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
     val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mms = rxPrefs.getBoolean("mms", true)

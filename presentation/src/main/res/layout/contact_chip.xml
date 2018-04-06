@@ -44,9 +44,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="12dp"
-            android:textSize="14sp"
             android:textStyle="bold"
             app:textColor="primary"
+            app:textSize="secondary"
             tools:text="Moez Bhatti" />
 
     </LinearLayout>

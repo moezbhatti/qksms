@@ -120,8 +120,8 @@
         android:layout_gravity="start"
         android:layout_marginStart="72dp"
         android:layout_marginTop="4dp"
-        android:textSize="12sp"
         app:textColor="secondary"
+        app:textSize="tertiary"
         tools:text="Sending..." />
 
 </LinearLayout>

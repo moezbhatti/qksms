@@ -34,6 +34,7 @@ data class SettingsState(
         val notificationsEnabled: Boolean = true,
         val deliveryEnabled: Boolean = false,
         val qkReplyEnabled: Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.N,
+        val textSizeSummary: String = "",
         val splitSmsEnabled: Boolean = false,
         val stripUnicodeEnabled: Boolean = false,
         val mmsEnabled: Boolean = true,

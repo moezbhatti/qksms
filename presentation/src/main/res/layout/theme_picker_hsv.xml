@@ -17,6 +17,7 @@
 
     <common.widget.QkTextView
         android:id="@+id/hexLabel"
+        style="@style/TextSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -24,12 +25,10 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         android:text="@string/theme_hex"
-        android:textSize="14sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/picker"
-        app:textColor="tertiary" />
+        app:layout_constraintTop_toBottomOf="@id/picker" />
 
     <common.widget.Separator
         android:id="@+id/hexSeparator"
@@ -47,12 +46,12 @@
         android:layout_marginStart="16dp"
         android:gravity="center"
         android:text="#"
-        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/hexLabel"
         app:layout_constraintStart_toEndOf="@id/hexSeparator"
         app:layout_constraintTop_toTopOf="@id/hexLabel"
         app:textColor="primary"
+        app:textSize="secondary"
         tools:ignore="HardcodedText" />
 
     <common.widget.QkEditText
@@ -63,12 +62,12 @@
         android:gravity="center"
         android:paddingEnd="16dp"
         android:textAllCaps="true"
-        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/hexLabel"
         app:layout_constraintStart_toEndOf="@id/hexSign"
         app:layout_constraintTop_toTopOf="@id/hexLabel"
         app:textColor="primary"
+        app:textSize="secondary"
         tools:text="1B8AE8" />
 
     <android.support.constraint.Group

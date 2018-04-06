@@ -31,19 +31,18 @@
         android:layout_marginStart="72dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textSize="14sp"
         app:textColor="secondary"
+        app:textSize="secondary"
         tools:text="(123) 456-7890"
         tools:textColor="@color/textSecondary" />
 
     <common.widget.QkTextView
         android:id="@+id/type"
+        style="@style/TextSecondary"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
-        android:textSize="14sp"
-        app:textColor="tertiary"
         tools:text="Mobile"
         tools:textColor="@color/textTertiary" />
 

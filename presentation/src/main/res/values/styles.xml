@@ -19,18 +19,18 @@
 <resources>
 
     <style name="TextPrimary">
-        <item name="android:textSize">16sp</item>
         <item name="textColor">primary</item>
+        <item name="textSize">primary</item>
     </style>
 
     <style name="TextSecondary">
-        <item name="android:textSize">14sp</item>
         <item name="textColor">tertiary</item>
+        <item name="textSize">secondary</item>
     </style>
 
     <style name="TextTertiary">
-        <item name="android:textSize">12sp</item>
         <item name="textColor">tertiary</item>
+        <item name="textSize">tertiary</item>
     </style>
 
     <style name="TextTab">
@@ -41,8 +41,8 @@
         <item name="android:paddingEnd">12sp</item>
         <item name="android:paddingStart">12sp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="textSize">secondary</item>
     </style>
 
     <style name="TextButton">
@@ -52,8 +52,8 @@
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="textSize">secondary</item>
     </style>
 
     <style name="Toolbar">
@@ -73,8 +73,8 @@
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">20sp</item>
         <item name="textColor">primary</item>
+        <item name="textSize">toolbar</item>
     </style>
 
     <style name="PreferenceCategory">
@@ -84,13 +84,13 @@
         <item name="android:layout_marginEnd">24dp</item>
         <item name="android:layout_marginStart">24dp</item>
         <item name="android:layout_marginTop">16dp</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="textColor">secondary</item>
+        <item name="textSize">secondary</item>
     </style>
 
     <style name="CollapsingToolbarCollapsedText">
-        <item name="android:textSize">20sp</item>
+        <item name="textSize">toolbar</item>
     </style>
 
     <style name="CollapsingToolbarExpandedText">
@@ -111,9 +111,9 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:lines">1</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="textColor">primary</item>
+        <item name="textSize">secondary</item>
     </style>
 
     <style name="DrawerIcon">
