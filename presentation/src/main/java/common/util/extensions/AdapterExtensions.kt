@@ -36,10 +36,18 @@ fun RecyclerView.Adapter<*>.autoScrollToStart(recyclerView: RecyclerView) {
                     recyclerView.scrollToPosition(positionStart)
                 }
             } else {
-                val firstVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+                val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
                 if (firstVisiblePosition == 0) {
                     recyclerView.scrollToPosition(positionStart)
                 }
+            }
+        }
+
+        override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+            val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+
+            if (!layoutManager.stackFromEnd) {
+                onItemRangeInserted(positionStart, itemCount)
             }
         }
     })
