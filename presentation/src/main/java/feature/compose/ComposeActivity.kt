@@ -192,20 +192,12 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
             message.showKeyboard()
         }
 
-        if (chipsAdapter.data !== state.selectedContacts) {
-            chipsAdapter.data = state.selectedContacts
-        }
-
-        if (contactsAdapter.data !== state.contacts) {
-            contactsAdapter.data = state.contacts
-        }
-
+        chipsAdapter.data = state.selectedContacts
+        contactsAdapter.data = state.contacts
         messageAdapter.data = state.messages
 
         attachments.setVisible(state.attachments.isNotEmpty())
-        if (attachmentAdapter.data !== state.attachments) {
-            attachmentAdapter.data = state.attachments
-        }
+        attachmentAdapter.data = state.attachments
 
         if (title != state.title) title = state.title
 

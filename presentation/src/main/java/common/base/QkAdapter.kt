@@ -29,6 +29,8 @@ abstract class QkAdapter<T> : RecyclerView.Adapter<QkViewHolder>() {
 
     var data: List<T> = ArrayList()
         set(value) {
+            if (field === value) return
+
             val diff = DiffUtil.calculateDiff(getDiffUtilCallback(field, value))
             field = value
             diff.dispatchUpdatesTo(this)
