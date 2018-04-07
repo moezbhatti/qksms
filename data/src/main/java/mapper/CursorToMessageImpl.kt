@@ -139,7 +139,7 @@ class CursorToMessageImpl @Inject constructor(
         val cursor = context.contentResolver.query(uri, projection, selection, null, null)
         cursor?.use {
             if (cursor.moveToFirst()) {
-                return cursor.getString(0)
+                return cursor.getString(0) ?: ""
             }
         }
 
