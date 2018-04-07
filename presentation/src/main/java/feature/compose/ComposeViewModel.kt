@@ -59,6 +59,7 @@ import repository.ContactRepository
 import repository.MessageRepository
 import util.extensions.asObservable
 import java.net.URLDecoder
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -208,7 +209,8 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
                     // If the entry is a valid destination, allow it as a recipient
                     if (PhoneNumberUtils.isWellFormedSmsAddress(query.toString())) {
-                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = query.toString())))
+                        val newAddress = PhoneNumberUtils.formatNumber(query.toString(), Locale.getDefault().country)
+                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = newAddress ?: query.toString())))
                         filteredContacts = listOf(newContact) + filteredContacts
                     }
 
