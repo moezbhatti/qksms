@@ -37,14 +37,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmList
 import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
-import model.Contact
 import model.Conversation
 import model.Message
-import model.PhoneNumber
+import model.Recipient
 import util.extensions.isImage
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -79,7 +77,7 @@ class MessagesAdapter @Inject constructor(
             updateData(value?.second)
         }
 
-    private val contactMap = HashMap<String, Contact>()
+    private val contactMap = HashMap<String, Recipient?>()
     private val selected = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
 
@@ -149,13 +147,12 @@ class MessagesAdapter @Inject constructor(
 
         val address = message.address
         if (contactMap[address]?.isValid != true) {
-            contactMap[address] = data?.first?.recipients?.mapNotNull { it.contact } // Map the conversation to its contacts
-                    ?.firstOrNull { it.numbers.any { PhoneNumberUtils.compare(it.address, address) } } // See if any of the phone numbers match
-                    ?: Contact(numbers = RealmList(PhoneNumber(address = address))) // Fallback to a fake contact
+            contactMap[address] = data?.first?.recipients
+                    ?.firstOrNull { PhoneNumberUtils.compare(it.address, address) } // See if any of the phone numbers match
         }
 
         view.avatar.threadId = data?.first?.id ?: 0
-        view.avatar.contact = contactMap[address]
+        view.avatar.setContact(contactMap[address])
     }
 
     private fun bindStatus(view: View, position: Int) {
@@ -169,7 +166,7 @@ class MessagesAdapter @Inject constructor(
             message.isSending() -> context.getString(R.string.message_status_sending)
             message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
-            !message.isMe() && data?.first?.recipients?.size ?: 0 > 1 -> "${contactMap[message.address]?.name} • $timestamp"
+            !message.isMe() && data?.first?.recipients?.size ?: 0 > 1 -> "${contactMap[message.address]?.getDisplayName()} • $timestamp"
             else -> timestamp
         }
 

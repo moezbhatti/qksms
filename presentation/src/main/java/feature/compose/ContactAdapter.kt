@@ -24,13 +24,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import common.util.extensions.setVisible
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 import model.Contact
-import common.base.QkAdapter
-import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ContactAdapter @Inject constructor(private val context: Context) : QkAdapter<Contact>() {
@@ -50,7 +50,7 @@ class ContactAdapter @Inject constructor(private val context: Context) : QkAdapt
 
         view.primary.clicks().subscribe { contactSelected.onNext(copyContact(contact, 0)) }
 
-        view.avatar.contact = contact
+        view.avatar.setContact(contact)
         view.name.text = contact.name
         view.name.setVisible(view.name.text.isNotEmpty())
         view.address.text = contact.numbers.first()?.address ?: ""

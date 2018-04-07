@@ -24,11 +24,11 @@ import android.util.AttributeSet
 import android.view.View
 import com.moez.QKSMS.R
 import kotlinx.android.synthetic.main.group_avatar_view.view.*
-import model.Contact
+import model.Recipient
 
 class GroupAvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
 
-    var contacts: List<Contact> = ArrayList()
+    var contacts: List<Recipient> = ArrayList()
         set(value) {
             field = value
             updateView()
@@ -57,7 +57,7 @@ class GroupAvatarView @JvmOverloads constructor(context: Context, attrs: Attribu
     private fun updateView() {
         avatars.forEachIndexed { index, avatar ->
             avatar.visibility = if (contacts.size > index) View.VISIBLE else View.GONE
-            avatar.contact = if (contacts.size > index) contacts[index] else null
+            avatar.setContact(contacts.getOrNull(index))
         }
     }
 

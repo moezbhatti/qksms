@@ -68,7 +68,7 @@ class ConversationRecipientAdapter @Inject constructor(
         }
 
         view.avatar.threadId = threadId
-        view.avatar.contact = recipient.contact
+        view.avatar.setContact(recipient)
 
         view.name.text = recipient.contact?.name ?: recipient.address
 

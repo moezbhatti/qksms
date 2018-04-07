@@ -25,9 +25,9 @@ import android.widget.RelativeLayout
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
 import common.util.Colors
 import common.util.extensions.setBackgroundTint
+import injection.appComponent
 import kotlinx.android.synthetic.main.contact_chip_detailed.view.*
 import model.Contact
 import javax.inject.Inject
@@ -58,7 +58,7 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
     }
 
     fun setContact(contact: Contact) {
-        avatar.contact = contact
+        avatar.setContact(contact)
         name.text = contact.name
         info.text = contact.numbers.map { it.address }.toString()
     }

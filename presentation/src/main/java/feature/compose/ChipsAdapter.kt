@@ -103,7 +103,7 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
                 val contact = getItem(position)
                 val view = holder.itemView
 
-                view.avatar.contact = contact
+                view.avatar.setContact(contact)
 
                 // If the contact's name is empty, try to display a phone number instead
                 // The contacts provided here should only have one number

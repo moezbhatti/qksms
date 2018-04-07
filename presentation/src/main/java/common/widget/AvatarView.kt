@@ -36,6 +36,7 @@ import common.util.extensions.setTint
 import injection.appComponent
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import model.Contact
+import model.Recipient
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
@@ -48,11 +49,9 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
      */
     var threadId: Long = 0
 
-    var contact: Contact? = null
-        set(value) {
-            field = value
-            updateView()
-        }
+    private var lookupKey: String? = null
+    private var name: String? = null
+    private var address: String? = null
 
     init {
         if (!isInEditMode) {
@@ -63,6 +62,26 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
         setBackgroundResource(R.drawable.circle)
         clipToOutline = true
+    }
+
+    fun setContact(recipient: Recipient?) {
+        // If the recipient has a contact, just use that and return
+        recipient?.contact?.let { contact ->
+            setContact(contact)
+            return
+        }
+
+        lookupKey = null
+        name = null
+        address = recipient?.address
+        updateView()
+    }
+
+    fun setContact(contact: Contact?) {
+        lookupKey = contact?.lookupKey
+        name = contact?.name
+        address = contact?.numbers?.firstOrNull()?.address
+        updateView()
     }
 
     override fun onAttachedToWindow() {
@@ -84,13 +103,10 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             clicks()
                     .autoDisposable(scope())
                     .subscribe {
-                        if (contact?.lookupKey.isNullOrEmpty()) {
-                            contact?.numbers?.firstOrNull()?.let { number ->
-                                navigator.addContact(number.address)
-                            }
+                        if (lookupKey.isNullOrEmpty()) {
+                            address?.let { address -> navigator.addContact(address) }
                         } else {
-                            val key = contact?.lookupKey
-                            val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, key)
+                            val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey)
                             ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,
                                     ContactsContract.QuickContact.MODE_MEDIUM, null)
                         }
@@ -107,8 +123,8 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     private fun updateView() {
-        if (contact?.name.orEmpty().isNotEmpty()) {
-            initial.text = contact?.name?.substring(0, 1)
+        if (name?.isNotEmpty() == true) {
+            initial.text = name?.substring(0, 1)
             icon.visibility = GONE
         } else {
             initial.text = null
@@ -116,7 +132,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
         photo.setImageDrawable(null)
-        contact?.numbers?.firstOrNull()?.address?.let { address ->
+        address?.let { address ->
             GlideApp.with(photo).load(PhoneNumberUtils.stripSeparators(address)).into(photo)
         }
     }

@@ -18,12 +18,10 @@
  */
 package model
 
-import android.telephony.PhoneNumberUtils
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Index
 import io.realm.annotations.PrimaryKey
-import java.util.*
 
 open class Conversation : RealmObject() {
 
@@ -38,9 +36,5 @@ open class Conversation : RealmObject() {
     var me: Boolean = false
     var draft: String = ""
 
-    fun getTitle() = recipients.joinToString { recipient ->
-        recipient.contact?.name?.takeIf { it.isNotBlank() }
-                ?: PhoneNumberUtils.formatNumber(recipient.address, Locale.getDefault().country)
-                ?: recipient.address
-    }
+    fun getTitle() = recipients.joinToString { recipient -> recipient.getDisplayName() }
 }

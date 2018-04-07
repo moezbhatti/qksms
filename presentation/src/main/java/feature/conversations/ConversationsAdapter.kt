@@ -32,9 +32,7 @@ import common.util.DateFormatter
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
-import model.Contact
 import model.Conversation
-import model.PhoneNumber
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
@@ -75,9 +73,7 @@ class ConversationsAdapter @Inject constructor(
         view.clicks().subscribe { clicks.onNext(conversation.id) }
         view.longClicks().subscribe { longClicks.onNext(conversation.id) }
 
-        view.avatars.contacts = conversation.recipients.map { recipient ->
-            recipient.contact ?: Contact().apply { numbers.add(PhoneNumber().apply { address = recipient.address }) }
-        }
+        view.avatars.contacts = conversation.recipients
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
         view.snippet.text = if (conversation.me) "You: ${conversation.snippet}" else conversation.snippet
