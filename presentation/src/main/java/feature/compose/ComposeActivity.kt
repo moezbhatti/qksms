@@ -24,7 +24,6 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -34,11 +33,13 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.base.QkThemedActivity
+import common.util.extensions.autoScrollToStart
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import common.util.extensions.showKeyboard
+import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
@@ -46,8 +47,6 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import model.Contact
 import model.Message
-import common.base.QkThemedActivity
-import common.util.extensions.autoScrollToStart
 import javax.inject.Inject
 
 class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
@@ -201,9 +200,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
             contactsAdapter.data = state.contacts
         }
 
-        if (messageAdapter.data !== state.messages) {
-            messageAdapter.data = state.messages
-        }
+        messageAdapter.data = state.messages
 
         attachments.setVisible(state.attachments.isNotEmpty())
         if (attachmentAdapter.data !== state.attachments) {

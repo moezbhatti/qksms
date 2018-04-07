@@ -77,6 +77,12 @@ class MessagesAdapter @Inject constructor(
             updateData(value?.second)
         }
 
+    /**
+     * Safely return the conversation, if available
+     */
+    private val conversation: Conversation?
+        get() = data?.first?.takeIf { it.isValid }
+
     private val contactMap = HashMap<String, Recipient?>()
     private val selected = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
@@ -100,7 +106,7 @@ class MessagesAdapter @Inject constructor(
                     .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
         } else {
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
-            view.avatar.threadId = data?.first?.id ?: 0
+            view.avatar.threadId = conversation?.id ?: 0
             view.subject.textColorObservable = textPrimaryOnTheme
             view.body.textColorObservable = textPrimaryOnTheme
             disposables += theme
@@ -147,11 +153,11 @@ class MessagesAdapter @Inject constructor(
 
         val address = message.address
         if (contactMap[address]?.isValid != true) {
-            contactMap[address] = data?.first?.recipients
+            contactMap[address] = conversation?.recipients
                     ?.firstOrNull { PhoneNumberUtils.compare(it.address, address) } // See if any of the phone numbers match
         }
 
-        view.avatar.threadId = data?.first?.id ?: 0
+        view.avatar.threadId = conversation?.id ?: 0
         view.avatar.setContact(contactMap[address])
     }
 
@@ -166,7 +172,7 @@ class MessagesAdapter @Inject constructor(
             message.isSending() -> context.getString(R.string.message_status_sending)
             message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
-            !message.isMe() && data?.first?.recipients?.size ?: 0 > 1 -> "${contactMap[message.address]?.getDisplayName()} • $timestamp"
+            !message.isMe() && conversation?.recipients?.size ?: 0 > 1 -> "${contactMap[message.address]?.getDisplayName()} • $timestamp"
             else -> timestamp
         }
 
@@ -175,7 +181,7 @@ class MessagesAdapter @Inject constructor(
             message.isSending() -> true
             message.isFailedMessage() -> true
             selected[message.id] == false -> false
-            data?.first?.recipients?.size ?: 0 > 1 && !message.isMe() && next?.compareSender(message) != true -> true
+            conversation?.recipients?.size ?: 0 > 1 && !message.isMe() && next?.compareSender(message) != true -> true
             message.isDelivered() && next?.isDelivered() != true && age <= TIMESTAMP_THRESHOLD -> true
             else -> false
         })
