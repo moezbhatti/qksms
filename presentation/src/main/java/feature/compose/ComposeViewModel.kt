@@ -291,7 +291,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .subscribe()
 
         // Mark the conversation read, if in foreground
-        Observables.combineLatest(messages, view.activityVisibleIntent, { _, b -> b })
+        Observables.combineLatest(messages, view.activityVisibleIntent, { _, visible -> visible })
                 .withLatestFrom(conversation, { visible, conversation ->
                     if (visible && conversation.isValid) markRead.execute(conversation.id)
                 })
