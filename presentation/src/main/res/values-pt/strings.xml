@@ -47,8 +47,7 @@
   <string name="drawer_inbox">Caixa de entrada</string>
   <string name="drawer_archived">Arquivadas</string>
   <string name="drawer_scheduled">Agendadas</string>
-  <string name="drawer_blocked">Bloqueadas</string>
-  <string name="drawer_more">Mais</string>
+    <string name="drawer_more">Mais</string>
   <string name="drawer_settings">Definições</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Ajuda e comentários</string>
@@ -123,8 +122,7 @@
   <string name="qksms_plus_respond_summary">Enviar automaticamente um resposta tendo por base os modelos</string>
   <string name="qksms_plus_more_title">Mais</string>
   <string name="qksms_plus_more_summary">QKSMS está em desenvolvimento ativo e a sua subscrição irá incluir todas as futuras funções do QKSMS+!</string>
-  <string name="settings_dialog_theme_title">Tema</string>
-  <string name="widget_loading">Loading&#8230;</string>
+    <string name="widget_loading">Loading&#8230;</string>
   <string name="widget_more">View more conversations</string>
   <string name="qkreply_menu_read">Mark read</string>
   <string name="qkreply_menu_call">Call</string>
@@ -137,8 +135,7 @@
   <string name="theme_apply">Apply</string>
   <string name="notification_reply">Responder</string>
   <string name="notification_read">Marcar como lida</string>
-  <string name="button_yes">Sim</string>
-  <string name="button_cancel">Cancelar</string>
+    <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Apagar</string>
   <string name="button_unblock">Unblock</string>
   <string name="button_undo">Anular</string>

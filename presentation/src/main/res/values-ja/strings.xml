@@ -47,8 +47,7 @@
   <string name="drawer_inbox">受信トレイ</string>
   <string name="drawer_archived">アーカイブ済</string>
   <string name="drawer_scheduled">スケジュール済</string>
-  <string name="drawer_blocked">ブロック済</string>
-  <string name="drawer_more">もっと</string>
+    <string name="drawer_more">もっと</string>
   <string name="drawer_settings">設定</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">ヘルプとフィードバック</string>
@@ -123,8 +122,7 @@
   <string name="qksms_plus_respond_summary">あらかじめ設定された応答で、受信したメッセージに自動的に返信します</string>
   <string name="qksms_plus_more_title">さらに</string>
   <string name="qksms_plus_more_summary">QKSMS は活発に開発しています。サブスクリプションにはすべて将来の QKSMS+ 機能が含まれます!</string>
-  <string name="settings_dialog_theme_title">テーマ</string>
-  <string name="widget_loading">Loading&#8230;</string>
+    <string name="widget_loading">Loading&#8230;</string>
   <string name="widget_more">View more conversations</string>
   <string name="qkreply_menu_read">Mark read</string>
   <string name="qkreply_menu_call">Call</string>
@@ -137,8 +135,7 @@
   <string name="theme_apply">Apply</string>
   <string name="notification_reply">返信</string>
   <string name="notification_read">既読にする</string>
-  <string name="button_yes">はい</string>
-  <string name="button_cancel">キャンセル</string>
+    <string name="button_cancel">キャンセル</string>
   <string name="button_delete">削除</string>
   <string name="button_unblock">Unblock</string>
   <string name="button_undo">元に戻す</string>

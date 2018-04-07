@@ -48,8 +48,6 @@
     <color name="separatorLight">#0C000000</color>
     <color name="separatorDark">#0CFFFFFF</color>
 
-    <color name="rowSelected">#F5F5F5</color>
-
     <color name="switchThumbEnabledLight">#ECECEC</color>
     <color name="switchThumbEnabledDark">#B9B9B9</color>
 

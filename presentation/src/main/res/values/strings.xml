@@ -53,7 +53,6 @@
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archived</string>
     <string name="drawer_scheduled">Scheduled</string>
-    <string name="drawer_blocked">Blocked</string>
     <string name="drawer_more">More</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_plus">QKSMS+</string>
@@ -141,8 +140,6 @@
     <string name="qksms_plus_more_title">More</string>
     <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
 
-    <string name="settings_dialog_theme_title">Theme</string>
-
     <string name="widget_loading">Loading…</string>
     <string name="widget_more">View more conversations</string>
 
@@ -160,7 +157,6 @@
     <string name="notification_reply">Reply</string>
     <string name="notification_read">Mark read</string>
 
-    <string name="button_yes">Yes</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
     <string name="button_unblock">Unblock</string>
