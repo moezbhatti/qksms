@@ -29,4 +29,8 @@ class AnalyticsManagerImpl @Inject constructor() : AnalyticsManager {
         // Do nothing
     }
 
+    override fun setUserProperty(key: String, value: Any) {
+        // Do nothing
+    }
+
 }

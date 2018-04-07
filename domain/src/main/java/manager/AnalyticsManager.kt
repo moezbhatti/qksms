@@ -22,4 +22,6 @@ interface AnalyticsManager {
 
     fun track(event: String)
 
+    fun setUserProperty(key: String, value: Any)
+
 }

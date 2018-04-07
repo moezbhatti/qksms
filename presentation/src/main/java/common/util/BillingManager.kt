@@ -32,9 +32,13 @@ import com.android.billingclient.api.SkuDetailsParams
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import manager.AnalyticsManager
 import javax.inject.Inject
 
-class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedListener {
+class BillingManager @Inject constructor(
+        context: Context,
+        private val analyticsManager: AnalyticsManager
+) : PurchasesUpdatedListener {
 
     enum class UpgradeStatus { REGULAR, UPGRADED }
 
@@ -67,6 +71,7 @@ class BillingManager @Inject constructor(context: Context) : PurchasesUpdatedLis
                         else -> UpgradeStatus.REGULAR
                     }
                 }
+                .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
     }
 
     private fun queryPurchases() {
