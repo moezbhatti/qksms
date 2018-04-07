@@ -389,7 +389,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         view.copyTextIntent
                 .autoDisposable(view.scope())
                 .subscribe { message ->
-                    ClipboardUtils.copy(context, message.body)
+                    ClipboardUtils.copy(context, message.getText())
                     context.makeToast(R.string.toast_copied)
                 }
 
