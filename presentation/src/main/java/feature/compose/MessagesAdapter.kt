@@ -67,7 +67,7 @@ class MessagesAdapter @Inject constructor(
             if (field === value) return
 
             field = value
-            contactMap.clear()
+            contactCache.clear()
 
             // Update the theme
             val threadId = value?.first?.id ?: 0
@@ -83,7 +83,7 @@ class MessagesAdapter @Inject constructor(
     private val conversation: Conversation?
         get() = data?.first?.takeIf { it.isValid }
 
-    private val contactMap = HashMap<String, Recipient?>()
+    private val contactCache = ContactCache()
     private val selected = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
 
@@ -151,14 +151,8 @@ class MessagesAdapter @Inject constructor(
         val message = getItem(position)!!
         if (message.isMe()) return
 
-        val address = message.address
-        if (contactMap[address]?.isValid != true) {
-            contactMap[address] = conversation?.recipients
-                    ?.firstOrNull { PhoneNumberUtils.compare(it.address, address) } // See if any of the phone numbers match
-        }
-
         view.avatar.threadId = conversation?.id ?: 0
-        view.avatar.setContact(contactMap[address])
+        view.avatar.setContact(contactCache[message.address])
     }
 
     private fun bindStatus(view: View, position: Int) {
@@ -172,7 +166,7 @@ class MessagesAdapter @Inject constructor(
             message.isSending() -> context.getString(R.string.message_status_sending)
             message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
-            !message.isMe() && conversation?.recipients?.size ?: 0 > 1 -> "${contactMap[message.address]?.getDisplayName()} • $timestamp"
+            !message.isMe() && conversation?.recipients?.size ?: 0 > 1 -> "${contactCache[message.address]?.getDisplayName()} • $timestamp"
             else -> timestamp
         }
 
@@ -244,5 +238,21 @@ class MessagesAdapter @Inject constructor(
             true -> VIEW_TYPE_MESSAGE_OUT
             false -> VIEW_TYPE_MESSAGE_IN
         }
+    }
+
+    /**
+     * Cache the contacts in a map by the address, because the messages we're binding don't have
+     * a reference to the contact.
+     */
+    private inner class ContactCache : HashMap<String, Recipient?>() {
+
+        override fun get(key: String): Recipient? {
+            if (super.get(key)?.isValid != true) {
+                set(key, conversation?.recipients?.firstOrNull { PhoneNumberUtils.compare(it.address, key) })
+            }
+
+            return super.get(key)?.takeIf { it.isValid }
+        }
+
     }
 }
