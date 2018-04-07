@@ -25,6 +25,7 @@ import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import androidx.net.toUri
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
@@ -58,6 +59,7 @@ import model.PhoneNumber
 import repository.ContactRepository
 import repository.MessageRepository
 import util.extensions.asObservable
+import util.extensions.isImage
 import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -210,7 +212,8 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                     // If the entry is a valid destination, allow it as a recipient
                     if (PhoneNumberUtils.isWellFormedSmsAddress(query.toString())) {
                         val newAddress = PhoneNumberUtils.formatNumber(query.toString(), Locale.getDefault().country)
-                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = newAddress ?: query.toString())))
+                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = newAddress
+                                ?: query.toString())))
                         filteredContacts = listOf(newContact) + filteredContacts
                     }
 
@@ -398,7 +401,10 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // Forward the message
         view.forwardMessageIntent
                 .autoDisposable(view.scope())
-                .subscribe { message -> navigator.showCompose(message.body) }
+                .subscribe { message ->
+                    val images = message.parts.filter { it.isImage() }.mapNotNull { it.image?.toUri() }
+                    navigator.showCompose(message.body, images)
+                }
 
         // Delete the selected message
         view.deleteMessageIntent
