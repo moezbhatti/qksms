@@ -39,9 +39,9 @@ class CursorToContactImpl @Inject constructor(private val context: Context) : Cu
 
     override fun map(from: Cursor) = Contact().apply {
         lookupKey = from.getString(COLUMN_LOOKUP_KEY)
-        name = from.getString(COLUMN_DISPLAY_NAME)
+        name = from.getString(COLUMN_DISPLAY_NAME) ?: ""
         numbers.add(PhoneNumber().apply {
-            address = from.getString(COLUMN_NUMBER)
+            address = from.getString(COLUMN_NUMBER) ?: ""
             type = context.getString(getTypeLabelResource(from.getInt(COLUMN_TYPE)))
         })
         lastUpdate = System.currentTimeMillis()
