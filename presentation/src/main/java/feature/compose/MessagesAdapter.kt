@@ -97,7 +97,7 @@ class MessagesAdapter @Inject constructor(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
 
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val view: View
 
         if (viewType == VIEW_TYPE_MESSAGE_OUT) {
