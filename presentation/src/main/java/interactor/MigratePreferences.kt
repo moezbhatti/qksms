@@ -41,8 +41,7 @@ class MigratePreferences @Inject constructor(
                     val defaultTheme = prefs.theme().get().toString()
                     val oldTheme = rxPrefs.getString("pref_key_theme", defaultTheme).get()
                     prefs.theme().set(Integer.parseInt(oldTheme))
-                }
-                .doOnNext {
+
                     // Night mode
                     val background = rxPrefs.getString("pref_key_background", "light").get()
                     val autoNight = rxPrefs.getBoolean("pref_key_night_auto", false).get()
@@ -55,20 +54,16 @@ class MigratePreferences @Inject constructor(
                             prefs.black.set(true)
                         }
                     }
-                }
-                .doOnNext {
+
                     // Delivery
                     prefs.delivery.set(rxPrefs.getBoolean("pref_key_delivery", prefs.delivery.get()).get())
-                }
-                .doOnNext {
+
                     // Quickreply
                     prefs.qkreply.set(rxPrefs.getBoolean("pref_key_quickreply_enabled", prefs.qkreply.get()).get())
-                }
-                .doOnNext {
+
                     // Font size
                     prefs.textSize.set(rxPrefs.getString("pref_key_font_size", "${prefs.textSize.get()}").get().toInt())
-                }
-                .doOnNext {
+
                     // Unicode
                     prefs.unicode.set(rxPrefs.getBoolean("pref_key_strip_unicode", prefs.unicode.get()).get())
                 }
