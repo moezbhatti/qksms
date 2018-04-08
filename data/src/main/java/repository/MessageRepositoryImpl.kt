@@ -372,6 +372,7 @@ class MessageRepositoryImpl @Inject constructor(
         val smsManager = SmsManager.getDefault()
 
         val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
+                ?: arrayListOf()
 
         val sentIntents = parts.map {
             val action = "com.moez.QKSMS.SMS_SENT"
