@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:gravity="start|bottom"
         android:orientation="horizontal"
-        android:paddingEnd="60dp"
+        android:paddingEnd="12dp"
         android:paddingStart="12dp">
 
         <common.widget.AvatarView

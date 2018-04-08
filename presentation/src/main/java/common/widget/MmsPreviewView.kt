@@ -40,7 +40,10 @@ class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
     init {
-        appComponent.inject(this)
+        if (!isInEditMode) {
+            appComponent.inject(this)
+        }
+
         orientation = LinearLayout.VERTICAL
     }
 
