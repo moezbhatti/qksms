@@ -163,6 +163,14 @@
                 app:widget="@layout/settings_switch_widget" />
 
             <common.widget.PreferenceView
+                android:id="@+id/qkreplyTapDismiss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:summary="@string/settings_qkreply_tap_dismiss_summary"
+                app:title="@string/settings_qkreply_tap_dismiss_title"
+                app:widget="@layout/settings_switch_widget" />
+
+            <common.widget.PreferenceView
                 android:id="@+id/textSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -176,14 +184,6 @@
                 app:icon="@drawable/ic_translate_black_24dp"
                 app:summary="@string/settings_unicode_summary"
                 app:title="@string/settings_unicode_title"
-                app:widget="@layout/settings_switch_widget" />
-
-            <common.widget.PreferenceView
-                android:id="@+id/mms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:title="@string/settings_mms_title"
                 app:widget="@layout/settings_switch_widget" />
 
             <common.widget.PreferenceView

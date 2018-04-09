@@ -82,15 +82,15 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += prefs.qkreply.asObservable()
                 .subscribe { enabled -> newState { it.copy(qkReplyEnabled = enabled) } }
 
+        disposables += prefs.qkreplyTapDismiss.asObservable()
+                .subscribe { enabled -> newState { it.copy(qkReplyTapDismiss = enabled) } }
+
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
         disposables += prefs.textSize.asObservable()
                 .subscribe { textSize -> newState { it.copy(textSizeSummary = textSizeLabels[textSize]) } }
 
         disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { it.copy(stripUnicodeEnabled = enabled) } }
-
-        disposables += prefs.mms.asObservable()
-                .subscribe { enabled -> newState { it.copy(mmsEnabled = enabled) } }
 
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
@@ -140,11 +140,11 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.qkreply -> prefs.qkreply.set(!prefs.qkreply.get())
 
+                        R.id.qkreplyTapDismiss -> prefs.qkreplyTapDismiss.set(!prefs.qkreplyTapDismiss.get())
+
                         R.id.textSize -> view.showTextSizePicker()
 
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
-
-                        R.id.mms -> prefs.mms.set(!prefs.mms.get())
 
                         R.id.mmsSize -> view.showMmsSizePicker()
 

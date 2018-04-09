@@ -118,11 +118,12 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
         delivery.checkbox.isChecked = state.deliveryEnabled
         qkreply.checkbox.isChecked = state.qkReplyEnabled
+        qkreplyTapDismiss.setVisible(state.qkReplyEnabled)
+        qkreplyTapDismiss.checkbox.isChecked = state.qkReplyTapDismiss
 
         textSize.summary = state.textSizeSummary
 
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
-        mms.checkbox.isChecked = state.mmsEnabled
 
         mmsSize.summary = state.maxMmsSizeSummary
         mmsSizeAdapter.selectedItem = state.maxMmsSizeId
