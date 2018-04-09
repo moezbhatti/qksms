@@ -59,6 +59,7 @@
     <string name="drawer_help">Help &amp; feedback</string>
 
     <string name="inbox_empty_text">Your conversations will appear here</string>
+    <string name="inbox_search_empty_text">No results</string>
     <string name="archived_empty_text">Your archived conversations will appear here</string>
     <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
 

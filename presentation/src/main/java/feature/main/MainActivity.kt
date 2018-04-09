@@ -142,7 +142,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         // Set the FAB compose icon color
         colors.textPrimaryOnTheme
                 .doOnNext { color -> compose.setTint(color) }
-                .doOnNext { color -> itemTouchCallback.iconColor = color}
+                .doOnNext { color -> itemTouchCallback.iconColor = color }
                 .autoDisposable(scope())
                 .subscribe()
 
@@ -195,7 +195,10 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 menuItemAdapter.data = state.page.menu
-                empty.setText(R.string.inbox_empty_text)
+                empty.setText(when (state.page.showClearButton) {
+                    true -> R.string.inbox_search_empty_text
+                    false -> R.string.inbox_empty_text
+                })
                 compose.setVisible(true)
             }
 
