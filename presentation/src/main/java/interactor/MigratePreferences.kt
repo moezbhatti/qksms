@@ -26,6 +26,8 @@ import javax.inject.Inject
 
 /**
  * When upgrading from 2.7.3 to 3.0, migrate the preferences
+ *
+ * Blocked conversations will be migrated in SyncManager
  */
 class MigratePreferences @Inject constructor(
         private val nightModeManager: NightModeManager,

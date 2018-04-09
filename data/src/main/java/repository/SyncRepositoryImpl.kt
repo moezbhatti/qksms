@@ -23,6 +23,7 @@ import android.content.ContentUris
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.realm.Realm
 import mapper.CursorToContact
 import mapper.CursorToConversation
@@ -48,7 +49,8 @@ class SyncRepositoryImpl @Inject constructor(
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
         private val cursorToRecipient: CursorToRecipient,
-        private val cursorToContact: CursorToContact
+        private val cursorToContact: CursorToContact,
+        private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
     sealed class Status {
@@ -72,10 +74,10 @@ class SyncRepositoryImpl @Inject constructor(
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
 
-        var persistedData: List<PersistedData>? = null
+        var persistedData: List<PersistedData> = listOf()
 
         if (fullSync) {
-            persistedData = realm.where(Conversation::class.java)
+            persistedData += realm.where(Conversation::class.java)
                     .beginGroup()
                     .equalTo("archived", true)
                     .or()
@@ -106,13 +108,19 @@ class SyncRepositoryImpl @Inject constructor(
             realm.insertOrUpdate(messages)
         }
 
+        // Migrate blocked conversations from 2.7.3
+        val oldBlockedSenders = rxPrefs.getStringSet("pref_key_blocked_senders")
+        persistedData += oldBlockedSenders.get()
+                .map { threadIdString -> threadIdString.toLong() }
+                .filter { threadId -> persistedData.none { it.id == threadId } }
+                .map { threadId -> PersistedData(threadId, false, true) }
 
         // Sync conversations
         cursorToConversation.getConversationsCursor()?.use { conversationCursor ->
             val conversations = conversationCursor
                     .map { cursor -> cursorToConversation.map(cursor) }
 
-            persistedData?.forEach { data ->
+            persistedData.forEach { data ->
                 val conversation = conversations.firstOrNull { conversation -> conversation.id == data.id }
                 conversation?.archived = data.archived
                 conversation?.blocked = data.blocked
@@ -130,6 +138,9 @@ class SyncRepositoryImpl @Inject constructor(
 
         realm.commitTransaction()
         realm.close()
+
+        // Only delete this after the sync has successfully completed
+        oldBlockedSenders.delete()
 
         syncContacts()
 
