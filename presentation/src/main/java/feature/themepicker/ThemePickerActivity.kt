@@ -56,7 +56,7 @@ class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePicke
         super.onCreate(savedInstanceState)
         setContentView(R.layout.theme_picker_activity)
         setTitle(R.string.title_theme)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         pager.offscreenPageLimit = 1

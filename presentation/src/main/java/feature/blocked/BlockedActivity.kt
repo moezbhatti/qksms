@@ -49,7 +49,7 @@ class BlockedActivity : QkThemedActivity<BlockedViewModel>(), BlockedView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.blocked_activity)
         setTitle(R.string.blocked_title)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         colors.background

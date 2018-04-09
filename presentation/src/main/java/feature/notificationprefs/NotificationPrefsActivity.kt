@@ -27,14 +27,14 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.MenuItemAdapter
+import common.base.QkThemedActivity
+import common.widget.PreferenceView
 import injection.appComponent
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.notification_prefs_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
-import common.MenuItemAdapter
-import common.base.QkThemedActivity
-import common.widget.PreferenceView
 import javax.inject.Inject
 
 class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>(), NotificationPrefsView {
@@ -54,7 +54,7 @@ class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.notification_prefs_activity)
         setTitle(R.string.title_notification_prefs)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         nightModeAdapter.setData(R.array.night_modes)

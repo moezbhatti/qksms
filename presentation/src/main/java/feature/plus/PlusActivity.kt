@@ -24,14 +24,14 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.base.QkThemedActivity
 import common.util.BillingManager
 import common.util.FontProvider
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
+import injection.appComponent
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
-import common.base.QkThemedActivity
 import javax.inject.Inject
 
 class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
@@ -47,7 +47,7 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qksms_plus_activity)
         setTitle(R.string.title_qksms_plus)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         fontProvider.getLato {

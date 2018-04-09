@@ -70,12 +70,15 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     private var textSizeDialog: AlertDialog? = null
     private var mmsSizeDialog: AlertDialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    init {
         appComponent.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         setTitle(R.string.title_settings)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         nightModeAdapter.setData(R.array.night_modes)

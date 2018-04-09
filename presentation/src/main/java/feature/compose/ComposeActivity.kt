@@ -82,7 +82,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compose_activity)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         chipsAdapter.view = chips
