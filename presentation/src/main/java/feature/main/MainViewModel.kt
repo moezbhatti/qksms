@@ -65,8 +65,13 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     private val menuUnarchive by lazy { MenuItem(context.getString(R.string.menu_unarchive), 1) }
     private val menuDelete by lazy { MenuItem(context.getString(R.string.menu_delete), 2) }
 
+    private val conversations by lazy { messageRepo.getConversations() }
+
     init {
         appComponent.inject(this)
+
+        // Now the conversations can be loaded
+        conversations
 
         disposables += deleteConversation
         disposables += markAllSeen
@@ -85,8 +90,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .doOnNext { if (it) partialSync.execute(Unit) }
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
-
-        newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
 
         // Migrate the preferences from 2.7.3 if necessary
         migratePreferences.execute(Unit)
@@ -110,14 +113,14 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         super.bindView(view)
 
         view.queryChangedIntent
-                .skip(1)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .withLatestFrom(state, { query, state ->
                     if (state.page is Inbox) {
-                        val conversations = state.page.data
-                                ?.map { conversations -> conversations.filter { conversationFilter.filter(it, query) } }
+                        val filteredConversations = if (query.isEmpty()) conversations
+                        else conversations
+                                .map { conversations -> conversations.filter { conversationFilter.filter(it, query) } }
 
-                        val page = state.page.copy(showClearButton = query.isNotEmpty(), data = conversations)
+                        val page = state.page.copy(showClearButton = query.isNotEmpty(), data = filteredConversations)
                         newState { it.copy(page = page) }
                     }
                 })
@@ -144,7 +147,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
+                        DrawerItem.INBOX -> newState { it.copy(page = Inbox()) }
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         else -> {
