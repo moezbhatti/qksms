@@ -43,6 +43,7 @@
     <string name="menu_save">Save image</string>
 
     <string name="main_syncing">Optimizing database, this might take a minute…</string>
+    <string name="main_sender_you">You: %s</string>
 
     <string name="compose_hint">Write a message…</string>
 
