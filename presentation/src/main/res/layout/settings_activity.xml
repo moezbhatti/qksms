@@ -77,7 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_color_lens_black_24dp"
-                app:title="@string/settings_theme_title" />
+                app:title="@string/settings_theme_title"
+                app:widget="@layout/settings_theme_widget" />
 
             <common.widget.PreferenceView
                 android:id="@+id/night"

@@ -25,6 +25,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
 import common.util.BillingManager
+import common.util.Colors
 import common.util.DateFormatter
 import common.util.NightModeManager
 import injection.appComponent
@@ -40,6 +41,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
     @Inject lateinit var context: Context
     @Inject lateinit var billingManager: BillingManager
+    @Inject lateinit var colors: Colors
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var nightModeManager: NightModeManager
@@ -54,6 +56,9 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 .subscribe { isDefaultSmsApp ->
                     newState { it.copy(isDefaultSmsApp = isDefaultSmsApp) }
                 }
+
+        disposables += colors.theme
+                .subscribe { color -> newState { it.copy(theme = color) } }
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()

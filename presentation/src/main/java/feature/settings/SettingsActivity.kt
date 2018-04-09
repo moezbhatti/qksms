@@ -32,6 +32,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.MenuItemAdapter
 import common.base.QkThemedActivity
 import common.util.extensions.dpToPx
+import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
 import common.widget.PreferenceView
 import injection.appComponent
@@ -39,6 +40,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
+import kotlinx.android.synthetic.main.settings_theme_widget.*
 import util.Preferences
 import javax.inject.Inject
 
@@ -109,6 +111,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
             else -> R.string.settings_default_sms_summary_false
         })
 
+        themePreview.setBackgroundTint(state.theme)
         night.summary = state.nightModeSummary
         nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
         nightStart.summary = state.nightStart
