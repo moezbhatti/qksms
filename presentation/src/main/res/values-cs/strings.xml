@@ -26,43 +26,43 @@
   <string name="title_notification_prefs">Notifications</string>
   <string name="title_theme">Theme</string>
   <string name="title_conversations">Search inbox&#8230;</string>
-  <string name="title_compose">Type a name or number</string>
+  <string name="title_compose">Nová zpráva</string>
   <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_title">Love texting again</string>
   <string name="setup_summary">Make QKSMS your default SMS app</string>
-  <string name="setup_skip">Skip</string>
-  <string name="setup_next">Continue</string>
-  <string name="menu_clear">Clear</string>
+  <string name="setup_skip">Přeskočit</string>
+  <string name="setup_next">Pokračovat</string>
+  <string name="menu_clear">Vymazat</string>
   <string name="menu_call">Volat</string>
-  <string name="menu_info">Details</string>
-  <string name="menu_archive">Archive conversation</string>
-  <string name="menu_unarchive">Remove from archive</string>
+  <string name="menu_info">Podrobnosti</string>
+  <string name="menu_archive">Archivovat konverzaci</string>
+  <string name="menu_unarchive">Odebrat z archivu</string>
   <string name="menu_delete">Smazat</string>
-  <string name="menu_save">Save image</string>
-  <string name="main_syncing">Optimizing database, this might take a minute&#8230;</string>
-  <string name="compose_hint">Write a message&#8230;</string>
-  <string name="message_status_sending">Sending&#8230;</string>
-  <string name="message_status_delivered">Delivered %s</string>
+  <string name="menu_save">Uložit obrázek</string>
+  <string name="main_syncing">Optimalizace databáze, to může chvíli trvat&#8230;</string>
+  <string name="compose_hint">Napsat zprávu&#8230;</string>
+  <string name="message_status_sending">Odesílání&#8230;</string>
+  <string name="message_status_delivered">Doručeno %s</string>
   <string name="message_status_failed">Failed to send. Tap to try again</string>
   <string name="drawer_inbox">Inbox</string>
   <string name="drawer_archived">Archived</string>
   <string name="drawer_scheduled">Scheduled</string>
-    <string name="drawer_more">More</string>
-  <string name="drawer_settings">Settings</string>
+  <string name="drawer_more">Více</string>
+  <string name="drawer_settings">Nastavení</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
-  <string name="inbox_empty_text">Your conversations will appear here</string>
+  <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
   <string name="dialog_delete_title">Delete</string>
-  <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
-  <string name="info_title">Details</string>
+  <string name="dialog_delete_message">Opravdu že chcete odstranit tuto konverzaci?</string>
+  <string name="info_title">Podrobnosti</string>
   <string name="info_notifications">Notifications</string>
   <string name="info_theme">Theme</string>
-  <string name="info_archive">Archive</string>
-  <string name="info_unarchive">Unarchive</string>
-  <string name="info_block">Block</string>
-  <string name="info_unblock">Unblock</string>
+  <string name="info_archive">Archivovat</string>
+  <string name="info_unarchive">Obnovit z archivu</string>
+  <string name="info_block">Blokovat</string>
+  <string name="info_unblock">Odblokovat</string>
   <string name="info_delete">Delete conversation</string>
   <string name="gallery_toast_saved">Saved image</string>
   <string name="settings_category_appearance">Appearance</string>
@@ -71,58 +71,62 @@
   <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
   <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
   <string name="settings_theme_title">Theme</string>
-  <string name="settings_night_title">Night mode</string>
+  <string name="settings_night_title">Noční režim</string>
   <string name="settings_black_title">Pure black night mode</string>
   <string name="settings_night_start_title">Start time</string>
   <string name="settings_night_end_title">End time</string>
-  <string name="settings_auto_emoji_title">Automatic emoji</string>
-  <string name="settings_auto_emoji_summary">Convert text like :) to an emoji like 🙂</string>
-  <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_vibration_title">Vibration</string>
+  <string name="settings_auto_emoji_title">Automatické emoji</string>
+  <string name="settings_auto_emoji_summary">Převést text jako :) na emotikonu jako 🙂</string>
+  <string name="settings_notifications_title">Upozornění</string>
+  <string name="settings_vibration_title">Vibrace</string>
   <string name="settings_ringtone_title">Sound</string>
-  <string name="settings_blocking_title">Blocked</string>
-  <string name="settings_delivery_title">Delivery confirmations</string>
-  <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
-  <string name="settings_qkreply_title">QK Reply</string>
+  <string name="settings_blocking_title">Blokování</string>
+  <!-- Do not translate -->
+  <string name="settings_should_i_answer_title">Should I Answer?</string>
+  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+  <string name="settings_delivery_title">Potvrzení o doručení</string>
+  <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>
+  <string name="settings_qkreply_title">QK odpověď</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
-  <string name="settings_unicode_title">Strip accents</string>
-  <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_title">MMS enabled</string>
-  <string name="settings_mms_size_title">Max MMS attachment size</string>
-  <string name="settings_sync_title">Sync messages</string>
-  <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-  <string name="blocked_title">Blocked</string>
-  <string name="blocked_empty">Your blocked conversations will appear here</string>
-  <string name="blocked_unblock_dialog_title">Unblock</string>
-  <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
+  <string name="settings_text_size_title">Velikost písma</string>
+  <string name="settings_unicode_title">Odstranit diakritiku</string>
+  <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných zprávách SMS</string>
+  <string name="settings_mms_title">MMS zapnuty</string>
+  <string name="settings_mms_size_title">Maximální velikost přílohy MMS</string>
+  <string name="settings_sync_title">Synchronizovat zprávy</string>
+  <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativním Android SMS databází</string>
+  <string name="blocked_title">Blokování</string>
+  <string name="blocked_empty">Zde se objeví vaše blokované konverzace</string>
+  <string name="blocked_unblock_dialog_title">Odblokovat</string>
+  <string name="blocked_unblock_dialog_message">Chcete odblokovat tuto konverzaci?</string>
   <string name="qksms_plus_description_title">Support development, unlock everything</string>
-  <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
+  <string name="qksms_plus_description_summary">Můžete zachránit hladovějícího vývojáře jen za %s</string>
   <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
   <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-  <string name="qksms_plus_coming_soon">Coming soon</string>
-  <string name="qksms_plus_themes_title">Premium themes</string>
+  <string name="qksms_plus_thanks_title">Děkujeme za podporu QKSMS!</string>
+  <string name="qksms_plus_thanks_summary">Nyní máte přístup ke všem funkcím QKSMS+</string>
+  <string name="qksms_plus_coming_soon">Připravujeme</string>
+  <string name="qksms_plus_themes_title">Prémiová témata</string>
   <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
   <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
   <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
   <string name="qksms_plus_backup_title">Message backup</string>
   <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
   <string name="qksms_plus_scheduled_title">Scheduled messages</string>
-  <string name="qksms_plus_scheduled_summary">Wait a few seconds before sending your message</string>
-  <string name="qksms_plus_delayed_title">Delayed sending</string>
-  <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
-  <string name="qksms_plus_night_title">Automatic night mode</string>
-  <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
-  <string name="qksms_plus_blacklist_title">Advanced blocking</string>
+  <string name="qksms_plus_scheduled_summary">Počkat několik sekund před odesláním zprávy</string>
+  <string name="qksms_plus_delayed_title">Zpožděné odeslání</string>
+  <string name="qksms_plus_delayed_summary">Počkat několik sekund před odesláním zprávy</string>
+  <string name="qksms_plus_night_title">Automatický noční režim</string>
+  <string name="qksms_plus_night_summary">Zapnout noční režim na základě denní doby</string>
+  <string name="qksms_plus_blacklist_title">Pokročilé blokování</string>
   <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
-  <string name="qksms_plus_forward_title">Auto-forward</string>
-  <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
-  <string name="qksms_plus_respond_title">Auto-respond</string>
-  <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
+  <string name="qksms_plus_forward_title">Automatické přeposílání</string>
+  <string name="qksms_plus_forward_summary">Automatické přeposílání zpráv od určitých odesílatelů</string>
+  <string name="qksms_plus_respond_title">Automatická odpověď</string>
+  <string name="qksms_plus_respond_summary">Automaticky odpovědět na příchozí zprávy přednastavenou odpovědí</string>
   <string name="qksms_plus_more_title">More</string>
   <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
-    <string name="widget_loading">Loading&#8230;</string>
+  <string name="widget_loading">Loading&#8230;</string>
   <string name="widget_more">View more conversations</string>
   <string name="qkreply_menu_read">Mark read</string>
   <string name="qkreply_menu_call">Call</string>
@@ -132,15 +136,15 @@
   <string name="theme_material">Material</string>
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Apply</string>
-  <string name="notification_reply">Reply</string>
-  <string name="notification_read">Mark read</string>
-    <string name="button_cancel">Cancel</string>
-  <string name="button_delete">Delete</string>
-  <string name="button_unblock">Unblock</string>
-  <string name="button_undo">Undo</string>
-  <string name="button_more">More</string>
-  <string name="toast_copied">Copied</string>
+  <string name="theme_apply">Použít</string>
+  <string name="notification_reply">Odpovědět</string>
+  <string name="notification_read">Označit jako přečtené</string>
+  <string name="button_cancel">Zrušit</string>
+  <string name="button_delete">Odstranit</string>
+  <string name="button_unblock">Odblokovat</string>
+  <string name="button_undo">Zpět</string>
+  <string name="button_more">Více</string>
+  <string name="toast_copied">Zkopírováno</string>
   <string name="toast_archived">Archived conversation</string>
   <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
   <string name="notification_message_failed_title">Message not sent</string>
@@ -155,6 +159,12 @@
     <item>Always on</item>
     <item>Automatic</item>
   </string-array>
+  <string-array name="text_sizes">
+    <item>Malé</item>
+    <item>Normální</item>
+    <item>Velké</item>
+    <item>Větší</item>
+  </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
@@ -162,20 +172,20 @@
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No limit</item>
+    <item>Bez omezení</item>
   </string-array>
   <string-array name="qk_responses">
-    <item>Okay</item>
-    <item>Give me a moment</item>
-    <item>On my way</item>
-    <item>Thanks</item>
-    <item>Sounds good</item>
-    <item>What\'s up?</item>
-    <item>Agreed</item>
-    <item>No</item>
-    <item>Love you</item>
-    <item>Sorry</item>
+    <item>OK</item>
+    <item>Dej mi chvíli</item>
+    <item>Jsem na cestě</item>
+    <item>Díky</item>
+    <item>To zní dobře</item>
+    <item>Co je?</item>
+    <item>Souhlas</item>
+    <item>Ne</item>
+    <item>Miluji tě</item>
+    <item>Omlouvám se</item>
     <item>LOL</item>
-    <item>That\'s okay</item>
+    <item>To je v pořádku</item>
   </string-array>
 </resources>

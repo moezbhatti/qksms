@@ -23,10 +23,10 @@
   <string name="title_archived">В архиве</string>
   <string name="title_scheduled">Запланировано</string>
   <string name="title_settings">Настройки</string>
-  <string name="title_notification_prefs">Notifications</string>
-  <string name="title_theme">Theme</string>
+  <string name="title_notification_prefs">Уведомления</string>
+  <string name="title_theme">Тема</string>
   <string name="title_conversations">Поиск во входящих&#8230;</string>
-  <string name="title_compose">Введите имя или номер</string>
+  <string name="title_compose">Написать</string>
   <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_title">Снова нравится писать</string>
   <string name="setup_summary">Сделать QKSMS приложением для SMS по умолчанию</string>
@@ -34,11 +34,11 @@
   <string name="setup_next">Продолжить</string>
   <string name="menu_clear">Очистить</string>
   <string name="menu_call">Позвонить</string>
-  <string name="menu_info">Details</string>
+  <string name="menu_info">Подробности</string>
   <string name="menu_archive">Архивировать переписку</string>
   <string name="menu_unarchive">Удалить из архива</string>
   <string name="menu_delete">Удалить</string>
-  <string name="menu_save">Save image</string>
+  <string name="menu_save">Сохранить изображение</string>
   <string name="main_syncing">Оптимизация базы данных, это может занять немного времени&#8230;</string>
   <string name="compose_hint">Написать сообщение&#8230;</string>
   <string name="message_status_sending">Отправка&#8230;</string>
@@ -47,22 +47,22 @@
   <string name="drawer_inbox">Входящие</string>
   <string name="drawer_archived">Архив</string>
   <string name="drawer_scheduled">Запланированные</string>
-    <string name="drawer_more">Ещё</string>
+  <string name="drawer_more">Ещё</string>
   <string name="drawer_settings">Настройки</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Помощь и обратная связь</string>
   <string name="inbox_empty_text">Your conversations will appear here</string>
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
-  <string name="dialog_delete_title">Delete</string>
+  <string name="dialog_delete_title">Удалить</string>
   <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
-  <string name="info_title">Details</string>
-  <string name="info_notifications">Notifications</string>
-  <string name="info_theme">Theme</string>
+  <string name="info_title">Подробности</string>
+  <string name="info_notifications">Уведомления</string>
+  <string name="info_theme">Тема</string>
   <string name="info_archive">Archive</string>
   <string name="info_unarchive">Unarchive</string>
-  <string name="info_block">Block</string>
-  <string name="info_unblock">Unblock</string>
+  <string name="info_block">Заблокировать</string>
+  <string name="info_unblock">Разблокировать</string>
   <string name="info_delete">Delete conversation</string>
   <string name="gallery_toast_saved">Saved image</string>
   <string name="settings_category_appearance">Appearance</string>
@@ -80,18 +80,22 @@
   <string name="settings_notifications_title">Notifications</string>
   <string name="settings_vibration_title">Вибросигнал</string>
   <string name="settings_ringtone_title">Sound</string>
-  <string name="settings_blocking_title">Blocked</string>
+  <string name="settings_blocking_title">Blocking</string>
+  <!-- Do not translate -->
+  <string name="settings_should_i_answer_title">Should I Answer?</string>
+  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
   <string name="settings_delivery_title">Отчёты о доставке</string>
   <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
+  <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
   <string name="settings_mms_title">MMS используется</string>
   <string name="settings_mms_size_title">Максимальный размер вложения MMS</string>
   <string name="settings_sync_title">Синхронизация сообщений</string>
   <string name="settings_sync_summary">Повторная синхронизация ваших сообщений с собственной базой данных SMS Android</string>
-  <string name="blocked_title">Blocked</string>
+  <string name="blocked_title">Blocking</string>
   <string name="blocked_empty">Your blocked conversations will appear here</string>
   <string name="blocked_unblock_dialog_title">Unblock</string>
   <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
@@ -122,7 +126,7 @@
   <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
   <string name="qksms_plus_more_title">More</string>
   <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
-    <string name="widget_loading">Loading&#8230;</string>
+  <string name="widget_loading">Loading&#8230;</string>
   <string name="widget_more">View more conversations</string>
   <string name="qkreply_menu_read">Mark read</string>
   <string name="qkreply_menu_call">Call</string>
@@ -135,7 +139,7 @@
   <string name="theme_apply">Apply</string>
   <string name="notification_reply">Ответить</string>
   <string name="notification_read">Пометить прочитанным</string>
-    <string name="button_cancel">Cancel</string>
+  <string name="button_cancel">Cancel</string>
   <string name="button_delete">Delete</string>
   <string name="button_unblock">Unblock</string>
   <string name="button_undo">Отмена</string>
@@ -155,6 +159,12 @@
     <item>Always on</item>
     <item>Automatic</item>
   </string-array>
+  <string-array name="text_sizes">
+    <item>Small</item>
+    <item>Normal</item>
+    <item>Large</item>
+    <item>Larger</item>
+  </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
@@ -165,17 +175,17 @@
     <item>No limit</item>
   </string-array>
   <string-array name="qk_responses">
-    <item>Okay</item>
-    <item>Give me a moment</item>
-    <item>On my way</item>
-    <item>Thanks</item>
-    <item>Sounds good</item>
-    <item>What\'s up?</item>
-    <item>Agreed</item>
-    <item>No</item>
-    <item>Love you</item>
-    <item>Sorry</item>
+    <item>Хорошо</item>
+    <item>Дайте мне минуту</item>
+    <item>Мне по пути</item>
+    <item>Спасибо</item>
+    <item>Звучит заманчиво</item>
+    <item>Что случилось?</item>
+    <item>Согласен</item>
+    <item>Нет</item>
+    <item>Люблю тебя</item>
+    <item>Извините</item>
     <item>LOL</item>
-    <item>That\'s okay</item>
+    <item>Это нормально</item>
   </string-array>
 </resources>

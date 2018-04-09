@@ -26,7 +26,7 @@
   <string name="title_notification_prefs">Notifications</string>
   <string name="title_theme">Theme</string>
   <string name="title_conversations">Search inbox&#8230;</string>
-  <string name="title_compose">Type a name or number</string>
+  <string name="title_compose">Rašyti</string>
   <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_title">Love texting again</string>
   <string name="setup_summary">Make QKSMS your default SMS app</string>
@@ -47,7 +47,7 @@
   <string name="drawer_inbox">Inbox</string>
   <string name="drawer_archived">Archived</string>
   <string name="drawer_scheduled">Scheduled</string>
-    <string name="drawer_more">More</string>
+  <string name="drawer_more">More</string>
   <string name="drawer_settings">Settings</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
@@ -80,18 +80,22 @@
   <string name="settings_notifications_title">Notifications</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Sound</string>
-  <string name="settings_blocking_title">Blocked</string>
+  <string name="settings_blocking_title">Blocking</string>
+  <!-- Do not translate -->
+  <string name="settings_should_i_answer_title">Should I Answer?</string>
+  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
   <string name="settings_delivery_title">Delivery confirmations</string>
   <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
+  <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
   <string name="settings_mms_title">MMS enabled</string>
   <string name="settings_mms_size_title">Max MMS attachment size</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-  <string name="blocked_title">Blocked</string>
+  <string name="blocked_title">Blocking</string>
   <string name="blocked_empty">Your blocked conversations will appear here</string>
   <string name="blocked_unblock_dialog_title">Unblock</string>
   <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
@@ -122,7 +126,7 @@
   <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
   <string name="qksms_plus_more_title">More</string>
   <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
-    <string name="widget_loading">Loading&#8230;</string>
+  <string name="widget_loading">Loading&#8230;</string>
   <string name="widget_more">View more conversations</string>
   <string name="qkreply_menu_read">Mark read</string>
   <string name="qkreply_menu_call">Call</string>
@@ -135,7 +139,7 @@
   <string name="theme_apply">Apply</string>
   <string name="notification_reply">Reply</string>
   <string name="notification_read">Mark read</string>
-    <string name="button_cancel">Cancel</string>
+  <string name="button_cancel">Cancel</string>
   <string name="button_delete">Delete</string>
   <string name="button_unblock">Unblock</string>
   <string name="button_undo">Undo</string>
@@ -155,6 +159,12 @@
     <item>Always on</item>
     <item>Automatic</item>
   </string-array>
+  <string-array name="text_sizes">
+    <item>Small</item>
+    <item>Normal</item>
+    <item>Large</item>
+    <item>Larger</item>
+  </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
@@ -165,10 +175,10 @@
     <item>No limit</item>
   </string-array>
   <string-array name="qk_responses">
-    <item>Okay</item>
-    <item>Give me a moment</item>
+    <item>Gerai</item>
+    <item>Duokite minutę</item>
     <item>On my way</item>
-    <item>Thanks</item>
+    <item>Ačiū</item>
     <item>Sounds good</item>
     <item>What\'s up?</item>
     <item>Agreed</item>
