@@ -40,6 +40,7 @@
   <string name="menu_delete">Elimina</string>
   <string name="menu_save">Salva immagine</string>
   <string name="main_syncing">Ottimizzazione del database, questa operazione potrebbe richiedere un minuto&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Scrivi un messaggio&#8230;</string>
   <string name="message_status_sending">Invio in corso&#8230;</string>
   <string name="message_status_delivered">%s consegnati</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
   <string name="inbox_empty_text">Le tue conversazioni vengono visualizzate qui</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Le tue conversazioni vengono archiviati qui</string>
   <string name="scheduled_empty_text">Il tuo messaggi pianificati appariranno qui</string>
   <string name="dialog_delete_title">Elimina</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Conferma che i messaggi siano stati inviati con successo</string>
   <string name="settings_qkreply_title">Risposta QK</string>
   <string name="settings_qkreply_summary">Popup per i nuovi messaggi</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Dimensione carattere</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Rimuovi gli accenti da caratteri nei messaggi SMS in uscita</string>
-  <string name="settings_mms_title">MMS abilitati</string>
   <string name="settings_mms_size_title">Dimensione massima degli allegati MMS</string>
   <string name="settings_sync_title">Sincronizza i messaggi</string>
   <string name="settings_sync_summary">Risincronizza i tuoi messaggi con il database SMS Android nativo</string>

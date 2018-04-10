@@ -40,6 +40,7 @@
   <string name="menu_delete">Slett</string>
   <string name="menu_save">Gem billede</string>
   <string name="main_syncing">Optimerer database, dette kan tage et øjeblik&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Skriv en besked&#8230;</string>
   <string name="message_status_sending">Afsender&#8230;</string>
   <string name="message_status_delivered">Leveret %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Hjælp og feedback</string>
   <string name="inbox_empty_text">Dine samtaler vil fremgå her</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Dine arkiverede samtaler vil fremgå her</string>
   <string name="scheduled_empty_text">Dine planlagte beskeder vil fremgå her</string>
   <string name="dialog_delete_title">Slet</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>
   <string name="settings_qkreply_title">QK-besvarelse</string>
   <string name="settings_qkreply_summary">Popup ved nye sMs\'er</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Skriftstørrelse</string>
   <string name="settings_unicode_title">Fjern betoninger</string>
   <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS-beskeder</string>
-  <string name="settings_mms_title">MMS aktiveret</string>
   <string name="settings_mms_size_title">Maksimumstørrelse for MMS-vedhæftning</string>
   <string name="settings_sync_title">Beskedsynkronisering</string>
   <string name="settings_sync_summary">Gen-synkroniéer beskeder med den indbyggede Android SMS-database</string>
