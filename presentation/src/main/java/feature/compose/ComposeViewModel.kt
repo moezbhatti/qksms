@@ -60,6 +60,7 @@ import repository.ContactRepository
 import repository.MessageRepository
 import util.extensions.asObservable
 import util.extensions.isImage
+import util.extensions.mapNotNull
 import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -297,11 +298,12 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
         // Mark the conversation read, if in foreground
         Observables.combineLatest(messages, view.activityVisibleIntent, { _, visible -> visible })
-                .withLatestFrom(conversation, { visible, conversation ->
-                    if (visible && conversation.isValid) markRead.execute(conversation.id)
-                })
+                .filter { visible -> visible }
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }
+                .debounce(200, TimeUnit.MILLISECONDS)
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { threadId -> markRead.execute(threadId) }
 
         // Attach a photo
         view.attachIntent

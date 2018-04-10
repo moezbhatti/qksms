@@ -40,6 +40,7 @@
   <string name="menu_delete">Izbriši</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">Optimiziranje baze podataka, ovo može potrajati minutu&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Napiši poruku&#8230;</string>
   <string name="message_status_sending">Slanje&#8230;</string>
   <string name="message_status_delivered">Isporučeno %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Pomoć i povratne informacije</string>
   <string name="inbox_empty_text">Vaši razgovori će se pojaviti ovdje</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Vaši arhivirani razgovori će se pojaviti ovdje</string>
   <string name="scheduled_empty_text">Vaši zakazani razgovori će se pojaviti ovdje</string>
   <string name="dialog_delete_title">Izbriši</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Budite sigurni da su se poruke uspješno poslale</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">Strip naglasci</string>
   <string name="settings_unicode_summary">Uklonite naglaske sa znakova u odlaznim SMS porukama</string>
-  <string name="settings_mms_title">MMS je omogućen</string>
   <string name="settings_mms_size_title">Maksimalna veličina MMS privitka</string>
   <string name="settings_sync_title">Uskladi poruke</string>
   <string name="settings_sync_summary">Ponovno uskladite svoje poruke sa nativnom Android SMS bazom podataka</string>

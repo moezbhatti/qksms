@@ -40,6 +40,7 @@
   <string name="menu_delete">Verwijderen</string>
   <string name="menu_save">Afbeelding opslaan</string>
   <string name="main_syncing">Database aan het optimaliseren. Even geduld&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Type een bericht&#8230;</string>
   <string name="message_status_sending">Verzenden&#8230;</string>
   <string name="message_status_delivered">Afgeleverd %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
   <string name="inbox_empty_text">Je conversaties verschijnen hier</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Je gearchiveerde conversaties verschijnen hier</string>
   <string name="scheduled_empty_text">Je geplande berichten verschijnen hier</string>
   <string name="dialog_delete_title">Verwijderen</string>
@@ -80,22 +82,23 @@
   <string name="settings_notifications_title">Notificaties</string>
   <string name="settings_vibration_title">Trillen</string>
   <string name="settings_ringtone_title">Geluid</string>
-  <string name="settings_blocking_title">Blocking</string>
+  <string name="settings_blocking_title">Blokkeren</string>
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+  <string name="settings_should_i_answer_summary">Automatisch filteren van berichten van ongevraagde nummers met behulp van de app \"Should I Answer\"</string>
   <string name="settings_delivery_title">Afleverrapporten</string>
   <string name="settings_delivery_summary">Bevestig dat berichten met succes zijn verzonden</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup voor nieuwe berichten</string>
-  <string name="settings_text_size_title">Font size</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
+  <string name="settings_text_size_title">Tekst grootte</string>
   <string name="settings_unicode_title">Verwijder accenten</string>
   <string name="settings_unicode_summary">Verwijder accenten van karakters voor uitgaande berichten</string>
-  <string name="settings_mms_title">MMS ingeschakeld</string>
   <string name="settings_mms_size_title">Max MMS grootte</string>
   <string name="settings_sync_title">Synchroniseer berichten</string>
   <string name="settings_sync_summary">Hersynchroniseer jouw berichten vanuit de SMS database op je telefoon</string>
-  <string name="blocked_title">Blocking</string>
+  <string name="blocked_title">Blokkeren</string>
   <string name="blocked_empty">Jouw geblokkeerde conversaties verschijnen hier</string>
   <string name="blocked_unblock_dialog_title">Blokkering opheffen</string>
   <string name="blocked_unblock_dialog_message">Wil je de blokkering voor deze conversatie opheffen?</string>
@@ -160,10 +163,10 @@
     <item>Automatisch</item>
   </string-array>
   <string-array name="text_sizes">
-    <item>Small</item>
-    <item>Normal</item>
-    <item>Large</item>
-    <item>Larger</item>
+    <item>Klein</item>
+    <item>Normaal</item>
+    <item>Groot</item>
+    <item>Groot</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>

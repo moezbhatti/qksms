@@ -40,6 +40,7 @@
   <string name="menu_delete">Törlés</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">Optimizing database, this might take a minute&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Write a message&#8230;</string>
   <string name="message_status_sending">Sending&#8230;</string>
   <string name="message_status_delivered">Delivered %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
   <string name="inbox_empty_text">Your conversations will appear here</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
   <string name="dialog_delete_title">Delete</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_title">MMS enabled</string>
   <string name="settings_mms_size_title">Max MMS attachment size</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
