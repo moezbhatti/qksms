@@ -19,6 +19,7 @@
 package feature.compose
 
 import android.content.Context
+import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
@@ -224,6 +225,14 @@ class MessagesAdapter @Inject constructor(
         // setClipToOutline doesn't work unless all of the corners have the same radius, so we have
         // to use the message_only bubble
         if (hasImages) view.messageBackground.setBackgroundResource(R.drawable.message_only)
+
+        // If we're on API 21, we need to re-tint the background
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            view.messageBackground.setBackgroundTint(when (message.isMe()) {
+                true -> colors.bubble
+                false -> theme
+            }.blockingFirst())
+        }
     }
 
     private fun canGroup(message: Message, other: Message?): Boolean {

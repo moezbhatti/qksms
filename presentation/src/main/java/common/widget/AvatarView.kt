@@ -32,6 +32,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.util.Colors
 import common.util.GlideApp
+import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import injection.appComponent
 import kotlinx.android.synthetic.main.avatar_view.view.*
@@ -90,15 +91,12 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         if (!isInEditMode) {
             colors.themeForConversation(threadId)
                     .autoDisposable(scope())
-                    .subscribe { color -> background.setTint(color) }
+                    .subscribe { color -> setBackgroundTint(color) }
 
-            colors.textPrimaryOnThemeForConversation(threadId).let { observable ->
-                initial.textColorObservable = observable
-
-                observable
-                        .autoDisposable(scope())
-                        .subscribe { color -> icon.setTint(color) }
-            }
+            colors.textPrimaryOnThemeForConversation(threadId)
+                    .apply { initial.textColorObservable = this }
+                    .autoDisposable(scope())
+                    .subscribe { color -> icon.setTint(color) }
 
             clicks()
                     .autoDisposable(scope())
