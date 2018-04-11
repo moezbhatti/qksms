@@ -89,7 +89,6 @@
     <string name="settings_night_start_title">Start time</string>
     <string name="settings_night_end_title">End time</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
-    <string name="settings_auto_emoji_summary">Convert text like :) to an emoji like 🙂</string>
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
