@@ -20,13 +20,12 @@ package common.util.extensions
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.v4.view.ViewPager
+import android.graphics.PorterDuff
+import android.os.Build
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
-import io.reactivex.Observable
 
 fun EditText.showKeyboard() {
     requestFocus()
@@ -39,19 +38,13 @@ fun ImageView.setTint(color: Int) {
 }
 
 fun View.setBackgroundTint(color: Int) {
+
+    // API 21 doesn't support this
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+        background.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+    }
+
     backgroundTintList = ColorStateList.valueOf(color)
-}
-
-fun View.setMargins(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null) {
-    val lp = layoutParams as? ViewGroup.MarginLayoutParams ?: return
-
-    lp.setMargins(
-            left ?: lp.leftMargin,
-            top ?: lp.topMargin,
-            right ?: lp.rightMargin,
-            bottom ?: lp.rightMargin)
-
-    layoutParams = lp
 }
 
 fun View.setPadding(left: Int? = null, top: Int? = null, right: Int? = null, bottom: Int? = null) {
@@ -62,15 +55,3 @@ fun View.setVisible(visible: Boolean, invisible: Int = View.GONE) {
     visibility = if (visible) View.VISIBLE else invisible
 }
 
-data class PageScroll(val position: Int, val offset: Float)
-
-fun ViewPager.pageScrolled(): Observable<PageScroll> {
-    return Observable.create<PageScroll> { emitter ->
-        addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                emitter.onNext(PageScroll(position, positionOffset))
-            }
-        })
-    }
-}

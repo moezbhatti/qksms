@@ -27,7 +27,6 @@ import java.util.HashSet;
 
 public final class PduCache extends AbstractCache<Uri, PduCacheEntry> {
     private static final String TAG = "PduCache";
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
     private static final int MMS_ALL             = 0;
