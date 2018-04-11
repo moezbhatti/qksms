@@ -43,6 +43,7 @@ class QKApplication : Application() {
         super.onCreate()
 
         Bugsnag.init(this, BuildConfig.BUGSNAG_API_KEY)
+        Bugsnag.setAppVersion(BuildConfig.VERSION_NAME)
 
         AppComponentManager.init(this)
         appComponent.inject(this)
