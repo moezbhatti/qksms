@@ -290,9 +290,21 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> navigator.showConversationInfo(conversation.id) }
 
+        // Retry sending
         view.messageClickIntent
                 .filter { message -> message.isFailedMessage() }
                 .doOnNext { message -> retrySending.execute(message) }
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        // Save draft when the activity goes into the background
+        view.activityVisibleIntent
+                .filter { visible -> !visible }
+                .withLatestFrom(conversation, { _, conversation -> conversation.id })
+                .observeOn(Schedulers.io())
+                .withLatestFrom(view.textChangedIntent, { threadId, draft ->
+                    messageRepo.saveDraft(threadId, draft.toString())
+                })
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -361,17 +373,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .distinctUntilChanged()
                 .autoDisposable(view.scope())
                 .subscribe { remaining -> newState { it.copy(remaining = remaining) } }
-
-        // Update the draft whenever the text is changed
-        view.textChangedIntent
-                .debounce(100, TimeUnit.MILLISECONDS)
-                .map { draft -> draft.toString() }
-                .observeOn(Schedulers.io())
-                .withLatestFrom(conversation.map { it.id }, { draft, threadId ->
-                    messageRepo.saveDraft(threadId, draft)
-                })
-                .autoDisposable(view.scope())
-                .subscribe()
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
