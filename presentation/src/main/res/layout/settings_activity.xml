@@ -89,6 +89,14 @@
                 tools:summary="Automatic" />
 
             <common.widget.PreferenceView
+                android:id="@+id/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:title="@string/settings_black_title"
+                app:widget="@layout/settings_switch_widget" />
+
+            <common.widget.PreferenceView
                 android:id="@+id/nightStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,12 +113,11 @@
                 tools:summary="9:00AM" />
 
             <common.widget.PreferenceView
-                android:id="@+id/black"
+                android:id="@+id/textSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:title="@string/settings_black_title"
-                app:widget="@layout/settings_switch_widget" />
+                app:icon="@drawable/ic_format_size_black_24dp"
+                app:title="@string/settings_text_size_title" />
 
             <common.widget.Separator
                 android:layout_width="match_parent"
@@ -169,13 +176,6 @@
                 app:summary="@string/settings_qkreply_tap_dismiss_summary"
                 app:title="@string/settings_qkreply_tap_dismiss_title"
                 app:widget="@layout/settings_switch_widget" />
-
-            <common.widget.PreferenceView
-                android:id="@+id/textSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_format_size_black_24dp"
-                app:title="@string/settings_text_size_title" />
 
             <common.widget.PreferenceView
                 android:id="@+id/unicode"
