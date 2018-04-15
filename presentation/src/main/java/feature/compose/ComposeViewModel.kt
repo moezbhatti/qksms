@@ -89,9 +89,9 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     private val conversation: Observable<Conversation>
     private val messages: Observable<List<Message>>
 
-    val menuCopy by lazy { MenuItem(context.getString(R.string.compose_menu_copy), 0) }
-    val menuForward by lazy { MenuItem(context.getString(R.string.compose_menu_forward), 1) }
-    val menuDelete by lazy { MenuItem(context.getString(R.string.compose_menu_delete), 2) }
+    private val menuCopy by lazy { MenuItem(context.getString(R.string.compose_menu_copy), 0) }
+    private val menuForward by lazy { MenuItem(context.getString(R.string.compose_menu_forward), 1) }
+    private val menuDelete by lazy { MenuItem(context.getString(R.string.compose_menu_delete), 2) }
 
     init {
         appComponent.inject(this)
