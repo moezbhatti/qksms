@@ -42,6 +42,7 @@
     <string name="main_syncing">Optimizing database, this might take a minute…</string>
     <string name="main_sender_you">You: %s</string>
 
+    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
     <string name="compose_hint">Write a message…</string>
 
     <string name="message_status_sending">Sending…</string>

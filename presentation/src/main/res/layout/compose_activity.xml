@@ -26,31 +26,6 @@
     android:orientation="vertical"
     tools:background="@color/backgroundLight">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/Toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/toolbarLight">
-
-        <common.widget.QkTextView
-            android:id="@+id/toolbarTitle"
-            style="@style/ToolbarText" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/chips"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
-            tools:visibility="gone" />
-
-    </android.support.v7.widget.Toolbar>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messageList"
         android:layout_width="0dp"
@@ -64,6 +39,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/message_list_item_in" />
+
+    <common.widget.QkTextView
+        android:id="@+id/messagesEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/compose_messages_empty"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:textColor="tertiary"
+        app:textSize="secondary" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contacts"
@@ -198,6 +187,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:backgroundTint="@color/tools_theme"
         tools:tint="@color/textPrimaryDark" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/toolbarLight">
+
+        <common.widget.QkTextView
+            android:id="@+id/toolbarTitle"
+            style="@style/ToolbarText" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            tools:visibility="gone" />
+
+    </android.support.v7.widget.Toolbar>
 
     <View
         android:layout_width="0dp"

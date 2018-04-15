@@ -94,6 +94,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
         val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
 
         messageAdapter.autoScrollToStart(messageList)
+        messageAdapter.emptyView = messagesEmpty
         messageAdapter.longClicks.subscribe { message ->
             AlertDialog.Builder(this)
                     .setItems(R.array.message_options, { _, row ->

@@ -27,6 +27,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
+import common.base.QkRealmAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
@@ -38,7 +39,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import model.Conversation
@@ -52,7 +52,7 @@ class MessagesAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
         private val dateFormatter: DateFormatter
-) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
+) : QkRealmAdapter<Message>() {
 
     companion object {
         private const val VIEW_TYPE_MESSAGE_IN = 0
