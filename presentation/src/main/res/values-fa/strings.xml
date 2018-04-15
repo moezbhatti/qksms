@@ -35,9 +35,9 @@
   <string name="menu_clear">پاک کردن</string>
   <string name="menu_call">تماس</string>
   <string name="menu_info">جزئیات</string>
-  <string name="menu_archive">بایگانی مکالمه</string>
-  <string name="menu_unarchive">حذف از بایگانی</string>
-  <string name="menu_delete">حذف</string>
+  <string name="inbox_menu_archive">بایگانی مکالمه</string>
+  <string name="inbox_menu_unarchive">حذف از بایگانی</string>
+  <string name="inbox_menu_delete">حذف</string>
   <string name="menu_save">ذخیره عکس</string>
   <string name="main_syncing">بهینه سازی پایگاه داده، این ممکن است یک دقیقه را&#8230;</string>
   <string name="main_sender_you">You: %s</string>

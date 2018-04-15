@@ -35,9 +35,9 @@
   <string name="menu_clear">Azzera</string>
   <string name="menu_call">Chiama</string>
   <string name="menu_info">Dettagli</string>
-  <string name="menu_archive">Archivio conversazione</string>
-  <string name="menu_unarchive">Rimuovi dall\'archivio</string>
-  <string name="menu_delete">Elimina</string>
+  <string name="inbox_menu_archive">Archivio conversazione</string>
+  <string name="inbox_menu_unarchive">Rimuovi dall\'archivio</string>
+  <string name="inbox_menu_delete">Elimina</string>
   <string name="menu_save">Salva immagine</string>
   <string name="main_syncing">Ottimizzazione del database, questa operazione potrebbe richiedere un minuto&#8230;</string>
   <string name="main_sender_you">You: %s</string>

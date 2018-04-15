@@ -35,9 +35,9 @@
   <string name="menu_clear">Očisti</string>
   <string name="menu_call">Nazovi</string>
   <string name="menu_info">Detalji</string>
-  <string name="menu_archive">Arhiviraj razgovor</string>
-  <string name="menu_unarchive">Ukloni iz arhive</string>
-  <string name="menu_delete">Izbriši</string>
+  <string name="inbox_menu_archive">Arhiviraj razgovor</string>
+  <string name="inbox_menu_unarchive">Ukloni iz arhive</string>
+  <string name="inbox_menu_delete">Izbriši</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">Optimiziranje baze podataka, ovo može potrajati minutu&#8230;</string>
   <string name="main_sender_you">You: %s</string>

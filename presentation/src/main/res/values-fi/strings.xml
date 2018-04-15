@@ -35,9 +35,9 @@
   <string name="menu_clear">Clear</string>
   <string name="menu_call">Soita</string>
   <string name="menu_info">Details</string>
-  <string name="menu_archive">Archive conversation</string>
-  <string name="menu_unarchive">Remove from archive</string>
-  <string name="menu_delete">Poista</string>
+  <string name="inbox_menu_archive">Archive conversation</string>
+  <string name="inbox_menu_unarchive">Remove from archive</string>
+  <string name="inbox_menu_delete">Poista</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">Optimizing database, this might take a minute&#8230;</string>
   <string name="main_sender_you">You: %s</string>

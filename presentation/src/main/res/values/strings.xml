@@ -37,9 +37,6 @@
     <string name="menu_clear">Clear</string>
     <string name="menu_call">Call</string>
     <string name="menu_info">Details</string>
-    <string name="menu_archive">Archive conversation</string>
-    <string name="menu_unarchive">Remove from archive</string>
-    <string name="menu_delete">Delete</string>
     <string name="menu_save">Save image</string>
 
     <string name="main_syncing">Optimizing database, this might take a minute…</string>
@@ -61,6 +58,10 @@
 
     <string name="inbox_empty_text">Your conversations will appear here</string>
     <string name="inbox_search_empty_text">No results</string>
+    <string name="inbox_menu_archive">Archive</string>
+    <string name="inbox_menu_unarchive">Unarchive</string>
+    <string name="inbox_menu_block">Block</string>
+    <string name="inbox_menu_delete">Delete</string>
     <string name="archived_empty_text">Your archived conversations will appear here</string>
     <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
 

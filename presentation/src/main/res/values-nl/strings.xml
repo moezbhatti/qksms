@@ -35,9 +35,9 @@
   <string name="menu_clear">Annuleren</string>
   <string name="menu_call">Bel</string>
   <string name="menu_info">Details</string>
-  <string name="menu_archive">Conversatie archiveren</string>
-  <string name="menu_unarchive">Verwijderen van archief</string>
-  <string name="menu_delete">Verwijderen</string>
+  <string name="inbox_menu_archive">Conversatie archiveren</string>
+  <string name="inbox_menu_unarchive">Verwijderen van archief</string>
+  <string name="inbox_menu_delete">Verwijderen</string>
   <string name="menu_save">Afbeelding opslaan</string>
   <string name="main_syncing">Database aan het optimaliseren. Even geduld&#8230;</string>
   <string name="main_sender_you">You: %s</string>

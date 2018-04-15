@@ -35,9 +35,9 @@
   <string name="menu_clear">クリア</string>
   <string name="menu_call">通話</string>
   <string name="menu_info">詳細</string>
-  <string name="menu_archive">会話のアーカイブ</string>
-  <string name="menu_unarchive">アーカイブから削除</string>
-  <string name="menu_delete">削除</string>
+  <string name="inbox_menu_archive">会話のアーカイブ</string>
+  <string name="inbox_menu_unarchive">アーカイブから削除</string>
+  <string name="inbox_menu_delete">削除</string>
   <string name="menu_save">画像を保存</string>
   <string name="main_syncing">データベースを最適化します。これは数分かかる場合があります&#8230;</string>
   <string name="main_sender_you">You: %s</string>

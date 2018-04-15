@@ -35,9 +35,9 @@
   <string name="menu_clear">Rensa</string>
   <string name="menu_call">Ring</string>
   <string name="menu_info">Details</string>
-  <string name="menu_archive">Arkivera konversationen</string>
-  <string name="menu_unarchive">Ta bort från arkiv</string>
-  <string name="menu_delete">Ta bort</string>
+  <string name="inbox_menu_archive">Arkivera konversationen</string>
+  <string name="inbox_menu_unarchive">Ta bort från arkiv</string>
+  <string name="inbox_menu_delete">Ta bort</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">Optimerar databasen, det här kan ta en stund&#8230;</string>
   <string name="main_sender_you">You: %s</string>

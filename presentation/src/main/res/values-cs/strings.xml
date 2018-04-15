@@ -35,9 +35,9 @@
   <string name="menu_clear">Vymazat</string>
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
-  <string name="menu_archive">Archivovat konverzaci</string>
-  <string name="menu_unarchive">Odebrat z archivu</string>
-  <string name="menu_delete">Smazat</string>
+  <string name="inbox_menu_archive">Archivovat konverzaci</string>
+  <string name="inbox_menu_unarchive">Odebrat z archivu</string>
+  <string name="inbox_menu_delete">Smazat</string>
   <string name="menu_save">Uložit obrázek</string>
   <string name="main_syncing">Optimalizace databáze, to může chvíli trvat&#8230;</string>
   <string name="main_sender_you">You: %s</string>

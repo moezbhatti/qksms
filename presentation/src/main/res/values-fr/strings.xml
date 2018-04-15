@@ -35,9 +35,9 @@
   <string name="menu_clear">Effacer</string>
   <string name="menu_call">Appeler</string>
   <string name="menu_info">Détails</string>
-  <string name="menu_archive">Archiver la conversation</string>
-  <string name="menu_unarchive">Supprimer des archives</string>
-  <string name="menu_delete">Supprimer</string>
+  <string name="inbox_menu_archive">Archiver la conversation</string>
+  <string name="inbox_menu_unarchive">Supprimer des archives</string>
+  <string name="inbox_menu_delete">Supprimer</string>
   <string name="menu_save">Sauvegarder l\'image</string>
   <string name="main_syncing">Optimisation de la base de données, cela peut prendre un moment&#8230;</string>
   <string name="main_sender_you">You: %s</string>

@@ -35,9 +35,9 @@
   <string name="menu_clear">Очистить</string>
   <string name="menu_call">Позвонить</string>
   <string name="menu_info">Подробности</string>
-  <string name="menu_archive">Архивировать переписку</string>
-  <string name="menu_unarchive">Удалить из архива</string>
-  <string name="menu_delete">Удалить</string>
+  <string name="inbox_menu_archive">Архивировать переписку</string>
+  <string name="inbox_menu_unarchive">Удалить из архива</string>
+  <string name="inbox_menu_delete">Удалить</string>
   <string name="menu_save">Сохранить изображение</string>
   <string name="main_syncing">Оптимизация базы данных, это может занять немного времени&#8230;</string>
   <string name="main_sender_you">You: %s</string>

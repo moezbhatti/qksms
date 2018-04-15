@@ -34,6 +34,7 @@ import injection.appComponent
 import interactor.DeleteConversation
 import interactor.MarkAllSeen
 import interactor.MarkArchived
+import interactor.MarkBlocked
 import interactor.MarkUnarchived
 import interactor.MigratePreferences
 import interactor.PartialSync
@@ -57,13 +58,15 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var deleteConversation: DeleteConversation
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
+    @Inject lateinit var markBlocked: MarkBlocked
     @Inject lateinit var migratePreferences: MigratePreferences
     @Inject lateinit var partialSync: PartialSync
     @Inject lateinit var prefs: Preferences
 
-    private val menuArchive by lazy { MenuItem(context.getString(R.string.menu_archive), 0) }
-    private val menuUnarchive by lazy { MenuItem(context.getString(R.string.menu_unarchive), 1) }
-    private val menuDelete by lazy { MenuItem(context.getString(R.string.menu_delete), 2) }
+    private val menuArchive by lazy { MenuItem(context.getString(R.string.inbox_menu_archive), 0) }
+    private val menuUnarchive by lazy { MenuItem(context.getString(R.string.inbox_menu_unarchive), 1) }
+    private val menuBlock by lazy { MenuItem(context.getString(R.string.inbox_menu_block), 2) }
+    private val menuDelete by lazy { MenuItem(context.getString(R.string.inbox_menu_delete), 3) }
 
     private val conversations by lazy { messageRepo.getConversations() }
 
@@ -167,11 +170,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .withLatestFrom(state, { _, mainState ->
                     when (mainState.page) {
                         is Inbox -> {
-                            val page = mainState.page.copy(menu = listOf(menuArchive, menuDelete))
+                            val page = mainState.page.copy(menu = listOf(menuArchive, menuBlock, menuDelete))
                             newState { it.copy(page = page) }
                         }
                         is Archived -> {
-                            val page = mainState.page.copy(menu = listOf(menuUnarchive, menuDelete))
+                            val page = mainState.page.copy(menu = listOf(menuUnarchive, menuBlock, menuDelete))
                             newState { it.copy(page = page) }
                         }
                     }
@@ -197,6 +200,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                     when (actionId) {
                         menuArchive.actionId -> markArchived.execute(threadId)
                         menuUnarchive.actionId -> markUnarchived.execute(threadId)
+                        menuBlock.actionId -> markBlocked.execute(threadId)
                         menuDelete.actionId -> view.showDeleteDialog()
                     }
                 })

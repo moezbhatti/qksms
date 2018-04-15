@@ -35,9 +35,9 @@
   <string name="menu_clear">Limpar</string>
   <string name="menu_call">Ligar</string>
   <string name="menu_info">Detalhes</string>
-  <string name="menu_archive">Arquivar conversa</string>
-  <string name="menu_unarchive">Remover do arquivo</string>
-  <string name="menu_delete">Apagar</string>
+  <string name="inbox_menu_archive">Arquivar conversa</string>
+  <string name="inbox_menu_unarchive">Remover do arquivo</string>
+  <string name="inbox_menu_delete">Apagar</string>
   <string name="menu_save">Guardar imagem</string>
   <string name="main_syncing">A otimizar. Por favor aguarde um pouco&#8230;</string>
   <string name="main_sender_you">You: %s</string>

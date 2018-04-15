@@ -35,9 +35,9 @@
   <string name="menu_clear">Ryd</string>
   <string name="menu_call">Ring op</string>
   <string name="menu_info">Oplysninger</string>
-  <string name="menu_archive">Arkivér samtale</string>
-  <string name="menu_unarchive">Fjern fra arkiv</string>
-  <string name="menu_delete">Slett</string>
+  <string name="inbox_menu_archive">Arkivér samtale</string>
+  <string name="inbox_menu_unarchive">Fjern fra arkiv</string>
+  <string name="inbox_menu_delete">Slett</string>
   <string name="menu_save">Gem billede</string>
   <string name="main_syncing">Optimerer database, dette kan tage et øjeblik&#8230;</string>
   <string name="main_sender_you">You: %s</string>
