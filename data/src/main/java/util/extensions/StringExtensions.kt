@@ -16,17 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package common.util.filter
+package util.extensions
 
-import model.Contact
-import util.extensions.removeAccents
-import javax.inject.Inject
+import java.text.Normalizer
 
-class ContactFilter @Inject constructor(private val phoneNumberFilter: PhoneNumberFilter) : Filter<Contact>() {
-
-    override fun filter(item: Contact, query: CharSequence): Boolean {
-        return item.name.removeAccents().contains(query, true) || // Name
-                item.numbers.map { it.address }.any { address -> phoneNumberFilter.filter(address, query) } // Number
-    }
-
-}
+/**
+ * Strip the accents from a string
+ */
+fun CharSequence.removeAccents() = Normalizer.normalize(this, Normalizer.Form.NFD)
+        .replace(Regex("[^\\p{ASCII}]"), "")

@@ -61,6 +61,7 @@ import repository.MessageRepository
 import util.extensions.asObservable
 import util.extensions.isImage
 import util.extensions.mapNotNull
+import util.extensions.removeAccents
 import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -206,9 +207,14 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // that have already been selected
         Observables
                 .combineLatest(view.queryChangedIntent, contacts, selectedContacts, { query, contacts, selectedContacts ->
+
+                    // Strip the accents from the query. This can be an expensive operation, so
+                    // cache the result instead of doing it for each contact
+                    val normalizedQuery = query.removeAccents()
+
                     var filteredContacts = contacts
                             .filterNot { contact -> selectedContacts.contains(contact) }
-                            .filter { contact -> contactFilter.filter(contact, query) }
+                            .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
 
                     // If the entry is a valid destination, allow it as a recipient
                     if (PhoneNumberUtils.isWellFormedSmsAddress(query.toString())) {

@@ -45,6 +45,7 @@ import io.realm.Realm
 import model.SyncLog
 import repository.MessageRepository
 import util.Preferences
+import util.extensions.removeAccents
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -117,6 +118,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)
+                .map { query -> query.removeAccents() }
                 .withLatestFrom(state, { query, state ->
                     if (state.page is Inbox) {
                         val filteredConversations = if (query.isEmpty()) conversations
