@@ -20,11 +20,12 @@ package feature.compose
 
 import android.net.Uri
 import android.view.KeyEvent
+import common.MenuItem
+import common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 import model.Contact
 import model.Message
-import common.base.QkView
 
 interface ComposeView : QkView<ComposeState> {
 
@@ -37,15 +38,15 @@ interface ComposeView : QkView<ComposeState> {
     val menuReadyIntent: Observable<Unit>
     val callIntent: Subject<Unit>
     val infoIntent: Subject<Unit>
-    val copyTextIntent: Subject<Message>
-    val forwardMessageIntent: Subject<Message>
-    val deleteMessageIntent: Subject<Message>
     val messageClickIntent: Subject<Message>
+    val messageLongClickIntent: Subject<Message>
+    val menuItemIntent: Subject<Int>
     val attachmentDeletedIntent: Subject<Uri>
     val textChangedIntent: Observable<CharSequence>
     val attachIntent: Observable<Unit>
     val sendIntent: Observable<Unit>
 
+    fun showMenu(menuItems: List<MenuItem>)
     fun setDraft(draft: String)
 
 }

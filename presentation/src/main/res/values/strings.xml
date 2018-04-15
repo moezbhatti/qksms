@@ -42,13 +42,6 @@
     <string name="main_syncing">Optimizing database, this might take a minute…</string>
     <string name="main_sender_you">You: %s</string>
 
-    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-    <string name="compose_hint">Write a message…</string>
-
-    <string name="message_status_sending">Sending…</string>
-    <string name="message_status_delivered">Delivered %s</string>
-    <string name="message_status_failed">Failed to send. Tap to try again</string>
-
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archived</string>
     <string name="drawer_scheduled">Scheduled</string>
@@ -68,6 +61,22 @@
 
     <string name="dialog_delete_title">Delete</string>
     <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+
+    <string-array name="message_options">
+        <item>Copy text</item>
+        <item>Forward</item>
+        <item>Delete</item>
+    </string-array>
+
+    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+    <string name="compose_hint">Write a message…</string>
+    <string name="compose_menu_copy">Copy text</string>
+    <string name="compose_menu_forward">Forward</string>
+    <string name="compose_menu_delete">Delete</string>
+
+    <string name="message_status_sending">Sending…</string>
+    <string name="message_status_delivered">Delivered %s</string>
+    <string name="message_status_failed">Failed to send. Tap to try again</string>
 
     <string name="info_title">Details</string>
     <string name="info_notifications">Notifications</string>
@@ -175,12 +184,6 @@
 
     <string name="notification_message_failed_title">Message not sent</string>
     <string name="notification_message_failed_text">The message to %s failed to send</string>
-
-    <string-array name="message_options">
-        <item>Copy text</item>
-        <item>Forward</item>
-        <item>Delete</item>
-    </string-array>
 
     <string-array name="night_modes">
         <item>Disabled</item>

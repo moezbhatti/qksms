@@ -31,6 +31,7 @@ import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.MenuItem
 import common.Navigator
 import common.base.QkViewModel
 import common.util.ClipboardUtils
@@ -87,6 +88,10 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     private val selectedContacts: Observable<List<Contact>>
     private val conversation: Observable<Conversation>
     private val messages: Observable<List<Message>>
+
+    val menuCopy by lazy { MenuItem(context.getString(R.string.compose_menu_copy), 0) }
+    val menuForward by lazy { MenuItem(context.getString(R.string.compose_menu_forward), 1) }
+    val menuDelete by lazy { MenuItem(context.getString(R.string.compose_menu_delete), 2) }
 
     init {
         appComponent.inject(this)
@@ -303,6 +308,31 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .autoDisposable(view.scope())
                 .subscribe()
 
+        // Show menu
+        view.messageLongClickIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.showMenu(listOf(menuCopy, menuForward, menuDelete)) }
+
+        // Handle long-press menu item click
+        view.menuItemIntent
+                .withLatestFrom(view.messageLongClickIntent, { actionId, message ->
+                    when (actionId) {
+                        menuCopy.actionId -> {
+                            ClipboardUtils.copy(context, message.getText())
+                            context.makeToast(R.string.toast_copied)
+                        }
+
+                        menuForward.actionId -> {
+                            val images = message.parts.filter { it.isImage() }.mapNotNull { it.image?.toUri() }
+                            navigator.showCompose(message.body, images)
+                        }
+
+                        menuDelete.actionId -> deleteMessage.execute(message.id)
+                    }
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
+
         // Save draft when the activity goes into the background
         view.activityVisibleIntent
                 .filter { visible -> !visible }
@@ -398,27 +428,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
-
-        // Copy the body of the selected message into the clipboard
-        view.copyTextIntent
-                .autoDisposable(view.scope())
-                .subscribe { message ->
-                    ClipboardUtils.copy(context, message.getText())
-                    context.makeToast(R.string.toast_copied)
-                }
-
-        // Forward the message
-        view.forwardMessageIntent
-                .autoDisposable(view.scope())
-                .subscribe { message ->
-                    val images = message.parts.filter { it.isImage() }.mapNotNull { it.image?.toUri() }
-                    navigator.showCompose(message.body, images)
-                }
-
-        // Delete the selected message
-        view.deleteMessageIntent
-                .autoDisposable(view.scope())
-                .subscribe { message -> deleteMessage.execute(message.id) }
     }
 
 }
