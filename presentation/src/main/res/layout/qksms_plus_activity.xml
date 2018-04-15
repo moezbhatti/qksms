@@ -57,31 +57,58 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <common.widget.QkTextView
+            <LinearLayout
+                android:id="@+id/toUpgrade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:text="@string/qksms_plus_description_title"
-                android:textStyle="bold"
-                app:textColor="primary"
-                app:textSize="primary" />
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:orientation="vertical">
 
-            <common.widget.QkTextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:text="@string/qksms_plus_description_summary"
-                app:textColor="secondary"
-                app:textSize="secondary" />
+                <common.widget.QkTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qksms_plus_description_title"
+                    android:textStyle="bold"
+                    app:textColor="primary"
+                    app:textSize="primary" />
+
+                <common.widget.QkTextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qksms_plus_description_summary"
+                    app:textColor="secondary"
+                    app:textSize="secondary" />
+
+                <common.widget.QkTextView
+                    android:id="@+id/upgrade"
+                    style="@style/TextButton"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_rectangle_2dp"
+                    android:text="@string/qksms_plus_upgrade"
+                    app:textColor="primaryOnTheme"
+                    tools:backgroundTint="@color/tools_theme" />
+
+                <common.widget.QkTextView
+                    android:id="@+id/upgradeDonate"
+                    style="@style/TextButton"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/rounded_rectangle_outline_2dp"
+                    android:text="@string/qksms_plus_upgrade_donate"
+                    app:textColor="primary"
+                    tools:backgroundTint="@color/separatorLight" />
+
+            </LinearLayout>
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/thanks"
+                android:id="@+id/upgraded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="24dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="24dp"
                 android:background="@drawable/rounded_rectangle_2dp"
                 android:padding="16dp"
                 tools:backgroundTint="@color/separatorLight">
@@ -92,7 +119,8 @@
                     android:layout_height="24dp"
                     android:src="@drawable/ic_favorite_black_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:tint="@color/tools_theme" />
 
                 <common.widget.QkTextView
                     android:id="@+id/thanksTitle"
@@ -118,28 +146,32 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <common.widget.QkTextView
-                android:id="@+id/upgrade"
-                style="@style/TextButton"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/rounded_rectangle_2dp"
-                android:text="@string/qksms_plus_upgrade"
-                app:textColor="primaryOnTheme"
-                tools:backgroundTint="@color/tools_theme" />
+            <LinearLayout
+                android:id="@+id/free"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:orientation="vertical">
 
-            <common.widget.QkTextView
-                android:id="@+id/upgradeDonate"
-                style="@style/TextButton"
-                android:layout_marginBottom="32dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rounded_rectangle_outline_2dp"
-                android:text="@string/qksms_plus_upgrade_donate"
-                app:textColor="primary"
-                tools:backgroundTint="@color/separatorLight" />
+                <common.widget.QkTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qksms_plus_free_title"
+                    app:textColor="secondary"
+                    app:textSize="secondary" />
+
+                <common.widget.QkTextView
+                    android:id="@+id/donate"
+                    style="@style/TextButton"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_rectangle_2dp"
+                    android:text="@string/qksms_plus_donate"
+                    app:textColor="primaryOnTheme"
+                    tools:backgroundTint="@color/tools_theme" />
+
+            </LinearLayout>
 
             <common.widget.Separator
                 android:layout_width="match_parent"

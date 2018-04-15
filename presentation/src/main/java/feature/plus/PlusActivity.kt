@@ -42,16 +42,21 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
     override val upgradeIntent by lazy { upgrade.clicks() }
     override val upgradeDonateIntent by lazy { upgradeDonate.clicks() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    init {
         appComponent.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qksms_plus_activity)
         setTitle(R.string.title_qksms_plus)
         showBackButton(true)
         viewModel.bindView(this)
 
-        fontProvider.getLato {
-            val typeface = Typeface.create(it, Typeface.BOLD)
+        free.setVisible(false)
+
+        fontProvider.getLato { lato ->
+            val typeface = Typeface.create(lato, Typeface.BOLD)
             collapsingToolbar.setCollapsedTitleTypeface(typeface)
             collapsingToolbar.setExpandedTitleTypeface(typeface)
         }
@@ -71,7 +76,7 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
                 .autoDisposable(scope())
                 .subscribe { color ->
                     upgradeDonate.setBackgroundTint(color)
-                    thanks.setBackgroundTint(color)
+                    upgraded.setBackgroundTint(color)
                 }
 
         colors.theme
@@ -87,9 +92,8 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
         upgrade.text = getString(R.string.qksms_plus_upgrade, state.upgradePrice, state.currency)
         upgradeDonate.text = getString(R.string.qksms_plus_upgrade_donate, state.upgradeDonatePrice, state.currency)
 
-        upgrade.setVisible(state.currentPlan == BillingManager.UpgradeStatus.REGULAR)
-        upgradeDonate.setVisible(state.currentPlan == BillingManager.UpgradeStatus.REGULAR)
-        thanks.setVisible(state.currentPlan != BillingManager.UpgradeStatus.REGULAR)
+        toUpgrade.setVisible(state.currentPlan == BillingManager.UpgradeStatus.REGULAR)
+        upgraded.setVisible(state.currentPlan == BillingManager.UpgradeStatus.UPGRADED)
     }
 
     override fun initiatePurchaseFlow(billingManager: BillingManager, sku: String) {
