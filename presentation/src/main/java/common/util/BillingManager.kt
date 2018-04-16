@@ -71,7 +71,7 @@ class BillingManager @Inject constructor(
                         else -> UpgradeStatus.REGULAR
                     }
                 }
-                .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
+                .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded.toString()) }
     }
 
     private fun queryPurchases() {
