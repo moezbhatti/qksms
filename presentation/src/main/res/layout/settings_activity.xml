@@ -203,6 +203,17 @@
                 app:summary="@string/settings_sync_summary"
                 app:title="@string/settings_sync_title" />
 
+            <common.widget.QkTextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                app:textColor="tertiary"
+                android:layout_gravity="center"
+                app:textSize="secondary"
+                tools:text="Version 3.0.0" />
+
         </LinearLayout>
 
     </ScrollView>

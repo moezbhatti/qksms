@@ -26,6 +26,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
+import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -86,6 +87,8 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         nightModeAdapter.setData(R.array.night_modes)
         textSizeAdapter.setData(R.array.text_sizes)
         mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
+
+        version.text = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
 
         colors.background
                 .autoDisposable(scope())

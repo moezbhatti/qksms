@@ -119,6 +119,7 @@
     <string name="settings_mms_size_title">Max MMS attachment size</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+    <string name="settings_version">Version %s</string>
 
     <string name="blocked_title">Blocking</string>
     <string name="blocked_empty">Your blocked conversations will appear here</string>
