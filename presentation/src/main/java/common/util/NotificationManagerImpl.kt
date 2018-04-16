@@ -156,6 +156,11 @@ class NotificationManagerImpl @Inject constructor(
 
         if (Build.VERSION.SDK_INT >= 24) {
             notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), threadId))
+        } else {
+            val replyIntent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId)
+            val replyPI = PendingIntent.getActivity(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val replyAction = NotificationCompat.Action(R.drawable.ic_reply_white_24dp, context.getString(R.string.notification_reply), replyPI)
+            notification.addAction(replyAction)
         }
 
         if (prefs.qkreply.get()) {
