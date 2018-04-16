@@ -26,12 +26,14 @@ import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
+import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.MenuItemAdapter
 import common.base.QkThemedActivity
 import common.util.extensions.dpToPx
+import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
 import common.widget.PreferenceView
 import injection.appComponent
@@ -39,6 +41,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
+import kotlinx.android.synthetic.main.settings_theme_widget.*
 import util.Preferences
 import javax.inject.Inject
 
@@ -70,17 +73,22 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     private var textSizeDialog: AlertDialog? = null
     private var mmsSizeDialog: AlertDialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    init {
         appComponent.inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         setTitle(R.string.title_settings)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         nightModeAdapter.setData(R.array.night_modes)
         textSizeAdapter.setData(R.array.text_sizes)
         mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
+
+        version.text = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
 
         colors.background
                 .autoDisposable(scope())
@@ -106,6 +114,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
             else -> R.string.settings_default_sms_summary_false
         })
 
+        themePreview.setBackgroundTint(state.theme)
         night.summary = state.nightModeSummary
         nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
         nightStart.summary = state.nightStart
@@ -118,11 +127,12 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
         delivery.checkbox.isChecked = state.deliveryEnabled
         qkreply.checkbox.isChecked = state.qkReplyEnabled
+        qkreplyTapDismiss.setVisible(state.qkReplyEnabled)
+        qkreplyTapDismiss.checkbox.isChecked = state.qkReplyTapDismiss
 
         textSize.summary = state.textSizeSummary
 
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
-        mms.checkbox.isChecked = state.mmsEnabled
 
         mmsSize.summary = state.maxMmsSizeSummary
         mmsSizeAdapter.selectedItem = state.maxMmsSizeId

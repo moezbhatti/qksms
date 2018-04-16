@@ -24,7 +24,7 @@ import android.net.Uri
 import model.Recipient
 import javax.inject.Inject
 
-class CursorToRecipienImpl @Inject constructor(private val context: Context) : CursorToRecipient {
+class CursorToRecipientImpl @Inject constructor(private val context: Context) : CursorToRecipient {
 
     companion object {
         val URI = Uri.parse("content://mms-sms/canonical-addresses")

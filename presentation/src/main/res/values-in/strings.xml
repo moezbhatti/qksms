@@ -35,11 +35,12 @@
   <string name="menu_clear">Clear</string>
   <string name="menu_call">Panggil</string>
   <string name="menu_info">Detail</string>
-  <string name="menu_archive">Archive conversation</string>
-  <string name="menu_unarchive">Buang dari arsip</string>
-  <string name="menu_delete">Hapus</string>
+  <string name="inbox_menu_archive">Archive conversation</string>
+  <string name="inbox_menu_unarchive">Buang dari arsip</string>
+  <string name="inbox_menu_delete">Hapus</string>
   <string name="menu_save">Simpan gambar</string>
   <string name="main_syncing">Optimizing database, this might take a minute&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Tulis pesan&#8230;</string>
   <string name="message_status_sending">Mengirim&#8230;</string>
   <string name="message_status_delivered">Delivered %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Bantuan &amp; Umpan balik</string>
   <string name="inbox_empty_text">Percakapan Anda akan ditampilkan di sini</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Arsip percakapan Anda akan ditampilkan di sini</string>
   <string name="scheduled_empty_text">Pesan yang dijadwalkan akan ditampilkan di sini</string>
   <string name="dialog_delete_title">Hapus</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Mengkonfirmasi bahwa pesan telah berhasil dikirim</string>
   <string name="settings_qkreply_title">Balasan QK</string>
   <string name="settings_qkreply_summary">Popup untuk pesan baru</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_title">MMS diaktifkan</string>
   <string name="settings_mms_size_title">Max MMS attachment size</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>

@@ -20,6 +20,7 @@ package repository
 
 import android.content.Context
 import android.net.Uri
+import android.provider.BaseColumns
 import android.provider.ContactsContract
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -37,11 +38,16 @@ class ContactRepositoryImpl @Inject constructor(val context: Context) : ContactR
 
     override fun findContactUri(address: String): Single<Uri> {
         return Flowable.just(address)
-                .map { Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address)) }
-                .mapNotNull { uri -> context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup._ID), null, null, null) }
+                .map {
+                    when {
+                        address.contains('@') -> Uri.withAppendedPath(ContactsContract.CommonDataKinds.Email.CONTENT_FILTER_URI, Uri.encode(address))
+                        else -> Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
+                    }
+                }
+                .mapNotNull { uri -> context.contentResolver.query(uri, arrayOf(BaseColumns._ID), null, null, null) }
                 .flatMap { cursor -> cursor.asFlowable() }
                 .firstOrError()
-                .map { cursor -> cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID)) }
+                .map { cursor -> cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID)) }
                 .map { id -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id) }
     }
 

@@ -62,12 +62,6 @@
                 android:layout_height="wrap_content"
                 app:title="@string/settings_default_sms_title" />
 
-            <common.widget.PreferenceView
-                android:id="@+id/notifications"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="@string/settings_notifications_title" />
-
             <common.widget.Separator
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -82,14 +76,25 @@
                 android:id="@+id/theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/settings_theme_title" />
+                app:icon="@drawable/ic_color_lens_black_24dp"
+                app:title="@string/settings_theme_title"
+                app:widget="@layout/settings_theme_widget" />
 
             <common.widget.PreferenceView
                 android:id="@+id/night"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_invert_colors_black_24dp"
                 app:title="@string/settings_night_title"
                 tools:summary="Automatic" />
+
+            <common.widget.PreferenceView
+                android:id="@+id/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:title="@string/settings_black_title"
+                app:widget="@layout/settings_switch_widget" />
 
             <common.widget.PreferenceView
                 android:id="@+id/nightStart"
@@ -108,12 +113,11 @@
                 tools:summary="9:00AM" />
 
             <common.widget.PreferenceView
-                android:id="@+id/black"
+                android:id="@+id/textSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:title="@string/settings_black_title"
-                app:widget="@layout/settings_switch_widget" />
+                app:icon="@drawable/ic_format_size_black_24dp"
+                app:title="@string/settings_text_size_title" />
 
             <common.widget.Separator
                 android:layout_width="match_parent"
@@ -126,11 +130,17 @@
                 android:text="@string/settings_category_general" />
 
             <common.widget.PreferenceView
+                android:id="@+id/notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_notifications_black_24dp"
+                app:title="@string/settings_notifications_title" />
+
+            <common.widget.PreferenceView
                 android:id="@+id/autoEmoji"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:summary="@string/settings_auto_emoji_summary"
                 app:title="@string/settings_auto_emoji_title"
                 app:widget="@layout/settings_switch_widget" />
 
@@ -138,12 +148,14 @@
                 android:id="@+id/blocked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_block_black_24dp"
                 app:title="@string/settings_blocking_title" />
 
             <common.widget.PreferenceView
                 android:id="@+id/delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_check_white_24dp"
                 app:summary="@string/settings_delivery_summary"
                 app:title="@string/settings_delivery_title"
                 app:widget="@layout/settings_switch_widget" />
@@ -152,30 +164,26 @@
                 android:id="@+id/qkreply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_reply_white_24dp"
                 app:summary="@string/settings_qkreply_summary"
                 app:title="@string/settings_qkreply_title"
                 app:widget="@layout/settings_switch_widget" />
 
             <common.widget.PreferenceView
-                android:id="@+id/textSize"
+                android:id="@+id/qkreplyTapDismiss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/settings_text_size_title" />
+                app:summary="@string/settings_qkreply_tap_dismiss_summary"
+                app:title="@string/settings_qkreply_tap_dismiss_title"
+                app:widget="@layout/settings_switch_widget" />
 
             <common.widget.PreferenceView
                 android:id="@+id/unicode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_translate_black_24dp"
                 app:summary="@string/settings_unicode_summary"
                 app:title="@string/settings_unicode_title"
-                app:widget="@layout/settings_switch_widget" />
-
-            <common.widget.PreferenceView
-                android:id="@+id/mms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:title="@string/settings_mms_title"
                 app:widget="@layout/settings_switch_widget" />
 
             <common.widget.PreferenceView
@@ -183,6 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
+                app:icon="@drawable/ic_photo_size_select_actual_black_24dp"
                 app:title="@string/settings_mms_size_title"
                 tools:summary="100KB" />
 
@@ -190,8 +199,20 @@
                 android:id="@+id/sync"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_sync_black_24dp"
                 app:summary="@string/settings_sync_summary"
                 app:title="@string/settings_sync_title" />
+
+            <common.widget.QkTextView
+                android:id="@+id/version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                app:textColor="tertiary"
+                android:layout_gravity="center"
+                app:textSize="secondary"
+                tools:text="Version 3.0.0" />
 
         </LinearLayout>
 

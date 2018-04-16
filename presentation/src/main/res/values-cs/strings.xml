@@ -35,11 +35,12 @@
   <string name="menu_clear">Vymazat</string>
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
-  <string name="menu_archive">Archivovat konverzaci</string>
-  <string name="menu_unarchive">Odebrat z archivu</string>
-  <string name="menu_delete">Smazat</string>
+  <string name="inbox_menu_archive">Archivovat konverzaci</string>
+  <string name="inbox_menu_unarchive">Odebrat z archivu</string>
+  <string name="inbox_menu_delete">Smazat</string>
   <string name="menu_save">Uložit obrázek</string>
   <string name="main_syncing">Optimalizace databáze, to může chvíli trvat&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Napsat zprávu&#8230;</string>
   <string name="message_status_sending">Odesílání&#8230;</string>
   <string name="message_status_delivered">Doručeno %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
   <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
   <string name="dialog_delete_title">Delete</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>
   <string name="settings_qkreply_title">QK odpověď</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Velikost písma</string>
   <string name="settings_unicode_title">Odstranit diakritiku</string>
   <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných zprávách SMS</string>
-  <string name="settings_mms_title">MMS zapnuty</string>
   <string name="settings_mms_size_title">Maximální velikost přílohy MMS</string>
   <string name="settings_sync_title">Synchronizovat zprávy</string>
   <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativním Android SMS databází</string>

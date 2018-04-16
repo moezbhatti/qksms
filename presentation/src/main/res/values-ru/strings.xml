@@ -35,11 +35,12 @@
   <string name="menu_clear">Очистить</string>
   <string name="menu_call">Позвонить</string>
   <string name="menu_info">Подробности</string>
-  <string name="menu_archive">Архивировать переписку</string>
-  <string name="menu_unarchive">Удалить из архива</string>
-  <string name="menu_delete">Удалить</string>
+  <string name="inbox_menu_archive">Архивировать переписку</string>
+  <string name="inbox_menu_unarchive">Удалить из архива</string>
+  <string name="inbox_menu_delete">Удалить</string>
   <string name="menu_save">Сохранить изображение</string>
   <string name="main_syncing">Оптимизация базы данных, это может занять немного времени&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Написать сообщение&#8230;</string>
   <string name="message_status_sending">Отправка&#8230;</string>
   <string name="message_status_delivered">Доставлено %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Помощь и обратная связь</string>
   <string name="inbox_empty_text">Your conversations will appear here</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
   <string name="dialog_delete_title">Удалить</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_title">MMS используется</string>
   <string name="settings_mms_size_title">Максимальный размер вложения MMS</string>
   <string name="settings_sync_title">Синхронизация сообщений</string>
   <string name="settings_sync_summary">Повторная синхронизация ваших сообщений с собственной базой данных SMS Android</string>

@@ -19,6 +19,7 @@
 package feature.compose
 
 import android.content.Context
+import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.moez.QKSMS.R
+import common.base.QkRealmAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
@@ -37,7 +39,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import model.Conversation
@@ -51,7 +52,7 @@ class MessagesAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
         private val dateFormatter: DateFormatter
-) : RealmRecyclerViewAdapter<Message, QkViewHolder>(null, true) {
+) : QkRealmAdapter<Message>() {
 
     companion object {
         private const val VIEW_TYPE_MESSAGE_IN = 0
@@ -224,6 +225,14 @@ class MessagesAdapter @Inject constructor(
         // setClipToOutline doesn't work unless all of the corners have the same radius, so we have
         // to use the message_only bubble
         if (hasImages) view.messageBackground.setBackgroundResource(R.drawable.message_only)
+
+        // If we're on API 21, we need to re-tint the background
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            view.messageBackground.setBackgroundTint(when (message.isMe()) {
+                true -> colors.bubble
+                false -> theme
+            }.blockingFirst())
+        }
     }
 
     private fun canGroup(message: Message, other: Message?): Boolean {

@@ -31,6 +31,7 @@ import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.MenuItem
 import common.Navigator
 import common.base.QkViewModel
 import common.util.ClipboardUtils
@@ -60,6 +61,8 @@ import repository.ContactRepository
 import repository.MessageRepository
 import util.extensions.asObservable
 import util.extensions.isImage
+import util.extensions.mapNotNull
+import util.extensions.removeAccents
 import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -85,6 +88,10 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     private val selectedContacts: Observable<List<Contact>>
     private val conversation: Observable<Conversation>
     private val messages: Observable<List<Message>>
+
+    private val menuCopy by lazy { MenuItem(context.getString(R.string.compose_menu_copy), 0) }
+    private val menuForward by lazy { MenuItem(context.getString(R.string.compose_menu_forward), 1) }
+    private val menuDelete by lazy { MenuItem(context.getString(R.string.compose_menu_delete), 2) }
 
     init {
         appComponent.inject(this)
@@ -205,9 +212,14 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // that have already been selected
         Observables
                 .combineLatest(view.queryChangedIntent, contacts, selectedContacts, { query, contacts, selectedContacts ->
+
+                    // Strip the accents from the query. This can be an expensive operation, so
+                    // cache the result instead of doing it for each contact
+                    val normalizedQuery = query.removeAccents()
+
                     var filteredContacts = contacts
                             .filterNot { contact -> selectedContacts.contains(contact) }
-                            .filter { contact -> contactFilter.filter(contact, query) }
+                            .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
 
                     // If the entry is a valid destination, allow it as a recipient
                     if (PhoneNumberUtils.isWellFormedSmsAddress(query.toString())) {
@@ -289,19 +301,57 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> navigator.showConversationInfo(conversation.id) }
 
+        // Retry sending
         view.messageClickIntent
                 .filter { message -> message.isFailedMessage() }
                 .doOnNext { message -> retrySending.execute(message) }
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        // Mark the conversation read, if in foreground
-        Observables.combineLatest(messages, view.activityVisibleIntent, { _, visible -> visible })
-                .withLatestFrom(conversation, { visible, conversation ->
-                    if (visible && conversation.isValid) markRead.execute(conversation.id)
+        // Show menu
+        view.messageLongClickIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.showMenu(listOf(menuCopy, menuForward, menuDelete)) }
+
+        // Handle long-press menu item click
+        view.menuItemIntent
+                .withLatestFrom(view.messageLongClickIntent, { actionId, message ->
+                    when (actionId) {
+                        menuCopy.actionId -> {
+                            ClipboardUtils.copy(context, message.getText())
+                            context.makeToast(R.string.toast_copied)
+                        }
+
+                        menuForward.actionId -> {
+                            val images = message.parts.filter { it.isImage() }.mapNotNull { it.image?.toUri() }
+                            navigator.showCompose(message.body, images)
+                        }
+
+                        menuDelete.actionId -> deleteMessage.execute(message.id)
+                    }
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        // Save draft when the activity goes into the background
+        view.activityVisibleIntent
+                .filter { visible -> !visible }
+                .withLatestFrom(conversation, { _, conversation -> conversation.id })
+                .observeOn(Schedulers.io())
+                .withLatestFrom(view.textChangedIntent, { threadId, draft ->
+                    messageRepo.saveDraft(threadId, draft.toString())
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        // Mark the conversation read, if in foreground
+        Observables.combineLatest(messages, view.activityVisibleIntent, { _, visible -> visible })
+                .filter { visible -> visible }
+                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }
+                .debounce(200, TimeUnit.MILLISECONDS)
+                .autoDisposable(view.scope())
+                .subscribe { threadId -> markRead.execute(threadId) }
 
         // Attach a photo
         view.attachIntent
@@ -360,17 +410,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .autoDisposable(view.scope())
                 .subscribe { remaining -> newState { it.copy(remaining = remaining) } }
 
-        // Update the draft whenever the text is changed
-        view.textChangedIntent
-                .debounce(100, TimeUnit.MILLISECONDS)
-                .map { draft -> draft.toString() }
-                .observeOn(Schedulers.io())
-                .withLatestFrom(conversation.map { it.id }, { draft, threadId ->
-                    messageRepo.saveDraft(threadId, draft)
-                })
-                .autoDisposable(view.scope())
-                .subscribe()
-
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
@@ -389,27 +428,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
-
-        // Copy the body of the selected message into the clipboard
-        view.copyTextIntent
-                .autoDisposable(view.scope())
-                .subscribe { message ->
-                    ClipboardUtils.copy(context, message.getText())
-                    context.makeToast(R.string.toast_copied)
-                }
-
-        // Forward the message
-        view.forwardMessageIntent
-                .autoDisposable(view.scope())
-                .subscribe { message ->
-                    val images = message.parts.filter { it.isImage() }.mapNotNull { it.image?.toUri() }
-                    navigator.showCompose(message.body, images)
-                }
-
-        // Delete the selected message
-        view.deleteMessageIntent
-                .autoDisposable(view.scope())
-                .subscribe { message -> deleteMessage.execute(message.id) }
     }
 
 }

@@ -41,6 +41,7 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.qkreply_activity.*
+import util.Preferences
 import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
@@ -51,6 +52,7 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
     override val sendIntent by lazy { send.clicks() }
 
     @Inject lateinit var adapter: MessagesAdapter
+    @Inject lateinit var prefs: Preferences
 
     init {
         appComponent.inject(this)
@@ -60,15 +62,18 @@ class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
 
-        setFinishOnTouchOutside(true)
+        setFinishOnTouchOutside(prefs.qkreplyTapDismiss.get())
         setContentView(R.layout.qkreply_activity)
         window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewModel.bindView(this)
 
         colors.composeBackground
+                .doOnNext  { color -> background.setBackgroundTint(color) }
+                .doOnNext  { color -> composeBackground.setBackgroundTint(color) }
+                .doOnNext  { color -> composeBackgroundGradient.setBackgroundTint(color) }
                 .autoDisposable(scope())
-                .subscribe { color -> background.setBackgroundTint(color) }
+                .subscribe()
 
         colors.bubble
                 .autoDisposable(scope())

@@ -41,6 +41,7 @@ import common.MenuItemAdapter
 import common.Navigator
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
+import common.util.extensions.dismissKeyboard
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
@@ -68,7 +69,11 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val queryCancelledIntent: PublishSubject<Unit> = PublishSubject.create()
     override val composeIntent by lazy { compose.clicks() }
-    override val drawerOpenIntent by lazy { drawerLayout.drawerOpen(Gravity.START) }
+    override val drawerOpenIntent: Observable<Boolean> by lazy {
+        drawerLayout
+                .drawerOpen(Gravity.START)
+                .doOnNext { dismissKeyboard() }
+    }
     override val drawerItemIntent: Observable<DrawerItem> by lazy {
         Observable.merge(listOf(
                 inbox.clicks().map { DrawerItem.INBOX },
@@ -142,7 +147,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         // Set the FAB compose icon color
         colors.textPrimaryOnTheme
                 .doOnNext { color -> compose.setTint(color) }
-                .doOnNext { color -> itemTouchCallback.iconColor = color}
+                .doOnNext { color -> itemTouchCallback.iconColor = color }
                 .autoDisposable(scope())
                 .subscribe()
 
@@ -195,7 +200,10 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 menuItemAdapter.data = state.page.menu
-                empty.setText(R.string.inbox_empty_text)
+                empty.setText(when (state.page.showClearButton) {
+                    true -> R.string.inbox_search_empty_text
+                    false -> R.string.inbox_empty_text
+                })
                 compose.setVisible(true)
             }
 
@@ -250,6 +258,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     }
 
     override fun clearSearch() {
+        dismissKeyboard()
         toolbarSearch.text = null
     }
 

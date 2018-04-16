@@ -20,15 +20,17 @@ package feature.plus
 
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import injection.appComponent
+import common.base.QkViewModel
 import common.util.BillingManager
+import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
-import common.base.QkViewModel
+import manager.AnalyticsManager
 import javax.inject.Inject
 
 class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {
 
+    @Inject lateinit var analyticsManager: AnalyticsManager
     @Inject lateinit var billingManager: BillingManager
 
     init {
@@ -56,6 +58,7 @@ class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {
         Observable.merge(
                 view.upgradeIntent.map { BillingManager.SKU_PLUS },
                 view.upgradeDonateIntent.map { BillingManager.SKU_PLUS_DONATE })
+                .doOnNext { sku -> analyticsManager.track("Clicked Upgrade", Pair("sku", sku)) }
                 .autoDisposable(view.scope())
                 .subscribe { sku -> view.initiatePurchaseFlow(billingManager, sku) }
     }

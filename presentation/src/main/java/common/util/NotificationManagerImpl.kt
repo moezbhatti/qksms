@@ -27,11 +27,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.os.Parcel
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import android.telephony.PhoneNumberUtils
+import android.widget.RemoteViews
 import com.moez.QKSMS.R
 import common.util.extensions.dpToPx
 import feature.compose.ComposeActivity
@@ -95,13 +97,6 @@ class NotificationManagerImpl @Inject constructor(
 
         val conversation = messageRepo.getConversation(threadId) ?: return
 
-        // If QK Reply is enabled, use the default importance so that we don't have a notification
-        // card in addition to the popup. Otherwise, use max importance
-        val importance = when (prefs.qkreply.get()) {
-            true -> NotificationManagerCompat.IMPORTANCE_DEFAULT
-            false -> NotificationManagerCompat.IMPORTANCE_MAX
-        }
-
         val style = NotificationCompat.MessagingStyle("Me")
         messages.forEach { message ->
             val name = if (message.isMe()) null else conversation.getTitle()
@@ -135,7 +130,7 @@ class NotificationManagerImpl @Inject constructor(
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(colors.themeForConversation(threadId).blockingFirst())
-                .setPriority(importance)
+                .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
                 .setLargeIcon(avatar)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
@@ -156,9 +151,17 @@ class NotificationManagerImpl @Inject constructor(
 
         if (Build.VERSION.SDK_INT >= 24) {
             notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), threadId))
+        } else {
+            val replyIntent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId)
+            val replyPI = PendingIntent.getActivity(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val replyAction = NotificationCompat.Action(R.drawable.ic_reply_white_24dp, context.getString(R.string.notification_reply), replyPI)
+            notification.addAction(replyAction)
         }
 
         if (prefs.qkreply.get()) {
+            // Needed in order to disable the heads up notification
+            notification.setCustomHeadsUpContentView(RemoteViews(Parcel.obtain()))
+
             val intent = Intent(context, QkReplyActivity::class.java)
                     .putExtra("threadId", threadId)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

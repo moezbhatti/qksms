@@ -35,11 +35,12 @@
   <string name="menu_clear">پاک کردن</string>
   <string name="menu_call">تماس</string>
   <string name="menu_info">جزئیات</string>
-  <string name="menu_archive">بایگانی مکالمه</string>
-  <string name="menu_unarchive">حذف از بایگانی</string>
-  <string name="menu_delete">حذف</string>
+  <string name="inbox_menu_archive">بایگانی مکالمه</string>
+  <string name="inbox_menu_unarchive">حذف از بایگانی</string>
+  <string name="inbox_menu_delete">حذف</string>
   <string name="menu_save">ذخیره عکس</string>
   <string name="main_syncing">بهینه سازی پایگاه داده، این ممکن است یک دقیقه را&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">نوشتن پیام&#8230;</string>
   <string name="message_status_sending">فرستادن&#8230;</string>
   <string name="message_status_delivered">رسیده %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">نسخه پیشرفته</string>
   <string name="drawer_help">راهنما &amp; نظرات</string>
   <string name="inbox_empty_text">مکالمات اینجا نمایش داده میشود</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">بایگانی اینجا نمایش داده میشود</string>
   <string name="scheduled_empty_text">زمانبندیها اینجا نمایش داده میشود</string>
   <string name="dialog_delete_title">حذف</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">تأیید ارسال موفق پیام</string>
   <string name="settings_qkreply_title">پاسخ برنامه</string>
   <string name="settings_qkreply_summary">پنجره پیام های جدید</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">اندازه متن</string>
   <string name="settings_unicode_title">لهجه ها</string>
   <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
-  <string name="settings_mms_title">MMS فعال</string>
   <string name="settings_mms_size_title">MMS حداکثر اندازه پیوست</string>
   <string name="settings_sync_title">همگام سازی پیام ها</string>
   <string name="settings_sync_summary">همگام سازی پیام ها با پایگاه داده</string>

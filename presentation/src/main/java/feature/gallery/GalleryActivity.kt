@@ -44,7 +44,7 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_activity)
         postponeEnterTransition()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
 
         val transition = TransitionSet().apply {

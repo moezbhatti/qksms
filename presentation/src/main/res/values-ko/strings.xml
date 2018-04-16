@@ -35,11 +35,12 @@
   <string name="menu_clear">비우기</string>
   <string name="menu_call">전화</string>
   <string name="menu_info">자세히</string>
-  <string name="menu_archive">대화 보관하기</string>
-  <string name="menu_unarchive">보관함에서 제거</string>
-  <string name="menu_delete">삭제</string>
+  <string name="inbox_menu_archive">대화 보관하기</string>
+  <string name="inbox_menu_unarchive">보관함에서 제거</string>
+  <string name="inbox_menu_delete">삭제</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">데이터베이스 초기화 중, 시간이 약간 걸립니다...</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">메시지 작성 중...</string>
   <string name="message_status_sending">전송 중...</string>
   <string name="message_status_delivered">%s 전송됨</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">도움말 &amp; 피드백</string>
   <string name="inbox_empty_text">대화가 여기에 나타납니다</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">보관된 메시지가 여기 나타납니다</string>
   <string name="scheduled_empty_text">예약된 메시지가 여기 나타납니다</string>
   <string name="dialog_delete_title">삭제</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">전송 성공을 확인합니다</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">스트립 악센트</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_title">MMS enabled</string>
   <string name="settings_mms_size_title">Max MMS attachment size</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>

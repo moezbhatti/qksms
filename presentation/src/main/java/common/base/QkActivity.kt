@@ -74,4 +74,8 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         return result
     }
 
+    protected fun showBackButton(show: Boolean) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(show)
+    }
+
 }

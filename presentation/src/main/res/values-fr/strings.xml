@@ -35,11 +35,12 @@
   <string name="menu_clear">Effacer</string>
   <string name="menu_call">Appeler</string>
   <string name="menu_info">Détails</string>
-  <string name="menu_archive">Archiver la conversation</string>
-  <string name="menu_unarchive">Supprimer des archives</string>
-  <string name="menu_delete">Supprimer</string>
+  <string name="inbox_menu_archive">Archiver la conversation</string>
+  <string name="inbox_menu_unarchive">Supprimer des archives</string>
+  <string name="inbox_menu_delete">Supprimer</string>
   <string name="menu_save">Sauvegarder l\'image</string>
   <string name="main_syncing">Optimisation de la base de données, cela peut prendre un moment&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">Écrire un message&#8230;</string>
   <string name="message_status_sending">Envoi&#8230;</string>
   <string name="message_status_delivered">Transmis %s</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Aide &amp; commentaire</string>
   <string name="inbox_empty_text">Vos conversations apparaîtront ici</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">Vos conversations archivées apparaîtront ici</string>
   <string name="scheduled_empty_text">Vos messages planifiés apparaîtront ici</string>
   <string name="dialog_delete_title">Supprimer</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
   <string name="settings_qkreply_title">Réponse rapide QK</string>
   <string name="settings_qkreply_summary">Popup pour les nouveaux messages</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Taille de la police d\'écriture</string>
   <string name="settings_unicode_title">Enlever les accents</string>
   <string name="settings_unicode_summary">Supprimer les accents des caractères lors de l\'envoi de messages SMS</string>
-  <string name="settings_mms_title">Activer les MMS</string>
   <string name="settings_mms_size_title">Taille maximale des pièces jointes MMS</string>
   <string name="settings_sync_title">Synchroniser les messages</string>
   <string name="settings_sync_summary">Re-synchroniser les messages avec la base de données Android native</string>

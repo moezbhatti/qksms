@@ -28,9 +28,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
-        android:visibility="gone"
-        tools:src="@drawable/ic_notifications_black_24dp"
-        tools:visibility="visible" />
+        android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="0dp"

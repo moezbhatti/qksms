@@ -54,7 +54,7 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.conversation_info_activity)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        showBackButton(true)
         viewModel.bindView(this)
         setTitle(R.string.info_title)
 

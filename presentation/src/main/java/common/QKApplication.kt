@@ -1,4 +1,6 @@
-package common/*
+package common
+
+/*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
@@ -23,6 +25,7 @@ import android.support.v4.provider.FontRequest
 import com.bugsnag.android.Bugsnag
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
+import common.util.NightModeManager
 import injection.AppComponentManager
 import injection.appComponent
 import io.realm.Realm
@@ -39,13 +42,18 @@ class QKApplication : Application() {
     @Suppress("unused")
     @Inject lateinit var analyticsManager: AnalyticsManager
 
+    @Inject lateinit var nightModeManager: NightModeManager
+
     override fun onCreate() {
         super.onCreate()
 
         Bugsnag.init(this, BuildConfig.BUGSNAG_API_KEY)
+        Bugsnag.setAppVersion(BuildConfig.VERSION_NAME)
 
         AppComponentManager.init(this)
         appComponent.inject(this)
+
+        nightModeManager.updateCurrentTheme()
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()

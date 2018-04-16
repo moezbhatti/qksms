@@ -16,12 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package manager
+package util.extensions
 
-interface AnalyticsManager {
+import java.text.Normalizer
 
-    fun track(event: String, vararg properties: Pair<String, String>)
-
-    fun setUserProperty(key: String, value: Any)
-
-}
+/**
+ * Strip the accents from a string
+ */
+fun CharSequence.removeAccents() = Normalizer.normalize(this, Normalizer.Form.NFD)
+        .replace(Regex("[^\\p{ASCII}]"), "")

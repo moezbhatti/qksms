@@ -76,7 +76,10 @@ class ConversationsAdapter @Inject constructor(
         view.avatars.contacts = conversation.recipients
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
-        view.snippet.text = if (conversation.me) "You: ${conversation.snippet}" else conversation.snippet
+        view.snippet.text = when(conversation.me) {
+            true -> context.getString(R.string.main_sender_you, conversation.snippet)
+            false -> conversation.snippet
+        }
     }
 
     override fun getItemId(index: Int): Long {

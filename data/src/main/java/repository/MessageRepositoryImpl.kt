@@ -23,7 +23,6 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.Telephony
@@ -47,7 +46,6 @@ import model.Message
 import model.MmsPart
 import util.MessageUtils
 import util.Preferences
-import util.extensions.asFlowable
 import util.extensions.asMaybe
 import util.extensions.insertOrUpdate
 import util.extensions.map
@@ -327,40 +325,34 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun markRead(threadId: Long) {
-        // TODO also need to mark MMS in ContentProvider as Read
-        val projection = arrayOf(BaseColumns._ID)
-        val selection = "${Telephony.Sms.THREAD_ID} = $threadId AND (${Telephony.Sms.SEEN} = 0 OR ${Telephony.Sms.READ} = 0)"
-        val contentResolver = context.contentResolver
-        contentResolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, selection, null, null)
-                ?.asFlowable() ?: Flowable.empty<Cursor>()
-                .subscribeOn(Schedulers.io())
-                .map { cursor -> cursor.getLong(0) }
-                .map { id -> Uri.withAppendedPath(Telephony.Sms.CONTENT_URI, id.toString()) }
-                .subscribe { uri ->
-                    val values = ContentValues()
-                    values.put(Telephony.Sms.SEEN, true)
-                    values.put(Telephony.Sms.READ, true)
-                    contentResolver.update(uri, values, null, null)
+        Realm.getDefaultInstance()?.use { realm ->
+            val messages = realm.where(Message::class.java)
+                    .equalTo("threadId", threadId)
+                    .beginGroup()
+                    .equalTo("read", false)
+                    .or()
+                    .equalTo("seen", false)
+                    .endGroup()
+                    .findAll()
+
+            realm.executeTransaction {
+                messages.forEach { message ->
+                    message.seen = true
+                    message.read = true
                 }
-
-
-        val realm = Realm.getDefaultInstance()
-        val messages = realm.where(Message::class.java)
-                .equalTo("threadId", threadId)
-                .beginGroup()
-                .equalTo("read", false)
-                .or()
-                .equalTo("seen", false)
-                .endGroup()
-                .findAll()
-
-        realm.executeTransaction {
-            messages.forEach { message ->
-                message.seen = true
-                message.read = true
             }
         }
-        realm.close()
+
+        val values = ContentValues()
+        values.put(Telephony.Sms.SEEN, true)
+        values.put(Telephony.Sms.READ, true)
+
+        try {
+            val uri = ContentUris.withAppendedId(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId)
+            context.contentResolver.update(uri, values, "${Telephony.Sms.READ} = 0", null)
+        } catch (exception: Exception) {
+
+        }
     }
 
     override fun sendSmsAndPersist(threadId: Long, address: String, body: String) {

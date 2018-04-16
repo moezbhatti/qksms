@@ -25,7 +25,7 @@ import javax.inject.Singleton
 @Singleton
 class AnalyticsManagerImpl @Inject constructor() : AnalyticsManager {
 
-    override fun track(event: String) {
+    override fun track(event: String, vararg properties: Pair<String, String>) {
         // Do nothing
     }
 

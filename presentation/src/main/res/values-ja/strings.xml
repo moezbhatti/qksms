@@ -35,11 +35,12 @@
   <string name="menu_clear">クリア</string>
   <string name="menu_call">通話</string>
   <string name="menu_info">詳細</string>
-  <string name="menu_archive">会話のアーカイブ</string>
-  <string name="menu_unarchive">アーカイブから削除</string>
-  <string name="menu_delete">削除</string>
+  <string name="inbox_menu_archive">会話のアーカイブ</string>
+  <string name="inbox_menu_unarchive">アーカイブから削除</string>
+  <string name="inbox_menu_delete">削除</string>
   <string name="menu_save">画像を保存</string>
   <string name="main_syncing">データベースを最適化します。これは数分かかる場合があります&#8230;</string>
+  <string name="main_sender_you">You: %s</string>
   <string name="compose_hint">メッセージを書く&#8230;</string>
   <string name="message_status_sending">送信中&#8230;</string>
   <string name="message_status_delivered">%s を配信しました</string>
@@ -52,6 +53,7 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">ヘルプとフィードバック</string>
   <string name="inbox_empty_text">会話がここに表示されます</string>
+  <string name="inbox_search_empty_text">No results</string>
   <string name="archived_empty_text">保存した会話がここに表示されます</string>
   <string name="scheduled_empty_text">スケジュールされたメッセージがここに表示されます</string>
   <string name="dialog_delete_title">削除</string>
@@ -88,10 +90,11 @@
   <string name="settings_delivery_summary">メッセージが正常に送信されたことを確認します</string>
   <string name="settings_qkreply_title">QK 返信</string>
   <string name="settings_qkreply_summary">新しいメッセージのポップアップ</string>
+  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
   <string name="settings_unicode_title">アクセントの除去</string>
   <string name="settings_unicode_summary">送信する SMS メッセージの文字からアクセントを削除します</string>
-  <string name="settings_mms_title">MMS が有効です</string>
   <string name="settings_mms_size_title">MMS の最大添付ファイルサイズ</string>
   <string name="settings_sync_title">メッセージを同期</string>
   <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
