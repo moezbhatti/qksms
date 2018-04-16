@@ -25,15 +25,15 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.hardware.display.DisplayManager
 import android.net.Uri
 import android.os.Build
-import android.os.Parcel
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.app.RemoteInput
 import android.support.v4.app.TaskStackBuilder
 import android.telephony.PhoneNumberUtils
-import android.widget.RemoteViews
+import android.view.Display
 import com.moez.QKSMS.R
 import common.util.extensions.dpToPx
 import feature.compose.ComposeActivity
@@ -159,8 +159,15 @@ class NotificationManagerImpl @Inject constructor(
         }
 
         if (prefs.qkreply.get()) {
-            // Needed in order to disable the heads up notification
-            notification.setCustomHeadsUpContentView(RemoteViews(Parcel.obtain()))
+            // If the screen is on, disable the sound and vibration so that a heads-up notification
+            // doesn't appear
+            val displayManager = context.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+            if (displayManager.displays.any { display -> display.state != Display.STATE_OFF }) {
+                notification.priority = NotificationManagerCompat.IMPORTANCE_MIN
+                notification.setCategory(null)
+                notification.setSound(null)
+                notification.setVibrate(null)
+            }
 
             val intent = Intent(context, QkReplyActivity::class.java)
                     .putExtra("threadId", threadId)
