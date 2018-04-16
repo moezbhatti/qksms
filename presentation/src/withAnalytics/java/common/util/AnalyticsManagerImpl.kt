@@ -32,16 +32,20 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AnalyticsManagerImpl @Inject constructor(context: Context): AnalyticsManager {
+class AnalyticsManagerImpl @Inject constructor(context: Context) : AnalyticsManager {
 
     private val amplitude: AmplitudeClient = Amplitude.getInstance().initialize(context, BuildConfig.AMPLITUDE_API_KEY)
     private val mixpanel: MixpanelAPI = MixpanelAPI.getInstance(context, BuildConfig.MIXPANEL_API_KEY)
 
-    override fun track(event: String) {
-        amplitude.logEvent(event)
+    override fun track(event: String, vararg properties: Pair<String, String>) {
+        val propertiesJson = JSONObject(properties
+                .associateBy { pair -> pair.first }
+                .mapValues { pair -> pair.value.second })
+
+        amplitude.logEvent(event, propertiesJson)
 
         synchronized(mixpanel, {
-            mixpanel.track(event)
+            mixpanel.track(event, propertiesJson)
         })
     }
 
