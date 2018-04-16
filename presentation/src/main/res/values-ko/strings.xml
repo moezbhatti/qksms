@@ -35,16 +35,9 @@
   <string name="menu_clear">비우기</string>
   <string name="menu_call">전화</string>
   <string name="menu_info">자세히</string>
-  <string name="inbox_menu_archive">대화 보관하기</string>
-  <string name="inbox_menu_unarchive">보관함에서 제거</string>
-  <string name="inbox_menu_delete">삭제</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">데이터베이스 초기화 중, 시간이 약간 걸립니다...</string>
   <string name="main_sender_you">You: %s</string>
-  <string name="compose_hint">메시지 작성 중...</string>
-  <string name="message_status_sending">전송 중...</string>
-  <string name="message_status_delivered">%s 전송됨</string>
-  <string name="message_status_failed">전송 실패, 눌러서 다시 시도하세요</string>
   <string name="drawer_inbox">수신함</string>
   <string name="drawer_archived">보관됨</string>
   <string name="drawer_scheduled">예약됨</string>
@@ -54,10 +47,27 @@
   <string name="drawer_help">도움말 &amp; 피드백</string>
   <string name="inbox_empty_text">대화가 여기에 나타납니다</string>
   <string name="inbox_search_empty_text">No results</string>
+  <string name="inbox_menu_archive">Archive</string>
+  <string name="inbox_menu_unarchive">Unarchive</string>
+  <string name="inbox_menu_block">Block</string>
+  <string name="inbox_menu_delete">Delete</string>
   <string name="archived_empty_text">보관된 메시지가 여기 나타납니다</string>
   <string name="scheduled_empty_text">예약된 메시지가 여기 나타납니다</string>
   <string name="dialog_delete_title">삭제</string>
   <string name="dialog_delete_message">정말 이 대화를 삭제하시겠습니까?</string>
+  <string-array name="message_options">
+    <item>Copy text</item>
+    <item>Forward</item>
+    <item>Delete</item>
+  </string-array>
+  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_hint">메시지 작성 중...</string>
+  <string name="compose_menu_copy">Copy text</string>
+  <string name="compose_menu_forward">Forward</string>
+  <string name="compose_menu_delete">Delete</string>
+  <string name="message_status_sending">전송 중...</string>
+  <string name="message_status_delivered">%s 전송됨</string>
+  <string name="message_status_failed">전송 실패, 눌러서 다시 시도하세요</string>
   <string name="info_title">자세히</string>
   <string name="info_notifications">알림</string>
   <string name="info_theme">Theme</string>
@@ -78,7 +88,6 @@
   <string name="settings_night_start_title">시작 시간</string>
   <string name="settings_night_end_title">끝나는 시간</string>
   <string name="settings_auto_emoji_title">자동 이모티콘</string>
-  <string name="settings_auto_emoji_summary">:) 와 같은 문자를 자동으로 🙂같은 이모티콘으로 변환합니다</string>
   <string name="settings_notifications_title">Notifications</string>
   <string name="settings_vibration_title">진동</string>
   <string name="settings_ringtone_title">소리</string>
@@ -98,6 +107,7 @@
   <string name="settings_mms_size_title">Max MMS attachment size</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+  <string name="settings_version">Version %s</string>
   <string name="blocked_title">Blocking</string>
   <string name="blocked_empty">Your blocked conversations will appear here</string>
   <string name="blocked_unblock_dialog_title">Unblock</string>
@@ -108,6 +118,8 @@
   <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
   <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
+  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+  <string name="qksms_plus_donate">Donate via PayPal</string>
   <string name="qksms_plus_coming_soon">Coming soon</string>
   <string name="qksms_plus_themes_title">Premium themes</string>
   <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
@@ -152,11 +164,6 @@
   <string name="toast_qksms_plus">이 기능을 사용하려면 QKSMS+ 를 잠금 해제해야 합니다.</string>
   <string name="notification_message_failed_title">메시지 보내지지 않음</string>
   <string name="notification_message_failed_text">The message to %s failed to send</string>
-  <string-array name="message_options">
-    <item>Copy text</item>
-    <item>Forward</item>
-    <item>Delete</item>
-  </string-array>
   <string-array name="night_modes">
     <item>Disabled</item>
     <item>Always on</item>

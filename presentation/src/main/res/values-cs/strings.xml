@@ -20,31 +20,24 @@
   -->
 <resources>
   <string name="app_name">QKSMS</string>
-  <string name="title_archived">Archived</string>
-  <string name="title_scheduled">Scheduled</string>
+  <string name="title_archived">Archivováno</string>
+  <string name="title_scheduled">Naplánováno</string>
   <string name="title_settings">Nastavení</string>
-  <string name="title_notification_prefs">Notifications</string>
-  <string name="title_theme">Theme</string>
+  <string name="title_notification_prefs">Oznámení</string>
+  <string name="title_theme">Motiv vzhledu</string>
   <string name="title_conversations">Search inbox&#8230;</string>
   <string name="title_compose">Nová zpráva</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Love texting again</string>
+  <string name="setup_title">Zamilujte si znovu SMS</string>
   <string name="setup_summary">Make QKSMS your default SMS app</string>
   <string name="setup_skip">Přeskočit</string>
   <string name="setup_next">Pokračovat</string>
   <string name="menu_clear">Vymazat</string>
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
-  <string name="inbox_menu_archive">Archivovat konverzaci</string>
-  <string name="inbox_menu_unarchive">Odebrat z archivu</string>
-  <string name="inbox_menu_delete">Smazat</string>
   <string name="menu_save">Uložit obrázek</string>
   <string name="main_syncing">Optimalizace databáze, to může chvíli trvat&#8230;</string>
-  <string name="main_sender_you">You: %s</string>
-  <string name="compose_hint">Napsat zprávu&#8230;</string>
-  <string name="message_status_sending">Odesílání&#8230;</string>
-  <string name="message_status_delivered">Doručeno %s</string>
-  <string name="message_status_failed">Failed to send. Tap to try again</string>
+  <string name="main_sender_you">Vy: %s</string>
   <string name="drawer_inbox">Inbox</string>
   <string name="drawer_archived">Archived</string>
   <string name="drawer_scheduled">Scheduled</string>
@@ -54,10 +47,27 @@
   <string name="drawer_help">Help &amp; feedback</string>
   <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
   <string name="inbox_search_empty_text">No results</string>
+  <string name="inbox_menu_archive">Archive</string>
+  <string name="inbox_menu_unarchive">Unarchive</string>
+  <string name="inbox_menu_block">Block</string>
+  <string name="inbox_menu_delete">Delete</string>
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
   <string name="dialog_delete_title">Delete</string>
   <string name="dialog_delete_message">Opravdu že chcete odstranit tuto konverzaci?</string>
+  <string-array name="message_options">
+    <item>Copy text</item>
+    <item>Forward</item>
+    <item>Delete</item>
+  </string-array>
+  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_hint">Napsat zprávu&#8230;</string>
+  <string name="compose_menu_copy">Copy text</string>
+  <string name="compose_menu_forward">Forward</string>
+  <string name="compose_menu_delete">Delete</string>
+  <string name="message_status_sending">Odesílání&#8230;</string>
+  <string name="message_status_delivered">Doručeno %s</string>
+  <string name="message_status_failed">Failed to send. Tap to try again</string>
   <string name="info_title">Podrobnosti</string>
   <string name="info_notifications">Notifications</string>
   <string name="info_theme">Theme</string>
@@ -78,7 +88,6 @@
   <string name="settings_night_start_title">Start time</string>
   <string name="settings_night_end_title">End time</string>
   <string name="settings_auto_emoji_title">Automatické emoji</string>
-  <string name="settings_auto_emoji_summary">Převést text jako :) na emotikonu jako 🙂</string>
   <string name="settings_notifications_title">Upozornění</string>
   <string name="settings_vibration_title">Vibrace</string>
   <string name="settings_ringtone_title">Sound</string>
@@ -98,6 +107,7 @@
   <string name="settings_mms_size_title">Maximální velikost přílohy MMS</string>
   <string name="settings_sync_title">Synchronizovat zprávy</string>
   <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativním Android SMS databází</string>
+  <string name="settings_version">Version %s</string>
   <string name="blocked_title">Blokování</string>
   <string name="blocked_empty">Zde se objeví vaše blokované konverzace</string>
   <string name="blocked_unblock_dialog_title">Odblokovat</string>
@@ -108,6 +118,8 @@
   <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">Děkujeme za podporu QKSMS!</string>
   <string name="qksms_plus_thanks_summary">Nyní máte přístup ke všem funkcím QKSMS+</string>
+  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+  <string name="qksms_plus_donate">Donate via PayPal</string>
   <string name="qksms_plus_coming_soon">Připravujeme</string>
   <string name="qksms_plus_themes_title">Prémiová témata</string>
   <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
@@ -152,11 +164,6 @@
   <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
   <string name="notification_message_failed_title">Message not sent</string>
   <string name="notification_message_failed_text">The message to %s failed to send</string>
-  <string-array name="message_options">
-    <item>Copy text</item>
-    <item>Forward</item>
-    <item>Delete</item>
-  </string-array>
   <string-array name="night_modes">
     <item>Disabled</item>
     <item>Always on</item>

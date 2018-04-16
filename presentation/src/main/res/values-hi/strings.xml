@@ -35,16 +35,9 @@
   <string name="menu_clear">Clear</string>
   <string name="menu_call">कॉल</string>
   <string name="menu_info">Details</string>
-  <string name="inbox_menu_archive">Archive conversation</string>
-  <string name="inbox_menu_unarchive">Remove from archive</string>
-  <string name="inbox_menu_delete">Delete</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">Optimizing database, this might take a minute&#8230;</string>
   <string name="main_sender_you">You: %s</string>
-  <string name="compose_hint">Write a message&#8230;</string>
-  <string name="message_status_sending">Sending&#8230;</string>
-  <string name="message_status_delivered">Delivered %s</string>
-  <string name="message_status_failed">Failed to send. Tap to try again</string>
   <string name="drawer_inbox">Inbox</string>
   <string name="drawer_archived">Archived</string>
   <string name="drawer_scheduled">Scheduled</string>
@@ -54,10 +47,27 @@
   <string name="drawer_help">Help &amp; feedback</string>
   <string name="inbox_empty_text">Your conversations will appear here</string>
   <string name="inbox_search_empty_text">No results</string>
+  <string name="inbox_menu_archive">Archive</string>
+  <string name="inbox_menu_unarchive">Unarchive</string>
+  <string name="inbox_menu_block">Block</string>
+  <string name="inbox_menu_delete">Delete</string>
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
   <string name="dialog_delete_title">Delete</string>
   <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+  <string-array name="message_options">
+    <item>Copy text</item>
+    <item>Forward</item>
+    <item>Delete</item>
+  </string-array>
+  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_hint">Write a message&#8230;</string>
+  <string name="compose_menu_copy">Copy text</string>
+  <string name="compose_menu_forward">Forward</string>
+  <string name="compose_menu_delete">Delete</string>
+  <string name="message_status_sending">Sending&#8230;</string>
+  <string name="message_status_delivered">Delivered %s</string>
+  <string name="message_status_failed">Failed to send. Tap to try again</string>
   <string name="info_title">Details</string>
   <string name="info_notifications">Notifications</string>
   <string name="info_theme">Theme</string>
@@ -78,7 +88,6 @@
   <string name="settings_night_start_title">Start time</string>
   <string name="settings_night_end_title">End time</string>
   <string name="settings_auto_emoji_title">Automatic emoji</string>
-  <string name="settings_auto_emoji_summary">Convert text like :) to an emoji like 🙂</string>
   <string name="settings_notifications_title">Notifications</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Sound</string>
@@ -98,6 +107,7 @@
   <string name="settings_mms_size_title">Max MMS attachment size</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+  <string name="settings_version">Version %s</string>
   <string name="blocked_title">Blocking</string>
   <string name="blocked_empty">Your blocked conversations will appear here</string>
   <string name="blocked_unblock_dialog_title">Unblock</string>
@@ -108,6 +118,8 @@
   <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
   <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
+  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+  <string name="qksms_plus_donate">Donate via PayPal</string>
   <string name="qksms_plus_coming_soon">Coming soon</string>
   <string name="qksms_plus_themes_title">Premium themes</string>
   <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
@@ -152,11 +164,6 @@
   <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
   <string name="notification_message_failed_title">Message not sent</string>
   <string name="notification_message_failed_text">The message to %s failed to send</string>
-  <string-array name="message_options">
-    <item>Copy text</item>
-    <item>Forward</item>
-    <item>Delete</item>
-  </string-array>
   <string-array name="night_modes">
     <item>Disabled</item>
     <item>Always on</item>

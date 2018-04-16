@@ -35,16 +35,9 @@
   <string name="menu_clear">پاک کردن</string>
   <string name="menu_call">تماس</string>
   <string name="menu_info">جزئیات</string>
-  <string name="inbox_menu_archive">بایگانی مکالمه</string>
-  <string name="inbox_menu_unarchive">حذف از بایگانی</string>
-  <string name="inbox_menu_delete">حذف</string>
   <string name="menu_save">ذخیره عکس</string>
   <string name="main_syncing">بهینه سازی پایگاه داده، این ممکن است یک دقیقه را&#8230;</string>
   <string name="main_sender_you">You: %s</string>
-  <string name="compose_hint">نوشتن پیام&#8230;</string>
-  <string name="message_status_sending">فرستادن&#8230;</string>
-  <string name="message_status_delivered">رسیده %s</string>
-  <string name="message_status_failed">اوپس، دوباره ارسال کن</string>
   <string name="drawer_inbox">صندوق ورودی</string>
   <string name="drawer_archived">بایگانی</string>
   <string name="drawer_scheduled">زمان بندی</string>
@@ -54,10 +47,27 @@
   <string name="drawer_help">راهنما &amp; نظرات</string>
   <string name="inbox_empty_text">مکالمات اینجا نمایش داده میشود</string>
   <string name="inbox_search_empty_text">No results</string>
+  <string name="inbox_menu_archive">Archive</string>
+  <string name="inbox_menu_unarchive">Unarchive</string>
+  <string name="inbox_menu_block">Block</string>
+  <string name="inbox_menu_delete">Delete</string>
   <string name="archived_empty_text">بایگانی اینجا نمایش داده میشود</string>
   <string name="scheduled_empty_text">زمانبندیها اینجا نمایش داده میشود</string>
   <string name="dialog_delete_title">حذف</string>
   <string name="dialog_delete_message">قطعاً مکالمه پاک شود?</string>
+  <string-array name="message_options">
+    <item>کپی متن</item>
+    <item>فوروارد</item>
+    <item>حذف</item>
+  </string-array>
+  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_hint">نوشتن پیام&#8230;</string>
+  <string name="compose_menu_copy">Copy text</string>
+  <string name="compose_menu_forward">Forward</string>
+  <string name="compose_menu_delete">Delete</string>
+  <string name="message_status_sending">فرستادن&#8230;</string>
+  <string name="message_status_delivered">رسیده %s</string>
+  <string name="message_status_failed">اوپس، دوباره ارسال کن</string>
   <string name="info_title">جزئیات</string>
   <string name="info_notifications">اعلانها</string>
   <string name="info_theme">پوسته</string>
@@ -78,7 +88,6 @@
   <string name="settings_night_start_title">زمان شروع</string>
   <string name="settings_night_end_title">زمان پایان</string>
   <string name="settings_auto_emoji_title">Emoji اتوماتیک</string>
-  <string name="settings_auto_emoji_summary">تبدیل متن مانند :) به emoji مانند 🙂</string>
   <string name="settings_notifications_title">اعلان‌ها</string>
   <string name="settings_vibration_title">لرزش</string>
   <string name="settings_ringtone_title">حالت صدا</string>
@@ -98,6 +107,7 @@
   <string name="settings_mms_size_title">MMS حداکثر اندازه پیوست</string>
   <string name="settings_sync_title">همگام سازی پیام ها</string>
   <string name="settings_sync_summary">همگام سازی پیام ها با پایگاه داده</string>
+  <string name="settings_version">Version %s</string>
   <string name="blocked_title">مسدود کردن</string>
   <string name="blocked_empty">مکالمات مسدود شده شما در اینجا نشان داده می شود</string>
   <string name="blocked_unblock_dialog_title">آنبلاک</string>
@@ -108,6 +118,8 @@
   <string name="qksms_plus_upgrade_donate">نسخه پیشرفته و حمایت %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">ممنون از حمایت شما!</string>
   <string name="qksms_plus_thanks_summary">حال شما به همه امکانات دسترسی دارید</string>
+  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+  <string name="qksms_plus_donate">Donate via PayPal</string>
   <string name="qksms_plus_coming_soon">درحال بروزرسانی</string>
   <string name="qksms_plus_themes_title">پوسته پیشرفته</string>
   <string name="qksms_plus_themes_summary">در حالت متریال دیزاین رنگبندی پوسته امکانپذیر نیست</string>
@@ -152,11 +164,6 @@
   <string name="toast_qksms_plus">باید نسخه پیشرفته را فعال کنید</string>
   <string name="notification_message_failed_title">ارسال نشد</string>
   <string name="notification_message_failed_text">پیام به %s ارسال نشد</string>
-  <string-array name="message_options">
-    <item>کپی متن</item>
-    <item>فوروارد</item>
-    <item>حذف</item>
-  </string-array>
   <string-array name="night_modes">
     <item>غیرفعال</item>
     <item>همیشه روشن</item>

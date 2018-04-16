@@ -35,16 +35,9 @@
   <string name="menu_clear">Očisti</string>
   <string name="menu_call">Nazovi</string>
   <string name="menu_info">Detalji</string>
-  <string name="inbox_menu_archive">Arhiviraj razgovor</string>
-  <string name="inbox_menu_unarchive">Ukloni iz arhive</string>
-  <string name="inbox_menu_delete">Izbriši</string>
   <string name="menu_save">Save image</string>
   <string name="main_syncing">Optimiziranje baze podataka, ovo može potrajati minutu&#8230;</string>
   <string name="main_sender_you">You: %s</string>
-  <string name="compose_hint">Napiši poruku&#8230;</string>
-  <string name="message_status_sending">Slanje&#8230;</string>
-  <string name="message_status_delivered">Isporučeno %s</string>
-  <string name="message_status_failed">Slanje nije uspjelo. Dodirnite da biste pokušali ponovno</string>
   <string name="drawer_inbox">Poruke</string>
   <string name="drawer_archived">Arhivirano</string>
   <string name="drawer_scheduled">Zakazano</string>
@@ -54,10 +47,27 @@
   <string name="drawer_help">Pomoć i povratne informacije</string>
   <string name="inbox_empty_text">Vaši razgovori će se pojaviti ovdje</string>
   <string name="inbox_search_empty_text">No results</string>
+  <string name="inbox_menu_archive">Archive</string>
+  <string name="inbox_menu_unarchive">Unarchive</string>
+  <string name="inbox_menu_block">Block</string>
+  <string name="inbox_menu_delete">Delete</string>
   <string name="archived_empty_text">Vaši arhivirani razgovori će se pojaviti ovdje</string>
   <string name="scheduled_empty_text">Vaši zakazani razgovori će se pojaviti ovdje</string>
   <string name="dialog_delete_title">Izbriši</string>
   <string name="dialog_delete_message">Jeste li sigurni da želite izbrisati ovaj razgovor?</string>
+  <string-array name="message_options">
+    <item>Kopiraj tekst</item>
+    <item>Proslijedi</item>
+    <item>Izbriši</item>
+  </string-array>
+  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_hint">Napiši poruku&#8230;</string>
+  <string name="compose_menu_copy">Copy text</string>
+  <string name="compose_menu_forward">Forward</string>
+  <string name="compose_menu_delete">Delete</string>
+  <string name="message_status_sending">Slanje&#8230;</string>
+  <string name="message_status_delivered">Isporučeno %s</string>
+  <string name="message_status_failed">Slanje nije uspjelo. Dodirnite da biste pokušali ponovno</string>
   <string name="info_title">Detalji</string>
   <string name="info_notifications">Obavijesti</string>
   <string name="info_theme">Theme</string>
@@ -78,7 +88,6 @@
   <string name="settings_night_start_title">Vrijeme početka</string>
   <string name="settings_night_end_title">Vrijeme završetka</string>
   <string name="settings_auto_emoji_title">Automatsk emoji</string>
-  <string name="settings_auto_emoji_summary">Pretvorite tekst kao :) u 🙂</string>
   <string name="settings_notifications_title">Notifications</string>
   <string name="settings_vibration_title">Vibracija</string>
   <string name="settings_ringtone_title">Zvuk</string>
@@ -98,6 +107,7 @@
   <string name="settings_mms_size_title">Maksimalna veličina MMS privitka</string>
   <string name="settings_sync_title">Uskladi poruke</string>
   <string name="settings_sync_summary">Ponovno uskladite svoje poruke sa nativnom Android SMS bazom podataka</string>
+  <string name="settings_version">Version %s</string>
   <string name="blocked_title">Blocking</string>
   <string name="blocked_empty">Your blocked conversations will appear here</string>
   <string name="blocked_unblock_dialog_title">Unblock</string>
@@ -108,6 +118,8 @@
   <string name="qksms_plus_upgrade_donate">Otključajte + za %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">Hvala vam za podržavanje QKSMS!</string>
   <string name="qksms_plus_thanks_summary">Sada imate pristup svim QKSMS+ značajkama</string>
+  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+  <string name="qksms_plus_donate">Donate via PayPal</string>
   <string name="qksms_plus_coming_soon">Uskoro dolazi</string>
   <string name="qksms_plus_themes_title">Premium teme</string>
   <string name="qksms_plus_themes_summary">Otključajte lijepe boje tema koje nisu dostupne na paleti materijalnog dizajna</string>
@@ -152,11 +164,6 @@
   <string name="toast_qksms_plus">Morate otključati QKSMS+ za korištenje ovog</string>
   <string name="notification_message_failed_title">Poruka nije poslana</string>
   <string name="notification_message_failed_text">Poruku %s se nije uspjela poslati</string>
-  <string-array name="message_options">
-    <item>Kopiraj tekst</item>
-    <item>Proslijedi</item>
-    <item>Izbriši</item>
-  </string-array>
   <string-array name="night_modes">
     <item>Onemogućeno</item>
     <item>Uvijek uključen</item>

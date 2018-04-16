@@ -35,16 +35,9 @@
   <string name="menu_clear">Effacer</string>
   <string name="menu_call">Appeler</string>
   <string name="menu_info">Détails</string>
-  <string name="inbox_menu_archive">Archiver la conversation</string>
-  <string name="inbox_menu_unarchive">Supprimer des archives</string>
-  <string name="inbox_menu_delete">Supprimer</string>
   <string name="menu_save">Sauvegarder l\'image</string>
   <string name="main_syncing">Optimisation de la base de données, cela peut prendre un moment&#8230;</string>
-  <string name="main_sender_you">You: %s</string>
-  <string name="compose_hint">Écrire un message&#8230;</string>
-  <string name="message_status_sending">Envoi&#8230;</string>
-  <string name="message_status_delivered">Transmis %s</string>
-  <string name="message_status_failed">Échec de l\'envoi. Taper pour réessayer</string>
+  <string name="main_sender_you">Vous: %s</string>
   <string name="drawer_inbox">Boite de réception</string>
   <string name="drawer_archived">Archives</string>
   <string name="drawer_scheduled">Planifiés</string>
@@ -53,16 +46,33 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Aide &amp; commentaire</string>
   <string name="inbox_empty_text">Vos conversations apparaîtront ici</string>
-  <string name="inbox_search_empty_text">No results</string>
+  <string name="inbox_search_empty_text">Aucun résultat</string>
+  <string name="inbox_menu_archive">Archiver</string>
+  <string name="inbox_menu_unarchive">Désarchiver</string>
+  <string name="inbox_menu_block">Bloquer</string>
+  <string name="inbox_menu_delete">Supprimer</string>
   <string name="archived_empty_text">Vos conversations archivées apparaîtront ici</string>
   <string name="scheduled_empty_text">Vos messages planifiés apparaîtront ici</string>
   <string name="dialog_delete_title">Supprimer</string>
   <string name="dialog_delete_message">Êtes-vous certain de vouloir supprimer cette conversation ?</string>
+  <string-array name="message_options">
+    <item>Copier texte</item>
+    <item>Transférer</item>
+    <item>Effacer</item>
+  </string-array>
+  <string name="compose_messages_empty">C\'est le début de votre conversation. Dites quelque chose de gentil!</string>
+  <string name="compose_hint">Écrire un message&#8230;</string>
+  <string name="compose_menu_copy">Copy text</string>
+  <string name="compose_menu_forward">Forward</string>
+  <string name="compose_menu_delete">Delete</string>
+  <string name="message_status_sending">Envoi&#8230;</string>
+  <string name="message_status_delivered">Livré %s</string>
+  <string name="message_status_failed">Échec de l\'envoi. Taper pour réessayer</string>
   <string name="info_title">Détails</string>
   <string name="info_notifications">Notifications</string>
   <string name="info_theme">Thème</string>
   <string name="info_archive">Archiver</string>
-  <string name="info_unarchive">Désarchiver</string>
+  <string name="info_unarchive">Restaurer</string>
   <string name="info_block">Bloquer</string>
   <string name="info_unblock">Débloquer</string>
   <string name="info_delete">Supprimer la conversation</string>
@@ -76,9 +86,8 @@
   <string name="settings_night_title">Mode nuit</string>
   <string name="settings_black_title">Mode noir pur</string>
   <string name="settings_night_start_title">Début</string>
-  <string name="settings_night_end_title">Fin</string>
+  <string name="settings_night_end_title">Heure de fin</string>
   <string name="settings_auto_emoji_title">Emoji automatique</string>
-  <string name="settings_auto_emoji_summary">Convertir les textes commes :) en emoji comme 🙂</string>
   <string name="settings_notifications_title">Notifications</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Son</string>
@@ -90,14 +99,15 @@
   <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
   <string name="settings_qkreply_title">Réponse rapide QK</string>
   <string name="settings_qkreply_summary">Popup pour les nouveaux messages</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
+  <string name="settings_qkreply_tap_dismiss_title">Touchez pour cacher</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Touchez à l\'extérieur du popup pour le fermer</string>
   <string name="settings_text_size_title">Taille de la police d\'écriture</string>
   <string name="settings_unicode_title">Enlever les accents</string>
   <string name="settings_unicode_summary">Supprimer les accents des caractères lors de l\'envoi de messages SMS</string>
   <string name="settings_mms_size_title">Taille maximale des pièces jointes MMS</string>
   <string name="settings_sync_title">Synchroniser les messages</string>
   <string name="settings_sync_summary">Re-synchroniser les messages avec la base de données Android native</string>
+  <string name="settings_version">Version %s</string>
   <string name="blocked_title">Blocage</string>
   <string name="blocked_empty">Vos conversations bloquées apparaîtront ici</string>
   <string name="blocked_unblock_dialog_title">Débloquer</string>
@@ -108,6 +118,8 @@
   <string name="qksms_plus_upgrade_donate">Déverrouiller + faire un don pour %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">Merci de soutenir QKSMS!</string>
   <string name="qksms_plus_thanks_summary">Vous avez maintenant accès à toutes les fonctionnalités de QKSMS+</string>
+  <string name="qksms_plus_free_title">QKSMS + est gratuit pour les utilisateurs de F-Droid ! Si vous souhaitez soutenir le développement, n’hésitez pas à faire un don.</string>
+  <string name="qksms_plus_donate">Faire un don avec PayPal</string>
   <string name="qksms_plus_coming_soon">Prochainement</string>
   <string name="qksms_plus_themes_title">Thèmes Premium</string>
   <string name="qksms_plus_themes_summary">Débloquez de magnifiques couleurs de thèmes non disponibles dans la palette Material Design</string>
@@ -152,11 +164,6 @@
   <string name="toast_qksms_plus">Vous devez déverrouiller QKSMS+ pour utiliser ceci</string>
   <string name="notification_message_failed_title">Message non envoyé</string>
   <string name="notification_message_failed_text">Le message à %s n\'a pu être envoyé</string>
-  <string-array name="message_options">
-    <item>Copier texte</item>
-    <item>Transférer</item>
-    <item>Effacer</item>
-  </string-array>
   <string-array name="night_modes">
     <item>Désactivé</item>
     <item>Toujours activé</item>
@@ -170,11 +177,11 @@
   </string-array>
   <string-array name="mms_sizes">
     <item>100 Ko</item>
-    <item>200Ko</item>
-    <item>300Ko</item>
+    <item>200 Ko</item>
+    <item>300 Ko</item>
     <item>600Ko</item>
-    <item>1000Ko</item>
-    <item>2000KB</item>
+    <item>1 000 Ko</item>
+    <item>2 000 Ko</item>
     <item>Pas de limite</item>
   </string-array>
   <string-array name="qk_responses">
