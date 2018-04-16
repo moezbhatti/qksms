@@ -45,7 +45,7 @@ import mapper.CursorToMessage
 import mapper.CursorToMessageImpl
 import mapper.CursorToPart
 import mapper.CursorToPartImpl
-import mapper.CursorToRecipienImpl
+import mapper.CursorToRecipientImpl
 import mapper.CursorToRecipient
 import repository.ContactRepository
 import repository.ContactRepositoryImpl
@@ -114,7 +114,7 @@ class AppModule(private var application: Application) {
     fun provideCursorToPart(mapper: CursorToPartImpl): CursorToPart = mapper
 
     @Provides
-    fun provideCursorToRecipient(mapper: CursorToRecipienImpl): CursorToRecipient = mapper
+    fun provideCursorToRecipient(mapper: CursorToRecipientImpl): CursorToRecipient = mapper
 
 
     // Repository
