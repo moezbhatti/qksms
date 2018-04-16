@@ -100,7 +100,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/attachments"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:clipChildren="false"
@@ -112,7 +112,6 @@
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
-        app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="@id/messageBackground"
         app:layout_constraintTop_toTopOf="@id/messageBackground"
         tools:listitem="@layout/attachment_list_item" />
@@ -162,12 +161,11 @@
     <common.widget.QkTextView
         android:id="@+id/counter"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/send"
         app:layout_constraintEnd_toEndOf="@id/send"
-        app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="@id/send"
         app:textColor="secondary"
         app:textSize="tertiary"
