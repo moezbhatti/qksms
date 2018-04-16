@@ -78,8 +78,8 @@ class ThemePickerViewModel(intent: Intent) : QkViewModel<ThemePickerView, ThemeP
         // Update the theme, when apply is clicked
         view.hsvThemeAppliedIntent
                 .withLatestFrom(view.hsvThemeSelectedIntent, { _, color -> color })
-                .withLatestFrom(billingManager.plusStatus, { color, upgradeStatus ->
-                    if (upgradeStatus == BillingManager.UpgradeStatus.REGULAR) {
+                .withLatestFrom(billingManager.upgradeStatus, { color, upgraded ->
+                    if (!upgraded) {
                         view.showQksmsPlusSnackbar()
                     } else {
                         theme.set(color)

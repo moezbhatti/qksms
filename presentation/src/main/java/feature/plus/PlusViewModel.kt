@@ -36,10 +36,8 @@ class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {
     init {
         appComponent.inject(this)
 
-        disposables += billingManager.plusStatus
-                .subscribe { plan ->
-                    newState { it.copy(currentPlan = plan) }
-                }
+        disposables += billingManager.upgradeStatus
+                .subscribe { upgraded -> newState { it.copy(upgraded = upgraded) } }
 
         disposables += billingManager.products
                 .subscribe { products ->

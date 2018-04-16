@@ -18,10 +18,8 @@
  */
 package feature.plus
 
-import common.util.BillingManager
-
 data class PlusState(
-        val currentPlan: BillingManager.UpgradeStatus = BillingManager.UpgradeStatus.REGULAR,
+        val upgraded: Boolean = false,
         val upgradePrice: String = "",
         val upgradeDonatePrice: String = "",
         val currency: String = ""

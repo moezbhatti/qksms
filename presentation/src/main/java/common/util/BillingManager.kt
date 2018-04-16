@@ -29,6 +29,7 @@ import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
+import com.moez.QKSMS.BuildConfig
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -40,19 +41,16 @@ class BillingManager @Inject constructor(
         private val analyticsManager: AnalyticsManager
 ) : PurchasesUpdatedListener {
 
-    enum class UpgradeStatus { REGULAR, UPGRADED }
-
     companion object {
         const val SKU_PLUS = "remove_ads"
         const val SKU_PLUS_DONATE = "qksms_plus_donate"
     }
 
     val products: Observable<List<SkuDetails>> = BehaviorSubject.create()
-    val plusStatus: Observable<UpgradeStatus>
+    val upgradeStatus: Observable<Boolean>
 
     private val skus = listOf(SKU_PLUS, SKU_PLUS_DONATE)
-    private val purchaseList = mutableListOf<Purchase>()
-    private val purchaseListObservable: Observable<List<Purchase>> = BehaviorSubject.createDefault(listOf())
+    private val purchaseListObservable = BehaviorSubject.createDefault<List<Purchase>>(listOf())
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context).setListener(this).build()
     private var isServiceConnected = false
@@ -63,15 +61,13 @@ class BillingManager @Inject constructor(
             querySkuDetailsAsync()
         }
 
-        plusStatus = purchaseListObservable
-                .map { purchases ->
-                    when {
-                        purchases.any { it.sku == SKU_PLUS } -> UpgradeStatus.UPGRADED
-                        purchases.any { it.sku == SKU_PLUS_DONATE } -> UpgradeStatus.UPGRADED
-                        else -> UpgradeStatus.REGULAR
-                    }
-                }
-                .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded.toString()) }
+        upgradeStatus = when (BuildConfig.FLAVOR) {
+            "noAnalytics" -> BehaviorSubject.createDefault(true)
+
+            else -> purchaseListObservable
+                    .map { purchases -> purchases.any { it.sku == SKU_PLUS } || purchases.any { it.sku == SKU_PLUS_DONATE } }
+                    .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
+        }
     }
 
     private fun queryPurchases() {
@@ -79,9 +75,7 @@ class BillingManager @Inject constructor(
             val purchasesResult = billingClient.queryPurchases(SkuType.INAPP)
 
             // Handle purchase result
-            purchaseList.clear()
-            purchaseList.addAll(purchasesResult.purchasesList.orEmpty())
-            (this.purchaseListObservable as Subject).onNext(purchaseList)
+            purchaseListObservable.onNext(purchasesResult.purchasesList.orEmpty())
         }
     }
 
@@ -127,16 +121,8 @@ class BillingManager @Inject constructor(
     }
 
     override fun onPurchasesUpdated(resultCode: Int, purchases: List<Purchase>?) {
-        when (resultCode) {
-            BillingResponse.OK -> {
-                purchaseList.clear()
-                purchases?.let { purchaseList.addAll(it) }
-                (this.purchaseListObservable as Subject).onNext(purchaseList)
-            }
-
-            else -> {
-                // Ignored
-            }
+        if (resultCode == BillingResponse.OK) {
+            purchaseListObservable.onNext(purchases.orEmpty())
         }
     }
 

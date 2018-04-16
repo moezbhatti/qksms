@@ -164,8 +164,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
         view.nightModeSelectedIntent
                 .doOnNext { view.dismissNightModeDialog() }
-                .withLatestFrom(billingManager.plusStatus, { mode, plusStatus ->
-                    if (plusStatus == BillingManager.UpgradeStatus.REGULAR && mode == Preferences.NIGHT_MODE_AUTO) {
+                .withLatestFrom(billingManager.upgradeStatus, { mode, upgraded ->
+                    if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
                         view.showQksmsPlusSnackbar()
                     } else {
                         nightModeManager.updateNightMode(mode)

@@ -92,8 +92,8 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
         upgrade.text = getString(R.string.qksms_plus_upgrade, state.upgradePrice, state.currency)
         upgradeDonate.text = getString(R.string.qksms_plus_upgrade_donate, state.upgradeDonatePrice, state.currency)
 
-        toUpgrade.setVisible(state.currentPlan == BillingManager.UpgradeStatus.REGULAR)
-        upgraded.setVisible(state.currentPlan == BillingManager.UpgradeStatus.UPGRADED)
+        toUpgrade.setVisible(!state.upgraded)
+        upgraded.setVisible(state.upgraded)
     }
 
     override fun initiatePurchaseFlow(billingManager: BillingManager, sku: String) {
