@@ -23,6 +23,7 @@ import android.support.text.emoji.EmojiCompat
 import android.support.text.emoji.FontRequestEmojiCompatConfig
 import android.support.v4.provider.FontRequest
 import com.bugsnag.android.Bugsnag
+import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import common.util.NightModeManager
@@ -47,8 +48,9 @@ class QKApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Bugsnag.init(this, BuildConfig.BUGSNAG_API_KEY)
-        Bugsnag.setAppVersion(BuildConfig.VERSION_NAME)
+        Bugsnag.init(this, Configuration(BuildConfig.BUGSNAG_API_KEY).apply {
+            appVersion = BuildConfig.VERSION_NAME
+        })
 
         AppComponentManager.init(this)
         appComponent.inject(this)
