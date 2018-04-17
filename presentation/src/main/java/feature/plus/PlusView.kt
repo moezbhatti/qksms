@@ -18,14 +18,15 @@
  */
 package feature.plus
 
+import common.base.QkView
 import common.util.BillingManager
 import io.reactivex.Observable
-import common.base.QkView
 
 interface PlusView : QkView<PlusState> {
 
     val upgradeIntent: Observable<Unit>
     val upgradeDonateIntent: Observable<Unit>
+    val donateIntent: Observable<*>
 
     fun initiatePurchaseFlow(billingManager: BillingManager, sku: String)
 

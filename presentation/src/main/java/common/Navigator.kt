@@ -150,6 +150,11 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivityExternal(intent)
     }
 
+    fun showDonation() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://bit.ly/QKSMSDonation"))
+        startActivity(intent)
+    }
+
     /**
      * Launch the Play Store and display the Should I Answer? listing
      */

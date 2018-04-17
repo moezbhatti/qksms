@@ -21,6 +21,7 @@ package feature.plus
 import android.graphics.Typeface
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
+import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -41,6 +42,7 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
     override val viewModelClass = PlusViewModel::class
     override val upgradeIntent by lazy { upgrade.clicks() }
     override val upgradeDonateIntent by lazy { upgradeDonate.clicks() }
+    override val donateIntent by lazy { donate.clicks() }
 
     init {
         appComponent.inject(this)
@@ -82,6 +84,7 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
         colors.theme
                 .autoDisposable(scope())
                 .subscribe { color ->
+                    donate.setBackgroundTint(color)
                     upgrade.setBackgroundTint(color)
                     thanksIcon.setTint(color)
                 }
@@ -92,8 +95,11 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
         upgrade.text = getString(R.string.qksms_plus_upgrade, state.upgradePrice, state.currency)
         upgradeDonate.text = getString(R.string.qksms_plus_upgrade_donate, state.upgradeDonatePrice, state.currency)
 
-        toUpgrade.setVisible(!state.upgraded)
-        upgraded.setVisible(state.upgraded)
+        val fdroid = BuildConfig.FLAVOR == "noAnalytics"
+
+        free.setVisible(fdroid)
+        toUpgrade.setVisible(!fdroid && !state.upgraded)
+        upgraded.setVisible(!fdroid && state.upgraded)
     }
 
     override fun initiatePurchaseFlow(billingManager: BillingManager, sku: String) {
