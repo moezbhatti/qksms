@@ -57,11 +57,13 @@ class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
 
         free.setVisible(false)
 
-        fontProvider.getLato { lato ->
-            val typeface = Typeface.create(lato, Typeface.BOLD)
-            collapsingToolbar.setCollapsedTitleTypeface(typeface)
-            collapsingToolbar.setExpandedTitleTypeface(typeface)
-        }
+        fontProvider.typeface
+                .autoDisposable(scope())
+                .subscribe { lato ->
+                    val typeface = Typeface.create(lato.value, Typeface.BOLD)
+                    collapsingToolbar.setCollapsedTitleTypeface(typeface)
+                    collapsingToolbar.setExpandedTitleTypeface(typeface)
+                }
 
         colors.textPrimary
                 .autoDisposable(scope())

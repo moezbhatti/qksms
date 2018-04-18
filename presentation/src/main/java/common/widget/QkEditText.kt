@@ -73,7 +73,6 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
-            fontProvider.getLato { setTypeface(it, typeface?.style ?: Typeface.NORMAL) }
 
             context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
                 val colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
@@ -117,6 +116,10 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (isInEditMode) return
+
+        fontProvider.typeface
+                .autoDisposable(scope())
+                .subscribe { setTypeface(it.value, typeface?.style ?: Typeface.NORMAL) }
 
         textColorObservable
                 ?.autoDisposable(scope())

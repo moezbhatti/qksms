@@ -75,7 +75,6 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
-            fontProvider.getLato { setTypeface(it, typeface?.style ?: Typeface.NORMAL) }
         }
 
         context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
@@ -142,6 +141,10 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
         if (isInEditMode) return
 
         updateSubscription()
+
+        fontProvider.typeface
+                .autoDisposable(scope())
+                .subscribe { setTypeface(it.value, typeface?.style ?: Typeface.NORMAL) }
 
         Observables
                 .combineLatest(prefs.textSize.asObservable(), textSizeAttrSubject, { textSizePref, textSizeAttr ->

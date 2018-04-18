@@ -131,6 +131,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         qkreplyTapDismiss.checkbox.isChecked = state.qkReplyTapDismiss
 
         textSize.summary = state.textSizeSummary
+        systemFont.checkbox.isChecked = state.systemFontEnabled
 
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
 

@@ -37,6 +37,7 @@ data class SettingsState(
         val qkReplyEnabled: Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.N,
         val qkReplyTapDismiss: Boolean = true,
         val textSizeSummary: String = "",
+        val systemFontEnabled: Boolean = false,
         val splitSmsEnabled: Boolean = false,
         val stripUnicodeEnabled: Boolean = false,
         val maxMmsSizeSummary: String = "100KB",

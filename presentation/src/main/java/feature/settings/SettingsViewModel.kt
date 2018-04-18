@@ -94,6 +94,9 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += prefs.textSize.asObservable()
                 .subscribe { textSize -> newState { it.copy(textSizeSummary = textSizeLabels[textSize]) } }
 
+        disposables += prefs.systemFont.asObservable()
+                .subscribe { enabled -> newState { it.copy(systemFontEnabled = enabled) } }
+
         disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { it.copy(stripUnicodeEnabled = enabled) } }
 
@@ -148,6 +151,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                         R.id.qkreplyTapDismiss -> prefs.qkreplyTapDismiss.set(!prefs.qkreplyTapDismiss.get())
 
                         R.id.textSize -> view.showTextSizePicker()
+
+                        R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
 
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 
