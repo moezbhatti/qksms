@@ -145,6 +145,13 @@
                 app:title="@string/settings_notifications_title" />
 
             <common.widget.PreferenceView
+                android:id="@+id/notificationPreviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_notification_previews_title"
+                tools:summary="Show name and message" />
+
+            <common.widget.PreferenceView
                 android:id="@+id/autoEmoji"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

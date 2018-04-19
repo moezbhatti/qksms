@@ -33,6 +33,7 @@ data class SettingsState(
         val black: Boolean = false,
         val autoEmojiEnabled: Boolean = true,
         val notificationsEnabled: Boolean = true,
+        val notificationPreviewSummary: String = "",
         val deliveryEnabled: Boolean = false,
         val qkReplyEnabled: Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.N,
         val qkReplyTapDismiss: Boolean = true,

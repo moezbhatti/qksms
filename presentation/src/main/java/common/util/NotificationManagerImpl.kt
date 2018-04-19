@@ -97,23 +97,6 @@ class NotificationManagerImpl @Inject constructor(
 
         val conversation = messageRepo.getConversation(threadId) ?: return
 
-        val style = NotificationCompat.MessagingStyle("Me")
-        messages.forEach { message ->
-            val name = if (message.isMe()) null else conversation.getTitle()
-            style.addMessage(message.getSummary(), message.date, name)
-        }
-
-        val avatar = conversation.recipients.takeIf { it.size == 1 }
-                ?.first()?.address
-                ?.let { address ->
-                    GlideApp.with(context)
-                            .asBitmap()
-                            .circleCrop()
-                            .load(PhoneNumberUtils.stripSeparators(address))
-                            .submit(64.dpToPx(context), 64.dpToPx(context))
-                }
-                ?.let { futureGet -> tryOrNull { futureGet.get() } }
-
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)
         taskStackBuilder.addParentStack(ComposeActivity::class.java)
@@ -131,17 +114,53 @@ class NotificationManagerImpl @Inject constructor(
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(colors.themeForConversation(threadId).blockingFirst())
                 .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
-                .setLargeIcon(avatar)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
                 .setAutoCancel(true)
                 .setContentIntent(contentPI)
                 .setDeleteIntent(seenPI)
                 .addAction(readAction)
-                .setStyle(style)
                 .setSound(Uri.parse(prefs.ringtone(threadId).get()))
                 .setLights(Color.WHITE, 500, 2000)
                 .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
+
+        val messagingStyle = NotificationCompat.MessagingStyle("Me")
+        messages.forEach { message ->
+            val name = if (message.isMe()) null else conversation.getTitle()
+            messagingStyle.addMessage(message.getSummary(), message.date, name)
+        }
+
+        val avatar = conversation.recipients.takeIf { it.size == 1 }
+                ?.first()?.address
+                ?.let { address ->
+                    GlideApp.with(context)
+                            .asBitmap()
+                            .circleCrop()
+                            .load(PhoneNumberUtils.stripSeparators(address))
+                            .submit(64.dpToPx(context), 64.dpToPx(context))
+                }
+                ?.let { futureGet -> tryOrNull { futureGet.get() } }
+
+        when (prefs.notificationPreviews(threadId).get()) {
+            Preferences.NOTIFICATION_PREVIEWS_ALL -> {
+                notification
+                        .setLargeIcon(avatar)
+                        .setStyle(messagingStyle)
+            }
+
+            Preferences.NOTIFICATION_PREVIEWS_NAME -> {
+                notification
+                        .setLargeIcon(avatar)
+                        .setContentTitle(conversation.getTitle())
+                        .setContentText(context.resources.getQuantityString(R.plurals.notification_new_messages, messages.size, messages.size))
+            }
+
+            Preferences.NOTIFICATION_PREVIEWS_NONE -> {
+                notification
+                        .setContentTitle(context.getString(R.string.app_name))
+                        .setContentText(context.resources.getQuantityString(R.plurals.notification_new_messages, messages.size, messages.size))
+            }
+        }
 
         // Add all of the people from this conversation to the notification, so that the system can
         // appropriately bypass DND mode

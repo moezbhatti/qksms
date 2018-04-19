@@ -37,6 +37,10 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val TEXT_SIZE_NORMAL = 1
         const val TEXT_SIZE_LARGE = 2
         const val TEXT_SIZE_LARGER = 3
+
+        const val NOTIFICATION_PREVIEWS_ALL = 0
+        const val NOTIFICATION_PREVIEWS_NAME = 1
+        const val NOTIFICATION_PREVIEWS_NONE = 2
     }
 
     val defaultSms = rxPrefs.getBoolean("defaultSms", false)
@@ -70,6 +74,15 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         return when (threadId) {
             0L -> default
             else -> rxPrefs.getBoolean("notifications_$threadId", default.get())
+        }
+    }
+
+    fun notificationPreviews(threadId: Long = 0): Preference<Int> {
+        val default = rxPrefs.getInteger("notification_previews", 0)
+
+        return when (threadId) {
+            0L -> default
+            else -> rxPrefs.getInteger("notification_previews_$threadId", default.get())
         }
     }
 

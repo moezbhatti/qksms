@@ -81,6 +81,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += prefs.notifications().asObservable()
                 .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
 
+        val notificationPreviewLabels = context.resources.getStringArray(R.array.notification_preview_options)
+        disposables += prefs.notificationPreviews().asObservable()
+                .subscribe { nightMode -> newState { it.copy(notificationPreviewSummary = notificationPreviewLabels[nightMode]) } }
+
         disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { it.copy(deliveryEnabled = enabled) } }
 
@@ -142,6 +146,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.notifications -> navigator.showNotificationSettings()
 
+                        R.id.notificationPreviews -> view.showNotificationPreviewModeDialog()
+
                         R.id.blocked -> navigator.showBlockedConversations()
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
@@ -199,6 +205,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 .doOnNext { view.dismissTextSizePicker() }
                 .autoDisposable(view.scope())
                 .subscribe { prefs.textSize.set(it) }
+
+        view.notificationPreviewModeSelectedIntent
+                .autoDisposable(view.scope())
+                .subscribe { prefs.notificationPreviews().set(it) }
 
         view.mmsSizeSelectedIntent
                 .doOnNext { view.dismissMmsSizePicker() }

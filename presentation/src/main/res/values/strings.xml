@@ -101,6 +101,7 @@
     <string name="settings_night_end_title">End time</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
     <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notification_previews_title">Notification previews</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
     <string name="settings_blocking_title">Blocking</string>
@@ -184,6 +185,10 @@
     <string name="toast_archived">Archived conversation</string>
     <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
 
+    <plurals name="notification_new_messages">
+        <item quantity="one">New message</item>
+        <item quantity="other">%s new messages</item>
+    </plurals>
     <string name="notification_message_failed_title">Message not sent</string>
     <string name="notification_message_failed_text">The message to %s failed to send</string>
 
@@ -191,6 +196,12 @@
         <item>Disabled</item>
         <item>Always on</item>
         <item>Automatic</item>
+    </string-array>
+    
+    <string-array name="notification_preview_options">
+        <item>Show name and message</item>
+        <item>Show name</item>
+        <item>Hide contents</item>
     </string-array>
 
     <string-array name="text_sizes">
