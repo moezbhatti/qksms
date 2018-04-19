@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -18,11 +17,20 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/ripple"
     android:gravity="center_vertical"
     android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/check"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:src="@drawable/radio_button"
+        tools:tint="@color/textTertiary" />
 
     <common.widget.QkTextView
         android:id="@+id/title"
@@ -33,13 +41,7 @@
         android:paddingBottom="12dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:paddingTop="12dp" />
-
-    <ImageView
-        android:id="@+id/check"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginRight="24dp"
-        android:src="@drawable/ic_check_white_24dp" />
+        android:paddingTop="12dp"
+        tools:text="Testing" />
 
 </LinearLayout>

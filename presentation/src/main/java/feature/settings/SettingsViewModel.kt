@@ -86,7 +86,9 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
         disposables += prefs.textSize.asObservable()
-                .subscribe { textSize -> newState { it.copy(textSizeSummary = textSizeLabels[textSize]) } }
+                .subscribe { textSize ->
+                    newState { it.copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
+                }
 
         disposables += prefs.systemFont.asObservable()
                 .subscribe { enabled -> newState { it.copy(systemFontEnabled = enabled) } }

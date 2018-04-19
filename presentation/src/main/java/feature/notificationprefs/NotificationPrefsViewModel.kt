@@ -48,6 +48,7 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
     private val threadId = intent.extras?.getLong("threadId") ?: 0L
 
     private val notifications: Preference<Boolean>
+    private val previews: Preference<Int>
     private val vibration: Preference<Boolean>
     private val ringtone: Preference<String>
 
@@ -55,6 +56,7 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
         appComponent.inject(this)
 
         notifications = prefs.notifications(threadId)
+        previews = prefs.notificationPreviews(threadId)
         vibration = prefs.vibration(threadId)
         ringtone = prefs.ringtone(threadId)
 
@@ -67,9 +69,11 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
         disposables += notifications.asObservable()
                 .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
 
-        val notificationPreviewLabels = context.resources.getStringArray(R.array.notification_preview_options)
-        disposables += prefs.notificationPreviews().asObservable()
-                .subscribe { nightMode -> newState { it.copy(notificationPreviewSummary = notificationPreviewLabels[nightMode]) } }
+        val previewLabels = context.resources.getStringArray(R.array.notification_preview_options)
+        disposables += previews.asObservable()
+                .subscribe { previewId ->
+                    newState { it.copy(previewSummary = previewLabels[previewId], previewId = previewId) }
+                }
 
         disposables += vibration.asObservable()
                 .subscribe { enabled -> newState { it.copy(vibrationEnabled = enabled) } }
@@ -111,7 +115,7 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
 
         view.previewModeSelectedIntent
                 .autoDisposable(view.scope())
-                .subscribe { prefs.notificationPreviews().set(it) }
+                .subscribe { previews.set(it) }
 
         view.ringtoneSelectedIntent
                 .autoDisposable(view.scope())

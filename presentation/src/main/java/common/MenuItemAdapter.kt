@@ -19,6 +19,7 @@
 package common
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.support.annotation.ArrayRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -28,9 +29,9 @@ import com.moez.QKSMS.R
 import common.base.QkAdapter
 import common.base.QkViewHolder
 import common.util.Colors
-import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -66,8 +67,15 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.menu_list_item, parent, false)
 
-        disposables += colors.theme
-                .subscribe { view.check.setTint(it) }
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_selected),
+                intArrayOf(-android.R.attr.state_selected))
+
+        disposables += Observables
+                .combineLatest(colors.theme, colors.textTertiary, { theme, textSecondary ->
+                    ColorStateList(states, intArrayOf(theme, textSecondary))
+                })
+                .subscribe { view.check.imageTintList = it }
 
         return QkViewHolder(view)
     }
@@ -79,7 +87,8 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
         view.clicks().subscribe { menuItemClicks.onNext(menuItem.actionId) }
 
         view.title.text = menuItem.title
-        view.check.setVisible(menuItem.actionId == selectedItem)
+        view.check.isSelected = (menuItem.actionId == selectedItem)
+        view.check.setVisible(selectedItem != null)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {

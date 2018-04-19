@@ -108,6 +108,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
         themePreview.setBackgroundTint(state.theme)
         night.summary = state.nightModeSummary
+        nightModeDialog.adapter.selectedItem = state.nightModeId
         nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
         nightStart.summary = state.nightStart
         nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
@@ -120,6 +121,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         delivery.checkbox.isChecked = state.deliveryEnabled
 
         textSize.summary = state.textSizeSummary
+        textSizeDialog.adapter.selectedItem = state.textSizeId
         systemFont.checkbox.isChecked = state.systemFontEnabled
 
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
