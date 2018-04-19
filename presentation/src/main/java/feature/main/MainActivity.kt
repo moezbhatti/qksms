@@ -26,7 +26,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Gravity
 import android.view.Menu
@@ -37,12 +36,11 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import common.MenuItemAdapter
 import common.Navigator
+import common.QkDialog
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
 import common.util.extensions.dismissKeyboard
-import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
@@ -62,8 +60,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
+    @Inject lateinit var dialog: QkDialog
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
-    @Inject lateinit var menuItemAdapter: MenuItemAdapter
 
     override val viewModelClass = MainViewModel::class
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
@@ -85,7 +83,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     }
     override val conversationClickIntent by lazy { conversationsAdapter.clicks }
     override val conversationLongClickIntent by lazy { conversationsAdapter.longClicks }
-    override val conversationMenuItemIntent by lazy { menuItemAdapter.menuItemClicks }
+    override val conversationMenuItemIntent by lazy { dialog.adapter.menuItemClicks }
     override val confirmDeleteIntent: Subject<Unit> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
@@ -96,7 +94,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
             setAction(R.string.button_undo, { undoSwipeConversationIntent.onNext(Unit) })
         }
     }
-    private var conversationMenuDialog: AlertDialog? = null
 
     init {
         appComponent.inject(this)
@@ -199,7 +196,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(recyclerView)
-                menuItemAdapter.data = state.page.menu
                 empty.setText(when (state.page.showClearButton) {
                     true -> R.string.inbox_search_empty_text
                     false -> R.string.inbox_empty_text
@@ -212,7 +208,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.flowable = state.page.data
                 itemTouchHelper.attachToRecyclerView(null)
-                menuItemAdapter.data = state.page.menu
                 empty.setText(R.string.archived_empty_text)
                 compose.setVisible(true)
             }
@@ -221,7 +216,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 if (!scheduled.isSelected) toolbarSearch.setText(R.string.title_scheduled)
                 recyclerView.adapter = null
                 itemTouchHelper.attachToRecyclerView(null)
-                menuItemAdapter.data = ArrayList()
                 empty.setText(R.string.scheduled_empty_text)
                 compose.setVisible(false)
             }
@@ -241,25 +235,16 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
-
-        if (conversationMenuDialog?.isShowing == true && menuItemAdapter.data.isEmpty()) {
-            conversationMenuDialog?.dismiss()
-            conversationMenuDialog = null
-        } else if (conversationMenuDialog?.isShowing != true && menuItemAdapter.data.isNotEmpty()) {
-            val recyclerView = RecyclerView(this)
-            recyclerView.layoutManager = LinearLayoutManager(this)
-            recyclerView.adapter = menuItemAdapter
-            recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-            conversationMenuDialog = AlertDialog.Builder(this).setView(recyclerView).create().apply {
-                setOnDismissListener { conversationMenuItemIntent.onNext(-1) }
-                show()
-            }
-        }
     }
 
     override fun clearSearch() {
         dismissKeyboard()
         toolbarSearch.text = null
+    }
+
+    override fun showDialog(menuItems: List<common.MenuItem>) {
+        dialog.adapter.data = menuItems
+        dialog.show(this)
     }
 
     override fun showDeleteDialog() {

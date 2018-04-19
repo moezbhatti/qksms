@@ -97,7 +97,7 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
 
                         R.id.notifications -> notifications.set(!notifications.get())
 
-                        R.id.notificationPreviews -> view.showNotificationPreviewModeDialog()
+                        R.id.notificationPreviews -> view.showPreviewModeDialog()
 
                         R.id.vibration -> vibration.set(!vibration.get())
 
@@ -109,7 +109,7 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
                     }
                 }
 
-        view.notificationPreviewModeSelectedIntent
+        view.previewModeSelectedIntent
                 .autoDisposable(view.scope())
                 .subscribe { prefs.notificationPreviews().set(it) }
 

@@ -158,7 +158,6 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 }
 
         view.nightModeSelectedIntent
-                .doOnNext { view.dismissNightModeDialog() }
                 .withLatestFrom(billingManager.upgradeStatus, { mode, upgraded ->
                     if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
                         view.showQksmsPlusSnackbar()
@@ -186,12 +185,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                 .subscribe { prefs.nightEnd.set(it) }
 
         view.textSizeSelectedIntent
-                .doOnNext { view.dismissTextSizePicker() }
                 .autoDisposable(view.scope())
                 .subscribe { prefs.textSize.set(it) }
 
         view.mmsSizeSelectedIntent
-                .doOnNext { view.dismissMmsSizePicker() }
                 .autoDisposable(view.scope())
                 .subscribe { prefs.mmsSize.set(it) }
     }

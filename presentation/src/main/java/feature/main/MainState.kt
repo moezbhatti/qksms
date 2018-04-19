@@ -18,7 +18,6 @@
  */
 package feature.main
 
-import common.MenuItem
 import io.reactivex.Flowable
 import model.Conversation
 
@@ -33,12 +32,10 @@ sealed class MainPage
 data class Inbox(
         val showClearButton: Boolean = false,
         val data: Flowable<List<Conversation>>? = null,
-        val menu: List<MenuItem> = ArrayList(),
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(
-        val data: Flowable<List<Conversation>>? = null,
-        val menu: List<MenuItem> = ArrayList()) : MainPage()
+        val data: Flowable<List<Conversation>>? = null) : MainPage()
 
 data class Scheduled(
         val data: Any? = null) : MainPage()

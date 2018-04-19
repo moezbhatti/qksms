@@ -18,6 +18,7 @@
  */
 package feature.main
 
+import common.MenuItem
 import common.base.QkView
 import io.reactivex.Observable
 
@@ -36,6 +37,7 @@ interface MainView : QkView<MainState> {
     val undoSwipeConversationIntent: Observable<Unit>
 
     fun clearSearch()
+    fun showDialog(menuItems: List<MenuItem>)
     fun showDeleteDialog()
 
 }

@@ -171,33 +171,14 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         view.conversationLongClickIntent
                 .withLatestFrom(state, { _, mainState ->
                     when (mainState.page) {
-                        is Inbox -> {
-                            val page = mainState.page.copy(menu = listOf(menuArchive, menuBlock, menuDelete))
-                            newState { it.copy(page = page) }
-                        }
-                        is Archived -> {
-                            val page = mainState.page.copy(menu = listOf(menuUnarchive, menuBlock, menuDelete))
-                            newState { it.copy(page = page) }
-                        }
+                        is Inbox -> view.showDialog(listOf(menuArchive, menuBlock, menuDelete))
+                        is Archived -> view.showDialog(listOf(menuUnarchive, menuBlock, menuDelete))
                     }
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
 
         view.conversationMenuItemIntent
-                .withLatestFrom(state, { actionId, mainState ->
-                    when (mainState.page) {
-                        is Inbox -> {
-                            val page = mainState.page.copy(menu = ArrayList())
-                            newState { it.copy(page = page) }
-                        }
-                        is Archived -> {
-                            val page = mainState.page.copy(menu = ArrayList())
-                            newState { it.copy(page = page) }
-                        }
-                    }
-                    actionId
-                })
                 .withLatestFrom(view.conversationLongClickIntent, { actionId, threadId ->
                     when (actionId) {
                         menuArchive.actionId -> markArchived.execute(threadId)

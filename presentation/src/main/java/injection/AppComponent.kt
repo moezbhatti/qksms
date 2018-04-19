@@ -19,6 +19,7 @@
 package injection
 
 import common.QKApplication
+import common.QkDialog
 import common.util.ContactImageLoader
 import common.widget.AvatarView
 import common.widget.MmsPreviewView
@@ -86,6 +87,10 @@ interface AppComponent {
     fun inject(activity: SettingsActivity)
     fun inject(activity: ThemePickerActivity)
 
+    fun inject(dialog: QkDialog)
+
+    fun inject(fetcher: ContactImageLoader.ContactImageFetcher)
+
     fun inject(receiver: DefaultSmsChangedReceiver)
     fun inject(receiver: SmsDeliveredReceiver)
     fun inject(receiver: SmsSentReceiver)
@@ -123,7 +128,5 @@ interface AppComponent {
     fun inject(viewModel: QkReplyViewModel)
     fun inject(viewModel: SettingsViewModel)
     fun inject(viewModel: ThemePickerViewModel)
-
-    fun inject(fetcher: ContactImageLoader.ContactImageFetcher)
 
 }

@@ -35,6 +35,7 @@ import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.MenuItemAdapter
+import common.QkDialog
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
 import common.util.extensions.dpToPx
@@ -66,7 +67,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override val infoIntent: Subject<Unit> = PublishSubject.create()
     override val messageClickIntent: Subject<Message> by lazy { messageAdapter.clicks }
     override val messageLongClickIntent: Subject<Message> by lazy { messageAdapter.longClicks }
-    override val menuItemIntent: Subject<Int> by lazy { menuItemAdapter.menuItemClicks }
+    override val menuItemIntent: Subject<Int> by lazy { dialog.adapter.menuItemClicks }
     override val attachmentDeletedIntent: Subject<Uri> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
@@ -74,8 +75,8 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
     @Inject lateinit var chipsAdapter: ChipsAdapter
     @Inject lateinit var contactsAdapter: ContactAdapter
+    @Inject lateinit var dialog: QkDialog
     @Inject lateinit var messageAdapter: MessagesAdapter
-    @Inject lateinit var menuItemAdapter: MenuItemAdapter
     @Inject lateinit var attachmentAdapter: AttachmentAdapter
 
     init {
@@ -205,20 +206,8 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     }
 
     override fun showMenu(menuItems: List<common.MenuItem>) {
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = menuItemAdapter
-        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-
-        val dialog = AlertDialog.Builder(this)
-                .setView(recyclerView)
-                .create()
-                .apply { show() }
-
-        menuItemAdapter.data = menuItems
-        menuItemAdapter.menuItemClicks
-                .autoDisposable(scope())
-                .subscribe { dialog.dismiss() }
+        dialog.adapter.data = menuItems
+        dialog.show(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

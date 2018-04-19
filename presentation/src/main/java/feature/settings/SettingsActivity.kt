@@ -18,21 +18,17 @@
  */
 package feature.settings
 
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import common.MenuItemAdapter
+import common.QkDialog
 import common.base.QkThemedActivity
-import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
 import common.widget.PreferenceView
@@ -47,18 +43,18 @@ import javax.inject.Inject
 
 class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
-    @Inject lateinit var nightModeAdapter: MenuItemAdapter
-    @Inject lateinit var textSizeAdapter: MenuItemAdapter
-    @Inject lateinit var mmsSizeAdapter: MenuItemAdapter
+    @Inject lateinit var nightModeDialog: QkDialog
+    @Inject lateinit var textSizeDialog: QkDialog
+    @Inject lateinit var mmsSizeDialog: QkDialog
 
     override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
-    override val nightModeSelectedIntent by lazy { nightModeAdapter.menuItemClicks }
+    override val nightModeSelectedIntent by lazy { nightModeDialog.adapter.menuItemClicks }
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
-    override val textSizeSelectedIntent by lazy { textSizeAdapter.menuItemClicks }
-    override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeAdapter.menuItemClicks }
+    override val textSizeSelectedIntent by lazy { textSizeDialog.adapter.menuItemClicks }
+    override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeDialog.adapter.menuItemClicks }
 
     // TODO remove this
     private val progressDialog by lazy {
@@ -68,10 +64,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
             setCanceledOnTouchOutside(false)
         }
     }
-
-    private var nightModeDialog: AlertDialog? = null
-    private var textSizeDialog: AlertDialog? = null
-    private var mmsSizeDialog: AlertDialog? = null
 
     init {
         appComponent.inject(this)
@@ -84,9 +76,9 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         showBackButton(true)
         viewModel.bindView(this)
 
-        nightModeAdapter.setData(R.array.night_modes)
-        textSizeAdapter.setData(R.array.text_sizes)
-        mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
+        nightModeDialog.adapter.setData(R.array.night_modes)
+        textSizeDialog.adapter.setData(R.array.text_sizes)
+        mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
         version.text = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
 
@@ -133,25 +125,11 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
 
         mmsSize.summary = state.maxMmsSizeSummary
-        mmsSizeAdapter.selectedItem = state.maxMmsSizeId
+        mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId
     }
 
     // TODO change this to a PopupWindow
-    override fun showNightModeDialog() {
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = nightModeAdapter
-        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-        nightModeDialog = AlertDialog.Builder(this)
-                .setTitle(R.string.settings_night_title)
-                .setView(recyclerView)
-                .create().apply { show() }
-    }
-
-    override fun dismissNightModeDialog() {
-        nightModeDialog?.dismiss()
-        nightModeDialog = null
-    }
+    override fun showNightModeDialog() = nightModeDialog.show(this)
 
     override fun showQksmsPlusSnackbar() {
         Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
@@ -172,37 +150,8 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         }, hour, minute, false).show()
     }
 
-    override fun showTextSizePicker() {
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = textSizeAdapter
-        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-        textSizeDialog = AlertDialog.Builder(this)
-                .setTitle(R.string.settings_text_size_title)
-                .setView(recyclerView)
-                .create().apply { show() }
-    }
+    override fun showTextSizePicker() = textSizeDialog.show(this)
 
-    override fun dismissTextSizePicker() {
-        textSizeDialog?.dismiss()
-        textSizeDialog = null
-    }
-
-    override fun showMmsSizePicker() {
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = mmsSizeAdapter
-        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-        mmsSizeDialog = AlertDialog.Builder(this)
-                .setTitle(R.string.settings_mms_size_title)
-                .setNegativeButton(R.string.button_cancel, null)
-                .setView(recyclerView)
-                .create().apply { show() }
-    }
-
-    override fun dismissMmsSizePicker() {
-        mmsSizeDialog?.dismiss()
-        mmsSizeDialog = null
-    }
+    override fun showMmsSizePicker() = mmsSizeDialog.show(this)
 
 }

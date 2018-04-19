@@ -34,12 +34,9 @@ interface SettingsView : QkView<SettingsState> {
     val mmsSizeSelectedIntent: Observable<Int>
 
     fun showNightModeDialog()
-    fun dismissNightModeDialog()
     fun showQksmsPlusSnackbar()
     fun showStartTimePicker(hour: Int, minute: Int)
     fun showEndTimePicker(hour: Int, minute: Int)
     fun showTextSizePicker()
-    fun dismissTextSizePicker()
     fun showMmsSizePicker()
-    fun dismissMmsSizePicker()
 }

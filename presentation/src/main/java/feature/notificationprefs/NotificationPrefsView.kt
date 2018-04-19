@@ -27,9 +27,9 @@ import io.reactivex.subjects.Subject
 interface NotificationPrefsView : QkView<NotificationPrefsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
-    val notificationPreviewModeSelectedIntent: Subject<Int>
+    val previewModeSelectedIntent: Subject<Int>
     val ringtoneSelectedIntent: Observable<String>
 
-    fun showNotificationPreviewModeDialog()
+    fun showPreviewModeDialog()
     fun showRingtonePicker(default: Uri)
 }
