@@ -19,16 +19,22 @@
 package feature.notificationprefs
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.MenuItemAdapter
 import common.base.QkThemedActivity
+import common.util.extensions.dpToPx
+import common.util.extensions.setVisible
 import common.widget.PreferenceView
 import injection.appComponent
 import io.reactivex.subjects.PublishSubject
@@ -39,11 +45,11 @@ import javax.inject.Inject
 
 class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>(), NotificationPrefsView {
 
-    @Inject lateinit var nightModeAdapter: MenuItemAdapter
-    @Inject lateinit var mmsSizeAdapter: MenuItemAdapter
+    @Inject lateinit var notificationPreviewModeAdapter: MenuItemAdapter
 
     override val viewModelClass = NotificationPrefsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
+    override val notificationPreviewModeSelectedIntent by lazy { notificationPreviewModeAdapter.menuItemClicks }
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
 
     init {
@@ -57,8 +63,14 @@ class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>()
         showBackButton(true)
         viewModel.bindView(this)
 
-        nightModeAdapter.setData(R.array.night_modes)
-        mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
+        val hasOreo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+
+        notificationsO.setVisible(hasOreo)
+        notifications.setVisible(!hasOreo)
+        vibration.setVisible(!hasOreo)
+        ringtone.setVisible(!hasOreo)
+
+        notificationPreviewModeAdapter.setData(R.array.notification_preview_options)
 
         colors.background
                 .autoDisposable(scope())
@@ -81,8 +93,28 @@ class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>()
         }
 
         notifications.checkbox.isChecked = state.notificationsEnabled
+        notificationPreviews.summary = state.notificationPreviewSummary
         vibration.checkbox.isChecked = state.vibrationEnabled
         ringtone.summary = state.ringtoneName
+        qkreply.checkbox.isChecked = state.qkReplyEnabled
+        qkreplyTapDismiss.setVisible(state.qkReplyEnabled)
+        qkreplyTapDismiss.checkbox.isChecked = state.qkReplyTapDismiss
+    }
+
+    override fun showNotificationPreviewModeDialog() {
+        val recyclerView = RecyclerView(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = notificationPreviewModeAdapter
+        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
+
+        val dialog = AlertDialog.Builder(this)
+                .setView(recyclerView)
+                .create()
+                .apply { show() }
+
+        notificationPreviewModeAdapter.menuItemClicks
+                .autoDisposable(scope())
+                .subscribe { dialog.dismiss() }
     }
 
     override fun showRingtonePicker(default: Uri) {

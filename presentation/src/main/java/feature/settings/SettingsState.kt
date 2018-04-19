@@ -18,12 +18,10 @@
  */
 package feature.settings
 
-import android.os.Build
 import util.Preferences
 
 data class SettingsState(
         val syncing: Boolean = false,
-
         val isDefaultSmsApp: Boolean = false,
         val theme: Int = 0,
         val nightModeSummary: String = "",
@@ -33,10 +31,7 @@ data class SettingsState(
         val black: Boolean = false,
         val autoEmojiEnabled: Boolean = true,
         val notificationsEnabled: Boolean = true,
-        val notificationPreviewSummary: String = "",
         val deliveryEnabled: Boolean = false,
-        val qkReplyEnabled: Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.N,
-        val qkReplyTapDismiss: Boolean = true,
         val textSizeSummary: String = "",
         val systemFontEnabled: Boolean = false,
         val splitSmsEnabled: Boolean = false,

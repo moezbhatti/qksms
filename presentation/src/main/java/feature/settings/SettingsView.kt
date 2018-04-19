@@ -31,7 +31,6 @@ interface SettingsView : QkView<SettingsState> {
     val startTimeSelectedIntent: Subject<Pair<Int, Int>>
     val endTimeSelectedIntent: Subject<Pair<Int, Int>>
     val textSizeSelectedIntent: Subject<Int>
-    val notificationPreviewModeSelectedIntent: Subject<Int>
     val mmsSizeSelectedIntent: Observable<Int>
 
     fun showNightModeDialog()
@@ -40,7 +39,6 @@ interface SettingsView : QkView<SettingsState> {
     fun showStartTimePicker(hour: Int, minute: Int)
     fun showEndTimePicker(hour: Int, minute: Int)
     fun showTextSizePicker()
-    fun showNotificationPreviewModeDialog()
     fun dismissTextSizePicker()
     fun showMmsSizePicker()
     fun dismissMmsSizePicker()

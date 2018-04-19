@@ -49,7 +49,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
     @Inject lateinit var nightModeAdapter: MenuItemAdapter
     @Inject lateinit var textSizeAdapter: MenuItemAdapter
-    @Inject lateinit var notificationPreviewModeAdapter: MenuItemAdapter
     @Inject lateinit var mmsSizeAdapter: MenuItemAdapter
 
     override val viewModelClass = SettingsViewModel::class
@@ -59,7 +58,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val textSizeSelectedIntent by lazy { textSizeAdapter.menuItemClicks }
-    override val notificationPreviewModeSelectedIntent by lazy { notificationPreviewModeAdapter.menuItemClicks }
     override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeAdapter.menuItemClicks }
 
     // TODO remove this
@@ -88,7 +86,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
         nightModeAdapter.setData(R.array.night_modes)
         textSizeAdapter.setData(R.array.text_sizes)
-        notificationPreviewModeAdapter.setData(R.array.notification_preview_options)
         mmsSizeAdapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
         version.text = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
@@ -127,12 +124,8 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         black.setVisible(state.nightModeId != Preferences.NIGHT_MODE_OFF)
         black.checkbox.isChecked = state.black
 
-        notificationPreviews.summary = state.notificationPreviewSummary
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
         delivery.checkbox.isChecked = state.deliveryEnabled
-        qkreply.checkbox.isChecked = state.qkReplyEnabled
-        qkreplyTapDismiss.setVisible(state.qkReplyEnabled)
-        qkreplyTapDismiss.checkbox.isChecked = state.qkReplyTapDismiss
 
         textSize.summary = state.textSizeSummary
         systemFont.checkbox.isChecked = state.systemFontEnabled
@@ -193,22 +186,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     override fun dismissTextSizePicker() {
         textSizeDialog?.dismiss()
         textSizeDialog = null
-    }
-
-    override fun showNotificationPreviewModeDialog() {
-        val recyclerView = RecyclerView(this)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = notificationPreviewModeAdapter
-        recyclerView.setPadding(0, 8.dpToPx(this), 0, 8.dpToPx(this))
-
-        val dialog = AlertDialog.Builder(this)
-                .setView(recyclerView)
-                .create()
-                .apply { show() }
-
-        notificationPreviewModeAdapter.menuItemClicks
-                .autoDisposable(scope())
-                .subscribe { dialog.dismiss() }
     }
 
     override fun showMmsSizePicker() {

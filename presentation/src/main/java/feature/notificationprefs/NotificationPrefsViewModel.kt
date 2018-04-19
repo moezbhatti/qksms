@@ -27,15 +27,14 @@ import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
+import common.Navigator
+import common.base.QkViewModel
 import injection.appComponent
-import util.Preferences
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
-import common.Navigator
-import common.base.QkViewModel
 import repository.MessageRepository
-import timber.log.Timber
+import util.Preferences
 import util.extensions.mapNotNull
 import javax.inject.Inject
 
@@ -68,6 +67,10 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
         disposables += notifications.asObservable()
                 .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
 
+        val notificationPreviewLabels = context.resources.getStringArray(R.array.notification_preview_options)
+        disposables += prefs.notificationPreviews().asObservable()
+                .subscribe { nightMode -> newState { it.copy(notificationPreviewSummary = notificationPreviewLabels[nightMode]) } }
+
         disposables += vibration.asObservable()
                 .subscribe { enabled -> newState { it.copy(vibrationEnabled = enabled) } }
 
@@ -75,6 +78,12 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
                 .map { uri -> uri.toUri() }
                 .map { uri -> RingtoneManager.getRingtone(context, uri).getTitle(context) }
                 .subscribe { title -> newState { it.copy(ringtoneName = title) } }
+
+        disposables += prefs.qkreply.asObservable()
+                .subscribe { enabled -> newState { it.copy(qkReplyEnabled = enabled) } }
+
+        disposables += prefs.qkreplyTapDismiss.asObservable()
+                .subscribe { enabled -> newState { it.copy(qkReplyTapDismiss = enabled) } }
     }
 
     override fun bindView(view: NotificationPrefsView) {
@@ -83,16 +92,26 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
         view.preferenceClickIntent
                 .autoDisposable(view.scope())
                 .subscribe {
-                    Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
-
                     when (it.id) {
+                        R.id.notificationsO -> navigator.showNotificationChannel(threadId)
+
                         R.id.notifications -> notifications.set(!notifications.get())
+
+                        R.id.notificationPreviews -> view.showNotificationPreviewModeDialog()
 
                         R.id.vibration -> vibration.set(!vibration.get())
 
                         R.id.ringtone -> view.showRingtonePicker(Uri.parse(ringtone.get()))
+
+                        R.id.qkreply -> prefs.qkreply.set(!prefs.qkreply.get())
+
+                        R.id.qkreplyTapDismiss -> prefs.qkreplyTapDismiss.set(!prefs.qkreplyTapDismiss.get())
                     }
                 }
+
+        view.notificationPreviewModeSelectedIntent
+                .autoDisposable(view.scope())
+                .subscribe { prefs.notificationPreviews().set(it) }
 
         view.ringtoneSelectedIntent
                 .autoDisposable(view.scope())

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -17,67 +16,118 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/Toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/white">
 
-    <FrameLayout
-        android:id="@+id/content"
+        <common.widget.QkTextView
+            android:id="@+id/toolbarTitle"
+            style="@style/ToolbarText"
+            tools:text="Notifications" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/preferences"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
 
-            <LinearLayout
-                android:id="@+id/preferences"
+            <common.widget.PreferenceView
+                android:id="@+id/notificationsO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:orientation="vertical"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp">
+                app:icon="@drawable/ic_notifications_black_24dp"
+                app:title="@string/settings_notifications_title"
+                tools:visibility="gone" />
 
-                <common.widget.PreferenceView
-                    android:id="@+id/notifications"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_notifications_title"
-                    app:widget="@layout/settings_switch_widget" />
+            <common.widget.PreferenceView
+                android:id="@+id/notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_notifications_black_24dp"
+                app:title="@string/settings_notifications_title"
+                app:widget="@layout/settings_switch_widget" />
 
-                <common.widget.PreferenceView
-                    android:id="@+id/vibration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_vibration_title"
-                    app:widget="@layout/settings_switch_widget" />
+            <common.widget.PreferenceView
+                android:id="@+id/notificationPreviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_notification_previews_title"
+                tools:summary="Show name and message" />
 
-                <common.widget.PreferenceView
-                    android:id="@+id/ringtone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="@string/settings_ringtone_title" />
+            <common.widget.PreferenceView
+                android:id="@+id/vibration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_vibration_title"
+                app:widget="@layout/settings_switch_widget" />
 
-            </LinearLayout>
+            <common.widget.PreferenceView
+                android:id="@+id/ringtone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_ringtone_title" />
 
-        </ScrollView>
+            <common.widget.Separator
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow" />
+            <common.widget.QkTextView
+                style="@style/PreferenceCategory"
+                android:text="@string/settings_category_qkreply" />
 
-        <common.widget.Separator
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom" />
+            <common.widget.PreferenceView
+                android:id="@+id/qkreply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_reply_white_24dp"
+                app:summary="@string/settings_qkreply_summary"
+                app:title="@string/settings_qkreply_title"
+                app:widget="@layout/settings_switch_widget" />
 
-    </FrameLayout>
+            <common.widget.PreferenceView
+                android:id="@+id/qkreplyTapDismiss"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:summary="@string/settings_qkreply_tap_dismiss_summary"
+                app:title="@string/settings_qkreply_tap_dismiss_title"
+                app:widget="@layout/settings_switch_widget" />
 
-</LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/ab_shadow"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <common.widget.Separator
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

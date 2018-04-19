@@ -19,15 +19,17 @@
 package feature.notificationprefs
 
 import android.net.Uri
-import io.reactivex.Observable
-import io.reactivex.subjects.Subject
 import common.base.QkView
 import common.widget.PreferenceView
+import io.reactivex.Observable
+import io.reactivex.subjects.Subject
 
 interface NotificationPrefsView : QkView<NotificationPrefsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
+    val notificationPreviewModeSelectedIntent: Subject<Int>
     val ringtoneSelectedIntent: Observable<String>
 
+    fun showNotificationPreviewModeDialog()
     fun showRingtonePicker(default: Uri)
 }

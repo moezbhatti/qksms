@@ -18,9 +18,13 @@
  */
 package feature.notificationprefs
 
+import android.os.Build
+
 data class NotificationPrefsState(
         val conversationTitle: String = "",
         val notificationsEnabled: Boolean = true,
+        val notificationPreviewSummary: String = "",
         val vibrationEnabled: Boolean = true,
-        val ringtoneName: String = ""
-)
+        val ringtoneName: String = "",
+        val qkReplyEnabled: Boolean = Build.VERSION.SDK_INT < Build.VERSION_CODES.N,
+        val qkReplyTapDismiss: Boolean = true)
