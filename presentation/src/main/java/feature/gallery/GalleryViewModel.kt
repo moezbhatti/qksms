@@ -49,8 +49,8 @@ class GalleryViewModel(intent: Intent) : QkViewModel<GalleryView, GalleryState>(
 
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getPart(partId) }
-                .mapNotNull { part -> part.image }
-                .subscribe { path -> newState { it.copy(imagePath = path) } }
+                .mapNotNull { part -> part.getUri() }
+                .subscribe { uri -> newState { it.copy(imageUri = uri) } }
 
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }

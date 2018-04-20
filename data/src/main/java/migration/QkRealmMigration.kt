@@ -16,12 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package feature.gallery
+package migration
 
-import android.net.Uri
+import io.realm.DynamicRealm
+import io.realm.RealmMigration
 
-data class GalleryState(
-        val navigationVisible: Boolean = true,
-        val title: String = "",
-        val imageUri: Uri? = null
-)
+
+class QkRealmMigration : RealmMigration {
+
+    override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
+        var version = oldVersion
+
+        if (version == 0L) {
+            realm.schema.get("MmsPart")
+                    ?.removeField("image")
+
+            version++
+        }
+
+        if (version < newVersion) {
+            throw IllegalStateException("Migration missing from v$oldVersion to v$newVersion")
+        }
+    }
+
+}

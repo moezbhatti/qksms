@@ -32,6 +32,7 @@ import injection.appComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import manager.AnalyticsManager
+import migration.QkRealmMigration
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,16 +53,17 @@ class QKApplication : Application() {
             appVersion = BuildConfig.VERSION_NAME
         })
 
+        Realm.init(this)
+        Realm.setDefaultConfiguration(RealmConfiguration.Builder()
+                .compactOnLaunch()
+                .migration(QkRealmMigration())
+                .schemaVersion(1)
+                .build())
+
         AppComponentManager.init(this)
         appComponent.inject(this)
 
         nightModeManager.updateCurrentTheme()
-
-        Realm.init(this)
-        Realm.setDefaultConfiguration(RealmConfiguration.Builder()
-                .compactOnLaunch()
-                .deleteRealmIfMigrationNeeded()
-                .build())
 
         val fontRequest = FontRequest(
                 "com.google.android.gms.fonts",

@@ -206,7 +206,6 @@ class MessageRepositoryImpl @Inject constructor(
                 .where(MmsPart::class.java)
                 .equalTo("messages.threadId", threadId)
                 .contains("type", "image/")
-                .isNotEmpty("image")
                 .sort("id", Sort.DESCENDING)
                 .findAllAsync()
     }

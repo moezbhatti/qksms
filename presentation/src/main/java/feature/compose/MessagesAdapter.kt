@@ -44,7 +44,7 @@ import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import model.Conversation
 import model.Message
 import model.Recipient
-import util.extensions.isImage
+import util.extensions.hasThumbnails
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -139,7 +139,7 @@ class MessagesAdapter @Inject constructor(
         view.subject.setVisible(view.subject.text.isNotBlank())
 
         view.body.text = message.getText()
-        view.body.setVisible(message.isSms() || view.body.text.isNotEmpty() || message.parts.all { it.image == null })
+        view.body.setVisible(message.isSms() || view.body.text.isNotEmpty() || message.parts.all { !it.hasThumbnails() })
 
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
 
@@ -219,7 +219,7 @@ class MessagesAdapter @Inject constructor(
         }
 
         // If we're showing any thumbnails, set clipToOutline to true
-        val hasImages = message.parts.filter { it.isImage() }.any()
+        val hasImages = message.parts.filter { it.hasThumbnails() }.any()
         view.messageBackground.clipToOutline = hasImages
 
         // setClipToOutline doesn't work unless all of the corners have the same radius, so we have

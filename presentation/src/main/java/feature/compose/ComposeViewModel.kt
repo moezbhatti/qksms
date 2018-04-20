@@ -25,7 +25,6 @@ import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
-import androidx.net.toUri
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
@@ -323,7 +322,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                         }
 
                         menuForward.actionId -> {
-                            val images = message.parts.filter { it.isImage() }.mapNotNull { it.image?.toUri() }
+                            val images = message.parts.filter { it.isImage() }.mapNotNull { it.getUri() }
                             navigator.showCompose(message.body, images)
                         }
 

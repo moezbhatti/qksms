@@ -25,7 +25,6 @@ import android.net.Uri
 import android.provider.Telephony
 import model.MmsPart
 import timber.log.Timber
-import util.extensions.isImage
 import util.extensions.isSmil
 import util.extensions.isText
 import java.io.BufferedReader
@@ -50,8 +49,6 @@ class CursorToPartImpl @Inject constructor(private val context: Context) : Curso
             isSmil() -> {
                 // Do nothing
             }
-
-            isImage() -> image = ContentUris.withAppendedId(CONTENT_URI, id).toString()
 
             isText() -> {
                 text = if (data == null) {

@@ -20,18 +20,25 @@ package common.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.ImageView
+import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.moez.QKSMS.R
 import common.Navigator
 import common.util.GlideApp
 import common.util.extensions.setVisible
 import injection.appComponent
+import kotlinx.android.synthetic.main.mms_preview_list_item.view.*
 import model.MmsPart
+import util.extensions.hasThumbnails
+import util.extensions.isImage
+import util.extensions.isVideo
 import javax.inject.Inject
 
 class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
 
     @Inject lateinit var navigator: Navigator
+
+    private val layoutInflater = LayoutInflater.from(context)
 
     var parts: List<MmsPart> = ArrayList()
         set(value) {
@@ -48,19 +55,27 @@ class MmsPreviewView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     private fun updateView() {
-        val images = parts.filter { it.image != null }
-        setVisible(images.isNotEmpty())
+        val media = parts.filter { it.hasThumbnails() }
+        setVisible(media.isNotEmpty())
 
         if (childCount > 0) {
             removeAllViews()
         }
 
-        images.forEach { image ->
-            addView(ImageView(context).apply {
-                layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-                GlideApp.with(context).load(image.image).fitCenter().into(this)
-                setOnClickListener { navigator.showImage(image.id) }
-            })
+        media.forEach { part ->
+            val view = layoutInflater.inflate(R.layout.mms_preview_list_item, this, false)
+            view.video.setVisible(part.isVideo())
+
+            GlideApp.with(context).load(part.getUri()).fitCenter().into(view.thumbnail)
+
+            setOnClickListener {
+                when {
+                    part.isImage() -> navigator.showImage(part.id)
+                    part.isVideo() -> navigator.showVideo(part.getUri(), part.type)
+                }
+            }
+
+            addView(view)
         }
     }
 

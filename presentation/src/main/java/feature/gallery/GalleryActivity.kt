@@ -85,7 +85,7 @@ class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
 
         if (image.drawable == null) {
             GlideApp.with(this)
-                    .load(state.imagePath)
+                    .load(state.imageUri)
                     .dontAnimate()
                     .listener(GlideCompletionListener {
                         startPostponedEnterTransition()

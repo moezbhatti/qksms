@@ -25,4 +25,8 @@ fun MmsPart.isSmil() = ContentType.APP_SMIL == type
 
 fun MmsPart.isImage() = ContentType.isImageType(type)
 
+fun MmsPart.isVideo() = ContentType.isVideoType(type)
+
 fun MmsPart.isText() = ContentType.isTextType(type)
+
+fun MmsPart.hasThumbnails() = isImage() || isVideo()

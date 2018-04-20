@@ -57,7 +57,7 @@ class ConversationMediaAdapter @Inject constructor(
         val view = holder.itemView
 
         GlideApp.with(context)
-                .load(part.image)
+                .load(part.getUri())
                 .fitCenter()
                 .into(view.thumbnail)
 

@@ -119,6 +119,13 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivity(intent)
     }
 
+    fun showVideo(uri: Uri, type: String) {
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+                .setDataAndType(uri, type)
+
+        startActivityExternal(intent)
+    }
+
     /**
      * Shows the attachment full-screen
      * The transitionName for the view should be the id of the image being displayed
