@@ -49,6 +49,8 @@ import feature.qkreply.QkReplyActivity
 import feature.qkreply.QkReplyViewModel
 import feature.settings.SettingsActivity
 import feature.settings.SettingsViewModel
+import feature.settings.about.AboutActivity
+import feature.settings.about.AboutViewModel
 import feature.setup.SetupActivity
 import feature.setup.SetupViewModel
 import feature.themepicker.ThemePickerActivity
@@ -77,6 +79,7 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
     fun inject(activity: SetupActivity)
+    fun inject(activity: AboutActivity)
     fun inject(activity: BlockedActivity)
     fun inject(activity: ComposeActivity)
     fun inject(activity: ConversationInfoActivity)
@@ -119,6 +122,7 @@ interface AppComponent {
 
     fun inject(viewModel: MainViewModel)
     fun inject(viewModel: SetupViewModel)
+    fun inject(viewModel: AboutViewModel)
     fun inject(viewModel: BlockedViewModel)
     fun inject(viewModel: ComposeViewModel)
     fun inject(viewModel: ConversationInfoViewModel)

@@ -123,12 +123,22 @@
     <string name="settings_mms_size_title">Max MMS attachment size</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+    <string name="settings_about_title">About QKSMS</string>
     <string name="settings_version">Version %s</string>
 
     <string name="blocked_title">Blocking</string>
     <string name="blocked_empty">Your blocked conversations will appear here</string>
     <string name="blocked_unblock_dialog_title">Unblock</string>
     <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
+
+    <string name="about_title">About</string>
+    <string name="about_version_title">Version</string>
+    <string name="about_developer_title">Developer</string>
+    <string name="about_source_title">Source code</string>
+    <string name="about_changelog_title">Changelog</string>
+    <string name="about_contact_title">Contact</string>
+    <string name="about_license_title">License</string>
+    <string name="about_copyright_title">Copyright</string>
 
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>

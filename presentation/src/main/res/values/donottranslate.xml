@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="about_developer">Moez Bhatti</string>
+    <string name="about_source">https://github.com/moezbhatti/qksms</string>
+    <string name="about_changelog">https://github.com/moezbhatti/qksms/releases</string>
+    <string name="about_contact">team@qklabs.com</string>
+    <string name="about_license">GNU General Public License v3.0</string>
+    <string name="about_copyright">© 2014–2018</string>
+
+</resources>

@@ -156,6 +156,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                                 newState { it.copy(syncing = false) }
                             })
                         }
+
+                        R.id.about -> navigator.showAbout()
                     }
                 }
 

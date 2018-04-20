@@ -194,16 +194,13 @@
                 app:summary="@string/settings_sync_summary"
                 app:title="@string/settings_sync_title" />
 
-            <common.widget.QkTextView
-                android:id="@+id/version"
-                android:layout_width="wrap_content"
+            <common.widget.PreferenceView
+                android:id="@+id/about"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="24dp"
-                app:textColor="tertiary"
-                app:textSize="secondary"
-                tools:text="Version 3.0.0" />
+                app:icon="@drawable/ic_info_outline_black_24dp"
+                app:title="@string/settings_about_title"
+                tools:summary="Version 3.0.7" />
 
         </LinearLayout>
 

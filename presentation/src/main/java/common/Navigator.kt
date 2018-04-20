@@ -46,6 +46,8 @@ import feature.plus.PlusViewModel
 import feature.qkreply.QkReplyViewModel
 import feature.settings.SettingsActivity
 import feature.settings.SettingsViewModel
+import feature.settings.about.AboutActivity
+import feature.settings.about.AboutViewModel
 import feature.setup.SetupActivity
 import feature.setup.SetupViewModel
 import feature.themepicker.ThemePickerActivity
@@ -134,6 +136,31 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivity(intent)
     }
 
+    fun showAbout() {
+        val intent = Intent(context, AboutActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun showDeveloper() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti"))
+        startActivity(intent)
+    }
+
+    fun showSourceCode() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti/qksms"))
+        startActivity(intent)
+    }
+
+    fun showChangelog() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti/qksms/releases"))
+        startActivity(intent)
+    }
+
+    fun showLicense() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti/qksms/blob/master/LICENSE"))
+        startActivity(intent)
+    }
+
     fun showBlockedConversations() {
         val intent = Intent(context, BlockedActivity::class.java)
         startActivity(intent)
@@ -205,6 +232,7 @@ class Navigator @Inject constructor(private val context: Context, private val no
                 MainViewModel::class.java -> MainViewModel()
                 PlusViewModel::class.java -> PlusViewModel()
                 SetupViewModel::class.java -> SetupViewModel()
+                AboutViewModel::class.java -> AboutViewModel()
                 ComposeViewModel::class.java -> ComposeViewModel(intent)
                 ConversationInfoViewModel::class.java -> ConversationInfoViewModel(intent)
                 GalleryViewModel::class.java -> GalleryViewModel(intent)

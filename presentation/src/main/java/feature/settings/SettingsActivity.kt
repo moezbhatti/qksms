@@ -80,7 +80,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         textSizeDialog.adapter.setData(R.array.text_sizes)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
-        version.text = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
+        about.summary = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
 
         colors.background
                 .autoDisposable(scope())
