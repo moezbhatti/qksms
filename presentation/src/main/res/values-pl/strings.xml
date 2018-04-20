@@ -20,7 +20,7 @@
   -->
 <resources>
   <string name="app_name">QKSMS</string>
-  <string name="title_archived">Archiwizuj</string>
+  <string name="title_archived">Archiwum</string>
   <string name="title_scheduled">Harmonogram</string>
   <string name="title_settings">Ustawienia</string>
   <string name="title_notification_prefs">Powiadomienia</string>
@@ -71,7 +71,7 @@
   <string name="info_title">Szczegóły</string>
   <string name="info_notifications">Powiadomienia</string>
   <string name="info_theme">Motyw</string>
-  <string name="info_archive">Archiwizuj</string>
+  <string name="info_archive">Archiwum</string>
   <string name="info_unarchive">Odarchiwizuj</string>
   <string name="info_block">Zablokuj</string>
   <string name="info_unblock">Odblokuj</string>
@@ -79,9 +79,9 @@
   <string name="gallery_toast_saved">Zapisz obraz</string>
   <string name="settings_category_appearance">Wygląd</string>
   <string name="settings_category_general">Ogólne</string>
-  <string name="settings_category_qkreply">QK Reply</string>
+  <string name="settings_category_qkreply">QK Odpowiedź</string>
   <string name="settings_default_sms_title">Domyślna aplikacja do obsługi SMSów</string>
-  <string name="settings_default_sms_summary_true">KSMS jest domyślną aplikacja do obsługi SMSów</string>
+  <string name="settings_default_sms_summary_true">QKSMS jest domyślną aplikacja do obsługi SMSów</string>
   <string name="settings_default_sms_summary_false">Ustaw QKSMS jako domyślna aplikacja do obsługi SMSów</string>
   <string name="settings_theme_title">Motyw</string>
   <string name="settings_night_title">Tryb nocny</string>
@@ -90,7 +90,7 @@
   <string name="settings_night_end_title">Czas zakończenia</string>
   <string name="settings_auto_emoji_title">Automatyczne emoji</string>
   <string name="settings_notifications_title">Powiadomienia</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
+  <string name="settings_notification_previews_title">Podgląd powiadomień</string>
   <string name="settings_vibration_title">Wibracje</string>
   <string name="settings_ringtone_title">Dźwięk</string>
   <string name="settings_blocking_title">Blokuj</string>
@@ -104,7 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Dotknij, aby odrzucić</string>
   <string name="settings_qkreply_tap_dismiss_summary">Dotknij gdziekolwiek poza okienkiem, aby zamknąć</string>
   <string name="settings_text_size_title">Rozmiar czcionki</string>
-  <string name="settings_system_font_title">Use system font</string>
+  <string name="settings_system_font_title">Użyj czcionki systemowej</string>
   <string name="settings_unicode_title">Usuwaj ogonki</string>
   <string name="settings_unicode_summary">Usuwaj ogonki z znaków w wychodzących wiadomości SMS</string>
   <string name="settings_mms_size_title">Maksymalny rozmiar załącznika MMS</string>
@@ -166,22 +166,22 @@
   <string name="toast_archived">Zarchiwizowana konwersacja</string>
   <string name="toast_qksms_plus">Musisz odblokować QKSMS+, aby używać tego</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="few">%s new messages</item>
-    <item quantity="many">%s new messages</item>
-    <item quantity="other">%s new messages</item>
+    <item quantity="one">Nowa wiadomość</item>
+    <item quantity="few">%s nowych wiadomości</item>
+    <item quantity="many">%s nowych wiadomości</item>
+    <item quantity="other">%s nowych wiadomości</item>
   </plurals>
   <string name="notification_message_failed_title">Wiadomość nie została wysłana</string>
   <string name="notification_message_failed_text">Wiadomość %s nie została wysłana</string>
   <string-array name="night_modes">
     <item>Wyłącz</item>
-    <item>Zawsze na</item>
+    <item>Zawsze włącz</item>
     <item>Automatycznie</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>Pokaż nazwę i wiadomości</item>
+    <item>Pokaż nazwę</item>
+    <item>Ukryć zawartość</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Mały</item>

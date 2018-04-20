@@ -79,7 +79,7 @@
   <string name="gallery_toast_saved">Foto gemt</string>
   <string name="settings_category_appearance">Udseende</string>
   <string name="settings_category_general">Generelt</string>
-  <string name="settings_category_qkreply">QK Reply</string>
+  <string name="settings_category_qkreply">QK-svar</string>
   <string name="settings_default_sms_title">Standard SMS-app</string>
   <string name="settings_default_sms_summary_true">QKSMS er dit standard SMS app</string>
   <string name="settings_default_sms_summary_false">Angiv QKSMS som dit standard SMS app</string>
@@ -90,7 +90,7 @@
   <string name="settings_night_end_title">Sluttidspunkt</string>
   <string name="settings_auto_emoji_title">Automatisk emoji</string>
   <string name="settings_notifications_title">Notifikationer</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
+  <string name="settings_notification_previews_title">Notifikationseksempler</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Lyd</string>
   <string name="settings_blocking_title">Blokering</string>
@@ -166,8 +166,8 @@
   <string name="toast_archived">Arkiveret samtale</string>
   <string name="toast_qksms_plus">Dette kræver oplåsning af QKSMS+</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="other">%s new messages</item>
+    <item quantity="one">Ny besked</item>
+    <item quantity="other">%s nye beskeder</item>
   </plurals>
   <string name="notification_message_failed_title">Besked ikke afsendt</string>
   <string name="notification_message_failed_text">Mislykkedes at afsende beskeden til %s</string>
@@ -177,9 +177,9 @@
     <item>Automatisk</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>Vis navn og besked</item>
+    <item>Vis navn</item>
+    <item>Skjul indhold</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Lille</item>
