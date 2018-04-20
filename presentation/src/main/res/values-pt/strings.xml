@@ -39,7 +39,7 @@
   <string name="main_syncing">A otimizar. Por favor aguarde um pouco&#8230;</string>
   <string name="main_sender_you">Você: %s</string>
   <string name="drawer_inbox">Caixa de entrada</string>
-  <string name="drawer_archived">Arquivadas</string>
+  <string name="drawer_archived">Arquivada</string>
   <string name="drawer_scheduled">Agendadas</string>
   <string name="drawer_more">Mais</string>
   <string name="drawer_settings">Definições</string>
@@ -47,10 +47,10 @@
   <string name="drawer_help">Ajuda e comentários</string>
   <string name="inbox_empty_text">As suas conversas aparecerão aqui</string>
   <string name="inbox_search_empty_text">Sem resultados</string>
-  <string name="inbox_menu_archive">Archive</string>
-  <string name="inbox_menu_unarchive">Unarchive</string>
-  <string name="inbox_menu_block">Block</string>
-  <string name="inbox_menu_delete">Delete</string>
+  <string name="inbox_menu_archive">Arquivar</string>
+  <string name="inbox_menu_unarchive">Retirar do arquivo</string>
+  <string name="inbox_menu_block">Bloquear</string>
+  <string name="inbox_menu_delete">Apagar</string>
   <string name="archived_empty_text">As conversas arquivadas aparecerão aqui</string>
   <string name="scheduled_empty_text">As mensagens agendadas aparecerão aqui</string>
   <string name="dialog_delete_title">Apagar</string>
@@ -60,11 +60,11 @@
     <item>Reencaminhar</item>
     <item>Apagar</item>
   </string-array>
-  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_messages_empty">Aqui é o início da sua conversa. Pode dizer algo simpático!</string>
   <string name="compose_hint">Escrever uma mensagem&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
+  <string name="compose_menu_copy">Copiar texto</string>
+  <string name="compose_menu_forward">Reencaminhar</string>
+  <string name="compose_menu_delete">Apagar</string>
   <string name="message_status_sending">A enviar&#8230;</string>
   <string name="message_status_delivered">%s entregue</string>
   <string name="message_status_failed">Falha ao enviar. Toque para tentar novamente</string>
@@ -72,13 +72,14 @@
   <string name="info_notifications">Notificações</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arquivar</string>
-  <string name="info_unarchive">Desarquivar</string>
+  <string name="info_unarchive">Retirar do arquivo</string>
   <string name="info_block">Bloquear</string>
   <string name="info_unblock">Desbloquear</string>
   <string name="info_delete">Apagar conversa</string>
   <string name="gallery_toast_saved">Imagem guardada</string>
   <string name="settings_category_appearance">Aparência</string>
   <string name="settings_category_general">Geral</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">Aplicação padrão para SMS</string>
   <string name="settings_default_sms_summary_true">O QKSMS é a aplicação padrão</string>
   <string name="settings_default_sms_summary_false">Definir QKSMS como a aplicação padrão para SMS</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">Hora de fim</string>
   <string name="settings_auto_emoji_title">Emoji automático</string>
   <string name="settings_notifications_title">Notificações</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibração</string>
   <string name="settings_ringtone_title">Som</string>
   <string name="settings_blocking_title">Bloqueio</string>
@@ -102,12 +104,13 @@
   <string name="settings_qkreply_tap_dismiss_title">Toque para fechar</string>
   <string name="settings_qkreply_tap_dismiss_summary">Toque fora do alerta para o fechar</string>
   <string name="settings_text_size_title">Tamanho do texto</string>
+  <string name="settings_system_font_title">Usar tipo de letra do sistema</string>
   <string name="settings_unicode_title">Remover acentos</string>
   <string name="settings_unicode_summary">Remover acentos dos caracteres nas mensagens enviadas</string>
   <string name="settings_mms_size_title">Tamanho máximo para anexos MMS</string>
   <string name="settings_sync_title">Sincronizar mensagens</string>
   <string name="settings_sync_summary">Sincronizar as mensagens com a base de dados nativa do Android</string>
-  <string name="settings_version">Version %s</string>
+  <string name="settings_version">Versão %s</string>
   <string name="blocked_title">Bloqueio</string>
   <string name="blocked_empty">As conversas bloqueadas aparecerão aqui</string>
   <string name="blocked_unblock_dialog_title">Desbloquear</string>
@@ -118,8 +121,8 @@
   <string name="qksms_plus_upgrade_donate">Desbloquear + com uma doação de %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">Obrigado por apoiar o QKSMS!</string>
   <string name="qksms_plus_thanks_summary">Agora, tem acesso a todas as funções do QKSMS+</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donate via PayPal</string>
+  <string name="qksms_plus_free_title">O QKSMS+ é gratuito para os utilizadores F-Droid! Se quiser ajudar no desenvolvimento, pode efetuar um donativo.</string>
+  <string name="qksms_plus_donate">Donativos por PayPal</string>
   <string name="qksms_plus_coming_soon">Brevemente</string>
   <string name="qksms_plus_themes_title">Temas premium</string>
   <string name="qksms_plus_themes_summary">Desbloquear diversos temas não disponíveis na paleta Material Design</string>
@@ -162,12 +165,21 @@
   <string name="toast_copied">Copiada</string>
   <string name="toast_archived">Conversa arquivada</string>
   <string name="toast_qksms_plus">Tem que ter o QKSMS+ para esta função</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Mensagem não enviada</string>
   <string name="notification_message_failed_text">Não foi possível enviar a mensagem para %s</string>
   <string-array name="night_modes">
     <item>Desativado</item>
     <item>Sempre ativo</item>
     <item>Automático</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Pequeno</item>

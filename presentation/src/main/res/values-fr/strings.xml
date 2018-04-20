@@ -62,9 +62,9 @@
   </string-array>
   <string name="compose_messages_empty">C\'est le début de votre conversation. Dites quelque chose de gentil!</string>
   <string name="compose_hint">Écrire un message&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
+  <string name="compose_menu_copy">Copier le texte</string>
+  <string name="compose_menu_forward">Transférer</string>
+  <string name="compose_menu_delete">Supprimer</string>
   <string name="message_status_sending">Envoi&#8230;</string>
   <string name="message_status_delivered">Livré %s</string>
   <string name="message_status_failed">Échec de l\'envoi. Taper pour réessayer</string>
@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">Image enregistrée</string>
   <string name="settings_category_appearance">Apparence</string>
   <string name="settings_category_general">Général</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">Application SMS par défaut</string>
   <string name="settings_default_sms_summary_true">QKSMS est votre application SMS par défaut</string>
   <string name="settings_default_sms_summary_false">Faire de QKSMS l\'application SMS par défaut</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">Heure de fin</string>
   <string name="settings_auto_emoji_title">Emoji automatique</string>
   <string name="settings_notifications_title">Notifications</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Son</string>
   <string name="settings_blocking_title">Blocage</string>
@@ -102,6 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Touchez pour cacher</string>
   <string name="settings_qkreply_tap_dismiss_summary">Touchez à l\'extérieur du popup pour le fermer</string>
   <string name="settings_text_size_title">Taille de la police d\'écriture</string>
+  <string name="settings_system_font_title">Utiliser la police du système</string>
   <string name="settings_unicode_title">Enlever les accents</string>
   <string name="settings_unicode_summary">Supprimer les accents des caractères lors de l\'envoi de messages SMS</string>
   <string name="settings_mms_size_title">Taille maximale des pièces jointes MMS</string>
@@ -162,12 +165,21 @@
   <string name="toast_copied">Copié</string>
   <string name="toast_archived">Conversation archivée</string>
   <string name="toast_qksms_plus">Vous devez déverrouiller QKSMS+ pour utiliser ceci</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Message non envoyé</string>
   <string name="notification_message_failed_text">Le message à %s n\'a pu être envoyé</string>
   <string-array name="night_modes">
     <item>Désactivé</item>
     <item>Toujours activé</item>
     <item>Automatique</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Petit</item>

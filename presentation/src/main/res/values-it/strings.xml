@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">Immagine salvata</string>
   <string name="settings_category_appearance">Aspetto</string>
   <string name="settings_category_general">Generale</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">App SMS predefinita</string>
   <string name="settings_default_sms_summary_true">QKSMS è l\'app SMS predefinita</string>
   <string name="settings_default_sms_summary_false">Imposta QKSMS come app SMS predefinita</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">Ora di fine</string>
   <string name="settings_auto_emoji_title">Emoji automatico</string>
   <string name="settings_notifications_title">Notifiche</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibrazione</string>
   <string name="settings_ringtone_title">Suono</string>
   <string name="settings_blocking_title">Blocco</string>
@@ -102,6 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Tocca per archiviare</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tocca al di fuori del popup per chiuderlo</string>
   <string name="settings_text_size_title">Dimensione carattere</string>
+  <string name="settings_system_font_title">Use system font</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Rimuovi gli accenti da caratteri nei messaggi SMS in uscita</string>
   <string name="settings_mms_size_title">Dimensione massima degli allegati MMS</string>
@@ -162,12 +165,21 @@
   <string name="toast_copied">Copiato</string>
   <string name="toast_archived">Conversazioni archiviate</string>
   <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Messaggi non inviati</string>
   <string name="notification_message_failed_text">Il messaggio a %s non è stato inviato</string>
   <string-array name="night_modes">
     <item>Disabled</item>
     <item>Sempre Attivo</item>
     <item>Automatico</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Piccolo</item>

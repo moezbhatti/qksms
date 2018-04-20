@@ -37,7 +37,7 @@
   <string name="menu_info">詳細</string>
   <string name="menu_save">画像を保存</string>
   <string name="main_syncing">データベースを最適化します。これは数分かかる場合があります&#8230;</string>
-  <string name="main_sender_you">You: %s</string>
+  <string name="main_sender_you">あなた: %s</string>
   <string name="drawer_inbox">受信トレイ</string>
   <string name="drawer_archived">アーカイブ済</string>
   <string name="drawer_scheduled">スケジュール済</string>
@@ -46,11 +46,11 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">ヘルプとフィードバック</string>
   <string name="inbox_empty_text">会話がここに表示されます</string>
-  <string name="inbox_search_empty_text">No results</string>
-  <string name="inbox_menu_archive">Archive</string>
-  <string name="inbox_menu_unarchive">Unarchive</string>
-  <string name="inbox_menu_block">Block</string>
-  <string name="inbox_menu_delete">Delete</string>
+  <string name="inbox_search_empty_text">結果はありません</string>
+  <string name="inbox_menu_archive">アーカイブ</string>
+  <string name="inbox_menu_unarchive">アーカイブ解除</string>
+  <string name="inbox_menu_block">ブロック</string>
+  <string name="inbox_menu_delete">削除</string>
   <string name="archived_empty_text">保存した会話がここに表示されます</string>
   <string name="scheduled_empty_text">スケジュールされたメッセージがここに表示されます</string>
   <string name="dialog_delete_title">削除</string>
@@ -60,11 +60,11 @@
     <item>転送</item>
     <item>削除</item>
   </string-array>
-  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_messages_empty">これが会話の始まりです。 何か素敵なことを言ってください!</string>
   <string name="compose_hint">メッセージを書く&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
+  <string name="compose_menu_copy">テキストのコピー</string>
+  <string name="compose_menu_forward">転送</string>
+  <string name="compose_menu_delete">削除</string>
   <string name="message_status_sending">送信中&#8230;</string>
   <string name="message_status_delivered">%s を配信しました</string>
   <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">画像を保存しました</string>
   <string name="settings_category_appearance">外観</string>
   <string name="settings_category_general">全般</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">デフォルトの SMS アプリ</string>
   <string name="settings_default_sms_summary_true">QKSMS はあなたのデフォルトの SMS アプリです</string>
   <string name="settings_default_sms_summary_false">デフォルトの SMS アプリとして QKSMS を設定します</string>
@@ -89,26 +90,28 @@
   <string name="settings_night_end_title">終了時刻</string>
   <string name="settings_auto_emoji_title">自動絵文字</string>
   <string name="settings_notifications_title">通知</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">振動</string>
   <string name="settings_ringtone_title">サウンド</string>
-  <string name="settings_blocking_title">Blocking</string>
+  <string name="settings_blocking_title">ブロック</string>
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+  <string name="settings_should_i_answer_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルタします</string>
   <string name="settings_delivery_title">配信確認</string>
   <string name="settings_delivery_summary">メッセージが正常に送信されたことを確認します</string>
   <string name="settings_qkreply_title">QK 返信</string>
   <string name="settings_qkreply_summary">新しいメッセージのポップアップ</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-  <string name="settings_text_size_title">Font size</string>
+  <string name="settings_qkreply_tap_dismiss_title">タップして消去</string>
+  <string name="settings_qkreply_tap_dismiss_summary">ポップアップの外側をタップすると閉じます</string>
+  <string name="settings_text_size_title">フォントサイズ</string>
+  <string name="settings_system_font_title">Use system font</string>
   <string name="settings_unicode_title">アクセントの除去</string>
   <string name="settings_unicode_summary">送信する SMS メッセージの文字からアクセントを削除します</string>
   <string name="settings_mms_size_title">MMS の最大添付ファイルサイズ</string>
   <string name="settings_sync_title">メッセージを同期</string>
   <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
-  <string name="settings_version">Version %s</string>
-  <string name="blocked_title">Blocking</string>
+  <string name="settings_version">バージョン %s</string>
+  <string name="blocked_title">ブロック</string>
   <string name="blocked_empty">ブロックした会話がここに表示されます</string>
   <string name="blocked_unblock_dialog_title">ブロックを解除</string>
   <string name="blocked_unblock_dialog_message">この会話のブロックを解除しますか?</string>
@@ -118,8 +121,8 @@
   <string name="qksms_plus_upgrade_donate">%1$s %2$s のロック解除と寄付</string>
   <string name="qksms_plus_thanks_title">QKSMS を支援いただきありがとうございます!</string>
   <string name="qksms_plus_thanks_summary">QKSMS+ のすべての機能にアクセスできます</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donate via PayPal</string>
+  <string name="qksms_plus_free_title">QKSMS+ は F-Droid ユーザーは無料です! 開発をサポートしたい場合は、気軽に寄付をしてください。</string>
+  <string name="qksms_plus_donate">PayPal で寄付する</string>
   <string name="qksms_plus_coming_soon">近日登場</string>
   <string name="qksms_plus_themes_title">プレミアムテーマ</string>
   <string name="qksms_plus_themes_summary">マテリアルデザインパレットで利用できない美しいテーマカラーのロックを解除します</string>
@@ -162,6 +165,9 @@
   <string name="toast_copied">コピーしました</string>
   <string name="toast_archived">会話をアーカイブしました</string>
   <string name="toast_qksms_plus">これを使用するには QKSMS+ のロックを解除する必要があります</string>
+  <plurals name="notification_new_messages">
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">メッセージは送信されませんでした</string>
   <string name="notification_message_failed_text">%s へのメッセージの送信に失敗しました</string>
   <string-array name="night_modes">
@@ -169,11 +175,16 @@
     <item>常にオン</item>
     <item>自動</item>
   </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
+  </string-array>
   <string-array name="text_sizes">
-    <item>Small</item>
-    <item>Normal</item>
-    <item>Large</item>
-    <item>Larger</item>
+    <item>小</item>
+    <item>標準</item>
+    <item>大</item>
+    <item>最大</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>

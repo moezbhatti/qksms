@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">Saved image</string>
   <string name="settings_category_appearance">Appearance</string>
   <string name="settings_category_general">Umum</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">Aplikasi SMS default</string>
   <string name="settings_default_sms_summary_true">QKSMS adalah aplikasi SMS default Anda</string>
   <string name="settings_default_sms_summary_false">Tetapkan QKSMS sebagai aplikasi SMS default Anda</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">Waktu berakhir</string>
   <string name="settings_auto_emoji_title">Automatic emoji</string>
   <string name="settings_notifications_title">Notifikasi</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Getar</string>
   <string name="settings_ringtone_title">Suara</string>
   <string name="settings_blocking_title">Blocking</string>
@@ -102,6 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
+  <string name="settings_system_font_title">Use system font</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
   <string name="settings_mms_size_title">Max MMS attachment size</string>
@@ -162,12 +165,20 @@
   <string name="toast_copied">Disalin</string>
   <string name="toast_archived">Archived conversation</string>
   <string name="toast_qksms_plus">Anda harus membuka QKSMS+ untuk menggunakan ini</string>
+  <plurals name="notification_new_messages">
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Message not sent</string>
   <string name="notification_message_failed_text">The message to %s failed to send</string>
   <string-array name="night_modes">
     <item>Nonaktif</item>
     <item>Selalu nyala</item>
     <item>Otomatis</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Small</item>

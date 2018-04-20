@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">Saved image</string>
   <string name="settings_category_appearance">Appearance</string>
   <string name="settings_category_general">General</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">Zadana aplikacija za SMS</string>
   <string name="settings_default_sms_summary_true">QKSMS je vaša zadana aplikacija za SMS</string>
   <string name="settings_default_sms_summary_false">Postavi QKSMS kao zadanu aplikaciju za SMS</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">Vrijeme završetka</string>
   <string name="settings_auto_emoji_title">Automatsk emoji</string>
   <string name="settings_notifications_title">Notifications</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibracija</string>
   <string name="settings_ringtone_title">Zvuk</string>
   <string name="settings_blocking_title">Blocking</string>
@@ -102,6 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Font size</string>
+  <string name="settings_system_font_title">Use system font</string>
   <string name="settings_unicode_title">Strip naglasci</string>
   <string name="settings_unicode_summary">Uklonite naglaske sa znakova u odlaznim SMS porukama</string>
   <string name="settings_mms_size_title">Maksimalna veličina MMS privitka</string>
@@ -162,12 +165,22 @@
   <string name="toast_copied">Kopirano</string>
   <string name="toast_archived">Razgovor je arhiviran</string>
   <string name="toast_qksms_plus">Morate otključati QKSMS+ za korištenje ovog</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="few">%s new messages</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Poruka nije poslana</string>
   <string name="notification_message_failed_text">Poruku %s se nije uspjela poslati</string>
   <string-array name="night_modes">
     <item>Onemogućeno</item>
     <item>Uvijek uključen</item>
     <item>Automatski</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Small</item>

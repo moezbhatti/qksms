@@ -57,7 +57,7 @@
   <string name="dialog_delete_message">Opravdu že chcete odstranit tuto konverzaci?</string>
   <string-array name="message_options">
     <item>Copy text</item>
-    <item>Forward</item>
+    <item>Přeposlat</item>
     <item>Delete</item>
   </string-array>
   <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">Saved image</string>
   <string name="settings_category_appearance">Appearance</string>
   <string name="settings_category_general">General</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">Default SMS app</string>
   <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
   <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">End time</string>
   <string name="settings_auto_emoji_title">Automatické emoji</string>
   <string name="settings_notifications_title">Upozornění</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibrace</string>
   <string name="settings_ringtone_title">Sound</string>
   <string name="settings_blocking_title">Blokování</string>
@@ -102,12 +104,13 @@
   <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">Velikost písma</string>
+  <string name="settings_system_font_title">Use system font</string>
   <string name="settings_unicode_title">Odstranit diakritiku</string>
   <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných zprávách SMS</string>
   <string name="settings_mms_size_title">Maximální velikost přílohy MMS</string>
   <string name="settings_sync_title">Synchronizovat zprávy</string>
   <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativním Android SMS databází</string>
-  <string name="settings_version">Version %s</string>
+  <string name="settings_version">Verze %s</string>
   <string name="blocked_title">Blokování</string>
   <string name="blocked_empty">Zde se objeví vaše blokované konverzace</string>
   <string name="blocked_unblock_dialog_title">Odblokovat</string>
@@ -162,12 +165,23 @@
   <string name="toast_copied">Zkopírováno</string>
   <string name="toast_archived">Archived conversation</string>
   <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="few">%s new messages</item>
+    <item quantity="many">%s new messages</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Message not sent</string>
   <string name="notification_message_failed_text">The message to %s failed to send</string>
   <string-array name="night_modes">
     <item>Disabled</item>
     <item>Always on</item>
     <item>Automatic</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Malé</item>

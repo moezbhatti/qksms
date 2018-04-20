@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">عکسای ذخیره</string>
   <string name="settings_category_appearance">ظاهر</string>
   <string name="settings_category_general">عمومی</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">برنامه پیشفرض</string>
   <string name="settings_default_sms_summary_true">پیامچه برنامه پیشفرض است</string>
   <string name="settings_default_sms_summary_false">پیامچه برنامه پیشفرض شود</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">زمان پایان</string>
   <string name="settings_auto_emoji_title">Emoji اتوماتیک</string>
   <string name="settings_notifications_title">اعلان‌ها</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">لرزش</string>
   <string name="settings_ringtone_title">حالت صدا</string>
   <string name="settings_blocking_title">مسدود کردن</string>
@@ -102,6 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
   <string name="settings_text_size_title">اندازه متن</string>
+  <string name="settings_system_font_title">Use system font</string>
   <string name="settings_unicode_title">لهجه ها</string>
   <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
   <string name="settings_mms_size_title">MMS حداکثر اندازه پیوست</string>
@@ -162,12 +165,21 @@
   <string name="toast_copied">کپی شد</string>
   <string name="toast_archived">آرشیو مکالمه</string>
   <string name="toast_qksms_plus">باید نسخه پیشرفته را فعال کنید</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">ارسال نشد</string>
   <string name="notification_message_failed_text">پیام به %s ارسال نشد</string>
   <string-array name="night_modes">
     <item>غیرفعال</item>
     <item>همیشه روشن</item>
     <item>اتوماتیک</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>کوچک</item>

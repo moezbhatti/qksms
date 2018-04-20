@@ -28,11 +28,11 @@
   <string name="title_conversations">In Posteingang suchen&#8230;</string>
   <string name="title_compose">Verfassen</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Love texting again</string>
-  <string name="setup_summary">QKSMS als Standard-Nachrichten-App festlegen</string>
+  <string name="setup_title">Du wirst SMS wieder lieben</string>
+  <string name="setup_summary">QKSMS als Standard-SMS-App festlegen</string>
   <string name="setup_skip">Überspringen</string>
   <string name="setup_next">Weiter</string>
-  <string name="menu_clear">Entfernen</string>
+  <string name="menu_clear">Leeren</string>
   <string name="menu_call">Anrufen</string>
   <string name="menu_info">Details</string>
   <string name="menu_save">Bild speichern</string>
@@ -62,9 +62,9 @@
   </string-array>
   <string name="compose_messages_empty">Das ist der Beginn der Unterhaltung. Sag\' etwas nettes!</string>
   <string name="compose_hint">Schreibe eine Nachricht&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
+  <string name="compose_menu_copy">Text kopieren</string>
+  <string name="compose_menu_forward">Weiterleiten</string>
+  <string name="compose_menu_delete">Löschen</string>
   <string name="message_status_sending">Wird gesendet&#8230;</string>
   <string name="message_status_delivered">Zugestellt %s</string>
   <string name="message_status_failed">Fehler beim Senden. Tippen, um es erneut zu versuchen</string>
@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">Bild wurde gespeichert</string>
   <string name="settings_category_appearance">Aussehen</string>
   <string name="settings_category_general">Allgemein</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">Standard-SMS-App</string>
   <string name="settings_default_sms_summary_true">QKSMS ist Ihre Standard-SMS-App</string>
   <string name="settings_default_sms_summary_false">QKSMS als Standard-SMS-App festlegen</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">Ende</string>
   <string name="settings_auto_emoji_title">Automatische Emoji</string>
   <string name="settings_notifications_title">Benachrichtigungen</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Ton</string>
   <string name="settings_blocking_title">Blockieren</string>
@@ -102,6 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Zum Verwerfen tippen</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tippe außerhalb des Popup um es zu schließen</string>
   <string name="settings_text_size_title">Schriftgröße</string>
+  <string name="settings_system_font_title">Systemschriftart verwenden</string>
   <string name="settings_unicode_title">Akzente entfernen</string>
   <string name="settings_unicode_summary">Entfernt Akzente aus Zeichen in ausgehenden SMS-Nachrichten</string>
   <string name="settings_mms_size_title">Maximale Größe von MMS Anhängen</string>
@@ -162,12 +165,21 @@
   <string name="toast_copied">Kopiert</string>
   <string name="toast_archived">Archivierte Unterhaltung</string>
   <string name="toast_qksms_plus">Du brauchst QKSMS+ um das verwenden zu können</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Nachricht wurde nicht gesendet</string>
   <string name="notification_message_failed_text">Due Nachricht an %s konnte nicht gesendet werden</string>
   <string-array name="night_modes">
     <item>Deaktiviert</item>
     <item>Immer aktiviert</item>
     <item>Automatisch</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Klein</item>

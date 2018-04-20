@@ -62,9 +62,9 @@
   </string-array>
   <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
   <string name="compose_hint">Skriv en besked&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
+  <string name="compose_menu_copy">Kopier tekst</string>
+  <string name="compose_menu_forward">Videresend</string>
+  <string name="compose_menu_delete">Slet</string>
   <string name="message_status_sending">Afsender&#8230;</string>
   <string name="message_status_delivered">Leveret %s</string>
   <string name="message_status_failed">Mislykkedes at afsende. Tryk for at forsøge igen</string>
@@ -79,6 +79,7 @@
   <string name="gallery_toast_saved">Foto gemt</string>
   <string name="settings_category_appearance">Udseende</string>
   <string name="settings_category_general">Generelt</string>
+  <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_default_sms_title">Standard SMS-app</string>
   <string name="settings_default_sms_summary_true">QKSMS er dit standard SMS app</string>
   <string name="settings_default_sms_summary_false">Angiv QKSMS som dit standard SMS app</string>
@@ -89,6 +90,7 @@
   <string name="settings_night_end_title">Sluttidspunkt</string>
   <string name="settings_auto_emoji_title">Automatisk emoji</string>
   <string name="settings_notifications_title">Notifikationer</string>
+  <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Lyd</string>
   <string name="settings_blocking_title">Blokering</string>
@@ -102,6 +104,7 @@
   <string name="settings_qkreply_tap_dismiss_title">Tryk for at afvise</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tryk udenfor popup-vinduet for at lukke det</string>
   <string name="settings_text_size_title">Skriftstørrelse</string>
+  <string name="settings_system_font_title">Brug systemets skrifttype</string>
   <string name="settings_unicode_title">Fjern betoninger</string>
   <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS\'er</string>
   <string name="settings_mms_size_title">Maks. MMS-vedhæftningsstørrelse</string>
@@ -162,12 +165,21 @@
   <string name="toast_copied">Kopieret</string>
   <string name="toast_archived">Arkiveret samtale</string>
   <string name="toast_qksms_plus">Dette kræver oplåsning af QKSMS+</string>
+  <plurals name="notification_new_messages">
+    <item quantity="one">New message</item>
+    <item quantity="other">%s new messages</item>
+  </plurals>
   <string name="notification_message_failed_title">Besked ikke afsendt</string>
   <string name="notification_message_failed_text">Mislykkedes at afsende beskeden til %s</string>
   <string-array name="night_modes">
     <item>Deakitiveret</item>
     <item>Altid aktiv</item>
     <item>Automatisk</item>
+  </string-array>
+  <string-array name="notification_preview_options">
+    <item>Show name and message</item>
+    <item>Show name</item>
+    <item>Hide contents</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Lille</item>
