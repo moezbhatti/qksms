@@ -18,13 +18,11 @@
  */
 package feature.compose
 
-import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -34,11 +32,9 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import common.MenuItemAdapter
 import common.QkDialog
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
-import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible

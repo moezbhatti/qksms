@@ -31,7 +31,7 @@ fun RecyclerView.Adapter<*>.autoScrollToStart(recyclerView: RecyclerView) {
                     notifyItemChanged(positionStart - 1)
                 }
 
-                val lastPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                val lastPosition = layoutManager.findLastVisibleItemPosition()
                 if (positionStart >= getItemCount() - 1 && lastPosition == positionStart - 1) {
                     recyclerView.scrollToPosition(positionStart)
                 }
