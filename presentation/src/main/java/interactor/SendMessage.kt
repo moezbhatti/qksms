@@ -21,6 +21,7 @@ package interactor
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import com.google.android.mms.ContentType
 import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.Transaction
@@ -57,15 +58,26 @@ class SendMessage @Inject constructor(
         val settings = Settings()
         val message = Message(body, addresses.toTypedArray())
 
-        val bitmaps = attachments.map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
-        val totalBytes = bitmaps.sumBy { it.allocationByteCount }
+        // Add the GIFs as attachments. The app currently can't compress them, which may result
+        // in a lot of these messages failing to send
+        // TODO Add support for GIF compression
+        attachments
+                .filter { uri -> context.contentResolver.getType(uri) == ContentType.IMAGE_GIF }
+                .map { uri -> context.contentResolver.openInputStream(uri) }
+                .map { inputStream -> inputStream.readBytes() }
+                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_GIF) }
 
-        bitmaps
+        // Compress the images and add them as attachments
+        var totalImageBytes = 0
+        attachments
+                .filter { uri -> context.contentResolver.getType(uri) != ContentType.IMAGE_GIF }
+                .map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
+                .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
                 .map { bitmap ->
-                    val byteRatio = bitmap.allocationByteCount / totalBytes.toFloat()
+                    val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
                     shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
                 }
-                .forEach { bitmap -> message.addMedia(bitmap, "image/jpeg") }
+                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_JPEG) }
 
         val transaction = Transaction(context, settings)
         transaction.sendNewMessage(message, threadId)

@@ -25,8 +25,10 @@ import android.net.Uri
 import android.provider.Telephony
 import model.MmsPart
 import timber.log.Timber
+import util.extensions.isImage
 import util.extensions.isSmil
 import util.extensions.isText
+import util.extensions.isVideo
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import javax.inject.Inject
@@ -46,8 +48,8 @@ class CursorToPartImpl @Inject constructor(private val context: Context) : Curso
         val data = from.getString(from.getColumnIndexOrThrow(Telephony.Mms.Part._DATA))
 
         when {
-            isSmil() -> {
-                // Do nothing
+            isSmil() || isImage() || isVideo() -> {
+                // Do nothing special
             }
 
             isText() -> {
