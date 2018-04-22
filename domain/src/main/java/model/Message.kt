@@ -97,8 +97,7 @@ open class Message : RealmObject() {
     }
 
     /**
-     * Returns the text that should be displayed in the messagelist view
-     * The returned text may be an empty string
+     * Returns the text that should be copied to the clipboard
      */
     fun getText(): String {
         return when {

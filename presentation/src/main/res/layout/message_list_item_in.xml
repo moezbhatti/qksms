@@ -17,111 +17,83 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple"
-    android:orientation="vertical"
-    android:paddingBottom="16dp">
+    android:background="@drawable/ripple">
 
     <common.widget.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
         android:gravity="center"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Tue at 11:39pm" />
 
     <LinearLayout
-        android:id="@+id/message"
-        android:layout_width="match_parent"
+        android:id="@+id/attachments"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start|bottom"
-        android:orientation="horizontal"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/timestamp" />
+
+    <common.widget.AvatarView
+        android:id="@+id/avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/body"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <common.widget.TightTextView
+        android:id="@+id/body"
+        style="@style/TextPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="2dp"
+        android:autoLink="all"
+        android:background="@drawable/message_only"
+        android:gravity="start|center_vertical"
+        android:minHeight="36dp"
+        android:paddingBottom="8dp"
         android:paddingEnd="12dp"
-        android:paddingStart="12dp">
-
-        <common.widget.AvatarView
-            android:id="@+id/avatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="12dp" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/messageBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/message_only"
-            android:minHeight="36dp"
-            android:orientation="vertical"
-            tools:backgroundTint="@color/tools_theme">
-
-            <common.widget.MmsPreviewView
-                android:id="@+id/mmsPreview"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/subject"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                app:layout_constraintWidth_min="192dp" />
-
-            <common.widget.TightTextView
-                android:id="@+id/subject"
-                style="@style/TextPrimary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:gravity="start|center_vertical"
-                android:textStyle="bold"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintBottom_toTopOf="@id/body"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/mmsPreview"
-                app:layout_goneMarginBottom="8dp"
-                tools:text="@tools:sample/lorem" />
-
-            <common.widget.TightTextView
-                android:id="@+id/body"
-                style="@style/TextPrimary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp"
-                android:autoLink="all"
-                android:gravity="start|center_vertical"
-                app:layout_constrainedWidth="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/subject"
-                app:layout_goneMarginTop="8dp"
-                tools:text="@tools:sample/lorem" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </LinearLayout>
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/attachments"
+        tools:backgroundTint="@color/tools_theme"
+        tools:text="@tools:sample/lorem" />
 
     <common.widget.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginBottom="4dp"
         android:layout_marginStart="72dp"
         android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/body"
         app:textColor="secondary"
         app:textSize="tertiary"
         tools:text="Sending..." />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

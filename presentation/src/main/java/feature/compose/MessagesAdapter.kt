@@ -19,39 +19,52 @@
 package feature.compose
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.telephony.PhoneNumberUtils
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
+import common.Navigator
 import common.base.QkRealmAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
+import common.util.GlideApp
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
 import common.util.extensions.setVisible
+import common.widget.BubbleImageView.Style.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
+import kotlinx.android.synthetic.main.mms_preview_list_item.view.*
 import model.Conversation
 import model.Message
 import model.Recipient
 import util.extensions.hasThumbnails
+import util.extensions.isImage
+import util.extensions.isVideo
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MessagesAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
-        private val dateFormatter: DateFormatter
+        private val dateFormatter: DateFormatter,
+        private val navigator: Navigator
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -84,6 +97,7 @@ class MessagesAdapter @Inject constructor(
     private val conversation: Conversation?
         get() = data?.first?.takeIf { it.isValid }
 
+    private val layoutInflater = LayoutInflater.from(context)
     private val contactCache = ContactCache()
     private val selected = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
@@ -98,20 +112,20 @@ class MessagesAdapter @Inject constructor(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
 
+        // Use the parent's context to inflate the layout, otherwise link clicks will crash the app
         val layoutInflater = LayoutInflater.from(parent.context)
         val view: View
 
         if (viewType == VIEW_TYPE_MESSAGE_OUT) {
             view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
             disposables += colors.bubble
-                    .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
+                    .subscribe { color -> view.body.setBackgroundTint(color) }
         } else {
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
             view.avatar.threadId = conversation?.id ?: 0
-            view.subject.textColorObservable = textPrimaryOnTheme
             view.body.textColorObservable = textPrimaryOnTheme
             disposables += theme
-                    .subscribe { color -> view.messageBackground.setBackgroundTint(color) }
+                    .subscribe { color -> view.body.setBackgroundTint(color) }
         }
 
         return QkViewHolder(view)
@@ -124,41 +138,111 @@ class MessagesAdapter @Inject constructor(
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val message = getItem(position)!!
+        val previous = if (position == 0) null else getItem(position - 1)
+        val next = if (position == itemCount - 1) null else getItem(position + 1)
         val view = viewHolder.itemView
 
         RxView.clicks(view).subscribe {
             clicks.onNext(message)
             selected[message.id] = view.status.visibility != View.VISIBLE
-            notifyItemChanged(position)
+            bindStatus(viewHolder, position)
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
 
-        view.mmsPreview.parts = message.parts
+        bindStatus(viewHolder, position)
 
-        view.subject.text = message.getCleansedSubject()
-        view.subject.setVisible(view.subject.text.isNotBlank())
 
-        view.body.text = message.getText()
-        view.body.setVisible(message.isSms() || view.body.text.isNotEmpty() || message.parts.all { !it.hasThumbnails() })
-
+        // Bind the timestamp
+        val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+        view.timestamp.visibility = if (timeSincePrevious < TIMESTAMP_THRESHOLD) View.GONE else View.VISIBLE
 
-        bindAvatar(view, position)
-        bindStatus(view, position)
-        bindGrouping(view, position)
+
+        // Bind the grouping
+        val media = message.parts.filter { it.hasThumbnails() }
+        view.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
+
+
+        // Bind the avatar
+        if (!message.isMe()) {
+            view.avatar.threadId = conversation?.id ?: 0
+            view.avatar.setContact(contactCache[message.address])
+            view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
+        }
+
+
+        // Bind the body text
+        view.body.text = when (message.isSms()) {
+            true -> message.body
+            false -> {
+                val subject = message.getCleansedSubject()
+                val sb = SpannableStringBuilder(message.parts
+                        .mapNotNull { it.text }
+                        .apply { subject + this }
+                        .filter { it.isNotBlank() }
+                        .joinToString("\n") { text -> text })
+
+                val bss = StyleSpan(Typeface.BOLD)
+                sb.setSpan(bss, 0, subject.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                sb.toString()
+            }
+        }
+        view.body.setVisible(message.isSms() || view.body.text.isNotBlank())
+
+        val canBodyGroupWithPrevious = canGroup(message, previous) || media.isNotEmpty()
+        val canBodyGroupWithNext = canGroup(message, next)
+        view.body.setBackgroundResource(when {
+            !canBodyGroupWithPrevious && canBodyGroupWithNext -> if (message.isMe()) R.drawable.message_out_first else R.drawable.message_in_first
+            canBodyGroupWithPrevious && canBodyGroupWithNext -> if (message.isMe()) R.drawable.message_out_middle else R.drawable.message_in_middle
+            canBodyGroupWithPrevious && !canBodyGroupWithNext -> if (message.isMe()) R.drawable.message_out_last else R.drawable.message_in_last
+            else -> R.drawable.message_only
+        })
+
+
+        // Bind the attachments
+        view.attachments.setVisible(media.isNotEmpty())
+        if (view.attachments.childCount > 0) {
+            view.attachments.removeAllViews()
+        }
+
+        media.forEachIndexed { index, part ->
+            val mediaView = layoutInflater.inflate(R.layout.mms_preview_list_item, view.attachments, false)
+            mediaView.video.setVisible(part.isVideo())
+            mediaView.longClicks().subscribe { longClicks.onNext(message) }
+            mediaView.clicks().subscribe {
+                when {
+                    part.isImage() -> navigator.showImage(part.id)
+                    part.isVideo() -> navigator.showVideo(part.getUri(), part.type)
+                }
+            }
+
+            val canMediaGroupWithPrevious = canGroup(message, previous) || index > 0
+            val canMediaGroupWithNext = canGroup(message, next) || index < media.size && view.body.visibility == View.VISIBLE
+            mediaView.thumbnail.bubbleStyle = when {
+                !canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_FIRST else IN_FIRST
+                canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_MIDDLE else IN_MIDDLE
+                canMediaGroupWithPrevious && !canMediaGroupWithNext -> if (message.isMe()) OUT_LAST else IN_LAST
+                else -> ONLY
+            }
+
+            GlideApp.with(context).load(part.getUri()).fitCenter().into(mediaView.thumbnail)
+            view.attachments.addView(mediaView)
+        }
+
+
+        // If we're on API 21, we need to re-tint the background
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            view.body.setBackgroundTint(when (message.isMe()) {
+                true -> colors.bubble
+                false -> theme
+            }.blockingFirst())
+        }
     }
 
-    private fun bindAvatar(view: View, position: Int) {
-        val message = getItem(position)!!
-        if (message.isMe()) return
-
-        view.avatar.threadId = conversation?.id ?: 0
-        view.avatar.setContact(contactCache[message.address])
-    }
-
-    private fun bindStatus(view: View, position: Int) {
+    private fun bindStatus(viewHolder: QkViewHolder, position: Int) {
         val message = getItem(position)!!
         val next = if (position == itemCount - 1) null else getItem(position + 1)
+        val view = viewHolder.itemView
 
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
         val timestamp = dateFormatter.getTimestamp(message.date)
@@ -180,59 +264,6 @@ class MessagesAdapter @Inject constructor(
             message.isDelivered() && next?.isDelivered() != true && age <= TIMESTAMP_THRESHOLD -> true
             else -> false
         })
-    }
-
-    private fun bindGrouping(view: View, position: Int) {
-        val message = getItem(position)!!
-        val previous = if (position == 0) null else getItem(position - 1)
-        val next = if (position == itemCount - 1) null else getItem(position + 1)
-
-        val diff = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
-
-        val sent = message.isMe()
-        val canGroupWithPrevious = canGroup(message, previous)
-        val canGroupWithNext = canGroup(message, next)
-
-        view.timestamp.visibility = if (diff < TIMESTAMP_THRESHOLD) View.GONE else View.VISIBLE
-
-        when {
-            !canGroupWithPrevious && canGroupWithNext -> {
-                view.setPadding(bottom = 2.dpToPx(context))
-                view.messageBackground.setBackgroundResource(if (sent) R.drawable.message_out_first else R.drawable.message_in_first)
-                view.avatar?.visibility = View.INVISIBLE
-            }
-            canGroupWithPrevious && canGroupWithNext -> {
-                view.setPadding(bottom = 2.dpToPx(context))
-                view.messageBackground.setBackgroundResource(if (sent) R.drawable.message_out_middle else R.drawable.message_in_middle)
-                view.avatar?.visibility = View.INVISIBLE
-            }
-            canGroupWithPrevious && !canGroupWithNext -> {
-                view.setPadding(bottom = 16.dpToPx(context))
-                view.messageBackground.setBackgroundResource(if (sent) R.drawable.message_out_last else R.drawable.message_in_last)
-                view.avatar?.visibility = View.VISIBLE
-            }
-            else -> {
-                view.setPadding(bottom = 16.dpToPx(context))
-                view.messageBackground.setBackgroundResource(R.drawable.message_only)
-                view.avatar?.visibility = View.VISIBLE
-            }
-        }
-
-        // If we're showing any thumbnails, set clipToOutline to true
-        val hasImages = message.parts.filter { it.hasThumbnails() }.any()
-        view.messageBackground.clipToOutline = hasImages
-
-        // setClipToOutline doesn't work unless all of the corners have the same radius, so we have
-        // to use the message_only bubble
-        if (hasImages) view.messageBackground.setBackgroundResource(R.drawable.message_only)
-
-        // If we're on API 21, we need to re-tint the background
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-            view.messageBackground.setBackgroundTint(when (message.isMe()) {
-                true -> colors.bubble
-                false -> theme
-            }.blockingFirst())
-        }
     }
 
     private fun canGroup(message: Message, other: Message?): Boolean {

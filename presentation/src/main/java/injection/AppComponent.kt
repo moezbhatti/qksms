@@ -22,7 +22,6 @@ import common.QKApplication
 import common.QkDialog
 import common.util.ContactImageLoader
 import common.widget.AvatarView
-import common.widget.MmsPreviewView
 import common.widget.PagerTitleView
 import common.widget.PreferenceView
 import common.widget.QkEditText
@@ -112,7 +111,6 @@ interface AppComponent {
 
     fun inject(view: AvatarView)
     fun inject(view: DetailedChipView)
-    fun inject(view: MmsPreviewView)
     fun inject(view: PagerTitleView)
     fun inject(view: PreferenceView)
     fun inject(view: QkEditText)
