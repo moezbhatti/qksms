@@ -175,16 +175,19 @@ class MessagesAdapter @Inject constructor(
         view.body.text = when (message.isSms()) {
             true -> message.body
             false -> {
-                val subject = message.getCleansedSubject()
-                val sb = SpannableStringBuilder(message.parts
-                        .mapNotNull { it.text }
-                        .apply { subject + this }
-                        .filter { it.isNotBlank() }
-                        .joinToString("\n") { text -> text })
+                val subject = SpannableStringBuilder(message.getCleansedSubject())
+                subject.setSpan(StyleSpan(Typeface.BOLD), 0, subject.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
-                val bss = StyleSpan(Typeface.BOLD)
-                sb.setSpan(bss, 0, subject.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-                sb.toString()
+                val body = message.parts
+                        .mapNotNull { it.text }
+                        .filter { it.isNotBlank() }
+                        .joinToString("\n") { text -> text }
+
+                when {
+                    subject.isNotBlank() && body.isNotBlank() -> subject.append("\n$body")
+                    subject.isNotBlank() -> subject
+                    else -> body
+                }
             }
         }
         view.body.setVisible(message.isSms() || view.body.text.isNotBlank())
