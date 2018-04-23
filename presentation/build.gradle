@@ -13,8 +13,8 @@ android {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 162
-        versionName "3.0.8"
+        versionCode 163
+        versionName "3.0.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
