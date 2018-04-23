@@ -29,6 +29,8 @@ interface MainView : QkView<MainState> {
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>
     val drawerItemIntent: Observable<DrawerItem>
+    val dismissRatingIntent: Observable<*>
+    val rateIntent: Observable<*>
     val conversationClickIntent: Observable<Long>
     val conversationLongClickIntent: Observable<Long>
     val conversationMenuItemIntent: Observable<Int>

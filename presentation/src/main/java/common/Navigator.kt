@@ -22,6 +22,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -55,6 +56,7 @@ import feature.themepicker.ThemePickerViewModel
 import manager.NotificationManager
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @Singleton
 class Navigator @Inject constructor(private val context: Context, private val notificationManager: NotificationManager) {
@@ -187,6 +189,20 @@ class Navigator @Inject constructor(private val context: Context, private val no
     fun showDonation() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://bit.ly/QKSMSDonation"))
         startActivity(intent)
+    }
+
+
+    fun showRating() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${context.packageName}"))
+                .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
+                        or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
+                        or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + context.packageName)))
+        }
     }
 
     /**

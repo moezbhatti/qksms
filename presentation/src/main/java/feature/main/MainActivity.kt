@@ -81,6 +81,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 plus.clicks().map { DrawerItem.PLUS },
                 help.clicks().map { DrawerItem.HELP }))
     }
+    override val dismissRatingIntent by lazy { rateDismiss.clicks() }
+    override val rateIntent by lazy { rateOkay.clicks() }
     override val conversationClickIntent by lazy { conversationsAdapter.clicks }
     override val conversationLongClickIntent by lazy { conversationsAdapter.longClicks }
     override val conversationMenuItemIntent by lazy { dialog.adapter.menuItemClicks }
@@ -137,6 +139,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         colors.theme
                 .doOnNext { color -> syncingProgress.indeterminateTintList = ColorStateList.valueOf(color) }
                 .doOnNext { color -> itemTouchCallback.color = color }
+                .doOnNext { color -> rateIcon.setTint(color) }
                 .doOnNext { color -> compose.setBackgroundTint(color) }
                 .autoDisposable(scope())
                 .subscribe()
@@ -172,6 +175,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
                 .doOnNext { color -> inbox.background = rowBackground(color) }
                 .doOnNext { color -> archived.background = rowBackground(color) }
                 .doOnNext { color -> scheduled.background = rowBackground(color) }
+                .doOnNext { color -> rateLayout.setBackgroundTint(color) }
                 .autoDisposable(scope())
                 .subscribe()
 
@@ -189,6 +193,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
         syncing.setVisible(state.syncing)
         synced.setVisible(!state.syncing)
+        rateLayout.setVisible(state.showRating)
 
         when (state.page) {
             is Inbox -> {

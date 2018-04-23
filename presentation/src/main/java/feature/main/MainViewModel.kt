@@ -42,6 +42,7 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.realm.Realm
+import manager.RatingManager
 import model.SyncLog
 import repository.MessageRepository
 import util.Preferences
@@ -52,7 +53,6 @@ import javax.inject.Inject
 class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
     @Inject lateinit var context: Context
-    @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationFilter: ConversationFilter
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var markAllSeen: MarkAllSeen
@@ -61,8 +61,10 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var markUnarchived: MarkUnarchived
     @Inject lateinit var markBlocked: MarkBlocked
     @Inject lateinit var migratePreferences: MigratePreferences
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var partialSync: PartialSync
     @Inject lateinit var prefs: Preferences
+    @Inject lateinit var ratingManager: RatingManager
 
     private val menuArchive by lazy { MenuItem(context.getString(R.string.inbox_menu_archive), 0) }
     private val menuUnarchive by lazy { MenuItem(context.getString(R.string.inbox_menu_unarchive), 1) }
@@ -95,6 +97,9 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
 
+        disposables += ratingManager.shouldShowRating
+                .subscribe { show -> newState { it.copy(showRating = show) } }
+
         // Migrate the preferences from 2.7.3 if necessary
         migratePreferences.execute(Unit)
 
@@ -110,6 +115,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
             navigator.showSetupActivity()
         }
 
+        ratingManager.addSession()
         markAllSeen.execute(Unit)
     }
 
@@ -161,6 +167,17 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        view.rateIntent
+                .autoDisposable(view.scope())
+                .subscribe {
+                    navigator.showRating()
+                    ratingManager.rate()
+                }
+
+        view.dismissRatingIntent
+                .autoDisposable(view.scope())
+                .subscribe { ratingManager.dismiss() }
 
         view.conversationClickIntent
                 .doOnNext { view.clearSearch() }

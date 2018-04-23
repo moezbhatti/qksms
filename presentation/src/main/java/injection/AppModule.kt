@@ -35,6 +35,7 @@ import manager.KeyManagerImpl
 import manager.NotificationManager
 import manager.PermissionManager
 import manager.PermissionManagerImpl
+import manager.RatingManager
 import manager.WidgetManager
 import manager.WidgetManagerImpl
 import mapper.CursorToContact
@@ -45,8 +46,9 @@ import mapper.CursorToMessage
 import mapper.CursorToMessageImpl
 import mapper.CursorToPart
 import mapper.CursorToPartImpl
-import mapper.CursorToRecipientImpl
 import mapper.CursorToRecipient
+import mapper.CursorToRecipientImpl
+import mapper.RatingManagerImpl
 import repository.ContactRepository
 import repository.ContactRepositoryImpl
 import repository.ImageRepository
@@ -94,6 +96,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun providePermissionsManager(manager: PermissionManagerImpl): PermissionManager = manager
+
+    @Provides
+    fun provideRatingManager(manager: RatingManagerImpl): RatingManager = manager
 
     @Provides
     fun provideWidgetManager(manager: WidgetManagerImpl): WidgetManager = manager

@@ -50,6 +50,11 @@
     <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Help &amp; feedback</string>
 
+    <string name="rate_title">Enjoying QKSMS?</string>
+    <string name="rate_summary">Share some love and rate us on Google Play!</string>
+    <string name="rate_okay">OKAY!</string>
+    <string name="rate_dismiss">DISMISS</string>
+
     <string name="inbox_empty_text">Your conversations will appear here</string>
     <string name="inbox_search_empty_text">No results</string>
     <string name="inbox_menu_archive">Archive</string>

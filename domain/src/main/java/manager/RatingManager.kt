@@ -16,27 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package feature.main
+package manager
 
-import io.reactivex.Flowable
-import model.Conversation
+import io.reactivex.Observable
 
-data class MainState(
-        val page: MainPage = Inbox(),
-        val drawerOpen: Boolean = false,
-        val syncing: Boolean = false,
-        val showRating: Boolean = false
-)
+interface RatingManager {
 
-sealed class MainPage
+    val shouldShowRating: Observable<Boolean>
 
-data class Inbox(
-        val showClearButton: Boolean = false,
-        val data: Flowable<List<Conversation>>? = null,
-        val showArchivedSnackbar: Boolean = false) : MainPage()
+    /**
+     * Whether or not we should show the rating UI should depend on the number of sessions
+     */
+    fun addSession()
 
-data class Archived(
-        val data: Flowable<List<Conversation>>? = null) : MainPage()
+    fun rate()
 
-data class Scheduled(
-        val data: Any? = null) : MainPage()
+    fun dismiss()
+
+}
