@@ -352,12 +352,26 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markRead.execute(threadId) }
 
-        // Attach a photo
+        // Open the attachment options
         view.attachIntent
+                .autoDisposable(view.scope())
+                .subscribe { newState { it.copy(attaching = !it.attaching) } }
+
+        // Attach a photo from camera
+        view.cameraIntent
+                .flatMap { RxImagePicker.with(context).requestImage(Sources.CAMERA) }
+                .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
+                .doOnNext { attachments.onNext(it) }
+                .autoDisposable(view.scope())
+                .subscribe { newState { it.copy(attaching = false) } }
+
+        // Attach a photo from gallery
+        view.galleryIntent
                 .flatMap { RxImagePicker.with(context).requestImage(Sources.GALLERY) }
                 .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
+                .doOnNext { attachments.onNext(it) }
                 .autoDisposable(view.scope())
-                .subscribe { attachments.onNext(it) }
+                .subscribe { newState { it.copy(attaching = false) } }
 
         // Detach a photo
         view.attachmentDeletedIntent

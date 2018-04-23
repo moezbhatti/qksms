@@ -34,6 +34,7 @@ data class ComposeState(
         val title: String = "",
         val messages: Pair<Conversation, RealmResults<Message>>? = null,
         val attachments: List<Uri> = ArrayList(),
+        val attaching: Boolean = false,
         val remaining: String = "",
         val canSend: Boolean = false
 )

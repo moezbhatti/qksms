@@ -44,6 +44,8 @@ interface ComposeView : QkView<ComposeState> {
     val attachmentDeletedIntent: Subject<Uri>
     val textChangedIntent: Observable<CharSequence>
     val attachIntent: Observable<Unit>
+    val cameraIntent: Observable<*>
+    val galleryIntent: Observable<*>
     val sendIntent: Observable<Unit>
 
     fun showMenu(menuItems: List<MenuItem>)

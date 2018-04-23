@@ -121,11 +121,36 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_add_circle_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/message"
+        app:layout_constraintStart_toStartOf="@id/messageBackground"
+        tools:tint="@color/textSecondary" />
+
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ripple"
+        android:padding="10dp"
+        android:src="@drawable/ic_camera_alt_black_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/message"
+        app:layout_constraintStart_toEndOf="@id/attach"
+        tools:tint="@color/textSecondary" />
+
+    <ImageView
+        android:id="@+id/gallery"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/ripple"
         android:padding="10dp"
         android:src="@drawable/ic_insert_photo_black_24dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintStart_toStartOf="@id/messageBackground"
+        app:layout_constraintStart_toEndOf="@id/camera"
         tools:tint="@color/textSecondary" />
 
     <common.widget.Separator
@@ -135,7 +160,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintStart_toEndOf="@id/attach"
+        app:layout_constraintStart_toEndOf="@id/gallery"
         app:layout_constraintTop_toBottomOf="@id/attachments" />
 
     <common.widget.QkEditText

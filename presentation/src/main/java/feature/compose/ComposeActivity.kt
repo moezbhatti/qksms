@@ -67,6 +67,8 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override val attachmentDeletedIntent: Subject<Uri> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
+    override val cameraIntent by lazy { camera.clicks() }
+    override val galleryIntent by lazy { gallery.clicks() }
     override val sendIntent by lazy { send.clicks() }
 
     @Inject lateinit var chipsAdapter: ChipsAdapter
@@ -129,7 +131,11 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
         colors.textSecondary
                 .autoDisposable(scope())
-                .subscribe { color -> attach.setTint(color) }
+                .subscribe { color ->
+                    attach.setTint(color)
+                    camera.setTint(color)
+                    gallery.setTint(color)
+                }
 
         colors.bubble
                 .autoDisposable(scope())
@@ -188,6 +194,10 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
 
         attachments.setVisible(state.attachments.isNotEmpty())
         attachmentAdapter.data = state.attachments
+
+        attach.animate().rotation(if (state.attaching) 45f else 0f).start()
+        camera.setVisible(state.attaching)
+        gallery.setVisible(state.attaching)
 
         if (title != state.title) title = state.title
 
