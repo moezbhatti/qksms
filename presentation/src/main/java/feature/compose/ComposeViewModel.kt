@@ -18,13 +18,19 @@
  */
 package feature.compose
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
@@ -430,9 +436,25 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 .withLatestFrom(attachments, conversation, { body, attachments, conversation ->
                     val threadId = conversation.id
                     val addresses = conversation.recipients.map { it.address }
-                    sendMessage.execute(SendMessage.Params(threadId, addresses, body, attachments))
-                    view.setDraft("")
-                    this.attachments.onNext(ArrayList())
+
+                    // If we're not allowed to send SMS, ask for the permission.
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(view as Activity,
+                                arrayOf(Manifest.permission.SEND_SMS),0)
+
+                    }
+
+                    // Ensure we were granted permission before sending anything
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        sendMessage.execute(SendMessage.Params(threadId, addresses, body, attachments))
+                        view.setDraft("")
+                        this.attachments.onNext(ArrayList())
+                    } else {
+                        Toast.makeText(context, R.string.error_sms_permissions, Toast.LENGTH_SHORT)
+                                .show()
+                    }
                 })
                 .withLatestFrom(state, { _, state ->
                     if (state.editingMode) {
