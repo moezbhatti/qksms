@@ -19,16 +19,30 @@
 package common.util.filter
 
 import model.Conversation
+import java.util.regex.PatternSyntaxException
 import javax.inject.Inject
 
 class ConversationFilter @Inject constructor(private val recipientFilter: RecipientFilter) : Filter<Conversation>() {
 
     override fun filter(item: Conversation, query: CharSequence): Boolean {
-        return item.recipients.any { recipient -> recipientFilter.filter(recipient, query) } ||
-                if (query.matches(Regex("/.*/")))
-                    Regex(query.trim('/').toString()).containsMatchIn(item.snippet)
-                else
+
+        val snippetMatches =
+                if (query.matches(Regex("/.*/"))) {
+                    try {
+                        Regex(query.substring(1..(query.lastIndex - 1))).containsMatchIn(item.snippet)
+                    } catch (e: PatternSyntaxException) {
+                        false
+                    }
+                } else {
                     item.snippet.contains(query)
+                }
+
+        val recipientsMatch = item.recipients.any {
+            recipient -> recipientFilter.filter(recipient, query)
+        }
+
+        return recipientsMatch || snippetMatches
+
     }
 
 }
