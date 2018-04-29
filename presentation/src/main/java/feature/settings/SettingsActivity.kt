@@ -22,6 +22,7 @@ import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.text.format.DateFormat
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
@@ -143,13 +144,13 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     override fun showStartTimePicker(hour: Int, minute: Int) {
         TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
             startTimeSelectedIntent.onNext(Pair(newHour, newMinute))
-        }, hour, minute, false).show()
+        }, hour, minute, DateFormat.is24HourFormat(this)).show()
     }
 
     override fun showEndTimePicker(hour: Int, minute: Int) {
         TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
             endTimeSelectedIntent.onNext(Pair(newHour, newMinute))
-        }, hour, minute, false).show()
+        }, hour, minute, DateFormat.is24HourFormat(this)).show()
     }
 
     override fun showTextSizePicker() = textSizeDialog.show(this)
