@@ -31,7 +31,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
 import common.Navigator
 import common.base.QkRealmAdapter
@@ -40,6 +39,7 @@ import common.util.Colors
 import common.util.DateFormatter
 import common.util.GlideApp
 import common.util.extensions.dpToPx
+import common.util.extensions.forwardTouches
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
 import common.util.extensions.setVisible
@@ -128,6 +128,8 @@ class MessagesAdapter @Inject constructor(
                     .subscribe { color -> view.body.setBackgroundTint(color) }
         }
 
+        view.body.forwardTouches(view)
+
         return QkViewHolder(view)
     }
 
@@ -149,6 +151,8 @@ class MessagesAdapter @Inject constructor(
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
 
+
+        // Bind the message status
         bindStatus(viewHolder, position)
 
 
@@ -211,7 +215,7 @@ class MessagesAdapter @Inject constructor(
         media.forEachIndexed { index, part ->
             val mediaView = layoutInflater.inflate(R.layout.mms_preview_list_item, view.attachments, false)
             mediaView.video.setVisible(part.isVideo())
-            mediaView.longClicks().subscribe { longClicks.onNext(message) }
+            mediaView.forwardTouches(view)
             mediaView.clicks().subscribe {
                 when {
                     part.isImage() -> navigator.showImage(part.id)
