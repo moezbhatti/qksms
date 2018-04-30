@@ -23,7 +23,6 @@ import android.content.Intent
 import android.net.Uri
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
-import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import com.mlsdev.rximagepicker.RxImagePicker
 import com.mlsdev.rximagepicker.Sources
@@ -241,21 +240,11 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
 
         // Backspaces should delete the most recent contact if there's no text input
         // Close the activity if user presses back
-        view.queryKeyEventIntent
-                .filter { event -> event.action == KeyEvent.ACTION_DOWN }
+        view.queryBackspaceIntent
                 .withLatestFrom(selectedContacts, view.queryChangedIntent, { event, contacts, query ->
-                    when (event.keyCode) {
-                        KeyEvent.KEYCODE_DEL -> {
-                            if (contacts.isNotEmpty() && query.isEmpty()) {
-                                contactsReducer.onNext { it.dropLast(1) }
-                            }
-                        }
-
-                        KeyEvent.KEYCODE_BACK -> {
-                            newState { it.copy(hasError = true) }
-                        }
+                    if (contacts.isNotEmpty() && query.isEmpty()) {
+                        contactsReducer.onNext { it.dropLast(1) }
                     }
-
                 })
                 .autoDisposable(view.scope())
                 .subscribe()

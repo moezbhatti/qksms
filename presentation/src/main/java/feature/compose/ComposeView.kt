@@ -19,7 +19,6 @@
 package feature.compose
 
 import android.net.Uri
-import android.view.KeyEvent
 import common.MenuItem
 import common.base.QkView
 import io.reactivex.Observable
@@ -31,7 +30,7 @@ interface ComposeView : QkView<ComposeState> {
 
     val activityVisibleIntent: Observable<Boolean>
     val queryChangedIntent: Observable<CharSequence>
-    val queryKeyEventIntent: Observable<KeyEvent>
+    val queryBackspaceIntent: Observable<*>
     val queryEditorActionIntent: Observable<Int>
     val chipSelectedIntent: Subject<Contact>
     val chipDeletedIntent: Subject<Contact>

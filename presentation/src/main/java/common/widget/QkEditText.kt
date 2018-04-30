@@ -21,6 +21,10 @@ package common.widget
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
+import android.view.inputmethod.InputConnectionWrapper
 import android.widget.EditText
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
@@ -35,6 +39,7 @@ import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import util.Preferences
 import javax.inject.Inject
@@ -64,6 +69,8 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
     @Inject lateinit var colors: Colors
     @Inject lateinit var fontProvider: FontProvider
     @Inject lateinit var prefs: Preferences
+
+    val backspaces: Subject<Unit> = PublishSubject.create()
 
     private var textColorObservable: Observable<Int>? = null
     private var textColorHintObservable: Observable<Int>? = null
@@ -167,6 +174,28 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 })
                 .autoDisposable(scope())
                 .subscribe()
+    }
+
+    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection {
+        return object : InputConnectionWrapper(super.onCreateInputConnection(outAttrs), true) {
+
+            override fun sendKeyEvent(event: KeyEvent): Boolean {
+                if (event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL) {
+                    backspaces.onNext(Unit)
+                }
+                return super.sendKeyEvent(event)
+            }
+
+
+            override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {
+                // magic: in latest Android, deleteSurroundingText(1, 0) will be called for backspace
+                return if (beforeLength == 1 && afterLength == 0) {
+                    sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL)) && sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
+                } else super.deleteSurroundingText(beforeLength, afterLength)
+
+            }
+
+        }
     }
 
 }
