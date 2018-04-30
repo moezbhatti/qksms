@@ -45,6 +45,10 @@
   <string name="drawer_settings">설정</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">도움말 &amp; 피드백</string>
+  <string name="rate_title">Enjoying QKSMS?</string>
+  <string name="rate_summary">Share some love and rate us on Google Play!</string>
+  <string name="rate_okay">OKAY!</string>
+  <string name="rate_dismiss">DISMISS</string>
   <string name="inbox_empty_text">대화가 여기에 나타납니다</string>
   <string name="inbox_search_empty_text">No results</string>
   <string name="inbox_menu_archive">Archive</string>
@@ -88,33 +92,44 @@
   <string name="settings_black_title">Pure black night mode</string>
   <string name="settings_night_start_title">시작 시간</string>
   <string name="settings_night_end_title">끝나는 시간</string>
+  <string name="settings_text_size_title">Font size</string>
+  <string name="settings_system_font_title">Use system font</string>
   <string name="settings_auto_emoji_title">자동 이모티콘</string>
   <string name="settings_notifications_title">Notifications</string>
   <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">진동</string>
   <string name="settings_ringtone_title">소리</string>
-  <string name="settings_blocking_title">Blocking</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-  <string name="settings_delivery_title">전송 확인</string>
-  <string name="settings_delivery_summary">전송 성공을 확인합니다</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
   <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-  <string name="settings_text_size_title">Font size</string>
-  <string name="settings_system_font_title">Use system font</string>
+  <string name="settings_blocking_title">Blocking</string>
+  <!-- Do not translate -->
+  <string name="settings_should_i_answer_title">Should I Answer?</string>
+  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+  <string name="settings_delayed_title">Delayed sending</string>
+  <string name="settings_delivery_title">전송 확인</string>
+  <string name="settings_delivery_summary">전송 성공을 확인합니다</string>
   <string name="settings_unicode_title">스트립 악센트</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
   <string name="settings_mms_size_title">Max MMS attachment size</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+  <string name="settings_about_title">About QKSMS</string>
   <string name="settings_version">Version %s</string>
+  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
   <string name="blocked_title">Blocking</string>
   <string name="blocked_empty">Your blocked conversations will appear here</string>
   <string name="blocked_unblock_dialog_title">Unblock</string>
   <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
+  <string name="about_title">About</string>
+  <string name="about_version_title">Version</string>
+  <string name="about_developer_title">Developer</string>
+  <string name="about_source_title">Source code</string>
+  <string name="about_changelog_title">Changelog</string>
+  <string name="about_contact_title">Contact</string>
+  <string name="about_license_title">License</string>
+  <string name="about_copyright_title">Copyright</string>
   <string name="qksms_plus_description_title">Support development, unlock everything</string>
   <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
   <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
@@ -159,9 +174,10 @@
   <string name="notification_read">Mark read</string>
   <string name="button_cancel">Cancel</string>
   <string name="button_delete">Delete</string>
+  <string name="button_more">More</string>
+  <string name="button_set">Set</string>
   <string name="button_unblock">Unblock</string>
   <string name="button_undo">Undo</string>
-  <string name="button_more">More</string>
   <string name="toast_copied">Copied</string>
   <string name="toast_archived">Archived conversation</string>
   <string name="toast_qksms_plus">이 기능을 사용하려면 QKSMS+ 를 잠금 해제해야 합니다.</string>
@@ -185,6 +201,12 @@
     <item>Normal</item>
     <item>Large</item>
     <item>Larger</item>
+  </string-array>
+  <string-array name="delayed_sending_labels">
+    <item>No delay</item>
+    <item>Short</item>
+    <item>Medium</item>
+    <item>Long</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>

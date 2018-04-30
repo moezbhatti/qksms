@@ -45,6 +45,10 @@
   <string name="drawer_settings">Настройки</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Помощь и обратная связь</string>
+  <string name="rate_title">Нравится QKSMS?</string>
+  <string name="rate_summary">Поделитесь любовью и оцените нас в Google Play!</string>
+  <string name="rate_okay">OK!</string>
+  <string name="rate_dismiss">ОТКЛОНИТЬ</string>
   <string name="inbox_empty_text">Ваши беседы будут появляться здесь</string>
   <string name="inbox_search_empty_text">Нет результатов</string>
   <string name="inbox_menu_archive">Архивировать</string>
@@ -79,7 +83,7 @@
   <string name="gallery_toast_saved">Сохраненное изображение</string>
   <string name="settings_category_appearance">Внешний вид</string>
   <string name="settings_category_general">Общее</string>
-  <string name="settings_category_qkreply">QK Reply</string>
+  <string name="settings_category_qkreply">QK Ответ</string>
   <string name="settings_default_sms_title">Приложение для SMS по умолчанию</string>
   <string name="settings_default_sms_summary_true">QKSMS ваше SMS-приложение по умолчанию</string>
   <string name="settings_default_sms_summary_false">Установить QKSMS как SMS-приложение по умолчанию</string>
@@ -88,33 +92,44 @@
   <string name="settings_black_title">Полностью черный ночной режим</string>
   <string name="settings_night_start_title">Время начала</string>
   <string name="settings_night_end_title">Время окончания</string>
+  <string name="settings_text_size_title">Размер шрифта</string>
+  <string name="settings_system_font_title">Использовать системный шрифт</string>
   <string name="settings_auto_emoji_title">Автоматические emoji</string>
   <string name="settings_notifications_title">Уведомления</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
+  <string name="settings_notification_previews_title">Предпросмотр уведомлений</string>
   <string name="settings_vibration_title">Вибросигнал</string>
   <string name="settings_ringtone_title">Звук</string>
+  <string name="settings_qkreply_title">QK Ответ</string>
+  <string name="settings_qkreply_summary">Всплывающее окно для новых сообщений</string>
+  <string name="settings_qkreply_tap_dismiss_title">Нажмите, чтобы отклонить</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Нажмите за пределами всплывающего окна, чтобы закрыть его</string>
   <string name="settings_blocking_title">Блокировка</string>
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Should I Answer?</string>
   <string name="settings_should_i_answer_summary">Автоматически фильтровать сообщения от нежелательных номеров, используя приложение «Should I Answer»</string>
+  <string name="settings_delayed_title">Delayed sending</string>
   <string name="settings_delivery_title">Отчёты о доставке</string>
   <string name="settings_delivery_summary">Подтверждение успешной отправки сообщений</string>
-  <string name="settings_qkreply_title">QK Reply</string>
-  <string name="settings_qkreply_summary">Всплывающее окно для новых сообщений</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Нажмите за пределами всплывающего окна, чтобы закрыть его</string>
-  <string name="settings_text_size_title">Размер шрифта</string>
-  <string name="settings_system_font_title">Использовать системный шрифт</string>
-  <string name="settings_unicode_title">Strip accents</string>
-  <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
+  <string name="settings_unicode_title">Удалить акценты</string>
+  <string name="settings_unicode_summary">Удаление акцентов с символов в исходящих SMS-сообщениях</string>
   <string name="settings_mms_size_title">Максимальный размер вложения MMS</string>
   <string name="settings_sync_title">Синхронизация сообщений</string>
   <string name="settings_sync_summary">Повторная синхронизация ваших сообщений с собственной базой данных SMS Android</string>
+  <string name="settings_about_title">О QKSMS</string>
   <string name="settings_version">Версия %s</string>
+  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
   <string name="blocked_title">Блокировка</string>
   <string name="blocked_empty">Ваши заблокированные беседы будут появляться здесь</string>
   <string name="blocked_unblock_dialog_title">Разблокировать</string>
   <string name="blocked_unblock_dialog_message">Хотите разблокировать эту беседу?</string>
+  <string name="about_title">О приложении</string>
+  <string name="about_version_title">Версия</string>
+  <string name="about_developer_title">Разработчик</string>
+  <string name="about_source_title">Исходный код</string>
+  <string name="about_changelog_title">История изменений</string>
+  <string name="about_contact_title">Контакт</string>
+  <string name="about_license_title">Лицензия</string>
+  <string name="about_copyright_title">Copyright</string>
   <string name="qksms_plus_description_title">Поддержать развитие, разблокировать все</string>
   <string name="qksms_plus_description_summary">Вы можете спасти голодающего разработчика всего за %s</string>
   <string name="qksms_plus_upgrade">Пожизненное обновление для %1$s %2$s</string>
@@ -126,10 +141,10 @@
   <string name="qksms_plus_coming_soon">Скоро</string>
   <string name="qksms_plus_themes_title">Премиум темы</string>
   <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
-  <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
-  <string name="qksms_plus_backup_title">Message backup</string>
-  <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
+  <string name="qksms_plus_emoji_title">Пользовательские авто-эмодзи</string>
+  <string name="qksms_plus_emoji_summary">Создайте ярлык пользовательских авто-эмодзи</string>
+  <string name="qksms_plus_backup_title">Бэкап сообщений</string>
+  <string name="qksms_plus_backup_summary">Автоматически создавайте резервные копии сообщений. Не беспокойтесь о потере истории, если Вы поменяете или потеряете телефон</string>
   <string name="qksms_plus_scheduled_title">Запланированные сообщения</string>
   <string name="qksms_plus_scheduled_summary">Подождите несколько секунд перед отправкой сообщения</string>
   <string name="qksms_plus_delayed_title">Отложенная отправка</string>
@@ -159,17 +174,18 @@
   <string name="notification_read">Пометить прочитанным</string>
   <string name="button_cancel">Отмена</string>
   <string name="button_delete">Удалить</string>
+  <string name="button_more">Еще</string>
+  <string name="button_set">Set</string>
   <string name="button_unblock">Разблокировать</string>
   <string name="button_undo">Отмена</string>
-  <string name="button_more">Еще</string>
   <string name="toast_copied">Скопировано</string>
   <string name="toast_archived">Архивированная беседа</string>
   <string name="toast_qksms_plus">Вы должны разблокировать QKSMS +, чтобы использовать</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="few">%s new messages</item>
-    <item quantity="many">%s new messages</item>
-    <item quantity="other">%s new messages</item>
+    <item quantity="one">Новое сообщение</item>
+    <item quantity="few">%s новых сообщения</item>
+    <item quantity="many">%s новых сообщений</item>
+    <item quantity="other">%s новых сообщений</item>
   </plurals>
   <string name="notification_message_failed_title">Сообщение не отправлено</string>
   <string name="notification_message_failed_text">Не удалось отправить сообщение для %s</string>
@@ -179,15 +195,21 @@
     <item>Автоматически</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>Показать имя и сообщение</item>
+    <item>Показать имя</item>
+    <item>Скрыть содержание</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Маленький</item>
     <item>Обычный</item>
     <item>Крупный</item>
     <item>Больше</item>
+  </string-array>
+  <string-array name="delayed_sending_labels">
+    <item>No delay</item>
+    <item>Short</item>
+    <item>Medium</item>
+    <item>Long</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100КБ</item>

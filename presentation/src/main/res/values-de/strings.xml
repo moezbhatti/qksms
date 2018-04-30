@@ -45,6 +45,10 @@
   <string name="drawer_settings">Einstellungen</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Hilfe &amp; Feedback</string>
+  <string name="rate_title">Gefällt dir QKSMS?</string>
+  <string name="rate_summary">Teile etwas von deiner Liebe und Bewerte uns auf Google Play!</string>
+  <string name="rate_okay">OKAY!</string>
+  <string name="rate_dismiss">VERWERFEN</string>
   <string name="inbox_empty_text">Deine Unterhaltungen werden hier angezeigt</string>
   <string name="inbox_search_empty_text">Keine Ergebnisse</string>
   <string name="inbox_menu_archive">Archivieren</string>
@@ -79,7 +83,7 @@
   <string name="gallery_toast_saved">Bild wurde gespeichert</string>
   <string name="settings_category_appearance">Aussehen</string>
   <string name="settings_category_general">Allgemein</string>
-  <string name="settings_category_qkreply">QK Reply</string>
+  <string name="settings_category_qkreply">Schnellantwort</string>
   <string name="settings_default_sms_title">Standard-SMS-App</string>
   <string name="settings_default_sms_summary_true">QKSMS ist Ihre Standard-SMS-App</string>
   <string name="settings_default_sms_summary_false">QKSMS als Standard-SMS-App festlegen</string>
@@ -88,33 +92,44 @@
   <string name="settings_black_title">Rein schwarzer Nachtmodus</string>
   <string name="settings_night_start_title">Anfang</string>
   <string name="settings_night_end_title">Ende</string>
+  <string name="settings_text_size_title">Schriftgröße</string>
+  <string name="settings_system_font_title">Systemschriftart verwenden</string>
   <string name="settings_auto_emoji_title">Automatische Emoji</string>
   <string name="settings_notifications_title">Benachrichtigungen</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
+  <string name="settings_notification_previews_title">Benachrichtigungs-Vorschau</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Ton</string>
-  <string name="settings_blocking_title">Blockieren</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Soll ich Antworten?</string>
-  <string name="settings_should_i_answer_summary">Filtere automatisch Nachrichten von unerwünschten Nummern mit Hilfe der App \"Should I Answer?\"</string>
-  <string name="settings_delivery_title">Zustellbestätigungen</string>
-  <string name="settings_delivery_summary">Bestätigung, dass Nachrichten erfolgreich gesendet wurden</string>
   <string name="settings_qkreply_title">Schnellantwort</string>
   <string name="settings_qkreply_summary">Popup für neue Nachrichten</string>
   <string name="settings_qkreply_tap_dismiss_title">Zum Verwerfen tippen</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tippe außerhalb des Popup um es zu schließen</string>
-  <string name="settings_text_size_title">Schriftgröße</string>
-  <string name="settings_system_font_title">Systemschriftart verwenden</string>
+  <string name="settings_blocking_title">Blockieren</string>
+  <!-- Do not translate -->
+  <string name="settings_should_i_answer_title">Soll ich Antworten?</string>
+  <string name="settings_should_i_answer_summary">Filtere automatisch Nachrichten von unerwünschten Nummern mit Hilfe der App \"Should I Answer?\"</string>
+  <string name="settings_delayed_title">Delayed sending</string>
+  <string name="settings_delivery_title">Zustellbestätigungen</string>
+  <string name="settings_delivery_summary">Bestätigung, dass Nachrichten erfolgreich gesendet wurden</string>
   <string name="settings_unicode_title">Akzente entfernen</string>
   <string name="settings_unicode_summary">Entfernt Akzente aus Zeichen in ausgehenden SMS-Nachrichten</string>
   <string name="settings_mms_size_title">Maximale Größe von MMS Anhängen</string>
   <string name="settings_sync_title">Synchronisiere Nachrichten</string>
   <string name="settings_sync_summary">Abgleichen der Nachrichten mit der Android SMS-Datenbank</string>
+  <string name="settings_about_title">Über QKSMS</string>
   <string name="settings_version">Version %s</string>
+  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
   <string name="blocked_title">Blockieren</string>
   <string name="blocked_empty">Blockierte Unterhaltungen werden hier angezeigt</string>
   <string name="blocked_unblock_dialog_title">Entsperren</string>
   <string name="blocked_unblock_dialog_message">Willst Du diese Unterhaltung entsperren?</string>
+  <string name="about_title">Über</string>
+  <string name="about_version_title">Version</string>
+  <string name="about_developer_title">Entwickler</string>
+  <string name="about_source_title">Quelltext</string>
+  <string name="about_changelog_title">Änderungsprotokoll</string>
+  <string name="about_contact_title">Kontakt</string>
+  <string name="about_license_title">Lizenz</string>
+  <string name="about_copyright_title">Urheberrecht</string>
   <string name="qksms_plus_description_title">Unterstütze die Entwicklung, entsperre alle Funktionen</string>
   <string name="qksms_plus_description_summary">Rette einen hungernden Entwickler für nur %s</string>
   <string name="qksms_plus_upgrade">Lebenslanges Upgrade für %1$s %2$s</string>
@@ -159,15 +174,16 @@
   <string name="notification_read">Als gelesen markieren</string>
   <string name="button_cancel">Abbrechen</string>
   <string name="button_delete">Löschen</string>
+  <string name="button_more">Mehr</string>
+  <string name="button_set">Set</string>
   <string name="button_unblock">Entsperren</string>
   <string name="button_undo">Rückgängig</string>
-  <string name="button_more">Mehr</string>
   <string name="toast_copied">Kopiert</string>
   <string name="toast_archived">Archivierte Unterhaltung</string>
   <string name="toast_qksms_plus">Du brauchst QKSMS+ um das verwenden zu können</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="other">%s new messages</item>
+    <item quantity="one">Neue Nachricht</item>
+    <item quantity="other">%s neue Nachrichten</item>
   </plurals>
   <string name="notification_message_failed_title">Nachricht wurde nicht gesendet</string>
   <string name="notification_message_failed_text">Due Nachricht an %s konnte nicht gesendet werden</string>
@@ -177,15 +193,21 @@
     <item>Automatisch</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>Name und Nachricht anzeigen</item>
+    <item>Name anzeigen</item>
+    <item>Inhalt ausblenden</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Klein</item>
     <item>Normal</item>
     <item>Groß</item>
     <item>Größer</item>
+  </string-array>
+  <string-array name="delayed_sending_labels">
+    <item>No delay</item>
+    <item>Short</item>
+    <item>Medium</item>
+    <item>Long</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>

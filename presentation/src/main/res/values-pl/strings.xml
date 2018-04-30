@@ -45,6 +45,10 @@
   <string name="drawer_settings">Ustawienia</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Pomoc &amp; opinie</string>
+  <string name="rate_title">Lubisz QKSMS?</string>
+  <string name="rate_summary">Podziel się kroplą miłości i oceń nas w Google Play!</string>
+  <string name="rate_okay">W PORZĄDKU!</string>
+  <string name="rate_dismiss">ODMAWIAM</string>
   <string name="inbox_empty_text">Twoje konwersacje będą wyświetlane tutaj</string>
   <string name="inbox_search_empty_text">Brak wyników</string>
   <string name="inbox_menu_archive">Archiwizuj</string>
@@ -88,33 +92,44 @@
   <string name="settings_black_title">Tryb czystej czerni w nocy</string>
   <string name="settings_night_start_title">Czas rozpoczęcia</string>
   <string name="settings_night_end_title">Czas zakończenia</string>
+  <string name="settings_text_size_title">Rozmiar czcionki</string>
+  <string name="settings_system_font_title">Użyj czcionki systemowej</string>
   <string name="settings_auto_emoji_title">Automatyczne emoji</string>
   <string name="settings_notifications_title">Powiadomienia</string>
   <string name="settings_notification_previews_title">Podgląd powiadomień</string>
   <string name="settings_vibration_title">Wibracje</string>
   <string name="settings_ringtone_title">Dźwięk</string>
-  <string name="settings_blocking_title">Blokuj</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Powinienem odpowiedzieć?</string>
-  <string name="settings_should_i_answer_summary">Automatycznie filtruj wiadomości od niechcianych numerów za pomocą aplikacji \"Powinien odpowiedzieć\"</string>
-  <string name="settings_delivery_title">Potwierdzenie dostarczenia</string>
-  <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>
   <string name="settings_qkreply_title">QK odpowiedź</string>
   <string name="settings_qkreply_summary">Popup dla nowych wiadomości</string>
   <string name="settings_qkreply_tap_dismiss_title">Dotknij, aby odrzucić</string>
   <string name="settings_qkreply_tap_dismiss_summary">Dotknij gdziekolwiek poza okienkiem, aby zamknąć</string>
-  <string name="settings_text_size_title">Rozmiar czcionki</string>
-  <string name="settings_system_font_title">Użyj czcionki systemowej</string>
+  <string name="settings_blocking_title">Blokuj</string>
+  <!-- Do not translate -->
+  <string name="settings_should_i_answer_title">Powinienem odpowiedzieć?</string>
+  <string name="settings_should_i_answer_summary">Automatycznie filtruj wiadomości od niechcianych numerów za pomocą aplikacji \"Powinien odpowiedzieć\"</string>
+  <string name="settings_delayed_title">Delayed sending</string>
+  <string name="settings_delivery_title">Potwierdzenie dostarczenia</string>
+  <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>
   <string name="settings_unicode_title">Usuwaj ogonki</string>
   <string name="settings_unicode_summary">Usuwaj ogonki z znaków w wychodzących wiadomości SMS</string>
   <string name="settings_mms_size_title">Maksymalny rozmiar załącznika MMS</string>
   <string name="settings_sync_title">Synchronizuj wiadomości</string>
   <string name="settings_sync_summary">Ponownie synchronizuj wiadomości z bazą danych natywną Android SMS</string>
+  <string name="settings_about_title">O QKSMS</string>
   <string name="settings_version">Wersja %s</string>
+  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
   <string name="blocked_title">Zablokuj</string>
   <string name="blocked_empty">Zablokowane konwersacje pojawią się tutaj</string>
   <string name="blocked_unblock_dialog_title">Odblokuj</string>
   <string name="blocked_unblock_dialog_message">Czy chcesz odblokować tę konwersację?</string>
+  <string name="about_title">O programie</string>
+  <string name="about_version_title">Wersja</string>
+  <string name="about_developer_title">Deweloper</string>
+  <string name="about_source_title">Kod źródłowy</string>
+  <string name="about_changelog_title">Lista zmian</string>
+  <string name="about_contact_title">Kontakt</string>
+  <string name="about_license_title">Licencja</string>
+  <string name="about_copyright_title">Prawa autorskie</string>
   <string name="qksms_plus_description_title">Wspierać rozwój, odblokuj wszystko</string>
   <string name="qksms_plus_description_summary">Możesz wesprzeć autora za jedyne %s</string>
   <string name="qksms_plus_upgrade">Dożywotnie aktualizacja za %1$s %2$s</string>
@@ -159,9 +174,10 @@
   <string name="notification_read">Oznacz jako przeczytane</string>
   <string name="button_cancel">Anuluj</string>
   <string name="button_delete">Usuń</string>
+  <string name="button_more">Więcej</string>
+  <string name="button_set">Set</string>
   <string name="button_unblock">Odblokuj</string>
   <string name="button_undo">Cofnij</string>
-  <string name="button_more">Więcej</string>
   <string name="toast_copied">Skopiowane</string>
   <string name="toast_archived">Zarchiwizowana konwersacja</string>
   <string name="toast_qksms_plus">Musisz odblokować QKSMS+, aby używać tego</string>
@@ -188,6 +204,12 @@
     <item>Normalny</item>
     <item>Duży</item>
     <item>Większy</item>
+  </string-array>
+  <string-array name="delayed_sending_labels">
+    <item>No delay</item>
+    <item>Short</item>
+    <item>Medium</item>
+    <item>Long</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>

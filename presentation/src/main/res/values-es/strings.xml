@@ -20,7 +20,7 @@
   -->
 <resources>
   <string name="app_name">QKSMS</string>
-  <string name="title_archived">Archivo</string>
+  <string name="title_archived">Archivados</string>
   <string name="title_scheduled">Programar</string>
   <string name="title_settings">Configuración</string>
   <string name="title_notification_prefs">Notificaciones</string>
@@ -39,12 +39,16 @@
   <string name="main_syncing">Optimizar base de datos, esto podría tomar un minuto&#8230;</string>
   <string name="main_sender_you">Tú: %s</string>
   <string name="drawer_inbox">Recibidos</string>
-  <string name="drawer_archived">Archivo</string>
+  <string name="drawer_archived">Archivar</string>
   <string name="drawer_scheduled">Programar</string>
   <string name="drawer_more">Más</string>
   <string name="drawer_settings">Ajustes</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Ayuda &amp; comentarios</string>
+  <string name="rate_title">¿Te diviertes con QKSMS?</string>
+  <string name="rate_summary">Comparte un poco de amor y puntúanos en Google Play!</string>
+  <string name="rate_okay">DE ACUERDO</string>
+  <string name="rate_dismiss">DESESTIMAR</string>
   <string name="inbox_empty_text">Sus conversaciones aparecerán aquí</string>
   <string name="inbox_search_empty_text">No hay resultados</string>
   <string name="inbox_menu_archive">Archivo</string>
@@ -71,7 +75,7 @@
   <string name="info_title">Detalles</string>
   <string name="info_notifications">Notificaciones</string>
   <string name="info_theme">Tema</string>
-  <string name="info_archive">Archivo</string>
+  <string name="info_archive">Archivar</string>
   <string name="info_unarchive">Desarchivar</string>
   <string name="info_block">Bloquear</string>
   <string name="info_unblock">Desbloquear</string>
@@ -88,33 +92,44 @@
   <string name="settings_black_title">Modo noche negro puro</string>
   <string name="settings_night_start_title">Hora de inicio</string>
   <string name="settings_night_end_title">Hora de finalización</string>
+  <string name="settings_text_size_title">Tamaño de la fuente</string>
+  <string name="settings_system_font_title">Usar fuente del sistema</string>
   <string name="settings_auto_emoji_title">Emojis automáticos</string>
   <string name="settings_notifications_title">Notificaciones</string>
   <string name="settings_notification_previews_title">Previsualización de notificaciones</string>
   <string name="settings_vibration_title">Vibración</string>
   <string name="settings_ringtone_title">Sonido</string>
-  <string name="settings_blocking_title">Bloquedo</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">¿Debo responder?</string>
-  <string name="settings_should_i_answer_summary">Filtra automáticamente los mensajes de números no solicitados mediante la aplicación \"¿Debo responder?\"</string>
-  <string name="settings_delivery_title">Confirmaciones de envió</string>
-  <string name="settings_delivery_summary">Confirmar cuando los mensajes se envien con éxito</string>
   <string name="settings_qkreply_title">Responder vía QKSMS</string>
   <string name="settings_qkreply_summary">Ventana emergente para los nuevos mensajes</string>
   <string name="settings_qkreply_tap_dismiss_title">Tocar para descartar</string>
   <string name="settings_qkreply_tap_dismiss_summary">Toque fuera de la ventana emergente para cerrarla</string>
-  <string name="settings_text_size_title">Tamaño de la fuente</string>
-  <string name="settings_system_font_title">Usar fuente del sistema</string>
+  <string name="settings_blocking_title">Bloquedo</string>
+  <!-- Do not translate -->
+  <string name="settings_should_i_answer_title">¿Debo responder?</string>
+  <string name="settings_should_i_answer_summary">Filtra automáticamente los mensajes de números no solicitados mediante la aplicación \"¿Debo responder?\"</string>
+  <string name="settings_delayed_title">Delayed sending</string>
+  <string name="settings_delivery_title">Confirmaciones de envió</string>
+  <string name="settings_delivery_summary">Confirmar cuando los mensajes se envien con éxito</string>
   <string name="settings_unicode_title">Detalles en tiras</string>
   <string name="settings_unicode_summary">Quitar acentos de caracteres en los mensajes SMS salientes</string>
   <string name="settings_mms_size_title">Tamaño máximo para archivos adjuntos MMS</string>
   <string name="settings_sync_title">Sincronizar mensajes</string>
   <string name="settings_sync_summary">Vuelve a sincronizar tus mensajes con la base de datos nativa de Android SMS</string>
+  <string name="settings_about_title">Acerca de QKSMS</string>
   <string name="settings_version">Versión %s</string>
+  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
   <string name="blocked_title">Bloqueado</string>
   <string name="blocked_empty">Sus conversaciones bloqueadas aparecerán aquí</string>
   <string name="blocked_unblock_dialog_title">Desbloquear</string>
   <string name="blocked_unblock_dialog_message">¿Quieres desbloquear esta conversación?</string>
+  <string name="about_title">Acerca de</string>
+  <string name="about_version_title">Versión</string>
+  <string name="about_developer_title">Desarrollador</string>
+  <string name="about_source_title">Código fuente</string>
+  <string name="about_changelog_title">Registro de cambios</string>
+  <string name="about_contact_title">Contáctanos</string>
+  <string name="about_license_title">Licencia</string>
+  <string name="about_copyright_title">Derechos de autor</string>
   <string name="qksms_plus_description_title">Apoye el desarrollo, desbloquee todo</string>
   <string name="qksms_plus_description_summary">Puedes salvar a un desarrollador hambriento por sólo %s</string>
   <string name="qksms_plus_upgrade">Actualización de por vida por %1$s %2$s</string>
@@ -159,9 +174,10 @@
   <string name="notification_read">Marcar como leído</string>
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Eliminar</string>
+  <string name="button_more">Más</string>
+  <string name="button_set">Set</string>
   <string name="button_unblock">Desbloquear</string>
   <string name="button_undo">Deshacer</string>
-  <string name="button_more">Más</string>
   <string name="toast_copied">Copiado</string>
   <string name="toast_archived">Conversación archivada</string>
   <string name="toast_qksms_plus">Debe desbloquear QKSMS+ para utilizarlo</string>
@@ -186,6 +202,12 @@
     <item>Normal</item>
     <item>Grande</item>
     <item>Más grande</item>
+  </string-array>
+  <string-array name="delayed_sending_labels">
+    <item>No delay</item>
+    <item>Short</item>
+    <item>Medium</item>
+    <item>Long</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>
