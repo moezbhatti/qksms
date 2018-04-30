@@ -26,6 +26,7 @@
         <enum name="primaryOnTheme" value="3" />
         <enum name="secondaryOnTheme" value="4" />
         <enum name="tertiaryOnTheme" value="5" />
+        <enum name="theme" value="6" />
     </attr>
 
     <attr name="textSize" format="enum">

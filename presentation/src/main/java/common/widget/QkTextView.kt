@@ -47,6 +47,7 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
         const val COLOR_PRIMARY_ON_THEME = 3
         const val COLOR_SECONDARY_ON_THEME = 4
         const val COLOR_TERTIARY_ON_THEME = 5
+        const val COLOR_THEME = 6
 
         const val SIZE_PRIMARY = 0
         const val SIZE_SECONDARY = 1
@@ -89,6 +90,7 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
                     COLOR_PRIMARY_ON_THEME -> R.color.textPrimaryDark
                     COLOR_SECONDARY_ON_THEME -> R.color.textSecondaryDark
                     COLOR_TERTIARY_ON_THEME -> R.color.textTertiaryDark
+                    COLOR_THEME -> R.color.tools_theme
                     else -> R.color.textPrimary
                 }))
 
@@ -107,6 +109,7 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
                     COLOR_PRIMARY_ON_THEME -> colors.textPrimaryOnTheme
                     COLOR_SECONDARY_ON_THEME -> colors.textSecondaryOnTheme
                     COLOR_TERTIARY_ON_THEME -> colors.textTertiaryOnTheme
+                    COLOR_THEME -> colors.theme
                     else -> null
                 }
 

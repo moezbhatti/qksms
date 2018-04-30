@@ -73,7 +73,7 @@
         <item name="android:layout_marginStart">72dp</item>
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="textColor">secondary</item>
+        <item name="textColor">theme</item>
         <item name="textSize">secondary</item>
     </style>
 
