@@ -20,12 +20,12 @@ package interactor
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import com.google.android.mms.ContentType
 import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.Transaction
 import com.mlsdev.rximagepicker.RxImageConverters
+import feature.compose.Attachment
 import io.reactivex.Flowable
 import repository.MessageRepository
 import util.Preferences
@@ -38,7 +38,7 @@ class SendMessage @Inject constructor(
         private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params>() {
 
-    data class Params(val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Uri> = listOf())
+    data class Params(val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Attachment> = listOf())
 
     override fun buildObservable(params: Params): Flowable<Unit> {
         return Flowable.just(Unit)
@@ -54,7 +54,7 @@ class SendMessage @Inject constructor(
                 .doOnNext { messageRepo.markUnarchived(params.threadId) }
     }
 
-    private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Uri>) {
+    private fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>) {
         val settings = Settings()
         val message = Message(body, addresses.toTypedArray())
 
@@ -62,7 +62,8 @@ class SendMessage @Inject constructor(
         // in a lot of these messages failing to send
         // TODO Add support for GIF compression
         attachments
-                .filter { uri -> context.contentResolver.getType(uri) == ContentType.IMAGE_GIF }
+                .filter { attachment -> attachment.isGif(context) }
+                .map { attachment -> attachment.getUri() }
                 .map { uri -> context.contentResolver.openInputStream(uri) }
                 .map { inputStream -> inputStream.readBytes() }
                 .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_GIF) }
@@ -70,7 +71,8 @@ class SendMessage @Inject constructor(
         // Compress the images and add them as attachments
         var totalImageBytes = 0
         attachments
-                .filter { uri -> context.contentResolver.getType(uri) != ContentType.IMAGE_GIF }
+                .filter { attachment -> !attachment.isGif(context) }
+                .map { attachment -> attachment.getUri() }
                 .map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
                 .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
                 .map { bitmap ->

@@ -82,7 +82,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     @Inject lateinit var deleteMessage: DeleteMessage
 
     private var sharedText: String = ""
-    private val attachments: Subject<List<Uri>> = BehaviorSubject.createDefault(ArrayList())
+    private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(ArrayList())
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Observable<List<Contact>>
@@ -103,7 +103,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         val sharedImages = mutableListOf<Uri>()
         intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.run { sharedImages += this }
         intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.run { sharedImages += this }
-        attachments.onNext(sharedImages)
+        attachments.onNext(sharedImages.map { uri -> Attachment(uri) })
 
         val threadId = intent.extras?.getLong("threadId") ?: 0L
         var address = ""
@@ -358,6 +358,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // Attach a photo from camera
         view.cameraIntent
                 .flatMap { RxImagePicker.with(context).requestImage(Sources.CAMERA) }
+                .map { uri -> Attachment(uri) }
                 .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
                 .doOnNext { attachments.onNext(it) }
                 .autoDisposable(view.scope())
@@ -366,6 +367,15 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         // Attach a photo from gallery
         view.galleryIntent
                 .flatMap { RxImagePicker.with(context).requestImage(Sources.GALLERY) }
+                .map { uri -> Attachment(uri) }
+                .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
+                .doOnNext { attachments.onNext(it) }
+                .autoDisposable(view.scope())
+                .subscribe { newState { it.copy(attaching = false) } }
+
+        // Attach media from the keyboard
+        view.inputContentIntent
+                .map { inputContent -> Attachment(uri = null, inputContent = inputContent) }
                 .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
                 .doOnNext { attachments.onNext(it) }
                 .autoDisposable(view.scope())

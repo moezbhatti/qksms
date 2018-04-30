@@ -20,12 +20,18 @@ package common.widget
 
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
+import android.os.Bundle
+import android.support.v13.view.inputmethod.EditorInfoCompat
+import android.support.v13.view.inputmethod.InputConnectionCompat
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputConnectionWrapper
+import android.view.inputmethod.InputContentInfo
 import android.widget.EditText
+import com.google.android.mms.ContentType
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -42,7 +48,9 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import util.Preferences
+import util.tryOrNull
 import javax.inject.Inject
+
 
 /**
  * Custom implementation of EditText to allow for dynamic text colors
@@ -71,6 +79,8 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
     @Inject lateinit var prefs: Preferences
 
     val backspaces: Subject<Unit> = PublishSubject.create()
+    val inputContentSelected: Subject<InputContentInfo> = PublishSubject.create()
+    var supportsInputContent: Boolean = false
 
     private var textColorObservable: Observable<Int>? = null
     private var textColorHintObservable: Observable<Int>? = null
@@ -176,8 +186,35 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 .subscribe()
     }
 
-    override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection {
-        return object : InputConnectionWrapper(super.onCreateInputConnection(outAttrs), true) {
+    override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection {
+
+        val inputConnection = super.onCreateInputConnection(editorInfo)
+
+        if (supportsInputContent) {
+            EditorInfoCompat.setContentMimeTypes(editorInfo, arrayOf(
+                    ContentType.IMAGE_JPEG,
+                    ContentType.IMAGE_JPG,
+                    ContentType.IMAGE_PNG,
+                    ContentType.IMAGE_GIF))
+        }
+
+        return object : InputConnectionWrapper(inputConnection, true) {
+
+            override fun commitContent(inputContentInfo: InputContentInfo, flags: Int, opts: Bundle?): Boolean {
+                val grantReadPermission = flags and InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION != 0
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && grantReadPermission) {
+                    return tryOrNull {
+                        inputContentInfo.requestPermission()
+                        inputContentSelected.onNext(inputContentInfo)
+
+                        true
+                    } ?: false
+
+                }
+
+                return true
+            }
 
             override fun sendKeyEvent(event: KeyEvent): Boolean {
                 if (event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL) {
@@ -188,11 +225,12 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
 
             override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {
-                // magic: in latest Android, deleteSurroundingText(1, 0) will be called for backspace
                 return if (beforeLength == 1 && afterLength == 0) {
-                    sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL)) && sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
-                } else super.deleteSurroundingText(beforeLength, afterLength)
-
+                    sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
+                            && sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
+                } else {
+                    super.deleteSurroundingText(beforeLength, afterLength)
+                }
             }
 
         }

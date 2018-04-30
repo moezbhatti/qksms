@@ -20,7 +20,6 @@ package feature.compose
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -64,11 +63,12 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override val messageLongClickIntent: Subject<Message> by lazy { messageAdapter.longClicks }
     override val cancelSendingIntent: Subject<Message> by lazy { messageAdapter.cancelSending }
     override val menuItemIntent: Subject<Int> by lazy { dialog.adapter.menuItemClicks }
-    override val attachmentDeletedIntent: Subject<Uri> by lazy { attachmentAdapter.attachmentDeleted }
+    override val attachmentDeletedIntent: Subject<Attachment> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { attach.clicks() }
     override val cameraIntent by lazy { camera.clicks() }
     override val galleryIntent by lazy { gallery.clicks() }
+    override val inputContentIntent by lazy { message.inputContentSelected }
     override val sendIntent by lazy { send.clicks() }
 
     @Inject lateinit var chipsAdapter: ChipsAdapter
@@ -105,6 +105,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
         attachments.adapter = attachmentAdapter
 
         messageBackground.backgroundTintMode = PorterDuff.Mode.MULTIPLY
+        message.supportsInputContent = true
 
         val states = arrayOf(
                 intArrayOf(android.R.attr.state_enabled),

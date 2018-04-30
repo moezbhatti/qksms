@@ -18,7 +18,7 @@
  */
 package feature.compose
 
-import android.net.Uri
+import android.view.inputmethod.InputContentInfo
 import common.MenuItem
 import common.base.QkView
 import io.reactivex.Observable
@@ -41,11 +41,12 @@ interface ComposeView : QkView<ComposeState> {
     val messageLongClickIntent: Subject<Message>
     val cancelSendingIntent: Subject<Message>
     val menuItemIntent: Subject<Int>
-    val attachmentDeletedIntent: Subject<Uri>
+    val attachmentDeletedIntent: Subject<Attachment>
     val textChangedIntent: Observable<CharSequence>
     val attachIntent: Observable<Unit>
     val cameraIntent: Observable<*>
     val galleryIntent: Observable<*>
+    val inputContentIntent: Observable<InputContentInfo>
     val sendIntent: Observable<Unit>
 
     fun showMenu(menuItems: List<MenuItem>)
