@@ -26,17 +26,19 @@ import io.reactivex.subjects.Subject
 interface SettingsView : QkView<SettingsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
-    val nightModeSelectedIntent: Observable<Int>
     val viewQksmsPlusIntent: Subject<Unit>
+    val nightModeSelectedIntent: Observable<Int>
     val startTimeSelectedIntent: Subject<Pair<Int, Int>>
     val endTimeSelectedIntent: Subject<Pair<Int, Int>>
     val textSizeSelectedIntent: Subject<Int>
+    val sendDelayChangedIntent: Observable<Int>
     val mmsSizeSelectedIntent: Observable<Int>
 
-    fun showNightModeDialog()
     fun showQksmsPlusSnackbar()
+    fun showNightModeDialog()
     fun showStartTimePicker(hour: Int, minute: Int)
     fun showEndTimePicker(hour: Int, minute: Int)
     fun showTextSizePicker()
+    fun showDelayDurationDialog()
     fun showMmsSizePicker()
 }

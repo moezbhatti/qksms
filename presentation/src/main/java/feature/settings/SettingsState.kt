@@ -31,6 +31,8 @@ data class SettingsState(
         val black: Boolean = false,
         val autoEmojiEnabled: Boolean = true,
         val notificationsEnabled: Boolean = true,
+        val sendDelaySummary: String = "",
+        val sendDelayId: Int = 0,
         val deliveryEnabled: Boolean = false,
         val textSizeSummary: String = "",
         val textSizeId: Int = Preferences.TEXT_SIZE_NORMAL,

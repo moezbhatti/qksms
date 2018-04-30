@@ -40,6 +40,7 @@ interface ComposeView : QkView<ComposeState> {
     val infoIntent: Subject<Unit>
     val messageClickIntent: Subject<Message>
     val messageLongClickIntent: Subject<Message>
+    val cancelSendingIntent: Subject<Message>
     val menuItemIntent: Subject<Int>
     val attachmentDeletedIntent: Subject<Uri>
     val textChangedIntent: Observable<CharSequence>

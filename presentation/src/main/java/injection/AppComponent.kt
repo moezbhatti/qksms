@@ -64,6 +64,7 @@ import receiver.MmsSentReceiver
 import receiver.MmsUpdatedReceiver
 import receiver.NightModeReceiver
 import receiver.RemoteMessagingReceiver
+import receiver.SendSmsReceiver
 import receiver.SmsDeliveredReceiver
 import receiver.SmsProviderChangedReceiver
 import receiver.SmsReceiver
@@ -103,6 +104,7 @@ interface AppComponent {
     fun inject(receiver: MmsUpdatedReceiver)
     fun inject(receiver: NightModeReceiver)
     fun inject(receiver: RemoteMessagingReceiver)
+    fun inject(receiver: SendSmsReceiver)
     fun inject(receiver: SmsProviderChangedReceiver)
     fun inject(receiver: SmsReceiver)
     fun inject(receiver: WidgetProvider)

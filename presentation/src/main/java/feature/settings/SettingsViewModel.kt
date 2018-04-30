@@ -75,11 +75,15 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         disposables += prefs.black.asObservable()
                 .subscribe { black -> newState { it.copy(black = black) } }
 
+        disposables += prefs.notifications().asObservable()
+                .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
+
         disposables += prefs.autoEmoji.asObservable()
                 .subscribe { enabled -> newState { it.copy(autoEmojiEnabled = enabled) } }
 
-        disposables += prefs.notifications().asObservable()
-                .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
+        val delayedSendingLabels = context.resources.getStringArray(R.array.delayed_sending_labels)
+        disposables += prefs.sendDelay.asObservable()
+                .subscribe { id -> newState { it.copy(sendDelaySummary = delayedSendingLabels[id], sendDelayId = id) } }
 
         disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { it.copy(deliveryEnabled = enabled) } }
@@ -140,6 +144,8 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.blocked -> navigator.showBlockedConversations()
 
+                        R.id.delayed -> view.showDelayDurationDialog()
+
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
                         R.id.textSize -> view.showTextSizePicker()
@@ -191,6 +197,17 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
         view.textSizeSelectedIntent
                 .autoDisposable(view.scope())
                 .subscribe { prefs.textSize.set(it) }
+
+        view.sendDelayChangedIntent
+                .withLatestFrom(billingManager.upgradeStatus, { duration, upgraded ->
+                    if (!upgraded && duration != 0) {
+                        view.showQksmsPlusSnackbar()
+                    } else {
+                        prefs.sendDelay.set(duration)
+                    }
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
 
         view.mmsSizeSelectedIntent
                 .autoDisposable(view.scope())

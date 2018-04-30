@@ -46,15 +46,17 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
     @Inject lateinit var nightModeDialog: QkDialog
     @Inject lateinit var textSizeDialog: QkDialog
+    @Inject lateinit var sendDelayDialog: QkDialog
     @Inject lateinit var mmsSizeDialog: QkDialog
 
     override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
-    override val nightModeSelectedIntent by lazy { nightModeDialog.adapter.menuItemClicks }
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
+    override val nightModeSelectedIntent by lazy { nightModeDialog.adapter.menuItemClicks }
     override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
     override val textSizeSelectedIntent by lazy { textSizeDialog.adapter.menuItemClicks }
+    override val sendDelayChangedIntent by lazy { sendDelayDialog.adapter.menuItemClicks }
     override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeDialog.adapter.menuItemClicks }
 
     // TODO remove this
@@ -79,6 +81,7 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
 
         nightModeDialog.adapter.setData(R.array.night_modes)
         textSizeDialog.adapter.setData(R.array.text_sizes)
+        sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
         about.summary = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
@@ -119,6 +122,10 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         black.checkbox.isChecked = state.black
 
         autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
+
+        delayed.summary = state.sendDelaySummary
+        sendDelayDialog.adapter.selectedItem = state.sendDelayId
+
         delivery.checkbox.isChecked = state.deliveryEnabled
 
         textSize.summary = state.textSizeSummary
@@ -131,15 +138,15 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId
     }
 
-    // TODO change this to a PopupWindow
-    override fun showNightModeDialog() = nightModeDialog.show(this)
-
     override fun showQksmsPlusSnackbar() {
         Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
             setAction(R.string.button_more, { viewQksmsPlusIntent.onNext(Unit) })
             show()
         }
     }
+
+    // TODO change this to a PopupWindow
+    override fun showNightModeDialog() = nightModeDialog.show(this)
 
     override fun showStartTimePicker(hour: Int, minute: Int) {
         TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
@@ -154,6 +161,8 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     }
 
     override fun showTextSizePicker() = textSizeDialog.show(this)
+
+    override fun showDelayDurationDialog() = sendDelayDialog.show(this)
 
     override fun showMmsSizePicker() = mmsSizeDialog.show(this)
 

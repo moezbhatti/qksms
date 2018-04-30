@@ -27,6 +27,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 
 fun EditText.showKeyboard() {
     requestFocus()
@@ -36,6 +37,10 @@ fun EditText.showKeyboard() {
 
 fun ImageView.setTint(color: Int) {
     imageTintList = ColorStateList.valueOf(color)
+}
+
+fun ProgressBar.setTint(color: Int) {
+    progressTintList = ColorStateList.valueOf(color)
 }
 
 fun View.setBackgroundTint(color: Int) {

@@ -37,6 +37,7 @@ import common.util.ClipboardUtils
 import common.util.extensions.makeToast
 import common.util.filter.ContactFilter
 import injection.appComponent
+import interactor.CancelDelayedMessage
 import interactor.ContactSync
 import interactor.DeleteMessage
 import interactor.MarkRead
@@ -70,6 +71,7 @@ import javax.inject.Inject
 class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(ComposeState()) {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var cancelMessage: CancelDelayedMessage
     @Inject lateinit var contactFilter: ContactFilter
     @Inject lateinit var contactsRepo: ContactRepository
     @Inject lateinit var messageRepo: MessageRepository
@@ -171,6 +173,7 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 }
                 .switchMap { messages -> messages.asObservable() }
 
+        disposables += cancelMessage
         disposables += sendMessage
         disposables += markRead
         disposables += conversation.subscribe()
@@ -311,6 +314,12 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
         view.messageLongClickIntent
                 .autoDisposable(view.scope())
                 .subscribe { view.showMenu(listOf(menuCopy, menuForward, menuDelete)) }
+
+        // Cancel sending a message
+        view.cancelSendingIntent
+                .doOnNext { message -> view.setDraft(message.getText()) }
+                .autoDisposable(view.scope())
+                .subscribe { message -> cancelMessage.execute(message.id) }
 
         // Handle long-press menu item click
         view.menuItemIntent

@@ -63,6 +63,7 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override val infoIntent: Subject<Unit> = PublishSubject.create()
     override val messageClickIntent: Subject<Message> by lazy { messageAdapter.clicks }
     override val messageLongClickIntent: Subject<Message> by lazy { messageAdapter.longClicks }
+    override val cancelSendingIntent: Subject<Message> by lazy { messageAdapter.cancelSending }
     override val menuItemIntent: Subject<Int> by lazy { dialog.adapter.menuItemClicks }
     override val attachmentDeletedIntent: Subject<Uri> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }

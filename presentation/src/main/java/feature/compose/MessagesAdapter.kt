@@ -18,6 +18,7 @@
  */
 package feature.compose
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
@@ -29,6 +30,8 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
@@ -42,6 +45,7 @@ import common.util.extensions.dpToPx
 import common.util.extensions.forwardTouches
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
+import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import common.widget.BubbleImageView.Style.*
 import io.reactivex.disposables.CompositeDisposable
@@ -54,6 +58,7 @@ import kotlinx.android.synthetic.main.mms_preview_list_item.view.*
 import model.Conversation
 import model.Message
 import model.Recipient
+import util.Preferences
 import util.extensions.hasThumbnails
 import util.extensions.isImage
 import util.extensions.isVideo
@@ -64,7 +69,8 @@ class MessagesAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors,
         private val dateFormatter: DateFormatter,
-        private val navigator: Navigator
+        private val navigator: Navigator,
+        private val prefs: Preferences
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -75,6 +81,7 @@ class MessagesAdapter @Inject constructor(
 
     val clicks: Subject<Message> = PublishSubject.create<Message>()
     val longClicks: Subject<Message> = PublishSubject.create<Message>()
+    val cancelSending: Subject<Message> = PublishSubject.create<Message>()
 
     var data: Pair<Conversation, RealmResults<Message>>? = null
         set(value) {
@@ -119,7 +126,15 @@ class MessagesAdapter @Inject constructor(
         if (viewType == VIEW_TYPE_MESSAGE_OUT) {
             view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
             disposables += colors.bubble
-                    .subscribe { color -> view.body.setBackgroundTint(color) }
+                    .subscribe { color ->
+                        view.body.setBackgroundTint(color)
+                        view.findViewById<ProgressBar>(R.id.cancel).setBackgroundTint(color)
+                    }
+            disposables += theme
+                    .subscribe { color ->
+                        view.findViewById<ImageView>(R.id.cancelIcon).setTint(color)
+                        view.findViewById<ProgressBar>(R.id.cancel).setTint(color)
+                    }
         } else {
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
             view.avatar.threadId = conversation?.id ?: 0
@@ -150,6 +165,29 @@ class MessagesAdapter @Inject constructor(
             bindStatus(viewHolder, position)
         }
         RxView.longClicks(view).subscribe { longClicks.onNext(message) }
+
+
+        // Bind the cancel view
+        view.findViewById<ProgressBar>(R.id.cancel)?.let { cancel ->
+            val isCancellable = message.isSending() && message.date > System.currentTimeMillis()
+            cancel.setVisible(isCancellable)
+            cancel.clicks().subscribe { cancelSending.onNext(message) }
+            cancel.progress = 2
+
+            if (isCancellable) {
+                val delay = when (prefs.sendDelay.get()) {
+                    Preferences.SEND_DELAY_SHORT -> 3000
+                    Preferences.SEND_DELAY_MEDIUM -> 5000
+                    Preferences.SEND_DELAY_LONG -> 10000
+                    else -> 0
+                }
+                val progress = (1 - (message.date - System.currentTimeMillis()) / delay.toFloat()) * 100
+
+                ObjectAnimator.ofInt(cancel, "progress", progress.toInt(), 100)
+                        .setDuration(message.date - System.currentTimeMillis())
+                        .start()
+            }
+        }
 
 
         // Bind the message status

@@ -18,12 +18,14 @@
  */
 package repository
 
+import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.BaseColumns
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
@@ -355,8 +357,29 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun sendSmsAndPersist(threadId: Long, address: String, body: String) {
-        val message = insertSentSms(threadId, address, body)
-        sendSms(message)
+        if (prefs.sendDelay.get() != Preferences.SEND_DELAY_NONE) {
+            val delay = when (prefs.sendDelay.get()) {
+                Preferences.SEND_DELAY_SHORT -> 3000
+                Preferences.SEND_DELAY_MEDIUM -> 5000
+                Preferences.SEND_DELAY_LONG -> 10000
+                else -> 0
+            }
+
+            val sendTime = System.currentTimeMillis() + delay
+            val message = insertSentSms(threadId, address, body, sendTime)
+
+            val intent = getIntentForDelayedSms(message.id)
+
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, sendTime, intent)
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
+            }
+        } else {
+            val message = insertSentSms(threadId, address, body, System.currentTimeMillis())
+            sendSms(message)
+        }
     }
 
     override fun sendSms(message: Message) {
@@ -383,14 +406,26 @@ class MessageRepositoryImpl @Inject constructor(
         smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
     }
 
-    override fun insertSentSms(threadId: Long, address: String, body: String): Message {
+    override fun cancelDelayedSms(id: Long) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel(getIntentForDelayedSms(id))
+    }
+
+    private fun getIntentForDelayedSms(id: Long): PendingIntent {
+        val action = "com.moez.QKSMS.SEND_SMS"
+        val intent = Intent(action).putExtra("id", id)
+        BroadcastUtils.addClassName(context, intent, action)
+        return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
+    override fun insertSentSms(threadId: Long, address: String, body: String, date: Long): Message {
 
         // Insert the message to Realm
         val message = Message().apply {
             this.threadId = threadId
             this.address = address
             this.body = body
-            this.date = System.currentTimeMillis()
+            this.date = date
 
             id = messageIds.newId()
             boxId = Telephony.Sms.MESSAGE_TYPE_OUTBOX
@@ -415,7 +450,8 @@ class MessageRepositoryImpl @Inject constructor(
         val uri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
 
         // Update the contentId after the message has been inserted to the content provider
-        realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
+        // The message might have been deleted by now, so only proceed if it's valid
+        realm.executeTransaction { managedMessage?.takeIf { it.isValid }?.contentId = uri.lastPathSegment.toLong() }
         realm.close()
 
         return message
@@ -565,13 +601,14 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun deleteMessage(messageId: Long) {
-        val realm = Realm.getDefaultInstance()
-        realm.where(Message::class.java).equalTo("id", messageId).findFirst()?.let { message ->
-            val uri = message.getUri()
-            realm.executeTransaction { message.deleteFromRealm() }
-            context.contentResolver.delete(uri, null, null)
+        Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+            realm.where(Message::class.java).equalTo("id", messageId).findFirst()?.let { message ->
+                val uri = message.getUri()
+                realm.executeTransaction { message.deleteFromRealm() }
+                context.contentResolver.delete(uri, null, null)
+            }
         }
-        realm.close()
     }
 
     override fun deleteConversation(threadId: Long) {

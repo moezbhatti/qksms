@@ -41,6 +41,11 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val NOTIFICATION_PREVIEWS_ALL = 0
         const val NOTIFICATION_PREVIEWS_NAME = 1
         const val NOTIFICATION_PREVIEWS_NONE = 2
+
+        const val SEND_DELAY_NONE = 0
+        const val SEND_DELAY_SHORT = 1
+        const val SEND_DELAY_MEDIUM = 2
+        const val SEND_DELAY_LONG = 3
     }
 
     val defaultSms = rxPrefs.getBoolean("defaultSms", false)
@@ -50,6 +55,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val nightEnd = rxPrefs.getString("nightEnd", "6:00 AM")
     val black = rxPrefs.getBoolean("black", false)
     val sia = rxPrefs.getBoolean("sia", false)
+    val sendDelay = rxPrefs.getInteger("sendDelay", SEND_DELAY_NONE)
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val delivery = rxPrefs.getBoolean("delivery", false)
     val systemFont = rxPrefs.getBoolean("systemFont", false)

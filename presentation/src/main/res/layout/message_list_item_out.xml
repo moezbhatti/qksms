@@ -75,6 +75,35 @@
         tools:backgroundTint="@color/white"
         tools:text="Hey! How's it going?" />
 
+    <ProgressBar
+        android:id="@+id/cancel"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/circle"
+        android:elevation="4dp"
+        android:foreground="@drawable/ripple"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/circular_progress_bar"
+        app:layout_constraintBottom_toBottomOf="@id/body"
+        app:layout_constraintEnd_toStartOf="@id/body"
+        tools:progress="45"
+        tools:progressTint="@color/tools_theme" />
+
+    <ImageView
+        android:id="@+id/cancelIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="4dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_stop_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/cancel"
+        app:layout_constraintEnd_toEndOf="@id/cancel"
+        app:layout_constraintStart_toStartOf="@id/cancel"
+        app:layout_constraintTop_toTopOf="@id/cancel"
+        tools:tint="@color/tools_theme" />
+
     <common.widget.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"

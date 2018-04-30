@@ -98,7 +98,12 @@ interface MessageRepository {
      */
     fun sendSms(message: Message)
 
-    fun insertSentSms(threadId: Long, address: String, body: String): Message
+    /**
+     * Attempts to cancel sending the message with the given id
+     */
+    fun cancelDelayedSms(id: Long)
+
+    fun insertSentSms(threadId: Long, address: String, body: String, date: Long): Message
 
     fun insertReceivedSms(address: String, body: String, sentTime: Long): Message
 
