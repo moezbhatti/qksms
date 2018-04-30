@@ -95,7 +95,7 @@ class SyncRepositoryImpl @Inject constructor(
             realm.delete(SyncLog::class.java)
         }
 
-        val lastSync = realm.where(Message::class.java)?.max("date")?.toLong() ?: 0
+        val lastSync = realm.where(SyncLog::class.java)?.max("date")?.toLong() ?: 0
         realm.insert(SyncLog())
 
 
