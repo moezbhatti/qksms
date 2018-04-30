@@ -186,6 +186,12 @@
                 app:title="@string/settings_mms_size_title"
                 tools:summary="100KB" />
 
+            <common.widget.Separator
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp" />
+
             <common.widget.PreferenceView
                 android:id="@+id/sync"
                 android:layout_width="match_parent"
