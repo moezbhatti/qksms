@@ -37,6 +37,10 @@ class AnalyticsManagerImpl @Inject constructor(context: Context) : AnalyticsMana
     private val amplitude: AmplitudeClient = Amplitude.getInstance().initialize(context, BuildConfig.AMPLITUDE_API_KEY)
     private val mixpanel: MixpanelAPI = MixpanelAPI.getInstance(context, BuildConfig.MIXPANEL_API_KEY)
 
+    init {
+        amplitude.trackSessionEvents(true)
+    }
+
     override fun track(event: String, vararg properties: Pair<String, String>) {
         val propertiesJson = JSONObject(properties
                 .associateBy { pair -> pair.first }

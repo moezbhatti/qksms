@@ -37,6 +37,7 @@ class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {
 
     init {
         appComponent.inject(this)
+        analyticsManager.track("Viewed QKSMS+")
 
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { it.copy(upgraded = upgraded) } }
