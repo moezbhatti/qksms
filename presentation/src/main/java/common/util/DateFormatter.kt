@@ -37,8 +37,8 @@ class DateFormatter @Inject constructor(val context: Context) {
     private fun getFormatter(pattern: String): SimpleDateFormat {
         val isUsing24HourTime = DateFormat.is24HourFormat(context)
 
-        return if (isUsing24HourTime) SimpleDateFormat(pattern.replace("h", "HH").replace(" a".toRegex(), ""), Locale.US)
-        else SimpleDateFormat(pattern, Locale.US)
+        return if (isUsing24HourTime) SimpleDateFormat(pattern.replace("h", "HH").replace(" a".toRegex(), ""), Locale.getDefault())
+        else SimpleDateFormat(pattern, Locale.getDefault())
     }
 
     fun getTimestamp(date: Long): String {
@@ -81,7 +81,7 @@ class DateFormatter @Inject constructor(val context: Context) {
     }
 
     fun parseTime(time: String): Calendar {
-        val simpleDateFormat = if (time.contains(" ")) getFormatter("h:mm a") else SimpleDateFormat("H:mm", Locale.US)
+        val simpleDateFormat = if (time.contains(" ")) getFormatter("h:mm a") else SimpleDateFormat("H:mm", Locale.getDefault())
         return Calendar.getInstance().apply { this.time = simpleDateFormat.parse(time) }
     }
 
