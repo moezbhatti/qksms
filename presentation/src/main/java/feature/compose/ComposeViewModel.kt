@@ -172,9 +172,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
                 }
                 .switchMap { messages -> messages.asObservable() }
 
-        disposables += cancelMessage
-        disposables += sendMessage
-        disposables += markRead
         disposables += conversation.subscribe()
         disposables += messages.subscribe()
 
