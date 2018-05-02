@@ -18,28 +18,27 @@
  */
 package feature.main
 
-import common.MenuItem
 import common.base.QkView
 import io.reactivex.Observable
 
 interface MainView : QkView<MainState> {
 
     val queryChangedIntent: Observable<CharSequence>
-    val queryCancelledIntent: Observable<*>
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>
+    val homeIntent: Observable<*>
     val drawerItemIntent: Observable<DrawerItem>
+    val optionsItemIntent: Observable<Int>
     val dismissRatingIntent: Observable<*>
     val rateIntent: Observable<*>
-    val conversationClickIntent: Observable<Long>
-    val conversationLongClickIntent: Observable<Long>
-    val conversationMenuItemIntent: Observable<Int>
+    val conversationsSelectedIntent: Observable<List<Long>>
     val confirmDeleteIntent: Observable<Unit>
     val swipeConversationIntent: Observable<Long>
     val undoSwipeConversationIntent: Observable<Unit>
+    val backPressedIntent: Observable<Unit>
 
     fun clearSearch()
-    fun showDialog(menuItems: List<MenuItem>)
+    fun clearSelection()
     fun showDeleteDialog()
 
 }

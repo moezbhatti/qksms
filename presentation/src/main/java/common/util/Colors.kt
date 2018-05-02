@@ -159,6 +159,15 @@ class Colors @Inject constructor(private val context: Context, private val prefs
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
+    val ripple: Observable<Int> = prefs.night.asObservable()
+            .map { night ->
+                when (night) {
+                    true -> R.drawable.ripple_dark
+                    false -> R.drawable.ripple
+                }
+            }
+            .distinctUntilChanged()
+
     val field: Observable<Int> = prefs.night.asObservable()
             .map { night -> if (night) R.color.fieldDark else R.color.fieldLight }
             .map { res -> getColor(res) }

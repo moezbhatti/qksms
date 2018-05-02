@@ -61,6 +61,10 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         title = title // The title may have been set before layout inflation
     }
 
+    override fun setTitle(titleId: Int) {
+        title = getString(titleId)
+    }
+
     override fun setTitle(title: CharSequence?) {
         super.setTitle(title)
         toolbarTitle?.text = title
@@ -74,7 +78,7 @@ abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
         return result
     }
 
-    protected fun showBackButton(show: Boolean) {
+    protected open fun showBackButton(show: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(show)
     }
 

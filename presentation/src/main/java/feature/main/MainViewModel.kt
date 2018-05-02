@@ -26,12 +26,11 @@ import android.support.v4.content.ContextCompat
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
-import common.MenuItem
 import common.Navigator
 import common.base.QkViewModel
 import common.util.filter.ConversationFilter
 import injection.appComponent
-import interactor.DeleteConversation
+import interactor.DeleteConversations
 import interactor.MarkAllSeen
 import interactor.MarkArchived
 import interactor.MarkBlocked
@@ -56,7 +55,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var conversationFilter: ConversationFilter
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var markAllSeen: MarkAllSeen
-    @Inject lateinit var deleteConversation: DeleteConversation
+    @Inject lateinit var deleteConversations: DeleteConversations
     @Inject lateinit var markArchived: MarkArchived
     @Inject lateinit var markUnarchived: MarkUnarchived
     @Inject lateinit var markBlocked: MarkBlocked
@@ -66,11 +65,6 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var prefs: Preferences
     @Inject lateinit var ratingManager: RatingManager
 
-    private val menuArchive by lazy { MenuItem(context.getString(R.string.inbox_menu_archive), 0) }
-    private val menuUnarchive by lazy { MenuItem(context.getString(R.string.inbox_menu_unarchive), 1) }
-    private val menuBlock by lazy { MenuItem(context.getString(R.string.inbox_menu_block), 2) }
-    private val menuDelete by lazy { MenuItem(context.getString(R.string.inbox_menu_delete), 3) }
-
     private val conversations by lazy { messageRepo.getConversations() }
 
     init {
@@ -79,7 +73,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         // Now the conversations can be loaded
         conversations
 
-        disposables += deleteConversation
+        disposables += deleteConversations
         disposables += markAllSeen
         disposables += markArchived
         disposables += markUnarchived
@@ -138,13 +132,23 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        view.queryCancelledIntent
-                .autoDisposable(view.scope())
-                .subscribe { view.clearSearch() }
-
         view.composeIntent
                 .autoDisposable(view.scope())
                 .subscribe { navigator.showCompose() }
+
+        view.homeIntent
+                .withLatestFrom(state, { _, state ->
+                    when {
+                        state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
+                        state.page is Inbox && state.page.showClearButton -> view.clearSearch()
+
+                        state.page is Archived && state.page.selected > 0 -> view.clearSelection()
+
+                        else -> newState { it.copy(drawerOpen = true) }
+                    }
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
 
         view.drawerOpenIntent
                 .autoDisposable(view.scope())
@@ -158,13 +162,37 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { it.copy(page = Inbox()) }
-                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(messageRepo.getConversations(true))) }
+                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
+                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(data = messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         else -> {
                         } // Do nothing
                     }
                 }
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        view.optionsItemIntent
+                .withLatestFrom(view.conversationsSelectedIntent, { itemId, conversations ->
+                    when (itemId) {
+                        R.id.archive -> {
+                            markArchived.execute(conversations)
+                            view.clearSelection()
+                        }
+
+                        R.id.unarchive -> {
+                            markUnarchived.execute(conversations)
+                            view.clearSelection()
+                        }
+
+                        R.id.block -> {
+                            markBlocked.execute(conversations)
+                            view.clearSelection()
+                        }
+
+                        R.id.delete -> view.showDeleteDialog()
+                    }
+                })
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -179,29 +207,19 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .autoDisposable(view.scope())
                 .subscribe { ratingManager.dismiss() }
 
-        view.conversationClickIntent
-                .doOnNext { view.clearSearch() }
-                .doOnNext { threadId -> navigator.showConversation(threadId) }
-                .autoDisposable(view.scope())
-                .subscribe()
+        view.conversationsSelectedIntent
+                .map { selection -> selection.size }
+                .withLatestFrom(state, { selected, state ->
+                    when (state.page) {
+                        is Inbox -> {
+                            val page = state.page.copy(selected = selected, showClearButton = selected > 0)
+                            newState { it.copy(page = page) }
+                        }
 
-        view.conversationLongClickIntent
-                .withLatestFrom(state, { _, mainState ->
-                    when (mainState.page) {
-                        is Inbox -> view.showDialog(listOf(menuArchive, menuBlock, menuDelete))
-                        is Archived -> view.showDialog(listOf(menuUnarchive, menuBlock, menuDelete))
-                    }
-                })
-                .autoDisposable(view.scope())
-                .subscribe()
-
-        view.conversationMenuItemIntent
-                .withLatestFrom(view.conversationLongClickIntent, { actionId, threadId ->
-                    when (actionId) {
-                        menuArchive.actionId -> markArchived.execute(threadId)
-                        menuUnarchive.actionId -> markUnarchived.execute(threadId)
-                        menuBlock.actionId -> markBlocked.execute(threadId)
-                        menuDelete.actionId -> view.showDeleteDialog()
+                        is Archived -> {
+                            val page = state.page.copy(selected = selected, showClearButton = selected > 0)
+                            newState { it.copy(page = page) }
+                        }
                     }
                 })
                 .autoDisposable(view.scope())
@@ -209,13 +227,16 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
 
         // Delete the conversation
         view.confirmDeleteIntent
-                .withLatestFrom(view.conversationLongClickIntent, { _, threadId -> threadId })
+                .withLatestFrom(view.conversationsSelectedIntent, { _, conversations -> conversations })
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> deleteConversation.execute(threadId) }
+                .subscribe { conversations ->
+                    deleteConversations.execute(conversations)
+                    view.clearSelection()
+                }
 
         view.swipeConversationIntent
                 .withLatestFrom(state, { threadId, state ->
-                    markArchived.execute(threadId) {
+                    markArchived.execute(listOf(threadId)) {
                         if (state.page is Inbox) {
                             val page = state.page.copy(showArchivedSnackbar = true)
                             newState { it.copy(page = page) }
@@ -224,7 +245,7 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 })
                 .switchMap { Observable.timer(2750, TimeUnit.MILLISECONDS) }
                 .withLatestFrom(state, { threadId, state ->
-                    markArchived.execute(threadId) {
+                    markArchived.execute(listOf(threadId)) {
                         if (state.page is Inbox) {
                             val page = state.page.copy(showArchivedSnackbar = false)
                             newState { it.copy(page = page) }
@@ -237,7 +258,25 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         view.undoSwipeConversationIntent
                 .withLatestFrom(view.swipeConversationIntent, { _, threadId -> threadId })
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> markUnarchived.execute(threadId) }
+                .subscribe { threadId -> markUnarchived.execute(listOf(threadId)) }
+
+        view.backPressedIntent
+                .withLatestFrom(state, { _, state ->
+                    when {
+                        state.drawerOpen -> newState { it.copy(drawerOpen = false) }
+
+                        state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
+                        state.page is Inbox && state.page.showClearButton -> view.clearSearch()
+
+                        state.page is Archived && state.page.selected > 0 -> view.clearSelection()
+
+                        state.page !is Inbox -> newState { it.copy(page = Inbox(data = conversations)) }
+
+                        else -> newState { it.copy(hasError = true) }
+                    }
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
     }
 
 }

@@ -22,11 +22,11 @@ import io.reactivex.Flowable
 import repository.MessageRepository
 import javax.inject.Inject
 
-class MarkArchived @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long>() {
+class MarkArchived @Inject constructor(private val messageRepo: MessageRepository) : Interactor<List<Long>>() {
 
-    override fun buildObservable(params: Long): Flowable<Unit> {
-        return Flowable.just(Unit)
-                .doOnNext { messageRepo.markArchived(params) }
+    override fun buildObservable(params: List<Long>): Flowable<*> {
+        return Flowable.just(params.toLongArray())
+                .doOnNext { threadIds -> messageRepo.markArchived(*threadIds) }
     }
 
 }

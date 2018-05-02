@@ -22,6 +22,7 @@ import io.reactivex.Flowable
 import model.Conversation
 
 data class MainState(
+        val hasError: Boolean = false,
         val page: MainPage = Inbox(),
         val drawerOpen: Boolean = false,
         val syncing: Boolean = false,
@@ -33,10 +34,13 @@ sealed class MainPage
 data class Inbox(
         val showClearButton: Boolean = false,
         val data: Flowable<List<Conversation>>? = null,
+        val selected: Int = 0,
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
 data class Archived(
-        val data: Flowable<List<Conversation>>? = null) : MainPage()
+        val showClearButton: Boolean = false,
+        val data: Flowable<List<Conversation>>? = null,
+        val selected: Int = 0) : MainPage()
 
 data class Scheduled(
         val data: Any? = null) : MainPage()

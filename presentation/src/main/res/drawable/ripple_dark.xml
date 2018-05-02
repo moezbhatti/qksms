@@ -18,7 +18,7 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/rippleLight">
+    android:color="@color/rippleDark">
 
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
@@ -30,7 +30,7 @@
     <item>
         <selector>
             <item android:state_selected="true">
-                <color android:color="@color/separatorLight" />
+                <color android:color="@color/separatorDark" />
             </item>
 
             <item>

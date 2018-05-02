@@ -34,13 +34,22 @@
     <string name="setup_skip">Skip</string>
     <string name="setup_next">Continue</string>
 
-    <string name="menu_clear">Clear</string>
     <string name="menu_call">Call</string>
     <string name="menu_info">Details</string>
     <string name="menu_save">Save image</string>
 
+    <string name="main_title_selected">%d selected</string>
+    <string name="main_menu_clear">Clear</string>
+    <string name="main_menu_archive">Archive</string>
+    <string name="main_menu_unarchive">Unarchive</string>
+    <string name="main_menu_block">Block</string>
+    <string name="main_menu_delete">Delete</string>
     <string name="main_syncing">Optimizing database, this might take a minute…</string>
     <string name="main_sender_you">You: %s</string>
+    <string name="inbox_empty_text">Your conversations will appear here</string>
+    <string name="inbox_search_empty_text">No results</string>
+    <string name="archived_empty_text">Your archived conversations will appear here</string>
+    <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
 
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archived</string>
@@ -54,15 +63,6 @@
     <string name="rate_summary">Share some love and rate us on Google Play!</string>
     <string name="rate_okay">OKAY!</string>
     <string name="rate_dismiss">DISMISS</string>
-
-    <string name="inbox_empty_text">Your conversations will appear here</string>
-    <string name="inbox_search_empty_text">No results</string>
-    <string name="inbox_menu_archive">Archive</string>
-    <string name="inbox_menu_unarchive">Unarchive</string>
-    <string name="inbox_menu_block">Block</string>
-    <string name="inbox_menu_delete">Delete</string>
-    <string name="archived_empty_text">Your archived conversations will appear here</string>
-    <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
 
     <string name="dialog_delete_title">Delete</string>
     <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>

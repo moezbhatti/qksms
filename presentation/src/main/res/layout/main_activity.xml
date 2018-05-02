@@ -32,6 +32,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar"
+            android:animateLayoutChanges="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,11 +40,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/white">
 
+            <common.widget.QkTextView
+                android:id="@+id/toolbarTitle"
+                style="@style/ToolbarText" />
+
             <common.widget.QkEditText
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
+                android:hint="@string/title_conversations"
                 app:textColorHint="tertiary"
-                tools:hint="Search something"
+                app:textSize="primary"
                 tools:textSize="16sp" />
 
         </android.support.v7.widget.Toolbar>

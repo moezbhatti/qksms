@@ -21,10 +21,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/clear"
-        android:icon="@drawable/ic_cancel_black_24dp"
-        android:title="@string/menu_clear"
+        android:id="@+id/archive"
+        android:icon="@drawable/ic_archive_black_24dp"
+        android:title="@string/main_menu_archive"
         android:visible="false"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/unarchive"
+        android:icon="@drawable/ic_archive_black_24dp"
+        android:title="@string/main_menu_unarchive"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/block"
+        android:icon="@drawable/ic_block_black_24dp"
+        android:title="@string/main_menu_block"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:title="@string/main_menu_delete"
+        android:visible="false"
+        app:showAsAction="never" />
 
 </menu>

@@ -22,14 +22,14 @@ import io.reactivex.Flowable
 import repository.MessageRepository
 import javax.inject.Inject
 
-class DeleteConversation @Inject constructor(
+class DeleteConversations @Inject constructor(
         private val messageRepo: MessageRepository,
         private val updateBadge: UpdateBadge
-): Interactor<Long>() {
+) : Interactor<List<Long>>() {
 
-    override fun buildObservable(params: Long): Flowable<*> {
-        return Flowable.just(Unit)
-                .doOnNext { messageRepo.deleteConversation(params) }
+    override fun buildObservable(params: List<Long>): Flowable<*> {
+        return Flowable.just(params.toLongArray())
+                .doOnNext { threadIds -> messageRepo.deleteConversations(*threadIds) }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

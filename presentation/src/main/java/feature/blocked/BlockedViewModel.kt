@@ -72,7 +72,7 @@ class BlockedViewModel : QkViewModel<BlockedView, BlockedState>(BlockedState()) 
         view.confirmUnblockIntent
                 .withLatestFrom(view.unblockIntent, { _, threadId -> threadId })
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> markUnblocked.execute(threadId) }
+                .subscribe { threadId -> markUnblocked.execute(listOf(threadId)) }
     }
 
 }

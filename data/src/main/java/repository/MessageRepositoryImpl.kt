@@ -48,6 +48,7 @@ import model.Message
 import model.MmsPart
 import util.MessageUtils
 import util.Preferences
+import util.extensions.anyOf
 import util.extensions.asMaybe
 import util.extensions.insertOrUpdate
 import util.extensions.map
@@ -236,71 +237,82 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAll()
     }
 
-    override fun updateConversation(threadId: Long) {
+    override fun updateConversations(vararg threadIds: Long) {
         Realm.getDefaultInstance().use { realm ->
             realm.refresh()
 
-            val conversation = realm
-                    .where(Conversation::class.java)
-                    .equalTo("id", threadId)
-                    .findFirst() ?: return
+            threadIds.forEach { threadId ->
+                val conversation = realm
+                        .where(Conversation::class.java)
+                        .equalTo("id", threadId)
+                        .findFirst() ?: return
 
-            val messages = realm
-                    .where(Message::class.java)
-                    .equalTo("threadId", threadId)
-                    .sort("date", Sort.DESCENDING)
-                    .findAll()
+                val messages = realm
+                        .where(Message::class.java)
+                        .equalTo("threadId", threadId)
+                        .sort("date", Sort.DESCENDING)
+                        .findAll()
 
-            val message = messages.firstOrNull()
+                val message = messages.firstOrNull()
 
-            realm.executeTransaction {
-                conversation.count = messages.size
-                conversation.date = message?.date ?: 0
-                conversation.snippet = message?.getSummary() ?: ""
-                conversation.read = message?.read ?: true
-                conversation.me = message?.isMe() ?: false
+                realm.executeTransaction {
+                    conversation.count = messages.size
+                    conversation.date = message?.date ?: 0
+                    conversation.snippet = message?.getSummary() ?: ""
+                    conversation.read = message?.read ?: true
+                    conversation.me = message?.isMe() ?: false
+                }
             }
         }
     }
 
-    override fun markArchived(threadId: Long) {
-        val realm = Realm.getDefaultInstance()
-        val conversation = realm.where(Conversation::class.java)
-                .equalTo("id", threadId)
-                .findFirst()
+    override fun markArchived(vararg threadIds: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            val conversations = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .findAll()
 
-        realm.executeTransaction { conversation?.archived = true }
-        realm.close()
+            realm.executeTransaction {
+                conversations.forEach { it.archived = true }
+            }
+        }
     }
 
-    override fun markUnarchived(threadId: Long) {
-        val realm = Realm.getDefaultInstance()
-        val conversation = realm.where(Conversation::class.java)
-                .equalTo("id", threadId)
-                .findFirst()
+    override fun markUnarchived(vararg threadIds: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            val conversations = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .findAll()
 
-        realm.executeTransaction { conversation?.archived = false }
-        realm.close()
+            realm.executeTransaction {
+                conversations.forEach { it.archived = false }
+            }
+        }
     }
 
-    override fun markBlocked(threadId: Long) {
-        val realm = Realm.getDefaultInstance()
-        val conversation = realm.where(Conversation::class.java)
-                .equalTo("id", threadId)
-                .findFirst()
+    override fun markBlocked(vararg threadIds: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            val conversations = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .findAll()
 
-        realm.executeTransaction { conversation?.blocked = true }
-        realm.close()
+            realm.executeTransaction {
+                conversations.forEach { it.blocked = true }
+            }
+        }
     }
 
-    override fun markUnblocked(threadId: Long) {
-        val realm = Realm.getDefaultInstance()
-        val conversation = realm.where(Conversation::class.java)
-                .equalTo("id", threadId)
-                .findFirst()
+    override fun markUnblocked(vararg threadIds: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            val conversations = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .equalTo("archived", false)
+                    .findAll()
 
-        realm.executeTransaction { conversation?.blocked = false }
-        realm.close()
+            realm.executeTransaction {
+                conversations.forEach { it.blocked = false }
+            }
+        }
     }
 
     override fun markAllSeen() {
@@ -611,10 +623,10 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun deleteConversation(threadId: Long) {
+    override fun deleteConversations(vararg threadIds: Long) {
         Realm.getDefaultInstance().use { realm ->
-            val conversation = realm.where(Conversation::class.java).equalTo("id", threadId).findAll()
-            val messages = realm.where(Message::class.java).equalTo("threadId", threadId).findAll()
+            val conversation = realm.where(Conversation::class.java).anyOf("id", threadIds).findAll()
+            val messages = realm.where(Message::class.java).anyOf("threadId", threadIds).findAll()
 
             realm.executeTransaction {
                 conversation.deleteAllFromRealm()
@@ -622,8 +634,10 @@ class MessageRepositoryImpl @Inject constructor(
             }
         }
 
-        val uri = ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId)
-        context.contentResolver.delete(uri, null, null)
+        threadIds.forEach { threadId ->
+            val uri = ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId)
+            context.contentResolver.delete(uri, null, null)
+        }
     }
 
     private fun getConversationFromCp(threadId: Long): Conversation? {

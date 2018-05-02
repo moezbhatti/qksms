@@ -20,6 +20,8 @@ package common.base
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 
 /**
  * Base RecyclerView.Adapter that provides some convenience when creating a new Adapter, such as
@@ -36,6 +38,38 @@ abstract class QkAdapter<T> : RecyclerView.Adapter<QkViewHolder>() {
             diff.dispatchUpdatesTo(this)
             onDatasetChanged()
         }
+
+    val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()
+
+    private val selection = mutableListOf<Long>()
+
+    /**
+     * Toggles the selected state for a particular view
+     *
+     * If we are currently in selection mode (we have an active selection), then the state will
+     * toggle. If we are not in selection mode, then we will only toggle if [force]
+     */
+    protected fun toggleSelection(id: Long, force: Boolean = true): Boolean {
+        if (!force && selection.isEmpty()) return false
+
+        when (selection.contains(id)) {
+            true -> selection.remove(id)
+            false -> selection.add(id)
+        }
+
+        selectionChanges.onNext(selection)
+        return true
+    }
+
+    protected fun isSelected(id: Long): Boolean {
+        return selection.contains(id)
+    }
+
+    fun clearSelection() {
+        selection.clear()
+        selectionChanges.onNext(selection)
+        notifyDataSetChanged()
+    }
 
     fun getItem(position: Int): T {
         return data[position]

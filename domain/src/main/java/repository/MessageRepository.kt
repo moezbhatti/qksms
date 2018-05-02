@@ -72,15 +72,15 @@ interface MessageRepository {
     /**
      * Updates message-related fields in the conversation, like the date and snippet
      */
-    fun updateConversation(threadId: Long)
+    fun updateConversations(vararg threadIds: Long)
 
-    fun markArchived(threadId: Long)
+    fun markArchived(vararg threadIds: Long)
 
-    fun markUnarchived(threadId: Long)
+    fun markUnarchived(vararg threadIds: Long)
 
-    fun markBlocked(threadId: Long)
+    fun markBlocked(vararg threadIds: Long)
 
-    fun markUnblocked(threadId: Long)
+    fun markUnblocked(vararg threadIds: Long)
 
     fun markAllSeen()
 
@@ -122,6 +122,6 @@ interface MessageRepository {
 
     fun deleteMessage(messageId: Long)
 
-    fun deleteConversation(threadId: Long)
+    fun deleteConversations(vararg threadIds: Long)
 
 }

@@ -32,9 +32,9 @@ class DeleteMessage @Inject constructor(
                 .doOnNext { messageId ->
                     val threadId = messageRepo.getMessage(messageId)?.threadId
                     messageRepo.deleteMessage(messageId)
-                    threadId?.let { messageRepo.updateConversation(it) }
+                    threadId?.let { messageRepo.updateConversations(it) }
                 }
-                .doOnNext { messageRepo.updateConversation(params) } // Update the conversation
+                .doOnNext { messageRepo.updateConversations(params) } // Update the conversation
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

@@ -32,7 +32,7 @@ class MarkRead @Inject constructor(
     override fun buildObservable(params: Long): Flowable<*> {
         return Flowable.just(Unit)
                 .doOnNext { messageRepo.markRead(params) }
-                .doOnNext { messageRepo.updateConversation(params) } // Update the conversation
+                .doOnNext { messageRepo.updateConversations(params) } // Update the conversation
                 .doOnNext { notificationManager.update(params) }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
