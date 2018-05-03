@@ -21,15 +21,14 @@ package common.widget
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
-import android.os.Bundle
 import android.support.v13.view.inputmethod.EditorInfoCompat
 import android.support.v13.view.inputmethod.InputConnectionCompat
+import android.support.v13.view.inputmethod.InputContentInfoCompat
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputConnectionWrapper
-import android.view.inputmethod.InputContentInfo
 import android.widget.EditText
 import com.google.android.mms.ContentType
 import com.moez.QKSMS.R
@@ -50,6 +49,8 @@ import io.reactivex.subjects.Subject
 import util.Preferences
 import util.tryOrNull
 import javax.inject.Inject
+
+
 
 
 /**
@@ -79,7 +80,7 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
     @Inject lateinit var prefs: Preferences
 
     val backspaces: Subject<Unit> = PublishSubject.create()
-    val inputContentSelected: Subject<InputContentInfo> = PublishSubject.create()
+    val inputContentSelected: Subject<InputContentInfoCompat> = PublishSubject.create()
     var supportsInputContent: Boolean = false
 
     private var textColorObservable: Observable<Int>? = null
@@ -188,34 +189,7 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection {
 
-        val inputConnection = super.onCreateInputConnection(editorInfo)
-
-        if (supportsInputContent) {
-            EditorInfoCompat.setContentMimeTypes(editorInfo, arrayOf(
-                    ContentType.IMAGE_JPEG,
-                    ContentType.IMAGE_JPG,
-                    ContentType.IMAGE_PNG,
-                    ContentType.IMAGE_GIF))
-        }
-
-        return object : InputConnectionWrapper(inputConnection, true) {
-
-            override fun commitContent(inputContentInfo: InputContentInfo, flags: Int, opts: Bundle?): Boolean {
-                val grantReadPermission = flags and InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION != 0
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && grantReadPermission) {
-                    return tryOrNull {
-                        inputContentInfo.requestPermission()
-                        inputContentSelected.onNext(inputContentInfo)
-
-                        true
-                    } ?: false
-
-                }
-
-                return true
-            }
-
+        val inputConnection = object : InputConnectionWrapper(super.onCreateInputConnection(editorInfo), true) {
             override fun sendKeyEvent(event: KeyEvent): Boolean {
                 if (event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL) {
                     backspaces.onNext(Unit)
@@ -232,8 +206,32 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
                     super.deleteSurroundingText(beforeLength, afterLength)
                 }
             }
-
         }
+
+        if (supportsInputContent) {
+            EditorInfoCompat.setContentMimeTypes(editorInfo, arrayOf(
+                    ContentType.IMAGE_JPEG,
+                    ContentType.IMAGE_JPG,
+                    ContentType.IMAGE_PNG,
+                    ContentType.IMAGE_GIF))
+        }
+
+        val callback = InputConnectionCompat.OnCommitContentListener { inputContentInfo, flags, opts ->
+            val grantReadPermission = flags and InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION != 0
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && grantReadPermission) {
+                return@OnCommitContentListener tryOrNull {
+                    inputContentInfo.requestPermission()
+                    inputContentSelected.onNext(inputContentInfo)
+                    true
+                } ?: false
+
+            }
+
+            true
+        }
+
+        return InputConnectionCompat.createWrapper(inputConnection, editorInfo, callback)
     }
 
 }

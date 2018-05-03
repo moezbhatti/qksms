@@ -21,10 +21,10 @@ package feature.compose
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import android.view.inputmethod.InputContentInfo
+import android.support.v13.view.inputmethod.InputContentInfoCompat
 import com.google.android.mms.ContentType
 
-data class Attachment(private val uri: Uri? = null, private val inputContent: InputContentInfo? = null) {
+data class Attachment(private val uri: Uri? = null, private val inputContent: InputContentInfoCompat? = null) {
 
     fun getUri(): Uri? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {

@@ -18,7 +18,7 @@
  */
 package feature.compose
 
-import android.view.inputmethod.InputContentInfo
+import android.support.v13.view.inputmethod.InputContentInfoCompat
 import common.MenuItem
 import common.base.QkView
 import io.reactivex.Observable
@@ -46,7 +46,7 @@ interface ComposeView : QkView<ComposeState> {
     val attachIntent: Observable<Unit>
     val cameraIntent: Observable<*>
     val galleryIntent: Observable<*>
-    val inputContentIntent: Observable<InputContentInfo>
+    val inputContentIntent: Observable<InputContentInfoCompat>
     val sendIntent: Observable<Unit>
 
     fun showMenu(menuItems: List<MenuItem>)
