@@ -31,6 +31,7 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
 import android.view.View
+import com.moez.QKSMS.BuildConfig
 import feature.blocked.BlockedActivity
 import feature.blocked.BlockedViewModel
 import feature.compose.ComposeActivity
@@ -218,6 +219,13 @@ class Navigator @Inject constructor(private val context: Context, private val no
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:")
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("team@qklabs.com"))
+        intent.putExtra(Intent.EXTRA_SUBJECT, "QKSMS Support")
+        intent.putExtra(Intent.EXTRA_TEXT, StringBuilder("\n\n")
+                .append("--- Please write your message above this line ---\n\n")
+                .append("Version: ${BuildConfig.VERSION_NAME}\n")
+                .append("Device: ${Build.BRAND} ${Build.MODEL}\n")
+                .append("SDK: ${Build.VERSION.SDK_INT}")
+                .toString())
         startActivityExternal(intent)
     }
 
