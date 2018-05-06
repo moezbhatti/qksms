@@ -51,8 +51,6 @@ import util.tryOrNull
 import javax.inject.Inject
 
 
-
-
 /**
  * Custom implementation of EditText to allow for dynamic text colors
  *
@@ -199,12 +197,11 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
 
             override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {
-                return if (beforeLength == 1 && afterLength == 0) {
+                if (beforeLength == 1 && afterLength == 0) {
                     sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
                             && sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
-                } else {
-                    super.deleteSurroundingText(beforeLength, afterLength)
                 }
+                return super.deleteSurroundingText(beforeLength, afterLength)
             }
         }
 
