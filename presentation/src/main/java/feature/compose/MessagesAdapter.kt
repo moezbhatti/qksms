@@ -32,8 +32,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
-import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
 import common.Navigator
 import common.base.QkRealmAdapter
@@ -80,7 +80,6 @@ class MessagesAdapter @Inject constructor(
     }
 
     val clicks: Subject<Message> = PublishSubject.create<Message>()
-    val longClicks: Subject<Message> = PublishSubject.create<Message>()
     val cancelSending: Subject<Message> = PublishSubject.create<Message>()
 
     var data: Pair<Conversation, RealmResults<Message>>? = null
@@ -106,7 +105,7 @@ class MessagesAdapter @Inject constructor(
 
     private val layoutInflater = LayoutInflater.from(context)
     private val contactCache = ContactCache()
-    private val selected = HashMap<Long, Boolean>()
+    private val expanded = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
 
     private var theme = colors.theme
@@ -143,6 +142,9 @@ class MessagesAdapter @Inject constructor(
                     .subscribe { color -> view.body.setBackgroundTint(color) }
         }
 
+        disposables += colors.ripple
+                .subscribe { res -> view.setBackgroundResource(res) }
+
         view.body.forwardTouches(view)
 
         return QkViewHolder(view)
@@ -159,12 +161,24 @@ class MessagesAdapter @Inject constructor(
         val next = if (position == itemCount - 1) null else getItem(position + 1)
         val view = viewHolder.itemView
 
-        RxView.clicks(view).subscribe {
-            clicks.onNext(message)
-            selected[message.id] = view.status.visibility != View.VISIBLE
-            bindStatus(viewHolder, position)
+        view.clicks().subscribe {
+            when (toggleSelection(message.id, false)) {
+                true -> view.isSelected = isSelected(message.id)
+                false -> {
+                    clicks.onNext(message)
+                    expanded[message.id] = view.status.visibility != View.VISIBLE
+                    bindStatus(viewHolder, message, next)
+                }
+            }
         }
-        RxView.longClicks(view).subscribe { longClicks.onNext(message) }
+        view.longClicks().subscribe {
+            toggleSelection(message.id)
+            view.isSelected = isSelected(message.id)
+        }
+
+
+        // Update the selected state
+        view.isSelected = isSelected(message.id)
 
 
         // Bind the cancel view
@@ -191,7 +205,7 @@ class MessagesAdapter @Inject constructor(
 
 
         // Bind the message status
-        bindStatus(viewHolder, position)
+        bindStatus(viewHolder, message, next)
 
 
         // Bind the timestamp
@@ -284,9 +298,7 @@ class MessagesAdapter @Inject constructor(
         }
     }
 
-    private fun bindStatus(viewHolder: QkViewHolder, position: Int) {
-        val message = getItem(position)!!
-        val next = if (position == itemCount - 1) null else getItem(position + 1)
+    private fun bindStatus(viewHolder: QkViewHolder, message: Message, next: Message?) {
         val view = viewHolder.itemView
 
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
@@ -301,10 +313,10 @@ class MessagesAdapter @Inject constructor(
         }
 
         view.status.setVisible(when {
-            selected[message.id] == true -> true
+            expanded[message.id] == true -> true
             message.isSending() -> true
             message.isFailedMessage() -> true
-            selected[message.id] == false -> false
+            expanded[message.id] == false -> false
             conversation?.recipients?.size ?: 0 > 1 && !message.isMe() && next?.compareSender(message) != true -> true
             message.isDelivered() && next?.isDelivered() != true && age <= TIMESTAMP_THRESHOLD -> true
             else -> false

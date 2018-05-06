@@ -612,14 +612,19 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun deleteMessage(messageId: Long) {
+    override fun deleteMessages(vararg messageIds: Long) {
         Realm.getDefaultInstance().use { realm ->
             realm.refresh()
-            realm.where(Message::class.java).equalTo("id", messageId).findFirst()?.let { message ->
-                val uri = message.getUri()
-                realm.executeTransaction { message.deleteFromRealm() }
-                context.contentResolver.delete(uri, null, null)
-            }
+
+            val messages = realm.where(Message::class.java)
+                    .anyOf("id", messageIds)
+                    .findAll()
+
+            val uris = messages.map { it.getUri() }
+
+            realm.executeTransaction { messages.deleteAllFromRealm() }
+
+            uris.forEach { uri -> context.contentResolver.delete(uri, null, null) }
         }
     }
 

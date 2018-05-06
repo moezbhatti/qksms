@@ -74,6 +74,7 @@
         <item>Delete</item>
     </string-array>
 
+    <string name="compose_title_selected">%d selected</string>
     <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
     <string name="compose_hint">Write a message…</string>
     <string name="compose_menu_copy">Copy text</string>

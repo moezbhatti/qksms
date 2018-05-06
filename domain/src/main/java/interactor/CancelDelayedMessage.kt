@@ -27,7 +27,7 @@ class CancelDelayedMessage @Inject constructor(private val messageRepo: MessageR
     override fun buildObservable(params: Long): Flowable<*> {
         return Flowable.just(params)
                 .doOnNext { id -> messageRepo.cancelDelayedSms(id) }
-                .doOnNext { id -> messageRepo.deleteMessage(id) }
+                .doOnNext { id -> messageRepo.deleteMessages(id) }
     }
 
 }

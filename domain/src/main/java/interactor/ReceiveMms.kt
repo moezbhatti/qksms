@@ -45,7 +45,7 @@ class ReceiveMms @Inject constructor(
                     // turns out that it should be blocked, then delete it
                     // TODO Don't store blocked messages in the first place
                     !externalBlockingManager.shouldBlock(message.address).blockingGet().also { blocked ->
-                        if (blocked) messageRepo.deleteMessage(message.id)
+                        if (blocked) messageRepo.deleteMessages(message.id)
                     }
                 }
                 .doOnNext { message -> messageRepo.updateConversations(message.threadId) } // Update the conversation

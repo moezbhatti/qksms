@@ -19,7 +19,6 @@
 package feature.compose
 
 import android.support.v13.view.inputmethod.InputContentInfoCompat
-import common.MenuItem
 import common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
@@ -35,12 +34,10 @@ interface ComposeView : QkView<ComposeState> {
     val chipSelectedIntent: Subject<Contact>
     val chipDeletedIntent: Subject<Contact>
     val menuReadyIntent: Observable<Unit>
-    val callIntent: Subject<Unit>
-    val infoIntent: Subject<Unit>
+    val optionsItemIntent: Observable<Int>
     val messageClickIntent: Subject<Message>
-    val messageLongClickIntent: Subject<Message>
+    val messagesSelectedIntent: Observable<List<Long>>
     val cancelSendingIntent: Subject<Message>
-    val menuItemIntent: Subject<Int>
     val attachmentDeletedIntent: Subject<Attachment>
     val textChangedIntent: Observable<CharSequence>
     val attachIntent: Observable<Unit>
@@ -49,7 +46,8 @@ interface ComposeView : QkView<ComposeState> {
     val inputContentIntent: Observable<InputContentInfoCompat>
     val sendIntent: Observable<Unit>
 
-    fun showMenu(menuItems: List<MenuItem>)
+    fun clearSelection()
     fun setDraft(draft: String)
+    val backPressedIntent: Observable<Unit>
 
 }

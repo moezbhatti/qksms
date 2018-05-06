@@ -120,7 +120,7 @@ interface MessageRepository {
 
     fun markDeliveryFailed(id: Long, resultCode: Int)
 
-    fun deleteMessage(messageId: Long)
+    fun deleteMessages(vararg messageIds: Long)
 
     fun deleteConversations(vararg threadIds: Long)
 
