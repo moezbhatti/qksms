@@ -198,8 +198,7 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
             override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {
                 if (beforeLength == 1 && afterLength == 0) {
-                    sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
-                            && sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL))
+                    backspaces.onNext(Unit)
                 }
                 return super.deleteSurroundingText(beforeLength, afterLength)
             }
