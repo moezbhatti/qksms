@@ -67,6 +67,7 @@ import receiver.SmsDeliveredReceiver
 import receiver.SmsProviderChangedReceiver
 import receiver.SmsReceiver
 import receiver.SmsSentReceiver
+import service.HeadlessSmsSendService
 import javax.inject.Singleton
 
 @Singleton
@@ -106,6 +107,7 @@ interface AppComponent {
     fun inject(receiver: SmsReceiver)
     fun inject(receiver: WidgetProvider)
 
+    fun inject(service: HeadlessSmsSendService)
     fun inject(service: WidgetAdapter)
 
     fun inject(view: AvatarView)
