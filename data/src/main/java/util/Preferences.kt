@@ -62,7 +62,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
     val qkreplyTapDismiss = rxPrefs.getBoolean("qkreplyTapDismiss", true)
     val unicode = rxPrefs.getBoolean("unicode", false)
-    val mmsSize = rxPrefs.getInteger("mmsSize", 100)
+    val mmsSize = rxPrefs.getInteger("mmsSize", 300)
 
     fun theme(threadId: Long = 0): Preference<Int> {
         val default = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
