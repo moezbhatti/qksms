@@ -23,6 +23,7 @@ import io.reactivex.Observable
 
 interface MainView : QkView<MainState> {
 
+    val activityResumedIntent: Observable<*>
     val queryChangedIntent: Observable<CharSequence>
     val composeIntent: Observable<Unit>
     val drawerOpenIntent: Observable<Boolean>
@@ -35,8 +36,10 @@ interface MainView : QkView<MainState> {
     val confirmDeleteIntent: Observable<Unit>
     val swipeConversationIntent: Observable<Long>
     val undoSwipeConversationIntent: Observable<Unit>
+    val snackbarButtonIntent: Observable<Unit>
     val backPressedIntent: Observable<Unit>
 
+    fun requestPermissions()
     fun clearSearch()
     fun clearSelection()
     fun showDeleteDialog()

@@ -24,6 +24,8 @@ import android.net.Uri
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
 import com.f2prateek.rx.preferences2.RxSharedPreferences
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import io.realm.Realm
 import mapper.CursorToContact
 import mapper.CursorToConversation
@@ -34,10 +36,8 @@ import model.Conversation
 import model.Message
 import model.MmsPart
 import model.Recipient
-import model.SyncLog
 import util.extensions.insertOrUpdate
 import util.extensions.map
-import util.extensions.mapWhile
 import util.tryOrNull
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -53,58 +53,41 @@ class SyncRepositoryImpl @Inject constructor(
         private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
-    sealed class Status {
-        class Idle : Status()
-        class Running : Status()
-    }
-
     /**
      * Holds data that should be persisted across full syncs
      */
     private data class PersistedData(val id: Long, val archived: Boolean, val blocked: Boolean)
 
-    private var status: Status = Status.Idle()
+    override val syncProgress: Subject<SyncRepository.SyncProgress> = BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
 
-    override fun syncMessages(fullSync: Boolean) {
+    override fun syncMessages() {
 
         // If the sync is already running, don't try to do another one
-        if (status is Status.Running) return
-        status = Status.Running()
+        if (syncProgress.blockingFirst() is SyncRepository.SyncProgress.Running) return
+        syncProgress.onNext(SyncRepository.SyncProgress.Running(0f))
 
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
 
-        var persistedData: List<PersistedData> = listOf()
+        var persistedData = realm.where(Conversation::class.java)
+                .beginGroup()
+                .equalTo("archived", true)
+                .or()
+                .equalTo("blocked", true)
+                .endGroup()
+                .findAll()
+                .map { PersistedData(it.id, it.archived, it.blocked) }
 
-        if (fullSync) {
-            persistedData += realm.where(Conversation::class.java)
-                    .beginGroup()
-                    .equalTo("archived", true)
-                    .or()
-                    .equalTo("blocked", true)
-                    .endGroup()
-                    .findAll()
-                    .map { conversation ->
-                        PersistedData(conversation.id, conversation.archived, conversation.blocked)
-                    }
-
-            realm.delete(Conversation::class.java)
-            realm.delete(Message::class.java)
-            realm.delete(MmsPart::class.java)
-            realm.delete(Recipient::class.java)
-            realm.delete(SyncLog::class.java)
-        }
-
-        val lastSync = realm.where(SyncLog::class.java)?.max("date")?.toLong() ?: 0
-        realm.insert(SyncLog())
+        realm.delete(Conversation::class.java)
+        realm.delete(Message::class.java)
+        realm.delete(MmsPart::class.java)
+        realm.delete(Recipient::class.java)
 
 
         // Sync messages
         cursorToMessage.getMessagesCursor()?.use { messageCursor ->
             val messageColumns = CursorToMessage.MessageColumns(messageCursor)
-            val messages = messageCursor.mapWhile(
-                    { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) },
-                    { message -> message.date > lastSync })
+            val messages = messageCursor.map { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) }
             realm.insertOrUpdate(messages)
         }
 
@@ -144,7 +127,7 @@ class SyncRepositoryImpl @Inject constructor(
 
         syncContacts()
 
-        status = Status.Idle()
+        syncProgress.onNext(SyncRepository.SyncProgress.Idle())
     }
 
     override fun syncMessage(uri: Uri): Message? {
@@ -204,26 +187,27 @@ class SyncRepositoryImpl @Inject constructor(
                     }
                 } ?: listOf()
 
-        val realm = Realm.getDefaultInstance()
-        val recipients = realm.where(Recipient::class.java).findAll()
+        Realm.getDefaultInstance()?.use { realm ->
+            val recipients = realm.where(Recipient::class.java).findAll()
 
-        realm.executeTransaction {
-            realm.delete(Contact::class.java)
+            realm.executeTransaction {
+                realm.delete(Contact::class.java)
 
-            contacts = realm.copyToRealm(contacts)
+                contacts = realm.copyToRealm(contacts)
 
-            // Update all the recipients with the new contacts
-            val updatedRecipients = recipients.map { recipient ->
-                recipient.apply {
-                    contact = contacts.firstOrNull {
-                        it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                // Update all the recipients with the new contacts
+                val updatedRecipients = recipients.map { recipient ->
+                    recipient.apply {
+                        contact = contacts.firstOrNull {
+                            it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                        }
                     }
                 }
+
+                realm.insertOrUpdate(updatedRecipients)
             }
 
-            realm.insertOrUpdate(updatedRecipients)
         }
-        realm.close()
     }
 
 }

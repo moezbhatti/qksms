@@ -22,7 +22,6 @@ import util.Preferences
 
 data class SettingsState(
         val syncing: Boolean = false,
-        val isDefaultSmsApp: Boolean = false,
         val theme: Int = 0,
         val nightModeSummary: String = "",
         val nightModeId: Int = Preferences.NIGHT_MODE_OFF,

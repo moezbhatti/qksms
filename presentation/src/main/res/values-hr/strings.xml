@@ -28,8 +28,8 @@
   <string name="title_conversations">Pretraži poruke&#8230;</string>
   <string name="title_compose">Unesite ime ili broj</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Ponovno zavolite poruke</string>
-  <string name="setup_summary">Postavite QKSMS kao zadanu aplikaciju za SMS</string>
+  <string name="main_default_sms_title">Ponovno zavolite poruke</string>
+  <string name="main_default_sms_message">Postavite QKSMS kao zadanu aplikaciju za SMS</string>
   <string name="setup_skip">Preskoči</string>
   <string name="setup_next">Nastavi</string>
   <string name="menu_clear">Očisti</string>

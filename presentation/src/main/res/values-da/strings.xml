@@ -28,8 +28,8 @@
   <string name="title_conversations">Søg i Indbakke&#8230;</string>
   <string name="title_compose">Angiv et navn eller nummer</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Elsk at SMS\'e igen</string>
-  <string name="setup_summary">Gør QKSMS til din standard SMS-app</string>
+  <string name="main_default_sms_title">Elsk at SMS\'e igen</string>
+  <string name="main_default_sms_message">Gør QKSMS til din standard SMS-app</string>
   <string name="setup_skip">Overspring</string>
   <string name="setup_next">Fortsæt</string>
   <string name="menu_clear">Ryd</string>

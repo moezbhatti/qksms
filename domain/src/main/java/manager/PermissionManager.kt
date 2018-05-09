@@ -20,6 +20,12 @@ package manager
 
 interface PermissionManager {
 
+    fun isDefaultSms(): Boolean
+
     fun hasSmsAndContacts(): Boolean
+
+    fun hasSms(): Boolean
+
+    fun hasContacts(): Boolean
 
 }

@@ -28,8 +28,8 @@
   <string name="title_conversations">Hledat&#8230;</string>
   <string name="title_compose">Nová zpráva</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Zamilujte si znovu SMS</string>
-  <string name="setup_summary">Nastavit QKSMS jako výchozí aplikaci pro zprávy SMS</string>
+  <string name="main_default_sms_title">Zamilujte si znovu SMS</string>
+  <string name="main_default_sms_message">Nastavit QKSMS jako výchozí aplikaci pro zprávy SMS</string>
   <string name="setup_skip">Přeskočit</string>
   <string name="setup_next">Pokračovat</string>
   <string name="menu_clear">Vymazat</string>

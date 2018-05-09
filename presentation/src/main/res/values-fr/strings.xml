@@ -28,8 +28,8 @@
   <string name="title_conversations">Rechercher dans les conversations&#8230;</string>
   <string name="title_compose">Entrez un nom ou un numéro</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Réapprenez à aimer les textos</string>
-  <string name="setup_summary">Faire de QKSMS l\'application par défaut pour les SMS</string>
+  <string name="main_default_sms_title">Réapprenez à aimer les textos</string>
+  <string name="main_default_sms_message">Faire de QKSMS l\'application par défaut pour les SMS</string>
   <string name="setup_skip">Plus tard</string>
   <string name="setup_next">Continuer</string>
   <string name="menu_clear">Effacer</string>

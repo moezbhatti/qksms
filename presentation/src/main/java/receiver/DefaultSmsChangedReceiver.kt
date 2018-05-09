@@ -25,25 +25,22 @@ import android.os.Build
 import android.provider.Telephony
 import android.support.annotation.RequiresApi
 import injection.appComponent
+import interactor.SyncMessages
 import util.Preferences
-import interactor.PartialSync
 import javax.inject.Inject
 
 class DefaultSmsChangedReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var partialSync: PartialSync
     @Inject lateinit var prefs: Preferences
+    @Inject lateinit var syncMessages: SyncMessages
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onReceive(context: Context, intent: Intent) {
         appComponent.inject(this)
 
-        val isDefaultSmsApp = intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)
-        prefs.defaultSms.set(isDefaultSmsApp)
-
-        if (isDefaultSmsApp) {
+        if (intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)) {
             val pendingResult = goAsync()
-            partialSync.execute(Unit, { pendingResult.finish() })
+            syncMessages.execute(Unit, { pendingResult.finish() })
         }
     }
 

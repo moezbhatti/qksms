@@ -24,14 +24,16 @@ import android.net.Uri
 import android.provider.Telephony.*
 import com.google.android.mms.pdu_alt.PduHeaders
 import manager.KeyManager
+import manager.PermissionManager
 import model.Message
 import util.extensions.map
 import javax.inject.Inject
 
 class CursorToMessageImpl @Inject constructor(
         private val context: Context,
+        private val cursorToPart: CursorToPart,
         private val keys: KeyManager,
-        private val cursorToPart: CursorToPart
+        private val permissionManager: PermissionManager
 ) : CursorToMessage {
 
     companion object {
@@ -120,7 +122,10 @@ class CursorToMessageImpl @Inject constructor(
     }
 
     override fun getMessagesCursor(): Cursor? {
-        return context.contentResolver.query(URI, PROJECTION, null, null, "normalized_date desc")
+        return when (permissionManager.hasSms()) {
+            true -> context.contentResolver.query(URI, PROJECTION, null, null, "normalized_date desc")
+            false -> null
+        }
     }
 
     override fun getMessageCursor(id: Long): Cursor? {

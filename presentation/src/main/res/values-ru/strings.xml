@@ -28,8 +28,8 @@
   <string name="title_conversations">Поиск во входящих&#8230;</string>
   <string name="title_compose">Написать</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Снова нравится писать</string>
-  <string name="setup_summary">Сделать QKSMS приложением для SMS по умолчанию</string>
+  <string name="main_default_sms_title">Снова нравится писать</string>
+  <string name="main_default_sms_message">Сделать QKSMS приложением для SMS по умолчанию</string>
   <string name="setup_skip">Пропустить</string>
   <string name="setup_next">Продолжить</string>
   <string name="menu_clear">Очистить</string>

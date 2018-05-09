@@ -29,7 +29,7 @@ import common.util.Colors
 import common.util.DateFormatter
 import common.util.NightModeManager
 import injection.appComponent
-import interactor.FullSync
+import interactor.SyncMessages
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import timber.log.Timber
@@ -46,16 +46,10 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var nightModeManager: NightModeManager
     @Inject lateinit var prefs: Preferences
-    @Inject lateinit var fullSync: FullSync
+    @Inject lateinit var syncMessages: SyncMessages
 
     init {
         appComponent.inject(this)
-
-        disposables += prefs.defaultSms
-                .asObservable()
-                .subscribe { isDefaultSmsApp ->
-                    newState { it.copy(isDefaultSmsApp = isDefaultSmsApp) }
-                }
 
         disposables += colors.theme
                 .subscribe { color -> newState { it.copy(theme = color) } }
@@ -108,7 +102,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     newState { it.copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
                 }
 
-        disposables += fullSync
+        disposables += syncMessages
     }
 
     override fun bindView(view: SettingsView) {
@@ -120,8 +114,6 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
                     Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
 
                     when (it.id) {
-                        R.id.defaultSms -> navigator.showDefaultSmsDialog()
-
                         R.id.theme -> navigator.showThemePicker()
 
                         R.id.night -> view.showNightModeDialog()
@@ -158,7 +150,7 @@ class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState
 
                         R.id.sync -> {
                             newState { it.copy(syncing = true) }
-                            fullSync.execute(Unit, {
+                            syncMessages.execute(Unit, {
                                 newState { it.copy(syncing = false) }
                             })
                         }

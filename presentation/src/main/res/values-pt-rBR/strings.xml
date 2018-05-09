@@ -28,8 +28,8 @@
   <string name="title_conversations">Pesquisar caixa de entrada&#8230;</string>
   <string name="title_compose">Nova Mensagem</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Volta a amar os SMS</string>
-  <string name="setup_summary">Tornar QKSMS a aplicação padrão</string>
+  <string name="main_default_sms_title">Volta a amar os SMS</string>
+  <string name="main_default_sms_message">Tornar QKSMS a aplicação padrão</string>
   <string name="setup_skip">Pular</string>
   <string name="setup_next">Continuar</string>
   <string name="menu_clear">Limpar</string>

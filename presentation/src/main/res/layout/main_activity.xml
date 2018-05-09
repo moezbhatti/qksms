@@ -22,7 +22,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="@color/white">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -54,85 +55,44 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.constraint.Group
-            android:id="@+id/syncing"
+        <common.widget.QkTextView
+            android:id="@+id/empty"
+            style="@style/TextSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="56dp"
+            app:layout_constraintBottom_toTopOf="@id/bottom"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:text="Your conversations will appear here"
+            tools:visibility="invisible" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            app:layout_constraintBottom_toTopOf="@id/bottom"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:listitem="@layout/conversation_list_item" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/compose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="syncingProgress,syncingLabel"
-            tools:visibility="gone" />
-
-        <ProgressBar
-            android:id="@+id/syncingProgress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toTopOf="@id/syncingLabel"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/main_fab_cd"
+            android:src="@drawable/ic_add_black_24dp"
+            android:tint="@color/white"
+            app:layout_anchor="@+id/recyclerView"
+            app:layout_anchorGravity="bottom|right|end"
+            app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <common.widget.QkTextView
-            android:id="@+id/syncingLabel"
-            style="@style/TextSecondary"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:gravity="center"
-            android:text="@string/main_syncing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/syncingProgress" />
-
-        <FrameLayout
-            android:id="@+id/synced"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-            <common.widget.QkTextView
-                android:id="@+id/empty"
-                style="@style/TextSecondary"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:padding="56dp"
-                tools:text="Your conversations will appear here"
-                tools:visibility="invisible" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                tools:listitem="@layout/conversation_list_item" />
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/compose"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:contentDescription="@string/main_fab_cd"
-                android:src="@drawable/ic_add_black_24dp"
-                android:tint="@color/white"
-                app:layout_anchor="@+id/recyclerView"
-                app:layout_anchorGravity="bottom|right|end"
-                tools:backgroundTint="@color/tools_theme" />
-
-        </FrameLayout>
+            tools:backgroundTint="@color/tools_theme" />
 
         <View
             android:layout_width="0dp"
@@ -143,8 +103,101 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <common.widget.Separator
+            android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            app:layout_constraintBottom_toTopOf="@id/bottomDivider" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/bottomDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="top"
+            app:constraint_referenced_ids="snackbarTitle, snackbarMessage, syncingLabel, syncingProgress" />
+
+        <android.support.constraint.Group
+            android:id="@+id/snackbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="snackbarTitle, snackbarMessage, snackbarButton"
+            tools:visibility="visible" />
+
+        <android.support.constraint.Group
+            android:id="@+id/syncing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="syncingProgress,syncingLabel"
+            tools:visibility="gone" />
+
+        <common.widget.QkTextView
+            android:id="@+id/snackbarTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingTop="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/snackbarMessage"
+            app:layout_constraintEnd_toStartOf="@id/snackbarButton"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:textColor="primary"
+            app:textSize="primary"
+            tools:text="Love texting again" />
+
+        <common.widget.QkTextView
+            android:id="@+id/snackbarMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/snackbarButton"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:textColor="secondary"
+            app:textSize="secondary"
+            tools:text="Make QKSMS your default SMS app" />
+
+        <common.widget.QkTextView
+            android:id="@+id/snackbarButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ripple"
+            android:padding="16dp"
+            android:textAllCaps="true"
+            android:textColor="@color/tools_theme"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/snackbarMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/snackbarTitle"
+            app:textColor="theme"
+            app:textSize="secondary"
+            tools:text="Change" />
+
+        <common.widget.QkTextView
+            android:id="@+id/syncingLabel"
+            style="@style/TextPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/main_syncing"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/syncingProgress" />
+
+        <ProgressBar
+            android:id="@+id/syncingProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </android.support.constraint.ConstraintLayout>

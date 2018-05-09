@@ -50,8 +50,6 @@ import feature.settings.SettingsActivity
 import feature.settings.SettingsViewModel
 import feature.settings.about.AboutActivity
 import feature.settings.about.AboutViewModel
-import feature.setup.SetupActivity
-import feature.setup.SetupViewModel
 import feature.themepicker.ThemePickerActivity
 import feature.themepicker.ThemePickerViewModel
 import feature.widget.WidgetAdapter
@@ -78,7 +76,6 @@ interface AppComponent {
     fun inject(application: QKApplication)
 
     fun inject(activity: MainActivity)
-    fun inject(activity: SetupActivity)
     fun inject(activity: AboutActivity)
     fun inject(activity: BlockedActivity)
     fun inject(activity: ComposeActivity)
@@ -121,7 +118,6 @@ interface AppComponent {
     fun inject(view: Separator)
 
     fun inject(viewModel: MainViewModel)
-    fun inject(viewModel: SetupViewModel)
     fun inject(viewModel: AboutViewModel)
     fun inject(viewModel: BlockedViewModel)
     fun inject(viewModel: ComposeViewModel)

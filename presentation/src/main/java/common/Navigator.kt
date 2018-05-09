@@ -50,8 +50,6 @@ import feature.settings.SettingsActivity
 import feature.settings.SettingsViewModel
 import feature.settings.about.AboutActivity
 import feature.settings.about.AboutViewModel
-import feature.setup.SetupActivity
-import feature.setup.SetupViewModel
 import feature.themepicker.ThemePickerActivity
 import feature.themepicker.ThemePickerViewModel
 import manager.NotificationManager
@@ -73,11 +71,6 @@ class Navigator @Inject constructor(private val context: Context, private val no
         } else {
             startActivity(Intent.createChooser(intent, null))
         }
-    }
-
-    fun showSetupActivity() {
-        val intent = Intent(context, SetupActivity::class.java)
-        startActivity(intent)
     }
 
     fun showQksmsPlusActivity() {
@@ -262,7 +255,6 @@ class Navigator @Inject constructor(private val context: Context, private val no
             return when (modelClass) {
                 MainViewModel::class.java -> MainViewModel()
                 PlusViewModel::class.java -> PlusViewModel()
-                SetupViewModel::class.java -> SetupViewModel()
                 AboutViewModel::class.java -> AboutViewModel()
                 ComposeViewModel::class.java -> ComposeViewModel(intent)
                 ConversationInfoViewModel::class.java -> ConversationInfoViewModel(intent)

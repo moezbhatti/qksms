@@ -28,8 +28,8 @@
   <string name="title_conversations">수신함에서 찾기...</string>
   <string name="title_compose">문자작성</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">다시 문자를 즐겁게</string>
-  <string name="setup_summary">QKSMS를 기본 SMS 앱으로 설정하세요</string>
+  <string name="main_default_sms_title">다시 문자를 즐겁게</string>
+  <string name="main_default_sms_message">QKSMS를 기본 SMS 앱으로 설정하세요</string>
   <string name="setup_skip">건너뛰기</string>
   <string name="setup_next">계속</string>
   <string name="menu_clear">비우기</string>

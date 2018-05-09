@@ -21,10 +21,14 @@ package mapper
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import manager.PermissionManager
 import model.Recipient
 import javax.inject.Inject
 
-class CursorToRecipientImpl @Inject constructor(private val context: Context) : CursorToRecipient {
+class CursorToRecipientImpl @Inject constructor(
+        private val context: Context,
+        private val permissionManager: PermissionManager
+) : CursorToRecipient {
 
     companion object {
         val URI = Uri.parse("content://mms-sms/canonical-addresses")
@@ -40,7 +44,10 @@ class CursorToRecipientImpl @Inject constructor(private val context: Context) : 
     }
 
     override fun getRecipientCursor(): Cursor? {
-        return context.contentResolver.query(URI, null, null, null, null)
+        return when (permissionManager.hasSms()) {
+            true -> context.contentResolver.query(URI, null, null, null, null)
+            false -> null
+        }
     }
 
     override fun getRecipientCursor(id: Long): Cursor? {

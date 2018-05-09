@@ -28,8 +28,8 @@
   <string name="title_conversations">受信トレイを検索&#8230;</string>
   <string name="title_compose">作成</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">愛のテキストメッセージをふたたび</string>
-  <string name="setup_summary">QKSMS をデフォルトの SMS アプリにします</string>
+  <string name="main_default_sms_title">愛のテキストメッセージをふたたび</string>
+  <string name="main_default_sms_message">QKSMS をデフォルトの SMS アプリにします</string>
   <string name="setup_skip">スキップ</string>
   <string name="setup_next">続行</string>
   <string name="menu_clear">クリア</string>

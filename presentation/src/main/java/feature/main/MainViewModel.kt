@@ -18,11 +18,7 @@
  */
 package feature.main
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
-import android.provider.Telephony
-import android.support.v4.content.ContextCompat
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -36,14 +32,15 @@ import interactor.MarkArchived
 import interactor.MarkBlocked
 import interactor.MarkUnarchived
 import interactor.MigratePreferences
-import interactor.PartialSync
+import interactor.SyncMessages
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
-import io.realm.Realm
+import manager.PermissionManager
 import manager.RatingManager
-import model.SyncLog
 import repository.MessageRepository
+import repository.SyncRepository
 import util.Preferences
 import util.extensions.removeAccents
 import java.util.concurrent.TimeUnit
@@ -61,9 +58,11 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     @Inject lateinit var markBlocked: MarkBlocked
     @Inject lateinit var migratePreferences: MigratePreferences
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var partialSync: PartialSync
+    @Inject lateinit var permissionManager: PermissionManager
     @Inject lateinit var prefs: Preferences
     @Inject lateinit var ratingManager: RatingManager
+    @Inject lateinit var syncMessages: SyncMessages
+    @Inject lateinit var syncRepository: SyncRepository
 
     private val conversations by lazy { messageRepo.getConversations() }
 
@@ -78,36 +77,21 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
         disposables += markArchived
         disposables += markUnarchived
         disposables += migratePreferences
-        disposables += partialSync
+        disposables += syncMessages
 
-        // If it's the first sync, reflect that in the ViewState
-        disposables += Realm.getDefaultInstance()
-                .where(SyncLog::class.java)
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .map { it.size == 0 }
-                .doOnNext { if (it) partialSync.execute(Unit) }
+        // Show the syncing UI
+        disposables += syncRepository.syncProgress
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
 
+
+        // Show the rating UI
         disposables += ratingManager.shouldShowRating
                 .subscribe { show -> newState { it.copy(showRating = show) } }
 
-        // Migrate the preferences from 2.7.3 if necessary
+
+        // Migrate the preferences from 2.7.3
         migratePreferences.execute(Unit)
-
-        val isNotDefaultSms = Telephony.Sms.getDefaultSmsPackage(context) != context.packageName
-        val hasSmsPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
-        val hasContactPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
-
-        if (isNotDefaultSms) {
-            partialSync.execute(Unit)
-        }
-
-        if (isNotDefaultSms || !hasSmsPermission || !hasContactPermission) {
-            navigator.showSetupActivity()
-        }
 
         ratingManager.addSession()
         markAllSeen.execute(Unit)
@@ -116,14 +100,43 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
     override fun bindView(view: MainView) {
         super.bindView(view)
 
+        if (!permissionManager.hasSmsAndContacts()) {
+            view.requestPermissions()
+        }
+
+        // If the default SMS state or permission states change, update the ViewState
+        Observables.combineLatest(
+                view.activityResumedIntent.map { permissionManager.isDefaultSms() }.distinctUntilChanged(),
+                view.activityResumedIntent.map { permissionManager.hasSms() }.distinctUntilChanged(),
+                view.activityResumedIntent.map { permissionManager.hasContacts() }.distinctUntilChanged(),
+                { defaultSms, smsPermission, contactPermission ->
+                    newState { it.copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        // If the SMS permission state changes from false to true, sync messages
+        view.activityResumedIntent
+                .map { permissionManager.hasSms() }
+                .distinctUntilChanged()
+                .skip(1)
+                .filter { hasSms -> hasSms }
+                .take(1)
+                .autoDisposable(view.scope())
+                .subscribe {
+                    syncMessages.execute(Unit)
+                    if (!permissionManager.isDefaultSms()) {
+                        navigator.showDefaultSmsDialog()
+                    }
+                }
+
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .map { query -> query.removeAccents() }
                 .withLatestFrom(state, { query, state ->
                     if (state.page is Inbox) {
                         val filteredConversations = if (query.isEmpty()) conversations
-                        else conversations
-                                .map { conversations -> conversations.filter { conversationFilter.filter(it, query) } }
+                        else conversations.map { conversations -> conversations.filter { conversationFilter.filter(it, query) } }
 
                         val page = state.page.copy(showClearButton = query.isNotEmpty(), data = filteredConversations)
                         newState { it.copy(page = page) }
@@ -259,6 +272,17 @@ class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
                 .withLatestFrom(view.swipeConversationIntent, { _, threadId -> threadId })
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnarchived.execute(listOf(threadId)) }
+
+        view.snackbarButtonIntent
+                .withLatestFrom(state, { _, state ->
+                    when {
+                        !state.smsPermission -> view.requestPermissions()
+                        !state.defaultSms -> navigator.showDefaultSmsDialog()
+                        !state.contactPermission -> view.requestPermissions()
+                    }
+                })
+                .autoDisposable(view.scope())
+                .subscribe()
 
         view.backPressedIntent
                 .withLatestFrom(state, { _, state ->

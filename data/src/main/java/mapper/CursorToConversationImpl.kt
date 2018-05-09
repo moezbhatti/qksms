@@ -22,11 +22,15 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.Telephony.Threads
+import manager.PermissionManager
 import model.Conversation
 import model.Recipient
 import javax.inject.Inject
 
-class CursorToConversationImpl @Inject constructor(private val context: Context) : CursorToConversation {
+class CursorToConversationImpl @Inject constructor(
+        private val context: Context,
+        private val permissionManager: PermissionManager
+) : CursorToConversation {
 
     companion object {
         val URI: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
@@ -62,9 +66,13 @@ class CursorToConversationImpl @Inject constructor(private val context: Context)
     }
 
     override fun getConversationsCursor(lastSync: Long): Cursor? {
-        return context.contentResolver.query(URI, PROJECTION,
-                "date > $lastSync", null,
-                "date desc")
+        return when (permissionManager.hasSms()) {
+            true -> context.contentResolver.query(URI, PROJECTION,
+                    "date > $lastSync", null,
+                    "date desc")
+
+            false -> null
+        }
     }
 
     override fun getConversationCursor(threadId: Long): Cursor? {

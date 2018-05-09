@@ -28,8 +28,8 @@
   <string name="title_conversations">یافتن پیامک&#8230;</string>
   <string name="title_compose">Compose</string>
   <string name="title_qksms_plus">نسخه پیشرفته</string>
-  <string name="setup_title">فرستادن مجدد</string>
-  <string name="setup_summary">انتخاب به عنوان برنامه پیشفرض</string>
+  <string name="main_default_sms_title">فرستادن مجدد</string>
+  <string name="main_default_sms_message">انتخاب به عنوان برنامه پیشفرض</string>
   <string name="setup_skip">بیخیال</string>
   <string name="setup_next">ادامه</string>
   <string name="menu_clear">پاک کردن</string>

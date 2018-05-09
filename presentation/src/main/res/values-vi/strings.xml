@@ -28,8 +28,8 @@
   <string name="title_conversations">Tìm kiếm các tin đã nhận&#8230;</string>
   <string name="title_compose">Nhập tên hoặc số điện thoại</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Thích nhắn tin trở lại</string>
-  <string name="setup_summary">Đặt QKSMS là ứng dụng tin nhắn mặc định</string>
+  <string name="main_default_sms_title">Thích nhắn tin trở lại</string>
+  <string name="main_default_sms_message">Đặt QKSMS là ứng dụng tin nhắn mặc định</string>
   <string name="setup_skip">Bỏ qua</string>
   <string name="setup_next">Tiếp tục</string>
   <string name="menu_clear">Xóa</string>

@@ -56,18 +56,6 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp">
 
-            <common.widget.PreferenceView
-                android:id="@+id/defaultSms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="@string/settings_default_sms_title" />
-
-            <common.widget.Separator
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp" />
-
             <common.widget.QkTextView
                 style="@style/PreferenceCategory"
                 android:text="@string/settings_category_appearance" />

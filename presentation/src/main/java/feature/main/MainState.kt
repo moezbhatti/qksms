@@ -20,13 +20,17 @@ package feature.main
 
 import io.reactivex.Flowable
 import model.Conversation
+import repository.SyncRepository
 
 data class MainState(
         val hasError: Boolean = false,
         val page: MainPage = Inbox(),
         val drawerOpen: Boolean = false,
-        val syncing: Boolean = false,
-        val showRating: Boolean = false
+        val showRating: Boolean = false,
+        val syncing: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle(),
+        val defaultSms: Boolean = false,
+        val smsPermission: Boolean = false,
+        val contactPermission: Boolean = false
 )
 
 sealed class MainPage

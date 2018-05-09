@@ -28,8 +28,8 @@
   <string name="title_conversations">In Posteingang suchen&#8230;</string>
   <string name="title_compose">Verfassen</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Du wirst SMS wieder lieben</string>
-  <string name="setup_summary">QKSMS als Standard-SMS-App festlegen</string>
+  <string name="main_default_sms_title">Du wirst SMS wieder lieben</string>
+  <string name="main_default_sms_message">QKSMS als Standard-SMS-App festlegen</string>
   <string name="setup_skip">Überspringen</string>
   <string name="setup_next">Weiter</string>
   <string name="menu_clear">Leeren</string>

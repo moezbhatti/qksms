@@ -21,11 +21,15 @@ package mapper
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract.CommonDataKinds.Phone.*
+import manager.PermissionManager
 import model.Contact
 import model.PhoneNumber
 import javax.inject.Inject
 
-class CursorToContactImpl @Inject constructor(private val context: Context) : CursorToContact {
+class CursorToContactImpl @Inject constructor(
+        private val context: Context,
+        private val permissionManager: PermissionManager
+) : CursorToContact {
 
     companion object {
         val URI = CONTENT_URI
@@ -48,7 +52,10 @@ class CursorToContactImpl @Inject constructor(private val context: Context) : Cu
     }
 
     override fun getContactsCursor(): Cursor? {
-        return context.contentResolver.query(URI, PROJECTION, null, null, null)
+        return when (permissionManager.hasContacts()) {
+            true -> context.contentResolver.query(URI, PROJECTION, null, null, null)
+            false -> null
+        }
     }
 
 }

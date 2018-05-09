@@ -28,8 +28,8 @@
   <string name="title_conversations">Caută în inbox...</string>
   <string name="title_compose">Compune</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Iubesc să scriu din nou</string>
-  <string name="setup_summary">Fă QKSMS aplicația de mesaje prestabilită</string>
+  <string name="main_default_sms_title">Iubesc să scriu din nou</string>
+  <string name="main_default_sms_message">Fă QKSMS aplicația de mesaje prestabilită</string>
   <string name="setup_skip">Sari</string>
   <string name="setup_next">Continue</string>
   <string name="menu_clear">Clear</string>

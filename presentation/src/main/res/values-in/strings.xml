@@ -28,8 +28,8 @@
   <string name="title_conversations">Cari kotak masuk&#8230;</string>
   <string name="title_compose">Tulis Pesan baru</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Love texting again</string>
-  <string name="setup_summary">Buat QKSMS aplikasi SMS default Anda</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Buat QKSMS aplikasi SMS default Anda</string>
   <string name="setup_skip">Lewati</string>
   <string name="setup_next">Lanjutkan</string>
   <string name="menu_clear">Clear</string>

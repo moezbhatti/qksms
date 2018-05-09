@@ -28,8 +28,8 @@
   <string name="title_conversations">Cerca posta in arrivo&#8230;</string>
   <string name="title_compose">Scrivi</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Love texting again</string>
-  <string name="setup_summary">Rendi QKSMS l\'app SMS predefinita</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Rendi QKSMS l\'app SMS predefinita</string>
   <string name="setup_skip">Salta</string>
   <string name="setup_next">Continua</string>
   <string name="menu_clear">Azzera</string>

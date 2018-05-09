@@ -105,11 +105,6 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         if (progressDialog.isShowing && !state.syncing) progressDialog.dismiss()
         else if (!progressDialog.isShowing && state.syncing) progressDialog.show()
 
-        defaultSms.summary = getString(when (state.isDefaultSmsApp) {
-            true -> R.string.settings_default_sms_summary_true
-            else -> R.string.settings_default_sms_summary_false
-        })
-
         themePreview.setBackgroundTint(state.theme)
         night.summary = state.nightModeSummary
         nightModeDialog.adapter.selectedItem = state.nightModeId

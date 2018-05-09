@@ -18,12 +18,14 @@
  */
 package feature.main
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -53,6 +55,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
+import repository.SyncRepository
 import javax.inject.Inject
 
 class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
@@ -62,6 +65,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
 
     override val viewModelClass = MainViewModel::class
+    override val activityResumedIntent: Subject<Unit> = PublishSubject.create()
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent: Observable<Boolean> by lazy {
@@ -86,6 +90,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     override val confirmDeleteIntent: Subject<Unit> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
+    override val snackbarButtonIntent by lazy { snackbarButton.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0) }
@@ -205,8 +210,6 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0
         toolbar.menu.findItem(R.id.delete)?.isVisible = selectedConversations != 0
 
-        syncing.setVisible(state.syncing)
-        synced.setVisible(!state.syncing)
         rateLayout.setVisible(state.showRating)
 
         compose.setVisible(state.page is Inbox || state.page is Archived)
@@ -255,10 +258,43 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
+
+        syncing.setVisible(state.syncing is SyncRepository.SyncProgress.Running)
+        snackbar.setVisible(state.syncing is SyncRepository.SyncProgress.Idle
+                && !state.defaultSms || !state.smsPermission || !state.contactPermission)
+
+        when {
+            !state.smsPermission -> {
+                snackbarTitle.setText(R.string.main_permission_required)
+                snackbarMessage.setText(R.string.main_permission_sms)
+                snackbarButton.setText(R.string.main_permission_allow)
+            }
+
+            !state.defaultSms -> {
+                snackbarTitle.setText(R.string.main_default_sms_title)
+                snackbarMessage.setText(R.string.main_default_sms_message)
+                snackbarButton.setText(R.string.main_default_sms_change)
+            }
+
+            !state.contactPermission -> {
+                snackbarTitle.setText(R.string.main_permission_required)
+                snackbarMessage.setText(R.string.main_permission_contacts)
+                snackbarButton.setText(R.string.main_permission_allow)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activityResumedIntent.onNext(Unit)
     }
 
     override fun showBackButton(show: Boolean) {
         toggle.onDrawerSlide(drawer, if (show) 1f else 0f)
+    }
+
+    override fun requestPermissions() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS), 0)
     }
 
     override fun clearSearch() {

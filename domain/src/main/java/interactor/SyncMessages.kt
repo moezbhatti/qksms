@@ -25,7 +25,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class FullSync @Inject constructor(
+class SyncMessages @Inject constructor(
         private val syncManager: SyncRepository,
         private val keys: KeyManager
 ) : Interactor<Unit>() {
@@ -33,7 +33,7 @@ class FullSync @Inject constructor(
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())
                 .doOnNext { keys.reset() }
-                .doOnNext { syncManager.syncMessages(true) }
+                .doOnNext { syncManager.syncMessages() }
                 .map { startTime -> System.currentTimeMillis() - startTime }
                 .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
                 .doOnNext { seconds -> Timber.v("Completed sync in $seconds seconds") }

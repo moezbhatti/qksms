@@ -28,8 +28,8 @@
   <string name="title_conversations">Sök i inkorg&#8230;</string>
   <string name="title_compose">Nytt meddelande</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Love texting again</string>
-  <string name="setup_summary">Gör QKSMS till din standard SMS-app</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Gör QKSMS till din standard SMS-app</string>
   <string name="setup_skip">Hoppa över</string>
   <string name="setup_next">Fortsätt</string>
   <string name="menu_clear">Rensa</string>

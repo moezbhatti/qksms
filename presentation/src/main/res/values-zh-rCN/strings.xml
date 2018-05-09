@@ -28,8 +28,8 @@
   <string name="title_conversations">Search inbox&#8230;</string>
   <string name="title_compose">撰写</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Love texting again</string>
-  <string name="setup_summary">使 QKSMS 成为您的默认短信应用</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">使 QKSMS 成为您的默认短信应用</string>
   <string name="setup_skip">跳过</string>
   <string name="setup_next">继续</string>
   <string name="menu_clear">清除</string>

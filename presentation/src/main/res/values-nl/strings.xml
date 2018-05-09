@@ -28,8 +28,8 @@
   <string name="title_conversations">Doorzoek inbox&#8230;</string>
   <string name="title_compose">Type een naam of nummer</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="setup_title">Love texting again</string>
-  <string name="setup_summary">Maak QKSMS jouw standaard SMS app</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Maak QKSMS jouw standaard SMS app</string>
   <string name="setup_skip">Overslaan</string>
   <string name="setup_next">Verder</string>
   <string name="menu_clear">Annuleren</string>

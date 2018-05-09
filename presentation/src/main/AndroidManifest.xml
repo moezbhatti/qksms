@@ -58,7 +58,6 @@
             </intent-filter>
         </activity>
         <activity android:name="feature.settings.SettingsActivity" />
-        <activity android:name="feature.setup.SetupActivity" />
         <activity android:name="feature.themepicker.ThemePickerActivity" />
         <activity android:name="feature.plus.PlusActivity" />
         <activity
