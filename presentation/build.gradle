@@ -117,9 +117,15 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
 
+    // testing
     androidTestImplementation("com.android.support.test.espresso:espresso-core:2.2.2", {
         exclude group: "com.android.support", module: "support-annotations"
     })
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
+    testImplementation "com.android.support.test:runner:1.0.1"
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "com.android.billingclient:billing:1.0"
     implementation "com.bugsnag:bugsnag-android:4.1.1"
@@ -132,9 +138,6 @@ dependencies {
     implementation project(":android-smsmms")
     implementation project(':data')
     implementation project(':domain')
-    testImplementation "com.android.support.test:runner:1.0.1"
-    testImplementation "junit:junit:4.12"
-    testImplementation "org.mockito:mockito-core:1.10.19"
     withAnalyticsImplementation "com.amplitude:android-sdk:2.16.0"
     withAnalyticsImplementation "com.mixpanel.android:mixpanel-android:5.2.1"
 }

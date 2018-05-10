@@ -8,6 +8,7 @@ buildscript {
     ext.kotlin_version = '1.2.31'
     ext.ktx_version = "0.2"
     ext.lifecycle_version = '1.1.0'
+    ext.mockito_version = '2.18.3'
     ext.realm_version = '4.3.1'
     ext.realm_adapters_version = '2.1.0'
     ext.rxandroid_version = '2.0.1'
