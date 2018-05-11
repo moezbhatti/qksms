@@ -34,7 +34,6 @@ import common.base.QkViewModel
 import common.util.ClipboardUtils
 import common.util.extensions.makeToast
 import common.util.filter.ContactFilter
-import injection.appComponent
 import interactor.CancelDelayedMessage
 import interactor.ContactSync
 import interactor.DeleteMessages
@@ -65,20 +64,22 @@ import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Named
 
-class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(ComposeState()) {
-
-    @Inject lateinit var context: Context
-    @Inject lateinit var cancelMessage: CancelDelayedMessage
-    @Inject lateinit var contactFilter: ContactFilter
-    @Inject lateinit var contactsRepo: ContactRepository
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var syncContacts: ContactSync
-    @Inject lateinit var sendMessage: SendMessage
-    @Inject lateinit var retrySending: RetrySending
-    @Inject lateinit var markRead: MarkRead
-    @Inject lateinit var deleteMessages: DeleteMessages
+class ComposeViewModel @Inject constructor(
+        private val intent: Intent,
+        private val context: Context,
+        private val cancelMessage: CancelDelayedMessage,
+        private val contactFilter: ContactFilter,
+        private val contactsRepo: ContactRepository,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val syncContacts: ContactSync,
+        private val sendMessage: SendMessage,
+        private val retrySending: RetrySending,
+        private val markRead: MarkRead,
+        private val deleteMessages: DeleteMessages
+) : QkViewModel<ComposeView, ComposeState>(ComposeState()) {
 
     private var sharedText: String = ""
     private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(ArrayList())
@@ -89,8 +90,6 @@ class ComposeViewModel(intent: Intent) : QkViewModel<ComposeView, ComposeState>(
     private val messages: Subject<List<Message>> = BehaviorSubject.create()
 
     init {
-        appComponent.inject(this)
-
         sharedText = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
 
         // If there are any image attachments, we'll set those as the initial attachments for the

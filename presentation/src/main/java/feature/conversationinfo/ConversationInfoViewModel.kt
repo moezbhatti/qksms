@@ -18,13 +18,11 @@
  */
 package feature.conversationinfo
 
-import android.content.Context
 import android.content.Intent
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
-import injection.appComponent
 import interactor.DeleteConversations
 import interactor.MarkArchived
 import interactor.MarkBlocked
@@ -38,22 +36,21 @@ import repository.MessageRepository
 import util.extensions.asObservable
 import javax.inject.Inject
 
-class ConversationInfoViewModel(intent: Intent) : QkViewModel<ConversationInfoView,
-        ConversationInfoState>(ConversationInfoState()) {
+class ConversationInfoViewModel @Inject constructor(
+        private val intent: Intent,
+        private val messageRepo: MessageRepository,
+        private val markArchived: MarkArchived,
+        private val markUnarchived: MarkUnarchived,
+        private val markBlocked: MarkBlocked,
+        private val markUnblocked: MarkUnblocked,
+        private val navigator: Navigator,
+        private val deleteConversations: DeleteConversations
+) : QkViewModel<ConversationInfoView, ConversationInfoState>(ConversationInfoState()) {
 
-    @Inject lateinit var context: Context
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var markArchived: MarkArchived
-    @Inject lateinit var markUnarchived: MarkUnarchived
-    @Inject lateinit var markBlocked: MarkBlocked
-    @Inject lateinit var markUnblocked: MarkUnblocked
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var deleteConversations: DeleteConversations
 
     private val conversation: Observable<Conversation>
 
     init {
-        appComponent.inject(this)
         val threadId = intent.extras?.getLong("threadId") ?: 0L
 
         newState { it.copy(threadId = threadId) }

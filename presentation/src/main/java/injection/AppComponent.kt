@@ -29,29 +29,8 @@ import common.widget.QkSwitch
 import common.widget.QkTextView
 import common.widget.Separator
 import dagger.Component
-import feature.blocked.BlockedActivity
-import feature.blocked.BlockedViewModel
-import feature.compose.ComposeActivity
-import feature.compose.ComposeViewModel
+import dagger.android.support.AndroidSupportInjectionModule
 import feature.compose.DetailedChipView
-import feature.conversationinfo.ConversationInfoActivity
-import feature.conversationinfo.ConversationInfoViewModel
-import feature.gallery.GalleryActivity
-import feature.gallery.GalleryViewModel
-import feature.main.MainActivity
-import feature.main.MainViewModel
-import feature.notificationprefs.NotificationPrefsActivity
-import feature.notificationprefs.NotificationPrefsViewModel
-import feature.plus.PlusActivity
-import feature.plus.PlusViewModel
-import feature.qkreply.QkReplyActivity
-import feature.qkreply.QkReplyViewModel
-import feature.settings.SettingsActivity
-import feature.settings.SettingsViewModel
-import feature.settings.about.AboutActivity
-import feature.settings.about.AboutViewModel
-import feature.themepicker.ThemePickerActivity
-import feature.themepicker.ThemePickerViewModel
 import feature.widget.WidgetAdapter
 import feature.widget.WidgetProvider
 import receiver.DefaultSmsChangedReceiver
@@ -71,22 +50,10 @@ import service.HeadlessSmsSendService
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [(AppModule::class)])
+@Component(modules = [AndroidSupportInjectionModule::class, AppModule::class, BuildersModule::class])
 interface AppComponent {
 
     fun inject(application: QKApplication)
-
-    fun inject(activity: MainActivity)
-    fun inject(activity: AboutActivity)
-    fun inject(activity: BlockedActivity)
-    fun inject(activity: ComposeActivity)
-    fun inject(activity: ConversationInfoActivity)
-    fun inject(activity: GalleryActivity)
-    fun inject(activity: NotificationPrefsActivity)
-    fun inject(activity: PlusActivity)
-    fun inject(activity: QkReplyActivity)
-    fun inject(activity: SettingsActivity)
-    fun inject(activity: ThemePickerActivity)
 
     fun inject(dialog: QkDialog)
 
@@ -118,17 +85,5 @@ interface AppComponent {
     fun inject(view: QkSwitch)
     fun inject(view: QkTextView)
     fun inject(view: Separator)
-
-    fun inject(viewModel: MainViewModel)
-    fun inject(viewModel: AboutViewModel)
-    fun inject(viewModel: BlockedViewModel)
-    fun inject(viewModel: ComposeViewModel)
-    fun inject(viewModel: ConversationInfoViewModel)
-    fun inject(viewModel: GalleryViewModel)
-    fun inject(viewModel: NotificationPrefsViewModel)
-    fun inject(viewModel: PlusViewModel)
-    fun inject(viewModel: QkReplyViewModel)
-    fun inject(viewModel: SettingsViewModel)
-    fun inject(viewModel: ThemePickerViewModel)
 
 }

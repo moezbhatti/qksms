@@ -18,6 +18,8 @@
  */
 package feature.compose
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -36,7 +38,7 @@ import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import common.util.extensions.showKeyboard
-import injection.appComponent
+import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
@@ -46,9 +48,14 @@ import model.Contact
 import model.Message
 import javax.inject.Inject
 
-class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
+class ComposeActivity : QkThemedActivity(), ComposeView {
 
-    override val viewModelClass = ComposeViewModel::class
+    @Inject lateinit var attachmentAdapter: AttachmentAdapter
+    @Inject lateinit var chipsAdapter: ChipsAdapter
+    @Inject lateinit var contactsAdapter: ContactAdapter
+    @Inject lateinit var messageAdapter: MessagesAdapter
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val queryBackspaceIntent: Observable<*> by lazy { chipsAdapter.backspaces }
@@ -69,16 +76,10 @@ class ComposeActivity : QkThemedActivity<ComposeViewModel>(), ComposeView {
     override val sendIntent by lazy { send.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
-    @Inject lateinit var chipsAdapter: ChipsAdapter
-    @Inject lateinit var contactsAdapter: ContactAdapter
-    @Inject lateinit var messageAdapter: MessagesAdapter
-    @Inject lateinit var attachmentAdapter: AttachmentAdapter
-
-    init {
-        appComponent.inject(this)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compose_activity)
         showBackButton(true)

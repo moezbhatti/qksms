@@ -19,10 +19,12 @@
 package injection
 
 import android.app.Application
+import android.arch.lifecycle.ViewModelProvider
 import android.content.ContentResolver
 import android.content.Context
 import android.preference.PreferenceManager
 import com.f2prateek.rx.preferences2.RxSharedPreferences
+import common.ViewModelFactory
 import common.util.AnalyticsManagerImpl
 import common.util.NotificationManagerImpl
 import dagger.Module
@@ -64,14 +66,10 @@ class AppModule(private var application: Application) {
 
     @Provides
     @Singleton
-    fun provideContext(): Context {
-        return application
-    }
+    fun provideContext(): Context = application
 
     @Provides
-    fun provideContentResolver(context: Context): ContentResolver {
-        return context.contentResolver
-    }
+    fun provideContentResolver(context: Context): ContentResolver = context.contentResolver
 
     @Provides
     @Singleton
@@ -79,6 +77,9 @@ class AppModule(private var application: Application) {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         return RxSharedPreferences.create(preferences)
     }
+
+    @Provides
+    fun provideViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory = factory
 
     // Manager
 

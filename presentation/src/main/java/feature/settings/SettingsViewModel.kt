@@ -28,7 +28,6 @@ import common.util.BillingManager
 import common.util.Colors
 import common.util.DateFormatter
 import common.util.NightModeManager
-import injection.appComponent
 import interactor.SyncMessages
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -37,20 +36,19 @@ import util.Preferences
 import java.util.*
 import javax.inject.Inject
 
-class SettingsViewModel : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
+class SettingsViewModel @Inject constructor(
+        private val context: Context,
+        private val billingManager: BillingManager,
+        private val colors: Colors,
+        private val dateFormatter: DateFormatter,
+        private val navigator: Navigator,
+        private val nightModeManager: NightModeManager,
+        private val prefs: Preferences,
+        private val syncMessages: SyncMessages
+) : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
 
-    @Inject lateinit var context: Context
-    @Inject lateinit var billingManager: BillingManager
-    @Inject lateinit var colors: Colors
-    @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var nightModeManager: NightModeManager
-    @Inject lateinit var prefs: Preferences
-    @Inject lateinit var syncMessages: SyncMessages
 
     init {
-        appComponent.inject(this)
-
         disposables += colors.theme
                 .subscribe { color -> newState { it.copy(theme = color) } }
 

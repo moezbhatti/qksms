@@ -3,7 +3,7 @@
 buildscript {
     ext.autodispose_version = '0.5.1'
     ext.constraintlayout_version = '1.1.0-beta5'
-    ext.dagger_version = "2.15"
+    ext.dagger_version = "2.16"
     ext.glide_version = "4.3.0"
     ext.kotlin_version = '1.2.31'
     ext.ktx_version = "0.2"

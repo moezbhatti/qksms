@@ -18,6 +18,8 @@
  */
 package feature.plus
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Typeface
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
@@ -31,24 +33,23 @@ import common.util.FontProvider
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
-import injection.appComponent
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
 import javax.inject.Inject
 
-class PlusActivity : QkThemedActivity<PlusViewModel>(), PlusView {
+class PlusActivity : QkThemedActivity(), PlusView {
 
     @Inject lateinit var fontProvider: FontProvider
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override val viewModelClass = PlusViewModel::class
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[PlusViewModel::class.java] }
+
     override val upgradeIntent by lazy { upgrade.clicks() }
     override val upgradeDonateIntent by lazy { upgradeDonate.clicks() }
     override val donateIntent by lazy { donate.clicks() }
 
-    init {
-        appComponent.inject(this)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qksms_plus_activity)
         setTitle(R.string.title_qksms_plus)

@@ -25,7 +25,6 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkViewModel
 import common.util.extensions.makeToast
-import injection.appComponent
 import interactor.SaveImage
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
@@ -34,19 +33,18 @@ import repository.MessageRepository
 import util.extensions.mapNotNull
 import javax.inject.Inject
 
-class GalleryViewModel(intent: Intent) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
-
-    @Inject lateinit var context: Context
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var saveImage: SaveImage
+class GalleryViewModel @Inject constructor(
+        private val intent: Intent,
+        private val context: Context,
+        private val messageRepo: MessageRepository,
+        private val saveImage: SaveImage
+) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
 
     private val partIdFlowable = Flowable.just(intent)
             .map { it.getLongExtra("partId", 0L) }
             .filter { partId -> partId != 0L }
 
     init {
-        appComponent.inject(this)
-
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getPart(partId) }
                 .mapNotNull { part -> part.getUri() }

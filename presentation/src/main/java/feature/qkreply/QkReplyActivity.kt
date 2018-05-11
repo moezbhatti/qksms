@@ -18,6 +18,8 @@
  */
 package feature.qkreply
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -35,8 +37,8 @@ import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
+import dagger.android.AndroidInjection
 import feature.compose.MessagesAdapter
-import injection.appComponent
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -44,21 +46,20 @@ import kotlinx.android.synthetic.main.qkreply_activity.*
 import util.Preferences
 import javax.inject.Inject
 
-class QkReplyActivity : QkThemedActivity<QkReplyViewModel>(), QkReplyView {
+class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
-    override val viewModelClass = QkReplyViewModel::class
+    @Inject lateinit var adapter: MessagesAdapter
+    @Inject lateinit var prefs: Preferences
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override val menuItemIntent: Subject<Int> = PublishSubject.create()
     override val textChangedIntent by lazy { message.textChanges() }
     override val sendIntent by lazy { send.clicks() }
 
-    @Inject lateinit var adapter: MessagesAdapter
-    @Inject lateinit var prefs: Preferences
-
-    init {
-        appComponent.inject(this)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[QkReplyViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
 

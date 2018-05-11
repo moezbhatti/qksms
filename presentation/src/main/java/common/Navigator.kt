@@ -20,8 +20,6 @@ package common
 
 import android.app.Activity
 import android.app.ActivityOptions
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -33,25 +31,14 @@ import android.provider.Telephony
 import android.view.View
 import com.moez.QKSMS.BuildConfig
 import feature.blocked.BlockedActivity
-import feature.blocked.BlockedViewModel
 import feature.compose.ComposeActivity
-import feature.compose.ComposeViewModel
 import feature.conversationinfo.ConversationInfoActivity
-import feature.conversationinfo.ConversationInfoViewModel
 import feature.gallery.GalleryActivity
-import feature.gallery.GalleryViewModel
-import feature.main.MainViewModel
 import feature.notificationprefs.NotificationPrefsActivity
-import feature.notificationprefs.NotificationPrefsViewModel
 import feature.plus.PlusActivity
-import feature.plus.PlusViewModel
-import feature.qkreply.QkReplyViewModel
 import feature.settings.SettingsActivity
-import feature.settings.SettingsViewModel
 import feature.settings.about.AboutActivity
-import feature.settings.about.AboutViewModel
 import feature.themepicker.ThemePickerActivity
-import feature.themepicker.ThemePickerViewModel
 import manager.NotificationManager
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -245,27 +232,6 @@ class Navigator @Inject constructor(private val context: Context, private val no
             intent.putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
             intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
             startActivity(intent)
-        }
-    }
-
-    class ViewModelFactory(private val intent: Intent) : ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return when (modelClass) {
-                MainViewModel::class.java -> MainViewModel()
-                PlusViewModel::class.java -> PlusViewModel()
-                AboutViewModel::class.java -> AboutViewModel()
-                ComposeViewModel::class.java -> ComposeViewModel(intent)
-                ConversationInfoViewModel::class.java -> ConversationInfoViewModel(intent)
-                GalleryViewModel::class.java -> GalleryViewModel(intent)
-                NotificationPrefsViewModel::class.java -> NotificationPrefsViewModel(intent)
-                QkReplyViewModel::class.java -> QkReplyViewModel(intent)
-                SettingsViewModel::class.java -> SettingsViewModel()
-                BlockedViewModel::class.java -> BlockedViewModel()
-                ThemePickerViewModel::class.java -> ThemePickerViewModel(intent)
-                else -> throw IllegalArgumentException("Invalid ViewModel class. If this is a new ViewModel, please add it to Navigator.kt")
-            } as T
         }
     }
 

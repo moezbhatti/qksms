@@ -23,7 +23,6 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
-import injection.appComponent
 import interactor.MarkUnblocked
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -32,17 +31,15 @@ import util.Preferences
 import util.tryOrNull
 import javax.inject.Inject
 
-class BlockedViewModel : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
-
-    @Inject lateinit var context: Context
-    @Inject lateinit var markUnblocked: MarkUnblocked
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var prefs: Preferences
+class BlockedViewModel @Inject constructor(
+        private val context: Context,
+        private val markUnblocked: MarkUnblocked,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val prefs: Preferences
+) : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
 
     init {
-        appComponent.inject(this)
-
         newState { it.copy(data = messageRepo.getBlockedConversations()) }
 
         disposables += prefs.sia.asObservable()

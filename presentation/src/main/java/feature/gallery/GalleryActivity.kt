@@ -18,6 +18,8 @@
  */
 package feature.gallery
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.ChangeImageTransform
@@ -30,17 +32,23 @@ import common.GlideCompletionListener
 import common.base.QkActivity
 import common.util.GlideApp
 import common.util.extensions.setVisible
+import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.gallery_activity.*
+import javax.inject.Inject
 
-class GalleryActivity : QkActivity<GalleryViewModel>(), GalleryView {
+class GalleryActivity : QkActivity(), GalleryView {
 
-    override val viewModelClass = GalleryViewModel::class
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override val screenTouchedIntent by lazy { image.clicks() }
     override val optionsItemSelectedIntent: Subject<Int> = PublishSubject.create()
 
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[GalleryViewModel::class.java] }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.gallery_activity)
         postponeEnterTransition()

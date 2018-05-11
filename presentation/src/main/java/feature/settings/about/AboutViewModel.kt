@@ -5,16 +5,11 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
-import injection.appComponent
 import javax.inject.Inject
 
-class AboutViewModel : QkViewModel<AboutView, Unit>(Unit) {
-
-    @Inject lateinit var navigator: Navigator
-
-    init {
-        appComponent.inject(this)
-    }
+class AboutViewModel @Inject constructor(
+        private val navigator: Navigator
+) : QkViewModel<AboutView, Unit>(Unit) {
 
     override fun bindView(view: AboutView) {
         super.bindView(view)
@@ -22,7 +17,7 @@ class AboutViewModel : QkViewModel<AboutView, Unit>(Unit) {
         view.preferenceClickIntent
                 .autoDisposable(view.scope())
                 .subscribe { preference ->
-                    when(preference.id) {
+                    when (preference.id) {
                         R.id.developer -> navigator.showDeveloper()
 
                         R.id.source -> navigator.showSourceCode()

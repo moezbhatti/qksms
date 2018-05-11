@@ -18,14 +18,12 @@
  */
 package feature.main
 
-import android.content.Context
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
 import common.util.filter.ConversationFilter
-import injection.appComponent
 import interactor.DeleteConversations
 import interactor.MarkAllSeen
 import interactor.MarkArchived
@@ -41,37 +39,29 @@ import manager.PermissionManager
 import manager.RatingManager
 import repository.MessageRepository
 import repository.SyncRepository
-import util.Preferences
 import util.extensions.removeAccents
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class MainViewModel : QkViewModel<MainView, MainState>(MainState()) {
+class MainViewModel @Inject constructor(
+        private val conversationFilter: ConversationFilter,
+        private val messageRepo: MessageRepository,
+        private val markAllSeen: MarkAllSeen,
+        private val deleteConversations: DeleteConversations,
+        private val markArchived: MarkArchived,
+        private val markUnarchived: MarkUnarchived,
+        private val markBlocked: MarkBlocked,
+        private val migratePreferences: MigratePreferences,
+        private val navigator: Navigator,
+        private val permissionManager: PermissionManager,
+        private val ratingManager: RatingManager,
+        private val syncMessages: SyncMessages,
+        private val syncRepository: SyncRepository
+) : QkViewModel<MainView, MainState>(MainState()) {
 
-    @Inject lateinit var context: Context
-    @Inject lateinit var conversationFilter: ConversationFilter
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var markAllSeen: MarkAllSeen
-    @Inject lateinit var deleteConversations: DeleteConversations
-    @Inject lateinit var markArchived: MarkArchived
-    @Inject lateinit var markUnarchived: MarkUnarchived
-    @Inject lateinit var markBlocked: MarkBlocked
-    @Inject lateinit var migratePreferences: MigratePreferences
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var permissionManager: PermissionManager
-    @Inject lateinit var prefs: Preferences
-    @Inject lateinit var ratingManager: RatingManager
-    @Inject lateinit var syncMessages: SyncMessages
-    @Inject lateinit var syncRepository: SyncRepository
-
-    private val conversations by lazy { messageRepo.getConversations() }
+    private val conversations = messageRepo.getConversations()
 
     init {
-        appComponent.inject(this)
-
-        // Now the conversations can be loaded
-        conversations
-
         disposables += deleteConversations
         disposables += markAllSeen
         disposables += markArchived

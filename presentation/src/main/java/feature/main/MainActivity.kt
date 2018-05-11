@@ -20,6 +20,8 @@ package feature.main
 
 import android.Manifest
 import android.app.AlertDialog
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.StateListDrawable
@@ -46,9 +48,9 @@ import common.util.extensions.dismissKeyboard
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
+import dagger.android.AndroidInjection
 import feature.conversations.ConversationItemTouchCallback
 import feature.conversations.ConversationsAdapter
-import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
@@ -58,13 +60,13 @@ import kotlinx.android.synthetic.main.main_activity.*
 import repository.SyncRepository
 import javax.inject.Inject
 
-class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
+class MainActivity : QkThemedActivity(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override val viewModelClass = MainViewModel::class
     override val activityResumedIntent: Subject<Unit> = PublishSubject.create()
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val composeIntent by lazy { compose.clicks() }
@@ -93,6 +95,7 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
     override val snackbarButtonIntent by lazy { snackbarButton.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java] }
     private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0) }
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val archiveSnackbar by lazy {
@@ -101,11 +104,8 @@ class MainActivity : QkThemedActivity<MainViewModel>(), MainView {
         }
     }
 
-    init {
-        appComponent.inject(this)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         viewModel.bindView(this)

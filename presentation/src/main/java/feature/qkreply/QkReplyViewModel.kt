@@ -25,7 +25,6 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
-import injection.appComponent
 import interactor.MarkRead
 import interactor.SendMessage
 import io.reactivex.rxkotlin.plusAssign
@@ -42,12 +41,13 @@ import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
-
-    @Inject lateinit var markRead: MarkRead
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var sendMessage: SendMessage
+class QkReplyViewModel @Inject constructor(
+        private val intent: Intent,
+        private val markRead: MarkRead,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val sendMessage: SendMessage
+) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
 
     private val conversation by lazy {
         messageRepo.getConversationAsync(intent.getLongExtra("threadId", -1))
@@ -60,8 +60,6 @@ class QkReplyViewModel(intent: Intent) : QkViewModel<QkReplyView, QkReplyState>(
     private val messages: Subject<RealmResults<Message>> = PublishSubject.create()
 
     init {
-        appComponent.inject(this)
-
         disposables += markRead
         disposables += sendMessage
 

@@ -40,7 +40,7 @@ import javax.inject.Inject
  * In most cases, this should be used instead of the base QkActivity, except for when
  * an activity does not depend on the theme
  */
-abstract class QkThemedActivity<VM : QkViewModel<*, *>> : QkActivity<VM>() {
+abstract class QkThemedActivity : QkActivity() {
 
     @Inject lateinit var colors: Colors
 

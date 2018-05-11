@@ -29,7 +29,6 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
-import injection.appComponent
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
@@ -38,12 +37,13 @@ import util.Preferences
 import util.extensions.mapNotNull
 import javax.inject.Inject
 
-class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState()) {
-
-    @Inject lateinit var context: Context
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var prefs: Preferences
+class NotificationPrefsViewModel @Inject constructor(
+        private val intent: Intent,
+        private val context: Context,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val prefs: Preferences
+) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState()) {
 
     private val threadId = intent.extras?.getLong("threadId") ?: 0L
 
@@ -53,8 +53,6 @@ class NotificationPrefsViewModel(intent: Intent) : QkViewModel<NotificationPrefs
     private val ringtone: Preference<String>
 
     init {
-        appComponent.inject(this)
-
         notifications = prefs.notifications(threadId)
         previews = prefs.notificationPreviews(threadId)
         vibration = prefs.vibration(threadId)

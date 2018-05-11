@@ -18,6 +18,8 @@
  */
 package feature.conversationinfo
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import com.jakewharton.rxbinding2.view.clicks
@@ -27,14 +29,19 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkThemedActivity
 import common.util.extensions.setVisible
-import injection.appComponent
+import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_info_activity.*
 import javax.inject.Inject
 
-class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), ConversationInfoView {
+class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
 
-    override val viewModelClass = ConversationInfoViewModel::class
+    @Inject lateinit var navigator: Navigator
+    @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
+    @Inject lateinit var mediaAdapter: ConversationMediaAdapter
+    @Inject lateinit var itemDecoration: GridSpacingItemDecoration
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override val notificationsIntent by lazy { notifications.clicks() }
     override val themeIntent by lazy { themePrefs.clicks() }
     override val archiveIntent by lazy { archive.clicks() }
@@ -42,16 +49,10 @@ class ConversationInfoActivity : QkThemedActivity<ConversationInfoViewModel>(), 
     override val deleteIntent by lazy { delete.clicks() }
     override val confirmDeleteIntent: PublishSubject<Unit> = PublishSubject.create()
 
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
-    @Inject lateinit var mediaAdapter: ConversationMediaAdapter
-    @Inject lateinit var itemDecoration: GridSpacingItemDecoration
-
-    init {
-        appComponent.inject(this)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ConversationInfoViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.conversation_info_activity)
         showBackButton(true)

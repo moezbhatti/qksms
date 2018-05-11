@@ -23,20 +23,18 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
 import common.util.BillingManager
-import injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import manager.AnalyticsManager
 import javax.inject.Inject
 
-class PlusViewModel : QkViewModel<PlusView, PlusState>(PlusState()) {
-
-    @Inject lateinit var analyticsManager: AnalyticsManager
-    @Inject lateinit var billingManager: BillingManager
-    @Inject lateinit var navigator: Navigator
+class PlusViewModel @Inject constructor(
+        private val analyticsManager: AnalyticsManager,
+        private val billingManager: BillingManager,
+        private val navigator: Navigator
+) : QkViewModel<PlusView, PlusState>(PlusState()) {
 
     init {
-        appComponent.inject(this)
         analyticsManager.track("Viewed QKSMS+")
 
         disposables += billingManager.upgradeStatus

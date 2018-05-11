@@ -19,23 +19,15 @@
 package common.base
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import common.Navigator
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlin.reflect.KClass
 
-abstract class QkActivity<VM : QkViewModel<*, *>> : AppCompatActivity() {
-
-    protected abstract val viewModelClass: KClass<VM>
-    protected val viewModel: VM by lazy {
-        ViewModelProviders.of(this, Navigator.ViewModelFactory(intent))[viewModelClass.java]
-    }
+abstract class QkActivity : AppCompatActivity() {
 
     protected val menu: Subject<Menu> = BehaviorSubject.create()
 

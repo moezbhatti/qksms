@@ -19,33 +19,34 @@
 package feature.blocked
 
 import android.app.AlertDialog
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
-import injection.appComponent
+import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.blocked_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import javax.inject.Inject
 
-class BlockedActivity : QkThemedActivity<BlockedViewModel>(), BlockedView {
+class BlockedActivity : QkThemedActivity(), BlockedView {
 
     @Inject lateinit var blockedAdapter: BlockedAdapter
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override val viewModelClass = BlockedViewModel::class
     override val siaClickedIntent by lazy { shouldIAnswer.clicks() }
     override val unblockIntent by lazy { blockedAdapter.unblock }
     override val confirmUnblockIntent: Subject<Unit> = PublishSubject.create()
 
-    init {
-        appComponent.inject(this)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[BlockedViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.blocked_activity)
         setTitle(R.string.blocked_title)

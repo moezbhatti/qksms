@@ -1,5 +1,7 @@
 package feature.settings.about
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
@@ -8,21 +10,22 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.widget.PreferenceView
-import injection.appComponent
+import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.about_activity.*
+import javax.inject.Inject
 
-class AboutActivity : QkThemedActivity<AboutViewModel>(), AboutView {
+class AboutActivity : QkThemedActivity(), AboutView {
 
-    override val viewModelClass = AboutViewModel::class
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
 
-    init {
-        appComponent.inject(this)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[AboutViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.about_activity)
         setTitle(R.string.about_title)

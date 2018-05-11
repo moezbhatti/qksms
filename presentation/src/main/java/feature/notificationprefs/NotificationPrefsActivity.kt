@@ -19,6 +19,8 @@
 package feature.notificationprefs
 
 import android.app.Activity
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
@@ -32,27 +34,26 @@ import common.QkDialog
 import common.base.QkThemedActivity
 import common.util.extensions.setVisible
 import common.widget.PreferenceView
-import injection.appComponent
+import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.notification_prefs_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import javax.inject.Inject
 
-class NotificationPrefsActivity : QkThemedActivity<NotificationPrefsViewModel>(), NotificationPrefsView {
+class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     @Inject lateinit var previewModeDialog: QkDialog
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override val viewModelClass = NotificationPrefsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val previewModeSelectedIntent by lazy { previewModeDialog.adapter.menuItemClicks }
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
 
-    init {
-        appComponent.inject(this)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[NotificationPrefsViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.notification_prefs_activity)
         setTitle(R.string.title_notification_prefs)

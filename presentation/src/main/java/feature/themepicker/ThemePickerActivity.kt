@@ -18,6 +18,8 @@
  */
 package feature.themepicker
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
@@ -29,30 +31,29 @@ import common.base.QkThemedActivity
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
-import injection.appComponent
+import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.theme_picker_activity.*
 import kotlinx.android.synthetic.main.theme_picker_hsv.*
 import javax.inject.Inject
 
-class ThemePickerActivity : QkThemedActivity<ThemePickerViewModel>(), ThemePickerView {
+class ThemePickerActivity : QkThemedActivity(), ThemePickerView {
 
-    override val viewModelClass = ThemePickerViewModel::class
+    @Inject lateinit var themeAdapter: ThemeAdapter
+    @Inject lateinit var themePagerAdapter: ThemePagerAdapter
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
     override val themeSelectedIntent by lazy { themeAdapter.colorSelected }
     override val hsvThemeSelectedIntent by lazy { picker.selectedColor }
     override val hsvThemeClearedIntent by lazy { clear.clicks() }
     override val hsvThemeAppliedIntent by lazy { apply.clicks() }
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
 
-    @Inject lateinit var themeAdapter: ThemeAdapter
-    @Inject lateinit var themePagerAdapter: ThemePagerAdapter
-
-    init {
-        appComponent.inject(this)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ThemePickerViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.theme_picker_activity)
         setTitle(R.string.title_theme)

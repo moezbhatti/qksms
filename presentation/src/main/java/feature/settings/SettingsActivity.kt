@@ -20,6 +20,8 @@ package feature.settings
 
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.text.format.DateFormat
@@ -33,7 +35,7 @@ import common.base.QkThemedActivity
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
 import common.widget.PreferenceView
-import injection.appComponent
+import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.settings_activity.*
@@ -42,14 +44,14 @@ import kotlinx.android.synthetic.main.settings_theme_widget.*
 import util.Preferences
 import javax.inject.Inject
 
-class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
+class SettingsActivity : QkThemedActivity(), SettingsView {
 
     @Inject lateinit var nightModeDialog: QkDialog
     @Inject lateinit var textSizeDialog: QkDialog
     @Inject lateinit var sendDelayDialog: QkDialog
     @Inject lateinit var mmsSizeDialog: QkDialog
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override val viewModelClass = SettingsViewModel::class
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val nightModeSelectedIntent by lazy { nightModeDialog.adapter.menuItemClicks }
@@ -58,6 +60,8 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
     override val textSizeSelectedIntent by lazy { textSizeDialog.adapter.menuItemClicks }
     override val sendDelayChangedIntent by lazy { sendDelayDialog.adapter.menuItemClicks }
     override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeDialog.adapter.menuItemClicks }
+
+    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[SettingsViewModel::class.java] }
 
     // TODO remove this
     private val progressDialog by lazy {
@@ -68,11 +72,8 @@ class SettingsActivity : QkThemedActivity<SettingsViewModel>(), SettingsView {
         }
     }
 
-    init {
-        appComponent.inject(this)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         setTitle(R.string.title_settings)
