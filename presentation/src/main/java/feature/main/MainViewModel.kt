@@ -35,8 +35,10 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.realm.Realm
 import manager.PermissionManager
 import manager.RatingManager
+import model.SyncLog
 import repository.MessageRepository
 import repository.SyncRepository
 import util.extensions.removeAccents
@@ -82,6 +84,14 @@ class MainViewModel @Inject constructor(
 
         // Migrate the preferences from 2.7.3
         migratePreferences.execute(Unit)
+
+
+        // If we have all permissions and we've never run a sync, run a sync. This will be the case
+        // when upgrading from 2.7.3, or if the app's data was cleared
+        val lastSync = Realm.getDefaultInstance().use { realm -> realm.where(SyncLog::class.java)?.max("date") ?: 0 }
+        if (lastSync == 0 && permissionManager.isDefaultSms() && permissionManager.hasSmsAndContacts()) {
+            syncMessages.execute(Unit)
+        }
 
         ratingManager.addSession()
         markAllSeen.execute(Unit)

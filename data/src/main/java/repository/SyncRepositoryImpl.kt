@@ -27,6 +27,7 @@ import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
+import manager.KeyManager
 import mapper.CursorToContact
 import mapper.CursorToConversation
 import mapper.CursorToMessage
@@ -36,6 +37,7 @@ import model.Conversation
 import model.Message
 import model.MmsPart
 import model.Recipient
+import model.SyncLog
 import util.extensions.insertOrUpdate
 import util.extensions.map
 import util.tryOrNull
@@ -50,6 +52,7 @@ class SyncRepositoryImpl @Inject constructor(
         private val cursorToMessage: CursorToMessage,
         private val cursorToRecipient: CursorToRecipient,
         private val cursorToContact: CursorToContact,
+        private val keys: KeyManager,
         private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
@@ -82,6 +85,8 @@ class SyncRepositoryImpl @Inject constructor(
         realm.delete(Message::class.java)
         realm.delete(MmsPart::class.java)
         realm.delete(Recipient::class.java)
+
+        keys.reset()
 
 
         // Sync messages
@@ -119,6 +124,8 @@ class SyncRepositoryImpl @Inject constructor(
             realm.insertOrUpdate(recipients)
         }
 
+
+        realm.insert(SyncLog())
         realm.commitTransaction()
         realm.close()
 

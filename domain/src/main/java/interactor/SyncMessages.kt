@@ -19,20 +19,17 @@
 package interactor
 
 import io.reactivex.Flowable
-import manager.KeyManager
 import repository.SyncRepository
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SyncMessages @Inject constructor(
-        private val syncManager: SyncRepository,
-        private val keys: KeyManager
+        private val syncManager: SyncRepository
 ) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<Long> {
         return Flowable.just(System.currentTimeMillis())
-                .doOnNext { keys.reset() }
                 .doOnNext { syncManager.syncMessages() }
                 .map { startTime -> System.currentTimeMillis() - startTime }
                 .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
