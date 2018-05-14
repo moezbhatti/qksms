@@ -49,7 +49,7 @@
     <color name="bubbleDark">#242a2f</color>
 
     <color name="separatorLight">#0C000000</color>
-    <color name="separatorDark">#0CFFFFFF</color>
+    <color name="separatorDark">#1AFFFFFF</color>
 
     <color name="switchThumbEnabledLight">#ECECEC</color>
     <color name="switchThumbEnabledDark">#B9B9B9</color>
