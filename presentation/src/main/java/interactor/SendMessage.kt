@@ -24,9 +24,9 @@ import com.google.android.mms.ContentType
 import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.Transaction
-import com.mlsdev.rximagepicker.RxImageConverters
 import feature.compose.Attachment
 import io.reactivex.Flowable
+import repository.ImageRepository
 import repository.MessageRepository
 import util.Preferences
 import java.io.ByteArrayOutputStream
@@ -34,6 +34,7 @@ import javax.inject.Inject
 
 class SendMessage @Inject constructor(
         private val context: Context,
+        private val imageRepository: ImageRepository,
         private val prefs: Preferences,
         private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params>() {
@@ -72,8 +73,8 @@ class SendMessage @Inject constructor(
         var totalImageBytes = 0
         attachments
                 .filter { attachment -> !attachment.isGif(context) }
-                .map { attachment -> attachment.getUri() }
-                .map { uri -> RxImageConverters.uriToBitmap(context, uri).blockingFirst() }
+                .mapNotNull { attachment -> attachment.getUri() }
+                .mapNotNull { uri -> imageRepository.loadImage(uri) }
                 .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
                 .map { bitmap ->
                     val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()

@@ -5,14 +5,40 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
+import android.support.media.ExifInterface
 import util.tryOrNull
 import javax.inject.Inject
 
 class ImageRepostoryImpl @Inject constructor(private val context: Context) : ImageRepository {
+
+    override fun loadImage(uri: Uri): Bitmap? {
+        val exif = ExifInterface(context.contentResolver.openInputStream(uri))
+        val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+
+        return when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270f)
+            else -> bitmap
+        }
+    }
+
+    private fun rotateBitmap(bitmap: Bitmap, degree: Float): Bitmap {
+        val w = bitmap.width
+        val h = bitmap.height
+
+        val mtx = Matrix()
+        mtx.postRotate(degree)
+
+        return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true)
+    }
 
     override fun saveImage(uri: Uri) {
         val bitmap = tryOrNull { MediaStore.Images.Media.getBitmap(context.contentResolver, uri) }
