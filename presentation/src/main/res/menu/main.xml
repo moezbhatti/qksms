@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -35,17 +34,17 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/block"
-        android:icon="@drawable/ic_block_black_24dp"
-        android:title="@string/main_menu_block"
-        android:visible="false"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/delete"
         android:icon="@drawable/ic_delete_black_24dp"
         android:title="@string/main_menu_delete"
         android:visible="false"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/block"
+        android:icon="@drawable/ic_block_black_24dp"
+        android:title="@string/main_menu_block"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 
 </menu>
