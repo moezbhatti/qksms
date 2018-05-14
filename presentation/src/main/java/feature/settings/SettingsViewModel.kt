@@ -59,9 +59,15 @@ class SettingsViewModel @Inject constructor(
                 }
 
         disposables += prefs.nightStart.asObservable()
+                .map { time -> nightModeManager.parseTime(time) }
+                .map { calendar -> calendar.timeInMillis }
+                .map { millis -> dateFormatter.getTimestamp(millis) }
                 .subscribe { nightStart -> newState { it.copy(nightStart = nightStart) } }
 
         disposables += prefs.nightEnd.asObservable()
+                .map { time -> nightModeManager.parseTime(time) }
+                .map { calendar -> calendar.timeInMillis }
+                .map { millis -> dateFormatter.getTimestamp(millis) }
                 .subscribe { nightEnd -> newState { it.copy(nightEnd = nightEnd) } }
 
         disposables += prefs.black.asObservable()
@@ -117,12 +123,12 @@ class SettingsViewModel @Inject constructor(
                         R.id.night -> view.showNightModeDialog()
 
                         R.id.nightStart -> {
-                            val date = dateFormatter.parseTime(prefs.nightStart.get())
+                            val date = nightModeManager.parseTime(prefs.nightStart.get())
                             view.showStartTimePicker(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE))
                         }
 
                         R.id.nightEnd -> {
-                            val date = dateFormatter.parseTime(prefs.nightEnd.get())
+                            val date = nightModeManager.parseTime(prefs.nightEnd.get())
                             view.showEndTimePicker(date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE))
                         }
 
@@ -173,16 +179,12 @@ class SettingsViewModel @Inject constructor(
                 .subscribe { navigator.showQksmsPlusActivity() }
 
         view.startTimeSelectedIntent
-                .doOnNext { nightModeManager.updateAlarms() }
-                .map { dateFormatter.formatTime(it.first, it.second) }
                 .autoDisposable(view.scope())
-                .subscribe { prefs.nightStart.set(it) }
+                .subscribe { nightModeManager.setNightStart(it.first, it.second) }
 
         view.endTimeSelectedIntent
-                .doOnNext { nightModeManager.updateAlarms() }
-                .map { dateFormatter.formatTime(it.first, it.second) }
                 .autoDisposable(view.scope())
-                .subscribe { prefs.nightEnd.set(it) }
+                .subscribe { nightModeManager.setNightEnd(it.first, it.second) }
 
         view.textSizeSelectedIntent
                 .autoDisposable(view.scope())

@@ -24,6 +24,8 @@ import android.content.Context
 import android.content.Intent
 import receiver.NightModeReceiver
 import util.Preferences
+import util.tryOrNull
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -32,7 +34,6 @@ import javax.inject.Singleton
 @Singleton
 class NightModeManager @Inject constructor(
         private val context: Context,
-        private val dateFormatter: DateFormatter,
         private val prefs: Preferences) {
 
     fun updateCurrentTheme() {
@@ -59,7 +60,17 @@ class NightModeManager @Inject constructor(
         updateAlarms()
     }
 
-    fun updateAlarms() {
+    fun setNightStart(hour: Int, minute: Int) {
+        prefs.nightStart.set("$hour:$minute")
+        updateAlarms()
+    }
+
+    fun setNightEnd(hour: Int, minute: Int) {
+        prefs.nightEnd.set("$hour:$minute")
+        updateAlarms()
+    }
+
+    private fun updateAlarms() {
         val dayCalendar = createCalendar(prefs.nightEnd.get())
         val day = Intent(context, NightModeReceiver::class.java)
         val dayIntent = PendingIntent.getBroadcast(context, 0, day, 0)
@@ -82,12 +93,26 @@ class NightModeManager @Inject constructor(
     }
 
     private fun createCalendar(time: String): Calendar {
-        val calendar = dateFormatter.parseTime(time)
+        val calendar = parseTime(time)
 
         return Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY))
             set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
         }
+    }
+
+    /**
+     * Parses the hour and minute out of the [time], which should be formatted h:mm
+     */
+    fun parseTime(time: String): Calendar {
+        return tryOrNull {
+            val parsedTime = SimpleDateFormat("H:mm", Locale.US).parse(time)
+            Calendar.getInstance().apply { this.time = parsedTime }
+        } ?: tryOrNull {
+            // Parse the legacy timestamp format (<=3.1.3)
+            val parsedTime = SimpleDateFormat("h:mm a", Locale.US).parse(time)
+            Calendar.getInstance().apply { this.time = parsedTime }
+        } ?: Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 18) }
     }
 
     /**

@@ -71,18 +71,4 @@ class DateFormatter @Inject constructor(val context: Context) {
         }.format(date)
     }
 
-    fun formatTime(hour: Int, minute: Int): String {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-
-        val simpleDateFormat = getFormatter("h:mm a")
-        return simpleDateFormat.format(calendar.time)
-    }
-
-    fun parseTime(time: String): Calendar {
-        val simpleDateFormat = if (time.contains(" ")) getFormatter("h:mm a") else SimpleDateFormat("H:mm", Locale.getDefault())
-        return Calendar.getInstance().apply { this.time = simpleDateFormat.parse(time) }
-    }
-
 }
