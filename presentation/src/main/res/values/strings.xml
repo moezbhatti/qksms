@@ -124,6 +124,8 @@
     <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
     <string name="settings_blocking_title">Blocking</string>
+
+    <string name="error_sms_permissions">Couldn\'t send SMS due to lack of permission</string>
     <!-- Do not translate -->
     <string name="settings_should_i_answer_title">Should I Answer?</string>
     <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
