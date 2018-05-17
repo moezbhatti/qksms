@@ -64,6 +64,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
+    @Inject lateinit var searchAdapter: SearchAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -202,7 +203,7 @@ class MainActivity : QkThemedActivity(), MainView {
             else -> 0
         }
 
-        toolbarSearch.setVisible(state.page is Inbox && state.page.selected == 0)
+        toolbarSearch.setVisible(state.page is Inbox && state.page.selected == 0 || state.page is Searching)
         toolbarTitle.setVisible(toolbarSearch.visibility != View.VISIBLE)
 
         toolbar.menu.findItem(R.id.archive)?.isVisible = state.page is Inbox && selectedConversations != 0
@@ -219,12 +220,17 @@ class MainActivity : QkThemedActivity(), MainView {
                 showBackButton(state.page.showClearButton)
                 title = getString(R.string.main_title_selected, state.page.selected)
                 if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                conversationsAdapter.flowable = state.page.data
+                conversationsAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(recyclerView)
-                empty.setText(when (state.page.showClearButton) {
-                    true -> R.string.inbox_search_empty_text
-                    false -> R.string.inbox_empty_text
-                })
+                empty.setText(R.string.inbox_empty_text)
+            }
+
+            is Searching -> {
+                showBackButton(true)
+                if (recyclerView.adapter !== searchAdapter) recyclerView.adapter = searchAdapter
+                searchAdapter.data = state.page.data ?: listOf()
+                itemTouchHelper.attachToRecyclerView(null)
+                empty.setText(R.string.inbox_search_empty_text)
             }
 
             is Archived -> {
@@ -234,7 +240,7 @@ class MainActivity : QkThemedActivity(), MainView {
                     false -> getString(R.string.title_archived)
                 }
                 if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
-                conversationsAdapter.flowable = state.page.data
+                conversationsAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(null)
                 empty.setText(R.string.archived_empty_text)
             }

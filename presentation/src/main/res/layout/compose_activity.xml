@@ -224,17 +224,35 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/toolbarLight">
 
-        <common.widget.QkTextView
-            android:id="@+id/toolbarTitle"
-            style="@style/ToolbarText" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/chips"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
-            tools:visibility="gone" />
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <common.widget.QkTextView
+                android:id="@+id/toolbarTitle"
+                style="@style/ToolbarText"
+                android:layout_height="wrap_content"
+                tools:text="Moez Bhatti" />
+
+            <common.widget.QkTextView
+                android:id="@+id/toolbarSubtitle"
+                style="@style/ToolbarText"
+                android:visibility="gone"
+                app:textColor="tertiary"
+                app:textSize="secondary"
+                tools:text="3 of 9 results" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/chips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                tools:visibility="gone" />
+
+        </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
 

@@ -32,10 +32,11 @@ import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
 import com.klinker.android.send_message.BroadcastUtils
 import com.klinker.android.send_message.StripAccents
-import io.reactivex.Flowable
+import filter.ConversationFilter
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
@@ -46,6 +47,7 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.MmsPart
+import model.SearchResult
 import util.MessageUtils
 import util.Preferences
 import util.extensions.anyOf
@@ -59,13 +61,13 @@ import javax.inject.Singleton
 class MessageRepositoryImpl @Inject constructor(
         private val context: Context,
         private val messageIds: KeyManager,
+        private val conversationFilter: ConversationFilter,
         private val cursorToConversation: CursorToConversation,
         private val cursorToRecipient: CursorToRecipient,
         private val prefs: Preferences) : MessageRepository {
 
-    override fun getConversations(archived: Boolean): Flowable<List<Conversation>> {
-        val realm = Realm.getDefaultInstance()
-        return realm
+    override fun getConversations(archived: Boolean): RealmResults<Conversation> {
+        return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
                 .notEqualTo("id", 0L)
                 .greaterThan("count", 0)
@@ -74,10 +76,6 @@ class MessageRepositoryImpl @Inject constructor(
                 .isNotEmpty("recipients")
                 .sort("date", Sort.DESCENDING)
                 .findAllAsync()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .filter { it.isValid }
-                .map { conversations -> realm.copyFromRealm(conversations) }
     }
 
     override fun getConversationsSnapshot(): List<Conversation> {
@@ -90,6 +88,25 @@ class MessageRepositoryImpl @Inject constructor(
                 .isNotEmpty("recipients")
                 .sort("date", Sort.DESCENDING)
                 .findAll())
+    }
+
+    override fun searchConversations(query: String): List<SearchResult> {
+        val conversations = getConversationsSnapshot()
+
+        val messagesByConversation = Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .contains("body", query, Case.INSENSITIVE)
+                .findAll()
+                .groupBy { message -> message.threadId }
+                .filter { (threadId, _) -> conversations.firstOrNull { it.id == threadId } != null }
+                .map { (threadId, messages) -> Pair(conversations.first { it.id == threadId }, messages.size) }
+                .map { (conversation, messages) -> SearchResult(query, conversation, messages) }
+                .sortedByDescending { result -> result.messages }
+
+        return conversations
+                .filter { conversation -> conversationFilter.filter(conversation, query)  }
+                .map { conversation -> SearchResult(query, conversation, 0) }
+                .plus(messagesByConversation)
     }
 
     override fun getBlockedConversations(): RealmResults<Conversation> {
@@ -166,10 +183,11 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getMessages(threadId: Long): RealmResults<Message> {
+    override fun getMessages(threadId: Long, query: String): RealmResults<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
+                .let { if (query.isEmpty()) it else it.contains("body", query, Case.INSENSITIVE) }
                 .sort("date")
                 .findAllAsync()
     }

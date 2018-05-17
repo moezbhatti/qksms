@@ -56,6 +56,8 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
     }
 
     override fun updateData(data: OrderedRealmCollection<T>?) {
+        if (getData() === data) return
+
         removeListener(getData())
         addListener(data)
 

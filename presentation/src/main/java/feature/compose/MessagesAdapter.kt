@@ -103,6 +103,17 @@ class MessagesAdapter @Inject constructor(
     private val conversation: Conversation?
         get() = data?.first?.takeIf { it.isValid }
 
+    /**
+     * Mark this message as highlighted
+     */
+    var highlight: Long = -1L
+        set(value) {
+            if (field == value) return
+
+            field = value
+            notifyDataSetChanged()
+        }
+
     private val layoutInflater = LayoutInflater.from(context)
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
@@ -178,7 +189,7 @@ class MessagesAdapter @Inject constructor(
 
 
         // Update the selected state
-        view.isSelected = isSelected(message.id)
+        view.isSelected = isSelected(message.id) || highlight == message.id
 
 
         // Bind the cancel view

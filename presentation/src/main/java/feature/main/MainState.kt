@@ -18,8 +18,9 @@
  */
 package feature.main
 
-import io.reactivex.Flowable
+import io.realm.RealmResults
 import model.Conversation
+import model.SearchResult
 import repository.SyncRepository
 
 data class MainState(
@@ -37,13 +38,18 @@ sealed class MainPage
 
 data class Inbox(
         val showClearButton: Boolean = false,
-        val data: Flowable<List<Conversation>>? = null,
+        val data: RealmResults<Conversation>? = null,
         val selected: Int = 0,
         val showArchivedSnackbar: Boolean = false) : MainPage()
 
+data class Searching(
+        val loading: Boolean = false,
+        val data: List<SearchResult>? = null
+) : MainPage()
+
 data class Archived(
         val showClearButton: Boolean = false,
-        val data: Flowable<List<Conversation>>? = null,
+        val data: RealmResults<Conversation>? = null,
         val selected: Int = 0) : MainPage()
 
 data class Scheduled(

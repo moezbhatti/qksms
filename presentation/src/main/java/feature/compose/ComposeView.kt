@@ -48,6 +48,7 @@ interface ComposeView : QkView<ComposeState> {
 
     fun clearSelection()
     fun setDraft(draft: String)
+    fun scrollToMessage(id: Long)
     val backPressedIntent: Observable<Unit>
 
 }

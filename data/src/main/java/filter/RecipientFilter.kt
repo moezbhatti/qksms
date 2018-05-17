@@ -16,15 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package common.util.filter
+package filter
 
-import model.Conversation
+import model.Recipient
 import javax.inject.Inject
 
-class ConversationFilter @Inject constructor(private val recipientFilter: RecipientFilter) : Filter<Conversation>() {
+class RecipientFilter @Inject constructor(
+        private val contactFilter: ContactFilter,
+        private val phoneNumberFilter: PhoneNumberFilter)
+    : Filter<Recipient>() {
 
-    override fun filter(item: Conversation, query: CharSequence): Boolean {
-        return item.recipients.any { recipient -> recipientFilter.filter(recipient, query) }
+    override fun filter(item: Recipient, query: CharSequence) = when {
+        item.contact?.let { contactFilter.filter(it, query) } == true -> true
+        phoneNumberFilter.filter(item.address, query) -> true
+        else -> false
     }
 
 }

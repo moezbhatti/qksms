@@ -54,5 +54,26 @@
         android:visible="false"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/previous"
+        android:icon="@drawable/ic_keyboard_arrow_up_black_24dp"
+        android:title="@string/compose_menu_previous"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/next"
+        android:icon="@drawable/ic_keyboard_arrow_down_black_24dp"
+        android:title="@string/compose_menu_next"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/clear"
+        android:icon="@drawable/ic_clear_black_24dp"
+        android:title="@string/compose_menu_clear"
+        android:visible="false"
+        app:showAsAction="always" />
+
 
 </menu>

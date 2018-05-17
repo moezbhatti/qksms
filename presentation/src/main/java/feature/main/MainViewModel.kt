@@ -23,7 +23,6 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
-import common.util.filter.ConversationFilter
 import interactor.DeleteConversations
 import interactor.MarkAllSeen
 import interactor.MarkArchived
@@ -32,9 +31,11 @@ import interactor.MarkUnarchived
 import interactor.MigratePreferences
 import interactor.SyncMessages
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import manager.PermissionManager
 import manager.RatingManager
@@ -46,7 +47,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-        private val conversationFilter: ConversationFilter,
         private val messageRepo: MessageRepository,
         private val markAllSeen: MarkAllSeen,
         private val deleteConversations: DeleteConversations,
@@ -59,9 +59,7 @@ class MainViewModel @Inject constructor(
         private val ratingManager: RatingManager,
         private val syncMessages: SyncMessages,
         private val syncRepository: SyncRepository
-) : QkViewModel<MainView, MainState>(MainState()) {
-
-    private val conversations = messageRepo.getConversations()
+) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = messageRepo.getConversations()))) {
 
     init {
         disposables += deleteConversations
@@ -132,18 +130,25 @@ class MainViewModel @Inject constructor(
 
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .map { query -> query.removeAccents() }
                 .withLatestFrom(state, { query, state ->
-                    if (state.page is Inbox) {
-                        val filteredConversations = if (query.isEmpty()) conversations
-                        else conversations.map { conversations -> conversations.filter { conversationFilter.filter(it, query) } }
-
-                        val page = state.page.copy(showClearButton = query.isNotEmpty(), data = filteredConversations)
-                        newState { it.copy(page = page) }
+                    if (query.isEmpty() && state.page is Searching) {
+                        newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
                     }
+                    query
                 })
+                .filter { query -> query.length >= 2 }
+                .doOnNext {
+                    newState { state ->
+                        val page = (state.page as? Searching) ?: Searching()
+                        state.copy(page = page.copy(loading = true))
+                    }
+                }
+                .observeOn(Schedulers.io())
+                .switchMap { query -> Observable.just(query).map { messageRepo.searchConversations(it) } }
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { data -> newState { it.copy(page = Searching(loading = false, data = data)) } }
 
         view.composeIntent
                 .autoDisposable(view.scope())
@@ -152,6 +157,8 @@ class MainViewModel @Inject constructor(
         view.homeIntent
                 .withLatestFrom(state, { _, state ->
                     when {
+                        state.page is Searching -> view.clearSearch()
+
                         state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
                         state.page is Inbox && state.page.showClearButton -> view.clearSearch()
 
@@ -175,7 +182,7 @@ class MainViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = conversations)) }
+                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
                         DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(data = messageRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
                         else -> {
@@ -289,12 +296,14 @@ class MainViewModel @Inject constructor(
                     when {
                         state.drawerOpen -> newState { it.copy(drawerOpen = false) }
 
+                        state.page is Searching -> view.clearSearch()
+
                         state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
                         state.page is Inbox && state.page.showClearButton -> view.clearSearch()
 
                         state.page is Archived && state.page.selected > 0 -> view.clearSelection()
 
-                        state.page !is Inbox -> newState { it.copy(page = Inbox(data = conversations)) }
+                        state.page !is Inbox -> newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
 
                         else -> newState { it.copy(hasError = true) }
                     }

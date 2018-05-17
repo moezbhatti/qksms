@@ -20,6 +20,8 @@ package common.base
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
+import android.view.View
+import common.util.extensions.setVisible
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 
@@ -36,7 +38,18 @@ abstract class QkAdapter<T> : RecyclerView.Adapter<QkViewHolder>() {
             val diff = DiffUtil.calculateDiff(getDiffUtilCallback(field, value))
             field = value
             diff.dispatchUpdatesTo(this)
-            onDatasetChanged()
+
+            emptyView?.setVisible(value.isEmpty())
+        }
+
+    /**
+     * This view can be set, and the adapter will automatically control the visibility of this view
+     * based on the data
+     */
+    var emptyView: View? = null
+        set(value) {
+            field = value
+            value?.setVisible(false)
         }
 
     val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()

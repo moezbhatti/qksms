@@ -171,10 +171,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         threadId.onNext(state.selectedConversation)
 
-        title = when (state.selectedMessages) {
-            0 -> state.conversationtitle
-            else -> getString(R.string.compose_title_selected, state.selectedMessages)
+        title = when {
+            state.selectedMessages > 0 -> getString(R.string.compose_title_selected, state.selectedMessages)
+            state.query.isNotEmpty() -> state.query
+            else -> state.conversationtitle
         }
+
+        toolbarSubtitle.setVisible(state.query.isNotEmpty())
+        toolbarSubtitle.text = getString(R.string.compose_subtitle_results, state.searchSelectionPosition, state.searchResults)
 
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
@@ -185,11 +189,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         if (state.editingMode && chips.adapter == null) chips.adapter = chipsAdapter
         if (state.editingMode && contacts.adapter == null) contacts.adapter = contactsAdapter
 
-        toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0
-        toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0
+        toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
+        toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
         toolbar.menu.findItem(R.id.copy)?.isVisible = !state.editingMode && state.selectedMessages == 1
         toolbar.menu.findItem(R.id.delete)?.isVisible = !state.editingMode && state.selectedMessages > 0
         toolbar.menu.findItem(R.id.forward)?.isVisible = !state.editingMode && state.selectedMessages == 1
+        toolbar.menu.findItem(R.id.previous)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
+        toolbar.menu.findItem(R.id.next)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
+        toolbar.menu.findItem(R.id.clear)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
 
         if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
             message.showKeyboard()
@@ -198,6 +205,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         chipsAdapter.data = state.selectedContacts
         contactsAdapter.data = state.contacts
         messageAdapter.data = state.messages
+        messageAdapter.highlight = state.searchSelectionId
 
         attachments.setVisible(state.attachments.isNotEmpty())
         attachmentAdapter.data = state.attachments
@@ -220,6 +228,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         message.setText(draft)
     }
 
+    override fun scrollToMessage(id: Long) {
+        messageAdapter.data?.second
+                ?.indexOfLast { message -> message.id == id }
+                ?.takeIf { position -> position != -1 }
+                ?.let(messageList::scrollToPosition)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.compose, menu)
         return super.onCreateOptionsMenu(menu)
@@ -228,6 +243,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         optionsItemIntent.onNext(item.itemId)
         return true
+    }
+
+    override fun getColoredMenuItems(): List<Int> {
+        return super.getColoredMenuItems() + R.id.call
     }
 
     override fun onBackPressed() {

@@ -27,7 +27,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
 import common.Navigator
-import common.base.FlowableAdapter
+import common.base.QkRealmAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
@@ -42,7 +42,7 @@ class ConversationsAdapter @Inject constructor(
         private val colors: Colors,
         private val dateFormatter: DateFormatter,
         private val navigator: Navigator
-) : FlowableAdapter<Conversation>() {
+) : QkRealmAdapter<Conversation>() {
 
     private val disposables = CompositeDisposable()
 
@@ -72,7 +72,7 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val conversation = getItem(position)
+        val conversation = getItem(position)!!
         val view = viewHolder.itemView
 
         view.clicks().subscribe {
@@ -103,14 +103,10 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun getItemId(index: Int): Long {
-        return getItem(index).id
+        return getItem(index)!!.id
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).read) 0 else 1
-    }
-
-    override fun areItemsTheSame(old: Conversation, new: Conversation): Boolean {
-        return old.id == new.id
+        return if (getItem(position)!!.read) 0 else 1
     }
 }

@@ -18,18 +18,20 @@
  */
 package repository
 
-import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.realm.RealmResults
 import model.Conversation
 import model.Message
 import model.MmsPart
+import model.SearchResult
 
 interface MessageRepository {
 
-    fun getConversations(archived: Boolean = false): Flowable<List<Conversation>>
+    fun getConversations(archived: Boolean = false): RealmResults<Conversation>
 
     fun getConversationsSnapshot(): List<Conversation>
+
+    fun searchConversations(query: String): List<SearchResult>
 
     fun getBlockedConversations(): RealmResults<Conversation>
 
@@ -45,7 +47,7 @@ interface MessageRepository {
 
     fun saveDraft(threadId: Long, draft: String)
 
-    fun getMessages(threadId: Long): RealmResults<Message>
+    fun getMessages(threadId: Long, query: String = ""): RealmResults<Message>
 
     fun getMessage(id: Long): Message?
 

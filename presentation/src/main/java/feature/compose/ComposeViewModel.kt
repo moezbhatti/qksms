@@ -33,7 +33,7 @@ import common.Navigator
 import common.base.QkViewModel
 import common.util.ClipboardUtils
 import common.util.extensions.makeToast
-import common.util.filter.ContactFilter
+import filter.ContactFilter
 import interactor.CancelDelayedMessage
 import interactor.ContactSync
 import interactor.DeleteMessages
@@ -64,7 +64,6 @@ import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import javax.inject.Named
 
 class ComposeViewModel @Inject constructor(
         private val intent: Intent,
@@ -79,19 +78,19 @@ class ComposeViewModel @Inject constructor(
         private val retrySending: RetrySending,
         private val markRead: MarkRead,
         private val deleteMessages: DeleteMessages
-) : QkViewModel<ComposeView, ComposeState>(ComposeState()) {
+) : QkViewModel<ComposeView, ComposeState>(ComposeState(query = intent.extras?.getString("query") ?: "")) {
 
-    private var sharedText: String = ""
+    private var sharedText: String = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
     private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(ArrayList())
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Observable<List<Contact>>
+    private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
+    private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
     private val messages: Subject<List<Message>> = BehaviorSubject.create()
 
     init {
-        sharedText = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
-
         // If there are any image attachments, we'll set those as the initial attachments for the
         // conversation
         val sharedImages = mutableListOf<Uri>()
@@ -175,6 +174,25 @@ class ComposeViewModel @Inject constructor(
 
         disposables += attachments
                 .subscribe { attachments -> newState { it.copy(attachments = attachments) } }
+
+        disposables += conversation
+                .map { conversation -> conversation.id }
+                .distinctUntilChanged()
+                .withLatestFrom(state) { id, state -> messageRepo.getMessages(id, state.query) }
+                .switchMap { messages -> messages.asObservable() }
+                .takeUntil(state.map { it.query }.filter { it.isEmpty() })
+                .filter { messages -> messages.isLoaded }
+                .filter { messages -> messages.isValid }
+                .subscribe(searchResults::onNext)
+
+        disposables += Observables.combineLatest(searchSelection, searchResults) { selected, messages ->
+            if (selected == -1L) {
+                messages.lastOrNull()?.let { message -> searchSelection.onNext(message.id) }
+            } else {
+                val position = messages.indexOfFirst { it.id == selected } + 1
+                newState { it.copy(searchSelectionPosition = position, searchResults = messages.size) }
+            }
+        }.subscribe()
 
         if (threadId == 0L) {
             syncContacts.execute(Unit)
@@ -313,6 +331,48 @@ class ComposeViewModel @Inject constructor(
                 })
                 .autoDisposable(view.scope())
                 .subscribe { view.clearSelection() }
+
+
+        // Show the previous search result
+        view.optionsItemIntent
+                .filter { it == R.id.previous }
+                .withLatestFrom(searchSelection, searchResults) { _, selection, messages ->
+                    val currentPosition = messages.indexOfFirst { it.id == selection }
+                    if (currentPosition <= 0L) messages.lastOrNull()?.id ?: -1
+                    else messages.getOrNull(currentPosition - 1)?.id ?: -1
+                }
+                .filter { id -> id != -1L }
+                .autoDisposable(view.scope())
+                .subscribe(searchSelection)
+
+
+        // Show the next search result
+        view.optionsItemIntent
+                .filter { it == R.id.next }
+                .withLatestFrom(searchSelection, searchResults) { _, selection, messages ->
+                    val currentPosition = messages.indexOfFirst { it.id == selection }
+                    if (currentPosition >= messages.size - 1) messages.firstOrNull()?.id ?: -1
+                    else messages.getOrNull(currentPosition + 1)?.id ?: -1
+                }
+                .filter { id -> id != -1L }
+                .autoDisposable(view.scope())
+                .subscribe(searchSelection)
+
+
+        // Clear the search
+        view.optionsItemIntent
+                .filter { it == R.id.clear }
+                .autoDisposable(view.scope())
+                .subscribe { newState { it.copy(query = "", searchSelectionId = -1) } }
+
+
+        // Scroll to search position
+        searchSelection
+                .filter { id -> id != -1L }
+                .doOnNext { id -> newState { it.copy(searchSelectionId = id) } }
+                .autoDisposable(view.scope())
+                .subscribe(view::scrollToMessage)
+
 
         // Retry sending
         view.messageClickIntent

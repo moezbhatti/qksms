@@ -16,18 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package common.util.filter
+package filter
 
-import android.telephony.PhoneNumberUtils
+import model.Conversation
 import javax.inject.Inject
 
-class PhoneNumberFilter @Inject constructor() : Filter<String>() {
+class ConversationFilter @Inject constructor(private val recipientFilter: RecipientFilter) : Filter<Conversation>() {
 
-    override fun filter(item: String, query: CharSequence): Boolean {
-        val allCharactersDialable = query.all { PhoneNumberUtils.isReallyDialable(it) }
-
-        return allCharactersDialable && (PhoneNumberUtils.compare(item, query.toString()) ||
-                PhoneNumberUtils.stripSeparators(item).contains(PhoneNumberUtils.stripSeparators(query.toString())))
+    override fun filter(item: Conversation, query: CharSequence): Boolean {
+        return item.recipients.any { recipient -> recipientFilter.filter(recipient, query) }
     }
 
 }

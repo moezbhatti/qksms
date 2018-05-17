@@ -204,6 +204,11 @@ class Colors @Inject constructor(private val context: Context, private val prefs
             .map { res -> getColor(res) }
             .distinctUntilChanged()
 
+    val highlightColor: Observable<Int> = theme
+            .map { theme -> FloatArray(3).apply { Color.colorToHSV(theme, this) } }
+            .map { hsv -> hsv.apply { set(2, 0.75f) } } // 75% value
+            .map { hsv -> Color.HSVToColor(85, hsv) } // 33% alpha
+
     val textPrimaryOnTheme = textPrimaryOnThemeForConversation()
 
     val textSecondaryOnTheme = textSecondaryOnThemeForConversation()

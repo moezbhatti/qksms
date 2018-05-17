@@ -82,14 +82,14 @@ abstract class QkThemedActivity : QkActivity() {
         super.onPostCreate(savedInstanceState)
 
         // Update the colours of the menu items
-        Observables.combineLatest(menu, theme, colors.textTertiary, { menu, theme, textTertiary ->
+        Observables.combineLatest(menu, theme, colors.textSecondary, { menu, theme, text ->
             (0 until menu.size())
                     .map { position -> menu.getItem(position) }
                     .forEach { menuItem ->
                         menuItem?.icon?.run {
                             setTint(when (menuItem.itemId) {
-                                R.id.info -> textTertiary
-                                else -> theme
+                                in getColoredMenuItems() -> theme
+                                else -> text
                             })
 
                             menuItem.icon = this
@@ -117,6 +117,10 @@ abstract class QkThemedActivity : QkActivity() {
                 }
                 .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { color -> toolbar?.setBackgroundTint(color) }
+    }
+
+    open fun getColoredMenuItems(): List<Int> {
+        return listOf()
     }
 
     /**
