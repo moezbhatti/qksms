@@ -18,6 +18,7 @@
  */
 package feature.compose
 
+import android.net.Uri
 import android.support.v13.view.inputmethod.InputContentInfoCompat
 import common.base.QkView
 import io.reactivex.Observable
@@ -43,10 +44,14 @@ interface ComposeView : QkView<ComposeState> {
     val attachIntent: Observable<Unit>
     val cameraIntent: Observable<*>
     val galleryIntent: Observable<*>
+    val attachmentSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
     val sendIntent: Observable<Unit>
 
     fun clearSelection()
+    fun requestStoragePermission()
+    fun requestCamera()
+    fun requestGallery()
     fun setDraft(draft: String)
     fun scrollToMessage(id: Long)
     val backPressedIntent: Observable<Unit>

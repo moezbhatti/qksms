@@ -24,8 +24,6 @@ import android.net.Uri
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.view.inputmethod.EditorInfo
-import com.mlsdev.rximagepicker.RxImagePicker
-import com.mlsdev.rximagepicker.Sources
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -50,6 +48,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmList
+import manager.PermissionManager
 import model.Contact
 import model.Conversation
 import model.Message
@@ -72,13 +71,14 @@ class ComposeViewModel @Inject constructor(
         private val cancelMessage: CancelDelayedMessage,
         private val contactFilter: ContactFilter,
         private val contactsRepo: ContactRepository,
+        private val deleteMessages: DeleteMessages,
+        private val markRead: MarkRead,
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
-        private val syncContacts: ContactSync,
-        private val sendMessage: SendMessage,
+        private val permissionManager: PermissionManager,
         private val retrySending: RetrySending,
-        private val markRead: MarkRead,
-        private val deleteMessages: DeleteMessages
+        private val sendMessage: SendMessage,
+        private val syncContacts: ContactSync
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(query = intent.extras?.getString("query") ?: "")) {
 
     private var sharedText: String = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
@@ -421,25 +421,23 @@ class ComposeViewModel @Inject constructor(
 
         // Attach a photo from camera
         view.cameraIntent
-                .flatMap { RxImagePicker.with(context).requestImage(Sources.CAMERA) }
-                .map { uri -> Attachment(uri) }
-                .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
-                .doOnNext { attachments.onNext(it) }
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(attaching = false) } }
+                .subscribe {
+                    when (permissionManager.hasStorage()) {
+                        true -> view.requestCamera()
+                        false -> view.requestStoragePermission()
+                    }
+                }
 
         // Attach a photo from gallery
         view.galleryIntent
-                .flatMap { RxImagePicker.with(context).requestImage(Sources.GALLERY) }
-                .map { uri -> Attachment(uri) }
-                .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
-                .doOnNext { attachments.onNext(it) }
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(attaching = false) } }
+                .subscribe { view.requestGallery() }
 
-        // Attach media from the keyboard
-        view.inputContentIntent
-                .map { inputContent -> Attachment(uri = null, inputContent = inputContent) }
+        // A photo was selected
+        Observable.merge(
+                view.attachmentSelectedIntent.map { uri -> Attachment(uri) },
+                view.inputContentIntent.map { inputContent -> Attachment(inputContent = inputContent) })
                 .withLatestFrom(attachments, { attachment, attachments -> attachments + attachment })
                 .doOnNext { attachments.onNext(it) }
                 .autoDisposable(view.scope())

@@ -28,4 +28,6 @@ interface PermissionManager {
 
     fun hasContacts(): Boolean
 
+    fun hasStorage(): Boolean
+
 }

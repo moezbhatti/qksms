@@ -18,11 +18,18 @@
  */
 package feature.compose
 
+import android.Manifest
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.ContentValues
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -46,9 +53,17 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
 import model.Contact
 import model.Message
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
+
 class ComposeActivity : QkThemedActivity(), ComposeView {
+
+    companion object {
+        const val CAMERA_REQUEST_CODE = 0
+        const val GALLERY_REQUEST_CODE = 1
+    }
 
     @Inject lateinit var attachmentAdapter: AttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
@@ -72,11 +87,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val attachIntent by lazy { attach.clicks() }
     override val cameraIntent by lazy { camera.clicks() }
     override val galleryIntent by lazy { gallery.clicks() }
+    override val attachmentSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { message.inputContentSelected }
     override val sendIntent by lazy { send.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
+
+    var cameraDestination: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -224,6 +242,30 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         messageAdapter.clearSelection()
     }
 
+    override fun requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+    }
+
+    override fun requestCamera() {
+        cameraDestination = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+                .let { timestamp -> ContentValues().apply { put(MediaStore.Images.Media.TITLE, timestamp) } }
+                .let { cv -> contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv) }
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                .putExtra(MediaStore.EXTRA_OUTPUT, cameraDestination)
+        startActivityForResult(intent, CAMERA_REQUEST_CODE)
+    }
+
+    override fun requestGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+                .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                .putExtra(Intent.EXTRA_LOCAL_ONLY, false)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .setType("image/*")
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+
     override fun setDraft(draft: String) {
         message.setText(draft)
     }
@@ -247,6 +289,16 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun getColoredMenuItems(): List<Int> {
         return super.getColoredMenuItems() + R.id.call
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                CAMERA_REQUEST_CODE -> cameraDestination
+                GALLERY_REQUEST_CODE -> data?.data
+                else -> null
+            }?.let(attachmentSelectedIntent::onNext)
+        }
     }
 
     override fun onBackPressed() {
