@@ -81,6 +81,7 @@ class SyncRepositoryImpl @Inject constructor(
                 .findAll()
                 .map { PersistedData(it.id, it.archived, it.blocked) }
 
+        realm.delete(Contact::class.java)
         realm.delete(Conversation::class.java)
         realm.delete(Message::class.java)
         realm.delete(MmsPart::class.java)
@@ -120,7 +121,16 @@ class SyncRepositoryImpl @Inject constructor(
 
         // Sync recipients
         cursorToRecipient.getRecipientCursor()?.use { recipientCursor ->
-            val recipients = recipientCursor.map { cursor -> cursorToRecipient.map(cursor) }
+            val contacts = realm.copyToRealm(getContacts())
+            val recipients = recipientCursor
+                    .map { cursor -> cursorToRecipient.map(cursor) }
+                    .map { recipient ->
+                        recipient.apply {
+                            contact = contacts.firstOrNull { contact ->
+                                contact.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                            }
+                        }
+                    }
             realm.insertOrUpdate(recipients)
         }
 
@@ -131,8 +141,6 @@ class SyncRepositoryImpl @Inject constructor(
 
         // Only delete this after the sync has successfully completed
         oldBlockedSenders.delete()
-
-        syncContacts()
 
         syncProgress.onNext(SyncRepository.SyncProgress.Idle())
     }
@@ -183,16 +191,7 @@ class SyncRepositoryImpl @Inject constructor(
 
     override fun syncContacts() {
         // Load all the contacts
-        var contacts = cursorToContact.getContactsCursor()
-                ?.map { cursor -> cursorToContact.map(cursor) }
-                ?.groupBy { contact -> contact.lookupKey }
-                ?.map { contacts ->
-                    val allNumbers = contacts.value.map { it.numbers }.flatten()
-                    contacts.value.first().apply {
-                        numbers.clear()
-                        numbers.addAll(allNumbers)
-                    }
-                } ?: listOf()
+        var contacts = getContacts()
 
         Realm.getDefaultInstance()?.use { realm ->
             val recipients = realm.where(Recipient::class.java).findAll()
@@ -215,6 +214,19 @@ class SyncRepositoryImpl @Inject constructor(
             }
 
         }
+    }
+
+    private fun getContacts(): List<Contact> {
+        return cursorToContact.getContactsCursor()
+                ?.map { cursor -> cursorToContact.map(cursor) }
+                ?.groupBy { contact -> contact.lookupKey }
+                ?.map { contacts ->
+                    val allNumbers = contacts.value.map { it.numbers }.flatten()
+                    contacts.value.first().apply {
+                        numbers.clear()
+                        numbers.addAll(allNumbers)
+                    }
+                } ?: listOf()
     }
 
 }
