@@ -140,7 +140,7 @@
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
     <string name="settings_unicode_title">Strip accents</string>
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-    <string name="settings_mms_size_title">Max MMS attachment size</string>
+    <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
     <string name="settings_about_title">About QKSMS</string>
@@ -256,11 +256,11 @@
     <string-array name="mms_sizes">
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB</item>
+        <item>300KB (Recommended)</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No limit</item>
+        <item>No compression</item>
     </string-array>
 
     <integer-array name="mms_sizes_ids">
