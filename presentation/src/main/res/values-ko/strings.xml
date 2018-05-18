@@ -28,16 +28,33 @@
   <string name="title_conversations">수신함에서 찾기...</string>
   <string name="title_compose">문자작성</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="main_default_sms_title">다시 문자를 즐겁게</string>
-  <string name="main_default_sms_message">QKSMS를 기본 SMS 앱으로 설정하세요</string>
   <string name="setup_skip">건너뛰기</string>
   <string name="setup_next">계속</string>
-  <string name="menu_clear">비우기</string>
   <string name="menu_call">전화</string>
   <string name="menu_info">자세히</string>
   <string name="menu_save">Save image</string>
-  <string name="main_syncing">데이터베이스 초기화 중, 시간이 약간 걸립니다...</string>
+  <string name="main_title_selected">%d selected</string>
+  <string name="main_menu_clear">Clear</string>
+  <string name="main_menu_archive">Archive</string>
+  <string name="main_menu_unarchive">Unarchive</string>
+  <string name="main_menu_block">Block</string>
+  <string name="main_menu_delete">Delete</string>
+  <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">You: %s</string>
+  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results">%d messages</string>
+  <string name="inbox_empty_text">대화가 여기에 나타납니다</string>
+  <string name="inbox_search_empty_text">No results</string>
+  <string name="archived_empty_text">보관된 메시지가 여기 나타납니다</string>
+  <string name="scheduled_empty_text">예약된 메시지가 여기 나타납니다</string>
+  <string name="main_fab_cd">Start new conversation</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+  <string name="main_default_sms_change">Change</string>
+  <string name="main_permission_required">Permission required</string>
+  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+  <string name="main_permission_allow">Allow</string>
   <string name="drawer_inbox">수신함</string>
   <string name="drawer_archived">보관됨</string>
   <string name="drawer_scheduled">예약됨</string>
@@ -49,14 +66,6 @@
   <string name="rate_summary">Share some love and rate us on Google Play!</string>
   <string name="rate_okay">OKAY!</string>
   <string name="rate_dismiss">DISMISS</string>
-  <string name="inbox_empty_text">대화가 여기에 나타납니다</string>
-  <string name="inbox_search_empty_text">No results</string>
-  <string name="inbox_menu_archive">Archive</string>
-  <string name="inbox_menu_unarchive">Unarchive</string>
-  <string name="inbox_menu_block">Block</string>
-  <string name="inbox_menu_delete">Delete</string>
-  <string name="archived_empty_text">보관된 메시지가 여기 나타납니다</string>
-  <string name="scheduled_empty_text">예약된 메시지가 여기 나타납니다</string>
   <string name="dialog_delete_title">삭제</string>
   <string name="dialog_delete_message">정말 이 대화를 삭제하시겠습니까?</string>
   <string-array name="message_options">
@@ -64,11 +73,20 @@
     <item>Forward</item>
     <item>Delete</item>
   </string-array>
+  <string name="compose_title_selected">%d selected</string>
+  <string name="compose_subtitle_results">%1$d of %2$d results</string>
   <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
   <string name="compose_hint">메시지 작성 중...</string>
   <string name="compose_menu_copy">Copy text</string>
   <string name="compose_menu_forward">Forward</string>
   <string name="compose_menu_delete">Delete</string>
+  <string name="compose_menu_previous">Previous</string>
+  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_attach_cd">Add an attachment</string>
+  <string name="compose_gallery_cd">Attach a photo</string>
+  <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">전송 중...</string>
   <string name="message_status_delivered">%s 전송됨</string>
   <string name="message_status_failed">전송 실패, 눌러서 다시 시도하세요</string>
@@ -84,9 +102,6 @@
   <string name="settings_category_appearance">Appearance</string>
   <string name="settings_category_general">General</string>
   <string name="settings_category_qkreply">QK Reply</string>
-  <string name="settings_default_sms_title">기본 SMS 앱</string>
-  <string name="settings_default_sms_summary_true">QKSMS가 기본 SMS 앱입니다</string>
-  <string name="settings_default_sms_summary_false">QKSMS를 기본 SMS 앱으로 설정하세요</string>
   <string name="settings_theme_title">테마</string>
   <string name="settings_night_title">나이트 모드</string>
   <string name="settings_black_title">Pure black night mode</string>
@@ -112,7 +127,7 @@
   <string name="settings_delivery_summary">전송 성공을 확인합니다</string>
   <string name="settings_unicode_title">스트립 악센트</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_size_title">Max MMS attachment size</string>
+  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
   <string name="settings_about_title">About QKSMS</string>
@@ -211,11 +226,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB</item>
+    <item>300KB (Recommended)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No limit</item>
+    <item>No compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>확인</item>

@@ -19,204 +19,219 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
-  <string name="title_archived">Archived</string>
-  <string name="title_scheduled">Scheduled</string>
+  <string name="app_name">QKSMS+</string>
+  <string name="title_archived">Arşivlenmiş</string>
+  <string name="title_scheduled">Zamanlanmış</string>
   <string name="title_settings">Ayarlar</string>
-  <string name="title_notification_prefs">Notifications</string>
-  <string name="title_theme">Theme</string>
-  <string name="title_conversations">Search inbox&#8230;</string>
-  <string name="title_compose">Oluştur</string>
-  <string name="title_qksms_plus">QKSMS+</string>
+  <string name="title_notification_prefs">Bildirimler</string>
+  <string name="title_theme">Tema</string>
+  <string name="title_conversations">Gelen mesajlarda ara...</string>
+  <string name="title_compose">Bir isme veya numaraya yazın</string>
+  <string name="title_qksms_plus">QKSMS +</string>
+  <string name="setup_skip">Atla</string>
+  <string name="setup_next">Devam</string>
+  <string name="menu_call">Ara</string>
+  <string name="menu_info">Ayrıntılar</string>
+  <string name="menu_save">Görüntüyü Kaydet</string>
+  <string name="main_title_selected">%d Seçili</string>
+  <string name="main_menu_clear">Temizle</string>
+  <string name="main_menu_archive">Arşivle</string>
+  <string name="main_menu_unarchive">Arşivden çıkar</string>
+  <string name="main_menu_block">Engelle</string>
+  <string name="main_menu_delete">Sil</string>
+  <string name="main_syncing">Syncing messages&#8230;</string>
+  <string name="main_sender_you">Size: %s</string>
+  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results">%d messages</string>
+  <string name="inbox_empty_text">Konuşmalarınız burada görünür</string>
+  <string name="inbox_search_empty_text"> Sonuç Yok</string>
+  <string name="archived_empty_text">Arşivlenmiş konuşmalarınızı burada görünür</string>
+  <string name="scheduled_empty_text">Zamanlanmış iletileriniz burada görünür</string>
+  <string name="main_fab_cd">Yeni konuşma başlat</string>
   <string name="main_default_sms_title">Love texting again</string>
   <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="setup_skip">Skip</string>
-  <string name="setup_next">Continue</string>
-  <string name="menu_clear">Clear</string>
-  <string name="menu_call">Ara</string>
-  <string name="menu_info">Details</string>
-  <string name="menu_save">Save image</string>
-  <string name="main_syncing">Optimizing database, this might take a minute&#8230;</string>
-  <string name="main_sender_you">You: %s</string>
-  <string name="drawer_inbox">Inbox</string>
-  <string name="drawer_archived">Archived</string>
-  <string name="drawer_scheduled">Scheduled</string>
-  <string name="drawer_more">More</string>
-  <string name="drawer_settings">Settings</string>
+  <string name="main_default_sms_change">Change</string>
+  <string name="main_permission_required">Permission required</string>
+  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+  <string name="main_permission_allow">Allow</string>
+  <string name="drawer_inbox">Gelen Kutusu:</string>
+  <string name="drawer_archived">Arşivle</string>
+  <string name="drawer_scheduled">Zamanla</string>
+  <string name="drawer_more">Daha fazla</string>
+  <string name="drawer_settings">Ayarlar</string>
   <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Help &amp; feedback</string>
-  <string name="rate_title">Enjoying QKSMS?</string>
-  <string name="rate_summary">Share some love and rate us on Google Play!</string>
-  <string name="rate_okay">OKAY!</string>
-  <string name="rate_dismiss">DISMISS</string>
-  <string name="inbox_empty_text">Your conversations will appear here</string>
-  <string name="inbox_search_empty_text">No results</string>
-  <string name="inbox_menu_archive">Archive</string>
-  <string name="inbox_menu_unarchive">Unarchive</string>
-  <string name="inbox_menu_block">Block</string>
-  <string name="inbox_menu_delete">Delete</string>
-  <string name="archived_empty_text">Your archived conversations will appear here</string>
-  <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
-  <string name="dialog_delete_title">Delete</string>
-  <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+  <string name="drawer_help">Yardım &amp; Geribildirim</string>
+  <string name="rate_title">QKSMS tadını çıkarıyor musun?</string>
+  <string name="rate_summary">Biraz sevgi paylaş ve Google Playden bizi oyla!</string>
+  <string name="rate_okay">TAMAM!</string>
+  <string name="rate_dismiss">GÖREVDEN</string>
+  <string name="dialog_delete_title">Sil</string>
+  <string name="dialog_delete_message">Sohbeti silmek istediğinizden emin misiniz?</string>
   <string-array name="message_options">
-    <item>Copy text</item>
-    <item>Forward</item>
-    <item>Delete</item>
+    <item>Metni kopyala</item>
+    <item>Yönlendir</item>
+    <item>Sil</item>
   </string-array>
-  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-  <string name="compose_hint">Write a message&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
-  <string name="message_status_sending">Sending&#8230;</string>
-  <string name="message_status_delivered">Delivered %s</string>
-  <string name="message_status_failed">Failed to send. Tap to try again</string>
-  <string name="info_title">Details</string>
-  <string name="info_notifications">Notifications</string>
-  <string name="info_theme">Theme</string>
-  <string name="info_archive">Archive</string>
-  <string name="info_unarchive">Unarchive</string>
-  <string name="info_block">Block</string>
-  <string name="info_unblock">Unblock</string>
-  <string name="info_delete">Delete conversation</string>
-  <string name="gallery_toast_saved">Saved image</string>
-  <string name="settings_category_appearance">Appearance</string>
-  <string name="settings_category_general">General</string>
-  <string name="settings_category_qkreply">QK Reply</string>
-  <string name="settings_default_sms_title">Default SMS app</string>
-  <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
-  <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
-  <string name="settings_theme_title">Theme</string>
-  <string name="settings_night_title">Night mode</string>
-  <string name="settings_black_title">Pure black night mode</string>
-  <string name="settings_night_start_title">Start time</string>
-  <string name="settings_night_end_title">End time</string>
-  <string name="settings_text_size_title">Font size</string>
-  <string name="settings_system_font_title">Use system font</string>
-  <string name="settings_auto_emoji_title">Automatic emoji</string>
-  <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
-  <string name="settings_vibration_title">Vibration</string>
-  <string name="settings_ringtone_title">Sound</string>
-  <string name="settings_qkreply_title">QK Reply</string>
-  <string name="settings_qkreply_summary">Popup for new messages</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-  <string name="settings_blocking_title">Blocking</string>
+  <string name="compose_title_selected">%d Seçili</string>
+  <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_messages_empty">Senin konuşma başlıyor. Güzel bir şey söyle!</string>
+  <string name="compose_hint">Mesaj Yaz...</string>
+  <string name="compose_menu_copy">Metni kopyala</string>
+  <string name="compose_menu_forward">Yönlendir</string>
+  <string name="compose_menu_delete">Sil</string>
+  <string name="compose_menu_previous">Previous</string>
+  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_attach_cd">Dosya Ekle</string>
+  <string name="compose_gallery_cd">Bir fotoğraf eklemek</string>
+  <string name="compose_camera_cd">Fotoğraf Çek</string>
+  <string name="compose_send_cd">Mesaj gönder</string>
+  <string name="message_status_sending">Gönderiliyor...</string>
+  <string name="message_status_delivered">Teslim edilen %s</string>
+  <string name="message_status_failed">Gönderilemedi. Yeniden denemek için dokunun</string>
+  <string name="info_title">Ayrıntılar</string>
+  <string name="info_notifications">Bildirimler</string>
+  <string name="info_theme">Tema</string>
+  <string name="info_archive">Arşivle</string>
+  <string name="info_unarchive">Arşivden çıkar</string>
+  <string name="info_block">Engelle</string>
+  <string name="info_unblock">Engeli kaldır</string>
+  <string name="info_delete">Yazışmayı sil</string>
+  <string name="gallery_toast_saved">Görüntüyü Kaydet</string>
+  <string name="settings_category_appearance">Görünüm</string>
+  <string name="settings_category_general">Genel</string>
+  <string name="settings_category_qkreply">QK yanıt</string>
+  <string name="settings_theme_title">Tema</string>
+  <string name="settings_night_title">Gece Modu</string>
+  <string name="settings_black_title">Saf siyah gece modu</string>
+  <string name="settings_night_start_title">Başlama zamanı</string>
+  <string name="settings_night_end_title">Bitiş Zamanı</string>
+  <string name="settings_text_size_title">Yazı tipi boyutu</string>
+  <string name="settings_system_font_title">Sistem yazı tipini kullan</string>
+  <string name="settings_auto_emoji_title">Otomatik emoji</string>
+  <string name="settings_notifications_title">Bildirimler</string>
+  <string name="settings_notification_previews_title">Bildirim ön izleme</string>
+  <string name="settings_vibration_title">Titreşim</string>
+  <string name="settings_ringtone_title">Ses</string>
+  <string name="settings_qkreply_title">QK yanıt</string>
+  <string name="settings_qkreply_summary">Yeni iletiler için açılan menü</string>
+  <string name="settings_qkreply_tap_dismiss_title">Kapatmak için dokunun</string>
+  <string name="settings_qkreply_tap_dismiss_summary">Açılır pencereyi kapatmak için pencere dışındaki herhangi bir yere dokunun</string>
+  <string name="settings_blocking_title">Engelle</string>
   <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-  <string name="settings_delayed_title">Delayed sending</string>
-  <string name="settings_delivery_title">Delivery confirmations</string>
-  <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
-  <string name="settings_unicode_title">Strip accents</string>
-  <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_size_title">Max MMS attachment size</string>
-  <string name="settings_sync_title">Sync messages</string>
-  <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-  <string name="settings_about_title">About QKSMS</string>
-  <string name="settings_version">Version %s</string>
-  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-  <string name="blocked_title">Blocking</string>
-  <string name="blocked_empty">Your blocked conversations will appear here</string>
-  <string name="blocked_unblock_dialog_title">Unblock</string>
-  <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
-  <string name="about_title">About</string>
-  <string name="about_version_title">Version</string>
-  <string name="about_developer_title">Developer</string>
-  <string name="about_source_title">Source code</string>
-  <string name="about_changelog_title">Changelog</string>
-  <string name="about_contact_title">Contact</string>
-  <string name="about_license_title">License</string>
-  <string name="about_copyright_title">Copyright</string>
-  <string name="qksms_plus_description_title">Support development, unlock everything</string>
-  <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
-  <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donate via PayPal</string>
-  <string name="qksms_plus_coming_soon">Coming soon</string>
-  <string name="qksms_plus_themes_title">Premium themes</string>
-  <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
-  <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
-  <string name="qksms_plus_backup_title">Message backup</string>
-  <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
-  <string name="qksms_plus_scheduled_title">Scheduled messages</string>
-  <string name="qksms_plus_scheduled_summary">Wait a few seconds before sending your message</string>
-  <string name="qksms_plus_delayed_title">Delayed sending</string>
-  <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
-  <string name="qksms_plus_night_title">Automatic night mode</string>
-  <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
-  <string name="qksms_plus_blacklist_title">Advanced blocking</string>
-  <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
-  <string name="qksms_plus_forward_title">Auto-forward</string>
-  <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
-  <string name="qksms_plus_respond_title">Auto-respond</string>
-  <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
-  <string name="qksms_plus_more_title">More</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
-  <string name="widget_loading">Loading&#8230;</string>
-  <string name="widget_more">View more conversations</string>
-  <string name="qkreply_menu_read">Mark read</string>
-  <string name="qkreply_menu_call">Call</string>
-  <string name="qkreply_menu_expand">Show more</string>
-  <string name="qkreply_menu_collapse">Show less</string>
-  <string name="qkreply_menu_view">Open conversation</string>
-  <string name="theme_material">Material</string>
+  <string name="settings_should_i_answer_title">Ben cevap vereyim?</string>
+  <string name="settings_should_i_answer_summary">İstenmeyen numaralardan gelen iletileri otomatik olarak filtre</string>
+  <string name="settings_delayed_title">Gecikmeli gönderme</string>
+  <string name="settings_delivery_title">İletim raporları</string>
+  <string name="settings_delivery_summary">Mesajınızın sorunsuz gönderildiğinin onayını alın</string>
+  <string name="settings_unicode_title">Şerit vurgular</string>
+  <string name="settings_unicode_summary">Giden SMS mesajlarından aksanlı karakterleri kaldırın</string>
+  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+  <string name="settings_sync_title"> İletileri eşitle</string>
+  <string name="settings_sync_summary">İletilerinizi  Android SMS veritabanı ile yeniden senkronize edin</string>
+  <string name="settings_about_title">QKSMS hakkında</string>
+  <string name="settings_version">Sürüm :</string>
+  <string name="settings_delay_duration_hint">Süre (saniye olarak) girin</string>
+  <string name="blocked_title">Engelle</string>
+  <string name="blocked_empty">Engellenen konuşmalarınız burada görünür</string>
+  <string name="blocked_unblock_dialog_title">Engelini kaldır</string>
+  <string name="blocked_unblock_dialog_message">Bu konuşmanın engelini kaldırmak ister misiniz?</string>
+  <string name="about_title">Hakkında</string>
+  <string name="about_version_title">Sürüm</string>
+  <string name="about_developer_title">Geliştirici</string>
+  <string name="about_source_title">Kaynak kodu</string>
+  <string name="about_changelog_title">Yenilikler</string>
+  <string name="about_contact_title">İletişim</string>
+  <string name="about_license_title">Lisanslar</string>
+  <string name="about_copyright_title">Telif hakkı</string>
+  <string name="qksms_plus_description_title">Gelişimini desteklemek, her şey kilitsiz</string>
+  <string name="qksms_plus_description_summary">Seni  kurtarmak için sadece %s açlıktan ölen bir geliştirici</string>
+  <string name="qksms_plus_upgrade">Süresiz kullanmak 1$s %2$s</string>
+  <string name="qksms_plus_upgrade_donate">Kilidi ac ve Satın Al %1$s %2$s</string>
+  <string name="qksms_plus_thanks_title">QKSMS desteği için teşekkür ederiz!!</string>
+  <string name="qksms_plus_thanks_summary">Şimdi tüm QKSMS+ özellikleri açıldı!</string>
+  <string name="qksms_plus_free_title">QKSMS+ F-Droid kullanıcıları için ücretsizdir! Eğer gelişmeyi desteklemek istiyorsanız, bağış yapmakta özgürsünüz.</string>
+  <string name="qksms_plus_donate">Paypal ile satın al</string>
+  <string name="qksms_plus_coming_soon">Yakında</string>
+  <string name="qksms_plus_themes_title">Ücretli Temalar</string>
+  <string name="qksms_plus_themes_summary">Malzeme tasarım paleti üzerinde bulunmayan güzel tema renkleri aç</string>
+  <string name="qksms_plus_emoji_title">Özel otomatik ifadeler</string>
+  <string name="qksms_plus_emoji_summary">Özel otomatik ifadeler kısayolları oluştur</string>
+  <string name="qksms_plus_backup_title">Mesajları yedekle</string>
+  <string name="qksms_plus_backup_summary">İletileriniz otomatik olarak yedekleyin. Telefonunuzu değiştirir veya kaybolursa endişelenmeyin.</string>
+  <string name="qksms_plus_scheduled_title">Zamanlanmış iletiler</string>
+  <string name="qksms_plus_scheduled_summary">İletinizi göndermeden önce birkaç saniye bekleyin</string>
+  <string name="qksms_plus_delayed_title">Gecikmeli gönderme</string>
+  <string name="qksms_plus_delayed_summary">İletinizi göndermeden önce birkaç saniye bekleyin</string>
+  <string name="qksms_plus_night_title">Otomatik gece modu</string>
+  <string name="qksms_plus_night_summary">Günün zamanına göre gece modunu etkinleştir</string>
+  <string name="qksms_plus_blacklist_title">Gelişmiş engelleme</string>
+  <string name="qksms_plus_blacklist_summary">Belirli anahtar sözcükleri içeren veya desen eşleşen iletileri engelleme</string>
+  <string name="qksms_plus_forward_title">Otomatik ilet</string>
+  <string name="qksms_plus_forward_summary">Belirli gönderenlerden gelen iletileri otomatik olarak ilet</string>
+  <string name="qksms_plus_respond_title">Otomatik yanıtla</string>
+  <string name="qksms_plus_respond_summary">Önceden ayarlanmış bir yanıt ile gelen iletilere otomatik olarak yanıtla</string>
+  <string name="qksms_plus_more_title">Daha fazla</string>
+  <string name="qksms_plus_more_summary">QKSMS etkin geliştirme altında tüm gelecek QKSMS + özellikler aboneliğinize dahil!</string>
+  <string name="widget_loading">Yükleniyor...</string>
+  <string name="widget_more">Daha fazla konuşma göster</string>
+  <string name="qkreply_menu_read">Okundu olarak işaretle</string>
+  <string name="qkreply_menu_call">Ara</string>
+  <string name="qkreply_menu_expand">Daha fazla göster</string>
+  <string name="qkreply_menu_collapse">Daha az göster</string>
+  <string name="qkreply_menu_view">Sohbeti aç</string>
+  <string name="theme_material">Malzeme</string>
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Apply</string>
-  <string name="notification_reply">Reply</string>
-  <string name="notification_read">Mark read</string>
-  <string name="button_cancel">Cancel</string>
-  <string name="button_delete">Delete</string>
-  <string name="button_more">More</string>
-  <string name="button_set">Set</string>
-  <string name="button_unblock">Unblock</string>
-  <string name="button_undo">Undo</string>
-  <string name="toast_copied">Copied</string>
-  <string name="toast_archived">Archived conversation</string>
-  <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
+  <string name="theme_apply">Uygula</string>
+  <string name="notification_reply">Cevapla</string>
+  <string name="notification_read">Okundu olarak işaretle</string>
+  <string name="button_cancel">İptal</string>
+  <string name="button_delete">Sil</string>
+  <string name="button_more">Daha fazla</string>
+  <string name="button_set">Ayarla</string>
+  <string name="button_unblock">Engelini kaldır</string>
+  <string name="button_undo">Geri al</string>
+  <string name="toast_copied">Kopyalandı.</string>
+  <string name="toast_archived">Arşivlenmiş konuşmalar</string>
+  <string name="toast_qksms_plus">Bunu kullanmak için QKSMS+ kilidi gerekir</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="other">%s new messages</item>
+    <item quantity="one">Yeni mesaj</item>
+    <item quantity="other">Yeni mesaj</item>
   </plurals>
-  <string name="notification_message_failed_title">Message not sent</string>
-  <string name="notification_message_failed_text">The message to %s failed to send</string>
+  <string name="notification_message_failed_title">İleti gönderilemedi</string>
+  <string name="notification_message_failed_text">%s mesaj gönderilemedi</string>
   <string-array name="night_modes">
-    <item>Disabled</item>
-    <item>Always on</item>
-    <item>Automatic</item>
+    <item>Devre dışı bırak</item>
+    <item>Her zaman açık</item>
+    <item>Otomatik</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>Adı ve ileti göster</item>
+    <item>Adını göster</item>
+    <item>İçeriği gizle</item>
   </string-array>
   <string-array name="text_sizes">
-    <item>Small</item>
+    <item>Küçük</item>
     <item>Normal</item>
-    <item>Large</item>
-    <item>Larger</item>
+    <item>Büyük</item>
+    <item>Daha büyük</item>
   </string-array>
   <string-array name="delayed_sending_labels">
-    <item>No delay</item>
-    <item>Short</item>
-    <item>Medium</item>
-    <item>Long</item>
+    <item>Gecikme yok</item>
+    <item>Kısa</item>
+    <item>Orta</item>
+    <item>Uzun</item>
   </string-array>
   <string-array name="mms_sizes">
-    <item>100KB</item>
-    <item>200KB</item>
-    <item>300KB</item>
-    <item>600KB</item>
-    <item>1000KB</item>
-    <item>2000KB</item>
-    <item>No limit</item>
+    <item>100 kilobayt</item>
+    <item>200 kilobayt</item>
+    <item>300KB (Recommended)</item>
+    <item>600 kilobayt</item>
+    <item>1000 kilobayt</item>
+    <item>2000 kilobayt</item>
+    <item>No compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>Tamam</item>
@@ -224,12 +239,12 @@
     <item>Yolda</item>
     <item>Teşekkürler</item>
     <item>Kulağa güzel geliyor</item>
-    <item>Ne haber?</item>
+    <item>Naber?</item>
     <item>Kararlaştırıldı</item>
     <item>Hayır</item>
     <item>Seni seviyorum</item>
     <item>Özür dilerim</item>
-    <item>Hehehe</item>
+    <item>He</item>
     <item>Tamam o zaman</item>
   </string-array>
 </resources>

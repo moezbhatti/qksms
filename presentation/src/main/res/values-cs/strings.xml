@@ -28,16 +28,33 @@
   <string name="title_conversations">Hledat&#8230;</string>
   <string name="title_compose">Nová zpráva</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="main_default_sms_title">Zamilujte si znovu SMS</string>
-  <string name="main_default_sms_message">Nastavit QKSMS jako výchozí aplikaci pro zprávy SMS</string>
   <string name="setup_skip">Přeskočit</string>
   <string name="setup_next">Pokračovat</string>
-  <string name="menu_clear">Vymazat</string>
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
   <string name="menu_save">Uložit obrázek</string>
-  <string name="main_syncing">Optimalizace databáze, to může chvíli trvat&#8230;</string>
+  <string name="main_title_selected">%d selected</string>
+  <string name="main_menu_clear">Clear</string>
+  <string name="main_menu_archive">Archive</string>
+  <string name="main_menu_unarchive">Unarchive</string>
+  <string name="main_menu_block">Block</string>
+  <string name="main_menu_delete">Delete</string>
+  <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">Vy: %s</string>
+  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results">%d messages</string>
+  <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
+  <string name="inbox_search_empty_text">Žádné výsledky</string>
+  <string name="archived_empty_text">Zde se zobrazí vaše archivované konverzace</string>
+  <string name="scheduled_empty_text">Zde se zobrazí vaše naplánované zprávy</string>
+  <string name="main_fab_cd">Start new conversation</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+  <string name="main_default_sms_change">Change</string>
+  <string name="main_permission_required">Permission required</string>
+  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+  <string name="main_permission_allow">Allow</string>
   <string name="drawer_inbox">Příchozí zprávy</string>
   <string name="drawer_archived">Archivováno</string>
   <string name="drawer_scheduled">Naplánováno</string>
@@ -49,26 +66,27 @@
   <string name="rate_summary">Sdílejte trochu lásky a ohodnoťte nás na Google Play!</string>
   <string name="rate_okay">Tak určitě!</string>
   <string name="rate_dismiss">ZAVŘÍT</string>
-  <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
-  <string name="inbox_search_empty_text">Žádné výsledky</string>
-  <string name="inbox_menu_archive">Archivovat</string>
-  <string name="inbox_menu_unarchive">Obnovit z archivu</string>
-  <string name="inbox_menu_block">Blokovat</string>
-  <string name="inbox_menu_delete">Smazat</string>
-  <string name="archived_empty_text">Zde se zobrazí vaše archivované konverzace</string>
-  <string name="scheduled_empty_text">Zde se zobrazí vaše naplánované zprávy</string>
   <string name="dialog_delete_title">Smazat</string>
-  <string name="dialog_delete_message">Opravdu že chcete odstranit tuto konverzaci?</string>
+  <string name="dialog_delete_message">Opravdu chcete odstranit tuto konverzaci?</string>
   <string-array name="message_options">
     <item>Kopírovat text</item>
     <item>Přeposlat</item>
     <item>Smazat</item>
   </string-array>
+  <string name="compose_title_selected">%d selected</string>
+  <string name="compose_subtitle_results">%1$d of %2$d results</string>
   <string name="compose_messages_empty">Toto je začátek vaší konverzace. Řekněte něco hezkého!</string>
   <string name="compose_hint">Napsat zprávu&#8230;</string>
   <string name="compose_menu_copy">Kopírovat text</string>
   <string name="compose_menu_forward">Přeposlat</string>
   <string name="compose_menu_delete">Smazat</string>
+  <string name="compose_menu_previous">Previous</string>
+  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_attach_cd">Add an attachment</string>
+  <string name="compose_gallery_cd">Attach a photo</string>
+  <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">Odesílání&#8230;</string>
   <string name="message_status_delivered">Doručeno %s</string>
   <string name="message_status_failed">Odeslání se nezdařilo. Klepnutím zkusíte znovu odeslat</string>
@@ -84,9 +102,6 @@
   <string name="settings_category_appearance">Vzhled</string>
   <string name="settings_category_general">Obecné</string>
   <string name="settings_category_qkreply">Rychlá odpověď</string>
-  <string name="settings_default_sms_title">Výchozí SMS aplikace</string>
-  <string name="settings_default_sms_summary_true">QKSMS je výchozí aplikací pro SMS</string>
-  <string name="settings_default_sms_summary_false">Nastavit QKSMS jako výchozí aplikaci pro SMS zprávy</string>
   <string name="settings_theme_title">Téma</string>
   <string name="settings_night_title">Noční režim</string>
   <string name="settings_black_title">Čistá černá, noční režim</string>
@@ -107,17 +122,17 @@
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Můžu to zvednout?</string>
   <string name="settings_should_i_answer_summary">Automaticky filtrovat zprávy od nevyžádaných čísel pomocí aplikace „Můžu to zvednout?“</string>
-  <string name="settings_delayed_title">Delayed sending</string>
+  <string name="settings_delayed_title">Zpožděné odeslání</string>
   <string name="settings_delivery_title">Potvrzení o doručení</string>
   <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>
   <string name="settings_unicode_title">Odstranit diakritiku</string>
   <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných zprávách SMS</string>
-  <string name="settings_mms_size_title">Maximální velikost přílohy MMS</string>
+  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">Synchronizovat zprávy</string>
   <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativním Android SMS databází</string>
   <string name="settings_about_title">O aplikaci QKSMS</string>
   <string name="settings_version">Verze %s</string>
-  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
+  <string name="settings_delay_duration_hint">Zadejte prodlevu (v sekundách)</string>
   <string name="blocked_title">Blokování</string>
   <string name="blocked_empty">Zde se objeví vaše blokované konverzace</string>
   <string name="blocked_unblock_dialog_title">Odblokovat</string>
@@ -175,7 +190,7 @@
   <string name="button_cancel">Zrušit</string>
   <string name="button_delete">Odstranit</string>
   <string name="button_more">Více</string>
-  <string name="button_set">Set</string>
+  <string name="button_set">Nastavit</string>
   <string name="button_unblock">Odblokovat</string>
   <string name="button_undo">Zpět</string>
   <string name="toast_copied">Zkopírováno</string>
@@ -206,19 +221,19 @@
     <item>Větší</item>
   </string-array>
   <string-array name="delayed_sending_labels">
-    <item>No delay</item>
-    <item>Short</item>
-    <item>Medium</item>
-    <item>Long</item>
+    <item>Žádná prodleva</item>
+    <item>Krátká</item>
+    <item>Střední</item>
+    <item>Dlouhá</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100 KB</item>
     <item>200 KB</item>
-    <item>300 KB</item>
+    <item>300KB (Recommended)</item>
     <item>600 KB</item>
     <item>1 000 KB</item>
     <item>2 000 KB</item>
-    <item>Bez omezení</item>
+    <item>No compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>OK</item>

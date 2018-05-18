@@ -28,16 +28,33 @@
   <string name="title_conversations">Search inbox&#8230;</string>
   <string name="title_compose">Kirjoita</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
   <string name="setup_skip">Skip</string>
   <string name="setup_next">Continue</string>
-  <string name="menu_clear">Clear</string>
   <string name="menu_call">Soita</string>
   <string name="menu_info">Details</string>
   <string name="menu_save">Save image</string>
-  <string name="main_syncing">Optimizing database, this might take a minute&#8230;</string>
+  <string name="main_title_selected">%d selected</string>
+  <string name="main_menu_clear">Clear</string>
+  <string name="main_menu_archive">Archive</string>
+  <string name="main_menu_unarchive">Unarchive</string>
+  <string name="main_menu_block">Block</string>
+  <string name="main_menu_delete">Delete</string>
+  <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">You: %s</string>
+  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results">%d messages</string>
+  <string name="inbox_empty_text">Your conversations will appear here</string>
+  <string name="inbox_search_empty_text">No results</string>
+  <string name="archived_empty_text">Your archived conversations will appear here</string>
+  <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
+  <string name="main_fab_cd">Start new conversation</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+  <string name="main_default_sms_change">Change</string>
+  <string name="main_permission_required">Permission required</string>
+  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+  <string name="main_permission_allow">Allow</string>
   <string name="drawer_inbox">Inbox</string>
   <string name="drawer_archived">Archived</string>
   <string name="drawer_scheduled">Scheduled</string>
@@ -49,14 +66,6 @@
   <string name="rate_summary">Share some love and rate us on Google Play!</string>
   <string name="rate_okay">OKAY!</string>
   <string name="rate_dismiss">DISMISS</string>
-  <string name="inbox_empty_text">Your conversations will appear here</string>
-  <string name="inbox_search_empty_text">No results</string>
-  <string name="inbox_menu_archive">Archive</string>
-  <string name="inbox_menu_unarchive">Unarchive</string>
-  <string name="inbox_menu_block">Block</string>
-  <string name="inbox_menu_delete">Delete</string>
-  <string name="archived_empty_text">Your archived conversations will appear here</string>
-  <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
   <string name="dialog_delete_title">Delete</string>
   <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
   <string-array name="message_options">
@@ -64,11 +73,20 @@
     <item>Forward</item>
     <item>Delete</item>
   </string-array>
+  <string name="compose_title_selected">%d selected</string>
+  <string name="compose_subtitle_results">%1$d of %2$d results</string>
   <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
   <string name="compose_hint">Write a message&#8230;</string>
   <string name="compose_menu_copy">Copy text</string>
   <string name="compose_menu_forward">Forward</string>
   <string name="compose_menu_delete">Delete</string>
+  <string name="compose_menu_previous">Previous</string>
+  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_attach_cd">Add an attachment</string>
+  <string name="compose_gallery_cd">Attach a photo</string>
+  <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">Sending&#8230;</string>
   <string name="message_status_delivered">Delivered %s</string>
   <string name="message_status_failed">Failed to send. Tap to try again</string>
@@ -84,9 +102,6 @@
   <string name="settings_category_appearance">Appearance</string>
   <string name="settings_category_general">General</string>
   <string name="settings_category_qkreply">QK Reply</string>
-  <string name="settings_default_sms_title">Default SMS app</string>
-  <string name="settings_default_sms_summary_true">QKSMS is your default SMS app</string>
-  <string name="settings_default_sms_summary_false">Set QKSMS as your default SMS app</string>
   <string name="settings_theme_title">Theme</string>
   <string name="settings_night_title">Night mode</string>
   <string name="settings_black_title">Pure black night mode</string>
@@ -112,7 +127,7 @@
   <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_size_title">Max MMS attachment size</string>
+  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
   <string name="settings_about_title">About QKSMS</string>
@@ -212,11 +227,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB</item>
+    <item>300KB (Recommended)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No limit</item>
+    <item>No compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>Kyllä</item>

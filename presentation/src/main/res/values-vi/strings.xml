@@ -28,16 +28,33 @@
   <string name="title_conversations">Tìm kiếm các tin đã nhận&#8230;</string>
   <string name="title_compose">Nhập tên hoặc số điện thoại</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="main_default_sms_title">Thích nhắn tin trở lại</string>
-  <string name="main_default_sms_message">Đặt QKSMS là ứng dụng tin nhắn mặc định</string>
   <string name="setup_skip">Bỏ qua</string>
   <string name="setup_next">Tiếp tục</string>
-  <string name="menu_clear">Xóa</string>
   <string name="menu_call">Cuộc gọi</string>
   <string name="menu_info">Chi tiết</string>
   <string name="menu_save">Lưu hình ảnh</string>
-  <string name="main_syncing">Đang tối ưu dữ liệu, có thể mất vài phút&#8230;</string>
+  <string name="main_title_selected">%d selected</string>
+  <string name="main_menu_clear">Clear</string>
+  <string name="main_menu_archive">Archive</string>
+  <string name="main_menu_unarchive">Unarchive</string>
+  <string name="main_menu_block">Block</string>
+  <string name="main_menu_delete">Delete</string>
+  <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">Bạn: %s</string>
+  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results">%d messages</string>
+  <string name="inbox_empty_text">Các cuộc hội thoại của bạn sẽ xuất hiện ở đây</string>
+  <string name="inbox_search_empty_text">Không có kết quả</string>
+  <string name="archived_empty_text">Các cuộc hội thoại đã lưu trữ của bạn sẽ xuất hiện ở đây</string>
+  <string name="scheduled_empty_text">Tin nhắn theo lịch gửi của bạn sẽ xuất hiện ở đây</string>
+  <string name="main_fab_cd">Start new conversation</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+  <string name="main_default_sms_change">Change</string>
+  <string name="main_permission_required">Permission required</string>
+  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+  <string name="main_permission_allow">Allow</string>
   <string name="drawer_inbox">Hộp thư đến</string>
   <string name="drawer_archived">Lưu trữ</string>
   <string name="drawer_scheduled">Lịch gửi</string>
@@ -49,14 +66,6 @@
   <string name="rate_summary">Chia sẻ và vote chúng tôi trên Google Play!</string>
   <string name="rate_okay">Đồng ý!</string>
   <string name="rate_dismiss">Bỏ qua</string>
-  <string name="inbox_empty_text">Các cuộc hội thoại của bạn sẽ xuất hiện ở đây</string>
-  <string name="inbox_search_empty_text">Không có kết quả</string>
-  <string name="inbox_menu_archive">Lưu trữ</string>
-  <string name="inbox_menu_unarchive">Hủy lưu trữ</string>
-  <string name="inbox_menu_block">Chặn</string>
-  <string name="inbox_menu_delete">Xóa</string>
-  <string name="archived_empty_text">Các cuộc hội thoại đã lưu trữ của bạn sẽ xuất hiện ở đây</string>
-  <string name="scheduled_empty_text">Tin nhắn theo lịch gửi của bạn sẽ xuất hiện ở đây</string>
   <string name="dialog_delete_title">Xóa</string>
   <string name="dialog_delete_message">Bạn có muốn xóa bỏ cuộc hội thoại này?</string>
   <string-array name="message_options">
@@ -64,11 +73,20 @@
     <item>Chuyển tiếp</item>
     <item>Xóa</item>
   </string-array>
+  <string name="compose_title_selected">%d selected</string>
+  <string name="compose_subtitle_results">%1$d of %2$d results</string>
   <string name="compose_messages_empty">Bắt đầu cuộc hội thoại nào. Hãy nói điều gì đó tốt đẹp!</string>
   <string name="compose_hint">Viết một tin nhắn&#8230;</string>
   <string name="compose_menu_copy">Sao chép văn bản</string>
   <string name="compose_menu_forward">Chuyển tiếp</string>
   <string name="compose_menu_delete">Xóa</string>
+  <string name="compose_menu_previous">Previous</string>
+  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_attach_cd">Add an attachment</string>
+  <string name="compose_gallery_cd">Attach a photo</string>
+  <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">Đang gửi&#8230;</string>
   <string name="message_status_delivered">Đã chuyển %s</string>
   <string name="message_status_failed">Gửi thất bại. Bấm để thử lại lần nữa</string>
@@ -84,9 +102,6 @@
   <string name="settings_category_appearance">Giao diện</string>
   <string name="settings_category_general">Chung</string>
   <string name="settings_category_qkreply">Trả lời nhanh</string>
-  <string name="settings_default_sms_title">Ứng dụng SMS mặc định</string>
-  <string name="settings_default_sms_summary_true">QKSMS là ứng dụng SMS mặc định</string>
-  <string name="settings_default_sms_summary_false">Đặt QKSMS là ứng dụng SMS mặc định</string>
   <string name="settings_theme_title">Chủ đề</string>
   <string name="settings_night_title">Chế độ ban đêm</string>
   <string name="settings_black_title">Chế độ ban đêm tinh khiết</string>
@@ -112,7 +127,7 @@
   <string name="settings_delivery_summary">Xác nhận rằng các tin nhắn được gửi thành công</string>
   <string name="settings_unicode_title">Bỏ dấu</string>
   <string name="settings_unicode_summary">Bỏ dấu ký tự khi gửi SMS</string>
-  <string name="settings_mms_size_title">Kích thước tập tin đính kèm MMS tối đa</string>
+  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">Đồng bộ tin nhắn</string>
   <string name="settings_sync_summary">Đồng bộ lại tin nhắn với thiết bị</string>
   <string name="settings_about_title">Thông tin QKSMS</string>
@@ -211,11 +226,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB</item>
+    <item>300KB (Recommended)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2M</item>
-    <item>Không giới hạn</item>
+    <item>No compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>Ok</item>

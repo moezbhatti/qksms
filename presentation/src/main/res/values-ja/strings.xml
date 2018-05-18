@@ -28,16 +28,33 @@
   <string name="title_conversations">受信トレイを検索&#8230;</string>
   <string name="title_compose">作成</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="main_default_sms_title">愛のテキストメッセージをふたたび</string>
-  <string name="main_default_sms_message">QKSMS をデフォルトの SMS アプリにします</string>
   <string name="setup_skip">スキップ</string>
   <string name="setup_next">続行</string>
-  <string name="menu_clear">クリア</string>
   <string name="menu_call">通話</string>
   <string name="menu_info">詳細</string>
   <string name="menu_save">画像を保存</string>
-  <string name="main_syncing">データベースを最適化します。これは数分かかる場合があります&#8230;</string>
+  <string name="main_title_selected">%d selected</string>
+  <string name="main_menu_clear">Clear</string>
+  <string name="main_menu_archive">Archive</string>
+  <string name="main_menu_unarchive">Unarchive</string>
+  <string name="main_menu_block">Block</string>
+  <string name="main_menu_delete">Delete</string>
+  <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">あなた: %s</string>
+  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results">%d messages</string>
+  <string name="inbox_empty_text">会話がここに表示されます</string>
+  <string name="inbox_search_empty_text">結果はありません</string>
+  <string name="archived_empty_text">保存した会話がここに表示されます</string>
+  <string name="scheduled_empty_text">スケジュールされたメッセージがここに表示されます</string>
+  <string name="main_fab_cd">Start new conversation</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+  <string name="main_default_sms_change">Change</string>
+  <string name="main_permission_required">Permission required</string>
+  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+  <string name="main_permission_allow">Allow</string>
   <string name="drawer_inbox">受信トレイ</string>
   <string name="drawer_archived">アーカイブ済</string>
   <string name="drawer_scheduled">スケジュール済</string>
@@ -49,14 +66,6 @@
   <string name="rate_summary">Google Play で愛を共有して私たちを評価してください!</string>
   <string name="rate_okay">OK!</string>
   <string name="rate_dismiss">消去</string>
-  <string name="inbox_empty_text">会話がここに表示されます</string>
-  <string name="inbox_search_empty_text">結果はありません</string>
-  <string name="inbox_menu_archive">アーカイブ</string>
-  <string name="inbox_menu_unarchive">アーカイブ解除</string>
-  <string name="inbox_menu_block">ブロック</string>
-  <string name="inbox_menu_delete">削除</string>
-  <string name="archived_empty_text">保存した会話がここに表示されます</string>
-  <string name="scheduled_empty_text">スケジュールされたメッセージがここに表示されます</string>
   <string name="dialog_delete_title">削除</string>
   <string name="dialog_delete_message">この会話を削除してもよろしいですか?</string>
   <string-array name="message_options">
@@ -64,11 +73,20 @@
     <item>転送</item>
     <item>削除</item>
   </string-array>
+  <string name="compose_title_selected">%d selected</string>
+  <string name="compose_subtitle_results">%1$d of %2$d results</string>
   <string name="compose_messages_empty">これが会話の始まりです。 何か素敵なことを言ってください!</string>
   <string name="compose_hint">メッセージを書く&#8230;</string>
   <string name="compose_menu_copy">テキストのコピー</string>
   <string name="compose_menu_forward">転送</string>
   <string name="compose_menu_delete">削除</string>
+  <string name="compose_menu_previous">Previous</string>
+  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_attach_cd">Add an attachment</string>
+  <string name="compose_gallery_cd">Attach a photo</string>
+  <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">送信中&#8230;</string>
   <string name="message_status_delivered">%s を配信しました</string>
   <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
@@ -84,9 +102,6 @@
   <string name="settings_category_appearance">外観</string>
   <string name="settings_category_general">全般</string>
   <string name="settings_category_qkreply">QK 返信</string>
-  <string name="settings_default_sms_title">デフォルトの SMS アプリ</string>
-  <string name="settings_default_sms_summary_true">QKSMS はあなたのデフォルトの SMS アプリです</string>
-  <string name="settings_default_sms_summary_false">デフォルトの SMS アプリとして QKSMS を設定します</string>
   <string name="settings_theme_title">テーマ</string>
   <string name="settings_night_title">夜間モード</string>
   <string name="settings_black_title">ピュアブラック夜間モード</string>
@@ -112,7 +127,7 @@
   <string name="settings_delivery_summary">メッセージが正常に送信されたことを確認します</string>
   <string name="settings_unicode_title">アクセントの除去</string>
   <string name="settings_unicode_summary">送信する SMS メッセージの文字からアクセントを削除します</string>
-  <string name="settings_mms_size_title">MMS の最大添付ファイルサイズ</string>
+  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">メッセージを同期</string>
   <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
   <string name="settings_about_title">QKSMS について</string>
@@ -211,11 +226,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB</item>
+    <item>300KB (Recommended)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>制限なし</item>
+    <item>No compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>OK</item>

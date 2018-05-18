@@ -28,16 +28,33 @@
   <string name="title_conversations">Przeszukaj skrzynkę odbiorczą&#8230;</string>
   <string name="title_compose">Nowa wiadomość</string>
   <string name="title_qksms_plus">QKSMS+</string>
-  <string name="main_default_sms_title">Znów kocham pisać wiadomości</string>
-  <string name="main_default_sms_message">Uczyń QKSMS domyślną aplikacja do obsługi SMSów</string>
   <string name="setup_skip">Pomiń</string>
   <string name="setup_next">Kontynuuj</string>
-  <string name="menu_clear">Wyczyść</string>
   <string name="menu_call">Zadzwoń</string>
   <string name="menu_info">Szczegóły</string>
   <string name="menu_save">Zapisz obraz</string>
-  <string name="main_syncing">Optymalizacja bazy danych, może to potrwać chwilę&#8230;</string>
+  <string name="main_title_selected">%d selected</string>
+  <string name="main_menu_clear">Clear</string>
+  <string name="main_menu_archive">Archive</string>
+  <string name="main_menu_unarchive">Unarchive</string>
+  <string name="main_menu_block">Block</string>
+  <string name="main_menu_delete">Delete</string>
+  <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">Ty: %s</string>
+  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results">%d messages</string>
+  <string name="inbox_empty_text">Twoje konwersacje będą wyświetlane tutaj</string>
+  <string name="inbox_search_empty_text">Brak wyników</string>
+  <string name="archived_empty_text">Twoje konwersacje pojawią się tutaj</string>
+  <string name="scheduled_empty_text">Twoje zaplanowane wiadomości pojawią się tutaj</string>
+  <string name="main_fab_cd">Start new conversation</string>
+  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+  <string name="main_default_sms_change">Change</string>
+  <string name="main_permission_required">Permission required</string>
+  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+  <string name="main_permission_allow">Allow</string>
   <string name="drawer_inbox">Skrzynka odbiorcza</string>
   <string name="drawer_archived">Archiwizowane</string>
   <string name="drawer_scheduled">Harmonogram</string>
@@ -49,14 +66,6 @@
   <string name="rate_summary">Podziel się kroplą miłości i oceń nas w Google Play!</string>
   <string name="rate_okay">W PORZĄDKU!</string>
   <string name="rate_dismiss">ODMAWIAM</string>
-  <string name="inbox_empty_text">Twoje konwersacje będą wyświetlane tutaj</string>
-  <string name="inbox_search_empty_text">Brak wyników</string>
-  <string name="inbox_menu_archive">Archiwizuj</string>
-  <string name="inbox_menu_unarchive">Odarchiwizuj</string>
-  <string name="inbox_menu_block">Zablokuj</string>
-  <string name="inbox_menu_delete">Usuń</string>
-  <string name="archived_empty_text">Twoje konwersacje pojawią się tutaj</string>
-  <string name="scheduled_empty_text">Twoje zaplanowane wiadomości pojawią się tutaj</string>
   <string name="dialog_delete_title">Usuń</string>
   <string name="dialog_delete_message">Czy na pewno chcesz usunąć konwersację?</string>
   <string-array name="message_options">
@@ -64,11 +73,20 @@
     <item>Przekaż dalej</item>
     <item>Usuń</item>
   </string-array>
+  <string name="compose_title_selected">%d selected</string>
+  <string name="compose_subtitle_results">%1$d of %2$d results</string>
   <string name="compose_messages_empty">To jest początek konwersacji. Powiedz coś miłego!</string>
   <string name="compose_hint">Napisz wiadomość&#8230;</string>
   <string name="compose_menu_copy">Kopiuj tekst</string>
   <string name="compose_menu_forward">Przekaż dalej</string>
   <string name="compose_menu_delete">Usuń</string>
+  <string name="compose_menu_previous">Previous</string>
+  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_attach_cd">Add an attachment</string>
+  <string name="compose_gallery_cd">Attach a photo</string>
+  <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">Wysyłanie&#8230;</string>
   <string name="message_status_delivered">Dostarczane %s</string>
   <string name="message_status_failed">Nie udało się wysłać. Dotknij, aby spróbować ponownie</string>
@@ -84,9 +102,6 @@
   <string name="settings_category_appearance">Wygląd</string>
   <string name="settings_category_general">Ogólne</string>
   <string name="settings_category_qkreply">QK Odpowiedź</string>
-  <string name="settings_default_sms_title">Domyślna aplikacja do obsługi SMSów</string>
-  <string name="settings_default_sms_summary_true">QKSMS jest domyślną aplikacja do obsługi SMSów</string>
-  <string name="settings_default_sms_summary_false">Ustaw QKSMS jako domyślna aplikacja do obsługi SMSów</string>
   <string name="settings_theme_title">Motyw</string>
   <string name="settings_night_title">Tryb nocny</string>
   <string name="settings_black_title">Tryb czystej czerni w nocy</string>
@@ -112,7 +127,7 @@
   <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>
   <string name="settings_unicode_title">Usuwaj ogonki</string>
   <string name="settings_unicode_summary">Usuwaj ogonki z znaków w wychodzących wiadomości SMS</string>
-  <string name="settings_mms_size_title">Maksymalny rozmiar załącznika MMS</string>
+  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">Synchronizuj wiadomości</string>
   <string name="settings_sync_summary">Ponownie synchronizuj wiadomości z bazą danych natywną Android SMS</string>
   <string name="settings_about_title">O QKSMS</string>
@@ -214,11 +229,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB</item>
+    <item>300KB (Recommended)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>Bez limitu</item>
+    <item>No compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>OK</item>
