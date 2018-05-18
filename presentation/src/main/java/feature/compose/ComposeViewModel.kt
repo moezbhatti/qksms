@@ -60,6 +60,7 @@ import util.extensions.asObservable
 import util.extensions.isImage
 import util.extensions.mapNotNull
 import util.extensions.removeAccents
+import util.tryOrNull
 import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -479,7 +480,7 @@ class ComposeViewModel @Inject constructor(
         // Show the remaining character counter when necessary
         view.textChangedIntent
                 .observeOn(Schedulers.computation())
-                .map { draft -> SmsMessage.calculateLength(draft, false) }
+                .mapNotNull { draft -> tryOrNull { SmsMessage.calculateLength(draft, false) } }
                 .map { array ->
                     val messages = array[0]
                     val remaining = array[2]
