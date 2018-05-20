@@ -80,6 +80,10 @@ public class Transaction {
     public String SMS_SENT = ".SMS_SENT";
     public String SMS_DELIVERED = ".SMS_DELIVERED";
 
+    public static final String MMS_SENT = "com.moez.QKSMS.MMS_SENT";
+    public static final String EXTRA_CONTENT_URI = "content_uri";
+    public static final String EXTRA_FILE_PATH = "file_path";
+
     public static String NOTIFY_SMS_FAILURE = ".NOTIFY_SMS_FAILURE";
     public static final String MMS_UPDATED = "com.moez.QKSMS.MMS_UPDATED";
     public static final String MMS_ERROR = "com.klinker.android.send_message.MMS_ERROR";
@@ -384,11 +388,11 @@ public class Transaction {
             PduPersister persister = PduPersister.getPduPersister(context);
             Uri messageUri = persister.persist(sendReq, Uri.parse("content://mms/outbox"), true, true, null);
 
-            Intent sentIntent = new Intent(MmsSentReceiver.MMS_SENT);
-            BroadcastUtils.addClassName(context, sentIntent, MmsSentReceiver.MMS_SENT);
+            Intent sentIntent = new Intent(MMS_SENT);
+            BroadcastUtils.addClassName(context, sentIntent, MMS_SENT);
 
-            sentIntent.putExtra(MmsSentReceiver.EXTRA_CONTENT_URI, messageUri.toString());
-            sentIntent.putExtra(MmsSentReceiver.EXTRA_FILE_PATH, mSendFile.getPath());
+            sentIntent.putExtra(EXTRA_CONTENT_URI, messageUri.toString());
+            sentIntent.putExtra(EXTRA_FILE_PATH, mSendFile.getPath());
             final PendingIntent sentPI = PendingIntent.getBroadcast(
                     context, 0, sentIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 

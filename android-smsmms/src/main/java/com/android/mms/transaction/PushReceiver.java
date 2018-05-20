@@ -21,14 +21,11 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
 import com.android.mms.MmsConfig;
@@ -61,23 +58,21 @@ import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_READ_ORIG_I
  */
 public class PushReceiver extends BroadcastReceiver {
     private static final String TAG = LogTag.TAG;
-    private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = true;
 
-    static final String[] PROJECTION = new String[] {
-            Mms.CONTENT_LOCATION,
-            Mms.LOCKED
-    };
+    static final String[] PROJECTION = new String[]{Mms.CONTENT_LOCATION, Mms.LOCKED};
 
-    static final int COLUMN_CONTENT_LOCATION      = 0;
+    static final int COLUMN_CONTENT_LOCATION = 0;
 
     private static Set<String> downloadedUrls = new HashSet<String>();
     private static final ExecutorService PUSH_RECEIVER_EXECUTOR = Executors.newSingleThreadExecutor();
 
-    private class ReceivePushTask extends AsyncTask<Intent,Void,Void> {
+    private class ReceivePushTask extends AsyncTask<Intent, Void, Void> {
         private Context mContext;
-        public ReceivePushTask(Context context) {
+        private PendingResult pendingResult;
+
+        private ReceivePushTask(Context context, PendingResult pendingResult) {
             mContext = context;
+            this.pendingResult = pendingResult;
         }
 
         @Override
@@ -90,7 +85,7 @@ public class PushReceiver extends BroadcastReceiver {
             PduParser parser = new PduParser(pushData);
             GenericPdu pdu = parser.parse();
 
-            if (null == pdu) {
+            if (pdu == null) {
                 Log.e(TAG, "Invalid PUSH data");
                 return null;
             }
@@ -98,7 +93,7 @@ public class PushReceiver extends BroadcastReceiver {
             PduPersister p = PduPersister.getPduPersister(mContext);
             ContentResolver cr = mContext.getContentResolver();
             int type = pdu.getMessageType();
-            long threadId = -1;
+            long threadId;
 
             try {
                 switch (type) {
@@ -123,11 +118,11 @@ public class PushReceiver extends BroadcastReceiver {
                         NotificationInd nInd = (NotificationInd) pdu;
 
                         if (MmsConfig.getTransIdEnabled()) {
-                            byte [] contentLocation = nInd.getContentLocation();
+                            byte[] contentLocation = nInd.getContentLocation();
                             if ('=' == contentLocation[contentLocation.length - 1]) {
-                                byte [] transactionId = nInd.getTransactionId();
-                                byte [] contentLocationWithId = new byte [contentLocation.length
-                                                                          + transactionId.length];
+                                byte[] transactionId = nInd.getTransactionId();
+                                byte[] contentLocationWithId = new byte[contentLocation.length
+                                        + transactionId.length];
                                 System.arraycopy(contentLocation, 0, contentLocationWithId,
                                         0, contentLocation.length);
                                 System.arraycopy(transactionId, 0, contentLocationWithId,
@@ -156,9 +151,8 @@ public class PushReceiver extends BroadcastReceiver {
                             Log.v(TAG, "receiving on a lollipop+ device");
 
                             DownloadManager.getInstance().downloadMultimediaMessage(mContext, location, uri, true);
-                        } else if (LOCAL_LOGV) {
-                            Log.v(TAG, "Skip downloading duplicate message: "
-                                    + new String(nInd.getContentLocation()));
+                        } else {
+                            Log.v(TAG, "Skip downloading duplicate message: " + new String(nInd.getContentLocation()));
                         }
                         break;
                     }
@@ -171,11 +165,14 @@ public class PushReceiver extends BroadcastReceiver {
                 Log.e(TAG, "Unexpected RuntimeException.", e);
             }
 
-            if (LOCAL_LOGV) {
-                Log.v(TAG, "PUSH Intent processed.");
-            }
+            Log.v(TAG, "PUSH Intent processed.");
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            pendingResult.finish();
         }
     }
 
@@ -184,28 +181,16 @@ public class PushReceiver extends BroadcastReceiver {
         Log.v(TAG, intent.getAction() + " " + intent.getType());
         if ((intent.getAction().equals(WAP_PUSH_DELIVER_ACTION) || intent.getAction().equals(WAP_PUSH_RECEIVED_ACTION))
                 && ContentType.MMS_MESSAGE.equals(intent.getType())) {
-            if (LOCAL_LOGV) {
-                Log.v(TAG, "Received PUSH Intent: " + intent);
-            }
+            Log.v(TAG, "Received PUSH Intent: " + intent);
 
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-            // Hold a wake lock for 5 seconds, enough to give any
-            // services we start time to take their own wake locks.
-            PowerManager pm = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                    "MMS PushReceiver");
-            wl.acquire(5000);
             MmsConfig.init(context);
-            new ReceivePushTask(context).executeOnExecutor(PUSH_RECEIVER_EXECUTOR, intent);
+            new ReceivePushTask(context, goAsync()).executeOnExecutor(PUSH_RECEIVER_EXECUTOR, intent);
 
             Log.v("mms_receiver", context.getPackageName() + " received and aborted");
-
-            abortBroadcast();
         }
     }
 
-    public static String getContentLocation(Context context, Uri uri)
-            throws MmsException {
+    public static String getContentLocation(Context context, Uri uri) throws MmsException {
         Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
                 uri, PROJECTION, null, null, null);
 
@@ -245,8 +230,8 @@ public class PushReceiver extends BroadcastReceiver {
         // sb.append(')');
 
         Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
-                            Mms.CONTENT_URI, new String[] { Mms.THREAD_ID },
-                            sb.toString(), null, null);
+                Mms.CONTENT_URI, new String[]{Mms.THREAD_ID},
+                sb.toString(), null, null);
         if (cursor != null) {
             try {
                 if ((cursor.getCount() == 1) && cursor.moveToFirst()) {
@@ -262,16 +247,15 @@ public class PushReceiver extends BroadcastReceiver {
         return -1;
     }
 
-    private static boolean isDuplicateNotification(
-            Context context, NotificationInd nInd) {
+    private static boolean isDuplicateNotification(Context context, NotificationInd nInd) {
         byte[] rawLocation = nInd.getContentLocation();
         if (rawLocation != null) {
             String location = new String(rawLocation);
             String selection = Mms.CONTENT_LOCATION + " = ?";
-            String[] selectionArgs = new String[] { location };
+            String[] selectionArgs = new String[]{location};
             Cursor cursor = SqliteWrapper.query(
                     context, context.getContentResolver(),
-                    Mms.CONTENT_URI, new String[] { Mms._ID },
+                    Mms.CONTENT_URI, new String[]{Mms._ID},
                     selection, selectionArgs, null);
             if (cursor != null) {
                 try {
