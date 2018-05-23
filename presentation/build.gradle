@@ -115,6 +115,7 @@ dependencies {
     kapt "io.realm:realm-annotations-processor:$realm_version"
 
     // rxjava
+    implementation 'com.akaita.java:rxjava2-debug:1.2.2'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
