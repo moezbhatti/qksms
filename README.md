@@ -28,7 +28,7 @@ If you'd like to donate to support the project, you can donate via [PayPal here]
 
 ## Thank you
 
-A special thank you to Jake Klinker ([@klinker41](https://github.com/klinker41)) for his work on [android-smsmms](https://github.com/klinker41/android-smsmms), which has been an unspeakably large help in implementing MMS in QKSMS.
+A special thank you to Jake ([@klinker41](https://github.com/klinker41)) and Luke Klinker ([@klinker24](https://github.com/klinker24)) for their work on [android-smsmms](https://github.com/klinker41/android-smsmms), which has been an unspeakably large help in implementing MMS in QKSMS.
 
 
 ## Contact
