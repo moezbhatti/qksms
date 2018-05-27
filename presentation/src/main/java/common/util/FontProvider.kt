@@ -22,28 +22,15 @@ import android.content.Context
 import android.graphics.Typeface
 import android.support.v4.content.res.ResourcesCompat
 import com.moez.QKSMS.R
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
 import timber.log.Timber
-import util.Preferences
-import util.extensions.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FontProvider @Inject constructor(context: Context, prefs: Preferences) {
+class FontProvider @Inject constructor(context: Context) {
 
-    val typeface: Observable<Optional<Typeface>> = prefs.systemFont.asObservable()
-            .distinctUntilChanged()
-            .switchMap { systemFont ->
-                when (systemFont) {
-                    true -> Observable.just(Optional(null))
-                    false -> lato
-                }
-            }
-
-    private val lato: Observable<Optional<Typeface>> = BehaviorSubject.create()
+    private var lato: Typeface? = null
+    private val pendingCallbacks = ArrayList<(Typeface) -> Unit>()
 
     init {
         ResourcesCompat.getFont(context, R.font.lato, object : ResourcesCompat.FontCallback() {
@@ -52,10 +39,16 @@ class FontProvider @Inject constructor(context: Context, prefs: Preferences) {
             }
 
             override fun onFontRetrieved(typeface: Typeface) {
-                val subject = lato as Subject<Optional<Typeface>>
-                subject.onNext(Optional(typeface))
+                lato = typeface
+
+                pendingCallbacks.forEach { lato?.run(it) }
+                pendingCallbacks.clear()
             }
         }, null)
+    }
+
+    fun getLato(callback: (Typeface) -> Unit) {
+        lato?.run(callback) ?: pendingCallbacks.add(callback)
     }
 
 }

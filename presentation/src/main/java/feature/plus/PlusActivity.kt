@@ -25,11 +25,10 @@ import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.BillingManager
 import common.util.FontProvider
+import common.util.extensions.resolveThemeColor
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
@@ -58,39 +57,22 @@ class PlusActivity : QkThemedActivity(), PlusView {
 
         free.setVisible(false)
 
-        fontProvider.typeface
-                .autoDisposable(scope())
-                .subscribe { lato ->
-                    val typeface = Typeface.create(lato.value, Typeface.BOLD)
-                    collapsingToolbar.setCollapsedTitleTypeface(typeface)
-                    collapsingToolbar.setExpandedTitleTypeface(typeface)
-                }
+        if (!prefs.systemFont.get()) {
+            fontProvider.getLato { lato ->
+                val typeface = Typeface.create(lato, Typeface.BOLD)
+                collapsingToolbar.setCollapsedTitleTypeface(typeface)
+                collapsingToolbar.setExpandedTitleTypeface(typeface)
+            }
+        }
 
-        colors.textPrimary
-                .autoDisposable(scope())
-                .subscribe { color ->
-                    collapsingToolbar.setCollapsedTitleTextColor(color)
-                    collapsingToolbar.setExpandedTitleColor(color)
-                }
+        val textPrimary = resolveThemeColor(android.R.attr.textColorPrimary)
+        collapsingToolbar.setCollapsedTitleTextColor(textPrimary)
+        collapsingToolbar.setExpandedTitleColor(textPrimary)
 
-        colors.background
-                .autoDisposable(scope())
-                .subscribe { color -> window.decorView.setBackgroundColor(color) }
-
-        colors.separator
-                .autoDisposable(scope())
-                .subscribe { color ->
-                    upgradeDonate.setBackgroundTint(color)
-                    upgraded.setBackgroundTint(color)
-                }
-
-        colors.theme
-                .autoDisposable(scope())
-                .subscribe { color ->
-                    donate.setBackgroundTint(color)
-                    upgrade.setBackgroundTint(color)
-                    thanksIcon.setTint(color)
-                }
+        val theme = colors.theme().theme
+        donate.setBackgroundTint(theme)
+        upgrade.setBackgroundTint(theme)
+        thanksIcon.setTint(theme)
     }
 
     override fun render(state: PlusState) {

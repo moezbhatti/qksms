@@ -18,7 +18,6 @@
  */
 package feature.conversationinfo
 
-import android.content.Intent
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
@@ -35,29 +34,24 @@ import model.Conversation
 import repository.MessageRepository
 import util.extensions.asObservable
 import javax.inject.Inject
+import javax.inject.Named
 
 class ConversationInfoViewModel @Inject constructor(
-        private val intent: Intent,
-        private val messageRepo: MessageRepository,
+        @Named("threadId") threadId: Long,
+        messageRepo: MessageRepository,
         private val markArchived: MarkArchived,
         private val markUnarchived: MarkUnarchived,
         private val markBlocked: MarkBlocked,
         private val markUnblocked: MarkUnblocked,
         private val navigator: Navigator,
         private val deleteConversations: DeleteConversations
-) : QkViewModel<ConversationInfoView, ConversationInfoState>(ConversationInfoState()) {
-
+) : QkViewModel<ConversationInfoView, ConversationInfoState>(
+        ConversationInfoState(threadId = threadId, media = messageRepo.getPartsForConversation(threadId))
+) {
 
     private val conversation: Observable<Conversation>
 
     init {
-        val threadId = intent.extras?.getLong("threadId") ?: 0L
-
-        newState { it.copy(threadId = threadId) }
-
-        // Load the attachments from the conversation
-        newState { it.copy(media = messageRepo.getPartsForConversation(threadId)) }
-
         conversation = messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { conversation -> conversation.isLoaded }

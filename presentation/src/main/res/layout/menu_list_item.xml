@@ -20,7 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple"
+    android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -30,7 +30,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
         android:src="@drawable/radio_button"
-        tools:tint="@color/textTertiary" />
+        tools:tint="?android:attr/textColorTertiary" />
 
     <common.widget.QkTextView
         android:id="@+id/title"

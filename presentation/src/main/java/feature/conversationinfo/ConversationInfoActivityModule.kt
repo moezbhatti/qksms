@@ -1,17 +1,18 @@
 package feature.conversationinfo
 
 import android.arch.lifecycle.ViewModel
-import android.content.Intent
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import injection.ViewModelKey
+import javax.inject.Named
 
 @Module
 class ConversationInfoActivityModule {
 
     @Provides
-    fun provideIntent(activity: ConversationInfoActivity): Intent = activity.intent
+    @Named("threadId")
+    fun provideIntent(activity: ConversationInfoActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
 
     @Provides
     @IntoMap

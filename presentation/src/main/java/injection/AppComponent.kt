@@ -27,7 +27,6 @@ import common.widget.PreferenceView
 import common.widget.QkEditText
 import common.widget.QkSwitch
 import common.widget.QkTextView
-import common.widget.Separator
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import feature.compose.DetailedChipView
@@ -84,6 +83,5 @@ interface AppComponent {
     fun inject(view: QkEditText)
     fun inject(view: QkSwitch)
     fun inject(view: QkTextView)
-    fun inject(view: Separator)
 
 }

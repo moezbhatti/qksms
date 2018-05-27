@@ -22,9 +22,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground"
     android:orientation="vertical"
-    android:paddingTop="8dp"
-    tools:background="@color/white">
+    android:paddingTop="8dp">
 
     <LinearLayout
         android:id="@+id/inbox"
@@ -50,7 +50,7 @@
             android:id="@+id/archivedIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_archive_black_24dp"
-            tools:tint="@color/textSecondary" />
+            tools:tint="?android:attr/textColorSecondary" />
 
         <common.widget.QkTextView
             style="@style/DrawerText"
@@ -67,7 +67,7 @@
             android:id="@+id/scheduledIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_event_black_24dp"
-            tools:tint="@color/textSecondary" />
+            tools:tint="?android:attr/textColorSecondary" />
 
         <common.widget.QkTextView
             style="@style/DrawerText"
@@ -75,10 +75,11 @@
 
     </LinearLayout>
 
-    <common.widget.Separator
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/divider" />
 
     <common.widget.QkTextView
         style="@style/TextSecondary"
@@ -95,7 +96,7 @@
             android:id="@+id/settingsIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_settings_black_24dp"
-            tools:tint="@color/textSecondary" />
+            tools:tint="?android:attr/textColorSecondary" />
 
         <common.widget.QkTextView
             style="@style/DrawerText"
@@ -111,7 +112,7 @@
             android:id="@+id/plusIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_star_black_24dp"
-            tools:tint="@color/textSecondary" />
+            tools:tint="?android:attr/textColorSecondary" />
 
         <common.widget.QkTextView
             style="@style/DrawerText"
@@ -127,7 +128,7 @@
             android:id="@+id/helpIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_help_black_24dp"
-            tools:tint="@color/textSecondary" />
+            tools:tint="?android:attr/textColorSecondary" />
 
         <common.widget.QkTextView
             style="@style/DrawerText"
@@ -146,7 +147,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/rounded_rectangle_outline_2dp"
-        android:backgroundTint="@color/separatorLight">
+        android:backgroundTint="?android:attr/divider">
 
         <ImageView
             android:id="@+id/rateIcon"
@@ -206,10 +207,10 @@
             android:id="@+id/rateOkay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/ripple"
-            android:padding="16dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="16dp"
             android:text="@string/rate_okay"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

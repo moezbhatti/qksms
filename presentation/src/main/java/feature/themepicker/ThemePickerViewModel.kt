@@ -18,7 +18,6 @@
  */
 package feature.themepicker
 
-import android.content.Intent
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
@@ -30,23 +29,17 @@ import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.withLatestFrom
 import util.Preferences
 import javax.inject.Inject
+import javax.inject.Named
 
 class ThemePickerViewModel @Inject constructor(
-        private val intent: Intent,
+        @Named("threadId") threadId: Long,
         private val billingManager: BillingManager,
         private val colors: Colors,
         private val navigator: Navigator,
         private val prefs: Preferences
-) : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState()) {
+) : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState(threadId = threadId)) {
 
-    private val threadId = intent.extras?.getLong("threadId") ?: 0L
-    private val theme: Preference<Int>
-
-    init {
-        newState { it.copy(threadId = threadId) }
-
-        theme = prefs.theme(threadId)
-    }
+    private val theme: Preference<Int> = prefs.theme(threadId)
 
     override fun bindView(view: ThemePickerView) {
         super.bindView(view)
@@ -63,7 +56,7 @@ class ThemePickerViewModel @Inject constructor(
         // Update the color of the apply button
         view.hsvThemeSelectedIntent
                 .doOnNext { color -> newState { it.copy(newColor = color) } }
-                .switchMap { color -> colors.textPrimaryOnThemeForColor(color) }
+                .map { color -> colors.textPrimaryOnThemeForColor(color) }
                 .doOnNext { color -> newState { it.copy(newTextColor = color) } }
                 .autoDisposable(view.scope())
                 .subscribe()

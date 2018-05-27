@@ -25,19 +25,14 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.moez.QKSMS.R
-import com.uber.autodispose.android.scope
-import com.uber.autodispose.kotlin.autoDisposable
-import common.util.Colors
-import common.util.extensions.getColorCompat
+import common.util.extensions.resolveThemeAttribute
+import common.util.extensions.resolveThemeColor
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import injection.appComponent
 import kotlinx.android.synthetic.main.preference_view.view.*
-import javax.inject.Inject
 
 class PreferenceView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayoutCompat(context, attrs) {
-
-    @Inject lateinit var colors: Colors
 
     var title: String? = null
         set(value) {
@@ -72,9 +67,12 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         View.inflate(context, R.layout.preference_view, this)
-        setBackgroundResource(R.drawable.ripple)
+        setBackgroundResource(context.resolveThemeAttribute(R.attr.selectableItemBackground))
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
+
+        val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
+        icon.setTint(textSecondary)
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView)?.run {
             title = getString(R.styleable.PreferenceView_title)
@@ -92,18 +90,6 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
             }
 
             recycle()
-        }
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        if (isInEditMode) {
-            icon.setTint(context.getColorCompat(R.color.textSecondary))
-        } else {
-            colors.textSecondary
-                    .autoDisposable(scope())
-                    .subscribe { icon.setTint(it) }
         }
     }
 

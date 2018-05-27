@@ -22,17 +22,18 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.support.v7.widget.SwitchCompat
 import android.util.AttributeSet
-import com.uber.autodispose.android.scope
-import com.uber.autodispose.kotlin.autoDisposable
+import com.moez.QKSMS.R
 import common.util.Colors
+import common.util.extensions.getColorCompat
 import common.util.extensions.withAlpha
 import injection.appComponent
-import io.reactivex.rxkotlin.Observables
+import util.Preferences
 import javax.inject.Inject
 
 class QkSwitch @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : SwitchCompat(context, attrs) {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var prefs: Preferences
 
     init {
         if (!isInEditMode) {
@@ -49,17 +50,26 @@ class QkSwitch @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                     intArrayOf(android.R.attr.state_checked),
                     intArrayOf())
 
-            Observables.combineLatest(colors.theme, colors.switchThumbEnabled, colors.switchThumbDisabled,
-                    { color, enabled, disabled -> intArrayOf(disabled, color, enabled) })
-                    .map { values -> ColorStateList(states, values) }
-                    .autoDisposable(scope())
-                    .subscribe { tintList -> thumbTintList = tintList }
+            val themeColor = colors.theme().theme
 
-            Observables.combineLatest(colors.theme, colors.switchTrackEnabled, colors.switchTrackDisabled,
-                    { color, enabled, disabled -> intArrayOf(disabled, color.withAlpha(0x4D), enabled) })
-                    .map { values -> ColorStateList(states, values) }
-                    .autoDisposable(scope())
-                    .subscribe { tintList -> trackTintList = tintList }
+            val switchThumbEnabled: Int = prefs.night.get()
+                    .let { night -> if (night) R.color.switchThumbEnabledDark else R.color.switchThumbEnabledLight }
+                    .let { res -> context.getColorCompat(res) }
+
+            val switchThumbDisabled: Int = prefs.night.get()
+                    .let { night -> if (night) R.color.switchThumbDisabledDark else R.color.switchThumbDisabledLight }
+                    .let { res -> context.getColorCompat(res) }
+
+            val switchTrackEnabled: Int = prefs.night.get()
+                    .let { night -> if (night) R.color.switchTrackEnabledDark else R.color.switchTrackEnabledLight }
+                    .let { res -> context.getColorCompat(res) }
+
+            val switchTrackDisabled: Int = prefs.night.get()
+                    .let { night -> if (night) R.color.switchTrackDisabledDark else R.color.switchTrackDisabledLight }
+                    .let { res -> context.getColorCompat(res) }
+
+            thumbTintList = ColorStateList(states, intArrayOf(switchThumbDisabled, themeColor, switchThumbEnabled))
+            trackTintList = ColorStateList(states, intArrayOf(switchTrackDisabled, themeColor.withAlpha(0x4D), switchTrackEnabled))
         }
     }
 }

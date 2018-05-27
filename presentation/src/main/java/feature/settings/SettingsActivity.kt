@@ -28,6 +28,7 @@ import android.text.format.DateFormat
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
+import com.uber.autodispose.AutoDispose.autoDisposable
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.QkDialog
@@ -87,10 +88,6 @@ class SettingsActivity : QkThemedActivity(), SettingsView {
 
         about.summary = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
 
-        colors.background
-                .autoDisposable(scope())
-                .subscribe { color -> window.decorView.setBackgroundColor(color) }
-
         // Listen to clicks for all of the preferences
         (0 until preferences.childCount)
                 .map { index -> preferences.getChildAt(index) }
@@ -100,6 +97,11 @@ class SettingsActivity : QkThemedActivity(), SettingsView {
                         preferenceClickIntent.onNext(preference as PreferenceView)
                     }
                 }
+
+        theme
+                .skip(1)
+                .autoDisposable(scope())
+                .subscribe { recreate() }
     }
 
     override fun render(state: SettingsState) {

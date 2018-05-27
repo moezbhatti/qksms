@@ -71,7 +71,7 @@
             android:id="@+id/delete"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:background="@drawable/ripple"
+            android:background="?attr/selectableItemBackground"
             android:padding="16dp"
             android:src="@drawable/ic_cancel_black_24dp"
             android:tint="@color/white" />

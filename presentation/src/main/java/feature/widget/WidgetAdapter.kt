@@ -35,12 +35,14 @@ import common.util.Colors
 import common.util.DateFormatter
 import common.util.GlideApp
 import common.util.extensions.dpToPx
+import common.util.extensions.getColorCompat
 import feature.main.MainActivity
 import injection.appComponent
 import model.Contact
 import model.Conversation
 import model.PhoneNumber
 import repository.MessageRepository
+import util.Preferences
 import javax.inject.Inject
 
 class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
@@ -53,6 +55,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
     @Inject lateinit var colors: Colors
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var prefs: Preferences
 
     private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
     private val smallWidget = intent.getBooleanExtra("small_widget", false)
@@ -61,12 +64,19 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
     // Cache colors, load lazily. This entire class is recreated when the widget is recreated,
     // so if the theme changes then these values will be correct in the new instance
-    private val theme by lazy { colors.theme.blockingFirst() }
-    private val background by lazy { colors.background.blockingFirst() }
-    private val textPrimary by lazy { colors.textPrimary.blockingFirst() }
-    private val textSecondary by lazy { colors.textSecondary.blockingFirst() }
-    private val textTertiary by lazy { colors.textTertiary.blockingFirst() }
-    private val textPrimaryOnTheme by lazy { colors.textPrimaryOnTheme.blockingFirst() }
+    private val night by lazy { prefs.night.get() }
+    private val black by lazy { prefs.black.get() }
+    private val theme by lazy { colors.theme() }
+    private val background by lazy {
+        context.getColorCompat(when {
+            night && black -> R.color.black
+            night && !black -> R.color.backgroundDark
+            else -> R.color.white
+        })
+    }
+    private val textPrimary by lazy { context.getColorCompat(if (night) R.color.textPrimaryDark else R.color.textPrimary) }
+    private val textSecondary by lazy { context.getColorCompat(if (night) R.color.textSecondaryDark else R.color.textSecondary) }
+    private val textTertiary by lazy { context.getColorCompat(if (night) R.color.textTertiaryDark else R.color.textTertiary) }
 
     override fun onCreate() {
         appComponent.inject(this)
@@ -103,9 +113,9 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
         // Avatar
         remoteViews.setViewVisibility(R.id.avatar, if (smallWidget) View.GONE else View.VISIBLE)
-        remoteViews.setInt(R.id.avatar, "setBackgroundColor", theme)
-        remoteViews.setTextColor(R.id.initial, textPrimaryOnTheme)
-        remoteViews.setInt(R.id.icon, "setColorFilter", textPrimaryOnTheme)
+        remoteViews.setInt(R.id.avatar, "setBackgroundColor", theme.theme)
+        remoteViews.setTextColor(R.id.initial, theme.textPrimary)
+        remoteViews.setInt(R.id.icon, "setColorFilter", theme.textPrimary)
         remoteViews.setInt(R.id.avatarMask, "setColorFilter", background)
 
         val contact = conversation.recipients.map { recipient ->

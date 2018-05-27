@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="14sp"
         tools:text="Loading..." />
 

@@ -23,7 +23,6 @@ import android.app.Application
 import android.support.text.emoji.EmojiCompat
 import android.support.text.emoji.FontRequestEmojiCompatConfig
 import android.support.v4.provider.FontRequest
-import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
@@ -63,7 +62,7 @@ class QKApplication : Application(), HasActivityInjector {
             projectPackages = packages
         })
 
-        RxJava2Debug.enableRxJava2AssemblyTracking(packages)
+        //RxJava2Debug.enableRxJava2AssemblyTracking(packages)
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()

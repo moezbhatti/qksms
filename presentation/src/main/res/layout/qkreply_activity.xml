@@ -25,12 +25,12 @@
     android:layout_gravity="center"
     android:layout_margin="24dp"
     android:background="@drawable/rounded_rectangle_4dp"
+    android:backgroundTint="?attr/composeBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:elevation="8dp"
     android:maxHeight="320dp"
     android:maxWidth="320dp"
-    tools:backgroundTint="@color/backgroundLight"
     tools:context="feature.qkreply.QkReplyActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -53,21 +53,21 @@
         android:layout_height="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/compose_bar_background"
+        android:backgroundTint="?attr/composeBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/message"
-        tools:backgroundTint="@color/backgroundLight" />
+        app:layout_constraintTop_toTopOf="@id/message" />
 
     <View
         android:id="@+id/composeBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/rounded_rectangle_bottom_4dp"
+        android:backgroundTint="?attr/composeBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/composeBackgroundGradient"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:backgroundTint="@color/backgroundLight" />
+        app:layout_constraintTop_toBottomOf="@id/composeBackgroundGradient" />
 
     <common.widget.QkEditText
         android:id="@+id/message"
@@ -76,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@drawable/rounded_rectangle_shadow"
+        android:backgroundTint="?attr/bubbleColor"
         android:backgroundTintMode="multiply"
         android:gravity="center_vertical"
         android:hint="@string/compose_hint"
@@ -83,12 +84,12 @@
         android:maxLines="6"
         android:minHeight="44dp"
         android:padding="20dp"
+        android:textColorHint="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
         app:layout_constraintEnd_toStartOf="@id/send"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/messages"
-        app:textColorHint="tertiary" />
+        app:layout_constraintTop_toBottomOf="@id/messages" />
 
     <common.widget.QkTextView
         android:id="@+id/counter"
@@ -122,6 +123,7 @@
         android:id="@+id/toolbar"
         style="@style/Toolbar"
         android:background="@drawable/rounded_rectangle_top_4dp"
+        android:backgroundTint="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

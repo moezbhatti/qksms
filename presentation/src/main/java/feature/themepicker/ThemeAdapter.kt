@@ -20,38 +20,29 @@ package feature.themepicker
 
 import android.content.Context
 import android.content.res.Resources
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
 import com.moez.QKSMS.R
+import common.base.QkAdapter
+import common.base.QkViewHolder
 import common.util.Colors
 import common.util.extensions.dpToPx
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.theme_list_item.view.*
 import kotlinx.android.synthetic.main.theme_palette_list_item.view.*
-import common.base.QkAdapter
-import common.base.QkViewHolder
 import javax.inject.Inject
 
 class ThemeAdapter @Inject constructor(
         private val context: Context,
         private val colors: Colors
 ) : QkAdapter<List<Int>>() {
-
-    var threadId: Long = 0
-        set(value) {
-            field = value
-            threadIdChanged()
-        }
 
     val colorSelected: Subject<Int> = PublishSubject.create()
 
@@ -61,16 +52,16 @@ class ThemeAdapter @Inject constructor(
             val newPosition = data.indexOfFirst { it.contains(value) }
 
             field = value
+            iconTint = colors.textPrimaryOnThemeForColor(value)
 
             oldPosition.takeIf { it != -1 }?.let { position -> notifyItemChanged(position) }
             newPosition.takeIf { it != -1 }?.let { position -> notifyItemChanged(position) }
         }
 
     private var iconTint = 0
-    private val disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.theme_palette_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.theme_palette_list_item, parent, false)
         view.palette.flexWrap = FlexWrap.WRAP
         view.palette.flexDirection = FlexDirection.ROW
 
@@ -117,17 +108,6 @@ class ThemeAdapter @Inject constructor(
                     }
                 }
                 .forEach { theme -> view.palette.addView(theme) }
-    }
-
-    private fun threadIdChanged() {
-        disposables.clear()
-        disposables += colors.textPrimaryOnThemeForConversation(threadId)
-                .subscribe { color -> iconTint = color }
-
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        disposables.clear()
     }
 
 }

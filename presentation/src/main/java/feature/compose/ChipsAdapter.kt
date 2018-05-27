@@ -30,9 +30,8 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import common.base.QkAdapter
 import common.base.QkViewHolder
-import common.util.Colors
 import common.util.extensions.dpToPx
-import common.util.extensions.setBackgroundTint
+import common.util.extensions.resolveThemeColor
 import common.util.extensions.showKeyboard
 import common.widget.QkEditText
 import io.reactivex.subjects.PublishSubject
@@ -40,7 +39,7 @@ import kotlinx.android.synthetic.main.contact_chip.view.*
 import model.Contact
 import javax.inject.Inject
 
-class ChipsAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<Contact>() {
+class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter<Contact>() {
 
     companion object {
         private const val TYPE_EDIT_TEXT = 0
@@ -76,13 +75,15 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        TYPE_EDIT_TEXT -> QkViewHolder(editText)
+        TYPE_EDIT_TEXT -> {
+            editText.setTextColor(parent.context.resolveThemeColor(android.R.attr.textColorPrimary))
+            editText.setHintTextColor(parent.context.resolveThemeColor(android.R.attr.textColorTertiary))
+            QkViewHolder(editText)
+        }
 
         else -> {
-            val view = LayoutInflater.from(context).inflate(R.layout.contact_chip, parent, false)
-            colors.composeBackground.subscribe { color -> view.content.setBackgroundTint(color) }
-
-            QkViewHolder(view)
+            val inflater = LayoutInflater.from(parent.context)
+            QkViewHolder(inflater.inflate(R.layout.contact_chip, parent, false))
         }
     }
 
@@ -102,7 +103,7 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
                     contact.numbers.firstOrNull { it.address.isNotBlank() }?.address ?: ""
                 }
 
-                view.setOnClickListener { showDetailedChip(contact) }
+                view.setOnClickListener { showDetailedChip(view.context, contact) }
             }
         }
     }
@@ -111,7 +112,10 @@ class ChipsAdapter @Inject constructor(private val context: Context, private val
 
     override fun getItemViewType(position: Int) = if (position == itemCount - 1) TYPE_EDIT_TEXT else TYPE_ITEM
 
-    private fun showDetailedChip(contact: Contact) {
+    /**
+     * The [context] has to come from a view, because we're inflating a view that used themed attrs
+     */
+    private fun showDetailedChip(context: Context, contact: Contact) {
         val detailedChipView = DetailedChipView(context)
         detailedChipView.setContact(contact)
 

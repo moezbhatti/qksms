@@ -18,7 +18,6 @@
  */
 package feature.blocked
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.moez.QKSMS.R
@@ -29,12 +28,12 @@ import kotlinx.android.synthetic.main.blocked_list_item.view.*
 import model.Conversation
 import javax.inject.Inject
 
-class BlockedAdapter @Inject constructor(private val context: Context) : QkRealmAdapter<Conversation>() {
+class BlockedAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
 
     val unblock: PublishSubject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        return QkViewHolder(LayoutInflater.from(context).inflate(R.layout.blocked_list_item, parent, false))
+        return QkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.blocked_list_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {

@@ -55,10 +55,11 @@
                 tools:layout_height="72dp"
                 tools:listitem="@layout/conversation_recipient_list_item" />
 
-            <common.widget.Separator
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/divider" />
 
             <common.widget.PreferenceView
                 android:id="@+id/notifications"
@@ -95,11 +96,12 @@
                 app:icon="@drawable/ic_delete_black_24dp"
                 app:title="@string/info_delete" />
 
-            <common.widget.Separator
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="16dp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:background="?android:attr/divider" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/media"
@@ -122,9 +124,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <common.widget.Separator
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

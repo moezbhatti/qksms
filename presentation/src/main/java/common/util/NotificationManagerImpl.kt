@@ -110,7 +110,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setColor(colors.themeForConversation(threadId).blockingFirst())
+                .setColor(colors.theme(threadId).theme)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
@@ -207,7 +207,7 @@ class NotificationManagerImpl @Inject constructor(
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setContentTitle(context.getString(R.string.notification_message_failed_title))
                 .setContentText(context.getString(R.string.notification_message_failed_text, conversation.getTitle()))
-                .setColor(colors.themeForConversation(threadId).blockingFirst())
+                .setColor(colors.theme(threadId).theme)
                 .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
                 .setSmallIcon(R.drawable.ic_notification_failed)
                 .setAutoCancel(true)

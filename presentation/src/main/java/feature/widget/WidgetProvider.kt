@@ -30,16 +30,19 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import com.moez.QKSMS.R
 import common.util.Colors
+import common.util.extensions.getColorCompat
 import feature.compose.ComposeActivity
 import feature.main.MainActivity
 import injection.appComponent
 import manager.WidgetManager
 import timber.log.Timber
+import util.Preferences
 import javax.inject.Inject
 
 class WidgetProvider : AppWidgetProvider() {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var prefs: Preferences
 
     init {
         appComponent.inject(this)
@@ -107,10 +110,27 @@ class WidgetProvider : AppWidgetProvider() {
         val remoteViews = RemoteViews(context.packageName, R.layout.widget)
 
         // Apply colors from theme
-        remoteViews.setInt(R.id.background, "setColorFilter", colors.background.blockingFirst())
-        remoteViews.setInt(R.id.toolbar, "setColorFilter", colors.toolbarColor.blockingFirst())
-        remoteViews.setTextColor(R.id.title, colors.textPrimary.blockingFirst())
-        remoteViews.setInt(R.id.compose, "setColorFilter", colors.theme.blockingFirst())
+        val night = prefs.night.get()
+        val black = prefs.black.get()
+
+        remoteViews.setInt(R.id.background, "setColorFilter", context.getColorCompat(when {
+            night && black -> R.color.black
+            night && !black -> R.color.backgroundDark
+            else -> R.color.white
+        }))
+
+        remoteViews.setInt(R.id.toolbar, "setColorFilter", context.getColorCompat(when {
+            night && black -> R.color.black
+            night && !black -> R.color.toolbarDark
+            else -> R.color.toolbarLight
+        }))
+
+        remoteViews.setTextColor(R.id.title, context.getColorCompat(when (night) {
+            true -> R.color.textPrimaryDark
+            false -> R.color.textPrimary
+        }))
+
+        remoteViews.setInt(R.id.compose, "setColorFilter", colors.theme().theme)
 
         // Set adapter for conversations
         val intent = Intent(context, WidgetService::class.java)

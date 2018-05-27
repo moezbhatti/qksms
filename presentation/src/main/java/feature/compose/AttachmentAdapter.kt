@@ -27,19 +27,14 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import common.base.QkAdapter
 import common.base.QkViewHolder
-import common.util.Colors
-import common.util.extensions.setBackgroundTint
-import common.util.extensions.setTint
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.attachment_list_item.view.*
 import javax.inject.Inject
 
 class AttachmentAdapter @Inject constructor(
-        private val context: Context,
-        private val colors: Colors
+        private val context: Context
 ) : QkAdapter<Attachment>() {
 
     val attachmentDeleted: Subject<Attachment> = PublishSubject.create()
@@ -47,15 +42,9 @@ class AttachmentAdapter @Inject constructor(
     private val disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.attachment_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.attachment_list_item, parent, false)
 
         view.thumbnailBounds.clipToOutline = true
-
-        disposables += colors.bubble
-                .subscribe { color -> view.detach.setBackgroundTint(color) }
-
-        disposables += colors.textSecondary
-                .subscribe { color -> view.detach.setTint(color) }
 
         return QkViewHolder(view)
     }

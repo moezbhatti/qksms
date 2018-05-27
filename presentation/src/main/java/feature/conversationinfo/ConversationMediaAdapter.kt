@@ -26,18 +26,15 @@ import android.view.ViewGroup
 import com.moez.QKSMS.R
 import common.base.QkRealmAdapter
 import common.base.QkViewHolder
-import common.util.Colors
 import common.util.GlideApp
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*
 import model.MmsPart
 import javax.inject.Inject
 
 class ConversationMediaAdapter @Inject constructor(
-        private val context: Context,
-        private val colors: Colors
+        private val context: Context
 ) : QkRealmAdapter<MmsPart>() {
 
     val thumbnailClicks: PublishSubject<View> = PublishSubject.create()
@@ -45,10 +42,7 @@ class ConversationMediaAdapter @Inject constructor(
     private val disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.conversation_media_list_item, parent, false)
-
-        disposables += colors.separator.subscribe { color -> view.setBackgroundColor(color) }
-
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.conversation_media_list_item, parent, false)
         return QkViewHolder(view)
     }
 

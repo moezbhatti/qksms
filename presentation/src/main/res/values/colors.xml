@@ -34,9 +34,6 @@
     <color name="backgroundLight">#ECEFF1</color>
     <color name="backgroundDark">#192025</color>
 
-    <color name="fieldLight">#0C000000</color>
-    <color name="fieldDark">#0CFFFFFF</color>
-
     <color name="textPrimary">#49555F</color>
     <color name="textSecondary">#70808D</color>
     <color name="textTertiary">#B7B9C0</color>

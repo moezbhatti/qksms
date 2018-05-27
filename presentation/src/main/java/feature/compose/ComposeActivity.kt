@@ -24,7 +24,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.ContentValues
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
@@ -41,13 +40,13 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
+import common.util.extensions.scrapViews
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import common.util.extensions.showKeyboard
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
-import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
@@ -123,50 +122,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         messageBackground.backgroundTintMode = PorterDuff.Mode.MULTIPLY
         message.supportsInputContent = true
 
-        val states = arrayOf(
-                intArrayOf(android.R.attr.state_enabled),
-                intArrayOf(-android.R.attr.state_enabled))
-
-        val iconEnabled = threadId
-                .distinctUntilChanged()
-                .switchMap { threadId -> colors.textPrimaryOnThemeForConversation(threadId) }
-
-        val iconDisabled = threadId
-                .distinctUntilChanged()
-                .switchMap { threadId -> colors.textTertiaryOnThemeForConversation(threadId) }
-
-        Observables
-                .combineLatest(iconEnabled, iconDisabled, { primary, tertiary ->
-                    ColorStateList(states, intArrayOf(primary, tertiary))
-                })
-                .autoDisposable(scope())
-                .subscribe { tintList -> send.imageTintList = tintList }
-
         theme
+                .doOnNext { send.setBackgroundTint(it.theme) }
+                .doOnNext { send.setTint(it.textPrimary) }
+                .doOnNext { messageAdapter.theme = it }
                 .autoDisposable(scope())
-                .subscribe { color -> send.setBackgroundTint(color) }
-
-        colors.textSecondary
-                .autoDisposable(scope())
-                .subscribe { color ->
-                    attach.setTint(color)
-                    camera.setTint(color)
-                    gallery.setTint(color)
-                }
-
-        colors.bubble
-                .autoDisposable(scope())
-                .subscribe { color -> messageBackground.setBackgroundTint(color) }
-
-        colors.background
-                .autoDisposable(scope())
-                .subscribe { color -> contacts.setBackgroundColor(color) }
-
-        colors.composeBackground
-                .doOnNext { color -> composeBackground.setBackgroundTint(color) }
-                .doOnNext { color -> window.decorView.setBackgroundColor(color) }
-                .autoDisposable(scope())
-                .subscribe()
+                .subscribe { messageList.scrapViews() }
 
         window.callback = ComposeWindowCallback(window.callback, this)
     }
@@ -236,6 +197,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         counter.setVisible(counter.text.isNotBlank())
 
         send.isEnabled = state.canSend
+        send.imageAlpha = if (state.canSend) 255 else 128
     }
 
     override fun clearSelection() {

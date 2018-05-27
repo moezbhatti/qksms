@@ -28,6 +28,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkThemedActivity
+import common.util.extensions.scrapViews
 import common.util.extensions.setVisible
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
@@ -59,10 +60,6 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
         viewModel.bindView(this)
         setTitle(R.string.info_title)
 
-        colors.background
-                .autoDisposable(scope())
-                .subscribe { color -> window.decorView.setBackgroundColor(color) }
-
         mediaAdapter.thumbnailClicks
                 .autoDisposable(scope())
                 .subscribe { view -> navigator.showImageAnimated(this, view) }
@@ -71,6 +68,10 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
 
         media.adapter = mediaAdapter
         media.addItemDecoration(itemDecoration)
+
+        theme
+                .autoDisposable(scope())
+                .subscribe { recipients.scrapViews() }
     }
 
     override fun render(state: ConversationInfoState) {
@@ -79,8 +80,9 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
             return
         }
 
-        recipientAdapter.updateData(state.recipients)
+        threadId.onNext(state.threadId)
         recipientAdapter.threadId = state.threadId
+        recipientAdapter.updateData(state.recipients)
 
         notifications.setVisible(!state.blocked)
 

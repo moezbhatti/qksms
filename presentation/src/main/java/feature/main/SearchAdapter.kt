@@ -19,7 +19,6 @@
 package feature.main
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.BackgroundColorSpan
@@ -33,8 +32,6 @@ import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
 import common.util.extensions.setVisible
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.search_list_item.view.*
 import model.SearchResult
 import javax.inject.Inject
@@ -46,12 +43,10 @@ class SearchAdapter @Inject constructor(
         private val navigator: Navigator
 ) : QkAdapter<SearchResult>() {
 
-    private var highlightColor: Int = 0
-
-    private val disposables = CompositeDisposable()
+    private var highlightColor: Int = colors.theme().highlight
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.search_list_item, parent, false)
         return QkViewHolder(view)
     }
@@ -104,15 +99,5 @@ class SearchAdapter @Inject constructor(
         return old.query == new.query && // Queries are the same
                 old.conversation.id == new.conversation.id // Conversation id is the same
                 && old.messages == new.messages // Result count is the same
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        disposables += colors.highlightColor
-                .doOnNext { color -> highlightColor = color }
-                .subscribe { notifyDataSetChanged() }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        disposables.dispose()
     }
 }
