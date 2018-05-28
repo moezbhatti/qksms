@@ -22,7 +22,6 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
-import androidx.net.toUri
 import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
@@ -77,8 +76,12 @@ class NotificationPrefsViewModel @Inject constructor(
                 .subscribe { enabled -> newState { it.copy(vibrationEnabled = enabled) } }
 
         disposables += ringtone.asObservable()
-                .map { uri -> uri.toUri() }
-                .map { uri -> RingtoneManager.getRingtone(context, uri).getTitle(context) }
+                .map { uriString ->
+                    uriString.takeIf { it.isNotEmpty() }
+                            ?.let(Uri::parse)
+                            ?.let { uri -> RingtoneManager.getRingtone(context, uri) }?.getTitle(context)
+                            ?: context.getString(R.string.settings_ringtone_none)
+                }
                 .subscribe { title -> newState { it.copy(ringtoneName = title) } }
 
         disposables += prefs.qkreply.asObservable()
@@ -103,7 +106,7 @@ class NotificationPrefsViewModel @Inject constructor(
 
                         R.id.vibration -> vibration.set(!vibration.get())
 
-                        R.id.ringtone -> view.showRingtonePicker(Uri.parse(ringtone.get()))
+                        R.id.ringtone -> view.showRingtonePicker(ringtone.get().takeIf { it.isNotEmpty() }?.let(Uri::parse))
 
                         R.id.qkreply -> prefs.qkreply.set(!prefs.qkreply.get())
 

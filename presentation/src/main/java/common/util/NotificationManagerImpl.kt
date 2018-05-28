@@ -108,6 +108,11 @@ class NotificationManagerImpl @Inject constructor(
         val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val readAction = NotificationCompat.Action(R.drawable.ic_check_white_24dp, context.getString(R.string.notification_read), readPI)
 
+        // We can't store a null preference, so map it to a null Uri if the pref string is empty
+        val ringtone = prefs.ringtone(threadId).get()
+                .takeIf { it.isNotEmpty() }
+                ?.let(Uri::parse)
+
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setColor(colors.theme(threadId).theme)
@@ -118,7 +123,7 @@ class NotificationManagerImpl @Inject constructor(
                 .setContentIntent(contentPI)
                 .setDeleteIntent(seenPI)
                 .addAction(readAction)
-                .setSound(Uri.parse(prefs.ringtone(threadId).get()))
+                .setSound(ringtone)
                 .setLights(Color.WHITE, 500, 2000)
                 .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
 

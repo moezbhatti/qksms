@@ -96,7 +96,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     override fun showPreviewModeDialog() = previewModeDialog.show(this)
 
-    override fun showRingtonePicker(default: Uri) {
+    override fun showRingtonePicker(default: Uri?) {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
@@ -109,7 +109,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
             val uri: Uri? = data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
-            uri?.let { ringtoneSelectedIntent.onNext(uri.toString()) }
+            ringtoneSelectedIntent.onNext(uri?.toString() ?: "")
         }
     }
 

@@ -31,5 +31,5 @@ interface NotificationPrefsView : QkView<NotificationPrefsState> {
     val ringtoneSelectedIntent: Observable<String>
 
     fun showPreviewModeDialog()
-    fun showRingtonePicker(default: Uri)
+    fun showRingtonePicker(default: Uri?)
 }
