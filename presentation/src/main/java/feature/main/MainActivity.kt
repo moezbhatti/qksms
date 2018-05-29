@@ -23,8 +23,6 @@ import android.app.AlertDialog
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.res.ColorStateList
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
@@ -45,6 +43,8 @@ import common.Navigator
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
 import common.util.extensions.dismissKeyboard
+import common.util.extensions.resolveThemeColor
+import common.util.extensions.scrapViews
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
@@ -52,7 +52,6 @@ import dagger.android.AndroidInjection
 import feature.conversations.ConversationItemTouchCallback
 import feature.conversations.ConversationsAdapter
 import io.reactivex.Observable
-import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
@@ -125,67 +124,40 @@ class MainActivity : QkThemedActivity(), MainView {
 
         scheduled.isEnabled = false
 
-        colors.background
-                .doOnNext { color -> window.decorView.setBackgroundColor(color) }
-                .doOnNext { color -> drawer.setBackgroundColor(color) }
-                .autoDisposable(scope())
-                .subscribe()
-
-        val states = arrayOf(
-                intArrayOf(android.R.attr.state_selected),
-                intArrayOf(-android.R.attr.state_selected))
-
-        val rowBackground = { separator: Int ->
-            StateListDrawable().apply {
-                addState(intArrayOf(android.R.attr.state_selected), ColorDrawable(separator))
-                addState(intArrayOf(-android.R.attr.state_selected), getDrawable(R.drawable.ripple))
-                mutate()
-            }
-        }
-
-        // Set the theme color tint to the progressbar and FAB
-        colors.theme
-                .doOnNext { color -> syncingProgress.indeterminateTintList = ColorStateList.valueOf(color) }
-                .doOnNext { color -> itemTouchCallback.color = color }
-                .doOnNext { color -> rateIcon.setTint(color) }
-                .doOnNext { color -> compose.setBackgroundTint(color) }
-                .autoDisposable(scope())
-                .subscribe()
-
-        // Set the FAB compose icon color
-        colors.textPrimaryOnTheme
-                .doOnNext { color -> compose.setTint(color) }
-                .doOnNext { color -> itemTouchCallback.iconColor = color }
+        // Set the theme color tint to the recyclerView, progressbar, and FAB
+        colors.themeObservable()
+                .doOnNext { recyclerView.scrapViews() }
+                .doOnNext { theme ->
+                    // Set the color for the drawer icons
+                    val states = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf(-android.R.attr.state_selected))
+                    resolveThemeColor(android.R.attr.textColorSecondary)
+                            .let { textSecondary -> ColorStateList(states, intArrayOf(theme.theme, textSecondary)) }
+                            .let { tintList ->
+                                inboxIcon.imageTintList = tintList
+                                archivedIcon.imageTintList = tintList
+                                scheduledIcon.imageTintList = tintList
+                                settingsIcon.imageTintList = tintList
+                                plusIcon.imageTintList = tintList
+                                helpIcon.imageTintList = tintList
+                            }
+                }
+                .doOnNext { theme ->
+                    // Miscellaneous views
+                    syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
+                    itemTouchCallback.color = theme.theme
+                    rateIcon.setTint(theme.theme)
+                    compose.setBackgroundTint(theme.theme)
+                }
+                .doOnNext { theme ->
+                    // Set the FAB compose icon color
+                    compose.setTint(theme.textPrimary)
+                    itemTouchCallback.iconColor = theme.textPrimary
+                }
                 .autoDisposable(scope())
                 .subscribe()
 
         // Set the hamburger icon color
-        colors.textSecondary
-                .autoDisposable(scope())
-                .subscribe { color -> toggle.drawerArrowDrawable.color = color }
-
-        // Set the color for the drawer icons
-        Observables
-                .combineLatest(colors.theme, colors.textSecondary, { theme, textSecondary ->
-                    ColorStateList(states, intArrayOf(theme, textSecondary))
-                })
-                .doOnNext { tintList -> inboxIcon.imageTintList = tintList }
-                .doOnNext { tintList -> archivedIcon.imageTintList = tintList }
-                .doOnNext { tintList -> scheduledIcon.imageTintList = tintList }
-                .doOnNext { tintList -> settingsIcon.imageTintList = tintList }
-                .doOnNext { tintList -> plusIcon.imageTintList = tintList }
-                .doOnNext { tintList -> helpIcon.imageTintList = tintList }
-                .autoDisposable(scope())
-                .subscribe()
-
-        // Set the background highlight for the drawer options
-        colors.separator
-                .doOnNext { color -> inbox.background = rowBackground(color) }
-                .doOnNext { color -> archived.background = rowBackground(color) }
-                .doOnNext { color -> scheduled.background = rowBackground(color) }
-                .doOnNext { color -> rateLayout.setBackgroundTint(color) }
-                .autoDisposable(scope())
-                .subscribe()
+        toggle.drawerArrowDrawable.color = resolveThemeColor(android.R.attr.textColorSecondary)
 
         conversationsAdapter.autoScrollToStart(recyclerView)
         conversationsAdapter.emptyView = empty

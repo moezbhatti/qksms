@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    tools:background="@color/white">
+    android:animateLayoutChanges="true">
 
     <feature.themepicker.HSVPickerView
         android:id="@+id/picker"
@@ -30,11 +29,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/picker" />
 
-    <common.widget.Separator
+    <View
         android:id="@+id/hexSeparator"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
+        android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="@id/hexLabel"
         app:layout_constraintStart_toEndOf="@id/hexLabel"
         app:layout_constraintTop_toTopOf="@id/hexLabel" />
@@ -76,22 +76,23 @@
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="applyDivider, clear, apply" />
 
-    <common.widget.Separator
+    <View
         android:id="@+id/applyDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:background="?android:attr/divider"
         app:layout_constraintBottom_toTopOf="@id/clear" />
 
     <ImageView
         android:id="@+id/clear"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:background="@drawable/ripple"
+        android:background="?attr/selectableItemBackground"
         android:padding="16dp"
         android:src="@drawable/ic_cancel_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:tint="@color/textSecondary" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <common.widget.QkTextView
         android:id="@+id/apply"

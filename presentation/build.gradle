@@ -13,8 +13,8 @@ android {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 168
-        versionName "3.2.0"
+        versionCode 169
+        versionName "3.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
@@ -115,6 +115,7 @@ dependencies {
     kapt "io.realm:realm-annotations-processor:$realm_version"
 
     // rxjava
+    implementation 'com.akaita.java:rxjava2-debug:1.2.2'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"

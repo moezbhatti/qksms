@@ -24,8 +24,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
@@ -52,10 +50,6 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
         setTitle(R.string.blocked_title)
         showBackButton(true)
         viewModel.bindView(this)
-
-        colors.background
-                .autoDisposable(scope())
-                .subscribe { color -> window.decorView.setBackgroundColor(color) }
 
         blockedAdapter.emptyView = empty
         conversations.adapter = blockedAdapter

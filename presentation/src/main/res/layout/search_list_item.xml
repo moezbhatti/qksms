@@ -21,7 +21,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple"
+    android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -32,11 +32,12 @@
         android:visibility="gone"
         app:constraint_referenced_ids="resultsSeparator, resultsTitle" />
 
-    <common.widget.Separator
+    <View
         android:id="@+id/resultsSeparator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="12dp"
+        android:background="?android:attr/divider"
         app:layout_constraintTop_toTopOf="parent" />
 
     <common.widget.QkTextView

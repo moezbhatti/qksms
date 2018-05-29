@@ -49,8 +49,7 @@ class SettingsViewModel @Inject constructor(
 
 
     init {
-        disposables += colors.theme
-                .subscribe { color -> newState { it.copy(theme = color) } }
+        newState { it.copy(theme = colors.theme().theme) }
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()

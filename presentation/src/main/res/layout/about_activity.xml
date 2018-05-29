@@ -26,8 +26,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/white">
+        app:layout_constraintTop_toTopOf="parent">
 
         <common.widget.QkTextView
             android:id="@+id/toolbarTitle"
@@ -110,10 +109,11 @@
         android:background="@drawable/ab_shadow"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <common.widget.Separator
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_gravity="bottom"
+        android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

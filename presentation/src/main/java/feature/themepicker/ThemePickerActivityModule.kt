@@ -1,17 +1,18 @@
 package feature.themepicker
 
 import android.arch.lifecycle.ViewModel
-import android.content.Intent
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import injection.ViewModelKey
+import javax.inject.Named
 
 @Module
 class ThemePickerActivityModule {
 
     @Provides
-    fun provideIntent(activity: ThemePickerActivity): Intent = activity.intent
+    @Named("threadId")
+    fun provideThreadId(activity: ThemePickerActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
 
     @Provides
     @IntoMap

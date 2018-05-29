@@ -20,52 +20,43 @@ package feature.conversations
 
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
 import common.Navigator
 import common.base.QkRealmAdapter
 import common.base.QkViewHolder
-import common.util.Colors
 import common.util.DateFormatter
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
+import common.util.extensions.resolveThemeColor
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import model.Conversation
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
         private val context: Context,
-        private val colors: Colors,
         private val dateFormatter: DateFormatter,
         private val navigator: Navigator
 ) : QkRealmAdapter<Conversation>() {
-
-    private val disposables = CompositeDisposable()
 
     init {
         setHasStableIds(true)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.conversation_list_item, parent, false)
 
-        disposables += colors.ripple
-                .subscribe { res -> view.setBackgroundResource(res) }
-
         if (viewType == 1) {
+            val textColorPrimary = parent.context.resolveThemeColor(android.R.attr.textColorPrimary)
+
             view.title.setTypeface(view.title.typeface, Typeface.BOLD)
 
             view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
-            view.snippet.textColorObservable = colors.textPrimary
+            view.snippet.setTextColor(textColorPrimary)
             view.snippet.maxLines = 5
 
             view.date.setTypeface(view.date.typeface, Typeface.BOLD)
-            view.date.textColorObservable = colors.textPrimary
+            view.date.setTextColor(textColorPrimary)
         }
 
         return QkViewHolder(view)
@@ -75,15 +66,16 @@ class ConversationsAdapter @Inject constructor(
         val conversation = getItem(position)!!
         val view = viewHolder.itemView
 
-        view.clicks().subscribe {
+        view.setOnClickListener {
             when (toggleSelection(conversation.id, false)) {
                 true -> view.isSelected = isSelected(conversation.id)
                 false -> navigator.showConversation(conversation.id)
             }
         }
-        view.longClicks().subscribe {
+        view.setOnLongClickListener {
             toggleSelection(conversation.id)
             view.isSelected = isSelected(conversation.id)
+            true
         }
 
         view.isSelected = isSelected(conversation.id)
@@ -95,11 +87,6 @@ class ConversationsAdapter @Inject constructor(
             true -> context.getString(R.string.main_sender_you, conversation.snippet)
             false -> conversation.snippet
         }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        disposables.clear()
     }
 
     override fun getItemId(index: Int): Long {

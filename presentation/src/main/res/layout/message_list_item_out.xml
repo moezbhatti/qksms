@@ -22,7 +22,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple">
+    android:background="?attr/selectableItemBackground">
 
     <common.widget.QkTextView
         android:id="@+id/timestamp"
@@ -61,6 +61,7 @@
         android:layout_marginTop="2dp"
         android:autoLink="all"
         android:background="@drawable/message_only"
+        android:backgroundTint="?attr/bubbleColor"
         android:gravity="start|center_vertical"
         android:minHeight="36dp"
         android:paddingBottom="8dp"
@@ -82,8 +83,9 @@
         android:layout_height="36dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
         android:elevation="4dp"
-        android:foreground="@drawable/ripple"
+        android:foreground="?attr/selectableItemBackground"
         android:indeterminate="false"
         android:progressDrawable="@drawable/circular_progress_bar"
         app:layout_constraintBottom_toBottomOf="@id/body"

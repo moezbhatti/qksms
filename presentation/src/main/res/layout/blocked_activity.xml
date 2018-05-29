@@ -65,9 +65,10 @@
                 app:title="@string/settings_should_i_answer_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <common.widget.Separator
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:background="?android:attr/divider" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/conversations"

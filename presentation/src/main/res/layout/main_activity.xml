@@ -22,8 +22,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:background="@color/white">
+    android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,8 +37,7 @@
             android:focusableInTouchMode="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@color/white">
+            app:layout_constraintTop_toTopOf="parent">
 
             <common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
@@ -49,7 +47,7 @@
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
                 android:hint="@string/title_conversations"
-                app:textColorHint="tertiary"
+                android:textColorHint="?android:attr/textColorTertiary"
                 app:textSize="primary"
                 tools:textSize="16sp" />
 
@@ -102,10 +100,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <common.widget.Separator
+        <View
             android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:background="?android:attr/divider"
             app:layout_constraintBottom_toTopOf="@id/bottomDivider" />
 
         <android.support.constraint.Barrier
@@ -165,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/ripple"
+            android:background="?attr/selectableItemBackground"
             android:padding="16dp"
             android:textAllCaps="true"
             android:textColor="@color/tools_theme"
@@ -207,7 +206,6 @@
         layout="@layout/drawer_view"
         android:layout_width="320dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/white" />
+        android:layout_gravity="start" />
 
 </android.support.v4.widget.DrawerLayout>

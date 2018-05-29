@@ -47,8 +47,9 @@
         android:layout_gravity="top|end"
         android:layout_margin="2dp"
         android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
         android:src="@drawable/ic_cancel_black_24dp"
-        android:tint="@color/textSecondary"
+        android:tint="?android:attr/textColorSecondary"
         tools:backgroundTint="@color/backgroundLight" />
 
 </FrameLayout>

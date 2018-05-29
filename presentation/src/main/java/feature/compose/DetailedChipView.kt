@@ -23,8 +23,6 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.widget.RelativeLayout
 import com.moez.QKSMS.R
-import com.uber.autodispose.android.scope
-import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
 import common.util.extensions.setBackgroundTint
 import injection.appComponent
@@ -47,14 +45,8 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
 
         isFocusable = true
         isFocusableInTouchMode = true
-    }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-        colors.theme
-                .autoDisposable(scope())
-                .subscribe { color -> card.setBackgroundTint(color) }
+        card.setBackgroundTint(colors.theme().theme)
     }
 
     fun setContact(contact: Contact) {

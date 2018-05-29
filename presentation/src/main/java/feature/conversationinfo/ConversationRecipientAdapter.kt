@@ -18,7 +18,6 @@
  */
 package feature.conversationinfo
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -26,18 +25,13 @@ import com.moez.QKSMS.R
 import common.Navigator
 import common.base.QkRealmAdapter
 import common.base.QkViewHolder
-import common.util.Colors
-import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.conversation_recipient_list_item.view.*
 import model.Recipient
 import javax.inject.Inject
 
 class ConversationRecipientAdapter @Inject constructor(
-        private val context: Context,
-        private val colors: Colors,
         private val navigator: Navigator
 ) : QkRealmAdapter<Recipient>() {
 
@@ -46,12 +40,8 @@ class ConversationRecipientAdapter @Inject constructor(
     private val disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.conversation_recipient_list_item, parent, false)
-
-        disposables += colors.textSecondary
-                .subscribe { color -> view.add.setTint(color) }
-
         return QkViewHolder(view)
     }
 

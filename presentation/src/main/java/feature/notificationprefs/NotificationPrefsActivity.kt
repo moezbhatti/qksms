@@ -28,8 +28,6 @@ import android.os.Build
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.kotlin.autoDisposable
 import common.QkDialog
 import common.base.QkThemedActivity
 import common.util.extensions.setVisible
@@ -70,10 +68,6 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         previewModeDialog.setTitle(R.string.settings_notification_previews_title)
         previewModeDialog.adapter.setData(R.array.notification_preview_options)
 
-        colors.background
-                .autoDisposable(scope())
-                .subscribe { color -> window.decorView.setBackgroundColor(color) }
-
         // Listen to clicks for all of the preferences
         (0 until preferences.childCount)
                 .map { index -> preferences.getChildAt(index) }
@@ -102,7 +96,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     override fun showPreviewModeDialog() = previewModeDialog.show(this)
 
-    override fun showRingtonePicker(default: Uri) {
+    override fun showRingtonePicker(default: Uri?) {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
@@ -115,7 +109,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
             val uri: Uri? = data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
-            uri?.let { ringtoneSelectedIntent.onNext(uri.toString()) }
+            ringtoneSelectedIntent.onNext(uri?.toString() ?: "")
         }
     }
 

@@ -30,6 +30,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="?attr/colorPrimary"
         android:orientation="horizontal"
         android:paddingEnd="12dp"
         android:paddingStart="12dp" />
@@ -62,10 +63,11 @@
             android:layout_height="8dp"
             android:background="@drawable/ab_shadow" />
 
-        <common.widget.Separator
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:background="?android:attr/divider" />
 
     </FrameLayout>
 

@@ -20,7 +20,6 @@ package feature.qkreply
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -31,25 +30,24 @@ import android.view.WindowManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import com.moez.QKSMS.R.id.*
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
 import common.util.extensions.setBackgroundTint
+import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import dagger.android.AndroidInjection
 import feature.compose.MessagesAdapter
-import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.qkreply_activity.*
-import util.Preferences
 import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
     @Inject lateinit var adapter: MessagesAdapter
-    @Inject lateinit var prefs: Preferences
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val menuItemIntent: Subject<Int> = PublishSubject.create()
@@ -69,39 +67,12 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewModel.bindView(this)
 
-        colors.composeBackground
-                .doOnNext  { color -> background.setBackgroundTint(color) }
-                .doOnNext  { color -> composeBackground.setBackgroundTint(color) }
-                .doOnNext  { color -> composeBackgroundGradient.setBackgroundTint(color) }
-                .autoDisposable(scope())
-                .subscribe()
-
-        colors.bubble
-                .autoDisposable(scope())
-                .subscribe { color -> message.setBackgroundTint(color) }
-
         theme
                 .autoDisposable(scope())
-                .subscribe { color -> send.setBackgroundTint(color) }
-
-        val states = arrayOf(
-                intArrayOf(android.R.attr.state_enabled),
-                intArrayOf(-android.R.attr.state_enabled))
-
-        val iconEnabled = threadId
-                .distinctUntilChanged()
-                .switchMap { threadId -> colors.textPrimaryOnThemeForConversation(threadId) }
-
-        val iconDisabled = threadId
-                .distinctUntilChanged()
-                .switchMap { threadId -> colors.textTertiaryOnThemeForConversation(threadId) }
-
-        Observables
-                .combineLatest(iconEnabled, iconDisabled, { primary, tertiary ->
-                    ColorStateList(states, intArrayOf(primary, tertiary))
-                })
-                .autoDisposable(scope())
-                .subscribe { tintList -> send.imageTintList = tintList }
+                .subscribe { theme ->
+                    send.setBackgroundTint(theme.theme)
+                    send.setTint(theme.textPrimary)
+                }
 
         toolbar.clipToOutline = true
 
@@ -129,6 +100,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         counter.setVisible(counter.text.isNotBlank())
 
         send.isEnabled = state.canSend
+        send.imageAlpha = if (state.canSend) 255 else 128
     }
 
     override fun setDraft(draft: String) {
@@ -145,6 +117,10 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         return true
     }
 
-    override fun getAppThemeResourcesObservable() = colors.appDialogThemeResources
+    override fun getActivityThemeRes(night: Boolean, black: Boolean) = when {
+        night && black -> R.style.AppThemeBlackDialog
+        night && !black -> R.style.AppThemeDarkDialog
+        else -> R.style.AppThemeLightDialog
+    }
 
 }

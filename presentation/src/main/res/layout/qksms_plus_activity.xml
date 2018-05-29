@@ -21,8 +21,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:background="@color/white">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -96,6 +95,7 @@
                     style="@style/TextButton"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/rounded_rectangle_outline_2dp"
+                    android:backgroundTint="?android:attr/divider"
                     android:text="@string/qksms_plus_upgrade_donate"
                     app:textColor="primary"
                     tools:backgroundTint="@color/separatorLight" />
@@ -110,6 +110,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
                 android:background="@drawable/rounded_rectangle_2dp"
+                android:backgroundTint="?android:attr/divider"
                 android:padding="16dp"
                 tools:backgroundTint="@color/separatorLight">
 
@@ -173,10 +174,11 @@
 
             </LinearLayout>
 
-            <common.widget.Separator
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/divider" />
 
             <common.widget.PreferenceView
                 android:layout_width="match_parent"

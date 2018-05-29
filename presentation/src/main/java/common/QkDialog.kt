@@ -1,9 +1,9 @@
 package common
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.support.annotation.StringRes
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import common.util.extensions.dpToPx
@@ -23,7 +23,7 @@ class QkDialog @Inject constructor(private val context: Context, val adapter: Me
     }
 
     fun show(activity: Activity) {
-        val recyclerView = RecyclerView(context)
+        val recyclerView = RecyclerView(activity)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
         recyclerView.setPadding(top = 8.dpToPx(context), bottom = 8.dpToPx(context))

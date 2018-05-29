@@ -22,7 +22,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ripple"
+    android:background="?attr/selectableItemBackground"
     android:paddingBottom="8dp"
     android:paddingEnd="16dp"
     android:paddingStart="24dp"
@@ -64,9 +64,9 @@
         android:layout_height="40dp"
         android:padding="8dp"
         android:src="@drawable/ic_person_add_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:tint="@color/textSecondary" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -38,6 +38,7 @@ abstract class QkAdapter<T> : RecyclerView.Adapter<QkViewHolder>() {
             val diff = DiffUtil.calculateDiff(getDiffUtilCallback(field, value))
             field = value
             diff.dispatchUpdatesTo(this)
+            onDatasetChanged()
 
             emptyView?.setVisible(value.isEmpty())
         }

@@ -22,8 +22,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:orientation="vertical"
-    tools:background="@color/backgroundLight">
+    android:background="?attr/composeBackground"
+    android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messageList"
@@ -57,6 +57,7 @@
         android:id="@+id/contacts"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="?android:attr/windowBackground"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingBottom="8dp"
@@ -81,16 +82,17 @@
         android:layout_height="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/compose_bar_background"
+        android:backgroundTint="?attr/composeBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/messageBackground"
-        tools:backgroundTint="@color/backgroundLight" />
+        app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
     <View
         android:id="@+id/messageBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/rounded_rectangle_shadow"
+        android:backgroundTint="?attr/bubbleColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/send"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,43 +125,44 @@
         android:contentDescription="@string/compose_attach_cd"
         android:padding="10dp"
         android:src="@drawable/ic_add_circle_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintStart_toStartOf="@id/messageBackground"
-        tools:tint="@color/textSecondary" />
+        app:layout_constraintStart_toStartOf="@id/messageBackground" />
 
     <ImageView
         android:id="@+id/camera"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:background="@drawable/ripple"
+        android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/compose_camera_cd"
         android:padding="10dp"
         android:src="@drawable/ic_camera_alt_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintStart_toEndOf="@id/attach"
-        tools:tint="@color/textSecondary" />
+        app:layout_constraintStart_toEndOf="@id/attach" />
 
     <ImageView
         android:id="@+id/gallery"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/ripple"
+        android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/compose_gallery_cd"
         android:padding="10dp"
         android:src="@drawable/ic_insert_photo_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintStart_toEndOf="@id/camera"
-        tools:tint="@color/textSecondary" />
+        app:layout_constraintStart_toEndOf="@id/camera" />
 
-    <common.widget.Separator
+    <View
         android:id="@+id/attachSeparator"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="@id/message"
         app:layout_constraintStart_toEndOf="@id/gallery"
         app:layout_constraintTop_toBottomOf="@id/attachments" />
@@ -179,10 +182,10 @@
         android:maxLines="6"
         android:minHeight="44dp"
         android:padding="12dp"
+        android:textColorHint="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
-        app:layout_constraintStart_toEndOf="@id/attachSeparator"
-        app:textColorHint="tertiary" />
+        app:layout_constraintStart_toEndOf="@id/attachSeparator" />
 
     <common.widget.QkTextView
         android:id="@+id/counter"
@@ -221,8 +224,7 @@
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/toolbarLight">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -264,9 +266,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <common.widget.Separator
+    <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

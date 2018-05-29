@@ -30,8 +30,8 @@ import com.uber.autodispose.android.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
 import common.util.extensions.forEach
+import common.util.extensions.resolveThemeColor
 import injection.appComponent
-import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.tab_view.view.*
@@ -90,24 +90,19 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
                 intArrayOf(android.R.attr.state_selected),
                 intArrayOf(-android.R.attr.state_selected))
 
-        val theme = threadId
+        threadId
                 .distinctUntilChanged()
-                .switchMap { threadId -> colors.themeForConversation(threadId) }
-
-        Observables
-                .combineLatest(theme, colors.textSecondary, { theme, textSecondary ->
-                    ColorStateList(states, intArrayOf(theme, textSecondary))
-                })
+                .switchMap { threadId -> colors.themeObservable(threadId) }
+                .map { theme ->
+                    val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
+                    ColorStateList(states, intArrayOf(theme.theme, textSecondary))
+                }
                 .autoDisposable(scope())
                 .subscribe { colorStateList ->
                     childCount.forEach { index ->
                         (getChildAt(index) as? TextView)?.setTextColor(colorStateList)
                     }
                 }
-
-        colors.toolbarColor
-                .autoDisposable(scope())
-                .subscribe { color -> setBackgroundColor(color) }
     }
 
 }

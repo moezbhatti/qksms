@@ -22,16 +22,20 @@ import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.arch.lifecycle.Lifecycle
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.util.Colors
-import common.util.extensions.setBackgroundTint
+import common.util.extensions.resolveThemeColor
+import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.toolbar.*
+import util.Preferences
 import javax.inject.Inject
 
 /**
@@ -43,6 +47,7 @@ import javax.inject.Inject
 abstract class QkThemedActivity : QkActivity() {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var prefs: Preferences
 
     /**
      * In case the activity should be themed for a specific conversation, the selected conversation
@@ -55,40 +60,58 @@ abstract class QkThemedActivity : QkActivity() {
      */
     protected val theme = threadId
             .distinctUntilChanged()
-            .switchMap { threadId -> colors.themeForConversation(threadId) }
+            .switchMap { threadId -> colors.themeObservable(threadId) }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val night = prefs.night.get()
+        val black = prefs.black.get()
+        setTheme(getActivityThemeRes(night, black))
+
         super.onCreate(savedInstanceState)
 
-        getAppThemeResourcesObservable()
+        // When certain preferences change, we need to recreate the activity
+        Observable.merge(
+                listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont)
+                        .map { it.asObservable().skip(1) })
                 .autoDisposable(scope())
-                .subscribe { res -> setTheme(res) }
+                .subscribe { recreate() }
 
-        colors.systemBarIcons
-                .autoDisposable(scope())
-                .subscribe { systemUiVisibility -> window.decorView.systemUiVisibility = systemUiVisibility }
+        // Set the color for the status bar icons
+        // If night mode, or no dark icons supported, use light icons
+        // If night mode and only dark status icons supported, use dark status icons
+        // If night mode and all dark icons supported, use all dark icons
+        window.decorView.systemUiVisibility = when {
+            night || Build.VERSION.SDK_INT < Build.VERSION_CODES.M -> 0
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.O -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            else -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
 
-        colors.statusBar
-                .autoDisposable(scope())
-                .subscribe { color -> window.statusBarColor = color }
+        // Set the color for the overflow and navigation icon
+        val textTertiary = resolveThemeColor(android.R.attr.textColorTertiary)
+        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textTertiary) }
+        toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(textTertiary) }
 
-        colors.navigationBar
-                .autoDisposable(scope())
-                .subscribe { color -> window.navigationBarColor = color }
+        // Set the color for the recent apps title
+        val toolbarColor = resolveThemeColor(R.attr.colorPrimary)
+        val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+        val taskDesc = ActivityManager.TaskDescription(getString(R.string.app_name), icon, toolbarColor)
+        setTaskDescription(taskDesc)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
         // Update the colours of the menu items
-        Observables.combineLatest(menu, theme, colors.textSecondary, { menu, theme, text ->
+        Observables.combineLatest(menu, theme, { menu, theme ->
+            val text = resolveThemeColor(android.R.attr.textColorSecondary)
             (0 until menu.size())
                     .map { position -> menu.getItem(position) }
                     .forEach { menuItem ->
                         menuItem?.icon?.run {
                             setTint(when (menuItem.itemId) {
-                                in getColoredMenuItems() -> theme
+                                in getColoredMenuItems() -> theme.theme
                                 else -> text
                             })
 
@@ -96,27 +119,6 @@ abstract class QkThemedActivity : QkActivity() {
                         }
                     }
         }).autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
-
-        colors.textTertiary
-                .doOnNext { color -> toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(color) } }
-                .doOnNext { color -> toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(color) } }
-                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
-                .subscribe()
-
-        colors.popupThemeResource
-                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
-                .subscribe { res -> toolbar?.popupTheme = res }
-
-        colors.toolbarColor
-                .doOnNext { color -> toolbar?.setBackgroundTint(color) }
-                .doOnNext { color ->
-                    // Set the color for the recent apps title
-                    val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-                    val taskDesc = ActivityManager.TaskDescription(getString(R.string.app_name), icon, color)
-                    setTaskDescription(taskDesc)
-                }
-                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
-                .subscribe { color -> toolbar?.setBackgroundTint(color) }
     }
 
     open fun getColoredMenuItems(): List<Int> {
@@ -126,6 +128,10 @@ abstract class QkThemedActivity : QkActivity() {
     /**
      * This can be overridden in case an activity does not want to use the default themes
      */
-    open fun getAppThemeResourcesObservable() = colors.appThemeResources
+    open fun getActivityThemeRes(night: Boolean, black: Boolean) = when {
+        night && black -> R.style.AppThemeBlack
+        night && !black -> R.style.AppThemeDark
+        else -> R.style.AppThemeLight
+    }
 
 }

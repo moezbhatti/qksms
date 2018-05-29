@@ -44,11 +44,6 @@
     <declare-styleable name="QkEditText">
         <attr name="textColor" />
         <attr name="textSize" />
-        <attr name="textColorHint" format="enum">
-            <enum name="primary" value="0" />
-            <enum name="secondary" value="1" />
-            <enum name="tertiary" value="2" />
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="PreferenceView">
