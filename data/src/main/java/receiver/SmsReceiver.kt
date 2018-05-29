@@ -21,19 +21,22 @@ package receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import injection.appComponent
-import interactor.MarkRead
+import android.provider.Telephony.Sms
+import dagger.android.AndroidInjection
+import interactor.ReceiveSms
 import javax.inject.Inject
 
-class MarkReadReceiver : BroadcastReceiver() {
+class SmsReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var markRead: MarkRead
+    @Inject lateinit var receiveMessage: ReceiveSms
 
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
-        val threadId = intent.getLongExtra("threadId", 0)
-        markRead.execute(threadId)
+        Sms.Intents.getMessagesFromIntent(intent)?.let { messages ->
+            val pendingResult = goAsync()
+            receiveMessage.execute(messages, { pendingResult.finish() })
+        }
     }
 
 }

@@ -50,6 +50,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
+import model.Attachment
 import model.Contact
 import model.Message
 import java.text.SimpleDateFormat

@@ -23,6 +23,7 @@ import android.support.v13.view.inputmethod.InputContentInfoCompat
 import common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
+import model.Attachment
 import model.Contact
 import model.Message
 

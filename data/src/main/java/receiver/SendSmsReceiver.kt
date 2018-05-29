@@ -21,7 +21,7 @@ package receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import injection.appComponent
+import dagger.android.AndroidInjection
 import interactor.RetrySending
 import repository.MessageRepository
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class SendSmsReceiver : BroadcastReceiver() {
     @Inject lateinit var retrySending: RetrySending
 
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
         val id = intent.getLongExtra("id", 0L)
         messageRepo.getMessage(id)?.let { message ->

@@ -49,6 +49,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmList
 import manager.PermissionManager
+import model.Attachment
 import model.Contact
 import model.Conversation
 import model.Message

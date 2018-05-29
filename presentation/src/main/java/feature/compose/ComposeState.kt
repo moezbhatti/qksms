@@ -19,6 +19,7 @@
 package feature.compose
 
 import io.realm.RealmResults
+import model.Attachment
 import model.Contact
 import model.Conversation
 import model.Message

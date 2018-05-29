@@ -26,7 +26,7 @@ import feature.themepicker.ThemePickerActivity
 import feature.themepicker.ThemePickerActivityModule
 
 @Module
-abstract class BuildersModule {
+abstract class ActivityBuilderModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [MainActivityModule::class])

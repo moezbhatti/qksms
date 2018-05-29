@@ -18,23 +18,22 @@
  */
 package receiver
 
-import android.net.Uri
-import com.klinker.android.send_message.MmsReceivedReceiver
-import injection.appComponent
-import interactor.ReceiveMms
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import dagger.android.AndroidInjection
+import interactor.MarkSeen
 import javax.inject.Inject
 
-class MmsReceivedReceiver : MmsReceivedReceiver() {
+class MarkSeenReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var receiveMms: ReceiveMms
+    @Inject lateinit var markSeen: MarkSeen
 
-    override fun onMessageReceived(messageUri: Uri?) {
-        appComponent.inject(this)
+    override fun onReceive(context: Context, intent: Intent) {
+        AndroidInjection.inject(this, context)
 
-        messageUri?.let { uri ->
-            val pendingResult = goAsync()
-            receiveMms.execute(uri) { pendingResult.finish() }
-        }
+        val threadId = intent.getLongExtra("threadId", 0)
+        markSeen.execute(threadId)
     }
 
 }

@@ -21,27 +21,19 @@ package receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.provider.Telephony
-import android.support.annotation.RequiresApi
-import injection.appComponent
-import interactor.SyncMessages
-import util.Preferences
+import dagger.android.AndroidInjection
+import interactor.MarkRead
 import javax.inject.Inject
 
-class DefaultSmsChangedReceiver : BroadcastReceiver() {
+class MarkReadReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var prefs: Preferences
-    @Inject lateinit var syncMessages: SyncMessages
+    @Inject lateinit var markRead: MarkRead
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
-        if (intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)) {
-            val pendingResult = goAsync()
-            syncMessages.execute(Unit, { pendingResult.finish() })
-        }
+        val threadId = intent.getLongExtra("threadId", 0)
+        markRead.execute(threadId)
     }
 
 }

@@ -27,7 +27,7 @@ import common.base.QkViewModel
 import common.util.BillingManager
 import common.util.Colors
 import common.util.DateFormatter
-import common.util.NightModeManager
+import util.NightModeManager
 import interactor.SyncMessages
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom

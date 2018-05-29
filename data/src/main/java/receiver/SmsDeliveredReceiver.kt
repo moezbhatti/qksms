@@ -18,24 +18,37 @@
  */
 package receiver
 
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.provider.Telephony.Sms
-import injection.appComponent
-import interactor.ReceiveSms
+import dagger.android.AndroidInjection
+import interactor.MarkDelivered
+import interactor.MarkDeliveryFailed
 import javax.inject.Inject
 
-class SmsReceiver : BroadcastReceiver() {
+class SmsDeliveredReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var receiveMessage: ReceiveSms
+    @Inject lateinit var markDelivered: MarkDelivered
+    @Inject lateinit var markDeliveryFailed: MarkDeliveryFailed
 
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
-        Sms.Intents.getMessagesFromIntent(intent)?.let { messages ->
-            val pendingResult = goAsync()
-            receiveMessage.execute(messages, { pendingResult.finish() })
+        val id = intent.getLongExtra("id", 0L)
+
+        when (resultCode) {
+        // TODO notify about delivery
+            Activity.RESULT_OK -> {
+                val pendingResult = goAsync()
+                markDelivered.execute(id) { pendingResult.finish() }
+            }
+
+        // TODO notify about delivery failure
+            Activity.RESULT_CANCELED -> {
+                val pendingResult = goAsync()
+                markDeliveryFailed.execute(MarkDeliveryFailed.Params(id, resultCode)) { pendingResult.finish() }
+            }
         }
     }
 

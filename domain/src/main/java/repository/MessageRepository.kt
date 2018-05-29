@@ -20,6 +20,7 @@ package repository
 
 import io.reactivex.Maybe
 import io.realm.RealmResults
+import model.Attachment
 import model.Conversation
 import model.Message
 import model.MmsPart
@@ -99,6 +100,8 @@ interface MessageRepository {
      * Attempts to send the SMS message. This can be called if the message has already been persisted
      */
     fun sendSms(message: Message)
+
+    fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>)
 
     /**
      * Attempts to cancel sending the message with the given id

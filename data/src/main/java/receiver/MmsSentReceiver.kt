@@ -29,7 +29,7 @@ import android.provider.Telephony
 import com.google.android.mms.MmsException
 import com.google.android.mms.util_alt.SqliteWrapper
 import com.klinker.android.send_message.Transaction
-import injection.appComponent
+import dagger.android.AndroidInjection
 import interactor.SyncMessage
 import timber.log.Timber
 import java.io.File
@@ -40,7 +40,7 @@ class MmsSentReceiver : BroadcastReceiver() {
     @Inject lateinit var syncMessage: SyncMessage
 
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
         Timber.v("MMS sending result: $resultCode")
         val uri = Uri.parse(intent.getStringExtra(Transaction.EXTRA_CONTENT_URI))

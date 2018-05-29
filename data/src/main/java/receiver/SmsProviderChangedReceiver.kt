@@ -21,7 +21,7 @@ package receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import injection.appComponent
+import dagger.android.AndroidInjection
 import interactor.SyncMessage
 import javax.inject.Inject
 
@@ -41,7 +41,7 @@ class SmsProviderChangedReceiver : BroadcastReceiver() {
     @Inject lateinit var syncMessage: SyncMessage
 
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
         // Obtain the uri for the changed data
         // If the value is null, don't continue

@@ -31,25 +31,15 @@ import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import feature.compose.DetailedChipView
 import feature.widget.WidgetAdapter
-import feature.widget.WidgetProvider
-import receiver.DefaultSmsChangedReceiver
-import receiver.MarkReadReceiver
-import receiver.MarkSeenReceiver
-import receiver.MmsReceivedReceiver
-import receiver.MmsSentReceiver
-import receiver.MmsUpdatedReceiver
-import receiver.NightModeReceiver
-import receiver.RemoteMessagingReceiver
-import receiver.SendSmsReceiver
-import receiver.SmsDeliveredReceiver
-import receiver.SmsProviderChangedReceiver
-import receiver.SmsReceiver
-import receiver.SmsSentReceiver
-import service.HeadlessSmsSendService
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidSupportInjectionModule::class, AppModule::class, BuildersModule::class])
+@Component(modules = [
+    AndroidSupportInjectionModule::class,
+    AppModule::class,
+    ActivityBuilderModule::class,
+    BroadcastReceiverBuilderModule::class,
+    ServiceBuilderModule::class])
 interface AppComponent {
 
     fun inject(application: QKApplication)
@@ -58,22 +48,6 @@ interface AppComponent {
 
     fun inject(fetcher: ContactImageLoader.ContactImageFetcher)
 
-    fun inject(receiver: DefaultSmsChangedReceiver)
-    fun inject(receiver: SmsDeliveredReceiver)
-    fun inject(receiver: SmsSentReceiver)
-    fun inject(receiver: MarkSeenReceiver)
-    fun inject(receiver: MarkReadReceiver)
-    fun inject(receiver: MmsReceivedReceiver)
-    fun inject(receiver: MmsSentReceiver)
-    fun inject(receiver: MmsUpdatedReceiver)
-    fun inject(receiver: NightModeReceiver)
-    fun inject(receiver: RemoteMessagingReceiver)
-    fun inject(receiver: SendSmsReceiver)
-    fun inject(receiver: SmsProviderChangedReceiver)
-    fun inject(receiver: SmsReceiver)
-    fun inject(receiver: WidgetProvider)
-
-    fun inject(service: HeadlessSmsSendService)
     fun inject(service: WidgetAdapter)
 
     fun inject(view: AvatarView)

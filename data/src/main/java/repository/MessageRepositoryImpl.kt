@@ -24,14 +24,18 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.BaseColumns
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
+import com.google.android.mms.ContentType
 import com.klinker.android.send_message.BroadcastUtils
+import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.StripAccents
+import com.klinker.android.send_message.Transaction
 import filter.ConversationFilter
 import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,6 +47,7 @@ import io.realm.Sort
 import manager.KeyManager
 import mapper.CursorToConversation
 import mapper.CursorToRecipient
+import model.Attachment
 import model.Contact
 import model.Conversation
 import model.Message
@@ -54,6 +59,7 @@ import util.extensions.anyOf
 import util.extensions.asMaybe
 import util.extensions.insertOrUpdate
 import util.extensions.map
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -64,6 +70,7 @@ class MessageRepositoryImpl @Inject constructor(
         private val conversationFilter: ConversationFilter,
         private val cursorToConversation: CursorToConversation,
         private val cursorToRecipient: CursorToRecipient,
+        private val imageRepository: ImageRepository,
         private val prefs: Preferences) : MessageRepository {
 
     override fun getConversations(archived: Boolean): RealmResults<Conversation> {
@@ -104,7 +111,7 @@ class MessageRepositoryImpl @Inject constructor(
                 .sortedByDescending { result -> result.messages }
 
         return conversations
-                .filter { conversation -> conversationFilter.filter(conversation, query)  }
+                .filter { conversation -> conversationFilter.filter(conversation, query) }
                 .map { conversation -> SearchResult(query, conversation, 0) }
                 .plus(messagesByConversation)
     }
@@ -434,6 +441,60 @@ class MessageRepositoryImpl @Inject constructor(
         }
 
         smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
+    }
+
+    override fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>) {
+        val settings = Settings()
+        val message = com.klinker.android.send_message.Message(body, addresses.toTypedArray())
+
+        // Add the GIFs as attachments. The app currently can't compress them, which may result
+        // in a lot of these messages failing to send
+        // TODO Add support for GIF compression
+        attachments
+                .filter { attachment -> attachment.isGif(context) }
+                .map { attachment -> attachment.getUri() }
+                .map { uri -> context.contentResolver.openInputStream(uri) }
+                .map { inputStream -> inputStream.readBytes() }
+                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_GIF) }
+
+        // Compress the images and add them as attachments
+        var totalImageBytes = 0
+        attachments
+                .filter { attachment -> !attachment.isGif(context) }
+                .mapNotNull { attachment -> attachment.getUri() }
+                .mapNotNull { uri -> imageRepository.loadImage(uri) }
+                .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
+                .map { bitmap ->
+                    val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
+                    shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
+                }
+                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_JPEG) }
+
+        val transaction = Transaction(context, settings)
+        transaction.sendNewMessage(message, threadId)
+    }
+
+    private fun shrink(src: Bitmap, maxBytes: Int): ByteArray {
+        var step = 0.0
+        val factor = 0.5
+        val quality = 60
+
+        val height = src.height
+        val width = src.width
+
+        val stream = ByteArrayOutputStream()
+        src.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+        while (maxBytes > 0 && stream.size() > maxBytes) {
+            step++
+            val scale = Math.pow(factor, step)
+
+            stream.reset()
+            Bitmap.createScaledBitmap(src, (width * scale).toInt(), (height * scale).toInt(), false)
+                    .compress(Bitmap.CompressFormat.JPEG, quality, stream)
+        }
+
+        return stream.toByteArray()
     }
 
     override fun cancelDelayedSms(id: Long) {

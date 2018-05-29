@@ -31,6 +31,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.attachment_list_item.view.*
+import model.Attachment
 import javax.inject.Inject
 
 class AttachmentAdapter @Inject constructor(
