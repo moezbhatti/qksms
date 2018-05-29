@@ -18,7 +18,6 @@
  */
 package feature.compose
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +32,7 @@ import kotlinx.android.synthetic.main.contact_list_item.view.*
 import model.Contact
 import javax.inject.Inject
 
-class ContactAdapter @Inject constructor(private val context: Context) : QkAdapter<Contact>() {
+class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
 
     val contactSelected: Subject<Contact> = PublishSubject.create()
 
@@ -58,7 +57,7 @@ class ContactAdapter @Inject constructor(private val context: Context) : QkAdapt
         view.addresses.removeAllViews()
         contact.numbers.forEachIndexed { index, number ->
             if (index != 0) {
-                val numberView = View.inflate(context, R.layout.contact_number_list_item, null)
+                val numberView = View.inflate(view.context, R.layout.contact_number_list_item, null)
                 numberView.clicks().subscribe { contactSelected.onNext(copyContact(contact, index)) }
                 numberView.address.text = number.address
                 numberView.type.text = number.type
