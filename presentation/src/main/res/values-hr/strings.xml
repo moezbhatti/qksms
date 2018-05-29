@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Pregledi obavijesti</string>
   <string name="settings_vibration_title">Vibracija</string>
   <string name="settings_ringtone_title">Zvuk</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">QK odgovor</string>
   <string name="settings_qkreply_summary">Skočni prozor za nove poruke</string>
   <string name="settings_qkreply_tap_dismiss_title">Dodirnite za odbacivanje</string>

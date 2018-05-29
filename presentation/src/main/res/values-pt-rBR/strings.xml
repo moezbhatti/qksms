@@ -39,22 +39,22 @@
   <string name="main_menu_unarchive">Retirar do arquivo</string>
   <string name="main_menu_block">Bloquear</string>
   <string name="main_menu_delete">Apagar</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
+  <string name="main_syncing">Sincronização de mensagens&#8230;</string>
   <string name="main_sender_you">Você: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
+  <string name="main_message_results_title">Resultados nas mensagens</string>
+  <string name="main_message_results">%d mensagens</string>
   <string name="inbox_empty_text">As suas conversas aparecerão aqui</string>
   <string name="inbox_search_empty_text">Nenhum resultado</string>
   <string name="archived_empty_text">Suas conversas arquivadas irão aparecer aqui</string>
   <string name="scheduled_empty_text">Suas conversas agendadas irão aparecer aqui</string>
   <string name="main_fab_cd">Iniciar nova conversa</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
+  <string name="main_default_sms_title">SMS em grande estilo</string>
+  <string name="main_default_sms_message">Tornar QKSMS a aplicação padrão para SMS</string>
+  <string name="main_default_sms_change">Alterar</string>
+  <string name="main_permission_required">Permissão necessária</string>
+  <string name="main_permission_sms">QKSMS necessita da permissão para ver e enviar as mensagens</string>
+  <string name="main_permission_contacts">QKSMS necessita da permissão para ver os seus contactos</string>
+  <string name="main_permission_allow">Permitir</string>
   <string name="drawer_inbox">Caixa de entrada</string>
   <string name="drawer_archived">Arquivada</string>
   <string name="drawer_scheduled">Agendadas</string>
@@ -74,15 +74,15 @@
     <item>Apagar</item>
   </string-array>
   <string name="compose_title_selected">%d selecionada(s)</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_subtitle_results">%1$d de %2$d resultados</string>
   <string name="compose_messages_empty">Aqui é o início da sua conversa. Pode dizer algo simpático!</string>
   <string name="compose_hint">Escrever uma mensagem&#8230;</string>
   <string name="compose_menu_copy">Copiar texto</string>
   <string name="compose_menu_forward">Reencaminhar</string>
   <string name="compose_menu_delete">Apagar</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_menu_previous">Anterior</string>
+  <string name="compose_menu_next">Seguinte</string>
+  <string name="compose_menu_clear">Limpar</string>
   <string name="compose_attach_cd">Adicionar anexo</string>
   <string name="compose_gallery_cd">Anexar fotografia</string>
   <string name="compose_camera_cd">Tirar fotografia</string>
@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Pré-visualização de notificações</string>
   <string name="settings_vibration_title">Vibração</string>
   <string name="settings_ringtone_title">Som</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Alerta para novas mensagens</string>
   <string name="settings_qkreply_tap_dismiss_title">Toque para fechar</string>
@@ -127,7 +128,7 @@
   <string name="settings_delivery_summary">Confirma se as mensagens foram enviadas com sucesso</string>
   <string name="settings_unicode_title">Remover acentos</string>
   <string name="settings_unicode_summary">Remover acentos dos caracteres nas mensagens enviadas</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+  <string name="settings_mms_size_title">Comprimir anexos MMS automaticamente</string>
   <string name="settings_sync_title">Sincronizar mensagens</string>
   <string name="settings_sync_summary">Sincronizar as mensagens com a base de dados nativa do Android</string>
   <string name="settings_about_title">Acerca do QKSMS</string>
@@ -227,11 +228,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB (Recommended)</item>
+    <item>300KB (recomendado)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No compression</item>
+    <item>Não comprimir</item>
   </string-array>
   <string-array name="qk_responses">
     <item>Ok</item>

@@ -39,22 +39,22 @@
   <string name="main_menu_unarchive">Fjern fra arkiv</string>
   <string name="main_menu_block">Blokér</string>
   <string name="main_menu_delete">Slet</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
+  <string name="main_syncing">Synkroniserer beskeder&#8230;</string>
   <string name="main_sender_you">Dig: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
+  <string name="main_message_results_title">Resultater i meddelelser</string>
+  <string name="main_message_results">%d beskeder</string>
   <string name="inbox_empty_text">Dine samtaler vil fremgå her</string>
   <string name="inbox_search_empty_text">Ingen resultater</string>
   <string name="archived_empty_text">Dine arkiverede samtaler vil fremgå her</string>
   <string name="scheduled_empty_text">Dine planlagte beskeder vil fremgå her</string>
   <string name="main_fab_cd">Start ny samtale</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
+  <string name="main_default_sms_title">Elsk at SMS\'e igen</string>
+  <string name="main_default_sms_message">Gør QKSMS til din standard SMS-app</string>
+  <string name="main_default_sms_change">Skift</string>
+  <string name="main_permission_required">Tilladelse nødvendig</string>
+  <string name="main_permission_sms">QKSMS behøver tilladelse til at sende og vise SMS\'er</string>
+  <string name="main_permission_contacts">QKSMS behøver tilladelse til at se dine kontakter</string>
+  <string name="main_permission_allow">Tillad</string>
   <string name="drawer_inbox">Indbakke</string>
   <string name="drawer_archived">Arkiveret</string>
   <string name="drawer_scheduled">Planlagte</string>
@@ -74,15 +74,15 @@
     <item>Slet</item>
   </string-array>
   <string name="compose_title_selected">%d valgt</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_subtitle_results">%1$d af %2$d resultater</string>
   <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
   <string name="compose_hint">Skriv en besked&#8230;</string>
   <string name="compose_menu_copy">Kopier tekst</string>
   <string name="compose_menu_forward">Videresend</string>
   <string name="compose_menu_delete">Slet</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_menu_previous">Foregående</string>
+  <string name="compose_menu_next">Næste</string>
+  <string name="compose_menu_clear">Ryd</string>
   <string name="compose_attach_cd">Tilføj en vedhæftning</string>
   <string name="compose_gallery_cd">Vedhæft et foto</string>
   <string name="compose_camera_cd">Tag et foto</string>
@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Notifikationseksempler</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Lyd</string>
+  <string name="settings_ringtone_none">Ingen</string>
   <string name="settings_qkreply_title">QK-besvarelse</string>
   <string name="settings_qkreply_summary">Popup ved nye SMS\'er</string>
   <string name="settings_qkreply_tap_dismiss_title">Tryk for at afvise</string>
@@ -127,7 +128,7 @@
   <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>
   <string name="settings_unicode_title">Fjern betoninger</string>
   <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS\'er</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+  <string name="settings_mms_size_title">Auto-komprimér MMS-vedhæftninger</string>
   <string name="settings_sync_title">Beskedsynkronisering</string>
   <string name="settings_sync_summary">Gen-synkroniéer beskeder med den indbyggede Android SMS-database</string>
   <string name="settings_about_title">Om QKSMS</string>
@@ -227,11 +228,11 @@
   <string-array name="mms_sizes">
     <item>100 KB</item>
     <item>200 KB</item>
-    <item>300KB (Recommended)</item>
+    <item>300 KB (anbefales)</item>
     <item>600 KB</item>
     <item>1.000 KB</item>
     <item>2.000 KB</item>
-    <item>No compression</item>
+    <item>Ingen komprimering</item>
   </string-array>
   <string-array name="qk_responses">
     <item>OK</item>
