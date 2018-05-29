@@ -39,22 +39,22 @@
   <string name="main_menu_unarchive">Terugzetten uit archief</string>
   <string name="main_menu_block">Blokkeren</string>
   <string name="main_menu_delete">Verwijderen</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
+  <string name="main_syncing">Berichten synchroniseren&#8230;</string>
   <string name="main_sender_you">Jij: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
+  <string name="main_message_results_title">Resultaten in berichten</string>
+  <string name="main_message_results">%d berichten</string>
   <string name="inbox_empty_text">Je conversaties verschijnen hier</string>
   <string name="inbox_search_empty_text">Geen resultaten</string>
   <string name="archived_empty_text">Je gearchiveerde conversaties verschijnen hier</string>
   <string name="scheduled_empty_text">Je geplande berichten verschijnen hier</string>
   <string name="main_fab_cd">Start nieuwe conversatie</string>
   <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
+  <string name="main_default_sms_message">QKSMS uw standaard SMS app maken</string>
+  <string name="main_default_sms_change">Wijzigen</string>
+  <string name="main_permission_required">Toestemming vereist</string>
+  <string name="main_permission_sms">QKSMS machtigen voor het verzenden en bekijken van SMS-berichten</string>
+  <string name="main_permission_contacts">QKSMS machtigen om uw contactpersonen te bekijken</string>
+  <string name="main_permission_allow">Toestaan</string>
   <string name="drawer_inbox">Inbox</string>
   <string name="drawer_archived">Archief</string>
   <string name="drawer_scheduled">Gepland</string>
@@ -74,15 +74,15 @@
     <item>Verwijderen</item>
   </string-array>
   <string name="compose_title_selected">%d geselecteerd</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_subtitle_results">%1$d van de %2$d resultaten</string>
   <string name="compose_messages_empty">Dit is het begin van je conversatie. Zeg iets leuks!</string>
   <string name="compose_hint">Type een bericht&#8230;</string>
   <string name="compose_menu_copy">Tekst kopiëren</string>
   <string name="compose_menu_forward">Doorsturen</string>
   <string name="compose_menu_delete">Verwijderen</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_menu_previous">Vorige</string>
+  <string name="compose_menu_next">Volgende</string>
+  <string name="compose_menu_clear">Wissen</string>
   <string name="compose_attach_cd">Een bijlage toevoegen</string>
   <string name="compose_gallery_cd">Voeg een foto toe</string>
   <string name="compose_camera_cd">Neem een foto</string>
@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Notificatievoorbeeld</string>
   <string name="settings_vibration_title">Trillen</string>
   <string name="settings_ringtone_title">Geluid</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup voor nieuwe berichten</string>
   <string name="settings_qkreply_tap_dismiss_title">Tik om te sluiten</string>
@@ -127,7 +128,7 @@
   <string name="settings_delivery_summary">Bevestig dat berichten met succes zijn verzonden</string>
   <string name="settings_unicode_title">Verwijder accenten</string>
   <string name="settings_unicode_summary">Verwijder accenten van karakters voor uitgaande berichten</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+  <string name="settings_mms_size_title">Auto-compress MMS bijlagen</string>
   <string name="settings_sync_title">Synchroniseer berichten</string>
   <string name="settings_sync_summary">Hersynchroniseer jouw berichten vanuit de SMS database op je telefoon</string>
   <string name="settings_about_title">Over QKSMS</string>
@@ -227,11 +228,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB (Recommended)</item>
+    <item>300KB (aanbevolen)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No compression</item>
+    <item>Geen compressie</item>
   </string-array>
   <string-array name="qk_responses">
     <item>Oké</item>

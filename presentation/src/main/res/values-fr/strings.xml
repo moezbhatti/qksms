@@ -39,22 +39,22 @@
   <string name="main_menu_unarchive">Désarchiver</string>
   <string name="main_menu_block">Bloquer</string>
   <string name="main_menu_delete">Supprimer</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
+  <string name="main_syncing">Synchronisation des messages&#8230;</string>
   <string name="main_sender_you">Vous : %s</string>
-  <string name="main_message_results_title">Results in messages</string>
+  <string name="main_message_results_title">Résultats dans les messages</string>
   <string name="main_message_results">%d messages</string>
   <string name="inbox_empty_text">Vos conversations apparaîtront ici</string>
   <string name="inbox_search_empty_text">Aucun résultat</string>
   <string name="archived_empty_text">Vos conversations archivées apparaîtront ici</string>
   <string name="scheduled_empty_text">Vos messages planifiés apparaîtront ici</string>
   <string name="main_fab_cd">Débuter une nouvelle conversation</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
+  <string name="main_default_sms_title">Réapprenez à aimer les textos</string>
+  <string name="main_default_sms_message">Faire de QKSMS votre application SMS par défaut</string>
+  <string name="main_default_sms_change">Changer</string>
+  <string name="main_permission_required">Autorisation requise</string>
+  <string name="main_permission_sms">QKSMS a besoin de l\'autorisation d’envoyer et de consulter des messages SMS</string>
+  <string name="main_permission_contacts">QKSMS a besoin de l\'autorisation d\'accéder aux contacts</string>
+  <string name="main_permission_allow">Autoriser</string>
   <string name="drawer_inbox">Boite de réception</string>
   <string name="drawer_archived">Archivées</string>
   <string name="drawer_scheduled">Planifiés</string>
@@ -74,15 +74,15 @@
     <item>Supprimer</item>
   </string-array>
   <string name="compose_title_selected">%d sélectionnée</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_subtitle_results">%1$d sur %2$d résultats</string>
   <string name="compose_messages_empty">C\'est le début de votre conversation. Dites quelque chose de sympa !</string>
   <string name="compose_hint">Écrire un message&#8230;</string>
   <string name="compose_menu_copy">Copier le texte</string>
   <string name="compose_menu_forward">Transférer</string>
   <string name="compose_menu_delete">Supprimer</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_menu_previous">Précédent</string>
+  <string name="compose_menu_next">Suivant</string>
+  <string name="compose_menu_clear">Effacer</string>
   <string name="compose_attach_cd">Ajouter une pièce jointe</string>
   <string name="compose_gallery_cd">Joindre une photo</string>
   <string name="compose_camera_cd">Prendre une photo</string>
@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Aperçus de notification</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Son</string>
+  <string name="settings_ringtone_none">Aucun</string>
   <string name="settings_qkreply_title">Réponse QK</string>
   <string name="settings_qkreply_summary">Fenêtre pour les nouveaux messages</string>
   <string name="settings_qkreply_tap_dismiss_title">Appuyer pour annuler</string>
@@ -127,7 +128,7 @@
   <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
   <string name="settings_unicode_title">Enlever les accents</string>
   <string name="settings_unicode_summary">Supprimer les accents des caractères lors de l\'envoi de messages SMS</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+  <string name="settings_mms_size_title">Compresser automatiquement les pièces jointes des MMS</string>
   <string name="settings_sync_title">Synchroniser les messages</string>
   <string name="settings_sync_summary">Resynchroniser les messages avec la base de données Android native</string>
   <string name="settings_about_title">À propos de QKSMS</string>
@@ -227,11 +228,11 @@
   <string-array name="mms_sizes">
     <item>100 Ko</item>
     <item>200 Ko</item>
-    <item>300KB (Recommended)</item>
+    <item>300 Ko (recommandé)</item>
     <item>600 Ko</item>
     <item>1 000 Ko</item>
     <item>2 000 Ko</item>
-    <item>No compression</item>
+    <item>Aucune compression</item>
   </string-array>
   <string-array name="qk_responses">
     <item>OK</item>

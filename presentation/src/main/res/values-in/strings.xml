@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Getar</string>
   <string name="settings_ringtone_title">Suara</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">Balasan QK</string>
   <string name="settings_qkreply_summary">Popup untuk pesan baru</string>
   <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>

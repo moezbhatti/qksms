@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Notifikations förhandsvisningar</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Ljud</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">QK-svar</string>
   <string name="settings_qkreply_summary">Popup för nya meddelanden</string>
   <string name="settings_qkreply_tap_dismiss_title">Tryck för att avfärda</string>

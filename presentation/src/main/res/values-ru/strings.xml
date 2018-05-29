@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Предпросмотр уведомлений</string>
   <string name="settings_vibration_title">Вибросигнал</string>
   <string name="settings_ringtone_title">Звук</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">QK Ответ</string>
   <string name="settings_qkreply_summary">Всплывающее окно для новых сообщений</string>
   <string name="settings_qkreply_tap_dismiss_title">Нажмите, чтобы отклонить</string>

@@ -33,22 +33,22 @@
   <string name="menu_call">Zadzwoń</string>
   <string name="menu_info">Szczegóły</string>
   <string name="menu_save">Zapisz obraz</string>
-  <string name="main_title_selected">%d selected</string>
-  <string name="main_menu_clear">Clear</string>
-  <string name="main_menu_archive">Archive</string>
-  <string name="main_menu_unarchive">Unarchive</string>
-  <string name="main_menu_block">Block</string>
-  <string name="main_menu_delete">Delete</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
+  <string name="main_title_selected">%d wybrano</string>
+  <string name="main_menu_clear">Wyczyść</string>
+  <string name="main_menu_archive">Archiwizuj</string>
+  <string name="main_menu_unarchive">Przywróć</string>
+  <string name="main_menu_block">Zablokuj</string>
+  <string name="main_menu_delete">Usuń</string>
+  <string name="main_syncing">Synchronizowanie wiadomości&#8230;</string>
   <string name="main_sender_you">Ty: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
+  <string name="main_message_results_title">Wyniki w wiadomościach</string>
+  <string name="main_message_results">%d wiadomości</string>
   <string name="inbox_empty_text">Twoje konwersacje będą wyświetlane tutaj</string>
   <string name="inbox_search_empty_text">Brak wyników</string>
   <string name="archived_empty_text">Twoje konwersacje pojawią się tutaj</string>
   <string name="scheduled_empty_text">Twoje zaplanowane wiadomości pojawią się tutaj</string>
-  <string name="main_fab_cd">Start new conversation</string>
-  <string name="main_default_sms_title">Love texting again</string>
+  <string name="main_fab_cd">Rozpocznij nową konwersację</string>
+  <string name="main_default_sms_title">Znów kocham pisać wiadomości</string>
   <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
   <string name="main_default_sms_change">Change</string>
   <string name="main_permission_required">Permission required</string>
@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Podgląd powiadomień</string>
   <string name="settings_vibration_title">Wibracje</string>
   <string name="settings_ringtone_title">Dźwięk</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">QK odpowiedź</string>
   <string name="settings_qkreply_summary">Popup dla nowych wiadomości</string>
   <string name="settings_qkreply_tap_dismiss_title">Dotknij, aby odrzucić</string>
@@ -229,11 +230,11 @@
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB (Recommended)</item>
+    <item>300KB (zalecane)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No compression</item>
+    <item>Bez kompresji</item>
   </string-array>
   <string-array name="qk_responses">
     <item>OK</item>

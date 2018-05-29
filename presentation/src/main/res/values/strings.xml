@@ -179,7 +179,7 @@
     <string name="qksms_plus_backup_title">Message backup</string>
     <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
     <string name="qksms_plus_scheduled_title">Scheduled messages</string>
-    <string name="qksms_plus_scheduled_summary">Wait a few seconds before sending your message</string>
+    <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
     <string name="qksms_plus_delayed_title">Delayed sending</string>
     <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
     <string name="qksms_plus_night_title">Automatic night mode</string>

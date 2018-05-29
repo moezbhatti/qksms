@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Pranešimų peržiūra</string>
   <string name="settings_vibration_title">Vibracija</string>
   <string name="settings_ringtone_title">Garas</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">Greitas atsakas</string>
   <string name="settings_qkreply_summary">Iššokantis langas naujiems pranešimams</string>
   <string name="settings_qkreply_tap_dismiss_title">Spustelėkite, kad atmestumėte</string>

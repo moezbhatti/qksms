@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">通知プレビュー</string>
   <string name="settings_vibration_title">振動</string>
   <string name="settings_ringtone_title">サウンド</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">QK 返信</string>
   <string name="settings_qkreply_summary">新しいメッセージのポップアップ</string>
   <string name="settings_qkreply_tap_dismiss_title">タップして消去</string>

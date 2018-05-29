@@ -114,6 +114,7 @@
   <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">Vibrazione</string>
   <string name="settings_ringtone_title">Suono</string>
+  <string name="settings_ringtone_none">None</string>
   <string name="settings_qkreply_title">Risposta QK</string>
   <string name="settings_qkreply_summary">Popup per i nuovi messaggi</string>
   <string name="settings_qkreply_tap_dismiss_title">Tocca per archiviare</string>
