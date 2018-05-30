@@ -47,6 +47,7 @@ open class Message : RealmObject() {
     var seen: Boolean = false
     var read: Boolean = false
     var locked: Boolean = false
+    var subId: Int = -1
 
     // SMS only
     var body: String = ""

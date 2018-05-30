@@ -24,12 +24,23 @@ import io.realm.RealmMigration
 
 class QkRealmMigration : RealmMigration {
 
+    companion object {
+        const val SCHEMA_VERSION: Long = 2
+    }
+
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
         var version = oldVersion
 
         if (version == 0L) {
             realm.schema.get("MmsPart")
                     ?.removeField("image")
+
+            version++
+        }
+
+        if (version == 1L) {
+            realm.schema.get("Message")
+                    ?.addField("subId", Int::class.java)
 
             version++
         }

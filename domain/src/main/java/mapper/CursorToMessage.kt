@@ -39,6 +39,7 @@ interface CursorToMessage : Mapper<Pair<Cursor, CursorToMessage.MessageColumns>,
         val read by lazy { getColumnIndex(Mms.READ) }
         val threadId by lazy { getColumnIndex(Mms.THREAD_ID) }
         val locked by lazy { getColumnIndex(Mms.LOCKED) }
+        val subId by lazy { getColumnIndex(Mms.SUBSCRIPTION_ID) }
 
         val smsAddress by lazy { getColumnIndex(Sms.ADDRESS) }
         val smsBody by lazy { getColumnIndex(Sms.BODY) }

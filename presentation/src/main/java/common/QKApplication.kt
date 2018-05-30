@@ -29,7 +29,6 @@ import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import util.NightModeManager
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -42,6 +41,7 @@ import io.realm.RealmConfiguration
 import manager.AnalyticsManager
 import migration.QkRealmMigration
 import timber.log.Timber
+import util.NightModeManager
 import javax.inject.Inject
 
 class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
@@ -74,7 +74,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
                 .compactOnLaunch()
                 .migration(QkRealmMigration())
-                .schemaVersion(1)
+                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
                 .build())
 
         AppComponentManager.init(this)
