@@ -116,16 +116,17 @@ open class Message : RealmObject() {
      * TODO: Don't return a hardcoded string
      */
     fun getSummary(): String {
-        return when {
+        val summary = when {
             isSms() -> body
 
             else -> parts
                     .mapNotNull { it.text }
-                    .joinToString("\n") { text -> text }
+                    .joinToString("\n")
                     .takeIf { it.isNotEmpty() }
                     ?: getCleansedSubject().takeIf { it.isNotEmpty() }
                     ?: "An MMS message"
         }
+        return summary.trim().replace("\\s+".toRegex(), " ")
     }
 
     /**
