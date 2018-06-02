@@ -154,7 +154,9 @@ open class Message : RealmObject() {
         return isFailedMms || isFailedSms
     }
 
-    fun compareSender(other: Message): Boolean {
-        return isMe() && other.isMe() || (!isMe() && !other.isMe() && address == other.address)
+    fun compareSender(other: Message): Boolean = when {
+        isMe() && other.isMe() -> subId == other.subId
+        !isMe() && !other.isMe() -> subId == other.subId && address == other.address
+        else -> false
     }
 }

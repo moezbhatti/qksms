@@ -393,7 +393,7 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun sendSmsAndPersist(threadId: Long, address: String, body: String) {
+    override fun sendSmsAndPersist(subId: Int, threadId: Long, address: String, body: String) {
         if (prefs.sendDelay.get() != Preferences.SEND_DELAY_NONE) {
             val delay = when (prefs.sendDelay.get()) {
                 Preferences.SEND_DELAY_SHORT -> 3000
@@ -403,7 +403,7 @@ class MessageRepositoryImpl @Inject constructor(
             }
 
             val sendTime = System.currentTimeMillis() + delay
-            val message = insertSentSms(threadId, address, body, sendTime)
+            val message = insertSentSms(subId, threadId, address, body, sendTime)
 
             val intent = getIntentForDelayedSms(message.id)
 
@@ -414,13 +414,13 @@ class MessageRepositoryImpl @Inject constructor(
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
             }
         } else {
-            val message = insertSentSms(threadId, address, body, System.currentTimeMillis())
+            val message = insertSentSms(subId, threadId, address, body, System.currentTimeMillis())
             sendSms(message)
         }
     }
 
     override fun sendSms(message: Message) {
-        val smsManager = SmsManager.getDefault()
+        val smsManager = SmsManager.getSmsManagerForSubscriptionId(message.subId)
 
         val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
                 ?: arrayListOf()
@@ -443,8 +443,8 @@ class MessageRepositoryImpl @Inject constructor(
         smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
     }
 
-    override fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>) {
-        val settings = Settings()
+    override fun sendMms(subId: Int, threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>) {
+        val settings = Settings().apply { subscriptionId = subId }
         val message = com.klinker.android.send_message.Message(body, addresses.toTypedArray())
 
         // Add the GIFs as attachments. The app currently can't compress them, which may result
@@ -509,7 +509,7 @@ class MessageRepositoryImpl @Inject constructor(
         return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
-    override fun insertSentSms(threadId: Long, address: String, body: String, date: Long): Message {
+    override fun insertSentSms(subId: Int, threadId: Long, address: String, body: String, date: Long): Message {
 
         // Insert the message to Realm
         val message = Message().apply {
@@ -517,6 +517,7 @@ class MessageRepositoryImpl @Inject constructor(
             this.address = address
             this.body = body
             this.date = date
+            this.subId = subId
 
             id = messageIds.newId()
             boxId = Telephony.Sms.MESSAGE_TYPE_OUTBOX
@@ -537,6 +538,7 @@ class MessageRepositoryImpl @Inject constructor(
             put(Telephony.Sms.SEEN, true)
             put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
             put(Telephony.Sms.THREAD_ID, threadId)
+            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
         }
         val uri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
 
@@ -548,7 +550,7 @@ class MessageRepositoryImpl @Inject constructor(
         return message
     }
 
-    override fun insertReceivedSms(address: String, body: String, sentTime: Long): Message {
+    override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message {
 
         // Insert the message to Realm
         val message = Message().apply {
@@ -556,6 +558,7 @@ class MessageRepositoryImpl @Inject constructor(
             this.body = body
             this.dateSent = sentTime
             this.date = System.currentTimeMillis()
+            this.subId = subId
 
             id = messageIds.newId()
             threadId = getOrCreateConversation(address).blockingGet().id
@@ -571,6 +574,7 @@ class MessageRepositoryImpl @Inject constructor(
             put(Telephony.Sms.ADDRESS, address)
             put(Telephony.Sms.BODY, body)
             put(Telephony.Sms.DATE_SENT, sentTime)
+            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
         }
         val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
 

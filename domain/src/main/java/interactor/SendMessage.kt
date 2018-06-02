@@ -27,16 +27,16 @@ class SendMessage @Inject constructor(
         private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params>() {
 
-    data class Params(val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Attachment> = listOf())
+    data class Params(val subId: Int, val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Attachment> = listOf())
 
     override fun buildObservable(params: Params): Flowable<Unit> {
         return Flowable.just(Unit)
                 .filter { params.addresses.isNotEmpty() }
                 .doOnNext {
                     if (params.addresses.size == 1 && params.attachments.isEmpty()) {
-                        messageRepo.sendSmsAndPersist(params.threadId, params.addresses.first(), params.body)
+                        messageRepo.sendSmsAndPersist(params.subId, params.threadId, params.addresses.first(), params.body)
                     } else {
-                        messageRepo.sendMms(params.threadId, params.addresses, params.body, params.attachments)
+                        messageRepo.sendMms(params.subId, params.threadId, params.addresses, params.body, params.attachments)
                     }
                 }
                 .doOnNext { messageRepo.updateConversations(params.threadId) }

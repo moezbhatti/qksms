@@ -25,24 +25,32 @@ import android.support.v4.app.RemoteInput
 import dagger.android.AndroidInjection
 import interactor.MarkRead
 import interactor.SendMessage
+import repository.MessageRepository
+import util.SubscriptionUtils
 import javax.inject.Inject
 
 class RemoteMessagingReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var sendMessage: SendMessage
     @Inject lateinit var markRead: MarkRead
+    @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var sendMessage: SendMessage
+    @Inject lateinit var subUtils: SubscriptionUtils
 
     override fun onReceive(context: Context, intent: Intent) {
         AndroidInjection.inject(this, context)
 
-        val remoteInput = RemoteInput.getResultsFromIntent(intent)
-        val bundle = intent.extras
-        if (remoteInput != null && bundle != null) {
-            val address = bundle.getString("address")
-            val threadId = bundle.getLong("threadId")
-            val body = remoteInput.getCharSequence("body").toString()
-            markRead.execute(threadId)
-            sendMessage.execute(SendMessage.Params(threadId, listOf(address), body))
-        }
+        val remoteInput = RemoteInput.getResultsFromIntent(intent) ?: return
+        val bundle = intent.extras ?: return
+
+        val threadId = bundle.getLong("threadId")
+        val body = remoteInput.getCharSequence("body").toString()
+        markRead.execute(threadId)
+
+        val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
+        val subId = subUtils.subscriptions.firstOrNull { it.subscriptionId == lastMessage?.subId }?.subscriptionId ?: -1
+        val addresses = messageRepo.getConversation(threadId)?.recipients?.map { it.address } ?: return
+
+        val pendingRepository = goAsync()
+        sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body)) { pendingRepository.finish() }
     }
 }

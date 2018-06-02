@@ -47,6 +47,7 @@ interface ComposeView : QkView<ComposeState> {
     val galleryIntent: Observable<*>
     val attachmentSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
+    val changeSimIntent: Observable<*>
     val sendIntent: Observable<Unit>
 
     fun clearSelection()

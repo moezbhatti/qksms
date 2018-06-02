@@ -59,6 +59,8 @@ import repository.MessageRepository
 import repository.MessageRepositoryImpl
 import repository.SyncRepository
 import repository.SyncRepositoryImpl
+import util.SubscriptionUtils
+import util.SubscriptionUtilsImpl
 import javax.inject.Singleton
 
 @Module
@@ -136,5 +138,11 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideSyncRepository(repository: SyncRepositoryImpl): SyncRepository = repository
+
+
+    // Utils
+
+    @Provides
+    fun provideSubscriptionUtils(utils: SubscriptionUtilsImpl): SubscriptionUtils = utils
 
 }

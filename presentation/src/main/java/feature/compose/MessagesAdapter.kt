@@ -21,7 +21,6 @@ package feature.compose
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Typeface
-import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.telephony.PhoneNumberUtils
 import android.text.Spannable
@@ -43,7 +42,6 @@ import common.util.DateFormatter
 import common.util.GlideApp
 import common.util.extensions.dpToPx
 import common.util.extensions.forwardTouches
-import common.util.extensions.resolveThemeColor
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
 import common.util.extensions.setTint
@@ -59,6 +57,7 @@ import model.Conversation
 import model.Message
 import model.Recipient
 import util.Preferences
+import util.SubscriptionUtils
 import util.extensions.hasThumbnails
 import util.extensions.isImage
 import util.extensions.isVideo
@@ -70,7 +69,8 @@ class MessagesAdapter @Inject constructor(
         private val colors: Colors,
         private val dateFormatter: DateFormatter,
         private val navigator: Navigator,
-        private val prefs: Preferences
+        private val prefs: Preferences,
+        private val subUtils: SubscriptionUtils
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -116,6 +116,7 @@ class MessagesAdapter @Inject constructor(
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
+    private val subs = subUtils.subscriptions
 
     var theme: Colors.Theme = colors.theme()
 
@@ -206,8 +207,14 @@ class MessagesAdapter @Inject constructor(
 
         // Bind the timestamp
         val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
+        val simIndex = subs.takeIf { it.size > 1 }?.indexOfFirst { it.subscriptionId == message.subId } ?: -1
+
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
-        view.timestamp.visibility = if (timeSincePrevious < TIMESTAMP_THRESHOLD) View.GONE else View.VISIBLE
+        view.simIndex.text = "${simIndex + 1}"
+
+        view.timestamp.setVisible(timeSincePrevious >= TIMESTAMP_THRESHOLD || message.subId != previous?.subId && simIndex != -1)
+        view.sim.setVisible(message.subId != previous?.subId && simIndex != -1)
+        view.simIndex.setVisible(message.subId != previous?.subId && simIndex != -1)
 
 
         // Bind the grouping
@@ -282,15 +289,6 @@ class MessagesAdapter @Inject constructor(
 
             GlideApp.with(context).load(part.getUri()).fitCenter().into(mediaView.thumbnail)
             view.attachments.addView(mediaView)
-        }
-
-
-        // If we're on API 21, we need to re-tint the background
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-            view.body.setBackgroundTint(when (message.isMe()) {
-                true -> context.resolveThemeColor(R.attr.bubbleColor)
-                false -> theme.theme
-            })
         }
     }
 

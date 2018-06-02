@@ -18,6 +18,7 @@
  */
 package feature.compose
 
+import android.telephony.SubscriptionInfo
 import io.realm.RealmResults
 import model.Attachment
 import model.Contact
@@ -41,5 +42,6 @@ data class ComposeState(
         val attachments: List<Attachment> = ArrayList(),
         val attaching: Boolean = false,
         val remaining: String = "",
+        val subscription: SubscriptionInfo? = null,
         val canSend: Boolean = false
 )

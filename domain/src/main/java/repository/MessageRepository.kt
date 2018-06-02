@@ -94,23 +94,23 @@ interface MessageRepository {
     /**
      * Persists the SMS and attempts to send it
      */
-    fun sendSmsAndPersist(threadId: Long, address: String, body: String)
+    fun sendSmsAndPersist(subId: Int, threadId: Long, address: String, body: String)
 
     /**
      * Attempts to send the SMS message. This can be called if the message has already been persisted
      */
     fun sendSms(message: Message)
 
-    fun sendMms(threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>)
+    fun sendMms(subId: Int, threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>)
 
     /**
      * Attempts to cancel sending the message with the given id
      */
     fun cancelDelayedSms(id: Long)
 
-    fun insertSentSms(threadId: Long, address: String, body: String, date: Long): Message
+    fun insertSentSms(subId: Int, threadId: Long, address: String, body: String, date: Long): Message
 
-    fun insertReceivedSms(address: String, body: String, sentTime: Long): Message
+    fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message
 
     /**
      * Marks the message as sending, in case we need to retry sending it

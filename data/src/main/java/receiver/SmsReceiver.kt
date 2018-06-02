@@ -34,8 +34,10 @@ class SmsReceiver : BroadcastReceiver() {
         AndroidInjection.inject(this, context)
 
         Sms.Intents.getMessagesFromIntent(intent)?.let { messages ->
+            val subId = intent.extras?.getInt("subscription", -1) ?: -1
+
             val pendingResult = goAsync()
-            receiveMessage.execute(messages, { pendingResult.finish() })
+            receiveMessage.execute(ReceiveSms.Params(subId, messages), { pendingResult.finish() })
         }
     }
 

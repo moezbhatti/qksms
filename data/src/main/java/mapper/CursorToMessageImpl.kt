@@ -85,7 +85,7 @@ class CursorToMessageImpl @Inject constructor(
             dateSent = cursor.getLong(columnsMap.dateSent)
             read = cursor.getInt(columnsMap.read) != 0
             locked = cursor.getInt(columnsMap.locked) != 0
-            subId = cursor.getInt(columnsMap.subId)
+            subId = if (columnsMap.subId != -1) cursor.getInt(columnsMap.subId) else -1
 
             when (type) {
                 "sms" -> {

@@ -40,7 +40,7 @@ class HeadlessSmsSendService : IntentService("HeadlessSmsSendService") {
             val intentUri = intent.data
             val recipients = getRecipients(intentUri).split(";")
             val threadId = messageRepo.getOrCreateConversation(recipients).blockingGet()?.id ?: 0L
-            sendMessage.execute(SendMessage.Params(threadId, recipients, body))
+            sendMessage.execute(SendMessage.Params(-1, threadId, recipients, body))
         }
     }
 

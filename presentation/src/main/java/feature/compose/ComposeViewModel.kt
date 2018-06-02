@@ -56,6 +56,7 @@ import model.Message
 import model.PhoneNumber
 import repository.ContactRepository
 import repository.MessageRepository
+import util.SubscriptionUtils
 import util.extensions.asObservable
 import util.extensions.isImage
 import util.extensions.mapNotNull
@@ -79,6 +80,7 @@ class ComposeViewModel @Inject constructor(
         private val permissionManager: PermissionManager,
         private val retrySending: RetrySending,
         private val sendMessage: SendMessage,
+        private val subUtils: SubscriptionUtils,
         private val syncContacts: ContactSync
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(query = intent.extras?.getString("query") ?: "")) {
 
@@ -194,6 +196,15 @@ class ComposeViewModel @Inject constructor(
                 val position = messages.indexOfFirst { it.id == selected } + 1
                 newState { it.copy(searchSelectionPosition = position, searchResults = messages.size) }
             }
+        }.subscribe()
+
+        val latestSubId = messages
+                .map { messages -> messages.lastOrNull()?.subId ?: -1 }
+                .distinctUntilChanged()
+
+        disposables += Observables.combineLatest(latestSubId, subUtils.subscriptionsObservable) { subId, subs ->
+            val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
+            newState { it.copy(subscription = sub) }
         }.subscribe()
 
         if (threadId == 0L) {
@@ -494,14 +505,30 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { remaining -> newState { it.copy(remaining = remaining) } }
 
+        // Toggle to the next sim slot
+        view.changeSimIntent
+                .withLatestFrom(state) { _, state ->
+                    val subs = subUtils.subscriptions
+                    val subIndex = subs.indexOfFirst { it.subscriptionId == state.subscription?.subscriptionId }
+                    val subscription = when {
+                        subIndex == -1 -> null
+                        subIndex < subs.size - 1 -> subs[subIndex + 1]
+                        else -> subs[0]
+                    }
+                    newState { it.copy(subscription = subscription) }
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
+
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
                 .map { body -> body.toString() }
-                .withLatestFrom(attachments, conversation, { body, attachments, conversation ->
+                .withLatestFrom(state, attachments, conversation, { body, state, attachments, conversation ->
+                    val subId = state.subscription?.subscriptionId ?: -1
                     val threadId = conversation.id
                     val addresses = conversation.recipients.map { it.address }
-                    sendMessage.execute(SendMessage.Params(threadId, addresses, body, attachments))
+                    sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
                     view.setDraft("")
                     this.attachments.onNext(ArrayList())
                 })

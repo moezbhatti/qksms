@@ -172,7 +172,7 @@ class NotificationManagerImpl @Inject constructor(
                 .forEach { uri -> notification.addPerson(uri) }
 
         if (Build.VERSION.SDK_INT >= 24) {
-            notification.addAction(getReplyAction(conversation.recipients[0]?.address.orEmpty(), threadId))
+            notification.addAction(getReplyAction(threadId))
         } else {
             val replyIntent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId)
             val replyPI = PendingIntent.getActivity(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -224,10 +224,8 @@ class NotificationManagerImpl @Inject constructor(
         notificationManager.notify(threadId.toInt() + 50000, notification.build())
     }
 
-    private fun getReplyAction(address: String, threadId: Long): NotificationCompat.Action {
-        val replyIntent = Intent(context, RemoteMessagingReceiver::class.java)
-                .putExtra("address", address)
-                .putExtra("threadId", threadId)
+    private fun getReplyAction(threadId: Long): NotificationCompat.Action {
+        val replyIntent = Intent(context, RemoteMessagingReceiver::class.java).putExtra("threadId", threadId)
         val replyPI = PendingIntent.getBroadcast(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val responseSet = context.resources.getStringArray(R.array.qk_responses)

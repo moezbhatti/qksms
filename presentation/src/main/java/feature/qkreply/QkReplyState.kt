@@ -18,6 +18,7 @@
  */
 package feature.qkreply
 
+import android.telephony.SubscriptionInfo
 import io.realm.RealmResults
 import model.Conversation
 import model.Message
@@ -28,5 +29,6 @@ data class QkReplyState(
         val expanded: Boolean = false,
         val data: Pair<Conversation, RealmResults<Message>>? = null,
         val remaining: String = "",
+        val subscription: SubscriptionInfo? = null,
         val canSend: Boolean = false
 )

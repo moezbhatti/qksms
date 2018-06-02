@@ -32,23 +32,26 @@ class ReceiveSms @Inject constructor(
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager,
         private val updateBadge: UpdateBadge
-) : Interactor<Array<SmsMessage>>() {
+) : Interactor<ReceiveSms.Params>() {
 
-    override fun buildObservable(params: Array<SmsMessage>): Flowable<*> {
+    class Params(val subId: Int, val messages: Array<SmsMessage>)
+
+    override fun buildObservable(params: Params): Flowable<*> {
         return Flowable.just(params)
-                .filter { it.isNotEmpty() }
-                .filter { messages -> // Don't continue if the sender is blocked
-                    val address = messages[0].displayOriginatingAddress
+                .filter { it.messages.isNotEmpty() }
+                .filter { // Don't continue if the sender is blocked
+                    val address = it.messages[0].displayOriginatingAddress
                     !externalBlockingManager.shouldBlock(address).blockingGet()
                 }
-                .map { messages ->
+                .map {
+                    val messages = it.messages
                     val address = messages[0].displayOriginatingAddress
                     val time = messages[0].timestampMillis
                     val body: String = messages
                             .map { message -> message.displayMessageBody }
                             .reduce { body, new -> body + new }
 
-                    messageRepo.insertReceivedSms(address, body, time) // Add the message to the db
+                    messageRepo.insertReceivedSms(it.subId, address, body, time) // Add the message to the db
                 }
                 .doOnNext { message -> messageRepo.updateConversations(message.threadId) } // Update the conversation
                 .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
