@@ -61,22 +61,24 @@ class AnalyticsManagerImpl @Inject constructor(context: Context) : AnalyticsMana
         mixpanel.registerSuperProperties(properties)
 
         // Set the value in Amplitude
+        val identify = Identify()
         when (value) {
-            is Boolean -> Identify().set(key, value)
-            is BooleanArray -> Identify().set(key, value)
-            is Double -> Identify().set(key, value)
-            is DoubleArray -> Identify().set(key, value)
-            is Float -> Identify().set(key, value)
-            is FloatArray -> Identify().set(key, value)
-            is Int -> Identify().set(key, value)
-            is IntArray -> Identify().set(key, value)
-            is Long -> Identify().set(key, value)
-            is LongArray -> Identify().set(key, value)
-            is String -> Identify().set(key, value)
-            is JSONArray -> Identify().set(key, value)
-            is JSONObject -> Identify().set(key, value)
+            is Boolean -> identify.set(key, value)
+            is BooleanArray -> identify.set(key, value)
+            is Double -> identify.set(key, value)
+            is DoubleArray -> identify.set(key, value)
+            is Float -> identify.set(key, value)
+            is FloatArray -> identify.set(key, value)
+            is Int -> identify.set(key, value)
+            is IntArray -> identify.set(key, value)
+            is Long -> identify.set(key, value)
+            is LongArray -> identify.set(key, value)
+            is String -> identify.set(key, value)
+            is JSONArray -> identify.set(key, value)
+            is JSONObject -> identify.set(key, value)
             else -> Timber.e("Value of type ${value::class.java} not supported")
         }
+        amplitude.identify(identify)
     }
 
 }
