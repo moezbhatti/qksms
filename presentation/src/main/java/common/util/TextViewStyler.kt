@@ -22,6 +22,10 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.widget.TextView
 import com.moez.QKSMS.R
+import common.util.TextViewStyler.Companion.SIZE_PRIMARY
+import common.util.TextViewStyler.Companion.SIZE_SECONDARY
+import common.util.TextViewStyler.Companion.SIZE_TERTIARY
+import common.util.TextViewStyler.Companion.SIZE_TOOLBAR
 import common.util.extensions.getColorCompat
 import common.util.extensions.resolveThemeColor
 import common.widget.QkEditText
@@ -48,69 +52,88 @@ class TextViewStyler @Inject constructor(
         const val SIZE_SECONDARY = 1
         const val SIZE_TERTIARY = 2
         const val SIZE_TOOLBAR = 3
-    }
 
-    fun applyAttributes(textView: TextView, attrs: AttributeSet?) {
-        textView.run {
-            when (this) {
-                is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
-                    val colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
-                    val textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
-                    applyAttributes(textView, colorAttr, textSizeAttr)
-                    recycle()
+        fun applyEditModeAttributes(textView: TextView, attrs: AttributeSet?) {
+            textView.run {
+                var colorAttr = 0
+                var textSizeAttr = 0
+
+                when (this) {
+                    is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
+                        colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
+                        textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
+                        recycle()
+                    }
+
+                    is QkEditText -> context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
+                        colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
+                        textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
+                        recycle()
+                    }
+
+                    else -> return
                 }
-
-                is QkEditText -> context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
-                    val colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
-                    val textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
-                    applyAttributes(textView, colorAttr, textSizeAttr)
-                    recycle()
-                }
-            }
-
-            if (!prefs.systemFont.get()) {
-                fontProvider.getLato { lato ->
-                    setTypeface(lato, typeface?.style ?: Typeface.NORMAL)
-                }
-            }
-        }
-    }
-
-    private fun applyAttributes(textView: TextView, colorAttr: Int, textSizeAttr: Int) {
-        textView.run {
-            if (isInEditMode) {
-                setTextColor(context.getColorCompat(when (colorAttr) {
-                    COLOR_PRIMARY -> R.color.textPrimary
-                    COLOR_SECONDARY -> R.color.textSecondary
-                    COLOR_TERTIARY -> R.color.textTertiary
-                    COLOR_PRIMARY_ON_THEME -> R.color.textPrimaryDark
-                    COLOR_SECONDARY_ON_THEME -> R.color.textSecondaryDark
-                    COLOR_TERTIARY_ON_THEME -> R.color.textTertiaryDark
-                    COLOR_THEME -> R.color.tools_theme
-                    else -> R.color.textPrimary
-                }))
+                setTextColor(when (colorAttr) {
+                    COLOR_PRIMARY -> context.getColorCompat(R.color.textPrimary)
+                    COLOR_SECONDARY -> context.getColorCompat(R.color.textSecondary)
+                    COLOR_TERTIARY -> context.getColorCompat(R.color.textTertiary)
+                    COLOR_PRIMARY_ON_THEME -> context.getColorCompat(R.color.textPrimaryDark)
+                    COLOR_SECONDARY_ON_THEME -> context.getColorCompat(R.color.textSecondaryDark)
+                    COLOR_TERTIARY_ON_THEME -> context.getColorCompat(R.color.textTertiaryDark)
+                    COLOR_THEME -> context.getColorCompat(R.color.tools_theme)
+                    else -> currentTextColor
+                })
 
                 textSize = when (textSizeAttr) {
                     SIZE_PRIMARY -> 16f
                     SIZE_SECONDARY -> 14f
                     SIZE_TERTIARY -> 12f
                     SIZE_TOOLBAR -> 20f
-                    else -> textSize
+                    else -> textSize / paint.density
                 }
-            } else {
-                setTextColor(when (colorAttr) {
-                    COLOR_PRIMARY -> context.resolveThemeColor(android.R.attr.textColorPrimary)
-                    COLOR_SECONDARY -> context.resolveThemeColor(android.R.attr.textColorSecondary)
-                    COLOR_TERTIARY -> context.resolveThemeColor(android.R.attr.textColorTertiary)
-                    COLOR_PRIMARY_ON_THEME -> colors.theme().textPrimary
-                    COLOR_SECONDARY_ON_THEME -> colors.theme().textSecondary
-                    COLOR_TERTIARY_ON_THEME -> colors.theme().textTertiary
-                    COLOR_THEME -> colors.theme().theme
-                    else -> currentTextColor
-                })
-
-                setTextSize(textView, textSizeAttr)
             }
+        }
+    }
+
+    fun applyAttributes(textView: TextView, attrs: AttributeSet?) {
+        textView.run {
+            var colorAttr = 0
+            var textSizeAttr = 0
+
+            if (!prefs.systemFont.get()) {
+                fontProvider.getLato { lato ->
+                    setTypeface(lato, typeface?.style ?: Typeface.NORMAL)
+                }
+            }
+
+            when (this) {
+                is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
+                    colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
+                    textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
+                    recycle()
+                }
+
+                is QkEditText -> context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
+                    colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
+                    textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
+                    recycle()
+                }
+
+                else -> return
+            }
+
+            setTextColor(when (colorAttr) {
+                COLOR_PRIMARY -> context.resolveThemeColor(android.R.attr.textColorPrimary)
+                COLOR_SECONDARY -> context.resolveThemeColor(android.R.attr.textColorSecondary)
+                COLOR_TERTIARY -> context.resolveThemeColor(android.R.attr.textColorTertiary)
+                COLOR_PRIMARY_ON_THEME -> colors.theme().textPrimary
+                COLOR_SECONDARY_ON_THEME -> colors.theme().textSecondary
+                COLOR_TERTIARY_ON_THEME -> colors.theme().textTertiary
+                COLOR_THEME -> colors.theme().theme
+                else -> currentTextColor
+            })
+
+            setTextSize(textView, textSizeAttr)
         }
     }
 

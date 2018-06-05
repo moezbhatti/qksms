@@ -56,6 +56,8 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
         if (!isInEditMode) {
             appComponent.inject(this)
             textViewStyler.applyAttributes(this, attrs)
+        } else {
+            TextViewStyler.applyEditModeAttributes(this, attrs)
         }
     }
 
