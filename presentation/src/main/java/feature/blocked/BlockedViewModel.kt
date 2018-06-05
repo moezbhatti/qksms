@@ -40,10 +40,10 @@ class BlockedViewModel @Inject constructor(
 ) : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
 
     init {
-        newState { it.copy(data = messageRepo.getBlockedConversations()) }
+        newState { copy(data = messageRepo.getBlockedConversations()) }
 
         disposables += prefs.sia.asObservable()
-                .subscribe { enabled -> newState { it.copy(siaEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(siaEnabled = enabled) } }
     }
 
     override fun bindView(view: BlockedView) {

@@ -55,16 +55,16 @@ class ThemePickerViewModel @Inject constructor(
 
         // Update the color of the apply button
         view.hsvThemeSelectedIntent
-                .doOnNext { color -> newState { it.copy(newColor = color) } }
+                .doOnNext { color -> newState { copy(newColor = color) } }
                 .map { color -> colors.textPrimaryOnThemeForColor(color) }
-                .doOnNext { color -> newState { it.copy(newTextColor = color) } }
+                .doOnNext { color -> newState { copy(newTextColor = color) } }
                 .autoDisposable(view.scope())
                 .subscribe()
 
         // Toggle the visibility of the apply group
         Observables.combineLatest(theme.asObservable(), view.hsvThemeSelectedIntent, { old, new -> old != new })
                 .autoDisposable(view.scope())
-                .subscribe { themeChanged -> newState { it.copy(applyThemeVisible = themeChanged) } }
+                .subscribe { themeChanged -> newState { copy(applyThemeVisible = themeChanged) } }
 
         // Update the theme, when apply is clicked
         view.hsvThemeAppliedIntent

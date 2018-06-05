@@ -27,11 +27,11 @@ import common.base.QkViewModel
 import common.util.BillingManager
 import common.util.Colors
 import common.util.DateFormatter
-import util.NightModeManager
 import interactor.SyncMessages
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import timber.log.Timber
+import util.NightModeManager
 import util.Preferences
 import java.util.*
 import javax.inject.Inject
@@ -49,60 +49,60 @@ class SettingsViewModel @Inject constructor(
 
 
     init {
-        newState { it.copy(theme = colors.theme().theme) }
+        newState { copy(theme = colors.theme().theme) }
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()
                 .subscribe { nightMode ->
-                    newState { it.copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
+                    newState { copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
                 }
 
         disposables += prefs.nightStart.asObservable()
                 .map { time -> nightModeManager.parseTime(time) }
                 .map { calendar -> calendar.timeInMillis }
                 .map { millis -> dateFormatter.getTimestamp(millis) }
-                .subscribe { nightStart -> newState { it.copy(nightStart = nightStart) } }
+                .subscribe { nightStart -> newState { copy(nightStart = nightStart) } }
 
         disposables += prefs.nightEnd.asObservable()
                 .map { time -> nightModeManager.parseTime(time) }
                 .map { calendar -> calendar.timeInMillis }
                 .map { millis -> dateFormatter.getTimestamp(millis) }
-                .subscribe { nightEnd -> newState { it.copy(nightEnd = nightEnd) } }
+                .subscribe { nightEnd -> newState { copy(nightEnd = nightEnd) } }
 
         disposables += prefs.black.asObservable()
-                .subscribe { black -> newState { it.copy(black = black) } }
+                .subscribe { black -> newState { copy(black = black) } }
 
         disposables += prefs.notifications().asObservable()
-                .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(notificationsEnabled = enabled) } }
 
         disposables += prefs.autoEmoji.asObservable()
-                .subscribe { enabled -> newState { it.copy(autoEmojiEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(autoEmojiEnabled = enabled) } }
 
         val delayedSendingLabels = context.resources.getStringArray(R.array.delayed_sending_labels)
         disposables += prefs.sendDelay.asObservable()
-                .subscribe { id -> newState { it.copy(sendDelaySummary = delayedSendingLabels[id], sendDelayId = id) } }
+                .subscribe { id -> newState { copy(sendDelaySummary = delayedSendingLabels[id], sendDelayId = id) } }
 
         disposables += prefs.delivery.asObservable()
-                .subscribe { enabled -> newState { it.copy(deliveryEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
         disposables += prefs.textSize.asObservable()
                 .subscribe { textSize ->
-                    newState { it.copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
+                    newState { copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
                 }
 
         disposables += prefs.systemFont.asObservable()
-                .subscribe { enabled -> newState { it.copy(systemFontEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(systemFontEnabled = enabled) } }
 
         disposables += prefs.unicode.asObservable()
-                .subscribe { enabled -> newState { it.copy(stripUnicodeEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(stripUnicodeEnabled = enabled) } }
 
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
         disposables += prefs.mmsSize.asObservable()
                 .subscribe { maxMmsSize ->
                     val index = mmsSizeIds.indexOf(maxMmsSize)
-                    newState { it.copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
+                    newState { copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
                 }
 
         disposables += syncMessages
@@ -152,9 +152,9 @@ class SettingsViewModel @Inject constructor(
                         R.id.mmsSize -> view.showMmsSizePicker()
 
                         R.id.sync -> {
-                            newState { it.copy(syncing = true) }
+                            newState { copy(syncing = true) }
                             syncMessages.execute(Unit, {
-                                newState { it.copy(syncing = false) }
+                                newState { copy(syncing = false) }
                             })
                         }
 

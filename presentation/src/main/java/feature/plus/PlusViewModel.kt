@@ -38,14 +38,14 @@ class PlusViewModel @Inject constructor(
         analyticsManager.track("Viewed QKSMS+")
 
         disposables += billingManager.upgradeStatus
-                .subscribe { upgraded -> newState { it.copy(upgraded = upgraded) } }
+                .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
 
         disposables += billingManager.products
                 .subscribe { products ->
                     newState {
                         val upgrade = products.firstOrNull { it.sku == BillingManager.SKU_PLUS }
                         val upgradeDonate = products.firstOrNull { it.sku == BillingManager.SKU_PLUS_DONATE }
-                        it.copy(upgradePrice = upgrade?.price ?: "", upgradeDonatePrice = upgradeDonate?.price ?: "",
+                        copy(upgradePrice = upgrade?.price ?: "", upgradeDonatePrice = upgradeDonate?.price ?: "",
                                 currency = upgrade?.priceCurrencyCode ?: upgradeDonate?.priceCurrencyCode ?: "")
                     }
                 }

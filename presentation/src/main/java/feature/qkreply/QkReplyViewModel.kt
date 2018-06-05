@@ -71,19 +71,19 @@ class QkReplyViewModel @Inject constructor(
         // If we're ever showing an empty set of messages, then it's time to shut down to activity
         disposables += Observables
                 .combineLatest(messages, conversation) { messages, conversation ->
-                    newState { it.copy(data = Pair(conversation, messages)) }
+                    newState { copy(data = Pair(conversation, messages)) }
                     messages
                 }
                 .switchMap { messages -> messages.asObservable() }
                 .filter { it.isLoaded }
                 .filter { it.isValid }
                 .filter { it.isEmpty() }
-                .subscribe { newState { it.copy(hasError = true) } }
+                .subscribe { newState { copy(hasError = true) } }
 
         disposables += conversation
                 .map { conversation -> conversation.getTitle() }
                 .distinctUntilChanged()
-                .subscribe { title -> newState { it.copy(title = title) } }
+                .subscribe { title -> newState { copy(title = title) } }
 
         val latestSubId = messages
                 .map { messages -> messages.lastOrNull()?.subId ?: -1 }
@@ -91,7 +91,7 @@ class QkReplyViewModel @Inject constructor(
 
         disposables += Observables.combineLatest(latestSubId, subUtils.subscriptionsObservable) { subId, subs ->
             val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
-            newState { it.copy(subscription = sub) }
+            newState { copy(subscription = sub) }
         }.subscribe()
     }
 
@@ -111,7 +111,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> conversation.id }
                 .autoDisposable(view.scope())
                 .subscribe { threadId ->
-                    markRead.execute(threadId) { newState { it.copy(hasError = true) } }
+                    markRead.execute(threadId) { newState { copy(hasError = true) } }
                 }
 
         // Call
@@ -121,7 +121,7 @@ class QkReplyViewModel @Inject constructor(
                 .mapNotNull { conversation -> conversation.recipients.first()?.address }
                 .doOnNext { address -> navigator.makePhoneCall(address) }
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(hasError = true) } }
+                .subscribe { newState { copy(hasError = true) } }
 
         // Show all messages
         view.menuItemIntent
@@ -130,7 +130,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> messageRepo.getMessages(conversation.id) }
                 .doOnNext(messages::onNext)
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(expanded = true) } }
+                .subscribe { newState { copy(expanded = true) } }
 
         // Show unread messages only
         view.menuItemIntent
@@ -139,7 +139,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> messageRepo.getUnreadMessages(conversation.id) }
                 .doOnNext(messages::onNext)
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(expanded = false) } }
+                .subscribe { newState { copy(expanded = false) } }
 
         // View conversation
         view.menuItemIntent
@@ -148,14 +148,14 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> conversation.id }
                 .doOnNext { threadId -> navigator.showConversation(threadId) }
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(hasError = true) } }
+                .subscribe { newState { copy(hasError = true) } }
 
         // Enable the send button when there is text input into the new message body or there's
         // an attachment, disable otherwise
         view.textChangedIntent
                 .map { text -> text.isNotBlank() }
                 .autoDisposable(view.scope())
-                .subscribe { canSend -> newState { it.copy(canSend = canSend) } }
+                .subscribe { canSend -> newState { copy(canSend = canSend) } }
 
         // Show the remaining character counter when necessary
         view.textChangedIntent
@@ -173,7 +173,7 @@ class QkReplyViewModel @Inject constructor(
                 }
                 .distinctUntilChanged()
                 .autoDisposable(view.scope())
-                .subscribe { remaining -> newState { it.copy(remaining = remaining) } }
+                .subscribe { remaining -> newState { copy(remaining = remaining) } }
 
         // Update the draft whenever the text is changed
         view.textChangedIntent
@@ -196,7 +196,7 @@ class QkReplyViewModel @Inject constructor(
                         subIndex < subs.size - 1 -> subs[subIndex + 1]
                         else -> subs[0]
                     }
-                    newState { it.copy(subscription = subscription) }
+                    newState { copy(subscription = subscription) }
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -215,7 +215,7 @@ class QkReplyViewModel @Inject constructor(
                 })
                 .doOnNext { threadId ->
                     markRead.execute(threadId) {
-                        newState { it.copy(hasError = true) }
+                        newState { copy(hasError = true) }
                     }
                 }
                 .autoDisposable(view.scope())

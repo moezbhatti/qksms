@@ -40,7 +40,7 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
                 .subscribe { view.render(it) }
     }
 
-    protected fun newState(reducer: (State) -> State) {
+    protected fun newState(reducer: State.() -> State) {
         state.value?.let { state.onNext(reducer(it)) }
     }
 

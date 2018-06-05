@@ -72,12 +72,12 @@ class MainViewModel @Inject constructor(
         // Show the syncing UI
         disposables += syncRepository.syncProgress
                 .distinctUntilChanged()
-                .subscribe { syncing -> newState { it.copy(syncing = syncing) } }
+                .subscribe { syncing -> newState { copy(syncing = syncing) } }
 
 
         // Show the rating UI
         disposables += ratingManager.shouldShowRating
-                .subscribe { show -> newState { it.copy(showRating = show) } }
+                .subscribe { show -> newState { copy(showRating = show) } }
 
 
         // Migrate the preferences from 2.7.3
@@ -108,7 +108,7 @@ class MainViewModel @Inject constructor(
                 view.activityResumedIntent.map { permissionManager.hasSms() }.distinctUntilChanged(),
                 view.activityResumedIntent.map { permissionManager.hasContacts() }.distinctUntilChanged(),
                 { defaultSms, smsPermission, contactPermission ->
-                    newState { it.copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
+                    newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -134,21 +134,21 @@ class MainViewModel @Inject constructor(
                 .map { query -> query.removeAccents() }
                 .withLatestFrom(state, { query, state ->
                     if (query.isEmpty() && state.page is Searching) {
-                        newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
+                        newState { copy(page = Inbox(data = messageRepo.getConversations())) }
                     }
                     query
                 })
                 .filter { query -> query.length >= 2 }
                 .doOnNext {
-                    newState { state ->
-                        val page = (state.page as? Searching) ?: Searching()
-                        state.copy(page = page.copy(loading = true))
+                    newState {
+                        val page = (page as? Searching) ?: Searching()
+                        copy(page = page.copy(loading = true))
                     }
                 }
                 .observeOn(Schedulers.io())
                 .switchMap { query -> Observable.just(query).map { messageRepo.searchConversations(it) } }
                 .autoDisposable(view.scope())
-                .subscribe { data -> newState { it.copy(page = Searching(loading = false, data = data)) } }
+                .subscribe { data -> newState { copy(page = Searching(loading = false, data = data)) } }
 
         view.composeIntent
                 .autoDisposable(view.scope())
@@ -164,7 +164,7 @@ class MainViewModel @Inject constructor(
 
                         state.page is Archived && state.page.selected > 0 -> view.clearSelection()
 
-                        else -> newState { it.copy(drawerOpen = true) }
+                        else -> newState { copy(drawerOpen = true) }
                     }
                 })
                 .autoDisposable(view.scope())
@@ -172,19 +172,19 @@ class MainViewModel @Inject constructor(
 
         view.drawerOpenIntent
                 .autoDisposable(view.scope())
-                .subscribe { open -> newState { it.copy(drawerOpen = open) } }
+                .subscribe { open -> newState { copy(drawerOpen = open) } }
 
         view.drawerItemIntent
-                .doOnNext { newState { it.copy(drawerOpen = false) } }
+                .doOnNext { newState { copy(drawerOpen = false) } }
                 .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
                 .doOnNext { if (it == DrawerItem.PLUS) navigator.showQksmsPlusActivity() }
                 .doOnNext { if (it == DrawerItem.HELP) navigator.showSupport() }
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
-                        DrawerItem.ARCHIVED -> newState { it.copy(page = Archived(data = messageRepo.getConversations(true))) }
-                        DrawerItem.SCHEDULED -> newState { it.copy(page = Scheduled()) }
+                        DrawerItem.INBOX -> newState { copy(page = Inbox(data = messageRepo.getConversations())) }
+                        DrawerItem.ARCHIVED -> newState { copy(page = Archived(data = messageRepo.getConversations(true))) }
+                        DrawerItem.SCHEDULED -> newState { copy(page = Scheduled()) }
                         else -> {
                         } // Do nothing
                     }
@@ -233,12 +233,12 @@ class MainViewModel @Inject constructor(
                     when (state.page) {
                         is Inbox -> {
                             val page = state.page.copy(selected = selected, showClearButton = selected > 0)
-                            newState { it.copy(page = page) }
+                            newState { copy(page = page) }
                         }
 
                         is Archived -> {
                             val page = state.page.copy(selected = selected, showClearButton = selected > 0)
-                            newState { it.copy(page = page) }
+                            newState { copy(page = page) }
                         }
                     }
                 })
@@ -259,7 +259,7 @@ class MainViewModel @Inject constructor(
                     markArchived.execute(listOf(threadId)) {
                         if (state.page is Inbox) {
                             val page = state.page.copy(showArchivedSnackbar = true)
-                            newState { it.copy(page = page) }
+                            newState { copy(page = page) }
                         }
                     }
                 })
@@ -268,7 +268,7 @@ class MainViewModel @Inject constructor(
                     markArchived.execute(listOf(threadId)) {
                         if (state.page is Inbox) {
                             val page = state.page.copy(showArchivedSnackbar = false)
-                            newState { it.copy(page = page) }
+                            newState { copy(page = page) }
                         }
                     }
                 })
@@ -294,7 +294,7 @@ class MainViewModel @Inject constructor(
         view.backPressedIntent
                 .withLatestFrom(state, { _, state ->
                     when {
-                        state.drawerOpen -> newState { it.copy(drawerOpen = false) }
+                        state.drawerOpen -> newState { copy(drawerOpen = false) }
 
                         state.page is Searching -> view.clearSearch()
 
@@ -303,9 +303,9 @@ class MainViewModel @Inject constructor(
 
                         state.page is Archived && state.page.selected > 0 -> view.clearSelection()
 
-                        state.page !is Inbox -> newState { it.copy(page = Inbox(data = messageRepo.getConversations())) }
+                        state.page !is Inbox -> newState { copy(page = Inbox(data = messageRepo.getConversations())) }
 
-                        else -> newState { it.copy(hasError = true) }
+                        else -> newState { copy(hasError = true) }
                     }
                 })
                 .autoDisposable(view.scope())

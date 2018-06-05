@@ -57,7 +57,7 @@ class ConversationInfoViewModel @Inject constructor(
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->
                     if (!conversation.isValid) {
-                        newState { it.copy(hasError = true) }
+                        newState { copy(hasError = true) }
                     }
                 }
                 .filter { conversation -> conversation.isValid }
@@ -73,19 +73,19 @@ class ConversationInfoViewModel @Inject constructor(
         disposables += conversation
                 .map { conversation -> conversation.recipients }
                 .distinctUntilChanged()
-                .subscribe { recipients -> newState { it.copy(recipients = recipients) } }
+                .subscribe { recipients -> newState { copy(recipients = recipients) } }
 
         // Update the view's archived state whenever it changes
         disposables += conversation
                 .map { conversation -> conversation.archived }
                 .distinctUntilChanged()
-                .subscribe { archived -> newState { it.copy(archived = archived) } }
+                .subscribe { archived -> newState { copy(archived = archived) } }
 
         // Update the view's blocked state whenever it changes
         disposables += conversation
                 .map { conversation -> conversation.blocked }
                 .distinctUntilChanged()
-                .subscribe { blocked -> newState { it.copy(blocked = blocked) } }
+                .subscribe { blocked -> newState { copy(blocked = blocked) } }
     }
 
     override fun bindView(view: ConversationInfoView) {

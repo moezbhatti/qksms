@@ -48,12 +48,12 @@ class GalleryViewModel @Inject constructor(
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getPart(partId) }
                 .mapNotNull { part -> part.getUri() }
-                .subscribe { uri -> newState { it.copy(imageUri = uri) } }
+                .subscribe { uri -> newState { copy(imageUri = uri) } }
 
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }
                 .mapNotNull { message -> messageRepo.getConversation(message.threadId) }
-                .subscribe { conversation -> newState { it.copy(title = conversation.getTitle()) } }
+                .subscribe { conversation -> newState { copy(title = conversation.getTitle()) } }
     }
 
     override fun bindView(view: GalleryView) {
@@ -64,7 +64,7 @@ class GalleryViewModel @Inject constructor(
                 .withLatestFrom(state, { _, state -> state.navigationVisible })
                 .map { navigationVisible -> !navigationVisible }
                 .autoDisposable(view.scope())
-                .subscribe { navigationVisible -> newState { it.copy(navigationVisible = navigationVisible) } }
+                .subscribe { navigationVisible -> newState { copy(navigationVisible = navigationVisible) } }
 
         // Save image to device
         view.optionsItemSelectedIntent
