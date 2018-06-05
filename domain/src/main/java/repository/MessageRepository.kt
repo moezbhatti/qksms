@@ -18,7 +18,6 @@
  */
 package repository
 
-import io.reactivex.Maybe
 import io.realm.RealmResults
 import model.Attachment
 import model.Conversation
@@ -42,9 +41,9 @@ interface MessageRepository {
 
     fun getOrCreateConversation(threadId: Long): Conversation?
 
-    fun getOrCreateConversation(address: String): Maybe<Conversation>
+    fun getOrCreateConversation(address: String): Conversation?
 
-    fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation>
+    fun getOrCreateConversation(addresses: List<String>): Conversation?
 
     fun saveDraft(threadId: Long, draft: String)
 

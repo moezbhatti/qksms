@@ -127,7 +127,10 @@ class ComposeViewModel @Inject constructor(
 
             address.isNotBlank() -> {
                 newState { it.copy(editingMode = false) }
-                messageRepo.getOrCreateConversation(address).toObservable()
+                Observable.just(address)
+                        .mapNotNull { messageRepo.getOrCreateConversation(it) }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
             }
 
             else -> {
@@ -146,7 +149,7 @@ class ComposeViewModel @Inject constructor(
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
-                .flatMapMaybe { addresses -> messageRepo.getOrCreateConversation(addresses) }
+                .mapNotNull { addresses -> messageRepo.getOrCreateConversation(addresses) }
                 .mergeWith(initialConversation)
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->
@@ -379,6 +382,12 @@ class ComposeViewModel @Inject constructor(
                 .subscribe { newState { it.copy(query = "", searchSelectionId = -1) } }
 
 
+        // Toggle the group sending mode
+        view.sendAsGroupIntent
+                .autoDisposable(view.scope())
+                .subscribe { newState { it.copy(sendAsGroup = !it.sendAsGroup) } }
+
+
         // Scroll to search position
         searchSelection
                 .filter { id -> id != -1L }
@@ -524,17 +533,31 @@ class ComposeViewModel @Inject constructor(
         view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
                 .map { body -> body.toString() }
-                .withLatestFrom(state, attachments, conversation, { body, state, attachments, conversation ->
+                .withLatestFrom(state, attachments, conversation, selectedContacts, { body, state, attachments, conversation, contacts ->
                     val subId = state.subscription?.subscriptionId ?: -1
-                    val threadId = conversation.id
-                    val addresses = conversation.recipients.map { it.address }
-                    sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
+
+                    if (state.sendAsGroup) {
+                        val threadId = conversation.id
+                        val addresses = conversation.recipients.map { it.address }
+                        sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
+                    } else {
+                        contacts
+                                .map { contact -> contact.numbers }
+                                .mapNotNull { numbers -> numbers.firstOrNull() }
+                                .map { number -> number.address }
+                                .mapNotNull { address -> messageRepo.getOrCreateConversation(address) }
+                                .filter { it.recipients.isNotEmpty() }
+                                .forEach {
+                                    val address = it.recipients.map { it.address }
+                                    sendMessage.execute(SendMessage.Params(subId, it.id, address, body, attachments))
+                                }
+                    }
+
                     view.setDraft("")
                     this.attachments.onNext(ArrayList())
-                })
-                .withLatestFrom(state, { _, state ->
+
                     if (state.editingMode) {
-                        newState { it.copy(editingMode = false) }
+                        newState { it.copy(editingMode = false, sendAsGroup = true, hasError = !state.sendAsGroup) }
                     }
                 })
                 .autoDisposable(view.scope())

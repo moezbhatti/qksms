@@ -32,6 +32,7 @@ data class ComposeState(
         val contactsVisible: Boolean = false,
         val selectedConversation: Long = 0,
         val selectedContacts: List<Contact> = ArrayList(),
+        val sendAsGroup: Boolean = true,
         val conversationtitle: String = "",
         val query: String = "",
         val searchSelectionId: Long = -1,

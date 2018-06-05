@@ -79,6 +79,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
+    override val sendAsGroupIntent by lazy { sendAsGroupBackground.clicks() }
     override val messageClickIntent: Subject<Message> by lazy { messageAdapter.clicks }
     override val messagesSelectedIntent by lazy { messageAdapter.selectionChanges }
     override val cancelSendingIntent: Subject<Message> by lazy { messageAdapter.cancelSending }
@@ -185,6 +186,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         chipsAdapter.data = state.selectedContacts
         contactsAdapter.data = state.contacts
+
+        sendAsGroup.setVisible(state.editingMode && state.selectedContacts.size >= 2)
+        sendAsGroupSwitch.isChecked = state.sendAsGroup
+
+        messageList.setVisible(state.sendAsGroup)
         messageAdapter.data = state.messages
         messageAdapter.highlight = state.searchSelectionId
 

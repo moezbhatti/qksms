@@ -24,6 +24,7 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SqliteWrapper
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -37,9 +38,6 @@ import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
 import filter.ConversationFilter
-import io.reactivex.Maybe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
@@ -56,8 +54,6 @@ import model.SearchResult
 import util.MessageUtils
 import util.Preferences
 import util.extensions.anyOf
-import util.extensions.asMaybe
-import util.extensions.insertOrUpdate
 import util.extensions.map
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -141,39 +137,32 @@ class MessageRepositoryImpl @Inject constructor(
         return getConversation(threadId) ?: getConversationFromCp(threadId)
     }
 
-    override fun getOrCreateConversation(address: String): Maybe<Conversation> {
+    override fun getOrCreateConversation(address: String): Conversation? {
         return getOrCreateConversation(listOf(address))
     }
 
-    override fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation> {
-        return Maybe.just(addresses)
-                .map { recipients ->
-                    recipients.map { address ->
-                        when (MessageUtils.isEmailAddress(address)) {
-                            true -> MessageUtils.extractAddrSpec(address)
-                            false -> address
-                        }
+    override fun getOrCreateConversation(addresses: List<String>): Conversation? {
+        return addresses
+                .map { address ->
+                    when (MessageUtils.isEmailAddress(address)) {
+                        true -> MessageUtils.extractAddrSpec(address)
+                        false -> address
                     }
                 }
-                .map { recipients ->
+                .let { recipients ->
                     Uri.parse("content://mms-sms/threadID").buildUpon().apply {
                         recipients.forEach { recipient -> appendQueryParameter("recipient", recipient) }
-                    }
+                    }.build()
                 }
-                .flatMap { uriBuilder ->
-                    context.contentResolver.query(uriBuilder.build(), arrayOf(BaseColumns._ID), null, null, null).asMaybe()
-                }
-                .map { cursor -> cursor.getLong(0) }
-                .filter { threadId -> threadId != 0L }
-                .map { threadId ->
+                .let { uri -> SqliteWrapper.query(context, context.contentResolver, uri, arrayOf(BaseColumns._ID), null, null, null) }
+                ?.use { cursor -> if (cursor.moveToFirst()) cursor.getLong(0) else null }
+                ?.takeIf { threadId -> threadId != 0L }
+                ?.let { threadId ->
                     var conversation = getConversation(threadId)
                     if (conversation != null) conversation = Realm.getDefaultInstance().copyFromRealm(conversation)
 
-                    conversation ?: getConversationFromCp(threadId)?.apply { insertOrUpdate() } ?: Conversation()
+                    conversation ?: getConversationFromCp(threadId)
                 }
-                .onErrorReturn { Conversation() }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun saveDraft(threadId: Long, draft: String) {
@@ -561,7 +550,7 @@ class MessageRepositoryImpl @Inject constructor(
             this.subId = subId
 
             id = messageIds.newId()
-            threadId = getOrCreateConversation(address).blockingGet().id
+            threadId = getOrCreateConversation(address)?.id ?: 0L
             boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
             type = "sms"
         }
@@ -755,7 +744,7 @@ class MessageRepositoryImpl @Inject constructor(
 
                     conversation.recipients.clear()
                     conversation.recipients.addAll(recipients)
-                    conversation.insertOrUpdate()
+                    realm.executeTransaction { it.insertOrUpdate(conversation) }
                     realm.close()
 
                     conversation
