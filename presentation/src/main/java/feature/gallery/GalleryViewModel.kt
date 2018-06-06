@@ -47,8 +47,7 @@ class GalleryViewModel @Inject constructor(
     init {
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getPart(partId) }
-                .mapNotNull { part -> part.getUri() }
-                .subscribe { uri -> newState { copy(imageUri = uri) } }
+                .subscribe { part -> newState { copy(uri = part.getUri(), type = part.type) } }
 
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }

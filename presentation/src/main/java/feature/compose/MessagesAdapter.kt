@@ -272,10 +272,7 @@ class MessagesAdapter @Inject constructor(
             mediaView.video.setVisible(part.isVideo())
             mediaView.forwardTouches(view)
             mediaView.clicks().subscribe {
-                when {
-                    part.isImage() -> navigator.showImage(part.id)
-                    part.isVideo() -> navigator.showVideo(part.getUri(), part.type)
-                }
+                if (part.isImage() || part.isVideo()) navigator.showMedia(part.id)
             }
 
             val canMediaGroupWithPrevious = canGroup(message, previous) || index > 0

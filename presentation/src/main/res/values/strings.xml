@@ -34,7 +34,7 @@
 
     <string name="menu_call">Call</string>
     <string name="menu_info">Details</string>
-    <string name="menu_save">Save image</string>
+    <string name="menu_save">Save to gallery</string>
 
     <string name="main_title_selected">%d selected</string>
     <string name="main_menu_clear">Clear</string>
@@ -111,7 +111,7 @@
     <string name="info_unblock">Unblock</string>
     <string name="info_delete">Delete conversation</string>
 
-    <string name="gallery_toast_saved">Saved image</string>
+    <string name="gallery_toast_saved">Saved to gallery</string>
 
     <string name="settings_category_appearance">Appearance</string>
     <string name="settings_category_general">General</string>

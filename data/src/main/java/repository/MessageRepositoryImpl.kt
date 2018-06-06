@@ -222,7 +222,11 @@ class MessageRepositoryImpl @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(MmsPart::class.java)
                 .equalTo("messages.threadId", threadId)
+                .beginGroup()
                 .contains("type", "image/")
+                .or()
+                .contains("type", "video/")
+                .endGroup()
                 .sort("id", Sort.DESCENDING)
                 .findAllAsync()
     }
