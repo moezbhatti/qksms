@@ -54,6 +54,19 @@
         app:textColor="tertiary"
         app:textSize="secondary" />
 
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:progress="45"
+        tools:progressTint="@color/tools_theme" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contacts"
         android:layout_width="0dp"

@@ -126,6 +126,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         message.supportsInputContent = true
 
         theme
+                .doOnNext { loading.setTint(it.theme) }
                 .doOnNext { send.setBackgroundTint(it.theme) }
                 .doOnNext { send.setTint(it.textPrimary) }
                 .doOnNext { messageAdapter.theme = it }
@@ -165,7 +166,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
         contacts.setVisible(state.contactsVisible)
-        composeBar.setVisible(!state.contactsVisible)
+        composeBar.setVisible(!state.contactsVisible && !state.loading)
 
         // Don't set the adapters unless needed
         if (state.editingMode && chips.adapter == null) chips.adapter = chipsAdapter
@@ -186,6 +187,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         chipsAdapter.data = state.selectedContacts
         contactsAdapter.data = state.contacts
+
+        loading.setVisible(state.loading)
 
         sendAsGroup.setVisible(state.editingMode && state.selectedContacts.size >= 2)
         sendAsGroupSwitch.isChecked = state.sendAsGroup

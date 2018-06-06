@@ -149,7 +149,14 @@ class ComposeViewModel @Inject constructor(
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
-                .mapNotNull { addresses -> messageRepo.getOrCreateConversation(addresses) }
+                .observeOn(Schedulers.computation())
+                .doOnNext { newState { copy(loading = true) } }
+                .mapNotNull { addresses ->
+                    val conversation = messageRepo.getOrCreateConversation(addresses)
+                    newState { copy(loading = false) }
+                    conversation
+                }
+                .observeOn(AndroidSchedulers.mainThread())
                 .mergeWith(initialConversation)
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->

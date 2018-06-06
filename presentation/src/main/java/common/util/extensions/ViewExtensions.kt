@@ -41,6 +41,7 @@ fun ImageView.setTint(color: Int) {
 }
 
 fun ProgressBar.setTint(color: Int) {
+    indeterminateTintList = ColorStateList.valueOf(color)
     progressTintList = ColorStateList.valueOf(color)
 }
 
