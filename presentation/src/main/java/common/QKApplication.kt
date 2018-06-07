@@ -29,6 +29,7 @@ import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
+import common.util.BugsnagTree
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -90,7 +91,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        Timber.plant(Timber.DebugTree())
+        Timber.plant(Timber.DebugTree(), BugsnagTree())
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

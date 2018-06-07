@@ -26,6 +26,7 @@ import android.telephony.SmsManager
 import dagger.android.AndroidInjection
 import interactor.MarkFailed
 import interactor.MarkSent
+import timber.log.Timber
 import javax.inject.Inject
 
 class SmsSentReceiver : BroadcastReceiver() {
@@ -48,9 +49,14 @@ class SmsSentReceiver : BroadcastReceiver() {
             SmsManager.RESULT_ERROR_NO_SERVICE,
             SmsManager.RESULT_ERROR_NULL_PDU,
             SmsManager.RESULT_ERROR_RADIO_OFF -> {
+                Timber.w(SmsFailedException(resultCode, intent.getIntExtra("errorCode", -1)))
+
                 val pendingResult = goAsync()
                 markFailed.execute(MarkFailed.Params(id, resultCode)) { pendingResult.finish() }
             }
         }
     }
 }
+
+private class SmsFailedException(resultCode: Int, errorCode: Int)
+    : Exception("Message failed to send with resultCode: $resultCode and errorCode: $errorCode")
