@@ -304,7 +304,9 @@
         android:id="@+id/sendAsGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="sendAsGroupBackground, sendAsGroupTitle, sendAsGroupSummary, sendAsGroupSwitch, sendAsGroupShadow" />
+        android:visibility="gone"
+        app:constraint_referenced_ids="sendAsGroupBackground, sendAsGroupTitle, sendAsGroupSummary, sendAsGroupSwitch, sendAsGroupShadow"
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/sendAsGroupBackground"
