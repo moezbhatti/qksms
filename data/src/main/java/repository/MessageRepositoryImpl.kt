@@ -413,7 +413,9 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun sendSms(message: Message) {
-        val smsManager = SmsManager.getSmsManagerForSubscriptionId(message.subId)
+        val smsManager = message.subId.takeIf { it != -1 }
+                ?.let(SmsManager::getSmsManagerForSubscriptionId)
+                ?: SmsManager.getDefault()
 
         val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
                 ?: arrayListOf()
