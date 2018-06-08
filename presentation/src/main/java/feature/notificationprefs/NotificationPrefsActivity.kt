@@ -30,6 +30,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import common.QkDialog
 import common.base.QkThemedActivity
+import common.util.extensions.animateLayoutChanges
 import common.util.extensions.setVisible
 import common.widget.PreferenceView
 import dagger.android.AndroidInjection
@@ -57,6 +58,8 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         setTitle(R.string.title_notification_prefs)
         showBackButton(true)
         viewModel.bindView(this)
+
+        preferences.postDelayed({ preferences.animateLayoutChanges = true }, 100)
 
         val hasOreo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 

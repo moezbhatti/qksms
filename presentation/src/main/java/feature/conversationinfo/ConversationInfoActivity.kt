@@ -28,6 +28,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkThemedActivity
+import common.util.extensions.animateLayoutChanges
 import common.util.extensions.scrapViews
 import common.util.extensions.setVisible
 import dagger.android.AndroidInjection
@@ -59,6 +60,8 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
         showBackButton(true)
         viewModel.bindView(this)
         setTitle(R.string.info_title)
+
+        items.postDelayed({ items.animateLayoutChanges = true }, 100)
 
         mediaAdapter.thumbnailClicks
                 .autoDisposable(scope())
