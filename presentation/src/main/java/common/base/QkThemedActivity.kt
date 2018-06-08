@@ -89,7 +89,7 @@ abstract class QkThemedActivity : QkActivity() {
         }
 
         // Some devices don't let you modify android.R.attr.navigationBarColor
-        window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
+        if (Build.VERSION.SDK_INT >= 27) window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
 
         // Set the color for the overflow and navigation icon
         val textTertiary = resolveThemeColor(android.R.attr.textColorTertiary)
