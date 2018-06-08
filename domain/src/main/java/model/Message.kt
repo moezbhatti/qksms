@@ -133,7 +133,7 @@ open class Message : RealmObject() {
      * Cleanses the subject in case it's useless, so that the UI doesn't have to show it
      */
     fun getCleansedSubject(): String {
-        val uselessSubjects = listOf("no subject", "NoSubject")
+        val uselessSubjects = listOf("no subject", "NoSubject", "<not present>")
 
         return if (uselessSubjects.contains(subject)) "" else subject
     }
