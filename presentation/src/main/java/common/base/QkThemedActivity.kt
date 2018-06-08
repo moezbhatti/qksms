@@ -88,6 +88,9 @@ abstract class QkThemedActivity : QkActivity() {
             else -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
 
+        // Some devices don't let you modify android.R.attr.navigationBarColor
+        window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
+
         // Set the color for the overflow and navigation icon
         val textTertiary = resolveThemeColor(android.R.attr.textColorTertiary)
         toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textTertiary) }
