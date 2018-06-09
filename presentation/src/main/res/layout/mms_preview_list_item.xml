@@ -19,18 +19,16 @@
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="280dp"
+    android:layout_height="280dp"
     android:layout_marginTop="2dp">
 
     <common.widget.BubbleImageView
         android:id="@+id/thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:maxHeight="320dp"
-        android:maxWidth="280dp"
-        android:scaleType="fitStart"
+        android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <ImageView
