@@ -304,8 +304,7 @@ class MessagesAdapter @Inject constructor(
                             .mapNotNull { inputStream -> inputStream.use { Ezvcard.parse(it).first() } }
                             .subscribeOn(Schedulers.computation())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .filter { mediaView.isAttachedToWindow }
-                            .subscribe { vcard -> mediaView.name.text = vcard.formattedName.value }
+                            .subscribe { vcard -> mediaView?.name?.text = vcard.formattedName.value }
 
                     if (!message.isMe()) {
                         mediaView.vCardBackground.setBackgroundTint(theme.theme)
