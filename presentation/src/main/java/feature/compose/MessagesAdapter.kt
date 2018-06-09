@@ -49,7 +49,10 @@ import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import common.widget.BubbleImageView.Style.*
 import ezvcard.Ezvcard
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
@@ -65,6 +68,7 @@ import util.SubscriptionUtils
 import util.extensions.isImage
 import util.extensions.isVCard
 import util.extensions.isVideo
+import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -289,13 +293,19 @@ class MessagesAdapter @Inject constructor(
 
                 part.isVCard() -> {
                     val uri = ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id)
-                    val vcard = context.contentResolver.openInputStream(uri).use { Ezvcard.parse(it).first() }
 
                     val mediaView = View.inflate(view.context, R.layout.mms_vcard_list_item, view.attachments)
                     mediaView.forwardTouches(view)
                     mediaView.setOnClickListener { navigator.saveVcard(uri) }
-                    mediaView.name.text = vcard?.formattedName?.value
                     mediaView.vCardBackground.setBackgroundResource(getBubble(canMediaGroupWithPrevious, canMediaGroupWithNext, message.isMe()))
+
+                    Observable.just(uri)
+                            .map(context.contentResolver::openInputStream)
+                            .mapNotNull { inputStream -> inputStream.use { Ezvcard.parse(it).first() } }
+                            .subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .filter { mediaView.isAttachedToWindow }
+                            .subscribe { vcard -> mediaView.name.text = vcard.formattedName.value }
 
                     if (!message.isMe()) {
                         mediaView.vCardBackground.setBackgroundTint(theme.theme)
