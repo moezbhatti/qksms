@@ -22,6 +22,7 @@ import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -36,11 +37,13 @@ import com.moez.QKSMS.R
 import common.util.extensions.dpToPx
 import feature.compose.ComposeActivity
 import feature.qkreply.QkReplyActivity
+import mapper.CursorToPartImpl
 import receiver.MarkReadReceiver
 import receiver.MarkSeenReceiver
 import receiver.RemoteMessagingReceiver
 import repository.MessageRepository
 import util.Preferences
+import util.extensions.isImage
 import util.tryOrNull
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -128,9 +131,26 @@ class NotificationManagerImpl @Inject constructor(
                 .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
 
         val messagingStyle = NotificationCompat.MessagingStyle("Me")
+        if (conversation.recipients.size >= 2) {
+            messagingStyle.conversationTitle = conversation.getTitle()
+        }
+
         messages.forEach { message ->
-            val name = if (message.isMe()) null else conversation.getTitle()
-            messagingStyle.addMessage(message.getSummary(), message.date, name)
+            val name = when {
+                message.isMe() -> null
+                conversation.recipients.size < 2 -> conversation.getTitle()
+                else -> conversation.recipients
+                        .firstOrNull { PhoneNumberUtils.compare(it.address, message.address) }
+                        ?.getDisplayName()
+                        ?: message.address
+            }
+
+            NotificationCompat.MessagingStyle.Message(message.getSummary(), message.date, name).apply {
+                message.parts.firstOrNull { it.isImage() }?.let { part ->
+                    setData(part.type, ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id))
+                }
+                messagingStyle.addMessage(this)
+            }
         }
 
         val avatar = conversation.recipients.takeIf { it.size == 1 }
