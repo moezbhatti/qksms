@@ -19,6 +19,7 @@
 package feature.compose
 
 import android.animation.ObjectAnimator
+import android.content.ContentUris
 import android.content.Context
 import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
@@ -47,19 +48,22 @@ import common.util.extensions.setPadding
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import common.widget.BubbleImageView.Style.*
+import ezvcard.Ezvcard
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import kotlinx.android.synthetic.main.mms_preview_list_item.view.*
+import kotlinx.android.synthetic.main.mms_vcard_list_item.view.*
+import mapper.CursorToPartImpl
 import model.Conversation
 import model.Message
 import model.Recipient
 import util.Preferences
 import util.SubscriptionUtils
-import util.extensions.hasThumbnails
 import util.extensions.isImage
+import util.extensions.isVCard
 import util.extensions.isVideo
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -112,7 +116,6 @@ class MessagesAdapter @Inject constructor(
             notifyDataSetChanged()
         }
 
-    private val layoutInflater = LayoutInflater.from(context)
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
@@ -218,7 +221,7 @@ class MessagesAdapter @Inject constructor(
 
 
         // Bind the grouping
-        val media = message.parts.filter { it.hasThumbnails() }
+        val media = message.parts.filter { it.isImage() || it.isVideo() || it.isVCard() }
         view.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
 
 
@@ -238,9 +241,10 @@ class MessagesAdapter @Inject constructor(
                 subject.setSpan(StyleSpan(Typeface.BOLD), 0, subject.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
 
                 val body = message.parts
-                        .mapNotNull { it.text }
-                        .filter { it.isNotBlank() }
-                        .joinToString("\n") { text -> text }
+                        .filter { part -> !part.isVCard() }
+                        .mapNotNull { part -> part.text }
+                        .filter { part -> part.isNotBlank() }
+                        .joinToString("\n")
 
                 when {
                     subject.isNotBlank() && body.isNotBlank() -> subject.append("\n$body")
@@ -250,15 +254,10 @@ class MessagesAdapter @Inject constructor(
             }
         }
         view.body.setVisible(message.isSms() || view.body.text.isNotBlank())
-
-        val canBodyGroupWithPrevious = canGroup(message, previous) || media.isNotEmpty()
-        val canBodyGroupWithNext = canGroup(message, next)
-        view.body.setBackgroundResource(when {
-            !canBodyGroupWithPrevious && canBodyGroupWithNext -> if (message.isMe()) R.drawable.message_out_first else R.drawable.message_in_first
-            canBodyGroupWithPrevious && canBodyGroupWithNext -> if (message.isMe()) R.drawable.message_out_middle else R.drawable.message_in_middle
-            canBodyGroupWithPrevious && !canBodyGroupWithNext -> if (message.isMe()) R.drawable.message_out_last else R.drawable.message_in_last
-            else -> R.drawable.message_only
-        })
+        view.body.setBackgroundResource(getBubble(
+                canGroupWithPrevious = canGroup(message, previous) || media.isNotEmpty(),
+                canGroupWithNext = canGroup(message, next),
+                isMe = message.isMe()))
 
 
         // Bind the attachments
@@ -268,24 +267,44 @@ class MessagesAdapter @Inject constructor(
         }
 
         media.forEachIndexed { index, part ->
-            val mediaView = layoutInflater.inflate(R.layout.mms_preview_list_item, view.attachments, false)
-            mediaView.video.setVisible(part.isVideo())
-            mediaView.forwardTouches(view)
-            mediaView.clicks().subscribe {
-                if (part.isImage() || part.isVideo()) navigator.showMedia(part.id)
-            }
-
             val canMediaGroupWithPrevious = canGroup(message, previous) || index > 0
             val canMediaGroupWithNext = canGroup(message, next) || index < media.size && view.body.visibility == View.VISIBLE
-            mediaView.thumbnail.bubbleStyle = when {
-                !canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_FIRST else IN_FIRST
-                canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_MIDDLE else IN_MIDDLE
-                canMediaGroupWithPrevious && !canMediaGroupWithNext -> if (message.isMe()) OUT_LAST else IN_LAST
-                else -> ONLY
-            }
 
-            GlideApp.with(context).load(part.getUri()).fitCenter().into(mediaView.thumbnail)
-            view.attachments.addView(mediaView)
+            when {
+                part.isImage() || part.isVideo() -> {
+                    val mediaView = View.inflate(view.context, R.layout.mms_preview_list_item, view.attachments)
+                    mediaView.video.setVisible(part.isVideo())
+                    mediaView.forwardTouches(view)
+                    mediaView.setOnClickListener { navigator.showMedia(part.id) }
+
+                    mediaView.thumbnail.bubbleStyle = when {
+                        !canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_FIRST else IN_FIRST
+                        canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_MIDDLE else IN_MIDDLE
+                        canMediaGroupWithPrevious && !canMediaGroupWithNext -> if (message.isMe()) OUT_LAST else IN_LAST
+                        else -> ONLY
+                    }
+
+                    GlideApp.with(context).load(part.getUri()).fitCenter().into(mediaView.thumbnail)
+                }
+
+                part.isVCard() -> {
+                    val uri = ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id)
+                    val vcard = context.contentResolver.openInputStream(uri).use { Ezvcard.parse(it).first() }
+
+                    val mediaView = View.inflate(view.context, R.layout.mms_vcard_list_item, view.attachments)
+                    mediaView.forwardTouches(view)
+                    mediaView.setOnClickListener { navigator.saveVcard(uri) }
+                    mediaView.name.text = vcard?.formattedName?.value
+                    mediaView.vCardBackground.setBackgroundResource(getBubble(canMediaGroupWithPrevious, canMediaGroupWithNext, message.isMe()))
+
+                    if (!message.isMe()) {
+                        mediaView.vCardBackground.setBackgroundTint(theme.theme)
+                        mediaView.vCardAvatar.setTint(theme.textPrimary)
+                        mediaView.name.setTextColor(theme.textPrimary)
+                        mediaView.label.setTextColor(theme.textTertiary)
+                    }
+                }
+            }
         }
     }
 
@@ -312,6 +331,15 @@ class MessagesAdapter @Inject constructor(
             message.isDelivered() && next?.isDelivered() != true && age <= TIMESTAMP_THRESHOLD -> true
             else -> false
         })
+    }
+
+    private fun getBubble(canGroupWithPrevious: Boolean, canGroupWithNext: Boolean, isMe: Boolean): Int {
+        return when {
+            !canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_first else R.drawable.message_in_first
+            canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_middle else R.drawable.message_in_middle
+            canGroupWithPrevious && !canGroupWithNext -> if (isMe) R.drawable.message_out_last else R.drawable.message_in_last
+            else -> R.drawable.message_only
+        }
     }
 
     private fun canGroup(message: Message, other: Message?): Boolean {

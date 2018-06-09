@@ -210,6 +210,13 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivityExternal(intent)
     }
 
+    fun saveVcard(uri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW)
+                .setDataAndType(uri, "text/x-vcard")
+
+        startActivityExternal(intent)
+    }
+
     fun showNotificationSettings(threadId: Long = 0) {
         val intent = Intent(context, NotificationPrefsActivity::class.java)
         intent.putExtra("threadId", threadId)

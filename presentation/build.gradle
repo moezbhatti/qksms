@@ -139,6 +139,7 @@ dependencies {
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.google.android:flexbox:0.3.1"
+    implementation 'com.googlecode.ez-vcard:ez-vcard:0.10.4'
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation project(":android-smsmms")
