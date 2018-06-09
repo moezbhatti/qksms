@@ -104,6 +104,8 @@
     <string name="message_status_failed">Failed to send. Tap to try again</string>
 
     <string name="info_title">Details</string>
+    <string name="info_name">Conversation title</string>
+    <string name="info_name_hint">Enter title</string>
     <string name="info_notifications">Notifications</string>
     <string name="info_theme">Theme</string>
     <string name="info_archive">Archive</string>
@@ -215,6 +217,7 @@
 
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
+    <string name="button_save">Save</string>
     <string name="button_more">More</string>
     <string name="button_set">Set</string>
     <string name="button_unblock">Unblock</string>

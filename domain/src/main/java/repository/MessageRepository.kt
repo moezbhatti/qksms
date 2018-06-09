@@ -31,6 +31,8 @@ interface MessageRepository {
 
     fun getConversationsSnapshot(): List<Conversation>
 
+    fun setConversationName(id: Long, name: String)
+
     fun searchConversations(query: String): List<SearchResult>
 
     fun getBlockedConversations(): RealmResults<Conversation>

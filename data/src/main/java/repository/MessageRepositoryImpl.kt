@@ -93,6 +93,17 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAll())
     }
 
+    override fun setConversationName(id: Long, name: String) {
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction {
+                realm.where(Conversation::class.java)
+                        .equalTo("id", id)
+                        .findFirst()
+                        ?.name = name
+            }
+        }
+    }
+
     override fun searchConversations(query: String): List<SearchResult> {
         val conversations = getConversationsSnapshot()
 

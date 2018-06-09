@@ -27,9 +27,10 @@ import interactor.MarkArchived
 import interactor.MarkBlocked
 import interactor.MarkUnarchived
 import interactor.MarkUnblocked
-import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import model.Conversation
 import repository.MessageRepository
 import util.extensions.asObservable
@@ -38,21 +39,21 @@ import javax.inject.Named
 
 class ConversationInfoViewModel @Inject constructor(
         @Named("threadId") threadId: Long,
-        messageRepo: MessageRepository,
         private val markArchived: MarkArchived,
         private val markUnarchived: MarkUnarchived,
         private val markBlocked: MarkBlocked,
         private val markUnblocked: MarkUnblocked,
+        private val messageRepo: MessageRepository,
         private val navigator: Navigator,
         private val deleteConversations: DeleteConversations
 ) : QkViewModel<ConversationInfoView, ConversationInfoState>(
         ConversationInfoState(threadId = threadId, media = messageRepo.getPartsForConversation(threadId))
 ) {
 
-    private val conversation: Observable<Conversation>
+    private val conversation: Subject<Conversation> = BehaviorSubject.create()
 
     init {
-        conversation = messageRepo.getConversationAsync(threadId)
+        disposables += messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->
@@ -62,6 +63,7 @@ class ConversationInfoViewModel @Inject constructor(
                 }
                 .filter { conversation -> conversation.isValid }
                 .filter { conversation -> conversation.id != 0L }
+                .subscribe(conversation::onNext)
 
         disposables += markArchived
         disposables += markUnarchived
@@ -74,6 +76,12 @@ class ConversationInfoViewModel @Inject constructor(
                 .map { conversation -> conversation.recipients }
                 .distinctUntilChanged()
                 .subscribe { recipients -> newState { copy(recipients = recipients) } }
+
+        // Update conversation title whenever it changes
+        disposables += conversation
+                .map { conversation -> conversation.name }
+                .distinctUntilChanged()
+                .subscribe { name -> newState { copy(name = name) } }
 
         // Update the view's archived state whenever it changes
         disposables += conversation
@@ -90,6 +98,21 @@ class ConversationInfoViewModel @Inject constructor(
 
     override fun bindView(view: ConversationInfoView) {
         super.bindView(view)
+
+        // Show the conversation title dialog
+        view.nameIntent
+                .withLatestFrom(conversation) { _, conversation -> conversation }
+                .map { conversation -> conversation.name }
+                .autoDisposable(view.scope())
+                .subscribe(view::showNameDialog)
+
+        // Set the conversation title
+        view.nameChangedIntent
+                .withLatestFrom(conversation) { name, conversation ->
+                    messageRepo.setConversationName(conversation.id, name)
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
         // Show the notifications settings for the conversation
         view.notificationsIntent

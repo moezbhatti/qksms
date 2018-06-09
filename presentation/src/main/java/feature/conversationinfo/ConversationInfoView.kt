@@ -18,11 +18,13 @@
  */
 package feature.conversationinfo
 
-import io.reactivex.Observable
 import common.base.QkView
+import io.reactivex.Observable
 
 interface ConversationInfoView : QkView<ConversationInfoState> {
 
+    val nameIntent: Observable<*>
+    val nameChangedIntent: Observable<String>
     val notificationsIntent: Observable<Unit>
     val themeIntent: Observable<Unit>
     val archiveIntent: Observable<Unit>
@@ -30,6 +32,7 @@ interface ConversationInfoView : QkView<ConversationInfoState> {
     val deleteIntent: Observable<Unit>
     val confirmDeleteIntent: Observable<Unit>
 
+    fun showNameDialog(name: String)
     fun showDeleteDialog()
 
 }

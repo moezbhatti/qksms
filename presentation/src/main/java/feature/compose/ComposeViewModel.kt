@@ -166,8 +166,7 @@ class ComposeViewModel @Inject constructor(
                 }
                 .filter { conversation -> conversation.isValid }
                 .filter { conversation -> conversation.id != 0L }
-                .distinctUntilChanged()
-                .subscribe { conversation.onNext(it) }
+                .subscribe(conversation::onNext)
 
         // When the conversation changes, update the threadId and the messages for the adapter
         disposables += conversation

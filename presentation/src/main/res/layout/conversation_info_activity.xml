@@ -62,6 +62,14 @@
                 android:background="?android:attr/divider" />
 
             <common.widget.PreferenceView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:icon="@drawable/ic_people_black_24dp"
+                app:title="@string/info_name" />
+
+            <common.widget.PreferenceView
                 android:id="@+id/notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
