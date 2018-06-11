@@ -24,11 +24,8 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.database.sqlite.SqliteWrapper
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
-import android.provider.BaseColumns
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
@@ -37,6 +34,7 @@ import com.klinker.android.send_message.BroadcastUtils
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
+import compat.TelephonyCompat
 import filter.ConversationFilter
 import io.realm.Case
 import io.realm.Realm
@@ -51,10 +49,10 @@ import model.Conversation
 import model.Message
 import model.MmsPart
 import model.SearchResult
-import util.MessageUtils
 import util.Preferences
 import util.extensions.anyOf
 import util.extensions.map
+import util.tryOrNull
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -153,20 +151,7 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun getOrCreateConversation(addresses: List<String>): Conversation? {
-        return addresses
-                .map { address ->
-                    when (MessageUtils.isEmailAddress(address)) {
-                        true -> MessageUtils.extractAddrSpec(address)
-                        false -> address
-                    }
-                }
-                .let { recipients ->
-                    Uri.parse("content://mms-sms/threadID").buildUpon().apply {
-                        recipients.forEach { recipient -> appendQueryParameter("recipient", recipient) }
-                    }.build()
-                }
-                .let { uri -> SqliteWrapper.query(context, context.contentResolver, uri, arrayOf(BaseColumns._ID), null, null, null) }
-                ?.use { cursor -> if (cursor.moveToFirst()) cursor.getLong(0) else null }
+        return tryOrNull { TelephonyCompat.getOrCreateThreadId(context, addresses.toSet()) }
                 ?.takeIf { threadId -> threadId != 0L }
                 ?.let { threadId ->
                     var conversation = getConversation(threadId)
