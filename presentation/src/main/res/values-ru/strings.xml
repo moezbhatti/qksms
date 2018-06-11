@@ -32,29 +32,29 @@
   <string name="setup_next">Продолжить</string>
   <string name="menu_call">Позвонить</string>
   <string name="menu_info">Подробности</string>
-  <string name="menu_save">Сохранить изображение</string>
+  <string name="menu_save">Сохранить в галерее</string>
   <string name="main_title_selected">%d выбран(о)</string>
   <string name="main_menu_clear">Очистить</string>
   <string name="main_menu_archive">Архивировать</string>
   <string name="main_menu_unarchive">Разархивировать</string>
   <string name="main_menu_block">Блокировать</string>
   <string name="main_menu_delete">Удалить</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
+  <string name="main_syncing">Синхронизация сообщений&#8230;</string>
   <string name="main_sender_you">Вы: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
+  <string name="main_message_results_title">Результаты в сообщениях</string>
+  <string name="main_message_results">%d сообщений</string>
   <string name="inbox_empty_text">Ваши беседы будут появляться здесь</string>
   <string name="inbox_search_empty_text">Нет результатов</string>
   <string name="archived_empty_text">Ваши архивированные беседы будут появляться здесь</string>
   <string name="scheduled_empty_text">Ваши запланированные сообщения будут появляться здесь</string>
   <string name="main_fab_cd">Начать новую беседу</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
+  <string name="main_default_sms_title">Снова полюбите писать</string>
+  <string name="main_default_sms_message">Сделать QKSMS приложением SMS по умолчанию</string>
+  <string name="main_default_sms_change">Изменить</string>
+  <string name="main_permission_required">Требуется разрешение</string>
+  <string name="main_permission_sms">QKSMS необходимо разрешение для отправки и просмотра SMS сообщений</string>
+  <string name="main_permission_contacts">QKSMS необходимо разрешение для просмотра контактов</string>
+  <string name="main_permission_allow">Разрешить</string>
   <string name="drawer_inbox">Входящие</string>
   <string name="drawer_archived">Архив</string>
   <string name="drawer_scheduled">Запланированные</string>
@@ -74,15 +74,18 @@
     <item>Удалить</item>
   </string-array>
   <string name="compose_title_selected">%d выбран(о)</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_subtitle_results">%1$d из %2$d результатов</string>
+  <string name="compose_send_group_title">Отправить как групповое сообщение</string>
+  <string name="compose_send_group_summary">Получатели и ответы будут видны всем</string>
   <string name="compose_messages_empty">Это начало Вашей беседы. Скажите что-нибудь приятное!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Написать сообщение&#8230;</string>
   <string name="compose_menu_copy">Скопировать текст</string>
   <string name="compose_menu_forward">Переслать</string>
   <string name="compose_menu_delete">Удалить</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
+  <string name="compose_menu_previous">Назад</string>
+  <string name="compose_menu_next">Вперед</string>
+  <string name="compose_menu_clear">Очистить</string>
   <string name="compose_attach_cd">Добавить вложение</string>
   <string name="compose_gallery_cd">Прикрепить фото</string>
   <string name="compose_camera_cd">Сделать снимок</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Доставлено %s</string>
   <string name="message_status_failed">Не удалось отправить. Коснитесь, чтобы попробовать ещё раз.</string>
   <string name="info_title">Подробности</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Уведомления</string>
   <string name="info_theme">Тема</string>
   <string name="info_archive">Архивировать</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Заблокировать</string>
   <string name="info_unblock">Разблокировать</string>
   <string name="info_delete">Удалить беседу</string>
-  <string name="gallery_toast_saved">Сохраненное изображение</string>
+  <string name="gallery_toast_saved">Сохранено в галерее</string>
   <string name="settings_category_appearance">Внешний вид</string>
   <string name="settings_category_general">Общее</string>
   <string name="settings_category_qkreply">QK Ответ</string>
@@ -114,7 +119,7 @@
   <string name="settings_notification_previews_title">Предпросмотр уведомлений</string>
   <string name="settings_vibration_title">Вибросигнал</string>
   <string name="settings_ringtone_title">Звук</string>
-  <string name="settings_ringtone_none">None</string>
+  <string name="settings_ringtone_none">Нет</string>
   <string name="settings_qkreply_title">QK Ответ</string>
   <string name="settings_qkreply_summary">Всплывающее окно для новых сообщений</string>
   <string name="settings_qkreply_tap_dismiss_title">Нажмите, чтобы отклонить</string>
@@ -128,7 +133,7 @@
   <string name="settings_delivery_summary">Подтверждение успешной отправки сообщений</string>
   <string name="settings_unicode_title">Удалить акценты</string>
   <string name="settings_unicode_summary">Удаление акцентов с символов в исходящих SMS-сообщениях</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+  <string name="settings_mms_size_title">Автоматически сжимать MMS вложения</string>
   <string name="settings_sync_title">Синхронизация сообщений</string>
   <string name="settings_sync_summary">Повторная синхронизация ваших сообщений с собственной базой данных SMS Android</string>
   <string name="settings_about_title">О QKSMS</string>
@@ -145,7 +150,7 @@
   <string name="about_changelog_title">История изменений</string>
   <string name="about_contact_title">Контакт</string>
   <string name="about_license_title">Лицензия</string>
-  <string name="about_copyright_title">Copyright</string>
+  <string name="about_copyright_title">Авторское право</string>
   <string name="qksms_plus_description_title">Поддержать развитие, разблокировать все</string>
   <string name="qksms_plus_description_summary">Вы можете спасти голодающего разработчика всего за %s</string>
   <string name="qksms_plus_upgrade">Пожизненное обновление для %1$s %2$s</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Бэкап сообщений</string>
   <string name="qksms_plus_backup_summary">Автоматически создавайте резервные копии сообщений. Не беспокойтесь о потере истории, если Вы поменяете или потеряете телефон</string>
   <string name="qksms_plus_scheduled_title">Запланированные сообщения</string>
-  <string name="qksms_plus_scheduled_summary">Подождите несколько секунд перед отправкой сообщения</string>
+  <string name="qksms_plus_scheduled_summary">Запланированные сообщения для автоматической отправки в определенное время и дату</string>
   <string name="qksms_plus_delayed_title">Отложенная отправка</string>
   <string name="qksms_plus_delayed_summary">Подождите несколько секунд перед отправкой сообщения</string>
   <string name="qksms_plus_night_title">Автоматический ночной режим</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Пометить прочитанным</string>
   <string name="button_cancel">Отмена</string>
   <string name="button_delete">Удалить</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Еще</string>
   <string name="button_set">Задать</string>
   <string name="button_unblock">Разблокировать</string>
@@ -230,11 +236,11 @@
   <string-array name="mms_sizes">
     <item>100КБ</item>
     <item>200КБ</item>
-    <item>300KB (Recommended)</item>
+    <item>300 КБ (рекомендуется)</item>
     <item>600КБ</item>
     <item>1000КБ</item>
     <item>2000КБ</item>
-    <item>No compression</item>
+    <item>Без сжатия</item>
   </string-array>
   <string-array name="qk_responses">
     <item>Хорошо</item>

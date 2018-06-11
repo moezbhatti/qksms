@@ -32,7 +32,7 @@
   <string name="setup_next">ادامه</string>
   <string name="menu_call">تماس</string>
   <string name="menu_info">جزئیات</string>
-  <string name="menu_save">ذخیره عکس</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">%d selected</string>
   <string name="main_menu_clear">پاکسازی</string>
   <string name="main_menu_archive">بایگانی</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d selected</string>
   <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">نوشتن پیام&#8230;</string>
   <string name="compose_menu_copy">Copy text</string>
   <string name="compose_menu_forward">Forward</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">رسیده %s</string>
   <string name="message_status_failed">اوپس، دوباره ارسال کن</string>
   <string name="info_title">جزئیات</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">اعلانها</string>
   <string name="info_theme">پوسته</string>
   <string name="info_archive">بایگانی</string>
@@ -98,7 +103,7 @@
   <string name="info_block">بلاک</string>
   <string name="info_unblock">آنبلاک</string>
   <string name="info_delete">حذف مکالمه</string>
-  <string name="gallery_toast_saved">عکسای ذخیره</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">ظاهر</string>
   <string name="settings_category_general">عمومی</string>
   <string name="settings_category_qkreply">QK Reply</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">بکاپ پیامها</string>
   <string name="qksms_plus_backup_summary">بکاپ خودکار.دیگر نگران از دست دادن پیام ها نباشید.حتی با عوض کردن تلفن همراه</string>
   <string name="qksms_plus_scheduled_title">پیام های برنامه ریزی شده</string>
-  <string name="qksms_plus_scheduled_summary">لطفا چند ثانیه صبر کنید</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">تاخیر در ارسال</string>
   <string name="qksms_plus_delayed_summary">لطفا چند ثانیه صبر کنید</string>
   <string name="qksms_plus_night_title">حالت شب اتوماتیک</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">خوانده شده</string>
   <string name="button_cancel">کنسل</string>
   <string name="button_delete">حذف</string>
+  <string name="button_save">Save</string>
   <string name="button_more">بيشتر</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">آنبلاک</string>

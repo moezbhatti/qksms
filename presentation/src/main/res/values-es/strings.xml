@@ -32,7 +32,7 @@
   <string name="setup_next">Continuar</string>
   <string name="menu_call">Llamar</string>
   <string name="menu_info">Detalles</string>
-  <string name="menu_save">Guardar imagen</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">%d Seleccionados</string>
   <string name="main_menu_clear">Limpiar</string>
   <string name="main_menu_archive">Archivo</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d seleccionados</string>
   <string name="compose_subtitle_results">%1$d de %2$d resultados</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Este es el comienzo de su conversación. ¡Di algo bonito!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Escribir mensaje&#8230;</string>
   <string name="compose_menu_copy">Copiar texto</string>
   <string name="compose_menu_forward">Reenviar</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Entregado %s</string>
   <string name="message_status_failed">No se envió. Pulse para volver a intentarlo</string>
   <string name="info_title">Detalles</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Notificaciones</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Archivar</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Bloquear</string>
   <string name="info_unblock">Desbloquear</string>
   <string name="info_delete">Borrar conversación</string>
-  <string name="gallery_toast_saved">Guardar imagen</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">Apariencia</string>
   <string name="settings_category_general">General</string>
   <string name="settings_category_qkreply">Responder vía QKSMS</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Copia de seguridad de mensajes</string>
   <string name="qksms_plus_backup_summary">Copia de seguridad automática de tus mensajes. Nunca más se preocupe por perder su historial si cambia o pierde su teléfono</string>
   <string name="qksms_plus_scheduled_title">Mensajes programados</string>
-  <string name="qksms_plus_scheduled_summary">Espere unos segundos antes de enviar su mensaje</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">Retraso en el envío</string>
   <string name="qksms_plus_delayed_summary">Espere unos segundos antes de enviar su mensaje</string>
   <string name="qksms_plus_night_title">Modo nocturno automático</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Marcar como leído</string>
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Eliminar</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Más</string>
   <string name="button_set">Establecer</string>
   <string name="button_unblock">Desbloquear</string>

@@ -32,7 +32,7 @@
   <string name="setup_next">Nastavi</string>
   <string name="menu_call">Nazovi</string>
   <string name="menu_info">Detalji</string>
-  <string name="menu_save">Spremi sliku</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">%d odabrano</string>
   <string name="main_menu_clear">Očisti</string>
   <string name="main_menu_archive">Arhiviraj</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d odabrano</string>
   <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Ovo je početak vašeg razgovora. Recite nešto lijepo!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Napiši poruku&#8230;</string>
   <string name="compose_menu_copy">Kopiraj tekst</string>
   <string name="compose_menu_forward">Proslijedi</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Isporučeno %s</string>
   <string name="message_status_failed">Slanje nije uspjelo. Dodirnite da biste pokušali ponovno</string>
   <string name="info_title">Detalji</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Obavijesti</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arhiva</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Blokiraj</string>
   <string name="info_unblock">Deblokiraj</string>
   <string name="info_delete">Izbriši razgovor</string>
-  <string name="gallery_toast_saved">Slika je spremljena</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">Izgled</string>
   <string name="settings_category_general">Općenito</string>
   <string name="settings_category_qkreply">QK odgovor</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Sigurnosno kopiranje poruka</string>
   <string name="qksms_plus_backup_summary">Automatski sigurnosno kopirajte svoje poruke. Nikad više nemojte brinuti zbog gubitka povijesti ako promijenite telefon ili ga izgubite</string>
   <string name="qksms_plus_scheduled_title">Zakazane poruke</string>
-  <string name="qksms_plus_scheduled_summary">Pričekajte nekoliko sekundi prije slanja poruke</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">Odgođeno slanje</string>
   <string name="qksms_plus_delayed_summary">Pričekajte nekoliko sekundi prije slanja poruke</string>
   <string name="qksms_plus_night_title">Automatski noćni način</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Označi kao pročitano</string>
   <string name="button_cancel">Odustani</string>
   <string name="button_delete">Izbriši</string>
+  <string name="button_save">Save</string>
   <string name="button_more"> Više</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">Unblock</string>

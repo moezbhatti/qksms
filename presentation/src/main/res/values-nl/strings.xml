@@ -32,7 +32,7 @@
   <string name="setup_next">Verder</string>
   <string name="menu_call">Bel</string>
   <string name="menu_info">Details</string>
-  <string name="menu_save">Afbeelding opslaan</string>
+  <string name="menu_save">Opslaan in galerij</string>
   <string name="main_title_selected">%d geselecteerd</string>
   <string name="main_menu_clear">Wissen</string>
   <string name="main_menu_archive">Archiveren</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d geselecteerd</string>
   <string name="compose_subtitle_results">%1$d van de %2$d resultaten</string>
+  <string name="compose_send_group_title">Versturen als groepsbericht</string>
+  <string name="compose_send_group_summary">Ontvangers en antwoorden zijn zichtbaar voor iedereen</string>
   <string name="compose_messages_empty">Dit is het begin van je conversatie. Zeg iets leuks!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Type een bericht&#8230;</string>
   <string name="compose_menu_copy">Tekst kopiëren</string>
   <string name="compose_menu_forward">Doorsturen</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Afgeleverd %s</string>
   <string name="message_status_failed">Fout bij verzenden. Tik om opnieuw te proberen</string>
   <string name="info_title">Details</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Notificaties</string>
   <string name="info_theme">Thema</string>
   <string name="info_archive">Archief</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Blokkeren</string>
   <string name="info_unblock">Blokkering opheffen</string>
   <string name="info_delete">Conversatie verwijderen</string>
-  <string name="gallery_toast_saved">Afbeelding opgeslagen</string>
+  <string name="gallery_toast_saved">Opgeslagen in galerij</string>
   <string name="settings_category_appearance">Uiterlijk</string>
   <string name="settings_category_general">Algemeen</string>
   <string name="settings_category_qkreply">QK Reply</string>
@@ -114,7 +119,7 @@
   <string name="settings_notification_previews_title">Notificatievoorbeeld</string>
   <string name="settings_vibration_title">Trillen</string>
   <string name="settings_ringtone_title">Geluid</string>
-  <string name="settings_ringtone_none">None</string>
+  <string name="settings_ringtone_none">Geen</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Popup voor nieuwe berichten</string>
   <string name="settings_qkreply_tap_dismiss_title">Tik om te sluiten</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Berichtenback-up</string>
   <string name="qksms_plus_backup_summary">Automatische back-up van jouw berichten. Geen zorgen meer over het kwijtraken van jouw berichten bij het verlies van je telefoon of het overschakelen naar een nieuwe telefoon</string>
   <string name="qksms_plus_scheduled_title">Geplande berichten</string>
-  <string name="qksms_plus_scheduled_summary">Wacht enkele seconden voor het versturen van je bericht</string>
+  <string name="qksms_plus_scheduled_summary">Berichten worden automatisch verzonden op de ingestelde tijd</string>
   <string name="qksms_plus_delayed_title">Vertraagd verzenden</string>
   <string name="qksms_plus_delayed_summary">Wacht enkele seconden voor het versturen van je bericht</string>
   <string name="qksms_plus_night_title">Automatische nachtmodus</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Markeren als gelezen</string>
   <string name="button_cancel">Annuleren</string>
   <string name="button_delete">Verwijderen</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Meer</string>
   <string name="button_set">Instellen</string>
   <string name="button_unblock">Blokkering opheffen</string>

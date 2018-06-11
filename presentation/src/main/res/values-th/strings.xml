@@ -32,7 +32,7 @@
   <string name="setup_next">ทำต่อ</string>
   <string name="menu_call">โทร</string>
   <string name="menu_info">รายละเอียด</string>
-  <string name="menu_save">บันทึกภาพ</string>
+  <string name="menu_save">บันทึกรูปภาพ</string>
   <string name="main_title_selected">%d ถูกเลือก</string>
   <string name="main_menu_clear">ลบออก</string>
   <string name="main_menu_archive">จัดเก็บ</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d ถูกเลือก</string>
   <string name="compose_subtitle_results">%1$d ใน %2$d ของผลลัพท์</string>
+  <string name="compose_send_group_title">ส่งเป็นข้อความกลุ่ม</string>
+  <string name="compose_send_group_summary">ผู้รับและการตอบกลับจะแสดงให้ทุกคนเห็นทุกคน</string>
   <string name="compose_messages_empty">การเริ่มต้นของการสนทนาของคุณ บอกกล่าวบางอย่างที่นี่</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">เขียนข้อความ...</string>
   <string name="compose_menu_copy">คัดลอกข้อความ</string>
   <string name="compose_menu_forward">ส่งต่อ</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">%s ถูกส่งแล้ว</string>
   <string name="message_status_failed">การส่งล้มเหลว ลองแตะเพื่อส่งอีกครั้ง</string>
   <string name="info_title">รายละเอียด</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">การแจ้งเตือน</string>
   <string name="info_theme">รูปแบบการแสดงผล</string>
   <string name="info_archive">จัดเก็บ</string>
@@ -98,7 +103,7 @@
   <string name="info_block">ปิดกั้น</string>
   <string name="info_unblock">ยกเลิกการปิดกั้น</string>
   <string name="info_delete">ลบการสนทนา</string>
-  <string name="gallery_toast_saved">ภาพถูกบันทึกแล้ว</string>
+  <string name="gallery_toast_saved">บันทึกรูปภาพแล้ว</string>
   <string name="settings_category_appearance">ลักษณะที่ปรากฏ</string>
   <string name="settings_category_general">ทั่วไป</string>
   <string name="settings_category_qkreply">QK ตอบกลับ</string>
@@ -114,7 +119,7 @@
   <string name="settings_notification_previews_title">ตัวอย่างการแจ้งเตือน</string>
   <string name="settings_vibration_title">การสั่น</string>
   <string name="settings_ringtone_title">เสียง</string>
-  <string name="settings_ringtone_none">None</string>
+  <string name="settings_ringtone_none">ไม่มี</string>
   <string name="settings_qkreply_title">QK ตอบกลับ</string>
   <string name="settings_qkreply_summary">ป๊อปอัพข้อความใหม่</string>
   <string name="settings_qkreply_tap_dismiss_title">แตะเพื่อยกเลิก</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">สำรองข้อมูลข้อความ</string>
   <string name="qksms_plus_backup_summary">สำรองข้อมูลข้อความของคุณโดยอัตโนมัติ ไม่ต้องกังวลว่าประวัติข้อความของคุณจะสูญหายถ้าคุณเปลี่ยนโทรศัพท์มือถือ หรือทำโทรศัพท์หาย</string>
   <string name="qksms_plus_scheduled_title">ข้อความที่กำหนดเวลา</string>
-  <string name="qksms_plus_scheduled_summary">รอสักครู่ก่อนที่จะส่งข้อความของคุณ</string>
+  <string name="qksms_plus_scheduled_summary">ข้อความจะถูกส่งโดยอัตโนมัติตามวันและเวลาที่กำหนด</string>
   <string name="qksms_plus_delayed_title">การส่งแบบล่าช้า</string>
   <string name="qksms_plus_delayed_summary">รอสักครู่ก่อนที่จะส่งข้อความของคุณ</string>
   <string name="qksms_plus_night_title">โหมดกลางคืนอัตโนมัติ</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">ทำเครื่องหมายอ่านแล้ว</string>
   <string name="button_cancel">ยกเลิก</string>
   <string name="button_delete">ลบ</string>
+  <string name="button_save">Save</string>
   <string name="button_more">เพิ่มเติม</string>
   <string name="button_set">ตั้งค่า</string>
   <string name="button_unblock">ยกเลิกการปิดกั้น</string>

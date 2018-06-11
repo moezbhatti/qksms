@@ -32,7 +32,7 @@
   <string name="setup_next">Pokračovat</string>
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
-  <string name="menu_save">Uložit obrázek</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">Vybráno: %d</string>
   <string name="main_menu_clear">Vymazat</string>
   <string name="main_menu_archive">Archivovat</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">Vybráno: %d</string>
   <string name="compose_subtitle_results">%1$d z %2$d výsledků</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Toto je začátek vaší konverzace. Řekněte něco hezkého!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Napsat zprávu&#8230;</string>
   <string name="compose_menu_copy">Kopírovat text</string>
   <string name="compose_menu_forward">Přeposlat</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Doručeno %s</string>
   <string name="message_status_failed">Odeslání se nezdařilo. Klepnutím zkusíte znovu odeslat</string>
   <string name="info_title">Podrobnosti</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Oznámení</string>
   <string name="info_theme">Motiv vzhledu</string>
   <string name="info_archive">Archivovat</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Blokovat</string>
   <string name="info_unblock">Odblokovat</string>
   <string name="info_delete">Odstranit konverzaci</string>
-  <string name="gallery_toast_saved">Obrázek uložen</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">Vzhled</string>
   <string name="settings_category_general">Obecné</string>
   <string name="settings_category_qkreply">Rychlá odpověď</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Zálohování zpráv</string>
   <string name="qksms_plus_backup_summary">Zálohujte automaticky své zprávy. Už se nemusíte obávat ztráty historie zpráv při ztrátě nebo výměně telefonu</string>
   <string name="qksms_plus_scheduled_title">Plánované zprávy</string>
-  <string name="qksms_plus_scheduled_summary">Počkat několik sekund před odesláním zprávy</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">Zpožděné odeslání</string>
   <string name="qksms_plus_delayed_summary">Počkat několik sekund před odesláním zprávy</string>
   <string name="qksms_plus_night_title">Automatický noční režim</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Označit jako přečtené</string>
   <string name="button_cancel">Zrušit</string>
   <string name="button_delete">Odstranit</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Více</string>
   <string name="button_set">Nastavit</string>
   <string name="button_unblock">Odblokovat</string>
