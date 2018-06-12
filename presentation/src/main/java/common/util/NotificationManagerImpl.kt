@@ -132,6 +132,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val messagingStyle = NotificationCompat.MessagingStyle("Me")
         if (conversation.recipients.size >= 2) {
+            messagingStyle.isGroupConversation = true
             messagingStyle.conversationTitle = conversation.getTitle()
         }
 
