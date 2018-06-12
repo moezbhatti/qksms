@@ -33,7 +33,7 @@ class MarkReadReceiver : BroadcastReceiver() {
         AndroidInjection.inject(this, context)
 
         val threadId = intent.getLongExtra("threadId", 0)
-        markRead.execute(threadId)
+        markRead.execute(listOf(threadId))
     }
 
 }

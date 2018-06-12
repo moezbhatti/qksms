@@ -20,6 +20,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/read"
+        android:icon="@drawable/ic_drafts_black_24dp"
+        android:title="@string/main_menu_read"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/unread"
+        android:icon="@drawable/ic_markunread_black_24dp"
+        android:title="@string/main_menu_unread"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/archive"
         android:icon="@drawable/ic_archive_black_24dp"
         android:title="@string/main_menu_archive"

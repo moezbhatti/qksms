@@ -44,7 +44,7 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
 
         val threadId = bundle.getLong("threadId")
         val body = remoteInput.getCharSequence("body").toString()
-        markRead.execute(threadId)
+        markRead.execute(listOf(threadId))
 
         val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
         val subId = subscriptionManager.activeSubscriptionInfoList.firstOrNull { it.subscriptionId == lastMessage?.subId }?.subscriptionId ?: -1

@@ -169,6 +169,12 @@ class MainActivity : QkThemedActivity(), MainView {
             return
         }
 
+        val markRead = when (state.page) {
+            is Inbox -> state.page.markRead
+            is Archived -> state.page.markRead
+            else -> true
+        }
+
         val selectedConversations = when (state.page) {
             is Inbox -> state.page.selected
             is Archived -> state.page.selected
@@ -178,6 +184,8 @@ class MainActivity : QkThemedActivity(), MainView {
         toolbarSearch.setVisible(state.page is Inbox && state.page.selected == 0 || state.page is Searching)
         toolbarTitle.setVisible(toolbarSearch.visibility != View.VISIBLE)
 
+        toolbar.menu.findItem(R.id.read)?.isVisible = markRead && selectedConversations != 0
+        toolbar.menu.findItem(R.id.unread)?.isVisible = !markRead && selectedConversations != 0
         toolbar.menu.findItem(R.id.archive)?.isVisible = state.page is Inbox && selectedConversations != 0
         toolbar.menu.findItem(R.id.unarchive)?.isVisible = state.page is Archived && selectedConversations != 0
         toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0

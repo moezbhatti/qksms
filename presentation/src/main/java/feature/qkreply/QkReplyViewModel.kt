@@ -113,7 +113,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> conversation.id }
                 .autoDisposable(view.scope())
                 .subscribe { threadId ->
-                    markRead.execute(threadId) { newState { copy(hasError = true) } }
+                    markRead.execute(listOf(threadId)) { newState { copy(hasError = true) } }
                 }
 
         // Call
@@ -216,7 +216,7 @@ class QkReplyViewModel @Inject constructor(
                     threadId
                 })
                 .doOnNext { threadId ->
-                    markRead.execute(threadId) {
+                    markRead.execute(listOf(threadId)) {
                         newState { copy(hasError = true) }
                     }
                 }

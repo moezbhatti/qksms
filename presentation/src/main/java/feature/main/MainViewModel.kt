@@ -27,7 +27,9 @@ import interactor.DeleteConversations
 import interactor.MarkAllSeen
 import interactor.MarkArchived
 import interactor.MarkBlocked
+import interactor.MarkRead
 import interactor.MarkUnarchived
+import interactor.MarkUnread
 import interactor.MigratePreferences
 import interactor.SyncMessages
 import io.reactivex.Observable
@@ -50,6 +52,8 @@ class MainViewModel @Inject constructor(
         private val messageRepo: MessageRepository,
         private val markAllSeen: MarkAllSeen,
         private val deleteConversations: DeleteConversations,
+        private val markRead: MarkRead,
+        private val markUnread: MarkUnread,
         private val markArchived: MarkArchived,
         private val markUnarchived: MarkUnarchived,
         private val markBlocked: MarkBlocked,
@@ -195,6 +199,16 @@ class MainViewModel @Inject constructor(
         view.optionsItemIntent
                 .withLatestFrom(view.conversationsSelectedIntent, { itemId, conversations ->
                     when (itemId) {
+                        R.id.read -> {
+                            markRead.execute(conversations)
+                            view.clearSelection()
+                        }
+
+                        R.id.unread -> {
+                            markUnread.execute(conversations)
+                            view.clearSelection()
+                        }
+
                         R.id.archive -> {
                             markArchived.execute(conversations)
                             view.clearSelection()
@@ -228,16 +242,20 @@ class MainViewModel @Inject constructor(
                 .subscribe { ratingManager.dismiss() }
 
         view.conversationsSelectedIntent
-                .map { selection -> selection.size }
-                .withLatestFrom(state, { selected, state ->
+                .withLatestFrom(state, { selection, state ->
+                    val read = selection
+                            .mapNotNull(messageRepo::getConversation)
+                            .sumBy { if (it.read) -1 else 1 } >= 0
+                    val selected = selection.size
+
                     when (state.page) {
                         is Inbox -> {
-                            val page = state.page.copy(selected = selected, showClearButton = selected > 0)
-                            newState { copy(page = page) }
+                            val page = state.page.copy(markRead = read, selected = selected, showClearButton = selected > 0)
+                            newState { copy(page = page.copy(markRead = read, selected = selected, showClearButton = selected > 0)) }
                         }
 
                         is Archived -> {
-                            val page = state.page.copy(selected = selected, showClearButton = selected > 0)
+                            val page = state.page.copy(markRead = read, selected = selected, showClearButton = selected > 0)
                             newState { copy(page = page) }
                         }
                     }

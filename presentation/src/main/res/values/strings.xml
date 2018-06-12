@@ -38,6 +38,8 @@
 
     <string name="main_title_selected">%d selected</string>
     <string name="main_menu_clear">Clear</string>
+    <string name="main_menu_read">Mark read</string>
+    <string name="main_menu_unread">Mark unread</string>
     <string name="main_menu_archive">Archive</string>
     <string name="main_menu_unarchive">Unarchive</string>
     <string name="main_menu_block">Block</string>

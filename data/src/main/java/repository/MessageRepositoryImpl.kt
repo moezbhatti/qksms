@@ -49,6 +49,7 @@ import model.Conversation
 import model.Message
 import model.MmsPart
 import model.SearchResult
+import timber.log.Timber
 import util.Preferences
 import util.extensions.anyOf
 import util.extensions.map
@@ -351,10 +352,10 @@ class MessageRepositoryImpl @Inject constructor(
         realm.close()
     }
 
-    override fun markRead(threadId: Long) {
+    override fun markRead(vararg threadIds: Long) {
         Realm.getDefaultInstance()?.use { realm ->
             val messages = realm.where(Message::class.java)
-                    .equalTo("threadId", threadId)
+                    .anyOf("threadId", threadIds)
                     .beginGroup()
                     .equalTo("read", false)
                     .or()
@@ -374,11 +375,26 @@ class MessageRepositoryImpl @Inject constructor(
         values.put(Telephony.Sms.SEEN, true)
         values.put(Telephony.Sms.READ, true)
 
-        try {
-            val uri = ContentUris.withAppendedId(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId)
-            context.contentResolver.update(uri, values, "${Telephony.Sms.READ} = 0", null)
-        } catch (exception: Exception) {
+        threadIds.forEach { threadId ->
+            try {
+                val uri = ContentUris.withAppendedId(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId)
+                context.contentResolver.update(uri, values, "${Telephony.Sms.READ} = 0", null)
+            } catch (exception: Exception) {
+                Timber.w(exception)
+            }
+        }
+    }
 
+    override fun markUnread(vararg threadIds: Long) {
+        Realm.getDefaultInstance()?.use { realm ->
+            val conversation = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .equalTo("read", true)
+                    .findAll()
+
+            realm.executeTransaction {
+                conversation.forEach { it.read = false }
+            }
         }
     }
 

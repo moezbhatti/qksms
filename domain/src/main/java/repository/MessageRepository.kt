@@ -90,7 +90,9 @@ interface MessageRepository {
 
     fun markSeen(threadId: Long)
 
-    fun markRead(threadId: Long)
+    fun markRead(vararg threadIds: Long)
+
+    fun markUnread(vararg threadIds: Long)
 
     /**
      * Persists the SMS and attempts to send it

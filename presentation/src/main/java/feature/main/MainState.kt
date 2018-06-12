@@ -38,6 +38,7 @@ sealed class MainPage
 
 data class Inbox(
         val showClearButton: Boolean = false,
+        val markRead: Boolean = false,
         val data: RealmResults<Conversation>? = null,
         val selected: Int = 0,
         val showArchivedSnackbar: Boolean = false) : MainPage()
@@ -49,6 +50,7 @@ data class Searching(
 
 data class Archived(
         val showClearButton: Boolean = false,
+        val markRead: Boolean = false,
         val data: RealmResults<Conversation>? = null,
         val selected: Int = 0) : MainPage()
 

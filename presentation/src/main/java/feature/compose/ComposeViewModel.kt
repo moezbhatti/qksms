@@ -441,7 +441,7 @@ class ComposeViewModel @Inject constructor(
                 .mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> markRead.execute(threadId) }
+                .subscribe { threadId -> markRead.execute(listOf(threadId)) }
 
         // Open the attachment options
         view.attachIntent
