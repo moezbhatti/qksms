@@ -20,6 +20,7 @@ package feature.qkreply
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -34,6 +35,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
+import common.util.extensions.resolveThemeColor
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
@@ -80,6 +82,14 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
         messages.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
         messages.adapter = adapter
+
+        // These theme attributes don't apply themselves on API 21
+        if (Build.VERSION.SDK_INT <= 22) {
+            toolbar.setBackgroundTint(resolveThemeColor(R.attr.colorPrimary))
+            background.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+            composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+            composeBackgroundGradient.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+        }
     }
 
     override fun render(state: QkReplyState) {

@@ -19,6 +19,7 @@
 package common.widget
 
 import android.content.Context
+import android.os.Build
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
@@ -47,6 +48,11 @@ class GroupAvatarView @JvmOverloads constructor(context: Context, attrs: Attribu
 
         avatars.forEach { avatar ->
             avatar.setBackgroundResource(R.drawable.rectangle)
+
+            // If we're on API 21 we need to reapply the tint after changing the background
+            if (Build.VERSION.SDK_INT < 22) {
+                avatar.applyTheme(0)
+            }
         }
 
         if (!isInEditMode) {

@@ -26,6 +26,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
@@ -40,6 +41,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
+import common.util.extensions.resolveThemeColor
 import common.util.extensions.scrapViews
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
@@ -134,6 +136,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .subscribe { messageList.scrapViews() }
 
         window.callback = ComposeWindowCallback(window.callback, this)
+
+        // These theme attributes don't apply themselves on API 21
+        if (Build.VERSION.SDK_INT <= 22) {
+            composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+        }
     }
 
     override fun onStart() {

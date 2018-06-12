@@ -31,6 +31,7 @@ import common.Navigator
 import common.base.QkViewModel
 import common.util.ClipboardUtils
 import common.util.extensions.makeToast
+import compat.SubscriptionManagerCompat
 import filter.ContactFilter
 import interactor.CancelDelayedMessage
 import interactor.ContactSync
@@ -56,7 +57,7 @@ import model.Message
 import model.PhoneNumber
 import repository.ContactRepository
 import repository.MessageRepository
-import util.SubscriptionUtils
+import util.ActiveSubscriptionObservable
 import util.extensions.asObservable
 import util.extensions.isImage
 import util.extensions.mapNotNull
@@ -80,7 +81,7 @@ class ComposeViewModel @Inject constructor(
         private val permissionManager: PermissionManager,
         private val retrySending: RetrySending,
         private val sendMessage: SendMessage,
-        private val subUtils: SubscriptionUtils,
+        private val subscriptionManager: SubscriptionManagerCompat,
         private val syncContacts: ContactSync
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(query = intent.extras?.getString("query") ?: "")) {
 
@@ -211,7 +212,8 @@ class ComposeViewModel @Inject constructor(
                 .map { messages -> messages.lastOrNull()?.subId ?: -1 }
                 .distinctUntilChanged()
 
-        disposables += Observables.combineLatest(latestSubId, subUtils.subscriptionsObservable) { subId, subs ->
+        val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
+        disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
             val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()
@@ -523,7 +525,7 @@ class ComposeViewModel @Inject constructor(
         // Toggle to the next sim slot
         view.changeSimIntent
                 .withLatestFrom(state) { _, state ->
-                    val subs = subUtils.subscriptions
+                    val subs = subscriptionManager.activeSubscriptionInfoList
                     val subIndex = subs.indexOfFirst { it.subscriptionId == state.subscription?.subscriptionId }
                     val subscription = when {
                         subIndex == -1 -> null

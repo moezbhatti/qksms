@@ -24,6 +24,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
+import compat.SubscriptionManagerCompat
 import interactor.MarkRead
 import interactor.SendMessage
 import io.reactivex.rxkotlin.Observables
@@ -36,7 +37,7 @@ import io.realm.RealmResults
 import model.Conversation
 import model.Message
 import repository.MessageRepository
-import util.SubscriptionUtils
+import util.ActiveSubscriptionObservable
 import util.extensions.asObservable
 import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
@@ -49,7 +50,7 @@ class QkReplyViewModel @Inject constructor(
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
         private val sendMessage: SendMessage,
-        private val subUtils: SubscriptionUtils
+        private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
 
     private val conversation by lazy {
@@ -89,7 +90,8 @@ class QkReplyViewModel @Inject constructor(
                 .map { messages -> messages.lastOrNull()?.subId ?: -1 }
                 .distinctUntilChanged()
 
-        disposables += Observables.combineLatest(latestSubId, subUtils.subscriptionsObservable) { subId, subs ->
+        val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
+        disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
             val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()
@@ -189,7 +191,7 @@ class QkReplyViewModel @Inject constructor(
         // Toggle to the next sim slot
         view.changeSimIntent
                 .withLatestFrom(state) { _, state ->
-                    val subs = subUtils.subscriptions
+                    val subs = subscriptionManager.activeSubscriptionInfoList
                     val subIndex = subs.indexOfFirst { it.subscriptionId == state.subscription?.subscriptionId }
                     val subscription = when {
                         subIndex == -1 -> null

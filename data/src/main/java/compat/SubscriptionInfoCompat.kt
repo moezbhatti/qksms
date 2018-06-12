@@ -16,19 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package feature.qkreply
+package compat
 
-import compat.SubscriptionInfoCompat
-import io.realm.RealmResults
-import model.Conversation
-import model.Message
+import android.annotation.TargetApi
+import android.os.Build
+import android.telephony.SubscriptionInfo
 
-data class QkReplyState(
-        val hasError: Boolean = false,
-        val title: String = "",
-        val expanded: Boolean = false,
-        val data: Pair<Conversation, RealmResults<Message>>? = null,
-        val remaining: String = "",
-        val subscription: SubscriptionInfoCompat? = null,
-        val canSend: Boolean = false
-)
+@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+data class SubscriptionInfoCompat(private val subscriptionInfo: SubscriptionInfo) {
+
+    val subscriptionId get() = subscriptionInfo.subscriptionId
+
+    val simSlotIndex get() = subscriptionInfo.simSlotIndex
+
+}

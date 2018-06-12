@@ -22,11 +22,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.RemoteInput
+import compat.SubscriptionManagerCompat
 import dagger.android.AndroidInjection
 import interactor.MarkRead
 import interactor.SendMessage
 import repository.MessageRepository
-import util.SubscriptionUtils
 import javax.inject.Inject
 
 class RemoteMessagingReceiver : BroadcastReceiver() {
@@ -34,7 +34,7 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var sendMessage: SendMessage
-    @Inject lateinit var subUtils: SubscriptionUtils
+    @Inject lateinit var subscriptionManager: SubscriptionManagerCompat
 
     override fun onReceive(context: Context, intent: Intent) {
         AndroidInjection.inject(this, context)
@@ -47,7 +47,7 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
         markRead.execute(threadId)
 
         val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
-        val subId = subUtils.subscriptions.firstOrNull { it.subscriptionId == lastMessage?.subId }?.subscriptionId ?: -1
+        val subId = subscriptionManager.activeSubscriptionInfoList.firstOrNull { it.subscriptionId == lastMessage?.subId }?.subscriptionId ?: -1
         val addresses = messageRepo.getConversation(threadId)?.recipients?.map { it.address } ?: return
 
         val pendingRepository = goAsync()

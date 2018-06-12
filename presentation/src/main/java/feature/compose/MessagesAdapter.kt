@@ -48,6 +48,7 @@ import common.util.extensions.setPadding
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
 import common.widget.BubbleImageView.Style.*
+import compat.SubscriptionManagerCompat
 import ezvcard.Ezvcard
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -64,7 +65,6 @@ import model.Conversation
 import model.Message
 import model.Recipient
 import util.Preferences
-import util.SubscriptionUtils
 import util.extensions.isImage
 import util.extensions.isVCard
 import util.extensions.isVideo
@@ -78,7 +78,7 @@ class MessagesAdapter @Inject constructor(
         private val dateFormatter: DateFormatter,
         private val navigator: Navigator,
         private val prefs: Preferences,
-        private val subUtils: SubscriptionUtils
+        private val subscriptionManager: SubscriptionManagerCompat
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -123,7 +123,7 @@ class MessagesAdapter @Inject constructor(
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
     private val disposables = CompositeDisposable()
-    private val subs = subUtils.subscriptions
+    private val subs = subscriptionManager.activeSubscriptionInfoList
 
     var theme: Colors.Theme = colors.theme()
 
