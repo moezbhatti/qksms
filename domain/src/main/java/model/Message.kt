@@ -47,6 +47,7 @@ open class Message : RealmObject() {
     var seen: Boolean = false
     var read: Boolean = false
     var locked: Boolean = false
+    var subId: Int = -1
 
     // SMS only
     var body: String = ""
@@ -132,7 +133,7 @@ open class Message : RealmObject() {
      * Cleanses the subject in case it's useless, so that the UI doesn't have to show it
      */
     fun getCleansedSubject(): String {
-        val uselessSubjects = listOf("no subject", "NoSubject")
+        val uselessSubjects = listOf("no subject", "NoSubject", "<not present>")
 
         return if (uselessSubjects.contains(subject)) "" else subject
     }
@@ -153,7 +154,9 @@ open class Message : RealmObject() {
         return isFailedMms || isFailedSms
     }
 
-    fun compareSender(other: Message): Boolean {
-        return isMe() && other.isMe() || (!isMe() && !other.isMe() && address == other.address)
+    fun compareSender(other: Message): Boolean = when {
+        isMe() && other.isMe() -> subId == other.subId
+        !isMe() && !other.isMe() -> subId == other.subId && address == other.address
+        else -> false
     }
 }

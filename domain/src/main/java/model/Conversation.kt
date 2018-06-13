@@ -36,5 +36,10 @@ open class Conversation : RealmObject() {
     var me: Boolean = false
     var draft: String = ""
 
-    fun getTitle() = recipients.joinToString { recipient -> recipient.getDisplayName() }
+    // For group chats, the user is allowed to set a custom title for the conversation
+    var name: String = ""
+
+    fun getTitle(): String {
+        return name.takeIf { it.isNotBlank() } ?: recipients.joinToString { recipient -> recipient.getDisplayName() }
+    }
 }

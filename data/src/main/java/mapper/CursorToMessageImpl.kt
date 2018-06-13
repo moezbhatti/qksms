@@ -46,6 +46,7 @@ class CursorToMessageImpl @Inject constructor(
                 Mms.READ,
                 Mms.THREAD_ID,
                 Mms.LOCKED,
+                Mms.SUBSCRIPTION_ID,
 
                 Sms.ADDRESS,
                 Sms.BODY,
@@ -84,6 +85,7 @@ class CursorToMessageImpl @Inject constructor(
             dateSent = cursor.getLong(columnsMap.dateSent)
             read = cursor.getInt(columnsMap.read) != 0
             locked = cursor.getInt(columnsMap.locked) != 0
+            subId = if (columnsMap.subId != -1) cursor.getInt(columnsMap.subId) else -1
 
             when (type) {
                 "sms" -> {

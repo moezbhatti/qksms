@@ -18,7 +18,6 @@
  */
 package feature.qkreply
 
-import android.content.Intent
 import android.telephony.SmsMessage
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
@@ -27,37 +26,42 @@ import common.Navigator
 import common.base.QkViewModel
 import interactor.MarkRead
 import interactor.SendMessage
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
 import model.Conversation
 import model.Message
 import repository.MessageRepository
+import util.SubscriptionUtils
 import util.extensions.asObservable
 import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Named
 
 class QkReplyViewModel @Inject constructor(
-        private val intent: Intent,
+        @Named("threadId") threadId: Long,
         private val markRead: MarkRead,
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
-        private val sendMessage: SendMessage
+        private val sendMessage: SendMessage,
+        private val subUtils: SubscriptionUtils
 ) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
 
     private val conversation by lazy {
-        messageRepo.getConversationAsync(intent.getLongExtra("threadId", -1))
+        messageRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { it.isLoaded }
                 .filter { it.isValid }
                 .distinctUntilChanged()
     }
 
-    private val messages: Subject<RealmResults<Message>> = PublishSubject.create()
+    private val messages: Subject<RealmResults<Message>> =
+            BehaviorSubject.createDefault(messageRepo.getUnreadMessages(threadId))
 
     init {
         disposables += markRead
@@ -65,21 +69,30 @@ class QkReplyViewModel @Inject constructor(
 
         // When the set of messages changes, update the state
         // If we're ever showing an empty set of messages, then it's time to shut down to activity
-        disposables += messages
-                .withLatestFrom(conversation, { messages, conversation -> Pair(conversation, messages) })
-                .doOnNext { data -> newState { it.copy(data = data) } }
-                .map { data -> data.second }
+        disposables += Observables
+                .combineLatest(messages, conversation) { messages, conversation ->
+                    newState { copy(data = Pair(conversation, messages)) }
+                    messages
+                }
                 .switchMap { messages -> messages.asObservable() }
                 .filter { it.isLoaded }
                 .filter { it.isValid }
                 .filter { it.isEmpty() }
-                .subscribe { newState { it.copy(hasError = true) } }
+                .subscribe { newState { copy(hasError = true) } }
 
         disposables += conversation
-                .doOnNext { conversation -> newState { it.copy(title = conversation.getTitle()) } }
-                .distinctUntilChanged { conversation -> conversation.id } // We only need to set the messages once
-                .map { conversation -> messageRepo.getUnreadMessages(conversation.id) }
-                .subscribe { messages.onNext(it) }
+                .map { conversation -> conversation.getTitle() }
+                .distinctUntilChanged()
+                .subscribe { title -> newState { copy(title = title) } }
+
+        val latestSubId = messages
+                .map { messages -> messages.lastOrNull()?.subId ?: -1 }
+                .distinctUntilChanged()
+
+        disposables += Observables.combineLatest(latestSubId, subUtils.subscriptionsObservable) { subId, subs ->
+            val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
+            newState { copy(subscription = sub) }
+        }.subscribe()
     }
 
     override fun bindView(view: QkReplyView) {
@@ -98,7 +111,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> conversation.id }
                 .autoDisposable(view.scope())
                 .subscribe { threadId ->
-                    markRead.execute(threadId) { newState { it.copy(hasError = true) } }
+                    markRead.execute(threadId) { newState { copy(hasError = true) } }
                 }
 
         // Call
@@ -108,25 +121,25 @@ class QkReplyViewModel @Inject constructor(
                 .mapNotNull { conversation -> conversation.recipients.first()?.address }
                 .doOnNext { address -> navigator.makePhoneCall(address) }
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(hasError = true) } }
+                .subscribe { newState { copy(hasError = true) } }
 
         // Show all messages
         view.menuItemIntent
                 .filter { id -> id == R.id.expand }
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .map { conversation -> messageRepo.getMessages(conversation.id) }
-                .doOnNext { messages.onNext(it) }
+                .doOnNext(messages::onNext)
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(expanded = true) } }
+                .subscribe { newState { copy(expanded = true) } }
 
         // Show unread messages only
         view.menuItemIntent
                 .filter { id -> id == R.id.collapse }
                 .withLatestFrom(conversation, { _, conversation -> conversation })
                 .map { conversation -> messageRepo.getUnreadMessages(conversation.id) }
-                .doOnNext { messages.onNext(it) }
+                .doOnNext(messages::onNext)
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(expanded = false) } }
+                .subscribe { newState { copy(expanded = false) } }
 
         // View conversation
         view.menuItemIntent
@@ -135,14 +148,14 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> conversation.id }
                 .doOnNext { threadId -> navigator.showConversation(threadId) }
                 .autoDisposable(view.scope())
-                .subscribe { newState { it.copy(hasError = true) } }
+                .subscribe { newState { copy(hasError = true) } }
 
         // Enable the send button when there is text input into the new message body or there's
         // an attachment, disable otherwise
         view.textChangedIntent
                 .map { text -> text.isNotBlank() }
                 .autoDisposable(view.scope())
-                .subscribe { canSend -> newState { it.copy(canSend = canSend) } }
+                .subscribe { canSend -> newState { copy(canSend = canSend) } }
 
         // Show the remaining character counter when necessary
         view.textChangedIntent
@@ -160,7 +173,7 @@ class QkReplyViewModel @Inject constructor(
                 }
                 .distinctUntilChanged()
                 .autoDisposable(view.scope())
-                .subscribe { remaining -> newState { it.copy(remaining = remaining) } }
+                .subscribe { remaining -> newState { copy(remaining = remaining) } }
 
         // Update the draft whenever the text is changed
         view.textChangedIntent
@@ -173,23 +186,36 @@ class QkReplyViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
+        // Toggle to the next sim slot
+        view.changeSimIntent
+                .withLatestFrom(state) { _, state ->
+                    val subs = subUtils.subscriptions
+                    val subIndex = subs.indexOfFirst { it.subscriptionId == state.subscription?.subscriptionId }
+                    val subscription = when {
+                        subIndex == -1 -> null
+                        subIndex < subs.size - 1 -> subs[subIndex + 1]
+                        else -> subs[0]
+                    }
+                    newState { copy(subscription = subscription) }
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
+
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
                 .withLatestFrom(view.textChangedIntent, { _, body -> body })
                 .map { body -> body.toString() }
-                .withLatestFrom(conversation, { body, conversation ->
+                .withLatestFrom(state, conversation, { body, state, conversation ->
+                    val subId = state.subscription?.subscriptionId ?: -1
                     val threadId = conversation.id
                     val addresses = conversation.recipients.map { it.address }
-
+                    sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body))
                     view.setDraft("")
-                    sendMessage.execute(SendMessage.Params(threadId, addresses, body, listOf())) {
-                    }
-
                     threadId
                 })
                 .doOnNext { threadId ->
                     markRead.execute(threadId) {
-                        newState { it.copy(hasError = true) }
+                        newState { copy(hasError = true) }
                     }
                 }
                 .autoDisposable(view.scope())

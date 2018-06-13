@@ -97,17 +97,10 @@ class Navigator @Inject constructor(private val context: Context, private val no
         startActivity(intent)
     }
 
-    fun showImage(partId: Long) {
+    fun showMedia(partId: Long) {
         val intent = Intent(context, GalleryActivity::class.java)
         intent.putExtra("partId", partId)
         startActivity(intent)
-    }
-
-    fun showVideo(uri: Uri, type: String) {
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-                .setDataAndType(uri, type)
-
-        startActivityExternal(intent)
     }
 
     /**
@@ -211,8 +204,16 @@ class Navigator @Inject constructor(private val context: Context, private val no
     }
 
     fun addContact(address: String) {
-        val uri = Uri.parse("tel: $address")
-        val intent = Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT, uri)
+        val intent = Intent(Intent.ACTION_INSERT)
+                .setType(ContactsContract.Contacts.CONTENT_TYPE)
+                .putExtra(ContactsContract.Intents.Insert.PHONE, address)
+        startActivityExternal(intent)
+    }
+
+    fun saveVcard(uri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW)
+                .setDataAndType(uri, "text/x-vcard")
+
         startActivityExternal(intent)
     }
 

@@ -50,6 +50,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
+import model.Attachment
 import model.Contact
 import model.Message
 import java.text.SimpleDateFormat
@@ -78,6 +79,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
+    override val sendAsGroupIntent by lazy { sendAsGroupBackground.clicks() }
     override val messageClickIntent: Subject<Message> by lazy { messageAdapter.clicks }
     override val messagesSelectedIntent by lazy { messageAdapter.selectionChanges }
     override val cancelSendingIntent: Subject<Message> by lazy { messageAdapter.cancelSending }
@@ -88,12 +90,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val galleryIntent by lazy { gallery.clicks() }
     override val attachmentSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { message.inputContentSelected }
+    override val changeSimIntent by lazy { sim.clicks() }
     override val sendIntent by lazy { send.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
-    var cameraDestination: Uri? = null
+    private var cameraDestination: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -123,6 +126,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         message.supportsInputContent = true
 
         theme
+                .doOnNext { loading.setTint(it.theme) }
                 .doOnNext { send.setBackgroundTint(it.theme) }
                 .doOnNext { send.setTint(it.textPrimary) }
                 .doOnNext { messageAdapter.theme = it }
@@ -162,7 +166,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
         contacts.setVisible(state.contactsVisible)
-        composeBar.setVisible(!state.contactsVisible)
+        composeBar.setVisible(!state.contactsVisible && !state.loading)
 
         // Don't set the adapters unless needed
         if (state.editingMode && chips.adapter == null) chips.adapter = chipsAdapter
@@ -183,6 +187,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         chipsAdapter.data = state.selectedContacts
         contactsAdapter.data = state.contacts
+
+        loading.setVisible(state.loading)
+
+        sendAsGroup.setVisible(state.editingMode && state.selectedContacts.size >= 2)
+        sendAsGroupSwitch.isChecked = state.sendAsGroup
+
+        messageList.setVisible(state.sendAsGroup)
         messageAdapter.data = state.messages
         messageAdapter.highlight = state.searchSelectionId
 
@@ -195,6 +206,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         counter.text = state.remaining
         counter.setVisible(counter.text.isNotBlank())
+
+        sim.setVisible(state.subscription != null)
+        simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
 
         send.isEnabled = state.canSend
         send.imageAlpha = if (state.canSend) 255 else 128

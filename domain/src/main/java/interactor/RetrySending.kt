@@ -34,6 +34,7 @@ class RetrySending @Inject constructor(private val messageRepo: MessageRepositor
             type = params.type
             address = params.address
             body = params.body
+            subId = params.subId
         }
 
         return Flowable.just(message)

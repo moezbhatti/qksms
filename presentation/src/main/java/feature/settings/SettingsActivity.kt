@@ -18,6 +18,7 @@
  */
 package feature.settings
 
+import android.animation.LayoutTransition
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.arch.lifecycle.ViewModelProvider
@@ -33,6 +34,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.QkDialog
 import common.base.QkThemedActivity
+import common.util.extensions.animateLayoutChanges
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setVisible
 import common.widget.PreferenceView
@@ -80,6 +82,8 @@ class SettingsActivity : QkThemedActivity(), SettingsView {
         setTitle(R.string.title_settings)
         showBackButton(true)
         viewModel.bindView(this)
+
+        preferences.postDelayed({ preferences.animateLayoutChanges = true }, 100)
 
         nightModeDialog.adapter.setData(R.array.night_modes)
         textSizeDialog.adapter.setData(R.array.text_sizes)

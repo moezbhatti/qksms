@@ -31,10 +31,35 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/sim"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Tue at 11:39pm" />
+
+    <ImageView
+        android:id="@+id/sim"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="2dp"
+        android:src="@drawable/ic_sim_card_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="@id/timestamp"
+        app:layout_constraintEnd_toStartOf="@id/simIndex"
+        app:layout_constraintStart_toEndOf="@id/timestamp"
+        app:layout_constraintTop_toTopOf="@id/timestamp" />
+
+    <common.widget.QkTextView
+        android:id="@+id/simIndex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="@id/timestamp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sim"
+        app:layout_constraintTop_toTopOf="@id/timestamp"
+        app:textSize="tertiary"
+        tools:text="1" />
 
     <LinearLayout
         android:id="@+id/attachments"

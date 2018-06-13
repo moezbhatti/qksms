@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -52,6 +53,19 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:textColor="tertiary"
         app:textSize="secondary" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:progress="45"
+        tools:progressTint="@color/tools_theme" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contacts"
@@ -184,8 +198,36 @@
         android:padding="12dp"
         android:textColorHint="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toEndOf="@id/messageBackground"
+        app:layout_constraintEnd_toStartOf="@id/sim"
         app:layout_constraintStart_toEndOf="@id/attachSeparator" />
+
+    <ImageView
+        android:id="@+id/sim"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/compose_attach_cd"
+        android:padding="10dp"
+        android:src="@drawable/ic_sim_card_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="@id/message"
+        app:layout_constraintEnd_toEndOf="@id/messageBackground" />
+
+    <common.widget.QkTextView
+        android:id="@+id/simIndex"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textColor="?android:attr/textColorPrimaryInverse"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/sim"
+        app:layout_constraintEnd_toEndOf="@id/sim"
+        app:layout_constraintStart_toStartOf="@id/sim"
+        app:layout_constraintTop_toTopOf="@id/sim"
+        tools:ignore="SpUsage"
+        tools:text="1" />
 
     <common.widget.QkTextView
         android:id="@+id/counter"
@@ -258,12 +300,71 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <android.support.constraint.Group
+        android:id="@+id/sendAsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="sendAsGroupBackground, sendAsGroupTitle, sendAsGroupSummary, sendAsGroupSwitch, sendAsGroupShadow"
+        tools:visibility="visible" />
+
     <View
+        android:id="@+id/sendAsGroupBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/sendAsGroupSummary"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <common.widget.QkTextView
+        android:id="@+id/sendAsGroupTitle"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/compose_send_group_title"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/sendAsGroupSwitch"
+        app:layout_constraintStart_toStartOf="@id/sendAsGroupBackground"
+        app:layout_constraintTop_toTopOf="@id/sendAsGroupBackground"
+        app:textSize="primary" />
+
+    <common.widget.QkTextView
+        android:id="@+id/sendAsGroupSummary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:text="@string/compose_send_group_summary"
+        android:textColor="?android:attr/textColorTertiary"
+        app:layout_constraintEnd_toEndOf="@id/sendAsGroupTitle"
+        app:layout_constraintStart_toStartOf="@id/sendAsGroupTitle"
+        app:layout_constraintTop_toBottomOf="@id/sendAsGroupTitle"
+        app:textSize="secondary" />
+
+    <common.widget.QkSwitch
+        android:id="@+id/sendAsGroupSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:checked="true"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@id/sendAsGroupBackground"
+        app:layout_constraintEnd_toEndOf="@id/sendAsGroupBackground"
+        app:layout_constraintTop_toTopOf="@id/sendAsGroupBackground" />
+
+    <View
+        android:id="@+id/sendAsGroupShadow"
+        android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@drawable/ab_shadow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/ab_shadow"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <View

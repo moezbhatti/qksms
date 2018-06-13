@@ -18,39 +18,30 @@
  */
 package receiver
 
-import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.telephony.SmsManager
-import injection.appComponent
-import interactor.MarkFailed
-import interactor.MarkSent
+import android.os.Build
+import android.provider.Telephony
+import android.support.annotation.RequiresApi
+import dagger.android.AndroidInjection
+import interactor.SyncMessages
+import util.Preferences
 import javax.inject.Inject
 
-class SmsSentReceiver : BroadcastReceiver() {
+class DefaultSmsChangedReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var markSent: MarkSent
-    @Inject lateinit var markFailed: MarkFailed
+    @Inject lateinit var prefs: Preferences
+    @Inject lateinit var syncMessages: SyncMessages
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
-        val id = intent.getLongExtra("id", 0L)
-
-        when (resultCode) {
-            Activity.RESULT_OK -> {
-                val pendingResult = goAsync()
-                markSent.execute(id) { pendingResult.finish() }
-            }
-
-            SmsManager.RESULT_ERROR_GENERIC_FAILURE,
-            SmsManager.RESULT_ERROR_NO_SERVICE,
-            SmsManager.RESULT_ERROR_NULL_PDU,
-            SmsManager.RESULT_ERROR_RADIO_OFF -> {
-                val pendingResult = goAsync()
-                markFailed.execute(MarkFailed.Params(id, resultCode)) { pendingResult.finish() }
-            }
+        if (intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)) {
+            val pendingResult = goAsync()
+            syncMessages.execute(Unit, { pendingResult.finish() })
         }
     }
+
 }

@@ -40,9 +40,9 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
+            android:id="@+id/items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
@@ -60,6 +60,14 @@
                 android:layout_height="1dp"
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/divider" />
+
+            <common.widget.PreferenceView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:icon="@drawable/ic_people_black_24dp"
+                app:title="@string/info_name" />
 
             <common.widget.PreferenceView
                 android:id="@+id/notifications"

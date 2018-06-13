@@ -30,7 +30,6 @@ import android.view.WindowManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
-import com.moez.QKSMS.R.id.*
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
@@ -52,6 +51,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
     override val menuItemIntent: Subject<Int> = PublishSubject.create()
     override val textChangedIntent by lazy { message.textChanges() }
+    override val changeSimIntent by lazy { sim.clicks() }
     override val sendIntent by lazy { send.clicks() }
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[QkReplyViewModel::class.java] }
@@ -98,6 +98,9 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
         counter.text = state.remaining
         counter.setVisible(counter.text.isNotBlank())
+
+        sim.setVisible(state.subscription != null)
+        simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
 
         send.isEnabled = state.canSend
         send.imageAlpha = if (state.canSend) 255 else 128

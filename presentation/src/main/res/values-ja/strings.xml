@@ -32,7 +32,7 @@
   <string name="setup_next">続行</string>
   <string name="menu_call">通話</string>
   <string name="menu_info">詳細</string>
-  <string name="menu_save">画像を保存</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">%d selected</string>
   <string name="main_menu_clear">Clear</string>
   <string name="main_menu_archive">Archive</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d selected</string>
   <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">これが会話の始まりです。 何か素敵なことを言ってください!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">メッセージを書く&#8230;</string>
   <string name="compose_menu_copy">テキストのコピー</string>
   <string name="compose_menu_forward">転送</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">%s を配信しました</string>
   <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
   <string name="info_title">詳細</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">通知</string>
   <string name="info_theme">テーマ</string>
   <string name="info_archive">アーカイブ</string>
@@ -98,7 +103,7 @@
   <string name="info_block">ブロック</string>
   <string name="info_unblock">ブロックを解除</string>
   <string name="info_delete">会話を削除</string>
-  <string name="gallery_toast_saved">画像を保存しました</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">外観</string>
   <string name="settings_category_general">全般</string>
   <string name="settings_category_qkreply">QK 返信</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">メッセージのバックアップ</string>
   <string name="qksms_plus_backup_summary">メッセージを自動的にバックアップします。携帯電話を変更したり、お使いの携帯電話をなくしても、もう二度と履歴がなくなる心配はいりません。</string>
   <string name="qksms_plus_scheduled_title">スケジュールされたメッセージ</string>
-  <string name="qksms_plus_scheduled_summary">メッセージを送信する前に、数秒間待ちます</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">送信の遅延</string>
   <string name="qksms_plus_delayed_summary">メッセージを送信する前に、数秒間待ちます</string>
   <string name="qksms_plus_night_title">自動夜間モード</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">既読にする</string>
   <string name="button_cancel">キャンセル</string>
   <string name="button_delete">削除</string>
+  <string name="button_save">Save</string>
   <string name="button_more">さらに</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">ブロックを解除</string>

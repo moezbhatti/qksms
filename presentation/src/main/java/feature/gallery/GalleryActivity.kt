@@ -20,12 +20,21 @@ package feature.gallery
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.net.Uri
 import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.ChangeImageTransform
 import android.transition.TransitionSet
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
+import com.google.android.mms.ContentType
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import common.GlideCompletionListener
@@ -38,6 +47,7 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.gallery_activity.*
 import javax.inject.Inject
 
+
 class GalleryActivity : QkActivity(), GalleryView {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -46,6 +56,8 @@ class GalleryActivity : QkActivity(), GalleryView {
     override val optionsItemSelectedIntent: Subject<Int> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[GalleryViewModel::class.java] }
+
+    private var exoPlayer: SimpleExoPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -91,15 +103,46 @@ class GalleryActivity : QkActivity(), GalleryView {
 
         title = state.title
 
+        when {
+            ContentType.isImageType(state.type) -> showImage(state.uri)
+            ContentType.isVideoType(state.type) -> showVideo(state.uri)
+            else -> hideMedia()
+        }
+    }
+
+    private fun showImage(uri: Uri?) {
+        image.setVisible(true)
+        video.setVisible(false)
         if (image.drawable == null) {
             GlideApp.with(this)
-                    .load(state.imageUri)
+                    .load(uri)
                     .dontAnimate()
                     .listener(GlideCompletionListener {
                         startPostponedEnterTransition()
                     })
                     .into(image)
         }
+    }
+
+    private fun showVideo(uri: Uri?) {
+        image.setVisible(false)
+        video.setVisible(true)
+
+        if (video.player == null) {
+            val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
+            val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
+            exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
+            video.player = exoPlayer
+
+            val dataSourceFactory = DefaultDataSourceFactory(this, Util.getUserAgent(this, "QKSMS"))
+            val videoSource = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
+            exoPlayer?.prepare(videoSource)
+        }
+    }
+
+    private fun hideMedia() {
+        image.setVisible(false)
+        video.setVisible(false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -113,6 +156,11 @@ class GalleryActivity : QkActivity(), GalleryView {
             else -> optionsItemSelectedIntent.onNext(item.itemId)
         }
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        exoPlayer?.release()
     }
 
 }

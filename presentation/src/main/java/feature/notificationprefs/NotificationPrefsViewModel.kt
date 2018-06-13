@@ -61,19 +61,19 @@ class NotificationPrefsViewModel @Inject constructor(
                 .mapNotNull { threadId -> messageRepo.getConversation(threadId) }
                 .map { conversation -> conversation.getTitle() }
                 .subscribeOn(Schedulers.io())
-                .subscribe { title -> newState { it.copy(conversationTitle = title) } }
+                .subscribe { title -> newState { copy(conversationTitle = title) } }
 
         disposables += notifications.asObservable()
-                .subscribe { enabled -> newState { it.copy(notificationsEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(notificationsEnabled = enabled) } }
 
         val previewLabels = context.resources.getStringArray(R.array.notification_preview_options)
         disposables += previews.asObservable()
                 .subscribe { previewId ->
-                    newState { it.copy(previewSummary = previewLabels[previewId], previewId = previewId) }
+                    newState { copy(previewSummary = previewLabels[previewId], previewId = previewId) }
                 }
 
         disposables += vibration.asObservable()
-                .subscribe { enabled -> newState { it.copy(vibrationEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(vibrationEnabled = enabled) } }
 
         disposables += ringtone.asObservable()
                 .map { uriString ->
@@ -82,13 +82,13 @@ class NotificationPrefsViewModel @Inject constructor(
                             ?.let { uri -> RingtoneManager.getRingtone(context, uri) }?.getTitle(context)
                             ?: context.getString(R.string.settings_ringtone_none)
                 }
-                .subscribe { title -> newState { it.copy(ringtoneName = title) } }
+                .subscribe { title -> newState { copy(ringtoneName = title) } }
 
         disposables += prefs.qkreply.asObservable()
-                .subscribe { enabled -> newState { it.copy(qkReplyEnabled = enabled) } }
+                .subscribe { enabled -> newState { copy(qkReplyEnabled = enabled) } }
 
         disposables += prefs.qkreplyTapDismiss.asObservable()
-                .subscribe { enabled -> newState { it.copy(qkReplyTapDismiss = enabled) } }
+                .subscribe { enabled -> newState { copy(qkReplyTapDismiss = enabled) } }
     }
 
     override fun bindView(view: NotificationPrefsView) {

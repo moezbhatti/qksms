@@ -18,31 +18,39 @@
  */
 package receiver
 
+import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.support.v4.app.RemoteInput
-import injection.appComponent
-import interactor.MarkRead
-import interactor.SendMessage
+import android.telephony.SmsManager
+import dagger.android.AndroidInjection
+import interactor.MarkFailed
+import interactor.MarkSent
 import javax.inject.Inject
 
-class RemoteMessagingReceiver : BroadcastReceiver() {
+class SmsSentReceiver : BroadcastReceiver() {
 
-    @Inject lateinit var sendMessage: SendMessage
-    @Inject lateinit var markRead: MarkRead
+    @Inject lateinit var markSent: MarkSent
+    @Inject lateinit var markFailed: MarkFailed
 
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+        AndroidInjection.inject(this, context)
 
-        val remoteInput = RemoteInput.getResultsFromIntent(intent)
-        val bundle = intent.extras
-        if (remoteInput != null && bundle != null) {
-            val address = bundle.getString("address")
-            val threadId = bundle.getLong("threadId")
-            val body = remoteInput.getCharSequence("body").toString()
-            markRead.execute(threadId)
-            sendMessage.execute(SendMessage.Params(threadId, listOf(address), body))
+        val id = intent.getLongExtra("id", 0L)
+
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                val pendingResult = goAsync()
+                markSent.execute(id) { pendingResult.finish() }
+            }
+
+            SmsManager.RESULT_ERROR_GENERIC_FAILURE,
+            SmsManager.RESULT_ERROR_NO_SERVICE,
+            SmsManager.RESULT_ERROR_NULL_PDU,
+            SmsManager.RESULT_ERROR_RADIO_OFF -> {
+                val pendingResult = goAsync()
+                markFailed.execute(MarkFailed.Params(id, resultCode)) { pendingResult.finish() }
+            }
         }
     }
 }

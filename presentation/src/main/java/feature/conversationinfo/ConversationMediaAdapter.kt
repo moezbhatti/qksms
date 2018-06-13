@@ -24,17 +24,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.moez.QKSMS.R
+import common.Navigator
 import common.base.QkRealmAdapter
 import common.base.QkViewHolder
 import common.util.GlideApp
+import common.util.extensions.setVisible
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*
 import model.MmsPart
+import util.extensions.isImage
+import util.extensions.isVideo
 import javax.inject.Inject
 
 class ConversationMediaAdapter @Inject constructor(
-        private val context: Context
+        private val context: Context,
+        private val navigator: Navigator
 ) : QkRealmAdapter<MmsPart>() {
 
     val thumbnailClicks: PublishSubject<View> = PublishSubject.create()
@@ -55,8 +60,11 @@ class ConversationMediaAdapter @Inject constructor(
                 .fitCenter()
                 .into(view.thumbnail)
 
+        view.video.setVisible(part.isVideo())
         view.thumbnail.transitionName = part.id.toString()
-        view.thumbnail.setOnClickListener { thumbnailClicks.onNext(it) }
+        view.thumbnail.setOnClickListener {
+            if (part.isImage()) thumbnailClicks.onNext(it) else navigator.showMedia(part.id)
+        }
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {

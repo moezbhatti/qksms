@@ -19,10 +19,15 @@
 package migration
 
 import io.realm.DynamicRealm
+import io.realm.FieldAttribute
 import io.realm.RealmMigration
 
 
 class QkRealmMigration : RealmMigration {
+
+    companion object {
+        const val SCHEMA_VERSION: Long = 3
+    }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
         var version = oldVersion
@@ -30,6 +35,20 @@ class QkRealmMigration : RealmMigration {
         if (version == 0L) {
             realm.schema.get("MmsPart")
                     ?.removeField("image")
+
+            version++
+        }
+
+        if (version == 1L) {
+            realm.schema.get("Message")
+                    ?.addField("subId", Int::class.java)
+
+            version++
+        }
+
+        if (version == 2L) {
+            realm.schema.get("Conversation")
+                    ?.addField("name", String::class.java, FieldAttribute.REQUIRED)
 
             version++
         }

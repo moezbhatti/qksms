@@ -21,24 +21,23 @@ package receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import injection.appComponent
-import interactor.SyncMessage
+import android.provider.Telephony.Sms
+import dagger.android.AndroidInjection
+import interactor.ReceiveSms
 import javax.inject.Inject
 
-class MmsUpdatedReceiver : BroadcastReceiver() {
+class SmsReceiver : BroadcastReceiver() {
 
-    companion object {
-        const val URI = "uri"
-    }
-
-    @Inject lateinit var syncMessage: SyncMessage
+    @Inject lateinit var receiveMessage: ReceiveSms
 
     override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
-        intent.getStringExtra(URI)?.let { uriString ->
+        AndroidInjection.inject(this, context)
+
+        Sms.Intents.getMessagesFromIntent(intent)?.let { messages ->
+            val subId = intent.extras?.getInt("subscription", -1) ?: -1
+
             val pendingResult = goAsync()
-            syncMessage.execute(Uri.parse(uriString)) { pendingResult.finish() }
+            receiveMessage.execute(ReceiveSms.Params(subId, messages), { pendingResult.finish() })
         }
     }
 

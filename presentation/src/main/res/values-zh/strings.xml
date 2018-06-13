@@ -32,7 +32,7 @@
   <string name="setup_next">Continue</string>
   <string name="menu_call">致電</string>
   <string name="menu_info">Details</string>
-  <string name="menu_save">Save image</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">%d selected</string>
   <string name="main_menu_clear">Clear</string>
   <string name="main_menu_archive">Archive</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d selected</string>
   <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Write a message&#8230;</string>
   <string name="compose_menu_copy">Copy text</string>
   <string name="compose_menu_forward">Forward</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Delivered %s</string>
   <string name="message_status_failed">Failed to send. Tap to try again</string>
   <string name="info_title">Details</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Notifications</string>
   <string name="info_theme">Theme</string>
   <string name="info_archive">Archive</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Block</string>
   <string name="info_unblock">Unblock</string>
   <string name="info_delete">Delete conversation</string>
-  <string name="gallery_toast_saved">Saved image</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">Appearance</string>
   <string name="settings_category_general">General</string>
   <string name="settings_category_qkreply">QK Reply</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Message backup</string>
   <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
   <string name="qksms_plus_scheduled_title">Scheduled messages</string>
-  <string name="qksms_plus_scheduled_summary">Wait a few seconds before sending your message</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">Delayed sending</string>
   <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
   <string name="qksms_plus_night_title">Automatic night mode</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Mark read</string>
   <string name="button_cancel">Cancel</string>
   <string name="button_delete">Delete</string>
+  <string name="button_save">Save</string>
   <string name="button_more">More</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">Unblock</string>

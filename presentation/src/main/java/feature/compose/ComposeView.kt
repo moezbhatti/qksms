@@ -23,6 +23,7 @@ import android.support.v13.view.inputmethod.InputContentInfoCompat
 import common.base.QkView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
+import model.Attachment
 import model.Contact
 import model.Message
 
@@ -36,6 +37,7 @@ interface ComposeView : QkView<ComposeState> {
     val chipDeletedIntent: Subject<Contact>
     val menuReadyIntent: Observable<Unit>
     val optionsItemIntent: Observable<Int>
+    val sendAsGroupIntent: Observable<*>
     val messageClickIntent: Subject<Message>
     val messagesSelectedIntent: Observable<List<Long>>
     val cancelSendingIntent: Subject<Message>
@@ -46,6 +48,7 @@ interface ComposeView : QkView<ComposeState> {
     val galleryIntent: Observable<*>
     val attachmentSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
+    val changeSimIntent: Observable<*>
     val sendIntent: Observable<Unit>
 
     fun clearSelection()

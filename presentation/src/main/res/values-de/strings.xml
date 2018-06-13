@@ -32,7 +32,7 @@
   <string name="setup_next">Weiter</string>
   <string name="menu_call">Anrufen</string>
   <string name="menu_info">Details</string>
-  <string name="menu_save">Bild speichern</string>
+  <string name="menu_save">In Galerie speichern</string>
   <string name="main_title_selected">%d ausgewählt</string>
   <string name="main_menu_clear">Zurücksetzen</string>
   <string name="main_menu_archive">Archivieren</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d ausgewählt</string>
   <string name="compose_subtitle_results">%1$d von %2$d Ergebnissen</string>
+  <string name="compose_send_group_title">Als Gruppennachricht senden</string>
+  <string name="compose_send_group_summary">Empfänger und Antworten werden für jeden sichtbar sein</string>
   <string name="compose_messages_empty">Das ist der Beginn der Unterhaltung. Sag\' etwas nettes!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Schreibe eine Nachricht&#8230;</string>
   <string name="compose_menu_copy">Text kopieren</string>
   <string name="compose_menu_forward">Weiterleiten</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Zugestellt %s</string>
   <string name="message_status_failed">Fehler beim Senden. Tippen, um es erneut zu versuchen</string>
   <string name="info_title">Details</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Benachrichtigungen</string>
   <string name="info_theme">Erscheinungsbild</string>
   <string name="info_archive">Archivieren</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Blockieren</string>
   <string name="info_unblock">Entsperren</string>
   <string name="info_delete">Unterhaltung löschen</string>
-  <string name="gallery_toast_saved">Bild gespeichert</string>
+  <string name="gallery_toast_saved">In Galerie gespeichert</string>
   <string name="settings_category_appearance">Aussehen</string>
   <string name="settings_category_general">Allgemein</string>
   <string name="settings_category_qkreply">Schnellantwort</string>
@@ -114,7 +119,7 @@
   <string name="settings_notification_previews_title">Benachrichtigungsvorschau</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Ton</string>
-  <string name="settings_ringtone_none">None</string>
+  <string name="settings_ringtone_none">Keine</string>
   <string name="settings_qkreply_title">Schnellantwort</string>
   <string name="settings_qkreply_summary">Popup für neue Nachrichten</string>
   <string name="settings_qkreply_tap_dismiss_title">Zum Verwerfen tippen</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Nachrichtensicherung</string>
   <string name="qksms_plus_backup_summary">Sichere Deine Nachrichten automatisch. Solltest Du Dein Handy wechseln oder es verlieren, musst Du Dir keine Sorgen mehr machen</string>
   <string name="qksms_plus_scheduled_title">Geplante Nachrichten</string>
-  <string name="qksms_plus_scheduled_summary">Wartet einige Sekunden, bevor deine Nachricht gesendet wird</string>
+  <string name="qksms_plus_scheduled_summary">Den automatischen Versand von Nachrichten zu einem bestimmen Zeitpunkt planen</string>
   <string name="qksms_plus_delayed_title">Verzögertes Senden</string>
   <string name="qksms_plus_delayed_summary">Wartet einige Sekunden, bevor deine Nachricht gesendet wird</string>
   <string name="qksms_plus_night_title">Automatischer Nachtmodus</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Als gelesen markieren</string>
   <string name="button_cancel">Abbrechen</string>
   <string name="button_delete">Löschen</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Mehr</string>
   <string name="button_set">OK</string>
   <string name="button_unblock">Entsperren</string>

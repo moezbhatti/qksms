@@ -16,8 +16,6 @@
 
 package com.klinker.android.send_message
 
-import android.os.Build
-
 /**
  * Class to house all of the settings that can be used to send a message
  */
@@ -39,20 +37,4 @@ class Settings @JvmOverloads constructor(
         var preText: String? = null,
         var sendLongAsMms: Boolean = true,
         var sendLongAsMmsAfter: Int = 3,
-        subscriptionId: Int = DEFAULT_SUBSCRIPTION_ID) {
-
-    // SIM options
-    var subscriptionId: Int = subscriptionId
-        set(value) {
-            // we won't allow you to go away from the default if your device doesn't support it
-            field = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 || false) {
-                DEFAULT_SUBSCRIPTION_ID
-            } else {
-                value
-            }
-        }
-
-    companion object {
-        const val DEFAULT_SUBSCRIPTION_ID = -1
-    }
-}
+        var subscriptionId: Int = -1)

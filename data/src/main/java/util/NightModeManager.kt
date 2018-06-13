@@ -16,15 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package common.util
+package util
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import receiver.NightModeReceiver
-import util.Preferences
-import util.tryOrNull
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit

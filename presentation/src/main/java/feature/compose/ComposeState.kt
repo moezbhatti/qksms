@@ -18,7 +18,9 @@
  */
 package feature.compose
 
+import android.telephony.SubscriptionInfo
 import io.realm.RealmResults
+import model.Attachment
 import model.Contact
 import model.Conversation
 import model.Message
@@ -30,7 +32,9 @@ data class ComposeState(
         val contactsVisible: Boolean = false,
         val selectedConversation: Long = 0,
         val selectedContacts: List<Contact> = ArrayList(),
+        val sendAsGroup: Boolean = true,
         val conversationtitle: String = "",
+        val loading: Boolean = false,
         val query: String = "",
         val searchSelectionId: Long = -1,
         val searchSelectionPosition: Int = 0,
@@ -40,5 +44,6 @@ data class ComposeState(
         val attachments: List<Attachment> = ArrayList(),
         val attaching: Boolean = false,
         val remaining: String = "",
+        val subscription: SubscriptionInfo? = null,
         val canSend: Boolean = false
 )

@@ -59,7 +59,11 @@ class SyncRepositoryImpl @Inject constructor(
     /**
      * Holds data that should be persisted across full syncs
      */
-    private data class PersistedData(val id: Long, val archived: Boolean, val blocked: Boolean)
+    private data class PersistedData(
+            val id: Long,
+            val archived: Boolean,
+            val blocked: Boolean,
+            val name: String)
 
     override val syncProgress: Subject<SyncRepository.SyncProgress> = BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
 
@@ -77,9 +81,11 @@ class SyncRepositoryImpl @Inject constructor(
                 .equalTo("archived", true)
                 .or()
                 .equalTo("blocked", true)
+                .or()
+                .isNotEmpty("name")
                 .endGroup()
                 .findAll()
-                .map { PersistedData(it.id, it.archived, it.blocked) }
+                .map { PersistedData(it.id, it.archived, it.blocked, it.name) }
 
         realm.delete(Contact::class.java)
         realm.delete(Conversation::class.java)
@@ -102,7 +108,7 @@ class SyncRepositoryImpl @Inject constructor(
         persistedData += oldBlockedSenders.get()
                 .map { threadIdString -> threadIdString.toLong() }
                 .filter { threadId -> persistedData.none { it.id == threadId } }
-                .map { threadId -> PersistedData(threadId, false, true) }
+                .map { threadId -> PersistedData(threadId, false, true, "") }
 
         // Sync conversations
         cursorToConversation.getConversationsCursor()?.use { conversationCursor ->
@@ -113,6 +119,7 @@ class SyncRepositoryImpl @Inject constructor(
                 val conversation = conversations.firstOrNull { conversation -> conversation.id == data.id }
                 conversation?.archived = data.archived
                 conversation?.blocked = data.blocked
+                conversation?.name = data.name
             }
 
             realm.insertOrUpdate(conversations)

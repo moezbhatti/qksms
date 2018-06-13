@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "com.moez.QKSMS"
-        minSdkVersion 21
+        minSdkVersion 22
         targetSdkVersion 27
-        versionCode 170
-        versionName "3.2.2"
+        versionCode 173
+        versionName "3.3.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
@@ -92,6 +92,10 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
+    // exoplayer
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
+
     // rxbinding
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"
     implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbinding_version"
@@ -108,6 +112,13 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     compileOnly "javax.annotation:jsr250-api:1.0"
+
+    // ezvcard
+    implementation('com.googlecode.ez-vcard:ez-vcard:0.10.4', {
+        exclude group: "org.jsoup", module: "jsoup"
+        exclude group: "org.freemarker", module: "freemarker"
+        exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
+    })
 
     // realm
     implementation("io.realm:android-adapters:$realm_adapters_version") { transitive = false }

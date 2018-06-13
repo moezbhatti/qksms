@@ -16,24 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package receiver
+package model
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import injection.appComponent
-import common.util.NightModeManager
-import javax.inject.Inject
+import android.net.Uri
+import android.os.Build
+import android.support.v13.view.inputmethod.InputContentInfoCompat
 
-class NightModeReceiver : BroadcastReceiver() {
+data class Attachment(private val uri: Uri? = null, private val inputContent: InputContentInfoCompat? = null) {
 
-    @Inject lateinit var nightModeManager: NightModeManager
-
-    init {
-        appComponent.inject(this)
+    fun getUri(): Uri? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            inputContent?.contentUri ?: uri
+        } else {
+            uri
+        }
     }
 
-    override fun onReceive(context: Context, intent: Intent) {
-        nightModeManager.updateCurrentTheme()
+    fun isGif(context: Context): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && inputContent != null) {
+            inputContent.description.hasMimeType("image/gif")
+        } else {
+            context.contentResolver.getType(uri) == "image/gif"
+        }
     }
+
 }

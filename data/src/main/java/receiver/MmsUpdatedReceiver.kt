@@ -16,29 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package feature.compose
+package receiver
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import android.support.v13.view.inputmethod.InputContentInfoCompat
-import com.google.android.mms.ContentType
+import dagger.android.AndroidInjection
+import interactor.SyncMessage
+import javax.inject.Inject
 
-data class Attachment(private val uri: Uri? = null, private val inputContent: InputContentInfoCompat? = null) {
+class MmsUpdatedReceiver : BroadcastReceiver() {
 
-    fun getUri(): Uri? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            inputContent?.contentUri ?: uri
-        } else {
-            uri
-        }
+    companion object {
+        const val URI = "uri"
     }
 
-    fun isGif(context: Context): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && inputContent != null) {
-            inputContent.description.hasMimeType(ContentType.IMAGE_GIF)
-        } else {
-            context.contentResolver.getType(uri) == ContentType.IMAGE_GIF
+    @Inject lateinit var syncMessage: SyncMessage
+
+    override fun onReceive(context: Context, intent: Intent) {
+        AndroidInjection.inject(this, context)
+
+        intent.getStringExtra(URI)?.let { uriString ->
+            val pendingResult = goAsync()
+            syncMessage.execute(Uri.parse(uriString)) { pendingResult.finish() }
         }
     }
 

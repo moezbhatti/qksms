@@ -22,16 +22,22 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.text.InputFilter
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkThemedActivity
+import common.util.extensions.animateLayoutChanges
+import common.util.extensions.dpToPx
+import common.util.extensions.resolveThemeColor
 import common.util.extensions.scrapViews
 import common.util.extensions.setVisible
+import common.widget.QkEditText
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_info_activity.*
 import javax.inject.Inject
 
@@ -43,6 +49,8 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
     @Inject lateinit var itemDecoration: GridSpacingItemDecoration
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    override val nameIntent by lazy { name.clicks() }
+    override val nameChangedIntent: Subject<String> = PublishSubject.create()
     override val notificationsIntent by lazy { notifications.clicks() }
     override val themeIntent by lazy { themePrefs.clicks() }
     override val archiveIntent by lazy { archive.clicks() }
@@ -59,6 +67,8 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
         showBackButton(true)
         viewModel.bindView(this)
         setTitle(R.string.info_title)
+
+        items.postDelayed({ items.animateLayoutChanges = true }, 100)
 
         mediaAdapter.thumbnailClicks
                 .autoDisposable(scope())
@@ -84,6 +94,9 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
         recipientAdapter.threadId = state.threadId
         recipientAdapter.updateData(state.recipients)
 
+        name.setVisible(state.recipients?.size ?: 0 >= 2)
+        name.summary = state.name
+
         notifications.setVisible(!state.blocked)
 
         archive.setVisible(!state.blocked)
@@ -98,6 +111,27 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
         })
 
         mediaAdapter.updateData(state.media)
+    }
+
+    override fun showNameDialog(name: String) {
+        val editText = QkEditText(this).apply {
+            val padding = 8.dpToPx(this@ConversationInfoActivity)
+            setPadding(padding * 3, padding, padding * 3, padding)
+            setSingleLine(true)
+            setHint(R.string.info_name_hint)
+            setText(name)
+            setHintTextColor(context.resolveThemeColor(android.R.attr.textColorTertiary))
+            setTextColor(context.resolveThemeColor(android.R.attr.textColorPrimary))
+            filters = arrayOf(InputFilter.LengthFilter(30))
+            background = null
+        }
+
+        AlertDialog.Builder(this)
+                .setTitle(R.string.info_name)
+                .setView(editText)
+                .setPositiveButton(R.string.button_save, { _, _ -> nameChangedIntent.onNext(editText.text.toString()) })
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
     }
 
     override fun showDeleteDialog() {

@@ -19,8 +19,8 @@
 package interactor
 
 import com.f2prateek.rx.preferences2.RxSharedPreferences
-import common.util.NightModeManager
 import io.reactivex.Flowable
+import util.NightModeManager
 import util.Preferences
 import javax.inject.Inject
 

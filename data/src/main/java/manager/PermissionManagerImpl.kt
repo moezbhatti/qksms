@@ -39,6 +39,8 @@ class PermissionManagerImpl @Inject constructor(private val context: Context) : 
 
     override fun hasContacts(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PERMISSION_GRANTED
 
+    override fun hasPhone(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PERMISSION_GRANTED
+
     override fun hasStorage(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED
 
 }

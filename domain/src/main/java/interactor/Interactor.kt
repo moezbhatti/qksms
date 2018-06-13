@@ -24,8 +24,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
-abstract class Interactor<in Params>: Disposable {
+abstract class Interactor<in Params> : Disposable {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
@@ -36,7 +37,7 @@ abstract class Interactor<in Params>: Disposable {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(onComplete)
-                .subscribe()
+                .subscribe({}, Timber::w)
     }
 
     override fun dispose() {

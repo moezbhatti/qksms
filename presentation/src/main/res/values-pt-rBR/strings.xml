@@ -32,7 +32,7 @@
   <string name="setup_next">Continuar</string>
   <string name="menu_call">Ligar</string>
   <string name="menu_info">Detalhes</string>
-  <string name="menu_save">Salvar imagem</string>
+  <string name="menu_save">Guardar na galeria</string>
   <string name="main_title_selected">%d selecionada(s)</string>
   <string name="main_menu_clear">Limpar</string>
   <string name="main_menu_archive">Arquivar</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d selecionada(s)</string>
   <string name="compose_subtitle_results">%1$d de %2$d resultados</string>
+  <string name="compose_send_group_title">Enviar como mensagem de grupo</string>
+  <string name="compose_send_group_summary">Destinatários e respostas visíveis para todos</string>
   <string name="compose_messages_empty">Aqui é o início da sua conversa. Pode dizer algo simpático!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Escrever uma mensagem&#8230;</string>
   <string name="compose_menu_copy">Copiar texto</string>
   <string name="compose_menu_forward">Reencaminhar</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">%s entregue</string>
   <string name="message_status_failed">Falha ao enviar. Toque para tentar novamente</string>
   <string name="info_title">Detalhes</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Notificações</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arquivar</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Bloquear</string>
   <string name="info_unblock">Desbloquear</string>
   <string name="info_delete">Apagar conversa</string>
-  <string name="gallery_toast_saved">Imagem salva</string>
+  <string name="gallery_toast_saved">Guardada na galeria</string>
   <string name="settings_category_appearance">Aparência</string>
   <string name="settings_category_general">Geral</string>
   <string name="settings_category_qkreply">QK Reply</string>
@@ -114,7 +119,7 @@
   <string name="settings_notification_previews_title">Pré-visualização de notificações</string>
   <string name="settings_vibration_title">Vibração</string>
   <string name="settings_ringtone_title">Som</string>
-  <string name="settings_ringtone_none">None</string>
+  <string name="settings_ringtone_none">Nenhum</string>
   <string name="settings_qkreply_title">QK Reply</string>
   <string name="settings_qkreply_summary">Alerta para novas mensagens</string>
   <string name="settings_qkreply_tap_dismiss_title">Toque para fechar</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Backup de mensagens</string>
   <string name="qksms_plus_backup_summary">Backup automático das mensagens. Nunca mais terá que se preocupar com o histórico caso troque de telefone.</string>
   <string name="qksms_plus_scheduled_title">Mensagens agendadas</string>
-  <string name="qksms_plus_scheduled_summary">Esperar alguns segundos antes de enviar a mensagem</string>
+  <string name="qksms_plus_scheduled_summary">Agendar mensagens para envio automático à hora/data especificada</string>
   <string name="qksms_plus_delayed_title">Atrasar envio</string>
   <string name="qksms_plus_delayed_summary">Esperar alguns segundos antes de enviar a mensagem</string>
   <string name="qksms_plus_night_title">Modo noturno automático</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Marcar como lida</string>
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Apagar</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Mais</string>
   <string name="button_set">Definir</string>
   <string name="button_unblock">Desbloquear</string>

@@ -16,27 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package receiver
+package injection
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.provider.Telephony.Sms
-import injection.appComponent
-import interactor.ReceiveSms
-import javax.inject.Inject
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
+import service.HeadlessSmsSendService
 
-class SmsReceiver : BroadcastReceiver() {
+@Module
+abstract class ServiceBuilderModule {
 
-    @Inject lateinit var receiveMessage: ReceiveSms
-
-    override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
-
-        Sms.Intents.getMessagesFromIntent(intent)?.let { messages ->
-            val pendingResult = goAsync()
-            receiveMessage.execute(messages, { pendingResult.finish() })
-        }
-    }
+    @ActivityScope
+    @ContributesAndroidInjector()
+    abstract fun bindHeadlessSmsSendService(): HeadlessSmsSendService
 
 }

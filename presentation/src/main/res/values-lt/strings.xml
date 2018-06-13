@@ -32,7 +32,7 @@
   <string name="setup_next">Tęsti</string>
   <string name="menu_call">Skambinti</string>
   <string name="menu_info">Dėtalės</string>
-  <string name="menu_save">Išsaugoti nuotrauką</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">%d pasirinkta(s)</string>
   <string name="main_menu_clear">Ištrinti</string>
   <string name="main_menu_archive">Archyvuoti</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d parinktas</string>
   <string name="compose_subtitle_results">%1$d of %2$d results</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Čia jūsų pokalbio pradžios. Pasakykite kažką gražaus!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Rašyti žinutę...</string>
   <string name="compose_menu_copy">Kopijuoti tekstą</string>
   <string name="compose_menu_forward">Persiųsti</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Nusiųsta %s</string>
   <string name="message_status_failed">Nepavyko nusiųsti. Spausk dar kartą norint persiųsti</string>
   <string name="info_title">Dėtalės</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Pranešimai</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Archyvuoti</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Blokuoti</string>
   <string name="info_unblock">Atblokuoti</string>
   <string name="info_delete">Ištrinti pokalbį</string>
-  <string name="gallery_toast_saved">Išsaugotas vaizdas</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">Išvaizda</string>
   <string name="settings_category_general">Bendra</string>
   <string name="settings_category_qkreply">Greitas atsakas</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Žinučių atsarginis kopijavimas</string>
   <string name="qksms_plus_backup_summary">Automatinis atsarginių pranešimų kopijavimas. Niekada nerimaukite, kad prarasite žinutes, jei pakeisite telefonus arba pamesite telefoną</string>
   <string name="qksms_plus_scheduled_title">Planuotos žinutės</string>
-  <string name="qksms_plus_scheduled_summary">Palaukti kelias sekundes prieš išsiunčiant pranešimą</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">Atidėtas siuntimas</string>
   <string name="qksms_plus_delayed_summary">Palaukti kelias sekundes prieš išsiųntant pranešimą</string>
   <string name="qksms_plus_night_title">Automatinė nakties tema</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Žymėti kaip skaitytą</string>
   <string name="button_cancel">Atšaukti</string>
   <string name="button_delete">Ištrinti</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Daugiau</string>
   <string name="button_set">Padaryti</string>
   <string name="button_unblock">Atblokuoti</string>

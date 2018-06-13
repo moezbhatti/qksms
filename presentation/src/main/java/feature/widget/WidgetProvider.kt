@@ -31,9 +31,9 @@ import android.widget.RemoteViews
 import com.moez.QKSMS.R
 import common.util.Colors
 import common.util.extensions.getColorCompat
+import dagger.android.AndroidInjection
 import feature.compose.ComposeActivity
 import feature.main.MainActivity
-import injection.appComponent
 import manager.WidgetManager
 import timber.log.Timber
 import util.Preferences
@@ -44,11 +44,9 @@ class WidgetProvider : AppWidgetProvider() {
     @Inject lateinit var colors: Colors
     @Inject lateinit var prefs: Preferences
 
-    init {
-        appComponent.inject(this)
-    }
-
     override fun onReceive(context: Context, intent: Intent) {
+        AndroidInjection.inject(this, context)
+
         when (intent.action) {
             WidgetManager.ACTION_NOTIFY_DATASET_CHANGED -> updateData(context)
             else -> super.onReceive(context, intent)

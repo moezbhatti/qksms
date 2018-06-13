@@ -20,6 +20,8 @@ package common
  */
 import android.app.Activity
 import android.app.Application
+import android.app.Service
+import android.content.BroadcastReceiver
 import android.support.text.emoji.EmojiCompat
 import android.support.text.emoji.FontRequestEmojiCompatConfig
 import android.support.v4.provider.FontRequest
@@ -27,10 +29,12 @@ import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import common.util.NightModeManager
+import common.util.BugsnagTree
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasBroadcastReceiverInjector
+import dagger.android.HasServiceInjector
 import injection.AppComponentManager
 import injection.appComponent
 import io.realm.Realm
@@ -38,9 +42,10 @@ import io.realm.RealmConfiguration
 import manager.AnalyticsManager
 import migration.QkRealmMigration
 import timber.log.Timber
+import util.NightModeManager
 import javax.inject.Inject
 
-class QKApplication : Application(), HasActivityInjector {
+class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
 
     /**
      * Inject this so that it is forced to initialize
@@ -48,7 +53,9 @@ class QKApplication : Application(), HasActivityInjector {
     @Suppress("unused")
     @Inject lateinit var analyticsManager: AnalyticsManager
 
-    @Inject lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+    @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
+    @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
     @Inject lateinit var nightModeManager: NightModeManager
 
     private val packages = arrayOf("common", "feature", "injection", "filter", "interactor", "manager", "mapper",
@@ -68,7 +75,7 @@ class QKApplication : Application(), HasActivityInjector {
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
                 .compactOnLaunch()
                 .migration(QkRealmMigration())
-                .schemaVersion(1)
+                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
                 .build())
 
         AppComponentManager.init(this)
@@ -84,11 +91,19 @@ class QKApplication : Application(), HasActivityInjector {
 
         EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        Timber.plant(Timber.DebugTree())
+        Timber.plant(Timber.DebugTree(), BugsnagTree())
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {
-        return dispatchingAndroidInjector
+        return dispatchingActivityInjector
+    }
+
+    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> {
+        return dispatchingBroadcastReceiverInjector
+    }
+
+    override fun serviceInjector(): AndroidInjector<Service> {
+        return dispatchingServiceInjector
     }
 
 }

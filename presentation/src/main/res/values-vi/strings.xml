@@ -32,7 +32,7 @@
   <string name="setup_next">Tiếp tục</string>
   <string name="menu_call">Cuộc gọi</string>
   <string name="menu_info">Chi tiết</string>
-  <string name="menu_save">Lưu hình ảnh</string>
+  <string name="menu_save">Save to gallery</string>
   <string name="main_title_selected">%d đã chọn</string>
   <string name="main_menu_clear">Dọn sạch</string>
   <string name="main_menu_archive">Lưu trữ</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d đã chọn</string>
   <string name="compose_subtitle_results">%1$d trên %2$d results</string>
+  <string name="compose_send_group_title">Send as group message</string>
+  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Bắt đầu cuộc hội thoại nào. Hãy nói điều gì đó tốt đẹp!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Viết một tin nhắn&#8230;</string>
   <string name="compose_menu_copy">Sao chép văn bản</string>
   <string name="compose_menu_forward">Chuyển tiếp</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Đã chuyển %s</string>
   <string name="message_status_failed">Gửi thất bại. Bấm để thử lại lần nữa</string>
   <string name="info_title">Chi tiết</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Thông báo</string>
   <string name="info_theme">Chủ đề</string>
   <string name="info_archive">Lưu trữ</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Chặn</string>
   <string name="info_unblock">Bỏ chặn</string>
   <string name="info_delete">Xóa hội thoại</string>
-  <string name="gallery_toast_saved">Lưu hình ảnh</string>
+  <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="settings_category_appearance">Giao diện</string>
   <string name="settings_category_general">Chung</string>
   <string name="settings_category_qkreply">Trả lời nhanh</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Sao lưu tin nhắn</string>
   <string name="qksms_plus_backup_summary">Tự động sao lưu tin nhắn của bạn. Không bao giờ lo lắng về việc mất đi lịch sử của bạn nếu bạn thay đổi điện thoại hoặc điện thoại của bạn bị mất</string>
   <string name="qksms_plus_scheduled_title">Tin nhắn theo lịch</string>
-  <string name="qksms_plus_scheduled_summary">Chờ một vài giây trước khi gửi tin nhắn</string>
+  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
   <string name="qksms_plus_delayed_title">Gửi đã bị chậm chễ</string>
   <string name="qksms_plus_delayed_summary">Chờ một vài giây trước khi gửi tin nhắn</string>
   <string name="qksms_plus_night_title">Chế độ tự động ban đêm</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Đánh dấu đã đọc</string>
   <string name="button_cancel">Hủy</string>
   <string name="button_delete">Xóa</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Xem thêm</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">Bỏ chặn</string>

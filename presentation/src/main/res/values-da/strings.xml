@@ -32,7 +32,7 @@
   <string name="setup_next">Fortsæt</string>
   <string name="menu_call">Opkald</string>
   <string name="menu_info">Oplysninger</string>
-  <string name="menu_save">Gem billede</string>
+  <string name="menu_save">Gem til galleri</string>
   <string name="main_title_selected">%d valgt</string>
   <string name="main_menu_clear">Ryd</string>
   <string name="main_menu_archive">Arkivér</string>
@@ -41,7 +41,7 @@
   <string name="main_menu_delete">Slet</string>
   <string name="main_syncing">Synkroniserer beskeder&#8230;</string>
   <string name="main_sender_you">Dig: %s</string>
-  <string name="main_message_results_title">Resultater i meddelelser</string>
+  <string name="main_message_results_title">Resultater i beskeder</string>
   <string name="main_message_results">%d beskeder</string>
   <string name="inbox_empty_text">Dine samtaler vil fremgå her</string>
   <string name="inbox_search_empty_text">Ingen resultater</string>
@@ -75,7 +75,10 @@
   </string-array>
   <string name="compose_title_selected">%d valgt</string>
   <string name="compose_subtitle_results">%1$d af %2$d resultater</string>
+  <string name="compose_send_group_title">Send som gruppe besked</string>
+  <string name="compose_send_group_summary">Modtagere og besvarelser vil være synlige for alle</string>
   <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
+  <string name="compose_vcard_label">Contact card</string>
   <string name="compose_hint">Skriv en besked&#8230;</string>
   <string name="compose_menu_copy">Kopier tekst</string>
   <string name="compose_menu_forward">Videresend</string>
@@ -91,6 +94,8 @@
   <string name="message_status_delivered">Leveret %s</string>
   <string name="message_status_failed">Mislykkedes at afsende. Tryk for at forsøge igen</string>
   <string name="info_title">Oplysninger</string>
+  <string name="info_name">Conversation title</string>
+  <string name="info_name_hint">Enter title</string>
   <string name="info_notifications">Notifikationer</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arkiv</string>
@@ -98,7 +103,7 @@
   <string name="info_block">Blokér</string>
   <string name="info_unblock">Afblokér</string>
   <string name="info_delete">Slet samtale</string>
-  <string name="gallery_toast_saved">Foto gemt</string>
+  <string name="gallery_toast_saved">Gemt til galleri</string>
   <string name="settings_category_appearance">Udseende</string>
   <string name="settings_category_general">Generelt</string>
   <string name="settings_category_qkreply">QK-svar</string>
@@ -162,7 +167,7 @@
   <string name="qksms_plus_backup_title">Beskedsikkerhedskopiering</string>
   <string name="qksms_plus_backup_summary">Sikkerhedskopiér automatisk dine beskeder. Ikke flere bekymringer over tab af din historik, hvis du udskifter eller mister din mobil</string>
   <string name="qksms_plus_scheduled_title">Planlagte beskeder</string>
-  <string name="qksms_plus_scheduled_summary">Vent et par sekunder før du afsender beskeden</string>
+  <string name="qksms_plus_scheduled_summary">Planlæg beskeder til automatisk at blive sendt på et specifikt tidspunkt og dato</string>
   <string name="qksms_plus_delayed_title">Forsinket afsendelse</string>
   <string name="qksms_plus_delayed_summary">Vent et par sekunder før du afsender beskeden</string>
   <string name="qksms_plus_night_title">Automatisk nattilstand</string>
@@ -190,6 +195,7 @@
   <string name="notification_read">Markér som læst</string>
   <string name="button_cancel">Annullér</string>
   <string name="button_delete">Slet</string>
+  <string name="button_save">Save</string>
   <string name="button_more">Flere</string>
   <string name="button_set">Indstil</string>
   <string name="button_unblock">Afblokér</string>

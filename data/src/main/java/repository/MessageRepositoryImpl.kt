@@ -24,18 +24,20 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SqliteWrapper
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.BaseColumns
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
+import com.google.android.mms.ContentType
 import com.klinker.android.send_message.BroadcastUtils
+import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.StripAccents
+import com.klinker.android.send_message.Transaction
 import filter.ConversationFilter
-import io.reactivex.Maybe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
@@ -43,6 +45,7 @@ import io.realm.Sort
 import manager.KeyManager
 import mapper.CursorToConversation
 import mapper.CursorToRecipient
+import model.Attachment
 import model.Contact
 import model.Conversation
 import model.Message
@@ -51,9 +54,8 @@ import model.SearchResult
 import util.MessageUtils
 import util.Preferences
 import util.extensions.anyOf
-import util.extensions.asMaybe
-import util.extensions.insertOrUpdate
 import util.extensions.map
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -64,6 +66,7 @@ class MessageRepositoryImpl @Inject constructor(
         private val conversationFilter: ConversationFilter,
         private val cursorToConversation: CursorToConversation,
         private val cursorToRecipient: CursorToRecipient,
+        private val imageRepository: ImageRepository,
         private val prefs: Preferences) : MessageRepository {
 
     override fun getConversations(archived: Boolean): RealmResults<Conversation> {
@@ -90,6 +93,17 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAll())
     }
 
+    override fun setConversationName(id: Long, name: String) {
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction {
+                realm.where(Conversation::class.java)
+                        .equalTo("id", id)
+                        .findFirst()
+                        ?.name = name
+            }
+        }
+    }
+
     override fun searchConversations(query: String): List<SearchResult> {
         val conversations = getConversationsSnapshot()
 
@@ -104,7 +118,7 @@ class MessageRepositoryImpl @Inject constructor(
                 .sortedByDescending { result -> result.messages }
 
         return conversations
-                .filter { conversation -> conversationFilter.filter(conversation, query)  }
+                .filter { conversation -> conversationFilter.filter(conversation, query) }
                 .map { conversation -> SearchResult(query, conversation, 0) }
                 .plus(messagesByConversation)
     }
@@ -134,39 +148,32 @@ class MessageRepositoryImpl @Inject constructor(
         return getConversation(threadId) ?: getConversationFromCp(threadId)
     }
 
-    override fun getOrCreateConversation(address: String): Maybe<Conversation> {
+    override fun getOrCreateConversation(address: String): Conversation? {
         return getOrCreateConversation(listOf(address))
     }
 
-    override fun getOrCreateConversation(addresses: List<String>): Maybe<Conversation> {
-        return Maybe.just(addresses)
-                .map { recipients ->
-                    recipients.map { address ->
-                        when (MessageUtils.isEmailAddress(address)) {
-                            true -> MessageUtils.extractAddrSpec(address)
-                            false -> address
-                        }
+    override fun getOrCreateConversation(addresses: List<String>): Conversation? {
+        return addresses
+                .map { address ->
+                    when (MessageUtils.isEmailAddress(address)) {
+                        true -> MessageUtils.extractAddrSpec(address)
+                        false -> address
                     }
                 }
-                .map { recipients ->
+                .let { recipients ->
                     Uri.parse("content://mms-sms/threadID").buildUpon().apply {
                         recipients.forEach { recipient -> appendQueryParameter("recipient", recipient) }
-                    }
+                    }.build()
                 }
-                .flatMap { uriBuilder ->
-                    context.contentResolver.query(uriBuilder.build(), arrayOf(BaseColumns._ID), null, null, null).asMaybe()
-                }
-                .map { cursor -> cursor.getLong(0) }
-                .filter { threadId -> threadId != 0L }
-                .map { threadId ->
+                .let { uri -> SqliteWrapper.query(context, context.contentResolver, uri, arrayOf(BaseColumns._ID), null, null, null) }
+                ?.use { cursor -> if (cursor.moveToFirst()) cursor.getLong(0) else null }
+                ?.takeIf { threadId -> threadId != 0L }
+                ?.let { threadId ->
                     var conversation = getConversation(threadId)
                     if (conversation != null) conversation = Realm.getDefaultInstance().copyFromRealm(conversation)
 
-                    conversation ?: getConversationFromCp(threadId)?.apply { insertOrUpdate() } ?: Conversation()
+                    conversation ?: getConversationFromCp(threadId)
                 }
-                .onErrorReturn { Conversation() }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
     }
 
     override fun saveDraft(threadId: Long, draft: String) {
@@ -226,7 +233,11 @@ class MessageRepositoryImpl @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(MmsPart::class.java)
                 .equalTo("messages.threadId", threadId)
+                .beginGroup()
                 .contains("type", "image/")
+                .or()
+                .contains("type", "video/")
+                .endGroup()
                 .sort("id", Sort.DESCENDING)
                 .findAllAsync()
     }
@@ -386,7 +397,7 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun sendSmsAndPersist(threadId: Long, address: String, body: String) {
+    override fun sendSmsAndPersist(subId: Int, threadId: Long, address: String, body: String) {
         if (prefs.sendDelay.get() != Preferences.SEND_DELAY_NONE) {
             val delay = when (prefs.sendDelay.get()) {
                 Preferences.SEND_DELAY_SHORT -> 3000
@@ -396,7 +407,7 @@ class MessageRepositoryImpl @Inject constructor(
             }
 
             val sendTime = System.currentTimeMillis() + delay
-            val message = insertSentSms(threadId, address, body, sendTime)
+            val message = insertSentSms(subId, threadId, address, body, sendTime)
 
             val intent = getIntentForDelayedSms(message.id)
 
@@ -407,13 +418,15 @@ class MessageRepositoryImpl @Inject constructor(
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
             }
         } else {
-            val message = insertSentSms(threadId, address, body, System.currentTimeMillis())
+            val message = insertSentSms(subId, threadId, address, body, System.currentTimeMillis())
             sendSms(message)
         }
     }
 
     override fun sendSms(message: Message) {
-        val smsManager = SmsManager.getDefault()
+        val smsManager = message.subId.takeIf { it != -1 }
+                ?.let(SmsManager::getSmsManagerForSubscriptionId)
+                ?: SmsManager.getDefault()
 
         val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
                 ?: arrayListOf()
@@ -436,6 +449,60 @@ class MessageRepositoryImpl @Inject constructor(
         smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
     }
 
+    override fun sendMms(subId: Int, threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>) {
+        val settings = Settings().apply { subscriptionId = subId }
+        val message = com.klinker.android.send_message.Message(body, addresses.toTypedArray())
+
+        // Add the GIFs as attachments. The app currently can't compress them, which may result
+        // in a lot of these messages failing to send
+        // TODO Add support for GIF compression
+        attachments
+                .filter { attachment -> attachment.isGif(context) }
+                .map { attachment -> attachment.getUri() }
+                .map { uri -> context.contentResolver.openInputStream(uri) }
+                .map { inputStream -> inputStream.readBytes() }
+                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_GIF) }
+
+        // Compress the images and add them as attachments
+        var totalImageBytes = 0
+        attachments
+                .filter { attachment -> !attachment.isGif(context) }
+                .mapNotNull { attachment -> attachment.getUri() }
+                .mapNotNull { uri -> imageRepository.loadImage(uri) }
+                .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
+                .map { bitmap ->
+                    val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
+                    shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
+                }
+                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_JPEG) }
+
+        val transaction = Transaction(context, settings)
+        transaction.sendNewMessage(message, threadId)
+    }
+
+    private fun shrink(src: Bitmap, maxBytes: Int): ByteArray {
+        var step = 0.0
+        val factor = 0.5
+        val quality = 60
+
+        val height = src.height
+        val width = src.width
+
+        val stream = ByteArrayOutputStream()
+        src.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+        while (maxBytes > 0 && stream.size() > maxBytes) {
+            step++
+            val scale = Math.pow(factor, step)
+
+            stream.reset()
+            Bitmap.createScaledBitmap(src, (width * scale).toInt(), (height * scale).toInt(), false)
+                    .compress(Bitmap.CompressFormat.JPEG, quality, stream)
+        }
+
+        return stream.toByteArray()
+    }
+
     override fun cancelDelayedSms(id: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.cancel(getIntentForDelayedSms(id))
@@ -448,7 +515,7 @@ class MessageRepositoryImpl @Inject constructor(
         return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
-    override fun insertSentSms(threadId: Long, address: String, body: String, date: Long): Message {
+    override fun insertSentSms(subId: Int, threadId: Long, address: String, body: String, date: Long): Message {
 
         // Insert the message to Realm
         val message = Message().apply {
@@ -456,6 +523,7 @@ class MessageRepositoryImpl @Inject constructor(
             this.address = address
             this.body = body
             this.date = date
+            this.subId = subId
 
             id = messageIds.newId()
             boxId = Telephony.Sms.MESSAGE_TYPE_OUTBOX
@@ -476,6 +544,7 @@ class MessageRepositoryImpl @Inject constructor(
             put(Telephony.Sms.SEEN, true)
             put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
             put(Telephony.Sms.THREAD_ID, threadId)
+            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
         }
         val uri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
 
@@ -487,7 +556,7 @@ class MessageRepositoryImpl @Inject constructor(
         return message
     }
 
-    override fun insertReceivedSms(address: String, body: String, sentTime: Long): Message {
+    override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message {
 
         // Insert the message to Realm
         val message = Message().apply {
@@ -495,9 +564,10 @@ class MessageRepositoryImpl @Inject constructor(
             this.body = body
             this.dateSent = sentTime
             this.date = System.currentTimeMillis()
+            this.subId = subId
 
             id = messageIds.newId()
-            threadId = getOrCreateConversation(address).blockingGet().id
+            threadId = getOrCreateConversation(address)?.id ?: 0L
             boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
             type = "sms"
         }
@@ -510,6 +580,7 @@ class MessageRepositoryImpl @Inject constructor(
             put(Telephony.Sms.ADDRESS, address)
             put(Telephony.Sms.BODY, body)
             put(Telephony.Sms.DATE_SENT, sentTime)
+            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
         }
         val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
 
@@ -690,7 +761,7 @@ class MessageRepositoryImpl @Inject constructor(
 
                     conversation.recipients.clear()
                     conversation.recipients.addAll(recipients)
-                    conversation.insertOrUpdate()
+                    realm.executeTransaction { it.insertOrUpdate(conversation) }
                     realm.close()
 
                     conversation

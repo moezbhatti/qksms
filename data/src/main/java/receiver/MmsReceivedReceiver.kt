@@ -18,29 +18,27 @@
  */
 package receiver
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.provider.Telephony
-import android.support.annotation.RequiresApi
-import injection.appComponent
-import interactor.SyncMessages
-import util.Preferences
+import android.net.Uri
+import com.klinker.android.send_message.MmsReceivedReceiver
+import dagger.android.AndroidInjection
+import interactor.ReceiveMms
 import javax.inject.Inject
 
-class DefaultSmsChangedReceiver : BroadcastReceiver() {
+class MmsReceivedReceiver : MmsReceivedReceiver() {
 
-    @Inject lateinit var prefs: Preferences
-    @Inject lateinit var syncMessages: SyncMessages
+    @Inject lateinit var receiveMms: ReceiveMms
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun onReceive(context: Context, intent: Intent) {
-        appComponent.inject(this)
+    override fun onReceive(context: Context?, intent: Intent?) {
+        AndroidInjection.inject(this, context)
+        super.onReceive(context, intent)
+    }
 
-        if (intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)) {
+    override fun onMessageReceived(messageUri: Uri?) {
+        messageUri?.let { uri ->
             val pendingResult = goAsync()
-            syncMessages.execute(Unit, { pendingResult.finish() })
+            receiveMms.execute(uri) { pendingResult.finish() }
         }
     }
 

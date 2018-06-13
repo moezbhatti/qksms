@@ -24,6 +24,7 @@ import model.MmsPart
 import model.Recipient
 
 data class ConversationInfoState(
+        val name: String = "",
         val recipients: RealmList<Recipient>? = null,
         val threadId: Long = 0,
         val archived: Boolean = false,

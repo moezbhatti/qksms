@@ -29,4 +29,4 @@ fun MmsPart.isVideo() = ContentType.isVideoType(type)
 
 fun MmsPart.isText() = ContentType.isTextType(type)
 
-fun MmsPart.hasThumbnails() = isImage() || isVideo()
+fun MmsPart.isVCard() = ContentType.TEXT_VCARD == type
