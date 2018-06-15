@@ -38,7 +38,7 @@ fun <T : RealmModel> Collection<T>.insertOrUpdate() {
     realm.close()
 }
 
-fun <T : RealmObject> RealmObject.asObservable(): Observable<T> {
+fun <T : RealmObject> T.asObservable(): Observable<T> {
     return asFlowable<T>().toObservable()
 }
 

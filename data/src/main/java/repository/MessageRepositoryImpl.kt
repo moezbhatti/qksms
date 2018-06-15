@@ -38,6 +38,7 @@ import compat.TelephonyCompat
 import filter.ConversationFilter
 import io.realm.Case
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.Sort
 import manager.KeyManager
@@ -48,10 +49,13 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.MmsPart
+import model.Recipient
 import model.SearchResult
 import timber.log.Timber
 import util.Preferences
 import util.extensions.anyOf
+import util.extensions.forEach
+import util.extensions.insertOrUpdate
 import util.extensions.map
 import util.tryOrNull
 import java.io.ByteArrayOutputStream
@@ -551,6 +555,9 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Update the contentId after the message has been inserted to the content provider
         // The message might have been deleted by now, so only proceed if it's valid
+        //
+        // We do this after inserting the message because it might be slow, and we want the message
+        // to be inserted into Realm immediately. We don't need to do this after receiving one
         realm.executeTransaction { managedMessage?.takeIf { it.isValid }?.contentId = uri.lastPathSegment.toLong() }
         realm.close()
 
@@ -558,23 +565,6 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message {
-
-        // Insert the message to Realm
-        val message = Message().apply {
-            this.address = address
-            this.body = body
-            this.dateSent = sentTime
-            this.date = System.currentTimeMillis()
-            this.subId = subId
-
-            id = messageIds.newId()
-            threadId = getOrCreateConversation(address)?.id ?: 0L
-            boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
-            type = "sms"
-        }
-        val realm = Realm.getDefaultInstance()
-        var managedMessage: Message? = null
-        realm.executeTransaction { managedMessage = realm.copyToRealmOrUpdate(message) }
 
         // Insert the message to the native content provider
         val values = ContentValues().apply {
@@ -585,11 +575,21 @@ class MessageRepositoryImpl @Inject constructor(
         }
         val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
 
-        // Update the contentId after the message has been inserted to the content provider
-        realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
-        realm.close()
+        // Insert the message to Realm
+        return Message().apply {
+            this.address = address
+            this.body = body
+            this.dateSent = sentTime
+            this.date = System.currentTimeMillis()
+            this.subId = subId
 
-        return message
+            id = messageIds.newId()
+            threadId = getOrCreateConversation(address)?.id ?: 0L
+            contentId = uri.lastPathSegment.toLong()
+            boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
+            type = "sms"
+            insertOrUpdate()
+        }
     }
 
     /**
@@ -735,6 +735,13 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
+    /**
+     * Returns a [Conversation] from the system SMS ContentProvider, based on the [threadId]
+     *
+     * It should be noted that even if we have a valid [threadId], that does not guarantee that
+     * we can return a [Conversation]. On some devices, the ContentProvider won't return the
+     * conversation unless it contains at least 1 message
+     */
     private fun getConversationFromCp(threadId: Long): Conversation? {
         return cursorToConversation.getConversationCursor(threadId)
                 ?.takeIf { cursor -> cursor.moveToFirst() }

@@ -18,7 +18,6 @@
  */
 package feature.compose
 
-import android.telephony.SubscriptionInfo
 import compat.SubscriptionInfoCompat
 import io.realm.RealmResults
 import model.Attachment

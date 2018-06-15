@@ -37,9 +37,13 @@ object TelephonyCompat {
 
     val NAME_ADDR_EMAIL_PATTERN = Pattern.compile("\\s*(\"[^\"]*\"|[^<>\"]+)\\s*<([^<>]+)>\\s*")
 
-    fun getOrCreateThreadId(context: Context, recipients: Set<String>): Long {
+    fun getOrCreateThreadId(context: Context, recipient: String): Long {
+        return getOrCreateThreadId(context, listOf(recipient))
+    }
+
+    fun getOrCreateThreadId(context: Context, recipients: Collection<String>): Long {
         return if (Build.VERSION.SDK_INT >= 23) {
-            Telephony.Threads.getOrCreateThreadId(context, recipients)
+            Telephony.Threads.getOrCreateThreadId(context, recipients.toSet())
         } else {
             val uriBuilder = THREAD_ID_CONTENT_URI.buildUpon()
 
