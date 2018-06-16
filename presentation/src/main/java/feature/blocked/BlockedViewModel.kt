@@ -26,21 +26,21 @@ import common.base.QkViewModel
 import interactor.MarkUnblocked
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
-import repository.MessageRepository
+import repository.ConversationRepository
 import util.Preferences
 import util.tryOrNull
 import javax.inject.Inject
 
 class BlockedViewModel @Inject constructor(
         private val context: Context,
+        private val conversationRepo: ConversationRepository,
         private val markUnblocked: MarkUnblocked,
-        private val messageRepo: MessageRepository,
         private val navigator: Navigator,
         private val prefs: Preferences
 ) : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
 
     init {
-        newState { copy(data = messageRepo.getBlockedConversations()) }
+        newState { copy(data = conversationRepo.getBlockedConversations()) }
 
         disposables += prefs.sia.asObservable()
                 .subscribe { enabled -> newState { copy(siaEnabled = enabled) } }

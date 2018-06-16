@@ -53,6 +53,8 @@ import mapper.CursorToRecipientImpl
 import mapper.RatingManagerImpl
 import repository.ContactRepository
 import repository.ContactRepositoryImpl
+import repository.ConversationRepository
+import repository.ConversationRepositoryImpl
 import repository.ImageRepository
 import repository.ImageRepostoryImpl
 import repository.MessageRepository
@@ -127,6 +129,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideContactRepository(repository: ContactRepositoryImpl): ContactRepository = repository
+
+    @Provides
+    fun provideConversationRepository(repository: ConversationRepositoryImpl): ConversationRepository = repository
 
     @Provides
     fun provideImageRepository(repository: ImageRepostoryImpl): ImageRepository = repository

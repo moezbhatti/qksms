@@ -19,17 +19,17 @@
 package interactor
 
 import io.reactivex.Flowable
-import repository.MessageRepository
+import repository.ConversationRepository
 import javax.inject.Inject
 
 class DeleteConversations @Inject constructor(
-        private val messageRepo: MessageRepository,
+        private val conversationRepo: ConversationRepository,
         private val updateBadge: UpdateBadge
 ) : Interactor<List<Long>>() {
 
     override fun buildObservable(params: List<Long>): Flowable<*> {
         return Flowable.just(params.toLongArray())
-                .doOnNext { threadIds -> messageRepo.deleteConversations(*threadIds) }
+                .doOnNext { threadIds -> conversationRepo.deleteConversations(*threadIds) }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

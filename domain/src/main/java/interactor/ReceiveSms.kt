@@ -22,12 +22,14 @@ import android.telephony.SmsMessage
 import io.reactivex.Flowable
 import manager.ExternalBlockingManager
 import manager.NotificationManager
+import repository.ConversationRepository
 import repository.MessageRepository
 import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ReceiveSms @Inject constructor(
+        private val conversationRepo: ConversationRepository,
         private val externalBlockingManager: ExternalBlockingManager,
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager,
@@ -39,7 +41,8 @@ class ReceiveSms @Inject constructor(
     override fun buildObservable(params: Params): Flowable<*> {
         return Flowable.just(params)
                 .filter { it.messages.isNotEmpty() }
-                .filter { // Don't continue if the sender is blocked
+                .filter {
+                    // Don't continue if the sender is blocked
                     val address = it.messages[0].displayOriginatingAddress
                     !externalBlockingManager.shouldBlock(address).blockingGet()
                 }
@@ -53,10 +56,10 @@ class ReceiveSms @Inject constructor(
 
                     messageRepo.insertReceivedSms(it.subId, address, body, time) // Add the message to the db
                 }
-                .doOnNext { message -> messageRepo.updateConversations(message.threadId) } // Update the conversation
-                .mapNotNull { message -> messageRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
+                .doOnNext { message -> conversationRepo.updateConversations(message.threadId) } // Update the conversation
+                .mapNotNull { message -> conversationRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
-                .doOnNext { conversation -> if (conversation.archived) messageRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
+                .doOnNext { conversation -> if (conversation.archived) conversationRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
                 .delay(1, TimeUnit.SECONDS) // Wait one second before trying to notify, in case the foreground app marks it as read first
                 .doOnNext { threadId -> notificationManager.update(threadId) } // Update the notification

@@ -56,6 +56,7 @@ import model.Message
 import model.PhoneNumber
 import model.Recipient
 import repository.ContactRepository
+import repository.ConversationRepository
 import repository.MessageRepository
 import util.ActiveSubscriptionObservable
 import util.extensions.asObservable
@@ -78,6 +79,7 @@ class ComposeViewModel @Inject constructor(
         private val cancelMessage: CancelDelayedMessage,
         private val contactFilter: ContactFilter,
         private val contactsRepo: ContactRepository,
+        private val conversationRepo: ConversationRepository,
         private val deleteMessages: DeleteMessages,
         private val markRead: MarkRead,
         private val messageRepo: MessageRepository,
@@ -104,7 +106,7 @@ class ComposeViewModel @Inject constructor(
 
     init {
         val initialConversation = threadId.takeIf { it != 0L }
-                ?.let(messageRepo::getConversationAsync)
+                ?.let(conversationRepo::getConversationAsync)
                 ?.asObservable()
                 ?: Observable.empty()
 
@@ -120,7 +122,7 @@ class ComposeViewModel @Inject constructor(
                 .doOnNext { newState { copy(loading = false) } }
                 .switchMap { (threadId, addresses) ->
                     val recipients = RealmList(*addresses.map { address -> Recipient(address = address) }.toTypedArray())
-                    messageRepo.getConversations().asObservable()
+                    conversationRepo.getConversations().asObservable()
                             .map { conversations -> conversations.filter { it.id == threadId } }
                             .map { conversations ->
                                 conversations.firstOrNull() ?: Conversation(id = threadId, recipients = recipients)
@@ -407,7 +409,7 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(conversation, { _, conversation -> conversation.id })
                 .observeOn(Schedulers.io())
                 .withLatestFrom(view.textChangedIntent, { threadId, draft ->
-                    messageRepo.saveDraft(threadId, draft.toString())
+                    conversationRepo.saveDraft(threadId, draft.toString())
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -533,7 +535,7 @@ class ComposeViewModel @Inject constructor(
                                 .map { number -> number.address }
                                 .forEach { addr ->
                                     val threadId = TelephonyCompat.getOrCreateThreadId(context, addr)
-                                    val address = listOf(messageRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address
+                                    val address = listOf(conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address
                                             ?: addr)
                                     sendMessage.execute(SendMessage.Params(subId, threadId, address, body, attachments))
                                 }

@@ -42,6 +42,7 @@ import io.realm.Realm
 import manager.PermissionManager
 import manager.RatingManager
 import model.SyncLog
+import repository.ConversationRepository
 import repository.MessageRepository
 import repository.SyncRepository
 import util.extensions.removeAccents
@@ -51,6 +52,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
         private val messageRepo: MessageRepository,
         private val markAllSeen: MarkAllSeen,
+        private val conversationRepo: ConversationRepository,
         private val deleteConversations: DeleteConversations,
         private val markRead: MarkRead,
         private val markUnread: MarkUnread,
@@ -63,7 +65,7 @@ class MainViewModel @Inject constructor(
         private val ratingManager: RatingManager,
         private val syncMessages: SyncMessages,
         private val syncRepository: SyncRepository
-) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = messageRepo.getConversations()))) {
+) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
 
     init {
         disposables += deleteConversations
@@ -138,7 +140,7 @@ class MainViewModel @Inject constructor(
                 .map { query -> query.removeAccents() }
                 .withLatestFrom(state, { query, state ->
                     if (query.isEmpty() && state.page is Searching) {
-                        newState { copy(page = Inbox(data = messageRepo.getConversations())) }
+                        newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
                     }
                     query
                 })
@@ -150,7 +152,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
                 .observeOn(Schedulers.io())
-                .switchMap { query -> Observable.just(query).map { messageRepo.searchConversations(it) } }
+                .switchMap { query -> Observable.just(query).map { conversationRepo.searchConversations(it) } }
                 .autoDisposable(view.scope())
                 .subscribe { data -> newState { copy(page = Searching(loading = false, data = data)) } }
 
@@ -186,8 +188,8 @@ class MainViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { copy(page = Inbox(data = messageRepo.getConversations())) }
-                        DrawerItem.ARCHIVED -> newState { copy(page = Archived(data = messageRepo.getConversations(true))) }
+                        DrawerItem.INBOX -> newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
+                        DrawerItem.ARCHIVED -> newState { copy(page = Archived(data = conversationRepo.getConversations(true))) }
                         DrawerItem.SCHEDULED -> newState { copy(page = Scheduled()) }
                         else -> {
                         } // Do nothing
@@ -244,7 +246,7 @@ class MainViewModel @Inject constructor(
         view.conversationsSelectedIntent
                 .withLatestFrom(state, { selection, state ->
                     val read = selection
-                            .mapNotNull(messageRepo::getConversation)
+                            .mapNotNull(conversationRepo::getConversation)
                             .sumBy { if (it.read) -1 else 1 } >= 0
                     val selected = selection.size
 
@@ -321,7 +323,7 @@ class MainViewModel @Inject constructor(
 
                         state.page is Archived && state.page.selected > 0 -> view.clearSelection()
 
-                        state.page !is Inbox -> newState { copy(page = Inbox(data = messageRepo.getConversations())) }
+                        state.page !is Inbox -> newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
 
                         else -> newState { copy(hasError = true) }
                     }

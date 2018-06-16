@@ -47,6 +47,7 @@ import javax.inject.Singleton
 @Singleton
 class SyncRepositoryImpl @Inject constructor(
         private val contentResolver: ContentResolver,
+        private val conversationRepo: ConversationRepository,
         private val messageRepo: MessageRepository,
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
@@ -190,7 +191,7 @@ class SyncRepositoryImpl @Inject constructor(
             cursorToMessage.map(Pair(cursor, columnsMap)).apply {
                 existingId?.let { this.id = it }
 
-                messageRepo.getOrCreateConversation(threadId)
+                conversationRepo.getOrCreateConversation(threadId)
                 insertOrUpdate()
             }
         }

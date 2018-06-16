@@ -26,11 +26,13 @@ import compat.SubscriptionManagerCompat
 import dagger.android.AndroidInjection
 import interactor.MarkRead
 import interactor.SendMessage
+import repository.ConversationRepository
 import repository.MessageRepository
 import javax.inject.Inject
 
 class RemoteMessagingReceiver : BroadcastReceiver() {
 
+    @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var sendMessage: SendMessage
@@ -48,7 +50,7 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
 
         val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
         val subId = subscriptionManager.activeSubscriptionInfoList.firstOrNull { it.subscriptionId == lastMessage?.subId }?.subscriptionId ?: -1
-        val addresses = messageRepo.getConversation(threadId)?.recipients?.map { it.address } ?: return
+        val addresses = conversationRepo.getConversation(threadId)?.recipients?.map { it.address } ?: return
 
         val pendingRepository = goAsync()
         sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body)) { pendingRepository.finish() }

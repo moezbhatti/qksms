@@ -36,6 +36,7 @@ import io.reactivex.subjects.Subject
 import io.realm.RealmResults
 import model.Conversation
 import model.Message
+import repository.ConversationRepository
 import repository.MessageRepository
 import util.ActiveSubscriptionObservable
 import util.extensions.asObservable
@@ -46,6 +47,7 @@ import javax.inject.Named
 
 class QkReplyViewModel @Inject constructor(
         @Named("threadId") threadId: Long,
+        private val conversationRepo: ConversationRepository,
         private val markRead: MarkRead,
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
@@ -54,7 +56,7 @@ class QkReplyViewModel @Inject constructor(
 ) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
 
     private val conversation by lazy {
-        messageRepo.getConversationAsync(threadId)
+        conversationRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { it.isLoaded }
                 .filter { it.isValid }
@@ -183,7 +185,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { draft -> draft.toString() }
                 .observeOn(Schedulers.io())
                 .withLatestFrom(conversation.map { it.id }, { draft, threadId ->
-                    messageRepo.saveDraft(threadId, draft)
+                    conversationRepo.saveDraft(threadId, draft)
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
