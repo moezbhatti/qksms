@@ -98,7 +98,7 @@ class ComposeViewModel @Inject constructor(
     private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(sharedAttachments)
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
-    private val selectedContacts: Subject<List<Contact>> = BehaviorSubject.create()
+    private val selectedContacts: Subject<List<Contact>> = BehaviorSubject.createDefault(listOf())
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
