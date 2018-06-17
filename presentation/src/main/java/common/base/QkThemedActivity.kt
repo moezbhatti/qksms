@@ -73,8 +73,7 @@ abstract class QkThemedActivity : QkActivity() {
 
         // When certain preferences change, we need to recreate the activity
         Observable.merge(
-                listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont)
-                        .map { it.asObservable().skip(1) })
+                listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont).map { it.asObservable().skip(1) })
                 .autoDisposable(scope())
                 .subscribe { recreate() }
 
@@ -89,7 +88,9 @@ abstract class QkThemedActivity : QkActivity() {
         }
 
         // Some devices don't let you modify android.R.attr.navigationBarColor
-        if (Build.VERSION.SDK_INT >= 27) window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
+        }
 
         // Set the color for the overflow and navigation icon
         val textTertiary = resolveThemeColor(android.R.attr.textColorTertiary)
