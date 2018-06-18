@@ -46,6 +46,7 @@
             <common.widget.QkEditText
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
+                android:layout_marginEnd="16dp"
                 android:hint="@string/title_conversations"
                 android:textColorHint="?android:attr/textColorTertiary"
                 app:textSize="primary"
