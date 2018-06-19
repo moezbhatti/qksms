@@ -217,6 +217,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         counter.setVisible(counter.text.isNotBlank())
 
         sim.setVisible(state.subscription != null)
+        sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
         simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
 
         send.isEnabled = state.canSend

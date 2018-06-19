@@ -29,4 +29,6 @@ data class SubscriptionInfoCompat(private val subscriptionInfo: SubscriptionInfo
 
     val simSlotIndex get() = subscriptionInfo.simSlotIndex
 
+    val displayName get() = subscriptionInfo.displayName
+
 }
