@@ -28,6 +28,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
 import common.util.ClipboardUtils
+import common.util.MessageDetailsFormatter
 import common.util.extensions.makeToast
 import compat.SubscriptionManagerCompat
 import compat.TelephonyCompat
@@ -82,6 +83,7 @@ class ComposeViewModel @Inject constructor(
         private val conversationRepo: ConversationRepository,
         private val deleteMessages: DeleteMessages,
         private val markRead: MarkRead,
+        private val messageDetailsFormatter: MessageDetailsFormatter,
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
@@ -314,6 +316,16 @@ class ComposeViewModel @Inject constructor(
                 })
                 .autoDisposable(view.scope())
                 .subscribe { view.clearSelection() }
+
+        // Show the message details
+        view.optionsItemIntent
+                .filter { it == R.id.details }
+                .withLatestFrom(view.messagesSelectedIntent) { _, messages -> messages }
+                .mapNotNull { messages -> messages.firstOrNull().also { view.clearSelection() } }
+                .mapNotNull(messageRepo::getMessage)
+                .map(messageDetailsFormatter::format)
+                .autoDisposable(view.scope())
+                .subscribe { view.showDetails(it) }
 
         // Delete the messages
         view.optionsItemIntent

@@ -30,6 +30,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -182,6 +183,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
         toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
         toolbar.menu.findItem(R.id.copy)?.isVisible = !state.editingMode && state.selectedMessages == 1
+        toolbar.menu.findItem(R.id.details)?.isVisible = !state.editingMode && state.selectedMessages == 1
         toolbar.menu.findItem(R.id.delete)?.isVisible = !state.editingMode && state.selectedMessages > 0
         toolbar.menu.findItem(R.id.forward)?.isVisible = !state.editingMode && state.selectedMessages == 1
         toolbar.menu.findItem(R.id.previous)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
@@ -223,6 +225,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun clearSelection() {
         messageAdapter.clearSelection()
+    }
+
+    override fun showDetails(details: String) {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.compose_details_title)
+                .setMessage(details)
+                .setCancelable(true)
+                .show()
     }
 
     override fun requestStoragePermission() {

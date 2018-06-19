@@ -52,6 +52,7 @@ interface ComposeView : QkView<ComposeState> {
     val sendIntent: Observable<Unit>
 
     fun clearSelection()
+    fun showDetails(details: String)
     fun requestStoragePermission()
     fun requestCamera()
     fun requestGallery()
