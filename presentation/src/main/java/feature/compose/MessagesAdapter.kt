@@ -22,7 +22,6 @@ import android.animation.ObjectAnimator
 import android.content.ContentUris
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v7.widget.RecyclerView
 import android.telephony.PhoneNumberUtils
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -52,7 +51,6 @@ import compat.SubscriptionManagerCompat
 import ezvcard.Ezvcard
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -122,7 +120,6 @@ class MessagesAdapter @Inject constructor(
 
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
-    private val disposables = CompositeDisposable()
     private val subs = subscriptionManager.activeSubscriptionInfoList
 
     var theme: Colors.Theme = colors.theme()
@@ -152,11 +149,6 @@ class MessagesAdapter @Inject constructor(
         view.body.forwardTouches(view)
 
         return QkViewHolder(view)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        disposables.clear()
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
@@ -272,11 +264,12 @@ class MessagesAdapter @Inject constructor(
 
         media.forEachIndexed { index, part ->
             val canMediaGroupWithPrevious = canGroup(message, previous) || index > 0
-            val canMediaGroupWithNext = canGroup(message, next) || index < media.size && view.body.visibility == View.VISIBLE
+            val canMediaGroupWithNext = canGroup(message, next) || index < media.size - 1 || view.body.visibility == View.VISIBLE
+            val inflater = LayoutInflater.from(view.context)
 
             when {
                 part.isImage() || part.isVideo() -> {
-                    val mediaView = View.inflate(view.context, R.layout.mms_preview_list_item, view.attachments)
+                    val mediaView = inflater.inflate(R.layout.mms_preview_list_item, view.attachments, false)
                     mediaView.video.setVisible(part.isVideo())
                     mediaView.forwardTouches(view)
                     mediaView.setOnClickListener { navigator.showMedia(part.id) }
@@ -289,12 +282,13 @@ class MessagesAdapter @Inject constructor(
                     }
 
                     GlideApp.with(context).load(part.getUri()).fitCenter().into(mediaView.thumbnail)
+                    view.attachments.addView(mediaView, index)
                 }
 
                 part.isVCard() -> {
                     val uri = ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id)
 
-                    val mediaView = View.inflate(view.context, R.layout.mms_vcard_list_item, view.attachments)
+                    val mediaView = inflater.inflate(R.layout.mms_vcard_list_item, view.attachments, false)
                     mediaView.forwardTouches(view)
                     mediaView.setOnClickListener { navigator.saveVcard(uri) }
                     mediaView.vCardBackground.setBackgroundResource(getBubble(canMediaGroupWithPrevious, canMediaGroupWithNext, message.isMe()))
@@ -312,6 +306,7 @@ class MessagesAdapter @Inject constructor(
                         mediaView.name.setTextColor(theme.textPrimary)
                         mediaView.label.setTextColor(theme.textTertiary)
                     }
+                    view.attachments.addView(mediaView, index)
                 }
             }
         }
