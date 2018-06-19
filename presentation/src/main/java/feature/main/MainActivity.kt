@@ -96,7 +96,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java] }
-    private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0) }
+    private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.main_drawer_open_cd, 0) }
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val archiveSnackbar by lazy {
         Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE).apply {
