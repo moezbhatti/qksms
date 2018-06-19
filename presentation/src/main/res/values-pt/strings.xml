@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Arquivada</string>
   <string name="title_scheduled">Agendada</string>
   <string name="title_settings">Definições</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Tema</string>
   <string name="title_conversations">Pesquisar caixa de entrada&#8230;</string>
   <string name="title_compose">Nova mensagem</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Ignorar</string>
   <string name="setup_next">Continuar</string>
   <string name="menu_call">Ligar</string>
   <string name="menu_info">Detalhes</string>
   <string name="menu_save">Guardar na galeria</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d selecionada(s)</string>
   <string name="main_menu_clear">Limpar</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Arquivar</string>
   <string name="main_menu_unarchive">Retirar do arquivo</string>
   <string name="main_menu_block">Bloquear</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Enviar como mensagem de grupo</string>
   <string name="compose_send_group_summary">Destinatários e respostas visíveis para todos</string>
   <string name="compose_messages_empty">Aqui é o início da sua conversa. Pode dizer algo simpático!</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Cartão do contacto</string>
   <string name="compose_hint">Escrever uma mensagem&#8230;</string>
   <string name="compose_menu_copy">Copiar texto</string>
   <string name="compose_menu_forward">Reencaminhar</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Anterior</string>
   <string name="compose_menu_next">Seguinte</string>
   <string name="compose_menu_clear">Limpar</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Adicionar anexo</string>
   <string name="compose_gallery_cd">Anexar fotografia</string>
   <string name="compose_camera_cd">Tirar fotografia</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Enviar mensagem</string>
   <string name="message_status_sending">A enviar&#8230;</string>
   <string name="message_status_delivered">%s entregue</string>
   <string name="message_status_failed">Falha ao enviar. Toque para tentar novamente</string>
   <string name="info_title">Detalhes</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Título da conversa</string>
+  <string name="info_name_hint">Digite o título</string>
   <string name="info_notifications">Notificações</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arquivar</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Marcar como lida</string>
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Apagar</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Guardar</string>
   <string name="button_more">Mais</string>
   <string name="button_set">Definir</string>
   <string name="button_unblock">Desbloquear</string>

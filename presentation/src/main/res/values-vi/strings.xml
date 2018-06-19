@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Đã được lưu trữ</string>
   <string name="title_scheduled">Lịch gửi</string>
   <string name="title_settings">Cài đặt</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Chủ đề</string>
   <string name="title_conversations">Tìm kiếm các tin đã nhận&#8230;</string>
   <string name="title_compose">Nhập tên hoặc số điện thoại</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Bỏ qua</string>
   <string name="setup_next">Tiếp tục</string>
   <string name="menu_call">Cuộc gọi</string>
   <string name="menu_info">Chi tiết</string>
   <string name="menu_save">Save to gallery</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d đã chọn</string>
   <string name="main_menu_clear">Dọn sạch</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Lưu trữ</string>
   <string name="main_menu_unarchive">Hủy lưu trữ</string>
   <string name="main_menu_block">Block</string>
@@ -86,9 +87,21 @@
   <string name="compose_menu_previous">Trước đó</string>
   <string name="compose_menu_next">Tiếp theo</string>
   <string name="compose_menu_clear">Xóa</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Thêm tập tin đính kèm</string>
   <string name="compose_gallery_cd">Đính kèm ảnh</string>
   <string name="compose_camera_cd">Chụp ảnh</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Gửi tin nhắn</string>
   <string name="message_status_sending">Đang gửi&#8230;</string>
   <string name="message_status_delivered">Đã chuyển %s</string>

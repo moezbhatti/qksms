@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Archief</string>
   <string name="title_scheduled">Gepland</string>
   <string name="title_settings">Instellingen</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Thema</string>
   <string name="title_conversations">Doorzoek inbox&#8230;</string>
   <string name="title_compose">Type een naam of nummer</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Overslaan</string>
   <string name="setup_next">Verder</string>
   <string name="menu_call">Bel</string>
   <string name="menu_info">Details</string>
   <string name="menu_save">Opslaan in galerij</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d geselecteerd</string>
   <string name="main_menu_clear">Wissen</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Archiveren</string>
   <string name="main_menu_unarchive">Terugzetten uit archief</string>
   <string name="main_menu_block">Blokkeren</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Versturen als groepsbericht</string>
   <string name="compose_send_group_summary">Ontvangers en antwoorden zijn zichtbaar voor iedereen</string>
   <string name="compose_messages_empty">Dit is het begin van je conversatie. Zeg iets leuks!</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Contactpersoonkaart</string>
   <string name="compose_hint">Type een bericht&#8230;</string>
   <string name="compose_menu_copy">Tekst kopiëren</string>
   <string name="compose_menu_forward">Doorsturen</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Vorige</string>
   <string name="compose_menu_next">Volgende</string>
   <string name="compose_menu_clear">Wissen</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Een bijlage toevoegen</string>
   <string name="compose_gallery_cd">Voeg een foto toe</string>
   <string name="compose_camera_cd">Neem een foto</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Verstuur bericht</string>
   <string name="message_status_sending">Verzenden&#8230;</string>
   <string name="message_status_delivered">Afgeleverd %s</string>
   <string name="message_status_failed">Fout bij verzenden. Tik om opnieuw te proberen</string>
   <string name="info_title">Details</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Titel van conversatie</string>
+  <string name="info_name_hint">Titel invoeren</string>
   <string name="info_notifications">Notificaties</string>
   <string name="info_theme">Thema</string>
   <string name="info_archive">Archief</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Markeren als gelezen</string>
   <string name="button_cancel">Annuleren</string>
   <string name="button_delete">Verwijderen</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Opslaan</string>
   <string name="button_more">Meer</string>
   <string name="button_set">Instellen</string>
   <string name="button_unblock">Blokkering opheffen</string>

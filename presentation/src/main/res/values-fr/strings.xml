@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Archivées</string>
   <string name="title_scheduled">Planifiés</string>
   <string name="title_settings">Paramètres</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Thème</string>
   <string name="title_conversations">Rechercher dans les conversations&#8230;</string>
   <string name="title_compose">Entrer un nom ou un numéro</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Ignorer</string>
   <string name="setup_next">Continuer</string>
   <string name="menu_call">Appeler</string>
   <string name="menu_info">Détails</string>
   <string name="menu_save">Enregistrer dans la galerie</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d sélectionnée</string>
   <string name="main_menu_clear">Effacer</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Archiver</string>
   <string name="main_menu_unarchive">Désarchiver</string>
   <string name="main_menu_block">Bloquer</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Envoyer en tant que message groupé</string>
   <string name="compose_send_group_summary">Les destinataires et les réponses seront visibles par tout le monde</string>
   <string name="compose_messages_empty">C\'est le début de votre conversation. Dites quelque chose de sympa !</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Fiche du contact</string>
   <string name="compose_hint">Écrire un message&#8230;</string>
   <string name="compose_menu_copy">Copier le texte</string>
   <string name="compose_menu_forward">Transférer</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Précédent</string>
   <string name="compose_menu_next">Suivant</string>
   <string name="compose_menu_clear">Effacer</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Ajouter une pièce jointe</string>
   <string name="compose_gallery_cd">Joindre une photo</string>
   <string name="compose_camera_cd">Prendre une photo</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Envoyer un message</string>
   <string name="message_status_sending">Envoi&#8230;</string>
   <string name="message_status_delivered">Envoyé %s</string>
   <string name="message_status_failed">Échec de l\'envoi. Appuyer pour réessayer</string>
   <string name="info_title">Détails</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Sujet de la conversation</string>
+  <string name="info_name_hint">Entrer un titre</string>
   <string name="info_notifications">Notifications</string>
   <string name="info_theme">Thème</string>
   <string name="info_archive">Archiver</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Marquer comme lu</string>
   <string name="button_cancel">Annuler</string>
   <string name="button_delete">Supprimer</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Enregistrer</string>
   <string name="button_more">Plus</string>
   <string name="button_set">Choisir</string>
   <string name="button_unblock">Débloquer</string>

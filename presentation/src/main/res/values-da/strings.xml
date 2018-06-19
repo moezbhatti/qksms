@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Arkiveret</string>
   <string name="title_scheduled">Planlagt</string>
   <string name="title_settings">Indstillinger</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Tema</string>
   <string name="title_conversations">Søg i Indbakke&#8230;</string>
   <string name="title_compose">Angiv et navn eller nummer</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Overspring</string>
   <string name="setup_next">Fortsæt</string>
   <string name="menu_call">Opkald</string>
   <string name="menu_info">Oplysninger</string>
   <string name="menu_save">Gem til galleri</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d valgt</string>
   <string name="main_menu_clear">Ryd</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Arkivér</string>
   <string name="main_menu_unarchive">Fjern fra arkiv</string>
   <string name="main_menu_block">Blokér</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Send som gruppe besked</string>
   <string name="compose_send_group_summary">Modtagere og besvarelser vil være synlige for alle</string>
   <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Kontaktkort</string>
   <string name="compose_hint">Skriv en besked&#8230;</string>
   <string name="compose_menu_copy">Kopier tekst</string>
   <string name="compose_menu_forward">Videresend</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Foregående</string>
   <string name="compose_menu_next">Næste</string>
   <string name="compose_menu_clear">Ryd</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Tilføj en vedhæftning</string>
   <string name="compose_gallery_cd">Vedhæft et foto</string>
   <string name="compose_camera_cd">Tag et foto</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Send besked</string>
   <string name="message_status_sending">Afsender&#8230;</string>
   <string name="message_status_delivered">Leveret %s</string>
   <string name="message_status_failed">Mislykkedes at afsende. Tryk for at forsøge igen</string>
   <string name="info_title">Oplysninger</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Samtaletitel</string>
+  <string name="info_name_hint">Angiv titel</string>
   <string name="info_notifications">Notifikationer</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arkiv</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Markér som læst</string>
   <string name="button_cancel">Annullér</string>
   <string name="button_delete">Slet</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Gem</string>
   <string name="button_more">Flere</string>
   <string name="button_set">Indstil</string>
   <string name="button_unblock">Afblokér</string>

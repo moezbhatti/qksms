@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Arkiverat</string>
   <string name="title_scheduled">Schemalagt</string>
   <string name="title_settings">Inställningar</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Tema</string>
   <string name="title_conversations">Sök i inkorg&#8230;</string>
   <string name="title_compose">Ange ett namn eller nummer</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Hoppa över</string>
   <string name="setup_next">Fortsätt</string>
   <string name="menu_call">Ring</string>
   <string name="menu_info">Detaljer</string>
   <string name="menu_save">Spara till galleri</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d vald</string>
   <string name="main_menu_clear">Rensa</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Arkiv</string>
   <string name="main_menu_unarchive">Avarkivera</string>
   <string name="main_menu_block">Blockera</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Skicka som ett grupp-meddelande</string>
   <string name="compose_send_group_summary">Mottagare och svar kommer att vara synligt för alla</string>
   <string name="compose_messages_empty">Det här är början på din konversation. Säg något snällt!</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Kontaktkort</string>
   <string name="compose_hint">Skriv ett meddelande&#8230;</string>
   <string name="compose_menu_copy">Kopiera text</string>
   <string name="compose_menu_forward">Vidarebefordra</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Föregående</string>
   <string name="compose_menu_next">Nästa</string>
   <string name="compose_menu_clear">Rensa</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Lägg till en bilaga</string>
   <string name="compose_gallery_cd">Bifoga en bild</string>
   <string name="compose_camera_cd">Ta en bild</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Skicka meddelandet</string>
   <string name="message_status_sending">Skickar&#8230;</string>
   <string name="message_status_delivered">Levererade %s</string>
   <string name="message_status_failed">Misslyckades med att skicka. Knacka för att försöka igen</string>
   <string name="info_title">Detaljer</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Titel för konversation</string>
+  <string name="info_name_hint">Fyll i titel</string>
   <string name="info_notifications">Aviseringar</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arkivera</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Markera som läst</string>
   <string name="button_cancel">Avbryt</string>
   <string name="button_delete">Radera</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Spara</string>
   <string name="button_more">Mer</string>
   <string name="button_set">Ställ in</string>
   <string name="button_unblock">Avblockera</string>
