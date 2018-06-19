@@ -103,6 +103,23 @@ class ConversationRepositoryImpl @Inject constructor(
                 .findFirst()
     }
 
+    override fun getThreadId(recipient: String): Long? {
+        return getThreadId(listOf(recipient))
+    }
+
+    override fun getThreadId(recipients: Collection<String>): Long? {
+        return Realm.getDefaultInstance().use { realm ->
+            realm.where(Conversation::class.java)
+                    .findAll()
+                    .firstOrNull { conversation ->
+                        conversation.recipients.size == recipients.size && conversation.recipients.map { it.address }.all { address ->
+                            recipients.any { recipient -> PhoneNumberUtils.compare(recipient, address) }
+                        }
+                    }
+                    ?.id
+        }
+    }
+
     override fun getOrCreateConversation(threadId: Long): Conversation? {
         return getConversation(threadId) ?: getConversationFromCp(threadId)
     }

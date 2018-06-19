@@ -20,6 +20,10 @@ interface ConversationRepository {
 
     fun getConversation(threadId: Long): Conversation?
 
+    fun getThreadId(recipient: String): Long?
+
+    fun getThreadId(recipients: Collection<String>): Long?
+
     fun getOrCreateConversation(threadId: Long): Conversation?
 
     fun getOrCreateConversation(address: String): Conversation?

@@ -55,7 +55,6 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.PhoneNumber
-import model.Recipient
 import repository.ContactRepository
 import repository.ConversationRepository
 import repository.MessageRepository
@@ -101,6 +100,7 @@ class ComposeViewModel @Inject constructor(
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
     private val selectedContacts: Subject<List<Contact>> = BehaviorSubject.createDefault(listOf())
+    private val threadIdSubject: Subject<Long> = BehaviorSubject.create()
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
@@ -119,16 +119,14 @@ class ComposeViewModel @Inject constructor(
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
                 .doOnNext { newState { copy(loading = true) } }
                 .observeOn(Schedulers.computation())
-                .map { addresses -> Pair(TelephonyCompat.getOrCreateThreadId(context, addresses), addresses) }
+                .map { addresses -> conversationRepo.getThreadId(addresses) ?: 0 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { newState { copy(loading = false) } }
-                .switchMap { (threadId, addresses) ->
-                    val recipients = RealmList(*addresses.map { address -> Recipient(address = address) }.toTypedArray())
+                .mergeWith(threadIdSubject)
+                .switchMap { threadId ->
                     conversationRepo.getConversations().asObservable()
                             .map { conversations -> conversations.filter { it.id == threadId } }
-                            .map { conversations ->
-                                conversations.firstOrNull() ?: Conversation(id = threadId, recipients = recipients)
-                            }
+                            .map { conversations -> conversations.firstOrNull() ?: Conversation(id = threadId) }
                 }
                 .mergeWith(initialConversation)
                 .filter { conversation -> conversation.isLoaded }
@@ -531,14 +529,18 @@ class ComposeViewModel @Inject constructor(
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
-                .withLatestFrom(view.textChangedIntent, { _, body -> body })
+                .withLatestFrom(view.textChangedIntent) { _, body -> body }
                 .map { body -> body.toString() }
                 .withLatestFrom(state, attachments, conversation, selectedContacts, { body, state, attachments, conversation, contacts ->
                     val subId = state.subscription?.subscriptionId ?: -1
 
                     if (state.sendAsGroup) {
-                        val threadId = conversation.id
-                        val addresses = conversation.recipients.map { it.address }
+                        val addresses = when (conversation.recipients.isNotEmpty()) {
+                            true -> conversation.recipients.map { it.address }
+                            false -> contacts.mapNotNull { it.numbers.firstOrNull()?.address }
+                        }
+                        val threadId = conversation.id.takeIf { it > 0 }
+                                ?: TelephonyCompat.getOrCreateThreadId(context, addresses).also(threadIdSubject::onNext)
                         sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
                     } else {
                         contacts
