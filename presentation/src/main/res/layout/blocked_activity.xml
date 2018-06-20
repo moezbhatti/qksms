@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/empty"
         style="@style/TextSecondary"
         android:layout_width="0dp"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/shouldIAnswer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

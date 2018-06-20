@@ -26,7 +26,7 @@
 
     <include layout="@layout/toolbar" />
 
-    <common.widget.PagerTitleView
+    <com.moez.QKSMS.common.widget.PagerTitleView
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="40dp"

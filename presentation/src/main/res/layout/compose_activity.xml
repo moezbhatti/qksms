@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/message_list_item_in" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/messagesEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
         app:layout_constraintBottom_toBottomOf="@id/sendAsGroupSummary"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/sendAsGroupTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toTopOf="@id/sendAsGroupBackground"
         app:textSize="primary" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/sendAsGroupSummary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
         app:layout_constraintTop_toBottomOf="@id/sendAsGroupTitle"
         app:textSize="secondary" />
 
-    <common.widget.QkSwitch
+    <com.moez.QKSMS.common.widget.QkSwitch
         android:id="@+id/sendAsGroupSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
         app:layout_constraintStart_toEndOf="@id/gallery"
         app:layout_constraintTop_toBottomOf="@id/attachments" />
 
-    <common.widget.QkEditText
+    <com.moez.QKSMS.common.widget.QkEditText
         android:id="@+id/message"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -274,7 +274,7 @@
         app:layout_constraintBottom_toBottomOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -289,7 +289,7 @@
         tools:ignore="SpUsage"
         tools:text="1" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/counter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -334,13 +334,13 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <common.widget.QkTextView
+            <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
                 style="@style/ToolbarText"
                 android:layout_height="wrap_content"
                 tools:text="Moez Bhatti" />
 
-            <common.widget.QkTextView
+            <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarSubtitle"
                 style="@style/ToolbarText"
                 android:visibility="gone"

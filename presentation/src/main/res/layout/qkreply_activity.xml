@@ -31,7 +31,7 @@
     android:elevation="8dp"
     android:maxHeight="320dp"
     android:maxWidth="320dp"
-    tools:context="feature.qkreply.QkReplyActivity">
+    tools:context="com.moez.QKSMS.feature.qkreply.QkReplyActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messages"
@@ -94,7 +94,7 @@
         app:layout_constraintStart_toStartOf="@id/messageBackground"
         app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
-    <common.widget.QkEditText
+    <com.moez.QKSMS.common.widget.QkEditText
         android:id="@+id/message"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -127,7 +127,7 @@
         app:layout_constraintBottom_toBottomOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -142,7 +142,7 @@
         tools:ignore="SpUsage"
         tools:text="1" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/counter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/toolbarTitle"
             style="@style/ToolbarText"
             tools:text="Conversations" />

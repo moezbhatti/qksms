@@ -28,7 +28,7 @@
     android:paddingStart="24dp"
     android:paddingTop="8dp">
 
-    <common.widget.AvatarView
+    <com.moez.QKSMS.common.widget.AvatarView
         android:id="@+id/avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/name"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -48,7 +48,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Moez Bhatti" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/address"
         style="@style/TextSecondary"
         android:layout_width="0dp"

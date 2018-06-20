@@ -22,7 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    tools:parentTag="common.widget.PreferenceView">
+    tools:parentTag="com.moez.QKSMS.common.widget.PreferenceView">
 
     <ImageView
         android:id="@+id/icon"
@@ -41,14 +41,14 @@
         android:paddingRight="24dp"
         android:paddingTop="16dp">
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/titleView"
             style="@style/TextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Default SMS App" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/summaryView"
             style="@style/TextSecondary"
             android:layout_width="match_parent"

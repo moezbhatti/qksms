@@ -40,7 +40,7 @@
         android:background="?android:attr/divider"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/resultsTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         app:textColor="secondary"
         app:textSize="secondary" />
 
-    <common.widget.GroupAvatarView
+    <com.moez.QKSMS.common.widget.GroupAvatarView
         android:id="@+id/avatars"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -69,7 +69,7 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -83,7 +83,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="@tools:sample/full_names" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/snippet"
         style="@style/TextSecondary"
         android:layout_width="0dp"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="@tools:sample/lorem/random" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/date"
         style="@style/TextTertiary"
         android:layout_width="wrap_content"

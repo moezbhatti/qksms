@@ -23,9 +23,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@color/tools_theme"
-    tools:parentTag="common.widget.AvatarView">
+    tools:parentTag="com.moez.QKSMS.common.widget.AvatarView">
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/initial"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

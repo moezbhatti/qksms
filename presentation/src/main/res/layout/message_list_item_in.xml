@@ -24,7 +24,7 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground">
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toEndOf="@id/timestamp"
         app:layout_constraintTop_toTopOf="@id/timestamp" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         tools:itemCount="1"
         tools:listitem="@layout/mms_preview_list_item" />
 
-    <common.widget.AvatarView
+    <com.moez.QKSMS.common.widget.AvatarView
         android:id="@+id/avatar"
         android:layout_width="36dp"
         android:layout_height="36dp"
@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="@id/body"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <common.widget.TightTextView
+    <com.moez.QKSMS.common.widget.TightTextView
         android:id="@+id/body"
         style="@style/TextPrimary"
         android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
         tools:backgroundTint="@color/tools_theme"
         tools:text="@tools:sample/lorem" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -39,11 +39,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <common.widget.QkTextView
+            <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
                 style="@style/ToolbarText" />
 
-            <common.widget.QkEditText
+            <com.moez.QKSMS.common.widget.QkEditText
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
                 android:hint="@string/title_conversations"
@@ -53,7 +53,7 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/empty"
             style="@style/TextSecondary"
             android:layout_width="match_parent"
@@ -130,7 +130,7 @@
             app:constraint_referenced_ids="syncingProgress,syncingLabel"
             tools:visibility="gone" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/snackbarTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
             app:textSize="primary"
             tools:text="Love texting again" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/snackbarMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
             app:textSize="secondary"
             tools:text="Make QKSMS your default SMS app" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/snackbarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             app:textSize="secondary"
             tools:text="Change" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/syncingLabel"
             style="@style/TextPrimary"
             android:layout_width="match_parent"

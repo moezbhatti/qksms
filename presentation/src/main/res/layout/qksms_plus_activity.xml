@@ -65,7 +65,7 @@
                 android:layout_marginStart="32dp"
                 android:orientation="vertical">
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/qksms_plus_description_title"
@@ -73,7 +73,7 @@
                     app:textColor="primary"
                     app:textSize="primary" />
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     app:textColor="secondary"
                     app:textSize="secondary" />
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/upgrade"
                     style="@style/TextButton"
                     android:layout_marginTop="16dp"
@@ -90,7 +90,7 @@
                     app:textColor="primaryOnTheme"
                     tools:backgroundTint="@color/tools_theme" />
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/upgradeDonate"
                     style="@style/TextButton"
                     android:layout_marginTop="8dp"
@@ -123,7 +123,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:tint="@color/tools_theme" />
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/thanksTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                     app:textColor="primary"
                     app:textSize="secondary" />
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/qksms_plus_thanks_summary"
@@ -156,14 +156,14 @@
                 android:layout_marginStart="32dp"
                 android:orientation="vertical">
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/qksms_plus_free_title"
                     app:textColor="secondary"
                     app:textSize="secondary" />
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/donate"
                     style="@style/TextButton"
                     android:layout_marginTop="16dp"
@@ -180,35 +180,35 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/divider" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_palette_black_24dp"
                 app:summary="@string/qksms_plus_themes_summary"
                 app:title="@string/qksms_plus_themes_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_invert_colors_black_24dp"
                 app:summary="@string/qksms_plus_night_summary"
                 app:title="@string/qksms_plus_night_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_av_timer_black_24dp"
                 app:summary="@string/qksms_plus_delayed_summary"
                 app:title="@string/qksms_plus_delayed_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_more_horiz_black_24dp"
                 app:summary="@string/qksms_plus_more_summary"
                 app:title="@string/qksms_plus_more_title" />
 
-            <common.widget.QkTextView
+            <com.moez.QKSMS.common.widget.QkTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -220,7 +220,7 @@
                 app:textColor="primary"
                 app:textSize="primary" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -228,7 +228,7 @@
                 app:summary="@string/qksms_plus_emoji_summary"
                 app:title="@string/qksms_plus_emoji_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -236,7 +236,7 @@
                 app:summary="@string/qksms_plus_backup_summary"
                 app:title="@string/qksms_plus_backup_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -244,7 +244,7 @@
                 app:summary="@string/qksms_plus_scheduled_summary"
                 app:title="@string/qksms_plus_scheduled_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -252,7 +252,7 @@
                 app:summary="@string/qksms_plus_blacklist_summary"
                 app:title="@string/qksms_plus_blacklist_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
@@ -260,7 +260,7 @@
                 app:summary="@string/qksms_plus_forward_summary"
                 app:title="@string/qksms_plus_forward_title" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.25"
