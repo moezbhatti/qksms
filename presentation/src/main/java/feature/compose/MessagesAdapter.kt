@@ -48,6 +48,9 @@ import common.util.extensions.setVisible
 import compat.SubscriptionManagerCompat
 import feature.compose.BubbleUtils.canGroup
 import feature.compose.BubbleUtils.getBubble
+import feature.compose.part.MediaBinder
+import feature.compose.part.PartsAdapter
+import feature.compose.part.VCardBinder
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
