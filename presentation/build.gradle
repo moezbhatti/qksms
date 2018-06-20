@@ -77,6 +77,13 @@ android.applicationVariants.all { variant ->
     }
 }
 
+configurations {
+    noAnalyticsDebug
+    noAnalyticsRelease
+    withAnalyticsDebug
+    withAnalyticsRelease
+}
+
 dependencies {
     // lifecycle
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
@@ -151,6 +158,8 @@ dependencies {
     implementation project(":android-smsmms")
     implementation project(':data')
     implementation project(':domain')
-    withAnalyticsImplementation "com.amplitude:android-sdk:2.16.0"
-    withAnalyticsImplementation "com.mixpanel.android:mixpanel-android:5.2.1"
+    noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
+    noAnalyticsRelease project(path: ':data', configuration: 'noAnalyticsRelease')
+    withAnalyticsDebug project(path: ':data', configuration: 'withAnalyticsDebug')
+    withAnalyticsRelease project(path: ':data', configuration: 'withAnalyticsRelease')
 }

@@ -18,7 +18,7 @@
  */
 package com.moez.QKSMS.common.util
 
-import manager.AnalyticsManager
+import com.moez.QKSMS.manager.AnalyticsManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

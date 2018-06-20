@@ -4,10 +4,17 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+    publishNonDefault true
+    flavorDimensions "analytics"
 
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
+    }
+
+    productFlavors {
+        withAnalytics { dimension "analytics" }
+        noAnalytics { dimension "analytics" }
     }
 }
 
@@ -35,6 +42,8 @@ dependencies {
     implementation "me.leolin:ShortcutBadger:1.1.21"
     implementation project(":android-smsmms")
     implementation project(':domain')
+    withAnalyticsImplementation "com.amplitude:android-sdk:2.16.0"
+    withAnalyticsImplementation "com.mixpanel.android:mixpanel-android:5.2.1"
 }
 
 repositories {
