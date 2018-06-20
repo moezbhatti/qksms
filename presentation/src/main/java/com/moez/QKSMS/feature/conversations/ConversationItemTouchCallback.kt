@@ -22,9 +22,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import androidx.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import io.reactivex.subjects.PublishSubject

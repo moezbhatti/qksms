@@ -20,10 +20,10 @@ package com.moez.QKSMS.common
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.annotation.ArrayRes
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ArrayRes
+import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter

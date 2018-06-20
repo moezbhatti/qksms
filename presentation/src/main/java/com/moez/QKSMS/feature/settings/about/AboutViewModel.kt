@@ -2,8 +2,8 @@ package com.moez.QKSMS.feature.settings.about
 
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import javax.inject.Inject
 

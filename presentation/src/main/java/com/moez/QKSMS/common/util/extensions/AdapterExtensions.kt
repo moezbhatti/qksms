@@ -18,8 +18,8 @@
  */
 package com.moez.QKSMS.common.util.extensions
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 fun RecyclerView.Adapter<*>.autoScrollToStart(recyclerView: RecyclerView) {
     registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

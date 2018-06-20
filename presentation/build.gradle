@@ -15,7 +15,7 @@ android {
         targetSdkVersion 28
         versionCode 174
         versionName "3.3.3"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
     }
@@ -84,14 +84,14 @@ configurations {
 
 dependencies {
     // lifecycle
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    // support
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraintlayout_version"
-    implementation "com.android.support:design:$support_version"
-    implementation "com.android.support:support-emoji-appcompat:$support_version"
+    // androidx
+    implementation "androidx.appcompat:appcompat:$androidx_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "com.google.android.material:material:$androidx_version"
+    implementation "androidx.emoji:emoji-appcompat:$androidx_version"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
@@ -139,11 +139,11 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
 
     // testing
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:2.2.2", {
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.1.0-alpha3", {
         exclude group: "com.android.support", module: "support-annotations"
     })
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-    testImplementation "com.android.support.test:runner:1.0.1"
+    testImplementation "androidx.test:runner:1.1.0-alpha3"
     testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 

@@ -21,6 +21,7 @@ package com.moez.QKSMS.feature.qkreply
 import android.telephony.SmsMessage
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
 import com.moez.QKSMS.extensions.asObservable
@@ -32,7 +33,6 @@ import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.ActiveSubscriptionObservable
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign

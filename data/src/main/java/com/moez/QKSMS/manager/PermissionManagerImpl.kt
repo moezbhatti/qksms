@@ -22,7 +22,7 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.provider.Telephony
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import javax.inject.Inject
 
 class PermissionManagerImpl @Inject constructor(private val context: Context) : PermissionManager {

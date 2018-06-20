@@ -10,7 +10,7 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
-import android.support.media.ExifInterface
+import androidx.exifinterface.media.ExifInterface
 import com.moez.QKSMS.util.tryOrNull
 import javax.inject.Inject
 

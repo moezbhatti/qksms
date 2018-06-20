@@ -20,8 +20,8 @@ package com.moez.QKSMS.feature.compose
 
 import android.Manifest
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -29,15 +29,16 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
@@ -49,7 +50,6 @@ import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Message
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.Observable

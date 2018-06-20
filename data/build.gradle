@@ -23,9 +23,9 @@ android {
 
 dependencies {
 
-    // support
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "com.android.support:exifinterface:$support_version"
+    // androidx
+    implementation "androidx.appcompat:appcompat:$androidx_version"
+    implementation "androidx.exifinterface:exifinterface:$androidx_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"

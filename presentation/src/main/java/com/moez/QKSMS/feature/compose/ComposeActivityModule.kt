@@ -1,6 +1,6 @@
 package com.moez.QKSMS.feature.compose
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.content.Intent
 import android.net.Uri
 import com.moez.QKSMS.injection.ViewModelKey

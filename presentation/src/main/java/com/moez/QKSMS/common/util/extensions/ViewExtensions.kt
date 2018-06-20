@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
-import android.support.v7.widget.RecyclerView
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +30,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.recyclerview.widget.RecyclerView
 
 var ViewGroup.animateLayoutChanges: Boolean
     get() = layoutTransition != null

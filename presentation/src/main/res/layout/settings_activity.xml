@@ -16,7 +16,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.constraint.ConstraintLayout android:id="@+id/contentView"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/contentView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -24,7 +24,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
             style="@style/ToolbarText"
             tools:text="Conversations" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="0dp"
@@ -222,4 +222,4 @@
         android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

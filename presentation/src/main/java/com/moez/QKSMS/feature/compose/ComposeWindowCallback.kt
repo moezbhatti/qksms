@@ -21,7 +21,7 @@ package com.moez.QKSMS.feature.compose
 import android.app.Activity
 import android.graphics.Rect
 import android.os.Build
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.view.ActionMode
 import android.view.KeyEvent
 import android.view.Menu

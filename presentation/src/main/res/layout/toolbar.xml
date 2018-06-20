@@ -17,7 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+<androidx.appcompat.widget.Toolbar android:id="@+id/toolbar"
     style="@style/Toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -27,4 +27,4 @@
         style="@style/ToolbarText"
         tools:text="Conversations" />
 
-</android.support.v7.widget.Toolbar>
+</androidx.appcompat.widget.Toolbar>

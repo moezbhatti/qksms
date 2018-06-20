@@ -18,14 +18,15 @@
  */
 package com.moez.QKSMS.feature.conversationinfo
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.text.InputFilter
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.dpToPx
@@ -33,7 +34,6 @@ import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.scrapViews
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.QkEditText
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject

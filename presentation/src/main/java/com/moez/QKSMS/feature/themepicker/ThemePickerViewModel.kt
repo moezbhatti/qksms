@@ -20,11 +20,11 @@ package com.moez.QKSMS.feature.themepicker
 
 import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.withLatestFrom

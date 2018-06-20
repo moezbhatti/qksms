@@ -20,8 +20,8 @@ package com.moez.QKSMS.common.util.extensions
 
 import android.app.Activity
 import android.content.Context
-import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast

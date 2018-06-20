@@ -20,11 +20,11 @@ package com.moez.QKSMS.common.widget
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.viewpager.widget.ViewPager
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.forEach

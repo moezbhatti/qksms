@@ -21,7 +21,6 @@ package com.moez.QKSMS.feature.compose
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v7.widget.RecyclerView
 import android.telephony.PhoneNumberUtils
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -31,6 +30,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator

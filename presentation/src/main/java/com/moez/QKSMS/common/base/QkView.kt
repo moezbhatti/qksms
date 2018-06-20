@@ -18,7 +18,7 @@
  */
 package com.moez.QKSMS.common.base
 
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 
 interface QkView<in State> : LifecycleOwner {
 

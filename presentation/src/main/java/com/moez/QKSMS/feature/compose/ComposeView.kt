@@ -19,7 +19,7 @@
 package com.moez.QKSMS.feature.compose
 
 import android.net.Uri
-import android.support.v13.view.inputmethod.InputContentInfoCompat
+import androidx.core.view.inputmethod.InputContentInfoCompat
 import com.moez.QKSMS.common.base.QkView
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact

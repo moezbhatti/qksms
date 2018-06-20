@@ -1,6 +1,6 @@
 package com.moez.QKSMS.feature.notificationprefs
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.content.Intent
 import com.moez.QKSMS.injection.ViewModelKey
 import dagger.Module

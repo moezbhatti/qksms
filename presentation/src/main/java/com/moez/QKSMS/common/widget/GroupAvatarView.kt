@@ -20,9 +20,9 @@ package com.moez.QKSMS.common.widget
 
 import android.content.Context
 import android.os.Build
-import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.moez.QKSMS.R
 import com.moez.QKSMS.model.Recipient
 import kotlinx.android.synthetic.main.group_avatar_view.view.*

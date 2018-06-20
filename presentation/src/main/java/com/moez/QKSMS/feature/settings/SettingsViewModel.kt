@@ -21,6 +21,7 @@ package com.moez.QKSMS.feature.settings
 import android.content.Context
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
@@ -28,7 +29,6 @@ import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom

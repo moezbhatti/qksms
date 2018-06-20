@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.main
 
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.interactor.DeleteConversations
@@ -37,7 +38,6 @@ import com.moez.QKSMS.model.SyncLog
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.SyncRepository
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

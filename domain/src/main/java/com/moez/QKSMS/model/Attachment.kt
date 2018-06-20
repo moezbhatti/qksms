@@ -21,7 +21,7 @@ package com.moez.QKSMS.model
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import android.support.v13.view.inputmethod.InputContentInfoCompat
+import androidx.core.view.inputmethod.InputContentInfoCompat
 
 data class Attachment(private val uri: Uri? = null, private val inputContent: InputContentInfoCompat? = null) {
 

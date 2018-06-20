@@ -1,7 +1,7 @@
 package com.moez.QKSMS.feature.settings.about
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig

@@ -18,8 +18,8 @@
  */
 package com.moez.QKSMS.common.base
 
-import android.support.annotation.CallSuper
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.CallSuper
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 

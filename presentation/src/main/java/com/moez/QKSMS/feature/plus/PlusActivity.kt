@@ -18,8 +18,8 @@
  */
 package com.moez.QKSMS.feature.plus
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.Typeface
 import android.os.Bundle
 import com.jakewharton.rxbinding2.view.clicks

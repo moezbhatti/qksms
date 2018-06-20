@@ -23,7 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Telephony
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.util.Preferences
 import dagger.android.AndroidInjection

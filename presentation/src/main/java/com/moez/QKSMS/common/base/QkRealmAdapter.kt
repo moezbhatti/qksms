@@ -1,14 +1,14 @@
 package com.moez.QKSMS.common.base
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import com.moez.QKSMS.common.androidxcompat.RealmRecyclerViewAdapter
 import com.moez.QKSMS.common.util.extensions.setVisible
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.OrderedRealmCollection
 import io.realm.RealmList
 import io.realm.RealmModel
-import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 
 abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkViewHolder>(null, true) {

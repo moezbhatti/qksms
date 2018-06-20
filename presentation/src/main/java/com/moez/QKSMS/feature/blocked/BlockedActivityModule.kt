@@ -1,6 +1,6 @@
 package com.moez.QKSMS.feature.blocked
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.moez.QKSMS.injection.ViewModelKey
 import dagger.Module
 import dagger.Provides

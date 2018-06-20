@@ -19,8 +19,8 @@
 package com.moez.QKSMS.feature.notificationprefs
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri

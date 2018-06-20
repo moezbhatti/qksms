@@ -18,9 +18,9 @@
  */
 package com.moez.QKSMS.common.base
 
-import android.arch.lifecycle.ViewModel
-import android.support.annotation.CallSuper
-import com.uber.autodispose.android.lifecycle.scope
+import androidx.annotation.CallSuper
+import androidx.lifecycle.ViewModel
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

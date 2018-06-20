@@ -21,10 +21,10 @@ package com.moez.QKSMS.feature.themepicker
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint

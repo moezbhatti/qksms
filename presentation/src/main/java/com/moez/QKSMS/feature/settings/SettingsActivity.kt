@@ -20,22 +20,22 @@ package com.moez.QKSMS.feature.settings
 
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.text.format.DateFormat
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.QkDialog
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject

@@ -2,10 +2,10 @@ package com.moez.QKSMS.common
 
 import android.app.Activity
 import android.content.Context
-import android.support.annotation.StringRes
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.injection.appComponent

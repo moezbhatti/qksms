@@ -19,7 +19,7 @@
 package com.moez.QKSMS.injection
 
 import android.app.Application
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import android.content.ContentResolver
 import android.content.Context
 import android.preference.PreferenceManager

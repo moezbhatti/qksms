@@ -18,9 +18,9 @@
  */
 package com.moez.QKSMS.common.base
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.common.util.extensions.setVisible
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject

@@ -18,11 +18,11 @@
  */
 package com.moez.QKSMS.feature.qkreply
 
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
@@ -31,6 +31,7 @@ import android.view.WindowManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
@@ -38,7 +39,6 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.feature.compose.MessagesAdapter
-import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject

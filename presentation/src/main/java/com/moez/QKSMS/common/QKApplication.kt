@@ -22,9 +22,9 @@ import android.app.Activity
 import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
-import android.support.text.emoji.EmojiCompat
-import android.support.text.emoji.FontRequestEmojiCompatConfig
-import android.support.v4.provider.FontRequest
+import androidx.emoji.text.EmojiCompat
+import androidx.emoji.text.FontRequestEmojiCompatConfig
+import androidx.core.provider.FontRequest
 import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration

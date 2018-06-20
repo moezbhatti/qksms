@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -70,7 +70,7 @@
         app:textSize="secondary"
         tools:text="1B8AE8" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/applyGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,4 +109,4 @@
         tools:backgroundTint="@color/tools_theme"
         tools:textColor="@color/textPrimaryDark" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
