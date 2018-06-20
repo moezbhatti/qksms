@@ -25,9 +25,9 @@ import android.content.Context
 import android.preference.PreferenceManager
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.ViewModelFactory
-import com.moez.QKSMS.common.util.AnalyticsManagerImpl
 import com.moez.QKSMS.common.util.NotificationManagerImpl
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.manager.AnalyticsManagerImpl
 import com.moez.QKSMS.manager.ExternalBlockingManager
 import com.moez.QKSMS.manager.ExternalBlockingManagerImpl
 import com.moez.QKSMS.manager.KeyManager

@@ -16,9 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.common.util
+package com.moez.QKSMS.manager
 
-import com.moez.QKSMS.manager.AnalyticsManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -10,6 +10,9 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
+
+        buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
+        buildConfigField "String", "MIXPANEL_API_KEY", "\"${System.getenv("MIXPANEL_API_KEY")}\""
     }
 
     productFlavors {
@@ -27,6 +30,7 @@ dependencies {
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     compileOnly "javax.annotation:jsr250-api:1.0"
 

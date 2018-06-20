@@ -17,9 +17,7 @@ android {
         versionName "3.3.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "AMPLITUDE_API_KEY", "\"${System.getenv("AMPLITUDE_API_KEY")}\""
         buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
-        buildConfigField "String", "MIXPANEL_API_KEY", "\"${System.getenv("MIXPANEL_API_KEY")}\""
     }
 
     signingConfigs {
@@ -101,7 +99,9 @@ dependencies {
 
     // exoplayer
     implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
-    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
+    implementation("com.google.android.exoplayer:exoplayer-ui:$exoplayer_version", {
+        exclude group: "com.android.support", module: "support-media-compat"
+    })
 
     // rxbinding
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"
