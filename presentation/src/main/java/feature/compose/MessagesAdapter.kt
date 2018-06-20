@@ -19,9 +19,9 @@
 package feature.compose
 
 import android.animation.ObjectAnimator
-import android.content.ContentUris
 import android.content.Context
 import android.graphics.Typeface
+import android.support.v7.widget.RecyclerView
 import android.telephony.PhoneNumberUtils
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -39,26 +39,19 @@ import common.base.QkRealmAdapter
 import common.base.QkViewHolder
 import common.util.Colors
 import common.util.DateFormatter
-import common.util.GlideApp
 import common.util.extensions.dpToPx
 import common.util.extensions.forwardTouches
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setPadding
 import common.util.extensions.setTint
 import common.util.extensions.setVisible
-import common.widget.BubbleImageView.Style.*
 import compat.SubscriptionManagerCompat
-import ezvcard.Ezvcard
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import feature.compose.BubbleUtils.canGroup
+import feature.compose.BubbleUtils.getBubble
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
-import kotlinx.android.synthetic.main.mms_preview_list_item.view.*
-import kotlinx.android.synthetic.main.mms_vcard_list_item.view.*
-import mapper.CursorToPartImpl
 import model.Conversation
 import model.Message
 import model.Recipient
@@ -66,7 +59,6 @@ import util.Preferences
 import util.extensions.isImage
 import util.extensions.isVCard
 import util.extensions.isVideo
-import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -82,7 +74,6 @@ class MessagesAdapter @Inject constructor(
     companion object {
         private const val VIEW_TYPE_MESSAGE_IN = 0
         private const val VIEW_TYPE_MESSAGE_OUT = 1
-        private const val TIMESTAMP_THRESHOLD = 10
     }
 
     val clicks: Subject<Message> = PublishSubject.create<Message>()
@@ -120,6 +111,7 @@ class MessagesAdapter @Inject constructor(
 
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
+    private val partsViewPool = RecyclerView.RecycledViewPool()
     private val subs = subscriptionManager.activeSubscriptionInfoList
 
     var theme: Colors.Theme = colors.theme()
@@ -146,6 +138,8 @@ class MessagesAdapter @Inject constructor(
             view.body.setBackgroundTint(theme.theme)
         }
 
+        view.attachments.adapter = PartsAdapter(context, navigator, theme)
+        view.attachments.setRecycledViewPool(partsViewPool)
         view.body.forwardTouches(view)
 
         return QkViewHolder(view)
@@ -211,7 +205,7 @@ class MessagesAdapter @Inject constructor(
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
         view.simIndex.text = "${simIndex + 1}"
 
-        view.timestamp.setVisible(timeSincePrevious >= TIMESTAMP_THRESHOLD || message.subId != previous?.subId && simIndex != -1)
+        view.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD || message.subId != previous?.subId && simIndex != -1)
         view.sim.setVisible(message.subId != previous?.subId && simIndex != -1)
         view.simIndex.setVisible(message.subId != previous?.subId && simIndex != -1)
 
@@ -257,59 +251,8 @@ class MessagesAdapter @Inject constructor(
 
 
         // Bind the attachments
-        view.attachments.setVisible(media.isNotEmpty())
-        if (view.attachments.childCount > 0) {
-            view.attachments.removeAllViews()
-        }
-
-        media.forEachIndexed { index, part ->
-            val canMediaGroupWithPrevious = canGroup(message, previous) || index > 0
-            val canMediaGroupWithNext = canGroup(message, next) || index < media.size - 1 || view.body.visibility == View.VISIBLE
-            val inflater = LayoutInflater.from(view.context)
-
-            when {
-                part.isImage() || part.isVideo() -> {
-                    val mediaView = inflater.inflate(R.layout.mms_preview_list_item, view.attachments, false)
-                    mediaView.video.setVisible(part.isVideo())
-                    mediaView.forwardTouches(view)
-                    mediaView.setOnClickListener { navigator.showMedia(part.id) }
-
-                    mediaView.thumbnail.bubbleStyle = when {
-                        !canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_FIRST else IN_FIRST
-                        canMediaGroupWithPrevious && canMediaGroupWithNext -> if (message.isMe()) OUT_MIDDLE else IN_MIDDLE
-                        canMediaGroupWithPrevious && !canMediaGroupWithNext -> if (message.isMe()) OUT_LAST else IN_LAST
-                        else -> ONLY
-                    }
-
-                    GlideApp.with(context).load(part.getUri()).fitCenter().into(mediaView.thumbnail)
-                    view.attachments.addView(mediaView, index)
-                }
-
-                part.isVCard() -> {
-                    val uri = ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id)
-
-                    val mediaView = inflater.inflate(R.layout.mms_vcard_list_item, view.attachments, false)
-                    mediaView.forwardTouches(view)
-                    mediaView.setOnClickListener { navigator.saveVcard(uri) }
-                    mediaView.vCardBackground.setBackgroundResource(getBubble(canMediaGroupWithPrevious, canMediaGroupWithNext, message.isMe()))
-
-                    Observable.just(uri)
-                            .map(context.contentResolver::openInputStream)
-                            .mapNotNull { inputStream -> inputStream.use { Ezvcard.parse(it).first() } }
-                            .subscribeOn(Schedulers.computation())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe { vcard -> mediaView?.name?.text = vcard.formattedName.value }
-
-                    if (!message.isMe()) {
-                        mediaView.vCardBackground.setBackgroundTint(theme.theme)
-                        mediaView.vCardAvatar.setTint(theme.textPrimary)
-                        mediaView.name.setTextColor(theme.textPrimary)
-                        mediaView.label.setTextColor(theme.textTertiary)
-                    }
-                    view.attachments.addView(mediaView, index)
-                }
-            }
-        }
+        val partsAdapter = view.attachments.adapter as PartsAdapter
+        partsAdapter.setData(message, previous, next, view)
     }
 
     private fun bindStatus(viewHolder: QkViewHolder, message: Message, next: Message?) {
@@ -332,24 +275,9 @@ class MessagesAdapter @Inject constructor(
             message.isFailedMessage() -> true
             expanded[message.id] == false -> false
             conversation?.recipients?.size ?: 0 > 1 && !message.isMe() && next?.compareSender(message) != true -> true
-            message.isDelivered() && next?.isDelivered() != true && age <= TIMESTAMP_THRESHOLD -> true
+            message.isDelivered() && next?.isDelivered() != true && age <= BubbleUtils.TIMESTAMP_THRESHOLD -> true
             else -> false
         })
-    }
-
-    private fun getBubble(canGroupWithPrevious: Boolean, canGroupWithNext: Boolean, isMe: Boolean): Int {
-        return when {
-            !canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_first else R.drawable.message_in_first
-            canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_middle else R.drawable.message_in_middle
-            canGroupWithPrevious && !canGroupWithNext -> if (isMe) R.drawable.message_out_last else R.drawable.message_in_last
-            else -> R.drawable.message_only
-        }
-    }
-
-    private fun canGroup(message: Message, other: Message?): Boolean {
-        if (other == null) return false
-        val diff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(message.date - other.date))
-        return message.compareSender(other) && diff < TIMESTAMP_THRESHOLD
     }
 
     override fun getItemViewType(position: Int): Int {

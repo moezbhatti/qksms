@@ -61,7 +61,7 @@
         app:textSize="tertiary"
         tools:text="1" />
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/attachments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,12 +69,15 @@
         android:layout_marginEnd="12dp"
         android:layout_marginStart="60dp"
         android:gravity="end"
+        android:nestedScrollingEnabled="false"
         android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timestamp" />
+        app:layout_constraintTop_toBottomOf="@id/timestamp"
+        tools:itemCount="1"
+        tools:listitem="@layout/mms_preview_list_item" />
 
     <common.widget.TightTextView
         android:id="@+id/body"
