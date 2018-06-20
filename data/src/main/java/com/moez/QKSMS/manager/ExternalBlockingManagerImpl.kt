@@ -26,7 +26,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
-import androidx.os.bundleOf
+import androidx.core.os.bundleOf
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Single

@@ -8,8 +8,8 @@ buildscript {
     ext.exoplayer_version = "2.8.1"
     ext.glide_version = "4.8.0-20180619.011009-9"
     ext.glide_compiler_version = "4.8.0-20180619.011013-9"
-    ext.kotlin_version = '1.2.31'
-    ext.ktx_version = "0.2"
+    ext.kotlin_version = '1.2.50'
+    ext.ktx_version = "1.0.0-alpha1"
     ext.lifecycle_version = '2.0.0-alpha1'
     ext.mockito_version = '2.18.3'
     ext.realm_version = '4.3.1'

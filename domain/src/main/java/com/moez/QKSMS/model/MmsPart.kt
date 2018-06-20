@@ -18,7 +18,7 @@
  */
 package com.moez.QKSMS.model
 
-import androidx.net.toUri
+import androidx.core.net.toUri
 import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.annotations.LinkingObjects
