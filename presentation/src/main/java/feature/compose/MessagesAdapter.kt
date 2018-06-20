@@ -32,7 +32,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.R
 import common.Navigator
 import common.base.QkRealmAdapter
@@ -48,9 +47,7 @@ import common.util.extensions.setVisible
 import compat.SubscriptionManagerCompat
 import feature.compose.BubbleUtils.canGroup
 import feature.compose.BubbleUtils.getBubble
-import feature.compose.part.MediaBinder
 import feature.compose.part.PartsAdapter
-import feature.compose.part.VCardBinder
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
@@ -62,6 +59,7 @@ import util.Preferences
 import util.extensions.isImage
 import util.extensions.isVCard
 import util.extensions.isVideo
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -154,7 +152,7 @@ class MessagesAdapter @Inject constructor(
         val next = if (position == itemCount - 1) null else getItem(position + 1)
         val view = viewHolder.itemView
 
-        view.clicks().subscribe {
+        view.setOnClickListener {
             when (toggleSelection(message.id, false)) {
                 true -> view.isSelected = isSelected(message.id)
                 false -> {
@@ -164,9 +162,10 @@ class MessagesAdapter @Inject constructor(
                 }
             }
         }
-        view.longClicks().subscribe {
+        view.setOnLongClickListener {
             toggleSelection(message.id)
             view.isSelected = isSelected(message.id)
+            true
         }
 
 
