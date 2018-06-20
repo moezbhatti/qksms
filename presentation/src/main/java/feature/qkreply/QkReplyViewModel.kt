@@ -24,6 +24,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
+import compat.SubscriptionManagerCompat
 import interactor.MarkRead
 import interactor.SendMessage
 import io.reactivex.rxkotlin.Observables
@@ -35,8 +36,9 @@ import io.reactivex.subjects.Subject
 import io.realm.RealmResults
 import model.Conversation
 import model.Message
+import repository.ConversationRepository
 import repository.MessageRepository
-import util.SubscriptionUtils
+import util.ActiveSubscriptionObservable
 import util.extensions.asObservable
 import util.extensions.mapNotNull
 import java.util.concurrent.TimeUnit
@@ -45,15 +47,16 @@ import javax.inject.Named
 
 class QkReplyViewModel @Inject constructor(
         @Named("threadId") threadId: Long,
+        private val conversationRepo: ConversationRepository,
         private val markRead: MarkRead,
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
         private val sendMessage: SendMessage,
-        private val subUtils: SubscriptionUtils
+        private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
 
     private val conversation by lazy {
-        messageRepo.getConversationAsync(threadId)
+        conversationRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { it.isLoaded }
                 .filter { it.isValid }
@@ -89,7 +92,8 @@ class QkReplyViewModel @Inject constructor(
                 .map { messages -> messages.lastOrNull()?.subId ?: -1 }
                 .distinctUntilChanged()
 
-        disposables += Observables.combineLatest(latestSubId, subUtils.subscriptionsObservable) { subId, subs ->
+        val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
+        disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
             val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()
@@ -111,7 +115,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { conversation -> conversation.id }
                 .autoDisposable(view.scope())
                 .subscribe { threadId ->
-                    markRead.execute(threadId) { newState { copy(hasError = true) } }
+                    markRead.execute(listOf(threadId)) { newState { copy(hasError = true) } }
                 }
 
         // Call
@@ -181,7 +185,7 @@ class QkReplyViewModel @Inject constructor(
                 .map { draft -> draft.toString() }
                 .observeOn(Schedulers.io())
                 .withLatestFrom(conversation.map { it.id }, { draft, threadId ->
-                    messageRepo.saveDraft(threadId, draft)
+                    conversationRepo.saveDraft(threadId, draft)
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -189,7 +193,7 @@ class QkReplyViewModel @Inject constructor(
         // Toggle to the next sim slot
         view.changeSimIntent
                 .withLatestFrom(state) { _, state ->
-                    val subs = subUtils.subscriptions
+                    val subs = subscriptionManager.activeSubscriptionInfoList
                     val subIndex = subs.indexOfFirst { it.subscriptionId == state.subscription?.subscriptionId }
                     val subscription = when {
                         subIndex == -1 -> null
@@ -214,7 +218,7 @@ class QkReplyViewModel @Inject constructor(
                     threadId
                 })
                 .doOnNext { threadId ->
-                    markRead.execute(threadId) {
+                    markRead.execute(listOf(threadId)) {
                         newState { copy(hasError = true) }
                     }
                 }

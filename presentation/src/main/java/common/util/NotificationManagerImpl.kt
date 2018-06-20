@@ -41,6 +41,7 @@ import mapper.CursorToPartImpl
 import receiver.MarkReadReceiver
 import receiver.MarkSeenReceiver
 import receiver.RemoteMessagingReceiver
+import repository.ConversationRepository
 import repository.MessageRepository
 import util.Preferences
 import util.extensions.isImage
@@ -51,8 +52,9 @@ import javax.inject.Singleton
 @Singleton
 class NotificationManagerImpl @Inject constructor(
         private val context: Context,
-        private val prefs: Preferences,
         private val colors: Colors,
+        private val conversationRepo: ConversationRepository,
+        private val prefs: Preferences,
         private val messageRepo: MessageRepository
 ) : manager.NotificationManager {
 
@@ -96,7 +98,7 @@ class NotificationManagerImpl @Inject constructor(
             return
         }
 
-        val conversation = messageRepo.getConversation(threadId) ?: return
+        val conversation = conversationRepo.getConversation(threadId) ?: return
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)
@@ -132,6 +134,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val messagingStyle = NotificationCompat.MessagingStyle("Me")
         if (conversation.recipients.size >= 2) {
+            messagingStyle.isGroupConversation = true
             messagingStyle.conversationTitle = conversation.getTitle()
         }
 
@@ -220,7 +223,7 @@ class NotificationManagerImpl @Inject constructor(
             return
         }
 
-        val conversation = messageRepo.getConversation(message.threadId) ?: return
+        val conversation = conversationRepo.getConversation(message.threadId) ?: return
         val threadId = conversation.id
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
@@ -269,7 +272,7 @@ class NotificationManagerImpl @Inject constructor(
         // Only proceed if the android version supports notification channels
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
-        messageRepo.getConversation(threadId)?.let { conversation ->
+        conversationRepo.getConversation(threadId)?.let { conversation ->
             val channelId = buildNotificationChannelId(threadId)
             val name = conversation.getTitle()
             val importance = NotificationManager.IMPORTANCE_HIGH

@@ -207,7 +207,6 @@
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
         android:background="?attr/selectableItemBackground"
-        android:contentDescription="@string/compose_attach_cd"
         android:padding="10dp"
         android:src="@drawable/ic_sim_card_black_24dp"
         android:tint="?android:attr/textColorSecondary"

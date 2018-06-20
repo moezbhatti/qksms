@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Archiviert</string>
   <string name="title_scheduled">Geplant</string>
   <string name="title_settings">Einstellungen</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Erscheinungsbild</string>
   <string name="title_conversations">In Posteingang suchen&#8230;</string>
   <string name="title_compose">Verfassen</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Überspringen</string>
   <string name="setup_next">Weiter</string>
   <string name="menu_call">Anrufen</string>
   <string name="menu_info">Details</string>
   <string name="menu_save">In Galerie speichern</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d ausgewählt</string>
   <string name="main_menu_clear">Zurücksetzen</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Archivieren</string>
   <string name="main_menu_unarchive">Wiederherstellen</string>
   <string name="main_menu_block">Blockieren</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Als Gruppennachricht senden</string>
   <string name="compose_send_group_summary">Empfänger und Antworten werden für jeden sichtbar sein</string>
   <string name="compose_messages_empty">Das ist der Beginn der Unterhaltung. Sag\' etwas nettes!</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Kontaktkarte</string>
   <string name="compose_hint">Schreibe eine Nachricht&#8230;</string>
   <string name="compose_menu_copy">Text kopieren</string>
   <string name="compose_menu_forward">Weiterleiten</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Vorherige</string>
   <string name="compose_menu_next">Nächste</string>
   <string name="compose_menu_clear">Löschen</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Anhang hinzufügen</string>
   <string name="compose_gallery_cd">Foto anhängen</string>
   <string name="compose_camera_cd">Foto aufnehmen</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Nachricht senden</string>
   <string name="message_status_sending">Wird gesendet&#8230;</string>
   <string name="message_status_delivered">Zugestellt %s</string>
   <string name="message_status_failed">Fehler beim Senden. Tippen, um es erneut zu versuchen</string>
   <string name="info_title">Details</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Unterhaltungstitel</string>
+  <string name="info_name_hint">Titel eingeben</string>
   <string name="info_notifications">Benachrichtigungen</string>
   <string name="info_theme">Erscheinungsbild</string>
   <string name="info_archive">Archivieren</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Als gelesen markieren</string>
   <string name="button_cancel">Abbrechen</string>
   <string name="button_delete">Löschen</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Speichern</string>
   <string name="button_more">Mehr</string>
   <string name="button_set">OK</string>
   <string name="button_unblock">Entsperren</string>

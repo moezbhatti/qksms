@@ -19,14 +19,14 @@
 package interactor
 
 import io.reactivex.Flowable
-import repository.MessageRepository
+import repository.ConversationRepository
 import javax.inject.Inject
 
-class MarkUnblocked @Inject constructor(private val messageRepo: MessageRepository) : Interactor<List<Long>>() {
+class MarkUnblocked @Inject constructor(private val conversationRepo: ConversationRepository) : Interactor<List<Long>>() {
 
     override fun buildObservable(params: List<Long>): Flowable<*> {
         return Flowable.just(params.toLongArray())
-                .doOnNext { threadIds -> messageRepo.markUnblocked(*threadIds) }
+                .doOnNext { threadIds -> conversationRepo.markUnblocked(*threadIds) }
     }
 
 }

@@ -26,9 +26,11 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
@@ -40,6 +42,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 import common.base.QkThemedActivity
 import common.util.extensions.autoScrollToStart
+import common.util.extensions.resolveThemeColor
 import common.util.extensions.scrapViews
 import common.util.extensions.setBackgroundTint
 import common.util.extensions.setTint
@@ -134,6 +137,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .subscribe { messageList.scrapViews() }
 
         window.callback = ComposeWindowCallback(window.callback, this)
+
+        // These theme attributes don't apply themselves on API 21
+        if (Build.VERSION.SDK_INT <= 22) {
+            composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+        }
     }
 
     override fun onStart() {
@@ -175,6 +183,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
         toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
         toolbar.menu.findItem(R.id.copy)?.isVisible = !state.editingMode && state.selectedMessages == 1
+        toolbar.menu.findItem(R.id.details)?.isVisible = !state.editingMode && state.selectedMessages == 1
         toolbar.menu.findItem(R.id.delete)?.isVisible = !state.editingMode && state.selectedMessages > 0
         toolbar.menu.findItem(R.id.forward)?.isVisible = !state.editingMode && state.selectedMessages == 1
         toolbar.menu.findItem(R.id.previous)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
@@ -208,6 +217,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         counter.setVisible(counter.text.isNotBlank())
 
         sim.setVisible(state.subscription != null)
+        sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
         simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
 
         send.isEnabled = state.canSend
@@ -216,6 +226,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun clearSelection() {
         messageAdapter.clearSelection()
+    }
+
+    override fun showDetails(details: String) {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.compose_details_title)
+                .setMessage(details)
+                .setCancelable(true)
+                .show()
     }
 
     override fun requestStoragePermission() {

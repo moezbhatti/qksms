@@ -49,12 +49,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         set(value) {
             if (field == value) return
             field = value
-
-            colors.theme(value).run {
-                setBackgroundTint(theme)
-                initial.setTextColor(textPrimary)
-                icon.setTint(textPrimary)
-            }
+            applyTheme(value)
         }
 
     private var lookupKey: String? = null
@@ -106,13 +101,16 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         super.onFinishInflate()
 
         if (!isInEditMode) {
-            colors.theme(threadId).run {
-                setBackgroundTint(theme)
-                initial.setTextColor(textPrimary)
-                icon.setTint(textPrimary)
-            }
-
+            applyTheme(threadId)
             updateView()
+        }
+    }
+
+    fun applyTheme(threadId: Long) {
+        colors.theme(threadId).run {
+            setBackgroundTint(theme)
+            initial.setTextColor(textPrimary)
+            icon.setTint(textPrimary)
         }
     }
 

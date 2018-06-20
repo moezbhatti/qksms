@@ -20,10 +20,12 @@ package interactor
 
 import io.reactivex.Flowable
 import model.Attachment
+import repository.ConversationRepository
 import repository.MessageRepository
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
+        private val conversationRepo: ConversationRepository,
         private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params>() {
 
@@ -39,8 +41,10 @@ class SendMessage @Inject constructor(
                         messageRepo.sendMms(params.subId, params.threadId, params.addresses, params.body, params.attachments)
                     }
                 }
-                .doOnNext { messageRepo.updateConversations(params.threadId) }
-                .doOnNext { messageRepo.markUnarchived(params.threadId) }
+                // If this was the first message sent in the conversation, the conversation might not exist yet
+                .doOnNext { conversationRepo.getOrCreateConversation(params.threadId) }
+                .doOnNext { conversationRepo.updateConversations(params.threadId) }
+                .doOnNext { conversationRepo.markUnarchived(params.threadId) }
     }
 
 }

@@ -24,11 +24,8 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.database.sqlite.SqliteWrapper
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
-import android.provider.BaseColumns
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
@@ -37,9 +34,11 @@ import com.klinker.android.send_message.BroadcastUtils
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
+import compat.TelephonyCompat
 import filter.ConversationFilter
 import io.realm.Case
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.Sort
 import manager.KeyManager
@@ -50,11 +49,15 @@ import model.Contact
 import model.Conversation
 import model.Message
 import model.MmsPart
+import model.Recipient
 import model.SearchResult
-import util.MessageUtils
+import timber.log.Timber
 import util.Preferences
 import util.extensions.anyOf
+import util.extensions.forEach
+import util.extensions.insertOrUpdate
 import util.extensions.map
+import util.tryOrNull
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -63,132 +66,9 @@ import javax.inject.Singleton
 class MessageRepositoryImpl @Inject constructor(
         private val context: Context,
         private val messageIds: KeyManager,
-        private val conversationFilter: ConversationFilter,
-        private val cursorToConversation: CursorToConversation,
-        private val cursorToRecipient: CursorToRecipient,
+        private val conversationRepo: ConversationRepository,
         private val imageRepository: ImageRepository,
         private val prefs: Preferences) : MessageRepository {
-
-    override fun getConversations(archived: Boolean): RealmResults<Conversation> {
-        return Realm.getDefaultInstance()
-                .where(Conversation::class.java)
-                .notEqualTo("id", 0L)
-                .greaterThan("count", 0)
-                .equalTo("archived", archived)
-                .equalTo("blocked", false)
-                .isNotEmpty("recipients")
-                .sort("date", Sort.DESCENDING)
-                .findAllAsync()
-    }
-
-    override fun getConversationsSnapshot(): List<Conversation> {
-        val realm = Realm.getDefaultInstance()
-        return realm.copyFromRealm(realm.where(Conversation::class.java)
-                .notEqualTo("id", 0L)
-                .greaterThan("count", 0)
-                .equalTo("archived", false)
-                .equalTo("blocked", false)
-                .isNotEmpty("recipients")
-                .sort("date", Sort.DESCENDING)
-                .findAll())
-    }
-
-    override fun setConversationName(id: Long, name: String) {
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                realm.where(Conversation::class.java)
-                        .equalTo("id", id)
-                        .findFirst()
-                        ?.name = name
-            }
-        }
-    }
-
-    override fun searchConversations(query: String): List<SearchResult> {
-        val conversations = getConversationsSnapshot()
-
-        val messagesByConversation = Realm.getDefaultInstance()
-                .where(Message::class.java)
-                .contains("body", query, Case.INSENSITIVE)
-                .findAll()
-                .groupBy { message -> message.threadId }
-                .filter { (threadId, _) -> conversations.firstOrNull { it.id == threadId } != null }
-                .map { (threadId, messages) -> Pair(conversations.first { it.id == threadId }, messages.size) }
-                .map { (conversation, messages) -> SearchResult(query, conversation, messages) }
-                .sortedByDescending { result -> result.messages }
-
-        return conversations
-                .filter { conversation -> conversationFilter.filter(conversation, query) }
-                .map { conversation -> SearchResult(query, conversation, 0) }
-                .plus(messagesByConversation)
-    }
-
-    override fun getBlockedConversations(): RealmResults<Conversation> {
-        return Realm.getDefaultInstance()
-                .where(Conversation::class.java)
-                .equalTo("blocked", true)
-                .findAllAsync()
-    }
-
-    override fun getConversationAsync(threadId: Long): Conversation {
-        return Realm.getDefaultInstance()
-                .where(Conversation::class.java)
-                .equalTo("id", threadId)
-                .findFirstAsync()
-    }
-
-    override fun getConversation(threadId: Long): Conversation? {
-        return Realm.getDefaultInstance()
-                .where(Conversation::class.java)
-                .equalTo("id", threadId)
-                .findFirst()
-    }
-
-    override fun getOrCreateConversation(threadId: Long): Conversation? {
-        return getConversation(threadId) ?: getConversationFromCp(threadId)
-    }
-
-    override fun getOrCreateConversation(address: String): Conversation? {
-        return getOrCreateConversation(listOf(address))
-    }
-
-    override fun getOrCreateConversation(addresses: List<String>): Conversation? {
-        return addresses
-                .map { address ->
-                    when (MessageUtils.isEmailAddress(address)) {
-                        true -> MessageUtils.extractAddrSpec(address)
-                        false -> address
-                    }
-                }
-                .let { recipients ->
-                    Uri.parse("content://mms-sms/threadID").buildUpon().apply {
-                        recipients.forEach { recipient -> appendQueryParameter("recipient", recipient) }
-                    }.build()
-                }
-                .let { uri -> SqliteWrapper.query(context, context.contentResolver, uri, arrayOf(BaseColumns._ID), null, null, null) }
-                ?.use { cursor -> if (cursor.moveToFirst()) cursor.getLong(0) else null }
-                ?.takeIf { threadId -> threadId != 0L }
-                ?.let { threadId ->
-                    var conversation = getConversation(threadId)
-                    if (conversation != null) conversation = Realm.getDefaultInstance().copyFromRealm(conversation)
-
-                    conversation ?: getConversationFromCp(threadId)
-                }
-    }
-
-    override fun saveDraft(threadId: Long, draft: String) {
-        Realm.getDefaultInstance().use { realm ->
-            val conversation = realm.where(Conversation::class.java)
-                    .equalTo("id", threadId)
-                    .findFirst()
-
-            conversation?.let {
-                realm.executeTransaction {
-                    conversation.draft = draft
-                }
-            }
-        }
-    }
 
     override fun getMessages(threadId: Long, query: String): RealmResults<Message> {
         return Realm.getDefaultInstance()
@@ -266,84 +146,6 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAll()
     }
 
-    override fun updateConversations(vararg threadIds: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            realm.refresh()
-
-            threadIds.forEach { threadId ->
-                val conversation = realm
-                        .where(Conversation::class.java)
-                        .equalTo("id", threadId)
-                        .findFirst() ?: return
-
-                val messages = realm
-                        .where(Message::class.java)
-                        .equalTo("threadId", threadId)
-                        .sort("date", Sort.DESCENDING)
-                        .findAll()
-
-                val message = messages.firstOrNull()
-
-                realm.executeTransaction {
-                    conversation.count = messages.size
-                    conversation.date = message?.date ?: 0
-                    conversation.snippet = message?.getSummary() ?: ""
-                    conversation.read = message?.read ?: true
-                    conversation.me = message?.isMe() ?: false
-                }
-            }
-        }
-    }
-
-    override fun markArchived(vararg threadIds: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            val conversations = realm.where(Conversation::class.java)
-                    .anyOf("id", threadIds)
-                    .findAll()
-
-            realm.executeTransaction {
-                conversations.forEach { it.archived = true }
-            }
-        }
-    }
-
-    override fun markUnarchived(vararg threadIds: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            val conversations = realm.where(Conversation::class.java)
-                    .anyOf("id", threadIds)
-                    .findAll()
-
-            realm.executeTransaction {
-                conversations.forEach { it.archived = false }
-            }
-        }
-    }
-
-    override fun markBlocked(vararg threadIds: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            val conversations = realm.where(Conversation::class.java)
-                    .anyOf("id", threadIds)
-                    .findAll()
-
-            realm.executeTransaction {
-                conversations.forEach { it.blocked = true }
-            }
-        }
-    }
-
-    override fun markUnblocked(vararg threadIds: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            val conversations = realm.where(Conversation::class.java)
-                    .anyOf("id", threadIds)
-                    .equalTo("archived", false)
-                    .findAll()
-
-            realm.executeTransaction {
-                conversations.forEach { it.blocked = false }
-            }
-        }
-    }
-
     override fun markAllSeen() {
         val realm = Realm.getDefaultInstance()
         val messages = realm.where(Message::class.java).equalTo("seen", false).findAll()
@@ -366,10 +168,10 @@ class MessageRepositoryImpl @Inject constructor(
         realm.close()
     }
 
-    override fun markRead(threadId: Long) {
+    override fun markRead(vararg threadIds: Long) {
         Realm.getDefaultInstance()?.use { realm ->
             val messages = realm.where(Message::class.java)
-                    .equalTo("threadId", threadId)
+                    .anyOf("threadId", threadIds)
                     .beginGroup()
                     .equalTo("read", false)
                     .or()
@@ -389,11 +191,26 @@ class MessageRepositoryImpl @Inject constructor(
         values.put(Telephony.Sms.SEEN, true)
         values.put(Telephony.Sms.READ, true)
 
-        try {
-            val uri = ContentUris.withAppendedId(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId)
-            context.contentResolver.update(uri, values, "${Telephony.Sms.READ} = 0", null)
-        } catch (exception: Exception) {
+        threadIds.forEach { threadId ->
+            try {
+                val uri = ContentUris.withAppendedId(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId)
+                context.contentResolver.update(uri, values, "${Telephony.Sms.READ} = 0", null)
+            } catch (exception: Exception) {
+                Timber.w(exception)
+            }
+        }
+    }
 
+    override fun markUnread(vararg threadIds: Long) {
+        Realm.getDefaultInstance()?.use { realm ->
+            val conversation = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .equalTo("read", true)
+                    .findAll()
+
+            realm.executeTransaction {
+                conversation.forEach { it.read = false }
+            }
         }
     }
 
@@ -550,6 +367,9 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Update the contentId after the message has been inserted to the content provider
         // The message might have been deleted by now, so only proceed if it's valid
+        //
+        // We do this after inserting the message because it might be slow, and we want the message
+        // to be inserted into Realm immediately. We don't need to do this after receiving one
         realm.executeTransaction { managedMessage?.takeIf { it.isValid }?.contentId = uri.lastPathSegment.toLong() }
         realm.close()
 
@@ -557,23 +377,6 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message {
-
-        // Insert the message to Realm
-        val message = Message().apply {
-            this.address = address
-            this.body = body
-            this.dateSent = sentTime
-            this.date = System.currentTimeMillis()
-            this.subId = subId
-
-            id = messageIds.newId()
-            threadId = getOrCreateConversation(address)?.id ?: 0L
-            boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
-            type = "sms"
-        }
-        val realm = Realm.getDefaultInstance()
-        var managedMessage: Message? = null
-        realm.executeTransaction { managedMessage = realm.copyToRealmOrUpdate(message) }
 
         // Insert the message to the native content provider
         val values = ContentValues().apply {
@@ -584,11 +387,21 @@ class MessageRepositoryImpl @Inject constructor(
         }
         val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
 
-        // Update the contentId after the message has been inserted to the content provider
-        realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
-        realm.close()
+        // Insert the message to Realm
+        return Message().apply {
+            this.address = address
+            this.body = body
+            this.dateSent = sentTime
+            this.date = System.currentTimeMillis()
+            this.subId = subId
 
-        return message
+            id = messageIds.newId()
+            threadId = conversationRepo.getOrCreateConversation(address)?.id ?: 0L
+            contentId = uri.lastPathSegment.toLong()
+            boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
+            type = "sms"
+            insertOrUpdate()
+        }
     }
 
     /**
@@ -715,57 +528,6 @@ class MessageRepositoryImpl @Inject constructor(
 
             uris.forEach { uri -> context.contentResolver.delete(uri, null, null) }
         }
-    }
-
-    override fun deleteConversations(vararg threadIds: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            val conversation = realm.where(Conversation::class.java).anyOf("id", threadIds).findAll()
-            val messages = realm.where(Message::class.java).anyOf("threadId", threadIds).findAll()
-
-            realm.executeTransaction {
-                conversation.deleteAllFromRealm()
-                messages.deleteAllFromRealm()
-            }
-        }
-
-        threadIds.forEach { threadId ->
-            val uri = ContentUris.withAppendedId(Telephony.Threads.CONTENT_URI, threadId)
-            context.contentResolver.delete(uri, null, null)
-        }
-    }
-
-    private fun getConversationFromCp(threadId: Long): Conversation? {
-        return cursorToConversation.getConversationCursor(threadId)
-                ?.takeIf { cursor -> cursor.moveToFirst() }
-                ?.use { cursor ->
-                    val conversation = cursorToConversation.map(cursor)
-
-                    val realm = Realm.getDefaultInstance()
-                    val contacts = realm.copyFromRealm(realm.where(Contact::class.java).findAll())
-
-                    val recipients = conversation.recipients
-                            .map { recipient -> recipient.id }
-                            .map { id -> cursorToRecipient.getRecipientCursor(id) }
-                            .mapNotNull { recipientCursor ->
-                                // Map the recipient cursor to a list of recipients
-                                recipientCursor?.use { recipientCursor.map { cursorToRecipient.map(recipientCursor) } }
-                            }
-                            .flatten()
-                            .map { recipient ->
-                                recipient.apply {
-                                    contact = contacts.firstOrNull {
-                                        it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
-                                    }
-                                }
-                            }
-
-                    conversation.recipients.clear()
-                    conversation.recipients.addAll(recipients)
-                    realm.executeTransaction { it.insertOrUpdate(conversation) }
-                    realm.close()
-
-                    conversation
-                }
     }
 
 }

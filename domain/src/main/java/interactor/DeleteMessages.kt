@@ -19,10 +19,12 @@
 package interactor
 
 import io.reactivex.Flowable
+import repository.ConversationRepository
 import repository.MessageRepository
 import javax.inject.Inject
 
 class DeleteMessages @Inject constructor(
+        private val conversationRepo: ConversationRepository,
         private val messageRepo: MessageRepository,
         private val updateBadge: UpdateBadge
 ) : Interactor<DeleteMessages.Params>() {
@@ -32,7 +34,7 @@ class DeleteMessages @Inject constructor(
     override fun buildObservable(params: Params): Flowable<*> {
         return Flowable.just(params.messageIds.toLongArray())
                 .doOnNext { messageIds -> messageRepo.deleteMessages(*messageIds) } // Delete the messages
-                .doOnNext { params.threadId?.let { messageRepo.updateConversations(it) } } // Update the conversation
+                .doOnNext { params.threadId?.let { conversationRepo.updateConversations(it) } } // Update the conversation
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

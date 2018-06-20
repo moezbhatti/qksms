@@ -41,7 +41,7 @@ import injection.appComponent
 import model.Contact
 import model.Conversation
 import model.PhoneNumber
-import repository.MessageRepository
+import repository.ConversationRepository
 import util.Preferences
 import javax.inject.Inject
 
@@ -53,8 +53,8 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
     @Inject lateinit var context: Context
     @Inject lateinit var colors: Colors
+    @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var prefs: Preferences
 
     private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -83,7 +83,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
     }
 
     override fun onDataSetChanged() {
-        conversations = messageRepo.getConversationsSnapshot()
+        conversations = conversationRepo.getConversationsSnapshot()
 
         val remoteViews = RemoteViews(context.packageName, R.layout.widget)
         appWidgetManager.partiallyUpdateAppWidget(appWidgetId, remoteViews)

@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">Arşivlenmiş</string>
   <string name="title_scheduled">Zamanlanmış</string>
   <string name="title_settings">Ayarlar</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Tema</string>
   <string name="title_conversations">Gelen mesajlarda ara...</string>
   <string name="title_compose">Bir isme veya numaraya yazın</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Atla</string>
   <string name="setup_next">Devam</string>
   <string name="menu_call">Ara</string>
   <string name="menu_info">Ayrıntılar</string>
   <string name="menu_save">Galeriye Kaydet</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d Seçili</string>
   <string name="main_menu_clear">Temizle</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Arşiv</string>
   <string name="main_menu_unarchive">Arşivden çıkar</string>
   <string name="main_menu_block">Engelle</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Grup mesajı gönder</string>
   <string name="compose_send_group_summary">Alıcılar ve yanıtlar herkese görünür olacak</string>
   <string name="compose_messages_empty">Senin konuşma başlıyor. Güzel bir şey söyle!</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Kişi Kartı</string>
   <string name="compose_hint">Mesaj Yaz...</string>
   <string name="compose_menu_copy">Metni kopyala</string>
   <string name="compose_menu_forward">Yönlendir</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Önceki</string>
   <string name="compose_menu_next">Sonraki</string>
   <string name="compose_menu_clear">Temizle</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Dosya Ekle</string>
   <string name="compose_gallery_cd">Bir fotoğraf eklemek</string>
   <string name="compose_camera_cd">Fotoğraf Çek</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Mesaj gönder</string>
   <string name="message_status_sending">Gönderiliyor...</string>
   <string name="message_status_delivered">Teslim Edildi %s</string>
   <string name="message_status_failed">Gönderilemedi. Yeniden denemek için dokunun</string>
   <string name="info_title">Ayrıntılar</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Konuşma başlığı</string>
+  <string name="info_name_hint">Başlık girin</string>
   <string name="info_notifications">Bildirimler</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Arşivle</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Okundu olarak işaretle</string>
   <string name="button_cancel">İptal</string>
   <string name="button_delete">Sil</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Kaydet</string>
   <string name="button_more">Daha fazla</string>
   <string name="button_set">Ayarla</string>
   <string name="button_unblock">Engelini kaldır</string>

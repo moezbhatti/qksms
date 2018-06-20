@@ -29,6 +29,7 @@ import interactor.SaveImage
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import repository.ConversationRepository
 import repository.MessageRepository
 import util.extensions.mapNotNull
 import javax.inject.Inject
@@ -36,6 +37,7 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
         private val intent: Intent,
         private val context: Context,
+        private val conversationRepo: ConversationRepository,
         private val messageRepo: MessageRepository,
         private val saveImage: SaveImage
 ) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
@@ -51,7 +53,7 @@ class GalleryViewModel @Inject constructor(
 
         disposables += partIdFlowable
                 .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }
-                .mapNotNull { message -> messageRepo.getConversation(message.threadId) }
+                .mapNotNull { message -> conversationRepo.getConversation(message.threadId) }
                 .subscribe { conversation -> newState { copy(title = conversation.getTitle()) } }
     }
 

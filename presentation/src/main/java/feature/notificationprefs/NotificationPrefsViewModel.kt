@@ -31,7 +31,7 @@ import common.base.QkViewModel
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
-import repository.MessageRepository
+import repository.ConversationRepository
 import util.Preferences
 import util.extensions.mapNotNull
 import javax.inject.Inject
@@ -39,7 +39,7 @@ import javax.inject.Inject
 class NotificationPrefsViewModel @Inject constructor(
         private val intent: Intent,
         private val context: Context,
-        private val messageRepo: MessageRepository,
+        private val conversationRepo: ConversationRepository,
         private val navigator: Navigator,
         private val prefs: Preferences
 ) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState()) {
@@ -58,7 +58,7 @@ class NotificationPrefsViewModel @Inject constructor(
         ringtone = prefs.ringtone(threadId)
 
         disposables += Flowable.just(threadId)
-                .mapNotNull { threadId -> messageRepo.getConversation(threadId) }
+                .mapNotNull { threadId -> conversationRepo.getConversation(threadId) }
                 .map { conversation -> conversation.getTitle() }
                 .subscribeOn(Schedulers.io())
                 .subscribe { title -> newState { copy(conversationTitle = title) } }

@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">В архиве</string>
   <string name="title_scheduled">Запланировано</string>
   <string name="title_settings">Настройки</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">Тема</string>
   <string name="title_conversations">Поиск во входящих&#8230;</string>
   <string name="title_compose">Написать</string>
-  <string name="title_qksms_plus">QKSMS+</string>
   <string name="setup_skip">Пропустить</string>
   <string name="setup_next">Продолжить</string>
   <string name="menu_call">Позвонить</string>
   <string name="menu_info">Подробности</string>
   <string name="menu_save">Сохранить в галерее</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d выбран(о)</string>
   <string name="main_menu_clear">Очистить</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Архивировать</string>
   <string name="main_menu_unarchive">Разархивировать</string>
   <string name="main_menu_block">Блокировать</string>
@@ -78,7 +79,7 @@
   <string name="compose_send_group_title">Отправить как групповое сообщение</string>
   <string name="compose_send_group_summary">Получатели и ответы будут видны всем</string>
   <string name="compose_messages_empty">Это начало Вашей беседы. Скажите что-нибудь приятное!</string>
-  <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_vcard_label">Карточка контакта</string>
   <string name="compose_hint">Написать сообщение&#8230;</string>
   <string name="compose_menu_copy">Скопировать текст</string>
   <string name="compose_menu_forward">Переслать</string>
@@ -86,16 +87,28 @@
   <string name="compose_menu_previous">Назад</string>
   <string name="compose_menu_next">Вперед</string>
   <string name="compose_menu_clear">Очистить</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Добавить вложение</string>
   <string name="compose_gallery_cd">Прикрепить фото</string>
   <string name="compose_camera_cd">Сделать снимок</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Отправить сообщение</string>
   <string name="message_status_sending">Отправка&#8230;</string>
   <string name="message_status_delivered">Доставлено %s</string>
   <string name="message_status_failed">Не удалось отправить. Коснитесь, чтобы попробовать ещё раз.</string>
   <string name="info_title">Подробности</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Название разговора</string>
+  <string name="info_name_hint">Введите название</string>
   <string name="info_notifications">Уведомления</string>
   <string name="info_theme">Тема</string>
   <string name="info_archive">Архивировать</string>
@@ -161,7 +174,7 @@
   <string name="qksms_plus_donate">Пожертвовать через PayPal</string>
   <string name="qksms_plus_coming_soon">Скоро</string>
   <string name="qksms_plus_themes_title">Премиум темы</string>
-  <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
+  <string name="qksms_plus_themes_summary">Разблокируйте красивые цвета темы, недоступные в палитре Material Design</string>
   <string name="qksms_plus_emoji_title">Пользовательские авто-эмодзи</string>
   <string name="qksms_plus_emoji_summary">Создайте ярлык пользовательских авто-эмодзи</string>
   <string name="qksms_plus_backup_title">Бэкап сообщений</string>
@@ -195,7 +208,7 @@
   <string name="notification_read">Пометить прочитанным</string>
   <string name="button_cancel">Отмена</string>
   <string name="button_delete">Удалить</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Сохранить</string>
   <string name="button_more">Еще</string>
   <string name="button_set">Задать</string>
   <string name="button_unblock">Разблокировать</string>

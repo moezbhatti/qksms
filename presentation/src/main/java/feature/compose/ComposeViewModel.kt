@@ -19,8 +19,6 @@
 package feature.compose
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.view.inputmethod.EditorInfo
@@ -30,7 +28,10 @@ import com.uber.autodispose.kotlin.autoDisposable
 import common.Navigator
 import common.base.QkViewModel
 import common.util.ClipboardUtils
+import common.util.MessageDetailsFormatter
 import common.util.extensions.makeToast
+import compat.SubscriptionManagerCompat
+import compat.TelephonyCompat
 import filter.ContactFilter
 import interactor.CancelDelayedMessage
 import interactor.ContactSync
@@ -55,108 +56,78 @@ import model.Conversation
 import model.Message
 import model.PhoneNumber
 import repository.ContactRepository
+import repository.ConversationRepository
 import repository.MessageRepository
-import util.SubscriptionUtils
+import util.ActiveSubscriptionObservable
 import util.extensions.asObservable
 import util.extensions.isImage
 import util.extensions.mapNotNull
 import util.extensions.removeAccents
 import util.tryOrNull
-import java.net.URLDecoder
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Named
 
 class ComposeViewModel @Inject constructor(
-        private val intent: Intent,
+        @Named("query") private val query: String,
+        @Named("threadId") private val threadId: Long,
+        @Named("address") private val address: String,
+        @Named("text") private val sharedText: String,
+        @Named("attachments") private val sharedAttachments: List<Attachment>,
         private val context: Context,
         private val cancelMessage: CancelDelayedMessage,
         private val contactFilter: ContactFilter,
         private val contactsRepo: ContactRepository,
+        private val conversationRepo: ConversationRepository,
         private val deleteMessages: DeleteMessages,
         private val markRead: MarkRead,
+        private val messageDetailsFormatter: MessageDetailsFormatter,
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
         private val retrySending: RetrySending,
         private val sendMessage: SendMessage,
-        private val subUtils: SubscriptionUtils,
+        private val subscriptionManager: SubscriptionManagerCompat,
         private val syncContacts: ContactSync
-) : QkViewModel<ComposeView, ComposeState>(ComposeState(query = intent.extras?.getString("query") ?: "")) {
+) : QkViewModel<ComposeView, ComposeState>(ComposeState(
+        editingMode = threadId == 0L,
+        selectedConversation = threadId,
+        query = query)
+) {
 
-    private var sharedText: String = intent.extras?.getString(Intent.EXTRA_TEXT) ?: ""
-    private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(ArrayList())
+    private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(sharedAttachments)
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
-    private val selectedContacts: Observable<List<Contact>>
+    private val selectedContacts: Subject<List<Contact>> = BehaviorSubject.createDefault(listOf())
+    private val threadIdSubject: Subject<Long> = BehaviorSubject.create()
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
     private val messages: Subject<List<Message>> = BehaviorSubject.create()
 
     init {
-        // If there are any image attachments, we'll set those as the initial attachments for the
-        // conversation
-        val sharedImages = mutableListOf<Uri>()
-        intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.run { sharedImages += this }
-        intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.run { sharedImages += this }
-        attachments.onNext(sharedImages.map { uri -> Attachment(uri) })
-
-        val threadId = intent.extras?.getLong("threadId") ?: 0L
-        var address = ""
-
-        intent.data?.let {
-            val data = it.toString()
-            address = when {
-                it.scheme.startsWith("smsto") -> data.replace("smsto:", "")
-                it.scheme.startsWith("mmsto") -> data.replace("mmsto:", "")
-                it.scheme.startsWith("sms") -> data.replace("sms:", "")
-                it.scheme.startsWith("mms") -> data.replace("mms:", "")
-                else -> ""
-            }
-
-            // The dialer app on Oreo sends a URL encoded string, make sure to decode it
-            if (address.contains('%')) address = URLDecoder.decode(address, "UTF-8")
-        }
-
-        val initialConversation: Observable<Conversation> = when {
-            threadId != 0L -> {
-                newState { copy(selectedConversation = threadId, editingMode = false) }
-                messageRepo.getConversationAsync(threadId).asObservable()
-            }
-
-            address.isNotBlank() -> {
-                newState { copy(editingMode = false) }
-                Observable.just(address)
-                        .mapNotNull { messageRepo.getOrCreateConversation(it) }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-            }
-
-            else -> {
-                newState { copy(editingMode = true) }
-                Observable.empty()
-            }
-        }
-
-        selectedContacts = contactsReducer
-                .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
-                .doOnNext { contacts -> newState { copy(selectedContacts = contacts) } }
+        val initialConversation = threadId.takeIf { it != 0L }
+                ?.let(conversationRepo::getConversationAsync)
+                ?.asObservable()
+                ?: Observable.empty()
 
         // Merges two potential conversation sources (threadId from constructor and contact selection) into a single
         // stream of conversations. If the conversation was deleted, notify the activity to shut down
         disposables += selectedContacts
-                .skipUntil(state.filter { state -> state.editingMode })
-                .takeUntil(state.filter { state -> !state.editingMode })
+                .skipWhile { it.isEmpty() }
                 .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
-                .observeOn(Schedulers.computation())
                 .doOnNext { newState { copy(loading = true) } }
-                .mapNotNull { addresses ->
-                    val conversation = messageRepo.getOrCreateConversation(addresses)
-                    newState { copy(loading = false) }
-                    conversation
-                }
+                .observeOn(Schedulers.computation())
+                .map { addresses -> conversationRepo.getThreadId(addresses) ?: 0 }
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { newState { copy(loading = false) } }
+                .mergeWith(threadIdSubject)
+                .switchMap { threadId ->
+                    conversationRepo.getConversations().asObservable()
+                            .map { conversations -> conversations.filter { it.id == threadId } }
+                            .map { conversations -> conversations.firstOrNull() ?: Conversation(id = threadId) }
+                }
                 .mergeWith(initialConversation)
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->
@@ -165,8 +136,18 @@ class ComposeViewModel @Inject constructor(
                     }
                 }
                 .filter { conversation -> conversation.isValid }
-                .filter { conversation -> conversation.id != 0L }
                 .subscribe(conversation::onNext)
+
+        if (address.isNotBlank()) {
+            selectedContacts.onNext(listOf(Contact(numbers = RealmList(PhoneNumber(address)))))
+        }
+
+        disposables += contactsReducer
+                .scan(listOf<Contact>(), { previousState, reducer -> reducer(previousState) })
+                .doOnNext { contacts -> newState { copy(selectedContacts = contacts) } }
+                .skipUntil(state.filter { state -> state.editingMode })
+                .takeUntil(state.filter { state -> !state.editingMode })
+                .subscribe(selectedContacts::onNext)
 
         // When the conversation changes, update the threadId and the messages for the adapter
         disposables += conversation
@@ -211,7 +192,8 @@ class ComposeViewModel @Inject constructor(
                 .map { messages -> messages.lastOrNull()?.subId ?: -1 }
                 .distinctUntilChanged()
 
-        disposables += Observables.combineLatest(latestSubId, subUtils.subscriptionsObservable) { subId, subs ->
+        val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
+        disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
             val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()
@@ -333,6 +315,16 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { view.clearSelection() }
 
+        // Show the message details
+        view.optionsItemIntent
+                .filter { it == R.id.details }
+                .withLatestFrom(view.messagesSelectedIntent) { _, messages -> messages }
+                .mapNotNull { messages -> messages.firstOrNull().also { view.clearSelection() } }
+                .mapNotNull(messageRepo::getMessage)
+                .map(messageDetailsFormatter::format)
+                .autoDisposable(view.scope())
+                .subscribe { view.showDetails(it) }
+
         // Delete the messages
         view.optionsItemIntent
                 .filter { it == R.id.delete }
@@ -427,7 +419,7 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(conversation, { _, conversation -> conversation.id })
                 .observeOn(Schedulers.io())
                 .withLatestFrom(view.textChangedIntent, { threadId, draft ->
-                    messageRepo.saveDraft(threadId, draft.toString())
+                    conversationRepo.saveDraft(threadId, draft.toString())
                 })
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -439,7 +431,7 @@ class ComposeViewModel @Inject constructor(
                 .mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> markRead.execute(threadId) }
+                .subscribe { threadId -> markRead.execute(listOf(threadId)) }
 
         // Open the attachment options
         view.attachIntent
@@ -523,7 +515,7 @@ class ComposeViewModel @Inject constructor(
         // Toggle to the next sim slot
         view.changeSimIntent
                 .withLatestFrom(state) { _, state ->
-                    val subs = subUtils.subscriptions
+                    val subs = subscriptionManager.activeSubscriptionInfoList
                     val subIndex = subs.indexOfFirst { it.subscriptionId == state.subscription?.subscriptionId }
                     val subscription = when {
                         subIndex == -1 -> null
@@ -537,25 +529,29 @@ class ComposeViewModel @Inject constructor(
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
-                .withLatestFrom(view.textChangedIntent, { _, body -> body })
+                .withLatestFrom(view.textChangedIntent) { _, body -> body }
                 .map { body -> body.toString() }
                 .withLatestFrom(state, attachments, conversation, selectedContacts, { body, state, attachments, conversation, contacts ->
                     val subId = state.subscription?.subscriptionId ?: -1
 
                     if (state.sendAsGroup) {
-                        val threadId = conversation.id
-                        val addresses = conversation.recipients.map { it.address }
+                        val addresses = when (conversation.recipients.isNotEmpty()) {
+                            true -> conversation.recipients.map { it.address }
+                            false -> contacts.mapNotNull { it.numbers.firstOrNull()?.address }
+                        }
+                        val threadId = conversation.id.takeIf { it > 0 }
+                                ?: TelephonyCompat.getOrCreateThreadId(context, addresses).also(threadIdSubject::onNext)
                         sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
                     } else {
                         contacts
                                 .map { contact -> contact.numbers }
                                 .mapNotNull { numbers -> numbers.firstOrNull() }
                                 .map { number -> number.address }
-                                .mapNotNull { address -> messageRepo.getOrCreateConversation(address) }
-                                .filter { it.recipients.isNotEmpty() }
-                                .forEach {
-                                    val address = it.recipients.map { it.address }
-                                    sendMessage.execute(SendMessage.Params(subId, it.id, address, body, attachments))
+                                .forEach { addr ->
+                                    val threadId = TelephonyCompat.getOrCreateThreadId(context, addr)
+                                    val address = listOf(conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address
+                                            ?: addr)
+                                    sendMessage.execute(SendMessage.Params(subId, threadId, address, body, attachments))
                                 }
                     }
 

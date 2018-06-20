@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">پیامچه</string>
   <string name="title_archived">بایگانی</string>
   <string name="title_scheduled">زمانبندی</string>
   <string name="title_settings">تنظیمات</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">پوسته</string>
   <string name="title_conversations">یافتن پیامک&#8230;</string>
   <string name="title_compose">Compose</string>
-  <string name="title_qksms_plus">نسخه پیشرفته</string>
   <string name="setup_skip">بیخیال</string>
   <string name="setup_next">ادامه</string>
   <string name="menu_call">تماس</string>
   <string name="menu_info">جزئیات</string>
   <string name="menu_save">Save to gallery</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d selected</string>
   <string name="main_menu_clear">پاکسازی</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">بایگانی</string>
   <string name="main_menu_unarchive">بیرون آوردن از بایگانی</string>
   <string name="main_menu_block">بلاک</string>
@@ -86,9 +87,21 @@
   <string name="compose_menu_previous">Previous</string>
   <string name="compose_menu_next">Next</string>
   <string name="compose_menu_clear">Clear</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">Add an attachment</string>
   <string name="compose_gallery_cd">Attach a photo</string>
   <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">فرستادن&#8230;</string>
   <string name="message_status_delivered">رسیده %s</string>

@@ -41,6 +41,10 @@ class DateFormatter @Inject constructor(val context: Context) {
         else SimpleDateFormat(pattern, Locale.getDefault())
     }
 
+    fun getDetailedTimestamp(date: Long): String {
+        return getFormatter("M/d/y, h:mm:ss a").format(date)
+    }
+
     fun getTimestamp(date: Long): String {
         return getFormatter("h:mm a").format(date)
     }

@@ -32,6 +32,7 @@ import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import model.Conversation
+import repository.ConversationRepository
 import repository.MessageRepository
 import util.extensions.asObservable
 import javax.inject.Inject
@@ -39,6 +40,7 @@ import javax.inject.Named
 
 class ConversationInfoViewModel @Inject constructor(
         @Named("threadId") threadId: Long,
+        private val conversationRepo: ConversationRepository,
         private val markArchived: MarkArchived,
         private val markUnarchived: MarkUnarchived,
         private val markBlocked: MarkBlocked,
@@ -53,7 +55,7 @@ class ConversationInfoViewModel @Inject constructor(
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
 
     init {
-        disposables += messageRepo.getConversationAsync(threadId)
+        disposables += conversationRepo.getConversationAsync(threadId)
                 .asObservable<Conversation>()
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->
@@ -109,7 +111,7 @@ class ConversationInfoViewModel @Inject constructor(
         // Set the conversation title
         view.nameChangedIntent
                 .withLatestFrom(conversation) { name, conversation ->
-                    messageRepo.setConversationName(conversation.id, name)
+                    conversationRepo.setConversationName(conversation.id, name)
                 }
                 .autoDisposable(view.scope())
                 .subscribe()

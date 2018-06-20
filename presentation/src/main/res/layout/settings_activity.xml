@@ -200,7 +200,7 @@
                 android:id="@+id/about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_info_outline_black_24dp"
+                app:icon="@drawable/ic_info_black_24dp"
                 app:title="@string/settings_about_title"
                 tools:summary="Version 3.0.7" />
 

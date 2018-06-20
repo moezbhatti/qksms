@@ -20,20 +20,22 @@ package interactor
 
 import io.reactivex.Flowable
 import manager.NotificationManager
+import repository.ConversationRepository
 import repository.MessageRepository
 import javax.inject.Inject
 
 class MarkRead @Inject constructor(
+        private val conversationRepo: ConversationRepository,
         private val messageRepo: MessageRepository,
         private val notificationManager: NotificationManager,
         private val updateBadge: UpdateBadge
-) : Interactor<Long>() {
+) : Interactor<List<Long>>() {
 
-    override fun buildObservable(params: Long): Flowable<*> {
-        return Flowable.just(Unit)
-                .doOnNext { messageRepo.markRead(params) }
-                .doOnNext { messageRepo.updateConversations(params) } // Update the conversation
-                .doOnNext { notificationManager.update(params) }
+    override fun buildObservable(params: List<Long>): Flowable<*> {
+        return Flowable.just(params.toLongArray())
+                .doOnNext { threadIds -> messageRepo.markRead(*threadIds) }
+                .doOnNext { threadIds -> conversationRepo.updateConversations(*threadIds) } // Update the conversation
+                .doOnNext { threadIds -> threadIds.forEach(notificationManager::update) }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

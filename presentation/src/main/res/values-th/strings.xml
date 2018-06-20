@@ -19,7 +19,6 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="app_name">QKSMS</string>
   <string name="title_archived">จัดเก็บ</string>
   <string name="title_scheduled">กำหนดเวลา</string>
   <string name="title_settings">การตั้งค่า</string>
@@ -27,14 +26,16 @@
   <string name="title_theme">รูปแบบการแสดงผล</string>
   <string name="title_conversations">ค้นหากล่องขาเข้า&#8230;</string>
   <string name="title_compose">พิมพ์ชื่อหรือหมายเลข</string>
-  <string name="title_qksms_plus">QKSMS +</string>
   <string name="setup_skip">ข้าม</string>
   <string name="setup_next">ทำต่อ</string>
   <string name="menu_call">โทร</string>
   <string name="menu_info">รายละเอียด</string>
   <string name="menu_save">บันทึกรูปภาพ</string>
+  <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d ถูกเลือก</string>
   <string name="main_menu_clear">ลบออก</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">จัดเก็บ</string>
   <string name="main_menu_unarchive">ยกเลิกการเก็บ</string>
   <string name="main_menu_block">ปิดกั้น</string>
@@ -86,9 +87,21 @@
   <string name="compose_menu_previous">ก่อนหน้านี้</string>
   <string name="compose_menu_next">ถัดไป</string>
   <string name="compose_menu_clear">ล้าง</string>
+  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_type">Type: %s</string>
+  <string name="compose_details_from">From: %s</string>
+  <string name="compose_details_to">To: %s</string>
+  <string name="compose_details_subject">Subject: %s</string>
+  <string name="compose_details_priority">Priority: %s</string>
+  <string name="compose_details_size">Size: %s</string>
+  <string name="compose_details_sent">Sent: %s</string>
+  <string name="compose_details_received">Received: %s</string>
+  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_error_code">Error code: %d</string>
   <string name="compose_attach_cd">เพิ่มสิ่งที่แนบ</string>
   <string name="compose_gallery_cd">แนบรูปภาพ</string>
   <string name="compose_camera_cd">ถ่ายภาพ</string>
+  <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">ส่งข้อความ</string>
   <string name="message_status_sending">กำลังส่ง...</string>
   <string name="message_status_delivered">%s ถูกส่งแล้ว</string>

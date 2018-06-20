@@ -53,14 +53,14 @@ import mapper.CursorToRecipientImpl
 import mapper.RatingManagerImpl
 import repository.ContactRepository
 import repository.ContactRepositoryImpl
+import repository.ConversationRepository
+import repository.ConversationRepositoryImpl
 import repository.ImageRepository
 import repository.ImageRepostoryImpl
 import repository.MessageRepository
 import repository.MessageRepositoryImpl
 import repository.SyncRepository
 import repository.SyncRepositoryImpl
-import util.SubscriptionUtils
-import util.SubscriptionUtilsImpl
 import javax.inject.Singleton
 
 @Module
@@ -131,6 +131,9 @@ class AppModule(private var application: Application) {
     fun provideContactRepository(repository: ContactRepositoryImpl): ContactRepository = repository
 
     @Provides
+    fun provideConversationRepository(repository: ConversationRepositoryImpl): ConversationRepository = repository
+
+    @Provides
     fun provideImageRepository(repository: ImageRepostoryImpl): ImageRepository = repository
 
     @Provides
@@ -138,11 +141,5 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideSyncRepository(repository: SyncRepositoryImpl): SyncRepository = repository
-
-
-    // Utils
-
-    @Provides
-    fun provideSubscriptionUtils(utils: SubscriptionUtilsImpl): SubscriptionUtils = utils
 
 }

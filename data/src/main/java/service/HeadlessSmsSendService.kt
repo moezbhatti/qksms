@@ -24,12 +24,12 @@ import android.net.Uri
 import android.telephony.TelephonyManager
 import dagger.android.AndroidInjection
 import interactor.SendMessage
-import repository.MessageRepository
+import repository.ConversationRepository
 import javax.inject.Inject
 
 class HeadlessSmsSendService : IntentService("HeadlessSmsSendService") {
 
-    @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var sendMessage: SendMessage
 
     override fun onHandleIntent(intent: Intent?) {
@@ -39,7 +39,7 @@ class HeadlessSmsSendService : IntentService("HeadlessSmsSendService") {
         intent.extras?.getString(Intent.EXTRA_TEXT)?.takeIf { it.isNotBlank() }?.let { body ->
             val intentUri = intent.data
             val recipients = getRecipients(intentUri).split(";")
-            val threadId = messageRepo.getOrCreateConversation(recipients)?.id ?: 0L
+            val threadId = conversationRepo.getOrCreateConversation(recipients)?.id ?: 0L
             sendMessage.execute(SendMessage.Params(-1, threadId, recipients, body))
         }
     }
