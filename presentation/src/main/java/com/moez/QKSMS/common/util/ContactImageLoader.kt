@@ -40,11 +40,11 @@ import javax.inject.Inject
 
 class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream> {
 
-    override fun handles(model: String?): Boolean {
+    override fun handles(model: String): Boolean {
         return PhoneNumberUtils.isGlobalPhoneNumber(model)
     }
 
-    override fun buildLoadData(model: String, width: Int, height: Int, options: Options?): ModelLoader.LoadData<InputStream> {
+    override fun buildLoadData(model: String, width: Int, height: Int, options: Options): ModelLoader.LoadData<InputStream>? {
         return ModelLoader.LoadData(ContactImageKey(model), ContactImageFetcher(context, model))
     }
 
@@ -71,7 +71,7 @@ class ContactImageLoader(val context: Context) : ModelLoader<String, InputStream
         override fun getDataClass() = InputStream::class.java
         override fun getDataSource() = DataSource.LOCAL
 
-        override fun loadData(priority: Priority?, callback: DataFetcher.DataCallback<in InputStream>) {
+        override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) {
             loadPhotoDisposable = contactRepo.findContactUri(address)
                     .map { uri -> ContactsContract.Contacts.openContactPhotoInputStream(context.contentResolver, uri) }
                     .subscribeOn(Schedulers.io())
