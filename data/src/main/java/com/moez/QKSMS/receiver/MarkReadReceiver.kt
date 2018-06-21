@@ -32,8 +32,9 @@ class MarkReadReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         AndroidInjection.inject(this, context)
 
+        val pendingResult = goAsync()
         val threadId = intent.getLongExtra("threadId", 0)
-        markRead.execute(listOf(threadId))
+        markRead.execute(listOf(threadId)) { pendingResult.finish() }
     }
 
 }
