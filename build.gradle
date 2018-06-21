@@ -2,12 +2,15 @@
 
 buildscript {
     ext.androidx_version = '1.0.0-alpha3'
+    ext.androidx_testrunner_version = '1.1.0-alpha3'
     ext.autodispose_version = '0.5.1'
     ext.constraintlayout_version = '1.1.0'
     ext.dagger_version = "2.16"
+    ext.espresso_version = '3.1.0-alpha3'
     ext.exoplayer_version = "2.8.1"
     ext.glide_version = "4.8.0-20180619.011009-9"
     ext.glide_compiler_version = "4.8.0-20180619.011013-9"
+    ext.junit_version = '4.12'
     ext.kotlin_version = '1.2.50'
     ext.ktx_version = "1.0.0-alpha1"
     ext.lifecycle_version = '2.0.0-alpha1'

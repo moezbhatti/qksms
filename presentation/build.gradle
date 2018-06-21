@@ -139,12 +139,12 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
 
     // testing
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.1.0-alpha3", {
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso_version", {
         exclude group: "com.android.support", module: "support-annotations"
     })
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-    testImplementation "androidx.test:runner:1.1.0-alpha3"
-    testImplementation "junit:junit:4.12"
+    testImplementation "androidx.test:runner:$androidx_testrunner_version"
+    testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
     implementation "androidx.core:core-ktx:$ktx_version"
