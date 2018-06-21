@@ -91,7 +91,7 @@ class ComposeViewModel @Inject constructor(
         private val subscriptionManager: SubscriptionManagerCompat,
         private val syncContacts: ContactSync
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(
-        editingMode = threadId == 0L,
+        editingMode = threadId == 0L && address.isBlank(),
         selectedConversation = threadId,
         query = query)
 ) {
