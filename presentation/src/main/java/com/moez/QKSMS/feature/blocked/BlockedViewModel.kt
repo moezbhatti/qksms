@@ -56,7 +56,7 @@ class BlockedViewModel @Inject constructor(
                             ?: false
                 }
                 .doOnNext { installed -> if (!installed) navigator.showSia() }
-                .withLatestFrom(prefs.sia.asObservable(), { installed, enabled -> installed && !enabled })
+                .withLatestFrom(prefs.sia.asObservable()) { installed, enabled -> installed && !enabled }
                 .autoDisposable(view.scope())
                 .subscribe { shouldEnable -> prefs.sia.set(shouldEnable) }
 
@@ -67,7 +67,7 @@ class BlockedViewModel @Inject constructor(
 
         // Unblock conversation
         view.confirmUnblockIntent
-                .withLatestFrom(view.unblockIntent, { _, threadId -> threadId })
+                .withLatestFrom(view.unblockIntent) { _, threadId -> threadId }
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnblocked.execute(listOf(threadId)) }
     }

@@ -153,9 +153,9 @@ class SettingsViewModel @Inject constructor(
 
                         R.id.sync -> {
                             newState { copy(syncing = true) }
-                            syncMessages.execute(Unit, {
+                            syncMessages.execute(Unit) {
                                 newState { copy(syncing = false) }
-                            })
+                            }
                         }
 
                         R.id.about -> navigator.showAbout()
@@ -163,13 +163,13 @@ class SettingsViewModel @Inject constructor(
                 }
 
         view.nightModeSelectedIntent
-                .withLatestFrom(billingManager.upgradeStatus, { mode, upgraded ->
+                .withLatestFrom(billingManager.upgradeStatus) { mode, upgraded ->
                     if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
                         view.showQksmsPlusSnackbar()
                     } else {
                         nightModeManager.updateNightMode(mode)
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -190,13 +190,13 @@ class SettingsViewModel @Inject constructor(
                 .subscribe { prefs.textSize.set(it) }
 
         view.sendDelayChangedIntent
-                .withLatestFrom(billingManager.upgradeStatus, { duration, upgraded ->
+                .withLatestFrom(billingManager.upgradeStatus) { duration, upgraded ->
                     if (!upgraded && duration != 0) {
                         view.showQksmsPlusSnackbar()
                     } else {
                         prefs.sendDelay.set(duration)
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 

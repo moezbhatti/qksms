@@ -65,7 +65,7 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
         AlertDialog.Builder(this)
                 .setTitle(R.string.blocked_unblock_dialog_title)
                 .setMessage(R.string.blocked_unblock_dialog_message)
-                .setPositiveButton(R.string.button_unblock, { _, _ -> confirmUnblockIntent.onNext(Unit) })
+                .setPositiveButton(R.string.button_unblock) { _, _ -> confirmUnblockIntent.onNext(Unit) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }

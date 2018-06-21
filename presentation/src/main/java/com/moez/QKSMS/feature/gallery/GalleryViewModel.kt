@@ -62,7 +62,7 @@ class GalleryViewModel @Inject constructor(
 
         // When the screen is touched, toggle the visibility of the navigation UI
         view.screenTouchedIntent
-                .withLatestFrom(state, { _, state -> state.navigationVisible })
+                .withLatestFrom(state) { _, state -> state.navigationVisible }
                 .map { navigationVisible -> !navigationVisible }
                 .autoDisposable(view.scope())
                 .subscribe { navigationVisible -> newState { copy(navigationVisible = navigationVisible) } }
@@ -70,7 +70,7 @@ class GalleryViewModel @Inject constructor(
         // Save image to device
         view.optionsItemSelectedIntent
                 .filter { itemId -> itemId == R.id.save }
-                .withLatestFrom(partIdFlowable.toObservable(), { _, partId -> partId })
+                .withLatestFrom(partIdFlowable.toObservable()) { _, partId -> partId }
                 .autoDisposable(view.scope())
                 .subscribe { partId -> saveImage.execute(partId) { context.makeToast(R.string.gallery_toast_saved) } }
     }

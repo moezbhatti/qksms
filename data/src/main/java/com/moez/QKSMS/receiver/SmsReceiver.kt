@@ -37,7 +37,7 @@ class SmsReceiver : BroadcastReceiver() {
             val subId = intent.extras?.getInt("subscription", -1) ?: -1
 
             val pendingResult = goAsync()
-            receiveMessage.execute(ReceiveSms.Params(subId, messages), { pendingResult.finish() })
+            receiveMessage.execute(ReceiveSms.Params(subId, messages)) { pendingResult.finish() }
         }
     }
 

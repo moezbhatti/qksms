@@ -129,7 +129,7 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
         AlertDialog.Builder(this)
                 .setTitle(R.string.info_name)
                 .setView(editText)
-                .setPositiveButton(R.string.button_save, { _, _ -> nameChangedIntent.onNext(editText.text.toString()) })
+                .setPositiveButton(R.string.button_save) { _, _ -> nameChangedIntent.onNext(editText.text.toString()) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }
@@ -138,7 +138,7 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
         AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_delete_title)
                 .setMessage(R.string.dialog_delete_message)
-                .setPositiveButton(R.string.button_delete, { _, _ -> confirmDeleteIntent.onNext(Unit) })
+                .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(Unit) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }

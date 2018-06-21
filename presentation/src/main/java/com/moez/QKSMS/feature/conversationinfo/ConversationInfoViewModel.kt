@@ -118,19 +118,19 @@ class ConversationInfoViewModel @Inject constructor(
 
         // Show the notifications settings for the conversation
         view.notificationsIntent
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> navigator.showNotificationSettings(conversation.id) }
 
         // Show the theme settings for the conversation
         view.themeIntent
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> navigator.showThemePicker(conversation.id) }
 
         // Toggle the archived state of the conversation
         view.archiveIntent
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation ->
                     when (conversation.archived) {
@@ -141,7 +141,7 @@ class ConversationInfoViewModel @Inject constructor(
 
         // Toggle the blocked state of the conversation
         view.blockIntent
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation ->
                     when (conversation.blocked) {
@@ -157,7 +157,7 @@ class ConversationInfoViewModel @Inject constructor(
 
         // Delete the conversation
         view.confirmDeleteIntent
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> deleteConversations.execute(listOf(conversation.id)) }
     }

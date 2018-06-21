@@ -100,7 +100,7 @@ class MainActivity : QkThemedActivity(), MainView {
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val archiveSnackbar by lazy {
         Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE).apply {
-            setAction(R.string.button_undo, { undoSwipeConversationIntent.onNext(Unit) })
+            setAction(R.string.button_undo) { undoSwipeConversationIntent.onNext(Unit) }
         }
     }
 
@@ -296,7 +296,7 @@ class MainActivity : QkThemedActivity(), MainView {
         AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_delete_title)
                 .setMessage(R.string.dialog_delete_message)
-                .setPositiveButton(R.string.button_delete, { _, _ -> confirmDeleteIntent.onNext(Unit) })
+                .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(Unit) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }

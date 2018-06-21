@@ -140,7 +140,7 @@ class SettingsActivity : QkThemedActivity(), SettingsView {
 
     override fun showQksmsPlusSnackbar() {
         Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
-            setAction(R.string.button_more, { viewQksmsPlusIntent.onNext(Unit) })
+            setAction(R.string.button_more) { viewQksmsPlusIntent.onNext(Unit) }
             show()
         }
     }

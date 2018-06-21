@@ -62,20 +62,20 @@ class ThemePickerViewModel @Inject constructor(
                 .subscribe()
 
         // Toggle the visibility of the apply group
-        Observables.combineLatest(theme.asObservable(), view.hsvThemeSelectedIntent, { old, new -> old != new })
+        Observables.combineLatest(theme.asObservable(), view.hsvThemeSelectedIntent) { old, new -> old != new }
                 .autoDisposable(view.scope())
                 .subscribe { themeChanged -> newState { copy(applyThemeVisible = themeChanged) } }
 
         // Update the theme, when apply is clicked
         view.hsvThemeAppliedIntent
-                .withLatestFrom(view.hsvThemeSelectedIntent, { _, color -> color })
-                .withLatestFrom(billingManager.upgradeStatus, { color, upgraded ->
+                .withLatestFrom(view.hsvThemeSelectedIntent) { _, color -> color }
+                .withLatestFrom(billingManager.upgradeStatus) { color, upgraded ->
                     if (!upgraded) {
                         view.showQksmsPlusSnackbar()
                     } else {
                         theme.set(color)
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -86,7 +86,7 @@ class ThemePickerViewModel @Inject constructor(
 
         // Reset the theme
         view.hsvThemeClearedIntent
-                .withLatestFrom(theme.asObservable(), { _, color -> color })
+                .withLatestFrom(theme.asObservable()) { _, color -> color }
                 .autoDisposable(view.scope())
                 .subscribe { color -> view.setCurrentTheme(color) }
     }

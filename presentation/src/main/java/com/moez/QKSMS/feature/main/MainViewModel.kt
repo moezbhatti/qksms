@@ -112,10 +112,10 @@ class MainViewModel @Inject constructor(
         Observables.combineLatest(
                 view.activityResumedIntent.map { permissionManager.isDefaultSms() }.distinctUntilChanged(),
                 view.activityResumedIntent.map { permissionManager.hasSms() }.distinctUntilChanged(),
-                view.activityResumedIntent.map { permissionManager.hasContacts() }.distinctUntilChanged(),
-                { defaultSms, smsPermission, contactPermission ->
-                    newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
-                })
+                view.activityResumedIntent.map { permissionManager.hasContacts() }.distinctUntilChanged())
+        { defaultSms, smsPermission, contactPermission ->
+            newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
+        }
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -138,12 +138,12 @@ class MainViewModel @Inject constructor(
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { query -> query.removeAccents() }
-                .withLatestFrom(state, { query, state ->
+                .withLatestFrom(state) { query, state ->
                     if (query.isEmpty() && state.page is Searching) {
                         newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
                     }
                     query
-                })
+                }
                 .filter { query -> query.length >= 2 }
                 .doOnNext {
                     newState {
@@ -161,7 +161,7 @@ class MainViewModel @Inject constructor(
                 .subscribe { navigator.showCompose() }
 
         view.homeIntent
-                .withLatestFrom(state, { _, state ->
+                .withLatestFrom(state) { _, state ->
                     when {
                         state.page is Searching -> view.clearSearch()
 
@@ -172,7 +172,7 @@ class MainViewModel @Inject constructor(
 
                         else -> newState { copy(drawerOpen = true) }
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -199,7 +199,7 @@ class MainViewModel @Inject constructor(
                 .subscribe()
 
         view.optionsItemIntent
-                .withLatestFrom(view.conversationsSelectedIntent, { itemId, conversations ->
+                .withLatestFrom(view.conversationsSelectedIntent) { itemId, conversations ->
                     when (itemId) {
                         R.id.read -> {
                             markRead.execute(conversations)
@@ -228,7 +228,7 @@ class MainViewModel @Inject constructor(
 
                         R.id.delete -> view.showDeleteDialog()
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -244,7 +244,7 @@ class MainViewModel @Inject constructor(
                 .subscribe { ratingManager.dismiss() }
 
         view.conversationsSelectedIntent
-                .withLatestFrom(state, { selection, state ->
+                .withLatestFrom(state) { selection, state ->
                     val read = selection
                             .mapNotNull(conversationRepo::getConversation)
                             .sumBy { if (it.read) -1 else 1 } >= 0
@@ -261,13 +261,13 @@ class MainViewModel @Inject constructor(
                             newState { copy(page = page) }
                         }
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
         // Delete the conversation
         view.confirmDeleteIntent
-                .withLatestFrom(view.conversationsSelectedIntent, { _, conversations -> conversations })
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations -> conversations }
                 .autoDisposable(view.scope())
                 .subscribe { conversations ->
                     deleteConversations.execute(conversations)
@@ -275,44 +275,44 @@ class MainViewModel @Inject constructor(
                 }
 
         view.swipeConversationIntent
-                .withLatestFrom(state, { threadId, state ->
+                .withLatestFrom(state) { threadId, state ->
                     markArchived.execute(listOf(threadId)) {
                         if (state.page is Inbox) {
                             val page = state.page.copy(showArchivedSnackbar = true)
                             newState { copy(page = page) }
                         }
                     }
-                })
+                }
                 .switchMap { Observable.timer(2750, TimeUnit.MILLISECONDS) }
-                .withLatestFrom(state, { threadId, state ->
+                .withLatestFrom(state) { threadId, state ->
                     markArchived.execute(listOf(threadId)) {
                         if (state.page is Inbox) {
                             val page = state.page.copy(showArchivedSnackbar = false)
                             newState { copy(page = page) }
                         }
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
         view.undoSwipeConversationIntent
-                .withLatestFrom(view.swipeConversationIntent, { _, threadId -> threadId })
+                .withLatestFrom(view.swipeConversationIntent) { _, threadId -> threadId }
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnarchived.execute(listOf(threadId)) }
 
         view.snackbarButtonIntent
-                .withLatestFrom(state, { _, state ->
+                .withLatestFrom(state) { _, state ->
                     when {
                         !state.smsPermission -> view.requestPermissions()
                         !state.defaultSms -> navigator.showDefaultSmsDialog()
                         !state.contactPermission -> view.requestPermissions()
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
         view.backPressedIntent
-                .withLatestFrom(state, { _, state ->
+                .withLatestFrom(state) { _, state ->
                     when {
                         state.drawerOpen -> newState { copy(drawerOpen = false) }
 
@@ -327,7 +327,7 @@ class MainViewModel @Inject constructor(
 
                         else -> newState { copy(hasError = true) }
                     }
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
     }

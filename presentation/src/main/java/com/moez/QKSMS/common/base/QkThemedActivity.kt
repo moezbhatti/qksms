@@ -108,7 +108,7 @@ abstract class QkThemedActivity : QkActivity() {
         super.onPostCreate(savedInstanceState)
 
         // Update the colours of the menu items
-        Observables.combineLatest(menu, theme, { menu, theme ->
+        Observables.combineLatest(menu, theme) { menu, theme ->
             val text = resolveThemeColor(android.R.attr.textColorSecondary)
             (0 until menu.size())
                     .map { position -> menu.getItem(position) }
@@ -122,7 +122,7 @@ abstract class QkThemedActivity : QkActivity() {
                             menuItem.icon = this
                         }
                     }
-        }).autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
+        }.autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
     }
 
     open fun getColoredMenuItems(): List<Int> {

@@ -111,7 +111,7 @@ class QkReplyViewModel @Inject constructor(
         // Mark read
         view.menuItemIntent
                 .filter { id -> id == R.id.read }
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .map { conversation -> conversation.id }
                 .autoDisposable(view.scope())
                 .subscribe { threadId ->
@@ -121,7 +121,7 @@ class QkReplyViewModel @Inject constructor(
         // Call
         view.menuItemIntent
                 .filter { id -> id == R.id.call }
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .mapNotNull { conversation -> conversation.recipients.first()?.address }
                 .doOnNext { address -> navigator.makePhoneCall(address) }
                 .autoDisposable(view.scope())
@@ -130,7 +130,7 @@ class QkReplyViewModel @Inject constructor(
         // Show all messages
         view.menuItemIntent
                 .filter { id -> id == R.id.expand }
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .map { conversation -> messageRepo.getMessages(conversation.id) }
                 .doOnNext(messages::onNext)
                 .autoDisposable(view.scope())
@@ -139,7 +139,7 @@ class QkReplyViewModel @Inject constructor(
         // Show unread messages only
         view.menuItemIntent
                 .filter { id -> id == R.id.collapse }
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .map { conversation -> messageRepo.getUnreadMessages(conversation.id) }
                 .doOnNext(messages::onNext)
                 .autoDisposable(view.scope())
@@ -148,7 +148,7 @@ class QkReplyViewModel @Inject constructor(
         // View conversation
         view.menuItemIntent
                 .filter { id -> id == R.id.view }
-                .withLatestFrom(conversation, { _, conversation -> conversation })
+                .withLatestFrom(conversation) { _, conversation -> conversation }
                 .map { conversation -> conversation.id }
                 .doOnNext { threadId -> navigator.showConversation(threadId) }
                 .autoDisposable(view.scope())
@@ -184,9 +184,9 @@ class QkReplyViewModel @Inject constructor(
                 .debounce(100, TimeUnit.MILLISECONDS)
                 .map { draft -> draft.toString() }
                 .observeOn(Schedulers.io())
-                .withLatestFrom(conversation.map { it.id }, { draft, threadId ->
+                .withLatestFrom(conversation.map { it.id }) { draft, threadId ->
                     conversationRepo.saveDraft(threadId, draft)
-                })
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
@@ -207,16 +207,16 @@ class QkReplyViewModel @Inject constructor(
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
-                .withLatestFrom(view.textChangedIntent, { _, body -> body })
+                .withLatestFrom(view.textChangedIntent) { _, body -> body }
                 .map { body -> body.toString() }
-                .withLatestFrom(state, conversation, { body, state, conversation ->
+                .withLatestFrom(state, conversation) { body, state, conversation ->
                     val subId = state.subscription?.subscriptionId ?: -1
                     val threadId = conversation.id
                     val addresses = conversation.recipients.map { it.address }
                     sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body))
                     view.setDraft("")
                     threadId
-                })
+                }
                 .doOnNext { threadId ->
                     markRead.execute(listOf(threadId)) {
                         newState { copy(hasError = true) }
