@@ -28,14 +28,18 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.provider.Telephony
 import android.telephony.SmsManager
+import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
 import com.klinker.android.send_message.BroadcastUtils
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
+import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
 import com.moez.QKSMS.extensions.insertOrUpdate
+import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.manager.KeyManager
+import com.moez.QKSMS.mapper.CursorToConversation
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
@@ -54,7 +58,6 @@ import javax.inject.Singleton
 class MessageRepositoryImpl @Inject constructor(
         private val context: Context,
         private val messageIds: KeyManager,
-        private val conversationRepo: ConversationRepository,
         private val imageRepository: ImageRepository,
         private val prefs: Preferences) : MessageRepository {
 
@@ -367,13 +370,12 @@ class MessageRepositoryImpl @Inject constructor(
     override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message {
 
         // Insert the message to the native content provider
-        val values = ContentValues().apply {
-            put(Telephony.Sms.ADDRESS, address)
-            put(Telephony.Sms.BODY, body)
-            put(Telephony.Sms.DATE_SENT, sentTime)
-            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
-        }
-        val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
+        val uri = contentValuesOf(
+                Pair(Telephony.Sms.ADDRESS, address),
+                Pair(Telephony.Sms.BODY, body),
+                Pair(Telephony.Sms.DATE_SENT, sentTime),
+                Pair(Telephony.Sms.SUBSCRIPTION_ID, subId))
+                .let { values -> context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) }
 
         // Insert the message to Realm
         return Message().apply {
@@ -384,8 +386,8 @@ class MessageRepositoryImpl @Inject constructor(
             this.subId = subId
 
             id = messageIds.newId()
-            threadId = conversationRepo.getOrCreateConversation(address)?.id ?: 0L
-            contentId = uri.lastPathSegment.toLong()
+            threadId = TelephonyCompat.getOrCreateThreadId(context, address)
+            contentId = uri?.lastPathSegment?.toLong() ?: 0L
             boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
             type = "sms"
             insertOrUpdate()

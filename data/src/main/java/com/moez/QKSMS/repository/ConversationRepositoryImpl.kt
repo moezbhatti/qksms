@@ -256,11 +256,10 @@ class ConversationRepositoryImpl @Inject constructor(
      * conversation unless it contains at least 1 message
      */
     private fun getConversationFromCp(threadId: Long): Conversation? {
-        return cursorToConversation.getConversationCursor(threadId)
-                ?.takeIf { cursor -> cursor.moveToFirst() }
-                ?.use { cursor ->
-                    val conversation = cursorToConversation.map(cursor)
-
+        return cursorToConversation.getConversationsCursor()
+                ?.map(cursorToConversation::map)
+                ?.firstOrNull { it.id == threadId }
+                ?.let { conversation ->
                     val realm = Realm.getDefaultInstance()
                     val contacts = realm.copyFromRealm(realm.where(Contact::class.java).findAll())
 

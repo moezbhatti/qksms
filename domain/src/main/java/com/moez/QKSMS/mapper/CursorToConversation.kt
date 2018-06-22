@@ -25,6 +25,4 @@ interface CursorToConversation : Mapper<Cursor, Conversation> {
 
     fun getConversationsCursor(lastSync: Long = 0): Cursor?
 
-    fun getConversationCursor(threadId: Long): Cursor?
-
 }

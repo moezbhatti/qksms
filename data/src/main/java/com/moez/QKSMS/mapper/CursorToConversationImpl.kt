@@ -75,9 +75,4 @@ class CursorToConversationImpl @Inject constructor(
         }
     }
 
-    override fun getConversationCursor(threadId: Long): Cursor? {
-        return context.contentResolver.query(URI, PROJECTION,
-                "_id = ?", arrayOf(threadId.toString()), null)
-    }
-
 }
