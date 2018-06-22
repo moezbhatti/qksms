@@ -31,11 +31,11 @@
   <string name="menu_call">اتصال</string>
   <string name="menu_info">تفاصيل</string>
   <string name="menu_save">حفظ إلى المعرض</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
+  <string name="main_drawer_open_cd">فتح درج التنقل</string>
   <string name="main_title_selected">%d محددة</string>
   <string name="main_menu_clear">مسح</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_read">علّمه مقروء</string>
+  <string name="main_menu_unread">وضع علامة غير مقروء</string>
   <string name="main_menu_archive">أرشفة</string>
   <string name="main_menu_unarchive">إلغاء الأرشفة</string>
   <string name="main_menu_block">حظر</string>
@@ -71,7 +71,7 @@
   <string name="dialog_delete_message">هل أنت متأكد من رغبتك حذف هذه المحادثة؟</string>
   <string-array name="message_options">
     <item>نسخ النص</item>
-    <item>للأمام</item>
+    <item>إعادة توجيه</item>
     <item>حذف</item>
   </string-array>
   <string name="compose_title_selected">%d مختارة</string>
@@ -82,26 +82,26 @@
   <string name="compose_vcard_label">بطاقة جهة الاتصال</string>
   <string name="compose_hint">كتابة رسالة&#8230;</string>
   <string name="compose_menu_copy">نسخ النص</string>
-  <string name="compose_menu_forward">للأمام</string>
+  <string name="compose_menu_forward">إعادة توجيه</string>
   <string name="compose_menu_delete">حذف</string>
   <string name="compose_menu_previous">السابقة</string>
   <string name="compose_menu_next">التالية</string>
   <string name="compose_menu_clear">مسح</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_title">تفاصيل الرسالة</string>
+  <string name="compose_details_type">النوع: %s</string>
+  <string name="compose_details_from">من: %s</string>
+  <string name="compose_details_to">إلى: %s</string>
+  <string name="compose_details_subject">الموضوع: %s</string>
+  <string name="compose_details_priority">الأولوية: %s</string>
+  <string name="compose_details_size">الحجم: %s</string>
+  <string name="compose_details_sent">أرسلت: %s</string>
+  <string name="compose_details_received">استلمت: %s</string>
+  <string name="compose_details_delivered">التسليم: %s</string>
+  <string name="compose_details_error_code">رمز الخطأ: %d</string>
   <string name="compose_attach_cd">إضافة مرفق</string>
   <string name="compose_gallery_cd">إرفاق صورة</string>
   <string name="compose_camera_cd">التقاط صورة</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
+  <string name="compose_sim_cd">%s محددة، غيّر شريحة SIM</string>
   <string name="compose_send_cd">إرسال الرسالة</string>
   <string name="message_status_sending">الإرسال جارٍ&#8230;</string>
   <string name="message_status_delivered">تم إرسال %s</string>
