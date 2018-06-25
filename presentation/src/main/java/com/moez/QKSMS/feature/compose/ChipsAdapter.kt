@@ -58,6 +58,7 @@ class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter
     init {
         val wrap = ViewGroup.LayoutParams.WRAP_CONTENT
         editText.layoutParams = FlexboxLayoutManager.LayoutParams(wrap, wrap).apply {
+            minHeight = 36.dpToPx(context)
             minWidth = 56.dpToPx(context)
             flexGrow = 8f
         }
