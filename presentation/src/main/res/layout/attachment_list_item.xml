@@ -20,7 +20,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:background="?attr/bubbleColor">
 
     <FrameLayout
         android:id="@+id/thumbnailBounds"
@@ -28,8 +29,8 @@
         android:layout_height="56dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_rectangle_2dp">
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_rectangle_4dp">
 
         <ImageView
             android:id="@+id/thumbnail"
@@ -45,7 +46,8 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="top|end"
-        android:layout_margin="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/circle"
         android:backgroundTint="?attr/bubbleColor"
         android:src="@drawable/ic_cancel_black_24dp"

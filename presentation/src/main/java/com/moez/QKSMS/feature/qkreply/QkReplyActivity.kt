@@ -18,28 +18,25 @@
  */
 package com.moez.QKSMS.feature.qkreply
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.feature.compose.MessagesAdapter
-import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -69,13 +66,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewModel.bindView(this)
 
-        theme
-                .autoDisposable(scope())
-                .subscribe { theme ->
-                    send.setBackgroundTint(theme.theme)
-                    send.setTint(theme.textPrimary)
-                }
-
         toolbar.clipToOutline = true
 
         adapter.autoScrollToStart(messages)
@@ -88,7 +78,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             toolbar.setBackgroundTint(resolveThemeColor(R.attr.colorPrimary))
             background.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
             composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
-            composeBackgroundGradient.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+            composeBackground2.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
     }
 

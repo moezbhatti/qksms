@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -41,14 +42,15 @@
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
         app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toTopOf="@id/message"
+        app:layout_constraintBottom_toBottomOf="@id/composeBackground"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="220dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/message_list_item_in" />
 
     <View
-        android:id="@+id/composeBackgroundGradient"
+        android:id="@+id/composeBackground"
         android:layout_width="0dp"
         android:layout_height="8dp"
         android:layout_marginTop="8dp"
@@ -56,60 +58,51 @@
         android:backgroundTint="?attr/composeBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/message" />
+        app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
     <View
-        android:id="@+id/composeBackground"
+        android:id="@+id/composeBackground2"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/rounded_rectangle_bottom_4dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rectangle"
         android:backgroundTint="?attr/composeBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/composeBackgroundGradient" />
+        app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
     <View
         android:id="@+id/messageBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/rounded_rectangle_shadow"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_rectangle_22dp"
         android:backgroundTint="?attr/bubbleColor"
-        android:backgroundTintMode="multiply"
+        android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/send"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/messagePadding" />
-
-    <!-- The padding inside the messageBackground view is broken, probably because of 9patch weirdness -->
-    <View
-        android:id="@+id/messagePadding"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:paddingEnd="8dp"
-        android:paddingStart="8dp"
-        android:paddingTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/message"
-        app:layout_constraintEnd_toEndOf="@id/messageBackground"
-        app:layout_constraintStart_toStartOf="@id/messageBackground"
-        app:layout_constraintTop_toTopOf="@id/messageBackground" />
+        app:layout_constraintTop_toTopOf="@id/message" />
 
     <com.moez.QKSMS.common.widget.QkEditText
         android:id="@+id/message"
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:background="@null"
+        android:elevation="4dp"
         android:gravity="center_vertical"
         android:hint="@string/compose_hint"
         android:inputType="textLongMessage|textCapSentences|textMultiLine"
         android:maxLines="6"
         android:minHeight="44dp"
-        android:padding="12dp"
+        android:paddingBottom="12dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
         android:textColorHint="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
         app:layout_constraintEnd_toStartOf="@id/sim"
@@ -119,18 +112,20 @@
         android:id="@+id/sim"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
         android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/compose_sim_cd"
+        android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_sim_card_black_24dp"
         android:tint="?android:attr/textColorSecondary"
-        app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintEnd_toEndOf="@id/messageBackground" />
+        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
+        app:layout_constraintEnd_toStartOf="@id/send" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:elevation="4dp"
         android:gravity="center"
         android:textColor="?android:attr/textColorPrimaryInverse"
         android:textSize="14dp"
@@ -147,6 +142,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:elevation="4dp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/send"
         app:layout_constraintEnd_toEndOf="@id/send"
@@ -159,17 +155,14 @@
         android:id="@+id/send"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/circle"
         android:contentDescription="@string/compose_send_cd"
         android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_send_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:backgroundTint="@color/tools_theme"
-        tools:tint="@color/textPrimaryDark" />
+        android:tint="?android:textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
+        app:layout_constraintEnd_toEndOf="@id/messageBackground"
+        tools:backgroundTint="@color/tools_theme" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
