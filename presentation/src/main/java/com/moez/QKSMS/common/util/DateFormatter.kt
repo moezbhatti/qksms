@@ -75,4 +75,16 @@ class DateFormatter @Inject constructor(val context: Context) {
         }.format(date)
     }
 
+    fun getScheduledTimestamp(date: Long): String {
+        val now = Calendar.getInstance()
+        val then = Calendar.getInstance()
+        then.timeInMillis = date
+
+        return when {
+            now.isSameDay(then) -> getFormatter("h:mm a")
+            now.isSameYear(then) -> getFormatter("MMM d h:mm a")
+            else -> getFormatter("MMM d yyyy h:mm a")
+        }.format(date)
+    }
+
 }

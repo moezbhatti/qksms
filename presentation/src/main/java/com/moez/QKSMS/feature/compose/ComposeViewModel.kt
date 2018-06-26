@@ -22,6 +22,7 @@ import android.content.Context
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.view.inputmethod.EditorInfo
+import androidx.core.widget.toast
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.scope
@@ -51,6 +52,7 @@ import com.moez.QKSMS.model.PhoneNumber
 import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
+import com.moez.QKSMS.repository.ScheduledMessageRepository
 import com.moez.QKSMS.util.ActiveSubscriptionObservable
 import com.moez.QKSMS.util.tryOrNull
 import com.uber.autodispose.kotlin.autoDisposable
@@ -87,6 +89,7 @@ class ComposeViewModel @Inject constructor(
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
         private val retrySending: RetrySending,
+        private val scheduledMessageRepo: ScheduledMessageRepository,
         private val sendMessage: SendMessage,
         private val subscriptionManager: SubscriptionManagerCompat,
         private val syncContacts: ContactSync
@@ -442,16 +445,25 @@ class ComposeViewModel @Inject constructor(
         view.cameraIntent
                 .autoDisposable(view.scope())
                 .subscribe {
-                    when (permissionManager.hasStorage()) {
-                        true -> view.requestCamera()
-                        false -> view.requestStoragePermission()
+                    if (permissionManager.hasStorage()) {
+                        newState { copy(attaching = false) }
+                        view.requestCamera()
+                    } else {
+                        view.requestStoragePermission()
                     }
                 }
 
         // Attach a photo from gallery
         view.galleryIntent
+                .doOnNext { newState { copy(attaching = false) } }
                 .autoDisposable(view.scope())
                 .subscribe { view.requestGallery() }
+
+        // Choose a time to schedule the message
+        view.scheduleIntent
+                .doOnNext { newState { copy(attaching = false) } }
+                .autoDisposable(view.scope())
+                .subscribe { view.requestDatePicker() }
 
         // A photo was selected
         Observable.merge(
@@ -461,6 +473,11 @@ class ComposeViewModel @Inject constructor(
                 .doOnNext { attachments.onNext(it) }
                 .autoDisposable(view.scope())
                 .subscribe { newState { copy(attaching = false) } }
+
+        // Set the scheduled time
+        view.scheduleSelectedIntent
+                .autoDisposable(view.scope())
+                .subscribe { scheduled -> newState { copy(scheduled = scheduled) } }
 
         // Detach a photo
         view.attachmentDeletedIntent
@@ -512,6 +529,11 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { remaining -> newState { copy(remaining = remaining) } }
 
+        // Cancel the scheduled time
+        view.scheduleCancelIntent
+                .autoDisposable(view.scope())
+                .subscribe { newState { copy(scheduled = 0) } }
+
         // Toggle to the next sim slot
         view.changeSimIntent
                 .withLatestFrom(state) { _, state ->
@@ -533,26 +555,33 @@ class ComposeViewModel @Inject constructor(
                 .map { body -> body.toString() }
                 .withLatestFrom(state, attachments, conversation, selectedContacts) { body, state, attachments, conversation, contacts ->
                     val subId = state.subscription?.subscriptionId ?: -1
+                    val addresses = when (conversation.recipients.isNotEmpty()) {
+                        true -> conversation.recipients.map { it.address }
+                        false -> contacts.mapNotNull { it.numbers.firstOrNull()?.address }
+                    }
 
-                    if (state.sendAsGroup) {
-                        val addresses = when (conversation.recipients.isNotEmpty()) {
-                            true -> conversation.recipients.map { it.address }
-                            false -> contacts.mapNotNull { it.numbers.firstOrNull()?.address }
+                    when {
+                        state.scheduled != 0L -> {
+                            newState { copy(scheduled = 0) }
+                            val uris = attachments.map { it.getUri() }.map { it.toString() }
+                            scheduledMessageRepo.saveScheduledMessage(state.scheduled, subId, addresses, state.sendAsGroup, body, uris)
+                            context.toast(R.string.compose_scheduled_toast)
                         }
-                        val threadId = conversation.id.takeIf { it > 0 }
-                                ?: TelephonyCompat.getOrCreateThreadId(context, addresses).also(threadIdSubject::onNext)
-                        sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
-                    } else {
-                        contacts
-                                .map { contact -> contact.numbers }
-                                .mapNotNull { numbers -> numbers.firstOrNull() }
-                                .map { number -> number.address }
-                                .forEach { addr ->
-                                    val threadId = TelephonyCompat.getOrCreateThreadId(context, addr)
-                                    val address = listOf(conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address
-                                            ?: addr)
-                                    sendMessage.execute(SendMessage.Params(subId, threadId, address, body, attachments))
-                                }
+
+                        state.sendAsGroup -> {
+                            val threadId = conversation.id.takeIf { it > 0 }
+                                    ?: TelephonyCompat.getOrCreateThreadId(context, addresses).also(threadIdSubject::onNext)
+                            sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
+                        }
+
+                        else -> {
+                            addresses.forEach { addr ->
+                                val threadId = TelephonyCompat.getOrCreateThreadId(context, addr)
+                                val address = listOf(conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address
+                                        ?: addr)
+                                sendMessage.execute(SendMessage.Params(subId, threadId, address, body, attachments))
+                            }
+                        }
                     }
 
                     view.setDraft("")

@@ -4,15 +4,19 @@ import com.moez.QKSMS.model.ScheduledMessage
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmResults
+import javax.inject.Inject
 
-class ScheduledMessageRepositoryImpl : ScheduledMessageRepository {
+class ScheduledMessageRepositoryImpl @Inject constructor() : ScheduledMessageRepository {
 
-    override fun saveScheduledMessage(date: Long, recipients: RealmList<String>, sendAsGroup: Boolean, body: String,
-                                      attachments: RealmList<String>): Long {
+    override fun saveScheduledMessage(date: Long, subId: Int, recipients: List<String>, sendAsGroup: Boolean,
+                                      body: String, attachments: List<String>): Long {
 
         return Realm.getDefaultInstance().use { realm ->
             val id = (realm.where(ScheduledMessage::class.java).max("id")?.toLong() ?: -1) + 1
-            val message = ScheduledMessage(id, date, recipients, sendAsGroup, body, attachments)
+            val recipientsRealmList = RealmList(*recipients.toTypedArray())
+            val attachmentsRealmList = RealmList(*attachments.toTypedArray())
+
+            val message = ScheduledMessage(id, date, subId, recipientsRealmList, sendAsGroup, body, attachmentsRealmList)
 
             realm.executeTransaction { realm.insertOrUpdate(message) }
 
@@ -24,7 +28,7 @@ class ScheduledMessageRepositoryImpl : ScheduledMessageRepository {
         return Realm.getDefaultInstance()
                 .where(ScheduledMessage::class.java)
                 .sort("date")
-                .findAll()
+                .findAllAsync()
     }
 
     override fun getScheduledMessage(id: Long): ScheduledMessage? {

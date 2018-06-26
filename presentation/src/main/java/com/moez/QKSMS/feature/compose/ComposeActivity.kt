@@ -20,6 +20,8 @@ package com.moez.QKSMS.feature.compose
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import android.content.ContentValues
@@ -29,17 +31,20 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.format.DateFormat
 import androidx.core.app.ActivityCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.view.isVisible
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.scrapViews
@@ -59,6 +64,7 @@ import kotlinx.android.synthetic.main.compose_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.min
 
 
 class ComposeActivity : QkThemedActivity(), ComposeView {
@@ -71,6 +77,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject lateinit var attachmentAdapter: AttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
     @Inject lateinit var contactsAdapter: ContactAdapter
+    @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -91,9 +98,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val attachIntent by lazy { attach.clicks() }
     override val cameraIntent by lazy { camera.clicks() }
     override val galleryIntent by lazy { gallery.clicks() }
+    override val scheduleIntent by lazy { schedule.clicks() }
     override val attachmentSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { message.inputContentSelected }
+    override val scheduleSelectedIntent: Subject<Long> = PublishSubject.create()
     override val changeSimIntent by lazy { sim.clicks() }
+    override val scheduleCancelIntent by lazy { scheduledCancel.clicks() }
     override val sendIntent by lazy { send.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
@@ -206,12 +216,16 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         messageAdapter.data = state.messages
         messageAdapter.highlight = state.searchSelectionId
 
+        scheduledGroup.isVisible = state.scheduled != 0L
+        scheduledTime.text = dateFormatter.getScheduledTimestamp(state.scheduled)
+
         attachments.setVisible(state.attachments.isNotEmpty())
         attachmentAdapter.data = state.attachments
 
-        attach.animate().rotation(if (state.attaching) 45f else 0f).start()
+        attach.animate().rotation(if (state.attaching) 135f else 0f).start()
         camera.setVisible(state.attaching)
         gallery.setVisible(state.attaching)
+        schedule.setVisible(state.attaching)
 
         counter.text = state.remaining
         counter.setVisible(counter.text.isNotBlank())
@@ -238,6 +252,20 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun requestStoragePermission() {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+    }
+
+    override fun requestDatePicker() {
+        val calendar = Calendar.getInstance()
+        DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.DAY_OF_MONTH, day)
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
+                scheduleSelectedIntent.onNext(calendar.timeInMillis)
+            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this)).show()
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
     }
 
     override fun requestCamera() {

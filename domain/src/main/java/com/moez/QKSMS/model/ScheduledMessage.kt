@@ -7,6 +7,7 @@ import io.realm.annotations.PrimaryKey
 open class ScheduledMessage(
         @PrimaryKey var id: Long = 0,
         var date: Long = 0,
+        var subId: Int = -1,
         var recipients: RealmList<String> = RealmList(),
         var sendAsGroup: Boolean = true,
         var body: String = "",

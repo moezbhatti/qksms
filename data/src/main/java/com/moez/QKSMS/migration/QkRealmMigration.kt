@@ -57,6 +57,7 @@ class QkRealmMigration : RealmMigration {
             realm.schema.create("ScheduledMessage")
                     .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
                     .addField("date", Long::class.java, FieldAttribute.REQUIRED)
+                    .addField("subId", Long::class.java, FieldAttribute.REQUIRED)
                     .addRealmListField("recipients", String::class.java)
                     .addField("sendAsGroup", Boolean::class.java, FieldAttribute.REQUIRED)
                     .addField("body", String::class.java, FieldAttribute.REQUIRED)

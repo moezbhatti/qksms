@@ -46,8 +46,11 @@ interface ComposeView : QkView<ComposeState> {
     val attachIntent: Observable<Unit>
     val cameraIntent: Observable<*>
     val galleryIntent: Observable<*>
+    val scheduleIntent: Observable<*>
     val attachmentSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
+    val scheduleSelectedIntent: Observable<Long>
+    val scheduleCancelIntent: Observable<*>
     val changeSimIntent: Observable<*>
     val sendIntent: Observable<Unit>
 
@@ -56,6 +59,7 @@ interface ComposeView : QkView<ComposeState> {
     fun requestStoragePermission()
     fun requestCamera()
     fun requestGallery()
+    fun requestDatePicker()
     fun setDraft(draft: String)
     fun scrollToMessage(id: Long)
     val backPressedIntent: Observable<Unit>

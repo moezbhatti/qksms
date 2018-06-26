@@ -164,6 +164,22 @@
         app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
     <ImageView
+        android:id="@+id/schedule"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/circle"
+        android:contentDescription="@string/compose_schedule_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_event_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/gallery"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach" />
+
+    <ImageView
         android:id="@+id/gallery"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -224,7 +240,67 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/attach"
-        app:layout_constraintTop_toTopOf="@id/attachments" />
+        app:layout_constraintTop_toTopOf="@id/scheduledCancel" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/scheduledGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="scheduledTitle, scheduledTime, scheduledCancel, scheduledSeparator" />
+
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/scheduledTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/compose_scheduled_for"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/scheduledTime"
+        app:layout_constraintEnd_toStartOf="@id/scheduledCancel"
+        app:layout_constraintStart_toStartOf="@id/messageBackground"
+        app:layout_constraintTop_toTopOf="@id/scheduledCancel"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:textSize="secondary" />
+
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/scheduledTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:textColor="?android:attr/textColorTertiary"
+        app:layout_constraintBottom_toBottomOf="@id/scheduledCancel"
+        app:layout_constraintEnd_toStartOf="@id/scheduledCancel"
+        app:layout_constraintStart_toStartOf="@id/messageBackground"
+        app:layout_constraintTop_toBottomOf="@id/scheduledTitle"
+        app:textSize="secondary"
+        tools:text="Decemeber 23rd at 12:00AM" />
+
+    <ImageView
+        android:id="@+id/scheduledCancel"
+        android:layout_width="44dp"
+        android:layout_height="56dp"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_cancel_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toTopOf="@id/scheduledSeparator"
+        app:layout_constraintEnd_toEndOf="@id/messageBackground" />
+
+    <View
+        android:id="@+id/scheduledSeparator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/divider"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/attachments"
+        app:layout_constraintEnd_toEndOf="@id/messageBackground"
+        app:layout_constraintStart_toStartOf="@id/messageBackground" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/attachments"
@@ -240,7 +316,6 @@
         app:layout_constraintBottom_toTopOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
         app:layout_constraintStart_toStartOf="@id/messageBackground"
-        app:layout_constraintTop_toTopOf="@id/messageBackground"
         tools:listitem="@layout/attachment_list_item" />
 
     <com.moez.QKSMS.common.widget.QkEditText
