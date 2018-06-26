@@ -19,10 +19,10 @@
 package com.moez.QKSMS.injection
 
 import android.app.Application
-import androidx.lifecycle.ViewModelProvider
 import android.content.ContentResolver
 import android.content.Context
 import android.preference.PreferenceManager
+import androidx.lifecycle.ViewModelProvider
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.ViewModelFactory
 import com.moez.QKSMS.common.util.NotificationManagerImpl
@@ -57,6 +57,8 @@ import com.moez.QKSMS.repository.ImageRepository
 import com.moez.QKSMS.repository.ImageRepostoryImpl
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.MessageRepositoryImpl
+import com.moez.QKSMS.repository.ScheduledMessageRepository
+import com.moez.QKSMS.repository.ScheduledMessageRepositoryImpl
 import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.repository.SyncRepositoryImpl
 import dagger.Module
@@ -138,6 +140,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideMessageRepository(repository: MessageRepositoryImpl): MessageRepository = repository
+
+    @Provides
+    fun provideScheduledMessagesRepository(repository: ScheduledMessageRepositoryImpl): ScheduledMessageRepository = repository
 
     @Provides
     fun provideSyncRepository(repository: SyncRepositoryImpl): SyncRepository = repository

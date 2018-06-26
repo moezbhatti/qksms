@@ -26,7 +26,7 @@ import io.realm.RealmMigration
 class QkRealmMigration : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 3
+        const val SCHEMA_VERSION: Long = 4
     }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
@@ -49,6 +49,18 @@ class QkRealmMigration : RealmMigration {
         if (version == 2L) {
             realm.schema.get("Conversation")
                     ?.addField("name", String::class.java, FieldAttribute.REQUIRED)
+
+            version++
+        }
+
+        if (version == 3L) {
+            realm.schema.create("ScheduledMessage")
+                    .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
+                    .addField("date", Long::class.java, FieldAttribute.REQUIRED)
+                    .addRealmListField("recipients", String::class.java)
+                    .addField("sendAsGroup", Boolean::class.java, FieldAttribute.REQUIRED)
+                    .addField("body", String::class.java, FieldAttribute.REQUIRED)
+                    .addRealmListField("attachments", String::class.java)
 
             version++
         }
