@@ -16,7 +16,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.constraint.ConstraintLayout android:id="@+id/background"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/background"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -31,9 +31,9 @@
     android:elevation="8dp"
     android:maxHeight="320dp"
     android:maxWidth="320dp"
-    tools:context="feature.qkreply.QkReplyActivity">
+    tools:context="com.moez.QKSMS.feature.qkreply.QkReplyActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
         app:layout_constraintStart_toStartOf="@id/messageBackground"
         app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
-    <common.widget.QkEditText
+    <com.moez.QKSMS.common.widget.QkEditText
         android:id="@+id/message"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -127,7 +127,7 @@
         app:layout_constraintBottom_toBottomOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -142,7 +142,7 @@
         tools:ignore="SpUsage"
         tools:text="1" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/counter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
         tools:backgroundTint="@color/tools_theme"
         tools:tint="@color/textPrimaryDark" />
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
         android:background="@drawable/rounded_rectangle_top_4dp"
@@ -180,12 +180,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/toolbarTitle"
             style="@style/ToolbarText"
             tools:text="Conversations" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <View
         android:layout_width="0dp"
@@ -195,4 +195,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

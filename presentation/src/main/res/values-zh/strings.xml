@@ -24,7 +24,7 @@
   <string name="title_settings">設定</string>
   <string name="title_notification_prefs">通知</string>
   <string name="title_theme">主題</string>
-  <string name="title_conversations">在收件箱中搜索</string>
+  <string name="title_conversations">在收件箱中搜索...</string>
   <string name="title_compose">編輯</string>
   <string name="setup_skip">跳过</string>
   <string name="setup_next">繼續</string>
@@ -34,8 +34,8 @@
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">已選擇%d項</string>
   <string name="main_menu_clear">清除</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_read">標記為已讀</string>
+  <string name="main_menu_unread">標記為未讀</string>
   <string name="main_menu_archive">封存</string>
   <string name="main_menu_unarchive">取消封存</string>
   <string name="main_menu_block">攔截</string>
@@ -46,224 +46,224 @@
   <string name="main_message_results">%d 條信息</string>
   <string name="inbox_empty_text">對話會在這裡顯示</string>
   <string name="inbox_search_empty_text">無結果</string>
-  <string name="archived_empty_text">Your archived conversations will appear here</string>
-  <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
-  <string name="main_fab_cd">Start new conversation</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
-  <string name="drawer_inbox">Inbox</string>
-  <string name="drawer_archived">Archived</string>
-  <string name="drawer_scheduled">Scheduled</string>
-  <string name="drawer_more">More</string>
-  <string name="drawer_settings">Settings</string>
+  <string name="archived_empty_text">您存檔的對話將出現在這裡</string>
+  <string name="scheduled_empty_text">您的預定訊息將出現在此處</string>
+  <string name="main_fab_cd">開始新對話</string>
+  <string name="main_default_sms_title">愛上發訊息</string>
+  <string name="main_default_sms_message">將QKSMS設為預設信息應用程式</string>
+  <string name="main_default_sms_change">更改</string>
+  <string name="main_permission_required">需要授權</string>
+  <string name="main_permission_sms">需要允許QKSMS發送和查看SMS訊息</string>
+  <string name="main_permission_contacts">需要允許QKSMS查看您的連絡人</string>
+  <string name="main_permission_allow">允許</string>
+  <string name="drawer_inbox">收件箱</string>
+  <string name="drawer_archived">已存檔</string>
+  <string name="drawer_scheduled">已計劃</string>
+  <string name="drawer_more">更多</string>
+  <string name="drawer_settings">設定</string>
   <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Help &amp; feedback</string>
-  <string name="rate_title">Enjoying QKSMS?</string>
-  <string name="rate_summary">Share some love and rate us on Google Play!</string>
-  <string name="rate_okay">OKAY!</string>
-  <string name="rate_dismiss">DISMISS</string>
-  <string name="dialog_delete_title">Delete</string>
-  <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+  <string name="drawer_help">幫助與反饋</string>
+  <string name="rate_title">喜歡QKSMS？</string>
+  <string name="rate_summary">在Google Play分享你的感受，並給我們評分！</string>
+  <string name="rate_okay">好！</string>
+  <string name="rate_dismiss">放棄</string>
+  <string name="dialog_delete_title">刪除</string>
+  <string name="dialog_delete_message">你確定要刪除這個對話？</string>
   <string-array name="message_options">
-    <item>Copy text</item>
-    <item>Forward</item>
-    <item>Delete</item>
+    <item>複製文本</item>
+    <item>轉寄</item>
+    <item>刪除</item>
   </string-array>
-  <string name="compose_title_selected">%d selected</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
-  <string name="compose_send_group_title">Send as group message</string>
-  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_hint">Write a message&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
-  <string name="compose_attach_cd">Add an attachment</string>
-  <string name="compose_gallery_cd">Attach a photo</string>
-  <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_title_selected">已選取%d</string>
+  <string name="compose_subtitle_results">已顯示%2$d條中的%1$d條結果</string>
+  <string name="compose_send_group_title">群發訊息</string>
+  <string name="compose_send_group_summary">收件人和回復對每個人都是可見的</string>
+  <string name="compose_messages_empty">這是你談話的開始。說點好聽的吧!</string>
+  <string name="compose_vcard_label">連絡人卡片</string>
+  <string name="compose_hint">寫一條訊息...</string>
+  <string name="compose_menu_copy">複製文本</string>
+  <string name="compose_menu_forward">轉寄</string>
+  <string name="compose_menu_delete">刪除</string>
+  <string name="compose_menu_previous">前一個</string>
+  <string name="compose_menu_next">下一個</string>
+  <string name="compose_menu_clear">清空</string>
+  <string name="compose_details_title">訊息詳情</string>
+  <string name="compose_details_type">類型：%s</string>
+  <string name="compose_details_from">來自：%s</string>
+  <string name="compose_details_to">发送到：%s</string>
+  <string name="compose_details_subject">主題：%s</string>
+  <string name="compose_details_priority">優先順序：%s</string>
+  <string name="compose_details_size">大小：%s</string>
+  <string name="compose_details_sent">傳送於：%s</string>
+  <string name="compose_details_received">接收於：%s</string>
+  <string name="compose_details_delivered">送達於：%s</string>
+  <string name="compose_details_error_code">錯誤代碼: %d</string>
+  <string name="compose_attach_cd">添加附件</string>
+  <string name="compose_gallery_cd">附加照片</string>
+  <string name="compose_camera_cd">拍攝照片</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
-  <string name="compose_send_cd">Send message</string>
-  <string name="message_status_sending">Sending&#8230;</string>
-  <string name="message_status_delivered">Delivered %s</string>
-  <string name="message_status_failed">Failed to send. Tap to try again</string>
-  <string name="info_title">Details</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
-  <string name="info_notifications">Notifications</string>
-  <string name="info_theme">Theme</string>
-  <string name="info_archive">Archive</string>
-  <string name="info_unarchive">Unarchive</string>
-  <string name="info_block">Block</string>
-  <string name="info_unblock">Unblock</string>
-  <string name="info_delete">Delete conversation</string>
-  <string name="gallery_toast_saved">Saved to gallery</string>
-  <string name="settings_category_appearance">Appearance</string>
-  <string name="settings_category_general">General</string>
-  <string name="settings_category_qkreply">QK Reply</string>
-  <string name="settings_theme_title">Theme</string>
-  <string name="settings_night_title">Night mode</string>
-  <string name="settings_black_title">Pure black night mode</string>
-  <string name="settings_night_start_title">Start time</string>
-  <string name="settings_night_end_title">End time</string>
-  <string name="settings_text_size_title">Font size</string>
-  <string name="settings_system_font_title">Use system font</string>
-  <string name="settings_auto_emoji_title">Automatic emoji</string>
-  <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
-  <string name="settings_vibration_title">Vibration</string>
-  <string name="settings_ringtone_title">Sound</string>
-  <string name="settings_ringtone_none">None</string>
-  <string name="settings_qkreply_title">QK Reply</string>
-  <string name="settings_qkreply_summary">Popup for new messages</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-  <string name="settings_blocking_title">Blocking</string>
+  <string name="compose_send_cd">發送訊息</string>
+  <string name="message_status_sending">正在發送...</string>
+  <string name="message_status_delivered">已傳遞 %s</string>
+  <string name="message_status_failed">發送失敗，點擊重試</string>
+  <string name="info_title">詳細資訊</string>
+  <string name="info_name">會話標題</string>
+  <string name="info_name_hint">輸入標題</string>
+  <string name="info_notifications">通知</string>
+  <string name="info_theme">主題</string>
+  <string name="info_archive">存檔</string>
+  <string name="info_unarchive">取消存檔</string>
+  <string name="info_block">攔截</string>
+  <string name="info_unblock">取消攔截</string>
+  <string name="info_delete">刪除對話</string>
+  <string name="gallery_toast_saved">保存到圖庫</string>
+  <string name="settings_category_appearance">外觀</string>
+  <string name="settings_category_general">通用</string>
+  <string name="settings_category_qkreply">快速答覆</string>
+  <string name="settings_theme_title">主題</string>
+  <string name="settings_night_title">夜間模式</string>
+  <string name="settings_black_title">純黑色夜間模式</string>
+  <string name="settings_night_start_title">開始時間</string>
+  <string name="settings_night_end_title">結束時間</string>
+  <string name="settings_text_size_title">字體大小</string>
+  <string name="settings_system_font_title">使用系統字體</string>
+  <string name="settings_auto_emoji_title">自動 emoji 表情</string>
+  <string name="settings_notifications_title">通知</string>
+  <string name="settings_notification_previews_title">通知預覽</string>
+  <string name="settings_vibration_title">震動</string>
+  <string name="settings_ringtone_title">音效</string>
+  <string name="settings_ringtone_none">無</string>
+  <string name="settings_qkreply_title">快速答覆</string>
+  <string name="settings_qkreply_summary">彈出新訊息</string>
+  <string name="settings_qkreply_tap_dismiss_title">點擊忽略</string>
+  <string name="settings_qkreply_tap_dismiss_summary">在快顯視窗外點擊以關閉它</string>
+  <string name="settings_blocking_title">攔截</string>
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-  <string name="settings_delayed_title">Delayed sending</string>
-  <string name="settings_delivery_title">Delivery confirmations</string>
-  <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
-  <string name="settings_unicode_title">Strip accents</string>
-  <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
-  <string name="settings_sync_title">Sync messages</string>
-  <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-  <string name="settings_about_title">About QKSMS</string>
-  <string name="settings_version">Version %s</string>
-  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-  <string name="blocked_title">Blocking</string>
-  <string name="blocked_empty">Your blocked conversations will appear here</string>
-  <string name="blocked_unblock_dialog_title">Unblock</string>
-  <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
-  <string name="about_title">About</string>
-  <string name="about_version_title">Version</string>
-  <string name="about_developer_title">Developer</string>
-  <string name="about_source_title">Source code</string>
-  <string name="about_changelog_title">Changelog</string>
-  <string name="about_contact_title">Contact</string>
-  <string name="about_license_title">License</string>
-  <string name="about_copyright_title">Copyright</string>
-  <string name="qksms_plus_description_title">Support development, unlock everything</string>
-  <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
-  <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donate via PayPal</string>
-  <string name="qksms_plus_coming_soon">Coming soon</string>
-  <string name="qksms_plus_themes_title">Premium themes</string>
-  <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
-  <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
-  <string name="qksms_plus_backup_title">Message backup</string>
-  <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
-  <string name="qksms_plus_scheduled_title">Scheduled messages</string>
-  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
-  <string name="qksms_plus_delayed_title">Delayed sending</string>
-  <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
-  <string name="qksms_plus_night_title">Automatic night mode</string>
-  <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
-  <string name="qksms_plus_blacklist_title">Advanced blocking</string>
-  <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
-  <string name="qksms_plus_forward_title">Auto-forward</string>
-  <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
-  <string name="qksms_plus_respond_title">Auto-respond</string>
-  <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
-  <string name="qksms_plus_more_title">More</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
-  <string name="widget_loading">Loading&#8230;</string>
-  <string name="widget_more">View more conversations</string>
-  <string name="qkreply_menu_read">Mark read</string>
-  <string name="qkreply_menu_call">Call</string>
-  <string name="qkreply_menu_expand">Show more</string>
-  <string name="qkreply_menu_collapse">Show less</string>
-  <string name="qkreply_menu_view">Open conversation</string>
+  <string name="settings_should_i_answer_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
+  <string name="settings_delayed_title">延遲發送</string>
+  <string name="settings_delivery_title">送達確認</string>
+  <string name="settings_delivery_summary">確認訊息已成功送達</string>
+  <string name="settings_unicode_title">刪除讀音符號</string>
+  <string name="settings_unicode_summary">刪除訊息中字母上的讀音符號</string>
+  <string name="settings_mms_size_title">自動壓縮MMS附件</string>
+  <string name="settings_sync_title">同步消息</string>
+  <string name="settings_sync_summary">重新與安卓原生訊息數據庫進行同步</string>
+  <string name="settings_about_title">關於QKSMS</string>
+  <string name="settings_version">版本 %s</string>
+  <string name="settings_delay_duration_hint">輸入時長 (秒)</string>
+  <string name="blocked_title">攔截</string>
+  <string name="blocked_empty">被攔截的對話將出現在這裡</string>
+  <string name="blocked_unblock_dialog_title">取消攔截</string>
+  <string name="blocked_unblock_dialog_message">確定不再攔截這個對話嗎？</string>
+  <string name="about_title">關於</string>
+  <string name="about_version_title">版本</string>
+  <string name="about_developer_title">開發者</string>
+  <string name="about_source_title">源代碼</string>
+  <string name="about_changelog_title">更新日誌</string>
+  <string name="about_contact_title">聯絡資訊</string>
+  <string name="about_license_title">授權</string>
+  <string name="about_copyright_title">版權</string>
+  <string name="qksms_plus_description_title">支持開發，解鎖全部功能</string>
+  <string name="qksms_plus_description_summary">你可以支付%s來拯救一個飢餓的開發者</string>
+  <string name="qksms_plus_upgrade">終身升級只需 %1$s %2$s</string>
+  <string name="qksms_plus_upgrade_donate">解鎖並捐贈只需 %1$s %2$s</string>
+  <string name="qksms_plus_thanks_title">感謝你對QKSMS的支持！</string>
+  <string name="qksms_plus_thanks_summary">現在你可以使用QKSMS+的全部功能！</string>
+  <string name="qksms_plus_free_title">QKSMS+對F-Droid用戶免費！如果您想支持開發，可以隨意捐款。</string>
+  <string name="qksms_plus_donate">使用PayPal捐贈</string>
+  <string name="qksms_plus_coming_soon">即將推出</string>
+  <string name="qksms_plus_themes_title">高級主題</string>
+  <string name="qksms_plus_themes_summary">解鎖 \"Material Design\" 調色板中不可用的美麗彩色主題</string>
+  <string name="qksms_plus_emoji_title">自定義自動emoji</string>
+  <string name="qksms_plus_emoji_summary">創建自定義自動emoji的快捷方式</string>
+  <string name="qksms_plus_backup_title">訊息備份</string>
+  <string name="qksms_plus_backup_summary">自動備份訊息，再也不用擔心更換或丟失手機後會丟掉訊息記錄。</string>
+  <string name="qksms_plus_scheduled_title">计划訊息</string>
+  <string name="qksms_plus_scheduled_summary">安排一個時間來自動計劃訊息</string>
+  <string name="qksms_plus_delayed_title">延遲發送</string>
+  <string name="qksms_plus_delayed_summary">發送訊息前，稍等幾秒</string>
+  <string name="qksms_plus_night_title">自動夜間模式</string>
+  <string name="qksms_plus_night_summary">根據時間自動啟用夜間模式</string>
+  <string name="qksms_plus_blacklist_title">高級攔截選項</string>
+  <string name="qksms_plus_blacklist_summary">根據關鍵字或匹配模式攔截消息</string>
+  <string name="qksms_plus_forward_title">自動轉寄</string>
+  <string name="qksms_plus_forward_summary">自動轉寄特定發件人的訊息</string>
+  <string name="qksms_plus_respond_title">自動回覆</string>
+  <string name="qksms_plus_respond_summary">使用預設回應自動回覆傳入郵件</string>
+  <string name="qksms_plus_more_title">更多</string>
+  <string name="qksms_plus_more_summary">QKSMS正在積極開發中，你的訂閱包含未來所有的QKSMS+功能！</string>
+  <string name="widget_loading">載入中...</string>
+  <string name="widget_more">查看更多對話</string>
+  <string name="qkreply_menu_read">標記為已讀</string>
+  <string name="qkreply_menu_call">致電</string>
+  <string name="qkreply_menu_expand">顯示更多</string>
+  <string name="qkreply_menu_collapse">顯示較少</string>
+  <string name="qkreply_menu_view">打開對話</string>
   <string name="theme_material">Material</string>
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Apply</string>
-  <string name="notification_reply">Reply</string>
-  <string name="notification_read">Mark read</string>
-  <string name="button_cancel">Cancel</string>
-  <string name="button_delete">Delete</string>
-  <string name="button_save">Save</string>
-  <string name="button_more">More</string>
-  <string name="button_set">Set</string>
-  <string name="button_unblock">Unblock</string>
-  <string name="button_undo">Undo</string>
-  <string name="toast_copied">Copied</string>
-  <string name="toast_archived">Archived conversation</string>
-  <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
+  <string name="theme_apply">應用</string>
+  <string name="notification_reply">回覆</string>
+  <string name="notification_read">標記為已讀</string>
+  <string name="button_cancel">取消</string>
+  <string name="button_delete">刪除</string>
+  <string name="button_save">儲存</string>
+  <string name="button_more">更多</string>
+  <string name="button_set">設置</string>
+  <string name="button_unblock">取消攔截</string>
+  <string name="button_undo">復原</string>
+  <string name="toast_copied">已複製</string>
+  <string name="toast_archived">存檔的會話</string>
+  <string name="toast_qksms_plus">您必須解鎖QKSMS+才能使用此功能</string>
   <plurals name="notification_new_messages">
-    <item quantity="other">%s new messages</item>
+    <item quantity="other">%s條新訊息</item>
   </plurals>
-  <string name="notification_message_failed_title">Message not sent</string>
-  <string name="notification_message_failed_text">The message to %s failed to send</string>
+  <string name="notification_message_failed_title">消息未發送</string>
+  <string name="notification_message_failed_text">給%s的訊息發送失敗</string>
   <string-array name="night_modes">
-    <item>Disabled</item>
-    <item>Always on</item>
-    <item>Automatic</item>
+    <item>禁用</item>
+    <item>保持打開</item>
+    <item>自動</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>顯示姓名和消息</item>
+    <item>只顯示姓名</item>
+    <item>隱藏內容</item>
   </string-array>
   <string-array name="text_sizes">
-    <item>Small</item>
-    <item>Normal</item>
-    <item>Large</item>
-    <item>Larger</item>
+    <item>小</item>
+    <item>一般</item>
+    <item>大</item>
+    <item>更大</item>
   </string-array>
   <string-array name="delayed_sending_labels">
-    <item>No delay</item>
-    <item>Short</item>
-    <item>Medium</item>
-    <item>Long</item>
+    <item>無延遲</item>
+    <item>短</item>
+    <item>中</item>
+    <item>长</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB (Recommended)</item>
+    <item>300KB (推荐)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No compression</item>
+    <item>不压缩</item>
   </string-array>
   <string-array name="qk_responses">
-    <item>Okay</item>
-    <item>Give me a moment</item>
-    <item>On my way</item>
-    <item>Thanks</item>
-    <item>Sounds good</item>
-    <item>What\'s up?</item>
-    <item>Agreed</item>
-    <item>No</item>
-    <item>Love you</item>
-    <item>Sorry</item>
-    <item>LOL</item>
-    <item>That\'s okay</item>
+    <item>好的</item>
+    <item>請稍等片刻</item>
+    <item>馬上就到</item>
+    <item>謝謝</item>
+    <item>聽上去不錯</item>
+    <item>怎麼了？</item>
+    <item>同意</item>
+    <item>不</item>
+    <item>愛你</item>
+    <item>抱歉</item>
+    <item>啊哈哈哈哈</item>
+    <item>好的</item>
   </string-array>
 </resources>

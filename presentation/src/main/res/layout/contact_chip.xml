@@ -33,12 +33,12 @@
         android:backgroundTint="?attr/composeBackground"
         android:orientation="horizontal">
 
-        <common.widget.AvatarView
+        <com.moez.QKSMS.common.widget.AvatarView
             android:id="@+id/avatar"
             android:layout_width="36dp"
             android:layout_height="36dp" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

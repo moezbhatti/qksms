@@ -23,7 +23,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="feature.gallery.GalleryActivity">
+    tools:context="com.moez.QKSMS.feature.gallery.GalleryActivity">
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/image"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -43,7 +43,7 @@
         android:gravity="center_vertical"
         android:minHeight="56dp">
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/toolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,6 +55,6 @@
             app:textSize="toolbar"
             tools:text="Conversations" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
 </FrameLayout>

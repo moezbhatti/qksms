@@ -34,8 +34,8 @@
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">已选择 %d 项</string>
   <string name="main_menu_clear">清除</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_read">标记为已读</string>
+  <string name="main_menu_unread">标记为未读</string>
   <string name="main_menu_archive">存档</string>
   <string name="main_menu_unarchive">取消存档</string>
   <string name="main_menu_block">拦截</string>
@@ -87,17 +87,17 @@
   <string name="compose_menu_previous">上一个</string>
   <string name="compose_menu_next">下一个</string>
   <string name="compose_menu_clear">清除</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_title">信息详情</string>
+  <string name="compose_details_type">类型：%s</string>
+  <string name="compose_details_from">来自：%s</string>
+  <string name="compose_details_to">发送给：%s</string>
+  <string name="compose_details_subject">主题：%s</string>
+  <string name="compose_details_priority">优先级：%s</string>
+  <string name="compose_details_size">大小：%s</string>
+  <string name="compose_details_sent">发送时间：%s</string>
+  <string name="compose_details_received">接收时间：%s</string>
+  <string name="compose_details_delivered">送达时间：%s</string>
+  <string name="compose_details_error_code">错误码：%d</string>
   <string name="compose_attach_cd">添加附件</string>
   <string name="compose_gallery_cd">添加照片</string>
   <string name="compose_camera_cd">拍照</string>
@@ -258,7 +258,7 @@
     <item>在路上了</item>
     <item>谢谢</item>
     <item>听上去不错</item>
-    <item>咋了</item>
+    <item>怎么了？</item>
     <item>同意</item>
     <item>不</item>
     <item>爱你</item>

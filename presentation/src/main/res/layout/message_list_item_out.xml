@@ -17,14 +17,14 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground">
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/timestamp"
         style="@style/TextSecondary"
         android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toEndOf="@id/timestamp"
         app:layout_constraintTop_toTopOf="@id/timestamp" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         app:textSize="tertiary"
         tools:text="1" />
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/attachments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,14 +69,17 @@
         android:layout_marginEnd="12dp"
         android:layout_marginStart="60dp"
         android:gravity="end"
+        android:nestedScrollingEnabled="false"
         android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timestamp" />
+        app:layout_constraintTop_toBottomOf="@id/timestamp"
+        tools:itemCount="1"
+        tools:listitem="@layout/mms_preview_list_item" />
 
-    <common.widget.TightTextView
+    <com.moez.QKSMS.common.widget.TightTextView
         android:id="@+id/body"
         style="@style/TextPrimary"
         android:layout_width="wrap_content"
@@ -131,7 +134,7 @@
         app:layout_constraintTop_toTopOf="@id/cancel"
         tools:tint="@color/tools_theme" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -146,4 +149,4 @@
         app:textSize="tertiary"
         tools:text="Sending..." />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

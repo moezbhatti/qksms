@@ -23,7 +23,7 @@
     android:layout_height="280dp"
     android:layout_marginTop="2dp">
 
-    <common.widget.BubbleImageView
+    <com.moez.QKSMS.common.widget.BubbleImageView
         android:id="@+id/thumbnail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

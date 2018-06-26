@@ -32,7 +32,7 @@
         android:src="@drawable/radio_button"
         tools:tint="?android:attr/textColorTertiary" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="0dp"

@@ -17,7 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
@@ -45,13 +45,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recipients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:layout_height="72dp"
                 tools:listitem="@layout/conversation_recipient_list_item" />
 
@@ -61,7 +61,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/divider" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,35 +69,35 @@
                 app:icon="@drawable/ic_people_black_24dp"
                 app:title="@string/info_name" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_notifications_black_24dp"
                 app:title="@string/info_notifications" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/themePrefs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_palette_black_24dp"
                 app:title="@string/info_theme" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/archive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_archive_black_24dp"
                 app:title="@string/info_archive" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_block_black_24dp"
                 app:title="@string/info_block" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/delete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,18 +111,18 @@
                 android:layout_marginTop="8dp"
                 android:background="?android:attr/divider" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/media"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="3"
                 tools:listitem="@layout/conversation_media_list_item" />
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         android:layout_width="match_parent"
@@ -138,4 +138,4 @@
         android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

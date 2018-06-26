@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_SMS" />
 
     <application
-        android:name="common.QKApplication"
+        android:name=".common.QKApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,7 +22,7 @@
         android:theme="@style/AppThemeLight">
 
         <activity
-            android:name="feature.main.MainActivity"
+            android:name=".feature.main.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,8 +30,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="feature.compose.ComposeActivity"
-            android:parentActivityName="feature.main.MainActivity">
+            android:name=".feature.compose.ComposeActivity"
+            android:parentActivityName=".feature.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
@@ -58,36 +58,36 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity android:name="feature.settings.SettingsActivity" />
-        <activity android:name="feature.themepicker.ThemePickerActivity" />
-        <activity android:name="feature.plus.PlusActivity" />
+        <activity android:name=".feature.settings.SettingsActivity" />
+        <activity android:name=".feature.themepicker.ThemePickerActivity" />
+        <activity android:name=".feature.plus.PlusActivity" />
         <activity
-            android:name="feature.gallery.GalleryActivity"
+            android:name=".feature.gallery.GalleryActivity"
             android:theme="@style/AppThemeBlack" />
-        <activity android:name="feature.conversationinfo.ConversationInfoActivity" />
-        <activity android:name="feature.notificationprefs.NotificationPrefsActivity" />
-        <activity android:name="feature.blocked.BlockedActivity" />
+        <activity android:name=".feature.conversationinfo.ConversationInfoActivity" />
+        <activity android:name=".feature.notificationprefs.NotificationPrefsActivity" />
+        <activity android:name=".feature.blocked.BlockedActivity" />
         <activity
-            android:name="feature.qkreply.QkReplyActivity"
+            android:name=".feature.qkreply.QkReplyActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/AppThemeLightDialog" />
-        <activity android:name="feature.settings.about.AboutActivity" />
+        <activity android:name=".feature.settings.about.AboutActivity" />
 
-        <receiver android:name="receiver.DefaultSmsChangedReceiver">
+        <receiver android:name=".receiver.DefaultSmsChangedReceiver">
             <intent-filter>
                 <action android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="receiver.SmsReceiver"
+            android:name=".receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name="receiver.MmsReceiver"
+            android:name=".receiver.MmsReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
@@ -95,33 +95,33 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="receiver.MmsSentReceiver"
+            android:name=".receiver.MmsSentReceiver"
             android:taskAffinity="com.moez.QKSMS.MMS_SENT" />
         <receiver
-            android:name="receiver.MmsUpdatedReceiver"
+            android:name=".receiver.MmsUpdatedReceiver"
             android:taskAffinity="com.moez.QKSMS.MMS_UPDATED" />
         <receiver
-            android:name="receiver.MmsReceivedReceiver"
+            android:name=".receiver.MmsReceivedReceiver"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
         <receiver
-            android:name="receiver.SendSmsReceiver"
+            android:name=".receiver.SendSmsReceiver"
             android:taskAffinity="com.moez.QKSMS.SEND_SMS" />
         <receiver
-            android:name="receiver.SmsSentReceiver"
+            android:name=".receiver.SmsSentReceiver"
             android:taskAffinity="com.moez.QKSMS.SMS_SENT" />
         <receiver
-            android:name="receiver.SmsDeliveredReceiver"
+            android:name=".receiver.SmsDeliveredReceiver"
             android:taskAffinity="com.moez.QKSMS.SMS_DELIVERED" />
-        <receiver android:name="receiver.MarkSeenReceiver" />
-        <receiver android:name="receiver.MarkReadReceiver" />
-        <receiver android:name="receiver.RemoteMessagingReceiver" />
-        <receiver android:name="receiver.NightModeReceiver" />
-        <receiver android:name="receiver.SmsProviderChangedReceiver">
+        <receiver android:name=".receiver.MarkSeenReceiver" />
+        <receiver android:name=".receiver.MarkReadReceiver" />
+        <receiver android:name=".receiver.RemoteMessagingReceiver" />
+        <receiver android:name=".receiver.NightModeReceiver" />
+        <receiver android:name=".receiver.SmsProviderChangedReceiver">
             <intent-filter>
                 <action android:name="android.provider.action.EXTERNAL_PROVIDER_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="feature.widget.WidgetProvider">
+        <receiver android:name=".feature.widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -136,7 +136,7 @@
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service
-            android:name="service.HeadlessSmsSendService"
+            android:name=".service.HeadlessSmsSendService"
             android:exported="true"
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
             <intent-filter>
@@ -150,7 +150,7 @@
             </intent-filter>
         </service>
         <service
-            android:name="feature.widget.WidgetService"
+            android:name=".feature.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <meta-data

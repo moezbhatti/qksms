@@ -16,24 +16,24 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
         app:layout_constraintTop_toTopOf="parent">
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/toolbarTitle"
             style="@style/ToolbarText"
             tools:text="Notifications" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -49,7 +49,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp">
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/notificationsO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 app:title="@string/settings_notifications_title"
                 tools:visibility="gone" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,21 +65,21 @@
                 app:title="@string/settings_notifications_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/notificationPreviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_notification_previews_title"
                 tools:summary="Show name and message" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/vibration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/settings_vibration_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/ringtone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,11 +92,11 @@
                 android:layout_marginTop="8dp"
                 android:background="?android:attr/divider" />
 
-            <common.widget.QkTextView
+            <com.moez.QKSMS.common.widget.QkTextView
                 style="@style/PreferenceCategory"
                 android:text="@string/settings_category_qkreply" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/qkreply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 app:title="@string/settings_qkreply_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <common.widget.PreferenceView
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/qkreplyTapDismiss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,4 +130,4 @@
         android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

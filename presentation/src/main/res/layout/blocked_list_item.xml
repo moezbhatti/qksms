@@ -17,7 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,7 +28,7 @@
     android:paddingStart="16dp"
     android:paddingTop="8dp">
 
-    <common.widget.GroupAvatarView
+    <com.moez.QKSMS.common.widget.GroupAvatarView
         android:id="@+id/avatars"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -36,7 +36,7 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <common.widget.QkTextView
+    <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -49,4 +49,4 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,19 +17,19 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.v4.widget.DrawerLayout android:id="@+id/drawerLayout"
+<androidx.drawerlayout.widget.DrawerLayout android:id="@+id/drawerLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar"
             android:animateLayoutChanges="true"
@@ -39,11 +39,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <common.widget.QkTextView
+            <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
                 style="@style/ToolbarText" />
 
-            <common.widget.QkEditText
+            <com.moez.QKSMS.common.widget.QkEditText
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
                 android:hint="@string/title_conversations"
@@ -51,9 +51,9 @@
                 app:textSize="primary"
                 tools:textSize="16sp" />
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/empty"
             style="@style/TextSecondary"
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             tools:text="Your conversations will appear here"
             tools:visibility="invisible" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:listitem="@layout/conversation_list_item" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/compose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,14 +107,14 @@
             android:background="?android:attr/divider"
             app:layout_constraintBottom_toTopOf="@id/bottomDivider" />
 
-        <android.support.constraint.Barrier
+        <androidx.constraintlayout.widget.Barrier
             android:id="@+id/bottomDivider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="top"
             app:constraint_referenced_ids="snackbarTitle, snackbarMessage, syncingLabel, syncingProgress" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/snackbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
             app:constraint_referenced_ids="snackbarTitle, snackbarMessage, snackbarButton"
             tools:visibility="visible" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/syncing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             app:constraint_referenced_ids="syncingProgress,syncingLabel"
             tools:visibility="gone" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/snackbarTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
             app:textSize="primary"
             tools:text="Love texting again" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/snackbarMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
             app:textSize="secondary"
             tools:text="Make QKSMS your default SMS app" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/snackbarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             app:textSize="secondary"
             tools:text="Change" />
 
-        <common.widget.QkTextView
+        <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/syncingLabel"
             style="@style/TextPrimary"
             android:layout_width="match_parent"
@@ -199,7 +199,7 @@
             android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/drawer"
@@ -208,4 +208,4 @@
         android:layout_height="match_parent"
         android:layout_gravity="start" />
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

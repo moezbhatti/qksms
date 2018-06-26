@@ -35,7 +35,7 @@
         android:paddingRight="16dp"
         android:paddingTop="8dp">
 
-        <common.widget.AvatarView
+        <com.moez.QKSMS.common.widget.AvatarView
             android:id="@+id/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <common.widget.QkTextView
+            <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/name"
                 style="@style/TextPrimary"
                 android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     tools:text="(123) 456-7890"
                     tools:textColor="@color/textSecondary" />
 
-                <common.widget.QkTextView
+                <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/type"
                     style="@style/TextSecondary"
                     android:layout_width="wrap_content"
