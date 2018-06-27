@@ -89,6 +89,7 @@
     <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_future">Selected time must be in the future!</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
     <string name="compose_hint">Write a message…</string>
     <string name="compose_menu_copy">Copy text</string>

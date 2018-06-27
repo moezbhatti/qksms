@@ -478,6 +478,11 @@ class ComposeViewModel @Inject constructor(
 
         // Set the scheduled time
         view.scheduleSelectedIntent
+                .filter { scheduled ->
+                    (scheduled > System.currentTimeMillis()).also { future ->
+                        if (!future) context.toast(R.string.compose_scheduled_future)
+                    }
+                }
                 .autoDisposable(view.scope())
                 .subscribe { scheduled -> newState { copy(scheduled = scheduled) } }
 
