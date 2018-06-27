@@ -51,7 +51,6 @@
         android:background="@drawable/circle"
         android:backgroundTint="?attr/bubbleColor"
         android:src="@drawable/ic_cancel_black_24dp"
-        android:tint="?android:attr/textColorSecondary"
-        tools:backgroundTint="@color/backgroundLight" />
+        android:tint="?android:attr/textColorSecondary" />
 
 </FrameLayout>
