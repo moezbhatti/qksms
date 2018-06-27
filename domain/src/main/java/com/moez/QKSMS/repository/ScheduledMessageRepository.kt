@@ -6,10 +6,10 @@ import io.realm.RealmResults
 interface ScheduledMessageRepository {
 
     /**
-     * Saves a scheduled message and returns the id if successful
+     * Saves a scheduled message
      */
     fun saveScheduledMessage(date: Long, subId: Int, recipients: List<String>, sendAsGroup: Boolean, body: String,
-                             attachments: List<String>): Long
+                             attachments: List<String>)
 
     /**
      * Returns all of the scheduled messages, sorted chronologically

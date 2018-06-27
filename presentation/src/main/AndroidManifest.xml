@@ -105,6 +105,9 @@
             android:name=".receiver.MmsReceivedReceiver"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
         <receiver
+            android:name=".receiver.SendScheduledMessageReceiver"
+            android:taskAffinity="com.moez.QKSMS.SEND_SCHEDULED_MESSAGE" />
+        <receiver
             android:name=".receiver.SendSmsReceiver"
             android:taskAffinity="com.moez.QKSMS.SEND_SMS" />
         <receiver

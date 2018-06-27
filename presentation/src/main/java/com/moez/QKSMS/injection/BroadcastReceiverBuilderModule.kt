@@ -28,6 +28,7 @@ import com.moez.QKSMS.receiver.MmsSentReceiver
 import com.moez.QKSMS.receiver.MmsUpdatedReceiver
 import com.moez.QKSMS.receiver.NightModeReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
+import com.moez.QKSMS.receiver.SendScheduledMessageReceiver
 import com.moez.QKSMS.receiver.SendSmsReceiver
 import com.moez.QKSMS.receiver.SmsDeliveredReceiver
 import com.moez.QKSMS.receiver.SmsProviderChangedReceiver
@@ -74,6 +75,10 @@ abstract class BroadcastReceiverBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector()
     abstract fun bindRemoteMessagingReceiver(): RemoteMessagingReceiver
+
+    @ActivityScope
+    @ContributesAndroidInjector()
+    abstract fun bindSendScheduledMessageReceiver(): SendScheduledMessageReceiver
 
     @ActivityScope
     @ContributesAndroidInjector()
