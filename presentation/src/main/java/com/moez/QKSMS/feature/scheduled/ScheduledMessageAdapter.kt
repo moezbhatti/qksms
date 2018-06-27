@@ -7,24 +7,26 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.interactor.SendScheduledMessage
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.PhoneNumber
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.ScheduledMessage
 import com.moez.QKSMS.repository.ContactRepository
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.scheduled_message_list_item.view.*
 import javax.inject.Inject
 
 class ScheduledMessageAdapter @Inject constructor(
         private val contactRepo: ContactRepository,
-        private val dateFormatter: DateFormatter,
-        private val sendScheduledMessage: SendScheduledMessage
+        private val dateFormatter: DateFormatter
 ) : QkRealmAdapter<ScheduledMessage>() {
 
     private val contacts by lazy { contactRepo.getContacts() }
     private val contactMap: HashMap<String, Contact> = hashMapOf()
+
+    val clicks: Subject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         return QkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.scheduled_message_list_item, parent, false))
@@ -34,7 +36,7 @@ class ScheduledMessageAdapter @Inject constructor(
         val message = getItem(position)!!
         val view = holder.itemView
 
-        view.setOnClickListener { sendScheduledMessage.execute(message.id) }
+        view.setOnClickListener { clicks.onNext(message.id) }
 
         message.recipients.forEach { address ->
             if (!contactMap.containsKey(address)) {

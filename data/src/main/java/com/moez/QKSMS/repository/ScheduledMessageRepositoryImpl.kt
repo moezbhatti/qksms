@@ -33,19 +33,22 @@ class ScheduledMessageRepositoryImpl @Inject constructor() : ScheduledMessageRep
 
     override fun getScheduledMessage(id: Long): ScheduledMessage? {
         return Realm.getDefaultInstance()
+                .apply { refresh() }
                 .where(ScheduledMessage::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
 
     override fun deleteScheduledMessage(id: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            val message = realm.where(ScheduledMessage::class.java)
-                    .equalTo("id", id)
-                    .findFirst()
+        Realm.getDefaultInstance()
+                .apply { refresh() }
+                .use { realm ->
+                    val message = realm.where(ScheduledMessage::class.java)
+                            .equalTo("id", id)
+                            .findFirst()
 
-            realm.executeTransaction { message?.deleteFromRealm() }
-        }
+                    realm.executeTransaction { message?.deleteFromRealm() }
+                }
     }
 
 }
