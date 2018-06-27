@@ -206,29 +206,53 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun sendSmsAndPersist(subId: Int, threadId: Long, address: String, body: String) {
-        if (prefs.sendDelay.get() != Preferences.SEND_DELAY_NONE) {
-            val delay = when (prefs.sendDelay.get()) {
-                Preferences.SEND_DELAY_SHORT -> 3000
-                Preferences.SEND_DELAY_MEDIUM -> 5000
-                Preferences.SEND_DELAY_LONG -> 10000
-                else -> 0
+    override fun sendMessage(subId: Int, threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>, delay: Int) {
+        if (addresses.size == 1 && attachments.isEmpty()) { // SMS
+            if (delay > 0) { // With delay
+                val sendTime = System.currentTimeMillis() + delay
+                val message = insertSentSms(subId, threadId, addresses.first(), body, sendTime)
+
+                val intent = getIntentForDelayedSms(message.id)
+
+                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, sendTime, intent)
+                } else {
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
+                }
+            } else { // No delay
+                val message = insertSentSms(subId, threadId, addresses.first(), body, System.currentTimeMillis())
+                sendSms(message)
             }
+        } else { // MMS
+            val settings = Settings().apply { subscriptionId = subId }
+            val message = com.klinker.android.send_message.Message(body, addresses.toTypedArray())
 
-            val sendTime = System.currentTimeMillis() + delay
-            val message = insertSentSms(subId, threadId, address, body, sendTime)
+            // Add the GIFs as attachments. The app currently can't compress them, which may result
+            // in a lot of these messages failing to send
+            // TODO Add support for GIF compression
+            attachments
+                    .filter { attachment -> attachment.isGif(context) }
+                    .map { attachment -> attachment.getUri() }
+                    .map { uri -> context.contentResolver.openInputStream(uri) }
+                    .map { inputStream -> inputStream.readBytes() }
+                    .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_GIF) }
 
-            val intent = getIntentForDelayedSms(message.id)
+            // Compress the images and add them as attachments
+            var totalImageBytes = 0
+            attachments
+                    .filter { attachment -> !attachment.isGif(context) }
+                    .mapNotNull { attachment -> attachment.getUri() }
+                    .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri) } }
+                    .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
+                    .map { bitmap ->
+                        val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
+                        shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
+                    }
+                    .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_JPEG) }
 
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, sendTime, intent)
-            } else {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
-            }
-        } else {
-            val message = insertSentSms(subId, threadId, address, body, System.currentTimeMillis())
-            sendSms(message)
+            val transaction = Transaction(context, settings)
+            transaction.sendNewMessage(message, threadId)
         }
     }
 
@@ -256,37 +280,6 @@ class MessageRepositoryImpl @Inject constructor(
         }
 
         smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
-    }
-
-    override fun sendMms(subId: Int, threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>) {
-        val settings = Settings().apply { subscriptionId = subId }
-        val message = com.klinker.android.send_message.Message(body, addresses.toTypedArray())
-
-        // Add the GIFs as attachments. The app currently can't compress them, which may result
-        // in a lot of these messages failing to send
-        // TODO Add support for GIF compression
-        attachments
-                .filter { attachment -> attachment.isGif(context) }
-                .map { attachment -> attachment.getUri() }
-                .map { uri -> context.contentResolver.openInputStream(uri) }
-                .map { inputStream -> inputStream.readBytes() }
-                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_GIF) }
-
-        // Compress the images and add them as attachments
-        var totalImageBytes = 0
-        attachments
-                .filter { attachment -> !attachment.isGif(context) }
-                .mapNotNull { attachment -> attachment.getUri() }
-                .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri) } }
-                .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
-                .map { bitmap ->
-                    val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
-                    shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
-                }
-                .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_JPEG) }
-
-        val transaction = Transaction(context, settings)
-        transaction.sendNewMessage(message, threadId)
     }
 
     private fun shrink(src: Bitmap, maxBytes: Int): ByteArray {

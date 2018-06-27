@@ -54,6 +54,7 @@ import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.ScheduledMessageRepository
 import com.moez.QKSMS.util.ActiveSubscriptionObservable
+import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
@@ -88,6 +89,7 @@ class ComposeViewModel @Inject constructor(
         private val messageRepo: MessageRepository,
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
+        private val prefs: Preferences,
         private val retrySending: RetrySending,
         private val scheduledMessageRepo: ScheduledMessageRepository,
         private val sendMessage: SendMessage,
@@ -559,6 +561,12 @@ class ComposeViewModel @Inject constructor(
                         true -> conversation.recipients.map { it.address }
                         false -> contacts.mapNotNull { it.numbers.firstOrNull()?.address }
                     }
+                    val delay = when (prefs.sendDelay.get()) {
+                        Preferences.SEND_DELAY_SHORT -> 3000
+                        Preferences.SEND_DELAY_MEDIUM -> 5000
+                        Preferences.SEND_DELAY_LONG -> 10000
+                        else -> 0
+                    }
 
                     when {
                         state.scheduled != 0L -> {
@@ -571,7 +579,7 @@ class ComposeViewModel @Inject constructor(
                         state.sendAsGroup -> {
                             val threadId = conversation.id.takeIf { it > 0 }
                                     ?: TelephonyCompat.getOrCreateThreadId(context, addresses).also(threadIdSubject::onNext)
-                            sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments))
+                            sendMessage.execute(SendMessage.Params(subId, threadId, addresses, body, attachments, delay))
                         }
 
                         else -> {
@@ -579,7 +587,7 @@ class ComposeViewModel @Inject constructor(
                                 val threadId = TelephonyCompat.getOrCreateThreadId(context, addr)
                                 val address = listOf(conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address
                                         ?: addr)
-                                sendMessage.execute(SendMessage.Params(subId, threadId, address, body, attachments))
+                                sendMessage.execute(SendMessage.Params(subId, threadId, address, body, attachments, delay))
                             }
                         }
                     }

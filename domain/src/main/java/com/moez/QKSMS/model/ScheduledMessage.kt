@@ -12,4 +12,17 @@ open class ScheduledMessage(
         var sendAsGroup: Boolean = true,
         var body: String = "",
         var attachments: RealmList<String> = RealmList()
-) : RealmObject()
+) : RealmObject() {
+
+    fun copy(id: Long = this.id,
+             date: Long = this.date,
+             subId: Int = this.subId,
+             recipients: RealmList<String> = this.recipients,
+             sendAsGroup: Boolean = this.sendAsGroup,
+             body: String = this.body,
+             attachments: RealmList<String> = this.attachments): ScheduledMessage {
+
+        return ScheduledMessage(id, date, subId, recipients, sendAsGroup, body, attachments)
+    }
+
+}

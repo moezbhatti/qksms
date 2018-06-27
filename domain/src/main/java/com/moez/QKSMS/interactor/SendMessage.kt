@@ -29,22 +29,20 @@ class SendMessage @Inject constructor(
         private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params>() {
 
-    data class Params(val subId: Int, val threadId: Long, val addresses: List<String>, val body: String, val attachments: List<Attachment> = listOf())
+    data class Params(
+            val subId: Int,
+            val threadId: Long,
+            val addresses: List<String>,
+            val body: String,
+            val attachments: List<Attachment> = listOf(),
+            val delay: Int = 0)
 
-    override fun buildObservable(params: Params): Flowable<Unit> {
-        return Flowable.just(Unit)
-                .filter { params.addresses.isNotEmpty() }
-                .doOnNext {
-                    if (params.addresses.size == 1 && params.attachments.isEmpty()) {
-                        messageRepo.sendSmsAndPersist(params.subId, params.threadId, params.addresses.first(), params.body)
-                    } else {
-                        messageRepo.sendMms(params.subId, params.threadId, params.addresses, params.body, params.attachments)
-                    }
-                }
-                // If this was the first message sent in the conversation, the conversation might not exist yet
-                .doOnNext { conversationRepo.getOrCreateConversation(params.threadId) }
-                .doOnNext { conversationRepo.updateConversations(params.threadId) }
-                .doOnNext { conversationRepo.markUnarchived(params.threadId) }
-    }
+    override fun buildObservable(params: Params): Flowable<Unit> = Flowable.just(Unit)
+            .filter { params.addresses.isNotEmpty() }
+            .doOnNext { messageRepo.sendMessage(params.subId, params.threadId, params.addresses, params.body, params.attachments, params.delay) }
+            // If this was the first message sent in the conversation, the conversation might not exist yet
+            .doOnNext { conversationRepo.getOrCreateConversation(params.threadId) }
+            .doOnNext { conversationRepo.updateConversations(params.threadId) }
+            .doOnNext { conversationRepo.markUnarchived(params.threadId) }
 
 }
