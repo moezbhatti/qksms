@@ -164,73 +164,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/messageBackground" />
 
-    <ImageView
-        android:id="@+id/schedule"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/circle"
-        android:backgroundTint="?attr/bubbleColor"
-        android:contentDescription="@string/compose_schedule_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_event_black_24dp"
-        android:tint="?android:attr/textColorSecondary"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/gallery"
-        app:layout_constraintEnd_toEndOf="@id/attach"
-        app:layout_constraintStart_toStartOf="@id/attach" />
-
-    <ImageView
-        android:id="@+id/gallery"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/circle"
-        android:backgroundTint="?attr/bubbleColor"
-        android:contentDescription="@string/compose_gallery_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_insert_photo_black_24dp"
-        android:tint="?android:attr/textColorSecondary"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/camera"
-        app:layout_constraintEnd_toEndOf="@id/attach"
-        app:layout_constraintStart_toStartOf="@id/attach" />
-
-    <ImageView
-        android:id="@+id/camera"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/circle"
-        android:backgroundTint="?attr/bubbleColor"
-        android:contentDescription="@string/compose_camera_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_camera_alt_black_24dp"
-        android:tint="?android:attr/textColorSecondary"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/attach"
-        app:layout_constraintEnd_toEndOf="@id/attach"
-        app:layout_constraintStart_toStartOf="@id/attach" />
-
-    <ImageView
-        android:id="@+id/attach"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/circle"
-        android:contentDescription="@string/compose_attach_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_add_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:backgroundTint="@color/tools_theme"
-        tools:tint="@color/textPrimaryDark" />
-
     <View
         android:id="@+id/messageBackground"
         android:layout_width="0dp"
@@ -456,5 +389,90 @@
         android:layout_height="1dp"
         android:background="?android:attr/divider"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/attaching"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="schedule, gallery, camera, attachingBackground" />
+
+    <View
+        android:id="@+id/attachingBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#44000000"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/schedule"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
+        android:contentDescription="@string/compose_schedule_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_event_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/gallery"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach" />
+
+    <ImageView
+        android:id="@+id/gallery"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
+        android:contentDescription="@string/compose_gallery_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_insert_photo_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/camera"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach" />
+
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
+        android:contentDescription="@string/compose_camera_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_camera_alt_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/attach"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach" />
+
+    <ImageView
+        android:id="@+id/attach"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/circle"
+        android:contentDescription="@string/compose_attach_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_add_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:backgroundTint="@color/tools_theme"
+        tools:tint="@color/textPrimaryDark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

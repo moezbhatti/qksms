@@ -59,6 +59,7 @@ import com.moez.QKSMS.model.Message
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
@@ -96,7 +97,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val cancelSendingIntent: Subject<Message> by lazy { messageAdapter.cancelSending }
     override val attachmentDeletedIntent: Subject<Attachment> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
-    override val attachIntent by lazy { attach.clicks() }
+    override val attachIntent by lazy { Observable.merge(attach.clicks(), attachingBackground.clicks()) }
     override val cameraIntent by lazy { camera.clicks() }
     override val galleryIntent by lazy { gallery.clicks() }
     override val scheduleIntent by lazy { schedule.clicks() }
@@ -224,10 +225,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         attachments.setVisible(state.attachments.isNotEmpty())
         attachmentAdapter.data = state.attachments
 
-        attach.animate().rotation(if (state.attaching) 135f else 0f).start()
-        camera.setVisible(state.attaching)
-        gallery.setVisible(state.attaching)
-        schedule.setVisible(state.attaching)
+        attach.animate().rotation(if (state.attaching) 45f else 0f).start()
+        attaching.isVisible = state.attaching
 
         counter.text = state.remaining
         counter.setVisible(counter.text.isNotBlank())
