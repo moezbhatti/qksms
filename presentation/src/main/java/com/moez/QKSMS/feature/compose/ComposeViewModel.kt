@@ -27,6 +27,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.MessageDetailsFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
@@ -79,6 +80,7 @@ class ComposeViewModel @Inject constructor(
         @Named("text") private val sharedText: String,
         @Named("attachments") private val sharedAttachments: List<Attachment>,
         private val context: Context,
+        private val billingManager: BillingManager,
         private val cancelMessage: CancelDelayedMessage,
         private val contactFilter: ContactFilter,
         private val contactsRepo: ContactRepository,
@@ -464,6 +466,10 @@ class ComposeViewModel @Inject constructor(
         // Choose a time to schedule the message
         view.scheduleIntent
                 .doOnNext { newState { copy(attaching = false) } }
+                .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
+                .filter { upgraded ->
+                    upgraded.also { if (!upgraded) view.showQksmsPlusSnackbar(R.string.compose_scheduled_plus) }
+                }
                 .autoDisposable(view.scope())
                 .subscribe { view.requestDatePicker() }
 
@@ -606,6 +612,11 @@ class ComposeViewModel @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        // View QKSMS+
+        view.viewQksmsPlusIntent
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showQksmsPlusActivity() }
 
         // Navigate back
         view.optionsItemIntent
