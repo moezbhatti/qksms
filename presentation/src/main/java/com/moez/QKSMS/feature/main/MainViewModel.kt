@@ -36,7 +36,7 @@ import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.manager.RatingManager
 import com.moez.QKSMS.model.SyncLog
 import com.moez.QKSMS.repository.ConversationRepository
-import com.moez.QKSMS.repository.MessageRepository
+import com.moez.QKSMS.repository.ScheduledMessageRepository
 import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
@@ -50,7 +50,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-        private val messageRepo: MessageRepository,
         private val markAllSeen: MarkAllSeen,
         private val conversationRepo: ConversationRepository,
         private val deleteConversations: DeleteConversations,
@@ -63,6 +62,7 @@ class MainViewModel @Inject constructor(
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
         private val ratingManager: RatingManager,
+        private val scheduledMessageRepo: ScheduledMessageRepository,
         private val syncMessages: SyncMessages,
         private val syncRepository: SyncRepository
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
@@ -190,7 +190,7 @@ class MainViewModel @Inject constructor(
                     when (it) {
                         DrawerItem.INBOX -> newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
                         DrawerItem.ARCHIVED -> newState { copy(page = Archived(data = conversationRepo.getConversations(true))) }
-                        DrawerItem.SCHEDULED -> newState { copy(page = Scheduled()) }
+                        DrawerItem.SCHEDULED -> newState { copy(page = Scheduled(data = scheduledMessageRepo.getScheduledMessages())) }
                         else -> {
                         } // Do nothing
                     }

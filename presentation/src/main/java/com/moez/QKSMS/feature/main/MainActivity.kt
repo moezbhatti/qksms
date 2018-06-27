@@ -49,6 +49,7 @@ import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
+import com.moez.QKSMS.feature.scheduled.ScheduledMessageAdapter
 import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
@@ -63,6 +64,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
+    @Inject lateinit var scheduledMessageAdapter: ScheduledMessageAdapter
     @Inject lateinit var searchAdapter: SearchAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -122,8 +124,6 @@ class MainActivity : QkThemedActivity(), MainView {
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
 
-        scheduled.isEnabled = false
-
         // Set the theme color tint to the recyclerView, progressbar, and FAB
         colors.themeObservable()
                 .doOnNext { recyclerView.scrapViews() }
@@ -160,7 +160,6 @@ class MainActivity : QkThemedActivity(), MainView {
         toggle.drawerArrowDrawable.color = resolveThemeColor(android.R.attr.textColorSecondary)
 
         conversationsAdapter.autoScrollToStart(recyclerView)
-        conversationsAdapter.emptyView = empty
     }
 
     override fun render(state: MainState) {
@@ -194,6 +193,8 @@ class MainActivity : QkThemedActivity(), MainView {
         rateLayout.setVisible(state.showRating)
 
         compose.setVisible(state.page is Inbox || state.page is Archived)
+        conversationsAdapter.emptyView = empty.takeIf { state.page is Inbox || state.page is Archived }
+        scheduledMessageAdapter.emptyView = empty.takeIf { state.page is Archived }
 
         when (state.page) {
             is Inbox -> {
@@ -227,7 +228,8 @@ class MainActivity : QkThemedActivity(), MainView {
 
             is Scheduled -> {
                 setTitle(R.string.title_scheduled)
-                recyclerView.adapter = null
+                if (recyclerView.adapter !== scheduledMessageAdapter) recyclerView.adapter = scheduledMessageAdapter
+                scheduledMessageAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(null)
                 empty.setText(R.string.scheduled_empty_text)
             }

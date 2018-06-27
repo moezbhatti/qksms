@@ -60,8 +60,7 @@
 
     <LinearLayout
         android:id="@+id/scheduled"
-        style="@style/DrawerRow"
-        android:alpha="0.5">
+        style="@style/DrawerRow">
 
         <ImageView
             android:id="@+id/scheduledIcon"

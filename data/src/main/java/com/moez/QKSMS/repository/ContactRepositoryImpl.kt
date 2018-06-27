@@ -30,6 +30,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import io.realm.RealmResults
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -49,6 +50,13 @@ class ContactRepositoryImpl @Inject constructor(val context: Context) : ContactR
                 .firstOrError()
                 .map { cursor -> cursor.getString(cursor.getColumnIndexOrThrow(BaseColumns._ID)) }
                 .map { id -> Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id) }
+    }
+
+    override fun getContacts(): RealmResults<Contact> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Contact::class.java)
+                .sort("name")
+                .findAll()
     }
 
     override fun getUnmanagedContacts(): Flowable<List<Contact>> {

@@ -18,6 +18,12 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
      * based on the data
      */
     var emptyView: View? = null
+        set(value) {
+            if (field === value) return
+
+            field = value
+            value?.setVisible(data?.isLoaded == true && data?.isEmpty() == true)
+        }
 
     private val emptyListener: (OrderedRealmCollection<T>) -> Unit = { data ->
         emptyView?.setVisible(data.isLoaded && data.isEmpty())

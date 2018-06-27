@@ -18,7 +18,9 @@
  */
 package com.moez.QKSMS.feature.main
 
+import com.moez.QKSMS.feature.scheduled.ScheduledMessageAdapter
 import com.moez.QKSMS.model.Conversation
+import com.moez.QKSMS.model.ScheduledMessage
 import com.moez.QKSMS.model.SearchResult
 import com.moez.QKSMS.repository.SyncRepository
 import io.realm.RealmResults
@@ -55,4 +57,4 @@ data class Archived(
         val selected: Int = 0) : MainPage()
 
 data class Scheduled(
-        val data: Any? = null) : MainPage()
+        val data: RealmResults<ScheduledMessage>) : MainPage()
