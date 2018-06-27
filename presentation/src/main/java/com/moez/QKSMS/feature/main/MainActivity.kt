@@ -49,7 +49,6 @@ import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
-import com.moez.QKSMS.feature.scheduled.ScheduledMessageAdapter
 import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
@@ -64,7 +63,6 @@ class MainActivity : QkThemedActivity(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
-    @Inject lateinit var scheduledMessageAdapter: ScheduledMessageAdapter
     @Inject lateinit var searchAdapter: SearchAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -194,7 +192,6 @@ class MainActivity : QkThemedActivity(), MainView {
 
         compose.setVisible(state.page is Inbox || state.page is Archived)
         conversationsAdapter.emptyView = empty.takeIf { state.page is Inbox || state.page is Archived }
-        scheduledMessageAdapter.emptyView = empty.takeIf { state.page is Archived }
 
         when (state.page) {
             is Inbox -> {
@@ -225,14 +222,6 @@ class MainActivity : QkThemedActivity(), MainView {
                 itemTouchHelper.attachToRecyclerView(null)
                 empty.setText(R.string.archived_empty_text)
             }
-
-            is Scheduled -> {
-                setTitle(R.string.title_scheduled)
-                if (recyclerView.adapter !== scheduledMessageAdapter) recyclerView.adapter = scheduledMessageAdapter
-                scheduledMessageAdapter.updateData(state.page.data)
-                itemTouchHelper.attachToRecyclerView(null)
-                empty.setText(R.string.scheduled_empty_text)
-            }
         }
 
         when (state.page is Inbox && state.page.showArchivedSnackbar) {
@@ -242,7 +231,6 @@ class MainActivity : QkThemedActivity(), MainView {
 
         inbox.isSelected = state.page is Inbox
         archived.isSelected = state.page is Archived
-        scheduled.isSelected = state.page is Scheduled
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)

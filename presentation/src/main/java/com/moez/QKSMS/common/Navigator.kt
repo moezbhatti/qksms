@@ -36,6 +36,7 @@ import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.plus.PlusActivity
+import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.settings.SettingsActivity
 import com.moez.QKSMS.feature.settings.about.AboutActivity
 import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
@@ -113,6 +114,11 @@ class Navigator @Inject constructor(private val context: Context, private val no
 
         val options = ActivityOptions.makeSceneTransitionAnimation(from, view, view.transitionName)
         from.startActivity(intent, options.toBundle())
+    }
+
+    fun showScheduled() {
+        val intent = Intent(context, ScheduledActivity::class.java)
+        startActivity(intent)
     }
 
     fun showSettings() {

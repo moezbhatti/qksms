@@ -16,6 +16,8 @@ import com.moez.QKSMS.feature.plus.PlusActivity
 import com.moez.QKSMS.feature.plus.PlusActivityModule
 import com.moez.QKSMS.feature.qkreply.QkReplyActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivityModule
+import com.moez.QKSMS.feature.scheduled.ScheduledActivity
+import com.moez.QKSMS.feature.scheduled.ScheduledActivityModule
 import com.moez.QKSMS.feature.settings.SettingsActivity
 import com.moez.QKSMS.feature.settings.SettingsActivityModule
 import com.moez.QKSMS.feature.settings.about.AboutActivity
@@ -59,6 +61,10 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [QkReplyActivityModule::class])
     abstract fun bindQkReplyActivity(): QkReplyActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [ScheduledActivityModule::class])
+    abstract fun bindScheduledActivity(): ScheduledActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [SettingsActivityModule::class])

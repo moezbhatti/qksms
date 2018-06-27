@@ -21,7 +21,6 @@
     <string name="app_name" translatable="false">QKSMS</string>
 
     <string name="title_archived">Archived</string>
-    <string name="title_scheduled">Scheduled</string>
     <string name="title_settings">Settings</string>
     <string name="title_notification_prefs">Notifications</string>
     <string name="title_theme">Theme</string>
@@ -52,7 +51,6 @@
     <string name="inbox_empty_text">Your conversations will appear here</string>
     <string name="inbox_search_empty_text">No results</string>
     <string name="archived_empty_text">Your archived conversations will appear here</string>
-    <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
     <string name="main_fab_cd">Start new conversation</string>
     <string name="main_default_sms_title">Love texting again</string>
     <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
@@ -133,6 +131,9 @@
     <string name="info_delete">Delete conversation</string>
 
     <string name="gallery_toast_saved">Saved to gallery</string>
+
+    <string name="scheduled_title">Scheduled</string>
+    <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
 
     <string name="settings_category_appearance">Appearance</string>
     <string name="settings_category_general">General</string>

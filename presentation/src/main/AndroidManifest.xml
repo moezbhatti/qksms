@@ -73,6 +73,7 @@
             android:taskAffinity=""
             android:theme="@style/AppThemeLightDialog" />
         <activity android:name=".feature.settings.about.AboutActivity" />
+        <activity android:name=".feature.scheduled.ScheduledActivity" />
 
         <receiver android:name=".receiver.DefaultSmsChangedReceiver">
             <intent-filter>
