@@ -6,6 +6,7 @@ import android.view.View
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.extensions.isVCard
@@ -48,6 +49,11 @@ class VCardBinder(
             view.vCardAvatar.setTint(theme.textPrimary)
             view.name.setTextColor(theme.textPrimary)
             view.label.setTextColor(theme.textTertiary)
+        } else {
+            view.vCardBackground.setBackgroundTint(view.context.resolveThemeColor(R.attr.bubbleColor))
+            view.vCardAvatar.setTint(view.context.resolveThemeColor(android.R.attr.textColorSecondary))
+            view.name.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorPrimary))
+            view.label.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorTertiary))
         }
     }
 
