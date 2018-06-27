@@ -22,9 +22,9 @@ import android.app.Activity
 import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
+import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import androidx.core.provider.FontRequest
 import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
@@ -69,7 +69,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
             projectPackages = packages
         })
 
-        RxJava2Debug.enableRxJava2AssemblyTracking(packages)
+        RxJava2Debug.enableRxJava2AssemblyTracking()
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()

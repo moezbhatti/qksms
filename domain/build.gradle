@@ -31,6 +31,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation project(":common")
 }
 
 repositories {

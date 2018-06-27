@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:$ktx_version"
+    implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation project(":android-smsmms")
+}
+
+repositories {
+    mavenCentral()
+}

@@ -18,10 +18,13 @@
  */
 package com.moez.QKSMS.util
 
+import timber.log.Timber
+
 fun <T> tryOrNull(body: () -> T?): T? {
     return try {
         body()
     } catch (e: Exception) {
+        Timber.w(e)
         null
     }
 }

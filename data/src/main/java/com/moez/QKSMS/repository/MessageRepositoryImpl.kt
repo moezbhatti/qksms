@@ -45,6 +45,7 @@ import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.util.Preferences
+import com.moez.QKSMS.util.tryOrNull
 import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
@@ -276,7 +277,7 @@ class MessageRepositoryImpl @Inject constructor(
         attachments
                 .filter { attachment -> !attachment.isGif(context) }
                 .mapNotNull { attachment -> attachment.getUri() }
-                .mapNotNull { uri -> imageRepository.loadImage(uri) }
+                .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri) } }
                 .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
                 .map { bitmap ->
                     val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()

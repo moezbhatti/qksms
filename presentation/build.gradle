@@ -156,6 +156,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(":android-smsmms")
+    implementation project(":common")
     implementation project(':data')
     implementation project(':domain')
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')

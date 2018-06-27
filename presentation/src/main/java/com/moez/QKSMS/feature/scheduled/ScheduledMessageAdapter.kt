@@ -7,6 +7,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.interactor.SendScheduledMessage
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.PhoneNumber
 import com.moez.QKSMS.model.Recipient
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 class ScheduledMessageAdapter @Inject constructor(
         private val contactRepo: ContactRepository,
-        private val dateFormatter: DateFormatter
+        private val dateFormatter: DateFormatter,
+        private val sendScheduledMessage: SendScheduledMessage
 ) : QkRealmAdapter<ScheduledMessage>() {
 
     private val contacts by lazy { contactRepo.getContacts() }
@@ -31,6 +33,8 @@ class ScheduledMessageAdapter @Inject constructor(
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val message = getItem(position)!!
         val view = holder.itemView
+
+        view.setOnClickListener { sendScheduledMessage.execute(message.id) }
 
         message.recipients.forEach { address ->
             if (!contactMap.containsKey(address)) {
