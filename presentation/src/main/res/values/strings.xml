@@ -63,6 +63,7 @@
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archived</string>
     <string name="drawer_scheduled">Scheduled</string>
+    <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">More</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_plus">QKSMS+</string>

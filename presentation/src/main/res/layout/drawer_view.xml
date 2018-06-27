@@ -58,15 +58,21 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/divider" />
+
     <LinearLayout
         android:id="@+id/scheduled"
         style="@style/DrawerRow">
 
         <ImageView
-            android:id="@+id/scheduledIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_event_black_24dp"
-            tools:tint="?android:attr/textColorSecondary" />
+            android:tint="?android:attr/textColorSecondary" />
 
         <com.moez.QKSMS.common.widget.QkTextView
             style="@style/DrawerText"
@@ -74,28 +80,36 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/blocking"
+        style="@style/DrawerRow">
+
+        <ImageView
+            style="@style/DrawerIcon"
+            android:src="@drawable/ic_block_black_24dp"
+            android:tint="?android:attr/textColorSecondary" />
+
+        <com.moez.QKSMS.common.widget.QkTextView
+            style="@style/DrawerText"
+            android:text="@string/drawer_blocking" />
+
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/divider" />
-
-    <com.moez.QKSMS.common.widget.QkTextView
-        style="@style/TextSecondary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/drawer_more" />
 
     <LinearLayout
         android:id="@+id/settings"
         style="@style/DrawerRow">
 
         <ImageView
-            android:id="@+id/settingsIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_settings_black_24dp"
-            tools:tint="?android:attr/textColorSecondary" />
+            android:tint="?android:attr/textColorSecondary" />
 
         <com.moez.QKSMS.common.widget.QkTextView
             style="@style/DrawerText"
@@ -108,10 +122,9 @@
         style="@style/DrawerRow">
 
         <ImageView
-            android:id="@+id/plusIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_star_black_24dp"
-            tools:tint="?android:attr/textColorSecondary" />
+            android:tint="?android:attr/textColorSecondary" />
 
         <com.moez.QKSMS.common.widget.QkTextView
             style="@style/DrawerText"
@@ -124,10 +137,9 @@
         style="@style/DrawerRow">
 
         <ImageView
-            android:id="@+id/helpIcon"
             style="@style/DrawerIcon"
             android:src="@drawable/ic_help_black_24dp"
-            tools:tint="?android:attr/textColorSecondary" />
+            android:tint="?android:attr/textColorSecondary" />
 
         <com.moez.QKSMS.common.widget.QkTextView
             style="@style/DrawerText"

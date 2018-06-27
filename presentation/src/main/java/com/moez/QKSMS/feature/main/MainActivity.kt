@@ -81,6 +81,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 inbox.clicks().map { DrawerItem.INBOX },
                 archived.clicks().map { DrawerItem.ARCHIVED },
                 scheduled.clicks().map { DrawerItem.SCHEDULED },
+                blocking.clicks().map { DrawerItem.BLOCKING },
                 settings.clicks().map { DrawerItem.SETTINGS },
                 plus.clicks().map { DrawerItem.PLUS },
                 help.clicks().map { DrawerItem.HELP }))
@@ -133,10 +134,6 @@ class MainActivity : QkThemedActivity(), MainView {
                             .let { tintList ->
                                 inboxIcon.imageTintList = tintList
                                 archivedIcon.imageTintList = tintList
-                                scheduledIcon.imageTintList = tintList
-                                settingsIcon.imageTintList = tintList
-                                plusIcon.imageTintList = tintList
-                                helpIcon.imageTintList = tintList
                             }
                 }
                 .doOnNext { theme ->
