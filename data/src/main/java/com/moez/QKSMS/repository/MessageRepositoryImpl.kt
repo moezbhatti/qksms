@@ -365,16 +365,8 @@ class MessageRepositoryImpl @Inject constructor(
 
     override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message {
 
-        // Insert the message to the native content provider
-        val uri = contentValuesOf(
-                Pair(Telephony.Sms.ADDRESS, address),
-                Pair(Telephony.Sms.BODY, body),
-                Pair(Telephony.Sms.DATE_SENT, sentTime),
-                Pair(Telephony.Sms.SUBSCRIPTION_ID, subId))
-                .let { values -> context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values) }
-
         // Insert the message to Realm
-        return Message().apply {
+        val message = Message().apply {
             this.address = address
             this.body = body
             this.dateSent = sentTime
@@ -383,11 +375,27 @@ class MessageRepositoryImpl @Inject constructor(
 
             id = messageIds.newId()
             threadId = TelephonyCompat.getOrCreateThreadId(context, address)
-            contentId = uri?.lastPathSegment?.toLong() ?: 0L
             boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
             type = "sms"
-            insertOrUpdate()
         }
+        val realm = Realm.getDefaultInstance()
+        var managedMessage: Message? = null
+        realm.executeTransaction { managedMessage = realm.copyToRealmOrUpdate(message) }
+
+        // Insert the message to the native content provider
+        val values = ContentValues().apply {
+            put(Telephony.Sms.ADDRESS, address)
+            put(Telephony.Sms.BODY, body)
+            put(Telephony.Sms.DATE_SENT, sentTime)
+            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
+        }
+        val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
+
+        // Update the contentId after the message has been inserted to the content provider
+        realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
+        realm.close()
+
+        return message
     }
 
     /**
