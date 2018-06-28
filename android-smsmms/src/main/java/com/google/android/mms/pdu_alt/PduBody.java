@@ -21,23 +21,23 @@ import java.util.Map;
 import java.util.Vector;
 
 public class PduBody {
-    private Vector<PduPart> mParts = null;
+    private Vector<PduPart> mParts;
 
-    private Map<String, PduPart> mPartMapByContentId = null;
-    private Map<String, PduPart> mPartMapByContentLocation = null;
-    private Map<String, PduPart> mPartMapByName = null;
-    private Map<String, PduPart> mPartMapByFileName = null;
+    private Map<String, PduPart> mPartMapByContentId;
+    private Map<String, PduPart> mPartMapByContentLocation;
+    private Map<String, PduPart> mPartMapByName;
+    private Map<String, PduPart> mPartMapByFileName;
 
     /**
      * Constructor.
      */
     public PduBody() {
-        mParts = new Vector<PduPart>();
+        mParts = new Vector<>();
 
-        mPartMapByContentId = new HashMap<String, PduPart>();
-        mPartMapByContentLocation  = new HashMap<String, PduPart>();
-        mPartMapByName = new HashMap<String, PduPart>();
-        mPartMapByFileName = new HashMap<String, PduPart>();
+        mPartMapByContentId = new HashMap<>();
+        mPartMapByContentLocation  = new HashMap<>();
+        mPartMapByName = new HashMap<>();
+        mPartMapByFileName = new HashMap<>();
     }
 
     private void putPartToMaps(PduPart part) {

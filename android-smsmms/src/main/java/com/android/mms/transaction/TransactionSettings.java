@@ -81,27 +81,27 @@ public class TransactionSettings {
 //
 //        if (cursor == null) {
 //            Log.e(TAG, "Apn is not found in Database!");
-        if (Transaction.settings == null) {
-            Transaction.settings = Utils.getDefaultSendSettings(context);
+        if (Transaction.Companion.getSettings() == null) {
+            Transaction.Companion.setSettings(Utils.getDefaultSendSettings(context));
         }
 
-        mServiceCenter = NetworkUtilsHelper.trimV4AddrZeros(Transaction.settings.getMmsc());
-        mProxyAddress = NetworkUtilsHelper.trimV4AddrZeros(Transaction.settings.getProxy());
+        mServiceCenter = NetworkUtilsHelper.trimV4AddrZeros(Transaction.Companion.getSettings().getMmsc());
+        mProxyAddress = NetworkUtilsHelper.trimV4AddrZeros(Transaction.Companion.getSettings().getProxy());
 
         // Set up the agent, profile url and tag name to be used in the mms request if they are attached in settings
-        String agent = Transaction.settings.getAgent();
+        String agent = Transaction.Companion.getSettings().getAgent();
         if (agent != null && !agent.trim().equals("")) {
             MmsConfig.setUserAgent(agent);
             Log.v(TAG, "set user agent");
         }
 
-        String uaProfUrl = Transaction.settings.getUserProfileUrl();
+        String uaProfUrl = Transaction.Companion.getSettings().getUserProfileUrl();
         if (uaProfUrl != null && !uaProfUrl.trim().equals("")) {
             MmsConfig.setUaProfUrl(uaProfUrl);
             Log.v(TAG, "set user agent profile url");
         }
 
-        String uaProfTagName = Transaction.settings.getUaProfTagName();
+        String uaProfTagName = Transaction.Companion.getSettings().getUaProfTagName();
         if (uaProfTagName != null && !uaProfTagName.trim().equals("")) {
             MmsConfig.setUaProfTagName(uaProfTagName);
             Log.v(TAG, "set user agent profile tag name");
@@ -109,9 +109,9 @@ public class TransactionSettings {
 
         if (isProxySet()) {
             try {
-                mProxyPort = Integer.parseInt(Transaction.settings.getPort());
+                mProxyPort = Integer.parseInt(Transaction.Companion.getSettings().getPort());
             } catch (NumberFormatException e) {
-                Log.e(TAG, "could not get proxy: " + Transaction.settings.getPort(), e);
+                Log.e(TAG, "could not get proxy: " + Transaction.Companion.getSettings().getPort(), e);
             }
         }
 //        }

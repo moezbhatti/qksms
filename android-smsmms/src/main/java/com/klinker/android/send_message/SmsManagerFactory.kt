@@ -5,8 +5,6 @@ import android.telephony.SmsManager
 
 object SmsManagerFactory {
 
-    fun createSmsManager(settings: Settings) = createSmsManager(settings.subscriptionId)
-
     fun createSmsManager(subscriptionId: Int): SmsManager {
         var manager: SmsManager? = null
 

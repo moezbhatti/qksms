@@ -357,13 +357,7 @@ public class Utils {
         sendSettings.setAgent(sharedPrefs.getString("mms_agent", ""));
         sendSettings.setUserProfileUrl(sharedPrefs.getString("mms_user_agent_profile_url", ""));
         sendSettings.setUaProfTagName(sharedPrefs.getString("mms_user_agent_tag_name", ""));
-        sendSettings.setDeliveryReports(sharedPrefs.getBoolean("delivery_reports", false));
-        sendSettings.setSplit(sharedPrefs.getBoolean("split_sms", false));
-        sendSettings.setSplitCounter(sharedPrefs.getBoolean("split_counter", false));
         sendSettings.setStripUnicode(sharedPrefs.getBoolean("strip_unicode", false));
-        sendSettings.setSignature(sharedPrefs.getString("signature", ""));
-        sendSettings.setSendLongAsMms(true);
-        sendSettings.setSendLongAsMmsAfter(3);
 
         return sendSettings;
     }

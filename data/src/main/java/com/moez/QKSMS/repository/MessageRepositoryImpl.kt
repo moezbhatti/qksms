@@ -30,16 +30,14 @@ import android.provider.Telephony
 import android.telephony.SmsManager
 import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
+import com.google.android.mms.MMSPart
 import com.klinker.android.send_message.BroadcastUtils
-import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
 import com.moez.QKSMS.extensions.insertOrUpdate
-import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.manager.KeyManager
-import com.moez.QKSMS.mapper.CursorToConversation
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
@@ -225,22 +223,25 @@ class MessageRepositoryImpl @Inject constructor(
                 sendSms(message)
             }
         } else { // MMS
-            val settings = Settings().apply { subscriptionId = subId }
-            val message = com.klinker.android.send_message.Message(body, addresses.toTypedArray())
+            val parts = arrayListOf<MMSPart>()
+
+            if (body.isNotBlank()) {
+                parts += MMSPart("text", ContentType.TEXT_PLAIN, body.toByteArray())
+            }
 
             // Add the GIFs as attachments. The app currently can't compress them, which may result
             // in a lot of these messages failing to send
             // TODO Add support for GIF compression
-            attachments
+            parts += attachments
                     .filter { attachment -> attachment.isGif(context) }
                     .map { attachment -> attachment.getUri() }
                     .map { uri -> context.contentResolver.openInputStream(uri) }
                     .map { inputStream -> inputStream.readBytes() }
-                    .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_GIF) }
+                    .map { bitmap -> MMSPart("image", ContentType.IMAGE_GIF, bitmap) }
 
             // Compress the images and add them as attachments
             var totalImageBytes = 0
-            attachments
+            parts += attachments
                     .filter { attachment -> !attachment.isGif(context) }
                     .mapNotNull { attachment -> attachment.getUri() }
                     .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri) } }
@@ -249,10 +250,11 @@ class MessageRepositoryImpl @Inject constructor(
                         val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
                         shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
                     }
-                    .forEach { bitmap -> message.addMedia(bitmap, ContentType.IMAGE_JPEG) }
+                    .map { bitmap -> MMSPart("image", ContentType.IMAGE_JPEG, bitmap) }
 
-            val transaction = Transaction(context, settings)
-            transaction.sendNewMessage(message, threadId)
+
+            val transaction = Transaction(context)
+            transaction.sendNewMessage(subId, threadId, addresses, parts, null)
         }
     }
 

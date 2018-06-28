@@ -29,12 +29,4 @@ class Settings @JvmOverloads constructor(
         var uaProfTagName: String? = "",
 
         // SMS options
-        var deliveryReports: Boolean = false,
-        var split: Boolean = false,
-        var splitCounter: Boolean = false,
-        var stripUnicode: Boolean = false,
-        var signature: String? = null,
-        var preText: String? = null,
-        var sendLongAsMms: Boolean = true,
-        var sendLongAsMmsAfter: Int = 3,
-        var subscriptionId: Int = -1)
+        var stripUnicode: Boolean = false)
