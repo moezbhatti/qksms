@@ -127,8 +127,8 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
                     Pair(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE, MmsConfig.getMaxMessageSize()))
 
             MmsConfig.getHttpParams()
-                    .takeIf { it.isNotEmpty() }
-                    .let { configOverrides.putString(SmsManager.MMS_CONFIG_HTTP_PARAMS, it) }
+                    ?.takeIf { it.isNotEmpty() }
+                    ?.let { configOverrides.putString(SmsManager.MMS_CONFIG_HTTP_PARAMS, it) }
 
             if (contentUri != null) {
                 SmsManagerFactory.createSmsManager(subId).sendMultimediaMessage(context, contentUri, null, configOverrides, sentPI)
@@ -142,7 +142,7 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
 
             }
         } catch (e: Exception) {
-            Timber.e(e, "error using system sending method")
+            Timber.e(e, "Error using system sending method")
         }
 
     }
