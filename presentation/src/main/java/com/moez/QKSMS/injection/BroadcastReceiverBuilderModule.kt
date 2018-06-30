@@ -19,6 +19,7 @@
 package com.moez.QKSMS.injection
 
 import com.moez.QKSMS.feature.widget.WidgetProvider
+import com.moez.QKSMS.receiver.BootReceiver
 import com.moez.QKSMS.receiver.DefaultSmsChangedReceiver
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
@@ -39,6 +40,10 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BroadcastReceiverBuilderModule {
+
+    @ActivityScope
+    @ContributesAndroidInjector()
+    abstract fun bindBootReceiver(): BootReceiver
 
     @ActivityScope
     @ContributesAndroidInjector()

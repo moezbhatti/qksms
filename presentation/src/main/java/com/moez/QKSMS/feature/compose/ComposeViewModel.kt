@@ -38,6 +38,7 @@ import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.filter.ContactFilter
+import com.moez.QKSMS.interactor.AddScheduledMessage
 import com.moez.QKSMS.interactor.CancelDelayedMessage
 import com.moez.QKSMS.interactor.ContactSync
 import com.moez.QKSMS.interactor.DeleteMessages
@@ -80,6 +81,7 @@ class ComposeViewModel @Inject constructor(
         @Named("text") private val sharedText: String,
         @Named("attachments") private val sharedAttachments: List<Attachment>,
         private val context: Context,
+        private val addScheduledMessage: AddScheduledMessage,
         private val billingManager: BillingManager,
         private val cancelMessage: CancelDelayedMessage,
         private val contactFilter: ContactFilter,
@@ -93,7 +95,6 @@ class ComposeViewModel @Inject constructor(
         private val permissionManager: PermissionManager,
         private val prefs: Preferences,
         private val retrySending: RetrySending,
-        private val scheduledMessageRepo: ScheduledMessageRepository,
         private val sendMessage: SendMessage,
         private val subscriptionManager: SubscriptionManagerCompat,
         private val syncContacts: ContactSync
@@ -583,7 +584,8 @@ class ComposeViewModel @Inject constructor(
                         state.scheduled != 0L -> {
                             newState { copy(scheduled = 0) }
                             val uris = attachments.map { it.getUri() }.map { it.toString() }
-                            scheduledMessageRepo.saveScheduledMessage(state.scheduled, subId, addresses, state.sendAsGroup, body, uris)
+                            val params = AddScheduledMessage.Params(state.scheduled, subId, addresses, state.sendAsGroup, body, uris)
+                            addScheduledMessage.execute(params)
                             context.toast(R.string.compose_scheduled_toast)
                         }
 

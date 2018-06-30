@@ -26,6 +26,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.ViewModelFactory
 import com.moez.QKSMS.common.util.NotificationManagerImpl
+import com.moez.QKSMS.manager.AlarmManager
+import com.moez.QKSMS.manager.AlarmManagerImpl
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.AnalyticsManagerImpl
 import com.moez.QKSMS.manager.ExternalBlockingManager
@@ -86,6 +88,9 @@ class AppModule(private var application: Application) {
     fun provideViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory = factory
 
     // Manager
+
+    @Provides
+    fun provideAlarmManager(manager: AlarmManagerImpl): AlarmManager = manager
 
     @Provides
     fun provideAnalyticsManager(manager: AnalyticsManagerImpl): AnalyticsManager = manager
