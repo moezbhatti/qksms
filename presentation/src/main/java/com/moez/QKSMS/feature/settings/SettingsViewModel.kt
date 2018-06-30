@@ -137,8 +137,6 @@ class SettingsViewModel @Inject constructor(
 
                         R.id.notifications -> navigator.showNotificationSettings()
 
-                        R.id.blocked -> navigator.showBlockedConversations()
-
                         R.id.delayed -> view.showDelayDurationDialog()
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
