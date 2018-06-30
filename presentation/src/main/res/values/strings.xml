@@ -137,6 +137,7 @@
 
     <string name="scheduled_title">Scheduled</string>
     <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
+    <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>Send now</item>
         <item>Delete</item>

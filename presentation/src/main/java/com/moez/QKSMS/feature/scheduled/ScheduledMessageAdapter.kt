@@ -1,8 +1,11 @@
 package com.moez.QKSMS.feature.scheduled
 
+import android.net.Uri
 import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
@@ -25,11 +28,17 @@ class ScheduledMessageAdapter @Inject constructor(
 
     private val contacts by lazy { contactRepo.getContacts() }
     private val contactMap: HashMap<String, Contact> = hashMapOf()
+    private val imagesViewPool = RecyclerView.RecycledViewPool()
 
     val clicks: Subject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        return QkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.scheduled_message_list_item, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.scheduled_message_list_item, parent, false)
+
+        view.attachments.adapter = ScheduledMessageAttachmentAdapter()
+        view.attachments.setRecycledViewPool(imagesViewPool)
+
+        return QkViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
@@ -55,6 +64,10 @@ class ScheduledMessageAdapter @Inject constructor(
 
         view.date.text = dateFormatter.getScheduledTimestamp(message.date)
         view.body.text = message.body
+
+        val adapter = view.attachments.adapter as ScheduledMessageAttachmentAdapter
+        adapter.data = message.attachments.map(Uri::parse)
+        view.attachments.isVisible = message.attachments.isNotEmpty()
     }
 
 }
