@@ -28,15 +28,14 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.provider.Telephony
 import android.telephony.SmsManager
-import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
 import com.google.android.mms.MMSPart
 import com.klinker.android.send_message.BroadcastUtils
+import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
-import com.moez.QKSMS.extensions.insertOrUpdate
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
@@ -260,7 +259,7 @@ class MessageRepositoryImpl @Inject constructor(
 
     override fun sendSms(message: Message) {
         val smsManager = message.subId.takeIf { it != -1 }
-                ?.let(SmsManager::getSmsManagerForSubscriptionId)
+                ?.let(SmsManagerFactory::createSmsManager)
                 ?: SmsManager.getDefault()
 
         val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
