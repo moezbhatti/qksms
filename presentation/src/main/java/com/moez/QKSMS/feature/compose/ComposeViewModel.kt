@@ -54,7 +54,6 @@ import com.moez.QKSMS.model.PhoneNumber
 import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
-import com.moez.QKSMS.repository.ScheduledMessageRepository
 import com.moez.QKSMS.util.ActiveSubscriptionObservable
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
@@ -424,7 +423,8 @@ class ComposeViewModel @Inject constructor(
         // Save draft when the activity goes into the background
         view.activityVisibleIntent
                 .filter { visible -> !visible }
-                .withLatestFrom(conversation) { _, conversation -> conversation.id }
+                .withLatestFrom(conversation) { _, conversation -> conversation }
+                .mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }
                 .observeOn(Schedulers.io())
                 .withLatestFrom(view.textChangedIntent) { threadId, draft ->
                     conversationRepo.saveDraft(threadId, draft.toString())
