@@ -179,16 +179,18 @@ class QkReplyViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { remaining -> newState { copy(remaining = remaining) } }
 
+        // This allows the conversation to be mapped to a threadId in the correct thread
+        val safeThreadId = conversation.map { it.takeIf { it.isValid }?.id ?: -1 }
+
         // Update the draft whenever the text is changed
         view.textChangedIntent
                 .debounce(100, TimeUnit.MILLISECONDS)
                 .map { draft -> draft.toString() }
                 .observeOn(Schedulers.io())
-                .withLatestFrom(conversation.map { it.id }) { draft, threadId ->
-                    conversationRepo.saveDraft(threadId, draft)
-                }
+                .withLatestFrom(safeThreadId) { draft, threadId -> Pair(draft, threadId) }
+                .filter { (_, threadId) -> threadId != -1L }
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { (draft, threadId) -> conversationRepo.saveDraft(threadId, draft) }
 
         // Toggle to the next sim slot
         view.changeSimIntent
