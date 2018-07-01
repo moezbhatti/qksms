@@ -140,13 +140,6 @@
                 app:widget="@layout/settings_switch_widget" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
-                android:id="@+id/blocked"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:icon="@drawable/ic_block_black_24dp"
-                app:title="@string/settings_blocking_title" />
-
-            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/delayed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -29,6 +29,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
         showBackButton(true)
         viewModel.bindView(this)
 
+        dialog.title = getString(R.string.scheduled_options_title)
         dialog.adapter.setData(R.array.scheduled_options)
 
         messageAdapter.emptyView = empty
