@@ -141,14 +141,14 @@ class ConversationRepositoryImpl @Inject constructor(
 
     override fun saveDraft(threadId: Long, draft: String) {
         Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+
             val conversation = realm.where(Conversation::class.java)
                     .equalTo("id", threadId)
                     .findFirst()
 
-            conversation?.let {
-                realm.executeTransaction {
-                    conversation.draft = draft
-                }
+            realm.executeTransaction {
+                conversation?.takeIf { it.isValid }?.draft = draft
             }
         }
     }
