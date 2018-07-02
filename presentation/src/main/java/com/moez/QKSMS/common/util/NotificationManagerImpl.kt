@@ -28,11 +28,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.telephony.PhoneNumberUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
-import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.extensions.isImage
@@ -165,7 +165,7 @@ class NotificationManagerImpl @Inject constructor(
                             .load(PhoneNumberUtils.stripSeparators(address))
                             .submit(64.dpToPx(context), 64.dpToPx(context))
                 }
-                ?.let { futureGet -> tryOrNull { futureGet.get() } }
+                ?.let { futureGet -> tryOrNull(false) { futureGet.get() } }
 
         when (prefs.notificationPreviews(threadId).get()) {
             Preferences.NOTIFICATION_PREVIEWS_ALL -> {

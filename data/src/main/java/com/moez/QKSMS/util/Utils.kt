@@ -20,11 +20,14 @@ package com.moez.QKSMS.util
 
 import timber.log.Timber
 
-fun <T> tryOrNull(body: () -> T?): T? {
+fun <T> tryOrNull(logOnError: Boolean = true, body: () -> T?): T? {
     return try {
         body()
     } catch (e: Exception) {
-        Timber.w(e)
+        if (logOnError) {
+            Timber.w(e)
+        }
+
         null
     }
 }

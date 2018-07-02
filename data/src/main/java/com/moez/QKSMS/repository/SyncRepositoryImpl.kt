@@ -163,7 +163,7 @@ class SyncRepositoryImpl @Inject constructor(
         }
 
         // If we don't have a valid id, return null
-        val id = tryOrNull { ContentUris.parseId(uri) } ?: return null
+        val id = tryOrNull(false) { ContentUris.parseId(uri) } ?: return null
 
         // Check if the message already exists, so we can reuse the id
         val existingId = Realm.getDefaultInstance().use { realm ->

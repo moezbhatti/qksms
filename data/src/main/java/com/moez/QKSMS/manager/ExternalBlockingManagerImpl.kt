@@ -72,10 +72,10 @@ class ExternalBlockingManagerImpl @Inject constructor(
             // If either version of Should I Answer? is installed and SIA is enabled, build the
             // intent to request a rating
             if (prefs.sia.get()) {
-                intent = tryOrNull {
+                intent = tryOrNull(false) {
                     context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled
                     Intent("org.mistergroup.shouldianswerpersonal.PublicService").setPackage("org.mistergroup.shouldianswerpersonal")
-                } ?: tryOrNull {
+                } ?: tryOrNull(false) {
                     context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled
                     Intent("org.mistergroup.muzutozvednout.PublicService").setPackage("org.mistergroup.muzutozvednout")
                 }
