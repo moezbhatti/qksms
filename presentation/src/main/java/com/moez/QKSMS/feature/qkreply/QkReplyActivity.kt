@@ -87,7 +87,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             finish()
         }
 
-        threadId.onNext(state.data?.first?.id ?: 0)
+        threadId.onNext(state.selectedConversation)
 
         title = state.title
 

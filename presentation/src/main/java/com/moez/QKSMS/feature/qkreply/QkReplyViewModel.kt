@@ -28,7 +28,6 @@ import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.interactor.MarkRead
 import com.moez.QKSMS.interactor.SendMessage
-import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
@@ -53,11 +52,11 @@ class QkReplyViewModel @Inject constructor(
         private val navigator: Navigator,
         private val sendMessage: SendMessage,
         private val subscriptionManager: SubscriptionManagerCompat
-) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState()) {
+) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState(selectedConversation = threadId)) {
 
     private val conversation by lazy {
         conversationRepo.getConversationAsync(threadId)
-                .asObservable<Conversation>()
+                .asObservable()
                 .filter { it.isLoaded }
                 .filter { it.isValid }
                 .distinctUntilChanged()

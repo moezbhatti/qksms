@@ -25,6 +25,7 @@ import io.realm.RealmResults
 
 data class QkReplyState(
         val hasError: Boolean = false,
+        val selectedConversation: Long = 0,
         val title: String = "",
         val expanded: Boolean = false,
         val data: Pair<Conversation, RealmResults<Message>>? = null,
