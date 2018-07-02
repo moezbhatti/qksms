@@ -13,8 +13,8 @@ android {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 176
-        versionName "3.3.5"
+        versionCode 177
+        versionName "3.3.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
