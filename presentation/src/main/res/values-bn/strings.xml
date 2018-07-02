@@ -19,239 +19,250 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="title_archived">Archived</string>
-  <string name="title_scheduled">Scheduled</string>
+  <string name="title_archived">আর্কাইভ করা</string>
   <string name="title_settings">সেটিংস</string>
-  <string name="title_notification_prefs">Notifications</string>
-  <string name="title_theme">Theme</string>
-  <string name="title_conversations">Search inbox&#8230;</string>
-  <string name="title_compose">রচনা করুন</string>
-  <string name="setup_skip">Skip</string>
-  <string name="setup_next">Continue</string>
+  <string name="title_notification_prefs">নোটিফিকেশন</string>
+  <string name="title_theme">থিম</string>
+  <string name="title_conversations">ইনবক্সে খুঁজুন&#8230;</string>
+  <string name="title_compose">নাম বা নম্বর টাইপ করুন</string>
+  <string name="setup_skip">এড়িয়ে যান</string>
+  <string name="setup_next">চালিয়ে যান</string>
   <string name="menu_call">কল করুন</string>
-  <string name="menu_info">Details</string>
-  <string name="menu_save">Save to gallery</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
-  <string name="main_title_selected">%d selected</string>
-  <string name="main_menu_clear">Clear</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
-  <string name="main_menu_archive">Archive</string>
-  <string name="main_menu_unarchive">Unarchive</string>
-  <string name="main_menu_block">Block</string>
-  <string name="main_menu_delete">Delete</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
-  <string name="main_sender_you">You: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
-  <string name="inbox_empty_text">Your conversations will appear here</string>
-  <string name="inbox_search_empty_text">No results</string>
-  <string name="archived_empty_text">Your archived conversations will appear here</string>
-  <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
-  <string name="main_fab_cd">Start new conversation</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
-  <string name="drawer_inbox">Inbox</string>
-  <string name="drawer_archived">Archived</string>
-  <string name="drawer_scheduled">Scheduled</string>
-  <string name="drawer_more">More</string>
-  <string name="drawer_settings">Settings</string>
-  <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Help &amp; feedback</string>
-  <string name="rate_title">Enjoying QKSMS?</string>
-  <string name="rate_summary">Share some love and rate us on Google Play!</string>
-  <string name="rate_okay">OKAY!</string>
-  <string name="rate_dismiss">DISMISS</string>
-  <string name="dialog_delete_title">Delete</string>
-  <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+  <string name="menu_info">বিস্তারিত</string>
+  <string name="menu_save">গ্যালারীতে সেভ করুন</string>
+  <string name="main_drawer_open_cd">নেভিগেশন ড্রয়ার খোল</string>
+  <string name="main_title_selected">নির্বাচিত %d</string>
+  <string name="main_menu_clear">পরিষ্কার করুন</string>
+  <string name="main_menu_read">পঠিত হিসেবে চিহ্নিত করুন</string>
+  <string name="main_menu_unread">অপঠিত হিসেবে চিহ্নিত করুন</string>
+  <string name="main_menu_archive">আর্কাইভ</string>
+  <string name="main_menu_unarchive">আনআর্কাইভ</string>
+  <string name="main_menu_block">ব্লক করুন</string>
+  <string name="main_menu_delete">মুছে ফেলুন</string>
+  <string name="main_syncing">বার্তাগুলি সিঙ্ক হচ্ছে&#8230;</string>
+  <string name="main_sender_you">%s আপনার:</string>
+  <string name="main_message_results_title">বার্তাগুলির মধ্যে ফলাফল </string>
+  <string name="main_message_results">%d বার্তাগুলি</string>
+  <string name="inbox_empty_text">আপনার কথোপকথন এখানে দেখা যাবে</string>
+  <string name="inbox_search_empty_text">কোনো ফলাফল নেই</string>
+  <string name="archived_empty_text">আপনার আর্কাইভ করা কথোপকথন এখানে দেখা যাবে </string>
+  <string name="main_fab_cd">নতুন কথোপকথন শুরু করুন</string>
+  <string name="main_default_sms_title">কথোপকথন আবার ভালবাসুন</string>
+  <string name="main_default_sms_message">QKSMS-কে আপনার ডিফল্ট এসএমএস অ্যাপ করুন</string>
+  <string name="main_default_sms_change">পরিবর্তন করুন</string>
+  <string name="main_permission_required">অনুমতি প্রয়োজন</string>
+  <string name="main_permission_sms">QKSMS-এর এসএমএস বার্তাগুলো পাঠানো এবং দেখানো অনুমতি প্রয়োজন</string>
+  <string name="main_permission_contacts">QKSMS-এর আপনার পরিচিতিগুলি দেখার জন্য অনুমতি প্রয়োজন</string>
+  <string name="main_permission_allow">মঞ্জুর করুন</string>
+  <string name="drawer_inbox">ইনবক্স</string>
+  <string name="drawer_archived">আর্কাইভ করা</string>
+  <string name="drawer_scheduled">পরিকল্পিত</string>
+  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_more">আরও</string>
+  <string name="drawer_settings">সেটিংস</string>
+  <string name="drawer_plus">QKSMS +</string>
+  <string name="drawer_help">সাহায্য &amp; প্রতিক্রিয়া</string>
+  <string name="rate_title">QKSMS উপভোগ করছেন?</string>
+  <string name="rate_summary">আমাদের প্রতি ভালবাসে দেখাতে Google Play-তে আমাদের মূল্যায়ন করুন!</string>
+  <string name="rate_okay">ঠিক আছে!</string>
+  <string name="rate_dismiss">বাতিল করুন</string>
+  <string name="dialog_delete_title">মুছে ফেলুন</string>
+  <string name="dialog_delete_message">আপনি কি নিশ্চিত যে আপনি এই কথোপকথন মুছে ফেলতে চান?</string>
   <string-array name="message_options">
-    <item>Copy text</item>
-    <item>Forward</item>
+    <item>পাঠ্য অনুলিপি করুন</item>
+    <item>সামনে পাঠান</item>
+    <item>মুছে ফেলুন</item>
+  </string-array>
+  <string name="compose_title_selected">নির্বাচিত %d</string>
+  <string name="compose_subtitle_results">%2$d এর %1$d ফলাফল </string>
+  <string name="compose_send_group_title">গ্রুপ বার্তা হিসেবে প্রেরণ করুন</string>
+  <string name="compose_send_group_summary">প্রাপক এবং উত্তর সবার চোখে পড়বে</string>
+  <string name="compose_messages_empty">এখানে আপনার কথোপকথন শুরু হয়। সুন্দর কিছু বলুন!</string>
+  <string name="compose_vcard_label">পরিচিতি কার্ড</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_hint">একটি বার্তা লিখুন&#8230;</string>
+  <string name="compose_menu_copy">পাঠ্য অনুলিপি করুন</string>
+  <string name="compose_menu_forward">সামনে পাঠান</string>
+  <string name="compose_menu_delete">মুছে ফেলুন</string>
+  <string name="compose_menu_previous">পূর্ববর্তী</string>
+  <string name="compose_menu_next">পরবর্তী</string>
+  <string name="compose_menu_clear">পরিষ্কার</string>
+  <string name="compose_details_title">বার্তার বিস্তারিত</string>
+  <string name="compose_details_type">ধরন: %s</string>
+  <string name="compose_details_from">থেকে: %s</string>
+  <string name="compose_details_to">কাছে: %s</string>
+  <string name="compose_details_subject">বিষয়: %s</string>
+  <string name="compose_details_priority">অগ্রাধিকার: %s</string>
+  <string name="compose_details_size">আকার: %s</string>
+  <string name="compose_details_sent">প্রেরিত: %s</string>
+  <string name="compose_details_received">গৃহীত: %s</string>
+  <string name="compose_details_delivered">প্রেরিত হয়েছে: %s</string>
+  <string name="compose_details_error_code">ত্রুটি কোড: %d</string>
+  <string name="compose_attach_cd">সংযুক্তি যোগ করুন</string>
+  <string name="compose_gallery_cd">ছবি সংযুক্ত করুন</string>
+  <string name="compose_camera_cd">একটি ছবি নিন</string>
+  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_sim_cd">নির্বাচিত, %s সিম কার্ড পরিবর্তন করুন</string>
+  <string name="compose_send_cd">বার্তাটি প্রেরণ করুন</string>
+  <string name="message_status_sending">পাঠানো হচ্ছে&#8230;</string>
+  <string name="message_status_delivered">প্রেরিত হয়েছে: %s</string>
+  <string name="message_status_failed">পাঠাতে ব্যর্থ. আবার চেষ্টা করতে ট্যাপ করুন</string>
+  <string name="info_title">বিস্তারিত</string>
+  <string name="info_name">কথোপকথনের শিরোনাম</string>
+  <string name="info_name_hint">শিরোনাম লিখুন</string>
+  <string name="info_notifications">নোটিফিকেশন</string>
+  <string name="info_theme">থিম</string>
+  <string name="info_archive">আর্কাইভ</string>
+  <string name="info_unarchive">আনআর্কাইভ</string>
+  <string name="info_block">ব্লক করুন</string>
+  <string name="info_unblock">আনব্লক করুন</string>
+  <string name="info_delete">কথোপকথন মুছে ফেলুন</string>
+  <string name="gallery_toast_saved">গ্যালারীতে সেভ করুন</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">এখানে আপনার পরিকল্পিত বার্তা প্রদর্শিত হবে</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
     <item>Delete</item>
   </string-array>
-  <string name="compose_title_selected">%d selected</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
-  <string name="compose_send_group_title">Send as group message</string>
-  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_hint">Write a message&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
-  <string name="compose_attach_cd">Add an attachment</string>
-  <string name="compose_gallery_cd">Attach a photo</string>
-  <string name="compose_camera_cd">Take a photo</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
-  <string name="compose_send_cd">Send message</string>
-  <string name="message_status_sending">Sending&#8230;</string>
-  <string name="message_status_delivered">Delivered %s</string>
-  <string name="message_status_failed">Failed to send. Tap to try again</string>
-  <string name="info_title">Details</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
-  <string name="info_notifications">Notifications</string>
-  <string name="info_theme">Theme</string>
-  <string name="info_archive">Archive</string>
-  <string name="info_unarchive">Unarchive</string>
-  <string name="info_block">Block</string>
-  <string name="info_unblock">Unblock</string>
-  <string name="info_delete">Delete conversation</string>
-  <string name="gallery_toast_saved">Saved to gallery</string>
-  <string name="settings_category_appearance">Appearance</string>
-  <string name="settings_category_general">General</string>
-  <string name="settings_category_qkreply">QK Reply</string>
-  <string name="settings_theme_title">Theme</string>
-  <string name="settings_night_title">Night mode</string>
-  <string name="settings_black_title">Pure black night mode</string>
-  <string name="settings_night_start_title">Start time</string>
-  <string name="settings_night_end_title">End time</string>
-  <string name="settings_text_size_title">Font size</string>
-  <string name="settings_system_font_title">Use system font</string>
-  <string name="settings_auto_emoji_title">Automatic emoji</string>
-  <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
-  <string name="settings_vibration_title">Vibration</string>
-  <string name="settings_ringtone_title">Sound</string>
-  <string name="settings_ringtone_none">None</string>
-  <string name="settings_qkreply_title">QK Reply</string>
-  <string name="settings_qkreply_summary">Popup for new messages</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-  <string name="settings_blocking_title">Blocking</string>
+  <string name="settings_category_appearance">উপস্থিতি</string>
+  <string name="settings_category_general">সাধারণ</string>
+  <string name="settings_category_qkreply">QK উত্তর</string>
+  <string name="settings_theme_title">থিম</string>
+  <string name="settings_night_title">নাইট মোড</string>
+  <string name="settings_black_title">সম্পূর্ণ কালো রাত্রি মোড</string>
+  <string name="settings_night_start_title">শুরুর সময়</string>
+  <string name="settings_night_end_title">শেষের সময়</string>
+  <string name="settings_text_size_title">ফন্টের আকার</string>
+  <string name="settings_system_font_title">সিস্টেম ফন্ট ব্যবহার করুন</string>
+  <string name="settings_auto_emoji_title">স্বয়ংক্রিয় ইমোজি</string>
+  <string name="settings_notifications_title">নোটিফিকেশন</string>
+  <string name="settings_notification_previews_title">নোটিফিকেশন প্রিভিউ</string>
+  <string name="settings_vibration_title">কম্পন</string>
+  <string name="settings_ringtone_title">শব্দ</string>
+  <string name="settings_ringtone_none">কোনোটা না</string>
+  <string name="settings_qkreply_title">QK উত্তর</string>
+  <string name="settings_qkreply_summary">নতুন বার্তার জন্য পপ-আপ</string>
+  <string name="settings_qkreply_tap_dismiss_title">সরিয়ে দিতে ট্যাপ করুন</string>
+  <string name="settings_qkreply_tap_dismiss_summary">এটি বন্ধ করার জন্য পপআপের বাইরে ট্যাপ করুন</string>
+  <string name="settings_blocking_title">ব্লক করা</string>
   <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-  <string name="settings_delayed_title">Delayed sending</string>
-  <string name="settings_delivery_title">Delivery confirmations</string>
-  <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
-  <string name="settings_unicode_title">Strip accents</string>
-  <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
-  <string name="settings_sync_title">Sync messages</string>
-  <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-  <string name="settings_about_title">About QKSMS</string>
-  <string name="settings_version">Version %s</string>
-  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-  <string name="blocked_title">Blocking</string>
-  <string name="blocked_empty">Your blocked conversations will appear here</string>
-  <string name="blocked_unblock_dialog_title">Unblock</string>
-  <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
-  <string name="about_title">About</string>
-  <string name="about_version_title">Version</string>
-  <string name="about_developer_title">Developer</string>
-  <string name="about_source_title">Source code</string>
-  <string name="about_changelog_title">Changelog</string>
-  <string name="about_contact_title">Contact</string>
-  <string name="about_license_title">License</string>
-  <string name="about_copyright_title">Copyright</string>
-  <string name="qksms_plus_description_title">Support development, unlock everything</string>
-  <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
-  <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donate via PayPal</string>
-  <string name="qksms_plus_coming_soon">Coming soon</string>
-  <string name="qksms_plus_themes_title">Premium themes</string>
-  <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
-  <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
-  <string name="qksms_plus_backup_title">Message backup</string>
-  <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
-  <string name="qksms_plus_scheduled_title">Scheduled messages</string>
-  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
-  <string name="qksms_plus_delayed_title">Delayed sending</string>
-  <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
-  <string name="qksms_plus_night_title">Automatic night mode</string>
-  <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
-  <string name="qksms_plus_blacklist_title">Advanced blocking</string>
-  <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
-  <string name="qksms_plus_forward_title">Auto-forward</string>
-  <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
-  <string name="qksms_plus_respond_title">Auto-respond</string>
-  <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
-  <string name="qksms_plus_more_title">More</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your subscription will include all future QKSMS+ features!</string>
-  <string name="widget_loading">Loading&#8230;</string>
-  <string name="widget_more">View more conversations</string>
-  <string name="qkreply_menu_read">Mark read</string>
-  <string name="qkreply_menu_call">Call</string>
-  <string name="qkreply_menu_expand">Show more</string>
-  <string name="qkreply_menu_collapse">Show less</string>
-  <string name="qkreply_menu_view">Open conversation</string>
-  <string name="theme_material">Material</string>
-  <string name="theme_plus">QKSMS+</string>
-  <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Apply</string>
-  <string name="notification_reply">Reply</string>
-  <string name="notification_read">Mark read</string>
-  <string name="button_cancel">Cancel</string>
-  <string name="button_delete">Delete</string>
-  <string name="button_save">Save</string>
-  <string name="button_more">More</string>
-  <string name="button_set">Set</string>
-  <string name="button_unblock">Unblock</string>
-  <string name="button_undo">Undo</string>
-  <string name="toast_copied">Copied</string>
-  <string name="toast_archived">Archived conversation</string>
-  <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
+  <string name="settings_should_i_answer_title">আমার কি উত্তর দেওয়া উচিত?</string>
+  <string name="settings_should_i_answer_summary">স্বয়ংক্রিয়ভাবে \"Should I Answer\" অ্যাপ্লিকেশন ব্যবহার করে অযাচিত সংখ্যার বার্তাগুলি ফিল্টার করুন</string>
+  <string name="settings_delayed_title">বিলম্বে পাঠানো</string>
+  <string name="settings_delivery_title">ডেলিভারি নিশ্চিতকরন</string>
+  <string name="settings_delivery_summary">নিশ্চিত করুন যে বার্তা সফলভাবে পাঠানো হয়েছে</string>
+  <string name="settings_unicode_title">কথার টান সরিয়ে দিন</string>
+  <string name="settings_unicode_summary">বহির্গামী এসএমএস বার্তার অক্ষর থেকে কথার টান সরিয়ে দিন</string>
+  <string name="settings_mms_size_title">এমএমএসের সংযুক্তি সক্রিয়ভাবে সংকোচন করুন</string>
+  <string name="settings_sync_title">বার্তাগুলি সিঙ্ক করুন</string>
+  <string name="settings_sync_summary">আপনার বার্তাগুলি অ্যান্ড্রয়েডের নিজস্ব এসএমএস এর ডাটাবেস সাতে পুনরায় সিঙ্ক করুন</string>
+  <string name="settings_about_title">QKSMS সম্পর্কে</string>
+  <string name="settings_version">সংস্করণ %s</string>
+  <string name="settings_delay_duration_hint">দৈর্ঘ্য (সেকেন্ডে) লিখুন</string>
+  <string name="blocked_title">ব্লক করা</string>
+  <string name="blocked_empty">আপনার ব্লক করা কথোপকথন দেখা যাবে এখানে</string>
+  <string name="blocked_unblock_dialog_title">আনব্লক করুন</string>
+  <string name="blocked_unblock_dialog_message">আপনি এই কথোপকথন আনব্লক করতে চান?</string>
+  <string name="about_title">সম্পর্কে</string>
+  <string name="about_version_title">সংস্করণ</string>
+  <string name="about_developer_title">ডেভেলপার</string>
+  <string name="about_source_title">সোর্স কোড</string>
+  <string name="about_changelog_title">পরিবর্তনসূচী</string>
+  <string name="about_contact_title">যোগাযোগ করুন</string>
+  <string name="about_license_title">লাইসেন্স</string>
+  <string name="about_copyright_title">স্বত্ব</string>
+  <string name="qksms_plus_description_title">উন্নয়নে সমর্থন করুন, সবকিছু আনলক করুন</string>
+  <string name="qksms_plus_description_summary">আপনি একটি ক্ষুধার ডেভেলপারকে বাঁচাতে পারেন মাত্র %s</string>
+  <string name="qksms_plus_upgrade">সারা জীবনের জন্য আপগ্রেড করুন %1$s %2$s দিয়ে</string>
+  <string name="qksms_plus_upgrade_donate">%1$s %2$s দান করুন, + আনলক করুন</string>
+  <string name="qksms_plus_thanks_title">QKSMS সমর্থনের জন্য আপনাকে ধন্যবাদ!</string>
+  <string name="qksms_plus_thanks_summary">আপনি এখন QKSMS+-এর সব বৈশিষ্ট্যেের সুবিধা পাচ্ছেন</string>
+  <string name="qksms_plus_free_title">F-Droid ব্যবহারকারীরা QKSMS+ বিনামূল্যে ব্যবহার করতে পারবেন! যদি আপনি উন্নয়ন সমর্থন করতে মুক্ত মনে অনুদান করুন।</string>
+  <string name="qksms_plus_donate">পেপাল এর মাধ্যমে দান করুন</string>
+  <string name="qksms_plus_coming_soon">শীঘ্রই আসছে</string>
+  <string name="qksms_plus_themes_title">প্রিমিয়াম থিম</string>
+  <string name="qksms_plus_themes_summary">Material Design প্যালেট পাওয়া যায় না এমন সুন্দর রঙয়ের থীম আনলক করুন</string>
+  <string name="qksms_plus_emoji_title">কাস্টম সক্রিয়-ইমোজি</string>
+  <string name="qksms_plus_emoji_summary">কাস্টম সক্রিয়-ইমোজি শর্টকাট তৈরি করুন</string>
+  <string name="qksms_plus_backup_title">বার্তা ব্যাক আপ</string>
+  <string name="qksms_plus_backup_summary">আপনার বার্তাগুলো স্বয়ংক্রিয়ভাবে ব্যাক আপ করুন। এবারআপনার ফোন পরিবর্তন বা আপনার ফোন নষ্ট হওয়ায় আপনাকে কখনো এসএমএস ইতিহাস হারানোর বিষয়ে উদ্বিগ্ন হতে হবে না</string>
+  <string name="qksms_plus_scheduled_title">পরিকল্পিত বার্তাগুলি</string>
+  <string name="qksms_plus_scheduled_summary">পরিকল্পিত বার্তাগুলি স্বয়ংক্রিয়ভাবে একটি নির্দিষ্ট সময় ও তারিখ প্রেরণ করা হবে</string>
+  <string name="qksms_plus_delayed_title">বিলম্বে পাঠানো</string>
+  <string name="qksms_plus_delayed_summary">আপনার বার্তা পাঠানোর আগে কয়েক সেকেন্ড অপেক্ষা করুন</string>
+  <string name="qksms_plus_night_title">স্বয়ংক্রিয় রাত্রি মোড</string>
+  <string name="qksms_plus_night_summary">দিন সময় উপর ভিত্তি করে নাইট মোড সক্ষম করুন</string>
+  <string name="qksms_plus_blacklist_title">উন্নীত আনব্লক করা</string>
+  <string name="qksms_plus_blacklist_summary">সেই সব বার্তা ব্লক কারুন যার কোন শব্দ বা নমুনার সাথে মিলে</string>
+  <string name="qksms_plus_forward_title">সক্রিয়ভাবে সামনে পাঠান</string>
+  <string name="qksms_plus_forward_summary">নির্দিষ্ট প্রেরকের বার্তাগুলো স্বয়ংক্রিয়ভাবে সামনে পাঠান</string>
+  <string name="qksms_plus_respond_title">স্বয়ংক্রিয়-উত্তর</string>
+  <string name="qksms_plus_respond_summary">আগত বার্তা জন্য স্বয়ংক্রিয়ভাবে পূর্বনির্ধারিত প্রতিক্রিয়া পাঠান</string>
+  <string name="qksms_plus_more_title">আরও</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="widget_loading">লোড হচ্ছে&#8230;</string>
+  <string name="widget_more">আরও কথোপকথন প্রদর্শন করুন</string>
+  <string name="qkreply_menu_read">পড়া চিহ্নিত করুন</string>
+  <string name="qkreply_menu_call">কল করুন</string>
+  <string name="qkreply_menu_expand">আরও দেখান</string>
+  <string name="qkreply_menu_collapse">আরও কম প্রদর্শন করুন</string>
+  <string name="qkreply_menu_view">চলমান কথোপকথন</string>
+  <string name="theme_material">উপকরণ</string>
+  <string name="theme_plus">QKSMS +</string>
+  <string name="theme_hex">হেক্স</string>
+  <string name="theme_apply">প্রয়োগ করুন</string>
+  <string name="notification_reply">প্রত্যুত্তর দিন</string>
+  <string name="notification_read">পড়া চিহ্নিত করুন</string>
+  <string name="button_cancel">বাতিল করুন</string>
+  <string name="button_delete">মুছে ফেলুন</string>
+  <string name="button_save">সেভ করুন</string>
+  <string name="button_more">আরও</string>
+  <string name="button_set">সেট করুন</string>
+  <string name="button_unblock">আনব্লক করুন</string>
+  <string name="button_undo">বাতিল করো</string>
+  <string name="toast_copied">অনুলিপি করা হয়েছে</string>
+  <string name="toast_archived">আর্কাইভ করা কথোপকথন</string>
+  <string name="toast_qksms_plus">এই ব্যবহার করতে আপনাকে অবশ্যই QKSMS + আনলক করতে হবে</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="other">%s new messages</item>
+    <item quantity="one">%s নতুন বার্তা</item>
+    <item quantity="other">নতুন বার্তা</item>
   </plurals>
-  <string name="notification_message_failed_title">Message not sent</string>
-  <string name="notification_message_failed_text">The message to %s failed to send</string>
+  <string name="notification_message_failed_title">বার্তা পাঠাতে অক্ষম</string>
+  <string name="notification_message_failed_text">%s এর বার্তাটি পাঠাতে ব্যর্থ হয়েছে</string>
   <string-array name="night_modes">
-    <item>Disabled</item>
-    <item>Always on</item>
-    <item>Automatic</item>
+    <item>নিষ্ক্রিয়</item>
+    <item>সবসময় চালু</item>
+    <item>স্বয়ংক্রিয়</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>নাম এবং বার্তা প্রদর্শন করুন</item>
+    <item>নাম দেখান</item>
+    <item>কন্টেন্ট আড়াল করুন</item>
   </string-array>
   <string-array name="text_sizes">
-    <item>Small</item>
-    <item>Normal</item>
-    <item>Large</item>
-    <item>Larger</item>
+    <item>ছোট</item>
+    <item>স্বাভাবিক</item>
+    <item>বড়</item>
+    <item>বড়</item>
   </string-array>
   <string-array name="delayed_sending_labels">
-    <item>No delay</item>
-    <item>Short</item>
-    <item>Medium</item>
-    <item>Long</item>
+    <item>কোনো বিলম্ব নেই</item>
+    <item>সংক্ষিপ্ত</item>
+    <item>মাঝারি</item>
+    <item>দীর্ঘ</item>
   </string-array>
   <string-array name="mms_sizes">
-    <item>100KB</item>
-    <item>200KB</item>
-    <item>300KB (Recommended)</item>
-    <item>600KB</item>
-    <item>1000KB</item>
-    <item>2000KB</item>
-    <item>No compression</item>
+    <item>১০০KB</item>
+    <item>২০০KB</item>
+    <item>৩০০KB (সুপারিশ করা)</item>
+    <item>৬০০KB</item>
+    <item>১০০০KB</item>
+    <item>২০০০KB</item>
+    <item>সংকোচনহীন</item>
   </string-array>
   <string-array name="qk_responses">
     <item>ঠিক আছে</item>

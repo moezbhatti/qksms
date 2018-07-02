@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Arşivlenmiş</string>
-  <string name="title_scheduled">Zamanlanmış</string>
   <string name="title_settings">Ayarlar</string>
   <string name="title_notification_prefs">Bildirimler</string>
   <string name="title_theme">Tema</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Konuşmalarınız burada görünür</string>
   <string name="inbox_search_empty_text"> Sonuç Yok</string>
   <string name="archived_empty_text">Arşivlenmiş konuşmalarınızı burada görünür</string>
-  <string name="scheduled_empty_text">Zamanlanmış iletileriniz burada görünür</string>
   <string name="main_fab_cd">Yeni konuşma başlat</string>
   <string name="main_default_sms_title">Yine mesajlaşmayı seviyorum</string>
   <string name="main_default_sms_message">QKSMS varsayılan SMS uygulaması yap</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Gelen Kutusu</string>
   <string name="drawer_archived">Arşivle</string>
   <string name="drawer_scheduled">Zamanla</string>
+  <string name="drawer_blocking">Engellenmiş</string>
   <string name="drawer_more">Daha fazla</string>
   <string name="drawer_settings">Ayarlar</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Alıcılar ve yanıtlar herkese görünür olacak</string>
   <string name="compose_messages_empty">Senin konuşma başlıyor. Güzel bir şey söyle!</string>
   <string name="compose_vcard_label">Kişi Kartı</string>
+  <string name="compose_scheduled_for">Planlanan</string>
+  <string name="compose_scheduled_future">Seçilen zaman gelecekte olmalı!</string>
+  <string name="compose_scheduled_plus">Zamanlanmış mesajlaşma kullanmak için QKSMS+ kilidini kaldırmak gerekir</string>
+  <string name="compose_scheduled_toast">Zamanlanmış iletilere eklendi</string>
   <string name="compose_hint">Mesaj Yaz...</string>
   <string name="compose_menu_copy">Metni kopyala</string>
   <string name="compose_menu_forward">Yönlendir</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Dosya Ekle</string>
   <string name="compose_gallery_cd">Bir fotoğraf eklemek</string>
   <string name="compose_camera_cd">Fotoğraf Çek</string>
+  <string name="compose_schedule_cd">Daha sonra gönder</string>
   <string name="compose_sim_cd">Seçili, %s SIM kartı değiştirin</string>
   <string name="compose_send_cd">Mesaj gönder</string>
   <string name="message_status_sending">Gönderiliyor...</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Engeli kaldır</string>
   <string name="info_delete">Yazışmayı sil</string>
   <string name="gallery_toast_saved">Galeriye kaydedildi</string>
+  <string name="scheduled_title">Zamanla</string>
+  <string name="scheduled_empty_text">Zamanlanmış iletileriniz burada görünür</string>
+  <string name="scheduled_options_title">Zamanlanmış mesaj</string>
+  <string-array name="scheduled_options">
+    <item>Şimdi gönder</item>
+    <item>Sil</item>
+  </string-array>
   <string name="settings_category_appearance">Görünüm</string>
   <string name="settings_category_general">Genel</string>
   <string name="settings_category_qkreply">QK Yanıt</string>
@@ -152,7 +163,7 @@
   <string name="settings_about_title">QKSMS Hakkında</string>
   <string name="settings_version">Sürüm ve Diğerleri(TR Muhammet Öztürk)</string>
   <string name="settings_delay_duration_hint">Süre (saniye olarak) girin</string>
-  <string name="blocked_title">Engelle</string>
+  <string name="blocked_title">Engellenmiş</string>
   <string name="blocked_empty">Engellenen konuşmalarınız burada görünür</string>
   <string name="blocked_unblock_dialog_title">Engelini kaldır</string>
   <string name="blocked_unblock_dialog_message">Bu konuşmanın engelini kaldırmak ister misiniz?</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Otomatik yanıtla</string>
   <string name="qksms_plus_respond_summary">Önceden ayarlanmış bir yanıt ile gelen iletilere otomatik olarak yanıtla</string>
   <string name="qksms_plus_more_title">Daha fazla</string>
-  <string name="qksms_plus_more_summary">QKSMS etkin geliştirme altında tüm gelecek QKSMS + özellikler aboneliğinize dahil!</string>
+  <string name="qksms_plus_more_summary">QKSMS etkin geliştirme altında ve satın alırsan tüm gelecek QKSMS+ özellikleri dahil olacaktır!</string>
   <string name="widget_loading">Yükleniyor...</string>
   <string name="widget_more">Daha fazla konuşma göster</string>
   <string name="qkreply_menu_read">Okundu olarak işaretle</string>

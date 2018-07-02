@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Archivados</string>
-  <string name="title_scheduled">Programar</string>
   <string name="title_settings">Configuración</string>
   <string name="title_notification_prefs">Notificaciones</string>
   <string name="title_theme">Tema</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Sus conversaciones aparecerán aquí</string>
   <string name="inbox_search_empty_text">No hay resultados</string>
   <string name="archived_empty_text">Sus conversaciones archivadas aparecerán aquí</string>
-  <string name="scheduled_empty_text">Tus mensajes programados aparecerán aquí</string>
   <string name="main_fab_cd">Iniciar una nueva conversación</string>
   <string name="main_default_sms_title">Me encanta enviar mensajes de texto otra vez</string>
   <string name="main_default_sms_message">Haga de QKSMS su aplicación SMS por defecto</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Recibidos</string>
   <string name="drawer_archived">Archivar</string>
   <string name="drawer_scheduled">Programar</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">Más</string>
   <string name="drawer_settings">Ajustes</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Este es el comienzo de su conversación. ¡Di algo bonito!</string>
   <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Escribir mensaje&#8230;</string>
   <string name="compose_menu_copy">Copiar texto</string>
   <string name="compose_menu_forward">Reenviar</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Agregar un archivo adjunto</string>
   <string name="compose_gallery_cd">Adjuntar una foto</string>
   <string name="compose_camera_cd">Tomar una foto</string>
+  <string name="compose_schedule_cd">Send later</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Enviar mensaje</string>
   <string name="message_status_sending">Enviando&#8230;</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Desbloquear</string>
   <string name="info_delete">Borrar conversación</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">Tus mensajes programados aparecerán aquí</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">Apariencia</string>
   <string name="settings_category_general">General</string>
   <string name="settings_category_qkreply">Responder vía QKSMS</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Auto-responder</string>
   <string name="qksms_plus_respond_summary">Responder automáticamente a mensajes entrantes con una respuesta preestablecida</string>
   <string name="qksms_plus_more_title">Más</string>
-  <string name="qksms_plus_more_summary">QKSMS está en desarrollo activo, y su suscripción incluirá todas las características futuras de QKSMS+!</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">Cargando&#8230;</string>
   <string name="widget_more">Ver más conversaciones</string>
   <string name="qkreply_menu_read">Marcar como leído</string>

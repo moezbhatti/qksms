@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Archief</string>
-  <string name="title_scheduled">Gepland</string>
   <string name="title_settings">Instellingen</string>
   <string name="title_notification_prefs">Notificaties</string>
   <string name="title_theme">Thema</string>
@@ -31,11 +30,11 @@
   <string name="menu_call">Bel</string>
   <string name="menu_info">Details</string>
   <string name="menu_save">Opslaan in galerij</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
+  <string name="main_drawer_open_cd">Open navigatie lade</string>
   <string name="main_title_selected">%d geselecteerd</string>
   <string name="main_menu_clear">Wissen</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_read">Markeren als gelezen</string>
+  <string name="main_menu_unread">Markeren als ongelezen</string>
   <string name="main_menu_archive">Archiveren</string>
   <string name="main_menu_unarchive">Terugzetten uit archief</string>
   <string name="main_menu_block">Blokkeren</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Je conversaties verschijnen hier</string>
   <string name="inbox_search_empty_text">Geen resultaten</string>
   <string name="archived_empty_text">Je gearchiveerde conversaties verschijnen hier</string>
-  <string name="scheduled_empty_text">Je geplande berichten verschijnen hier</string>
   <string name="main_fab_cd">Start nieuwe conversatie</string>
   <string name="main_default_sms_title">Love texting again</string>
   <string name="main_default_sms_message">QKSMS uw standaard SMS app maken</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Inbox</string>
   <string name="drawer_archived">Archief</string>
   <string name="drawer_scheduled">Gepland</string>
+  <string name="drawer_blocking">Blokkeren</string>
   <string name="drawer_more">Meer</string>
   <string name="drawer_settings">Instellingen</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Ontvangers en antwoorden zijn zichtbaar voor iedereen</string>
   <string name="compose_messages_empty">Dit is het begin van je conversatie. Zeg iets leuks!</string>
   <string name="compose_vcard_label">Contactpersoonkaart</string>
+  <string name="compose_scheduled_for">Gepland voor</string>
+  <string name="compose_scheduled_future">De geselecteerde tijd moet in de toekomst liggen!</string>
+  <string name="compose_scheduled_plus">Je hebt QKSMS+ nodig om geplande berichten te gebruiken</string>
+  <string name="compose_scheduled_toast">Toegevoegd aan geplande berichten</string>
   <string name="compose_hint">Type een bericht&#8230;</string>
   <string name="compose_menu_copy">Tekst kopiëren</string>
   <string name="compose_menu_forward">Doorsturen</string>
@@ -87,21 +90,22 @@
   <string name="compose_menu_previous">Vorige</string>
   <string name="compose_menu_next">Volgende</string>
   <string name="compose_menu_clear">Wissen</string>
-  <string name="compose_details_title">Message details</string>
+  <string name="compose_details_title">Details van bericht</string>
   <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_from">Van: %s</string>
+  <string name="compose_details_to">Naar: %s</string>
+  <string name="compose_details_subject">Onderwerp: %s</string>
+  <string name="compose_details_priority">Prioriteit: %s</string>
+  <string name="compose_details_size">Grootte: %s</string>
+  <string name="compose_details_sent">Verzonden: %s</string>
+  <string name="compose_details_received">Ontvangen: %s</string>
+  <string name="compose_details_delivered">Afgeleverd: %s</string>
+  <string name="compose_details_error_code">Foutcode: %d</string>
   <string name="compose_attach_cd">Een bijlage toevoegen</string>
   <string name="compose_gallery_cd">Voeg een foto toe</string>
   <string name="compose_camera_cd">Neem een foto</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
+  <string name="compose_schedule_cd">Later versturen</string>
+  <string name="compose_sim_cd">%s geselecteerd, wijzig SIM-kaart</string>
   <string name="compose_send_cd">Verstuur bericht</string>
   <string name="message_status_sending">Verzenden&#8230;</string>
   <string name="message_status_delivered">Afgeleverd %s</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Blokkering opheffen</string>
   <string name="info_delete">Conversatie verwijderen</string>
   <string name="gallery_toast_saved">Opgeslagen in galerij</string>
+  <string name="scheduled_title">Gepland</string>
+  <string name="scheduled_empty_text">Je geplande berichten verschijnen hier</string>
+  <string name="scheduled_options_title">Gepland bericht</string>
+  <string-array name="scheduled_options">
+    <item>Nu versturen</item>
+    <item>Verwijderen</item>
+  </string-array>
   <string name="settings_category_appearance">Uiterlijk</string>
   <string name="settings_category_general">Algemeen</string>
   <string name="settings_category_qkreply">QK Reply</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Auto-antwoorden</string>
   <string name="qksms_plus_respond_summary">Automatisch reageren op inkomende berichten met een vooraf ingestelde reactie</string>
   <string name="qksms_plus_more_title">Meer</string>
-  <string name="qksms_plus_more_summary">QKSMS wordt actief doorontwikkeld en jouw abonnement bevat alle nieuwe functies ie aan QKSMS+ worden toegevoegd!</string>
+  <string name="qksms_plus_more_summary">QKSMS is in actieve ontwikkeling, uw aankoop bevat alle toekomstige nieuwigheden exclusief voor QKSMS+!</string>
   <string name="widget_loading">Laden&#8230;</string>
   <string name="widget_more">Bekijk meer conversaties</string>
   <string name="qkreply_menu_read">Markeer als gelezen</string>
@@ -217,7 +228,7 @@
   <string name="toast_archived">Conversatie gearchiveerd</string>
   <string name="toast_qksms_plus">Je dient QKSMS+ te ontgrendelen om dit te gebruiken</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
+    <item quantity="one">Nieuw bericht</item>
     <item quantity="other">%s nieuwe berichten</item>
   </plurals>
   <string name="notification_message_failed_title">Bericht niet verzonden</string>

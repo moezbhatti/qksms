@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Archivováno</string>
-  <string name="title_scheduled">Naplánováno</string>
   <string name="title_settings">Nastavení</string>
   <string name="title_notification_prefs">Oznámení</string>
   <string name="title_theme">Motiv vzhledu</string>
@@ -31,11 +30,11 @@
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
   <string name="menu_save">Uložit do galerie</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
+  <string name="main_drawer_open_cd">Otevřít menu</string>
   <string name="main_title_selected">Vybráno: %d</string>
   <string name="main_menu_clear">Vymazat</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_read">Označit jako přečtené</string>
+  <string name="main_menu_unread">Označit jako nepřečtené</string>
   <string name="main_menu_archive">Archivovat</string>
   <string name="main_menu_unarchive">Obnovit z archivu</string>
   <string name="main_menu_block">Blokovat</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
   <string name="inbox_search_empty_text">Žádné výsledky</string>
   <string name="archived_empty_text">Zde se objeví Vaše archivované konverzace</string>
-  <string name="scheduled_empty_text">Zde se zobrazí vaše naplánované zprávy</string>
   <string name="main_fab_cd">Zahájit novou konverzaci</string>
   <string name="main_default_sms_title">Zamilujte si znovu psaní</string>
   <string name="main_default_sms_message">Nastavte si QKSMS jako výchozí SMS aplikaci</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Příchozí zprávy</string>
   <string name="drawer_archived">Archivováno</string>
   <string name="drawer_scheduled">Naplánováno</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">Více</string>
   <string name="drawer_settings">Nastavení</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Příjemci a odpovědi budou viditelné všem</string>
   <string name="compose_messages_empty">Toto je začátek vaší konverzace. Řekněte něco hezkého!</string>
   <string name="compose_vcard_label">Karta kontaktu</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Napsat zprávu&#8230;</string>
   <string name="compose_menu_copy">Kopírovat text</string>
   <string name="compose_menu_forward">Přeposlat</string>
@@ -87,21 +90,22 @@
   <string name="compose_menu_previous">Předchozí</string>
   <string name="compose_menu_next">Další</string>
   <string name="compose_menu_clear">Vymazat</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_title">Podrobnosti zprávy</string>
+  <string name="compose_details_type">Typ: %s</string>
+  <string name="compose_details_from">Od: %s</string>
+  <string name="compose_details_to">Pro: %s</string>
+  <string name="compose_details_subject">Předmět: %s</string>
+  <string name="compose_details_priority">Priorita: %s</string>
+  <string name="compose_details_size">Velikost: %s</string>
+  <string name="compose_details_sent">Odesláno: %s</string>
+  <string name="compose_details_received">Přijato: %s</string>
+  <string name="compose_details_delivered">Doručeno: %s</string>
+  <string name="compose_details_error_code">Kód chyby: %d</string>
   <string name="compose_attach_cd">Připojit přílohu</string>
   <string name="compose_gallery_cd">Připojit fotografii</string>
   <string name="compose_camera_cd">Fotografovat</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
+  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_sim_cd">%s vybráno, změňte SIM kartu</string>
   <string name="compose_send_cd">Odeslat zprávu</string>
   <string name="message_status_sending">Odesílání&#8230;</string>
   <string name="message_status_delivered">Doručeno %s</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Odblokovat</string>
   <string name="info_delete">Odstranit konverzaci</string>
   <string name="gallery_toast_saved">Uloženo do galerie</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">Zde se zobrazí vaše naplánované zprávy</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">Vzhled</string>
   <string name="settings_category_general">Obecné</string>
   <string name="settings_category_qkreply">Rychlá odpověď</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Automatická odpověď</string>
   <string name="qksms_plus_respond_summary">Automaticky odpovědět na příchozí zprávy přednastavenou odpovědí</string>
   <string name="qksms_plus_more_title">Více</string>
-  <string name="qksms_plus_more_summary">QKSMS je v aktivním vývoji a odběr bude zahrnovat všechny budoucí QKSMS + funkce!</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">Načítání&#8230;</string>
   <string name="widget_more">Zobrazit další konverzace</string>
   <string name="qkreply_menu_read">Označit jako přečtené</string>

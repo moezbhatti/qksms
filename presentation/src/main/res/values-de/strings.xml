@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Archiviert</string>
-  <string name="title_scheduled">Geplant</string>
   <string name="title_settings">Einstellungen</string>
   <string name="title_notification_prefs">Benachrichtigungen</string>
   <string name="title_theme">Erscheinungsbild</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Deine Unterhaltungen werden hier angezeigt</string>
   <string name="inbox_search_empty_text">Keine Ergebnisse</string>
   <string name="archived_empty_text">Archivierte Unterhaltungen werden hier angezeigt</string>
-  <string name="scheduled_empty_text">Deine geplanten Unterhaltungen werden hier angezeigt</string>
   <string name="main_fab_cd">Neue Unterhaltung starten</string>
   <string name="main_default_sms_title">Liebe es wieder, SMS zu schreiben</string>
   <string name="main_default_sms_message">QKSMS als Standard-SMS-App festlegen</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Posteingang</string>
   <string name="drawer_archived">Archiviert</string>
   <string name="drawer_scheduled">Geplant</string>
+  <string name="drawer_blocking">Blockiert</string>
   <string name="drawer_more">Mehr</string>
   <string name="drawer_settings">Einstellungen</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Empfänger und Antworten werden für jeden sichtbar sein</string>
   <string name="compose_messages_empty">Das ist der Beginn der Unterhaltung. Sag\' etwas nettes!</string>
   <string name="compose_vcard_label">Kontaktkarte</string>
+  <string name="compose_scheduled_for">Geplant für</string>
+  <string name="compose_scheduled_future">Gewählte Zeit muss in der Zukunft liegen!</string>
+  <string name="compose_scheduled_plus">Für diese Funktion muss QKSMS+ freigeschalten werden</string>
+  <string name="compose_scheduled_toast">Zu geplanten Nachrichten hinzugefügt</string>
   <string name="compose_hint">Schreibe eine Nachricht&#8230;</string>
   <string name="compose_menu_copy">Text kopieren</string>
   <string name="compose_menu_forward">Weiterleiten</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Anhang hinzufügen</string>
   <string name="compose_gallery_cd">Foto anhängen</string>
   <string name="compose_camera_cd">Foto aufnehmen</string>
+  <string name="compose_schedule_cd">Später senden</string>
   <string name="compose_sim_cd">%s ausgewählt, SIM-Karte ändern</string>
   <string name="compose_send_cd">Nachricht senden</string>
   <string name="message_status_sending">Wird gesendet&#8230;</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Entsperren</string>
   <string name="info_delete">Unterhaltung löschen</string>
   <string name="gallery_toast_saved">In Galerie gespeichert</string>
+  <string name="scheduled_title">Geplant</string>
+  <string name="scheduled_empty_text">Deine geplanten Unterhaltungen werden hier angezeigt</string>
+  <string name="scheduled_options_title">Geplante Nachricht</string>
+  <string-array name="scheduled_options">
+    <item>Sofort senden</item>
+    <item>Löschen</item>
+  </string-array>
   <string name="settings_category_appearance">Aussehen</string>
   <string name="settings_category_general">Allgemein</string>
   <string name="settings_category_qkreply">Schnellantwort</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Automatische Antwort</string>
   <string name="qksms_plus_respond_summary">Eingehende Nachrichten werden mit einer voreingestellten Antwort beantwortet</string>
   <string name="qksms_plus_more_title">Mehr</string>
-  <string name="qksms_plus_more_summary">QKSMS wird aktiv weiterentwickelt und Dein Abonnement wird alle zukünftigen Funktionen von QKSMS+ beinhalten!</string>
+  <string name="qksms_plus_more_summary">QKSMS wird aktiv weiterentwickelt und Dein Erwerb wird alle zukünftigen Funktionen enthalten!</string>
   <string name="widget_loading">Lädt&#8230;</string>
   <string name="widget_more">Weitere Unterhaltungen anzeigen</string>
   <string name="qkreply_menu_read">Als gelesen markieren</string>

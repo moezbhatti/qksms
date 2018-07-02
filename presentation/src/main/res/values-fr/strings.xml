@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Archivées</string>
-  <string name="title_scheduled">Planifiés</string>
   <string name="title_settings">Paramètres</string>
   <string name="title_notification_prefs">Notifications</string>
   <string name="title_theme">Thème</string>
@@ -31,11 +30,11 @@
   <string name="menu_call">Appeler</string>
   <string name="menu_info">Détails</string>
   <string name="menu_save">Enregistrer dans la galerie</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
+  <string name="main_drawer_open_cd">Ouvrir le tiroir de navigation</string>
   <string name="main_title_selected">%d sélectionnée</string>
   <string name="main_menu_clear">Effacer</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_read">Marquer comme lu</string>
+  <string name="main_menu_unread">Marquer comme non-lu</string>
   <string name="main_menu_archive">Archiver</string>
   <string name="main_menu_unarchive">Désarchiver</string>
   <string name="main_menu_block">Bloquer</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Vos conversations apparaîtront ici</string>
   <string name="inbox_search_empty_text">Aucun résultat</string>
   <string name="archived_empty_text">Vos conversations archivées apparaîtront ici</string>
-  <string name="scheduled_empty_text">Vos messages planifiés apparaîtront ici</string>
   <string name="main_fab_cd">Débuter une nouvelle conversation</string>
   <string name="main_default_sms_title">Réapprenez à aimer les textos</string>
   <string name="main_default_sms_message">Faire de QKSMS votre application SMS par défaut</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Boite de réception</string>
   <string name="drawer_archived">Archivées</string>
   <string name="drawer_scheduled">Planifiés</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">Plus</string>
   <string name="drawer_settings">Paramètres</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Les destinataires et les réponses seront visibles par tout le monde</string>
   <string name="compose_messages_empty">C\'est le début de votre conversation. Dites quelque chose de sympa !</string>
   <string name="compose_vcard_label">Fiche du contact</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Écrire un message&#8230;</string>
   <string name="compose_menu_copy">Copier le texte</string>
   <string name="compose_menu_forward">Transférer</string>
@@ -87,21 +90,22 @@
   <string name="compose_menu_previous">Précédent</string>
   <string name="compose_menu_next">Suivant</string>
   <string name="compose_menu_clear">Effacer</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_title">Détails du message</string>
+  <string name="compose_details_type">Type : %s</string>
+  <string name="compose_details_from">De : %s</string>
+  <string name="compose_details_to">À : %s</string>
+  <string name="compose_details_subject">Objet : %s</string>
+  <string name="compose_details_priority">Priorité : %s</string>
+  <string name="compose_details_size">Taille : %s</string>
+  <string name="compose_details_sent">Envoyé : %s</string>
+  <string name="compose_details_received">Reçu : %s</string>
+  <string name="compose_details_delivered">Délivré : %s</string>
+  <string name="compose_details_error_code">Code d’erreur : %d</string>
   <string name="compose_attach_cd">Ajouter une pièce jointe</string>
   <string name="compose_gallery_cd">Joindre une photo</string>
   <string name="compose_camera_cd">Prendre une photo</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
+  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_sim_cd">%s sélectionné, changer la carte SIM</string>
   <string name="compose_send_cd">Envoyer un message</string>
   <string name="message_status_sending">Envoi&#8230;</string>
   <string name="message_status_delivered">Envoyé %s</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Débloquer</string>
   <string name="info_delete">Supprimer la conversation</string>
   <string name="gallery_toast_saved">Enregistré dans la galerie</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">Vos messages planifiés apparaîtront ici</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">Apparence</string>
   <string name="settings_category_general">Général</string>
   <string name="settings_category_qkreply">Réponse QK</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Réponse automatique</string>
   <string name="qksms_plus_respond_summary">Répondre automatiquement aux messages entrants avec une réponse prédéfinie</string>
   <string name="qksms_plus_more_title">Plus</string>
-  <string name="qksms_plus_more_summary">QKSMS est en constant développement et votre abonnement comprendra toutes les fonctions futures de QKSMS + !</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">Chargement&#8230;</string>
   <string name="widget_more">Afficher plus de conversations</string>
   <string name="qkreply_menu_read">Marquer comme lu</string>

@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Archyvas</string>
-  <string name="title_scheduled">Planuota</string>
   <string name="title_settings">Nustatymai</string>
   <string name="title_notification_prefs">Pranešimai</string>
   <string name="title_theme">Spalva</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Tavo žinutės buvo matomos čia</string>
   <string name="inbox_search_empty_text">Nėra rezultatų</string>
   <string name="archived_empty_text">Tavo archyvuoti pokalbiai bus čia</string>
-  <string name="scheduled_empty_text">Tavo planuotos žinutės bus čia</string>
   <string name="main_fab_cd">Pradėti naują pokalbį</string>
   <string name="main_default_sms_title">Love texting again</string>
   <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Žinutės</string>
   <string name="drawer_archived">Archyvas</string>
   <string name="drawer_scheduled">Planuota</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">Daugiau</string>
   <string name="drawer_settings">Nustatymai</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Čia jūsų pokalbio pradžios. Pasakykite kažką gražaus!</string>
   <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Rašyti žinutę...</string>
   <string name="compose_menu_copy">Kopijuoti tekstą</string>
   <string name="compose_menu_forward">Persiųsti</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Pridėti priedą</string>
   <string name="compose_gallery_cd">Pridėti nuotrauką</string>
   <string name="compose_camera_cd">Padaryti nuotrauką</string>
+  <string name="compose_schedule_cd">Send later</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Siųsti žinutę</string>
   <string name="message_status_sending">Siunčiama&#8230;</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Atblokuoti</string>
   <string name="info_delete">Ištrinti pokalbį</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">Tavo planuotos žinutės bus čia</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">Išvaizda</string>
   <string name="settings_category_general">Bendra</string>
   <string name="settings_category_qkreply">Greitas atsakas</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Automatiškai atsakyti</string>
   <string name="qksms_plus_respond_summary">Automatiškai atsakyti į žinutes su tam tikru atsaku</string>
   <string name="qksms_plus_more_title">Daugiau</string>
-  <string name="qksms_plus_more_summary">Aktyviai kūriame QKSMS, todėl prenumeratara visados turės visas programos funkcijas!</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">Kraunama&#8230;</string>
   <string name="widget_more">Žiūrėti daugiau pokalbių</string>
   <string name="qkreply_menu_read">Žymėti skaitytą</string>

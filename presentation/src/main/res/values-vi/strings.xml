@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Đã được lưu trữ</string>
-  <string name="title_scheduled">Lịch gửi</string>
   <string name="title_settings">Cài đặt</string>
   <string name="title_notification_prefs">Thông báo</string>
   <string name="title_theme">Chủ đề</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Các cuộc hội thoại của bạn sẽ xuất hiện ở đây</string>
   <string name="inbox_search_empty_text">Không có kết quả</string>
   <string name="archived_empty_text">Các cuộc hội thoại đã lưu trữ của bạn sẽ xuất hiện ở đây</string>
-  <string name="scheduled_empty_text">Tin nhắn theo lịch gửi của bạn sẽ xuất hiện ở đây</string>
   <string name="main_fab_cd">Bắt đầu cuộc hội thoại</string>
   <string name="main_default_sms_title">Love texting again</string>
   <string name="main_default_sms_message">Đặt QKSMS là ứng dụng SMS mặc định</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Hộp thư đến</string>
   <string name="drawer_archived">Lưu trữ</string>
   <string name="drawer_scheduled">Lịch gửi</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">Xem thêm</string>
   <string name="drawer_settings">Cài đặt</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">Bắt đầu cuộc hội thoại nào. Hãy nói điều gì đó tốt đẹp!</string>
   <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Viết một tin nhắn&#8230;</string>
   <string name="compose_menu_copy">Sao chép văn bản</string>
   <string name="compose_menu_forward">Chuyển tiếp</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Thêm tập tin đính kèm</string>
   <string name="compose_gallery_cd">Đính kèm ảnh</string>
   <string name="compose_camera_cd">Chụp ảnh</string>
+  <string name="compose_schedule_cd">Send later</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Gửi tin nhắn</string>
   <string name="message_status_sending">Đang gửi&#8230;</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Bỏ chặn</string>
   <string name="info_delete">Xóa hội thoại</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">Tin nhắn theo lịch gửi của bạn sẽ xuất hiện ở đây</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">Giao diện</string>
   <string name="settings_category_general">Chung</string>
   <string name="settings_category_qkreply">Trả lời nhanh</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Tự động trả lời</string>
   <string name="qksms_plus_respond_summary">Tự động trả lời các tin nhắn với nội dung cài sẵn</string>
   <string name="qksms_plus_more_title">Xem thêm</string>
-  <string name="qksms_plus_more_summary">QKSMS đang trong quá trình phát triển, đăng ký của bạn sẽ có tất cả các chức năng sẽ có trong tương lai của QKSMS+!</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">Đang tải&#8230;</string>
   <string name="widget_more">Xem thêm các cuộc hội thoại</string>
   <string name="qkreply_menu_read">Đánh dấu đã đọc</string>

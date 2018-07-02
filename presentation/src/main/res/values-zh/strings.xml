@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">封存</string>
-  <string name="title_scheduled">已計劃</string>
   <string name="title_settings">設定</string>
   <string name="title_notification_prefs">通知</string>
   <string name="title_theme">主題</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">對話會在這裡顯示</string>
   <string name="inbox_search_empty_text">無結果</string>
   <string name="archived_empty_text">您存檔的對話將出現在這裡</string>
-  <string name="scheduled_empty_text">您的預定訊息將出現在此處</string>
   <string name="main_fab_cd">開始新對話</string>
   <string name="main_default_sms_title">愛上發訊息</string>
   <string name="main_default_sms_message">將QKSMS設為預設信息應用程式</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">收件箱</string>
   <string name="drawer_archived">已存檔</string>
   <string name="drawer_scheduled">已計劃</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">更多</string>
   <string name="drawer_settings">設定</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">收件人和回復對每個人都是可見的</string>
   <string name="compose_messages_empty">這是你談話的開始。說點好聽的吧!</string>
   <string name="compose_vcard_label">連絡人卡片</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">寫一條訊息...</string>
   <string name="compose_menu_copy">複製文本</string>
   <string name="compose_menu_forward">轉寄</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">添加附件</string>
   <string name="compose_gallery_cd">附加照片</string>
   <string name="compose_camera_cd">拍攝照片</string>
+  <string name="compose_schedule_cd">Send later</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">發送訊息</string>
   <string name="message_status_sending">正在發送...</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">取消攔截</string>
   <string name="info_delete">刪除對話</string>
   <string name="gallery_toast_saved">保存到圖庫</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">您的預定訊息將出現在此處</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">外觀</string>
   <string name="settings_category_general">通用</string>
   <string name="settings_category_qkreply">快速答覆</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">自動回覆</string>
   <string name="qksms_plus_respond_summary">使用預設回應自動回覆傳入郵件</string>
   <string name="qksms_plus_more_title">更多</string>
-  <string name="qksms_plus_more_summary">QKSMS正在積極開發中，你的訂閱包含未來所有的QKSMS+功能！</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">載入中...</string>
   <string name="widget_more">查看更多對話</string>
   <string name="qkreply_menu_read">標記為已讀</string>

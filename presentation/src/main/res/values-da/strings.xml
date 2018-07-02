@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Arkiveret</string>
-  <string name="title_scheduled">Planlagt</string>
   <string name="title_settings">Indstillinger</string>
   <string name="title_notification_prefs">Notifikationer</string>
   <string name="title_theme">Tema</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Dine samtaler vil fremgå her</string>
   <string name="inbox_search_empty_text">Ingen resultater</string>
   <string name="archived_empty_text">Dine arkiverede samtaler vil fremgå her</string>
-  <string name="scheduled_empty_text">Dine planlagte beskeder vil fremgå her</string>
   <string name="main_fab_cd">Start ny samtale</string>
   <string name="main_default_sms_title">Elsk at SMS\'e igen</string>
   <string name="main_default_sms_message">Gør QKSMS til din standard SMS-app</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Indbakke</string>
   <string name="drawer_archived">Arkiveret</string>
   <string name="drawer_scheduled">Planlagte</string>
+  <string name="drawer_blocking">Blokering</string>
   <string name="drawer_more">Flere</string>
   <string name="drawer_settings">Indstillinger</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Modtagere og besvarelser vil være synlige for alle</string>
   <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
   <string name="compose_vcard_label">Kontaktkort</string>
+  <string name="compose_scheduled_for">Planlagt til</string>
+  <string name="compose_scheduled_future">Valgte tidspunkt skal være i fremtiden!</string>
+  <string name="compose_scheduled_plus">Du skal oplåse QKSMS+ for at benytte planlagt beskedfunktion</string>
+  <string name="compose_scheduled_toast">Føjet til planlagte beskeder</string>
   <string name="compose_hint">Skriv en besked&#8230;</string>
   <string name="compose_menu_copy">Kopier tekst</string>
   <string name="compose_menu_forward">Videresend</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Tilføj en vedhæftning</string>
   <string name="compose_gallery_cd">Vedhæft et foto</string>
   <string name="compose_camera_cd">Tag et foto</string>
+  <string name="compose_schedule_cd">Send senere</string>
   <string name="compose_sim_cd">%s valgt, skift SIM-kortet</string>
   <string name="compose_send_cd">Send besked</string>
   <string name="message_status_sending">Afsender&#8230;</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Afblokér</string>
   <string name="info_delete">Slet samtale</string>
   <string name="gallery_toast_saved">Gemt til galleri</string>
+  <string name="scheduled_title">Planlagt</string>
+  <string name="scheduled_empty_text">Dine planlagte beskeder vil fremgå her</string>
+  <string name="scheduled_options_title">Planlagt besked</string>
+  <string-array name="scheduled_options">
+    <item>Send nu</item>
+    <item>Slet</item>
+  </string-array>
   <string name="settings_category_appearance">Udseende</string>
   <string name="settings_category_general">Generelt</string>
   <string name="settings_category_qkreply">QK-svar</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Autosvar</string>
   <string name="qksms_plus_respond_summary">Besvarer automatisk indgående beskeder med et foruddefineret svar</string>
   <string name="qksms_plus_more_title">Mere</string>
-  <string name="qksms_plus_more_summary">QKSMS er under aktiv udvikling, og dit abonnement vil omfatte alle fremtidige QKSMS+-funktioner!</string>
+  <string name="qksms_plus_more_summary">QKSMS er under aktiv udvikling, og dit køb vil omfatte alle fremtidige QKSMS+ funktioner!</string>
   <string name="widget_loading">Indlæser&#8230;</string>
   <string name="widget_more">Se flere samtaler</string>
   <string name="qkreply_menu_read">Markér som læst</string>

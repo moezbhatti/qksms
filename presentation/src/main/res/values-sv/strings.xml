@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">Arkiverat</string>
-  <string name="title_scheduled">Schemalagt</string>
   <string name="title_settings">Inställningar</string>
   <string name="title_notification_prefs">Notifikationer</string>
   <string name="title_theme">Tema</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">Dina konversationer kommer att dyka upp här</string>
   <string name="inbox_search_empty_text">Inga resultat</string>
   <string name="archived_empty_text">Dina arkiverade konversationer kommer att dyka upp här</string>
-  <string name="scheduled_empty_text">Dina schemalagda meddelanden kommer att dyka upp här</string>
   <string name="main_fab_cd">Starta en ny konversation</string>
   <string name="main_default_sms_title">Älska att skicka SMS igen</string>
   <string name="main_default_sms_message">Gör QKSMS till din standard-app för SMS</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">Inkorg</string>
   <string name="drawer_archived">Arkiverat</string>
   <string name="drawer_scheduled">Schemalagt</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">Mer</string>
   <string name="drawer_settings">Inställningar</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Mottagare och svar kommer att vara synligt för alla</string>
   <string name="compose_messages_empty">Det här är början på din konversation. Säg något snällt!</string>
   <string name="compose_vcard_label">Kontaktkort</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Skriv ett meddelande&#8230;</string>
   <string name="compose_menu_copy">Kopiera text</string>
   <string name="compose_menu_forward">Vidarebefordra</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Lägg till en bilaga</string>
   <string name="compose_gallery_cd">Bifoga en bild</string>
   <string name="compose_camera_cd">Ta en bild</string>
+  <string name="compose_schedule_cd">Send later</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Skicka meddelandet</string>
   <string name="message_status_sending">Skickar&#8230;</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">Avblockera</string>
   <string name="info_delete">Radera konversation</string>
   <string name="gallery_toast_saved">Spara till galleri</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">Dina schemalagda meddelanden kommer att dyka upp här</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">Utseende</string>
   <string name="settings_category_general">Generellt</string>
   <string name="settings_category_qkreply">QK svar</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">Auto-svara</string>
   <string name="qksms_plus_respond_summary">Svara automatiskt på inkommande meddelanden med ett förinställt svar</string>
   <string name="qksms_plus_more_title">Mer</string>
-  <string name="qksms_plus_more_summary">QKSMS är under aktiv utveckling, och din prenumeration kommer att omfatta alla framtida QKSMS + funktioner!</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">Laddar&#8230;</string>
   <string name="widget_more">Visa fler konversationer</string>
   <string name="qkreply_menu_read">Markera som läst</string>

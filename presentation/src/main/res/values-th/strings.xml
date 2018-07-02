@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">จัดเก็บ</string>
-  <string name="title_scheduled">กำหนดเวลา</string>
   <string name="title_settings">การตั้งค่า</string>
   <string name="title_notification_prefs">การแจ้งเตือน</string>
   <string name="title_theme">รูปแบบการแสดงผล</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">บทสนทนาของคุณจะปรากฏที่นี่</string>
   <string name="inbox_search_empty_text">ไม่มีผลลัพธ์</string>
   <string name="archived_empty_text">บทสนทนาของคุณที่จัดเก็บไว้จะปรากฏที่นี่</string>
-  <string name="scheduled_empty_text">ข้อความที่คุณกำหนดเวลาจะปรากฏที่นี่</string>
   <string name="main_fab_cd">เริ่มการสนทนาใหม่</string>
   <string name="main_default_sms_title">อยากส่งข้อความอีกครั้ง</string>
   <string name="main_default_sms_message">ทำให้ QKSMS แอป SMS ค่าเริ่มต้นของคุณ</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">กล่องขาเข้า</string>
   <string name="drawer_archived">จัดเก็บ</string>
   <string name="drawer_scheduled">กำหนดเวลา</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">เพิ่มเติม</string>
   <string name="drawer_settings">การตั้งค่า</string>
   <string name="drawer_plus">QKSMS +</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">ผู้รับและการตอบกลับจะแสดงให้ทุกคนเห็นทุกคน</string>
   <string name="compose_messages_empty">การเริ่มต้นของการสนทนาของคุณ บอกกล่าวบางอย่างที่นี่</string>
   <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">เขียนข้อความ...</string>
   <string name="compose_menu_copy">คัดลอกข้อความ</string>
   <string name="compose_menu_forward">ส่งต่อ</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">เพิ่มสิ่งที่แนบ</string>
   <string name="compose_gallery_cd">แนบรูปภาพ</string>
   <string name="compose_camera_cd">ถ่ายภาพ</string>
+  <string name="compose_schedule_cd">Send later</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">ส่งข้อความ</string>
   <string name="message_status_sending">กำลังส่ง...</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">ยกเลิกการปิดกั้น</string>
   <string name="info_delete">ลบการสนทนา</string>
   <string name="gallery_toast_saved">บันทึกรูปภาพแล้ว</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">ข้อความที่คุณกำหนดเวลาจะปรากฏที่นี่</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">ลักษณะที่ปรากฏ</string>
   <string name="settings_category_general">ทั่วไป</string>
   <string name="settings_category_qkreply">QK ตอบกลับ</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">ตอบกลับอัตโนมัติ</string>
   <string name="qksms_plus_respond_summary">ตอบกลับข้อความที่เข้ามาอัตโนมัติ โดยใช้ข้อความที่จัดเตรียมไว้</string>
   <string name="qksms_plus_more_title">เพิ่มเติม</string>
-  <string name="qksms_plus_more_summary">QKSMS เป็นงานที่พัฒนาอย่างต่อเนื่อง และการสมัครของคุณจะมีคุณสมบัติทั้งหมดที่จะเกิดขึ้นใน QKSMS +</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">กำลังโหลด&#8230;</string>
   <string name="widget_more">ดูการสนทนาเพิ่มเติม</string>
   <string name="qkreply_menu_read">ทำเครื่องหมายอ่าน</string>

@@ -20,7 +20,6 @@
   -->
 <resources>
   <string name="title_archived">アーカイブ済</string>
-  <string name="title_scheduled">スケジュール済</string>
   <string name="title_settings">設定</string>
   <string name="title_notification_prefs">通知</string>
   <string name="title_theme">テーマ</string>
@@ -47,7 +46,6 @@
   <string name="inbox_empty_text">会話がここに表示されます</string>
   <string name="inbox_search_empty_text">結果はありません</string>
   <string name="archived_empty_text">保存した会話がここに表示されます</string>
-  <string name="scheduled_empty_text">スケジュールされたメッセージがここに表示されます</string>
   <string name="main_fab_cd">Start new conversation</string>
   <string name="main_default_sms_title">Love texting again</string>
   <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
@@ -59,6 +57,7 @@
   <string name="drawer_inbox">受信トレイ</string>
   <string name="drawer_archived">アーカイブ済</string>
   <string name="drawer_scheduled">スケジュール済</string>
+  <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">もっと</string>
   <string name="drawer_settings">設定</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -80,6 +79,10 @@
   <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
   <string name="compose_messages_empty">これが会話の始まりです。 何か素敵なことを言ってください!</string>
   <string name="compose_vcard_label">Contact card</string>
+  <string name="compose_scheduled_for">Scheduled for</string>
+  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">メッセージを書く&#8230;</string>
   <string name="compose_menu_copy">テキストのコピー</string>
   <string name="compose_menu_forward">転送</string>
@@ -101,6 +104,7 @@
   <string name="compose_attach_cd">Add an attachment</string>
   <string name="compose_gallery_cd">Attach a photo</string>
   <string name="compose_camera_cd">Take a photo</string>
+  <string name="compose_schedule_cd">Send later</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Send message</string>
   <string name="message_status_sending">送信中&#8230;</string>
@@ -117,6 +121,13 @@
   <string name="info_unblock">ブロックを解除</string>
   <string name="info_delete">会話を削除</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
+  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_empty_text">スケジュールされたメッセージがここに表示されます</string>
+  <string name="scheduled_options_title">Scheduled message</string>
+  <string-array name="scheduled_options">
+    <item>Send now</item>
+    <item>Delete</item>
+  </string-array>
   <string name="settings_category_appearance">外観</string>
   <string name="settings_category_general">全般</string>
   <string name="settings_category_qkreply">QK 返信</string>
@@ -192,7 +203,7 @@
   <string name="qksms_plus_respond_title">自動応答</string>
   <string name="qksms_plus_respond_summary">あらかじめ設定された応答で、受信したメッセージに自動的に返信します</string>
   <string name="qksms_plus_more_title">さらに</string>
-  <string name="qksms_plus_more_summary">QKSMS は活発に開発しています。サブスクリプションにはすべて将来の QKSMS+ 機能が含まれます!</string>
+  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
   <string name="widget_loading">読み込み中&#8230;</string>
   <string name="widget_more">さらに会話を表示</string>
   <string name="qkreply_menu_read">既読にする</string>
