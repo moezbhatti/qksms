@@ -27,6 +27,8 @@ import com.moez.QKSMS.common.widget.QkEditText
 import com.moez.QKSMS.common.widget.QkSwitch
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.feature.compose.DetailedChipView
+import com.moez.QKSMS.feature.settings.SettingsController
+import com.moez.QKSMS.feature.settings.about.AboutController
 import com.moez.QKSMS.feature.widget.WidgetAdapter
 import com.moez.QKSMS.util.ContactImageLoader
 import dagger.Component
@@ -43,6 +45,9 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(application: QKApplication)
+
+    fun inject(controller: AboutController)
+    fun inject(controller: SettingsController)
 
     fun inject(dialog: QkDialog)
 

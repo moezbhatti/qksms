@@ -111,6 +111,10 @@ dependencies {
     implementation "com.google.android.material:material:$androidx_version"
     implementation "androidx.emoji:emoji-appcompat:$androidx_version"
 
+    // conductor
+    implementation "com.bluelinelabs:conductor:$conductor_version"
+    implementation "com.bluelinelabs:conductor-autodispose:$conductor_autodispose_version"
+
     // glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_compiler_version"

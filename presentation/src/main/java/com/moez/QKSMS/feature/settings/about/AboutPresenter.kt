@@ -20,17 +20,16 @@ package com.moez.QKSMS.feature.settings.about
 
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.uber.autodispose.kotlin.autoDisposable
 import javax.inject.Inject
 
-class AboutViewModel @Inject constructor(
+class AboutPresenter @Inject constructor(
         private val navigator: Navigator
-) : QkViewModel<AboutView, Unit>(Unit) {
+) : QkPresenter<AboutView, Unit>(Unit) {
 
-    override fun bindView(view: AboutView) {
-        super.bindView(view)
+    override fun onCreate(view: AboutView) {
+        super.onCreate(view)
 
         view.preferenceClickIntent
                 .autoDisposable(view.scope())

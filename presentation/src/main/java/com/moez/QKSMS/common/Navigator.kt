@@ -38,7 +38,6 @@ import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.plus.PlusActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.settings.SettingsActivity
-import com.moez.QKSMS.feature.settings.about.AboutActivity
 import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.NotificationManager
@@ -136,11 +135,6 @@ class Navigator @Inject constructor(
 
     fun showSettings() {
         val intent = Intent(context, SettingsActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun showAbout() {
-        val intent = Intent(context, AboutActivity::class.java)
         startActivity(intent)
     }
 

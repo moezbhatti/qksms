@@ -18,12 +18,12 @@
  */
 package com.moez.QKSMS.feature.settings
 
-import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.common.base.QkConductorView
 import com.moez.QKSMS.common.widget.PreferenceView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 
-interface SettingsView : QkView<SettingsState> {
+interface SettingsView : QkConductorView<SettingsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
     val viewQksmsPlusIntent: Subject<Unit>
@@ -41,4 +41,5 @@ interface SettingsView : QkView<SettingsState> {
     fun showTextSizePicker()
     fun showDelayDurationDialog()
     fun showMmsSizePicker()
+    fun showAbout()
 }

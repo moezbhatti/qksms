@@ -92,7 +92,7 @@
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/AppThemeLightDialog" />
-        <activity android:name=".feature.settings.about.AboutActivity" />
+        <activity android:name=".feature.settings.about.AboutController" />
         <activity android:name=".feature.scheduled.ScheduledActivity" />
 
         <receiver android:name=".receiver.BootReceiver">

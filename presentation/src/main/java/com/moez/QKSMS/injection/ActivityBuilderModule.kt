@@ -37,9 +37,6 @@ import com.moez.QKSMS.feature.qkreply.QkReplyActivityModule
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivityModule
 import com.moez.QKSMS.feature.settings.SettingsActivity
-import com.moez.QKSMS.feature.settings.SettingsActivityModule
-import com.moez.QKSMS.feature.settings.about.AboutActivity
-import com.moez.QKSMS.feature.settings.about.AboutActivityModule
 import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
 import com.moez.QKSMS.feature.themepicker.ThemePickerActivityModule
 import dagger.Module
@@ -55,10 +52,6 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [PlusActivityModule::class])
     abstract fun bindPlusActivity(): PlusActivity
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [AboutActivityModule::class])
-    abstract fun bindAboutActivity(): AboutActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [ComposeActivityModule::class])
@@ -85,7 +78,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindScheduledActivity(): ScheduledActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [SettingsActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindSettingsActivity(): SettingsActivity
 
     @ActivityScope

@@ -1,28 +1,9 @@
-/*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
- *
- * This file is part of QKSMS.
- *
- * QKSMS is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * QKSMS is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.moez.QKSMS.feature.settings
 
 import android.content.Context
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
@@ -30,13 +11,12 @@ import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-class SettingsViewModel @Inject constructor(
+class SettingsPresenter @Inject constructor(
         private val context: Context,
         private val billingManager: BillingManager,
         private val colors: Colors,
@@ -45,71 +25,76 @@ class SettingsViewModel @Inject constructor(
         private val nightModeManager: NightModeManager,
         private val prefs: Preferences,
         private val syncMessages: SyncMessages
-) : QkViewModel<SettingsView, SettingsState>(SettingsState()) {
+) : QkPresenter<SettingsView, SettingsState>(SettingsState(theme = colors.theme().theme)) {
 
-
-    init {
-        newState { copy(theme = colors.theme().theme) }
+    override fun onCreate(view: SettingsView) {
+        super.onCreate(view)
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
-        disposables += prefs.nightMode.asObservable()
+        prefs.nightMode.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { nightMode ->
                     newState { copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
                 }
 
-        disposables += prefs.nightStart.asObservable()
+        prefs.nightStart.asObservable()
                 .map { time -> nightModeManager.parseTime(time) }
                 .map { calendar -> calendar.timeInMillis }
                 .map { millis -> dateFormatter.getTimestamp(millis) }
+                .autoDisposable(view.scope())
                 .subscribe { nightStart -> newState { copy(nightStart = nightStart) } }
 
-        disposables += prefs.nightEnd.asObservable()
+        prefs.nightEnd.asObservable()
                 .map { time -> nightModeManager.parseTime(time) }
                 .map { calendar -> calendar.timeInMillis }
                 .map { millis -> dateFormatter.getTimestamp(millis) }
+                .autoDisposable(view.scope())
                 .subscribe { nightEnd -> newState { copy(nightEnd = nightEnd) } }
 
-        disposables += prefs.black.asObservable()
+        prefs.black.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { black -> newState { copy(black = black) } }
 
-        disposables += prefs.notifications().asObservable()
+        prefs.notifications().asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { enabled -> newState { copy(notificationsEnabled = enabled) } }
 
-        disposables += prefs.autoEmoji.asObservable()
+        prefs.autoEmoji.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { enabled -> newState { copy(autoEmojiEnabled = enabled) } }
 
         val delayedSendingLabels = context.resources.getStringArray(R.array.delayed_sending_labels)
-        disposables += prefs.sendDelay.asObservable()
+        prefs.sendDelay.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { id -> newState { copy(sendDelaySummary = delayedSendingLabels[id], sendDelayId = id) } }
 
-        disposables += prefs.delivery.asObservable()
+        prefs.delivery.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
-        disposables += prefs.textSize.asObservable()
+        prefs.textSize.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { textSize ->
                     newState { copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
                 }
 
-        disposables += prefs.systemFont.asObservable()
+        prefs.systemFont.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { enabled -> newState { copy(systemFontEnabled = enabled) } }
 
-        disposables += prefs.unicode.asObservable()
+        prefs.unicode.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { enabled -> newState { copy(stripUnicodeEnabled = enabled) } }
 
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
-        disposables += prefs.mmsSize.asObservable()
+        prefs.mmsSize.asObservable()
+                .autoDisposable(view.scope())
                 .subscribe { maxMmsSize ->
                     val index = mmsSizeIds.indexOf(maxMmsSize)
                     newState { copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
                 }
-
-        disposables += syncMessages
-    }
-
-    override fun bindView(view: SettingsView) {
-        super.bindView(view)
 
         view.preferenceClickIntent
                 .autoDisposable(view.scope())
@@ -156,7 +141,7 @@ class SettingsViewModel @Inject constructor(
                             }
                         }
 
-                        R.id.about -> navigator.showAbout()
+                        R.id.about -> view.showAbout()
                     }
                 }
 
@@ -202,4 +187,5 @@ class SettingsViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { prefs.mmsSize.set(it) }
     }
+
 }

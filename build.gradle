@@ -1,9 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.androidx_version = '1.0.0-alpha3'
+    ext.androidx_version = '1.0.0-beta01'
     ext.androidx_testrunner_version = '1.1.0-alpha3'
     ext.autodispose_version = '0.5.1'
+    ext.conductor_version = '2.1.5-20180620.204119-27'
+    ext.conductor_autodispose_version = '2.1.5-20180620.204134-27'
     ext.constraintlayout_version = '1.1.0'
     ext.dagger_version = "2.16"
     ext.espresso_version = '3.1.0-alpha3'
