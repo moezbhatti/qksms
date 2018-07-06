@@ -138,7 +138,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         attachments.adapter = attachmentAdapter
 
-        messageBackground.backgroundTintMode = PorterDuff.Mode.MULTIPLY
         message.supportsInputContent = true
 
         theme
@@ -153,6 +152,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         // These theme attributes don't apply themselves on API 21
         if (Build.VERSION.SDK_INT <= 22) {
+            messageBackground.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
             composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
     }
