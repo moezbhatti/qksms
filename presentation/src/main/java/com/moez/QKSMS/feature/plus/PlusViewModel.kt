@@ -35,8 +35,6 @@ class PlusViewModel @Inject constructor(
 ) : QkViewModel<PlusView, PlusState>(PlusState()) {
 
     init {
-        analyticsManager.track("Viewed QKSMS+")
-
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
 

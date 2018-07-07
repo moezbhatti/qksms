@@ -618,7 +618,7 @@ class ComposeViewModel @Inject constructor(
         // View QKSMS+
         view.viewQksmsPlusIntent
                 .autoDisposable(view.scope())
-                .subscribe { navigator.showQksmsPlusActivity() }
+                .subscribe { navigator.showQksmsPlusActivity("compose_schedule") }
 
         // Navigate back
         view.optionsItemIntent

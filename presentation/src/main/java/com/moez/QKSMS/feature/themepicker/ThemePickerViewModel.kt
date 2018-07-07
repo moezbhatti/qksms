@@ -82,7 +82,7 @@ class ThemePickerViewModel @Inject constructor(
         // Show QKSMS+ activity
         view.viewQksmsPlusIntent
                 .autoDisposable(view.scope())
-                .subscribe { navigator.showQksmsPlusActivity() }
+                .subscribe { navigator.showQksmsPlusActivity("settings_theme") }
 
         // Reset the theme
         view.hsvThemeClearedIntent

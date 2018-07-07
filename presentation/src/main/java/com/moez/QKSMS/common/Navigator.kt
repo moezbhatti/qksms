@@ -40,13 +40,18 @@ import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.settings.SettingsActivity
 import com.moez.QKSMS.feature.settings.about.AboutActivity
 import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
+import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.NotificationManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class Navigator @Inject constructor(private val context: Context, private val notificationManager: NotificationManager) {
+class Navigator @Inject constructor(
+        private val context: Context,
+        private val analyticsManager: AnalyticsManager,
+        private val notificationManager: NotificationManager
+) {
 
     private fun startActivity(intent: Intent) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -61,7 +66,12 @@ class Navigator @Inject constructor(private val context: Context, private val no
         }
     }
 
-    fun showQksmsPlusActivity() {
+    /**
+     * @param source String to indicate where this QKSMS+ screen was launched from. This should be
+     * one of [main_menu, compose_schedule, settings_night, settings_theme]
+     */
+    fun showQksmsPlusActivity(source: String) {
+        analyticsManager.track("Viewed QKSMS+", Pair("source", source))
         val intent = Intent(context, PlusActivity::class.java)
         startActivity(intent)
     }

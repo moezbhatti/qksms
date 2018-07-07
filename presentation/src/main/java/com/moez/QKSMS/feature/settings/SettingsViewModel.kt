@@ -173,7 +173,7 @@ class SettingsViewModel @Inject constructor(
 
         view.viewQksmsPlusIntent
                 .autoDisposable(view.scope())
-                .subscribe { navigator.showQksmsPlusActivity() }
+                .subscribe { navigator.showQksmsPlusActivity("settings_night") }
 
         view.startTimeSelectedIntent
                 .autoDisposable(view.scope())

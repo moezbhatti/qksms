@@ -183,7 +183,7 @@ class MainViewModel @Inject constructor(
                 .doOnNext { if (it == DrawerItem.SCHEDULED) navigator.showScheduled() }
                 .doOnNext { if (it == DrawerItem.BLOCKING) navigator.showBlockedConversations() }
                 .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
-                .doOnNext { if (it == DrawerItem.PLUS) navigator.showQksmsPlusActivity() }
+                .doOnNext { if (it == DrawerItem.PLUS) navigator.showQksmsPlusActivity("main_menu") }
                 .doOnNext { if (it == DrawerItem.HELP) navigator.showSupport() }
                 .distinctUntilChanged()
                 .doOnNext {
