@@ -247,7 +247,7 @@ class MessageRepositoryImpl @Inject constructor(
                     .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
                     .map { bitmap ->
                         val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
-                        shrink(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
+                        compress(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
                     }
                     .map { bitmap -> MMSPart("image", ContentType.IMAGE_JPEG, bitmap) }
 
@@ -283,27 +283,36 @@ class MessageRepositoryImpl @Inject constructor(
         smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
     }
 
-    private fun shrink(src: Bitmap, maxBytes: Int): ByteArray {
-        var step = 0.0
-        val factor = 0.5
-        val quality = 60
+    private fun compress(src: Bitmap, maxBytes: Int): ByteArray {
+        val quality = 90
 
         val height = src.height
         val width = src.width
 
         val stream = ByteArrayOutputStream()
-        src.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        src.compress(Bitmap.CompressFormat.JPEG, quality, stream)
 
-        while (maxBytes > 0 && stream.size() > maxBytes) {
-            step++
-            val scale = Math.pow(factor, step)
+        // Based on the byte size of the bitmap, we'll try to reduce the image's dimensions such
+        // that it will fit within the max byte size set. If we don't get it right the first time,
+        // use a slightly heavier compression until we fit within the max size
+        var attempts = 0
+        var bytes = stream.size().toDouble()
+        while (maxBytes > 0 && bytes > maxBytes) {
+            val scale = Math.sqrt(maxBytes / bytes) * (1 - attempts * 0.1)
 
             stream.reset()
-            Bitmap.createScaledBitmap(src, (width * scale).toInt(), (height * scale).toInt(), false)
+            Bitmap.createScaledBitmap(src, (width * scale).toInt(), (height * scale).toInt(), true)
                     .compress(Bitmap.CompressFormat.JPEG, quality, stream)
+
+            attempts++
+            bytes = stream.size().toDouble()
         }
 
-        return stream.toByteArray()
+        if (maxBytes > 0 && stream.size() > maxBytes) {
+            Timber.w(Exception("Compressed image size exceeds max byte size (${stream.size()}/$maxBytes) after $attempts attempts"))
+        }
+
+        return stream.toByteArray().also { src.recycle() }
     }
 
     override fun cancelDelayedSms(id: Long) {
