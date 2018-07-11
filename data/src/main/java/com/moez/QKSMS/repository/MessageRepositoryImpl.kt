@@ -397,10 +397,12 @@ class MessageRepositoryImpl @Inject constructor(
             put(Telephony.Sms.DATE_SENT, sentTime)
             put(Telephony.Sms.SUBSCRIPTION_ID, subId)
         }
-        val uri = context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)
 
-        // Update the contentId after the message has been inserted to the content provider
-        realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
+        context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)?.let { uri ->
+            // Update the contentId after the message has been inserted to the content provider
+            realm.executeTransaction { managedMessage?.contentId = uri.lastPathSegment.toLong() }
+        }
+
         realm.close()
 
         return message
