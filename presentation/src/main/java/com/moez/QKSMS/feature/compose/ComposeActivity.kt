@@ -98,9 +98,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val attachmentDeletedIntent: Subject<Attachment> by lazy { attachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { message.textChanges() }
     override val attachIntent by lazy { Observable.merge(attach.clicks(), attachingBackground.clicks()) }
-    override val cameraIntent by lazy { camera.clicks() }
-    override val galleryIntent by lazy { gallery.clicks() }
-    override val scheduleIntent by lazy { schedule.clicks() }
+    override val cameraIntent by lazy { Observable.merge(camera.clicks(), cameraLabel.clicks()) }
+    override val galleryIntent by lazy { Observable.merge(gallery.clicks(), galleryLabel.clicks()) }
+    override val scheduleIntent by lazy { Observable.merge(schedule.clicks(), scheduleLabel.clicks()) }
     override val attachmentSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { message.inputContentSelected }
     override val scheduleSelectedIntent: Subject<Long> = PublishSubject.create()
