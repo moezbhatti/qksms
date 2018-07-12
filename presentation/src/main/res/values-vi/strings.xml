@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Thêm tập tin đính kèm</string>
   <string name="compose_gallery_cd">Đính kèm ảnh</string>
   <string name="compose_camera_cd">Chụp ảnh</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Gửi tin nhắn</string>
   <string name="message_status_sending">Đang gửi&#8230;</string>

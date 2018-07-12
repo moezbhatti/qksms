@@ -57,7 +57,7 @@
   <string name="drawer_inbox">Вхідні</string>
   <string name="drawer_archived">Архівні</string>
   <string name="drawer_scheduled">Заплановані</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_blocking">Блокування</string>
   <string name="drawer_more">Більше</string>
   <string name="drawer_settings">Налаштування</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -79,10 +79,10 @@
   <string name="compose_send_group_summary">Отримувачі та відповіді будуть видимі для всіх</string>
   <string name="compose_messages_empty">Це початок вашої бесіди. Скажіть, що-небудь приємне!</string>
   <string name="compose_vcard_label">Картка контакту</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_scheduled_for">Заплановано на</string>
+  <string name="compose_scheduled_future">Обраний час повинен бути в майбутньому!</string>
+  <string name="compose_scheduled_plus">Для використання запланованих повідомлень ви повинні розблоквати QKSMS+</string>
+  <string name="compose_scheduled_toast">Додано до запланованих повідомлень</string>
   <string name="compose_hint">Написати повідомлення&#8230;</string>
   <string name="compose_menu_copy">Скопіювати текст</string>
   <string name="compose_menu_forward">Переслати</string>
@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Додати вкладення</string>
   <string name="compose_gallery_cd">Прикріпити фотографію</string>
   <string name="compose_camera_cd">Сфотографувати</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s обрано, змініть SIM-картку</string>
   <string name="compose_send_cd">Надіслати повідомлення</string>
   <string name="message_status_sending">Надсилання&#8230;</string>
@@ -121,12 +121,12 @@
   <string name="info_unblock">Розблокувати</string>
   <string name="info_delete">Видалити бесіду</string>
   <string name="gallery_toast_saved">Зберегти до галереї</string>
-  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_title">Заплановані</string>
   <string name="scheduled_empty_text">Ваші заплановані повідомлення з\'являтимуться тут</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_options_title">Заплановане повідомлення</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Надіслати зараз</item>
+    <item>Видалити</item>
   </string-array>
   <string name="settings_category_appearance">Зовнішній вигляд</string>
   <string name="settings_category_general">Загальні</string>
@@ -203,7 +203,7 @@
   <string name="qksms_plus_respond_title">Автоматична відповідь</string>
   <string name="qksms_plus_respond_summary">Автоматично відповідати на вхідні повідомлення за допомогою попередньо налаштованих шаблонів</string>
   <string name="qksms_plus_more_title">Ще</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_summary">QKSMS перебуває у активній розробці, і Ваша покупка буде включати в себе всі майбутні можливості QKSMS +!</string>
   <string name="widget_loading">Завантаження&#8230;</string>
   <string name="widget_more">Переглянути більше бесід</string>
   <string name="qkreply_menu_read">Позначити як прочитане</string>

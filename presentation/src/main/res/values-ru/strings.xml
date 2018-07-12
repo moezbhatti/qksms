@@ -57,7 +57,7 @@
   <string name="drawer_inbox">Входящие</string>
   <string name="drawer_archived">Архив</string>
   <string name="drawer_scheduled">Запланированные</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_blocking">Блокировка</string>
   <string name="drawer_more">Ещё</string>
   <string name="drawer_settings">Настройки</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -79,10 +79,10 @@
   <string name="compose_send_group_summary">Получатели и ответы будут видны всем</string>
   <string name="compose_messages_empty">Это начало Вашей беседы. Скажите что-нибудь приятное!</string>
   <string name="compose_vcard_label">Карточка контакта</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_scheduled_for">Запланировано на</string>
+  <string name="compose_scheduled_future">Выбранное время должно быть в будущем!</string>
+  <string name="compose_scheduled_plus">Вы должны разблокировать QKSMS +, чтобы использовать запланированные сообщения</string>
+  <string name="compose_scheduled_toast">Добавлено в запланированные сообщения</string>
   <string name="compose_hint">Написать сообщение&#8230;</string>
   <string name="compose_menu_copy">Скопировать текст</string>
   <string name="compose_menu_forward">Переслать</string>
@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Добавить вложение</string>
   <string name="compose_gallery_cd">Прикрепить фото</string>
   <string name="compose_camera_cd">Сделать снимок</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">Выбрано %s, сменить SIM-карту</string>
   <string name="compose_send_cd">Отправить сообщение</string>
   <string name="message_status_sending">Отправка&#8230;</string>
@@ -123,10 +123,10 @@
   <string name="gallery_toast_saved">Сохранено в галерее</string>
   <string name="scheduled_title">Scheduled</string>
   <string name="scheduled_empty_text">Ваши запланированные сообщения будут появляться здесь</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_options_title">Запланированное сообщение</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Отправить сейчас</item>
+    <item>Удалить</item>
   </string-array>
   <string name="settings_category_appearance">Внешний вид</string>
   <string name="settings_category_general">Общее</string>
@@ -203,7 +203,7 @@
   <string name="qksms_plus_respond_title">Авто-ответ</string>
   <string name="qksms_plus_respond_summary">Автоматически отвечать на входящие сообщения предустановленным ответом</string>
   <string name="qksms_plus_more_title">Еще</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_summary">QKSMS находится в активной разработке, и Ваша покупка будет включать в себя все функции QKSMS+ в будущем!</string>
   <string name="widget_loading">Загрузка&#8230;</string>
   <string name="widget_more">Посмотреть больше бесед</string>
   <string name="qkreply_menu_read">Отметить прочитанным</string>

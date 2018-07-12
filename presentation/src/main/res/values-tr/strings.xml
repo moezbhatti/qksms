@@ -35,7 +35,7 @@
   <string name="main_menu_clear">Temizle</string>
   <string name="main_menu_read">Okundu olarak işaretle</string>
   <string name="main_menu_unread">Okunmadı olarak işaretle</string>
-  <string name="main_menu_archive">Arşiv</string>
+  <string name="main_menu_archive">Arşivlenmiş</string>
   <string name="main_menu_unarchive">Arşivden çıkar</string>
   <string name="main_menu_block">Engelle</string>
   <string name="main_menu_delete">Sil</string>
@@ -56,7 +56,7 @@
   <string name="main_permission_allow">İzin ver</string>
   <string name="drawer_inbox">Gelen Kutusu</string>
   <string name="drawer_archived">Arşivle</string>
-  <string name="drawer_scheduled">Zamanla</string>
+  <string name="drawer_scheduled">Zamanlanmış</string>
   <string name="drawer_blocking">Engellenmiş</string>
   <string name="drawer_more">Daha fazla</string>
   <string name="drawer_settings">Ayarlar</string>
@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Dosya Ekle</string>
   <string name="compose_gallery_cd">Bir fotoğraf eklemek</string>
   <string name="compose_camera_cd">Fotoğraf Çek</string>
-  <string name="compose_schedule_cd">Daha sonra gönder</string>
+  <string name="compose_schedule_cd">Mesajı zamanlama</string>
   <string name="compose_sim_cd">Seçili, %s SIM kartı değiştirin</string>
   <string name="compose_send_cd">Mesaj gönder</string>
   <string name="message_status_sending">Gönderiliyor...</string>
@@ -121,7 +121,7 @@
   <string name="info_unblock">Engeli kaldır</string>
   <string name="info_delete">Yazışmayı sil</string>
   <string name="gallery_toast_saved">Galeriye kaydedildi</string>
-  <string name="scheduled_title">Zamanla</string>
+  <string name="scheduled_title">Zamanlanmış</string>
   <string name="scheduled_empty_text">Zamanlanmış iletileriniz burada görünür</string>
   <string name="scheduled_options_title">Zamanlanmış mesaj</string>
   <string-array name="scheduled_options">

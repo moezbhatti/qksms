@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Lägg till en bilaga</string>
   <string name="compose_gallery_cd">Bifoga en bild</string>
   <string name="compose_camera_cd">Ta en bild</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Skicka meddelandet</string>
   <string name="message_status_sending">Skickar&#8230;</string>

@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Připojit přílohu</string>
   <string name="compose_gallery_cd">Připojit fotografii</string>
   <string name="compose_camera_cd">Fotografovat</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s vybráno, změňte SIM kartu</string>
   <string name="compose_send_cd">Odeslat zprávu</string>
   <string name="message_status_sending">Odesílání&#8230;</string>

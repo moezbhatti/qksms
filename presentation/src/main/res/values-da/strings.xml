@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Tilføj en vedhæftning</string>
   <string name="compose_gallery_cd">Vedhæft et foto</string>
   <string name="compose_camera_cd">Tag et foto</string>
-  <string name="compose_schedule_cd">Send senere</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s valgt, skift SIM-kortet</string>
   <string name="compose_send_cd">Send besked</string>
   <string name="message_status_sending">Afsender&#8230;</string>

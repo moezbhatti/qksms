@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Dodaj załącznik</string>
   <string name="compose_gallery_cd">Załącz zdjęcie</string>
   <string name="compose_camera_cd">Zrób zdjęcie</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Wyślij wiadomość</string>
   <string name="message_status_sending">Wysyłanie&#8230;</string>

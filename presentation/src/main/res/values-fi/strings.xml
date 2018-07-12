@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">Lisää liite</string>
   <string name="compose_gallery_cd">Liitä kuva</string>
   <string name="compose_camera_cd">Ota kuva</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">Lähetä viesti</string>
   <string name="message_status_sending">Lähetetään&#8230;</string>

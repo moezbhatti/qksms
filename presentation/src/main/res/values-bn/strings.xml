@@ -57,7 +57,7 @@
   <string name="drawer_inbox">ইনবক্স</string>
   <string name="drawer_archived">আর্কাইভ করা</string>
   <string name="drawer_scheduled">পরিকল্পিত</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_blocking">ব্লক করা</string>
   <string name="drawer_more">আরও</string>
   <string name="drawer_settings">সেটিংস</string>
   <string name="drawer_plus">QKSMS +</string>
@@ -79,10 +79,10 @@
   <string name="compose_send_group_summary">প্রাপক এবং উত্তর সবার চোখে পড়বে</string>
   <string name="compose_messages_empty">এখানে আপনার কথোপকথন শুরু হয়। সুন্দর কিছু বলুন!</string>
   <string name="compose_vcard_label">পরিচিতি কার্ড</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_scheduled_for">জন্য পরিকল্পিত</string>
+  <string name="compose_scheduled_future">নির্বাচিত সময় অবশ্য ভবিষ্যতে হতে হবে!</string>
+  <string name="compose_scheduled_plus">পরিকল্পিত বার্তাপ্রেরক ব্যবহার করতে আপনাকে অবশ্যই QKSMS + আনলক করতে হবে</string>
+  <string name="compose_scheduled_toast">পরিকল্পিত বার্তাগুলিতে যোগ করা হয়েছে</string>
   <string name="compose_hint">একটি বার্তা লিখুন&#8230;</string>
   <string name="compose_menu_copy">পাঠ্য অনুলিপি করুন</string>
   <string name="compose_menu_forward">সামনে পাঠান</string>
@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">সংযুক্তি যোগ করুন</string>
   <string name="compose_gallery_cd">ছবি সংযুক্ত করুন</string>
   <string name="compose_camera_cd">একটি ছবি নিন</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">নির্বাচিত, %s সিম কার্ড পরিবর্তন করুন</string>
   <string name="compose_send_cd">বার্তাটি প্রেরণ করুন</string>
   <string name="message_status_sending">পাঠানো হচ্ছে&#8230;</string>
@@ -121,12 +121,12 @@
   <string name="info_unblock">আনব্লক করুন</string>
   <string name="info_delete">কথোপকথন মুছে ফেলুন</string>
   <string name="gallery_toast_saved">গ্যালারীতে সেভ করুন</string>
-  <string name="scheduled_title">Scheduled</string>
+  <string name="scheduled_title">পরিকল্পিত</string>
   <string name="scheduled_empty_text">এখানে আপনার পরিকল্পিত বার্তা প্রদর্শিত হবে</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_options_title">পরিকল্পিত বার্তা</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>এখন পাঠান</item>
+    <item>মুছুন</item>
   </string-array>
   <string name="settings_category_appearance">উপস্থিতি</string>
   <string name="settings_category_general">সাধারণ</string>
@@ -203,7 +203,7 @@
   <string name="qksms_plus_respond_title">স্বয়ংক্রিয়-উত্তর</string>
   <string name="qksms_plus_respond_summary">আগত বার্তা জন্য স্বয়ংক্রিয়ভাবে পূর্বনির্ধারিত প্রতিক্রিয়া পাঠান</string>
   <string name="qksms_plus_more_title">আরও</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_summary">QKSMS সক্রিয় উন্নয়ন অধীনে এবং QKSMS+ এর সকাল ভবিষ্যত ফিচার আপনার কেনা অ্যাপেে অন্তর্ভুক্ত থাকবে!</string>
   <string name="widget_loading">লোড হচ্ছে&#8230;</string>
   <string name="widget_more">আরও কথোপকথন প্রদর্শন করুন</string>
   <string name="qkreply_menu_read">পড়া চিহ্নিত করুন</string>

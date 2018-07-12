@@ -104,7 +104,7 @@
   <string name="compose_attach_cd">添加附件</string>
   <string name="compose_gallery_cd">附加照片</string>
   <string name="compose_camera_cd">拍攝照片</string>
-  <string name="compose_schedule_cd">Send later</string>
+  <string name="compose_schedule_cd">Schedule message</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
   <string name="compose_send_cd">發送訊息</string>
   <string name="message_status_sending">正在發送...</string>

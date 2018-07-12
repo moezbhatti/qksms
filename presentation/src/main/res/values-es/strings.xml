@@ -29,12 +29,12 @@
   <string name="setup_next">Continuar</string>
   <string name="menu_call">Llamar</string>
   <string name="menu_info">Detalles</string>
-  <string name="menu_save">Save to gallery</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
+  <string name="menu_save">Guardar en la galería</string>
+  <string name="main_drawer_open_cd">Abrir cajón de navegación</string>
   <string name="main_title_selected">%d Seleccionados</string>
   <string name="main_menu_clear">Limpiar</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_read">Marcar como leído</string>
+  <string name="main_menu_unread">Marcar como no leído</string>
   <string name="main_menu_archive">Archivo</string>
   <string name="main_menu_unarchive">Desarchivar</string>
   <string name="main_menu_block">Bloquear</string>
@@ -57,7 +57,7 @@
   <string name="drawer_inbox">Recibidos</string>
   <string name="drawer_archived">Archivar</string>
   <string name="drawer_scheduled">Programar</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_blocking">Bloqueando</string>
   <string name="drawer_more">Más</string>
   <string name="drawer_settings">Ajustes</string>
   <string name="drawer_plus">QKSMS+</string>
@@ -75,14 +75,14 @@
   </string-array>
   <string name="compose_title_selected">%d seleccionados</string>
   <string name="compose_subtitle_results">%1$d de %2$d resultados</string>
-  <string name="compose_send_group_title">Send as group message</string>
-  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+  <string name="compose_send_group_title">Enviar como mensaje de grupo</string>
+  <string name="compose_send_group_summary">Los destinatarios y las respuestas serán visibles a todos</string>
   <string name="compose_messages_empty">Este es el comienzo de su conversación. ¡Di algo bonito!</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_vcard_label">Tarjeta de contacto</string>
+  <string name="compose_scheduled_for">Programado para</string>
+  <string name="compose_scheduled_future">El tiempo seleccionado debe de ser en el futuro!</string>
+  <string name="compose_scheduled_plus">Tienes que desbloquear QKSMS+ para usar mensajes programados</string>
+  <string name="compose_scheduled_toast">Añadido a los mensajes programados</string>
   <string name="compose_hint">Escribir mensaje&#8230;</string>
   <string name="compose_menu_copy">Copiar texto</string>
   <string name="compose_menu_forward">Reenviar</string>
@@ -90,29 +90,29 @@
   <string name="compose_menu_previous">Anterior</string>
   <string name="compose_menu_next">Siguiente</string>
   <string name="compose_menu_clear">Borrar</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_title">Detalles del mensaje</string>
+  <string name="compose_details_type">Escribe: %s</string>
+  <string name="compose_details_from">De: %s</string>
+  <string name="compose_details_to">Para: %s</string>
+  <string name="compose_details_subject">Asunto: %s</string>
+  <string name="compose_details_priority">Prioridad: %s</string>
+  <string name="compose_details_size">Tamaño: %s</string>
+  <string name="compose_details_sent">Enviado: %s</string>
+  <string name="compose_details_received">Recibido: %s</string>
+  <string name="compose_details_delivered">Entregado: %s</string>
+  <string name="compose_details_error_code">Código de error: %d</string>
   <string name="compose_attach_cd">Agregar un archivo adjunto</string>
   <string name="compose_gallery_cd">Adjuntar una foto</string>
   <string name="compose_camera_cd">Tomar una foto</string>
-  <string name="compose_schedule_cd">Send later</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
+  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_sim_cd">%s seleccionado, cambia la tarjeta SIM</string>
   <string name="compose_send_cd">Enviar mensaje</string>
   <string name="message_status_sending">Enviando&#8230;</string>
   <string name="message_status_delivered">Entregado %s</string>
   <string name="message_status_failed">No se envió. Pulse para volver a intentarlo</string>
   <string name="info_title">Detalles</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Título de la conversación</string>
+  <string name="info_name_hint">Introducir título</string>
   <string name="info_notifications">Notificaciones</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Archivar</string>
@@ -120,13 +120,13 @@
   <string name="info_block">Bloquear</string>
   <string name="info_unblock">Desbloquear</string>
   <string name="info_delete">Borrar conversación</string>
-  <string name="gallery_toast_saved">Saved to gallery</string>
-  <string name="scheduled_title">Scheduled</string>
+  <string name="gallery_toast_saved">Guardado en Galería</string>
+  <string name="scheduled_title">Programado</string>
   <string name="scheduled_empty_text">Tus mensajes programados aparecerán aquí</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_options_title">Mensaje programado</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Enviar ahora</item>
+    <item>Eliminar</item>
   </string-array>
   <string name="settings_category_appearance">Apariencia</string>
   <string name="settings_category_general">General</string>
@@ -191,7 +191,7 @@
   <string name="qksms_plus_backup_title">Copia de seguridad de mensajes</string>
   <string name="qksms_plus_backup_summary">Copia de seguridad automática de tus mensajes. Nunca más se preocupe por perder su historial si cambia o pierde su teléfono</string>
   <string name="qksms_plus_scheduled_title">Mensajes programados</string>
-  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
+  <string name="qksms_plus_scheduled_summary">Programa mensajes para enviarlos automáticamente a una hora y fecha específica</string>
   <string name="qksms_plus_delayed_title">Retraso en el envío</string>
   <string name="qksms_plus_delayed_summary">Espere unos segundos antes de enviar su mensaje</string>
   <string name="qksms_plus_night_title">Modo nocturno automático</string>
@@ -203,7 +203,7 @@
   <string name="qksms_plus_respond_title">Auto-responder</string>
   <string name="qksms_plus_respond_summary">Responder automáticamente a mensajes entrantes con una respuesta preestablecida</string>
   <string name="qksms_plus_more_title">Más</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_summary">QKSMS está bajo desarollo activo, y sus compras incluirán todas las características futuras de QKSMS+!</string>
   <string name="widget_loading">Cargando&#8230;</string>
   <string name="widget_more">Ver más conversaciones</string>
   <string name="qkreply_menu_read">Marcar como leído</string>
@@ -219,7 +219,7 @@
   <string name="notification_read">Marcar como leído</string>
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Eliminar</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Guardar</string>
   <string name="button_more">Más</string>
   <string name="button_set">Establecer</string>
   <string name="button_unblock">Desbloquear</string>
