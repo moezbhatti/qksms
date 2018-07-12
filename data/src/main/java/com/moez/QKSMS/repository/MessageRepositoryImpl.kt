@@ -27,6 +27,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.provider.Telephony
+import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
 import com.google.android.mms.ContentType
 import com.google.android.mms.MMSPart
@@ -253,7 +254,7 @@ class MessageRepositoryImpl @Inject constructor(
 
 
             val transaction = Transaction(context)
-            transaction.sendNewMessage(subId, threadId, addresses, parts, null)
+            transaction.sendNewMessage(subId, threadId, addresses.map(PhoneNumberUtils::stripSeparators), parts, null)
         }
     }
 
