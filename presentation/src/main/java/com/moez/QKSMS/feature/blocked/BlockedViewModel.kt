@@ -23,6 +23,7 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.interactor.MarkUnblocked
+import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
@@ -33,6 +34,7 @@ import javax.inject.Inject
 
 class BlockedViewModel @Inject constructor(
         private val context: Context,
+        private val analytics: AnalyticsManager,
         private val conversationRepo: ConversationRepository,
         private val markUnblocked: MarkUnblocked,
         private val navigator: Navigator,
@@ -56,7 +58,10 @@ class BlockedViewModel @Inject constructor(
                             ?: false
                 }
                 .doOnNext { installed -> if (!installed) navigator.showSia() }
-                .withLatestFrom(prefs.sia.asObservable()) { installed, enabled -> installed && !enabled }
+                .withLatestFrom(prefs.sia.asObservable()) { installed, enabled ->
+                    analytics.track("Clicked SIA", Pair("enable", !enabled), Pair("installed", installed))
+                    installed && !enabled
+                }
                 .autoDisposable(view.scope())
                 .subscribe { shouldEnable -> prefs.sia.set(shouldEnable) }
 

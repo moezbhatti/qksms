@@ -40,10 +40,11 @@ class AnalyticsManagerImpl @Inject constructor(context: Context) : AnalyticsMana
         amplitude.trackSessionEvents(true)
     }
 
-    override fun track(event: String, vararg properties: Pair<String, String>) {
+    override fun track(event: String, vararg properties: Pair<String, Any>) {
         val propertiesJson = JSONObject(properties
                 .associateBy { pair -> pair.first }
                 .mapValues { pair -> pair.value.second })
+                .also { Timber.v("$event: $it") }
 
         amplitude.logEvent(event, propertiesJson)
 
