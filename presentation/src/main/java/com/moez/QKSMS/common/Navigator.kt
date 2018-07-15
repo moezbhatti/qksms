@@ -127,6 +127,7 @@ class Navigator @Inject constructor(
     }
 
     fun showScheduled() {
+        analyticsManager.track("Viewed Scheduled")
         val intent = Intent(context, ScheduledActivity::class.java)
         startActivity(intent)
     }
