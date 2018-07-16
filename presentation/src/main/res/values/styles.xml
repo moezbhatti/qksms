@@ -87,6 +87,21 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ScheduledSampleTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/rounded_rectangle_outline_22dp</item>
+        <item name="android:backgroundTint">?android:attr/divider</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="textSize">primary</item>
+    </style>
+
     <style name="DrawerRow">
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>

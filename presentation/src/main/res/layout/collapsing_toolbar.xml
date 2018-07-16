@@ -31,6 +31,8 @@
         android:layout_height="match_parent"
         app:collapsedTitleTextAppearance="@style/CollapsingToolbarCollapsedText"
         app:expandedTitleMarginBottom="8dp"
+        app:expandedTitleMarginEnd="24dp"
+        app:expandedTitleMarginStart="24dp"
         app:expandedTitleTextAppearance="@style/CollapsingToolbarExpandedText"
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 

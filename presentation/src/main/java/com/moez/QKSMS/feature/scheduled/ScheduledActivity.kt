@@ -54,6 +54,8 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
         messages.adapter = messageAdapter
 
         colors.theme().let { theme ->
+            sampleMessage.setBackgroundTint(theme.theme)
+            sampleMessage.setTextColor(theme.textPrimary)
             upgrade.setBackgroundTint(theme.theme)
             upgradeIcon.setTint(theme.textPrimary)
             upgradeLabel.setTextColor(theme.textPrimary)

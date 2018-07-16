@@ -137,7 +137,10 @@
 
     <string name="scheduled_title">Scheduled</string>
     <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-    <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
+    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd&#x200A;</string>
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>Send now</item>
