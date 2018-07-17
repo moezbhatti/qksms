@@ -105,6 +105,18 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/compose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/scheduled_compose_cd"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@color/white"
+        android:visibility="gone"
+        tools:backgroundTint="@color/tools_theme" />
+
     <LinearLayout
         android:id="@+id/upgrade"
         android:layout_width="wrap_content"

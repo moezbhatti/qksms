@@ -27,6 +27,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
 
     override val messageClickIntent by lazy { messageAdapter.clicks }
     override val messageMenuIntent by lazy { dialog.adapter.menuItemClicks }
+    override val composeIntent by lazy { compose.clicks() }
     override val upgradeIntent by lazy { upgrade.clicks() }
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ScheduledViewModel::class.java] }
@@ -56,6 +57,8 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
         colors.theme().let { theme ->
             sampleMessage.setBackgroundTint(theme.theme)
             sampleMessage.setTextColor(theme.textPrimary)
+            compose.setTint(theme.textPrimary)
+            compose.setBackgroundTint(theme.theme)
             upgrade.setBackgroundTint(theme.theme)
             upgradeIcon.setTint(theme.textPrimary)
             upgradeLabel.setTextColor(theme.textPrimary)
@@ -65,6 +68,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
     override fun render(state: ScheduledState) {
         messageAdapter.updateData(state.scheduledMessages)
 
+        compose.isVisible = state.upgraded
         upgrade.isVisible = !state.upgraded
     }
 
