@@ -27,44 +27,45 @@ import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.util.Preferences
+import com.moez.QKSMS.util.SqliteWrapper
+import com.moez.QKSMS.util.tryOrNull
 import javax.inject.Inject
 
 class CursorToMessageImpl @Inject constructor(
         private val context: Context,
         private val cursorToPart: CursorToPart,
         private val keys: KeyManager,
-        private val permissionManager: PermissionManager
+        private val permissionManager: PermissionManager,
+        private val preferences: Preferences
 ) : CursorToMessage {
 
-    companion object {
-        val URI = Uri.parse("content://mms-sms/complete-conversations")
-        val PROJECTION = arrayOf(
-                MmsSms.TYPE_DISCRIMINATOR_COLUMN,
-                MmsSms._ID,
-                Mms.DATE,
-                Mms.DATE_SENT,
-                Mms.READ,
-                Mms.THREAD_ID,
-                Mms.LOCKED,
-                Mms.SUBSCRIPTION_ID,
+    private val uri = Uri.parse("content://mms-sms/complete-conversations")
+    private val projection = arrayOf(
+            MmsSms.TYPE_DISCRIMINATOR_COLUMN,
+            MmsSms._ID,
+            Mms.DATE,
+            Mms.DATE_SENT,
+            Mms.READ,
+            Mms.THREAD_ID,
+            Mms.LOCKED,
 
-                Sms.ADDRESS,
-                Sms.BODY,
-                Sms.SEEN,
-                Sms.TYPE,
-                Sms.STATUS,
-                Sms.ERROR_CODE,
+            Sms.ADDRESS,
+            Sms.BODY,
+            Sms.SEEN,
+            Sms.TYPE,
+            Sms.STATUS,
+            Sms.ERROR_CODE,
 
-                Mms.SUBJECT,
-                Mms.SUBJECT_CHARSET,
-                Mms.SEEN,
-                Mms.MESSAGE_TYPE,
-                Mms.MESSAGE_BOX,
-                Mms.DELIVERY_REPORT,
-                Mms.READ_REPORT,
-                MmsSms.PendingMessages.ERROR_TYPE,
-                Mms.STATUS)
-    }
+            Mms.SUBJECT,
+            Mms.SUBJECT_CHARSET,
+            Mms.SEEN,
+            Mms.MESSAGE_TYPE,
+            Mms.MESSAGE_BOX,
+            Mms.DELIVERY_REPORT,
+            Mms.READ_REPORT,
+            MmsSms.PendingMessages.ERROR_TYPE,
+            Mms.STATUS)
 
     override fun map(from: Pair<Cursor, CursorToMessage.MessageColumns>): Message {
         val cursor = from.first
@@ -124,8 +125,24 @@ class CursorToMessageImpl @Inject constructor(
     }
 
     override fun getMessagesCursor(): Cursor? {
+
+        // Even if the device is running API 22, we can't assume we have access to the subId
+        // column. In this case, we need to check if we do, before trying to sync messages
+        if (!preferences.canUseSubId.isSet) {
+            val canUseSubId = tryOrNull {
+                SqliteWrapper.query(context, uri, arrayOf(Mms.SUBSCRIPTION_ID))?.use { true }
+            }
+
+            preferences.canUseSubId.set(canUseSubId ?: false)
+        }
+
+        val projection = when (preferences.canUseSubId.get()) {
+            true -> this.projection
+            false -> this.projection
+        }
+
         return when (permissionManager.hasSms()) {
-            true -> context.contentResolver.query(URI, PROJECTION, null, null, "normalized_date desc")
+            true -> SqliteWrapper.query(context, uri, projection, sortOrder = "normalized_date desc")
             false -> null
         }
     }

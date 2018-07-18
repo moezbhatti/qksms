@@ -48,7 +48,11 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val SEND_DELAY_LONG = 3
     }
 
+    // Internal
     val night = rxPrefs.getBoolean("night", false)
+    val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
+
+    // User configurable
     val nightMode = rxPrefs.getInteger("nightModeSummary", NIGHT_MODE_OFF)
     val nightStart = rxPrefs.getString("nightStart", "18:00")
     val nightEnd = rxPrefs.getString("nightEnd", "6:00")
