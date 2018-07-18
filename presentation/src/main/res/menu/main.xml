@@ -28,7 +28,7 @@
 
     <item
         android:id="@+id/unarchive"
-        android:icon="@drawable/ic_archive_black_24dp"
+        android:icon="@drawable/ic_inbox_black_24dp"
         android:title="@string/main_menu_unarchive"
         android:visible="false"
         app:showAsAction="ifRoom" />
