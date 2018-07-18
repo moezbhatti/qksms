@@ -68,6 +68,8 @@
     <string name="drawer_settings">Settings</string>
     <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Help &amp; feedback</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
 
     <string name="rate_title">Enjoying QKSMS?</string>
     <string name="rate_summary">Share some love and rate us on Google Play!</string>

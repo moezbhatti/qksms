@@ -28,6 +28,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -87,6 +88,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 help.clicks().map { DrawerItem.HELP }))
     }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
+    override val plusBannerIntent by lazy { plusBanner.clicks() }
     override val dismissRatingIntent by lazy { rateDismiss.clicks() }
     override val rateIntent by lazy { rateOkay.clicks() }
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
@@ -140,6 +142,7 @@ class MainActivity : QkThemedActivity(), MainView {
                     // Miscellaneous views
                     syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     itemTouchCallback.color = theme.theme
+                    plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
                     compose.setBackgroundTint(theme.theme)
                 }
@@ -185,6 +188,8 @@ class MainActivity : QkThemedActivity(), MainView {
         toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0
         toolbar.menu.findItem(R.id.delete)?.isVisible = selectedConversations != 0
 
+        plus.isVisible = state.upgraded
+        plusBanner.isVisible = !state.upgraded
         rateLayout.setVisible(state.showRating)
 
         compose.setVisible(state.page is Inbox || state.page is Archived)

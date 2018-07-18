@@ -22,6 +22,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkAllSeen
@@ -49,7 +50,10 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-        private val markAllSeen: MarkAllSeen,
+        billingManager: BillingManager,
+        markAllSeen: MarkAllSeen,
+        migratePreferences: MigratePreferences,
+        syncRepository: SyncRepository,
         private val conversationRepo: ConversationRepository,
         private val deleteConversations: DeleteConversations,
         private val markRead: MarkRead,
@@ -57,12 +61,10 @@ class MainViewModel @Inject constructor(
         private val markArchived: MarkArchived,
         private val markUnarchived: MarkUnarchived,
         private val markBlocked: MarkBlocked,
-        private val migratePreferences: MigratePreferences,
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
         private val ratingManager: RatingManager,
-        private val syncMessages: SyncMessages,
-        private val syncRepository: SyncRepository
+        private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
 
     init {
@@ -78,6 +80,9 @@ class MainViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { copy(syncing = syncing) } }
 
+        // Update the upgraded status
+        disposables += billingManager.upgradeStatus
+                .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
 
         // Show the rating UI
         disposables += ratingManager.shouldShowRating
@@ -230,6 +235,13 @@ class MainViewModel @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        view.plusBannerIntent
+                .autoDisposable(view.scope())
+                .subscribe {
+                    newState { copy(drawerOpen = false) }
+                    navigator.showQksmsPlusActivity("main_banner")
+                }
 
         view.rateIntent
                 .autoDisposable(view.scope())
