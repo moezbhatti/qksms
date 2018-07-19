@@ -137,7 +137,7 @@ class CursorToMessageImpl @Inject constructor(
         }
 
         val projection = when (preferences.canUseSubId.get()) {
-            true -> this.projection
+            true -> this.projection + Mms.SUBSCRIPTION_ID
             false -> this.projection
         }
 
