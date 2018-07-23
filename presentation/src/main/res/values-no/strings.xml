@@ -19,57 +19,61 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="title_archived">Archived</string>
+  <string name="title_archived">Arkivert</string>
   <string name="title_settings">Innstillinger</string>
-  <string name="title_notification_prefs">Notifications</string>
-  <string name="title_theme">Theme</string>
-  <string name="title_conversations">Search inbox&#8230;</string>
-  <string name="title_compose">Type a name or number</string>
-  <string name="setup_skip">Skip</string>
-  <string name="setup_next">Continue</string>
+  <string name="title_notification_prefs">Varsler</string>
+  <string name="title_theme">Tema</string>
+  <string name="title_conversations">Søk innboks&#8230;</string>
+  <string name="title_compose">Skriv inn et navn eller nummer</string>
+  <string name="setup_skip">Hopp over</string>
+  <string name="setup_next">Fortsett</string>
   <string name="menu_call">Ring</string>
-  <string name="menu_info">Details</string>
-  <string name="menu_save">Save to gallery</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
-  <string name="main_title_selected">%d selected</string>
-  <string name="main_menu_clear">Clear</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
-  <string name="main_menu_archive">Archive</string>
-  <string name="main_menu_unarchive">Unarchive</string>
-  <string name="main_menu_block">Block</string>
-  <string name="main_menu_delete">Delete</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
-  <string name="main_sender_you">You: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
-  <string name="inbox_empty_text">Your conversations will appear here</string>
-  <string name="inbox_search_empty_text">No results</string>
-  <string name="archived_empty_text">Your archived conversations will appear here</string>
-  <string name="main_fab_cd">Start new conversation</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
-  <string name="drawer_inbox">Inbox</string>
-  <string name="drawer_archived">Archived</string>
-  <string name="drawer_scheduled">Scheduled</string>
-  <string name="drawer_blocking">Blocking</string>
-  <string name="drawer_more">More</string>
-  <string name="drawer_settings">Settings</string>
+  <string name="menu_info">Detaljer</string>
+  <string name="menu_save">Lagre til galleri</string>
+  <string name="main_drawer_open_cd">Åpne navigasjonsskuff</string>
+  <string name="main_title_selected">%d valgt</string>
+  <string name="main_menu_clear">Tøm</string>
+  <string name="main_menu_archive">Arkiv</string>
+  <string name="main_menu_unarchive">Fjern fra arkiv</string>
+  <string name="main_menu_delete">Slett</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Marker som lest</string>
+  <string name="main_menu_unread">Marker som ulest</string>
+  <string name="main_menu_block">Blokker</string>
+  <string name="main_syncing">Synkroniserer meldinger&#8230;</string>
+  <string name="main_sender_you">Du: %s</string>
+  <string name="main_message_results_title">Resultater i meldinger</string>
+  <string name="main_message_results">%d meldinger</string>
+  <string name="inbox_empty_text">Samtalene dine vises her</string>
+  <string name="inbox_search_empty_text">Ingen treff</string>
+  <string name="archived_empty_text">Arkiverte samtaler vises her</string>
+  <string name="main_fab_cd">Start ny samtale</string>
+  <string name="main_default_sms_title">Elsk teksting igjen</string>
+  <string name="main_default_sms_message">Gjør QKSMS til standard SMS-app</string>
+  <string name="main_default_sms_change">Endre</string>
+  <string name="main_permission_required">Tillatelse kreves</string>
+  <string name="main_permission_sms">QKSMS trenger tillatelse til å sende og vise tekstmeldinger</string>
+  <string name="main_permission_contacts">QKSMS trenger tillatelse til å lese kontaktene dine</string>
+  <string name="main_permission_allow">Tillat</string>
+  <string name="drawer_inbox">Innboks</string>
+  <string name="drawer_archived">Arkivert</string>
+  <string name="drawer_scheduled">Planlagt</string>
+  <string name="drawer_blocking">Blokkerer</string>
+  <string name="drawer_more">Mer</string>
+  <string name="drawer_settings">Innstillinger</string>
   <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Help &amp; feedback</string>
-  <string name="rate_title">Enjoying QKSMS?</string>
-  <string name="rate_summary">Share some love and rate us on Google Play!</string>
-  <string name="rate_okay">OKAY!</string>
-  <string name="rate_dismiss">DISMISS</string>
-  <string name="dialog_delete_title">Delete</string>
-  <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+  <string name="drawer_help">Hjelp og tilbakemelding</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Lås opp fantastiske nye funksjoner, og støtt utvikling</string>
+  <string name="rate_title">Liker du QKSMS?</string>
+  <string name="rate_summary">Del litt kjærlighet og vurder oss på Google Play!</string>
+  <string name="rate_okay">OK!</string>
+  <string name="rate_dismiss">AVVIS</string>
+  <string name="dialog_delete_title">Slett</string>
+  <string name="dialog_delete_message">Er du sikker på at du vil slette samtalen?</string>
   <string-array name="message_options">
-    <item>Copy text</item>
+    <item>Kopier tekst</item>
     <item>Forward</item>
     <item>Delete</item>
   </string-array>
@@ -121,30 +125,40 @@
   <string name="info_unblock">Unblock</string>
   <string name="info_delete">Delete conversation</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">Your scheduled messages will appear here</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_title">Planlagt</string>
+  <string name="scheduled_empty_description">Send automatisk en melding på det tidspunktet du ønsker</string>
+  <string name="scheduled_empty_message_1">Hei! Når var fødselsdagen din igjen?</string>
+  <string name="scheduled_empty_message_2">Den er på 23. desember</string>
+  <string name="scheduled_empty_message_3">Gratulerer med dagen! For en god venn jeg er som husker på bursdagen din</string>
+  <string name="scheduled_empty_message_3_timestamp">Sender den 23. desember</string>
+  <string name="scheduled_compose_cd">Planlegg en melding</string>
+  <string name="scheduled_options_title">Planlagt melding</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Send nå</item>
+    <item>Slett</item>
   </string-array>
-  <string name="settings_category_appearance">Appearance</string>
-  <string name="settings_category_general">General</string>
-  <string name="settings_category_qkreply">QK Reply</string>
-  <string name="settings_theme_title">Theme</string>
-  <string name="settings_night_title">Night mode</string>
-  <string name="settings_black_title">Pure black night mode</string>
-  <string name="settings_night_start_title">Start time</string>
-  <string name="settings_night_end_title">End time</string>
-  <string name="settings_text_size_title">Font size</string>
-  <string name="settings_system_font_title">Use system font</string>
-  <string name="settings_auto_emoji_title">Automatic emoji</string>
-  <string name="settings_notifications_title">Notifications</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
-  <string name="settings_vibration_title">Vibration</string>
-  <string name="settings_ringtone_title">Sound</string>
-  <string name="settings_ringtone_none">None</string>
-  <string name="settings_qkreply_title">QK Reply</string>
+  <string name="settings_category_appearance">Utseende</string>
+  <string name="settings_category_general">Generelt</string>
+  <string name="settings_category_qkreply">QK Svar</string>
+  <string name="settings_theme_title">Tema</string>
+  <string name="settings_night_title">Nattmodus</string>
+  <string name="settings_black_title">Ren svart nattmodus</string>
+  <string name="settings_night_start_title">Starttid</string>
+  <string name="settings_night_end_title">Sluttidspunkt</string>
+  <string name="settings_text_size_title">Skriftstørrelse</string>
+  <string name="settings_system_font_title">Bruk systemskrift</string>
+  <string name="settings_auto_emoji_title">Automatisk emoji</string>
+  <string name="settings_notifications_title">Varsler</string>
+  <string name="settings_notifications_o_summary">Trykk for å tilpasse</string>
+  <string name="settings_notification_actions_title">Handlinger</string>
+  <string name="settings_notification_action_1">Knapp 1</string>
+  <string name="settings_notification_action_2">Knapp 2</string>
+  <string name="settings_notification_action_3">Knapp 3</string>
+  <string name="settings_notification_previews_title">Forhåndsvisninger av varsler</string>
+  <string name="settings_vibration_title">Vibrasjon</string>
+  <string name="settings_ringtone_title">Lyd</string>
+  <string name="settings_ringtone_none">Ingen</string>
+  <string name="settings_qkreply_title">QK Svar</string>
   <string name="settings_qkreply_summary">Popup for new messages</string>
   <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
   <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Apply</string>
-  <string name="notification_reply">Reply</string>
-  <string name="notification_read">Mark read</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Cancel</string>
   <string name="button_delete">Delete</string>
   <string name="button_save">Save</string>

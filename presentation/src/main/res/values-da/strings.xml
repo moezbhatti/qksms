@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Åbn navigationsskuffe</string>
   <string name="main_title_selected">%d valgt</string>
   <string name="main_menu_clear">Ryd</string>
-  <string name="main_menu_read">Markér som læst</string>
-  <string name="main_menu_unread">Markér som ulæst</string>
   <string name="main_menu_archive">Arkivér</string>
   <string name="main_menu_unarchive">Fjern fra arkiv</string>
-  <string name="main_menu_block">Blokér</string>
   <string name="main_menu_delete">Slet</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Markér som læst</string>
+  <string name="main_menu_unread">Markér som ulæst</string>
+  <string name="main_menu_block">Blokér</string>
   <string name="main_syncing">Synkroniserer beskeder&#8230;</string>
   <string name="main_sender_you">Dig: %s</string>
   <string name="main_message_results_title">Resultater i beskeder</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">Indstillinger</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Hjælp og feedback</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Synes om QKSMS?</string>
   <string name="rate_summary">Del og bedøm os på Google Play!</string>
   <string name="rate_okay">OKAY!</string>
@@ -104,7 +108,7 @@
   <string name="compose_attach_cd">Tilføj en vedhæftning</string>
   <string name="compose_gallery_cd">Vedhæft et foto</string>
   <string name="compose_camera_cd">Tag et foto</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_schedule_cd">Planlæg besked</string>
   <string name="compose_sim_cd">%s valgt, skift SIM-kortet</string>
   <string name="compose_send_cd">Send besked</string>
   <string name="message_status_sending">Afsender&#8230;</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">Slet samtale</string>
   <string name="gallery_toast_saved">Gemt til galleri</string>
   <string name="scheduled_title">Planlagt</string>
-  <string name="scheduled_empty_text">Dine planlagte beskeder vil fremgå her</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">Planlagt besked</string>
   <string-array name="scheduled_options">
     <item>Send nu</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Brug systemets skrifttype</string>
   <string name="settings_auto_emoji_title">Automatisk emoji</string>
   <string name="settings_notifications_title">Notifikationer</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">Notifikationseksempler</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Lyd</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Anvend</string>
-  <string name="notification_reply">Besvar</string>
-  <string name="notification_read">Markér som læst</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Annullér</string>
   <string name="button_delete">Slet</string>
   <string name="button_save">Gem</string>

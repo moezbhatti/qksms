@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">নেভিগেশন ড্রয়ার খোল</string>
   <string name="main_title_selected">নির্বাচিত %d</string>
   <string name="main_menu_clear">পরিষ্কার করুন</string>
-  <string name="main_menu_read">পঠিত হিসেবে চিহ্নিত করুন</string>
-  <string name="main_menu_unread">অপঠিত হিসেবে চিহ্নিত করুন</string>
   <string name="main_menu_archive">আর্কাইভ</string>
   <string name="main_menu_unarchive">আনআর্কাইভ</string>
-  <string name="main_menu_block">ব্লক করুন</string>
   <string name="main_menu_delete">মুছে ফেলুন</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">পঠিত হিসেবে চিহ্নিত করুন</string>
+  <string name="main_menu_unread">অপঠিত হিসেবে চিহ্নিত করুন</string>
+  <string name="main_menu_block">ব্লক করুন</string>
   <string name="main_syncing">বার্তাগুলি সিঙ্ক হচ্ছে&#8230;</string>
   <string name="main_sender_you">%s আপনার:</string>
   <string name="main_message_results_title">বার্তাগুলির মধ্যে ফলাফল </string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">সেটিংস</string>
   <string name="drawer_plus">QKSMS +</string>
   <string name="drawer_help">সাহায্য &amp; প্রতিক্রিয়া</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">QKSMS উপভোগ করছেন?</string>
   <string name="rate_summary">আমাদের প্রতি ভালবাসে দেখাতে Google Play-তে আমাদের মূল্যায়ন করুন!</string>
   <string name="rate_okay">ঠিক আছে!</string>
@@ -104,7 +108,7 @@
   <string name="compose_attach_cd">সংযুক্তি যোগ করুন</string>
   <string name="compose_gallery_cd">ছবি সংযুক্ত করুন</string>
   <string name="compose_camera_cd">একটি ছবি নিন</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_schedule_cd">পরবর্তীতে পাঠানোর জন্য বার্তা পরিকল্পনা করুন</string>
   <string name="compose_sim_cd">নির্বাচিত, %s সিম কার্ড পরিবর্তন করুন</string>
   <string name="compose_send_cd">বার্তাটি প্রেরণ করুন</string>
   <string name="message_status_sending">পাঠানো হচ্ছে&#8230;</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">কথোপকথন মুছে ফেলুন</string>
   <string name="gallery_toast_saved">গ্যালারীতে সেভ করুন</string>
   <string name="scheduled_title">পরিকল্পিত</string>
-  <string name="scheduled_empty_text">এখানে আপনার পরিকল্পিত বার্তা প্রদর্শিত হবে</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">পরিকল্পিত বার্তা</string>
   <string-array name="scheduled_options">
     <item>এখন পাঠান</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">সিস্টেম ফন্ট ব্যবহার করুন</string>
   <string name="settings_auto_emoji_title">স্বয়ংক্রিয় ইমোজি</string>
   <string name="settings_notifications_title">নোটিফিকেশন</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">নোটিফিকেশন প্রিভিউ</string>
   <string name="settings_vibration_title">কম্পন</string>
   <string name="settings_ringtone_title">শব্দ</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS +</string>
   <string name="theme_hex">হেক্স</string>
   <string name="theme_apply">প্রয়োগ করুন</string>
-  <string name="notification_reply">প্রত্যুত্তর দিন</string>
-  <string name="notification_read">পড়া চিহ্নিত করুন</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">বাতিল করুন</string>
   <string name="button_delete">মুছে ফেলুন</string>
   <string name="button_save">সেভ করুন</string>

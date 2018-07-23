@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">فتح درج التنقل</string>
   <string name="main_title_selected">%d محددة</string>
   <string name="main_menu_clear">مسح</string>
-  <string name="main_menu_read">علّمه مقروء</string>
-  <string name="main_menu_unread">وضع علامة غير مقروء</string>
   <string name="main_menu_archive">أرشفة</string>
   <string name="main_menu_unarchive">إلغاء الأرشفة</string>
-  <string name="main_menu_block">حظر</string>
   <string name="main_menu_delete">حذف</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">علّمه مقروء</string>
+  <string name="main_menu_unread">وضع علامة غير مقروء</string>
+  <string name="main_menu_block">حظر</string>
   <string name="main_syncing">مزامنة الرسائل&#8230;</string>
   <string name="main_sender_you">أنت: %s</string>
   <string name="main_message_results_title">النتائج في الرسائل</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">الإعدادات</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">المساعدة والتواصل مع المبرمج</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">هل QKSMS ممتع ؟</string>
   <string name="rate_summary">أظهر محبتك وقيّمنا على متجر Google Play!</string>
   <string name="rate_okay">حسناً</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">حذف المحادثة</string>
   <string name="gallery_toast_saved">تم الحفظ في المعرض</string>
   <string name="scheduled_title">مجدولة</string>
-  <string name="scheduled_empty_text">ستظهر الرسائل المجدولة الخاصة بك هنا</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">الرسالة المجدولة</string>
   <string-array name="scheduled_options">
     <item>أرسل الآن</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">استخدم خط النظام</string>
   <string name="settings_auto_emoji_title">إيموجي تلقائية</string>
   <string name="settings_notifications_title">الإشعارات</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">معاينات الإشعارات</string>
   <string name="settings_vibration_title">الاهتزاز</string>
   <string name="settings_ringtone_title">الصوت</string>
@@ -216,8 +230,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">تطبيق</string>
-  <string name="notification_reply">الرد</string>
-  <string name="notification_read">علّمها مقروءة</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">إلغاء</string>
   <string name="button_delete">حذف</string>
   <string name="button_save">حفظ</string>

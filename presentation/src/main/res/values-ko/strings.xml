@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d selected</string>
   <string name="main_menu_clear">Clear</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Archive</string>
   <string name="main_menu_unarchive">Unarchive</string>
-  <string name="main_menu_block">Block</string>
   <string name="main_menu_delete">Delete</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_block">Block</string>
   <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">You: %s</string>
   <string name="main_message_results_title">Results in messages</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">설정</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">도움말 &amp; 피드백</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Enjoying QKSMS?</string>
   <string name="rate_summary">Share some love and rate us on Google Play!</string>
   <string name="rate_okay">OKAY!</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">대화 삭제</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">예약된 메시지가 여기 나타납니다</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">Scheduled message</string>
   <string-array name="scheduled_options">
     <item>Send now</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Use system font</string>
   <string name="settings_auto_emoji_title">자동 이모티콘</string>
   <string name="settings_notifications_title">Notifications</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">Notification previews</string>
   <string name="settings_vibration_title">진동</string>
   <string name="settings_ringtone_title">소리</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Apply</string>
-  <string name="notification_reply">Reply</string>
-  <string name="notification_read">Mark read</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Cancel</string>
   <string name="button_delete">Delete</string>
   <string name="button_save">Save</string>

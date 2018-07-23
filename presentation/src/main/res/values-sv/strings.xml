@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d vald</string>
   <string name="main_menu_clear">Rensa</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Arkiv</string>
   <string name="main_menu_unarchive">Avarkivera</string>
-  <string name="main_menu_block">Blockera</string>
   <string name="main_menu_delete">Radera</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Markera som läst</string>
+  <string name="main_menu_unread">Markera som ej läst</string>
+  <string name="main_menu_block">Blockera</string>
   <string name="main_syncing">Synkroniserar meddelanden&#8230;</string>
   <string name="main_sender_you">Du: %s</string>
   <string name="main_message_results_title">Resultat i meddelanden</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">Inställningar</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Hjälp &amp; återgivning</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Tycker du om QKSMS?</string>
   <string name="rate_summary">Dela lite kärlek och betygsätt oss på Google Play!</string>
   <string name="rate_okay">OKEJ!</string>
@@ -79,8 +83,8 @@
   <string name="compose_send_group_summary">Mottagare och svar kommer att vara synligt för alla</string>
   <string name="compose_messages_empty">Det här är början på din konversation. Säg något snällt!</string>
   <string name="compose_vcard_label">Kontaktkort</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
+  <string name="compose_scheduled_for">Schemalagd för</string>
+  <string name="compose_scheduled_future">Den valda tiden måste vara i framtiden!</string>
   <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
   <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Skriv ett meddelande&#8230;</string>
@@ -90,22 +94,22 @@
   <string name="compose_menu_previous">Föregående</string>
   <string name="compose_menu_next">Nästa</string>
   <string name="compose_menu_clear">Rensa</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_title">Meddelandedetaljer</string>
+  <string name="compose_details_type">Typ: %s</string>
+  <string name="compose_details_from">Från: %s</string>
+  <string name="compose_details_to">Till: %s</string>
+  <string name="compose_details_subject">Ämne: %s</string>
+  <string name="compose_details_priority">Prioritet: %s</string>
+  <string name="compose_details_size">Storlek: %s</string>
+  <string name="compose_details_sent">Skickades: %s</string>
+  <string name="compose_details_received">Togs emot: %s</string>
+  <string name="compose_details_delivered">Levererades: %s</string>
+  <string name="compose_details_error_code">Felkod: %d</string>
   <string name="compose_attach_cd">Lägg till en bilaga</string>
   <string name="compose_gallery_cd">Bifoga en bild</string>
   <string name="compose_camera_cd">Ta en bild</string>
   <string name="compose_schedule_cd">Schedule message</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
+  <string name="compose_sim_cd">%s valt, byt SIM-kort</string>
   <string name="compose_send_cd">Skicka meddelandet</string>
   <string name="message_status_sending">Skickar&#8230;</string>
   <string name="message_status_delivered">Levererade %s</string>
@@ -122,11 +126,16 @@
   <string name="info_delete">Radera konversation</string>
   <string name="gallery_toast_saved">Spara till galleri</string>
   <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">Dina schemalagda meddelanden kommer att dyka upp här</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_options_title">Schemalagt meddelande</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Skicka nu</item>
+    <item>Ta bort</item>
   </string-array>
   <string name="settings_category_appearance">Utseende</string>
   <string name="settings_category_general">Generellt</string>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Använd systemteckensnitt</string>
   <string name="settings_auto_emoji_title">Automatisk uttryckssymbol</string>
   <string name="settings_notifications_title">Aviseringar</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">Notifikations förhandsvisningar</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Ljud</string>
@@ -203,7 +217,7 @@
   <string name="qksms_plus_respond_title">Auto-svara</string>
   <string name="qksms_plus_respond_summary">Svara automatiskt på inkommande meddelanden med ett förinställt svar</string>
   <string name="qksms_plus_more_title">Mer</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_summary">QKSMS är under aktiv utveckling, och dina köp kommer att inkludera alla kommande QKSMS+-funktioner!</string>
   <string name="widget_loading">Laddar&#8230;</string>
   <string name="widget_more">Visa fler konversationer</string>
   <string name="qkreply_menu_read">Markera som läst</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Verkställ</string>
-  <string name="notification_reply">Svara</string>
-  <string name="notification_read">Markera som läst</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Avbryt</string>
   <string name="button_delete">Radera</string>
   <string name="button_save">Spara</string>

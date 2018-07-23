@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">已選擇%d項</string>
   <string name="main_menu_clear">清除</string>
-  <string name="main_menu_read">標記為已讀</string>
-  <string name="main_menu_unread">標記為未讀</string>
   <string name="main_menu_archive">封存</string>
   <string name="main_menu_unarchive">取消封存</string>
-  <string name="main_menu_block">攔截</string>
   <string name="main_menu_delete">刪除</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">標記為已讀</string>
+  <string name="main_menu_unread">標記為未讀</string>
+  <string name="main_menu_block">攔截</string>
   <string name="main_syncing">正在同步...</string>
   <string name="main_sender_you">你：%s</string>
   <string name="main_message_results_title">信息中的結果</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">設定</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">幫助與反饋</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">喜歡QKSMS？</string>
   <string name="rate_summary">在Google Play分享你的感受，並給我們評分！</string>
   <string name="rate_okay">好！</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">刪除對話</string>
   <string name="gallery_toast_saved">保存到圖庫</string>
   <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">您的預定訊息將出現在此處</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">Scheduled message</string>
   <string-array name="scheduled_options">
     <item>Send now</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">使用系統字體</string>
   <string name="settings_auto_emoji_title">自動 emoji 表情</string>
   <string name="settings_notifications_title">通知</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">通知預覽</string>
   <string name="settings_vibration_title">震動</string>
   <string name="settings_ringtone_title">音效</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">應用</string>
-  <string name="notification_reply">回覆</string>
-  <string name="notification_read">標記為已讀</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">取消</string>
   <string name="button_delete">刪除</string>
   <string name="button_save">儲存</string>

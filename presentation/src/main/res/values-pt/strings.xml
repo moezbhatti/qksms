@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Abrir menu de navegação</string>
   <string name="main_title_selected">%d selecionada(s)</string>
   <string name="main_menu_clear">Limpar</string>
-  <string name="main_menu_read">Marcar como lida</string>
-  <string name="main_menu_unread">Marcar como não lida</string>
   <string name="main_menu_archive">Arquivar</string>
   <string name="main_menu_unarchive">Retirar do arquivo</string>
-  <string name="main_menu_block">Bloquear</string>
   <string name="main_menu_delete">Apagar</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Marcar como lida</string>
+  <string name="main_menu_unread">Marcar como não lida</string>
+  <string name="main_menu_block">Bloquear</string>
   <string name="main_syncing">Sincronização de mensagens&#8230;</string>
   <string name="main_sender_you">Você: %s</string>
   <string name="main_message_results_title">Resultados nas mensagens</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">Definições</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Ajuda e comentários</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Gosta do QKSMS?</string>
   <string name="rate_summary">Mostre o seu contentamento e avalie a aplicação na Google Play!</string>
   <string name="rate_okay">Está bem</string>
@@ -104,7 +108,7 @@
   <string name="compose_attach_cd">Adicionar anexo</string>
   <string name="compose_gallery_cd">Anexar fotografia</string>
   <string name="compose_camera_cd">Tirar fotografia</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_schedule_cd">Agendar mensagem</string>
   <string name="compose_sim_cd">%s selecionado, alterar cartão SIM</string>
   <string name="compose_send_cd">Enviar mensagem</string>
   <string name="message_status_sending">A enviar&#8230;</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">Apagar conversa</string>
   <string name="gallery_toast_saved">Guardada na galeria</string>
   <string name="scheduled_title">Agendada</string>
-  <string name="scheduled_empty_text">As mensagens agendadas aparecerão aqui</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">Mensagem agendada</string>
   <string-array name="scheduled_options">
     <item>Enviar agora</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Usar tipo de letra do sistema</string>
   <string name="settings_auto_emoji_title">Emoji automático</string>
   <string name="settings_notifications_title">Notificações</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">Pré-visualização de notificações</string>
   <string name="settings_vibration_title">Vibração</string>
   <string name="settings_ringtone_title">Som</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Aplicar</string>
-  <string name="notification_reply">Responder</string>
-  <string name="notification_read">Marcar como lida</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Apagar</string>
   <string name="button_save">Guardar</string>

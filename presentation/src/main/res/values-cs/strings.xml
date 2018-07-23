@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Otevřít menu</string>
   <string name="main_title_selected">Vybráno: %d</string>
   <string name="main_menu_clear">Vymazat</string>
-  <string name="main_menu_read">Označit jako přečtené</string>
-  <string name="main_menu_unread">Označit jako nepřečtené</string>
   <string name="main_menu_archive">Archivovat</string>
   <string name="main_menu_unarchive">Obnovit z archivu</string>
-  <string name="main_menu_block">Blokovat</string>
   <string name="main_menu_delete">Smazat</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Označit jako přečtené</string>
+  <string name="main_menu_unread">Označit jako nepřečtené</string>
+  <string name="main_menu_block">Blokovat</string>
   <string name="main_syncing">Synchronizace zpráv&#8230;</string>
   <string name="main_sender_you">Vy: %s</string>
   <string name="main_message_results_title">Výsledky ve zprávách</string>
@@ -57,11 +59,13 @@
   <string name="drawer_inbox">Příchozí zprávy</string>
   <string name="drawer_archived">Archivováno</string>
   <string name="drawer_scheduled">Naplánováno</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_blocking">Blokování</string>
   <string name="drawer_more">Více</string>
   <string name="drawer_settings">Nastavení</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Nápověda a zpětná vazba</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Líbí se Vám QKSMS?</string>
   <string name="rate_summary">Sdílejte trochu lásky a ohodnoťte nás na Google Play!</string>
   <string name="rate_okay">Tak určitě!</string>
@@ -79,10 +83,10 @@
   <string name="compose_send_group_summary">Příjemci a odpovědi budou viditelné všem</string>
   <string name="compose_messages_empty">Toto je začátek vaší konverzace. Řekněte něco hezkého!</string>
   <string name="compose_vcard_label">Karta kontaktu</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_scheduled_for">Naplánováno na</string>
+  <string name="compose_scheduled_future">Vybraný čas musí teprve nastat (musí být v budoucnu).</string>
+  <string name="compose_scheduled_plus">Pro použití plánování zpráv je třeba povýšit na QKSMS+</string>
+  <string name="compose_scheduled_toast">Přidáno do naplánovaných zpráv</string>
   <string name="compose_hint">Napsat zprávu&#8230;</string>
   <string name="compose_menu_copy">Kopírovat text</string>
   <string name="compose_menu_forward">Přeposlat</string>
@@ -104,7 +108,7 @@
   <string name="compose_attach_cd">Připojit přílohu</string>
   <string name="compose_gallery_cd">Připojit fotografii</string>
   <string name="compose_camera_cd">Fotografovat</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_schedule_cd">Naplánovat zprávu</string>
   <string name="compose_sim_cd">%s vybráno, změňte SIM kartu</string>
   <string name="compose_send_cd">Odeslat zprávu</string>
   <string name="message_status_sending">Odesílání&#8230;</string>
@@ -121,12 +125,17 @@
   <string name="info_unblock">Odblokovat</string>
   <string name="info_delete">Odstranit konverzaci</string>
   <string name="gallery_toast_saved">Uloženo do galerie</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">Zde se zobrazí vaše naplánované zprávy</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_title">Naplánováno</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_options_title">Naplánovaná zpráva</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Odeslat nyní</item>
+    <item>Smazat</item>
   </string-array>
   <string name="settings_category_appearance">Vzhled</string>
   <string name="settings_category_general">Obecné</string>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Použít systémové písmo</string>
   <string name="settings_auto_emoji_title">Automatické emoji</string>
   <string name="settings_notifications_title">Upozornění</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">Nastavení oznámení</string>
   <string name="settings_vibration_title">Vibrace</string>
   <string name="settings_ringtone_title">Vyzvánění</string>
@@ -156,7 +170,7 @@
   <string name="settings_delivery_title">Potvrzení o doručení</string>
   <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>
   <string name="settings_unicode_title">Odstranit diakritiku</string>
-  <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných zprávách SMS</string>
+  <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných SMS zprávách</string>
   <string name="settings_mms_size_title">Automaticky komprimovat MMS přílohy</string>
   <string name="settings_sync_title">Synchronizovat zprávy</string>
   <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativním Android SMS databází</string>
@@ -185,7 +199,7 @@
   <string name="qksms_plus_donate">Darovat pomocí PayPal</string>
   <string name="qksms_plus_coming_soon">Připravujeme</string>
   <string name="qksms_plus_themes_title">Prémiová témata</string>
-  <string name="qksms_plus_themes_summary">Při použití Material Design nelze měnit barvy vzhledu</string>
+  <string name="qksms_plus_themes_summary">Odemkněte nádherné barvy, které nejsou na paletě Material designu</string>
   <string name="qksms_plus_emoji_title">Vlastní auto-emoji</string>
   <string name="qksms_plus_emoji_summary">Vytvořit zkratky pro vlastní auto-emoji</string>
   <string name="qksms_plus_backup_title">Zálohování zpráv</string>
@@ -193,17 +207,17 @@
   <string name="qksms_plus_scheduled_title">Plánované zprávy</string>
   <string name="qksms_plus_scheduled_summary">Plánované zprávy budou automaticky odeslány v určené datum a čas</string>
   <string name="qksms_plus_delayed_title">Zpožděné odeslání</string>
-  <string name="qksms_plus_delayed_summary">Počkat několik sekund před odesláním zprávy</string>
+  <string name="qksms_plus_delayed_summary">Vyčkání několik sekund před odesláním zprávy</string>
   <string name="qksms_plus_night_title">Automatický noční režim</string>
-  <string name="qksms_plus_night_summary">Zapnout noční režim na základě denní doby</string>
+  <string name="qksms_plus_night_summary">Zapnutí nočního režimu podle denní doby</string>
   <string name="qksms_plus_blacklist_title">Pokročilé blokování</string>
   <string name="qksms_plus_blacklist_summary">Blokovat zprávy, které obsahují klíčová slova nebo vzory</string>
   <string name="qksms_plus_forward_title">Automatické přeposílání</string>
   <string name="qksms_plus_forward_summary">Automatické přeposílání zpráv od určitých odesílatelů</string>
   <string name="qksms_plus_respond_title">Automatická odpověď</string>
-  <string name="qksms_plus_respond_summary">Automaticky odpovědět na příchozí zprávy přednastavenou odpovědí</string>
+  <string name="qksms_plus_respond_summary">Automatické odpovídání na příchozí zprávy přednastavenou odpovědí</string>
   <string name="qksms_plus_more_title">Více</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_summary">QKSMS je v aktivním vývoji a váš nákup bude obsahovat i všechny budoucí funkce QKSMS+!</string>
   <string name="widget_loading">Načítání&#8230;</string>
   <string name="widget_more">Zobrazit další konverzace</string>
   <string name="qkreply_menu_read">Označit jako přečtené</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Použít</string>
-  <string name="notification_reply">Odpovědět</string>
-  <string name="notification_read">Označit jako přečtené</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Zrušit</string>
   <string name="button_delete">Odstranit</string>
   <string name="button_save">Uložit</string>

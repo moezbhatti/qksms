@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Open navigatie lade</string>
   <string name="main_title_selected">%d geselecteerd</string>
   <string name="main_menu_clear">Wissen</string>
-  <string name="main_menu_read">Markeren als gelezen</string>
-  <string name="main_menu_unread">Markeren als ongelezen</string>
   <string name="main_menu_archive">Archiveren</string>
   <string name="main_menu_unarchive">Terugzetten uit archief</string>
-  <string name="main_menu_block">Blokkeren</string>
   <string name="main_menu_delete">Verwijderen</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Markeren als gelezen</string>
+  <string name="main_menu_unread">Markeren als ongelezen</string>
+  <string name="main_menu_block">Blokkeren</string>
   <string name="main_syncing">Berichten synchroniseren&#8230;</string>
   <string name="main_sender_you">Jij: %s</string>
   <string name="main_message_results_title">Resultaten in berichten</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">Instellingen</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Ontgrendel geweldig nieuwe functies en ondersteun verdere ontwikkeling</string>
   <string name="rate_title">Aan het genieten van QKSMS?</string>
   <string name="rate_summary">Deel je liefde voor QKSMS door een beoordeling op Google Play te plaatsen!</string>
   <string name="rate_okay">Ok</string>
@@ -104,7 +108,7 @@
   <string name="compose_attach_cd">Een bijlage toevoegen</string>
   <string name="compose_gallery_cd">Voeg een foto toe</string>
   <string name="compose_camera_cd">Neem een foto</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_schedule_cd">Gepland bericht</string>
   <string name="compose_sim_cd">%s geselecteerd, wijzig SIM-kaart</string>
   <string name="compose_send_cd">Verstuur bericht</string>
   <string name="message_status_sending">Verzenden&#8230;</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">Conversatie verwijderen</string>
   <string name="gallery_toast_saved">Opgeslagen in galerij</string>
   <string name="scheduled_title">Gepland</string>
-  <string name="scheduled_empty_text">Je geplande berichten verschijnen hier</string>
+  <string name="scheduled_empty_description">Verzend automatisch een bericht, op de door jou ingestelde tijd</string>
+  <string name="scheduled_empty_message_1">Hey! Wanneer was je verjaardag nu weer?</string>
+  <string name="scheduled_empty_message_2">Op 23 december</string>
+  <string name="scheduled_empty_message_3">Gelukkige verjaardag! Zie eens wat voor een vriend ik ben, ik herinner je verjaardag</string>
+  <string name="scheduled_empty_message_3_timestamp">Verzenden op 23 december</string>
+  <string name="scheduled_compose_cd">Plan een bericht</string>
   <string name="scheduled_options_title">Gepland bericht</string>
   <string-array name="scheduled_options">
     <item>Nu versturen</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Gebruik lettertype van systeem</string>
   <string name="settings_auto_emoji_title">Automatische emoji</string>
   <string name="settings_notifications_title">Notificaties</string>
+  <string name="settings_notifications_o_summary">Tikken om aan te passen</string>
+  <string name="settings_notification_actions_title">Acties</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">Notificatievoorbeeld</string>
   <string name="settings_vibration_title">Trillen</string>
   <string name="settings_ringtone_title">Geluid</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Toepassen</string>
-  <string name="notification_reply">Antwoorden</string>
-  <string name="notification_read">Markeren als gelezen</string>
+  <string-array name="notification_actions">
+    <item>Geen</item>
+    <item>Markeren als gelezen</item>
+    <item>Beantwoorden</item>
+    <item>Bellen</item>
+  </string-array>
   <string name="button_cancel">Annuleren</string>
   <string name="button_delete">Verwijderen</string>
   <string name="button_save">Opslaan</string>

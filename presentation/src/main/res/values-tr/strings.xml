@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Gezinti çubuğunu aç</string>
   <string name="main_title_selected">%d Seçili</string>
   <string name="main_menu_clear">Temizle</string>
-  <string name="main_menu_read">Okundu olarak işaretle</string>
-  <string name="main_menu_unread">Okunmadı olarak işaretle</string>
   <string name="main_menu_archive">Arşivlenmiş</string>
   <string name="main_menu_unarchive">Arşivden çıkar</string>
-  <string name="main_menu_block">Engelle</string>
   <string name="main_menu_delete">Sil</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Okundu olarak işaretle</string>
+  <string name="main_menu_unread">Okunmadı olarak işaretle</string>
+  <string name="main_menu_block">Engelle</string>
   <string name="main_syncing">İletiler eşitleniyor.. </string>
   <string name="main_sender_you">Sen: %s</string>
   <string name="main_message_results_title">Mesajlardaki sonuçlar</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">Ayarlar</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Yardım &amp; Geri bildirim</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">İnanılmaz yeni özelliklerin kilidini aç ve geliştirmeye destek ol</string>
   <string name="rate_title">QKSMS tadını çıkarıyor musun?</string>
   <string name="rate_summary">Biraz sevgi paylaş ve Google Playden bizi oyla!</string>
   <string name="rate_okay">TAMAM!</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">Yazışmayı sil</string>
   <string name="gallery_toast_saved">Galeriye kaydedildi</string>
   <string name="scheduled_title">Zamanlanmış</string>
-  <string name="scheduled_empty_text">Zamanlanmış iletileriniz burada görünür</string>
+  <string name="scheduled_empty_description">Otomatik olarak istediğiniz zamanda, bir mesaj göndermek</string>
+  <string name="scheduled_empty_message_1">Hey! Doğum günün ne zamandı?</string>
+  <string name="scheduled_empty_message_2">23 Aralık\'ta</string>
+  <string name="scheduled_empty_message_3">Doğum günün kutlu olsun! Doğum gününü hatırladığım harika arkadaşım</string>
+  <string name="scheduled_empty_message_3_timestamp">23  Aralık\'ta gönder</string>
+  <string name="scheduled_compose_cd">Bir mesaj zamanla</string>
   <string name="scheduled_options_title">Zamanlanmış mesaj</string>
   <string-array name="scheduled_options">
     <item>Şimdi gönder</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Sistem yazı tipini kullan</string>
   <string name="settings_auto_emoji_title">Otomatik emoji</string>
   <string name="settings_notifications_title">Bildirimler</string>
+  <string name="settings_notifications_o_summary">Özelleştirmek için dokunun</string>
+  <string name="settings_notification_actions_title">Eylemler</string>
+  <string name="settings_notification_action_1">Buton 1</string>
+  <string name="settings_notification_action_2">Buton 2</string>
+  <string name="settings_notification_action_3">Buton 3</string>
   <string name="settings_notification_previews_title">Bildirim ön izleme</string>
   <string name="settings_vibration_title">Titreşim</string>
   <string name="settings_ringtone_title">Ses</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Uygula</string>
-  <string name="notification_reply">Cevapla</string>
-  <string name="notification_read">Okundu olarak işaretle</string>
+  <string-array name="notification_actions">
+    <item>Hiçbiri</item>
+    <item>Okundu olarak işaretle</item>
+    <item>Yanıtla</item>
+    <item>Ara</item>
+  </string-array>
   <string name="button_cancel">İptal</string>
   <string name="button_delete">Sil</string>
   <string name="button_save">Kaydet</string>

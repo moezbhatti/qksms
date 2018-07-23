@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Ouvrir le tiroir de navigation</string>
   <string name="main_title_selected">%d sélectionnée</string>
   <string name="main_menu_clear">Effacer</string>
-  <string name="main_menu_read">Marquer comme lu</string>
-  <string name="main_menu_unread">Marquer comme non-lu</string>
   <string name="main_menu_archive">Archiver</string>
   <string name="main_menu_unarchive">Désarchiver</string>
-  <string name="main_menu_block">Bloquer</string>
   <string name="main_menu_delete">Supprimer</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Marquer comme lu</string>
+  <string name="main_menu_unread">Marquer comme non-lu</string>
+  <string name="main_menu_block">Bloquer</string>
   <string name="main_syncing">Synchronisation des messages&#8230;</string>
   <string name="main_sender_you">Vous : %s</string>
   <string name="main_message_results_title">Résultats dans les messages</string>
@@ -57,11 +59,13 @@
   <string name="drawer_inbox">Boite de réception</string>
   <string name="drawer_archived">Archivées</string>
   <string name="drawer_scheduled">Planifiés</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_blocking">Bloquer</string>
   <string name="drawer_more">Plus</string>
   <string name="drawer_settings">Paramètres</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Aide &amp; commentaire</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Vous aimez QKSMS ?</string>
   <string name="rate_summary">Partagez un peu d’amour et évaluez-nous sur le Play Store !</string>
   <string name="rate_okay">OK !</string>
@@ -79,10 +83,10 @@
   <string name="compose_send_group_summary">Les destinataires et les réponses seront visibles par tout le monde</string>
   <string name="compose_messages_empty">C\'est le début de votre conversation. Dites quelque chose de sympa !</string>
   <string name="compose_vcard_label">Fiche du contact</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_scheduled_for">Programmé pour</string>
+  <string name="compose_scheduled_future">Le moment choisi doit être dans le futur !</string>
+  <string name="compose_scheduled_plus">Vous devez déverrouiller QKSMS+ pour utiliser la programmation de message</string>
+  <string name="compose_scheduled_toast">Ajouté aux messages programmés</string>
   <string name="compose_hint">Écrire un message&#8230;</string>
   <string name="compose_menu_copy">Copier le texte</string>
   <string name="compose_menu_forward">Transférer</string>
@@ -104,7 +108,7 @@
   <string name="compose_attach_cd">Ajouter une pièce jointe</string>
   <string name="compose_gallery_cd">Joindre une photo</string>
   <string name="compose_camera_cd">Prendre une photo</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_schedule_cd">Programmer un message</string>
   <string name="compose_sim_cd">%s sélectionné, changer la carte SIM</string>
   <string name="compose_send_cd">Envoyer un message</string>
   <string name="message_status_sending">Envoi&#8230;</string>
@@ -121,12 +125,17 @@
   <string name="info_unblock">Débloquer</string>
   <string name="info_delete">Supprimer la conversation</string>
   <string name="gallery_toast_saved">Enregistré dans la galerie</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">Vos messages planifiés apparaîtront ici</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="scheduled_title">Programmé</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_options_title">Message programmé</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Envoyer maintenant</item>
+    <item>Supprimer</item>
   </string-array>
   <string name="settings_category_appearance">Apparence</string>
   <string name="settings_category_general">Général</string>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">Utiliser la police du système</string>
   <string name="settings_auto_emoji_title">Émoticône automatique</string>
   <string name="settings_notifications_title">Notifications</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">Aperçus de notification</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Son</string>
@@ -203,7 +217,7 @@
   <string name="qksms_plus_respond_title">Réponse automatique</string>
   <string name="qksms_plus_respond_summary">Répondre automatiquement aux messages entrants avec une réponse prédéfinie</string>
   <string name="qksms_plus_more_title">Plus</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_summary">QKSMS est en cours de développement actif, et votre achat comprendra toutes les futures fonctionnalités QKSMS + !</string>
   <string name="widget_loading">Chargement&#8230;</string>
   <string name="widget_more">Afficher plus de conversations</string>
   <string name="qkreply_menu_read">Marquer comme lu</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Appliquer</string>
-  <string name="notification_reply">Répondre</string>
-  <string name="notification_read">Marquer comme lu</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Annuler</string>
   <string name="button_delete">Supprimer</string>
   <string name="button_save">Enregistrer</string>

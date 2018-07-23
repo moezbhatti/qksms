@@ -33,12 +33,14 @@
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d ถูกเลือก</string>
   <string name="main_menu_clear">ลบออก</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">จัดเก็บ</string>
   <string name="main_menu_unarchive">ยกเลิกการเก็บ</string>
-  <string name="main_menu_block">ปิดกั้น</string>
   <string name="main_menu_delete">ลบ</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Mark read</string>
+  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_block">ปิดกั้น</string>
   <string name="main_syncing">กำลังปรับแต่งเพิ่มประสิทธิภาพฐานข้อมูล อาจใช้เวลาสักครู่&#8230;</string>
   <string name="main_sender_you">คุณ: %s</string>
   <string name="main_message_results_title">ผลลัพธ์ในข้อความ</string>
@@ -62,6 +64,8 @@
   <string name="drawer_settings">การตั้งค่า</string>
   <string name="drawer_plus">QKSMS +</string>
   <string name="drawer_help">ช่วยเหลือ &amp; ข้อคิดเห็น</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">ชอบ QKSMS ไหม?</string>
   <string name="rate_summary">แชร์และให้คะแนนเราบน Google Play!</string>
   <string name="rate_okay">ตกลง!</string>
@@ -122,7 +126,12 @@
   <string name="info_delete">ลบการสนทนา</string>
   <string name="gallery_toast_saved">บันทึกรูปภาพแล้ว</string>
   <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">ข้อความที่คุณกำหนดเวลาจะปรากฏที่นี่</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">Scheduled message</string>
   <string-array name="scheduled_options">
     <item>Send now</item>
@@ -140,6 +149,11 @@
   <string name="settings_system_font_title">ใช้แบบอักษรของระบบ</string>
   <string name="settings_auto_emoji_title">อีโมจิอัตโนมัติ</string>
   <string name="settings_notifications_title">การแจ้งเตือน</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
   <string name="settings_notification_previews_title">ตัวอย่างการแจ้งเตือน</string>
   <string name="settings_vibration_title">การสั่น</string>
   <string name="settings_ringtone_title">เสียง</string>
@@ -215,8 +229,12 @@
   <string name="theme_plus">QKSMS +</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">ตกลง</string>
-  <string name="notification_reply">ตอบกลับ</string>
-  <string name="notification_read">ทำเครื่องหมายอ่านแล้ว</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">ยกเลิก</string>
   <string name="button_delete">ลบ</string>
   <string name="button_save">Save</string>

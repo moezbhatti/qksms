@@ -23,37 +23,39 @@
   <string name="title_settings">Impostazioni</string>
   <string name="title_notification_prefs">Notifiche</string>
   <string name="title_theme">Tema</string>
-  <string name="title_conversations">Cerca posta in arrivo&#8230;</string>
+  <string name="title_conversations">Cerca nei messaggi&#8230;</string>
   <string name="title_compose">Scrivi</string>
   <string name="setup_skip">Salta</string>
   <string name="setup_next">Continua</string>
   <string name="menu_call">Chiama</string>
   <string name="menu_info">Dettagli</string>
-  <string name="menu_save">Save to gallery</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
-  <string name="main_title_selected">%d selected</string>
+  <string name="menu_save">Salva nella galleria</string>
+  <string name="main_drawer_open_cd">Apri il pannello di navigazione</string>
+  <string name="main_title_selected">%d selezionato</string>
   <string name="main_menu_clear">Clear</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
   <string name="main_menu_archive">Archive</string>
   <string name="main_menu_unarchive">Unarchive</string>
-  <string name="main_menu_block">Block</string>
-  <string name="main_menu_delete">Delete</string>
+  <string name="main_menu_delete">Elimina</string>
+  <string name="main_menu_pin">Pin to top</string>
+  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_read">Segna come letto</string>
+  <string name="main_menu_unread">Segna come non letto</string>
+  <string name="main_menu_block">Blocca</string>
   <string name="main_syncing">Syncing messages&#8230;</string>
-  <string name="main_sender_you">You: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
+  <string name="main_sender_you">Tu: %s</string>
+  <string name="main_message_results_title">Risultati nei messaggi</string>
+  <string name="main_message_results">%d messaggi</string>
   <string name="inbox_empty_text">Le tue conversazioni vengono visualizzate qui</string>
   <string name="inbox_search_empty_text">Nessun risultato</string>
   <string name="archived_empty_text">Le tue conversazioni vengono archiviati qui</string>
-  <string name="main_fab_cd">Start new conversation</string>
+  <string name="main_fab_cd">Inizia nuova conversazione</string>
   <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+  <string name="main_default_sms_message">Rendi QKSMS la tua app di SMS predefinita</string>
   <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
+  <string name="main_permission_required">Autorizzazione necessaria</string>
+  <string name="main_permission_sms">QKSMS ha bisogno dell\'autorizzazione per inviare e visualizzare gli SMS</string>
+  <string name="main_permission_contacts">QKSMS ha bisogno dell\'autorizzazione per visualizzare i tuoi contatti</string>
+  <string name="main_permission_allow">Consenti</string>
   <string name="drawer_inbox">Posta In Arrivo</string>
   <string name="drawer_archived">Archivio</string>
   <string name="drawer_scheduled">Schedulato</string>
@@ -61,9 +63,11 @@
   <string name="drawer_more">Altro</string>
   <string name="drawer_settings">Impostazioni</string>
   <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Help &amp; feedback</string>
-  <string name="rate_title">Enjoying QKSMS?</string>
-  <string name="rate_summary">Share some love and rate us on Google Play!</string>
+  <string name="drawer_help">Aiuto &amp; suggerimenti</string>
+  <string name="drawer_plus_banner_title">QKSMS+</string>
+  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="rate_title">Ti piace QKSMS?</string>
+  <string name="rate_summary">Condividi un po\' di amore e votaci su Google Play!</string>
   <string name="rate_okay">OKAY!</string>
   <string name="rate_dismiss">DISMISS</string>
   <string name="dialog_delete_title">Elimina</string>
@@ -73,46 +77,46 @@
     <item>Inoltra</item>
     <item>Elimina</item>
   </string-array>
-  <string name="compose_title_selected">%d selected</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
-  <string name="compose_send_group_title">Send as group message</string>
-  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_title_selected">%d selezionato</string>
+  <string name="compose_subtitle_results">%1$d di %2$d risultati</string>
+  <string name="compose_send_group_title">Invia come messaggio di gruppo</string>
+  <string name="compose_send_group_summary">I destinatari e le risposte saranno visibili a tutti</string>
+  <string name="compose_messages_empty">Questo è l\'inizio della tua conversazione. Dì qualcosa di carino!</string>
+  <string name="compose_vcard_label">Scheda contatto</string>
+  <string name="compose_scheduled_for">Pianificato per</string>
+  <string name="compose_scheduled_future">L\'ora selezionata deve essere nel futuro!</string>
+  <string name="compose_scheduled_plus">È necessario sbloccare QKSMS+ per utilizzare la pianificazione dei messaggi</string>
+  <string name="compose_scheduled_toast">Aggiunto ai messaggi pianificati</string>
   <string name="compose_hint">Scrivi un messaggio&#8230;</string>
-  <string name="compose_menu_copy">Copy text</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
+  <string name="compose_menu_copy">Copia testo</string>
+  <string name="compose_menu_forward">Inoltra</string>
+  <string name="compose_menu_delete">Elimina</string>
+  <string name="compose_menu_previous">Precedente</string>
+  <string name="compose_menu_next">Successivo</string>
   <string name="compose_menu_clear">Clear</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
+  <string name="compose_details_title">Dettagli del messaggio</string>
+  <string name="compose_details_type">Tipo: %s</string>
+  <string name="compose_details_from">Da: %s</string>
+  <string name="compose_details_to">A: %s</string>
+  <string name="compose_details_subject">Oggetto: %s</string>
+  <string name="compose_details_priority">Priorità: %s</string>
+  <string name="compose_details_size">Dimensione: %s</string>
+  <string name="compose_details_sent">Inviato: %s</string>
+  <string name="compose_details_received">Ricevuto: %s</string>
+  <string name="compose_details_delivered">Consegnato: %s</string>
   <string name="compose_details_error_code">Error code: %d</string>
-  <string name="compose_attach_cd">Add an attachment</string>
-  <string name="compose_gallery_cd">Attach a photo</string>
-  <string name="compose_camera_cd">Take a photo</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_attach_cd">Aggiungi un allegato</string>
+  <string name="compose_gallery_cd">Allega una foto</string>
+  <string name="compose_camera_cd">Scatta una foto</string>
+  <string name="compose_schedule_cd">Pianifica messaggio</string>
   <string name="compose_sim_cd">%s selected, change SIM card</string>
-  <string name="compose_send_cd">Send message</string>
+  <string name="compose_send_cd">Invia messaggio</string>
   <string name="message_status_sending">Invio in corso&#8230;</string>
   <string name="message_status_delivered">%s consegnati</string>
   <string name="message_status_failed">Impossibile inviare. Tocca per riprovare</string>
   <string name="info_title">Dettagli</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">Titolo della conversazione</string>
+  <string name="info_name_hint">Inserisci il titolo</string>
   <string name="info_notifications">Notifiche</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Archivia</string>
@@ -120,13 +124,18 @@
   <string name="info_block">Blocca</string>
   <string name="info_unblock">Sblocca</string>
   <string name="info_delete">Elimina la conversazione</string>
-  <string name="gallery_toast_saved">Saved to gallery</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_text">Il tuo messaggi pianificati appariranno qui</string>
-  <string name="scheduled_options_title">Scheduled message</string>
+  <string name="gallery_toast_saved">Salvato nella galleria</string>
+  <string name="scheduled_title">Pianificato</string>
+  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_options_title">Messaggio pianificato</string>
   <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
+    <item>Invia ora</item>
+    <item>Elimina</item>
   </string-array>
   <string name="settings_category_appearance">Aspetto</string>
   <string name="settings_category_general">Generale</string>
@@ -137,13 +146,18 @@
   <string name="settings_night_start_title">Ora di inizio</string>
   <string name="settings_night_end_title">Ora di fine</string>
   <string name="settings_text_size_title">Dimensione carattere</string>
-  <string name="settings_system_font_title">Use system font</string>
+  <string name="settings_system_font_title">Usa il carattere di sistema</string>
   <string name="settings_auto_emoji_title">Emoji automatico</string>
   <string name="settings_notifications_title">Notifiche</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
+  <string name="settings_notifications_o_summary">Tap to customize</string>
+  <string name="settings_notification_actions_title">Actions</string>
+  <string name="settings_notification_action_1">Button 1</string>
+  <string name="settings_notification_action_2">Button 2</string>
+  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notification_previews_title">Anteprima delle notifiche</string>
   <string name="settings_vibration_title">Vibrazione</string>
   <string name="settings_ringtone_title">Suono</string>
-  <string name="settings_ringtone_none">None</string>
+  <string name="settings_ringtone_none">Nessuno</string>
   <string name="settings_qkreply_title">Risposta QK</string>
   <string name="settings_qkreply_summary">Popup per i nuovi messaggi</string>
   <string name="settings_qkreply_tap_dismiss_title">Tocca per archiviare</string>
@@ -151,29 +165,29 @@
   <string name="settings_blocking_title">Blocco</string>
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Devo rispondere?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-  <string name="settings_delayed_title">Delayed sending</string>
+  <string name="settings_should_i_answer_summary">Filtrare automaticamente i messaggi provenienti da numeri indesiderati utilizzando l\'app \"Should I Answer\"</string>
+  <string name="settings_delayed_title">Invio posticipato</string>
   <string name="settings_delivery_title">Conferme di recapito</string>
   <string name="settings_delivery_summary">Conferma che i messaggi siano stati inviati con successo</string>
-  <string name="settings_unicode_title">Strip accents</string>
-  <string name="settings_unicode_summary">Rimuovi gli accenti da caratteri nei messaggi SMS in uscita</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+  <string name="settings_unicode_title">Elimina gli accenti</string>
+  <string name="settings_unicode_summary">Rimuovi gli accenti dai caratteri negli SMS in uscita</string>
+  <string name="settings_mms_size_title">Compressione automatica degli allegati MMS</string>
   <string name="settings_sync_title">Sincronizza i messaggi</string>
   <string name="settings_sync_summary">Risincronizza i tuoi messaggi con il database SMS Android nativo</string>
-  <string name="settings_about_title">About QKSMS</string>
-  <string name="settings_version">Version %s</string>
-  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
+  <string name="settings_about_title">Informazioni su QKSMS</string>
+  <string name="settings_version">Versione %s</string>
+  <string name="settings_delay_duration_hint">Inserisci la durata (in secondi)</string>
   <string name="blocked_title">Blocco</string>
   <string name="blocked_empty">Le tue conversazioni bloccate appariranno qui</string>
   <string name="blocked_unblock_dialog_title">Sbloccare</string>
   <string name="blocked_unblock_dialog_message">Vuoi sbloccare questa conversazione?</string>
-  <string name="about_title">About</string>
-  <string name="about_version_title">Version</string>
-  <string name="about_developer_title">Developer</string>
-  <string name="about_source_title">Source code</string>
-  <string name="about_changelog_title">Changelog</string>
-  <string name="about_contact_title">Contact</string>
-  <string name="about_license_title">License</string>
+  <string name="about_title">Informazioni</string>
+  <string name="about_version_title">Versione</string>
+  <string name="about_developer_title">Sviluppatore</string>
+  <string name="about_source_title">Codice sorgente</string>
+  <string name="about_changelog_title">Elenco delle modifiche</string>
+  <string name="about_contact_title">Contatto</string>
+  <string name="about_license_title">Licenza</string>
   <string name="about_copyright_title">Copyright</string>
   <string name="qksms_plus_description_title">Support development, unlock everything</string>
   <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
@@ -181,88 +195,92 @@
   <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">Grazie per il supporto a QKSMS!</string>
   <string name="qksms_plus_thanks_summary">È ora possibile accedere a tutte le funzioni QKSMS+</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donate via PayPal</string>
+  <string name="qksms_plus_free_title">QKSMS+ è gratuito per gli utenti di F-Droid! Se desideri sostenere il progetto, una tua donazione sarebbe molto apprezzata.</string>
+  <string name="qksms_plus_donate">Fai una donazione tramite PayPal</string>
   <string name="qksms_plus_coming_soon">Prossimamente</string>
   <string name="qksms_plus_themes_title">Temi Premium</string>
-  <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
-  <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
-  <string name="qksms_plus_backup_title">Message backup</string>
-  <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
+  <string name="qksms_plus_themes_summary">Sblocca splendidi colori non disponibili nella tavolozza del Material Design</string>
+  <string name="qksms_plus_emoji_title">Personalizza gli emoji automatici</string>
+  <string name="qksms_plus_emoji_summary">Crea scorciatoie personalizzate per gli emoji automatici</string>
+  <string name="qksms_plus_backup_title">Backup dei messaggi</string>
+  <string name="qksms_plus_backup_summary">Effettua automaticamente il backup dei tuoi messaggi. Non dovrai più preoccuparti di perdere la cronologia quando cambi il telefono o lo perdi</string>
   <string name="qksms_plus_scheduled_title">Messaggi pianificati</string>
-  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
-  <string name="qksms_plus_delayed_title">Invio differito</string>
-  <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
+  <string name="qksms_plus_scheduled_summary">Messaggi pianificati da inviare automaticamente ad una specifica data e ora</string>
+  <string name="qksms_plus_delayed_title">Invio posticipato</string>
+  <string name="qksms_plus_delayed_summary">Attendere alcuni secondi prima di inviare il tuo messaggio</string>
   <string name="qksms_plus_night_title">Modalità notturna automatica</string>
-  <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
-  <string name="qksms_plus_blacklist_title">Advanced blocking</string>
+  <string name="qksms_plus_night_summary">Attiva la modalità notturna in base all\'ora del giorno</string>
+  <string name="qksms_plus_blacklist_title">Blocco avanzato</string>
   <string name="qksms_plus_blacklist_summary">Bloccare i messaggi che contengono parole chiave o corrispondono a modelli</string>
   <string name="qksms_plus_forward_title">Inoltro automatico</string>
-  <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
-  <string name="qksms_plus_respond_title">Auto-respond</string>
+  <string name="qksms_plus_forward_summary">Inoltrare automaticamente i messaggi da determinati mittenti</string>
+  <string name="qksms_plus_respond_title">Risposta automatica</string>
   <string name="qksms_plus_respond_summary">Rispondere automaticamente ai messaggi in arrivo con una risposta preimpostata</string>
-  <string name="qksms_plus_more_title">More</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+  <string name="qksms_plus_more_title">Altro</string>
+  <string name="qksms_plus_more_summary">QKSMS è sotto sviluppo attivo, e l\'acquisto includerà tutte le caratteristiche future di QKSMS+!</string>
   <string name="widget_loading">Caricamento&#8230;</string>
   <string name="widget_more">Mostra altre conversazioni</string>
   <string name="qkreply_menu_read">Segna come \"letto\"</string>
   <string name="qkreply_menu_call">Chiama</string>
   <string name="qkreply_menu_expand">Mostra dettagli</string>
-  <string name="qkreply_menu_collapse">Show less</string>
+  <string name="qkreply_menu_collapse">Mostra meno</string>
   <string name="qkreply_menu_view">Apri la conversazione</string>
   <string name="theme_material">Material</string>
   <string name="theme_plus">QKSMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Applica</string>
-  <string name="notification_reply">Rispondi</string>
-  <string name="notification_read">Segna come \"letto\"</string>
+  <string-array name="notification_actions">
+    <item>None</item>
+    <item>Mark read</item>
+    <item>Reply</item>
+    <item>Call</item>
+  </string-array>
   <string name="button_cancel">Annulla</string>
   <string name="button_delete">Elimina</string>
-  <string name="button_save">Save</string>
+  <string name="button_save">Salva</string>
   <string name="button_more">More</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">Sblocca</string>
   <string name="button_undo">Annulla</string>
   <string name="toast_copied">Copiato</string>
   <string name="toast_archived">Conversazioni archiviate</string>
-  <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
+  <string name="toast_qksms_plus">È necessario sbloccare QKSMS+ per utilizzare questo</string>
   <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="other">%s new messages</item>
+    <item quantity="one">Nuovo messaggio</item>
+    <item quantity="other">%s nuovi messaggi</item>
   </plurals>
   <string name="notification_message_failed_title">Messaggi non inviati</string>
   <string name="notification_message_failed_text">Il messaggio a %s non è stato inviato</string>
   <string-array name="night_modes">
-    <item>Disabled</item>
-    <item>Sempre Attivo</item>
-    <item>Automatico</item>
+    <item>Disabilitata</item>
+    <item>Sempre attiva</item>
+    <item>Automatica</item>
   </string-array>
   <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
+    <item>Mostra il nome e il messaggio</item>
+    <item>Mostra il nome</item>
+    <item>Non mostrare il contenuto</item>
   </string-array>
   <string-array name="text_sizes">
     <item>Piccolo</item>
     <item>Normale</item>
     <item>Grande</item>
-    <item>Larger</item>
+    <item>Enorme</item>
   </string-array>
   <string-array name="delayed_sending_labels">
-    <item>No delay</item>
-    <item>Short</item>
-    <item>Medium</item>
-    <item>Long</item>
+    <item>Nessun ritardo</item>
+    <item>Breve</item>
+    <item>Medio</item>
+    <item>Lungo</item>
   </string-array>
   <string-array name="mms_sizes">
     <item>100KB</item>
     <item>200KB</item>
-    <item>300KB (Recommended)</item>
+    <item>300KB (consigliato)</item>
     <item>600KB</item>
     <item>1000KB</item>
     <item>2000KB</item>
-    <item>No compression</item>
+    <item>Nessuna compressione</item>
   </string-array>
   <string-array name="qk_responses">
     <item>Okay</item>
