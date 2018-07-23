@@ -36,7 +36,7 @@ class ConversationRepositoryImpl @Inject constructor(
                 .equalTo("archived", archived)
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
-                .sort("date", Sort.DESCENDING)
+                .sort("pinned", Sort.DESCENDING, "date", Sort.DESCENDING)
                 .findAllAsync()
     }
 
@@ -48,7 +48,7 @@ class ConversationRepositoryImpl @Inject constructor(
                 .equalTo("archived", false)
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
-                .sort("date", Sort.DESCENDING)
+                .sort("pinned", Sort.DESCENDING, "date", Sort.DESCENDING)
                 .findAll())
     }
 
@@ -202,6 +202,30 @@ class ConversationRepositoryImpl @Inject constructor(
 
             realm.executeTransaction {
                 conversations.forEach { it.archived = false }
+            }
+        }
+    }
+
+    override fun markPinned(vararg threadIds: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            val conversations = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .findAll()
+
+            realm.executeTransaction {
+                conversations.forEach { it.pinned = true }
+            }
+        }
+    }
+
+    override fun markUnpinned(vararg threadIds: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            val conversations = realm.where(Conversation::class.java)
+                    .anyOf("id", threadIds)
+                    .findAll()
+
+            realm.executeTransaction {
+                conversations.forEach { it.pinned = false }
             }
         }
     }

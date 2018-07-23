@@ -26,7 +26,7 @@ import io.realm.RealmMigration
 class QkRealmMigration : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 4
+        const val SCHEMA_VERSION: Long = 5
     }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
@@ -62,6 +62,13 @@ class QkRealmMigration : RealmMigration {
                     .addField("sendAsGroup", Boolean::class.java, FieldAttribute.REQUIRED)
                     .addField("body", String::class.java, FieldAttribute.REQUIRED)
                     .addRealmListField("attachments", String::class.java)
+
+            version++
+        }
+
+        if (version == 4L) {
+            realm.schema.get("Conversation")
+                    ?.addField("pinned", Boolean::class.java, FieldAttribute.REQUIRED, FieldAttribute.INDEXED)
 
             version++
         }

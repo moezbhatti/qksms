@@ -166,6 +166,12 @@ class MainActivity : QkThemedActivity(), MainView {
             return
         }
 
+        val markPinned = when (state.page) {
+            is Inbox -> state.page.markPinned
+            is Archived -> state.page.markPinned
+            else -> true
+        }
+
         val markRead = when (state.page) {
             is Inbox -> state.page.markRead
             is Archived -> state.page.markRead
@@ -181,12 +187,14 @@ class MainActivity : QkThemedActivity(), MainView {
         toolbarSearch.setVisible(state.page is Inbox && state.page.selected == 0 || state.page is Searching)
         toolbarTitle.setVisible(toolbarSearch.visibility != View.VISIBLE)
 
-        toolbar.menu.findItem(R.id.read)?.isVisible = markRead && selectedConversations != 0
-        toolbar.menu.findItem(R.id.unread)?.isVisible = !markRead && selectedConversations != 0
         toolbar.menu.findItem(R.id.archive)?.isVisible = state.page is Inbox && selectedConversations != 0
         toolbar.menu.findItem(R.id.unarchive)?.isVisible = state.page is Archived && selectedConversations != 0
-        toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0
         toolbar.menu.findItem(R.id.delete)?.isVisible = selectedConversations != 0
+        toolbar.menu.findItem(R.id.pin)?.isVisible = markPinned && selectedConversations != 0
+        toolbar.menu.findItem(R.id.unpin)?.isVisible = !markPinned && selectedConversations != 0
+        toolbar.menu.findItem(R.id.read)?.isVisible = markRead && selectedConversations != 0
+        toolbar.menu.findItem(R.id.unread)?.isVisible = !markRead && selectedConversations != 0
+        toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0
 
         plus.isVisible = state.upgraded
         plusBanner.isVisible = !state.upgraded

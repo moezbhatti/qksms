@@ -22,6 +22,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkRealmAdapter
@@ -87,6 +88,7 @@ class ConversationsAdapter @Inject constructor(
             true -> context.getString(R.string.main_sender_you, conversation.snippet)
             false -> conversation.snippet
         }
+        view.pinned.isVisible = conversation.pinned
     }
 
     override fun getItemId(index: Int): Long {

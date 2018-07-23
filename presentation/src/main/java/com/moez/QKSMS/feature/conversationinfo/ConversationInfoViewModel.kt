@@ -40,14 +40,14 @@ import javax.inject.Named
 
 class ConversationInfoViewModel @Inject constructor(
         @Named("threadId") threadId: Long,
+        messageRepo: MessageRepository,
         private val conversationRepo: ConversationRepository,
+        private val deleteConversations: DeleteConversations,
         private val markArchived: MarkArchived,
         private val markUnarchived: MarkUnarchived,
         private val markBlocked: MarkBlocked,
         private val markUnblocked: MarkUnblocked,
-        private val messageRepo: MessageRepository,
-        private val navigator: Navigator,
-        private val deleteConversations: DeleteConversations
+        private val navigator: Navigator
 ) : QkViewModel<ConversationInfoView, ConversationInfoState>(
         ConversationInfoState(threadId = threadId, media = messageRepo.getPartsForConversation(threadId))
 ) {
@@ -56,7 +56,7 @@ class ConversationInfoViewModel @Inject constructor(
 
     init {
         disposables += conversationRepo.getConversationAsync(threadId)
-                .asObservable<Conversation>()
+                .asObservable()
                 .filter { conversation -> conversation.isLoaded }
                 .doOnNext { conversation ->
                     if (!conversation.isValid) {

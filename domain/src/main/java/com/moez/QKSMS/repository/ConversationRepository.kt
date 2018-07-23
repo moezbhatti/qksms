@@ -41,6 +41,10 @@ interface ConversationRepository {
 
     fun markUnarchived(vararg threadIds: Long)
 
+    fun markPinned(vararg threadIds: Long)
+
+    fun markUnpinned(vararg threadIds: Long)
+
     fun markBlocked(vararg threadIds: Long)
 
     fun markUnblocked(vararg threadIds: Long)

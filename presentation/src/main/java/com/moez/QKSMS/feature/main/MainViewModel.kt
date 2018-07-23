@@ -28,8 +28,10 @@ import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkAllSeen
 import com.moez.QKSMS.interactor.MarkArchived
 import com.moez.QKSMS.interactor.MarkBlocked
+import com.moez.QKSMS.interactor.MarkPinned
 import com.moez.QKSMS.interactor.MarkRead
 import com.moez.QKSMS.interactor.MarkUnarchived
+import com.moez.QKSMS.interactor.MarkUnpinned
 import com.moez.QKSMS.interactor.MarkUnread
 import com.moez.QKSMS.interactor.MigratePreferences
 import com.moez.QKSMS.interactor.SyncMessages
@@ -56,11 +58,13 @@ class MainViewModel @Inject constructor(
         syncRepository: SyncRepository,
         private val conversationRepo: ConversationRepository,
         private val deleteConversations: DeleteConversations,
-        private val markRead: MarkRead,
-        private val markUnread: MarkUnread,
         private val markArchived: MarkArchived,
-        private val markUnarchived: MarkUnarchived,
         private val markBlocked: MarkBlocked,
+        private val markPinned: MarkPinned,
+        private val markRead: MarkRead,
+        private val markUnarchived: MarkUnarchived,
+        private val markUnpinned: MarkUnpinned,
+        private val markUnread: MarkUnread,
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
         private val ratingManager: RatingManager,
@@ -205,16 +209,6 @@ class MainViewModel @Inject constructor(
         view.optionsItemIntent
                 .withLatestFrom(view.conversationsSelectedIntent) { itemId, conversations ->
                     when (itemId) {
-                        R.id.read -> {
-                            markRead.execute(conversations)
-                            view.clearSelection()
-                        }
-
-                        R.id.unread -> {
-                            markUnread.execute(conversations)
-                            view.clearSelection()
-                        }
-
                         R.id.archive -> {
                             markArchived.execute(conversations)
                             view.clearSelection()
@@ -225,12 +219,32 @@ class MainViewModel @Inject constructor(
                             view.clearSelection()
                         }
 
+                        R.id.delete -> view.showDeleteDialog()
+
+                        R.id.pin -> {
+                            markPinned.execute(conversations)
+                            view.clearSelection()
+                        }
+
+                        R.id.unpin -> {
+                            markUnpinned.execute(conversations)
+                            view.clearSelection()
+                        }
+
+                        R.id.read -> {
+                            markRead.execute(conversations)
+                            view.clearSelection()
+                        }
+
+                        R.id.unread -> {
+                            markUnread.execute(conversations)
+                            view.clearSelection()
+                        }
+
                         R.id.block -> {
                             markBlocked.execute(conversations)
                             view.clearSelection()
                         }
-
-                        R.id.delete -> view.showDeleteDialog()
                     }
                 }
                 .autoDisposable(view.scope())
@@ -256,6 +270,9 @@ class MainViewModel @Inject constructor(
 
         view.conversationsSelectedIntent
                 .withLatestFrom(state) { selection, state ->
+                    val pin = selection
+                            .mapNotNull(conversationRepo::getConversation)
+                            .sumBy { if (it.pinned) -1 else 1 } >= 0
                     val read = selection
                             .mapNotNull(conversationRepo::getConversation)
                             .sumBy { if (it.read) -1 else 1 } >= 0
@@ -263,12 +280,12 @@ class MainViewModel @Inject constructor(
 
                     when (state.page) {
                         is Inbox -> {
-                            val page = state.page.copy(markRead = read, selected = selected, showClearButton = selected > 0)
+                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected, showClearButton = selected > 0)
                             newState { copy(page = page.copy(markRead = read, selected = selected, showClearButton = selected > 0)) }
                         }
 
                         is Archived -> {
-                            val page = state.page.copy(markRead = read, selected = selected, showClearButton = selected > 0)
+                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected, showClearButton = selected > 0)
                             newState { copy(page = page) }
                         }
                     }
