@@ -3,6 +3,9 @@
 # QKSMS
 
 [![Build Status](https://travis-ci.org/moezbhatti/qksms.svg?branch=master)](https://travis-ci.org/moezbhatti/qksms)
+[![Liberapay donation](https://img.shields.io/badge/donate-liberapay-yellow.svg)](https://liberapay.com/moezbhatti/)
+[![Bitcoin donation](https://img.shields.io/badge/donate-bitcoin-yellow.svg)](http://qklabs.com/donate-btc/)
+[![PayPal donation](https://img.shields.io/badge/donate-paypal-yellow.svg)](http://bit.ly/QKSMSDonation)
 
 QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.moez.QKSMS) and on [F-Droid](https://f-droid.org/repository/browse/?fdid=com.moez.QKSMS)
 
@@ -20,11 +23,7 @@ When reporting a bug, please make sure to provide the following information
 
 ## Translations
 
-If you'd like to add translations to QKSMS, please join the project on [Crowdin](https://crowdin.com/project/qksms). Translations that are committed directly to source files will not be accepted. 
-
-## Donations
-
-If you'd like to donate to support the project, you can donate via [PayPal here](http://bit.ly/QKSMSDonation)
+If you'd like to add translations to QKSMS, please join the project on [Crowdin](https://crowdin.com/project/qksms). Translations that are committed directly to source files will not be accepted.
 
 ## Thank you
 
