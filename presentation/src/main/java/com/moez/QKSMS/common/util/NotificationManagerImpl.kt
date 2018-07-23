@@ -109,10 +109,6 @@ class NotificationManagerImpl @Inject constructor(
         val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
         val seenPI = PendingIntent.getBroadcast(context, threadId.toInt() + 20000, seenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val readIntent = Intent(context, MarkReadReceiver::class.java).putExtra("threadId", threadId)
-        val readPI = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, readIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val readAction = NotificationCompat.Action(R.drawable.ic_check_white_24dp, context.getString(R.string.notification_read), readPI)
-
         // We can't store a null preference, so map it to a null Uri if the pref string is empty
         val ringtone = prefs.ringtone(threadId).get()
                 .takeIf { it.isNotEmpty() }
@@ -127,17 +123,18 @@ class NotificationManagerImpl @Inject constructor(
                 .setAutoCancel(true)
                 .setContentIntent(contentPI)
                 .setDeleteIntent(seenPI)
-                .addAction(readAction)
                 .setSound(ringtone)
                 .setLights(Color.WHITE, 500, 2000)
                 .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
 
+        // Tell the notification if it's a group message
         val messagingStyle = NotificationCompat.MessagingStyle("Me")
         if (conversation.recipients.size >= 2) {
             messagingStyle.isGroupConversation = true
             messagingStyle.conversationTitle = conversation.getTitle()
         }
 
+        // Add the messages to the notification
         messages.forEach { message ->
             val name = when {
                 message.isMe() -> null
@@ -156,6 +153,7 @@ class NotificationManagerImpl @Inject constructor(
             }
         }
 
+        // Set the large icon
         val avatar = conversation.recipients.takeIf { it.size == 1 }
                 ?.first()?.address
                 ?.let { address ->
@@ -167,6 +165,7 @@ class NotificationManagerImpl @Inject constructor(
                 }
                 ?.let { futureGet -> tryOrNull(false) { futureGet.get() } }
 
+        // Bind the notification contents based on the notification preview mode
         when (prefs.notificationPreviews(threadId).get()) {
             Preferences.NOTIFICATION_PREVIEWS_ALL -> {
                 notification
@@ -194,14 +193,40 @@ class NotificationManagerImpl @Inject constructor(
                 .mapNotNull { recipient -> recipient.contact?.lookupKey }
                 .forEach { uri -> notification.addPerson(uri) }
 
-        if (Build.VERSION.SDK_INT >= 24) {
-            notification.addAction(getReplyAction(threadId))
-        } else {
-            val replyIntent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId)
-            val replyPI = PendingIntent.getActivity(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-            val replyAction = NotificationCompat.Action(R.drawable.ic_reply_white_24dp, context.getString(R.string.notification_reply), replyPI)
-            notification.addAction(replyAction)
-        }
+        // Add the action buttons
+        val actionLabels = context.resources.getStringArray(R.array.notification_actions)
+        listOf(prefs.notifAction1, prefs.notifAction2, prefs.notifAction3)
+                .map { preference -> preference.get() }
+                .distinct()
+                .mapNotNull { action ->
+                    when (action) {
+                        Preferences.NOTIFICATION_ACTION_READ -> {
+                            val intent = Intent(context, MarkReadReceiver::class.java).putExtra("threadId", threadId)
+                            val pi = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                            NotificationCompat.Action(R.drawable.ic_check_white_24dp, actionLabels[action], pi)
+                        }
+
+                        Preferences.NOTIFICATION_ACTION_REPLY -> {
+                            if (Build.VERSION.SDK_INT >= 24) {
+                                getReplyAction(threadId)
+                            } else {
+                                val intent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId)
+                                val pi = PendingIntent.getActivity(context, threadId.toInt() + 40000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                                NotificationCompat.Action(R.drawable.ic_reply_white_24dp, actionLabels[action], pi)
+                            }
+                        }
+
+                        Preferences.NOTIFICATION_ACTION_CALL -> {
+                            val address = conversation.recipients[0]?.address
+                            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$address"))
+                            val pi = PendingIntent.getActivity(context, threadId.toInt() + 50000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                            NotificationCompat.Action(R.drawable.ic_call_white_24dp, actionLabels[action], pi)
+                        }
+
+                        else -> null
+                    }
+                }
+                .forEach { notification.addAction(it) }
 
         if (prefs.qkreply.get()) {
             notification.priority = NotificationCompat.PRIORITY_DEFAULT
@@ -251,15 +276,14 @@ class NotificationManagerImpl @Inject constructor(
         val replyIntent = Intent(context, RemoteMessagingReceiver::class.java).putExtra("threadId", threadId)
         val replyPI = PendingIntent.getBroadcast(context, threadId.toInt() + 40000, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val title = context.resources.getStringArray(R.array.notification_actions)[Preferences.NOTIFICATION_ACTION_REPLY]
         val responseSet = context.resources.getStringArray(R.array.qk_responses)
         val remoteInput = RemoteInput.Builder("body")
-                .setLabel(context.getString(R.string.notification_reply))
+                .setLabel(title)
                 .setChoices(responseSet)
                 .build()
 
-        return NotificationCompat.Action.Builder(
-                R.drawable.ic_reply_white_24dp,
-                context.getString(R.string.notification_reply), replyPI)
+        return NotificationCompat.Action.Builder(R.drawable.ic_reply_white_24dp, title, replyPI)
                 .addRemoteInput(remoteInput)
                 .build()
     }

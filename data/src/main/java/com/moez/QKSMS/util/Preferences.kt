@@ -42,6 +42,12 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val NOTIFICATION_PREVIEWS_NAME = 1
         const val NOTIFICATION_PREVIEWS_NONE = 2
 
+        const val NOTIFICATION_ACTION_NONE = 0
+        const val NOTIFICATION_ACTION_READ = 1
+        const val NOTIFICATION_ACTION_REPLY = 2
+        const val NOTIFICATION_ACTION_CALL = 3
+        const val NOTIFICATION_ACTION_DELETE = 4
+
         const val SEND_DELAY_NONE = 0
         const val SEND_DELAY_SHORT = 1
         const val SEND_DELAY_MEDIUM = 2
@@ -63,6 +69,9 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val delivery = rxPrefs.getBoolean("delivery", false)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
+    val notifAction1 = rxPrefs.getInteger("notifAction1", 1)
+    val notifAction2 = rxPrefs.getInteger("notifAction2", 2)
+    val notifAction3 = rxPrefs.getInteger("notifAction3", 0)
     val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
     val qkreplyTapDismiss = rxPrefs.getBoolean("qkreplyTapDismiss", true)
     val unicode = rxPrefs.getBoolean("unicode", false)

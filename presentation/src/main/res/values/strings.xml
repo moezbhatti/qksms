@@ -163,6 +163,10 @@
     <string name="settings_system_font_title">Use system font</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
     <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notification_actions_title">Actions</string>
+    <string name="settings_notification_action_1">Button 1</string>
+    <string name="settings_notification_action_2">Button 2</string>
+    <string name="settings_notification_action_3">Button 3</string>
     <string name="settings_notification_previews_title">Notification previews</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
@@ -246,8 +250,12 @@
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Apply</string>
 
-    <string name="notification_reply">Reply</string>
-    <string name="notification_read">Mark read</string>
+    <string-array name="notification_actions">
+        <item>None</item>
+        <item>Mark read</item>
+        <item>Reply</item>
+        <item>Call</item>
+    </string-array>
 
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>

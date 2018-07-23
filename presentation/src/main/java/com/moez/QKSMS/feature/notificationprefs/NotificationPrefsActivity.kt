@@ -19,21 +19,25 @@
 package com.moez.QKSMS.feature.notificationprefs
 
 import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.QkDialog
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
+import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.notification_prefs_activity.*
@@ -43,11 +47,13 @@ import javax.inject.Inject
 class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     @Inject lateinit var previewModeDialog: QkDialog
+    @Inject lateinit var actionsDialog: QkDialog
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val previewModeSelectedIntent by lazy { previewModeDialog.adapter.menuItemClicks }
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
+    override val actionsSelectedIntent by lazy { actionsDialog.adapter.menuItemClicks }
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[NotificationPrefsViewModel::class.java] }
 
@@ -70,30 +76,43 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
         previewModeDialog.setTitle(R.string.settings_notification_previews_title)
         previewModeDialog.adapter.setData(R.array.notification_preview_options)
+        actionsDialog.adapter.setData(R.array.notification_actions)
 
         // Listen to clicks for all of the preferences
         (0 until preferences.childCount)
                 .map { index -> preferences.getChildAt(index) }
-                .filter { view -> view is PreferenceView }
-                .forEach { preference ->
-                    preference.clicks().subscribe {
-                        preferenceClickIntent.onNext(preference as PreferenceView)
-                    }
-                }
+                .mapNotNull { view -> view as? PreferenceView }
+                .map { preference -> preference.clicks().map { preference } }
+                .let { Observable.merge(it) }
+                .autoDisposable(scope())
+                .subscribe(preferenceClickIntent)
     }
 
     override fun render(state: NotificationPrefsState) {
-        if (state.conversationTitle.isNotEmpty()) {
+        if (state.threadId != 0L) {
             title = state.conversationTitle
         }
 
         notifications.checkbox.isChecked = state.notificationsEnabled
-        notificationPreviews.summary = state.previewSummary
+        previews.summary = state.previewSummary
         previewModeDialog.adapter.selectedItem = state.previewId
         vibration.checkbox.isChecked = state.vibrationEnabled
         ringtone.summary = state.ringtoneName
+
+        actionsDivider.isVisible = state.threadId == 0L
+        actionsTitle.isVisible = state.threadId == 0L
+        action1.isVisible = state.threadId == 0L
+        action1.summary = state.action1Summary
+        action2.isVisible = state.threadId == 0L
+        action2.summary = state.action2Summary
+        action3.isVisible = state.threadId == 0L
+        action3.summary = state.action3Summary
+
+        qkreplyDivider.isVisible = state.threadId == 0L
+        qkreplyTitle.isVisible = state.threadId == 0L
         qkreply.checkbox.isChecked = state.qkReplyEnabled
-        qkreplyTapDismiss.setVisible(state.qkReplyEnabled)
+        qkreply.isVisible = state.threadId == 0L
+        qkreplyTapDismiss.setVisible(state.threadId == 0L && state.qkReplyEnabled)
         qkreplyTapDismiss.checkbox.isChecked = state.qkReplyTapDismiss
     }
 
@@ -106,6 +125,11 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, default)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
         startActivityForResult(intent, 123)
+    }
+
+    override fun showActionDialog(selected: Int) {
+        actionsDialog.adapter.selectedItem = selected
+        actionsDialog.show(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

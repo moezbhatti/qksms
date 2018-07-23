@@ -19,10 +19,8 @@
 package com.moez.QKSMS.feature.notificationprefs
 
 import android.content.Context
-import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
-import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.scope
@@ -33,30 +31,25 @@ import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Named
 
 class NotificationPrefsViewModel @Inject constructor(
-        private val intent: Intent,
+        @Named("threadId") private val threadId: Long,
         private val context: Context,
         private val conversationRepo: ConversationRepository,
         private val navigator: Navigator,
         private val prefs: Preferences
-) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState()) {
+) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
 
-    private val threadId = intent.extras?.getLong("threadId") ?: 0L
-
-    private val notifications: Preference<Boolean>
-    private val previews: Preference<Int>
-    private val vibration: Preference<Boolean>
-    private val ringtone: Preference<String>
+    private val notifications = prefs.notifications(threadId)
+    private val previews = prefs.notificationPreviews(threadId)
+    private val vibration = prefs.vibration(threadId)
+    private val ringtone = prefs.ringtone(threadId)
 
     init {
-        notifications = prefs.notifications(threadId)
-        previews = prefs.notificationPreviews(threadId)
-        vibration = prefs.vibration(threadId)
-        ringtone = prefs.ringtone(threadId)
-
         disposables += Flowable.just(threadId)
                 .mapNotNull { threadId -> conversationRepo.getConversation(threadId) }
                 .map { conversation -> conversation.getTitle() }
@@ -71,6 +64,16 @@ class NotificationPrefsViewModel @Inject constructor(
                 .subscribe { previewId ->
                     newState { copy(previewSummary = previewLabels[previewId], previewId = previewId) }
                 }
+
+        val actionLabels = context.resources.getStringArray(R.array.notification_actions)
+        disposables += prefs.notifAction1.asObservable()
+                .subscribe { previewId -> newState { copy(action1Summary = actionLabels[previewId]) } }
+
+        disposables += prefs.notifAction2.asObservable()
+                .subscribe { previewId -> newState { copy(action2Summary = actionLabels[previewId]) } }
+
+        disposables += prefs.notifAction3.asObservable()
+                .subscribe { previewId -> newState { copy(action3Summary = actionLabels[previewId]) } }
 
         disposables += vibration.asObservable()
                 .subscribe { enabled -> newState { copy(vibrationEnabled = enabled) } }
@@ -102,11 +105,17 @@ class NotificationPrefsViewModel @Inject constructor(
 
                         R.id.notifications -> notifications.set(!notifications.get())
 
-                        R.id.notificationPreviews -> view.showPreviewModeDialog()
+                        R.id.previews -> view.showPreviewModeDialog()
 
                         R.id.vibration -> vibration.set(!vibration.get())
 
                         R.id.ringtone -> view.showRingtonePicker(ringtone.get().takeIf { it.isNotEmpty() }?.let(Uri::parse))
+
+                        R.id.action1 -> view.showActionDialog(prefs.notifAction1.get())
+
+                        R.id.action2 -> view.showActionDialog(prefs.notifAction2.get())
+
+                        R.id.action3 -> view.showActionDialog(prefs.notifAction3.get())
 
                         R.id.qkreply -> prefs.qkreply.set(!prefs.qkreply.get())
 
@@ -121,5 +130,16 @@ class NotificationPrefsViewModel @Inject constructor(
         view.ringtoneSelectedIntent
                 .autoDisposable(view.scope())
                 .subscribe { ringtone -> this.ringtone.set(ringtone) }
+
+        view.actionsSelectedIntent
+                .withLatestFrom(view.preferenceClickIntent) { action, preference ->
+                    when (preference.id) {
+                        R.id.action1 -> prefs.notifAction1.set(action)
+                        R.id.action2 -> prefs.notifAction2.set(action)
+                        R.id.action3 -> prefs.notifAction3.set(action)
+                    }
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
     }
 }
