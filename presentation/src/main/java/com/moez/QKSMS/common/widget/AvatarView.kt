@@ -28,12 +28,12 @@ import android.widget.FrameLayout
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.util.Colors
-import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Recipient
+import com.moez.QKSMS.util.GlideApp
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
 

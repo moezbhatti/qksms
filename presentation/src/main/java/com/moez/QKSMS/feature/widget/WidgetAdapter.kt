@@ -33,7 +33,6 @@ import android.widget.RemoteViewsService
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.getColorCompat
 import com.moez.QKSMS.feature.main.MainActivity
@@ -42,6 +41,7 @@ import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.PhoneNumber
 import com.moez.QKSMS.repository.ConversationRepository
+import com.moez.QKSMS.util.GlideApp
 import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
 

@@ -18,8 +18,6 @@
  */
 package com.moez.QKSMS.feature.gallery
 
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.net.Uri
 import android.os.Bundle
 import android.transition.ChangeBounds
@@ -27,6 +25,8 @@ import android.transition.ChangeImageTransform
 import android.transition.TransitionSet
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -39,8 +39,8 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.GlideCompletionListener
 import com.moez.QKSMS.common.base.QkActivity
-import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.util.GlideApp
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject

@@ -27,11 +27,11 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
-import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.util.GlideApp
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*

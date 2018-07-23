@@ -4,13 +4,13 @@ import android.content.Context
 import android.view.View
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.util.GlideApp
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.BubbleImageView
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.util.GlideApp
 import kotlinx.android.synthetic.main.mms_preview_list_item.view.*
 
 class MediaBinder(private val context: Context, private val navigator: Navigator) : PartBinder {

@@ -20,7 +20,7 @@ package com.moez.QKSMS.injection
 
 import com.moez.QKSMS.common.QKApplication
 import com.moez.QKSMS.common.QkDialog
-import com.moez.QKSMS.common.util.ContactImageLoader
+import com.moez.QKSMS.util.ContactImageLoader
 import com.moez.QKSMS.common.widget.AvatarView
 import com.moez.QKSMS.common.widget.PagerTitleView
 import com.moez.QKSMS.common.widget.PreferenceView

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
-import com.moez.QKSMS.common.util.GlideApp
+import com.moez.QKSMS.util.GlideApp
 import kotlinx.android.synthetic.main.attachment_list_item.view.*
 import javax.inject.Inject
 

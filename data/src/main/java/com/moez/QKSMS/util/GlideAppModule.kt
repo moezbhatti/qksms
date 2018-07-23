@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.common.util
+package com.moez.QKSMS.util
 
 import android.content.Context
 import android.util.Log
