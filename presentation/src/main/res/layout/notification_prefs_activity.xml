@@ -53,6 +53,7 @@
                 android:id="@+id/notificationsO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:summary="@string/settings_notifications_o_summary"
                 app:title="@string/settings_notifications_title"
                 tools:visibility="gone" />
 
