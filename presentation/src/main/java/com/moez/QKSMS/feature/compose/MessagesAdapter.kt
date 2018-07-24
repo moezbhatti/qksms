@@ -158,7 +158,7 @@ class MessagesAdapter @Inject constructor(
                 false -> {
                     clicks.onNext(message)
                     expanded[message.id] = view.status.visibility != View.VISIBLE
-                    bindStatus(viewHolder, message, next)
+                    notifyItemChanged(position)
                 }
             }
         }
