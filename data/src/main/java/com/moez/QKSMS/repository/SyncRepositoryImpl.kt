@@ -48,7 +48,6 @@ import javax.inject.Singleton
 class SyncRepositoryImpl @Inject constructor(
         private val contentResolver: ContentResolver,
         private val conversationRepo: ConversationRepository,
-        private val messageRepo: MessageRepository,
         private val cursorToConversation: CursorToConversation,
         private val cursorToMessage: CursorToMessage,
         private val cursorToRecipient: CursorToRecipient,
@@ -64,6 +63,7 @@ class SyncRepositoryImpl @Inject constructor(
             val id: Long,
             val archived: Boolean,
             val blocked: Boolean,
+            val pinned: Boolean,
             val name: String)
 
     override val syncProgress: Subject<SyncRepository.SyncProgress> = BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
@@ -83,10 +83,12 @@ class SyncRepositoryImpl @Inject constructor(
                 .or()
                 .equalTo("blocked", true)
                 .or()
+                .equalTo("pinned", true)
+                .or()
                 .isNotEmpty("name")
                 .endGroup()
                 .findAll()
-                .map { PersistedData(it.id, it.archived, it.blocked, it.name) }
+                .map { PersistedData(it.id, it.archived, it.blocked, it.pinned, it.name) }
 
         realm.delete(Contact::class.java)
         realm.delete(Conversation::class.java)
@@ -109,7 +111,7 @@ class SyncRepositoryImpl @Inject constructor(
         persistedData += oldBlockedSenders.get()
                 .map { threadIdString -> threadIdString.toLong() }
                 .filter { threadId -> persistedData.none { it.id == threadId } }
-                .map { threadId -> PersistedData(threadId, false, true, "") }
+                .map { threadId -> PersistedData(threadId, false, true, false, "") }
 
         // Sync conversations
         cursorToConversation.getConversationsCursor()?.use { conversationCursor ->
@@ -120,6 +122,7 @@ class SyncRepositoryImpl @Inject constructor(
                 val conversation = conversations.firstOrNull { conversation -> conversation.id == data.id }
                 conversation?.archived = data.archived
                 conversation?.blocked = data.blocked
+                conversation?.pinned = data.pinned
                 conversation?.name = data.name
             }
 
