@@ -79,7 +79,10 @@
     <string name="rate_dismiss">DISMISS</string>
 
     <string name="dialog_delete_title">Delete</string>
-    <string name="dialog_delete_message">Are you sure you would like to delete this conversation?</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">Are you sure you would like to delete this conversation?</item>
+        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    </plurals>
 
     <string-array name="message_options">
         <item>Copy text</item>

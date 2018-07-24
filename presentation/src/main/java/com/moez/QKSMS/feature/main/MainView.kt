@@ -43,7 +43,7 @@ interface MainView : QkView<MainState> {
     fun requestPermissions()
     fun clearSearch()
     fun clearSelection()
-    fun showDeleteDialog()
+    fun showDeleteDialog(count: Int)
 
 }
 

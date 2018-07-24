@@ -18,11 +18,11 @@
  */
 package com.moez.QKSMS.feature.conversationinfo
 
+import android.os.Bundle
+import android.text.InputFilter
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
-import android.text.InputFilter
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
@@ -137,7 +137,7 @@ class ConversationInfoActivity : QkThemedActivity(), ConversationInfoView {
     override fun showDeleteDialog() {
         AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_delete_title)
-                .setMessage(R.string.dialog_delete_message)
+                .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, 1))
                 .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(Unit) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()

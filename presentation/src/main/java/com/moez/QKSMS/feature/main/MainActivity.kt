@@ -292,10 +292,10 @@ class MainActivity : QkThemedActivity(), MainView {
         conversationsAdapter.clearSelection()
     }
 
-    override fun showDeleteDialog() {
+    override fun showDeleteDialog(count: Int) {
         AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_delete_title)
-                .setMessage(R.string.dialog_delete_message)
+                .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, count, count))
                 .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(Unit) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()

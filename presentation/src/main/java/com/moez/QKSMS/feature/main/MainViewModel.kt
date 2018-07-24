@@ -219,7 +219,7 @@ class MainViewModel @Inject constructor(
                             view.clearSelection()
                         }
 
-                        R.id.delete -> view.showDeleteDialog()
+                        R.id.delete -> view.showDeleteDialog(conversations.size)
 
                         R.id.pin -> {
                             markPinned.execute(conversations)
