@@ -36,8 +36,8 @@
   <string name="main_menu_archive">Archivieren</string>
   <string name="main_menu_unarchive">Wiederherstellen</string>
   <string name="main_menu_delete">Löschen</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">Oben anheften</string>
+  <string name="main_menu_unpin">Loslösen</string>
   <string name="main_menu_read">Als gelesen markieren</string>
   <string name="main_menu_unread">Als ungelesen markieren</string>
   <string name="main_menu_block">Blockieren</string>
@@ -65,13 +65,16 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Hilfe &amp; Feedback</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_plus_banner_summary">Schalte erstaunliche Neue Funktionen frei und unterstütze die Entwicklung</string>
   <string name="rate_title">Gefällt dir QKSMS?</string>
   <string name="rate_summary">Teile etwas von deiner Liebe und Bewerte uns auf Google Play!</string>
   <string name="rate_okay">OKAY!</string>
   <string name="rate_dismiss">VERWERFEN</string>
   <string name="dialog_delete_title">Löschen</string>
-  <string name="dialog_delete_message">Bist Du sicher, dass Du diese Unterhaltung löschen möchtest?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Text kopieren</item>
     <item>Weiterleiten</item>
@@ -126,12 +129,12 @@
   <string name="info_delete">Unterhaltung löschen</string>
   <string name="gallery_toast_saved">In Galerie gespeichert</string>
   <string name="scheduled_title">Geplant</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_empty_description">Nachricht genau dann senden, wenn du magst</string>
+  <string name="scheduled_empty_message_1">Hey! Wann war dein Geburtstag nochmal?</string>
+  <string name="scheduled_empty_message_2">Er ist am 23. Dezember</string>
+  <string name="scheduled_empty_message_3">Alles Gute zum Geburtstag! Schau was für ein großartiger Freund ich bin, dass ich an deinen Geburtstag denke</string>
+  <string name="scheduled_empty_message_3_timestamp">Am 23. Dezember senden </string>
+  <string name="scheduled_compose_cd">Nachricht verschieben</string>
   <string name="scheduled_options_title">Geplante Nachricht</string>
   <string-array name="scheduled_options">
     <item>Sofort senden</item>
@@ -149,11 +152,11 @@
   <string name="settings_system_font_title">Systemschriftart verwenden</string>
   <string name="settings_auto_emoji_title">Automatische Emoji</string>
   <string name="settings_notifications_title">Benachrichtigungen</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">Zum Anpassen antippen</string>
+  <string name="settings_notification_actions_title">Aktionen</string>
+  <string name="settings_notification_action_1">Taste 1</string>
+  <string name="settings_notification_action_2">Taste 2</string>
+  <string name="settings_notification_action_3">Taste 3</string>
   <string name="settings_notification_previews_title">Benachrichtigungsvorschau</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Ton</string>
@@ -230,10 +233,10 @@
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Übernehmen</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
+    <item>Nichts</item>
+    <item>Als gelesen markieren</item>
+    <item>Antworten</item>
+    <item>Anrufen</item>
   </string-array>
   <string name="button_cancel">Abbrechen</string>
   <string name="button_delete">Löschen</string>

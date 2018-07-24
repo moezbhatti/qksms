@@ -71,7 +71,14 @@
   <string name="rate_okay">حسناً</string>
   <string name="rate_dismiss">استبعاد</string>
   <string name="dialog_delete_title">حذف</string>
-  <string name="dialog_delete_message">هل أنت متأكد من رغبتك حذف هذه المحادثة؟</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="zero">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="two">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>نسخ النص</item>
     <item>إعادة توجيه</item>

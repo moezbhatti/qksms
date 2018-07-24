@@ -36,8 +36,8 @@
   <string name="main_menu_archive">Архівувати</string>
   <string name="main_menu_unarchive">Розархівувати</string>
   <string name="main_menu_delete">Видалити</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">Закріпити</string>
+  <string name="main_menu_unpin">Відкріпити</string>
   <string name="main_menu_read">Позначити як прочитане</string>
   <string name="main_menu_unread">Позначити як непрочитане</string>
   <string name="main_menu_block">Блокувати</string>
@@ -65,13 +65,18 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Допомога та зворотній зв\'язок</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_plus_banner_summary">Розблокувати нові дивовижні можливості та підтримати розробку</string>
   <string name="rate_title">Подобається QKSMS?</string>
   <string name="rate_summary">Поділись любов\'ю та оціни нас на Google Play!</string>
   <string name="rate_okay">Добре!</string>
   <string name="rate_dismiss">ВІДХИЛИТИ</string>
   <string name="dialog_delete_title">Видалити</string>
-  <string name="dialog_delete_message">Ви впевнені, що хочете видалити цю розмову?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Скопіювати текст</item>
     <item>Переслати</item>
@@ -126,12 +131,12 @@
   <string name="info_delete">Видалити бесіду</string>
   <string name="gallery_toast_saved">Зберегти до галереї</string>
   <string name="scheduled_title">Заплановані</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_empty_description">Автоматично надсилайте повідомлення саме в той час, який ви захочете</string>
+  <string name="scheduled_empty_message_1">Агов! Коли у вас день народження?</string>
+  <string name="scheduled_empty_message_2">23 грудня</string>
+  <string name="scheduled_empty_message_3">З Днем народження! Подивіться, який я чудовий друг згадав про ваш день народження</string>
+  <string name="scheduled_empty_message_3_timestamp">Відправлення 23 грудня </string>
+  <string name="scheduled_compose_cd">Запланувати повідомлення</string>
   <string name="scheduled_options_title">Заплановане повідомлення</string>
   <string-array name="scheduled_options">
     <item>Надіслати зараз</item>
@@ -149,11 +154,11 @@
   <string name="settings_system_font_title">Використовувати системний шрифт</string>
   <string name="settings_auto_emoji_title">Автоматичні emoji</string>
   <string name="settings_notifications_title">Сповіщення</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">Торкніться, щоб налаштувати</string>
+  <string name="settings_notification_actions_title">Дії</string>
+  <string name="settings_notification_action_1">Кнопка 1</string>
+  <string name="settings_notification_action_2">Кнопка 2</string>
+  <string name="settings_notification_action_3">Кнопка 3</string>
   <string name="settings_notification_previews_title">Попередній перегляд сповіщень</string>
   <string name="settings_vibration_title">Вібро</string>
   <string name="settings_ringtone_title">Звук</string>
@@ -230,10 +235,10 @@
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Застосувати</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
+    <item>Немає</item>
+    <item>Позначити як прочитане</item>
+    <item>Відповісти</item>
+    <item>Зателефонувати</item>
   </string-array>
   <string name="button_cancel">Скасувати</string>
   <string name="button_delete">Видалити</string>

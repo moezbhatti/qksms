@@ -71,7 +71,12 @@
   <string name="rate_okay">OK!</string>
   <string name="rate_dismiss">ATMESTI</string>
   <string name="dialog_delete_title">Ištrinti</string>
-  <string name="dialog_delete_message">Ar tikrai norite ištrinti šį pokalbį?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Kopijuoti tekstą</item>
     <item>Persiųsti</item>

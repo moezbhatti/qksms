@@ -71,7 +71,9 @@
   <string name="rate_okay">好！</string>
   <string name="rate_dismiss">放棄</string>
   <string name="dialog_delete_title">刪除</string>
-  <string name="dialog_delete_message">你確定要刪除這個對話？</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>複製文本</item>
     <item>轉寄</item>

@@ -71,7 +71,12 @@
   <string name="rate_okay">Tak určitě!</string>
   <string name="rate_dismiss">ZAVŘÍT</string>
   <string name="dialog_delete_title">Smazat</string>
-  <string name="dialog_delete_message">Opravdu chcete odstranit tuto konverzaci?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Kopírovat text</item>
     <item>Přeposlat</item>

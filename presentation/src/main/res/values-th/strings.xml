@@ -71,7 +71,9 @@
   <string name="rate_okay">ตกลง!</string>
   <string name="rate_dismiss">ยกเลิก</string>
   <string name="dialog_delete_title">ลบ</string>
-  <string name="dialog_delete_message">คุณต้องการลบบทสนทนานี้ใช่หรือไม่</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>คัดลอกข้อความ</item>
     <item>ส่งต่อ</item>

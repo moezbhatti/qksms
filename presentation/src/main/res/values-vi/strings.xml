@@ -71,7 +71,9 @@
   <string name="rate_okay">Đồng ý!</string>
   <string name="rate_dismiss">Bỏ qua</string>
   <string name="dialog_delete_title">Xóa</string>
-  <string name="dialog_delete_message">Bạn có muốn xóa bỏ cuộc hội thoại này?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Sao chép văn bản</item>
     <item>Chuyển tiếp</item>

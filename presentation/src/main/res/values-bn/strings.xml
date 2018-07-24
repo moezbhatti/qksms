@@ -71,7 +71,10 @@
   <string name="rate_okay">ঠিক আছে!</string>
   <string name="rate_dismiss">বাতিল করুন</string>
   <string name="dialog_delete_title">মুছে ফেলুন</string>
-  <string name="dialog_delete_message">আপনি কি নিশ্চিত যে আপনি এই কথোপকথন মুছে ফেলতে চান?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>পাঠ্য অনুলিপি করুন</item>
     <item>সামনে পাঠান</item>

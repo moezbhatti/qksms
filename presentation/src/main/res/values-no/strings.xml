@@ -71,7 +71,10 @@
   <string name="rate_okay">OK!</string>
   <string name="rate_dismiss">AVVIS</string>
   <string name="dialog_delete_title">Slett</string>
-  <string name="dialog_delete_message">Er du sikker på at du vil slette samtalen?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Kopier tekst</item>
     <item>Forward</item>

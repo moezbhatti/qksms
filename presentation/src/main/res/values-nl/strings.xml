@@ -36,8 +36,8 @@
   <string name="main_menu_archive">Archiveren</string>
   <string name="main_menu_unarchive">Terugzetten uit archief</string>
   <string name="main_menu_delete">Verwijderen</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">Bovenaan vastzetten</string>
+  <string name="main_menu_unpin">Losmaken</string>
   <string name="main_menu_read">Markeren als gelezen</string>
   <string name="main_menu_unread">Markeren als ongelezen</string>
   <string name="main_menu_block">Blokkeren</string>
@@ -71,7 +71,10 @@
   <string name="rate_okay">Ok</string>
   <string name="rate_dismiss">Sluiten</string>
   <string name="dialog_delete_title">Verwijderen</string>
-  <string name="dialog_delete_message">Weet je zeker dat je deze conversatie wilt verwijderen?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Kopieer tekst</item>
     <item>Doorsturen</item>

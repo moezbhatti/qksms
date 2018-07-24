@@ -71,7 +71,9 @@
   <string name="rate_okay">OK!</string>
   <string name="rate_dismiss">消去</string>
   <string name="dialog_delete_title">削除</string>
-  <string name="dialog_delete_message">この会話を削除してもよろしいですか?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>テキストをコピー</item>
     <item>転送</item>

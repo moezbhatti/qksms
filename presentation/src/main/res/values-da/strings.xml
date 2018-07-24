@@ -19,7 +19,7 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="title_archived">Arkiveret</string>
+  <string name="title_archived">Arkiver</string>
   <string name="title_settings">Indstillinger</string>
   <string name="title_notification_prefs">Notifikationer</string>
   <string name="title_theme">Tema</string>
@@ -36,8 +36,8 @@
   <string name="main_menu_archive">Arkivér</string>
   <string name="main_menu_unarchive">Fjern fra arkiv</string>
   <string name="main_menu_delete">Slet</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">Fastgør til toppen</string>
+  <string name="main_menu_unpin">Frigør</string>
   <string name="main_menu_read">Markér som læst</string>
   <string name="main_menu_unread">Markér som ulæst</string>
   <string name="main_menu_block">Blokér</string>
@@ -65,13 +65,16 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Hjælp og feedback</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_plus_banner_summary">Oplås fantastiske nye funktioner og støt udvikling</string>
   <string name="rate_title">Synes om QKSMS?</string>
   <string name="rate_summary">Del og bedøm os på Google Play!</string>
   <string name="rate_okay">OKAY!</string>
   <string name="rate_dismiss">AFVIS</string>
   <string name="dialog_delete_title">Slet</string>
-  <string name="dialog_delete_message">Er du sikker på du vil slette denne samtale?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Kopiér tekst</item>
     <item>Videresend</item>
@@ -126,12 +129,12 @@
   <string name="info_delete">Slet samtale</string>
   <string name="gallery_toast_saved">Gemt til galleri</string>
   <string name="scheduled_title">Planlagt</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_empty_description">Send automatisk en meddelelse på præcist det tidspunkt, du vil</string>
+  <string name="scheduled_empty_message_1">Hej! Hvornår var det, at du har fødselsdag?</string>
+  <string name="scheduled_empty_message_2">Det er d. 23. december</string>
+  <string name="scheduled_empty_message_3">Tillykke med fødselsdagen! Se hvor god en ven jeg er, at huske din fødselsdag</string>
+  <string name="scheduled_empty_message_3_timestamp">Sender d. 23. december </string>
+  <string name="scheduled_compose_cd">Planlæg en besked</string>
   <string name="scheduled_options_title">Planlagt besked</string>
   <string-array name="scheduled_options">
     <item>Send nu</item>
@@ -149,11 +152,11 @@
   <string name="settings_system_font_title">Brug systemets skrifttype</string>
   <string name="settings_auto_emoji_title">Automatisk emoji</string>
   <string name="settings_notifications_title">Notifikationer</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">Tryk for at tilpasse</string>
+  <string name="settings_notification_actions_title">Handlinger</string>
+  <string name="settings_notification_action_1">Knap 1</string>
+  <string name="settings_notification_action_2">Knap 2</string>
+  <string name="settings_notification_action_3">Knap 3</string>
   <string name="settings_notification_previews_title">Notifikationseksempler</string>
   <string name="settings_vibration_title">Vibration</string>
   <string name="settings_ringtone_title">Lyd</string>
@@ -230,10 +233,10 @@
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Anvend</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
+    <item>Ingen</item>
+    <item>Markér som læst</item>
+    <item>Besvar</item>
+    <item>Ring op</item>
   </string-array>
   <string name="button_cancel">Annullér</string>
   <string name="button_delete">Slet</string>

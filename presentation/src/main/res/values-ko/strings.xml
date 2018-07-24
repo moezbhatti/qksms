@@ -71,7 +71,9 @@
   <string name="rate_okay">OKAY!</string>
   <string name="rate_dismiss">DISMISS</string>
   <string name="dialog_delete_title">삭제</string>
-  <string name="dialog_delete_message">정말 이 대화를 삭제하시겠습니까?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Copy text</item>
     <item>Forward</item>

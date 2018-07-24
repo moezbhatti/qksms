@@ -71,7 +71,11 @@
   <string name="rate_okay">U REDU!</string>
   <string name="rate_dismiss">ODBACI</string>
   <string name="dialog_delete_title">Izbriši</string>
-  <string name="dialog_delete_message">Jeste li sigurni da želite izbrisati ovaj razgovor?</string>
+  <plurals name="dialog_delete_message">
+    <item quantity="one">Are you sure you would like to delete this conversation?</item>
+    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+  </plurals>
   <string-array name="message_options">
     <item>Kopiraj tekst</item>
     <item>Proslijedi</item>
