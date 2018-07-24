@@ -19,8 +19,8 @@
 package com.moez.QKSMS.common.widget
 
 import android.content.Context
-import androidx.emoji.widget.EmojiAppCompatTextView
 import android.util.AttributeSet
+import androidx.emoji.widget.EmojiAppCompatTextView
 import com.moez.QKSMS.common.util.TextViewStyler
 import com.moez.QKSMS.injection.appComponent
 import javax.inject.Inject

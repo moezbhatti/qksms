@@ -19,11 +19,11 @@
 package com.moez.QKSMS.common.widget
 
 import android.content.Context
-import androidx.appcompat.widget.LinearLayoutCompat
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.resolveThemeAttribute
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor

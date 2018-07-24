@@ -20,11 +20,11 @@ package com.moez.QKSMS.feature.settings
 
 import android.app.ProgressDialog
 import android.app.TimePickerDialog
+import android.os.Bundle
+import android.text.format.DateFormat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
-import android.text.format.DateFormat
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R

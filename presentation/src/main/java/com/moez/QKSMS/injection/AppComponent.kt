@@ -20,7 +20,6 @@ package com.moez.QKSMS.injection
 
 import com.moez.QKSMS.common.QKApplication
 import com.moez.QKSMS.common.QkDialog
-import com.moez.QKSMS.util.ContactImageLoader
 import com.moez.QKSMS.common.widget.AvatarView
 import com.moez.QKSMS.common.widget.PagerTitleView
 import com.moez.QKSMS.common.widget.PreferenceView
@@ -29,6 +28,7 @@ import com.moez.QKSMS.common.widget.QkSwitch
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.feature.compose.DetailedChipView
 import com.moez.QKSMS.feature.widget.WidgetAdapter
+import com.moez.QKSMS.util.ContactImageLoader
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton

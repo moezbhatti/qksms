@@ -20,8 +20,8 @@ package com.moez.QKSMS.common.widget
 
 import android.content.Context
 import android.content.res.ColorStateList
-import androidx.appcompat.widget.SwitchCompat
 import android.util.AttributeSet
+import androidx.appcompat.widget.SwitchCompat
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.getColorCompat

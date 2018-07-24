@@ -20,11 +20,11 @@ package com.moez.QKSMS.common.util.extensions
 
 import android.app.Activity
 import android.content.Context
-import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 
 fun Context.getColorCompat(colorRes: Int): Int {
     return ContextCompat.getColor(this, colorRes)
