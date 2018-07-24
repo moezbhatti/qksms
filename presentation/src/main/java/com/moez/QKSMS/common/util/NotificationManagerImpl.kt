@@ -38,6 +38,7 @@ import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivity
+import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.mapper.CursorToPartImpl
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
@@ -56,7 +57,8 @@ class NotificationManagerImpl @Inject constructor(
         private val colors: Colors,
         private val conversationRepo: ConversationRepository,
         private val prefs: Preferences,
-        private val messageRepo: MessageRepository
+        private val messageRepo: MessageRepository,
+        private val permissions: PermissionManager
 ) : com.moez.QKSMS.manager.NotificationManager {
 
     companion object {
@@ -219,7 +221,8 @@ class NotificationManagerImpl @Inject constructor(
 
                         Preferences.NOTIFICATION_ACTION_CALL -> {
                             val address = conversation.recipients[0]?.address
-                            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$address"))
+                            val intentAction = if (permissions.hasCalling()) Intent.ACTION_CALL else Intent.ACTION_DIAL
+                            val intent = Intent(intentAction, Uri.parse("tel:$address"))
                             val pi = PendingIntent.getActivity(context, threadId.toInt() + 50000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
                             NotificationCompat.Action(R.drawable.ic_call_white_24dp, actionLabels[action], pi)
                         }

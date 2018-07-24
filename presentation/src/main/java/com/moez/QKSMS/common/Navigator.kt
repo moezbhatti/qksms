@@ -42,6 +42,7 @@ import com.moez.QKSMS.feature.settings.about.AboutActivity
 import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.NotificationManager
+import com.moez.QKSMS.manager.PermissionManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,7 +51,8 @@ import javax.inject.Singleton
 class Navigator @Inject constructor(
         private val context: Context,
         private val analyticsManager: AnalyticsManager,
-        private val notificationManager: NotificationManager
+        private val notificationManager: NotificationManager,
+        private val permissions: PermissionManager
 ) {
 
     private fun startActivity(intent: Intent) {
@@ -174,7 +176,8 @@ class Navigator @Inject constructor(
     }
 
     fun makePhoneCall(address: String) {
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$address"))
+        val action = if (permissions.hasCalling()) Intent.ACTION_CALL else Intent.ACTION_DIAL
+        val intent = Intent(action, Uri.parse("tel:$address"))
         startActivityExternal(intent)
     }
 
