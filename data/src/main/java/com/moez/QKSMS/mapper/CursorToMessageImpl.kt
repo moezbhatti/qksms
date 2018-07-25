@@ -130,7 +130,7 @@ class CursorToMessageImpl @Inject constructor(
         // column. In this case, we need to check if we do, before trying to sync messages
         if (!preferences.canUseSubId.isSet) {
             val canUseSubId = tryOrNull {
-                SqliteWrapper.query(context, uri, arrayOf(Mms.SUBSCRIPTION_ID))?.use { true }
+                SqliteWrapper.query(context, uri, arrayOf(Mms.SUBSCRIPTION_ID), logError = false)?.use { true }
             }
 
             preferences.canUseSubId.set(canUseSubId ?: false)

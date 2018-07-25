@@ -35,12 +35,15 @@ object SqliteWrapper {
             projection: Array<String>? = null,
             selection: String? = null,
             selectionArgs: Array<String>? = null,
-            sortOrder: String? = null
+            sortOrder: String? = null,
+            logError: Boolean = true
     ): Cursor? {
         return try {
             context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
         } catch (e: SQLiteException) {
-            Timber.e(e)
+            if (logError) {
+                Timber.e(e)
+            }
             null
         }
 
