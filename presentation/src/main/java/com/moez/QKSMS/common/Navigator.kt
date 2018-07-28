@@ -188,7 +188,7 @@ class Navigator @Inject constructor(
 
 
     fun showRating() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=${context.packageName}"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.moez.QKSMS"))
                 .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
                         or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
                         or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
@@ -196,7 +196,7 @@ class Navigator @Inject constructor(
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + context.packageName)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.moez.QKSMS")))
         }
     }
 
@@ -221,6 +221,15 @@ class Navigator @Inject constructor(
                 .append("SDK: ${Build.VERSION.SDK_INT}")
                 .toString())
         startActivityExternal(intent)
+    }
+
+    fun showInvite() {
+        analyticsManager.track("Clicked Invite")
+        Intent(Intent.ACTION_SEND)
+                .setType("text/plain")
+                .putExtra(Intent.EXTRA_TEXT, "http://qklabs.com/download")
+                .let { Intent.createChooser(it, null) }
+                .let(this::startActivityExternal)
     }
 
     fun addContact(address: String) {

@@ -47,4 +47,4 @@ interface MainView : QkView<MainState> {
 
 }
 
-enum class DrawerItem { INBOX, ARCHIVED, SCHEDULED, BLOCKING, SETTINGS, PLUS, HELP }
+enum class DrawerItem { INBOX, ARCHIVED, SCHEDULED, BLOCKING, SETTINGS, PLUS, HELP, INVITE }

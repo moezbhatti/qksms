@@ -152,6 +152,21 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/invite"
+            style="@style/DrawerRow">
+
+            <ImageView
+                style="@style/DrawerIcon"
+                android:src="@drawable/ic_people_black_24dp"
+                android:tint="?android:attr/textColorSecondary" />
+
+            <com.moez.QKSMS.common.widget.QkTextView
+                style="@style/DrawerText"
+                android:text="@string/drawer_invite" />
+
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/plusBanner"
             android:layout_width="match_parent"
