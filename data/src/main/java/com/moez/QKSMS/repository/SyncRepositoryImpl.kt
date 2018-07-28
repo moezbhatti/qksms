@@ -41,6 +41,7 @@ import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
+import io.realm.Sort
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -125,6 +126,17 @@ class SyncRepositoryImpl @Inject constructor(
                 conversation?.pinned = data.pinned
                 conversation?.name = data.name
             }
+
+            realm.where(Message::class.java)
+                    .sort("date", Sort.DESCENDING)
+                    .distinctValues("threadId")
+                    .findAll()
+                    .forEach { message ->
+                        val conversation = conversations.firstOrNull { conversation -> conversation.id == message.threadId }
+                        conversation?.date = message.date
+                        conversation?.snippet = message.getSummary()
+                        conversation?.me = message.isMe()
+                    }
 
             realm.insertOrUpdate(conversations)
         }
