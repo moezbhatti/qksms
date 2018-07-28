@@ -72,10 +72,10 @@
   <string name="rate_dismiss">ВІДХИЛИТИ</string>
   <string name="dialog_delete_title">Видалити</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Ви впевнені, що хочете видалити цю бесіду?</item>
+    <item quantity="few">Ви впевнені, що хочете видалити %d бесіди?</item>
+    <item quantity="many">Ви впевнені, що хочете видалити %d бесід?</item>
+    <item quantity="other">Ви впевнені, що хочете видалити %d бесіди?</item>
   </plurals>
   <string-array name="message_options">
     <item>Скопіювати текст</item>

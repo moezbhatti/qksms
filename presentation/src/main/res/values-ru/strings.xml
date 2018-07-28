@@ -36,8 +36,8 @@
   <string name="main_menu_archive">Архивировать</string>
   <string name="main_menu_unarchive">Разархивировать</string>
   <string name="main_menu_delete">Удалить</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">Закрепить наверху</string>
+  <string name="main_menu_unpin">Открепить</string>
   <string name="main_menu_read">Отметить прочитанным</string>
   <string name="main_menu_unread">Отметить непрочитанным</string>
   <string name="main_menu_block">Блокировать</string>
@@ -65,17 +65,17 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Помощь и обратная связь</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_plus_banner_summary">Разблокировать новые удивительные функции и поддержать разработку</string>
   <string name="rate_title">Нравится QKSMS?</string>
   <string name="rate_summary">Поделитесь любовью и оцените нас в Google Play!</string>
   <string name="rate_okay">OK!</string>
   <string name="rate_dismiss">ОТКЛОНИТЬ</string>
   <string name="dialog_delete_title">Удалить</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Уверены, что хотите удалить эту беседу?</item>
+    <item quantity="few">Уверены, что хотите удалить %d беседы?</item>
+    <item quantity="many">Уверены, что хотите удалить %d бесед?</item>
+    <item quantity="other">Уверены, что хотите удалить %d бесед?</item>
   </plurals>
   <string-array name="message_options">
     <item>Скопировать текст</item>
@@ -131,12 +131,12 @@
   <string name="info_delete">Удалить беседу</string>
   <string name="gallery_toast_saved">Сохранено в галерее</string>
   <string name="scheduled_title">Запланировать</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_empty_description">Автоматически отправить сообщение когда пожелаете</string>
+  <string name="scheduled_empty_message_1">Привет! Когда у Вас был день рождения?</string>
+  <string name="scheduled_empty_message_2">На 23 декабря</string>
+  <string name="scheduled_empty_message_3">С днем рождения! Посмотрите, какой я отличный друг, помнящий о Вашем дне рождения</string>
+  <string name="scheduled_empty_message_3_timestamp">Отправка 23 декабря </string>
+  <string name="scheduled_compose_cd">Запланировать сообщение</string>
   <string name="scheduled_options_title">Запланированное сообщение</string>
   <string-array name="scheduled_options">
     <item>Отправить сейчас</item>
@@ -154,11 +154,11 @@
   <string name="settings_system_font_title">Использовать системный шрифт</string>
   <string name="settings_auto_emoji_title">Автоматические emoji</string>
   <string name="settings_notifications_title">Уведомления</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">Нажмите для настройки</string>
+  <string name="settings_notification_actions_title">Действия</string>
+  <string name="settings_notification_action_1">Кнопка 1</string>
+  <string name="settings_notification_action_2">Кнопка 2</string>
+  <string name="settings_notification_action_3">Кнопка 3</string>
   <string name="settings_notification_previews_title">Предпросмотр уведомлений</string>
   <string name="settings_vibration_title">Вибросигнал</string>
   <string name="settings_ringtone_title">Звук</string>
@@ -235,10 +235,10 @@
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Применить</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
+    <item>Нет</item>
+    <item>Отметить непрочитанным</item>
+    <item>Ответить</item>
+    <item>Позвонить</item>
   </string-array>
   <string name="button_cancel">Отмена</string>
   <string name="button_delete">Удалить</string>

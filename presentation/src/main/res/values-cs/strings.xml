@@ -36,8 +36,8 @@
   <string name="main_menu_archive">Archivovat</string>
   <string name="main_menu_unarchive">Obnovit z archivu</string>
   <string name="main_menu_delete">Smazat</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">Připnout nahoru</string>
+  <string name="main_menu_unpin">Odepnout</string>
   <string name="main_menu_read">Označit jako přečtené</string>
   <string name="main_menu_unread">Označit jako nepřečtené</string>
   <string name="main_menu_block">Blokovat</string>
@@ -47,7 +47,7 @@
   <string name="main_message_results">%d zpráv</string>
   <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
   <string name="inbox_search_empty_text">Žádné výsledky</string>
-  <string name="archived_empty_text">Zde se objeví Vaše archivované konverzace</string>
+  <string name="archived_empty_text">Zde se objeví vaše archivované konverzace</string>
   <string name="main_fab_cd">Zahájit novou konverzaci</string>
   <string name="main_default_sms_title">Zamilujte si znovu psaní</string>
   <string name="main_default_sms_message">Nastavte si QKSMS jako výchozí SMS aplikaci</string>
@@ -65,17 +65,17 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Nápověda a zpětná vazba</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_plus_banner_summary">Odemkněte úžasné nové funkce a podpořte vývoj</string>
   <string name="rate_title">Líbí se Vám QKSMS?</string>
   <string name="rate_summary">Sdílejte trochu lásky a ohodnoťte nás na Google Play!</string>
   <string name="rate_okay">Tak určitě!</string>
   <string name="rate_dismiss">ZAVŘÍT</string>
   <string name="dialog_delete_title">Smazat</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Opravdu chcete smazat tuto konverzaci?</item>
+    <item quantity="few">Opravdu chcete smazat %d konverzace?</item>
+    <item quantity="many">Opravdu chcete smazat %d konverzací?</item>
+    <item quantity="other">Opravdu chcete smazat %d konverzací?</item>
   </plurals>
   <string-array name="message_options">
     <item>Kopírovat text</item>
@@ -131,12 +131,12 @@
   <string name="info_delete">Odstranit konverzaci</string>
   <string name="gallery_toast_saved">Uloženo do galerie</string>
   <string name="scheduled_title">Naplánováno</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_empty_description">Automaticky odeslat zprávu v přesný okamžik, který chcete</string>
+  <string name="scheduled_empty_message_1">Zdar! Kdy máš narozeniny?</string>
+  <string name="scheduled_empty_message_2">23. prosince</string>
+  <string name="scheduled_empty_message_3">Všechno nejlepší! Hleďme, ještě že si je pamatuji</string>
+  <string name="scheduled_empty_message_3_timestamp">Posíláno 23. prosince</string>
+  <string name="scheduled_compose_cd">Naplánovat zprávu</string>
   <string name="scheduled_options_title">Naplánovaná zpráva</string>
   <string-array name="scheduled_options">
     <item>Odeslat nyní</item>
@@ -154,11 +154,11 @@
   <string name="settings_system_font_title">Použít systémové písmo</string>
   <string name="settings_auto_emoji_title">Automatické emoji</string>
   <string name="settings_notifications_title">Upozornění</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">Klepnutím přizpůsobit</string>
+  <string name="settings_notification_actions_title">Akce</string>
+  <string name="settings_notification_action_1">Tlačítko 1</string>
+  <string name="settings_notification_action_2">Tlačítko 2</string>
+  <string name="settings_notification_action_3">Tlačítko 3</string>
   <string name="settings_notification_previews_title">Nastavení oznámení</string>
   <string name="settings_vibration_title">Vibrace</string>
   <string name="settings_ringtone_title">Vyzvánění</string>
@@ -235,10 +235,10 @@
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Použít</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
+    <item>Žádné</item>
+    <item>Přečteno</item>
+    <item>Odpovědět</item>
+    <item>Volat</item>
   </string-array>
   <string name="button_cancel">Zrušit</string>
   <string name="button_delete">Odstranit</string>

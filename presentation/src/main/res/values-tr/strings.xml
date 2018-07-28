@@ -36,7 +36,7 @@
   <string name="main_menu_archive">Arşivlenmiş</string>
   <string name="main_menu_unarchive">Arşivden çıkar</string>
   <string name="main_menu_delete">Sil</string>
-  <string name="main_menu_pin">Üstte sabitle</string>
+  <string name="main_menu_pin">Sabitle</string>
   <string name="main_menu_unpin">Sabitlemeyi kaldır</string>
   <string name="main_menu_read">Okundu olarak işaretle</string>
   <string name="main_menu_unread">Okunmadı olarak işaretle</string>
@@ -73,7 +73,7 @@
   <string name="dialog_delete_title">Sil</string>
   <plurals name="dialog_delete_message">
     <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">%d konuşmaları silmek istediğinizden emin misiniz?</item>
   </plurals>
   <string-array name="message_options">
     <item>Metni kopyala</item>

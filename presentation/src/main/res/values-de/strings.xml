@@ -72,8 +72,8 @@
   <string name="rate_dismiss">VERWERFEN</string>
   <string name="dialog_delete_title">Löschen</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Bist du sicher, dass du diese Unterhaltung löschen möchtest?</item>
+    <item quantity="other">Bist du sicher, dass du %d Unterhaltungen löschen möchtest?</item>
   </plurals>
   <string-array name="message_options">
     <item>Text kopieren</item>

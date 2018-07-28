@@ -72,8 +72,8 @@
   <string name="rate_dismiss">ANNULER</string>
   <string name="dialog_delete_title">Supprimer</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Êtes-vous certain de vouloir supprimer cette conversation ?</item>
+    <item quantity="other">Êtes-vous certain de vouloir supprimer %d conversation ?</item>
   </plurals>
   <string-array name="message_options">
     <item>Copier le texte</item>

@@ -36,8 +36,8 @@
   <string name="main_menu_archive">存档</string>
   <string name="main_menu_unarchive">取消存档</string>
   <string name="main_menu_delete">删除</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">固定到顶部</string>
+  <string name="main_menu_unpin">取消固定</string>
   <string name="main_menu_read">标记为已读</string>
   <string name="main_menu_unread">标记为未读</string>
   <string name="main_menu_block">拦截</string>
@@ -65,14 +65,14 @@
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">帮助及反馈</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_plus_banner_summary">解锁炫酷特性并支持开发者</string>
   <string name="rate_title">喜欢QKSMS？</string>
   <string name="rate_summary">在Google Play分享你的感受，并给我们评分！</string>
   <string name="rate_okay">好的！</string>
   <string name="rate_dismiss">放弃</string>
   <string name="dialog_delete_title">删除</string>
   <plurals name="dialog_delete_message">
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">你确定要删除%d段对话么？</item>
   </plurals>
   <string-array name="message_options">
     <item>复制</item>
@@ -110,7 +110,7 @@
   <string name="compose_attach_cd">添加附件</string>
   <string name="compose_gallery_cd">添加照片</string>
   <string name="compose_camera_cd">拍照</string>
-  <string name="compose_schedule_cd">Schedule message</string>
+  <string name="compose_schedule_cd">定时消息</string>
   <string name="compose_sim_cd">%s已选择， 更改SIM卡</string>
   <string name="compose_send_cd">发送消息</string>
   <string name="message_status_sending">正在发送...</string>

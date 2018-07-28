@@ -72,8 +72,8 @@
   <string name="rate_dismiss">AFVIS</string>
   <string name="dialog_delete_title">Slet</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Sikker på, at du vil slette denne samtale?</item>
+    <item quantity="other">Sikker på, at du vil slette disse %d samtaler?</item>
   </plurals>
   <string-array name="message_options">
     <item>Kopiér tekst</item>
