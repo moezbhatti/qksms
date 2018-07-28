@@ -23,6 +23,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 fun RecyclerView.Adapter<*>.autoScrollToStart(recyclerView: RecyclerView) {
     registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        override fun onChanged() {
+            val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+
+            if (layoutManager.stackFromEnd) {
+                recyclerView.scrollToPosition(itemCount - 1)
+            }
+        }
+
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
             val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
 

@@ -41,12 +41,14 @@
         android:clipToPadding="false"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toBottomOf="@id/composeBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="220dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:stackFromEnd="true"
         tools:listitem="@layout/message_list_item_in" />
 
     <View
