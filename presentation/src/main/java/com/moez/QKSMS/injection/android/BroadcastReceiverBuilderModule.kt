@@ -16,9 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.injection
+package com.moez.QKSMS.injection.android
 
 import com.moez.QKSMS.feature.widget.WidgetProvider
+import com.moez.QKSMS.injection.scope.ActivityScope
 import com.moez.QKSMS.receiver.BootReceiver
 import com.moez.QKSMS.receiver.DefaultSmsChangedReceiver
 import com.moez.QKSMS.receiver.MarkReadReceiver

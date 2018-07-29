@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.themepicker
+package com.moez.QKSMS.feature.themepicker.injection
 
-import com.moez.QKSMS.common.base.QkViewContract
-import io.reactivex.Observable
+import com.moez.QKSMS.feature.themepicker.ThemePickerController
+import com.moez.QKSMS.injection.scope.ControllerScope
+import dagger.Module
+import dagger.Provides
+import javax.inject.Named
 
-interface ThemePickerView : QkViewContract<ThemePickerState> {
+@Module
+class ThemePickerModule(private val controller: ThemePickerController) {
 
-    fun themeSelected(): Observable<Int>
-    fun hsvThemeSelected(): Observable<Int>
-    fun clearHsvThemeClicks(): Observable<*>
-    fun applyHsvThemeClicks(): Observable<*>
-    fun viewQksmsPlusClicks(): Observable<*>
-
-    fun setCurrentTheme(color: Int)
-    fun showQksmsPlusSnackbar()
+    @Provides
+    @ControllerScope
+    @Named("threadId")
+    fun provideThreadId(): Long = controller.threadId
 
 }

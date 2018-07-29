@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.injection
+package com.moez.QKSMS.injection.android
 
 import com.moez.QKSMS.feature.blocked.BlockedActivity
 import com.moez.QKSMS.feature.blocked.BlockedActivityModule
@@ -38,7 +38,7 @@ import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivityModule
 import com.moez.QKSMS.feature.settings.SettingsActivity
 import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
-import com.moez.QKSMS.feature.themepicker.ThemePickerActivityModule
+import com.moez.QKSMS.injection.scope.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -86,7 +86,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindBlockedActivity(): BlockedActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [ThemePickerActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindThemePickerActivity(): ThemePickerActivity
 
 }

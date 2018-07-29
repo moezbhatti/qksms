@@ -16,17 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.injection
+package com.moez.QKSMS.injection.scope
 
-import com.moez.QKSMS.service.HeadlessSmsSendService
-import dagger.Module
-import dagger.android.ContributesAndroidInjector
+import javax.inject.Scope
 
-@Module
-abstract class ServiceBuilderModule {
-
-    @ActivityScope
-    @ContributesAndroidInjector()
-    abstract fun bindHeadlessSmsSendService(): HeadlessSmsSendService
-
-}
+@Scope
+annotation class ActivityScope

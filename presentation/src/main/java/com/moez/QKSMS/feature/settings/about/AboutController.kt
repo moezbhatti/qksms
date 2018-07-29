@@ -1,8 +1,6 @@
 package com.moez.QKSMS.feature.settings.about
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
@@ -11,7 +9,6 @@ import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.injection.appComponent
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.about_activity.*
-import kotlinx.android.synthetic.main.about_activity.view.*
 import javax.inject.Inject
 
 class AboutController : QkController<AboutView, Unit, AboutPresenter>(), AboutView {
@@ -20,12 +17,7 @@ class AboutController : QkController<AboutView, Unit, AboutPresenter>(), AboutVi
 
     init {
         appComponent.inject(this)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(R.layout.about_activity, container, false).apply {
-            version.summary = BuildConfig.VERSION_NAME
-        }
+        layoutRes = R.layout.about_activity
     }
 
     override fun onAttach(view: View) {
@@ -33,6 +25,8 @@ class AboutController : QkController<AboutView, Unit, AboutPresenter>(), AboutVi
         presenter.bindIntents(this)
         setTitle(R.string.about_title)
         showBackButton(true)
+
+        version.summary = BuildConfig.VERSION_NAME
     }
 
     override fun preferenceClicks(): Observable<PreferenceView> = (0 until preferences.childCount)

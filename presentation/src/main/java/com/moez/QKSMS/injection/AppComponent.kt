@@ -29,7 +29,11 @@ import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.feature.compose.DetailedChipView
 import com.moez.QKSMS.feature.settings.SettingsController
 import com.moez.QKSMS.feature.settings.about.AboutController
+import com.moez.QKSMS.feature.themepicker.injection.ThemePickerComponent
 import com.moez.QKSMS.feature.widget.WidgetAdapter
+import com.moez.QKSMS.injection.android.ActivityBuilderModule
+import com.moez.QKSMS.injection.android.BroadcastReceiverBuilderModule
+import com.moez.QKSMS.injection.android.ServiceBuilderModule
 import com.moez.QKSMS.util.ContactImageLoader
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
@@ -43,6 +47,8 @@ import javax.inject.Singleton
     BroadcastReceiverBuilderModule::class,
     ServiceBuilderModule::class])
 interface AppComponent {
+
+    fun themePickerBuilder(): ThemePickerComponent.Builder
 
     fun inject(application: QKApplication)
 

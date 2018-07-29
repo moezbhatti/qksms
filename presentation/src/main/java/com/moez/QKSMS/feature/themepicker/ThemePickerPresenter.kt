@@ -20,8 +20,7 @@ package com.moez.QKSMS.feature.themepicker
 
 import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.util.Preferences
@@ -31,30 +30,30 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 import javax.inject.Named
 
-class ThemePickerViewModel @Inject constructor(
+class ThemePickerPresenter @Inject constructor(
         @Named("threadId") threadId: Long,
+        prefs: Preferences,
         private val billingManager: BillingManager,
         private val colors: Colors,
-        private val navigator: Navigator,
-        private val prefs: Preferences
-) : QkViewModel<ThemePickerView, ThemePickerState>(ThemePickerState(threadId = threadId)) {
+        private val navigator: Navigator
+) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(threadId = threadId)) {
 
     private val theme: Preference<Int> = prefs.theme(threadId)
 
-    override fun bindView(view: ThemePickerView) {
-        super.bindView(view)
+    override fun bindIntents(view: ThemePickerView) {
+        super.bindIntents(view)
 
         theme.asObservable()
                 .autoDisposable(view.scope())
                 .subscribe { color -> view.setCurrentTheme(color) }
 
         // Update the theme when a material theme is clicked
-        view.themeSelectedIntent
+        view.themeSelected()
                 .autoDisposable(view.scope())
                 .subscribe { color -> theme.set(color) }
 
         // Update the color of the apply button
-        view.hsvThemeSelectedIntent
+        view.hsvThemeSelected()
                 .doOnNext { color -> newState { copy(newColor = color) } }
                 .map { color -> colors.textPrimaryOnThemeForColor(color) }
                 .doOnNext { color -> newState { copy(newTextColor = color) } }
@@ -62,13 +61,13 @@ class ThemePickerViewModel @Inject constructor(
                 .subscribe()
 
         // Toggle the visibility of the apply group
-        Observables.combineLatest(theme.asObservable(), view.hsvThemeSelectedIntent) { old, new -> old != new }
+        Observables.combineLatest(theme.asObservable(), view.hsvThemeSelected()) { old, new -> old != new }
                 .autoDisposable(view.scope())
                 .subscribe { themeChanged -> newState { copy(applyThemeVisible = themeChanged) } }
 
         // Update the theme, when apply is clicked
-        view.hsvThemeAppliedIntent
-                .withLatestFrom(view.hsvThemeSelectedIntent) { _, color -> color }
+        view.applyHsvThemeClicks()
+                .withLatestFrom(view.hsvThemeSelected()) { _, color -> color }
                 .withLatestFrom(billingManager.upgradeStatus) { color, upgraded ->
                     if (!upgraded) {
                         view.showQksmsPlusSnackbar()
@@ -80,12 +79,12 @@ class ThemePickerViewModel @Inject constructor(
                 .subscribe()
 
         // Show QKSMS+ activity
-        view.viewQksmsPlusIntent
+        view.viewQksmsPlusClicks()
                 .autoDisposable(view.scope())
                 .subscribe { navigator.showQksmsPlusActivity("settings_theme") }
 
         // Reset the theme
-        view.hsvThemeClearedIntent
+        view.clearHsvThemeClicks()
                 .withLatestFrom(theme.asObservable()) { _, color -> color }
                 .autoDisposable(view.scope())
                 .subscribe { color -> view.setCurrentTheme(color) }

@@ -16,9 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.injection
+package com.moez.QKSMS.feature.themepicker.injection
 
-import javax.inject.Scope
+import com.moez.QKSMS.feature.themepicker.ThemePickerController
+import com.moez.QKSMS.injection.scope.ControllerScope
+import dagger.Subcomponent
 
-@Scope
-annotation class ActivityScope
+@ControllerScope
+@Subcomponent(modules = [ThemePickerModule::class])
+interface ThemePickerComponent {
+
+    fun inject(controller: ThemePickerController)
+
+    @Subcomponent.Builder
+    interface Builder {
+        fun themePickerModule(module: ThemePickerModule): Builder
+        fun build(): ThemePickerComponent
+    }
+
+}

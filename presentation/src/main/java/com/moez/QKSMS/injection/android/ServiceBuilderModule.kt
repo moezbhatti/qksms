@@ -16,20 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.themepicker
+package com.moez.QKSMS.injection.android
 
-import com.moez.QKSMS.common.base.QkViewContract
-import io.reactivex.Observable
+import com.moez.QKSMS.injection.scope.ActivityScope
+import com.moez.QKSMS.service.HeadlessSmsSendService
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
-interface ThemePickerView : QkViewContract<ThemePickerState> {
+@Module
+abstract class ServiceBuilderModule {
 
-    fun themeSelected(): Observable<Int>
-    fun hsvThemeSelected(): Observable<Int>
-    fun clearHsvThemeClicks(): Observable<*>
-    fun applyHsvThemeClicks(): Observable<*>
-    fun viewQksmsPlusClicks(): Observable<*>
-
-    fun setCurrentTheme(color: Int)
-    fun showQksmsPlusSnackbar()
+    @ActivityScope
+    @ContributesAndroidInjector()
+    abstract fun bindHeadlessSmsSendService(): HeadlessSmsSendService
 
 }

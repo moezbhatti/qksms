@@ -21,6 +21,7 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.feature.settings.about.AboutController
+import com.moez.QKSMS.feature.themepicker.ThemePickerController
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
@@ -60,23 +61,11 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     init {
         appComponent.inject(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
+        layoutRes = R.layout.settings_activity
 
         colors.themeObservable()
                 .autoDisposable(scope())
                 .subscribe { activity?.recreate() }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(R.layout.settings_activity, container, false).apply {
-            preferences.postDelayed({ preferences.animateLayoutChanges = true }, 100)
-
-            nightModeDialog.adapter.setData(R.array.night_modes)
-            textSizeDialog.adapter.setData(R.array.text_sizes)
-            sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
-            mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
-
-            about.summary = context.getString(R.string.settings_version, BuildConfig.VERSION_NAME)
-        }
     }
 
     override fun onAttach(view: View) {
@@ -84,6 +73,15 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         presenter.bindIntents(this)
         setTitle(R.string.title_settings)
         showBackButton(true)
+
+        preferences.postDelayed({ preferences.animateLayoutChanges = true }, 100)
+
+        nightModeDialog.adapter.setData(R.array.night_modes)
+        textSizeDialog.adapter.setData(R.array.text_sizes)
+        sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
+        mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
+
+        about.summary = context.getString(R.string.settings_version, BuildConfig.VERSION_NAME)
     }
 
     override fun preferenceClicks(): Observable<PreferenceView> = (0 until preferences.childCount)
@@ -168,10 +166,16 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
     override fun showMmsSizePicker() = mmsSizeDialog.show(activity!!)
 
+    override fun showThemePicker() {
+        router.pushController(RouterTransaction.with(ThemePickerController())
+                .pushChangeHandler(FadeChangeHandler(150))
+                .popChangeHandler(FadeChangeHandler(150)))
+    }
+
     override fun showAbout() {
         router.pushController(RouterTransaction.with(AboutController())
-                .pushChangeHandler(FadeChangeHandler())
-                .popChangeHandler(FadeChangeHandler()))
+                .pushChangeHandler(FadeChangeHandler(150))
+                .popChangeHandler(FadeChangeHandler(150)))
     }
 
 }

@@ -23,7 +23,6 @@ import com.moez.QKSMS.common.widget.PreferenceView
 import io.reactivex.Observable
 
 interface SettingsView : QkViewContract<SettingsState> {
-
     fun preferenceClicks(): Observable<PreferenceView>
     fun viewQksmsPlusClicks(): Observable<*>
     fun nightModeSelected(): Observable<Int>
@@ -40,5 +39,6 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun showTextSizePicker()
     fun showDelayDurationDialog()
     fun showMmsSizePicker()
+    fun showThemePicker()
     fun showAbout()
 }

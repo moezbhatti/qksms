@@ -16,25 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.themepicker
+package com.moez.QKSMS.injection.scope
 
-import androidx.lifecycle.ViewModel
-import com.moez.QKSMS.injection.ViewModelKey
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoMap
-import javax.inject.Named
+import javax.inject.Scope
 
-@Module
-class ThemePickerActivityModule {
-
-    @Provides
-    @Named("threadId")
-    fun provideThreadId(activity: ThemePickerActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(ThemePickerViewModel::class)
-    fun provideThemePickerViewModel(viewModel: ThemePickerViewModel): ViewModel = viewModel
-
-}
+@Scope
+annotation class ControllerScope
