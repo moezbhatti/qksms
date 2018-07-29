@@ -11,6 +11,7 @@ import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import timber.log.Timber
 import java.util.*
@@ -27,76 +28,70 @@ class SettingsPresenter @Inject constructor(
         private val syncMessages: SyncMessages
 ) : QkPresenter<SettingsView, SettingsState>(SettingsState(theme = colors.theme().theme)) {
 
-    override fun onCreate(view: SettingsView) {
-        super.onCreate(view)
+    init {
+        newState { copy(theme = colors.theme().theme) }
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
-        prefs.nightMode.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.nightMode.asObservable()
                 .subscribe { nightMode ->
                     newState { copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
                 }
 
-        prefs.nightStart.asObservable()
+        disposables += prefs.nightStart.asObservable()
                 .map { time -> nightModeManager.parseTime(time) }
                 .map { calendar -> calendar.timeInMillis }
                 .map { millis -> dateFormatter.getTimestamp(millis) }
-                .autoDisposable(view.scope())
                 .subscribe { nightStart -> newState { copy(nightStart = nightStart) } }
 
-        prefs.nightEnd.asObservable()
+        disposables += prefs.nightEnd.asObservable()
                 .map { time -> nightModeManager.parseTime(time) }
                 .map { calendar -> calendar.timeInMillis }
                 .map { millis -> dateFormatter.getTimestamp(millis) }
-                .autoDisposable(view.scope())
                 .subscribe { nightEnd -> newState { copy(nightEnd = nightEnd) } }
 
-        prefs.black.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.black.asObservable()
                 .subscribe { black -> newState { copy(black = black) } }
 
-        prefs.notifications().asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.notifications().asObservable()
                 .subscribe { enabled -> newState { copy(notificationsEnabled = enabled) } }
 
-        prefs.autoEmoji.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.autoEmoji.asObservable()
                 .subscribe { enabled -> newState { copy(autoEmojiEnabled = enabled) } }
 
         val delayedSendingLabels = context.resources.getStringArray(R.array.delayed_sending_labels)
-        prefs.sendDelay.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.sendDelay.asObservable()
                 .subscribe { id -> newState { copy(sendDelaySummary = delayedSendingLabels[id], sendDelayId = id) } }
 
-        prefs.delivery.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
-        prefs.textSize.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.textSize.asObservable()
                 .subscribe { textSize ->
                     newState { copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
                 }
 
-        prefs.systemFont.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.systemFont.asObservable()
                 .subscribe { enabled -> newState { copy(systemFontEnabled = enabled) } }
 
-        prefs.unicode.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { copy(stripUnicodeEnabled = enabled) } }
 
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
-        prefs.mmsSize.asObservable()
-                .autoDisposable(view.scope())
+        disposables += prefs.mmsSize.asObservable()
                 .subscribe { maxMmsSize ->
                     val index = mmsSizeIds.indexOf(maxMmsSize)
                     newState { copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
                 }
 
-        view.preferenceClickIntent
+        disposables += syncMessages
+    }
+
+    override fun bindIntents(view: SettingsView) {
+        super.bindIntents(view)
+
+        view.preferenceClicks()
                 .autoDisposable(view.scope())
                 .subscribe {
                     Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
@@ -145,7 +140,7 @@ class SettingsPresenter @Inject constructor(
                     }
                 }
 
-        view.nightModeSelectedIntent
+        view.nightModeSelected()
                 .withLatestFrom(billingManager.upgradeStatus) { mode, upgraded ->
                     if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
                         view.showQksmsPlusSnackbar()
@@ -156,23 +151,23 @@ class SettingsPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        view.viewQksmsPlusIntent
+        view.viewQksmsPlusClicks()
                 .autoDisposable(view.scope())
                 .subscribe { navigator.showQksmsPlusActivity("settings_night") }
 
-        view.startTimeSelectedIntent
+        view.nightStartSelected()
                 .autoDisposable(view.scope())
                 .subscribe { nightModeManager.setNightStart(it.first, it.second) }
 
-        view.endTimeSelectedIntent
+        view.nightEndSelected()
                 .autoDisposable(view.scope())
                 .subscribe { nightModeManager.setNightEnd(it.first, it.second) }
 
-        view.textSizeSelectedIntent
+        view.textSizeSelected()
                 .autoDisposable(view.scope())
                 .subscribe { prefs.textSize.set(it) }
 
-        view.sendDelayChangedIntent
+        view.sendDelaySelected()
                 .withLatestFrom(billingManager.upgradeStatus) { duration, upgraded ->
                     if (!upgraded && duration != 0) {
                         view.showQksmsPlusSnackbar()
@@ -183,7 +178,7 @@ class SettingsPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        view.mmsSizeSelectedIntent
+        view.mmsSizeSelected()
                 .autoDisposable(view.scope())
                 .subscribe { prefs.mmsSize.set(it) }
     }

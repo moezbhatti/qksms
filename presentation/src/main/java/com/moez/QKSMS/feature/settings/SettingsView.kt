@@ -18,21 +18,20 @@
  */
 package com.moez.QKSMS.feature.settings
 
-import com.moez.QKSMS.common.base.QkConductorView
+import com.moez.QKSMS.common.base.QkViewContract
 import com.moez.QKSMS.common.widget.PreferenceView
 import io.reactivex.Observable
-import io.reactivex.subjects.Subject
 
-interface SettingsView : QkConductorView<SettingsState> {
+interface SettingsView : QkViewContract<SettingsState> {
 
-    val preferenceClickIntent: Subject<PreferenceView>
-    val viewQksmsPlusIntent: Subject<Unit>
-    val nightModeSelectedIntent: Observable<Int>
-    val startTimeSelectedIntent: Subject<Pair<Int, Int>>
-    val endTimeSelectedIntent: Subject<Pair<Int, Int>>
-    val textSizeSelectedIntent: Subject<Int>
-    val sendDelayChangedIntent: Observable<Int>
-    val mmsSizeSelectedIntent: Observable<Int>
+    fun preferenceClicks(): Observable<PreferenceView>
+    fun viewQksmsPlusClicks(): Observable<*>
+    fun nightModeSelected(): Observable<Int>
+    fun nightStartSelected(): Observable<Pair<Int, Int>>
+    fun nightEndSelected(): Observable<Pair<Int, Int>>
+    fun textSizeSelected(): Observable<Int>
+    fun sendDelaySelected(): Observable<Int>
+    fun mmsSizeSelected(): Observable<Int>
 
     fun showQksmsPlusSnackbar()
     fun showNightModeDialog()

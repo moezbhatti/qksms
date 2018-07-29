@@ -82,6 +82,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 import com.android.build.OutputFile
 
 // For each APK output variant, override versionCode with one that is unique

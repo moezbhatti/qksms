@@ -28,10 +28,10 @@ class AboutPresenter @Inject constructor(
         private val navigator: Navigator
 ) : QkPresenter<AboutView, Unit>(Unit) {
 
-    override fun onCreate(view: AboutView) {
-        super.onCreate(view)
+    override fun bindIntents(view: AboutView) {
+        super.bindIntents(view)
 
-        view.preferenceClickIntent
+        view.preferenceClicks()
                 .autoDisposable(view.scope())
                 .subscribe { preference ->
                     when (preference.id) {

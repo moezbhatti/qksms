@@ -18,12 +18,12 @@
  */
 package com.moez.QKSMS.feature.settings.about
 
-import com.moez.QKSMS.common.base.QkConductorView
+import com.moez.QKSMS.common.base.QkViewContract
 import com.moez.QKSMS.common.widget.PreferenceView
-import io.reactivex.subjects.Subject
+import io.reactivex.Observable
 
-interface AboutView : QkConductorView<Unit> {
+interface AboutView : QkViewContract<Unit> {
 
-    val preferenceClickIntent: Subject<PreferenceView>
+    fun preferenceClicks(): Observable<PreferenceView>
 
 }

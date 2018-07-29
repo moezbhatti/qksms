@@ -27,12 +27,13 @@ import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.settings_activity.*
 import kotlinx.android.synthetic.main.settings_activity.view.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
-import kotlinx.android.synthetic.main.settings_theme_widget.view.*
+import kotlinx.android.synthetic.main.settings_theme_widget.*
 import javax.inject.Inject
 
-class SettingsController : QkController(), SettingsView {
+class SettingsController : QkController<SettingsView, SettingsState, SettingsPresenter>(), SettingsView {
 
     @Inject lateinit var context: Context
     @Inject lateinit var colors: Colors
@@ -41,16 +42,11 @@ class SettingsController : QkController(), SettingsView {
     @Inject lateinit var sendDelayDialog: QkDialog
     @Inject lateinit var mmsSizeDialog: QkDialog
 
-    @Inject lateinit var presenter: SettingsPresenter
+    @Inject override lateinit var presenter: SettingsPresenter
 
-    override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
-    override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
-    override val nightModeSelectedIntent by lazy { nightModeDialog.adapter.menuItemClicks }
-    override val startTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
-    override val endTimeSelectedIntent: Subject<Pair<Int, Int>> = PublishSubject.create()
-    override val textSizeSelectedIntent by lazy { textSizeDialog.adapter.menuItemClicks }
-    override val sendDelayChangedIntent by lazy { sendDelayDialog.adapter.menuItemClicks }
-    override val mmsSizeSelectedIntent: Subject<Int> by lazy { mmsSizeDialog.adapter.menuItemClicks }
+    private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
+    private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
+    private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
 
     // TODO remove this
     private val progressDialog by lazy {
@@ -63,7 +59,6 @@ class SettingsController : QkController(), SettingsView {
 
     init {
         appComponent.inject(this)
-        presenter.onCreate(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
 
         colors.themeObservable()
@@ -81,63 +76,72 @@ class SettingsController : QkController(), SettingsView {
             mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
             about.summary = context.getString(R.string.settings_version, BuildConfig.VERSION_NAME)
-
-            // Listen to clicks for all of the preferences
-            (0 until preferences.childCount)
-                    .map { index -> preferences.getChildAt(index) }
-                    .mapNotNull { view -> view as? PreferenceView }
-                    .map { preference -> preference.clicks().map { preference } }
-                    .let { preferences -> Observable.merge(preferences) }
-                    .subscribe(preferenceClickIntent::onNext)
         }
     }
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        presenter.onAttach(this)
+        presenter.bindIntents(this)
         setTitle(R.string.title_settings)
         showBackButton(true)
     }
+
+    override fun preferenceClicks(): Observable<PreferenceView> = (0 until preferences.childCount)
+            .map { index -> preferences.getChildAt(index) }
+            .mapNotNull { view -> view as? PreferenceView }
+            .map { preference -> preference.clicks().map { preference } }
+            .let { preferences -> Observable.merge(preferences) }
+
+    override fun viewQksmsPlusClicks(): Observable<*> = viewQksmsPlusSubject
+
+    override fun nightModeSelected(): Observable<Int> = nightModeDialog.adapter.menuItemClicks
+
+    override fun nightStartSelected(): Observable<Pair<Int, Int>> = startTimeSelectedSubject
+
+    override fun nightEndSelected(): Observable<Pair<Int, Int>> = endTimeSelectedSubject
+
+    override fun textSizeSelected(): Observable<Int> = textSizeDialog.adapter.menuItemClicks
+
+    override fun sendDelaySelected(): Observable<Int> = sendDelayDialog.adapter.menuItemClicks
+
+    override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
 
     override fun render(state: SettingsState) {
         if (progressDialog.isShowing && !state.syncing) progressDialog.dismiss()
         else if (!progressDialog.isShowing && state.syncing) progressDialog.show()
 
-        view?.run {
-            themePreview.setBackgroundTint(state.theme)
-            night.summary = state.nightModeSummary
-            nightModeDialog.adapter.selectedItem = state.nightModeId
-            nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
-            nightStart.summary = state.nightStart
-            nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
-            nightEnd.summary = state.nightEnd
+        themePreview.setBackgroundTint(state.theme)
+        night.summary = state.nightModeSummary
+        nightModeDialog.adapter.selectedItem = state.nightModeId
+        nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
+        nightStart.summary = state.nightStart
+        nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
+        nightEnd.summary = state.nightEnd
 
-            black.setVisible(state.nightModeId != Preferences.NIGHT_MODE_OFF)
-            black.checkbox.isChecked = state.black
+        black.setVisible(state.nightModeId != Preferences.NIGHT_MODE_OFF)
+        black.checkbox.isChecked = state.black
 
-            autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
+        autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
 
-            delayed.summary = state.sendDelaySummary
-            sendDelayDialog.adapter.selectedItem = state.sendDelayId
+        delayed.summary = state.sendDelaySummary
+        sendDelayDialog.adapter.selectedItem = state.sendDelayId
 
-            delivery.checkbox.isChecked = state.deliveryEnabled
+        delivery.checkbox.isChecked = state.deliveryEnabled
 
-            textSize.summary = state.textSizeSummary
-            textSizeDialog.adapter.selectedItem = state.textSizeId
-            systemFont.checkbox.isChecked = state.systemFontEnabled
+        textSize.summary = state.textSizeSummary
+        textSizeDialog.adapter.selectedItem = state.textSizeId
+        systemFont.checkbox.isChecked = state.systemFontEnabled
 
-            unicode.checkbox.isChecked = state.stripUnicodeEnabled
+        unicode.checkbox.isChecked = state.stripUnicodeEnabled
 
-            mmsSize.summary = state.maxMmsSizeSummary
-            mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId
-
-        }
+        mmsSize.summary = state.maxMmsSizeSummary
+        mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId
     }
 
     override fun showQksmsPlusSnackbar() {
         view?.run {
             Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
-                setAction(R.string.button_more) { viewQksmsPlusIntent.onNext(Unit) }
+                setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
                 show()
             }
         }
@@ -148,13 +152,13 @@ class SettingsController : QkController(), SettingsView {
 
     override fun showStartTimePicker(hour: Int, minute: Int) {
         TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
-            startTimeSelectedIntent.onNext(Pair(newHour, newMinute))
+            startTimeSelectedSubject.onNext(Pair(newHour, newMinute))
         }, hour, minute, DateFormat.is24HourFormat(activity)).show()
     }
 
     override fun showEndTimePicker(hour: Int, minute: Int) {
         TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
-            endTimeSelectedIntent.onNext(Pair(newHour, newMinute))
+            endTimeSelectedSubject.onNext(Pair(newHour, newMinute))
         }, hour, minute, DateFormat.is24HourFormat(activity)).show()
     }
 
