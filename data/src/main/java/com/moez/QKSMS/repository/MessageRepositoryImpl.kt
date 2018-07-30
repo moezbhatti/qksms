@@ -24,7 +24,6 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Build
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
@@ -42,6 +41,7 @@ import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.util.ImageUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import io.realm.Case
@@ -49,7 +49,6 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -234,9 +233,8 @@ class MessageRepositoryImpl @Inject constructor(
             // TODO Add support for GIF compression
             parts += attachments
                     .filter { attachment -> attachment.isGif(context) }
-                    .map { attachment -> attachment.getUri() }
-                    .map { uri -> context.contentResolver.openInputStream(uri) }
-                    .map { inputStream -> inputStream.readBytes() }
+                    .mapNotNull { attachment -> attachment.getUri() }
+                    .map { uri -> ImageUtils.compressGif(context, uri, prefs.mmsSize.get() * 1024) }
                     .map { bitmap -> MMSPart("image", ContentType.IMAGE_GIF, bitmap) }
 
             // Compress the images and add them as attachments
@@ -248,7 +246,7 @@ class MessageRepositoryImpl @Inject constructor(
                     .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
                     .map { bitmap ->
                         val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
-                        compress(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
+                        ImageUtils.compressBitmap(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
                     }
                     .map { bitmap -> MMSPart("image", ContentType.IMAGE_JPEG, bitmap) }
 
@@ -282,38 +280,6 @@ class MessageRepositoryImpl @Inject constructor(
         }
 
         smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
-    }
-
-    private fun compress(src: Bitmap, maxBytes: Int): ByteArray {
-        val quality = 90
-
-        val height = src.height
-        val width = src.width
-
-        val stream = ByteArrayOutputStream()
-        src.compress(Bitmap.CompressFormat.JPEG, quality, stream)
-
-        // Based on the byte size of the bitmap, we'll try to reduce the image's dimensions such
-        // that it will fit within the max byte size set. If we don't get it right the first time,
-        // use a slightly heavier compression until we fit within the max size
-        var attempts = 0
-        var bytes = stream.size().toDouble()
-        while (maxBytes > 0 && bytes > maxBytes) {
-            val scale = Math.sqrt(maxBytes / bytes) * (1 - attempts * 0.1)
-
-            stream.reset()
-            Bitmap.createScaledBitmap(src, (width * scale).toInt(), (height * scale).toInt(), true)
-                    .compress(Bitmap.CompressFormat.JPEG, quality, stream)
-
-            attempts++
-            bytes = stream.size().toDouble()
-        }
-
-        if (maxBytes > 0 && stream.size() > maxBytes) {
-            Timber.w(Exception("Compressed image size exceeds max byte size (${stream.size()}/$maxBytes) after $attempts attempts"))
-        }
-
-        return stream.toByteArray().also { src.recycle() }
     }
 
     override fun cancelDelayedSms(id: Long) {
