@@ -2,7 +2,7 @@
 
 Privacy Policy provides information on how personal data or information is collected, used and disclosed when the software Qksms is utilized and the choices you have associated with that data. This policy document aims to create a form of transparency between the developer and consumer and by utilizing the software Qksms, it means acceptance of all the terms and conditions of this Policy. This Policy applies to this software and the developer would not be held responsible for the content or privacy practices on any third party app not operated by the developer to which this software links or that links to this software.
 
-The Data and information collected when using this software are used to make improvements to the efficiency of the software thereby creating a platform for better user experience(UX). <HR>
+ <HR>
 
 ## Information Collection And Use
 
@@ -17,7 +17,9 @@ The permissions are;
 
 The information that may be collected with the enablement of these permissions are stored locally on the device and the developer has no access to that information.
 
-These permissions can be revoked when they are not needed, this is possible on devices running Android 6.0 upwards.
+These permissions can be revoked when they are not needed, this is possible on devices running Android 6.0 upward.
+
+The Data and information collected when using this software are used to make improvements to the efficiency of the software thereby enabling the developer create a better user experience(UX).
 
 ## Types of Data Collected
 
@@ -36,6 +38,11 @@ The data collected is for the purpose of understanding what consumers of the Qks
 ## Security Of Data
 
 The security of your data is important, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure therefore the developer doesn't guarantee its absolute security. <hr>
+
+
+## Children's Privacy
+
+This application has no age restrictions. <hr>
 
 
 ## Changes To This Privacy Policy
