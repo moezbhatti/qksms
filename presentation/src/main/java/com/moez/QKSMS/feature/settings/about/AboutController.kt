@@ -8,7 +8,7 @@ import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.injection.appComponent
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.about_activity.*
+import kotlinx.android.synthetic.main.about_controller.*
 import javax.inject.Inject
 
 class AboutController : QkController<AboutView, Unit, AboutPresenter>(), AboutView {
@@ -17,7 +17,7 @@ class AboutController : QkController<AboutView, Unit, AboutPresenter>(), AboutVi
 
     init {
         appComponent.inject(this)
-        layoutRes = R.layout.about_activity
+        layoutRes = R.layout.about_controller
     }
 
     override fun onAttach(view: View) {

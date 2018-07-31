@@ -3,7 +3,6 @@ package com.moez.QKSMS.common.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -30,13 +29,6 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
 
     final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         return inflater.inflate(layoutRes, container, false)
-    }
-
-    @CallSuper
-    override fun onAttach(view: View) {
-        super.onAttach(view)
-        appCompatActivity?.setSupportActionBar(view.toolbar)
-        setTitle(activity?.title)
     }
 
     fun setTitle(@StringRes titleId: Int) {

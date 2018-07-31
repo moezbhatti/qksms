@@ -24,51 +24,33 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
     <com.moez.QKSMS.common.widget.PagerTitleView
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="?attr/colorPrimary"
+        android:elevation="8dp"
         android:orientation="horizontal"
         android:paddingEnd="12dp"
         android:paddingStart="12dp" />
 
-    <FrameLayout
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/materialColors"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/materialColors"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <include
-                android:id="@+id/hsvPicker"
-                layout="@layout/theme_picker_hsv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </androidx.viewpager.widget.ViewPager>
-
-        <View
+        <include
+            android:id="@+id/hsvPicker"
+            layout="@layout/theme_picker_hsv"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow" />
+            android:layout_height="match_parent" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="?android:attr/divider" />
-
-    </FrameLayout>
+    </androidx.viewpager.widget.ViewPager>
 
 </LinearLayout>

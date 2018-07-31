@@ -32,7 +32,7 @@ import com.moez.QKSMS.injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.theme_picker_activity.*
+import kotlinx.android.synthetic.main.theme_picker_controller.*
 import kotlinx.android.synthetic.main.theme_picker_hsv.*
 import javax.inject.Inject
 
@@ -53,7 +53,7 @@ class ThemePickerController(val threadId: Long = 0L) : QkController<ThemePickerV
                 .build()
                 .inject(this)
 
-        layoutRes = R.layout.theme_picker_activity
+        layoutRes = R.layout.theme_picker_controller
     }
 
     override fun onAttach(view: View) {
