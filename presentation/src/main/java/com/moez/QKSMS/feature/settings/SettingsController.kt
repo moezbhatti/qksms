@@ -4,9 +4,7 @@ import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.text.format.DateFormat
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +19,7 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.feature.settings.about.AboutController
+import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
 import com.moez.QKSMS.feature.themepicker.ThemePickerController
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.util.Preferences
@@ -28,8 +27,8 @@ import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.settings_activity.*
-import kotlinx.android.synthetic.main.settings_activity.view.*
+import kotlinx.android.synthetic.main.settings_controller.*
+import kotlinx.android.synthetic.main.settings_controller.view.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import kotlinx.android.synthetic.main.settings_theme_widget.*
 import javax.inject.Inject
@@ -61,7 +60,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     init {
         appComponent.inject(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
-        layoutRes = R.layout.settings_activity
+        layoutRes = R.layout.settings_controller
 
         colors.themeObservable()
                 .autoDisposable(scope())
@@ -165,6 +164,12 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun showDelayDurationDialog() = sendDelayDialog.show(activity!!)
 
     override fun showMmsSizePicker() = mmsSizeDialog.show(activity!!)
+
+    override fun showSwipeActions() {
+        router.pushController(RouterTransaction.with(SwipeActionsController())
+                .pushChangeHandler(FadeChangeHandler(150))
+                .popChangeHandler(FadeChangeHandler(150)))
+    }
 
     override fun showThemePicker() {
         router.pushController(RouterTransaction.with(ThemePickerController())

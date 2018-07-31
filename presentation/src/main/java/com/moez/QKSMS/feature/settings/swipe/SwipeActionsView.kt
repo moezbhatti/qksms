@@ -16,24 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.main
+package com.moez.QKSMS.feature.settings.swipe
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import com.moez.QKSMS.injection.ViewModelKey
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoMap
+import com.moez.QKSMS.common.base.QkViewContract
+import io.reactivex.Observable
 
-@Module
-class MainActivityModule {
+interface SwipeActionsView : QkViewContract<SwipeActionsState> {
 
-    @Provides
-    fun provideLifecycle(activity: MainActivity): Lifecycle = activity.lifecycle
+    enum class Action { LEFT, RIGHT }
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun provideMainViewModel(viewModel: MainViewModel): ViewModel = viewModel
+    fun actionClicks(): Observable<Action>
+    fun actionSelected(): Observable<Int>
+
+    fun showSwipeActions(selected: Int)
 
 }

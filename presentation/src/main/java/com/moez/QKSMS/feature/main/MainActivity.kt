@@ -95,7 +95,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
     override val confirmDeleteIntent: Subject<Unit> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
-    override val undoSwipeConversationIntent: Subject<Unit> = PublishSubject.create()
+    override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
     override val snackbarButtonIntent by lazy { snackbarButton.clicks() }
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
@@ -103,8 +103,8 @@ class MainActivity : QkThemedActivity(), MainView {
     private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.main_drawer_open_cd, 0) }
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val archiveSnackbar by lazy {
-        Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_INDEFINITE).apply {
-            setAction(R.string.button_undo) { undoSwipeConversationIntent.onNext(Unit) }
+        Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_LONG).apply {
+            setAction(R.string.button_undo) { undoArchiveIntent.onNext(Unit) }
         }
     }
 
@@ -129,7 +129,8 @@ class MainActivity : QkThemedActivity(), MainView {
         // Set the theme color tint to the recyclerView, progressbar, and FAB
         colors.themeObservable()
                 .doOnNext { recyclerView.scrapViews() }
-                .doOnNext { theme ->
+                .autoDisposable(scope())
+                .subscribe { theme ->
                     // Set the color for the drawer icons
                     val states = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf(-android.R.attr.state_selected))
                     resolveThemeColor(android.R.attr.textColorSecondary)
@@ -138,26 +139,21 @@ class MainActivity : QkThemedActivity(), MainView {
                                 inboxIcon.imageTintList = tintList
                                 archivedIcon.imageTintList = tintList
                             }
-                }
-                .doOnNext { theme ->
+
                     // Miscellaneous views
                     syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
-                    itemTouchCallback.color = theme.theme
                     plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
                     compose.setBackgroundTint(theme.theme)
-                }
-                .doOnNext { theme ->
+
                     // Set the FAB compose icon color
                     compose.setTint(theme.textPrimary)
-                    itemTouchCallback.iconColor = theme.textPrimary
                 }
-                .autoDisposable(scope())
-                .subscribe()
 
         // Set the hamburger icon color
         toggle.drawerArrowDrawable.color = resolveThemeColor(android.R.attr.textColorSecondary)
 
+        itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(recyclerView)
     }
 
@@ -235,11 +231,6 @@ class MainActivity : QkThemedActivity(), MainView {
             }
         }
 
-        when (state.page is Inbox && state.page.showArchivedSnackbar) {
-            true -> archiveSnackbar.show()
-            false -> archiveSnackbar.dismiss()
-        }
-
         inbox.isSelected = state.page is Inbox
         archived.isSelected = state.page is Archived
 
@@ -300,6 +291,10 @@ class MainActivity : QkThemedActivity(), MainView {
                 .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(Unit) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
+    }
+
+    override fun showArchivedSnackbar() {
+        archiveSnackbar.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.main
 
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.scope
@@ -40,6 +41,7 @@ import com.moez.QKSMS.manager.RatingManager
 import com.moez.QKSMS.model.SyncLog
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.SyncRepository
+import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -67,6 +69,7 @@ class MainViewModel @Inject constructor(
         private val markUnread: MarkUnread,
         private val navigator: Navigator,
         private val permissionManager: PermissionManager,
+        private val prefs: Preferences,
         private val ratingManager: RatingManager,
         private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
@@ -296,7 +299,10 @@ class MainViewModel @Inject constructor(
 
         // Delete the conversation
         view.confirmDeleteIntent
-                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations -> conversations }
+                .withLatestFrom(view.conversationsSelectedIntent, view.swipeConversationIntent) { _, conversations, swipe ->
+                    // If conversations are selected, use those. Otherwise, this was triggered by a swipe-to-delete
+                    conversations.takeIf { it.isNotEmpty() } ?: listOf(swipe.first)
+                }
                 .autoDisposable(view.scope())
                 .subscribe { conversations ->
                     deleteConversations.execute(conversations)
@@ -304,28 +310,19 @@ class MainViewModel @Inject constructor(
                 }
 
         view.swipeConversationIntent
-                .withLatestFrom(state) { threadId, state ->
-                    markArchived.execute(listOf(threadId)) {
-                        if (state.page is Inbox) {
-                            val page = state.page.copy(showArchivedSnackbar = true)
-                            newState { copy(page = page) }
-                        }
-                    }
-                }
-                .switchMap { Observable.timer(2750, TimeUnit.MILLISECONDS) }
-                .withLatestFrom(state) { threadId, state ->
-                    markArchived.execute(listOf(threadId)) {
-                        if (state.page is Inbox) {
-                            val page = state.page.copy(showArchivedSnackbar = false)
-                            newState { copy(page = page) }
-                        }
-                    }
-                }
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { (threadId, direction) ->
+                    val action = if (direction == ItemTouchHelper.RIGHT) prefs.swipeRight.get() else prefs.swipeLeft.get()
+                    when (action) {
+                        Preferences.SWIPE_ACTION_ARCHIVE -> markArchived.execute(listOf(threadId)) { view.showArchivedSnackbar() }
+                        Preferences.SWIPE_ACTION_DELETE -> view.showDeleteDialog(1)
+                        Preferences.SWIPE_ACTION_CALL -> conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address?.let(navigator::makePhoneCall)
+                        Preferences.SWIPE_ACTION_READ -> markRead.execute(listOf(threadId))
+                    }
+                }
 
-        view.undoSwipeConversationIntent
-                .withLatestFrom(view.swipeConversationIntent) { _, threadId -> threadId }
+        view.undoArchiveIntent
+                .withLatestFrom(view.swipeConversationIntent) { _, pair -> pair.first }
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnarchived.execute(listOf(threadId)) }
 

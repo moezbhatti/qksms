@@ -23,37 +23,60 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.androidxcompat.scope
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.dpToPx
+import com.moez.QKSMS.util.Preferences
+import com.uber.autodispose.kotlin.autoDisposable
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 
-class ConversationItemTouchCallback @Inject constructor(private val context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+class ConversationItemTouchCallback @Inject constructor(
+        colors: Colors,
+        lifecycle: Lifecycle,
+        prefs: Preferences,
+        private val context: Context
+) : ItemTouchHelper.SimpleCallback(0, 0) {
 
-    val swipes: Subject<Long> = PublishSubject.create()
+    val swipes: Subject<Pair<Long, Int>> = PublishSubject.create()
 
-    private var paint = Paint()
-    private lateinit var icon: Bitmap
+    /**
+     * Setting the adapter allows us to animate back to the original position
+     */
+    var adapter: RecyclerView.Adapter<*>? = null
 
-    private var iconLength = 24.dpToPx(context)
+    private val paint = Paint()
+    private var rightAction = 0
+    private var rightIcon: Bitmap? = null
+    private var leftAction = 0
+    private var leftIcon: Bitmap? = null
 
-    var color: Int = 0
-        set(value) {
-            field = value
-            paint.color = value
-        }
+    private val iconLength = 24.dpToPx(context)
 
-    var iconColor: Int = 0
-        set(value) {
-            field = value
-            icon = context.resources.getDrawable(R.drawable.ic_archive_black_24dp)
-                    .apply { setTint(value) }
-                    .toBitmap(iconLength, iconLength)
-        }
+    init {
+        colors.themeObservable()
+                .autoDisposable(lifecycle.scope())
+                .subscribe { theme -> paint.color = theme.theme }
+
+        Observables
+                .combineLatest(prefs.swipeRight.asObservable(), prefs.swipeLeft.asObservable(), colors.themeObservable()) { right, left, theme ->
+                    rightAction = right
+                    rightIcon = iconForAction(right, theme.textPrimary)
+                    leftAction = left
+                    leftIcon = iconForAction(left, theme.textPrimary)
+                    setDefaultSwipeDirs((if (right == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.RIGHT)
+                            or (if (left == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.LEFT))
+                }
+                .autoDisposable(lifecycle.scope())
+                .subscribe()
+    }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
         return false
@@ -65,14 +88,14 @@ class ConversationItemTouchCallback @Inject constructor(private val context: Con
 
             if (dX > 0) {
                 c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(), dX, itemView.bottom.toFloat(), paint)
-                c.drawBitmap(icon, itemView.left.toFloat() + iconLength,
-                        itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - icon.height) / 2,
-                        paint)
+                c.drawBitmap(rightIcon, itemView.left.toFloat() + iconLength,
+                        itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - (rightIcon?.height
+                                ?: 0)) / 2, paint)
             } else if (dX < 0) {
                 c.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat(), paint)
-                c.drawBitmap(icon, itemView.right.toFloat() - iconLength - icon.width,
-                        itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - icon.height) / 2,
-                        paint)
+                c.drawBitmap(leftIcon, itemView.right.toFloat() - iconLength - (leftIcon?.width ?: 0),
+                        itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - (leftIcon?.height
+                                ?: 0)) / 2, paint)
             }
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
@@ -80,7 +103,27 @@ class ConversationItemTouchCallback @Inject constructor(private val context: Con
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        swipes.onNext(viewHolder.itemId)
+        swipes.onNext(Pair(viewHolder.itemId, direction))
+
+        // This will trigger the animation back to neutral state
+        val action = if (direction == ItemTouchHelper.RIGHT) rightAction else leftAction
+        if (action != Preferences.SWIPE_ACTION_ARCHIVE && action != Preferences.SWIPE_ACTION_READ) {
+            adapter?.notifyItemChanged(viewHolder.adapterPosition)
+        }
+    }
+
+    private fun iconForAction(action: Int, tint: Int): Bitmap? {
+        val res = when (action) {
+            Preferences.SWIPE_ACTION_ARCHIVE -> R.drawable.ic_archive_black_24dp
+            Preferences.SWIPE_ACTION_DELETE -> R.drawable.ic_delete_white_24dp
+            Preferences.SWIPE_ACTION_CALL -> R.drawable.ic_call_white_24dp
+            Preferences.SWIPE_ACTION_READ -> R.drawable.ic_check_white_24dp
+            else -> null
+        }
+
+        return res?.let(context.resources::getDrawable)
+                ?.apply { setTint(tint) }
+                ?.toBitmap(iconLength, iconLength)
     }
 
 }

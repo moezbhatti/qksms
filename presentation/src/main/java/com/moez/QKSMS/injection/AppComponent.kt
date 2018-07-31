@@ -29,6 +29,7 @@ import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.feature.compose.DetailedChipView
 import com.moez.QKSMS.feature.settings.SettingsController
 import com.moez.QKSMS.feature.settings.about.AboutController
+import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
 import com.moez.QKSMS.feature.themepicker.injection.ThemePickerComponent
 import com.moez.QKSMS.feature.widget.WidgetAdapter
 import com.moez.QKSMS.injection.android.ActivityBuilderModule
@@ -54,6 +55,7 @@ interface AppComponent {
 
     fun inject(controller: AboutController)
     fun inject(controller: SettingsController)
+    fun inject(controller: SwipeActionsController)
 
     fun inject(dialog: QkDialog)
 

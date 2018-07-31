@@ -16,24 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.main
+package com.moez.QKSMS.feature.settings.swipe
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import com.moez.QKSMS.injection.ViewModelKey
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoMap
+import androidx.annotation.DrawableRes
+import com.moez.QKSMS.R
 
-@Module
-class MainActivityModule {
+data class SwipeActionsState(
+        @DrawableRes val rightIcon: Int = R.drawable.ic_archive_black_24dp,
+        val rightLabel: String = "",
 
-    @Provides
-    fun provideLifecycle(activity: MainActivity): Lifecycle = activity.lifecycle
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun provideMainViewModel(viewModel: MainViewModel): ViewModel = viewModel
-
-}
+        @DrawableRes val leftIcon: Int = R.drawable.ic_archive_black_24dp,
+        val leftLabel: String = ""
+)

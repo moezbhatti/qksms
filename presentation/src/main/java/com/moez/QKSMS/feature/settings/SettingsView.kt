@@ -39,6 +39,7 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun showTextSizePicker()
     fun showDelayDurationDialog()
     fun showMmsSizePicker()
+    fun showSwipeActions()
     fun showThemePicker()
     fun showAbout()
 }

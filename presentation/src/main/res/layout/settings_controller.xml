@@ -150,6 +150,15 @@
                 tools:summary="No delay" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/swipeActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:icon="@drawable/ic_clear_all_black_24dp"
+                app:summary="@string/settings_swipe_actions_summary"
+                app:title="@string/settings_swipe_actions" />
+
+            <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

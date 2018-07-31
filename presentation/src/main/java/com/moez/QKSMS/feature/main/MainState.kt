@@ -42,8 +42,7 @@ data class Inbox(
         val markPinned: Boolean = true,
         val markRead: Boolean = false,
         val data: RealmResults<Conversation>? = null,
-        val selected: Int = 0,
-        val showArchivedSnackbar: Boolean = false) : MainPage()
+        val selected: Int = 0) : MainPage()
 
 data class Searching(
         val loading: Boolean = false,

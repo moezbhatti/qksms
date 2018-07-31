@@ -35,8 +35,8 @@ interface MainView : QkView<MainState> {
     val rateIntent: Observable<*>
     val conversationsSelectedIntent: Observable<List<Long>>
     val confirmDeleteIntent: Observable<Unit>
-    val swipeConversationIntent: Observable<Long>
-    val undoSwipeConversationIntent: Observable<Unit>
+    val swipeConversationIntent: Observable<Pair<Long, Int>>
+    val undoArchiveIntent: Observable<Unit>
     val snackbarButtonIntent: Observable<Unit>
     val backPressedIntent: Observable<Unit>
 
@@ -44,6 +44,7 @@ interface MainView : QkView<MainState> {
     fun clearSearch()
     fun clearSelection()
     fun showDeleteDialog(count: Int)
+    fun showArchivedSnackbar()
 
 }
 
