@@ -54,12 +54,7 @@ class SwipeActionsController : QkController<SwipeActionsView, SwipeActionsState,
         actionsDialog.adapter.setData(R.array.settings_swipe_actions)
     }
 
-    override fun onAttach(view: View) {
-        super.onAttach(view)
-        presenter.bindIntents(this)
-        setTitle(R.string.settings_swipe_actions)
-        showBackButton(true)
-
+    override fun onViewCreated() {
         colors.theme().let { theme ->
             rightIcon.setBackgroundTint(theme.theme)
             rightIcon.setTint(theme.textPrimary)
@@ -75,6 +70,13 @@ class SwipeActionsController : QkController<SwipeActionsView, SwipeActionsState,
                 left.clicks().map { SwipeActionsView.Action.LEFT })
                 .autoDisposable(scope())
                 .subscribe(actionClicks)
+    }
+
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        presenter.bindIntents(this)
+        setTitle(R.string.settings_swipe_actions)
+        showBackButton(true)
     }
 
     override fun actionClicks(): Observable<SwipeActionsView.Action> = actionClicks

@@ -20,13 +20,15 @@ class AboutController : QkController<AboutView, Unit, AboutPresenter>(), AboutVi
         layoutRes = R.layout.about_controller
     }
 
+    override fun onViewCreated() {
+        version.summary = BuildConfig.VERSION_NAME
+    }
+
     override fun onAttach(view: View) {
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.about_title)
         showBackButton(true)
-
-        version.summary = BuildConfig.VERSION_NAME
     }
 
     override fun preferenceClicks(): Observable<PreferenceView> = (0 until preferences.childCount)

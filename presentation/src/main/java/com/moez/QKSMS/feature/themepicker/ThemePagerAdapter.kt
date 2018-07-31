@@ -45,6 +45,9 @@ class ThemePagerAdapter @Inject constructor(private val context: Context) : Page
         return view == `object`
     }
 
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+    }
+
     override fun getCount(): Int {
         return 2
     }

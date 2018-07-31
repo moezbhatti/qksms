@@ -67,12 +67,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
                 .subscribe { activity?.recreate() }
     }
 
-    override fun onAttach(view: View) {
-        super.onAttach(view)
-        presenter.bindIntents(this)
-        setTitle(R.string.title_settings)
-        showBackButton(true)
-
+    override fun onViewCreated() {
         preferences.postDelayed({ preferences.animateLayoutChanges = true }, 100)
 
         nightModeDialog.adapter.setData(R.array.night_modes)
@@ -81,6 +76,13 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
         about.summary = context.getString(R.string.settings_version, BuildConfig.VERSION_NAME)
+    }
+
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        presenter.bindIntents(this)
+        setTitle(R.string.title_settings)
+        showBackButton(true)
     }
 
     override fun preferenceClicks(): Observable<PreferenceView> = (0 until preferences.childCount)

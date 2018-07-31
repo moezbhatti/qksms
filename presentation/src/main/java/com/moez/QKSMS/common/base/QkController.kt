@@ -21,14 +21,19 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
     private val appCompatActivity: AppCompatActivity?
         get() = activity as? AppCompatActivity
 
-    override val containerView: View?
-        get() = view
+    override var containerView: View? = null
 
     @LayoutRes
     var layoutRes: Int = 0
 
-    final override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        return inflater.inflate(layoutRes, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+        return inflater.inflate(layoutRes, container, false).also {
+            containerView = it
+            onViewCreated()
+        }
+    }
+
+    open fun onViewCreated() {
     }
 
     fun setTitle(@StringRes titleId: Int) {
@@ -45,7 +50,7 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
     }
 
     override fun onDestroyView(view: View) {
-        super.onDestroyView(view)
+        containerView = null
         clearFindViewByIdCache()
     }
 

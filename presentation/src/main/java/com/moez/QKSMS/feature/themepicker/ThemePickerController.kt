@@ -56,12 +56,7 @@ class ThemePickerController(val threadId: Long = 0L) : QkController<ThemePickerV
         layoutRes = R.layout.theme_picker_controller
     }
 
-    override fun onAttach(view: View) {
-        super.onAttach(view)
-        presenter.bindIntents(this)
-        setTitle(R.string.title_theme)
-        showBackButton(true)
-
+    override fun onViewCreated() {
         pager.offscreenPageLimit = 1
         pager.adapter = themePagerAdapter
         tabs.pager = pager
@@ -70,6 +65,13 @@ class ThemePickerController(val threadId: Long = 0L) : QkController<ThemePickerV
 
         materialColors.layoutManager = LinearLayoutManager(activity)
         materialColors.adapter = themeAdapter
+    }
+
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        presenter.bindIntents(this)
+        setTitle(R.string.title_theme)
+        showBackButton(true)
     }
 
     override fun showQksmsPlusSnackbar() {
