@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.themepicker
 
+import android.animation.ObjectAnimator
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +26,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.feature.themepicker.injection.ThemePickerModule
@@ -72,6 +74,18 @@ class ThemePickerController(val threadId: Long = 0L) : QkController<ThemePickerV
         presenter.bindIntents(this)
         setTitle(R.string.title_theme)
         showBackButton(true)
+
+        themedActivity?.supportActionBar?.let { toolbar ->
+            ObjectAnimator.ofFloat(toolbar, "elevation", toolbar.elevation, 0f).start()
+        }
+    }
+
+    override fun onDetach(view: View) {
+        super.onDetach(view)
+
+        themedActivity?.supportActionBar?.let { toolbar ->
+            ObjectAnimator.ofFloat(toolbar, "elevation", toolbar.elevation, 8.dpToPx(toolbar.themedContext).toFloat()).start()
+        }
     }
 
     override fun showQksmsPlusSnackbar() {

@@ -7,10 +7,13 @@ import android.text.format.DateFormat
 import android.view.View
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
+import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.QkDialog
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.Colors
@@ -169,20 +172,20 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
     override fun showSwipeActions() {
         router.pushController(RouterTransaction.with(SwipeActionsController())
-                .pushChangeHandler(FadeChangeHandler(150))
-                .popChangeHandler(FadeChangeHandler(150)))
+                .pushChangeHandler(QkChangeHandler())
+                .popChangeHandler(QkChangeHandler()))
     }
 
     override fun showThemePicker() {
         router.pushController(RouterTransaction.with(ThemePickerController())
-                .pushChangeHandler(FadeChangeHandler(150))
-                .popChangeHandler(FadeChangeHandler(150)))
+                .pushChangeHandler(QkChangeHandler())
+                .popChangeHandler(QkChangeHandler()))
     }
 
     override fun showAbout() {
         router.pushController(RouterTransaction.with(AboutController())
-                .pushChangeHandler(FadeChangeHandler(150))
-                .popChangeHandler(FadeChangeHandler(150)))
+                .pushChangeHandler(QkChangeHandler())
+                .popChangeHandler(QkChangeHandler()))
     }
 
 }

@@ -22,10 +22,10 @@ import android.text.InputFilter
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.dpToPx
@@ -157,8 +157,8 @@ class ConversationInfoController(val threadId: Long = 0) : QkController<Conversa
 
     override fun showThemePicker(threadId: Long) {
         router.pushController(RouterTransaction.with(ThemePickerController(threadId))
-                .pushChangeHandler(FadeChangeHandler(150))
-                .popChangeHandler(FadeChangeHandler(150)))
+                .pushChangeHandler(QkChangeHandler())
+                .popChangeHandler(QkChangeHandler()))
     }
 
     override fun showDeleteDialog() {
