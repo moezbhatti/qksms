@@ -38,7 +38,6 @@ import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.plus.PlusActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.settings.SettingsActivity
-import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.manager.PermissionManager
@@ -160,12 +159,6 @@ class Navigator @Inject constructor(
 
     fun showBlockedConversations() {
         val intent = Intent(context, BlockedActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun showThemePicker(threadId: Long = 0) {
-        val intent = Intent(context, ThemePickerActivity::class.java)
-        intent.putExtra("threadId", threadId)
         startActivity(intent)
     }
 

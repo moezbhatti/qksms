@@ -27,6 +27,7 @@ import com.moez.QKSMS.common.widget.QkEditText
 import com.moez.QKSMS.common.widget.QkSwitch
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.feature.compose.DetailedChipView
+import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.settings.SettingsController
 import com.moez.QKSMS.feature.settings.about.AboutController
 import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
@@ -49,6 +50,7 @@ import javax.inject.Singleton
     ServiceBuilderModule::class])
 interface AppComponent {
 
+    fun conversationInfoBuilder(): ConversationInfoComponent.Builder
     fun themePickerBuilder(): ThemePickerComponent.Builder
 
     fun inject(application: QKApplication)

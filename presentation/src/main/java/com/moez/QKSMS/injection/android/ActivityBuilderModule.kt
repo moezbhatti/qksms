@@ -23,7 +23,6 @@ import com.moez.QKSMS.feature.blocked.BlockedActivityModule
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
-import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivityModule
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivityModule
 import com.moez.QKSMS.feature.main.MainActivity
@@ -37,7 +36,6 @@ import com.moez.QKSMS.feature.qkreply.QkReplyActivityModule
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivityModule
 import com.moez.QKSMS.feature.settings.SettingsActivity
-import com.moez.QKSMS.feature.themepicker.ThemePickerActivity
 import com.moez.QKSMS.injection.scope.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -58,7 +56,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindComposeActivity(): ComposeActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [ConversationInfoActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindConversationInfoActivity(): ConversationInfoActivity
 
     @ActivityScope
@@ -84,9 +82,5 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [BlockedActivityModule::class])
     abstract fun bindBlockedActivity(): BlockedActivity
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [])
-    abstract fun bindThemePickerActivity(): ThemePickerActivity
 
 }

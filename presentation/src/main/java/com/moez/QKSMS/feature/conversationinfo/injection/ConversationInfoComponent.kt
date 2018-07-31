@@ -16,24 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.conversationinfo
+package com.moez.QKSMS.feature.conversationinfo.injection
 
-import com.moez.QKSMS.common.base.QkViewContract
-import io.reactivex.Observable
+import com.moez.QKSMS.feature.conversationinfo.ConversationInfoController
+import com.moez.QKSMS.injection.scope.ControllerScope
+import dagger.Subcomponent
 
-interface ConversationInfoView : QkViewContract<ConversationInfoState> {
+@ControllerScope
+@Subcomponent(modules = [ConversationInfoModule::class])
+interface ConversationInfoComponent {
 
-    fun nameClicks(): Observable<*>
-    fun nameChanges(): Observable<String>
-    fun notificationClicks(): Observable<*>
-    fun themeClicks(): Observable<*>
-    fun archiveClicks(): Observable<*>
-    fun blockClicks(): Observable<*>
-    fun deleteClicks(): Observable<*>
-    fun confirmDelete(): Observable<*>
+    fun inject(controller: ConversationInfoController)
 
-    fun showNameDialog(name: String)
-    fun showThemePicker(threadId: Long)
-    fun showDeleteDialog()
+    @Subcomponent.Builder
+    interface Builder {
+        fun conversationInfoModule(module: ConversationInfoModule): Builder
+        fun build(): ConversationInfoComponent
+    }
 
 }

@@ -21,6 +21,9 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
     private val appCompatActivity: AppCompatActivity?
         get() = activity as? AppCompatActivity
 
+    protected val themedActivity: QkThemedActivity?
+        get() = activity as? QkThemedActivity
+
     override var containerView: View? = null
 
     @LayoutRes

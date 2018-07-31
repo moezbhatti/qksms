@@ -53,12 +53,12 @@ abstract class QkThemedActivity : QkActivity() {
      * In case the activity should be themed for a specific conversation, the selected conversation
      * can be changed by pushing the threadId to this subject
      */
-    protected val threadId: Subject<Long> = BehaviorSubject.createDefault(0)
+    val threadId: Subject<Long> = BehaviorSubject.createDefault(0)
 
     /**
      * Switch the theme if the threadId changes
      */
-    protected val theme = threadId
+    val theme = threadId
             .distinctUntilChanged()
             .switchMap { threadId -> colors.themeObservable(threadId) }
 

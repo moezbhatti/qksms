@@ -16,25 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.conversationinfo
+package com.moez.QKSMS.feature.conversationinfo.injection
 
-import androidx.lifecycle.ViewModel
-import com.moez.QKSMS.injection.ViewModelKey
+import com.moez.QKSMS.feature.conversationinfo.ConversationInfoController
+import com.moez.QKSMS.injection.scope.ControllerScope
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoMap
 import javax.inject.Named
 
 @Module
-class ConversationInfoActivityModule {
+class ConversationInfoModule(private val controller: ConversationInfoController) {
 
     @Provides
+    @ControllerScope
     @Named("threadId")
-    fun provideIntent(activity: ConversationInfoActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(ConversationInfoViewModel::class)
-    fun provideConversationInfoViewModel(viewModel: ConversationInfoViewModel): ViewModel = viewModel
+    fun provideThreadId(): Long = controller.threadId
 
 }

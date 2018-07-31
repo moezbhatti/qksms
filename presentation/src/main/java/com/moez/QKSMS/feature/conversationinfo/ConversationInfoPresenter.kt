@@ -19,8 +19,7 @@
 package com.moez.QKSMS.feature.conversationinfo
 
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkArchived
@@ -38,7 +37,7 @@ import io.reactivex.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Named
 
-class ConversationInfoViewModel @Inject constructor(
+class ConversationInfoPresenter @Inject constructor(
         @Named("threadId") threadId: Long,
         messageRepo: MessageRepository,
         private val conversationRepo: ConversationRepository,
@@ -48,7 +47,7 @@ class ConversationInfoViewModel @Inject constructor(
         private val markBlocked: MarkBlocked,
         private val markUnblocked: MarkUnblocked,
         private val navigator: Navigator
-) : QkViewModel<ConversationInfoView, ConversationInfoState>(
+) : QkPresenter<ConversationInfoView, ConversationInfoState>(
         ConversationInfoState(threadId = threadId, media = messageRepo.getPartsForConversation(threadId))
 ) {
 
@@ -98,18 +97,18 @@ class ConversationInfoViewModel @Inject constructor(
                 .subscribe { blocked -> newState { copy(blocked = blocked) } }
     }
 
-    override fun bindView(view: ConversationInfoView) {
-        super.bindView(view)
+    override fun bindIntents(view: ConversationInfoView) {
+        super.bindIntents(view)
 
         // Show the conversation title dialog
-        view.nameIntent
+        view.nameClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .map { conversation -> conversation.name }
                 .autoDisposable(view.scope())
                 .subscribe(view::showNameDialog)
 
         // Set the conversation title
-        view.nameChangedIntent
+        view.nameChanges()
                 .withLatestFrom(conversation) { name, conversation ->
                     conversationRepo.setConversationName(conversation.id, name)
                 }
@@ -117,19 +116,19 @@ class ConversationInfoViewModel @Inject constructor(
                 .subscribe()
 
         // Show the notifications settings for the conversation
-        view.notificationsIntent
+        view.notificationClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> navigator.showNotificationSettings(conversation.id) }
 
         // Show the theme settings for the conversation
-        view.themeIntent
+        view.themeClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
-                .subscribe { conversation -> navigator.showThemePicker(conversation.id) }
+                .subscribe { conversation -> view.showThemePicker(conversation.id) }
 
         // Toggle the archived state of the conversation
-        view.archiveIntent
+        view.archiveClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation ->
@@ -140,7 +139,7 @@ class ConversationInfoViewModel @Inject constructor(
                 }
 
         // Toggle the blocked state of the conversation
-        view.blockIntent
+        view.blockClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation ->
@@ -151,12 +150,12 @@ class ConversationInfoViewModel @Inject constructor(
                 }
 
         // Show the delete confirmation dialog
-        view.deleteIntent
+        view.deleteClicks()
                 .autoDisposable(view.scope())
                 .subscribe { view.showDeleteDialog() }
 
         // Delete the conversation
-        view.confirmDeleteIntent
+        view.confirmDelete()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> deleteConversations.execute(listOf(conversation.id)) }

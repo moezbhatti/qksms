@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.ViewModelFactory
 import com.moez.QKSMS.common.util.NotificationManagerImpl
+import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.themepicker.injection.ThemePickerComponent
 import com.moez.QKSMS.manager.AlarmManager
 import com.moez.QKSMS.manager.AlarmManagerImpl
@@ -68,7 +69,9 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(subcomponents = [ThemePickerComponent::class])
+@Module(subcomponents = [
+    ConversationInfoComponent::class,
+    ThemePickerComponent::class])
 class AppModule(private var application: Application) {
 
     @Provides
