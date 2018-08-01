@@ -30,11 +30,16 @@ import javax.inject.Inject
 
 class SmsSentReceiver : BroadcastReceiver() {
 
+    companion object {
+        const val ACTION = "com.moez.QKSMS.SMS_SENT"
+    }
+
     @Inject lateinit var markSent: MarkSent
     @Inject lateinit var markFailed: MarkFailed
 
     override fun onReceive(context: Context, intent: Intent) {
         AndroidInjection.inject(this, context)
+        context.unregisterReceiver(this)
 
         val id = intent.getLongExtra("id", 0L)
 

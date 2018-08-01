@@ -30,12 +30,12 @@ import com.moez.QKSMS.receiver.MmsSentReceiver
 import com.moez.QKSMS.receiver.MmsUpdatedReceiver
 import com.moez.QKSMS.receiver.NightModeReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
-import com.moez.QKSMS.receiver.SendScheduledMessageReceiver
-import com.moez.QKSMS.receiver.SendSmsReceiver
 import com.moez.QKSMS.receiver.SmsDeliveredReceiver
 import com.moez.QKSMS.receiver.SmsProviderChangedReceiver
 import com.moez.QKSMS.receiver.SmsReceiver
 import com.moez.QKSMS.receiver.SmsSentReceiver
+import com.moez.QKSMS.service.SendScheduledMessageService
+import com.moez.QKSMS.service.SendSmsService
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -81,14 +81,6 @@ abstract class BroadcastReceiverBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector()
     abstract fun bindRemoteMessagingReceiver(): RemoteMessagingReceiver
-
-    @ActivityScope
-    @ContributesAndroidInjector()
-    abstract fun bindSendScheduledMessageReceiver(): SendScheduledMessageReceiver
-
-    @ActivityScope
-    @ContributesAndroidInjector()
-    abstract fun bindSendSmsReceiver(): SendSmsReceiver
 
     @ActivityScope
     @ContributesAndroidInjector()

@@ -24,13 +24,13 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
 import com.google.android.mms.ContentType
 import com.google.android.mms.MMSPart
-import com.klinker.android.send_message.BroadcastUtils
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
@@ -41,6 +41,9 @@ import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.receiver.SmsDeliveredReceiver
+import com.moez.QKSMS.receiver.SmsSentReceiver
+import com.moez.QKSMS.service.SendSmsService
 import com.moez.QKSMS.util.ImageUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
@@ -265,16 +268,14 @@ class MessageRepositoryImpl @Inject constructor(
                 ?: arrayListOf()
 
         val sentIntents = parts.map {
-            val action = "com.moez.QKSMS.SMS_SENT"
-            val intent = Intent(action).putExtra("id", message.id)
-            BroadcastUtils.addClassName(context, intent, action)
+            context.registerReceiver(SmsSentReceiver(), IntentFilter(SmsSentReceiver.ACTION))
+            val intent = Intent(SmsSentReceiver.ACTION).putExtra("id", message.id)
             PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
         val deliveredIntents = parts.map {
-            val action = "com.moez.QKSMS.SMS_DELIVERED"
-            val intent = Intent(action).putExtra("id", message.id)
-            BroadcastUtils.addClassName(context, intent, action)
+            context.registerReceiver(SmsDeliveredReceiver(), IntentFilter(SmsDeliveredReceiver.ACTION))
+            val intent = Intent(SmsDeliveredReceiver.ACTION).putExtra("id", message.id)
             val pendingIntent = PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
             if (prefs.delivery.get()) pendingIntent else null
         }
@@ -288,10 +289,8 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     private fun getIntentForDelayedSms(id: Long): PendingIntent {
-        val action = "com.moez.QKSMS.SEND_SMS"
-        val intent = Intent(action).putExtra("id", id)
-        BroadcastUtils.addClassName(context, intent, action)
-        return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val intent = Intent(context, SendSmsService::class.java).putExtra("id", id)
+        return PendingIntent.getService(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     override fun insertSentSms(subId: Int, threadId: Long, address: String, body: String, date: Long): Message {

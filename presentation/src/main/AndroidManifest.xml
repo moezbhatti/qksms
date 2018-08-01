@@ -25,7 +25,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -96,7 +96,7 @@
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver android:name=".receiver.DefaultSmsChangedReceiver">
@@ -128,18 +128,6 @@
         <receiver
             android:name=".receiver.MmsReceivedReceiver"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
-        <receiver
-            android:name=".receiver.SendScheduledMessageReceiver"
-            android:taskAffinity="com.moez.QKSMS.SEND_SCHEDULED_MESSAGE" />
-        <receiver
-            android:name=".receiver.SendSmsReceiver"
-            android:taskAffinity="com.moez.QKSMS.SEND_SMS" />
-        <receiver
-            android:name=".receiver.SmsSentReceiver"
-            android:taskAffinity="com.moez.QKSMS.SMS_SENT" />
-        <receiver
-            android:name=".receiver.SmsDeliveredReceiver"
-            android:taskAffinity="com.moez.QKSMS.SMS_DELIVERED" />
         <receiver android:name=".receiver.MarkSeenReceiver" />
         <receiver android:name=".receiver.MarkReadReceiver" />
         <receiver android:name=".receiver.RemoteMessagingReceiver" />
@@ -180,6 +168,8 @@
         <service
             android:name=".feature.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service android:name=".service.SendScheduledMessageService" />
+        <service android:name=".service.SendSmsService" />
 
         <meta-data
             android:name="preloaded_fonts"

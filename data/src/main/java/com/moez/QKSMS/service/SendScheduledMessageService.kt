@@ -16,27 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.receiver
+package com.moez.QKSMS.service
 
-import android.content.BroadcastReceiver
-import android.content.Context
+import android.app.IntentService
 import android.content.Intent
 import com.moez.QKSMS.interactor.SendScheduledMessage
 import com.moez.QKSMS.repository.MessageRepository
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
-class SendScheduledMessageReceiver : BroadcastReceiver() {
+class SendScheduledMessageService : IntentService(null) {
 
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var sendScheduledMessage: SendScheduledMessage
 
-    override fun onReceive(context: Context, intent: Intent) {
-        AndroidInjection.inject(this, context)
+    override fun onHandleIntent(intent: Intent) {
+        AndroidInjection.inject(this)
 
         intent.getLongExtra("id", -1L).takeIf { it >= 0 }?.let { id ->
-            val result = goAsync()
-            sendScheduledMessage.execute(id) { result.finish() }
+            sendScheduledMessage.buildObservable(id).blockingSubscribe()
         }
     }
 
