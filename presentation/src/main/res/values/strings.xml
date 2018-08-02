@@ -228,6 +228,9 @@
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_b">Unlock for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_c">Unlock forever for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_d">One-time purchase of %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
     <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>

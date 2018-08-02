@@ -34,6 +34,7 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
+import com.moez.QKSMS.feature.plus.experiment.UpgradeButtonExperiment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import kotlinx.android.synthetic.main.preference_view.view.*
@@ -43,6 +44,7 @@ import javax.inject.Inject
 class PlusActivity : QkThemedActivity(), PlusView {
 
     @Inject lateinit var fontProvider: FontProvider
+    @Inject lateinit var upgradeButtonExperiment: UpgradeButtonExperiment
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[PlusViewModel::class.java] }
@@ -87,7 +89,7 @@ class PlusActivity : QkThemedActivity(), PlusView {
 
     override fun render(state: PlusState) {
         description.text = getString(R.string.qksms_plus_description_summary, state.upgradePrice)
-        upgrade.text = getString(R.string.qksms_plus_upgrade, state.upgradePrice, state.currency)
+        upgrade.text = getString(upgradeButtonExperiment.variant.value, state.upgradePrice, state.currency)
         upgradeDonate.text = getString(R.string.qksms_plus_upgrade_donate, state.upgradeDonatePrice, state.currency)
 
         val fdroid = BuildConfig.FLAVOR == "noAnalytics"

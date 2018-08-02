@@ -54,6 +54,7 @@ class AnalyticsManagerImpl @Inject constructor(context: Context) : AnalyticsMana
     }
 
     override fun setUserProperty(key: String, value: Any) {
+        Timber.v("$key: $value")
 
         // Set the value in Mixpanel
         val properties = JSONObject()
