@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.plus
 
 import android.graphics.Typeface
 import android.os.Bundle
+import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
@@ -32,8 +33,10 @@ import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.common.widget.PreferenceView
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.collapsing_toolbar.*
+import kotlinx.android.synthetic.main.preference_view.view.*
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
 import javax.inject.Inject
 
@@ -65,6 +68,12 @@ class PlusActivity : QkThemedActivity(), PlusView {
                 collapsingToolbar.setExpandedTitleTypeface(typeface)
             }
         }
+
+        // Make the list titles bold
+        linearLayout.children
+                .mapNotNull { it as? PreferenceView }
+                .map { it.titleView }
+                .forEach { it.setTypeface(it.typeface, Typeface.BOLD) }
 
         val textPrimary = resolveThemeColor(android.R.attr.textColorPrimary)
         collapsingToolbar.setCollapsedTitleTextColor(textPrimary)
