@@ -19,6 +19,10 @@
   -->
 <resources>
 
+    <string name="qksms_plus_upgrade_b">Unlock for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_c">Unlock forever for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_d">One-time purchase of %1$s %2$s</string>
+
     <string name="about_developer">Moez Bhatti</string>
     <string name="about_source">https://github.com/moezbhatti/qksms</string>
     <string name="about_changelog">https://github.com/moezbhatti/qksms/releases</string>
