@@ -89,7 +89,7 @@ class PlusActivity : QkThemedActivity(), PlusView {
 
     override fun render(state: PlusState) {
         description.text = getString(R.string.qksms_plus_description_summary, state.upgradePrice)
-        upgrade.text = getString(upgradeButtonExperiment.variant.value, state.upgradePrice, state.currency)
+        upgrade.text = getString(upgradeButtonExperiment.variant, state.upgradePrice, state.currency)
         upgradeDonate.text = getString(R.string.qksms_plus_upgrade_donate, state.upgradeDonatePrice, state.currency)
 
         val fdroid = BuildConfig.FLAVOR == "noAnalytics"

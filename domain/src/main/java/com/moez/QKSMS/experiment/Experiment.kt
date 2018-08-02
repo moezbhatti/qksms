@@ -38,21 +38,21 @@ abstract class Experiment<T>(val context: Context, val analytics: AnalyticsManag
      */
     protected open val qualifies: Boolean = Locale.getDefault().language == "en"
 
-    val variant: Variant<T> by lazy {
+    val variant: T by lazy {
         when {
             !qualifies -> null // Device doesn't quality for experiment
 
             prefs.contains(prefKey) -> { // Variant already set
-                variants.firstOrNull { it.key == prefs.getString(prefKey, null) }
+                variants.firstOrNull { it.key == prefs.getString(prefKey, null) }?.value
             }
 
             else -> { // Variant hasn't been set yet
                 variants[Random().nextInt(variants.size)].also { variant ->
                     analytics.setUserProperty("Experiment: $key", variant.key)
                     prefs.edit().putString(prefKey, variant.key).apply()
-                }
+                }.value
             }
-        } ?: Variant("default", default)
+        } ?: default
     }
 
 }
