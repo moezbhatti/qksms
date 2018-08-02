@@ -64,6 +64,7 @@
   <string name="drawer_settings">সেটিংস</string>
   <string name="drawer_plus">QKSMS +</string>
   <string name="drawer_help">সাহায্য &amp; প্রতিক্রিয়া</string>
+  <string name="drawer_invite">Invite friends</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">QKSMS উপভোগ করছেন?</string>
@@ -170,6 +171,18 @@
   <string name="settings_should_i_answer_title">আমার কি উত্তর দেওয়া উচিত?</string>
   <string name="settings_should_i_answer_summary">স্বয়ংক্রিয়ভাবে \"Should I Answer\" অ্যাপ্লিকেশন ব্যবহার করে অযাচিত সংখ্যার বার্তাগুলি ফিল্টার করুন</string>
   <string name="settings_delayed_title">বিলম্বে পাঠানো</string>
+  <string name="settings_swipe_actions">Swipe actions</string>
+  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
+  <string name="settings_swipe_actions_right">Right swipe</string>
+  <string name="settings_swipe_actions_left">Left swipe</string>
+  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string-array name="settings_swipe_actions">
+    <item>None</item>
+    <item>Archive</item>
+    <item>Delete</item>
+    <item>Call</item>
+    <item>Mark read</item>
+  </string-array>
   <string name="settings_delivery_title">ডেলিভারি নিশ্চিতকরন</string>
   <string name="settings_delivery_summary">নিশ্চিত করুন যে বার্তা সফলভাবে পাঠানো হয়েছে</string>
   <string name="settings_unicode_title">কথার টান সরিয়ে দিন</string>

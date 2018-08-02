@@ -19,12 +19,12 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="title_archived">Archiviato</string>
+  <string name="title_archived">Archivio</string>
   <string name="title_settings">Impostazioni</string>
   <string name="title_notification_prefs">Notifiche</string>
   <string name="title_theme">Tema</string>
   <string name="title_conversations">Cerca nei messaggi&#8230;</string>
-  <string name="title_compose">Scrivi</string>
+  <string name="title_compose">Digita un nome o un numero</string>
   <string name="setup_skip">Salta</string>
   <string name="setup_next">Continua</string>
   <string name="menu_call">Chiama</string>
@@ -33,21 +33,21 @@
   <string name="main_drawer_open_cd">Apri il pannello di navigazione</string>
   <string name="main_title_selected">%d selezionato</string>
   <string name="main_menu_clear">Clear</string>
-  <string name="main_menu_archive">Archive</string>
-  <string name="main_menu_unarchive">Unarchive</string>
+  <string name="main_menu_archive">Archivia</string>
+  <string name="main_menu_unarchive">Annulla archiviazione</string>
   <string name="main_menu_delete">Elimina</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
+  <string name="main_menu_pin">Blocca in alto</string>
+  <string name="main_menu_unpin">Sblocca</string>
   <string name="main_menu_read">Segna come letto</string>
   <string name="main_menu_unread">Segna come non letto</string>
-  <string name="main_menu_block">Blocca</string>
+  <string name="main_menu_block">Sposta negli Indesiderati</string>
   <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">Tu: %s</string>
   <string name="main_message_results_title">Risultati nei messaggi</string>
   <string name="main_message_results">%d messaggi</string>
   <string name="inbox_empty_text">Le tue conversazioni vengono visualizzate qui</string>
   <string name="inbox_search_empty_text">Nessun risultato</string>
-  <string name="archived_empty_text">Le tue conversazioni vengono archiviati qui</string>
+  <string name="archived_empty_text">Le tue conversazioni vengono archiviate qui</string>
   <string name="main_fab_cd">Inizia nuova conversazione</string>
   <string name="main_default_sms_title">Love texting again</string>
   <string name="main_default_sms_message">Rendi QKSMS la tua app di SMS predefinita</string>
@@ -56,24 +56,25 @@
   <string name="main_permission_sms">QKSMS ha bisogno dell\'autorizzazione per inviare e visualizzare gli SMS</string>
   <string name="main_permission_contacts">QKSMS ha bisogno dell\'autorizzazione per visualizzare i tuoi contatti</string>
   <string name="main_permission_allow">Consenti</string>
-  <string name="drawer_inbox">Posta In Arrivo</string>
-  <string name="drawer_archived">Archivio</string>
-  <string name="drawer_scheduled">Schedulato</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_inbox">Ricevuti</string>
+  <string name="drawer_archived">Archiviati</string>
+  <string name="drawer_scheduled">Pianificati</string>
+  <string name="drawer_blocking">Indesiderati</string>
   <string name="drawer_more">Altro</string>
   <string name="drawer_settings">Impostazioni</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Aiuto &amp; suggerimenti</string>
+  <string name="drawer_invite">Invite friends</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Ti piace QKSMS?</string>
   <string name="rate_summary">Condividi un po\' di amore e votaci su Google Play!</string>
-  <string name="rate_okay">OKAY!</string>
-  <string name="rate_dismiss">DISMISS</string>
+  <string name="rate_okay">OK!</string>
+  <string name="rate_dismiss">ANNULLA</string>
   <string name="dialog_delete_title">Elimina</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">Sei sicuro di voler eliminare questa conversazione?</item>
+    <item quantity="other">Sei sicuro di voler eliminare %d conversazioni?</item>
   </plurals>
   <string-array name="message_options">
     <item>Copia testo</item>
@@ -123,17 +124,17 @@
   <string name="info_notifications">Notifiche</string>
   <string name="info_theme">Tema</string>
   <string name="info_archive">Archivia</string>
-  <string name="info_unarchive">De-archivia</string>
-  <string name="info_block">Blocca</string>
-  <string name="info_unblock">Sblocca</string>
+  <string name="info_unarchive">Annulla archiviazione</string>
+  <string name="info_block">Mittente indesiderato</string>
+  <string name="info_unblock">Ripristina mittente</string>
   <string name="info_delete">Elimina la conversazione</string>
   <string name="gallery_toast_saved">Salvato nella galleria</string>
-  <string name="scheduled_title">Pianificato</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+  <string name="scheduled_title">Messaggi pianificati</string>
+  <string name="scheduled_empty_description">Invia un messaggio automatico, nel momento desiderato</string>
+  <string name="scheduled_empty_message_1">Ehi! Quand\'è il tuo compleanno?</string>
+  <string name="scheduled_empty_message_2">È il 23 dicembre</string>
+  <string name="scheduled_empty_message_3">Buon Compleanno! Solo un grande amico si ricorda il tuo compleanno</string>
+  <string name="scheduled_empty_message_3_timestamp">Invio il 23 dicembre </string>
   <string name="scheduled_compose_cd">Schedule a message</string>
   <string name="scheduled_options_title">Messaggio pianificato</string>
   <string-array name="scheduled_options">
@@ -152,11 +153,11 @@
   <string name="settings_system_font_title">Usa il carattere di sistema</string>
   <string name="settings_auto_emoji_title">Emoji automatico</string>
   <string name="settings_notifications_title">Notifiche</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">Seleziona per personalizzare</string>
+  <string name="settings_notification_actions_title">Azioni</string>
+  <string name="settings_notification_action_1">Pulsante 1</string>
+  <string name="settings_notification_action_2">Pulsante 2</string>
+  <string name="settings_notification_action_3">Pulsante 3</string>
   <string name="settings_notification_previews_title">Anteprima delle notifiche</string>
   <string name="settings_vibration_title">Vibrazione</string>
   <string name="settings_ringtone_title">Suono</string>
@@ -167,9 +168,21 @@
   <string name="settings_qkreply_tap_dismiss_summary">Tocca al di fuori del popup per chiuderlo</string>
   <string name="settings_blocking_title">Blocco</string>
   <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Devo rispondere?</string>
-  <string name="settings_should_i_answer_summary">Filtrare automaticamente i messaggi provenienti da numeri indesiderati utilizzando l\'app \"Should I Answer\"</string>
+  <string name="settings_should_i_answer_title">Dovrei rispondere?</string>
+  <string name="settings_should_i_answer_summary">Filtrare automaticamente i messaggi provenienti da numeri indesiderati utilizzando l\'app \"Dovrei rispondere?\"</string>
   <string name="settings_delayed_title">Invio posticipato</string>
+  <string name="settings_swipe_actions">Swipe actions</string>
+  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
+  <string name="settings_swipe_actions_right">Right swipe</string>
+  <string name="settings_swipe_actions_left">Left swipe</string>
+  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string-array name="settings_swipe_actions">
+    <item>None</item>
+    <item>Archive</item>
+    <item>Delete</item>
+    <item>Call</item>
+    <item>Mark read</item>
+  </string-array>
   <string name="settings_delivery_title">Conferme di recapito</string>
   <string name="settings_delivery_summary">Conferma che i messaggi siano stati inviati con successo</string>
   <string name="settings_unicode_title">Elimina gli accenti</string>
@@ -180,10 +193,10 @@
   <string name="settings_about_title">Informazioni su QKSMS</string>
   <string name="settings_version">Versione %s</string>
   <string name="settings_delay_duration_hint">Inserisci la durata (in secondi)</string>
-  <string name="blocked_title">Blocco</string>
+  <string name="blocked_title">Mittenti indesiderati</string>
   <string name="blocked_empty">Le tue conversazioni bloccate appariranno qui</string>
-  <string name="blocked_unblock_dialog_title">Sbloccare</string>
-  <string name="blocked_unblock_dialog_message">Vuoi sbloccare questa conversazione?</string>
+  <string name="blocked_unblock_dialog_title">Ripristina mittente</string>
+  <string name="blocked_unblock_dialog_message">Vuoi ripristinare questa conversazione?</string>
   <string name="about_title">Informazioni</string>
   <string name="about_version_title">Versione</string>
   <string name="about_developer_title">Sviluppatore</string>
@@ -233,20 +246,20 @@
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Applica</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
+    <item>Nessuna</item>
+    <item>Segna come letto</item>
+    <item>Rispondi</item>
+    <item>Chiama</item>
   </string-array>
   <string name="button_cancel">Annulla</string>
   <string name="button_delete">Elimina</string>
   <string name="button_save">Salva</string>
   <string name="button_more">More</string>
   <string name="button_set">Set</string>
-  <string name="button_unblock">Sblocca</string>
+  <string name="button_unblock">Ripristina</string>
   <string name="button_undo">Annulla</string>
   <string name="toast_copied">Copiato</string>
-  <string name="toast_archived">Conversazioni archiviate</string>
+  <string name="toast_archived">Conversazione archiviata</string>
   <string name="toast_qksms_plus">È necessario sbloccare QKSMS+ per utilizzare questo</string>
   <plurals name="notification_new_messages">
     <item quantity="one">Nuovo messaggio</item>

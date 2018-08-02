@@ -64,6 +64,7 @@
   <string name="drawer_settings">Ayarlar</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Yardım &amp; Geri bildirim</string>
+  <string name="drawer_invite">Arkadaşlarınızı davet edin</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">İnanılmaz yeni özelliklerin kilidini aç ve geliştirmeye destek ol</string>
   <string name="rate_title">QKSMS tadını çıkarıyor musun?</string>
@@ -72,8 +73,8 @@
   <string name="rate_dismiss">GÖREVDEN</string>
   <string name="dialog_delete_title">Sil</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">%d konuşmaları silmek istediğinizden emin misiniz?</item>
+    <item quantity="one">Sohbeti silmek istediğinizden emin misiniz?</item>
+    <item quantity="other">%d konuşmayı silmek istediğinizden emin misiniz?</item>
   </plurals>
   <string-array name="message_options">
     <item>Metni kopyala</item>
@@ -170,6 +171,18 @@
   <string name="settings_should_i_answer_title">Ben cevap vereyim?</string>
   <string name="settings_should_i_answer_summary">İstenmeyen numaralardan gelen iletileri otomatik olarak filtre</string>
   <string name="settings_delayed_title">Gecikmeli gönderme</string>
+  <string name="settings_swipe_actions">Kaydırma eylemleri</string>
+  <string name="settings_swipe_actions_summary">Konuşmalar için kaydırma eylemlerini yapılandırma</string>
+  <string name="settings_swipe_actions_right">Sağa kaydır</string>
+  <string name="settings_swipe_actions_left">Sola Kaydır</string>
+  <string name="settings_swipe_actions_change">DEĞİŞTİR</string>
+  <string-array name="settings_swipe_actions">
+    <item>Hiçbiri</item>
+    <item>Arşivle</item>
+    <item>Sil</item>
+    <item>Ara</item>
+    <item>Okundu olarak işaretle</item>
+  </string-array>
   <string name="settings_delivery_title">İletim raporları</string>
   <string name="settings_delivery_summary">Mesajınızın sorunsuz gönderildiğinin onayını alın</string>
   <string name="settings_unicode_title">Şeritli aksanlar</string>

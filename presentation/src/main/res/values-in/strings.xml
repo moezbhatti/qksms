@@ -64,6 +64,7 @@
   <string name="drawer_settings">Pengaturan</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Bantuan &amp; Umpan balik</string>
+  <string name="drawer_invite">Invite friends</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Enjoying QKSMS?</string>
@@ -169,6 +170,18 @@
   <string name="settings_should_i_answer_title">Should I Answer?</string>
   <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
   <string name="settings_delayed_title">Delayed sending</string>
+  <string name="settings_swipe_actions">Swipe actions</string>
+  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
+  <string name="settings_swipe_actions_right">Right swipe</string>
+  <string name="settings_swipe_actions_left">Left swipe</string>
+  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string-array name="settings_swipe_actions">
+    <item>None</item>
+    <item>Archive</item>
+    <item>Delete</item>
+    <item>Call</item>
+    <item>Mark read</item>
+  </string-array>
   <string name="settings_delivery_title">Konfirmasi pengiriman</string>
   <string name="settings_delivery_summary">Mengkonfirmasi bahwa pesan telah berhasil dikirim</string>
   <string name="settings_unicode_title">Strip accents</string>

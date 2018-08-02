@@ -64,6 +64,7 @@
   <string name="drawer_settings">Paramètres</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Aide &amp; commentaire</string>
+  <string name="drawer_invite">Inviter des amis</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Débloquer les nouvelles fonctions sensationnelles et soutenir le développement</string>
   <string name="rate_title">Vous aimez QKSMS ?</string>
@@ -170,6 +171,18 @@
   <string name="settings_should_i_answer_title">Devrais-je répondre ?</string>
   <string name="settings_should_i_answer_summary">Filtrer automatiquement les messages de numéros non sollicités à l’aide de l’application « Devrais-je répondre »</string>
   <string name="settings_delayed_title">Envoi retardé</string>
+  <string name="settings_swipe_actions">Actions de balayage</string>
+  <string name="settings_swipe_actions_summary">Configurer les actions de balayage pour les conversations</string>
+  <string name="settings_swipe_actions_right">Balayage vers la droite</string>
+  <string name="settings_swipe_actions_left">Balayage vers la gauche</string>
+  <string name="settings_swipe_actions_change">CHANGER</string>
+  <string-array name="settings_swipe_actions">
+    <item>Aucune</item>
+    <item>Archiver</item>
+    <item>Supprimer</item>
+    <item>Appeler</item>
+    <item>Marquer comme lu</item>
+  </string-array>
   <string name="settings_delivery_title">Accusés de réception</string>
   <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
   <string name="settings_unicode_title">Enlever les accents</string>

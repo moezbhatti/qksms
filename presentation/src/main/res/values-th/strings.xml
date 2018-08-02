@@ -30,16 +30,16 @@
   <string name="menu_call">โทร</string>
   <string name="menu_info">รายละเอียด</string>
   <string name="menu_save">บันทึกรูปภาพ</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
+  <string name="main_drawer_open_cd">เปิดเมนูลัด</string>
   <string name="main_title_selected">%d ถูกเลือก</string>
   <string name="main_menu_clear">ลบออก</string>
   <string name="main_menu_archive">จัดเก็บ</string>
   <string name="main_menu_unarchive">ยกเลิกการเก็บ</string>
   <string name="main_menu_delete">ลบ</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
+  <string name="main_menu_pin">ปักหมุดไว้ด้านบน</string>
+  <string name="main_menu_unpin">เอาหมุดออก</string>
+  <string name="main_menu_read">ทำเครื่องหมายอ่านแล้ว</string>
+  <string name="main_menu_unread">ทำเครื่องหมายยังไม่ได้อ่าน</string>
   <string name="main_menu_block">ปิดกั้น</string>
   <string name="main_syncing">กำลังปรับแต่งเพิ่มประสิทธิภาพฐานข้อมูล อาจใช้เวลาสักครู่&#8230;</string>
   <string name="main_sender_you">คุณ: %s</string>
@@ -59,20 +59,21 @@
   <string name="drawer_inbox">กล่องขาเข้า</string>
   <string name="drawer_archived">จัดเก็บ</string>
   <string name="drawer_scheduled">กำหนดเวลา</string>
-  <string name="drawer_blocking">Blocking</string>
+  <string name="drawer_blocking">บล็อก</string>
   <string name="drawer_more">เพิ่มเติม</string>
   <string name="drawer_settings">การตั้งค่า</string>
   <string name="drawer_plus">QKSMS +</string>
   <string name="drawer_help">ช่วยเหลือ &amp; ข้อคิดเห็น</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_invite">เชิญเพื่อน</string>
+  <string name="drawer_plus_banner_title">QKSMS +</string>
+  <string name="drawer_plus_banner_summary">ปลดล็อคฟีเจอร์ใหม่ ๆ และสนับสนุนการพัฒนา</string>
   <string name="rate_title">ชอบ QKSMS ไหม?</string>
   <string name="rate_summary">แชร์และให้คะแนนเราบน Google Play!</string>
   <string name="rate_okay">ตกลง!</string>
   <string name="rate_dismiss">ยกเลิก</string>
   <string name="dialog_delete_title">ลบ</string>
   <plurals name="dialog_delete_message">
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="other">คุณแน่ใจหรือว่า คุณต้องการลบการสนทนาทั้งหมด</item>
   </plurals>
   <string-array name="message_options">
     <item>คัดลอกข้อความ</item>
@@ -84,11 +85,11 @@
   <string name="compose_send_group_title">ส่งเป็นข้อความกลุ่ม</string>
   <string name="compose_send_group_summary">ผู้รับและการตอบกลับจะแสดงให้ทุกคนเห็นทุกคน</string>
   <string name="compose_messages_empty">การเริ่มต้นของการสนทนาของคุณ บอกกล่าวบางอย่างที่นี่</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
+  <string name="compose_vcard_label">นามบัตร</string>
+  <string name="compose_scheduled_for">กำหนดการ</string>
+  <string name="compose_scheduled_future">เลือกเวลาที่ต้องเป็นเวลาในอนาคต</string>
+  <string name="compose_scheduled_plus">คุณต้องปลดล็อก QKSMS + เพื่อการใช้ข้อความที่กำหนดเวลาได้</string>
+  <string name="compose_scheduled_toast">เพิ่มข้อความที่กำหนดเวลา</string>
   <string name="compose_hint">เขียนข้อความ...</string>
   <string name="compose_menu_copy">คัดลอกข้อความ</string>
   <string name="compose_menu_forward">ส่งต่อ</string>
@@ -96,29 +97,29 @@
   <string name="compose_menu_previous">ก่อนหน้านี้</string>
   <string name="compose_menu_next">ถัดไป</string>
   <string name="compose_menu_clear">ล้าง</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
+  <string name="compose_details_title">รายละเอียดข้อความ</string>
+  <string name="compose_details_type">ประเภท: %s</string>
+  <string name="compose_details_from">จาก: %s</string>
+  <string name="compose_details_to">ถึง: %s</string>
+  <string name="compose_details_subject">เรื่อง: %s</string>
+  <string name="compose_details_priority">ความสำคัญ: %s</string>
+  <string name="compose_details_size">ขนาด: %s</string>
+  <string name="compose_details_sent">ส่งแล้ว: %s</string>
+  <string name="compose_details_received">รับ: %s</string>
+  <string name="compose_details_delivered">การจัดส่ง: %s</string>
+  <string name="compose_details_error_code">รหัสข้อผิดพลาด: %d</string>
   <string name="compose_attach_cd">เพิ่มสิ่งที่แนบ</string>
   <string name="compose_gallery_cd">แนบรูปภาพ</string>
   <string name="compose_camera_cd">ถ่ายภาพ</string>
-  <string name="compose_schedule_cd">Schedule message</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
+  <string name="compose_schedule_cd">กำหนดเวลาของข้อความ</string>
+  <string name="compose_sim_cd">%s เลือก เปลี่ยน SIM การ์ด</string>
   <string name="compose_send_cd">ส่งข้อความ</string>
   <string name="message_status_sending">กำลังส่ง...</string>
   <string name="message_status_delivered">%s ถูกส่งแล้ว</string>
   <string name="message_status_failed">การส่งล้มเหลว ลองแตะเพื่อส่งอีกครั้ง</string>
   <string name="info_title">รายละเอียด</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
+  <string name="info_name">หัวข้อสนทนา</string>
+  <string name="info_name_hint">ป้อนชื่อเรื่อง</string>
   <string name="info_notifications">การแจ้งเตือน</string>
   <string name="info_theme">รูปแบบการแสดงผล</string>
   <string name="info_archive">จัดเก็บ</string>
@@ -127,10 +128,10 @@
   <string name="info_unblock">ยกเลิกการปิดกั้น</string>
   <string name="info_delete">ลบการสนทนา</string>
   <string name="gallery_toast_saved">บันทึกรูปภาพแล้ว</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+  <string name="scheduled_title">กำหนดการ</string>
+  <string name="scheduled_empty_description">ส่งข้อความ โดยอัตโนมัติที่คุณต้องการ</string>
+  <string name="scheduled_empty_message_1">วันเกิดของคุณอีกครั้งเมื่อไหร่</string>
+  <string name="scheduled_empty_message_2">วันที่ 23 นี้ธันวาคม</string>
   <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
   <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
   <string name="scheduled_compose_cd">Schedule a message</string>
@@ -169,6 +170,18 @@
   <string name="settings_should_i_answer_title">ควรตอบกลับหรือไม่</string>
   <string name="settings_should_i_answer_summary">กรองข้อความจากหมายเลขที่ไม่พึงประสงค์ โดยใช้แอพควรตอบกลับหรือไม่</string>
   <string name="settings_delayed_title">การส่งแบบล่าช้า</string>
+  <string name="settings_swipe_actions">Swipe actions</string>
+  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
+  <string name="settings_swipe_actions_right">Right swipe</string>
+  <string name="settings_swipe_actions_left">Left swipe</string>
+  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string-array name="settings_swipe_actions">
+    <item>None</item>
+    <item>Archive</item>
+    <item>Delete</item>
+    <item>Call</item>
+    <item>Mark read</item>
+  </string-array>
   <string name="settings_delivery_title">ยืนยันการส่ง</string>
   <string name="settings_delivery_summary">ยืนยันว่า ส่งข้อความเรียบร้อยแล้ว</string>
   <string name="settings_unicode_title">ลบอักษรพิเศษ accents</string>

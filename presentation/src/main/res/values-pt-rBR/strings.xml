@@ -64,6 +64,7 @@
   <string name="drawer_settings">Configurações</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Ajuda e comentários</string>
+  <string name="drawer_invite">Convidar amigos</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Desbloqueie mais funcionalidades e ajude no desenvolvimento</string>
   <string name="rate_title">Gosta do QKSMS?</string>
@@ -169,7 +170,19 @@
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Should I Answer?</string>
   <string name="settings_should_i_answer_summary">Automaticamente filtrar mensagens não solicitadas usando o aplicativo \"Should I Answer\"</string>
-  <string name="settings_delayed_title">Adiar envio</string>
+  <string name="settings_delayed_title">Envio adiado</string>
+  <string name="settings_swipe_actions">Ações de deslize</string>
+  <string name="settings_swipe_actions_summary">Configurar ações de deslize nas conversas</string>
+  <string name="settings_swipe_actions_right">Deslize à direita</string>
+  <string name="settings_swipe_actions_left">Deslize à esquerda</string>
+  <string name="settings_swipe_actions_change">Alterar</string>
+  <string-array name="settings_swipe_actions">
+    <item>Nenhuma</item>
+    <item>Arquivar</item>
+    <item>Apagar</item>
+    <item>Ligar</item>
+    <item>Marcar como lida</item>
+  </string-array>
   <string name="settings_delivery_title">Confirmações de entrega</string>
   <string name="settings_delivery_summary">Confirma se as mensagens foram enviadas com sucesso</string>
   <string name="settings_unicode_title">Remover acentos</string>

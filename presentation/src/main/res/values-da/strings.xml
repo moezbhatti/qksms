@@ -64,6 +64,7 @@
   <string name="drawer_settings">Indstillinger</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Hjælp og feedback</string>
+  <string name="drawer_invite">Invitér venner</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Oplås fantastiske nye funktioner og støt udvikling</string>
   <string name="rate_title">Synes om QKSMS?</string>
@@ -170,6 +171,18 @@
   <string name="settings_should_i_answer_title">Bør jeg besvare?</string>
   <string name="settings_should_i_answer_summary">Filtrér automatisk beskeder fra uopfordrede numre vha. \"Bør jeg besvare\"-app\'en</string>
   <string name="settings_delayed_title">Forsinket afsendelse</string>
+  <string name="settings_swipe_actions">Strygehandlinger</string>
+  <string name="settings_swipe_actions_summary">Opsæt strygehandlinger for samtaler</string>
+  <string name="settings_swipe_actions_right">Højrestryg</string>
+  <string name="settings_swipe_actions_left">Venstrestryg</string>
+  <string name="settings_swipe_actions_change">SKIFT</string>
+  <string-array name="settings_swipe_actions">
+    <item>Ingen</item>
+    <item>Arkivér</item>
+    <item>Slet</item>
+    <item>Ring op</item>
+    <item>Markér som læst</item>
+  </string-array>
   <string name="settings_delivery_title">Leveringskvitteringer</string>
   <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>
   <string name="settings_unicode_title">Fjern betoninger</string>

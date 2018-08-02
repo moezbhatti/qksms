@@ -64,6 +64,7 @@
   <string name="drawer_settings">Налаштування</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Допомога та зворотній зв\'язок</string>
+  <string name="drawer_invite">Запросити друзів</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Розблокувати нові дивовижні можливості та підтримати розробку</string>
   <string name="rate_title">Подобається QKSMS?</string>
@@ -132,10 +133,10 @@
   <string name="gallery_toast_saved">Зберегти до галереї</string>
   <string name="scheduled_title">Заплановані</string>
   <string name="scheduled_empty_description">Автоматично надсилайте повідомлення саме в той час, який ви захочете</string>
-  <string name="scheduled_empty_message_1">Агов! Коли у вас день народження?</string>
-  <string name="scheduled_empty_message_2">23 грудня</string>
+  <string name="scheduled_empty_message_1">Агов! Коли в тебе день народження?</string>
+  <string name="scheduled_empty_message_2">23-го грудня</string>
   <string name="scheduled_empty_message_3">З Днем народження! Подивіться, який я чудовий друг згадав про ваш день народження</string>
-  <string name="scheduled_empty_message_3_timestamp">Відправлення 23 грудня </string>
+  <string name="scheduled_empty_message_3_timestamp">Надіслано: 23 грудня </string>
   <string name="scheduled_compose_cd">Запланувати повідомлення</string>
   <string name="scheduled_options_title">Заплановане повідомлення</string>
   <string-array name="scheduled_options">
@@ -172,6 +173,18 @@
   <string name="settings_should_i_answer_title">Should I Answer?</string>
   <string name="settings_should_i_answer_summary">Автоматично фільтрувати повідомлення від небажаних номерів, використовуючи додаток «Should I Answer»</string>
   <string name="settings_delayed_title">Затримка відправлення</string>
+  <string name="settings_swipe_actions">Дії жестів</string>
+  <string name="settings_swipe_actions_summary">Налаштуйте використання жестів для розмови</string>
+  <string name="settings_swipe_actions_right">Провести праворуч</string>
+  <string name="settings_swipe_actions_left">Провести ліворуч</string>
+  <string name="settings_swipe_actions_change">ЗМІНИТИ</string>
+  <string-array name="settings_swipe_actions">
+    <item>Немає</item>
+    <item>Перенести в архів</item>
+    <item>Видалити</item>
+    <item>Виклик</item>
+    <item>Позначити як прочитане</item>
+  </string-array>
   <string name="settings_delivery_title">Звіти про доставку</string>
   <string name="settings_delivery_summary">Підтвердження успішного надсилання повідомлень</string>
   <string name="settings_unicode_title">Видалити акценти</string>
@@ -183,7 +196,7 @@
   <string name="settings_version">Версія %s</string>
   <string name="settings_delay_duration_hint">Введіть тривалість (у секундах)</string>
   <string name="blocked_title">Блокування</string>
-  <string name="blocked_empty">Ваші розблоковані розмови з\'являтимуться тут</string>
+  <string name="blocked_empty">Ваші заблоковані розмови з\'являтимуться тут</string>
   <string name="blocked_unblock_dialog_title">Розблокувати</string>
   <string name="blocked_unblock_dialog_message">Бажаєте розблокувати цю бесіду?</string>
   <string name="about_title">Про додаток</string>
