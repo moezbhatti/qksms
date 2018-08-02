@@ -117,7 +117,7 @@ dependencies {
 
     // conductor
     implementation "com.bluelinelabs:conductor:$conductor_version"
-    implementation "com.bluelinelabs:conductor-autodispose:$conductor_autodispose_version"
+    implementation "com.bluelinelabs:conductor-autodispose:$conductor_version"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glide_version"

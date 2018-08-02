@@ -4,8 +4,7 @@ buildscript {
     ext.androidx_version = '1.0.0-beta01'
     ext.androidx_testrunner_version = '1.1.0-alpha3'
     ext.autodispose_version = '0.5.1'
-    ext.conductor_version = '2.1.5-20180719.190656-29'
-    ext.conductor_autodispose_version = '2.1.5-20180719.190706-29'
+    ext.conductor_version = '2.1.5'
     ext.constraintlayout_version = '1.1.0'
     ext.dagger_version = "2.16"
     ext.espresso_version = '3.1.0-alpha3'
@@ -13,7 +12,7 @@ buildscript {
     ext.glide_version = "4.8.0-20180619.011009-9"
     ext.glide_compiler_version = "4.8.0-20180619.011013-9"
     ext.junit_version = '4.12'
-    ext.kotlin_version = '1.2.50'
+    ext.kotlin_version = '1.2.51'
     ext.ktx_version = "1.0.0-alpha1"
     ext.lifecycle_version = '2.0.0-alpha1'
     ext.mockito_version = '2.18.3'
@@ -35,7 +34,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-beta05'
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.realm:realm-gradle-plugin:4.3.1"
     }
