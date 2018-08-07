@@ -4,8 +4,8 @@
 
 [![Build Status](https://travis-ci.org/moezbhatti/qksms.svg?branch=master)](https://travis-ci.org/moezbhatti/qksms)
 [![Liberapay donation](https://img.shields.io/badge/donate-liberapay-yellow.svg)](https://liberapay.com/moezbhatti/)
-[![Bitcoin donation](https://img.shields.io/badge/donate-bitcoin-yellow.svg)](http://qklabs.com/donate-btc/)
-[![PayPal donation](https://img.shields.io/badge/donate-paypal-yellow.svg)](http://bit.ly/QKSMSDonation)
+[![Bitcoin donation](https://img.shields.io/badge/donate-bitcoin-yellow.svg)](https://qklabs.com/donate-btc/)
+[![PayPal donation](https://img.shields.io/badge/donate-paypal-yellow.svg)](https://qklabs.com/donate)
 
 QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.moez.QKSMS) and on [F-Droid](https://f-droid.org/repository/browse/?fdid=com.moez.QKSMS)
 
