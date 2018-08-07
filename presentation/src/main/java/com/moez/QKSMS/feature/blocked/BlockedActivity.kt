@@ -39,7 +39,7 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
 
     override val siaClickedIntent by lazy { shouldIAnswer.clicks() }
     override val unblockIntent by lazy { blockedAdapter.unblock }
-    override val confirmUnblockIntent: Subject<Unit> = PublishSubject.create()
+    override val confirmUnblockIntent: Subject<Long> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[BlockedViewModel::class.java] }
 
@@ -61,11 +61,11 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
         blockedAdapter.updateData(state.data)
     }
 
-    override fun showUnblockDialog() {
+    override fun showUnblockDialog(threadId: Long) {
         AlertDialog.Builder(this)
                 .setTitle(R.string.blocked_unblock_dialog_title)
                 .setMessage(R.string.blocked_unblock_dialog_message)
-                .setPositiveButton(R.string.button_unblock) { _, _ -> confirmUnblockIntent.onNext(Unit) }
+                .setPositiveButton(R.string.button_unblock) { _, _ -> confirmUnblockIntent.onNext(threadId) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }
