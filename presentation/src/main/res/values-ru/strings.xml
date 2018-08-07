@@ -252,6 +252,7 @@
     <item>Отметить непрочитанным</item>
     <item>Ответить</item>
     <item>Позвонить</item>
+    <item>Удалить</item>
   </string-array>
   <string name="button_cancel">Отмена</string>
   <string name="button_delete">Удалить</string>

@@ -251,6 +251,7 @@
     <item>Mark read</item>
     <item>Reply</item>
     <item>Call</item>
+    <item>Delete</item>
   </string-array>
   <string name="button_cancel">Odustani</string>
   <string name="button_delete">Izbriši</string>

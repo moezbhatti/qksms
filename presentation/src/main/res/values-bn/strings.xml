@@ -250,6 +250,7 @@
     <item>Mark read</item>
     <item>Reply</item>
     <item>Call</item>
+    <item>Delete</item>
   </string-array>
   <string name="button_cancel">বাতিল করুন</string>
   <string name="button_delete">মুছে ফেলুন</string>

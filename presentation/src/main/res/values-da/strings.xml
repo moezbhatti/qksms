@@ -250,6 +250,7 @@
     <item>Markér som læst</item>
     <item>Besvar</item>
     <item>Ring op</item>
+    <item>Slet</item>
   </string-array>
   <string name="button_cancel">Annullér</string>
   <string name="button_delete">Slet</string>

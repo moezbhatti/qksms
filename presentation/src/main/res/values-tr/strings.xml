@@ -250,6 +250,7 @@
     <item>Okundu olarak işaretle</item>
     <item>Yanıtla</item>
     <item>Ara</item>
+    <item>Sil</item>
   </string-array>
   <string name="button_cancel">İptal</string>
   <string name="button_delete">Sil</string>

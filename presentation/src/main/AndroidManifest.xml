@@ -104,6 +104,7 @@
                 <action android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.DeleteMessagesReceiver" />
         <receiver
             android:name=".receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">

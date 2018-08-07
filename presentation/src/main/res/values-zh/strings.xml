@@ -249,6 +249,7 @@
     <item>Mark read</item>
     <item>Reply</item>
     <item>Call</item>
+    <item>Delete</item>
   </string-array>
   <string name="button_cancel">取消</string>
   <string name="button_delete">刪除</string>
