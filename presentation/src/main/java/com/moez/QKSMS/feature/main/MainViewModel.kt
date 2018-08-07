@@ -223,7 +223,7 @@ class MainViewModel @Inject constructor(
                             view.clearSelection()
                         }
 
-                        R.id.delete -> view.showDeleteDialog(conversations.size)
+                        R.id.delete -> view.showDeleteDialog(conversations)
 
                         R.id.pin -> {
                             markPinned.execute(conversations)
@@ -299,10 +299,6 @@ class MainViewModel @Inject constructor(
 
         // Delete the conversation
         view.confirmDeleteIntent
-                .withLatestFrom(view.conversationsSelectedIntent, view.swipeConversationIntent) { _, conversations, swipe ->
-                    // If conversations are selected, use those. Otherwise, this was triggered by a swipe-to-delete
-                    conversations.takeIf { it.isNotEmpty() } ?: listOf(swipe.first)
-                }
                 .autoDisposable(view.scope())
                 .subscribe { conversations ->
                     deleteConversations.execute(conversations)
@@ -315,7 +311,7 @@ class MainViewModel @Inject constructor(
                     val action = if (direction == ItemTouchHelper.RIGHT) prefs.swipeRight.get() else prefs.swipeLeft.get()
                     when (action) {
                         Preferences.SWIPE_ACTION_ARCHIVE -> markArchived.execute(listOf(threadId)) { view.showArchivedSnackbar() }
-                        Preferences.SWIPE_ACTION_DELETE -> view.showDeleteDialog(1)
+                        Preferences.SWIPE_ACTION_DELETE -> view.showDeleteDialog(listOf(threadId))
                         Preferences.SWIPE_ACTION_CALL -> conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address?.let(navigator::makePhoneCall)
                         Preferences.SWIPE_ACTION_READ -> markRead.execute(listOf(threadId))
                     }

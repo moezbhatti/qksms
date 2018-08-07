@@ -93,7 +93,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override val dismissRatingIntent by lazy { rateDismiss.clicks() }
     override val rateIntent by lazy { rateOkay.clicks() }
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
-    override val confirmDeleteIntent: Subject<Unit> = PublishSubject.create()
+    override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
     override val snackbarButtonIntent by lazy { snackbarButton.clicks() }
@@ -284,11 +284,12 @@ class MainActivity : QkThemedActivity(), MainView {
         conversationsAdapter.clearSelection()
     }
 
-    override fun showDeleteDialog(count: Int) {
+    override fun showDeleteDialog(conversations: List<Long>) {
+        val count = conversations.size
         AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_delete_title)
                 .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, count, count))
-                .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(Unit) }
+                .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(conversations) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .show()
     }
