@@ -206,7 +206,8 @@ class NotificationManagerImpl @Inject constructor(
                         Preferences.NOTIFICATION_ACTION_READ -> {
                             val intent = Intent(context, MarkReadReceiver::class.java).putExtra("threadId", threadId)
                             val pi = PendingIntent.getBroadcast(context, threadId.toInt() + 30000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-                            NotificationCompat.Action(R.drawable.ic_check_white_24dp, actionLabels[action], pi)
+                            NotificationCompat.Action.Builder(R.drawable.ic_check_white_24dp, actionLabels[action], pi)
+                                    .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ).build()
                         }
 
                         Preferences.NOTIFICATION_ACTION_REPLY -> {
@@ -215,7 +216,8 @@ class NotificationManagerImpl @Inject constructor(
                             } else {
                                 val intent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId)
                                 val pi = PendingIntent.getActivity(context, threadId.toInt() + 40000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-                                NotificationCompat.Action(R.drawable.ic_reply_white_24dp, actionLabels[action], pi)
+                                NotificationCompat.Action.Builder(R.drawable.ic_reply_white_24dp, actionLabels[action], pi)
+                                        .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY).build()
                             }
                         }
 
@@ -224,7 +226,8 @@ class NotificationManagerImpl @Inject constructor(
                             val intentAction = if (permissions.hasCalling()) Intent.ACTION_CALL else Intent.ACTION_DIAL
                             val intent = Intent(intentAction, Uri.parse("tel:$address"))
                             val pi = PendingIntent.getActivity(context, threadId.toInt() + 50000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-                            NotificationCompat.Action(R.drawable.ic_call_white_24dp, actionLabels[action], pi)
+                            NotificationCompat.Action.Builder(R.drawable.ic_call_white_24dp, actionLabels[action], pi)
+                                    .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_CALL).build()
                         }
 
                         else -> null
@@ -288,6 +291,7 @@ class NotificationManagerImpl @Inject constructor(
                 .build()
 
         return NotificationCompat.Action.Builder(R.drawable.ic_reply_white_24dp, title, replyPI)
+                .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
                 .addRemoteInput(remoteInput)
                 .build()
     }
