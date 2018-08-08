@@ -9,8 +9,14 @@
 
 QKSMS is an open source replacement to the [stock messaging app](https://github.com/android/platform_packages_apps_mms) on Android. It is currently available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.moez.QKSMS) and on [F-Droid](https://f-droid.org/repository/browse/?fdid=com.moez.QKSMS)
 
-[![Download on Google Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.moez.QKSMS)
-[![Download on F-Droid](https://fdroid.gitlab.io/artwork/badge/get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.moez.QKSMS)
+<a href="https://play.google.com/store/apps/details?id=com.moez.QKSMS">
+    <img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+         alt="Download on Google Play" height="80">
+</a>
+<a href="https://f-droid.org/repository/browse/?fdid=com.moez.QKSMS">
+    <img src="https://f-droid.org/badge/get-it-on.png"
+         alt="Get it on F-Droid" height="80">
+</a>
 
 ## Reporting bugs
 
