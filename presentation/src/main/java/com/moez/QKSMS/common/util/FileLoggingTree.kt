@@ -20,24 +20,30 @@ package com.moez.QKSMS.common.util
 
 import android.os.Environment
 import android.util.Log
+import com.moez.QKSMS.util.Preferences
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Based off Vipin Kumar's FileLoggingTree: https://medium.com/@vicky7230/file-logging-with-timber-4e63a1b86a66
  */
-class FileLoggingTree : Timber.DebugTree() {
+@Singleton
+class FileLoggingTree @Inject constructor(private val prefs: Preferences) : Timber.DebugTree() {
+
+    private val fileLock: Boolean = false
 
     override fun log(priority: Int, tag: String, message: String, t: Throwable?) {
-        try {
-            val time = System.currentTimeMillis()
-            val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Logs").apply { mkdirs() }
-            val file = File(dir, "${SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(time)}.html")
+        if (!prefs.logging.get()) return
 
-            val priorityString = when(priority) {
+        Schedulers.io().scheduleDirect {
+            val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault()).format(System.currentTimeMillis())
+            val priorityString = when (priority) {
                 Log.VERBOSE -> "V"
                 Log.DEBUG -> "D"
                 Log.INFO -> "I"
@@ -46,13 +52,24 @@ class FileLoggingTree : Timber.DebugTree() {
                 else -> "WTF"
             }
 
-            FileOutputStream(file, true).use { fileOutputStream ->
-                val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault()).format(time)
-                fileOutputStream.write("$timestamp $priorityString/$tag: $message ${Log.getStackTraceString(t)}<br>".toByteArray())
-            }
-        } catch (e: Exception) {
-            Log.e("FileLoggingTree", "Error while logging into file", e)
-        }
+            // Format the log to be written to the file
+            val log = "$timestamp $priorityString/$tag: $message ${Log.getStackTraceString(t)}<br>".toByteArray()
 
+            // Ensure that only one thread is writing to the file at a time
+            synchronized(fileLock) {
+                try {
+                    // Create the directory
+                    val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Logs").apply { mkdirs() }
+
+                    // Create the file
+                    val file = File(dir, "${SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis())}.html")
+
+                    // Write the log to the file
+                    FileOutputStream(file, true).use { fileOutputStream -> fileOutputStream.write(log) }
+                } catch (e: Exception) {
+                    Log.e("FileLoggingTree", "Error while logging into file", e)
+                }
+            }
+        }
     }
 }

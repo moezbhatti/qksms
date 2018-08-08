@@ -208,6 +208,8 @@
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
     <string name="settings_about_title">About QKSMS</string>
     <string name="settings_version">Version %s</string>
+    <string name="settings_logging_enabled">Debug logging enabled</string>
+    <string name="settings_logging_disabled">Debug logging disabled</string>
 
     <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
 

@@ -49,6 +49,7 @@ import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.BugsnagTree
+import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
@@ -75,6 +76,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
     @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+    @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
 
     private val packages = arrayOf("com.moez.QKSMS")
@@ -109,7 +111,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        Timber.plant(Timber.DebugTree(), BugsnagTree())
+        Timber.plant(Timber.DebugTree(), BugsnagTree(), fileLoggingTree)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

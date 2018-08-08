@@ -11,6 +11,7 @@ import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.QkChangeHandler
@@ -93,6 +94,8 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
             .mapNotNull { view -> view as? PreferenceView }
             .map { preference -> preference.clicks().map { preference } }
             .let { preferences -> Observable.merge(preferences) }
+
+    override fun aboutLongClicks(): Observable<*> = about.longClicks()
 
     override fun viewQksmsPlusClicks(): Observable<*> = viewQksmsPlusSubject
 

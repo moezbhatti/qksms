@@ -1,6 +1,7 @@
 package com.moez.QKSMS.feature.settings
 
 import android.content.Context
+import androidx.core.widget.toast
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
@@ -140,6 +141,17 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.about -> view.showAbout()
                     }
+                }
+
+        view.aboutLongClicks()
+                .map { !prefs.logging.get() }
+                .doOnNext { enabled -> prefs.logging.set(enabled) }
+                .autoDisposable(view.scope())
+                .subscribe { enabled ->
+                    context.toast(when (enabled) {
+                        true -> R.string.settings_logging_enabled
+                        false -> R.string.settings_logging_disabled
+                    })
                 }
 
         view.nightModeSelected()
