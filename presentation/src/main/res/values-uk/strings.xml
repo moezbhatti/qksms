@@ -252,6 +252,7 @@
     <item>Позначити як прочитане</item>
     <item>Відповісти</item>
     <item>Зателефонувати</item>
+    <item>Видалити</item>
   </string-array>
   <string name="button_cancel">Скасувати</string>
   <string name="button_delete">Видалити</string>

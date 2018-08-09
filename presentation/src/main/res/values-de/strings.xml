@@ -250,6 +250,7 @@
     <item>Als gelesen markieren</item>
     <item>Antworten</item>
     <item>Anrufen</item>
+    <item>Löschen</item>
   </string-array>
   <string name="button_cancel">Abbrechen</string>
   <string name="button_delete">Löschen</string>

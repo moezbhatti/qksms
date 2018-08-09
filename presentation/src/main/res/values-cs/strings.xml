@@ -252,6 +252,7 @@
     <item>Přečteno</item>
     <item>Odpovědět</item>
     <item>Volat</item>
+    <item>Smazat</item>
   </string-array>
   <string name="button_cancel">Zrušit</string>
   <string name="button_delete">Odstranit</string>

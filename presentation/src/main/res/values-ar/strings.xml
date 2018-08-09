@@ -255,6 +255,7 @@
     <item>علّمها مقروءة</item>
     <item>الرد</item>
     <item>اتصال</item>
+    <item>حذف</item>
   </string-array>
   <string name="button_cancel">إلغاء</string>
   <string name="button_delete">حذف</string>

@@ -22,6 +22,7 @@ import com.moez.QKSMS.feature.widget.WidgetProvider
 import com.moez.QKSMS.injection.scope.ActivityScope
 import com.moez.QKSMS.receiver.BootReceiver
 import com.moez.QKSMS.receiver.DefaultSmsChangedReceiver
+import com.moez.QKSMS.receiver.DeleteMessagesReceiver
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.MmsReceivedReceiver
@@ -49,6 +50,10 @@ abstract class BroadcastReceiverBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector()
     abstract fun bindDefaultSmsChangedReceiver(): DefaultSmsChangedReceiver
+
+    @ActivityScope
+    @ContributesAndroidInjector()
+    abstract fun bindDeleteMessagesReceiver(): DeleteMessagesReceiver
 
     @ActivityScope
     @ContributesAndroidInjector()

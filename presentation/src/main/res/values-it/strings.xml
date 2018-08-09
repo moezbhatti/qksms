@@ -250,6 +250,7 @@
     <item>Segna come letto</item>
     <item>Rispondi</item>
     <item>Chiama</item>
+    <item>Elimina</item>
   </string-array>
   <string name="button_cancel">Annulla</string>
   <string name="button_delete">Elimina</string>

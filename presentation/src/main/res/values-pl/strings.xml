@@ -252,6 +252,7 @@
     <item>Oznacz jako przeczytane</item>
     <item>Odpowiedz</item>
     <item>Zadzwoń</item>
+    <item>Usuń</item>
   </string-array>
   <string name="button_cancel">Anuluj</string>
   <string name="button_delete">Usuń</string>

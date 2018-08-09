@@ -250,6 +250,7 @@
     <item>Marquer comme lu</item>
     <item>Répondre</item>
     <item>Appeler</item>
+    <item>Supprimer</item>
   </string-array>
   <string name="button_cancel">Annuler</string>
   <string name="button_delete">Supprimer</string>

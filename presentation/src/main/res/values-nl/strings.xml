@@ -250,6 +250,7 @@
     <item>Markeren als gelezen</item>
     <item>Beantwoorden</item>
     <item>Bellen</item>
+    <item>Verwijderen</item>
   </string-array>
   <string name="button_cancel">Annuleren</string>
   <string name="button_delete">Verwijderen</string>

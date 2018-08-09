@@ -250,6 +250,7 @@
     <item>Merkitse luetuksi</item>
     <item>Vastaa</item>
     <item>Soita</item>
+    <item>Poista</item>
   </string-array>
   <string name="button_cancel">Peruuta</string>
   <string name="button_delete">Poista</string>

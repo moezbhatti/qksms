@@ -38,8 +38,10 @@ import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivity
+import com.moez.QKSMS.interactor.DeleteMessages
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.mapper.CursorToPartImpl
+import com.moez.QKSMS.receiver.DeleteMessagesReceiver
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
@@ -228,6 +230,14 @@ class NotificationManagerImpl @Inject constructor(
                             val pi = PendingIntent.getActivity(context, threadId.toInt() + 50000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
                             NotificationCompat.Action.Builder(R.drawable.ic_call_white_24dp, actionLabels[action], pi)
                                     .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_CALL).build()
+                        }
+
+                        Preferences.NOTIFICATION_ACTION_DELETE -> {
+                            val messageIds = messages.map { it.id }.toLongArray()
+                            val intent = Intent(context, DeleteMessagesReceiver::class.java).putExtra("threadId", threadId).putExtra("messageIds", messageIds)
+                            val pi = PendingIntent.getBroadcast(context, threadId.toInt() + 60000, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                            NotificationCompat.Action.Builder(R.drawable.ic_delete_white_24dp, actionLabels[action], pi)
+                                    .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_DELETE).build()
                         }
 
                         else -> null

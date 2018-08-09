@@ -250,6 +250,7 @@
     <item>Mark read</item>
     <item>Svara</item>
     <item>Ring</item>
+    <item>Radera</item>
   </string-array>
   <string name="button_cancel">Avbryt</string>
   <string name="button_delete">Radera</string>

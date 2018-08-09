@@ -250,6 +250,7 @@
     <item>Marcar como lida</item>
     <item>Responder</item>
     <item>Ligar</item>
+    <item>Apagar</item>
   </string-array>
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Apagar</string>
