@@ -35,7 +35,9 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class BillingManager @Inject constructor(
         context: Context,
         private val analyticsManager: AnalyticsManager
@@ -50,7 +52,7 @@ class BillingManager @Inject constructor(
     val upgradeStatus: Observable<Boolean>
 
     private val skus = listOf(SKU_PLUS, SKU_PLUS_DONATE)
-    private val purchaseListObservable = BehaviorSubject.createDefault<List<Purchase>>(listOf())
+    private val purchaseListObservable = BehaviorSubject.create<List<Purchase>>()
 
     private val billingClient: BillingClient = BillingClient.newBuilder(context).setListener(this).build()
     private var isServiceConnected = false
