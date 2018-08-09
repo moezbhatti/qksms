@@ -64,6 +64,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
+    @Inject lateinit var drawerBadgesExperiment: DrawerBadgesExperiment
     @Inject lateinit var searchAdapter: SearchAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -141,6 +142,8 @@ class MainActivity : QkThemedActivity(), MainView {
                             }
 
                     // Miscellaneous views
+                    plusBadge.setBackgroundTint(theme.theme)
+                    plusBadge.setTextColor(theme.textPrimary)
                     syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
@@ -193,6 +196,7 @@ class MainActivity : QkThemedActivity(), MainView {
         toolbar.menu.findItem(R.id.unread)?.isVisible = !markRead && selectedConversations != 0
         toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0
 
+        plusBadge.isVisible = drawerBadgesExperiment.variant && !state.upgraded
         plus.isVisible = state.upgraded
         plusBanner.isVisible = !state.upgraded
         rateLayout.setVisible(state.showRating)
