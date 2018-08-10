@@ -27,6 +27,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -69,6 +70,9 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
         messages.adapter = adapter
         messages.adapter?.autoScrollToStart(messages)
+        messages.adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() = messages.scrollToPosition(adapter.itemCount - 1)
+        })
 
         // These theme attributes don't apply themselves on API 21
         if (Build.VERSION.SDK_INT <= 22) {

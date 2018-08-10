@@ -36,7 +36,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
@@ -124,13 +123,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         chips.itemAnimator = null
         chips.layoutManager = FlexboxLayoutManager(this)
 
-        val layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
-
         messageAdapter.autoScrollToStart(messageList)
         messageAdapter.emptyView = messagesEmpty
 
         messageList.setHasFixedSize(true)
-        messageList.layoutManager = layoutManager
         messageList.adapter = messageAdapter
 
         attachments.adapter = attachmentAdapter
