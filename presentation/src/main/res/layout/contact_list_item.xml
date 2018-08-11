@@ -39,7 +39,7 @@
             android:id="@+id/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginRight="16dp" />
+            android:layout_marginEnd="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +55,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
 
                 <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/address"
@@ -83,10 +84,11 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/addresses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/contact_number_list_item" />
 
 </LinearLayout>

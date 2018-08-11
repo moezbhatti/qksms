@@ -19,8 +19,8 @@
 package com.moez.QKSMS.feature.compose
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
@@ -35,13 +35,22 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
 
     val contactSelected: Subject<Contact> = PublishSubject.create()
 
+    private val numbersViewPool = RecyclerView.RecycledViewPool()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.contact_list_item, parent, false)
+
+        view.addresses.setRecycledViewPool(numbersViewPool)
+
         return QkViewHolder(view).apply {
             view.primary.setOnClickListener {
                 val contact = getItem(adapterPosition)
                 contactSelected.onNext(copyContact(contact, 0))
+            }
+
+            view.addresses.adapter = PhoneNumberAdapter { contact, index ->
+                contactSelected.onNext(copyContact(contact, index + 1))
             }
         }
     }
@@ -56,17 +65,9 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
         view.address.text = contact.numbers.first()?.address ?: ""
         view.type.text = contact.numbers.first()?.type ?: ""
 
-        view.addresses.removeAllViews()
-        contact.numbers.forEachIndexed { index, number ->
-            if (index != 0) {
-                val numberView = View.inflate(view.context, R.layout.contact_number_list_item, null)
-                numberView.setOnClickListener { contactSelected.onNext(copyContact(contact, index)) }
-                numberView.address.text = number.address
-                numberView.type.text = number.type
-                view.addresses.addView(numberView)
-            }
-        }
-
+        val adapter = view.addresses.adapter as PhoneNumberAdapter
+        adapter.contact = contact
+        adapter.data = contact.numbers.drop(Math.min(contact.numbers.size, 1))
     }
 
     /**
