@@ -264,7 +264,6 @@ class ConversationRepositoryImpl @Inject constructor(
         Realm.getDefaultInstance().use { realm ->
             val conversations = realm.where(Conversation::class.java)
                     .anyOf("id", threadIds)
-                    .equalTo("archived", false)
                     .findAll()
 
             realm.executeTransaction {
