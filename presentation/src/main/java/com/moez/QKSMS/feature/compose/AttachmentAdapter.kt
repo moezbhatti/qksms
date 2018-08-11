@@ -21,14 +21,11 @@ package com.moez.QKSMS.feature.compose
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.model.Attachment
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.attachment_list_item.view.*
@@ -40,28 +37,22 @@ class AttachmentAdapter @Inject constructor(
 
     val attachmentDeleted: Subject<Attachment> = PublishSubject.create()
 
-    private val disposables = CompositeDisposable()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.attachment_list_item, parent, false)
 
         view.thumbnailBounds.clipToOutline = true
 
-        return QkViewHolder(view)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        disposables.clear()
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
+                val attachment = getItem(adapterPosition)
+                attachmentDeleted.onNext(attachment)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val attachment = getItem(position)
         val view = holder.itemView
-
-        view.clicks().subscribe {
-            attachmentDeleted.onNext(attachment)
-        }
 
         Glide.with(context).load(attachment.getUri()).into(view.thumbnail)
     }

@@ -143,7 +143,25 @@ class MessagesAdapter @Inject constructor(
         view.attachments.setRecycledViewPool(partsViewPool)
         view.body.forwardTouches(view)
 
-        return QkViewHolder(view)
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
+                val message = getItem(adapterPosition)!!
+                when (toggleSelection(message.id, false)) {
+                    true -> view.isSelected = isSelected(message.id)
+                    false -> {
+                        clicks.onNext(message)
+                        expanded[message.id] = view.status.visibility != View.VISIBLE
+                        notifyItemChanged(adapterPosition)
+                    }
+                }
+            }
+            view.setOnLongClickListener {
+                val message = getItem(adapterPosition)!!
+                toggleSelection(message.id)
+                view.isSelected = isSelected(message.id)
+                true
+            }
+        }
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
@@ -151,22 +169,6 @@ class MessagesAdapter @Inject constructor(
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
         val view = viewHolder.itemView
-
-        view.setOnClickListener {
-            when (toggleSelection(message.id, false)) {
-                true -> view.isSelected = isSelected(message.id)
-                false -> {
-                    clicks.onNext(message)
-                    expanded[message.id] = view.status.visibility != View.VISIBLE
-                    notifyItemChanged(position)
-                }
-            }
-        }
-        view.setOnLongClickListener {
-            toggleSelection(message.id)
-            view.isSelected = isSelected(message.id)
-            true
-        }
 
 
         // Update the selected state

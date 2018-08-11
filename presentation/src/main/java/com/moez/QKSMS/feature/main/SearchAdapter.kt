@@ -24,7 +24,6 @@ import android.text.Spanned
 import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkAdapter
@@ -48,17 +47,18 @@ class SearchAdapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.search_list_item, parent, false)
-        return QkViewHolder(view)
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
+                val result = getItem(adapterPosition)
+                navigator.showConversation(result.conversation.id, result.query.takeIf { result.messages > 0 })
+            }
+        }
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val previous = data.getOrNull(position - 1)
         val result = getItem(position)
         val view = viewHolder.itemView
-
-        view.clicks().subscribe {
-            navigator.showConversation(result.conversation.id, result.query.takeIf { result.messages > 0 })
-        }
 
         view.resultsHeader.setVisible(result.messages > 0 && previous?.messages == 0)
 

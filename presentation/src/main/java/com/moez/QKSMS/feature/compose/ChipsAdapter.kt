@@ -84,7 +84,13 @@ class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter
 
         else -> {
             val inflater = LayoutInflater.from(parent.context)
-            QkViewHolder(inflater.inflate(R.layout.contact_chip, parent, false))
+            val view = inflater.inflate(R.layout.contact_chip, parent, false)
+            QkViewHolder(view).apply {
+                view.setOnClickListener {
+                    val contact = getItem(adapterPosition)
+                    showDetailedChip(view.context, contact)
+                }
+            }
         }
     }
 
@@ -103,8 +109,6 @@ class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter
                 } else {
                     contact.numbers.firstOrNull { it.address.isNotBlank() }?.address ?: ""
                 }
-
-                view.setOnClickListener { showDetailedChip(view.context, contact) }
             }
         }
     }

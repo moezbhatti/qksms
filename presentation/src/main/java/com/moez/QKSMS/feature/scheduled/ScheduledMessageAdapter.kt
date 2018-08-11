@@ -56,14 +56,17 @@ class ScheduledMessageAdapter @Inject constructor(
         view.attachments.adapter = ScheduledMessageAttachmentAdapter()
         view.attachments.setRecycledViewPool(imagesViewPool)
 
-        return QkViewHolder(view)
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
+                val message = getItem(adapterPosition)!!
+                clicks.onNext(message.id)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val message = getItem(position)!!
         val view = holder.itemView
-
-        view.setOnClickListener { clicks.onNext(message.id) }
 
         message.recipients.forEach { address ->
             if (!contactMap.containsKey(address)) {

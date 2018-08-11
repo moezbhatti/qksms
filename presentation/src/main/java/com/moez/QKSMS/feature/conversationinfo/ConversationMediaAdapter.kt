@@ -22,7 +22,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkRealmAdapter
@@ -32,7 +31,6 @@ import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.util.GlideApp
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*
 import javax.inject.Inject
@@ -44,11 +42,15 @@ class ConversationMediaAdapter @Inject constructor(
 
     val thumbnailClicks: PublishSubject<View> = PublishSubject.create()
 
-    private val disposables = CompositeDisposable()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.conversation_media_list_item, parent, false)
-        return QkViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.conversation_media_list_item, parent, false)
+        return QkViewHolder(view).apply {
+            view.thumbnail.setOnClickListener {
+                val part = getItem(adapterPosition)!!
+                if (part.isImage()) thumbnailClicks.onNext(it) else navigator.showMedia(part.id)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
@@ -62,13 +64,6 @@ class ConversationMediaAdapter @Inject constructor(
 
         view.video.setVisible(part.isVideo())
         view.thumbnail.transitionName = part.id.toString()
-        view.thumbnail.setOnClickListener {
-            if (part.isImage()) thumbnailClicks.onNext(it) else navigator.showMedia(part.id)
-        }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        disposables.clear()
     }
 
 }

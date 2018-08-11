@@ -60,24 +60,26 @@ class ConversationsAdapter @Inject constructor(
             view.date.setTextColor(textColorPrimary)
         }
 
-        return QkViewHolder(view)
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
+                val conversation = getItem(adapterPosition)!!
+                when (toggleSelection(conversation.id, false)) {
+                    true -> view.isSelected = isSelected(conversation.id)
+                    false -> navigator.showConversation(conversation.id)
+                }
+            }
+            view.setOnLongClickListener {
+                val conversation = getItem(adapterPosition)!!
+                toggleSelection(conversation.id)
+                view.isSelected = isSelected(conversation.id)
+                true
+            }
+        }
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val conversation = getItem(position)!!
         val view = viewHolder.itemView
-
-        view.setOnClickListener {
-            when (toggleSelection(conversation.id, false)) {
-                true -> view.isSelected = isSelected(conversation.id)
-                false -> navigator.showConversation(conversation.id)
-            }
-        }
-        view.setOnLongClickListener {
-            toggleSelection(conversation.id)
-            view.isSelected = isSelected(conversation.id)
-            true
-        }
 
         view.isSelected = isSelected(conversation.id)
 

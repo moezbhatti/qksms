@@ -42,20 +42,21 @@ class ConversationRecipientAdapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.conversation_recipient_list_item, parent, false)
-        return QkViewHolder(view)
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
+                val recipient = getItem(adapterPosition)!!
+                if (recipient.contact == null) {
+                    navigator.addContact(recipient.address)
+                } else {
+                    view.avatar.callOnClick()
+                }
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val recipient = getItem(position)!!
         val view = holder.itemView
-
-        view.setOnClickListener {
-            if (recipient.contact == null) {
-                navigator.addContact(recipient.address)
-            } else {
-                view.avatar.callOnClick()
-            }
-        }
 
         view.avatar.threadId = threadId
         view.avatar.setContact(recipient)

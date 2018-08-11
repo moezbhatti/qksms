@@ -24,7 +24,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ArrayRes
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
@@ -74,14 +73,17 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
         val text = parent.context.resolveThemeColor(android.R.attr.textColorTertiary)
         view.check.imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, text))
 
-        return QkViewHolder(view)
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
+                val menuItem = getItem(adapterPosition)
+                menuItemClicks.onNext(menuItem.actionId)
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val menuItem = getItem(position)
         val view = holder.itemView
-
-        view.clicks().subscribe { menuItemClicks.onNext(menuItem.actionId) }
 
         view.title.text = menuItem.title
         view.check.isSelected = (menuItem.actionId == selectedItem)

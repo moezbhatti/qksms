@@ -59,14 +59,14 @@ class PartsAdapter(context: Context, navigator: Navigator, theme: Colors.Theme) 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layout = partBinders.getOrNull(viewType)?.partLayout ?: 0
-        return QkViewHolder(LayoutInflater.from(parent.context).inflate(layout, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
+        messageView?.let(view::forwardTouches)
+        return QkViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val part = data[position]
         val view = holder.itemView
-
-        messageView?.let(view::forwardTouches)
 
         val canGroupWithPrevious = canGroup(message, previous) || position > 0
         val canGroupWithNext = canGroup(message, next) || position < itemCount - 1 || bodyVisible

@@ -21,7 +21,6 @@ package com.moez.QKSMS.feature.compose
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
@@ -39,14 +38,17 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.contact_list_item, parent, false)
-        return QkViewHolder(view)
+        return QkViewHolder(view).apply {
+            view.primary.setOnClickListener {
+                val contact = getItem(adapterPosition)
+                contactSelected.onNext(copyContact(contact, 0))
+            }
+        }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val contact = getItem(position)
         val view = holder.itemView
-
-        view.primary.clicks().subscribe { contactSelected.onNext(copyContact(contact, 0)) }
 
         view.avatar.setContact(contact)
         view.name.text = contact.name
@@ -58,7 +60,7 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
         contact.numbers.forEachIndexed { index, number ->
             if (index != 0) {
                 val numberView = View.inflate(view.context, R.layout.contact_number_list_item, null)
-                numberView.clicks().subscribe { contactSelected.onNext(copyContact(contact, index)) }
+                numberView.setOnClickListener { contactSelected.onNext(copyContact(contact, index)) }
                 numberView.address.text = number.address
                 numberView.type.text = number.type
                 view.addresses.addView(numberView)
