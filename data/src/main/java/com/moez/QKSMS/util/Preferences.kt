@@ -83,6 +83,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val delivery = rxPrefs.getBoolean("delivery", false)
     val unicode = rxPrefs.getBoolean("unicode", false)
+    val mobileOnly = rxPrefs.getBoolean("mobileOnly", false)
     val mmsSize = rxPrefs.getInteger("mmsSize", 300)
     val logging = rxPrefs.getBoolean("logging", false)
 

@@ -37,7 +37,10 @@ import java.io.InputStream
 import java.security.MessageDigest
 
 
-class ContactImageLoader(private val context: Context, private val contactRepo: ContactRepository) : ModelLoader<String, InputStream> {
+class ContactImageLoader(
+        private val context: Context,
+        private val contactRepo: ContactRepository
+) : ModelLoader<String, InputStream> {
 
     override fun handles(model: String): Boolean {
         return PhoneNumberUtils.isGlobalPhoneNumber(model)
@@ -47,8 +50,8 @@ class ContactImageLoader(private val context: Context, private val contactRepo: 
         return ModelLoader.LoadData(ContactImageKey(model), ContactImageFetcher(context, contactRepo, model))
     }
 
-    class Factory(val context: Context) : ModelLoaderFactory<String, InputStream> {
-        override fun build(multiFactory: MultiModelLoaderFactory) = ContactImageLoader(context, ContactRepositoryImpl(context))
+    class Factory(val context: Context, val prefs: Preferences) : ModelLoaderFactory<String, InputStream> {
+        override fun build(multiFactory: MultiModelLoaderFactory) = ContactImageLoader(context, ContactRepositoryImpl(context, prefs))
         override fun teardown() {} // nothing to do here
     }
 

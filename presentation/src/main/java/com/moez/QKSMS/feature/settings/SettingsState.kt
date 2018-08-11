@@ -38,6 +38,7 @@ data class SettingsState(
         val systemFontEnabled: Boolean = false,
         val splitSmsEnabled: Boolean = false,
         val stripUnicodeEnabled: Boolean = false,
+        val mobileOnly: Boolean = false,
         val maxMmsSizeSummary: String = "100KB",
         val maxMmsSizeId: Int = 100
 )

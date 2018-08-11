@@ -22,9 +22,12 @@ import android.content.Context
 import android.net.Uri
 import android.provider.BaseColumns
 import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.moez.QKSMS.extensions.asFlowable
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.model.Contact
+import com.moez.QKSMS.util.Preferences
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,13 +38,16 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ContactRepositoryImpl @Inject constructor(val context: Context) : ContactRepository {
+class ContactRepositoryImpl @Inject constructor(
+        private val context: Context,
+        private val prefs: Preferences
+) : ContactRepository {
 
     override fun findContactUri(address: String): Single<Uri> {
         return Flowable.just(address)
                 .map {
                     when {
-                        address.contains('@') -> Uri.withAppendedPath(ContactsContract.CommonDataKinds.Email.CONTENT_FILTER_URI, Uri.encode(address))
+                        address.contains('@') -> Uri.withAppendedPath(Email.CONTENT_FILTER_URI, Uri.encode(address))
                         else -> Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
                     }
                 }
@@ -61,15 +67,41 @@ class ContactRepositoryImpl @Inject constructor(val context: Context) : ContactR
 
     override fun getUnmanagedContacts(): Flowable<List<Contact>> {
         val realm = Realm.getDefaultInstance()
-        return realm.where(Contact::class.java)
-                .sort("name")
-                .findAllAsync()
-                .asFlowable()
-                .filter { it.isLoaded }
-                .filter { it.isValid }
-                .map { realm.copyFromRealm(it) }
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
+
+        val mobileLabel by lazy {
+            Phone.getTypeLabel(context.resources, Phone.TYPE_MOBILE, "Mobile").toString()
+        }
+
+        return when (prefs.mobileOnly.get()) {
+            true -> realm.where(Contact::class.java)
+                    .contains("numbers.type", mobileLabel)
+                    .sort("name")
+                    .findAllAsync()
+                    .asFlowable()
+                    .filter { it.isLoaded }
+                    .filter { it.isValid }
+                    .map { realm.copyFromRealm(it) }
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(Schedulers.io())
+                    .map { contacts ->
+                        contacts.map { contact ->
+                            val filteredNumbers = contact.numbers.filter { number -> number.type == mobileLabel }
+                            contact.numbers.clear()
+                            contact.numbers.addAll(filteredNumbers)
+                            contact
+                        }
+                    }
+
+            false -> realm.where(Contact::class.java)
+                    .sort("name")
+                    .findAllAsync()
+                    .asFlowable()
+                    .filter { it.isLoaded }
+                    .filter { it.isValid }
+                    .map { realm.copyFromRealm(it) }
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(Schedulers.io())
+        }
     }
 
 }

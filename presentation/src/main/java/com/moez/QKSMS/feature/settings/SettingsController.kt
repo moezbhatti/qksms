@@ -138,6 +138,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         systemFont.checkbox.isChecked = state.systemFontEnabled
 
         unicode.checkbox.isChecked = state.stripUnicodeEnabled
+        mobileOnly.checkbox.isChecked = state.mobileOnly
 
         mmsSize.summary = state.maxMmsSizeSummary
         mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId

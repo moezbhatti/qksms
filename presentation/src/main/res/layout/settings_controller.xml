@@ -154,6 +154,15 @@
             app:widget="@layout/settings_switch_widget" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/mobileOnly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_smartphone_black_24dp"
+            app:summary="@string/settings_mobile_summary"
+            app:title="@string/settings_mobile_title"
+            app:widget="@layout/settings_switch_widget" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/mmsSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

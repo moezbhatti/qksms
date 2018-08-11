@@ -78,6 +78,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { copy(stripUnicodeEnabled = enabled) } }
 
+        disposables += prefs.mobileOnly.asObservable()
+                .subscribe { enabled -> newState { copy(mobileOnly = enabled) } }
+
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
         disposables += prefs.mmsSize.asObservable()
@@ -129,6 +132,8 @@ class SettingsPresenter @Inject constructor(
                         R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
 
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
+
+                        R.id.mobileOnly -> prefs.mobileOnly.set(!prefs.mobileOnly.get())
 
                         R.id.mmsSize -> view.showMmsSizePicker()
 
