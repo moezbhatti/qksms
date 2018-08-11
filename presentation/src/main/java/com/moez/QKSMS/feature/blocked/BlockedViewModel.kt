@@ -68,11 +68,10 @@ class BlockedViewModel @Inject constructor(
         // Show confirm unblock conversation dialog
         view.unblockIntent
                 .autoDisposable(view.scope())
-                .subscribe { view.showUnblockDialog() }
+                .subscribe { threadId -> view.showUnblockDialog(threadId) }
 
         // Unblock conversation
         view.confirmUnblockIntent
-                .withLatestFrom(view.unblockIntent) { _, threadId -> threadId }
                 .autoDisposable(view.scope())
                 .subscribe { threadId -> markUnblocked.execute(listOf(threadId)) }
     }

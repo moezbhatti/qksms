@@ -25,8 +25,8 @@ interface BlockedView : QkView<BlockedState> {
 
     val siaClickedIntent: Observable<*>
     val unblockIntent: Observable<Long>
-    val confirmUnblockIntent: Observable<*>
+    val confirmUnblockIntent: Observable<Long>
 
-    fun showUnblockDialog()
+    fun showUnblockDialog(threadId: Long)
 
 }
