@@ -25,6 +25,7 @@ import android.widget.RelativeLayout
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.Contact
 import kotlinx.android.synthetic.main.contact_chip_detailed.view.*
@@ -46,13 +47,18 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
         isFocusable = true
         isFocusableInTouchMode = true
 
-        card.setBackgroundTint(colors.theme().theme)
+        colors.theme().let { theme ->
+            card.setBackgroundTint(theme.theme)
+            name.setTextColor(theme.textPrimary)
+            info.setTextColor(theme.textTertiary)
+            delete.setTint(theme.textPrimary)
+        }
     }
 
     fun setContact(contact: Contact) {
         avatar.setContact(contact)
         name.text = contact.name
-        info.text = contact.numbers.map { it.address }.toString()
+        info.text = contact.numbers.joinToString(", ") { it.address }
     }
 
     fun show() {

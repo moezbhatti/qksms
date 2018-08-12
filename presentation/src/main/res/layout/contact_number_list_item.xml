@@ -28,7 +28,6 @@
         android:id="@+id/address"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginStart="72dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
         app:textColor="secondary"
@@ -41,7 +40,6 @@
         style="@style/TextSecondary"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         tools:text="Mobile"
         tools:textColor="@color/textTertiary" />
