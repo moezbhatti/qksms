@@ -36,7 +36,7 @@ abstract class Experiment<T>(val context: Context, val analytics: AnalyticsManag
     /**
      * Returns true if the current device qualifies for the experiment
      */
-    protected open val qualifies: Boolean = Locale.getDefault().language == "en"
+    protected open val qualifies: Boolean by lazy { Locale.getDefault().language.startsWith("en") }
 
     val variant: T by lazy {
         when {
