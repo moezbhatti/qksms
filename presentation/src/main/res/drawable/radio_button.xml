@@ -19,7 +19,7 @@
   -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/ic_radio_button_checked_black_24dp" android:state_selected="true" />
+    <item android:drawable="@drawable/ic_radio_button_checked_black_24dp" android:state_activated="true" />
 
     <item android:drawable="@drawable/ic_radio_button_unchecked_black_24dp" />
 

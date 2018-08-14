@@ -71,13 +71,13 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
         }
 
         childCount.forEach { index ->
-            getChildAt(index).isSelected = index == pager?.currentItem
+            getChildAt(index).isActivated = index == pager?.currentItem
         }
 
         pager?.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 childCount.forEach { index ->
-                    getChildAt(index).isSelected = index == position
+                    getChildAt(index).isActivated = index == position
                 }
             }
         })
@@ -87,8 +87,8 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
         super.onAttachedToWindow()
 
         val states = arrayOf(
-                intArrayOf(android.R.attr.state_selected),
-                intArrayOf(-android.R.attr.state_selected))
+                intArrayOf(android.R.attr.state_activated),
+                intArrayOf(-android.R.attr.state_activated))
 
         threadId
                 .distinctUntilChanged()

@@ -133,7 +133,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 .autoDisposable(scope())
                 .subscribe { theme ->
                     // Set the color for the drawer icons
-                    val states = arrayOf(intArrayOf(android.R.attr.state_selected), intArrayOf(-android.R.attr.state_selected))
+                    val states = arrayOf(intArrayOf(android.R.attr.state_activated), intArrayOf(-android.R.attr.state_activated))
                     resolveThemeColor(android.R.attr.textColorSecondary)
                             .let { textSecondary -> ColorStateList(states, intArrayOf(theme.theme, textSecondary)) }
                             .let { tintList ->
@@ -235,8 +235,8 @@ class MainActivity : QkThemedActivity(), MainView {
             }
         }
 
-        inbox.isSelected = state.page is Inbox
-        archived.isSelected = state.page is Archived
+        inbox.isActivated = state.page is Inbox
+        archived.isActivated = state.page is Archived
 
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)

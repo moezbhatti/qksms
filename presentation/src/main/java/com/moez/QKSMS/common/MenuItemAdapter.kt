@@ -67,8 +67,8 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
         val view = layoutInflater.inflate(R.layout.menu_list_item, parent, false)
 
         val states = arrayOf(
-                intArrayOf(android.R.attr.state_selected),
-                intArrayOf(-android.R.attr.state_selected))
+                intArrayOf(android.R.attr.state_activated),
+                intArrayOf(-android.R.attr.state_activated))
 
         val text = parent.context.resolveThemeColor(android.R.attr.textColorTertiary)
         view.check.imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, text))
@@ -86,7 +86,7 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
         val view = holder.itemView
 
         view.title.text = menuItem.title
-        view.check.isSelected = (menuItem.actionId == selectedItem)
+        view.check.isActivated = (menuItem.actionId == selectedItem)
         view.check.setVisible(selectedItem != null)
     }
 

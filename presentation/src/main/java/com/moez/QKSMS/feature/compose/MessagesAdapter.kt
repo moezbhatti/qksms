@@ -147,7 +147,7 @@ class MessagesAdapter @Inject constructor(
             view.setOnClickListener {
                 val message = getItem(adapterPosition)!!
                 when (toggleSelection(message.id, false)) {
-                    true -> view.isSelected = isSelected(message.id)
+                    true -> view.isActivated = isSelected(message.id)
                     false -> {
                         clicks.onNext(message)
                         expanded[message.id] = view.status.visibility != View.VISIBLE
@@ -158,7 +158,7 @@ class MessagesAdapter @Inject constructor(
             view.setOnLongClickListener {
                 val message = getItem(adapterPosition)!!
                 toggleSelection(message.id)
-                view.isSelected = isSelected(message.id)
+                view.isActivated = isSelected(message.id)
                 true
             }
         }
@@ -172,7 +172,7 @@ class MessagesAdapter @Inject constructor(
 
 
         // Update the selected state
-        view.isSelected = isSelected(message.id) || highlight == message.id
+        view.isActivated = isSelected(message.id) || highlight == message.id
 
 
         // Bind the cancel view

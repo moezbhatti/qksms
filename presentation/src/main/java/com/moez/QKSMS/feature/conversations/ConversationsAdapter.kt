@@ -64,14 +64,14 @@ class ConversationsAdapter @Inject constructor(
             view.setOnClickListener {
                 val conversation = getItem(adapterPosition)!!
                 when (toggleSelection(conversation.id, false)) {
-                    true -> view.isSelected = isSelected(conversation.id)
+                    true -> view.isActivated = isSelected(conversation.id)
                     false -> navigator.showConversation(conversation.id)
                 }
             }
             view.setOnLongClickListener {
                 val conversation = getItem(adapterPosition)!!
                 toggleSelection(conversation.id)
-                view.isSelected = isSelected(conversation.id)
+                view.isActivated = isSelected(conversation.id)
                 true
             }
         }
@@ -81,7 +81,7 @@ class ConversationsAdapter @Inject constructor(
         val conversation = getItem(position)!!
         val view = viewHolder.itemView
 
-        view.isSelected = isSelected(conversation.id)
+        view.isActivated = isSelected(conversation.id)
 
         view.avatars.contacts = conversation.recipients
         view.title.text = conversation.getTitle()
