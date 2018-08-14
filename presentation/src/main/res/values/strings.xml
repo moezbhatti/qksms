@@ -35,8 +35,10 @@
     <string name="menu_info">Details</string>
     <string name="menu_save">Save to gallery</string>
 
+    <string name="main_title">Inbox</string>
     <string name="main_drawer_open_cd">Open navigation drawer</string>
     <string name="main_title_selected">%d selected</string>
+    <string name="main_menu_search">Search</string>
     <string name="main_menu_clear">Clear</string>
     <string name="main_menu_archive">Archive</string>
     <string name="main_menu_unarchive">Unarchive</string>
