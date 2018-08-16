@@ -321,7 +321,7 @@ class NotificationManagerImpl @Inject constructor(
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
         conversationRepo.getConversation(threadId)?.let { conversation ->
-            val groupId = "conversations_id_101"
+            val groupId = "notifications_conversations"
             val groupName = "Conversations"
             val channelId = buildNotificationChannelId(threadId)
             val name = conversation.getTitle()
