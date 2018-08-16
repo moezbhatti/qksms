@@ -38,7 +38,7 @@ class FileLoggingTree @Inject constructor(private val prefs: Preferences) : Timb
 
     private val fileLock: Boolean = false
 
-    override fun log(priority: Int, tag: String, message: String, t: Throwable?) {
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (!prefs.logging.get()) return
 
         Schedulers.io().scheduleDirect {

@@ -33,7 +33,7 @@ class BugsnagTree : Timber.Tree() {
         return priority == Log.WARN || priority == Log.ERROR
     }
 
-    override fun log(priority: Int, tag: String?, message: String?, throwable: Throwable?) {
+    override fun log(priority: Int, tag: String?, message: String, throwable: Throwable?) {
         val severity = if (priority == Log.ERROR) Severity.ERROR else Severity.WARNING
         throwable?.run { Bugsnag.notify(this, severity) }
     }

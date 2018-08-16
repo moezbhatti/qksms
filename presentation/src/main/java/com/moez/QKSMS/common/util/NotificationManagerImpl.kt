@@ -20,6 +20,7 @@ package com.moez.QKSMS.common.util
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
+import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ContentUris
@@ -38,7 +39,6 @@ import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivity
-import com.moez.QKSMS.interactor.DeleteMessages
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.mapper.CursorToPartImpl
 import com.moez.QKSMS.receiver.DeleteMessagesReceiver
@@ -74,8 +74,13 @@ class NotificationManagerImpl @Inject constructor(
         @SuppressLint("NewApi")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Default"
+            val description = "Notifications with no notification channel set are sent via this " +
+                    "channel. If you want conversation-specific notification settings, open the " +
+                    "notification settings for the desired conversation via its information " +
+                    "screen."
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(DEFAULT_CHANNEL_ID, name, importance).apply {
+                setDescription(description)
                 enableLights(true)
                 lightColor = Color.WHITE
                 enableVibration(true)
@@ -306,25 +311,33 @@ class NotificationManagerImpl @Inject constructor(
                 .build()
     }
 
+
     /**
      * Creates a notification channel for the given conversation
      */
     override fun createNotificationChannel(threadId: Long) {
 
-        // Only proceed if the android version supports notification channels
+        // Only proceed if the user is running Android Oreo or later.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
 
         conversationRepo.getConversation(threadId)?.let { conversation ->
+            val groupId = "conversations_id_101"
+            val groupName = "Conversations"
             val channelId = buildNotificationChannelId(threadId)
             val name = conversation.getTitle()
+            val description = "You can customize notifications for your conversation with " +
+                    conversation.getTitle() + " here."
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelId, name, importance).apply {
+                setDescription(description)
+                group = groupId
                 enableLights(true)
                 lightColor = Color.WHITE
                 enableVibration(true)
                 vibrationPattern = VIBRATE_PATTERN
             }
 
+            notificationManager.createNotificationChannelGroup(NotificationChannelGroup(groupId, groupName))
             notificationManager.createNotificationChannel(channel)
         }
     }
@@ -374,4 +387,13 @@ class NotificationManagerImpl @Inject constructor(
         }
     }
 
+    /**
+     * Deletes the specified notification channel upon conversation deletion.
+     */
+    override fun deleteNotificationChannel(threadId: Long) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && threadId != 0L) {
+            val channelId = buildNotificationChannelId(threadId)
+            notificationManager.deleteNotificationChannel(channelId)
+        }
+    }
 }

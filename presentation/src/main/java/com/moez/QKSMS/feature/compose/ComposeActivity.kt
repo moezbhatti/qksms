@@ -44,13 +44,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.extensions.autoScrollToStart
-import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.common.util.extensions.scrapViews
-import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setTint
-import com.moez.QKSMS.common.util.extensions.setVisible
-import com.moez.QKSMS.common.util.extensions.showKeyboard
+import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Message

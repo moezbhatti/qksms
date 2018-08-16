@@ -27,11 +27,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
-import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
-import com.moez.QKSMS.common.util.extensions.dpToPx
-import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.common.util.extensions.scrapViews
-import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.common.widget.QkEditText
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoModule
 import com.moez.QKSMS.feature.themepicker.ThemePickerController

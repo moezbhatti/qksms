@@ -55,11 +55,7 @@ import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasBroadcastReceiverInjector
-import dagger.android.HasServiceInjector
+import dagger.android.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber

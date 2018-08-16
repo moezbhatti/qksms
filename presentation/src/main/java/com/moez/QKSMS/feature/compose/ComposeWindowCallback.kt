@@ -21,15 +21,7 @@ package com.moez.QKSMS.feature.compose
 import android.app.Activity
 import android.graphics.Rect
 import android.os.Build
-import android.view.ActionMode
-import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
-import android.view.MotionEvent
-import android.view.SearchEvent
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import androidx.annotation.RequiresApi
 

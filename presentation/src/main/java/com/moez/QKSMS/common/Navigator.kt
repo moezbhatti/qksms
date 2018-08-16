@@ -252,5 +252,4 @@ class Navigator @Inject constructor(
             startActivity(intent)
         }
     }
-
 }

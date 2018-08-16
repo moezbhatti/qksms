@@ -18,10 +18,11 @@
  */
 package com.moez.QKSMS.common.androidxcompat;
 
+import com.jakewharton.rxbinding2.InitialValueObservable;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
-import com.jakewharton.rxbinding2.InitialValueObservable;
 import io.reactivex.functions.Consumer;
 
 import static com.jakewharton.rxbinding2.internal.Preconditions.checkNotNull;

@@ -33,6 +33,7 @@ class DeleteConversations @Inject constructor(
         return Flowable.just(params.toLongArray())
                 .doOnNext { threadIds -> conversationRepo.deleteConversations(*threadIds) }
                 .doOnNext { threadIds -> threadIds.forEach(notificationManager::update) }
+                .doOnNext { threadIds -> threadIds.forEach(notificationManager::deleteNotificationChannel) }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 
