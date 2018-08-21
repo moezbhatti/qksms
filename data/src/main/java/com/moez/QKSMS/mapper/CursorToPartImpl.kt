@@ -28,6 +28,7 @@ import com.moez.QKSMS.extensions.isSmil
 import com.moez.QKSMS.extensions.isText
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.util.tryOrNull
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -58,7 +59,9 @@ class CursorToPartImpl @Inject constructor(private val context: Context) : Curso
                 } else {
                     val uri = ContentUris.withAppendedId(CONTENT_URI, id)
                     val sb = StringBuilder()
-                    context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                    val inputStream = tryOrNull(false) { context.contentResolver.openInputStream(uri) }
+
+                    inputStream?.use {
                         val isr = InputStreamReader(inputStream, "UTF-8")
                         val reader = BufferedReader(isr)
                         var temp = reader.readLine()
@@ -67,6 +70,7 @@ class CursorToPartImpl @Inject constructor(private val context: Context) : Curso
                             temp = reader.readLine()
                         }
                     }
+
                     sb.toString()
                 }
             }
