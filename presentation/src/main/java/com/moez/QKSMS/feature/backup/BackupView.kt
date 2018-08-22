@@ -19,10 +19,10 @@
 package com.moez.QKSMS.feature.backup
 
 import android.net.Uri
-import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.common.base.QkViewContract
 import io.reactivex.Observable
 
-interface BackupView : QkView<BackupState> {
+interface BackupView : QkViewContract<BackupState> {
 
     fun restoreClicks(): Observable<*>
     fun restoreFileSelected(): Observable<Uri>

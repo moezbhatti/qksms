@@ -18,84 +18,35 @@
  */
 package com.moez.QKSMS.feature.backup
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.jakewharton.rxbinding2.view.clicks
+import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkThemedActivity
-import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setTint
 import dagger.android.AndroidInjection
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.backup_controller.*
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.container_activity.*
 
 
-class BackupActivity : QkThemedActivity(), BackupView {
+class BackupActivity : QkThemedActivity() {
 
-    companion object {
-        private const val REQUEST_CODE = 427
-    }
-
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[BackupViewModel::class.java] }
-
-    private val restoreFileSubject: Subject<Uri> = PublishSubject.create()
+    private lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.backup_controller)
-        setTitle(R.string.backup_title)
-        showBackButton(true)
-        viewModel.bindView(this)
+        setContentView(R.layout.container_activity)
 
-        colors.theme().let { theme ->
-            fab.setBackgroundTint(theme.theme)
-            fabIcon.setTint(theme.textPrimary)
-            fabLabel.setTextColor(theme.textPrimary)
+        router = Conductor.attachRouter(this, container, savedInstanceState)
+        if (!router.hasRootController()) {
+            router.setRoot(RouterTransaction.with(BackupController()))
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.data?.run(restoreFileSubject::onNext)
+    override fun onBackPressed() {
+        if (!router.handleBack()) {
+            super.onBackPressed()
         }
-    }
-
-    override fun render(state: BackupState) {
-        restore.isEnabled = state.upgraded
-
-        fabIcon.setImageResource(when (state.upgraded) {
-            true -> R.drawable.ic_file_upload_black_24dp
-            false -> R.drawable.ic_star_black_24dp
-        })
-
-        fabLabel.setText(when (state.upgraded) {
-            true -> R.string.backup_now
-            false -> R.string.title_qksms_plus
-        })
-    }
-
-    override fun restoreClicks(): Observable<*> = restore.clicks()
-
-    override fun restoreFileSelected(): Observable<Uri> = restoreFileSubject
-
-    override fun fabClicks(): Observable<*> = fab.clicks()
-
-    override fun selectFile() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
-        startActivityForResult(Intent.createChooser(intent, "Choose directory"), REQUEST_CODE)
     }
 
 }

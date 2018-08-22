@@ -19,26 +19,25 @@
 package com.moez.QKSMS.feature.backup
 
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
-class BackupViewModel @Inject constructor(
+class BackupPresenter @Inject constructor(
         private val billingManager: BillingManager,
         private val navigator: Navigator
-) : QkViewModel<BackupView, BackupState>(BackupState()) {
+) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     init {
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
     }
 
-    override fun bindView(view: BackupView) {
-        super.bindView(view)
+    override fun bindIntents(view: BackupView) {
+        super.bindIntents(view)
 
         view.restoreClicks()
                 .autoDisposable(view.scope())

@@ -17,106 +17,86 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar" />
-
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.moez.QKSMS.common.widget.PreferenceView
-                    android:id="@+id/backup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_history_black_24dp"
-                    app:title="@string/backup_last"
-                    tools:summary="@string/backup_never" />
-
-                <com.moez.QKSMS.common.widget.PreferenceView
-                    android:id="@+id/restore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_file_download_black_24dp"
-                    app:summary="@string/backup_restore_summary"
-                    app:title="@string/backup_restore_title" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/divider" />
-
-                <com.moez.QKSMS.common.widget.QkTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
-                    android:text="@string/backup_disclaimer"
-                    android:textColor="?android:attr/textColorTertiary"
-                    app:textSize="secondary" />
-
-            </LinearLayout>
-
-        </ScrollView>
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
 
         <LinearLayout
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_rectangle_24dp"
-            android:elevation="4dp"
-            android:gravity="center"
-            tools:backgroundTint="@color/tools_theme">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/fabIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="12dp"
-                android:src="@drawable/ic_star_black_24dp"
-                tools:tint="@color/textPrimaryDark" />
+            <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/backup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_history_black_24dp"
+                app:title="@string/backup_last"
+                tools:summary="@string/backup_never" />
+
+            <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/restore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_file_download_black_24dp"
+                app:summary="@string/backup_restore_summary"
+                app:title="@string/backup_restore_title" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/divider" />
 
             <com.moez.QKSMS.common.widget.QkTextView
-                android:id="@+id/fabLabel"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:text="@string/title_qksms_plus"
-                android:textColor="@color/textPrimaryDark"
-                android:textStyle="bold"
-                app:textSize="primary" />
+                android:layout_margin="24dp"
+                android:text="@string/backup_disclaimer"
+                android:textColor="?android:attr/textColorTertiary"
+                app:textSize="secondary" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow" />
+    </ScrollView>
 
-    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_rectangle_24dp"
+        android:elevation="4dp"
+        android:gravity="center"
+        tools:backgroundTint="@color/tools_theme">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/divider" />
+        <ImageView
+            android:id="@+id/fabIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/ic_star_black_24dp"
+            tools:tint="@color/textPrimaryDark" />
 
-</LinearLayout>
+        <com.moez.QKSMS.common.widget.QkTextView
+            android:id="@+id/fabLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/title_qksms_plus"
+            android:textColor="@color/textPrimaryDark"
+            android:textStyle="bold"
+            app:textSize="primary" />
+
+    </LinearLayout>
+
+</FrameLayout>
