@@ -1,29 +1,30 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.androidx_version = '1.0.0-beta01'
-    ext.androidx_testrunner_version = '1.1.0-alpha3'
-    ext.autodispose_version = '0.5.1'
+    ext.gradle_version = '3.3.0-alpha06'
+    ext.androidx_version = '1.0.0-rc01'
+    ext.androidx_testrunner_version = '1.1.0-alpha4'
+    ext.autodispose_version = '0.8.0'
     ext.conductor_version = '2.1.5'
-    ext.constraintlayout_version = '1.1.0'
+    ext.constraintlayout_version = '1.1.2'
     ext.dagger_version = "2.16"
-    ext.espresso_version = '3.1.0-alpha3'
-    ext.exoplayer_version = "2.8.1"
-    ext.glide_version = "4.8.0-20180619.011009-9"
-    ext.glide_compiler_version = "4.8.0-20180619.011013-9"
+    ext.espresso_version = '3.1.0-alpha4'
+    ext.exoplayer_version = "2.8.3"
+    ext.glide_version = "4.8.0-SNAPSHOT"
+    ext.glide_compiler_version = "4.8.0-SNAPSHOT"
     ext.junit_version = '4.12'
-    ext.kotlin_version = '1.2.51'
+    ext.kotlin_version = '1.2.60'
     ext.ktx_version = "1.0.0-alpha1"
-    ext.lifecycle_version = '2.0.0-alpha1'
-    ext.mockito_version = '2.18.3'
-    ext.realm_version = '4.3.1'
-    ext.realm_adapters_version = '2.1.0'
-    ext.rxandroid_version = '2.0.1'
-    ext.rxbinding_version = '2.0.0'
-    ext.rxjava_version = '2.1.4'
-    ext.rxkotlin_version = '2.1.0'
-    ext.rx_preferences_version = '2.0.0-RC3'
-    ext.timber_version = '4.5.1'
+    ext.lifecycle_version = '2.0.0-rc01'
+    ext.mockito_version = '2.21.0'
+    ext.realm_version = '5.4.2'
+    ext.realm_adapters_version = '3.0.0'
+    ext.rxandroid_version = '2.1.0'
+    ext.rxbinding_version = '2.1.1'
+    ext.rxjava_version = '2.2.0'
+    ext.rxkotlin_version = '2.2.0'
+    ext.rx_preferences_version = '2.0.0'
+    ext.timber_version = '4.7.1'
 
     ext.abiCodes = ['armeabi-v7a': 1, 'arm64-v8a': 2]
 
@@ -34,9 +35,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha03'
+        classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "io.realm:realm-gradle-plugin:4.3.1"
+        classpath "io.realm:realm-gradle-plugin:$realm_version"
     }
 }
 
@@ -45,7 +46,6 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
-        maven { url 'https://maven.google.com' }
         maven {
             name 'glide-snapshot'
             url 'http://oss.sonatype.org/content/repositories/snapshots'

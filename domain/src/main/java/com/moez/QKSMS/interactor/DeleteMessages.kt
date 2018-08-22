@@ -40,5 +40,4 @@ class DeleteMessages @Inject constructor(
                 .doOnNext { params.threadId?.let { notificationManager.update(it) } }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
-
 }

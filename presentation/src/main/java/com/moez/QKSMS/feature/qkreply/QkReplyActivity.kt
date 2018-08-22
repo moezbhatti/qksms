@@ -20,11 +20,7 @@ package com.moez.QKSMS.feature.qkreply
 
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView

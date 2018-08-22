@@ -38,12 +38,7 @@ import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.extensions.dpToPx
-import com.moez.QKSMS.common.util.extensions.forwardTouches
-import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setPadding
-import com.moez.QKSMS.common.util.extensions.setTint
-import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVCard

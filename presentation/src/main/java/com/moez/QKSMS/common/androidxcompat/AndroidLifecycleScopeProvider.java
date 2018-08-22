@@ -19,10 +19,11 @@
 
 package com.moez.QKSMS.common.androidxcompat;
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import com.uber.autodispose.LifecycleEndedException;
 import com.uber.autodispose.LifecycleScopeProvider;
+
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 

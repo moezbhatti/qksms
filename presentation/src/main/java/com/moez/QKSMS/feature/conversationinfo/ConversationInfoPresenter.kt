@@ -21,11 +21,7 @@ package com.moez.QKSMS.feature.conversationinfo
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.extensions.asObservable
-import com.moez.QKSMS.interactor.DeleteConversations
-import com.moez.QKSMS.interactor.MarkArchived
-import com.moez.QKSMS.interactor.MarkBlocked
-import com.moez.QKSMS.interactor.MarkUnarchived
-import com.moez.QKSMS.interactor.MarkUnblocked
+import com.moez.QKSMS.interactor.*
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository

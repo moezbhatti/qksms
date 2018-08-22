@@ -20,12 +20,7 @@ package com.moez.QKSMS.injection
 
 import com.moez.QKSMS.common.QKApplication
 import com.moez.QKSMS.common.QkDialog
-import com.moez.QKSMS.common.widget.AvatarView
-import com.moez.QKSMS.common.widget.PagerTitleView
-import com.moez.QKSMS.common.widget.PreferenceView
-import com.moez.QKSMS.common.widget.QkEditText
-import com.moez.QKSMS.common.widget.QkSwitch
-import com.moez.QKSMS.common.widget.QkTextView
+import com.moez.QKSMS.common.widget.*
 import com.moez.QKSMS.feature.compose.DetailedChipView
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.settings.SettingsController

@@ -19,8 +19,10 @@
 package com.moez.QKSMS.common.androidxcompat;
 
 import android.view.View;
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.jakewharton.rxbinding2.InitialValueObservable;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 import io.reactivex.Observer;
 import io.reactivex.android.MainThreadDisposable;
 
