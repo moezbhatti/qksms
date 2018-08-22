@@ -192,6 +192,7 @@ class MainViewModel @Inject constructor(
 
         view.drawerItemIntent
                 .doOnNext { newState { copy(drawerOpen = false) } }
+                .doOnNext { if (it == DrawerItem.BACKUP) navigator.showBackup() }
                 .doOnNext { if (it == DrawerItem.SCHEDULED) navigator.showScheduled() }
                 .doOnNext { if (it == DrawerItem.BLOCKING) navigator.showBlockedConversations() }
                 .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }

@@ -93,6 +93,7 @@
             android:theme="@style/AppThemeLightDialog" />
         <activity android:name=".feature.settings.about.AboutController" />
         <activity android:name=".feature.scheduled.ScheduledActivity" />
+        <activity android:name=".feature.backup.BackupActivity" />
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>

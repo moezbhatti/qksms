@@ -81,6 +81,7 @@ class MainActivity : QkThemedActivity(), MainView {
         Observable.merge(listOf(
                 inbox.clicks().map { DrawerItem.INBOX },
                 archived.clicks().map { DrawerItem.ARCHIVED },
+                backup.clicks().map { DrawerItem.BACKUP },
                 scheduled.clicks().map { DrawerItem.SCHEDULED },
                 blocking.clicks().map { DrawerItem.BLOCKING },
                 settings.clicks().map { DrawerItem.SETTINGS },
@@ -141,8 +142,10 @@ class MainActivity : QkThemedActivity(), MainView {
                             }
 
                     // Miscellaneous views
-                    plusBadge.setBackgroundTint(theme.theme)
-                    plusBadge.setTextColor(theme.textPrimary)
+                    listOf(plusBadge1, plusBadge2).forEach { badge ->
+                        badge.setBackgroundTint(theme.theme)
+                        badge.setTextColor(theme.textPrimary)
+                    }
                     syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
@@ -193,7 +196,9 @@ class MainActivity : QkThemedActivity(), MainView {
         toolbar.menu.findItem(R.id.unread)?.isVisible = !markRead && selectedConversations != 0
         toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0
 
-        plusBadge.isVisible = drawerBadgesExperiment.variant && !state.upgraded
+        listOf(plusBadge1, plusBadge2).forEach { badge ->
+            badge.isVisible = drawerBadgesExperiment.variant && !state.upgraded
+        }
         plus.isVisible = state.upgraded
         plusBanner.isVisible = !state.upgraded
         rateLayout.setVisible(state.showRating)

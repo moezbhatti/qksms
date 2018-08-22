@@ -30,7 +30,7 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.forEach
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.injection.appComponent
-import com.uber.autodispose.android.scope
+import com.uber.autodispose.android.ViewScopeProvider
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -97,7 +97,7 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
                     val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
                     ColorStateList(states, intArrayOf(theme.theme, textSecondary))
                 }
-                .autoDisposable(scope())
+                .autoDisposable(ViewScopeProvider.from(this))
                 .subscribe { colorStateList ->
                     childCount.forEach { index ->
                         (getChildAt(index) as? TextView)?.setTextColor(colorStateList)

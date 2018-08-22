@@ -71,6 +71,33 @@
             android:background="?android:attr/divider" />
 
         <LinearLayout
+            android:id="@+id/backup"
+            style="@style/DrawerRow">
+
+            <ImageView
+                style="@style/DrawerIcon"
+                android:src="@drawable/ic_import_export_black_24dp"
+                android:tint="?android:attr/textColorSecondary" />
+
+            <com.moez.QKSMS.common.widget.QkTextView
+                style="@style/DrawerText"
+                android:text="@string/backup_title" />
+
+            <com.moez.QKSMS.common.widget.QkTextView
+                android:id="@+id/plusBadge1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_rectangle_2dp"
+                android:padding="4dp"
+                android:text="@string/title_qksms_plus"
+                android:textStyle="bold"
+                app:textSize="tertiary"
+                tools:backgroundTint="@color/tools_theme"
+                tools:textColor="@color/textPrimaryDark" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/scheduled"
             style="@style/DrawerRow">
 
@@ -84,7 +111,7 @@
                 android:text="@string/drawer_scheduled" />
 
             <com.moez.QKSMS.common.widget.QkTextView
-                android:id="@+id/plusBadge"
+                android:id="@+id/plusBadge2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_rectangle_2dp"
