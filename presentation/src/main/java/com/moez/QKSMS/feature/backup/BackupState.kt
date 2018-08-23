@@ -22,6 +22,6 @@ import com.moez.QKSMS.model.Backup
 
 data class BackupState(
         val upgraded: Boolean = false,
-        val lastBackup: Long = 0,
+        val lastBackup: Long? = null,
         val backups: List<Backup> = listOf()
 )

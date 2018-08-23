@@ -35,7 +35,7 @@ class BackupPresenter @Inject constructor(
 
     init {
         disposables += backupRepo.getBackups()
-                .subscribe { backups -> newState { copy(backups = backups) } }
+                .subscribe { backups -> newState { copy(lastBackup = backups.map { it.date }.max(), backups = backups) } }
 
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }

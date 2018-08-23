@@ -19,22 +19,28 @@
 package com.moez.QKSMS.feature.backup
 
 import android.app.AlertDialog
+import android.graphics.Typeface
 import android.view.View
+import androidx.core.view.children
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
+import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
+import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.Backup
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.backup_controller.*
 import kotlinx.android.synthetic.main.backup_list_dialog.view.*
+import kotlinx.android.synthetic.main.preference_view.view.*
 import javax.inject.Inject
 
 class BackupController : QkController<BackupView, BackupState, BackupPresenter>(), BackupView {
 
     @Inject lateinit var adapter: BackupAdapter
+    @Inject lateinit var dateFormatter: DateFormatter
     @Inject override lateinit var presenter: BackupPresenter
 
     private val dialog by lazy {
@@ -67,9 +73,20 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
             fabIcon.setTint(theme.textPrimary)
             fabLabel.setTextColor(theme.textPrimary)
         }
+
+        // Make the list titles bold
+        linearLayout.children
+                .mapNotNull { it as? PreferenceView }
+                .map { it.titleView }
+                .forEach { it.setTypeface(it.typeface, Typeface.BOLD) }
     }
 
     override fun render(state: BackupState) {
+        backup.summary = when (state.lastBackup) {
+            null -> activity?.getString(R.string.backup_never)
+            else -> dateFormatter.getDetailedTimestamp(state.lastBackup)
+        }
+
         restore.isEnabled = state.upgraded
 
         adapter.data = state.backups
