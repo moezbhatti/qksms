@@ -27,6 +27,7 @@ import com.moez.QKSMS.repository.BackupRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
@@ -39,9 +40,13 @@ class BackupPresenter @Inject constructor(
 
     init {
         disposables += backupRepo.getBackupProgress()
+                .sample(16, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
                 .subscribe { progress -> newState { copy(backupProgress = progress) } }
 
         disposables += backupRepo.getRestoreProgress()
+                .sample(16, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
                 .subscribe { progress -> newState { copy(restoreProgress = progress) } }
 
         disposables += backupRepo.getBackups()

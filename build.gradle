@@ -16,6 +16,7 @@ buildscript {
     ext.ktx_version = "1.0.0-alpha1"
     ext.lifecycle_version = '2.0.0-alpha1'
     ext.mockito_version = '2.18.3'
+    ext.moshi_version = '1.6.0'
     ext.realm_version = '4.3.1'
     ext.realm_adapters_version = '2.1.0'
     ext.rxandroid_version = '2.0.1'

@@ -74,6 +74,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$ktx_version"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "me.leolin:ShortcutBadger:1.1.21"
     implementation project(":android-smsmms")

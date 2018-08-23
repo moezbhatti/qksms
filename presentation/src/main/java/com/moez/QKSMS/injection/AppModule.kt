@@ -67,6 +67,7 @@ import com.moez.QKSMS.repository.ScheduledMessageRepository
 import com.moez.QKSMS.repository.ScheduledMessageRepositoryImpl
 import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.repository.SyncRepositoryImpl
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -88,6 +89,12 @@ class AppModule(private var application: Application) {
     fun provideRxPreferences(context: Context): RxSharedPreferences {
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         return RxSharedPreferences.create(preferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder().build()
     }
 
     @Provides

@@ -31,7 +31,7 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.injection.appComponent
-import com.moez.QKSMS.model.Backup
+import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.repository.BackupRepository
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.backup_controller.*
@@ -135,7 +135,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
 
     override fun restoreClicks(): Observable<*> = restore.clicks()
 
-    override fun restoreFileSelected(): Observable<Backup> = adapter.backupSelected
+    override fun restoreFileSelected(): Observable<BackupFile> = adapter.backupSelected
             .doOnNext { dialog.dismiss() }
 
     override fun fabClicks(): Observable<*> = fab.clicks()

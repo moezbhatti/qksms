@@ -19,14 +19,13 @@
 package com.moez.QKSMS.feature.backup
 
 import com.moez.QKSMS.common.base.QkViewContract
-import com.moez.QKSMS.model.Backup
+import com.moez.QKSMS.model.BackupFile
 import io.reactivex.Observable
-import java.io.File
 
 interface BackupView : QkViewContract<BackupState> {
 
     fun restoreClicks(): Observable<*>
-    fun restoreFileSelected(): Observable<Backup>
+    fun restoreFileSelected(): Observable<BackupFile>
     fun fabClicks(): Observable<*>
 
     fun selectFile()

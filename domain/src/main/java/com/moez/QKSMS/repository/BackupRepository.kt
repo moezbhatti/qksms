@@ -18,7 +18,7 @@
  */
 package com.moez.QKSMS.repository
 
-import com.moez.QKSMS.model.Backup
+import com.moez.QKSMS.model.BackupFile
 import io.reactivex.Observable
 
 interface BackupRepository {
@@ -35,7 +35,7 @@ interface BackupRepository {
     /**
      * Returns a list of all local backups
      */
-    fun getBackups(): Observable<List<Backup>>
+    fun getBackups(): Observable<List<BackupFile>>
 
     fun performRestore()
 

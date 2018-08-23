@@ -18,8 +18,8 @@
  */
 package com.moez.QKSMS.model
 
-data class Backup(
+data class BackupFile(
         val date: Long,
-        val messages: List<Long>,
+        val messages: Int,
         val size: Long
 )

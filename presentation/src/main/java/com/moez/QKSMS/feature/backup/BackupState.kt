@@ -18,13 +18,13 @@
  */
 package com.moez.QKSMS.feature.backup
 
-import com.moez.QKSMS.model.Backup
+import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.repository.BackupRepository
 
 data class BackupState(
         val backupProgress: BackupRepository.Progress = BackupRepository.Progress.Idle(),
         val restoreProgress: BackupRepository.Progress = BackupRepository.Progress.Idle(),
         val lastBackup: Long? = null,
-        val backups: List<Backup> = listOf(),
+        val backups: List<BackupFile> = listOf(),
         val upgraded: Boolean = false
 )

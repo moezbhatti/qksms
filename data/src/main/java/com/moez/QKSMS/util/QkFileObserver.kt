@@ -22,7 +22,7 @@ import android.os.FileObserver
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class QkFileObserver(path: String) : FileObserver(path) {
+class QkFileObserver(private val path: String) : FileObserver(path) {
 
     private val subject = BehaviorSubject.createDefault<String>(path).toSerialized()
 
