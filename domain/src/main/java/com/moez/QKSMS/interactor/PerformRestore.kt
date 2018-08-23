@@ -16,15 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.backup
+package com.moez.QKSMS.interactor
 
-import com.moez.QKSMS.model.Backup
 import com.moez.QKSMS.repository.BackupRepository
+import io.reactivex.Flowable
+import javax.inject.Inject
 
-data class BackupState(
-        val backupProgress: BackupRepository.Progress = BackupRepository.Progress.Idle(),
-        val restoreProgress: BackupRepository.Progress = BackupRepository.Progress.Idle(),
-        val lastBackup: Long? = null,
-        val backups: List<Backup> = listOf(),
-        val upgraded: Boolean = false
-)
+class PerformRestore @Inject constructor(
+        private val backupRepo: BackupRepository
+) : Interactor<Unit>() {
+
+    override fun buildObservable(params: Unit): Flowable<*> {
+        return Flowable.just(params)
+                .doOnNext { backupRepo.performRestore() }
+    }
+
+}

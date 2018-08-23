@@ -21,6 +21,8 @@ package com.moez.QKSMS.feature.backup
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
+import com.moez.QKSMS.interactor.PerformBackup
+import com.moez.QKSMS.interactor.PerformRestore
 import com.moez.QKSMS.repository.BackupRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -30,10 +32,18 @@ import javax.inject.Inject
 class BackupPresenter @Inject constructor(
         backupRepo: BackupRepository,
         private val billingManager: BillingManager,
-        private val navigator: Navigator
+        private val navigator: Navigator,
+        private val performBackup: PerformBackup,
+        private val performRestore: PerformRestore
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     init {
+        disposables += backupRepo.getBackupProgress()
+                .subscribe { progress -> newState { copy(backupProgress = progress) } }
+
+        disposables += backupRepo.getRestoreProgress()
+                .subscribe { progress -> newState { copy(restoreProgress = progress) } }
+
         disposables += backupRepo.getBackups()
                 .subscribe { backups -> newState { copy(lastBackup = backups.map { it.date }.max(), backups = backups) } }
 
@@ -50,14 +60,14 @@ class BackupPresenter @Inject constructor(
 
         view.restoreFileSelected()
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { performRestore.execute(Unit) }
 
         view.fabClicks()
                 .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
                 .autoDisposable(view.scope())
                 .subscribe { upgraded ->
                     when (upgraded) {
-                        true -> navigator.showQksmsPlusActivity("backup_fab")
+                        true -> performBackup.execute(Unit)
                         false -> navigator.showQksmsPlusActivity("backup_fab")
                     }
                 }

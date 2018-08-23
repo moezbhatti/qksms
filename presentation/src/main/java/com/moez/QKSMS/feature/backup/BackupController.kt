@@ -22,6 +22,7 @@ import android.app.AlertDialog
 import android.graphics.Typeface
 import android.view.View
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
@@ -31,6 +32,7 @@ import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.Backup
+import com.moez.QKSMS.repository.BackupRepository
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.backup_controller.*
 import kotlinx.android.synthetic.main.backup_list_dialog.view.*
@@ -82,6 +84,35 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
     }
 
     override fun render(state: BackupState) {
+        when {
+            state.backupProgress is BackupRepository.Progress.Running -> {
+                progressIcon.setImageResource(R.drawable.ic_file_upload_black_24dp)
+                progressTitle.setText(R.string.backup_backing_up)
+                progressSummary.text = state.backupProgress.status
+                progressSummary.isVisible = progressSummary.text.isNotEmpty()
+                progressBar.isIndeterminate = state.backupProgress.progress == 0
+                progressBar.progress = state.backupProgress.progress
+                progress.isVisible = true
+                fab.isVisible = false
+            }
+
+            state.restoreProgress is BackupRepository.Progress.Running -> {
+                progressIcon.setImageResource(R.drawable.ic_file_download_black_24dp)
+                progressTitle.setText(R.string.backup_restoring)
+                progressSummary.text = state.restoreProgress.status
+                progressSummary.isVisible = progressSummary.text.isNotEmpty()
+                progressBar.isIndeterminate = state.restoreProgress.progress == 0
+                progressBar.progress = state.restoreProgress.progress
+                progress.isVisible = true
+                fab.isVisible = false
+            }
+
+            else -> {
+                progress.isVisible = false
+                fab.isVisible = true
+            }
+        }
+
         backup.summary = when (state.lastBackup) {
             null -> activity?.getString(R.string.backup_never)
             else -> dateFormatter.getDetailedTimestamp(state.lastBackup)
@@ -105,6 +136,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
     override fun restoreClicks(): Observable<*> = restore.clicks()
 
     override fun restoreFileSelected(): Observable<Backup> = adapter.backupSelected
+            .doOnNext { dialog.dismiss() }
 
     override fun fabClicks(): Observable<*> = fab.clicks()
 

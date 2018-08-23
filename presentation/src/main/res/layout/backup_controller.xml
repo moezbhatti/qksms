@@ -33,7 +33,89 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/progressIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:tint="?android:attr/textColorSecondary"
+                    app:layout_constraintBottom_toBottomOf="@id/progressSummary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/progressTitle"
+                    tools:src="@drawable/ic_file_download_black_24dp" />
+
+                <com.moez.QKSMS.common.widget.QkTextView
+                    android:id="@+id/progressTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/progressCancel"
+                    app:layout_constraintStart_toEndOf="@id/progressIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textSize="primary"
+                    tools:text="Restoring from backup" />
+
+                <com.moez.QKSMS.common.widget.QkTextView
+                    android:id="@+id/progressSummary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="?android:attr/textColorTertiary"
+                    app:layout_constraintEnd_toEndOf="@id/progressTitle"
+                    app:layout_constraintStart_toStartOf="@id/progressTitle"
+                    app:layout_constraintTop_toBottomOf="@id/progressTitle"
+                    app:textSize="secondary"
+                    tools:text="8 minutes remaining" />
+
+                <ImageView
+                    android:id="@+id/progressCancel"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_close_black_24dp"
+                    android:tint="?android:attr/textColorSecondary"
+                    app:layout_constraintBottom_toBottomOf="@id/progressSummary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/progressTitle" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:indeterminate="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/progressTitle"
+                    app:layout_constraintTop_toBottomOf="@id/progressSummary" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="?android:attr/divider"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/progressBar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/backup"

@@ -146,6 +146,8 @@
     <string name="gallery_toast_saved">Saved to gallery</string>
 
     <string name="backup_title">Backup and restore</string>
+    <string name="backup_backing_up">Backing up messages</string>
+    <string name="backup_restoring">Restoring from backup</string>
     <string name="backup_last">Last backup</string>
     <string name="backup_never">Never</string>
     <string name="backup_restore_title">Restore</string>

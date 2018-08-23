@@ -23,9 +23,22 @@ import io.reactivex.Observable
 
 interface BackupRepository {
 
+    sealed class Progress {
+        class Idle : Progress()
+        class Running(val progress: Int, val status: String? = null) : Progress()
+    }
+
+    fun performBackup()
+
+    fun getBackupProgress(): Observable<Progress>
+
     /**
      * Returns a list of all local backups
      */
     fun getBackups(): Observable<List<Backup>>
+
+    fun performRestore()
+
+    fun getRestoreProgress(): Observable<Progress>
 
 }
