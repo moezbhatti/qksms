@@ -19,6 +19,7 @@
 package com.moez.QKSMS.common.base
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.common.util.extensions.setVisible
@@ -50,7 +51,7 @@ abstract class QkAdapter<T> : RecyclerView.Adapter<QkViewHolder>() {
     var emptyView: View? = null
         set(value) {
             field = value
-            value?.setVisible(false)
+            field?.isVisible = data.isEmpty()
         }
 
     val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()

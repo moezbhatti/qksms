@@ -16,12 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.backup
+package com.moez.QKSMS.model
 
-import com.moez.QKSMS.model.Backup
-
-data class BackupState(
-        val upgraded: Boolean = false,
-        val lastBackup: Long = 0,
-        val backups: List<Backup> = listOf()
+data class Backup(
+        val date: Long,
+        val messages: List<Long>,
+        val size: Long
 )

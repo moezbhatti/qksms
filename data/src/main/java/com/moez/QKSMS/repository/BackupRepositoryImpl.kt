@@ -16,19 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.backup
+package com.moez.QKSMS.repository
 
-import com.moez.QKSMS.common.base.QkViewContract
+import android.os.Environment
 import com.moez.QKSMS.model.Backup
+import com.moez.QKSMS.util.QkFileObserver
 import io.reactivex.Observable
 import java.io.File
+import javax.inject.Inject
 
-interface BackupView : QkViewContract<BackupState> {
+class BackupRepositoryImpl @Inject constructor() : BackupRepository {
 
-    fun restoreClicks(): Observable<*>
-    fun restoreFileSelected(): Observable<Backup>
-    fun fabClicks(): Observable<*>
+    companion object {
+        private val BACKUP_LOCATION = Environment.getExternalStorageDirectory().toString() + "/QKSMS/Backups"
+    }
 
-    fun selectFile()
+    override fun getBackups(): Observable<List<Backup>> = QkFileObserver(BACKUP_LOCATION)
+            .observable
+            .map { path -> File(path).listFiles() }
+            .map { files ->
+                files.map { file ->
+                    val date = file.lastModified()
+                    val size = file.length()
+                    Backup(date, listOf(), size)
+                }
+            }
 
 }

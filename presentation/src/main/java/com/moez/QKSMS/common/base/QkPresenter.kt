@@ -25,6 +25,7 @@ abstract class QkPresenter<View : QkViewContract<State>, State>(initialState: St
     }
 
     open fun onCleared() {
+        disposables.dispose()
     }
 
 }

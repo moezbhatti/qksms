@@ -16,12 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.backup
+package com.moez.QKSMS.repository
 
 import com.moez.QKSMS.model.Backup
+import io.reactivex.Observable
 
-data class BackupState(
-        val upgraded: Boolean = false,
-        val lastBackup: Long = 0,
-        val backups: List<Backup> = listOf()
-)
+interface BackupRepository {
+
+    /**
+     * Returns a list of all local backups
+     */
+    fun getBackups(): Observable<List<Backup>>
+
+}

@@ -16,12 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.backup
+package com.moez.QKSMS.util
 
-import com.moez.QKSMS.model.Backup
+import android.os.FileObserver
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 
-data class BackupState(
-        val upgraded: Boolean = false,
-        val lastBackup: Long = 0,
-        val backups: List<Backup> = listOf()
-)
+class QkFileObserver(path: String) : FileObserver(path) {
+
+    private val subject = BehaviorSubject.createDefault<String>(path).toSerialized()
+
+    val observable: Observable<String> = subject
+            .doOnSubscribe { startWatching() }
+            .doOnDispose { stopWatching() }
+            .share()
+
+    override fun onEvent(event: Int, path: String?) {
+        path?.let(subject::onNext)
+    }
+
+}

@@ -18,9 +18,7 @@
  */
 package com.moez.QKSMS.feature.backup
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
+import android.app.AlertDialog
 import android.view.View
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
@@ -28,21 +26,26 @@ import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
+import com.moez.QKSMS.model.Backup
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.backup_controller.*
+import kotlinx.android.synthetic.main.backup_list_dialog.view.*
 import javax.inject.Inject
 
 class BackupController : QkController<BackupView, BackupState, BackupPresenter>(), BackupView {
 
-    companion object {
-        private const val REQUEST_CODE = 427
-    }
-
+    @Inject lateinit var adapter: BackupAdapter
     @Inject override lateinit var presenter: BackupPresenter
 
-    private val restoreFileSubject: Subject<Uri> = PublishSubject.create()
+    private val dialog by lazy {
+        val view = View.inflate(activity, R.layout.backup_list_dialog, null)
+                .apply { files.adapter = adapter.apply { emptyView = empty } }
+
+        AlertDialog.Builder(activity)
+                .setView(view)
+                .setCancelable(true)
+                .create()
+    }
 
     init {
         appComponent.inject(this)
@@ -66,16 +69,10 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.data?.run(restoreFileSubject::onNext)
-        }
-    }
-
     override fun render(state: BackupState) {
         restore.isEnabled = state.upgraded
+
+        adapter.data = state.backups
 
         fabIcon.setImageResource(when (state.upgraded) {
             true -> R.drawable.ic_file_upload_black_24dp
@@ -90,14 +87,10 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
 
     override fun restoreClicks(): Observable<*> = restore.clicks()
 
-    override fun restoreFileSelected(): Observable<Uri> = restoreFileSubject
+    override fun restoreFileSelected(): Observable<Backup> = adapter.backupSelected
 
     override fun fabClicks(): Observable<*> = fab.clicks()
 
-    override fun selectFile() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "*/*"
-        startActivityForResult(Intent.createChooser(intent, null), REQUEST_CODE)
-    }
+    override fun selectFile() = dialog.show()
 
 }

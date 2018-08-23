@@ -53,6 +53,8 @@ import com.moez.QKSMS.mapper.CursorToPartImpl
 import com.moez.QKSMS.mapper.CursorToRecipient
 import com.moez.QKSMS.mapper.CursorToRecipientImpl
 import com.moez.QKSMS.mapper.RatingManagerImpl
+import com.moez.QKSMS.repository.BackupRepository
+import com.moez.QKSMS.repository.BackupRepositoryImpl
 import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ContactRepositoryImpl
 import com.moez.QKSMS.repository.ConversationRepository
@@ -137,6 +139,9 @@ class AppModule(private var application: Application) {
 
 
     // Repository
+
+    @Provides
+    fun provideBackupRepository(repository: BackupRepositoryImpl): BackupRepository = repository
 
     @Provides
     fun provideContactRepository(repository: ContactRepositoryImpl): ContactRepository = repository

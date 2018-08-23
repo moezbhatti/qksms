@@ -21,17 +21,22 @@ package com.moez.QKSMS.feature.backup
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
+import com.moez.QKSMS.repository.BackupRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
+        backupRepo: BackupRepository,
         private val billingManager: BillingManager,
         private val navigator: Navigator
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     init {
+        disposables += backupRepo.getBackups()
+                .subscribe { backups -> newState { copy(backups = backups) } }
+
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
     }
