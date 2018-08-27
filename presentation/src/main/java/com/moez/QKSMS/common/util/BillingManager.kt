@@ -34,6 +34,7 @@ import com.moez.QKSMS.manager.AnalyticsManager
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -88,6 +89,8 @@ class BillingManager @Inject constructor(
                 if (billingResponseCode == BillingResponse.OK) {
                     isServiceConnected = true
                     onSuccess()
+                } else {
+                    Timber.w("Billing response: $billingResponseCode")
                 }
             }
 
