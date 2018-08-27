@@ -18,7 +18,10 @@
  */
 package com.moez.QKSMS.repository
 
+import android.content.Context
 import android.os.Environment
+import android.provider.Telephony
+import androidx.core.content.contentValuesOf
 import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.util.QkFileObserver
@@ -29,7 +32,6 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
 import okio.Okio
-import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -37,11 +39,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.system.measureTimeMillis
 
 
 @Singleton
 class BackupRepositoryImpl @Inject constructor(
+        private val context: Context,
         private val moshi: Moshi
 ) : BackupRepository {
 
@@ -54,16 +56,17 @@ class BackupRepositoryImpl @Inject constructor(
     )
 
     data class BackupMessage(
-            val protocol: Int,
+            val type: Int,
             val address: String,
             val date: Long,
-            val type: String,
-            val body: String,
-            val serviceCenter: String?,
+            val dateSent: Long,
             val read: Boolean,
             val status: Int,
+            val body: String,
+            val protocol: Int,
+            val serviceCenter: String?,
             val locked: Boolean,
-            val dateSent: Long)
+            val subId: Int)
 
     // Subjects to emit our progress events to
     private val backupProgress: Subject<BackupRepository.Progress> = BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
@@ -116,16 +119,17 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     private fun messageToBackupMessage(message: Message): BackupMessage = BackupMessage(
-            protocol = 0,
+            type = message.boxId,
             address = message.address,
             date = message.date,
-            type = message.type,
-            body = message.body,
-            serviceCenter = null,
+            dateSent = message.dateSent,
             read = message.read,
             status = message.deliveryStatus,
+            body = message.body,
+            protocol = 0,
+            serviceCenter = null,
             locked = message.locked,
-            dateSent = message.dateSent)
+            subId =  message.subId)
 
     override fun getBackupProgress(): Observable<BackupRepository.Progress> = backupProgress
 
@@ -153,8 +157,28 @@ class BackupRepositoryImpl @Inject constructor(
         val file = File(backupFile.path)
         val source = Okio.buffer(Okio.source(file))
 
-        val parseDuration = measureTimeMillis { moshi.adapter(Backup::class.java).fromJson(source) }
-        Timber.v("Parsing backup took ${parseDuration}ms")
+        val backup = moshi.adapter(Backup::class.java).fromJson(source)
+        val messageCount = backup?.messages?.size ?: 0
+
+        backup?.messages?.forEachIndexed { index, message ->
+            // Update the progress
+            val progress = Math.ceil(index.toDouble() / messageCount * 100).toInt()
+            restoreProgress.onNext(BackupRepository.Progress.Running(progress, "$index/$messageCount messages"))
+
+            context.contentResolver.insert(Telephony.Sms.CONTENT_URI, contentValuesOf(
+                    Telephony.Sms.TYPE to message.type,
+                    Telephony.Sms.ADDRESS to message.address,
+                    Telephony.Sms.DATE to message.date,
+                    Telephony.Sms.DATE_SENT to message.dateSent,
+                    Telephony.Sms.READ to message.read,
+                    Telephony.Sms.SEEN to 1,
+                    Telephony.Sms.STATUS to message.status,
+                    Telephony.Sms.BODY to message.body,
+                    Telephony.Sms.PROTOCOL to message.protocol,
+                    Telephony.Sms.SERVICE_CENTER to message.serviceCenter,
+                    Telephony.Sms.LOCKED to message.locked,
+                    Telephony.Sms.SUBSCRIPTION_ID to message.subId))
+        }
 
         restoreProgress.onNext(BackupRepository.Progress.Idle())
     }
