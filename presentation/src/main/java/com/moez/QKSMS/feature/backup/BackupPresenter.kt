@@ -65,7 +65,7 @@ class BackupPresenter @Inject constructor(
 
         view.restoreFileSelected()
                 .autoDisposable(view.scope())
-                .subscribe { performRestore.execute(Unit) }
+                .subscribe { backup -> performRestore.execute(backup) }
 
         view.fabClicks()
                 .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }

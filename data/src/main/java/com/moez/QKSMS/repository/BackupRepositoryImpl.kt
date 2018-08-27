@@ -18,19 +18,18 @@
  */
 package com.moez.QKSMS.repository
 
-import android.animation.ObjectAnimator
 import android.os.Environment
-import androidx.core.animation.addListener
 import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.util.QkFileObserver
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
+import okio.Okio
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -38,6 +37,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.system.measureTimeMillis
 
 
 @Singleton
@@ -135,32 +135,28 @@ class BackupRepositoryImpl @Inject constructor(
             .observeOn(Schedulers.computation())
             .map { files ->
                 files.map { file ->
+                    val path = file.path
                     val date = file.lastModified()
                     val messages = 0
                     val size = file.length()
-                    BackupFile(date, messages, size)
+                    BackupFile(path, date, messages, size)
                 }
             }
             .map { files -> files.sortedByDescending { file -> file.date } }
 
-    override fun performRestore() {
-        // If a backup or restore is already running, don't do anything
+    override fun performRestore(backupFile: BackupFile) {
+        // If a backupFile or restore is already running, don't do anything
         if (isBackupOrRestoreRunning()) return
 
-        restoreProgress.onNext(BackupRepository.Progress.Running(0))
+        restoreProgress.onNext(BackupRepository.Progress.Running(0, "Parsing backup"))
 
-        Thread.sleep(1000)
+        val file = File(backupFile.path)
+        val source = Okio.buffer(Okio.source(file))
 
-        val animator = ObjectAnimator.ofInt(0, 100)
-        animator.duration = 3000
-        animator.addUpdateListener {
-            val remaining = TimeUnit.MILLISECONDS.toSeconds(it.duration - it.currentPlayTime) + 1
-            restoreProgress.onNext(BackupRepository.Progress.Running(it.animatedValue as Int, "$remaining seconds remaining"))
-        }
-        animator.addListener(onEnd = {
-            restoreProgress.onNext(BackupRepository.Progress.Idle())
-        })
-        AndroidSchedulers.mainThread().scheduleDirect { animator.start() }
+        val parseDuration = measureTimeMillis { moshi.adapter(Backup::class.java).fromJson(source) }
+        Timber.v("Parsing backup took ${parseDuration}ms")
+
+        restoreProgress.onNext(BackupRepository.Progress.Idle())
     }
 
     override fun getRestoreProgress(): Observable<BackupRepository.Progress> = restoreProgress

@@ -18,17 +18,18 @@
  */
 package com.moez.QKSMS.interactor
 
+import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.repository.BackupRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class PerformRestore @Inject constructor(
         private val backupRepo: BackupRepository
-) : Interactor<Unit>() {
+) : Interactor<BackupFile>() {
 
-    override fun buildObservable(params: Unit): Flowable<*> {
+    override fun buildObservable(params: BackupFile): Flowable<*> {
         return Flowable.just(params)
-                .doOnNext { backupRepo.performRestore() }
+                .doOnNext(backupRepo::performRestore)
     }
 
 }
