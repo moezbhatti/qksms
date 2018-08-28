@@ -18,12 +18,13 @@
  */
 package com.moez.QKSMS.feature.backup
 
+import android.content.Context
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.interactor.PerformBackup
-import com.moez.QKSMS.interactor.PerformRestore
 import com.moez.QKSMS.repository.BackupRepository
+import com.moez.QKSMS.service.RestoreBackupService
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -33,9 +34,9 @@ import javax.inject.Inject
 class BackupPresenter @Inject constructor(
         backupRepo: BackupRepository,
         private val billingManager: BillingManager,
+        private val context: Context,
         private val navigator: Navigator,
-        private val performBackup: PerformBackup,
-        private val performRestore: PerformRestore
+        private val performBackup: PerformBackup
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     init {
@@ -65,7 +66,7 @@ class BackupPresenter @Inject constructor(
 
         view.restoreFileSelected()
                 .autoDisposable(view.scope())
-                .subscribe { backup -> performRestore.execute(backup) }
+                .subscribe { backup -> RestoreBackupService.start(context, backup.path) }
 
         view.fabClicks()
                 .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }

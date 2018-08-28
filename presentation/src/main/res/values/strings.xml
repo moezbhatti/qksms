@@ -162,6 +162,7 @@
     </plurals>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
     <string name="backup_now">Backup now</string>
+    <string name="backup_notification_channel_name">Backup and restore</string>
 
     <string name="scheduled_title">Scheduled</string>
     <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>

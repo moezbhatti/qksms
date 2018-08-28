@@ -154,6 +154,9 @@
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service
+            android:name=".feature.widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
             android:name=".service.HeadlessSmsSendService"
             android:exported="true"
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
@@ -167,9 +170,7 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
-        <service
-            android:name=".feature.widget.WidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service android:name=".service.RestoreBackupService" />
         <service android:name=".service.SendScheduledMessageService" />
         <service android:name=".service.SendSmsService" />
 

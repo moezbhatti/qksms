@@ -38,7 +38,6 @@ import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivity
-import com.moez.QKSMS.interactor.DeleteMessages
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.mapper.CursorToPartImpl
 import com.moez.QKSMS.receiver.DeleteMessagesReceiver
@@ -65,6 +64,8 @@ class NotificationManagerImpl @Inject constructor(
 
     companion object {
         const val DEFAULT_CHANNEL_ID = "notifications_default"
+        const val BACKUP_RESTORE_CHANNEL_ID = "notifications_backup_restore"
+
         val VIBRATE_PATTERN = longArrayOf(0, 200, 0, 200)
     }
 
@@ -372,6 +373,23 @@ class NotificationManagerImpl @Inject constructor(
             0L -> DEFAULT_CHANNEL_ID
             else -> "notifications_$threadId"
         }
+    }
+
+    override fun getNotificationForBackup(): NotificationCompat.Builder {
+        if (Build.VERSION.SDK_INT >= 26) {
+            val name = context.getString(R.string.backup_notification_channel_name)
+            val importance = NotificationManager.IMPORTANCE_LOW
+            val channel = NotificationChannel(BACKUP_RESTORE_CHANNEL_ID, name, importance)
+            val notificationManager = context.getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        return NotificationCompat.Builder(context, BACKUP_RESTORE_CHANNEL_ID)
+                .setContentTitle(context.getString(R.string.backup_restoring))
+                .setSmallIcon(R.drawable.ic_file_download_black_24dp)
+                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setProgress(0, 0, true)
+                .setOngoing(true)
     }
 
 }

@@ -148,13 +148,13 @@ class BackupRepositoryImpl @Inject constructor(
             }
             .map { files -> files.sortedByDescending { file -> file.date } }
 
-    override fun performRestore(backupFile: BackupFile) {
+    override fun performRestore(filePath: String) {
         // If a backupFile or restore is already running, don't do anything
         if (isBackupOrRestoreRunning()) return
 
         restoreProgress.onNext(BackupRepository.Progress.Running(0, "Parsing backup"))
 
-        val file = File(backupFile.path)
+        val file = File(filePath)
         val source = Okio.buffer(Okio.source(file))
 
         val backup = moshi.adapter(Backup::class.java).fromJson(source)

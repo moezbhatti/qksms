@@ -37,7 +37,7 @@ interface BackupRepository {
      */
     fun getBackups(): Observable<List<BackupFile>>
 
-    fun performRestore(backupFile: BackupFile)
+    fun performRestore(filePath: String)
 
     fun getRestoreProgress(): Observable<Progress>
 
