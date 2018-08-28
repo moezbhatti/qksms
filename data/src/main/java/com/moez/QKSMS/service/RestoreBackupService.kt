@@ -30,6 +30,7 @@ import com.moez.QKSMS.repository.BackupRepository
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -96,8 +97,9 @@ class RestoreBackupService : Service() {
         // Start the restore
         Observable.just(intent)
                 .map { it.getStringExtra(EXTRA_FILE_PATH) }
+                .map(backupRepo::performRestore)
                 .subscribeOn(Schedulers.io())
-                .subscribe(backupRepo::performRestore)
+                .subscribe({}, Timber::w)
     }
 
     private fun stop() {

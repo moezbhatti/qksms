@@ -52,7 +52,7 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     data class Backup(
-            val messages: List<BackupMessage>
+            val messages: List<BackupMessage> = listOf()
     )
 
     data class BackupMessage(
