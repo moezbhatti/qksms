@@ -91,6 +91,7 @@ class BillingManager @Inject constructor(
                     onSuccess()
                 } else {
                     Timber.w("Billing response: $billingResponseCode")
+                    purchaseListObservable.onNext(listOf())
                 }
             }
 
