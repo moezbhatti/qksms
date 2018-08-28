@@ -83,7 +83,9 @@ class RestoreBackupService : Service() {
                 .subscribe { progress ->
                     when (progress) {
                         is BackupRepository.Progress.Running -> {
-                            notification.setProgress(100, progress.progress, false)
+                            notification
+                                    .setProgress(100, progress.progress, false)
+                                    .setContentText("${progress.progress}%")
                             notificationManager.notify(NOTIFICATION_ID, notification.build())
                         }
 

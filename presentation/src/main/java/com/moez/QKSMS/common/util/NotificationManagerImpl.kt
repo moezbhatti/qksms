@@ -386,7 +386,11 @@ class NotificationManagerImpl @Inject constructor(
 
         return NotificationCompat.Builder(context, BACKUP_RESTORE_CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.backup_restoring))
+                .setShowWhen(false)
+                .setWhen(System.currentTimeMillis()) // Set this anyway in case it's shown
                 .setSmallIcon(R.drawable.ic_file_download_black_24dp)
+                .setColor(colors.theme().theme)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setProgress(0, 0, true)
                 .setOngoing(true)
