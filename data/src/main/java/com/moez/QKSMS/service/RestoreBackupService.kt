@@ -55,6 +55,8 @@ class RestoreBackupService : Service() {
     @Inject lateinit var backupRepo: BackupRepository
     @Inject lateinit var notificationManager: NotificationManager
 
+    private val notification by lazy { notificationManager.getNotificationForBackup() }
+
     override fun onCreate() = AndroidInjection.inject(this)
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -71,7 +73,6 @@ class RestoreBackupService : Service() {
 
     @SuppressLint("CheckResult")
     private fun start(intent: Intent) {
-        val notification = notificationManager.getNotificationForBackup()
         val notificationManager = NotificationManagerCompat.from(this)
 
         startForeground(NOTIFICATION_ID, notification.build())
