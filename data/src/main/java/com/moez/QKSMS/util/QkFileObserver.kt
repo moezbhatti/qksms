@@ -21,8 +21,9 @@ package com.moez.QKSMS.util
 import android.os.FileObserver
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import java.io.File
 
-class QkFileObserver(private val path: String) : FileObserver(path) {
+class QkFileObserver(path: String) : FileObserver(path) {
 
     private val subject = BehaviorSubject.createDefault<String>(path).toSerialized()
 
@@ -30,6 +31,11 @@ class QkFileObserver(private val path: String) : FileObserver(path) {
             .doOnSubscribe { startWatching() }
             .doOnDispose { stopWatching() }
             .share()
+
+    init {
+        // Make sure that the directory exists
+        tryOrNull { File(path).mkdirs() }
+    }
 
     override fun onEvent(event: Int, path: String?) {
         path?.let(subject::onNext)
