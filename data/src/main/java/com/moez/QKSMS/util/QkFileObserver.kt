@@ -23,7 +23,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import java.io.File
 
-class QkFileObserver(path: String) : FileObserver(path) {
+class QkFileObserver(path: String) : FileObserver(path, CREATE or DELETE or MODIFY) {
 
     private val subject = BehaviorSubject.createDefault<String>(path).toSerialized()
 

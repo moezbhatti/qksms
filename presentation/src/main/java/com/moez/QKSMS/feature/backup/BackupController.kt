@@ -113,10 +113,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
             }
         }
 
-        backup.summary = when (state.lastBackup) {
-            null -> activity?.getString(R.string.backup_never)
-            else -> dateFormatter.getDetailedTimestamp(state.lastBackup)
-        }
+        backup.summary = state.lastBackup
 
         adapter.data = state.backups
 

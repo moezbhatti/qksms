@@ -24,6 +24,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
+import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.interactor.PerformBackup
 import com.moez.QKSMS.repository.BackupRepository
 import com.moez.QKSMS.service.RestoreBackupService
@@ -37,6 +38,7 @@ class BackupPresenter @Inject constructor(
         private val backupRepo: BackupRepository,
         private val billingManager: BillingManager,
         private val context: Context,
+        private val dateFormatter: DateFormatter,
         private val navigator: Navigator,
         private val performBackup: PerformBackup
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
@@ -53,7 +55,16 @@ class BackupPresenter @Inject constructor(
                 .subscribe { progress -> newState { copy(restoreProgress = progress) } }
 
         disposables += backupRepo.getBackups()
-                .subscribe { backups -> newState { copy(lastBackup = backups.map { it.date }.max(), backups = backups) } }
+                .doOnNext { backups -> newState { copy(backups = backups) } }
+                .map { backups -> backups.map { it.date }.max() ?: 0L }
+                .map { lastBackup ->
+                    when (lastBackup) {
+                        0L -> context.getString(R.string.backup_never)
+                        else -> dateFormatter.getDetailedTimestamp(lastBackup)
+                    }
+                }
+                .startWith(context.getString(R.string.backup_loading))
+                .subscribe { lastBackup -> newState { copy(lastBackup = lastBackup) } }
 
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }

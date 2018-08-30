@@ -52,7 +52,16 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     data class Backup(
+            val messageCount: Int = 0,
             val messages: List<BackupMessage> = listOf()
+    )
+
+    /**
+     * Simpler version of [Backup] which allows us to read certain fields from the backup without
+     * needing to parse the entire file
+     */
+    data class BackupMetadata(
+            val messageCount: Int = 0
     )
 
     data class BackupMessage(
@@ -76,11 +85,13 @@ class BackupRepositoryImpl @Inject constructor(
         // If a backup or restore is already running, don't do anything
         if (isBackupOrRestoreRunning()) return
 
+        var messageCount = 0
+
         // Map all the messages into our object we'll use for the Json mapping
         val backupMessages = Realm.getDefaultInstance().use { realm ->
             // Get the messages from realm
             val messages = realm.where(Message::class.java).sort("date").findAll().createSnapshot()
-            val messageCount = messages.size
+            messageCount = messages.size
 
             // Map the messages to the new format
             val startTime = System.currentTimeMillis()
@@ -103,7 +114,7 @@ class BackupRepositoryImpl @Inject constructor(
 
         // Convert the data to json
         val adapter = moshi.adapter(Backup::class.java).indent("\t")
-        val json = adapter.toJson(Backup(backupMessages)).toByteArray()
+        val json = adapter.toJson(Backup(messageCount, backupMessages)).toByteArray()
 
         try {
             // Create the directory and file
@@ -129,7 +140,7 @@ class BackupRepositoryImpl @Inject constructor(
             protocol = 0,
             serviceCenter = null,
             locked = message.locked,
-            subId =  message.subId)
+            subId = message.subId)
 
     override fun getBackupProgress(): Observable<BackupRepository.Progress> = backupProgress
 
@@ -139,9 +150,14 @@ class BackupRepositoryImpl @Inject constructor(
             .observeOn(Schedulers.computation())
             .map { files ->
                 files.map { file ->
+                    val backup = Okio.buffer(Okio.source(file)).use { source ->
+                        moshi.adapter(BackupMetadata::class.java).fromJson(source)
+                    }
+
+
                     val path = file.path
                     val date = file.lastModified()
-                    val messages = 0
+                    val messages = backup?.messageCount ?: 0
                     val size = file.length()
                     BackupFile(path, date, messages, size)
                 }
@@ -155,9 +171,10 @@ class BackupRepositoryImpl @Inject constructor(
         restoreProgress.onNext(BackupRepository.Progress.Running(0, "Parsing backup"))
 
         val file = File(filePath)
-        val source = Okio.buffer(Okio.source(file))
+        val backup = Okio.buffer(Okio.source(file)).use { source ->
+            moshi.adapter(Backup::class.java).fromJson(source)
+        }
 
-        val backup = moshi.adapter(Backup::class.java).fromJson(source)
         val messageCount = backup?.messages?.size ?: 0
 
         backup?.messages?.forEachIndexed { index, message ->

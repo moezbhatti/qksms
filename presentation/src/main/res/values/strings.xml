@@ -149,6 +149,7 @@
     <string name="backup_backing_up">Backing up messages</string>
     <string name="backup_restoring">Restoring from backup</string>
     <string name="backup_last">Last backup</string>
+    <string name="backup_loading">Loading…</string>
     <string name="backup_never">Never</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
