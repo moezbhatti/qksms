@@ -269,7 +269,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, cameraDestination)
-        startActivityForResult(intent, CAMERA_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), CAMERA_REQUEST_CODE)
     }
 
     override fun requestGallery() {
@@ -279,7 +279,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .putExtra(Intent.EXTRA_LOCAL_ONLY, false)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .setType("image/*")
-        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), GALLERY_REQUEST_CODE)
     }
 
     override fun setDraft(draft: String) {
