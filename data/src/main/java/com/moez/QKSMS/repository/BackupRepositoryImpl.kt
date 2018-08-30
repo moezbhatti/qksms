@@ -44,7 +44,8 @@ import javax.inject.Singleton
 @Singleton
 class BackupRepositoryImpl @Inject constructor(
         private val context: Context,
-        private val moshi: Moshi
+        private val moshi: Moshi,
+        private val syncRepo: SyncRepository
 ) : BackupRepository {
 
     companion object {
@@ -196,6 +197,10 @@ class BackupRepositoryImpl @Inject constructor(
                     Telephony.Sms.LOCKED to message.locked,
                     Telephony.Sms.SUBSCRIPTION_ID to message.subId))
         }
+
+        restoreProgress.onNext(BackupRepository.Progress.Running(0, "Syncing messages"))
+
+        syncRepo.syncMessages()
 
         restoreProgress.onNext(BackupRepository.Progress.Idle())
     }
