@@ -118,8 +118,6 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
             else -> dateFormatter.getDetailedTimestamp(state.lastBackup)
         }
 
-        restore.isEnabled = state.upgraded
-
         adapter.data = state.backups
 
         fabIcon.setImageResource(when (state.upgraded) {

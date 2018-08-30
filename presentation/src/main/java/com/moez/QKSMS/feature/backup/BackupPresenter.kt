@@ -19,6 +19,8 @@
 package com.moez.QKSMS.feature.backup
 
 import android.content.Context
+import androidx.core.widget.toast
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
@@ -32,7 +34,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
-        backupRepo: BackupRepository,
+        private val backupRepo: BackupRepository,
         private val billingManager: BillingManager,
         private val context: Context,
         private val navigator: Navigator,
@@ -61,8 +63,20 @@ class BackupPresenter @Inject constructor(
         super.bindIntents(view)
 
         view.restoreClicks()
+                .withLatestFrom(
+                        backupRepo.getBackupProgress(),
+                        backupRepo.getRestoreProgress(),
+                        billingManager.upgradeStatus)
+                { _, backupProgress, restoreProgress, upgraded ->
+                    when {
+                        !upgraded -> context.toast(R.string.backup_restore_error_plus)
+                        backupProgress is BackupRepository.Progress.Running -> context.toast(R.string.backup_restore_error_backup)
+                        restoreProgress is BackupRepository.Progress.Running -> context.toast(R.string.backup_restore_error_restore)
+                        else -> view.selectFile()
+                    }
+                }
                 .autoDisposable(view.scope())
-                .subscribe { view.selectFile() }
+                .subscribe()
 
         view.restoreFileSelected()
                 .autoDisposable(view.scope())
