@@ -23,7 +23,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.telephony.PhoneNumberUtils
 import android.text.Spannable
-import android.text.SpannableStringBuilder
+import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -231,9 +231,7 @@ class MessagesAdapter @Inject constructor(
         view.body.text = when (message.isSms()) {
             true -> message.body
             false -> {
-                val subject = SpannableStringBuilder(message.getCleansedSubject())
-                subject.setSpan(StyleSpan(Typeface.BOLD), 0, subject.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
-
+                val subject = message.getCleansedSubject()
                 val body = message.parts
                         .filter { part -> !part.isVCard() }
                         .mapNotNull { part -> part.text }
@@ -241,8 +239,11 @@ class MessagesAdapter @Inject constructor(
                         .joinToString("\n")
 
                 when {
-                    subject.isNotBlank() && body.isNotBlank() -> subject.append("\n$body")
-                    subject.isNotBlank() -> subject
+                    subject.isNotBlank() -> {
+                        val spannable = SpannableString(if (body.isNotBlank()) "$subject\n$body" else subject)
+                        spannable.setSpan(StyleSpan(Typeface.BOLD), 0, subject.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+                        spannable
+                    }
                     else -> body
                 }
             }
