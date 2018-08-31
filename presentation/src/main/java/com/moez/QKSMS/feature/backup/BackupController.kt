@@ -27,6 +27,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.extensions.getLabel
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.widget.PreferenceView
@@ -85,24 +86,30 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
 
     override fun render(state: BackupState) {
         when {
-            state.backupProgress is BackupRepository.Progress.Running -> {
+            state.backupProgress.running -> {
                 progressIcon.setImageResource(R.drawable.ic_file_upload_black_24dp)
                 progressTitle.setText(R.string.backup_backing_up)
-                progressSummary.text = state.backupProgress.status
+                progressSummary.text = state.backupProgress.getLabel(activity!!)
                 progressSummary.isVisible = progressSummary.text.isNotEmpty()
-                progressBar.isIndeterminate = state.backupProgress.progress == 0
-                progressBar.progress = state.backupProgress.progress
+                val running = (state.backupProgress as? BackupRepository.Progress.Running)
+                progressBar.isVisible = state.backupProgress.indeterminate || running?.max ?: 0 > 0
+                progressBar.isIndeterminate = state.backupProgress.indeterminate
+                progressBar.max = running?.max ?: 0
+                progressBar.progress = running?.count ?: 0
                 progress.isVisible = true
                 fab.isVisible = false
             }
 
-            state.restoreProgress is BackupRepository.Progress.Running -> {
+            state.restoreProgress.running -> {
                 progressIcon.setImageResource(R.drawable.ic_file_download_black_24dp)
                 progressTitle.setText(R.string.backup_restoring)
-                progressSummary.text = state.restoreProgress.status
+                progressSummary.text = state.restoreProgress.getLabel(activity!!)
                 progressSummary.isVisible = progressSummary.text.isNotEmpty()
-                progressBar.isIndeterminate = state.restoreProgress.progress == 0
-                progressBar.progress = state.restoreProgress.progress
+                val running = (state.restoreProgress as? BackupRepository.Progress.Running)
+                progressBar.isVisible = state.restoreProgress.indeterminate || running?.max ?: 0 > 0
+                progressBar.isIndeterminate = state.restoreProgress.indeterminate
+                progressBar.max = running?.max ?: 0
+                progressBar.progress = running?.count ?: 0
                 progress.isVisible = true
                 fab.isVisible = false
             }

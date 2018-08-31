@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.service
+package com.moez.QKSMS.feature.backup
 
 import android.annotation.SuppressLint
 import android.app.Service
@@ -25,6 +25,7 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.moez.QKSMS.common.util.extensions.getLabel
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.repository.BackupRepository
 import dagger.android.AndroidInjection
@@ -83,14 +84,21 @@ class RestoreBackupService : Service() {
                 .subscribeOn(Schedulers.io())
                 .subscribe { progress ->
                     when (progress) {
+                        is BackupRepository.Progress.Idle -> stop()
+
                         is BackupRepository.Progress.Running -> {
                             notification
-                                    .setProgress(100, progress.progress, false)
-                                    .setContentText("${progress.progress}%")
+                                    .setProgress(progress.max, progress.count, progress.indeterminate)
+                                    .setContentText(progress.getLabel(this))
                             notificationManager.notify(NOTIFICATION_ID, notification.build())
                         }
 
-                        is BackupRepository.Progress.Idle -> stop()
+                        else -> {
+                            notification
+                                    .setProgress(0, 0, progress.indeterminate)
+                                    .setContentText(progress.getLabel(this))
+                            notificationManager.notify(NOTIFICATION_ID, notification.build())
+                        }
                     }
                 }
 

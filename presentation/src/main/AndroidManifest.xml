@@ -153,6 +153,7 @@
         </receiver>
 
         <service android:name="com.android.mms.transaction.TransactionService" />
+        <service android:name=".feature.backup.RestoreBackupService" />
         <service
             android:name=".feature.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
@@ -170,7 +171,6 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
-        <service android:name=".service.RestoreBackupService" />
         <service android:name=".service.SendScheduledMessageService" />
         <service android:name=".service.SendSmsService" />
 

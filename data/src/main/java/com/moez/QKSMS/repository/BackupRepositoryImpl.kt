@@ -32,13 +32,14 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
 import okio.Okio
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.concurrent.schedule
 
 
 @Singleton
@@ -95,23 +96,15 @@ class BackupRepositoryImpl @Inject constructor(
             messageCount = messages.size
 
             // Map the messages to the new format
-            val startTime = System.currentTimeMillis()
             messages.mapIndexed { index, message ->
-                val progress = index.toDouble() / messageCount * 100
-                val elapsed = System.currentTimeMillis() - startTime
-                val remaining = when {
-                    index > 100 -> TimeUnit.MILLISECONDS.toSeconds((elapsed.toDouble() / index * (messageCount - index)).toLong())
-                    else -> 0
-                }
-
                 // Update the progress
-                backupProgress.onNext(BackupRepository.Progress.Running(progress.toInt(), "$remaining seconds remaining"))
+                backupProgress.onNext(BackupRepository.Progress.Running(messageCount, index))
                 messageToBackupMessage(message)
             }
         }
 
         // Update the status, and set the progress to be indeterminate since we can no longer calculate progress
-        backupProgress.onNext(BackupRepository.Progress.Running(0, "Saving..."))
+        backupProgress.onNext(BackupRepository.Progress.Saving())
 
         // Convert the data to json
         val adapter = moshi.adapter(Backup::class.java).indent("\t")
@@ -125,9 +118,12 @@ class BackupRepositoryImpl @Inject constructor(
             // Write the log to the file
             FileOutputStream(file, true).use { fileOutputStream -> fileOutputStream.write(json) }
         } catch (e: Exception) {
+            Timber.w(e)
         }
 
-        backupProgress.onNext(BackupRepository.Progress.Idle())
+        // Mark the task finished, and set it as Idle a second later
+        backupProgress.onNext(BackupRepository.Progress.Finished())
+        Timer().schedule(1000) { backupProgress.onNext(BackupRepository.Progress.Idle()) }
     }
 
     private fun messageToBackupMessage(message: Message): BackupMessage = BackupMessage(
@@ -169,7 +165,7 @@ class BackupRepositoryImpl @Inject constructor(
         // If a backupFile or restore is already running, don't do anything
         if (isBackupOrRestoreRunning()) return
 
-        restoreProgress.onNext(BackupRepository.Progress.Running(0, "Parsing backup"))
+        restoreProgress.onNext(BackupRepository.Progress.Parsing())
 
         val file = File(filePath)
         val backup = Okio.buffer(Okio.source(file)).use { source ->
@@ -180,8 +176,7 @@ class BackupRepositoryImpl @Inject constructor(
 
         backup?.messages?.forEachIndexed { index, message ->
             // Update the progress
-            val progress = Math.ceil(index.toDouble() / messageCount * 100).toInt()
-            restoreProgress.onNext(BackupRepository.Progress.Running(progress, "$index/$messageCount messages"))
+            restoreProgress.onNext(BackupRepository.Progress.Running(messageCount, index))
 
             context.contentResolver.insert(Telephony.Sms.CONTENT_URI, contentValuesOf(
                     Telephony.Sms.TYPE to message.type,
@@ -198,18 +193,19 @@ class BackupRepositoryImpl @Inject constructor(
                     Telephony.Sms.SUBSCRIPTION_ID to message.subId))
         }
 
-        restoreProgress.onNext(BackupRepository.Progress.Running(0, "Syncing messages"))
-
+        // Sync the messages
+        restoreProgress.onNext(BackupRepository.Progress.Syncing())
         syncRepo.syncMessages()
 
-        restoreProgress.onNext(BackupRepository.Progress.Idle())
+        // Mark the task finished, and set it as Idle a second later
+        restoreProgress.onNext(BackupRepository.Progress.Finished())
+        Timer().schedule(1000) { restoreProgress.onNext(BackupRepository.Progress.Idle()) }
     }
 
     override fun getRestoreProgress(): Observable<BackupRepository.Progress> = restoreProgress
 
     private fun isBackupOrRestoreRunning(): Boolean {
-        return backupProgress.blockingFirst() is BackupRepository.Progress.Running
-                || restoreProgress.blockingFirst() is BackupRepository.Progress.Running
+        return backupProgress.blockingFirst().running || restoreProgress.blockingFirst().running
     }
 
 }

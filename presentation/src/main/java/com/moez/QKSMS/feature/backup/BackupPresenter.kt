@@ -27,7 +27,6 @@ import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.interactor.PerformBackup
 import com.moez.QKSMS.repository.BackupRepository
-import com.moez.QKSMS.service.RestoreBackupService
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -81,8 +80,8 @@ class BackupPresenter @Inject constructor(
                 { _, backupProgress, restoreProgress, upgraded ->
                     when {
                         !upgraded -> context.toast(R.string.backup_restore_error_plus)
-                        backupProgress is BackupRepository.Progress.Running -> context.toast(R.string.backup_restore_error_backup)
-                        restoreProgress is BackupRepository.Progress.Running -> context.toast(R.string.backup_restore_error_restore)
+                        backupProgress.running -> context.toast(R.string.backup_restore_error_backup)
+                        restoreProgress.running -> context.toast(R.string.backup_restore_error_restore)
                         else -> view.selectFile()
                     }
                 }

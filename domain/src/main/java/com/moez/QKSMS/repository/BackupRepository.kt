@@ -23,9 +23,13 @@ import io.reactivex.Observable
 
 interface BackupRepository {
 
-    sealed class Progress {
+    sealed class Progress(val running: Boolean = false, val indeterminate: Boolean = true) {
         class Idle : Progress()
-        class Running(val progress: Int, val status: String? = null) : Progress()
+        class Parsing : Progress(true)
+        class Running(val max: Int, val count: Int) : Progress(true, false)
+        class Saving : Progress(true)
+        class Syncing : Progress(true)
+        class Finished : Progress(true, false)
     }
 
     fun performBackup()
