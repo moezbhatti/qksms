@@ -22,6 +22,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- Used for starting foreground service for backup/restore on Android P+ -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -91,7 +93,6 @@
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/AppThemeLightDialog" />
-        <activity android:name=".feature.settings.about.AboutController" />
         <activity android:name=".feature.scheduled.ScheduledActivity" />
         <activity android:name=".feature.backup.BackupActivity" />
 
