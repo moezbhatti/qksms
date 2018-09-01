@@ -528,7 +528,7 @@ class ComposeViewModel @Inject constructor(
         // Show the remaining character counter when necessary
         view.textChangedIntent
                 .observeOn(Schedulers.computation())
-                .mapNotNull { draft -> tryOrNull { SmsMessage.calculateLength(draft, false) } }
+                .mapNotNull { draft -> tryOrNull { SmsMessage.calculateLength(draft, prefs.unicode.get()) } }
                 .map { array ->
                     val messages = array[0]
                     val remaining = array[2]
