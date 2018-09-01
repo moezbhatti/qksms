@@ -18,9 +18,9 @@
  */
 package com.moez.QKSMS.feature.backup
 
-import android.app.AlertDialog
 import android.graphics.Typeface
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
@@ -29,12 +29,15 @@ import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.getLabel
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.common.util.extensions.setPositiveButton
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.repository.BackupRepository
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.backup_controller.*
 import kotlinx.android.synthetic.main.backup_list_dialog.view.*
 import kotlinx.android.synthetic.main.preference_view.view.*
@@ -46,13 +49,34 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject override lateinit var presenter: BackupPresenter
 
-    private val dialog by lazy {
+    private val confirmRestoreSubject: Subject<Unit> = PublishSubject.create()
+    private val stopRestoreSubject: Subject<Unit> = PublishSubject.create()
+
+    private val backupFilesDialog by lazy {
         val view = View.inflate(activity, R.layout.backup_list_dialog, null)
                 .apply { files.adapter = adapter.apply { emptyView = empty } }
 
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(activity!!)
                 .setView(view)
                 .setCancelable(true)
+                .create()
+    }
+
+    private val confirmRestoreDialog by lazy {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_restore_confirm_title)
+                .setMessage(R.string.backup_restore_confirm_message)
+                .setPositiveButton(R.string.backup_restore_title, confirmRestoreSubject)
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+    }
+
+    private val stopRestoreDialog by lazy {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_restore_stop_title)
+                .setMessage(R.string.backup_restore_stop_message)
+                .setPositiveButton(R.string.button_stop, stopRestoreSubject)
+                .setNegativeButton(R.string.button_cancel, null)
                 .create()
     }
 
@@ -138,10 +162,20 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
     override fun restoreClicks(): Observable<*> = restore.clicks()
 
     override fun restoreFileSelected(): Observable<BackupFile> = adapter.backupSelected
-            .doOnNext { dialog.dismiss() }
+            .doOnNext { backupFilesDialog.dismiss() }
+
+    override fun restoreConfirmed(): Observable<*> = confirmRestoreSubject
+
+    override fun stopRestoreClicks(): Observable<*> = progressCancel.clicks()
+
+    override fun stopRestoreConfirmed(): Observable<*> = stopRestoreSubject
 
     override fun fabClicks(): Observable<*> = fab.clicks()
 
-    override fun selectFile() = dialog.show()
+    override fun selectFile() = backupFilesDialog.show()
+
+    override fun confirmRestore() = confirmRestoreDialog.show()
+
+    override fun stopRestore() = stopRestoreDialog.show()
 
 }

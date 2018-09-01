@@ -16,23 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.backup
+package com.moez.QKSMS.common.util.extensions
 
-import com.moez.QKSMS.common.base.QkViewContract
-import com.moez.QKSMS.model.BackupFile
-import io.reactivex.Observable
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
+import io.reactivex.subjects.Subject
 
-interface BackupView : QkViewContract<BackupState> {
+fun AlertDialog.Builder.setPositiveButton(@StringRes textId: Int, subject: Subject<Unit>): AlertDialog.Builder {
+    return setPositiveButton(textId) { _, _ -> subject.onNext(Unit) }
+}
 
-    fun restoreClicks(): Observable<*>
-    fun restoreFileSelected(): Observable<BackupFile>
-    fun restoreConfirmed(): Observable<*>
-    fun stopRestoreClicks(): Observable<*>
-    fun stopRestoreConfirmed(): Observable<*>
-    fun fabClicks(): Observable<*>
+fun AlertDialog.Builder.setNegativeButton(@StringRes textId: Int, subject: Subject<Unit>): AlertDialog.Builder {
+    return setNegativeButton(textId) { _, _ -> subject.onNext(Unit) }
+}
 
-    fun selectFile()
-    fun confirmRestore()
-    fun stopRestore()
-
+fun AlertDialog.Builder.setNeutralButton(@StringRes textId: Int, subject: Subject<Unit>): AlertDialog.Builder {
+    return setNeutralButton(textId) { _, _ -> subject.onNext(Unit) }
 }

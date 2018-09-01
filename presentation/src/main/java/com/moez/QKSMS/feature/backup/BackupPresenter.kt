@@ -90,7 +90,20 @@ class BackupPresenter @Inject constructor(
 
         view.restoreFileSelected()
                 .autoDisposable(view.scope())
+                .subscribe { view.confirmRestore() }
+
+        view.restoreConfirmed()
+                .withLatestFrom(view.restoreFileSelected()) { _, backup -> backup }
+                .autoDisposable(view.scope())
                 .subscribe { backup -> RestoreBackupService.start(context, backup.path) }
+
+        view.stopRestoreClicks()
+                .autoDisposable(view.scope())
+                .subscribe { view.stopRestore() }
+
+        view.stopRestoreConfirmed()
+                .autoDisposable(view.scope())
+                .subscribe()
 
         view.fabClicks()
                 .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
