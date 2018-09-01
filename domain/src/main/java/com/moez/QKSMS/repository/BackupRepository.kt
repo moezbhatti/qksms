@@ -43,6 +43,8 @@ interface BackupRepository {
 
     fun performRestore(filePath: String)
 
+    fun stopRestore()
+
     fun getRestoreProgress(): Observable<Progress>
 
 }

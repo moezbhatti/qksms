@@ -103,7 +103,7 @@ class BackupPresenter @Inject constructor(
 
         view.stopRestoreConfirmed()
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { backupRepo.stopRestore() }
 
         view.fabClicks()
                 .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }

@@ -83,6 +83,8 @@ class BackupRepositoryImpl @Inject constructor(
     private val backupProgress: Subject<BackupRepository.Progress> = BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
     private val restoreProgress: Subject<BackupRepository.Progress> = BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
 
+    @Volatile private var stopFlag: Boolean = false
+
     override fun performBackup() {
         // If a backup or restore is already running, don't do anything
         if (isBackupOrRestoreRunning()) return
@@ -175,6 +177,12 @@ class BackupRepositoryImpl @Inject constructor(
         val messageCount = backup?.messages?.size ?: 0
 
         backup?.messages?.forEachIndexed { index, message ->
+            if (stopFlag) {
+                stopFlag = false
+                restoreProgress.onNext(BackupRepository.Progress.Idle())
+                return
+            }
+
             // Update the progress
             restoreProgress.onNext(BackupRepository.Progress.Running(messageCount, index))
 
@@ -200,6 +208,10 @@ class BackupRepositoryImpl @Inject constructor(
         // Mark the task finished, and set it as Idle a second later
         restoreProgress.onNext(BackupRepository.Progress.Finished())
         Timer().schedule(1000) { restoreProgress.onNext(BackupRepository.Progress.Idle()) }
+    }
+
+    override fun stopRestore() {
+        stopFlag = true
     }
 
     override fun getRestoreProgress(): Observable<BackupRepository.Progress> = restoreProgress

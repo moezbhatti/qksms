@@ -86,19 +86,15 @@ class RestoreBackupService : Service() {
                     when (progress) {
                         is BackupRepository.Progress.Idle -> stop()
 
-                        is BackupRepository.Progress.Running -> {
-                            notification
-                                    .setProgress(progress.max, progress.count, progress.indeterminate)
-                                    .setContentText(progress.getLabel(this))
-                            notificationManager.notify(NOTIFICATION_ID, notification.build())
-                        }
+                        is BackupRepository.Progress.Running -> notification
+                                .setProgress(progress.max, progress.count, progress.indeterminate)
+                                .setContentText(progress.getLabel(this))
+                                .let { notificationManager.notify(NOTIFICATION_ID, it.build()) }
 
-                        else -> {
-                            notification
-                                    .setProgress(0, 0, progress.indeterminate)
-                                    .setContentText(progress.getLabel(this))
-                            notificationManager.notify(NOTIFICATION_ID, notification.build())
-                        }
+                        else -> notification
+                                .setProgress(0, 0, progress.indeterminate)
+                                .setContentText(progress.getLabel(this))
+                                .let { notificationManager.notify(NOTIFICATION_ID, it.build()) }
                     }
                 }
 

@@ -115,6 +115,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
                 progressTitle.setText(R.string.backup_backing_up)
                 progressSummary.text = state.backupProgress.getLabel(activity!!)
                 progressSummary.isVisible = progressSummary.text.isNotEmpty()
+                progressCancel.isVisible = false
                 val running = (state.backupProgress as? BackupRepository.Progress.Running)
                 progressBar.isVisible = state.backupProgress.indeterminate || running?.max ?: 0 > 0
                 progressBar.isIndeterminate = state.backupProgress.indeterminate
@@ -129,6 +130,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
                 progressTitle.setText(R.string.backup_restoring)
                 progressSummary.text = state.restoreProgress.getLabel(activity!!)
                 progressSummary.isVisible = progressSummary.text.isNotEmpty()
+                progressCancel.isVisible = true
                 val running = (state.restoreProgress as? BackupRepository.Progress.Running)
                 progressBar.isVisible = state.restoreProgress.indeterminate || running?.max ?: 0 > 0
                 progressBar.isIndeterminate = state.restoreProgress.indeterminate
