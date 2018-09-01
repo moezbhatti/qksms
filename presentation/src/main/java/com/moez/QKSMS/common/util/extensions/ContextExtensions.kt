@@ -20,23 +20,17 @@ package com.moez.QKSMS.common.util.extensions
 
 import android.app.Activity
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
-import android.util.Log
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import com.moez.QKSMS.common.util.BugsnagTree
+import com.moez.QKSMS.util.tryOrNull
 
 fun Context.getColorCompat(colorRes: Int): Int {
-    return try {
-        ContextCompat.getColor(this, colorRes)
-    } catch (e: Resources.NotFoundException) {
-        BugsnagTree().log(Log.ERROR, e)
-        Color.BLACK
-    }
+    //return black as a default color, in case an invalid color ID was passed in
+    return tryOrNull { ContextCompat.getColor(this, colorRes) } ?: Color.BLACK
 }
 
 /**
