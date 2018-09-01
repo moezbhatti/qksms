@@ -131,9 +131,15 @@ class ComposeViewModel @Inject constructor(
                 .doOnNext { newState { copy(loading = false) } }
                 .mergeWith(threadIdSubject)
                 .switchMap { threadId ->
+                    // Query the entire list of conversations and map from there, rather than
+                    // directly querying the conversation from realm. If querying a single
+                    // conversation and it doesn't exist yet, the realm query will never update
                     conversationRepo.getConversations().asObservable()
-                            .map { conversations -> conversations.filter { it.id == threadId } }
-                            .map { conversations -> conversations.firstOrNull() ?: Conversation(id = threadId) }
+                            .map { conversations ->
+                                conversations.firstOrNull { it.id == threadId }
+                                        ?: conversationRepo.getOrCreateConversation(threadId)
+                                        ?: Conversation(id = threadId)
+                            }
                 }
                 .mergeWith(initialConversation)
                 .filter { conversation -> conversation.isLoaded }
