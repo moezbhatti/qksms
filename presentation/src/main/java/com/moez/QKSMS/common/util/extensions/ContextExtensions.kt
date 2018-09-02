@@ -20,14 +20,17 @@ package com.moez.QKSMS.common.util.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.moez.QKSMS.util.tryOrNull
 
 fun Context.getColorCompat(colorRes: Int): Int {
-    return ContextCompat.getColor(this, colorRes)
+    //return black as a default color, in case an invalid color ID was passed in
+    return tryOrNull { ContextCompat.getColor(this, colorRes) } ?: Color.BLACK
 }
 
 /**
