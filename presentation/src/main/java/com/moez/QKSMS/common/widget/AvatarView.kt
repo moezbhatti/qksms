@@ -31,15 +31,19 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
+import com.moez.QKSMS.listener.ContactAddedListener
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.util.GlideApp
+import com.uber.autodispose.android.ViewScopeProvider
+import com.uber.autodispose.kotlin.autoDisposable
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var contactAddedListener: ContactAddedListener
     @Inject lateinit var navigator: Navigator
 
     /**
@@ -68,7 +72,15 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
         setOnClickListener {
             if (lookupKey.isNullOrEmpty()) {
-                address?.let { address -> navigator.addContact(address) }
+                address?.let { address ->
+                    // Allow the user to add the contact
+                    navigator.addContact(address)
+
+                    // Listen for contact changes
+                    contactAddedListener.listen(address)
+                            .autoDisposable(ViewScopeProvider.from(this))
+                            .subscribe()
+                }
             } else {
                 val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey)
                 ContactsContract.QuickContact.showQuickContact(context, this@AvatarView, uri,

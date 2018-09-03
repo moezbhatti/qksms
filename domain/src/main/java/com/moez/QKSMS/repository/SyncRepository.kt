@@ -37,4 +37,11 @@ interface SyncRepository {
 
     fun syncContacts()
 
+    /**
+     * Syncs a single contact to the Realm
+     *
+     * Return false if the contact couldn't be found
+     */
+    fun syncContact(address: String): Boolean
+
 }

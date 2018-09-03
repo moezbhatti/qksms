@@ -26,6 +26,7 @@ import android.telephony.PhoneNumberUtils
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.extensions.insertOrUpdate
 import com.moez.QKSMS.extensions.map
+import com.moez.QKSMS.filter.PhoneNumberFilter
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.mapper.CursorToContact
 import com.moez.QKSMS.mapper.CursorToConversation
@@ -54,6 +55,7 @@ class SyncRepositoryImpl @Inject constructor(
         private val cursorToRecipient: CursorToRecipient,
         private val cursorToContact: CursorToContact,
         private val keys: KeyManager,
+        private val phoneNumberFilter: PhoneNumberFilter,
         private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
@@ -237,6 +239,30 @@ class SyncRepositoryImpl @Inject constructor(
             }
 
         }
+    }
+
+    override fun syncContact(address: String): Boolean {
+        // See if there's a contact that matches this phone number
+        var contact = getContacts().firstOrNull {
+            it.numbers.any { number -> PhoneNumberUtils.compare(number.address, address) }
+        } ?: return false
+
+        Realm.getDefaultInstance().use { realm ->
+            val recipients = realm.where(Recipient::class.java).findAll()
+
+            realm.executeTransaction {
+                contact = realm.copyToRealm(contact)
+
+                // Update all the matching recipients with the new contact
+                val updatedRecipients = recipients
+                        .filter { recipient -> contact.numbers.any { number -> PhoneNumberUtils.compare(recipient.address, number.address) } }
+                        .map { recipient -> recipient.apply { this.contact = contact } }
+
+                realm.insertOrUpdate(updatedRecipients)
+            }
+        }
+
+        return true
     }
 
     private fun getContacts(): List<Contact> {
