@@ -20,6 +20,7 @@ package com.moez.QKSMS.injection
 
 import com.moez.QKSMS.common.QKApplication
 import com.moez.QKSMS.common.QkDialog
+import com.moez.QKSMS.common.util.QkChooserTargetService
 import com.moez.QKSMS.common.widget.AvatarView
 import com.moez.QKSMS.common.widget.PagerTitleView
 import com.moez.QKSMS.common.widget.PreferenceView
@@ -66,6 +67,11 @@ interface AppComponent {
     fun inject(fetcher: ContactImageLoader.ContactImageFetcher)
 
     fun inject(service: WidgetAdapter)
+
+    /**
+     * This can't use AndroidInjection, or else it will crash on pre-marshmallow devices
+     */
+    fun inject(service: QkChooserTargetService)
 
     fun inject(view: AvatarView)
     fun inject(view: DetailedChipView)

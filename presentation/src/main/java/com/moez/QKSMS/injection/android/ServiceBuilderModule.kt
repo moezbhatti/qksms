@@ -18,7 +18,6 @@
  */
 package com.moez.QKSMS.injection.android
 
-import com.moez.QKSMS.common.util.QkChooserTargetService
 import com.moez.QKSMS.feature.backup.RestoreBackupService
 import com.moez.QKSMS.injection.scope.ActivityScope
 import com.moez.QKSMS.service.HeadlessSmsSendService
@@ -33,10 +32,6 @@ abstract class ServiceBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector()
     abstract fun bindHeadlessSmsSendService(): HeadlessSmsSendService
-
-    @ActivityScope
-    @ContributesAndroidInjector()
-    abstract fun bindQkChooserTargetService(): QkChooserTargetService
 
     @ActivityScope
     @ContributesAndroidInjector()

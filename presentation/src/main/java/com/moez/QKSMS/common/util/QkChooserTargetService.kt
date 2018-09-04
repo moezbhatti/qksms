@@ -11,11 +11,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import com.moez.QKSMS.R
 import com.moez.QKSMS.feature.compose.ComposeActivity
+import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.GlideApp
 import com.moez.QKSMS.util.tryOrNull
-import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.M)
@@ -24,7 +24,7 @@ class QkChooserTargetService : ChooserTargetService() {
     @Inject lateinit var conversationRepo: ConversationRepository
 
     override fun onCreate() {
-        AndroidInjection.inject(this)
+        appComponent.inject(this)
         super.onCreate()
     }
 
