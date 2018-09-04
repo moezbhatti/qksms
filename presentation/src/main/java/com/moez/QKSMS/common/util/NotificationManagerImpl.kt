@@ -298,12 +298,14 @@ class NotificationManagerImpl @Inject constructor(
         val responseSet = context.resources.getStringArray(R.array.qk_responses)
         val remoteInput = RemoteInput.Builder("body")
                 .setLabel(title)
-                .setChoices(responseSet)
-                .build()
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            remoteInput.setChoices(responseSet)
+        }
 
         return NotificationCompat.Action.Builder(R.drawable.ic_reply_white_24dp, title, replyPI)
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
-                .addRemoteInput(remoteInput)
+                .addRemoteInput(remoteInput.build())
                 .build()
     }
 
