@@ -18,9 +18,12 @@
  */
 package com.moez.QKSMS.feature.backup
 
+import android.Manifest
+import android.app.Activity
 import android.graphics.Typeface
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
@@ -49,6 +52,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject override lateinit var presenter: BackupPresenter
 
+    private val activityVisibleSubject: Subject<Unit> = PublishSubject.create()
     private val confirmRestoreSubject: Subject<Unit> = PublishSubject.create()
     private val stopRestoreSubject: Subject<Unit> = PublishSubject.create()
 
@@ -108,6 +112,11 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
                 .forEach { it.setTypeface(it.typeface, Typeface.BOLD) }
     }
 
+    override fun onActivityResumed(activity: Activity) {
+        super.onActivityResumed(activity)
+        activityVisibleSubject.onNext(Unit)
+    }
+
     override fun render(state: BackupState) {
         when {
             state.backupProgress.running -> {
@@ -161,6 +170,8 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
         })
     }
 
+    override fun activityVisible(): Observable<*> = activityVisibleSubject
+
     override fun restoreClicks(): Observable<*> = restore.clicks()
 
     override fun restoreFileSelected(): Observable<BackupFile> = adapter.backupSelected
@@ -173,6 +184,10 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
     override fun stopRestoreConfirmed(): Observable<*> = stopRestoreSubject
 
     override fun fabClicks(): Observable<*> = fab.clicks()
+
+    override fun requestStoragePermission() {
+        ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+    }
 
     override fun selectFile() = backupFilesDialog.show()
 

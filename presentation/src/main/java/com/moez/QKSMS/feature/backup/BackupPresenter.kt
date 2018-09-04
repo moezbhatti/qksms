@@ -26,10 +26,13 @@ import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.interactor.PerformBackup
+import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.repository.BackupRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -39,8 +42,11 @@ class BackupPresenter @Inject constructor(
         private val context: Context,
         private val dateFormatter: DateFormatter,
         private val navigator: Navigator,
-        private val performBackup: PerformBackup
+        private val performBackup: PerformBackup,
+        private val permissionManager: PermissionManager
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
+
+    private val storagePermissionSubject: Subject<Boolean> = BehaviorSubject.createDefault(permissionManager.hasStorage())
 
     init {
         disposables += backupRepo.getBackupProgress()
@@ -53,7 +59,9 @@ class BackupPresenter @Inject constructor(
                 .distinctUntilChanged()
                 .subscribe { progress -> newState { copy(restoreProgress = progress) } }
 
-        disposables += backupRepo.getBackups()
+        disposables += storagePermissionSubject
+                .distinctUntilChanged()
+                .switchMap { backupRepo.getBackups() }
                 .doOnNext { backups -> newState { copy(backups = backups) } }
                 .map { backups -> backups.map { it.date }.max() ?: 0L }
                 .map { lastBackup ->
@@ -72,6 +80,11 @@ class BackupPresenter @Inject constructor(
     override fun bindIntents(view: BackupView) {
         super.bindIntents(view)
 
+        view.activityVisible()
+                .map { permissionManager.hasStorage() }
+                .autoDisposable(view.scope())
+                .subscribe(storagePermissionSubject)
+
         view.restoreClicks()
                 .withLatestFrom(
                         backupRepo.getBackupProgress(),
@@ -82,6 +95,7 @@ class BackupPresenter @Inject constructor(
                         !upgraded -> context.toast(R.string.backup_restore_error_plus)
                         backupProgress.running -> context.toast(R.string.backup_restore_error_backup)
                         restoreProgress.running -> context.toast(R.string.backup_restore_error_restore)
+                        !permissionManager.hasStorage() -> view.requestStoragePermission()
                         else -> view.selectFile()
                     }
                 }
@@ -109,9 +123,10 @@ class BackupPresenter @Inject constructor(
                 .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
                 .autoDisposable(view.scope())
                 .subscribe { upgraded ->
-                    when (upgraded) {
-                        true -> performBackup.execute(Unit)
-                        false -> navigator.showQksmsPlusActivity("backup_fab")
+                    when {
+                        !upgraded -> navigator.showQksmsPlusActivity("backup_fab")
+                        !permissionManager.hasStorage() -> view.requestStoragePermission()
+                        upgraded -> performBackup.execute(Unit)
                     }
                 }
     }
