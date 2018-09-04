@@ -3,7 +3,7 @@
 buildscript {
     ext.androidx_version = '1.0.0-beta01'
     ext.androidx_testrunner_version = '1.1.0-alpha3'
-    ext.autodispose_version = '0.5.1'
+    ext.autodispose_version = '0.7.0'
     ext.conductor_version = '2.1.5'
     ext.constraintlayout_version = '1.1.0'
     ext.dagger_version = "2.16"
