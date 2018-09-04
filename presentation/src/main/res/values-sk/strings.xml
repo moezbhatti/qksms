@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">Archived</string>
   <string name="title_settings">Nastavenia</string>
   <string name="title_notification_prefs">Upozornenia</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Volať</string>
   <string name="menu_info">Podrobnosti</string>
   <string name="menu_save">Uložiť do galérie</string>
+  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d vybraných</string>
+  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">Vymazať</string>
   <string name="main_menu_archive">Archivovať</string>
   <string name="main_menu_unarchive">Unarchive</string>
@@ -131,6 +136,37 @@
   <string name="info_unblock">Unblock</string>
   <string name="info_delete">Delete conversation</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
+  <string name="backup_title">Backup and restore</string>
+  <string name="backup_backing_up">Backing up messages</string>
+  <string name="backup_restoring">Restoring from backup</string>
+  <string name="backup_last">Last backup</string>
+  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_never">Never</string>
+  <string name="backup_restore_title">Restore</string>
+  <string name="backup_restore_summary">Select a backup</string>
+  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">Backups</string>
+  <string name="backup_restore_dialog_empty">No backups found</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d message</item>
+    <item quantity="few">%d messages</item>
+    <item quantity="many">%d messages</item>
+    <item quantity="other">%d messages</item>
+  </plurals>
+  <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+  <string name="backup_now">Backup now</string>
+  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d messages</string>
+  <string name="backup_progress_saving">Saving backup&#8230;</string>
+  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">Backup and restore</string>
   <string name="scheduled_title">Scheduled</string>
   <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
   <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
@@ -189,11 +225,15 @@
   <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
   <string name="settings_unicode_title">Strip accents</string>
   <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
+  <string name="settings_mobile_title">Mobile numbers only</string>
+  <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
   <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
   <string name="settings_about_title">About QKSMS</string>
   <string name="settings_version">Version %s</string>
+  <string name="settings_logging_enabled">Debug logging enabled</string>
+  <string name="settings_logging_disabled">Debug logging disabled</string>
   <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
   <string name="blocked_title">Blocking</string>
   <string name="blocked_empty">Your blocked conversations will appear here</string>
@@ -257,6 +297,7 @@
   <string name="button_cancel">Cancel</string>
   <string name="button_delete">Delete</string>
   <string name="button_save">Save</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">More</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">Unblock</string>

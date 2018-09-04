@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">أُرشفت</string>
   <string name="title_settings">الإعدادات</string>
   <string name="title_notification_prefs">الإشعارات</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">اتصال</string>
   <string name="menu_info">تفاصيل</string>
   <string name="menu_save">حفظ إلى المعرض</string>
+  <string name="main_title">الوارد</string>
   <string name="main_drawer_open_cd">فتح درج التنقل</string>
   <string name="main_title_selected">%d محددة</string>
+  <string name="main_menu_search">بحث</string>
   <string name="main_menu_clear">مسح</string>
   <string name="main_menu_archive">أرشفة</string>
   <string name="main_menu_unarchive">إلغاء الأرشفة</string>
@@ -133,6 +138,39 @@
   <string name="info_unblock">إلغاء الحظر</string>
   <string name="info_delete">حذف المحادثة</string>
   <string name="gallery_toast_saved">تم الحفظ في المعرض</string>
+  <string name="backup_title">النسخ الاحتياطي والاستعادة</string>
+  <string name="backup_backing_up">النسخ الاحتياطي للرسائل</string>
+  <string name="backup_restoring">استعادة من النسخة الاحتياطية</string>
+  <string name="backup_last">آخر نسخ احتياطي</string>
+  <string name="backup_loading">تحميل&#8230;</string>
+  <string name="backup_never">أبداً</string>
+  <string name="backup_restore_title">استعادة</string>
+  <string name="backup_restore_summary">اختر نسخة احتياطية</string>
+  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">النسخ الاحتياطية</string>
+  <string name="backup_restore_dialog_empty">لا توجد أي نسخة احتياطية</string>
+  <plurals name="backup_message_count">
+    <item quantity="zero">%d messages</item>
+    <item quantity="one">%d message</item>
+    <item quantity="two">%d messages</item>
+    <item quantity="few">%d messages</item>
+    <item quantity="many">%d messages</item>
+    <item quantity="other">%d messages</item>
+  </plurals>
+  <string name="backup_disclaimer">النسخ الاحتياطي والاستعادة متاحة الآن فقط للرسائل النصّية. دعم رسائل الوسائط والرسائل المجدولة قادم قريباً!</string>
+  <string name="backup_now">النسخ الاحتياطي الآن</string>
+  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d messages</string>
+  <string name="backup_progress_saving">Saving backup&#8230;</string>
+  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">النسخ الاحتياطي والاستعادة</string>
   <string name="scheduled_title">مجدولة</string>
   <string name="scheduled_empty_description">الإرسال الآلي لأي رسالة في الوقت الذي ترغب بالضبط</string>
   <string name="scheduled_empty_message_1">مهلاً..متى عيد ميلادك؟</string>
@@ -191,11 +229,15 @@
   <string name="settings_delivery_summary">تأكيد أنه تم إرسال الرسائل بنجاح</string>
   <string name="settings_unicode_title">نزع حركات التشكيل</string>
   <string name="settings_unicode_summary">حذف حركات التشكيل من المحارف في الرسائل النصية الصادرة</string>
+  <string name="settings_mobile_title">أرقام الهواتف النقالة فقط</string>
+  <string name="settings_mobile_summary">عند إنشاء رسالة، أظهر فقط أرقام الهواتف النقالة</string>
   <string name="settings_mms_size_title">الضغط التلقائي لمرفقات رسائل الوسائط</string>
   <string name="settings_sync_title">مزامنة الرسائل</string>
   <string name="settings_sync_summary">إعادة مزامنة رسائلك مع قاعدة البيانات الأصلية للرسائل في النظام</string>
   <string name="settings_about_title">حول QKSMS</string>
   <string name="settings_version">النسخة %s</string>
+  <string name="settings_logging_enabled">تسجيل التصحيح مفعَّل</string>
+  <string name="settings_logging_disabled">تسجيل التصحيح معطَّل</string>
   <string name="settings_delay_duration_hint">أدخل المدة (ثوان)</string>
   <string name="blocked_title">الحظر</string>
   <string name="blocked_empty">المحادثات المحظورة لديك ستظهر هنا</string>
@@ -260,6 +302,7 @@
   <string name="button_cancel">إلغاء</string>
   <string name="button_delete">حذف</string>
   <string name="button_save">حفظ</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">المزيد</string>
   <string name="button_set">تعيين</string>
   <string name="button_unblock">إلغاء الحظر</string>

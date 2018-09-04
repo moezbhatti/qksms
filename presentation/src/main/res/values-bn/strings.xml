@@ -19,7 +19,10 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="title_archived">আর্কাইভ করা</string>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="title_archived">আর্কাইভকৃত</string>
   <string name="title_settings">সেটিংস</string>
   <string name="title_notification_prefs">নোটিফিকেশন</string>
   <string name="title_theme">থিম</string>
@@ -30,26 +33,28 @@
   <string name="menu_call">কল করুন</string>
   <string name="menu_info">বিস্তারিত</string>
   <string name="menu_save">গ্যালারীতে সেভ করুন</string>
-  <string name="main_drawer_open_cd">নেভিগেশন ড্রয়ার খোল</string>
+  <string name="main_title">ইনবক্স</string>
+  <string name="main_drawer_open_cd">নেভিগেশন ড্রয়ার খুলুন </string>
   <string name="main_title_selected">নির্বাচিত %d</string>
-  <string name="main_menu_clear">পরিষ্কার করুন</string>
+  <string name="main_menu_search">সার্চ</string>
+  <string name="main_menu_clear">ক্লিয়ার</string>
   <string name="main_menu_archive">আর্কাইভ</string>
   <string name="main_menu_unarchive">আনআর্কাইভ</string>
-  <string name="main_menu_delete">মুছে ফেলুন</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
-  <string name="main_menu_read">পঠিত হিসেবে চিহ্নিত করুন</string>
-  <string name="main_menu_unread">অপঠিত হিসেবে চিহ্নিত করুন</string>
+  <string name="main_menu_delete">ডিলিট   </string>
+  <string name="main_menu_pin">উপরে থাকুক</string>
+  <string name="main_menu_unpin">সরিয়ে নিন</string>
+  <string name="main_menu_read">পড়া হয়েছে</string>
+  <string name="main_menu_unread">পড়া হয়নি</string>
   <string name="main_menu_block">ব্লক করুন</string>
-  <string name="main_syncing">বার্তাগুলি সিঙ্ক হচ্ছে&#8230;</string>
-  <string name="main_sender_you">%s আপনার:</string>
-  <string name="main_message_results_title">বার্তাগুলির মধ্যে ফলাফল </string>
-  <string name="main_message_results">%d বার্তাগুলি</string>
-  <string name="inbox_empty_text">আপনার কথোপকথন এখানে দেখা যাবে</string>
-  <string name="inbox_search_empty_text">কোনো ফলাফল নেই</string>
-  <string name="archived_empty_text">আপনার আর্কাইভ করা কথোপকথন এখানে দেখা যাবে </string>
-  <string name="main_fab_cd">নতুন কথোপকথন শুরু করুন</string>
-  <string name="main_default_sms_title">কথোপকথন আবার ভালবাসুন</string>
+  <string name="main_syncing">মেসেজ সিঙ্ক হচ্ছে...</string>
+  <string name="main_sender_you">আপনি: %s</string>
+  <string name="main_message_results_title">মেসেজের ভিতর পাওয়া গেছে</string>
+  <string name="main_message_results">%d মেসেজ</string>
+  <string name="inbox_empty_text">আপনার আলাপ এখানে দেখা যাবে</string>
+  <string name="inbox_search_empty_text">রেজাল্ট পাওয়া যায়নি</string>
+  <string name="archived_empty_text">আপনার আর্কাইভ করা আলাপ এখানে দেখা যাবে</string>
+  <string name="main_fab_cd">নতুন আলাপ শুরু করুন</string>
+  <string name="main_default_sms_title">আবার texting ভালবাসুন</string>
   <string name="main_default_sms_message">QKSMS-কে আপনার ডিফল্ট এসএমএস অ্যাপ করুন</string>
   <string name="main_default_sms_change">পরিবর্তন করুন</string>
   <string name="main_permission_required">অনুমতি প্রয়োজন</string>
@@ -64,17 +69,17 @@
   <string name="drawer_settings">সেটিংস</string>
   <string name="drawer_plus">QKSMS +</string>
   <string name="drawer_help">সাহায্য &amp; প্রতিক্রিয়া</string>
-  <string name="drawer_invite">Invite friends</string>
+  <string name="drawer_invite">বন্ধুদের আমন্ত্রণ জানান</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+  <string name="drawer_plus_banner_summary">দারুণ নতুন ফিচার আনলক করুন এবং উন্নয়ন সহায়তা করুন</string>
   <string name="rate_title">QKSMS উপভোগ করছেন?</string>
   <string name="rate_summary">আমাদের প্রতি ভালবাসে দেখাতে Google Play-তে আমাদের মূল্যায়ন করুন!</string>
   <string name="rate_okay">ঠিক আছে!</string>
   <string name="rate_dismiss">বাতিল করুন</string>
   <string name="dialog_delete_title">মুছে ফেলুন</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    <item quantity="one">আপনি কি নিশ্চিত যে এই আলাপটি আপনি ডিলিট করতে চান?</item>
+    <item quantity="other">আপনি কি নিশ্চিত যে %d টি আলাপ আপনি ডিলিট করতে চান?</item>
   </plurals>
   <string-array name="message_options">
     <item>পাঠ্য অনুলিপি করুন</item>
@@ -129,17 +134,46 @@
   <string name="info_unblock">আনব্লক করুন</string>
   <string name="info_delete">কথোপকথন মুছে ফেলুন</string>
   <string name="gallery_toast_saved">গ্যালারীতে সেভ করুন</string>
+  <string name="backup_title">ব্যাকআপ ও পুনরুদ্ধার</string>
+  <string name="backup_backing_up">মেসেজ ব্যাকআপ হচ্ছে </string>
+  <string name="backup_restoring">ব্যাকআপ হতে পুনরুদ্ধার হচ্ছে </string>
+  <string name="backup_last">সর্বশেষ ব্যাকআপ</string>
+  <string name="backup_loading">লোড হচ্ছে&#8230;</string>
+  <string name="backup_never">কখনই না </string>
+  <string name="backup_restore_title">পুনরুদ্ধার</string>
+  <string name="backup_restore_summary">ব্যাকআপ নির্বাচন করুন</string>
+  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">ব্যাকআপ গুলো</string>
+  <string name="backup_restore_dialog_empty">কোন ব্যাকআপ পাওয়া যায়নি</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d মেসেজ</item>
+    <item quantity="other">%d মেসেজ গুলো</item>
+  </plurals>
+  <string name="backup_disclaimer">এইমুহুর্তে, ব্যাকআপ এবং পুনরুদ্ধার শুধুমাত্র এসএমএস এ করতে পারবেন । এমএমএস সাপর্ট  ও  শিডিউল  ব্যাকআপ শীঘ্রই আসছে!</string>
+  <string name="backup_now">ব্যাকআপ করুন </string>
+  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d messages</string>
+  <string name="backup_progress_saving">Saving backup&#8230;</string>
+  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">ব্যাকআপ ও পুনরুদ্ধার</string>
   <string name="scheduled_title">পরিকল্পিত</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_empty_description">স্বয়ংক্রিয়ভাবে একটি বার্তা পাঠান, ঠিক যে মুহূর্তে আপনি চান</string>
+  <string name="scheduled_empty_message_1">হেই! আপনার জন্মদিন যেন কবে?</string>
+  <string name="scheduled_empty_message_2">এটি ২৩শে ডিসেম্বরে</string>
+  <string name="scheduled_empty_message_3">শুভ জন্মদিন! আপনার জন্মদিনকে স্মরণ রাখায় আমি কি আপনার একজন ভাল বন্ধু নই</string>
+  <string name="scheduled_empty_message_3_timestamp">২৩শে ডিসেম্বর পাঠানো হচ্ছে </string>
+  <string name="scheduled_compose_cd">পরবর্তীতে পাঠানোর জন্য একটি বার্তা পরিকল্পনা করুন</string>
   <string name="scheduled_options_title">পরিকল্পিত বার্তা</string>
   <string-array name="scheduled_options">
     <item>এখন পাঠান</item>
-    <item>মুছুন</item>
+    <item>মুছে ফেলুন</item>
   </string-array>
   <string name="settings_category_appearance">উপস্থিতি</string>
   <string name="settings_category_general">সাধারণ</string>
@@ -153,11 +187,11 @@
   <string name="settings_system_font_title">সিস্টেম ফন্ট ব্যবহার করুন</string>
   <string name="settings_auto_emoji_title">স্বয়ংক্রিয় ইমোজি</string>
   <string name="settings_notifications_title">নোটিফিকেশন</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">কাস্টমাইজ করতে ট্যাপ করুন</string>
+  <string name="settings_notification_actions_title">অ্যাকশনগুলি</string>
+  <string name="settings_notification_action_1">বাটন ১</string>
+  <string name="settings_notification_action_2">বাটন ২</string>
+  <string name="settings_notification_action_3">বাটন ৩</string>
   <string name="settings_notification_previews_title">নোটিফিকেশন প্রিভিউ</string>
   <string name="settings_vibration_title">কম্পন</string>
   <string name="settings_ringtone_title">শব্দ</string>
@@ -171,27 +205,31 @@
   <string name="settings_should_i_answer_title">আমার কি উত্তর দেওয়া উচিত?</string>
   <string name="settings_should_i_answer_summary">স্বয়ংক্রিয়ভাবে \"Should I Answer\" অ্যাপ্লিকেশন ব্যবহার করে অযাচিত সংখ্যার বার্তাগুলি ফিল্টার করুন</string>
   <string name="settings_delayed_title">বিলম্বে পাঠানো</string>
-  <string name="settings_swipe_actions">Swipe actions</string>
-  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-  <string name="settings_swipe_actions_right">Right swipe</string>
-  <string name="settings_swipe_actions_left">Left swipe</string>
-  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string name="settings_swipe_actions">সোয়াইপের জন্য অ্যাকশনগুলি</string>
+  <string name="settings_swipe_actions_summary">কথোপকথনের জন্য সোয়াইপ অ্যাকশনগুলি কনফিগার করুন</string>
+  <string name="settings_swipe_actions_right">ডানে সোয়াইপ করুন</string>
+  <string name="settings_swipe_actions_left">বামে সোয়াইপ করুন</string>
+  <string name="settings_swipe_actions_change">পরিবর্তন করুন</string>
   <string-array name="settings_swipe_actions">
-    <item>None</item>
-    <item>Archive</item>
-    <item>Delete</item>
-    <item>Call</item>
-    <item>Mark read</item>
+    <item>কোনোটা না</item>
+    <item>আর্কাইভ করুন</item>
+    <item>মুছে ফেলুন</item>
+    <item>কল</item>
+    <item>পঠিত হিসেবে চিহ্নিত করুন</item>
   </string-array>
   <string name="settings_delivery_title">ডেলিভারি নিশ্চিতকরন</string>
   <string name="settings_delivery_summary">নিশ্চিত করুন যে বার্তা সফলভাবে পাঠানো হয়েছে</string>
   <string name="settings_unicode_title">কথার টান সরিয়ে দিন</string>
   <string name="settings_unicode_summary">বহির্গামী এসএমএস বার্তার অক্ষর থেকে কথার টান সরিয়ে দিন</string>
+  <string name="settings_mobile_title">শুধু মোবাইল নম্বর</string>
+  <string name="settings_mobile_summary">বার্তা লিখার করার সময়, শুধুমাত্র মোবাইল নম্বর দেখান</string>
   <string name="settings_mms_size_title">এমএমএসের সংযুক্তি সক্রিয়ভাবে সংকোচন করুন</string>
   <string name="settings_sync_title">বার্তাগুলি সিঙ্ক করুন</string>
   <string name="settings_sync_summary">আপনার বার্তাগুলি অ্যান্ড্রয়েডের নিজস্ব এসএমএস এর ডাটাবেস সাতে পুনরায় সিঙ্ক করুন</string>
   <string name="settings_about_title">QKSMS সম্পর্কে</string>
   <string name="settings_version">সংস্করণ %s</string>
+  <string name="settings_logging_enabled">ডিবাগ লগিং চালু করা হয়ছে</string>
+  <string name="settings_logging_disabled">ডিবাগ লগিং বন্ধ করা হয়ছে</string>
   <string name="settings_delay_duration_hint">দৈর্ঘ্য (সেকেন্ডে) লিখুন</string>
   <string name="blocked_title">ব্লক করা</string>
   <string name="blocked_empty">আপনার ব্লক করা কথোপকথন দেখা যাবে এখানে</string>
@@ -246,15 +284,16 @@
   <string name="theme_hex">হেক্স</string>
   <string name="theme_apply">প্রয়োগ করুন</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
-    <item>Delete</item>
+    <item>কোনোটা না</item>
+    <item>পঠিত হিসেবে চিহ্নিত করুন</item>
+    <item>উত্তর দিন</item>
+    <item>কল</item>
+    <item>মুছে ফেলুন</item>
   </string-array>
   <string name="button_cancel">বাতিল করুন</string>
   <string name="button_delete">মুছে ফেলুন</string>
   <string name="button_save">সেভ করুন</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">আরও</string>
   <string name="button_set">সেট করুন</string>
   <string name="button_unblock">আনব্লক করুন</string>

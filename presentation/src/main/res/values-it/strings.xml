@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">Archivio</string>
   <string name="title_settings">Impostazioni</string>
   <string name="title_notification_prefs">Notifiche</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Chiama</string>
   <string name="menu_info">Dettagli</string>
   <string name="menu_save">Salva nella galleria</string>
+  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Apri il pannello di navigazione</string>
   <string name="main_title_selected">%d selezionato</string>
+  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">Clear</string>
   <string name="main_menu_archive">Archivia</string>
   <string name="main_menu_unarchive">Annulla archiviazione</string>
@@ -40,7 +45,7 @@
   <string name="main_menu_unpin">Sblocca</string>
   <string name="main_menu_read">Segna come letto</string>
   <string name="main_menu_unread">Segna come non letto</string>
-  <string name="main_menu_block">Sposta negli Indesiderati</string>
+  <string name="main_menu_block">Sposta negli indesiderati</string>
   <string name="main_syncing">Syncing messages&#8230;</string>
   <string name="main_sender_you">Tu: %s</string>
   <string name="main_message_results_title">Risultati nei messaggi</string>
@@ -64,7 +69,7 @@
   <string name="drawer_settings">Impostazioni</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Aiuto &amp; suggerimenti</string>
-  <string name="drawer_invite">Invite friends</string>
+  <string name="drawer_invite">Invita gli amici</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
   <string name="rate_title">Ti piace QKSMS?</string>
@@ -129,6 +134,35 @@
   <string name="info_unblock">Ripristina mittente</string>
   <string name="info_delete">Elimina la conversazione</string>
   <string name="gallery_toast_saved">Salvato nella galleria</string>
+  <string name="backup_title">Backup and restore</string>
+  <string name="backup_backing_up">Backing up messages</string>
+  <string name="backup_restoring">Restoring from backup</string>
+  <string name="backup_last">Last backup</string>
+  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_never">Never</string>
+  <string name="backup_restore_title">Restore</string>
+  <string name="backup_restore_summary">Select a backup</string>
+  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">Backups</string>
+  <string name="backup_restore_dialog_empty">No backups found</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d message</item>
+    <item quantity="other">%d messages</item>
+  </plurals>
+  <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+  <string name="backup_now">Backup now</string>
+  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d messages</string>
+  <string name="backup_progress_saving">Saving backup&#8230;</string>
+  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">Backup and restore</string>
   <string name="scheduled_title">Messaggi pianificati</string>
   <string name="scheduled_empty_description">Invia un messaggio automatico, nel momento desiderato</string>
   <string name="scheduled_empty_message_1">Ehi! Quand\'è il tuo compleanno?</string>
@@ -171,27 +205,31 @@
   <string name="settings_should_i_answer_title">Dovrei rispondere?</string>
   <string name="settings_should_i_answer_summary">Filtrare automaticamente i messaggi provenienti da numeri indesiderati utilizzando l\'app \"Dovrei rispondere?\"</string>
   <string name="settings_delayed_title">Invio posticipato</string>
-  <string name="settings_swipe_actions">Swipe actions</string>
-  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-  <string name="settings_swipe_actions_right">Right swipe</string>
-  <string name="settings_swipe_actions_left">Left swipe</string>
-  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string name="settings_swipe_actions">Azioni di scorrimento</string>
+  <string name="settings_swipe_actions_summary">Configura le azioni di scorrimento per le conversazioni</string>
+  <string name="settings_swipe_actions_right">Scorrimento a destra</string>
+  <string name="settings_swipe_actions_left">Scorrimento a sinistra</string>
+  <string name="settings_swipe_actions_change">CAMBIA</string>
   <string-array name="settings_swipe_actions">
-    <item>None</item>
-    <item>Archive</item>
-    <item>Delete</item>
-    <item>Call</item>
-    <item>Mark read</item>
+    <item>Nessuna</item>
+    <item>Archivia</item>
+    <item>Elimina</item>
+    <item>Chiama</item>
+    <item>Segna come letto</item>
   </string-array>
   <string name="settings_delivery_title">Conferme di recapito</string>
   <string name="settings_delivery_summary">Conferma che i messaggi siano stati inviati con successo</string>
   <string name="settings_unicode_title">Elimina gli accenti</string>
   <string name="settings_unicode_summary">Rimuovi gli accenti dai caratteri negli SMS in uscita</string>
+  <string name="settings_mobile_title">Mobile numbers only</string>
+  <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
   <string name="settings_mms_size_title">Compressione automatica degli allegati MMS</string>
   <string name="settings_sync_title">Sincronizza i messaggi</string>
   <string name="settings_sync_summary">Risincronizza i tuoi messaggi con il database SMS Android nativo</string>
   <string name="settings_about_title">Informazioni su QKSMS</string>
   <string name="settings_version">Versione %s</string>
+  <string name="settings_logging_enabled">Debug logging enabled</string>
+  <string name="settings_logging_disabled">Debug logging disabled</string>
   <string name="settings_delay_duration_hint">Inserisci la durata (in secondi)</string>
   <string name="blocked_title">Mittenti indesiderati</string>
   <string name="blocked_empty">Le tue conversazioni bloccate appariranno qui</string>
@@ -236,7 +274,7 @@
   <string name="qksms_plus_more_summary">QKSMS è sotto sviluppo attivo, e l\'acquisto includerà tutte le caratteristiche future di QKSMS+!</string>
   <string name="widget_loading">Caricamento&#8230;</string>
   <string name="widget_more">Mostra altre conversazioni</string>
-  <string name="qkreply_menu_read">Segna come \"letto\"</string>
+  <string name="qkreply_menu_read">Segna come letto</string>
   <string name="qkreply_menu_call">Chiama</string>
   <string name="qkreply_menu_expand">Mostra dettagli</string>
   <string name="qkreply_menu_collapse">Mostra meno</string>
@@ -250,11 +288,12 @@
     <item>Segna come letto</item>
     <item>Rispondi</item>
     <item>Chiama</item>
-    <item>Elimina</item>
+    <item>Delete</item>
   </string-array>
   <string name="button_cancel">Annulla</string>
   <string name="button_delete">Elimina</string>
   <string name="button_save">Salva</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">More</string>
   <string name="button_set">Set</string>
   <string name="button_unblock">Ripristina</string>

@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">Arquivado</string>
   <string name="title_settings">Configurações</string>
   <string name="title_notification_prefs">Notificações</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Ligar</string>
   <string name="menu_info">Detalhes</string>
   <string name="menu_save">Guardar na galeria</string>
+  <string name="main_title">Caixa de entrada</string>
   <string name="main_drawer_open_cd">Abrir menu de navegação</string>
   <string name="main_title_selected">%d selecionada(s)</string>
+  <string name="main_menu_search">Pesquisar</string>
   <string name="main_menu_clear">Limpar</string>
   <string name="main_menu_archive">Arquivar</string>
   <string name="main_menu_unarchive">Retirar do arquivo</string>
@@ -57,7 +62,7 @@
   <string name="main_permission_contacts">QKSMS necessita da permissão para ver os seus contactos</string>
   <string name="main_permission_allow">Permitir</string>
   <string name="drawer_inbox">Caixa de entrada</string>
-  <string name="drawer_archived">Arquivada</string>
+  <string name="drawer_archived">Arquivadas</string>
   <string name="drawer_scheduled">Agendadas</string>
   <string name="drawer_blocking">Bloqueio</string>
   <string name="drawer_more">Mais</string>
@@ -73,8 +78,8 @@
   <string name="rate_dismiss">Agora não</string>
   <string name="dialog_delete_title">Apagar</string>
   <plurals name="dialog_delete_message">
-    <item quantity="one">Tem certeza que quer apagar esta conversa?</item>
-    <item quantity="other">Tem certeza que quer apagar %d conversas?</item>
+    <item quantity="one">Tem a certeza de que deseja apagar esta conversa?</item>
+    <item quantity="other">Tem a certeza de que deseja apagar %d conversas?</item>
   </plurals>
   <string-array name="message_options">
     <item>Copiar texto</item>
@@ -129,6 +134,35 @@
   <string name="info_unblock">Desbloquear</string>
   <string name="info_delete">Apagar conversa</string>
   <string name="gallery_toast_saved">Guardada na galeria</string>
+  <string name="backup_title">Backup e restauro</string>
+  <string name="backup_backing_up">Backup de mensagens</string>
+  <string name="backup_restoring">Restauro de backup</string>
+  <string name="backup_last">Último backup</string>
+  <string name="backup_loading">A carregar&#8230;</string>
+  <string name="backup_never">Nunca</string>
+  <string name="backup_restore_title">Restaurar</string>
+  <string name="backup_restore_summary">Selecionar backup</string>
+  <string name="backup_restore_error_plus">Tem que ter QKSMS+ para poder usar o backup e restauro</string>
+  <string name="backup_restore_error_backup">A criar backup&#8230;</string>
+  <string name="backup_restore_error_restore">A restaurar&#8230;</string>
+  <string name="backup_restore_confirm_title">Restaurar de backup</string>
+  <string name="backup_restore_confirm_message">Tem a certeza de que deseja restaurar as mensagens deste backup?</string>
+  <string name="backup_restore_stop_title">Parar restauro</string>
+  <string name="backup_restore_stop_message">As mensagens que tiverem sido restauradas irão permanecer no dispositivo</string>
+  <string name="backup_restore_dialog_title">Backups</string>
+  <string name="backup_restore_dialog_empty">Backup não encontrado</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d mensagem</item>
+    <item quantity="other">%d mensagens</item>
+  </plurals>
+  <string name="backup_disclaimer">Atualmente, apenas está disponível o backup e restauro de SMS. O suporte a MMS e o agendamento de backups será adicionado brevemente!</string>
+  <string name="backup_now">Criar backup</string>
+  <string name="backup_progress_parsing">A analisar backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d mensagens</string>
+  <string name="backup_progress_saving">A guardar backup&#8230;</string>
+  <string name="backup_progress_syncing">A sincronizar mensagens&#8230;</string>
+  <string name="backup_progress_finished">Terminado!</string>
+  <string name="backup_notification_channel_name">Backup e restauro</string>
   <string name="scheduled_title">Agendada</string>
   <string name="scheduled_empty_description">Enviar automaticamente uma mensagem à hora especificada</string>
   <string name="scheduled_empty_message_1">Olá! Quando é que é mesmo o teu aniversário?</string>
@@ -170,7 +204,7 @@
   <!-- Do not translate -->
   <string name="settings_should_i_answer_title">Should I Answer?</string>
   <string name="settings_should_i_answer_summary">Automaticamente filtrar mensagens não solicitadas usando o aplicativo \"Should I Answer\"</string>
-  <string name="settings_delayed_title">Envio adiado</string>
+  <string name="settings_delayed_title">Atraso de envio</string>
   <string name="settings_swipe_actions">Ações de deslize</string>
   <string name="settings_swipe_actions_summary">Configurar ações de deslize nas conversas</string>
   <string name="settings_swipe_actions_right">Deslize à direita</string>
@@ -187,11 +221,15 @@
   <string name="settings_delivery_summary">Confirma se as mensagens foram enviadas com sucesso</string>
   <string name="settings_unicode_title">Remover acentos</string>
   <string name="settings_unicode_summary">Remover acentos dos caracteres nas mensagens enviadas</string>
+  <string name="settings_mobile_title">Apenas números de telemóvel</string>
+  <string name="settings_mobile_summary">Ao escrever uma mensagem, mostrar apenas os números móveis</string>
   <string name="settings_mms_size_title">Comprimir anexos MMS automaticamente</string>
   <string name="settings_sync_title">Sincronizar mensagens</string>
   <string name="settings_sync_summary">Sincronizar as mensagens com a base de dados nativa do Android</string>
   <string name="settings_about_title">Acerca do QKSMS</string>
   <string name="settings_version">Versão %s</string>
+  <string name="settings_logging_enabled">Depuração ativada</string>
+  <string name="settings_logging_disabled">Depuração desativada</string>
   <string name="settings_delay_duration_hint">Digite a duração (segundos)</string>
   <string name="blocked_title">Bloqueio</string>
   <string name="blocked_empty">As conversas bloqueadas aparecerão aqui</string>
@@ -222,7 +260,7 @@
   <string name="qksms_plus_backup_summary">Backup automático das mensagens. Nunca mais terá que se preocupar com o histórico caso troque de telefone.</string>
   <string name="qksms_plus_scheduled_title">Mensagens agendadas</string>
   <string name="qksms_plus_scheduled_summary">Agendar mensagens para envio automático à hora/data especificada</string>
-  <string name="qksms_plus_delayed_title">Atrasar envio</string>
+  <string name="qksms_plus_delayed_title">Atraso de envio</string>
   <string name="qksms_plus_delayed_summary">Esperar alguns segundos antes de enviar a mensagem</string>
   <string name="qksms_plus_night_title">Modo noturno automático</string>
   <string name="qksms_plus_night_summary">Habilitar modo noturno automaticamente conforme a hora do dia</string>
@@ -255,6 +293,7 @@
   <string name="button_cancel">Cancelar</string>
   <string name="button_delete">Apagar</string>
   <string name="button_save">Guardar</string>
+  <string name="button_stop">Parar</string>
   <string name="button_more">Mais</string>
   <string name="button_set">Definir</string>
   <string name="button_unblock">Desbloquear</string>
@@ -285,7 +324,7 @@
     <item>Enorme</item>
   </string-array>
   <string-array name="delayed_sending_labels">
-    <item>Nenhum</item>
+    <item>Não</item>
     <item>Curto</item>
     <item>Médio</item>
     <item>Longo</item>

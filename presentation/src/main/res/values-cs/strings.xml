@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">Archivováno</string>
   <string name="title_settings">Nastavení</string>
   <string name="title_notification_prefs">Oznámení</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
   <string name="menu_save">Uložit do galerie</string>
+  <string name="main_title">Příchozí zprávy</string>
   <string name="main_drawer_open_cd">Otevřít menu</string>
   <string name="main_title_selected">Vybráno: %d</string>
+  <string name="main_menu_search">Hledat</string>
   <string name="main_menu_clear">Vymazat</string>
   <string name="main_menu_archive">Archivovat</string>
   <string name="main_menu_unarchive">Obnovit z archivu</string>
@@ -64,7 +69,7 @@
   <string name="drawer_settings">Nastavení</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Nápověda a zpětná vazba</string>
-  <string name="drawer_invite">Invite friends</string>
+  <string name="drawer_invite">Pozvat přátele</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Odemkněte úžasné nové funkce a podpořte vývoj</string>
   <string name="rate_title">Líbí se Vám QKSMS?</string>
@@ -131,6 +136,37 @@
   <string name="info_unblock">Odblokovat</string>
   <string name="info_delete">Odstranit konverzaci</string>
   <string name="gallery_toast_saved">Uloženo do galerie</string>
+  <string name="backup_title">Záloha a obnovení</string>
+  <string name="backup_backing_up">Backing up messages</string>
+  <string name="backup_restoring">Restoring from backup</string>
+  <string name="backup_last">Poslední záloha</string>
+  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_never">Nikdy</string>
+  <string name="backup_restore_title">Obnovit</string>
+  <string name="backup_restore_summary">Vybrat zálohu</string>
+  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">Zálohy</string>
+  <string name="backup_restore_dialog_empty">Nenalezeny žádné zálohy</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d zpráva</item>
+    <item quantity="few">%d zpráv</item>
+    <item quantity="many">%d zprávy</item>
+    <item quantity="other">%d zprávy</item>
+  </plurals>
+  <string name="backup_disclaimer">Momentálně jsou pro zálohování a obnovení podporovány pouze SMS. MMS podpora a plánované zálohy budou přidány již brzy!</string>
+  <string name="backup_now">Zálohovat nyní</string>
+  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d messages</string>
+  <string name="backup_progress_saving">Saving backup&#8230;</string>
+  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">Backup and restore</string>
   <string name="scheduled_title">Naplánováno</string>
   <string name="scheduled_empty_description">Automaticky odeslat zprávu v přesný okamžik, který chcete</string>
   <string name="scheduled_empty_message_1">Zdar! Kdy máš narozeniny?</string>
@@ -173,27 +209,31 @@
   <string name="settings_should_i_answer_title">Můžu to zvednout?</string>
   <string name="settings_should_i_answer_summary">Automaticky filtrovat zprávy od nevyžádaných čísel pomocí aplikace „Můžu to zvednout?“</string>
   <string name="settings_delayed_title">Zpožděné odeslání</string>
-  <string name="settings_swipe_actions">Swipe actions</string>
-  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-  <string name="settings_swipe_actions_right">Right swipe</string>
-  <string name="settings_swipe_actions_left">Left swipe</string>
-  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string name="settings_swipe_actions">Akce přejetí</string>
+  <string name="settings_swipe_actions_summary">Nastavení akcí pro přejetí v konverzacích</string>
+  <string name="settings_swipe_actions_right">Přejetí vpravo</string>
+  <string name="settings_swipe_actions_left">Přejetí vlevo</string>
+  <string name="settings_swipe_actions_change">ZMĚNIT</string>
   <string-array name="settings_swipe_actions">
-    <item>None</item>
-    <item>Archive</item>
-    <item>Delete</item>
-    <item>Call</item>
-    <item>Mark read</item>
+    <item>Žádná</item>
+    <item>Archivovat</item>
+    <item>Smazat</item>
+    <item>Volat</item>
+    <item>Přečteno</item>
   </string-array>
   <string name="settings_delivery_title">Potvrzení o doručení</string>
   <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>
   <string name="settings_unicode_title">Odstranit diakritiku</string>
   <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných SMS zprávách</string>
+  <string name="settings_mobile_title">Pouze mobilní čísla</string>
+  <string name="settings_mobile_summary">Při psaní zprávy zobrazit pouze mobilní telefonní čísla</string>
   <string name="settings_mms_size_title">Automaticky komprimovat MMS přílohy</string>
   <string name="settings_sync_title">Synchronizovat zprávy</string>
   <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativním Android SMS databází</string>
   <string name="settings_about_title">O aplikaci QKSMS</string>
   <string name="settings_version">Verze %s</string>
+  <string name="settings_logging_enabled">Ladící protokolování zapnuto</string>
+  <string name="settings_logging_disabled">Ladící protokolování vypnuto</string>
   <string name="settings_delay_duration_hint">Zadejte prodlevu (v sekundách)</string>
   <string name="blocked_title">Blokování</string>
   <string name="blocked_empty">Zde se objeví vaše blokované konverzace</string>
@@ -257,6 +297,7 @@
   <string name="button_cancel">Zrušit</string>
   <string name="button_delete">Odstranit</string>
   <string name="button_save">Uložit</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">Více</string>
   <string name="button_set">Nastavit</string>
   <string name="button_unblock">Odblokovat</string>

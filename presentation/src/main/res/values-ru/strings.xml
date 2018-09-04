@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">В архиве</string>
   <string name="title_settings">Настройки</string>
   <string name="title_notification_prefs">Уведомления</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Позвонить</string>
   <string name="menu_info">Подробности</string>
   <string name="menu_save">Сохранить в галерее</string>
+  <string name="main_title">Входящие</string>
   <string name="main_drawer_open_cd">Открыть боковое меню</string>
   <string name="main_title_selected">%d выбран(о)</string>
+  <string name="main_menu_search">Поиск</string>
   <string name="main_menu_clear">Очистить</string>
   <string name="main_menu_archive">Архивировать</string>
   <string name="main_menu_unarchive">Разархивировать</string>
@@ -131,6 +136,37 @@
   <string name="info_unblock">Разблокировать</string>
   <string name="info_delete">Удалить беседу</string>
   <string name="gallery_toast_saved">Сохранено в галерее</string>
+  <string name="backup_title">Бэкап и восстановление</string>
+  <string name="backup_backing_up">Резервное копирование сообщений</string>
+  <string name="backup_restoring">Восстановление из резервной копии</string>
+  <string name="backup_last">Последний бэкап</string>
+  <string name="backup_loading">Загрузка&#8230;</string>
+  <string name="backup_never">Никогда</string>
+  <string name="backup_restore_title">Восстановление</string>
+  <string name="backup_restore_summary">Выберите бэкап</string>
+  <string name="backup_restore_error_plus">Пожалуйста, разблокируйте QKSMS + для использования резервного копирования и восстановления</string>
+  <string name="backup_restore_error_backup">Выполняется резервное копирование&#8230;</string>
+  <string name="backup_restore_error_restore">Выполняется восстановление&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">Бэкапы</string>
+  <string name="backup_restore_dialog_empty">Бэкапы не найдены</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d сообщение</item>
+    <item quantity="few">%d сообщения</item>
+    <item quantity="many">%d сообщений</item>
+    <item quantity="other">%d сообщений</item>
+  </plurals>
+  <string name="backup_disclaimer">В настоящее время поддерживается резервное копирование и восстановление только SMS. Поддержка MMS и запланированные резервные копии появятся в ближайшее время!</string>
+  <string name="backup_now">Сбэкапить сейчас</string>
+  <string name="backup_progress_parsing">Анализ резервной копии&#8230;</string>
+  <string name="backup_progress_running">%d/%d сообщений</string>
+  <string name="backup_progress_saving">Сохранение резервной копии&#8230;</string>
+  <string name="backup_progress_syncing">Синхронизация сообщений&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">Бэкап и восстановление</string>
   <string name="scheduled_title">Запланировать</string>
   <string name="scheduled_empty_description">Автоматически отправить сообщение когда пожелаете</string>
   <string name="scheduled_empty_message_1">Привет! Когда у Вас был день рождения?</string>
@@ -189,11 +225,15 @@
   <string name="settings_delivery_summary">Подтверждение успешной отправки сообщений</string>
   <string name="settings_unicode_title">Удалить акценты</string>
   <string name="settings_unicode_summary">Удаление акцентов с символов в исходящих SMS-сообщениях</string>
+  <string name="settings_mobile_title">Только мобильные номера</string>
+  <string name="settings_mobile_summary">При составлении сообщения показывать только мобильные номера</string>
   <string name="settings_mms_size_title">Автоматически сжимать MMS вложения</string>
   <string name="settings_sync_title">Синхронизация сообщений</string>
   <string name="settings_sync_summary">Повторная синхронизация ваших сообщений с собственной базой данных SMS Android</string>
   <string name="settings_about_title">О QKSMS</string>
   <string name="settings_version">Версия %s</string>
+  <string name="settings_logging_enabled">Ведение журнала отладки включено</string>
+  <string name="settings_logging_disabled">Ведение журнала отладки отключено</string>
   <string name="settings_delay_duration_hint">Введите продолжительность (в секундах)</string>
   <string name="blocked_title">Блокировка</string>
   <string name="blocked_empty">Ваши заблокированные беседы будут появляться здесь</string>
@@ -249,7 +289,7 @@
   <string name="theme_apply">Применить</string>
   <string-array name="notification_actions">
     <item>Нет</item>
-    <item>Отметить непрочитанным</item>
+    <item>Отметить прочитанным</item>
     <item>Ответить</item>
     <item>Позвонить</item>
     <item>Удалить</item>
@@ -257,6 +297,7 @@
   <string name="button_cancel">Отмена</string>
   <string name="button_delete">Удалить</string>
   <string name="button_save">Сохранить</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">Еще</string>
   <string name="button_set">Задать</string>
   <string name="button_unblock">Разблокировать</string>

@@ -19,7 +19,10 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="title_archived">Arkiver</string>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="title_archived">Arkiveret</string>
   <string name="title_settings">Indstillinger</string>
   <string name="title_notification_prefs">Notifikationer</string>
   <string name="title_theme">Tema</string>
@@ -29,9 +32,11 @@
   <string name="setup_next">Fortsæt</string>
   <string name="menu_call">Opkald</string>
   <string name="menu_info">Oplysninger</string>
-  <string name="menu_save">Gem til galleri</string>
-  <string name="main_drawer_open_cd">Åbn navigationsskuffe</string>
+  <string name="menu_save">Gem i Galleri</string>
+  <string name="main_title">Indbakke</string>
+  <string name="main_drawer_open_cd">Åbn navigeringsskuffe</string>
   <string name="main_title_selected">%d valgt</string>
+  <string name="main_menu_search">Søg</string>
   <string name="main_menu_clear">Ryd</string>
   <string name="main_menu_archive">Arkivér</string>
   <string name="main_menu_unarchive">Fjern fra arkiv</string>
@@ -129,6 +134,35 @@
   <string name="info_unblock">Afblokér</string>
   <string name="info_delete">Slet samtale</string>
   <string name="gallery_toast_saved">Gemt til galleri</string>
+  <string name="backup_title">Sikkerhedskopiering og gendannelse</string>
+  <string name="backup_backing_up">Sikkerhedskopierer beskeder</string>
+  <string name="backup_restoring">Gendanner fra sikkerhedskopi</string>
+  <string name="backup_last">Seneste sikkerhedskopi</string>
+  <string name="backup_loading">Indlæser&#8230;</string>
+  <string name="backup_never">Aldrig</string>
+  <string name="backup_restore_title">Gendanne</string>
+  <string name="backup_restore_summary">Vælg en sikkerhedskopi</string>
+  <string name="backup_restore_error_plus">Oplås QKSMS+ for at benytte sikkerhedskopiering og gendannelse</string>
+  <string name="backup_restore_error_backup">Sikkerhedskopiering i gang&#8230;</string>
+  <string name="backup_restore_error_restore">Gendannelse i gang&#8230;</string>
+  <string name="backup_restore_confirm_title">Genskab fra sikkerhedskopi</string>
+  <string name="backup_restore_confirm_message">Er du sikker på at du vil gendanne dine beskeder fra denne sikkerhedskopi?</string>
+  <string name="backup_restore_stop_title">Stop gendannelsen</string>
+  <string name="backup_restore_stop_message">Beskeder som allerede er genskabt vil forblive på din enhed</string>
+  <string name="backup_restore_dialog_title">Sikkerhedskopier</string>
+  <string name="backup_restore_dialog_empty">Ingen sikkerhedskopier fundet</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d besked</item>
+    <item quantity="other">%d beskeder</item>
+  </plurals>
+  <string name="backup_disclaimer">I øjeblikket understøtter Sikkerhedskopiering og Gendannelse kun SMS. MMS-understøttelse og planlagte sikkerhedskopieringer kommer snart!</string>
+  <string name="backup_now">Sikkerhedskopiér nu</string>
+  <string name="backup_progress_parsing">Analyserer sikkerhedskopi&#8230;</string>
+  <string name="backup_progress_running">%d/%d beskeder</string>
+  <string name="backup_progress_saving">Gemme sikkerhedskopi&#8230;</string>
+  <string name="backup_progress_syncing">Synkroniserer beskeder&#8230;</string>
+  <string name="backup_progress_finished">Færdig!</string>
+  <string name="backup_notification_channel_name">Sikkerhedskopiering og gendannelse</string>
   <string name="scheduled_title">Planlagt</string>
   <string name="scheduled_empty_description">Send automatisk en meddelelse på præcist det tidspunkt, du vil</string>
   <string name="scheduled_empty_message_1">Hej! Hvornår var det, at du har fødselsdag?</string>
@@ -187,11 +221,15 @@
   <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>
   <string name="settings_unicode_title">Fjern betoninger</string>
   <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS\'er</string>
+  <string name="settings_mobile_title">Kun mobilnumre</string>
+  <string name="settings_mobile_summary">Vis kun mobilnumre ved SMS-skrivning,</string>
   <string name="settings_mms_size_title">Auto-komprimér MMS-vedhæftninger</string>
   <string name="settings_sync_title">Beskedsynkronisering</string>
   <string name="settings_sync_summary">Gen-synkroniéer beskeder med den indbyggede Android SMS-database</string>
   <string name="settings_about_title">Om QKSMS</string>
   <string name="settings_version">Version %s</string>
+  <string name="settings_logging_enabled">Fejlfindingslogning aktiveret</string>
+  <string name="settings_logging_disabled">Fejlfindingslogning deaktiveret</string>
   <string name="settings_delay_duration_hint">Angiv varighed (sekunder)</string>
   <string name="blocked_title">Blokering</string>
   <string name="blocked_empty">Dine blokerede samtaler vil fremgå her</string>
@@ -255,6 +293,7 @@
   <string name="button_cancel">Annullér</string>
   <string name="button_delete">Slet</string>
   <string name="button_save">Gem</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">Flere</string>
   <string name="button_set">Indstil</string>
   <string name="button_unblock">Afblokér</string>

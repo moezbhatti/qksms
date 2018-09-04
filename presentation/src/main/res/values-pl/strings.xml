@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">Archiwum</string>
   <string name="title_settings">Ustawienia</string>
   <string name="title_notification_prefs">Powiadomienia</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Zadzwoń</string>
   <string name="menu_info">Szczegóły</string>
   <string name="menu_save">Zapisz w galerii</string>
-  <string name="main_drawer_open_cd">Otwórz pasek nawigacji</string>
+  <string name="main_title">Skrzynka odbiorcza</string>
+  <string name="main_drawer_open_cd">Otwórz panel nawigacyjny</string>
   <string name="main_title_selected">%d wybrano</string>
+  <string name="main_menu_search">Szukaj</string>
   <string name="main_menu_clear">Wyczyść</string>
   <string name="main_menu_archive">Archiwizuj</string>
   <string name="main_menu_unarchive">Przywróć</string>
@@ -56,15 +61,15 @@
   <string name="main_permission_sms">QKSMS wymaga uprawnień do wysyłania i przeglądania wiadomości</string>
   <string name="main_permission_contacts">QKSMS wymaga uprawnień do przeglądania kontaktów</string>
   <string name="main_permission_allow">Zezwól</string>
-  <string name="drawer_inbox">Skrzynka odbiorcza</string>
-  <string name="drawer_archived">Archiwizowane</string>
-  <string name="drawer_scheduled">Harmonogram</string>
-  <string name="drawer_blocking">Blokowanie</string>
+  <string name="drawer_inbox">Odebrane</string>
+  <string name="drawer_archived">Zarchiwizowane</string>
+  <string name="drawer_scheduled">Zaplanowane</string>
+  <string name="drawer_blocking">Blokowane</string>
   <string name="drawer_more">Więcej</string>
   <string name="drawer_settings">Ustawienia</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">Pomoc i opinie</string>
-  <string name="drawer_invite">Zaproś znajomych</string>
+  <string name="drawer_invite">Poleć znajomym</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">Odblokuj nowe funkcje i wesprzyj rozwój aplikacji</string>
   <string name="rate_title">Lubisz QKSMS?</string>
@@ -131,6 +136,37 @@
   <string name="info_unblock">Odblokuj</string>
   <string name="info_delete">Usuń rozmowę</string>
   <string name="gallery_toast_saved">Zapisano w galerii</string>
+  <string name="backup_title">Kopia zapasowa i przywracanie</string>
+  <string name="backup_backing_up">Tworzenie kopii zapasowej wiadomości</string>
+  <string name="backup_restoring">Przywracanie z kopii zapasowej</string>
+  <string name="backup_last">Ostatnia kopia zapasowa</string>
+  <string name="backup_loading">Wcztywanie&#8230;</string>
+  <string name="backup_never">Nigdy</string>
+  <string name="backup_restore_title">Przywróć</string>
+  <string name="backup_restore_summary">Wybierz kopię zapasową</string>
+  <string name="backup_restore_error_plus">Odblokuj QKSMS+, aby używać kopii i przywracania</string>
+  <string name="backup_restore_error_backup">Tworzenie kopii zapasowej&#8230;</string>
+  <string name="backup_restore_error_restore">Przywracanie kopii zapasowej&#8230;</string>
+  <string name="backup_restore_confirm_title">Przywróć z kopii zapasowej</string>
+  <string name="backup_restore_confirm_message">Czy na pewno chcesz przywrócić wiadomości z tej kopii zapasowej?</string>
+  <string name="backup_restore_stop_title">Zatrzymaj przywracanie</string>
+  <string name="backup_restore_stop_message">Wiadomości, które już zostały przywrócone, pozostaną w urządzeniu</string>
+  <string name="backup_restore_dialog_title">Kopie zapasowe</string>
+  <string name="backup_restore_dialog_empty">Nie znaleziono kopii zapasowych</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d wiadomość</item>
+    <item quantity="few">%d messages</item>
+    <item quantity="many">%d messages</item>
+    <item quantity="other">%d wiadomości</item>
+  </plurals>
+  <string name="backup_disclaimer">Obecnie można wykonywać i przwracać tylko kopie zapasowe SMSów. Wsparcie dla MMSów i planowane kopie zapasowe zostaną wprawdzone wkrótce.</string>
+  <string name="backup_now">Utwórz kopię zapasową teraz</string>
+  <string name="backup_progress_parsing">Przetwarzanie kopii zapasowej&#8230;</string>
+  <string name="backup_progress_running">%d/%d wiadomości</string>
+  <string name="backup_progress_saving">Zapisywanie kopii zapasowej&#8230;</string>
+  <string name="backup_progress_syncing">Synchronizowanie wiadomości&#8230;</string>
+  <string name="backup_progress_finished">Zakończono</string>
+  <string name="backup_notification_channel_name">Kopia zapasowa i przywracanie</string>
   <string name="scheduled_title">Zaplanowane</string>
   <string name="scheduled_empty_description">Automatyczne wysyłanie wiadomości, w dowolnym wybranym przez Ciebie momencie</string>
   <string name="scheduled_empty_message_1">Cześć! Możesz powtórzyć kiedy były Twoje urodziny?</string>
@@ -148,7 +184,7 @@
   <string name="settings_category_qkreply">QK Reply</string>
   <string name="settings_theme_title">Motyw</string>
   <string name="settings_night_title">Tryb nocny</string>
-  <string name="settings_black_title">Tryb czystej czerni</string>
+  <string name="settings_black_title">Czarne tło w trybie nocnym</string>
   <string name="settings_night_start_title">Czas rozpoczęcia</string>
   <string name="settings_night_end_title">Czas zakończenia</string>
   <string name="settings_text_size_title">Rozmiar czcionki</string>
@@ -160,7 +196,7 @@
   <string name="settings_notification_action_1">Przycisk 1</string>
   <string name="settings_notification_action_2">Przycisk 2</string>
   <string name="settings_notification_action_3">Przycisk 3</string>
-  <string name="settings_notification_previews_title">Podgląd powiadomień</string>
+  <string name="settings_notification_previews_title">Zawartość powiadomień</string>
   <string name="settings_vibration_title">Wibracje</string>
   <string name="settings_ringtone_title">Dźwięki</string>
   <string name="settings_ringtone_none">Brak</string>
@@ -189,11 +225,15 @@
   <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>
   <string name="settings_unicode_title">Usuwaj ogonki</string>
   <string name="settings_unicode_summary">Usuwaj ogonki ze znaków w wiadomościach</string>
+  <string name="settings_mobile_title">Tylko numery komórkowe</string>
+  <string name="settings_mobile_summary">Pokazuj kontakty tylko z numerami komórkowymi</string>
   <string name="settings_mms_size_title">Automatyczna kompresja załączników MMSów</string>
   <string name="settings_sync_title">Synchronizuj wiadomości</string>
   <string name="settings_sync_summary">Zsynchronizuj wiadomości z systemową bazą danych</string>
   <string name="settings_about_title">O aplikacji</string>
   <string name="settings_version">Wersja %s</string>
+  <string name="settings_logging_enabled">Logi włączone</string>
+  <string name="settings_logging_disabled">Logi wyłączone</string>
   <string name="settings_delay_duration_hint">Wprowadź czas (w sekundach)</string>
   <string name="blocked_title">Blokowanie</string>
   <string name="blocked_empty">Twoje zablokowane rozmowy będą wyświetlane tutaj</string>
@@ -257,6 +297,7 @@
   <string name="button_cancel">Anuluj</string>
   <string name="button_delete">Usuń</string>
   <string name="button_save">Zapisz</string>
+  <string name="button_stop">Zatrzymaj</string>
   <string name="button_more">Więcej</string>
   <string name="button_set">Ustaw</string>
   <string name="button_unblock">Odblokuj</string>

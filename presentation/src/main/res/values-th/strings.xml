@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">จัดเก็บ</string>
   <string name="title_settings">การตั้งค่า</string>
   <string name="title_notification_prefs">การแจ้งเตือน</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">โทร</string>
   <string name="menu_info">รายละเอียด</string>
   <string name="menu_save">บันทึกรูปภาพ</string>
+  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">เปิดเมนูลัด</string>
   <string name="main_title_selected">%d ถูกเลือก</string>
+  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">ลบออก</string>
   <string name="main_menu_archive">จัดเก็บ</string>
   <string name="main_menu_unarchive">ยกเลิกการเก็บ</string>
@@ -128,6 +133,34 @@
   <string name="info_unblock">ยกเลิกการปิดกั้น</string>
   <string name="info_delete">ลบการสนทนา</string>
   <string name="gallery_toast_saved">บันทึกรูปภาพแล้ว</string>
+  <string name="backup_title">Backup and restore</string>
+  <string name="backup_backing_up">Backing up messages</string>
+  <string name="backup_restoring">Restoring from backup</string>
+  <string name="backup_last">Last backup</string>
+  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_never">Never</string>
+  <string name="backup_restore_title">Restore</string>
+  <string name="backup_restore_summary">Select a backup</string>
+  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">Backups</string>
+  <string name="backup_restore_dialog_empty">No backups found</string>
+  <plurals name="backup_message_count">
+    <item quantity="other">%d messages</item>
+  </plurals>
+  <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+  <string name="backup_now">Backup now</string>
+  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d messages</string>
+  <string name="backup_progress_saving">Saving backup&#8230;</string>
+  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">Backup and restore</string>
   <string name="scheduled_title">กำหนดการ</string>
   <string name="scheduled_empty_description">ส่งข้อความ โดยอัตโนมัติที่คุณต้องการ</string>
   <string name="scheduled_empty_message_1">วันเกิดของคุณอีกครั้งเมื่อไหร่</string>
@@ -186,11 +219,15 @@
   <string name="settings_delivery_summary">ยืนยันว่า ส่งข้อความเรียบร้อยแล้ว</string>
   <string name="settings_unicode_title">ลบอักษรพิเศษ accents</string>
   <string name="settings_unicode_summary">ลบอักษรพิเศษ accents ออกจากข้อความ SMS ที่กำลังจะส่งออก</string>
+  <string name="settings_mobile_title">Mobile numbers only</string>
+  <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
   <string name="settings_mms_size_title">บีบอัดสิ่งที่แนบมาใน MMS อัตโนมัติ</string>
   <string name="settings_sync_title">ซิงค์ข้อความ</string>
   <string name="settings_sync_summary">ซิงค์ข้อความของคุณกับฐานข้อมูลของ Android SMS</string>
   <string name="settings_about_title">เกี่ยวกับ QKSMS</string>
   <string name="settings_version">เวอร์ชัน: %s</string>
+  <string name="settings_logging_enabled">Debug logging enabled</string>
+  <string name="settings_logging_disabled">Debug logging disabled</string>
   <string name="settings_delay_duration_hint">ระยะเวลาการป้อน (วินาที)</string>
   <string name="blocked_title">การปิดกั้น</string>
   <string name="blocked_empty">สนทนาของคุณที่ถูกปิดกั้นจะปรากฏที่นี่</string>
@@ -254,6 +291,7 @@
   <string name="button_cancel">ยกเลิก</string>
   <string name="button_delete">ลบ</string>
   <string name="button_save">Save</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">เพิ่มเติม</string>
   <string name="button_set">ตั้งค่า</string>
   <string name="button_unblock">ยกเลิกการปิดกั้น</string>

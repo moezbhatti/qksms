@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">Arşivlenmiş</string>
   <string name="title_settings">Ayarlar</string>
   <string name="title_notification_prefs">Bildirimler</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Ara</string>
   <string name="menu_info">Ayrıntılar</string>
   <string name="menu_save">Galeriye Kaydet</string>
+  <string name="main_title">Gelen Kutusu</string>
   <string name="main_drawer_open_cd">Gezinti çubuğunu aç</string>
   <string name="main_title_selected">%d Seçili</string>
+  <string name="main_menu_search">Arama</string>
   <string name="main_menu_clear">Temizle</string>
   <string name="main_menu_archive">Arşivlenmiş</string>
   <string name="main_menu_unarchive">Arşivden çıkar</string>
@@ -129,6 +134,35 @@
   <string name="info_unblock">Engeli kaldır</string>
   <string name="info_delete">Yazışmayı sil</string>
   <string name="gallery_toast_saved">Galeriye kaydedildi</string>
+  <string name="backup_title">Yedekleme ve geri yükleme</string>
+  <string name="backup_backing_up">Mesajları yedekleme</string>
+  <string name="backup_restoring">Yedekten geri yükleme</string>
+  <string name="backup_last">Son yedekleme</string>
+  <string name="backup_loading">Yükleniyor...</string>
+  <string name="backup_never">Asla</string>
+  <string name="backup_restore_title">Geri yükle</string>
+  <string name="backup_restore_summary">Bir yedekleme\'yi seçin</string>
+  <string name="backup_restore_error_plus">Lütfen yedeklemeyi ve geri yüklemeyi kullanmak için QKSMS+\'ı açınız.</string>
+  <string name="backup_restore_error_backup">Yedekleme devam ediyor...</string>
+  <string name="backup_restore_error_restore">Geri yükleme devam ediyor...</string>
+  <string name="backup_restore_confirm_title">Yedeklemeyi geri yükle</string>
+  <string name="backup_restore_confirm_message">Mesajlarınızı bu yedekten geri yüklemek istediğinizden emin misiniz?</string>
+  <string name="backup_restore_stop_title">Geri yüklemeyi durdur</string>
+  <string name="backup_restore_stop_message">Zaten geri yüklenen mesajlar cihazınızda kalacaktır</string>
+  <string name="backup_restore_dialog_title">Yedekler</string>
+  <string name="backup_restore_dialog_empty">Yedekleme bulunamadı</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d mesaj</item>
+    <item quantity="other">%d mesajlar</item>
+  </plurals>
+  <string name="backup_disclaimer">Şu anda, sadece SMS yedekleme ve geri yükleme desteklenmektedir. MMS desteği ve zamanlanmış mesaj yedeklemeleri çok yakında !</string>
+  <string name="backup_now">Şimdi yedekle</string>
+  <string name="backup_progress_parsing">Yedekleme ayrılıyor&#8230;</string>
+  <string name="backup_progress_running">%d%d mesajlar</string>
+  <string name="backup_progress_saving">Yedekleme kaydediliyor...</string>
+  <string name="backup_progress_syncing">Mesajlar senkronize ediliyor...</string>
+  <string name="backup_progress_finished">Tamamlandı!</string>
+  <string name="backup_notification_channel_name">Yedekleme ve geri yükleme</string>
   <string name="scheduled_title">Zamanlanmış</string>
   <string name="scheduled_empty_description">Otomatik olarak istediğiniz zamanda, bir mesaj göndermek</string>
   <string name="scheduled_empty_message_1">Hey! Doğum günün ne zamandı?</string>
@@ -187,11 +221,15 @@
   <string name="settings_delivery_summary">Mesajınızın sorunsuz gönderildiğinin onayını alın</string>
   <string name="settings_unicode_title">Şeritli aksanlar</string>
   <string name="settings_unicode_summary">Giden SMS mesajlarından aksanlı karakterleri kaldırın</string>
+  <string name="settings_mobile_title">Sadece cep telefonu numaraları</string>
+  <string name="settings_mobile_summary">Bir mesaj oluştururken, yalnızca cep telefonu numaralarını göster</string>
   <string name="settings_mms_size_title">Otomatik-MMS ekleri sıkıştır</string>
   <string name="settings_sync_title"> İletileri eşitle</string>
   <string name="settings_sync_summary">İletilerinizi  Android SMS veritabanı ile yeniden senkronize edin</string>
   <string name="settings_about_title">QKSMS Hakkında</string>
   <string name="settings_version">Sürüm ve Diğerleri(TR Muhammet Öztürk)</string>
+  <string name="settings_logging_enabled">Hata ayıklama günlüğü etkin</string>
+  <string name="settings_logging_disabled">Hata ayıklama günlüğü devre dışı</string>
   <string name="settings_delay_duration_hint">Süre (saniye olarak) girin</string>
   <string name="blocked_title">Engellenmiş</string>
   <string name="blocked_empty">Engellenen konuşmalarınız burada görünür</string>
@@ -208,7 +246,7 @@
   <string name="qksms_plus_description_title">Gelişimini desteklemek, her şey kilitsiz</string>
   <string name="qksms_plus_description_summary">Seni  kurtarmak için sadece %s açlıktan ölen bir geliştirici</string>
   <string name="qksms_plus_upgrade">Süresiz kullanmak 1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Kilidi ac ve Satın Al %1$s %2$s</string>
+  <string name="qksms_plus_upgrade_donate">Kilidi aç ve Satın Al %1$s %2$s</string>
   <string name="qksms_plus_thanks_title">QKSMS desteği için teşekkür ederiz!!</string>
   <string name="qksms_plus_thanks_summary">Şimdi tüm QKSMS+ özellikleri açıldı!</string>
   <string name="qksms_plus_free_title">QKSMS+ F-Droid kullanıcıları için ücretsizdir! Eğer gelişmeyi desteklemek istiyorsanız, bağış yapmakta özgürsünüz.</string>
@@ -255,6 +293,7 @@
   <string name="button_cancel">İptal</string>
   <string name="button_delete">Sil</string>
   <string name="button_save">Kaydet</string>
+  <string name="button_stop">Durdur</string>
   <string name="button_more">Daha fazla</string>
   <string name="button_set">Ayarla</string>
   <string name="button_unblock">Engelini kaldır</string>

@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">Archief</string>
   <string name="title_settings">Instellingen</string>
   <string name="title_notification_prefs">Notificaties</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">Bel</string>
   <string name="menu_info">Details</string>
   <string name="menu_save">Opslaan in galerij</string>
+  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Open navigatie lade</string>
   <string name="main_title_selected">%d geselecteerd</string>
+  <string name="main_menu_search">Zoeken</string>
   <string name="main_menu_clear">Wissen</string>
   <string name="main_menu_archive">Archiveren</string>
   <string name="main_menu_unarchive">Terugzetten uit archief</string>
@@ -129,6 +134,35 @@
   <string name="info_unblock">Blokkering opheffen</string>
   <string name="info_delete">Conversatie verwijderen</string>
   <string name="gallery_toast_saved">Opgeslagen in galerij</string>
+  <string name="backup_title">Back-up en herstel</string>
+  <string name="backup_backing_up">Back-up van berichten aan het maken</string>
+  <string name="backup_restoring">Bezig met het terugzetten van berichten</string>
+  <string name="backup_last">Laatste back-up</string>
+  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_never">Nooit</string>
+  <string name="backup_restore_title">Herstellen</string>
+  <string name="backup_restore_summary">Selecteer een back-up</string>
+  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">Back-ups</string>
+  <string name="backup_restore_dialog_empty">Geen back-ups gevonden</string>
+  <plurals name="backup_message_count">
+    <item quantity="one">%d bericht</item>
+    <item quantity="other">%d berichten</item>
+  </plurals>
+  <string name="backup_disclaimer">Op dit moment wordt alleen SMS ondersteund door back-up en terugzetten. MMS ondersteuning en geplande back-ups zullen spoedig beschikbaar komen!</string>
+  <string name="backup_now">Nu back-up maken</string>
+  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+  <string name="backup_progress_running">%d/%d messages</string>
+  <string name="backup_progress_saving">Saving backup&#8230;</string>
+  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">Back-up en herstel</string>
   <string name="scheduled_title">Gepland</string>
   <string name="scheduled_empty_description">Verzend automatisch een bericht, op de door jou ingestelde tijd</string>
   <string name="scheduled_empty_message_1">Hey! Wanneer was je verjaardag nu weer?</string>
@@ -187,11 +221,15 @@
   <string name="settings_delivery_summary">Bevestig dat berichten met succes zijn verzonden</string>
   <string name="settings_unicode_title">Verwijder accenten</string>
   <string name="settings_unicode_summary">Verwijder accenten van karakters voor uitgaande berichten</string>
+  <string name="settings_mobile_title">Alleen GSM-nummers</string>
+  <string name="settings_mobile_summary">Enkel mobiele nummers tonen wanneer je een bericht opstelt</string>
   <string name="settings_mms_size_title">Auto-compress MMS bijlagen</string>
   <string name="settings_sync_title">Synchroniseer berichten</string>
   <string name="settings_sync_summary">Hersynchroniseer jouw berichten vanuit de SMS database op je telefoon</string>
   <string name="settings_about_title">Over QKSMS</string>
   <string name="settings_version">Versie %s</string>
+  <string name="settings_logging_enabled">Foutenregistratie ingeschakeld</string>
+  <string name="settings_logging_disabled">Foutenregistratie uitgeschakeld</string>
   <string name="settings_delay_duration_hint">Voer duur (seconden) in</string>
   <string name="blocked_title">Blokkeren</string>
   <string name="blocked_empty">Jouw geblokkeerde conversaties verschijnen hier</string>
@@ -255,6 +293,7 @@
   <string name="button_cancel">Annuleren</string>
   <string name="button_delete">Verwijderen</string>
   <string name="button_save">Opslaan</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">Meer</string>
   <string name="button_set">Instellen</string>
   <string name="button_unblock">Blokkering opheffen</string>

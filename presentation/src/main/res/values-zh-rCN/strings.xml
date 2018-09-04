@@ -19,6 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_short_label">Compose</string>
+  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
   <string name="title_archived">已存档</string>
   <string name="title_settings">设置</string>
   <string name="title_notification_prefs">通知</string>
@@ -30,8 +33,10 @@
   <string name="menu_call">致电</string>
   <string name="menu_info">详情</string>
   <string name="menu_save">保存到图库</string>
+  <string name="main_title">收件箱</string>
   <string name="main_drawer_open_cd">打开导航栏</string>
   <string name="main_title_selected">已选择 %d 项</string>
+  <string name="main_menu_search">搜索</string>
   <string name="main_menu_clear">清除</string>
   <string name="main_menu_archive">存档</string>
   <string name="main_menu_unarchive">取消存档</string>
@@ -64,7 +69,7 @@
   <string name="drawer_settings">设置</string>
   <string name="drawer_plus">QKSMS+</string>
   <string name="drawer_help">帮助及反馈</string>
-  <string name="drawer_invite">Invite friends</string>
+  <string name="drawer_invite">邀请朋友</string>
   <string name="drawer_plus_banner_title">QKSMS+</string>
   <string name="drawer_plus_banner_summary">解锁炫酷特性并支持开发者</string>
   <string name="rate_title">喜欢QKSMS？</string>
@@ -128,13 +133,41 @@
   <string name="info_unblock">取消拦截</string>
   <string name="info_delete">删除对话</string>
   <string name="gallery_toast_saved">保存到图库</string>
+  <string name="backup_title">备份和还原</string>
+  <string name="backup_backing_up">正在备份消息</string>
+  <string name="backup_restoring">正在从备份还原</string>
+  <string name="backup_last">上次备份</string>
+  <string name="backup_loading">正在加载&#8230;</string>
+  <string name="backup_never">永不</string>
+  <string name="backup_restore_title">还原</string>
+  <string name="backup_restore_summary">选择备份</string>
+  <string name="backup_restore_error_plus">请解锁 QKSMS+ 以使用备份和还原</string>
+  <string name="backup_restore_error_backup">正在进行备份&#8230;</string>
+  <string name="backup_restore_error_restore">正在还原&#8230;</string>
+  <string name="backup_restore_confirm_title">Restore from backup</string>
+  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+  <string name="backup_restore_stop_title">Stop restore</string>
+  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_dialog_title">备份</string>
+  <string name="backup_restore_dialog_empty">找不到备份</string>
+  <plurals name="backup_message_count">
+    <item quantity="other">%d 条消息</item>
+  </plurals>
+  <string name="backup_disclaimer">目前, 只有 SMS 支持备份和恢复。彩信支持和定时备份将很快到来!</string>
+  <string name="backup_now">立即备份</string>
+  <string name="backup_progress_parsing">正在分析备份&#8230;</string>
+  <string name="backup_progress_running">%d/%d 消息</string>
+  <string name="backup_progress_saving">正在保存备份&#8230;</string>
+  <string name="backup_progress_syncing">正在同步消息&#8230;</string>
+  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_notification_channel_name">备份和还原</string>
   <string name="scheduled_title">预约</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
+  <string name="scheduled_empty_description">在指定时间自动发送消息</string>
+  <string name="scheduled_empty_message_1">嘿！你的生日是什么时候？</string>
+  <string name="scheduled_empty_message_2">是12月23日</string>
+  <string name="scheduled_empty_message_3">生日快乐！我够朋友吧，还记得你的生日</string>
+  <string name="scheduled_empty_message_3_timestamp">在12月23日发送 </string>
+  <string name="scheduled_compose_cd">创建预约短信</string>
   <string name="scheduled_options_title">预约短信</string>
   <string-array name="scheduled_options">
     <item>现在发送</item>
@@ -152,11 +185,11 @@
   <string name="settings_system_font_title">使用系统字体</string>
   <string name="settings_auto_emoji_title">自动颜文字</string>
   <string name="settings_notifications_title">通知</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
+  <string name="settings_notifications_o_summary">点击跳转到系统设置</string>
+  <string name="settings_notification_actions_title">操作</string>
+  <string name="settings_notification_action_1">按钮1</string>
+  <string name="settings_notification_action_2">按钮2</string>
+  <string name="settings_notification_action_3">按钮3</string>
   <string name="settings_notification_previews_title">通知预览</string>
   <string name="settings_vibration_title">振动</string>
   <string name="settings_ringtone_title">铃声</string>
@@ -170,27 +203,31 @@
   <string name="settings_should_i_answer_title">Should I Answer?</string>
   <string name="settings_should_i_answer_summary">使用\"Should I Answer\"应用过滤未知号码的消息</string>
   <string name="settings_delayed_title">延迟发送</string>
-  <string name="settings_swipe_actions">Swipe actions</string>
-  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-  <string name="settings_swipe_actions_right">Right swipe</string>
-  <string name="settings_swipe_actions_left">Left swipe</string>
-  <string name="settings_swipe_actions_change">CHANGE</string>
+  <string name="settings_swipe_actions">滑动操作</string>
+  <string name="settings_swipe_actions_summary">配置对话的滑动操作</string>
+  <string name="settings_swipe_actions_right">右划</string>
+  <string name="settings_swipe_actions_left">左划</string>
+  <string name="settings_swipe_actions_change">更改</string>
   <string-array name="settings_swipe_actions">
-    <item>None</item>
-    <item>Archive</item>
-    <item>Delete</item>
-    <item>Call</item>
-    <item>Mark read</item>
+    <item>无</item>
+    <item>归档</item>
+    <item>删除</item>
+    <item>呼叫</item>
+    <item>标记为已读</item>
   </string-array>
   <string name="settings_delivery_title">送达确认</string>
   <string name="settings_delivery_summary">确认短信已成功送达</string>
   <string name="settings_unicode_title">删除读音符号</string>
   <string name="settings_unicode_summary">删除短信中字母上的读音符号</string>
+  <string name="settings_mobile_title">仅限手机号码</string>
+  <string name="settings_mobile_summary">撰写邮件时, 只显示手机号码</string>
   <string name="settings_mms_size_title">自动压缩彩信附件</string>
   <string name="settings_sync_title">同步消息</string>
   <string name="settings_sync_summary">重新与安卓原生短信数据库进行同步</string>
   <string name="settings_about_title">关于 QKSMS</string>
   <string name="settings_version">版本 %s</string>
+  <string name="settings_logging_enabled">启用了调试日志记录</string>
+  <string name="settings_logging_disabled">调试日志记录已禁用</string>
   <string name="settings_delay_duration_hint">输入时长 (秒)</string>
   <string name="blocked_title">拦截</string>
   <string name="blocked_empty">被拦截的对话将出现在这里</string>
@@ -245,15 +282,16 @@
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">应用</string>
   <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
-    <item>Delete</item>
+    <item>无</item>
+    <item>标记为已读</item>
+    <item>回复</item>
+    <item>呼叫</item>
+    <item>删除</item>
   </string-array>
   <string name="button_cancel">取消</string>
   <string name="button_delete">删除</string>
   <string name="button_save">保存</string>
+  <string name="button_stop">Stop</string>
   <string name="button_more">更多</string>
   <string name="button_set">设置</string>
   <string name="button_unblock">取消拦截</string>
