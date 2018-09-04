@@ -82,6 +82,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="image/*" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.service.chooser.chooser_target_service"
+                android:value=".common.util.QkChooserTargetService" />
         </activity>
         <activity android:name=".feature.settings.SettingsActivity" />
         <activity android:name=".feature.plus.PlusActivity" />
@@ -173,6 +177,14 @@
                 <data android:scheme="smsto" />
                 <data android:scheme="mms" />
                 <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".common.util.QkChooserTargetService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.chooser.ChooserTargetService" />
             </intent-filter>
         </service>
         <service android:name=".service.SendScheduledMessageService" />
