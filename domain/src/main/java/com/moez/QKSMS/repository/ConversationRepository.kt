@@ -28,6 +28,11 @@ interface ConversationRepository {
 
     fun getConversationsSnapshot(): List<Conversation>
 
+    /**
+     * Returns the top conversations that were active in the last week
+     */
+    fun getTopConversations(): List<Conversation>
+
     fun setConversationName(id: Long, name: String)
 
     fun searchConversations(query: String): List<SearchResult>

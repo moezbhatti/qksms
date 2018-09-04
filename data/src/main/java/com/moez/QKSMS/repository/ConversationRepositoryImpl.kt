@@ -37,6 +37,7 @@ import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ConversationRepositoryImpl @Inject constructor(
@@ -67,6 +68,19 @@ class ConversationRepositoryImpl @Inject constructor(
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
                 .sort("pinned", Sort.DESCENDING, "date", Sort.DESCENDING)
+                .findAll())
+    }
+
+    override fun getTopConversations(): List<Conversation> {
+        val realm = Realm.getDefaultInstance()
+        return realm.copyFromRealm(realm.where(Conversation::class.java)
+                .notEqualTo("id", 0L)
+                .greaterThan("count", 0)
+                .greaterThan("date", System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7))
+                .equalTo("archived", false)
+                .equalTo("blocked", false)
+                .isNotEmpty("recipients")
+                .sort("pinned", Sort.DESCENDING, "count", Sort.DESCENDING)
                 .findAll())
     }
 

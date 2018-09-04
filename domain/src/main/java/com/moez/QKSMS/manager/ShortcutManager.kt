@@ -16,22 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.interactor
+package com.moez.QKSMS.manager
 
-import com.moez.QKSMS.manager.ShortcutManager
-import com.moez.QKSMS.manager.WidgetManager
-import io.reactivex.Flowable
-import javax.inject.Inject
+interface ShortcutManager {
 
-class UpdateBadge @Inject constructor(
-        private val shortcutManager: ShortcutManager,
-        private val widgetManager: WidgetManager
-) : Interactor<Unit>() {
+    fun updateBadge()
 
-    override fun buildObservable(params: Unit): Flowable<*> {
-        return Flowable.just(params)
-                .doOnNext { shortcutManager.updateBadge() }
-                .doOnNext { widgetManager.updateUnreadCount() }
-    }
+    fun updateShortcuts()
 
 }

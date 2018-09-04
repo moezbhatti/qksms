@@ -20,6 +20,10 @@
 
     <string name="app_name" translatable="false">QKSMS</string>
 
+    <string name="shortcut_compose_long_label">New conversation</string>
+    <string name="shortcut_compose_short_label">Compose</string>
+    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+
     <string name="title_archived">Archived</string>
     <string name="title_settings">Settings</string>
     <string name="title_notification_prefs">Notifications</string>

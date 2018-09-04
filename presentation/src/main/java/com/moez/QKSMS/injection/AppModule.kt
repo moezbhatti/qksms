@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.ViewModelFactory
 import com.moez.QKSMS.common.util.NotificationManagerImpl
+import com.moez.QKSMS.common.util.ShortcutManagerImpl
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.themepicker.injection.ThemePickerComponent
 import com.moez.QKSMS.listener.ContactAddedListener
@@ -42,6 +43,7 @@ import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.manager.PermissionManagerImpl
 import com.moez.QKSMS.manager.RatingManager
+import com.moez.QKSMS.manager.ShortcutManager
 import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.manager.WidgetManagerImpl
 import com.moez.QKSMS.mapper.CursorToContact
@@ -129,6 +131,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideRatingManager(manager: RatingManagerImpl): RatingManager = manager
+
+    @Provides
+    fun provideShortcutManager(manager: ShortcutManagerImpl): ShortcutManager = manager
 
     @Provides
     fun provideWidgetManager(manager: WidgetManagerImpl): WidgetManager = manager
