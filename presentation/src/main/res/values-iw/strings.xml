@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="shortcut_compose_long_label">התכתבות חדשה</string>
+  <string name="shortcut_compose_short_label">כתיבה</string>
+  <string name="shortcut_compose_disabled_message">קיצור הדרך הושבת</string>
   <string name="title_archived">בארכיון</string>
   <string name="title_settings">הגדרות</string>
   <string name="title_notification_prefs">התראות</string>
