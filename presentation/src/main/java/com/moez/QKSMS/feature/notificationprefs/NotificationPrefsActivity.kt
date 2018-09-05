@@ -65,7 +65,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         showBackButton(true)
         viewModel.bindView(this)
 
-        preferences.postDelayed({ preferences.animateLayoutChanges = true }, 100)
+        preferences.postDelayed({ preferences?.animateLayoutChanges = true }, 100)
 
         val hasOreo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 

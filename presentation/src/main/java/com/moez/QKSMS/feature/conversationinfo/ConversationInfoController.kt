@@ -65,7 +65,7 @@ class ConversationInfoController(val threadId: Long = 0) : QkController<Conversa
     }
 
     override fun onViewCreated() {
-        items.postDelayed({ items.animateLayoutChanges = true }, 100)
+        items.postDelayed({ items?.animateLayoutChanges = true }, 100)
 
         mediaAdapter.thumbnailClicks
                 .autoDisposable(scope())

@@ -62,8 +62,8 @@ class SwipeActionsController : QkController<SwipeActionsView, SwipeActionsState,
             leftIcon.setTint(theme.textPrimary)
         }
 
-        right.postDelayed({ right.animateLayoutChanges = true }, 100)
-        left.postDelayed({ left.animateLayoutChanges = true }, 100)
+        right.postDelayed({ right?.animateLayoutChanges = true }, 100)
+        left.postDelayed({ left?.animateLayoutChanges = true }, 100)
 
         Observable.merge(
                 right.clicks().map { SwipeActionsView.Action.RIGHT },

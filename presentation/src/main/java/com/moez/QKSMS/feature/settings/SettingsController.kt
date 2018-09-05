@@ -72,7 +72,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     }
 
     override fun onViewCreated() {
-        preferences.postDelayed({ preferences.animateLayoutChanges = true }, 100)
+        preferences.postDelayed({ preferences?.animateLayoutChanges = true }, 100)
 
         nightModeDialog.adapter.setData(R.array.night_modes)
         textSizeDialog.adapter.setData(R.array.text_sizes)
