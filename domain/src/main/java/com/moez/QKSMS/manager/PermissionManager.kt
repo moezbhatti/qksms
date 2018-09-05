@@ -22,9 +22,9 @@ interface PermissionManager {
 
     fun isDefaultSms(): Boolean
 
-    fun hasSmsAndContacts(): Boolean
+    fun hasReadSms(): Boolean
 
-    fun hasSms(): Boolean
+    fun hasSendSms(): Boolean
 
     fun hasContacts(): Boolean
 

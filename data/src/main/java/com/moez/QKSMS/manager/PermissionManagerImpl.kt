@@ -31,11 +31,9 @@ class PermissionManagerImpl @Inject constructor(private val context: Context) : 
         return Telephony.Sms.getDefaultSmsPackage(context) == context.packageName
     }
 
-    override fun hasSmsAndContacts(): Boolean {
-        return hasSms() && hasContacts()
-    }
+    override fun hasReadSms(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PERMISSION_GRANTED
 
-    override fun hasSms(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PERMISSION_GRANTED
+    override fun hasSendSms(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PERMISSION_GRANTED
 
     override fun hasContacts(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PERMISSION_GRANTED
 

@@ -44,7 +44,7 @@ class CursorToRecipientImpl @Inject constructor(
     }
 
     override fun getRecipientCursor(): Cursor? {
-        return when (permissionManager.hasSms()) {
+        return when (permissionManager.hasReadSms()) {
             true -> context.contentResolver.query(URI, null, null, null, null)
             false -> null
         }

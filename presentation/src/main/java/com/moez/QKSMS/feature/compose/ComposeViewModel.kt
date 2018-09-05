@@ -571,6 +571,11 @@ class ComposeViewModel @Inject constructor(
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
+                .filter {
+                    val hasPermission = permissionManager.hasSendSms()
+                    if (!hasPermission) view.requestSmsPermission()
+                    hasPermission
+                }
                 .withLatestFrom(view.textChangedIntent) { _, body -> body }
                 .map { body -> body.toString() }
                 .withLatestFrom(state, attachments, conversation, selectedContacts) { body, state, attachments, conversation, contacts ->

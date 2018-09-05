@@ -103,7 +103,7 @@ class MainViewModel @Inject constructor(
         // If we have all permissions and we've never run a sync, run a sync. This will be the case
         // when upgrading from 2.7.3, or if the app's data was cleared
         val lastSync = Realm.getDefaultInstance().use { realm -> realm.where(SyncLog::class.java)?.max("date") ?: 0 }
-        if (lastSync == 0 && permissionManager.isDefaultSms() && permissionManager.hasSmsAndContacts()) {
+        if (lastSync == 0 && permissionManager.isDefaultSms() && permissionManager.hasReadSms() && permissionManager.hasContacts()) {
             syncMessages.execute(Unit)
         }
 
@@ -114,14 +114,14 @@ class MainViewModel @Inject constructor(
     override fun bindView(view: MainView) {
         super.bindView(view)
 
-        if (!permissionManager.hasSmsAndContacts()) {
+        if (!permissionManager.hasReadSms() || !permissionManager.hasContacts()) {
             view.requestPermissions()
         }
 
         // If the default SMS state or permission states change, update the ViewState
         Observables.combineLatest(
                 view.activityResumedIntent.map { permissionManager.isDefaultSms() }.distinctUntilChanged(),
-                view.activityResumedIntent.map { permissionManager.hasSms() }.distinctUntilChanged(),
+                view.activityResumedIntent.map { permissionManager.hasReadSms() }.distinctUntilChanged(),
                 view.activityResumedIntent.map { permissionManager.hasContacts() }.distinctUntilChanged())
         { defaultSms, smsPermission, contactPermission ->
             newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
@@ -131,7 +131,7 @@ class MainViewModel @Inject constructor(
 
         // If the SMS permission state changes from false to true, sync messages
         view.activityResumedIntent
-                .map { permissionManager.hasSms() }
+                .map { permissionManager.hasReadSms() }
                 .distinctUntilChanged()
                 .skip(1)
                 .filter { hasSms -> hasSms }

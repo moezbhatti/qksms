@@ -248,6 +248,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
     }
 
+    override fun requestSmsPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(
+                Manifest.permission.READ_SMS,
+                Manifest.permission.SEND_SMS), 0)
+    }
+
     override fun requestDatePicker() {
         val calendar = Calendar.getInstance()
         DatePickerDialog(this, DatePickerDialog.OnDateSetListener { _, year, month, day ->

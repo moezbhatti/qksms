@@ -141,7 +141,7 @@ class CursorToMessageImpl @Inject constructor(
             false -> this.projection
         }
 
-        return when (permissionManager.hasSms()) {
+        return when (permissionManager.hasReadSms()) {
             true -> SqliteWrapper.query(context, uri, projection, sortOrder = "normalized_date desc")
             false -> null
         }
