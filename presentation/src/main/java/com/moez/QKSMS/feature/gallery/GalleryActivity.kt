@@ -77,7 +77,8 @@ class GalleryActivity : QkActivity(), GalleryView {
         window.sharedElementReturnTransition = transition
         window.sharedElementEnterTransition = transition
 
-        image.transitionName = intent.getLongExtra("partId", 0L).toString()
+        // FIXME: Setting a transitionName breaks GIF playback
+        // image.transitionName = intent.getLongExtra("partId", 0L).toString()
 
         // When calling the public setter, it doesn't allow the midscale to be the same as the
         // maxscale or the minscale. We don't want 3 levels and we don't want to modify the library
@@ -114,13 +115,25 @@ class GalleryActivity : QkActivity(), GalleryView {
         image.setVisible(true)
         video.setVisible(false)
         if (image.drawable == null) {
-            GlideApp.with(this)
-                    .load(uri)
-                    .dontAnimate()
-                    .listener(GlideCompletionListener {
-                        startPostponedEnterTransition()
-                    })
-                    .into(image)
+
+            // We need to explicitly request a gif from glide for animations to work
+            when (uri?.let(contentResolver::getType)) {
+                ContentType.IMAGE_GIF -> GlideApp.with(this)
+                        .asGif()
+                        .load(uri)
+                        .listener(GlideCompletionListener {
+                            startPostponedEnterTransition()
+                        })
+                        .into(image)
+
+                else -> GlideApp.with(this)
+                        .asBitmap()
+                        .load(uri)
+                        .listener(GlideCompletionListener {
+                            startPostponedEnterTransition()
+                        })
+                        .into(image)
+            }
         }
     }
 
