@@ -31,6 +31,8 @@ import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoCompone
 import com.moez.QKSMS.feature.themepicker.injection.ThemePickerComponent
 import com.moez.QKSMS.listener.ContactAddedListener
 import com.moez.QKSMS.listener.ContactAddedListenerImpl
+import com.moez.QKSMS.manager.ActiveConversationManager
+import com.moez.QKSMS.manager.ActiveConversationManagerImpl
 import com.moez.QKSMS.manager.AlarmManager
 import com.moez.QKSMS.manager.AlarmManagerImpl
 import com.moez.QKSMS.manager.AnalyticsManager
@@ -110,6 +112,9 @@ class AppModule(private var application: Application) {
     fun provideContactAddedListener(listener: ContactAddedListenerImpl): ContactAddedListener = listener
 
     // Manager
+
+    @Provides
+    fun provideActiveConversationManager(manager: ActiveConversationManagerImpl): ActiveConversationManager = manager
 
     @Provides
     fun provideAlarmManager(manager: AlarmManagerImpl): AlarmManager = manager

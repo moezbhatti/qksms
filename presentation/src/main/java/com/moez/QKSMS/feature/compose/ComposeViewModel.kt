@@ -45,6 +45,7 @@ import com.moez.QKSMS.interactor.DeleteMessages
 import com.moez.QKSMS.interactor.MarkRead
 import com.moez.QKSMS.interactor.RetrySending
 import com.moez.QKSMS.interactor.SendMessage
+import com.moez.QKSMS.manager.ActiveConversationManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
@@ -69,7 +70,6 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmList
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -80,6 +80,7 @@ class ComposeViewModel @Inject constructor(
         @Named("text") private val sharedText: String,
         @Named("attachments") private val sharedAttachments: List<Attachment>,
         private val context: Context,
+        private val activeConversationManager: ActiveConversationManager,
         private val addScheduledMessage: AddScheduledMessage,
         private val billingManager: BillingManager,
         private val cancelMessage: CancelDelayedMessage,
@@ -162,9 +163,10 @@ class ComposeViewModel @Inject constructor(
                 .takeUntil(state.filter { state -> !state.editingMode })
                 .subscribe(selectedContacts::onNext)
 
-        // When the conversation changes, update the threadId and the messages for the adapter
+        // When the conversation changes, mark read, and update the threadId and the messages for the adapter
         disposables += conversation
                 .distinctUntilChanged { conversation -> conversation.id }
+                .doOnNext { conversation -> markRead.execute(listOf(conversation.id)) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { conversation ->
                     val messages = messageRepo.getMessages(conversation.id)
@@ -172,7 +174,7 @@ class ComposeViewModel @Inject constructor(
                     messages
                 }
                 .switchMap { messages -> messages.asObservable() }
-                .subscribe { messages.onNext(it) }
+                .subscribe(messages::onNext)
 
         disposables += conversation
                 .map { conversation -> conversation.getTitle() }
@@ -426,6 +428,20 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { message -> cancelMessage.execute(message.id) }
 
+        // Set the current conversation
+        Observables
+                .combineLatest(
+                        view.activityVisibleIntent.distinctUntilChanged(),
+                        conversation.mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }.distinctUntilChanged())
+                { visible, threadId ->
+                    when (visible) {
+                        true -> activeConversationManager.setActiveConversation(threadId)
+                        false -> activeConversationManager.setActiveConversation(null)
+                    }
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
+
         // Save draft when the activity goes into the background
         view.activityVisibleIntent
                 .filter { visible -> !visible }
@@ -437,15 +453,6 @@ class ComposeViewModel @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
-
-        // Mark the conversation read, if in foreground
-        Observables.combineLatest(messages, view.activityVisibleIntent) { _, visible -> visible }
-                .filter { visible -> visible }
-                .withLatestFrom(conversation) { _, conversation -> conversation }
-                .mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }
-                .debounce(200, TimeUnit.MILLISECONDS)
-                .autoDisposable(view.scope())
-                .subscribe { threadId -> markRead.execute(listOf(threadId)) }
 
         // Open the attachment options
         view.attachIntent

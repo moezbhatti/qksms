@@ -36,6 +36,7 @@ import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
+import com.moez.QKSMS.manager.ActiveConversationManager
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
@@ -57,6 +58,7 @@ import javax.inject.Singleton
 
 @Singleton
 class MessageRepositoryImpl @Inject constructor(
+        private val activeConversationManager: ActiveConversationManager,
         private val context: Context,
         private val messageIds: KeyManager,
         private val imageRepository: ImageRepository,
@@ -351,6 +353,7 @@ class MessageRepositoryImpl @Inject constructor(
             threadId = TelephonyCompat.getOrCreateThreadId(context, address)
             boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
             type = "sms"
+            read = activeConversationManager.getActiveConversation() == threadId
         }
         val realm = Realm.getDefaultInstance()
         var managedMessage: Message? = null

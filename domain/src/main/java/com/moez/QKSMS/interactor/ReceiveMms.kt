@@ -20,16 +20,17 @@ package com.moez.QKSMS.interactor
 
 import android.net.Uri
 import com.moez.QKSMS.extensions.mapNotNull
+import com.moez.QKSMS.manager.ActiveConversationManager
 import com.moez.QKSMS.manager.ExternalBlockingManager
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.SyncRepository
 import io.reactivex.Flowable
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ReceiveMms @Inject constructor(
+        private val activeConversationManager: ActiveConversationManager,
         private val conversationRepo: ConversationRepository,
         private val externalBlockingManager: ExternalBlockingManager,
         private val syncManager: SyncRepository,
@@ -40,7 +41,14 @@ class ReceiveMms @Inject constructor(
 
     override fun buildObservable(params: Uri): Flowable<*> {
         return Flowable.just(params)
-                .mapNotNull { uri -> syncManager.syncMessage(uri) } // Sync the message
+                .mapNotNull(syncManager::syncMessage) // Sync the message
+                .doOnNext { message ->
+                    // TODO: Ideally this is done when we're saving the MMS to ContentResolver
+                    // This change can be made once we move the MMS storing code to the Data module
+                    if (activeConversationManager.getActiveConversation() == message.threadId) {
+                        messageRepo.markRead(message.threadId)
+                    }
+                }
                 .filter { message ->
                     // Because we use the smsmms library for receiving and storing MMS, we'll need
                     // to check if it should be blocked after we've pulled it into realm. If it
@@ -55,8 +63,7 @@ class ReceiveMms @Inject constructor(
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) conversationRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
-                .delay(1, TimeUnit.SECONDS) // Wait one second before trying to notify, in case the foreground app marks it as read first
-                .doOnNext { threadId -> notificationManager.update(threadId) } // Update the notification
+                .doOnNext(notificationManager::update) // Update the notification
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 
