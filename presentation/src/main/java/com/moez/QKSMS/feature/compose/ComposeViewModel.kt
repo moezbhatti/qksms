@@ -166,7 +166,6 @@ class ComposeViewModel @Inject constructor(
         // When the conversation changes, mark read, and update the threadId and the messages for the adapter
         disposables += conversation
                 .distinctUntilChanged { conversation -> conversation.id }
-                .doOnNext { conversation -> markRead.execute(listOf(conversation.id)) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { conversation ->
                     val messages = messageRepo.getMessages(conversation.id)
@@ -435,7 +434,11 @@ class ComposeViewModel @Inject constructor(
                         conversation.mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }.distinctUntilChanged())
                 { visible, threadId ->
                     when (visible) {
-                        true -> activeConversationManager.setActiveConversation(threadId)
+                        true -> {
+                            activeConversationManager.setActiveConversation(threadId)
+                            markRead.execute(listOf(threadId))
+                        }
+
                         false -> activeConversationManager.setActiveConversation(null)
                     }
                 }
