@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.backup
 
 import android.Manifest
 import android.app.Activity
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -100,6 +101,8 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
         super.onViewCreated()
 
         themedActivity?.colors?.theme()?.let { theme ->
+            progressBar.indeterminateTintList = ColorStateList.valueOf(theme.theme)
+            progressBar.progressTintList = ColorStateList.valueOf(theme.theme)
             fab.setBackgroundTint(theme.theme)
             fabIcon.setTint(theme.textPrimary)
             fabLabel.setTextColor(theme.textPrimary)
