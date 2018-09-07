@@ -38,6 +38,7 @@ import kotlinx.android.synthetic.main.message_list_item_in.view.*
 class PartsAdapter(context: Context, navigator: Navigator, theme: Colors.Theme) : QkAdapter<MmsPart>() {
 
     private val partBinders = listOf(
+            AudioBinder(theme),
             MediaBinder(context, navigator),
             VCardBinder(context, navigator, theme)
     )

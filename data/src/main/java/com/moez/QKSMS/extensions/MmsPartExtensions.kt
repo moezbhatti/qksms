@@ -23,6 +23,8 @@ import com.moez.QKSMS.model.MmsPart
 
 fun MmsPart.isSmil() = ContentType.APP_SMIL == type
 
+fun MmsPart.isAudio() = ContentType.isAudioType(type)
+
 fun MmsPart.isImage() = ContentType.isImageType(type)
 
 fun MmsPart.isVideo() = ContentType.isVideoType(type)
