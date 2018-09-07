@@ -208,7 +208,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
         when (state.page) {
             is Inbox -> {
-                showBackButton(state.page.showClearButton)
+                showBackButton(state.page.selected > 0)
                 title = when (state.page.selected != 0) {
                     true -> getString(R.string.main_title_selected, state.page.selected)
                     false -> getString(R.string.main_title)
@@ -228,7 +228,7 @@ class MainActivity : QkThemedActivity(), MainView {
             }
 
             is Archived -> {
-                showBackButton(state.page.showClearButton)
+                showBackButton(state.page.selected > 0)
                 title = when (state.page.selected != 0) {
                     true -> getString(R.string.main_title_selected, state.page.selected)
                     false -> getString(R.string.title_archived)

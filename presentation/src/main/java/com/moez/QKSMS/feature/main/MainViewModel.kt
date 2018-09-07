@@ -174,10 +174,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(state) { _, state ->
                     when {
                         state.page is Searching -> view.clearSearch()
-
                         state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
-                        state.page is Inbox && state.page.showClearButton -> view.clearSearch()
-
                         state.page is Archived && state.page.selected > 0 -> view.clearSelection()
 
                         else -> newState { copy(drawerOpen = true) }
@@ -285,12 +282,12 @@ class MainViewModel @Inject constructor(
 
                     when (state.page) {
                         is Inbox -> {
-                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected, showClearButton = selected > 0)
-                            newState { copy(page = page.copy(markRead = read, selected = selected, showClearButton = selected > 0)) }
+                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected)
+                            newState { copy(page = page.copy(markRead = read, selected = selected)) }
                         }
 
                         is Archived -> {
-                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected, showClearButton = selected > 0)
+                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected)
                             newState { copy(page = page) }
                         }
                     }
@@ -342,7 +339,6 @@ class MainViewModel @Inject constructor(
                         state.page is Searching -> view.clearSearch()
 
                         state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
-                        state.page is Inbox && state.page.showClearButton -> view.clearSearch()
 
                         state.page is Archived && state.page.selected > 0 -> view.clearSelection()
 
