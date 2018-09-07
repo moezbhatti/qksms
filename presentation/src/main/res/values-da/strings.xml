@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
+  <string name="shortcut_compose_long_label">Ny samtale</string>
   <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="shortcut_compose_disabled_message">Genvej deaktiveret</string>
   <string name="title_archived">Arkiveret</string>
   <string name="title_settings">Indstillinger</string>
   <string name="title_notification_prefs">Notifikationer</string>

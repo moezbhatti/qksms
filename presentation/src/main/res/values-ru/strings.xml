@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="shortcut_compose_long_label">Новая беседа</string>
+  <string name="shortcut_compose_short_label">Написать</string>
+  <string name="shortcut_compose_disabled_message">Ярлык отключен</string>
   <string name="title_archived">В архиве</string>
   <string name="title_settings">Настройки</string>
   <string name="title_notification_prefs">Уведомления</string>
@@ -147,10 +147,10 @@
   <string name="backup_restore_error_plus">Пожалуйста, разблокируйте QKSMS + для использования резервного копирования и восстановления</string>
   <string name="backup_restore_error_backup">Выполняется резервное копирование&#8230;</string>
   <string name="backup_restore_error_restore">Выполняется восстановление&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_confirm_title">Восстановление из резервной копии</string>
+  <string name="backup_restore_confirm_message">Вы уверены, что хотите восстановить свои сообщения из этой резервной копии?</string>
+  <string name="backup_restore_stop_title">Остановить восстановление</string>
+  <string name="backup_restore_stop_message">Сообщения, которые уже были восстановлены останутся на Вашем устройстве</string>
   <string name="backup_restore_dialog_title">Бэкапы</string>
   <string name="backup_restore_dialog_empty">Бэкапы не найдены</string>
   <plurals name="backup_message_count">
@@ -165,7 +165,7 @@
   <string name="backup_progress_running">%d/%d сообщений</string>
   <string name="backup_progress_saving">Сохранение резервной копии&#8230;</string>
   <string name="backup_progress_syncing">Синхронизация сообщений&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_progress_finished">Завершено!</string>
   <string name="backup_notification_channel_name">Бэкап и восстановление</string>
   <string name="scheduled_title">Запланировать</string>
   <string name="scheduled_empty_description">Автоматически отправить сообщение когда пожелаете</string>
@@ -297,7 +297,7 @@
   <string name="button_cancel">Отмена</string>
   <string name="button_delete">Удалить</string>
   <string name="button_save">Сохранить</string>
-  <string name="button_stop">Stop</string>
+  <string name="button_stop">Остановить</string>
   <string name="button_more">Еще</string>
   <string name="button_set">Задать</string>
   <string name="button_unblock">Разблокировать</string>

@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="shortcut_compose_long_label">Nieuwe conversatie</string>
+  <string name="shortcut_compose_short_label">Opstellen</string>
+  <string name="shortcut_compose_disabled_message">Snelkoppeling uitgeschakeld</string>
   <string name="title_archived">Archief</string>
   <string name="title_settings">Instellingen</string>
   <string name="title_notification_prefs">Notificaties</string>
@@ -138,17 +138,17 @@
   <string name="backup_backing_up">Back-up van berichten aan het maken</string>
   <string name="backup_restoring">Bezig met het terugzetten van berichten</string>
   <string name="backup_last">Laatste back-up</string>
-  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_loading">Bezig met laden&#8230;</string>
   <string name="backup_never">Nooit</string>
   <string name="backup_restore_title">Herstellen</string>
   <string name="backup_restore_summary">Selecteer een back-up</string>
-  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_error_plus">Je dient QKSMS+ te hebben alvorens je gebruik kan maken van Back-up en herstellen</string>
+  <string name="backup_restore_error_backup">Bezig met het maken van back-up&#8230;</string>
+  <string name="backup_restore_error_restore">Bezig met herstellen&#8230;</string>
+  <string name="backup_restore_confirm_title">Herstel van back-up</string>
+  <string name="backup_restore_confirm_message">Weet je ze zeker dat je de berichten uit deze back-up wilt herstellen?</string>
+  <string name="backup_restore_stop_title">Stop herstellen</string>
+  <string name="backup_restore_stop_message">Berichten die al hersteld zijn zullen worden behouden op je toestel</string>
   <string name="backup_restore_dialog_title">Back-ups</string>
   <string name="backup_restore_dialog_empty">Geen back-ups gevonden</string>
   <plurals name="backup_message_count">
@@ -157,11 +157,11 @@
   </plurals>
   <string name="backup_disclaimer">Op dit moment wordt alleen SMS ondersteund door back-up en terugzetten. MMS ondersteuning en geplande back-ups zullen spoedig beschikbaar komen!</string>
   <string name="backup_now">Nu back-up maken</string>
-  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-  <string name="backup_progress_running">%d/%d messages</string>
-  <string name="backup_progress_saving">Saving backup&#8230;</string>
-  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
+  <string name="backup_progress_parsing">Back-up samenstellen&#8230;</string>
+  <string name="backup_progress_running">%d/%d berichten</string>
+  <string name="backup_progress_saving">Back-up opslaan&#8230;</string>
+  <string name="backup_progress_syncing">Synchroniseren van berichten&#8230;</string>
+  <string name="backup_progress_finished">Klaar!</string>
   <string name="backup_notification_channel_name">Back-up en herstel</string>
   <string name="scheduled_title">Gepland</string>
   <string name="scheduled_empty_description">Verzend automatisch een bericht, op de door jou ingestelde tijd</string>
