@@ -157,8 +157,11 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
         req.date = System.currentTimeMillis() / 1000
         req.body = PduBody()
 
+        // Parts
+        parts.map(this::partToPduPart).forEach { req.body.addPart(it) }
+
         // SMIL document for compatibility
-        req.body.addPart(PduPart().apply {
+        req.body.addPart(0, PduPart().apply {
             contentId = "smil".toByteArray()
             contentLocation = "smil.xml".toByteArray()
             contentType = ContentType.APP_SMIL.toByteArray()
@@ -166,9 +169,6 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
                     .apply { SmilXmlSerializer.serialize(SmilHelper.createSmilDocument(req.body), this) }
                     .toByteArray()
         })
-
-        // Parts
-        parts.map(this::partToPduPart).forEach { req.body.addPart(it) }
 
         req.messageSize = parts.mapNotNull { it.data?.size }.sum().toLong()
         req.messageClass = PduHeaders.MESSAGE_CLASS_PERSONAL_STR.toByteArray()
