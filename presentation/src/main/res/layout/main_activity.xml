@@ -32,7 +32,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar"
-            android:elevation="8dp"
+            android:animateLayoutChanges="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,8 +41,16 @@
 
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
+                style="@style/ToolbarText" />
+
+            <com.moez.QKSMS.common.widget.QkEditText
+                android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
-                tools:text="Conversations" />
+                android:layout_marginEnd="16dp"
+                android:hint="@string/title_conversations"
+                android:textColorHint="?android:attr/textColorTertiary"
+                app:textSize="primary"
+                tools:textSize="16sp" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -84,6 +92,14 @@
             app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintEnd_toEndOf="parent"
             tools:backgroundTint="@color/tools_theme" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:background="@drawable/ab_shadow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <View
             android:id="@+id/bottom"

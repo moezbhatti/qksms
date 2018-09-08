@@ -20,13 +20,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/main_menu_search"
-        app:actionViewClass="com.moez.QKSMS.common.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
-
-    <item
         android:id="@+id/archive"
         android:icon="@drawable/ic_archive_black_24dp"
         android:title="@string/main_menu_archive"

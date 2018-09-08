@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
@@ -35,6 +36,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
@@ -47,7 +49,6 @@ import com.moez.QKSMS.common.util.extensions.scrapViews
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
-import com.moez.QKSMS.common.widget.SearchView
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
 import com.moez.QKSMS.repository.SyncRepository
@@ -70,7 +71,7 @@ class MainActivity : QkThemedActivity(), MainView {
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val activityResumedIntent: Subject<Unit> = PublishSubject.create()
-    override val queryChangedIntent: Subject<CharSequence> = PublishSubject.create()
+    override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent: Observable<Boolean> by lazy {
         drawerLayout
@@ -188,7 +189,9 @@ class MainActivity : QkThemedActivity(), MainView {
             else -> 0
         }
 
-        toolbar.menu.findItem(R.id.search)?.isVisible = state.page is Inbox && state.page.selected == 0 || state.page is Searching
+        toolbarSearch.setVisible(state.page is Inbox && state.page.selected == 0 || state.page is Searching)
+        toolbarTitle.setVisible(toolbarSearch.visibility != View.VISIBLE)
+
         toolbar.menu.findItem(R.id.archive)?.isVisible = state.page is Inbox && selectedConversations != 0
         toolbar.menu.findItem(R.id.unarchive)?.isVisible = state.page is Archived && selectedConversations != 0
         toolbar.menu.findItem(R.id.delete)?.isVisible = selectedConversations != 0
@@ -211,10 +214,7 @@ class MainActivity : QkThemedActivity(), MainView {
         when (state.page) {
             is Inbox -> {
                 showBackButton(state.page.selected > 0)
-                title = when (state.page.selected != 0) {
-                    true -> getString(R.string.main_title_selected, state.page.selected)
-                    false -> getString(R.string.main_title)
-                }
+                title = getString(R.string.main_title_selected, state.page.selected)
                 if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(recyclerView)
@@ -301,7 +301,8 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun clearSearch() {
-        toolbar.menu.findItem(R.id.search)?.collapseActionView()
+        dismissKeyboard()
+        toolbarSearch.text = null
     }
 
     override fun clearSelection() {
@@ -324,13 +325,6 @@ class MainActivity : QkThemedActivity(), MainView {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main, menu)
-
-        // Query changes
-        menu?.findItem(R.id.search)
-                ?.let { search -> search.actionView as? SearchView }
-                ?.queryChanged
-                ?.subscribe(queryChangedIntent)
-
         return super.onCreateOptionsMenu(menu)
     }
 
