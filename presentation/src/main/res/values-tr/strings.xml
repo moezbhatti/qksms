@@ -38,7 +38,7 @@
   <string name="main_title_selected">%d Seçili</string>
   <string name="main_menu_search">Arama</string>
   <string name="main_menu_clear">Temizle</string>
-  <string name="main_menu_archive">Arşivlenmiş</string>
+  <string name="main_menu_archive">Arşiv</string>
   <string name="main_menu_unarchive">Arşivden çıkar</string>
   <string name="main_menu_delete">Sil</string>
   <string name="main_menu_pin">Sabitle</string>
@@ -52,7 +52,7 @@
   <string name="main_message_results">%d mesaj</string>
   <string name="inbox_empty_text">Konuşmalarınız burada görünür</string>
   <string name="inbox_search_empty_text"> Sonuç Yok</string>
-  <string name="archived_empty_text">Arşivlenmiş konuşmalarınızı burada görünür</string>
+  <string name="archived_empty_text">Arşivlenmiş konuşmalarınız burada görünür</string>
   <string name="main_fab_cd">Yeni konuşma başlat</string>
   <string name="main_default_sms_title">Yine mesajlaşmayı seviyorum</string>
   <string name="main_default_sms_message">QKSMS varsayılan SMS uygulaması yap</string>
