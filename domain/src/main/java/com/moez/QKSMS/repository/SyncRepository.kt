@@ -26,7 +26,7 @@ interface SyncRepository {
 
     sealed class SyncProgress {
         class Idle : SyncProgress()
-        class Running(progress: Float) : SyncProgress()
+        data class Running(val max: Int, val progress: Int, val indeterminate: Boolean) : SyncProgress()
     }
 
     val syncProgress: Observable<SyncProgress>

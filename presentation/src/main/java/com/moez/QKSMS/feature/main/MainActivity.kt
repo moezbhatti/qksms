@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.main
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -103,6 +104,7 @@ class MainActivity : QkThemedActivity(), MainView {
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java] }
     private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.main_drawer_open_cd, 0) }
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
+    private val progressAnimator by lazy { ObjectAnimator.ofInt(syncingProgress, "progress", 0, 0) }
     private val archiveSnackbar by lazy {
         Snackbar.make(drawerLayout, R.string.toast_archived, Snackbar.LENGTH_LONG).apply {
             setAction(R.string.button_undo) { undoArchiveIntent.onNext(Unit) }
@@ -246,9 +248,20 @@ class MainActivity : QkThemedActivity(), MainView {
         if (drawerLayout.isDrawerOpen(Gravity.START) && !state.drawerOpen) drawerLayout.closeDrawer(Gravity.START)
         else if (!drawerLayout.isDrawerVisible(Gravity.START) && state.drawerOpen) drawerLayout.openDrawer(Gravity.START)
 
-        syncing.setVisible(state.syncing is SyncRepository.SyncProgress.Running)
-        snackbar.setVisible(state.syncing is SyncRepository.SyncProgress.Idle
-                && !state.defaultSms || !state.smsPermission || !state.contactPermission)
+        when (state.syncing) {
+            is SyncRepository.SyncProgress.Idle -> {
+                syncing.isVisible = false
+                snackbar.isVisible = !state.defaultSms || !state.smsPermission || !state.contactPermission
+            }
+
+            is SyncRepository.SyncProgress.Running -> {
+                syncing.isVisible = true
+                syncingProgress.max = state.syncing.max
+                progressAnimator.apply { setIntValues(syncingProgress.progress, state.syncing.progress) }.start()
+                syncingProgress.isIndeterminate = state.syncing.indeterminate
+                snackbar.isVisible = false
+            }
+        }
 
         when {
             !state.smsPermission -> {

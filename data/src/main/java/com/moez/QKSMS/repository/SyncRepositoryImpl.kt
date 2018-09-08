@@ -26,7 +26,6 @@ import android.telephony.PhoneNumberUtils
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.extensions.insertOrUpdate
 import com.moez.QKSMS.extensions.map
-import com.moez.QKSMS.filter.PhoneNumberFilter
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.mapper.CursorToContact
 import com.moez.QKSMS.mapper.CursorToConversation
@@ -55,7 +54,6 @@ class SyncRepositoryImpl @Inject constructor(
         private val cursorToRecipient: CursorToRecipient,
         private val cursorToContact: CursorToContact,
         private val keys: KeyManager,
-        private val phoneNumberFilter: PhoneNumberFilter,
         private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
@@ -75,7 +73,7 @@ class SyncRepositoryImpl @Inject constructor(
 
         // If the sync is already running, don't try to do another one
         if (syncProgress.blockingFirst() is SyncRepository.SyncProgress.Running) return
-        syncProgress.onNext(SyncRepository.SyncProgress.Running(0f))
+        syncProgress.onNext(SyncRepository.SyncProgress.Running(0, 0, true))
 
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
@@ -101,11 +99,25 @@ class SyncRepositoryImpl @Inject constructor(
 
         keys.reset()
 
+        val messageCursor = cursorToMessage.getMessagesCursor()
+        val conversationCursor = cursorToConversation.getConversationsCursor()
+        val recipientCursor = cursorToRecipient.getRecipientCursor()
+
+        val max = (messageCursor?.count ?: 0) +
+                (conversationCursor?.count ?: 0) +
+                (recipientCursor?.count ?: 0)
+
+        var progress = 0
+
 
         // Sync messages
-        cursorToMessage.getMessagesCursor()?.use { messageCursor ->
+        messageCursor?.use {
             val messageColumns = CursorToMessage.MessageColumns(messageCursor)
-            val messages = messageCursor.map { cursor -> cursorToMessage.map(Pair(cursor, messageColumns)) }
+            val messages = messageCursor.map { cursor ->
+                progress++
+                syncProgress.onNext(SyncRepository.SyncProgress.Running(max, progress, false))
+                cursorToMessage.map(Pair(cursor, messageColumns))
+            }
             realm.insertOrUpdate(messages)
         }
 
@@ -117,9 +129,13 @@ class SyncRepositoryImpl @Inject constructor(
                 .map { threadId -> PersistedData(threadId, false, true, false, "") }
 
         // Sync conversations
-        cursorToConversation.getConversationsCursor()?.use { conversationCursor ->
+        conversationCursor?.use {
             val conversations = conversationCursor
-                    .map { cursor -> cursorToConversation.map(cursor) }
+                    .map { cursor ->
+                        progress++
+                        syncProgress.onNext(SyncRepository.SyncProgress.Running(max, progress, false))
+                        cursorToConversation.map(cursor)
+                    }
 
             persistedData.forEach { data ->
                 val conversation = conversations.firstOrNull { conversation -> conversation.id == data.id }
@@ -145,19 +161,22 @@ class SyncRepositoryImpl @Inject constructor(
 
 
         // Sync recipients
-        cursorToRecipient.getRecipientCursor()?.use { recipientCursor ->
+        recipientCursor?.use {
             val contacts = realm.copyToRealm(getContacts())
             val recipients = recipientCursor
-                    .map { cursor -> cursorToRecipient.map(cursor) }
-                    .map { recipient ->
-                        recipient.apply {
+                    .map { cursor ->
+                        progress++
+                        syncProgress.onNext(SyncRepository.SyncProgress.Running(max, progress, false))
+                        cursorToRecipient.map(cursor).apply {
                             contact = contacts.firstOrNull { contact ->
-                                contact.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                                contact.numbers.any { PhoneNumberUtils.compare(address, it.address) }
                             }
                         }
                     }
             realm.insertOrUpdate(recipients)
         }
+
+        syncProgress.onNext(SyncRepository.SyncProgress.Running(0, 0, true))
 
 
         realm.insert(SyncLog())
