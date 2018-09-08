@@ -22,7 +22,9 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.Telephony.*
+import com.google.android.mms.pdu_alt.EncodedStringValue
 import com.google.android.mms.pdu_alt.PduHeaders
+import com.google.android.mms.pdu_alt.PduPersister
 import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.manager.PermissionManager
@@ -114,7 +116,11 @@ class CursorToMessageImpl @Inject constructor(
                     readReportString = cursor.getString(columnsMap.mmsReadReport) ?: ""
                     messageType = cursor.getInt(columnsMap.mmsMessageType)
                     mmsStatus = cursor.getInt(columnsMap.mmsStatus)
-                    subject = cursor.getString(columnsMap.mmsSubject) ?: ""
+                    val subjectCharset = cursor.getInt(columnsMap.mmsSubjectCharset)
+                    subject = cursor.getString(columnsMap.mmsSubject)
+                            ?.takeIf { it.isNotBlank() }
+                            ?.let(PduPersister::getBytes)
+                            ?.let { EncodedStringValue(subjectCharset, it).string } ?: ""
                     textContentType = ""
                     attachmentType = Message.AttachmentType.NOT_LOADED
 
