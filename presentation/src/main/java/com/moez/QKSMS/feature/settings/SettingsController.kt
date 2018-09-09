@@ -18,15 +18,13 @@
  */
 package com.moez.QKSMS.feature.settings
 
-import android.app.ProgressDialog
+import android.animation.ObjectAnimator
 import android.app.TimePickerDialog
 import android.content.Context
 import android.text.format.DateFormat
 import android.view.View
+import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
-import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
-import com.bluelinelabs.conductor.changehandler.VerticalChangeHandler
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
@@ -44,6 +42,7 @@ import com.moez.QKSMS.feature.settings.about.AboutController
 import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
 import com.moez.QKSMS.feature.themepicker.ThemePickerController
 import com.moez.QKSMS.injection.appComponent
+import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
@@ -70,14 +69,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
 
-    // TODO remove this
-    private val progressDialog by lazy {
-        ProgressDialog(activity).apply {
-            isIndeterminate = true
-            setCancelable(false)
-            setCanceledOnTouchOutside(false)
-        }
-    }
+    private val progressAnimator by lazy { ObjectAnimator.ofInt(syncingProgress, "progress", 0, 0) }
 
     init {
         appComponent.inject(this)
@@ -130,9 +122,6 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
 
     override fun render(state: SettingsState) {
-        if (progressDialog.isShowing && !state.syncing) progressDialog.dismiss()
-        else if (!progressDialog.isShowing && state.syncing) progressDialog.show()
-
         themePreview.setBackgroundTint(state.theme)
         night.summary = state.nightModeSummary
         nightModeDialog.adapter.selectedItem = state.nightModeId
@@ -160,6 +149,17 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
         mmsSize.summary = state.maxMmsSizeSummary
         mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId
+
+        when (state.syncProgress) {
+            is SyncRepository.SyncProgress.Idle -> syncingProgress.isVisible = false
+
+            is SyncRepository.SyncProgress.Running -> {
+                syncingProgress.isVisible = true
+                syncingProgress.max = state.syncProgress.max
+                progressAnimator.apply { setIntValues(syncingProgress.progress, state.syncProgress.progress) }.start()
+                syncingProgress.isIndeterminate = state.syncProgress.indeterminate
+            }
+        }
     }
 
     override fun showQksmsPlusSnackbar() {

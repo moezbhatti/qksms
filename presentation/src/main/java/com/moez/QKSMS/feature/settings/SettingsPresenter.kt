@@ -27,6 +27,7 @@ import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.interactor.SyncMessages
+import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
@@ -34,6 +35,7 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
@@ -44,7 +46,8 @@ class SettingsPresenter @Inject constructor(
         private val navigator: Navigator,
         private val nightModeManager: NightModeManager,
         private val prefs: Preferences,
-        private val syncMessages: SyncMessages
+        private val syncMessages: SyncMessages,
+        private val syncRepo: SyncRepository
 ) : QkPresenter<SettingsView, SettingsState>(SettingsState(theme = colors.theme().theme)) {
 
     init {
@@ -107,6 +110,11 @@ class SettingsPresenter @Inject constructor(
                     newState { copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
                 }
 
+        disposables += syncRepo.syncProgress
+                .sample(16, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .subscribe { syncProgress -> newState { copy(syncProgress = syncProgress) } }
+
         disposables += syncMessages
     }
 
@@ -155,12 +163,7 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.mmsSize -> view.showMmsSizePicker()
 
-                        R.id.sync -> {
-                            newState { copy(syncing = true) }
-                            syncMessages.execute(Unit) {
-                                newState { copy(syncing = false) }
-                            }
-                        }
+                        R.id.sync -> syncMessages.execute(Unit)
 
                         R.id.about -> view.showAbout()
                     }

@@ -186,6 +186,17 @@
             app:summary="@string/settings_sync_summary"
             app:title="@string/settings_sync_title" />
 
+        <ProgressBar
+            android:id="@+id/syncingProgress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="72dp"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
         <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/about"
             android:layout_width="match_parent"
