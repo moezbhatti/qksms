@@ -19,7 +19,6 @@
 package com.moez.QKSMS.feature.gallery
 
 import android.content.Context
-import android.content.Intent
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
@@ -33,44 +32,39 @@ import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
+import javax.inject.Named
 
 class GalleryViewModel @Inject constructor(
-        private val intent: Intent,
+        conversationRepo: ConversationRepository,
+        messageRepo: MessageRepository,
+        @Named("partId") private val partId: Long,
         private val context: Context,
-        private val conversationRepo: ConversationRepository,
-        private val messageRepo: MessageRepository,
         private val saveImage: SaveImage
 ) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
 
-    private val partIdFlowable = Flowable.just(intent)
-            .map { it.getLongExtra("partId", 0L) }
-            .filter { partId -> partId != 0L }
-
     init {
-        disposables += partIdFlowable
-                .mapNotNull { partId -> messageRepo.getPart(partId) }
-                .subscribe { part -> newState { copy(uri = part.getUri(), type = part.type) } }
-
-        disposables += partIdFlowable
-                .mapNotNull { partId -> messageRepo.getMessageForPart(partId) }
-                .mapNotNull { message -> conversationRepo.getConversation(message.threadId) }
-                .subscribe { conversation -> newState { copy(title = conversation.getTitle()) } }
+        disposables += Flowable.just(partId)
+                .mapNotNull(messageRepo::getMessageForPart)
+                .mapNotNull { message -> message.threadId }
+                .doOnNext { threadId -> newState { copy(parts = messageRepo.getPartsForConversation(threadId)) } }
+                .doOnNext { threadId -> newState { copy(title = conversationRepo.getConversation(threadId)?.getTitle()) } }
+                .subscribe()
     }
 
     override fun bindView(view: GalleryView) {
         super.bindView(view)
 
         // When the screen is touched, toggle the visibility of the navigation UI
-        view.screenTouchedIntent
+        view.screenTouched()
                 .withLatestFrom(state) { _, state -> state.navigationVisible }
                 .map { navigationVisible -> !navigationVisible }
                 .autoDisposable(view.scope())
                 .subscribe { navigationVisible -> newState { copy(navigationVisible = navigationVisible) } }
 
         // Save image to device
-        view.optionsItemSelectedIntent
+        view.optionsItemSelected()
                 .filter { itemId -> itemId == R.id.save }
-                .withLatestFrom(partIdFlowable.toObservable()) { _, partId -> partId }
+                .withLatestFrom(view.pageChanged()) { _, part -> part.id }
                 .autoDisposable(view.scope())
                 .subscribe { partId -> saveImage.execute(partId) { context.makeToast(R.string.gallery_toast_saved) } }
     }

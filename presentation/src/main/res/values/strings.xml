@@ -145,6 +145,7 @@
     <string name="info_unblock">Unblock</string>
     <string name="info_delete">Delete conversation</string>
 
+    <string name="gallery_error">Couldn\'t load media</string>
     <string name="gallery_toast_saved">Saved to gallery</string>
 
     <string name="backup_title">Backup and restore</string>

@@ -31,6 +31,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 
 var ViewGroup.animateLayoutChanges: Boolean
     get() = layoutTransition != null
@@ -103,6 +104,14 @@ fun View.forwardTouches(parent: View) {
             else -> v.onTouchEvent(event)
         }
     }
+}
+
+fun ViewPager.addOnPageChangeListener(listener: (Int) -> Unit) {
+    addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+        override fun onPageSelected(position: Int) {
+            listener(position)
+        }
+    })
 }
 
 fun RecyclerView.scrapViews() {
