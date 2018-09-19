@@ -301,6 +301,7 @@
 
     <string name="qkreply_menu_read">Mark read</string>
     <string name="qkreply_menu_call">Call</string>
+    <string name="qkreply_menu_delete">Delete</string>
     <string name="qkreply_menu_expand">Show more</string>
     <string name="qkreply_menu_collapse">Show less</string>
     <string name="qkreply_menu_view">Open conversation</string>

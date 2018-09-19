@@ -43,6 +43,10 @@
         android:title="@string/qkreply_menu_call" />
 
     <item
+        android:id="@+id/delete"
+        android:title="@string/qkreply_menu_delete" />
+
+    <item
         android:id="@+id/view"
         android:title="@string/qkreply_menu_view" />
 
