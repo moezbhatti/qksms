@@ -147,6 +147,7 @@
                 <action android:name="android.provider.action.EXTERNAL_PROVIDER_CHANGE" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.SendScheduledMessageReceiver" />
         <receiver android:name=".feature.widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -187,7 +188,6 @@
                 <action android:name="android.service.chooser.ChooserTargetService" />
             </intent-filter>
         </service>
-        <service android:name=".service.SendScheduledMessageService" />
         <service android:name=".service.SendSmsService" />
 
         <meta-data

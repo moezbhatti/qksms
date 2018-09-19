@@ -22,14 +22,14 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import com.moez.QKSMS.service.SendScheduledMessageService
+import com.moez.QKSMS.receiver.SendScheduledMessageReceiver
 import javax.inject.Inject
 
 class AlarmManagerImpl @Inject constructor(private val context: Context) : AlarmManager {
 
     override fun getScheduledMessageIntent(id: Long): PendingIntent {
-        val intent = Intent(context, SendScheduledMessageService::class.java).putExtra("id", id)
-        return PendingIntent.getService(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val intent = Intent(context, SendScheduledMessageReceiver::class.java).putExtra("id", id)
+        return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     override fun setAlarm(date: Long, intent: PendingIntent) {
