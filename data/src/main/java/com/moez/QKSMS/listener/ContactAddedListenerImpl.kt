@@ -25,7 +25,6 @@ import android.os.Handler
 import android.provider.ContactsContract
 import com.moez.QKSMS.repository.SyncRepository
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
@@ -43,11 +42,9 @@ class ContactAddedListenerImpl @Inject constructor(
         private val URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
     }
 
-    override fun listen(address: String): Single<*> {
-        val observable = ContactContentObserver(context).observable
+    override fun listen(address: String): Observable<*> {
+        return ContactContentObserver(context).observable
                 .filter { syncRepo.syncContact(address) }
-
-        return Single.fromObservable(observable)
     }
 
     private class ContactContentObserver(context: Context) : ContentObserver(Handler()) {
