@@ -51,7 +51,7 @@ class SendScheduledMessage @Inject constructor(
                     SendMessage.Params(message.subId, threadId, message.recipients, message.body, attachments)
                 }
                 .flatMap(sendMessage::buildObservable)
-                .doFinally { scheduledMessageRepo.deleteScheduledMessage(params) }
+                .doOnNext { scheduledMessageRepo.deleteScheduledMessage(params) }
     }
 
 }
