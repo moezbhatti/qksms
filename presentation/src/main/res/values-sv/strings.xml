@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="shortcut_compose_long_label">Ny konversation</string>
+  <string name="shortcut_compose_short_label">Skriv</string>
+  <string name="shortcut_compose_disabled_message">Genvägen inaktiverades</string>
   <string name="title_archived">Arkiverat</string>
   <string name="title_settings">Inställningar</string>
   <string name="title_notification_prefs">Aviseringar</string>
@@ -33,10 +33,8 @@
   <string name="menu_call">Ring</string>
   <string name="menu_info">Detaljer</string>
   <string name="menu_save">Spara till galleri</string>
-  <string name="main_title">Inkorg</string>
   <string name="main_drawer_open_cd">Öppna navigeringspanelen</string>
   <string name="main_title_selected">%d vald</string>
-  <string name="main_menu_search">Sök</string>
   <string name="main_menu_clear">Rensa</string>
   <string name="main_menu_archive">Arkiv</string>
   <string name="main_menu_unarchive">Avarkivera</string>
@@ -133,22 +131,23 @@
   <string name="info_block">Blockera</string>
   <string name="info_unblock">Avblockera</string>
   <string name="info_delete">Radera konversation</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Spara till galleri</string>
   <string name="backup_title">Säkerhetskopiera och återställ</string>
-  <string name="backup_backing_up">Backing up messages</string>
-  <string name="backup_restoring">Restoring from backup</string>
+  <string name="backup_backing_up">Säkerhetskopierar meddelandena</string>
+  <string name="backup_restoring">Återställer från säkerhetskopia</string>
   <string name="backup_last">Senaste säkerhetskopiering</string>
-  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_loading">Laddar&#8230;</string>
   <string name="backup_never">Aldrig</string>
   <string name="backup_restore_title">Återställ</string>
   <string name="backup_restore_summary">Välj en säkerhetskopia</string>
-  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_error_plus">Vänligen lås upp QKSMS+ för att använda säkerhetskopiera och återställ</string>
+  <string name="backup_restore_error_backup">Säkerhetskopiering pågår&#8230;</string>
+  <string name="backup_restore_error_restore">Återställning pågår&#8230;</string>
+  <string name="backup_restore_confirm_title">Återställ från säkerhetskopia</string>
+  <string name="backup_restore_confirm_message">Är du säker på att du vill återställa dina meddelanden från den här säkerhetskopian?</string>
+  <string name="backup_restore_stop_title">Stoppa återställningen</string>
+  <string name="backup_restore_stop_message">Meddelanden som redan har blivit återställda kommer att stanna kvar i din enhet</string>
   <string name="backup_restore_dialog_title">Säkerhetskopior</string>
   <string name="backup_restore_dialog_empty">Inga säkerhetskopior kunde hittas</string>
   <plurals name="backup_message_count">
@@ -157,12 +156,12 @@
   </plurals>
   <string name="backup_disclaimer">För närvarande så stöds endast SMS av Säkerhetskopiera och Återställ. MMS-stöd och schemalagda säkerhetskopieringar kommer att dyka upp inom kort!</string>
   <string name="backup_now">Säkerhetskopiera nu</string>
-  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-  <string name="backup_progress_running">%d/%d messages</string>
-  <string name="backup_progress_saving">Saving backup&#8230;</string>
-  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
-  <string name="backup_notification_channel_name">Backup and restore</string>
+  <string name="backup_progress_parsing">Tolkar säkerhetskopieringen&#8230;</string>
+  <string name="backup_progress_running">%d/%d meddelanden</string>
+  <string name="backup_progress_saving">Sparar säkerhetskopian&#8230;</string>
+  <string name="backup_progress_syncing">Synkroniserar meddelandena&#8230;</string>
+  <string name="backup_progress_finished">Avslutad!</string>
+  <string name="backup_notification_channel_name">Säkerhetskopiera och återställ</string>
   <string name="scheduled_title">Schemalagda</string>
   <string name="scheduled_empty_description">Skicka ett meddelande automatiskt i det exakta ögonblicket som du önskar</string>
   <string name="scheduled_empty_message_1">Hi! När var din födelsedag igen?</string>
@@ -276,6 +275,7 @@
   <string name="widget_more">Visa fler konversationer</string>
   <string name="qkreply_menu_read">Markera som läst</string>
   <string name="qkreply_menu_call">Ring</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Visa mer</string>
   <string name="qkreply_menu_collapse">Visa färre</string>
   <string name="qkreply_menu_view">Öppna konversation</string>
@@ -293,7 +293,7 @@
   <string name="button_cancel">Avbryt</string>
   <string name="button_delete">Radera</string>
   <string name="button_save">Spara</string>
-  <string name="button_stop">Stop</string>
+  <string name="button_stop">Stoppa</string>
   <string name="button_more">Mer</string>
   <string name="button_set">Ställ in</string>
   <string name="button_unblock">Avblockera</string>

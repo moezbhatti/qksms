@@ -33,10 +33,8 @@
   <string name="menu_call">Зателефонувати</string>
   <string name="menu_info">Деталі</string>
   <string name="menu_save">Зберегти в галерії</string>
-  <string name="main_title">Вхідні</string>
   <string name="main_drawer_open_cd">Відкрити панель навігації</string>
   <string name="main_title_selected">Обрано: %d</string>
-  <string name="main_menu_search">Пошук</string>
   <string name="main_menu_clear">Очистити</string>
   <string name="main_menu_archive">Архівувати</string>
   <string name="main_menu_unarchive">Розархівувати</string>
@@ -135,6 +133,7 @@
   <string name="info_block">Заблокувати</string>
   <string name="info_unblock">Розблокувати</string>
   <string name="info_delete">Видалити бесіду</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Зберегти до галереї</string>
   <string name="backup_title">Резервне копіювання та відновлення</string>
   <string name="backup_backing_up">Резервне копіювання повідомлень</string>
@@ -280,6 +279,7 @@
   <string name="widget_more">Переглянути більше бесід</string>
   <string name="qkreply_menu_read">Позначити як прочитане</string>
   <string name="qkreply_menu_call">Зателефонувати</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Показати більше</string>
   <string name="qkreply_menu_collapse">Показати меньше</string>
   <string name="qkreply_menu_view">Відкрити бесіду</string>

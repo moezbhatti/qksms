@@ -33,10 +33,8 @@
   <string name="menu_call">اتصال</string>
   <string name="menu_info">تفاصيل</string>
   <string name="menu_save">حفظ إلى المعرض</string>
-  <string name="main_title">الوارد</string>
   <string name="main_drawer_open_cd">فتح درج التنقل</string>
   <string name="main_title_selected">%d محددة</string>
-  <string name="main_menu_search">بحث</string>
   <string name="main_menu_clear">مسح</string>
   <string name="main_menu_archive">أرشفة</string>
   <string name="main_menu_unarchive">إلغاء الأرشفة</string>
@@ -137,6 +135,7 @@
   <string name="info_block">حظر</string>
   <string name="info_unblock">إلغاء الحظر</string>
   <string name="info_delete">حذف المحادثة</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">تم الحفظ في المعرض</string>
   <string name="backup_title">النسخ الاحتياطي والاستعادة</string>
   <string name="backup_backing_up">النسخ الاحتياطي للرسائل</string>
@@ -285,6 +284,7 @@
   <string name="widget_more">عرض المزيد من المحادثات</string>
   <string name="qkreply_menu_read">علّمها مقروءة</string>
   <string name="qkreply_menu_call">مكالمة</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">إظهار المزيد</string>
   <string name="qkreply_menu_collapse">إظهار أقل</string>
   <string name="qkreply_menu_view">فتح المحادثة</string>

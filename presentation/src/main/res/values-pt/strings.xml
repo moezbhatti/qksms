@@ -33,10 +33,8 @@
   <string name="menu_call">Ligar</string>
   <string name="menu_info">Detalhes</string>
   <string name="menu_save">Guardar na galeria</string>
-  <string name="main_title">Caixa de entrada</string>
   <string name="main_drawer_open_cd">Abrir menu de navegação</string>
   <string name="main_title_selected">%d selecionada(s)</string>
-  <string name="main_menu_search">Pesquisar</string>
   <string name="main_menu_clear">Limpar</string>
   <string name="main_menu_archive">Arquivar</string>
   <string name="main_menu_unarchive">Retirar do arquivo</string>
@@ -133,6 +131,7 @@
   <string name="info_block">Bloquear</string>
   <string name="info_unblock">Desbloquear</string>
   <string name="info_delete">Apagar conversa</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Guardada na galeria</string>
   <string name="backup_title">Backup e restauro</string>
   <string name="backup_backing_up">Backup de mensagens</string>
@@ -276,6 +275,7 @@
   <string name="widget_more">Ver mais conversas</string>
   <string name="qkreply_menu_read">Marcar como lida</string>
   <string name="qkreply_menu_call">Ligar</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Mostrar mais</string>
   <string name="qkreply_menu_collapse">Mostrar menos</string>
   <string name="qkreply_menu_view">Abrir conversa</string>

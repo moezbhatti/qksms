@@ -33,10 +33,8 @@
   <string name="menu_call">কল করুন</string>
   <string name="menu_info">বিস্তারিত</string>
   <string name="menu_save">গ্যালারীতে সেভ করুন</string>
-  <string name="main_title">ইনবক্স</string>
   <string name="main_drawer_open_cd">নেভিগেশন ড্রয়ার খুলুন </string>
   <string name="main_title_selected">নির্বাচিত %d</string>
-  <string name="main_menu_search">সার্চ</string>
   <string name="main_menu_clear">ক্লিয়ার</string>
   <string name="main_menu_archive">আর্কাইভ</string>
   <string name="main_menu_unarchive">আনআর্কাইভ</string>
@@ -133,6 +131,7 @@
   <string name="info_block">ব্লক করুন</string>
   <string name="info_unblock">আনব্লক করুন</string>
   <string name="info_delete">কথোপকথন মুছে ফেলুন</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">গ্যালারীতে সেভ করুন</string>
   <string name="backup_title">ব্যাকআপ ও পুনরুদ্ধার</string>
   <string name="backup_backing_up">মেসেজ ব্যাকআপ হচ্ছে </string>
@@ -276,6 +275,7 @@
   <string name="widget_more">আরও কথোপকথন প্রদর্শন করুন</string>
   <string name="qkreply_menu_read">পড়া চিহ্নিত করুন</string>
   <string name="qkreply_menu_call">কল করুন</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">আরও দেখান</string>
   <string name="qkreply_menu_collapse">আরও কম প্রদর্শন করুন</string>
   <string name="qkreply_menu_view">চলমান কথোপকথন</string>

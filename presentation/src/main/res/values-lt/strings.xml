@@ -33,10 +33,8 @@
   <string name="menu_call">Skambinti</string>
   <string name="menu_info">Dėtalės</string>
   <string name="menu_save">Save to gallery</string>
-  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d pasirinkta(s)</string>
-  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">Ištrinti</string>
   <string name="main_menu_archive">Archyvuoti</string>
   <string name="main_menu_unarchive">Išarchyvuoti</string>
@@ -135,6 +133,7 @@
   <string name="info_block">Blokuoti</string>
   <string name="info_unblock">Atblokuoti</string>
   <string name="info_delete">Ištrinti pokalbį</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="backup_title">Backup and restore</string>
   <string name="backup_backing_up">Backing up messages</string>
@@ -280,6 +279,7 @@
   <string name="widget_more">Žiūrėti daugiau pokalbių</string>
   <string name="qkreply_menu_read">Žymėti skaitytą</string>
   <string name="qkreply_menu_call">Skambinti</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Rodyti daugiau</string>
   <string name="qkreply_menu_collapse">Rodyti mažiau</string>
   <string name="qkreply_menu_view">Atidaryti pokalbį</string>

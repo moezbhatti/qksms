@@ -33,10 +33,8 @@
   <string name="menu_call">Soita</string>
   <string name="menu_info">Tiedot</string>
   <string name="menu_save">Tallenna galleriaan</string>
-  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Avaa navigointilaatikko</string>
   <string name="main_title_selected">%d valittu</string>
-  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">Tyhjä</string>
   <string name="main_menu_archive">Arkistoi</string>
   <string name="main_menu_unarchive">Poista arkistosta</string>
@@ -133,6 +131,7 @@
   <string name="info_block">Estä</string>
   <string name="info_unblock">Poista esto</string>
   <string name="info_delete">Poista keskustelu</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Tallennettu galleriaan</string>
   <string name="backup_title">Backup and restore</string>
   <string name="backup_backing_up">Backing up messages</string>
@@ -276,6 +275,7 @@
   <string name="widget_more">Näytä lisää keskusteluja</string>
   <string name="qkreply_menu_read">Merkitse luetuksi</string>
   <string name="qkreply_menu_call">Soita</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Näytä lisää</string>
   <string name="qkreply_menu_collapse">Näytä vähemmän</string>
   <string name="qkreply_menu_view">Avaa keskustelu</string>

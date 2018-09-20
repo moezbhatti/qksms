@@ -33,10 +33,8 @@
   <string name="menu_call">Appeler</string>
   <string name="menu_info">Détails</string>
   <string name="menu_save">Enregistrer dans la galerie</string>
-  <string name="main_title">Boite de réception</string>
   <string name="main_drawer_open_cd">Ouvrir le tiroir de navigation</string>
   <string name="main_title_selected">%d sélectionnée</string>
-  <string name="main_menu_search">Rechercher</string>
   <string name="main_menu_clear">Effacer</string>
   <string name="main_menu_archive">Archiver</string>
   <string name="main_menu_unarchive">Désarchiver</string>
@@ -133,10 +131,11 @@
   <string name="info_block">Bloquer</string>
   <string name="info_unblock">Débloquer</string>
   <string name="info_delete">Supprimer la conversation</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Enregistré dans la galerie</string>
   <string name="backup_title">Sauvegarde et restauration</string>
   <string name="backup_backing_up">Sauvegarde des messages</string>
-  <string name="backup_restoring">Restauration de sauvegarde</string>
+  <string name="backup_restoring">Restaurer à partir d\'une sauvegarde</string>
   <string name="backup_last">Dernière sauvegarde</string>
   <string name="backup_loading">Chargement&#8230;</string>
   <string name="backup_never">Jamais</string>
@@ -276,6 +275,7 @@
   <string name="widget_more">Afficher plus de conversations</string>
   <string name="qkreply_menu_read">Marquer comme lu</string>
   <string name="qkreply_menu_call">Appeler</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Afficher plus</string>
   <string name="qkreply_menu_collapse">Afficher moins</string>
   <string name="qkreply_menu_view">Ouvrir la conversation</string>

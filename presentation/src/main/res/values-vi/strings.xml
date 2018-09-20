@@ -33,10 +33,8 @@
   <string name="menu_call">Cuộc gọi</string>
   <string name="menu_info">Chi tiết</string>
   <string name="menu_save">Lưu vào bộ sưu tập</string>
-  <string name="main_title">Hộp thư đến</string>
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d đã chọn</string>
-  <string name="main_menu_search">Tìm kiếm</string>
   <string name="main_menu_clear">Dọn sạch</string>
   <string name="main_menu_archive">Lưu trữ</string>
   <string name="main_menu_unarchive">Hủy lưu trữ</string>
@@ -132,6 +130,7 @@
   <string name="info_block">Chặn</string>
   <string name="info_unblock">Bỏ chặn</string>
   <string name="info_delete">Xóa hội thoại</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="backup_title">Backup and restore</string>
   <string name="backup_backing_up">Backing up messages</string>
@@ -274,6 +273,7 @@
   <string name="widget_more">Xem thêm các cuộc hội thoại</string>
   <string name="qkreply_menu_read">Đánh dấu đã đọc</string>
   <string name="qkreply_menu_call">Đàm thoại</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Hiển thị nhiều hơn</string>
   <string name="qkreply_menu_collapse">Hiển thị ít hơn</string>
   <string name="qkreply_menu_view">Mở hội thoại</string>

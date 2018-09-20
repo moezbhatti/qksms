@@ -33,10 +33,8 @@
   <string name="menu_call">Позвонить</string>
   <string name="menu_info">Подробности</string>
   <string name="menu_save">Сохранить в галерее</string>
-  <string name="main_title">Входящие</string>
   <string name="main_drawer_open_cd">Открыть боковое меню</string>
   <string name="main_title_selected">%d выбран(о)</string>
-  <string name="main_menu_search">Поиск</string>
   <string name="main_menu_clear">Очистить</string>
   <string name="main_menu_archive">Архивировать</string>
   <string name="main_menu_unarchive">Разархивировать</string>
@@ -135,6 +133,7 @@
   <string name="info_block">Заблокировать</string>
   <string name="info_unblock">Разблокировать</string>
   <string name="info_delete">Удалить беседу</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Сохранено в галерее</string>
   <string name="backup_title">Бэкап и восстановление</string>
   <string name="backup_backing_up">Резервное копирование сообщений</string>
@@ -280,6 +279,7 @@
   <string name="widget_more">Посмотреть больше бесед</string>
   <string name="qkreply_menu_read">Отметить прочитанным</string>
   <string name="qkreply_menu_call">Позвонить</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Показать больше</string>
   <string name="qkreply_menu_collapse">Показать меньше</string>
   <string name="qkreply_menu_view">Открыть беседу</string>

@@ -33,10 +33,8 @@
   <string name="menu_call">Volať</string>
   <string name="menu_info">Podrobnosti</string>
   <string name="menu_save">Uložiť do galérie</string>
-  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d vybraných</string>
-  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">Vymazať</string>
   <string name="main_menu_archive">Archivovať</string>
   <string name="main_menu_unarchive">Unarchive</string>
@@ -135,6 +133,7 @@
   <string name="info_block">Block</string>
   <string name="info_unblock">Unblock</string>
   <string name="info_delete">Delete conversation</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="backup_title">Backup and restore</string>
   <string name="backup_backing_up">Backing up messages</string>
@@ -280,6 +279,7 @@
   <string name="widget_more">View more conversations</string>
   <string name="qkreply_menu_read">Mark read</string>
   <string name="qkreply_menu_call">Call</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Show more</string>
   <string name="qkreply_menu_collapse">Show less</string>
   <string name="qkreply_menu_view">Open conversation</string>

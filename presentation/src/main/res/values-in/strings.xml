@@ -33,10 +33,8 @@
   <string name="menu_call">Panggil</string>
   <string name="menu_info">Detail</string>
   <string name="menu_save">Save to gallery</string>
-  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d selected</string>
-  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">Clear</string>
   <string name="main_menu_archive">Archive</string>
   <string name="main_menu_unarchive">Unarchive</string>
@@ -132,6 +130,7 @@
   <string name="info_block">Blokir</string>
   <string name="info_unblock">Buka blokir</string>
   <string name="info_delete">Hapus percakapan</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="backup_title">Backup and restore</string>
   <string name="backup_backing_up">Backing up messages</string>
@@ -274,6 +273,7 @@
   <string name="widget_more">Lihat lebih banyak percakapan</string>
   <string name="qkreply_menu_read">Mark read</string>
   <string name="qkreply_menu_call">Panggil</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Lebih banyak</string>
   <string name="qkreply_menu_collapse">Lebih sedikit</string>
   <string name="qkreply_menu_view">Buka percakapan</string>

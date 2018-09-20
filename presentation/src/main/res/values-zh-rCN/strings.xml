@@ -33,10 +33,8 @@
   <string name="menu_call">致电</string>
   <string name="menu_info">详情</string>
   <string name="menu_save">保存到图库</string>
-  <string name="main_title">收件箱</string>
   <string name="main_drawer_open_cd">打开导航栏</string>
   <string name="main_title_selected">已选择 %d 项</string>
-  <string name="main_menu_search">搜索</string>
   <string name="main_menu_clear">清除</string>
   <string name="main_menu_archive">存档</string>
   <string name="main_menu_unarchive">取消存档</string>
@@ -132,6 +130,7 @@
   <string name="info_block">拦截</string>
   <string name="info_unblock">取消拦截</string>
   <string name="info_delete">删除对话</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">保存到图库</string>
   <string name="backup_title">备份和还原</string>
   <string name="backup_backing_up">正在备份消息</string>
@@ -274,6 +273,7 @@
   <string name="widget_more">查看更多对话</string>
   <string name="qkreply_menu_read">标记为已读</string>
   <string name="qkreply_menu_call">致电</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">显示更多</string>
   <string name="qkreply_menu_collapse">收起</string>
   <string name="qkreply_menu_view">打开会话</string>

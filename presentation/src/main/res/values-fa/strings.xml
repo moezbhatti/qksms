@@ -33,10 +33,8 @@
   <string name="menu_call">تماس</string>
   <string name="menu_info">جزئیات</string>
   <string name="menu_save">Save to gallery</string>
-  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d selected</string>
-  <string name="main_menu_search">جستجو</string>
   <string name="main_menu_clear">پاکسازی</string>
   <string name="main_menu_archive">بایگانی</string>
   <string name="main_menu_unarchive">بیرون آوردن از بایگانی</string>
@@ -133,6 +131,7 @@
   <string name="info_block">بلاک</string>
   <string name="info_unblock">آنبلاک</string>
   <string name="info_delete">حذف مکالمه</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">ذخیره در گالری</string>
   <string name="backup_title">پشتیبان گیری و بازیابی</string>
   <string name="backup_backing_up">پشتیبان گیری از پیام‌ها</string>
@@ -276,6 +275,7 @@
   <string name="widget_more">مشاهده مکالمات بیشتر</string>
   <string name="qkreply_menu_read">خوانده شده</string>
   <string name="qkreply_menu_call">تماس</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">ادامه</string>
   <string name="qkreply_menu_collapse">کمتر</string>
   <string name="qkreply_menu_view">بازکردن پیام</string>

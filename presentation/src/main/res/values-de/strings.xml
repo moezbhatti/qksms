@@ -33,10 +33,8 @@
   <string name="menu_call">Anrufen</string>
   <string name="menu_info">Details</string>
   <string name="menu_save">In Galerie speichern</string>
-  <string name="main_title">Posteingang</string>
   <string name="main_drawer_open_cd">Öffne den Navigation Drawer</string>
   <string name="main_title_selected">%d ausgewählt</string>
-  <string name="main_menu_search">Suchen</string>
   <string name="main_menu_clear">Zurücksetzen</string>
   <string name="main_menu_archive">Archivieren</string>
   <string name="main_menu_unarchive">Wiederherstellen</string>
@@ -133,6 +131,7 @@
   <string name="info_block">Blockieren</string>
   <string name="info_unblock">Entsperren</string>
   <string name="info_delete">Unterhaltung löschen</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">In Galerie gespeichert</string>
   <string name="backup_title">Sichern und Wiederherstellen</string>
   <string name="backup_backing_up">Sichere Nachrichten</string>
@@ -276,6 +275,7 @@
   <string name="widget_more">Weitere Unterhaltungen anzeigen</string>
   <string name="qkreply_menu_read">Als gelesen markieren</string>
   <string name="qkreply_menu_call">Anrufen</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Mehr anzeigen</string>
   <string name="qkreply_menu_collapse">Weniger anzeigen</string>
   <string name="qkreply_menu_view">Unterhaltung öffnen</string>

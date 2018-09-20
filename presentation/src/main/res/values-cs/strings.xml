@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="shortcut_compose_long_label">Nová konverzace</string>
+  <string name="shortcut_compose_short_label">Nová zpráva</string>
+  <string name="shortcut_compose_disabled_message">Zkratka vypnuta</string>
   <string name="title_archived">Archivováno</string>
   <string name="title_settings">Nastavení</string>
   <string name="title_notification_prefs">Oznámení</string>
@@ -33,10 +33,8 @@
   <string name="menu_call">Volat</string>
   <string name="menu_info">Podrobnosti</string>
   <string name="menu_save">Uložit do galerie</string>
-  <string name="main_title">Příchozí zprávy</string>
   <string name="main_drawer_open_cd">Otevřít menu</string>
   <string name="main_title_selected">Vybráno: %d</string>
-  <string name="main_menu_search">Hledat</string>
   <string name="main_menu_clear">Vymazat</string>
   <string name="main_menu_archive">Archivovat</string>
   <string name="main_menu_unarchive">Obnovit z archivu</string>
@@ -135,22 +133,23 @@
   <string name="info_block">Blokovat</string>
   <string name="info_unblock">Odblokovat</string>
   <string name="info_delete">Odstranit konverzaci</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Uloženo do galerie</string>
   <string name="backup_title">Záloha a obnovení</string>
-  <string name="backup_backing_up">Backing up messages</string>
-  <string name="backup_restoring">Restoring from backup</string>
+  <string name="backup_backing_up">Zálohování zpráv</string>
+  <string name="backup_restoring">Obnovení ze zálohy</string>
   <string name="backup_last">Poslední záloha</string>
-  <string name="backup_loading">Loading&#8230;</string>
+  <string name="backup_loading">Načítání&#8230;</string>
   <string name="backup_never">Nikdy</string>
   <string name="backup_restore_title">Obnovit</string>
   <string name="backup_restore_summary">Vybrat zálohu</string>
-  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+  <string name="backup_restore_error_plus">Odemkněte QKSMS+ pro použití funkce zálohování a obnovení</string>
+  <string name="backup_restore_error_backup">Zálohování&#8230;</string>
+  <string name="backup_restore_error_restore">Probíhá obnova&#8230;</string>
+  <string name="backup_restore_confirm_title">Obnovit ze zálohy</string>
+  <string name="backup_restore_confirm_message">Opravdu chcete obnovit všechny vaše zprávy z této zálohy?</string>
+  <string name="backup_restore_stop_title">Zastavit obnovu</string>
+  <string name="backup_restore_stop_message">Dříve obnovené zprávy zůstanou ve vašem zařízení</string>
   <string name="backup_restore_dialog_title">Zálohy</string>
   <string name="backup_restore_dialog_empty">Nenalezeny žádné zálohy</string>
   <plurals name="backup_message_count">
@@ -161,12 +160,12 @@
   </plurals>
   <string name="backup_disclaimer">Momentálně jsou pro zálohování a obnovení podporovány pouze SMS. MMS podpora a plánované zálohy budou přidány již brzy!</string>
   <string name="backup_now">Zálohovat nyní</string>
-  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-  <string name="backup_progress_running">%d/%d messages</string>
-  <string name="backup_progress_saving">Saving backup&#8230;</string>
-  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
-  <string name="backup_notification_channel_name">Backup and restore</string>
+  <string name="backup_progress_parsing">Analyzování zálohy&#8230;</string>
+  <string name="backup_progress_running">%d/%d zpráv</string>
+  <string name="backup_progress_saving">Ukládání zálohy&#8230;</string>
+  <string name="backup_progress_syncing">Synchronizace zpráv&#8230;</string>
+  <string name="backup_progress_finished">Hotovo!</string>
+  <string name="backup_notification_channel_name">Zálohování a obnovení</string>
   <string name="scheduled_title">Naplánováno</string>
   <string name="scheduled_empty_description">Automaticky odeslat zprávu v přesný okamžik, který chcete</string>
   <string name="scheduled_empty_message_1">Zdar! Kdy máš narozeniny?</string>
@@ -258,8 +257,8 @@
   <string name="qksms_plus_coming_soon">Připravujeme</string>
   <string name="qksms_plus_themes_title">Prémiová témata</string>
   <string name="qksms_plus_themes_summary">Odemkněte nádherné barvy, které nejsou na paletě Material designu</string>
-  <string name="qksms_plus_emoji_title">Vlastní auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Vytvořit zkratky pro vlastní auto-emoji</string>
+  <string name="qksms_plus_emoji_title">Vlastní automatické emoji</string>
+  <string name="qksms_plus_emoji_summary">Vytvořte si zkratky pro vlastní automatické emoji</string>
   <string name="qksms_plus_backup_title">Zálohování zpráv</string>
   <string name="qksms_plus_backup_summary">Zálohujte automaticky své zprávy. Už se nemusíte obávat ztráty historie zpráv při ztrátě nebo výměně telefonu</string>
   <string name="qksms_plus_scheduled_title">Plánované zprávy</string>
@@ -269,7 +268,7 @@
   <string name="qksms_plus_night_title">Automatický noční režim</string>
   <string name="qksms_plus_night_summary">Zapnutí nočního režimu podle denní doby</string>
   <string name="qksms_plus_blacklist_title">Pokročilé blokování</string>
-  <string name="qksms_plus_blacklist_summary">Blokovat zprávy, které obsahují klíčová slova nebo vzory</string>
+  <string name="qksms_plus_blacklist_summary">Blokování zpráv dle klíčových slov nebo vzorů</string>
   <string name="qksms_plus_forward_title">Automatické přeposílání</string>
   <string name="qksms_plus_forward_summary">Automatické přeposílání zpráv od určitých odesílatelů</string>
   <string name="qksms_plus_respond_title">Automatická odpověď</string>
@@ -280,6 +279,7 @@
   <string name="widget_more">Zobrazit další konverzace</string>
   <string name="qkreply_menu_read">Označit jako přečtené</string>
   <string name="qkreply_menu_call">Volat</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Zobrazit více</string>
   <string name="qkreply_menu_collapse">Zobrazit méně</string>
   <string name="qkreply_menu_view">Otevřít konverzaci</string>
@@ -297,7 +297,7 @@
   <string name="button_cancel">Zrušit</string>
   <string name="button_delete">Odstranit</string>
   <string name="button_save">Uložit</string>
-  <string name="button_stop">Stop</string>
+  <string name="button_stop">Zastavit</string>
   <string name="button_more">Více</string>
   <string name="button_set">Nastavit</string>
   <string name="button_unblock">Odblokovat</string>

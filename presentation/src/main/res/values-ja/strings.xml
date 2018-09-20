@@ -33,10 +33,8 @@
   <string name="menu_call">通話</string>
   <string name="menu_info">詳細</string>
   <string name="menu_save">Save to gallery</string>
-  <string name="main_title">Inbox</string>
   <string name="main_drawer_open_cd">Open navigation drawer</string>
   <string name="main_title_selected">%d selected</string>
-  <string name="main_menu_search">Search</string>
   <string name="main_menu_clear">Clear</string>
   <string name="main_menu_archive">Archive</string>
   <string name="main_menu_unarchive">Unarchive</string>
@@ -132,6 +130,7 @@
   <string name="info_block">ブロック</string>
   <string name="info_unblock">ブロックを解除</string>
   <string name="info_delete">会話を削除</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Saved to gallery</string>
   <string name="backup_title">Backup and restore</string>
   <string name="backup_backing_up">Backing up messages</string>
@@ -274,6 +273,7 @@
   <string name="widget_more">さらに会話を表示</string>
   <string name="qkreply_menu_read">既読にする</string>
   <string name="qkreply_menu_call">通話</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">表示を増やす</string>
   <string name="qkreply_menu_collapse">表示を減らす</string>
   <string name="qkreply_menu_view">会話を開く</string>

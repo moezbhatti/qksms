@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+  <string name="shortcut_compose_long_label">Nowa rozmowa</string>
+  <string name="shortcut_compose_short_label">Napisz</string>
+  <string name="shortcut_compose_disabled_message">Skrót wyłączony</string>
   <string name="title_archived">Archiwum</string>
   <string name="title_settings">Ustawienia</string>
   <string name="title_notification_prefs">Powiadomienia</string>
@@ -33,10 +33,8 @@
   <string name="menu_call">Zadzwoń</string>
   <string name="menu_info">Szczegóły</string>
   <string name="menu_save">Zapisz w galerii</string>
-  <string name="main_title">Skrzynka odbiorcza</string>
   <string name="main_drawer_open_cd">Otwórz panel nawigacyjny</string>
   <string name="main_title_selected">%d wybrano</string>
-  <string name="main_menu_search">Szukaj</string>
   <string name="main_menu_clear">Wyczyść</string>
   <string name="main_menu_archive">Archiwizuj</string>
   <string name="main_menu_unarchive">Przywróć</string>
@@ -135,6 +133,7 @@
   <string name="info_block">Zablokuj</string>
   <string name="info_unblock">Odblokuj</string>
   <string name="info_delete">Usuń rozmowę</string>
+  <string name="gallery_error">Couldn\'t load media</string>
   <string name="gallery_toast_saved">Zapisano w galerii</string>
   <string name="backup_title">Kopia zapasowa i przywracanie</string>
   <string name="backup_backing_up">Tworzenie kopii zapasowej wiadomości</string>
@@ -280,6 +279,7 @@
   <string name="widget_more">Zobacz więcej konwersacji</string>
   <string name="qkreply_menu_read">Oznacz jako przeczytane</string>
   <string name="qkreply_menu_call">Zadzwoń</string>
+  <string name="qkreply_menu_delete">Delete</string>
   <string name="qkreply_menu_expand">Pokaż więcej</string>
   <string name="qkreply_menu_collapse">Pokaż mniej</string>
   <string name="qkreply_menu_view">Otwórz konwersację</string>
