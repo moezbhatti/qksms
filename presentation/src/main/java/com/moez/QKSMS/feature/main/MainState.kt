@@ -30,9 +30,9 @@ data class MainState(
         val upgraded: Boolean = true,
         val showRating: Boolean = false,
         val syncing: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle(),
-        val defaultSms: Boolean = false,
-        val smsPermission: Boolean = false,
-        val contactPermission: Boolean = false
+        val defaultSms: Boolean = true,
+        val smsPermission: Boolean = true,
+        val contactPermission: Boolean = true
 )
 
 sealed class MainPage
