@@ -32,7 +32,10 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
@@ -40,7 +43,7 @@ import javax.inject.Inject
 
 class ConversationItemTouchCallback @Inject constructor(
         colors: Colors,
-        lifecycle: Lifecycle,
+        disposables: CompositeDisposable,
         prefs: Preferences,
         private val context: Context
 ) : ItemTouchHelper.SimpleCallback(0, 0) {
@@ -61,11 +64,12 @@ class ConversationItemTouchCallback @Inject constructor(
     private val iconLength = 24.dpToPx(context)
 
     init {
-        colors.themeObservable()
-                .autoDisposable(lifecycle.scope())
-                .subscribe { theme -> paint.color = theme.theme }
+        disposables += colors.themeObservable()
+                .doOnNext { theme -> paint.color = theme.theme }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
 
-        Observables
+        disposables += Observables
                 .combineLatest(prefs.swipeRight.asObservable(), prefs.swipeLeft.asObservable(), colors.themeObservable()) { right, left, theme ->
                     rightAction = right
                     rightIcon = iconForAction(right, theme.textPrimary)
@@ -74,7 +78,7 @@ class ConversationItemTouchCallback @Inject constructor(
                     setDefaultSwipeDirs((if (right == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.RIGHT)
                             or (if (left == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.LEFT))
                 }
-                .autoDisposable(lifecycle.scope())
+                .subscribeOn(Schedulers.io())
                 .subscribe()
     }
 
