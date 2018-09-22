@@ -36,13 +36,13 @@ import kotlinx.android.synthetic.main.search_list_item.view.*
 import javax.inject.Inject
 
 class SearchAdapter @Inject constructor(
+        colors: Colors,
         private val context: Context,
-        private val colors: Colors,
         private val dateFormatter: DateFormatter,
         private val navigator: Navigator
 ) : QkAdapter<SearchResult>() {
 
-    private var highlightColor: Int = colors.theme().highlight
+    private val highlightColor: Int by lazy { colors.theme().highlight }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
