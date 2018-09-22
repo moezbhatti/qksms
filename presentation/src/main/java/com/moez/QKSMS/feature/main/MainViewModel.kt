@@ -120,18 +120,19 @@ class MainViewModel @Inject constructor(
         }
 
         // If the default SMS state or permission states change, update the ViewState
-        Observables.combineLatest(
-                view.activityResumedIntent.map { permissionManager.isDefaultSms() }.distinctUntilChanged(),
-                view.activityResumedIntent.map { permissionManager.hasReadSms() }.distinctUntilChanged(),
-                view.activityResumedIntent.map { permissionManager.hasContacts() }.distinctUntilChanged())
-        { defaultSms, smsPermission, contactPermission ->
-            newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
-        }
+        view.activityResumedIntent
+                .observeOn(Schedulers.io())
+                .map { Triple(permissionManager.isDefaultSms(), permissionManager.hasReadSms(), permissionManager.hasContacts()) }
+                .distinctUntilChanged()
+                .doOnNext { (defaultSms, smsPermission, contactPermission) ->
+                    newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
         // If the SMS permission state changes from false to true, sync messages
         view.activityResumedIntent
+                .observeOn(Schedulers.io())
                 .map { permissionManager.hasReadSms() }
                 .distinctUntilChanged()
                 .skip(1)
