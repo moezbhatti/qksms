@@ -36,7 +36,7 @@ class MigratePreferences @Inject constructor(
 ) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<*> {
-        return Flowable.just(rxPrefs.getBoolean("pref_key_welcome_seen", false))
+        return Flowable.fromCallable { rxPrefs.getBoolean("pref_key_welcome_seen", false) }
                 .filter { seen -> seen.get() } // Only proceed if this value is true. It will be set false at the end
                 .doOnNext {
                     // Theme
