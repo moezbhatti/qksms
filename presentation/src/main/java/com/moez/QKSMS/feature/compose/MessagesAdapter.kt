@@ -264,14 +264,18 @@ class MessagesAdapter @Inject constructor(
         val view = viewHolder.itemView
 
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
-        val timestamp = dateFormatter.getTimestamp(message.date)
 
         view.status.text = when {
             message.isSending() -> context.getString(R.string.message_status_sending)
-            message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
+            message.isDelivered() -> context.getString(R.string.message_status_delivered, dateFormatter.getTimestamp(message.dateSent))
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
-            !message.isMe() && conversation?.recipients?.size ?: 0 > 1 -> "${contactCache[message.address]?.getDisplayName()} • $timestamp"
-            else -> timestamp
+
+            // Incoming group message
+            !message.isMe() && conversation?.recipients?.size ?: 0 > 1 -> {
+                "${contactCache[message.address]?.getDisplayName()} • ${dateFormatter.getTimestamp(message.date)}"
+            }
+
+            else -> dateFormatter.getTimestamp(message.date)
         }
 
         view.status.setVisible(when {
