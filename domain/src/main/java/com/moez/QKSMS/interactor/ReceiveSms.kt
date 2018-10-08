@@ -59,7 +59,11 @@ class ReceiveSms @Inject constructor(
                 }
                 .doOnNext { message -> conversationRepo.updateConversations(message.threadId) } // Update the conversation
                 .mapNotNull { message -> conversationRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
-                .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
+                .filter {
+                    conversation ->
+                    !conversation.blocked
+                    !conversation.snippet.contains(Regex("退订|退定"))
+                } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) conversationRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
                 .doOnNext { threadId -> notificationManager.update(threadId) } // Update the notification

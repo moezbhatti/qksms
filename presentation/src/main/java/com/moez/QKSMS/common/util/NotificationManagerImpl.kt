@@ -300,7 +300,7 @@ class NotificationManagerImpl @Inject constructor(
                 .setLabel(title)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            remoteInput.setChoices(responseSet)
+//            remoteInput.setChoices(responseSet)
         }
 
         return NotificationCompat.Action.Builder(R.drawable.ic_reply_white_24dp, title, replyPI)
