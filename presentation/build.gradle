@@ -24,7 +24,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.0"
+    buildToolsVersion "28.0.3"
     flavorDimensions "analytics"
 
     defaultConfig {
@@ -112,6 +112,7 @@ dependencies {
     // androidx
     implementation "androidx.appcompat:appcompat:$androidx_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.core:core-ktx:$androidx_version"
     implementation "com.google.android.material:material:$androidx_version"
     implementation "androidx.emoji:emoji-appcompat:$androidx_version"
 
@@ -173,7 +174,6 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
-    implementation "androidx.core:core-ktx:$ktx_version"
     implementation "com.android.billingclient:billing:1.0"
     implementation "com.bugsnag:bugsnag-android:4.1.1"
     implementation "com.github.chrisbanes:PhotoView:2.0.0"

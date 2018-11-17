@@ -44,6 +44,7 @@ dependencies {
 
     // androidx
     implementation "androidx.appcompat:appcompat:$androidx_version"
+    implementation "androidx.core:core-ktx:$androidx_version"
     implementation "androidx.exifinterface:exifinterface:$androidx_version"
 
     // glide
@@ -71,7 +72,6 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
-    implementation "androidx.core:core-ktx:$ktx_version"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
