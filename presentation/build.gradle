@@ -122,7 +122,7 @@ dependencies {
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_compiler_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // exoplayer
     implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
