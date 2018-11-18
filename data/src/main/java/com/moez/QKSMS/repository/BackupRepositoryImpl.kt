@@ -25,6 +25,7 @@ import androidx.core.content.contentValuesOf
 import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.util.QkFileObserver
+import com.moez.QKSMS.util.tryOrNull
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -148,15 +149,15 @@ class BackupRepositoryImpl @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
             .map { files ->
-                files.map { file ->
-                    val backup = Okio.buffer(Okio.source(file)).use { source ->
-                        moshi.adapter(BackupMetadata::class.java).fromJson(source)
-                    }
-
+                files.mapNotNull { file ->
+                    val adapter = moshi.adapter(BackupMetadata::class.java)
+                    val backup = tryOrNull(false) {
+                        Okio.buffer(Okio.source(file)).use(adapter::fromJson)
+                    } ?: return@mapNotNull null
 
                     val path = file.path
                     val date = file.lastModified()
-                    val messages = backup?.messageCount ?: 0
+                    val messages = backup.messageCount
                     val size = file.length()
                     BackupFile(path, date, messages, size)
                 }
