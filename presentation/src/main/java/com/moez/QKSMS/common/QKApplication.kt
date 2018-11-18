@@ -101,6 +101,10 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
         AppComponentManager.init(this)
         appComponent.inject(this)
 
+        packageManager.getInstallerPackageName(packageName)?.let { installer ->
+            analyticsManager.setUserProperty("Installer", installer)
+        }
+
         nightModeManager.updateCurrentTheme()
 
         val fontRequest = FontRequest(
