@@ -147,7 +147,7 @@ class SyncRepositoryImpl @Inject constructor(
 
             realm.where(Message::class.java)
                     .sort("date", Sort.DESCENDING)
-                    .distinctValues("threadId")
+                    .distinct("threadId")
                     .findAll()
                     .forEach { message ->
                         val conversation = conversations.firstOrNull { conversation -> conversation.id == message.threadId }
