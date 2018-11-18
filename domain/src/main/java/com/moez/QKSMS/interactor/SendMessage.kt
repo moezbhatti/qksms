@@ -21,12 +21,14 @@ package com.moez.QKSMS.interactor
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
+import com.moez.QKSMS.repository.SyncRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
         private val conversationRepo: ConversationRepository,
-        private val messageRepo: MessageRepository
+        private val messageRepo: MessageRepository,
+        private val syncRepo: SyncRepository
 ) : Interactor<SendMessage.Params>() {
 
     data class Params(
@@ -37,12 +39,19 @@ class SendMessage @Inject constructor(
             val attachments: List<Attachment> = listOf(),
             val delay: Int = 0)
 
-    override fun buildObservable(params: Params): Flowable<Unit> = Flowable.just(Unit)
+    override fun buildObservable(params: Params): Flowable<*> = Flowable.just(Unit)
             .filter { params.addresses.isNotEmpty() }
             .doOnNext { messageRepo.sendMessage(params.subId, params.threadId, params.addresses, params.body, params.attachments, params.delay) }
-            // If this was the first message sent in the conversation, the conversation might not exist yet
-            .doOnNext { conversationRepo.getOrCreateConversation(params.threadId) }
-            .doOnNext { conversationRepo.updateConversations(params.threadId) }
-            .doOnNext { conversationRepo.markUnarchived(params.threadId) }
+            .map {
+                // On some manufacturers, we can't obtain a threadId for a new conversation. In
+                // this case, find the threadId manually now that it contains a message
+                if (params.threadId == 0L) {
+                    conversationRepo.getOrCreateConversation(params.addresses)?.id ?: 0
+                } else {
+                    params.threadId
+                }
+            }
+            .doOnNext { threadId -> conversationRepo.updateConversations(threadId) }
+            .doOnNext { threadId -> conversationRepo.markUnarchived(threadId) }
 
 }

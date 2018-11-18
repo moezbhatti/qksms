@@ -62,7 +62,8 @@ class MessageRepositoryImpl @Inject constructor(
         private val context: Context,
         private val messageIds: KeyManager,
         private val imageRepository: ImageRepository,
-        private val prefs: Preferences) : MessageRepository {
+        private val prefs: Preferences,
+        private val syncRepository: SyncRepository) : MessageRepository {
 
     override fun getMessages(threadId: Long, query: String): RealmResults<Message> {
         return Realm.getDefaultInstance()
@@ -335,6 +336,13 @@ class MessageRepositoryImpl @Inject constructor(
         // to be inserted into Realm immediately. We don't need to do this after receiving one
         realm.executeTransaction { managedMessage?.takeIf { it.isValid }?.contentId = uri.lastPathSegment.toLong() }
         realm.close()
+
+        // On some devices, we can't obtain a threadId until after the first message is sent in a
+        // conversation. In this case, we need to update the message's threadId after it gets added
+        // to the native ContentProvider
+        if (threadId == 0L) {
+            uri?.let(syncRepository::syncMessage)
+        }
 
         return message
     }
