@@ -23,6 +23,7 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.rxkotlin.Observables
@@ -31,11 +32,12 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ThemePickerPresenter @Inject constructor(
-        @Named("threadId") threadId: Long,
         prefs: Preferences,
+        @Named("threadId") private val threadId: Long,
         private val billingManager: BillingManager,
         private val colors: Colors,
-        private val navigator: Navigator
+        private val navigator: Navigator,
+        private val widgetManager: WidgetManager
 ) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(threadId = threadId)) {
 
     private val theme: Preference<Int> = prefs.theme(threadId)
@@ -50,7 +52,12 @@ class ThemePickerPresenter @Inject constructor(
         // Update the theme when a material theme is clicked
         view.themeSelected()
                 .autoDisposable(view.scope())
-                .subscribe { color -> theme.set(color) }
+                .subscribe { color ->
+                    theme.set(color)
+                    if (threadId == 0L) {
+                        widgetManager.updateTheme()
+                    }
+                }
 
         // Update the color of the apply button
         view.hsvThemeSelected()
@@ -73,6 +80,9 @@ class ThemePickerPresenter @Inject constructor(
                         view.showQksmsPlusSnackbar()
                     } else {
                         theme.set(color)
+                        if (threadId == 0L) {
+                            widgetManager.updateTheme()
+                        }
                     }
                 }
                 .autoDisposable(view.scope())

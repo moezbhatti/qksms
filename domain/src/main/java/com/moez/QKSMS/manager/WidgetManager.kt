@@ -26,4 +26,6 @@ interface WidgetManager {
 
     fun updateUnreadCount()
 
+    fun updateTheme()
+
 }
