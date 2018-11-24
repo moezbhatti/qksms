@@ -283,16 +283,16 @@ class MainActivity : QkThemedActivity(), MainView {
         }
 
         when {
-            !state.smsPermission -> {
-                snackbarTitle?.setText(R.string.main_permission_required)
-                snackbarMessage?.setText(R.string.main_permission_sms)
-                snackbarButton?.setText(R.string.main_permission_allow)
-            }
-
             !state.defaultSms -> {
                 snackbarTitle?.setText(R.string.main_default_sms_title)
                 snackbarMessage?.setText(R.string.main_default_sms_message)
                 snackbarButton?.setText(R.string.main_default_sms_change)
+            }
+
+            !state.smsPermission -> {
+                snackbarTitle?.setText(R.string.main_permission_required)
+                snackbarMessage?.setText(R.string.main_permission_sms)
+                snackbarButton?.setText(R.string.main_permission_allow)
             }
 
             !state.contactPermission -> {
@@ -319,9 +319,9 @@ class MainActivity : QkThemedActivity(), MainView {
 
     override fun requestPermissions() {
         ActivityCompat.requestPermissions(this, arrayOf(
-                Manifest.permission.READ_CONTACTS,
                 Manifest.permission.READ_SMS,
-                Manifest.permission.SEND_SMS), 0)
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_CONTACTS), 0)
     }
 
     override fun clearSearch() {
