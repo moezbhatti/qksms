@@ -180,7 +180,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         toolbarTitle.setVisible(!state.editingMode)
         chips.setVisible(state.editingMode)
         contacts.setVisible(state.contactsVisible)
-        composeBar.setVisible(!state.contactsVisible && !state.loading)
+        composeBar.setVisible(state.shouldShowComposeBar())
 
         // Don't set the adapters unless needed
         if (state.editingMode && chips.adapter == null) chips.adapter = chipsAdapter
@@ -224,13 +224,18 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         counter.text = state.remaining
         counter.setVisible(counter.text.isNotBlank())
 
-        sim.setVisible(state.subscription != null)
+        // for dual/ multi-sim devices the visibility of the sim view should also behave like composeBar, which hides when the contacts list is visible
+        // of if it's loading state.
+        sim.setVisible(state.subscription != null && state.shouldShowComposeBar())
         sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
         simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
 
         send.isEnabled = state.canSend
         send.imageAlpha = if (state.canSend) 255 else 128
     }
+
+    // we should show the compose bar only if the contacts list is not visible and the current state is not loading.
+    private fun ComposeState.shouldShowComposeBar(): Boolean = !contactsVisible && !loading
 
     override fun clearSelection() {
         messageAdapter.clearSelection()
