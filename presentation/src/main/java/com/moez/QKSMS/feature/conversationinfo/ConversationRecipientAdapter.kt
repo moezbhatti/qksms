@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.conversation_recipient_list_item.view.*
 import javax.inject.Inject
 
 class ConversationRecipientAdapter @Inject constructor(
-        private val navigator: Navigator
+    private val navigator: Navigator
 ) : QkRealmAdapter<Recipient>() {
 
     var threadId: Long = 0L

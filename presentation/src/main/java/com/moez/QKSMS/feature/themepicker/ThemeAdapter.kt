@@ -40,8 +40,8 @@ import kotlinx.android.synthetic.main.theme_palette_list_item.view.*
 import javax.inject.Inject
 
 class ThemeAdapter @Inject constructor(
-        private val context: Context,
-        private val colors: Colors
+    private val context: Context,
+    private val colors: Colors
 ) : QkAdapter<List<Int>>() {
 
     val colorSelected: Subject<Int> = PublishSubject.create()

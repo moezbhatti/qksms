@@ -33,8 +33,8 @@ import kotlinx.android.synthetic.main.backup_list_item.view.*
 import javax.inject.Inject
 
 class BackupAdapter @Inject constructor(
-        private val context: Context,
-        private val dateFormatter: DateFormatter
+    private val context: Context,
+    private val dateFormatter: DateFormatter
 ) : FlowableAdapter<BackupFile>() {
 
     val backupSelected: Subject<BackupFile> = PublishSubject.create()

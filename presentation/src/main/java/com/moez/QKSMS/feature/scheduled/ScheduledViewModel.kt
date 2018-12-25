@@ -30,10 +30,10 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class ScheduledViewModel @Inject constructor(
-        billingManager: BillingManager,
-        private val navigator: Navigator,
-        private val scheduledMessageRepo: ScheduledMessageRepository,
-        private val sendScheduledMessage: SendScheduledMessage
+    billingManager: BillingManager,
+    private val navigator: Navigator,
+    private val scheduledMessageRepo: ScheduledMessageRepository,
+    private val sendScheduledMessage: SendScheduledMessage
 ) : QkViewModel<ScheduledView, ScheduledState>(ScheduledState(
         scheduledMessages = scheduledMessageRepo.getScheduledMessages()
 )) {

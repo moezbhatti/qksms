@@ -23,8 +23,8 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class MarkUnread @Inject constructor(
-        private val messageRepo: MessageRepository,
-        private val updateBadge: UpdateBadge
+    private val messageRepo: MessageRepository,
+    private val updateBadge: UpdateBadge
 ) : Interactor<List<Long>>() {
 
     override fun buildObservable(params: List<Long>): Flowable<*> {

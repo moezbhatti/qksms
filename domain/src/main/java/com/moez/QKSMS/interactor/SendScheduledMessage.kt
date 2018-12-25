@@ -30,9 +30,9 @@ import io.realm.RealmList
 import javax.inject.Inject
 
 class SendScheduledMessage @Inject constructor(
-        private val context: Context,
-        private val scheduledMessageRepo: ScheduledMessageRepository,
-        private val sendMessage: SendMessage
+    private val context: Context,
+    private val scheduledMessageRepo: ScheduledMessageRepository,
+    private val sendMessage: SendMessage
 ) : Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<*> {

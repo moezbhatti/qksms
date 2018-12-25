@@ -26,9 +26,9 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class SyncMessage @Inject constructor(
-        private val conversationRepo: ConversationRepository,
-        private val syncManager: SyncRepository,
-        private val updateBadge: UpdateBadge
+    private val conversationRepo: ConversationRepository,
+    private val syncManager: SyncRepository,
+    private val updateBadge: UpdateBadge
 ) : Interactor<Uri>() {
 
     override fun buildObservable(params: Uri): Flowable<*> {

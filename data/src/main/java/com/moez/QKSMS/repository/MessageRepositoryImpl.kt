@@ -58,12 +58,13 @@ import javax.inject.Singleton
 
 @Singleton
 class MessageRepositoryImpl @Inject constructor(
-        private val activeConversationManager: ActiveConversationManager,
-        private val context: Context,
-        private val messageIds: KeyManager,
-        private val imageRepository: ImageRepository,
-        private val prefs: Preferences,
-        private val syncRepository: SyncRepository) : MessageRepository {
+    private val activeConversationManager: ActiveConversationManager,
+    private val context: Context,
+    private val messageIds: KeyManager,
+    private val imageRepository: ImageRepository,
+    private val prefs: Preferences,
+    private val syncRepository: SyncRepository
+) : MessageRepository {
 
     override fun getMessages(threadId: Long, query: String): RealmResults<Message> {
         return Realm.getDefaultInstance()

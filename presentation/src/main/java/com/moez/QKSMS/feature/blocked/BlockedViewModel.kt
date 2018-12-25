@@ -33,12 +33,12 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class BlockedViewModel @Inject constructor(
-        private val context: Context,
-        private val analytics: AnalyticsManager,
-        private val conversationRepo: ConversationRepository,
-        private val markUnblocked: MarkUnblocked,
-        private val navigator: Navigator,
-        private val prefs: Preferences
+    private val context: Context,
+    private val analytics: AnalyticsManager,
+    private val conversationRepo: ConversationRepository,
+    private val markUnblocked: MarkUnblocked,
+    private val navigator: Navigator,
+    private val prefs: Preferences
 ) : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
 
     init {

@@ -30,9 +30,9 @@ import javax.inject.Inject
  * Blocked conversations will be migrated in SyncManager
  */
 class MigratePreferences @Inject constructor(
-        private val nightModeManager: NightModeManager,
-        private val prefs: Preferences,
-        private val rxPrefs: RxSharedPreferences
+    private val nightModeManager: NightModeManager,
+    private val prefs: Preferences,
+    private val rxPrefs: RxSharedPreferences
 ) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<*> {

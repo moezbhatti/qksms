@@ -23,8 +23,8 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class MarkArchived @Inject constructor(
-        private val conversationRepo: ConversationRepository,
-        private val markRead: MarkRead
+    private val conversationRepo: ConversationRepository,
+    private val markRead: MarkRead
 ) : Interactor<List<Long>>() {
 
     override fun buildObservable(params: List<Long>): Flowable<*> {

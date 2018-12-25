@@ -38,8 +38,8 @@ import kotlinx.android.synthetic.main.scheduled_message_list_item.view.*
 import javax.inject.Inject
 
 class ScheduledMessageAdapter @Inject constructor(
-        private val contactRepo: ContactRepository,
-        private val dateFormatter: DateFormatter
+    private val contactRepo: ContactRepository,
+    private val dateFormatter: DateFormatter
 ) : QkRealmAdapter<ScheduledMessage>() {
 
     private val contacts by lazy { contactRepo.getContacts() }

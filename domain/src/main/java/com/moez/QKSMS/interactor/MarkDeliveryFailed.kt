@@ -23,7 +23,7 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class MarkDeliveryFailed @Inject constructor(
-        private val messageRepo: MessageRepository
+    private val messageRepo: MessageRepository
 ) : Interactor<MarkDeliveryFailed.Params>() {
 
     data class Params(val id: Long, val resultCode: Int)

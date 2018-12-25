@@ -54,12 +54,12 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationManagerImpl @Inject constructor(
-        private val context: Context,
-        private val colors: Colors,
-        private val conversationRepo: ConversationRepository,
-        private val prefs: Preferences,
-        private val messageRepo: MessageRepository,
-        private val permissions: PermissionManager
+    private val context: Context,
+    private val colors: Colors,
+    private val conversationRepo: ConversationRepository,
+    private val prefs: Preferences,
+    private val messageRepo: MessageRepository,
+    private val permissions: PermissionManager
 ) : com.moez.QKSMS.manager.NotificationManager {
 
     companion object {

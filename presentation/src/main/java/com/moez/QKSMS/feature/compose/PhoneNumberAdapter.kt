@@ -28,7 +28,7 @@ import com.moez.QKSMS.model.PhoneNumber
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
 class PhoneNumberAdapter(
-        private val numberClicked: (Contact, Int) -> Unit
+    private val numberClicked: (Contact, Int) -> Unit
 ) : QkAdapter<PhoneNumber>() {
 
     lateinit var contact: Contact

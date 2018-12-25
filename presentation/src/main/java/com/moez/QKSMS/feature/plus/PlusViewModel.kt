@@ -29,9 +29,9 @@ import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class PlusViewModel @Inject constructor(
-        private val analyticsManager: AnalyticsManager,
-        private val billingManager: BillingManager,
-        private val navigator: Navigator
+    private val analyticsManager: AnalyticsManager,
+    private val billingManager: BillingManager,
+    private val navigator: Navigator
 ) : QkViewModel<PlusView, PlusState>(PlusState()) {
 
     init {

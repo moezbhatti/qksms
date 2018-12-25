@@ -64,12 +64,12 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MessagesAdapter @Inject constructor(
-        private val context: Context,
-        private val colors: Colors,
-        private val dateFormatter: DateFormatter,
-        private val navigator: Navigator,
-        private val prefs: Preferences,
-        private val subscriptionManager: SubscriptionManagerCompat
+    private val context: Context,
+    private val colors: Colors,
+    private val dateFormatter: DateFormatter,
+    private val navigator: Navigator,
+    private val prefs: Preferences,
+    private val subscriptionManager: SubscriptionManagerCompat
 ) : QkRealmAdapter<Message>() {
 
     companion object {

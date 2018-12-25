@@ -25,7 +25,7 @@ import com.uber.autodispose.kotlin.autoDisposable
 import javax.inject.Inject
 
 class AboutPresenter @Inject constructor(
-        private val navigator: Navigator
+    private val navigator: Navigator
 ) : QkPresenter<AboutView, Unit>(Unit) {
 
     override fun bindIntents(view: AboutView) {

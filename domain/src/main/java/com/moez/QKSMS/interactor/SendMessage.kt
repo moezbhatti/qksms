@@ -26,18 +26,18 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
-        private val conversationRepo: ConversationRepository,
-        private val messageRepo: MessageRepository,
-        private val syncRepo: SyncRepository
+    private val conversationRepo: ConversationRepository,
+    private val messageRepo: MessageRepository,
+    private val syncRepo: SyncRepository
 ) : Interactor<SendMessage.Params>() {
 
     data class Params(
-            val subId: Int,
-            val threadId: Long,
-            val addresses: List<String>,
-            val body: String,
-            val attachments: List<Attachment> = listOf(),
-            val delay: Int = 0)
+        val subId: Int,
+        val threadId: Long,
+        val addresses: List<String>,
+        val body: String,
+        val attachments: List<Attachment> = listOf(),
+        val delay: Int = 0)
 
     override fun buildObservable(params: Params): Flowable<*> = Flowable.just(Unit)
             .filter { params.addresses.isNotEmpty() }

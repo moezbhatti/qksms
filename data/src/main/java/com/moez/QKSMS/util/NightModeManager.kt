@@ -32,9 +32,10 @@ import javax.inject.Singleton
 
 @Singleton
 class NightModeManager @Inject constructor(
-        private val context: Context,
-        private val prefs: Preferences,
-        private val widgetManager: WidgetManager) {
+    private val context: Context,
+    private val prefs: Preferences,
+    private val widgetManager: WidgetManager
+) {
 
     fun updateCurrentTheme() {
         // If night mode is not on auto, then there's nothing to do here

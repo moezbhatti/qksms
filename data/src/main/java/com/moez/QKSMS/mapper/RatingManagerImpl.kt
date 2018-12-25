@@ -28,9 +28,9 @@ import io.reactivex.rxkotlin.Observables
 import javax.inject.Inject
 
 class RatingManagerImpl @Inject constructor(
-        rxPrefs: RxSharedPreferences,
-        private val analyticsManager: AnalyticsManager,
-        private val ratingThresholdExperiment: RatingThresholdExperiment
+    rxPrefs: RxSharedPreferences,
+    private val analyticsManager: AnalyticsManager,
+    private val ratingThresholdExperiment: RatingThresholdExperiment
 ) : RatingManager {
 
     private val sessions = rxPrefs.getInteger("sessions", 0)
@@ -62,8 +62,8 @@ class RatingManagerImpl @Inject constructor(
 }
 
 class RatingThresholdExperiment @Inject constructor(
-        context: Context,
-        analytics: AnalyticsManager
+    context: Context,
+    analytics: AnalyticsManager
 ) : Experiment<Int>(context, analytics) {
 
     override val key: String = "Rating Threshold"

@@ -45,9 +45,9 @@ import kotlin.concurrent.schedule
 
 @Singleton
 class BackupRepositoryImpl @Inject constructor(
-        private val context: Context,
-        private val moshi: Moshi,
-        private val syncRepo: SyncRepository
+    private val context: Context,
+    private val moshi: Moshi,
+    private val syncRepo: SyncRepository
 ) : BackupRepository {
 
     companion object {
@@ -55,8 +55,8 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     data class Backup(
-            val messageCount: Int = 0,
-            val messages: List<BackupMessage> = listOf()
+        val messageCount: Int = 0,
+        val messages: List<BackupMessage> = listOf()
     )
 
     /**
@@ -64,21 +64,21 @@ class BackupRepositoryImpl @Inject constructor(
      * needing to parse the entire file
      */
     data class BackupMetadata(
-            val messageCount: Int = 0
+        val messageCount: Int = 0
     )
 
     data class BackupMessage(
-            val type: Int,
-            val address: String,
-            val date: Long,
-            val dateSent: Long,
-            val read: Boolean,
-            val status: Int,
-            val body: String,
-            val protocol: Int,
-            val serviceCenter: String?,
-            val locked: Boolean,
-            val subId: Int)
+        val type: Int,
+        val address: String,
+        val date: Long,
+        val dateSent: Long,
+        val read: Boolean,
+        val status: Int,
+        val body: String,
+        val protocol: Int,
+        val serviceCenter: String?,
+        val locked: Boolean,
+        val subId: Int)
 
     // Subjects to emit our progress events to
     private val backupProgress: Subject<BackupRepository.Progress> = BehaviorSubject.createDefault(BackupRepository.Progress.Idle())

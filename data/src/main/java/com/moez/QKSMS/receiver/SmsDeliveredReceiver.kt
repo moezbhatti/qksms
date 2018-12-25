@@ -43,13 +43,13 @@ class SmsDeliveredReceiver : BroadcastReceiver() {
         val id = intent.getLongExtra("id", 0L)
 
         when (resultCode) {
-        // TODO notify about delivery
+            // TODO notify about delivery
             Activity.RESULT_OK -> {
                 val pendingResult = goAsync()
                 markDelivered.execute(id) { pendingResult.finish() }
             }
 
-        // TODO notify about delivery failure
+            // TODO notify about delivery failure
             Activity.RESULT_CANCELED -> {
                 val pendingResult = goAsync()
                 markDeliveryFailed.execute(MarkDeliveryFailed.Params(id, resultCode)) { pendingResult.finish() }

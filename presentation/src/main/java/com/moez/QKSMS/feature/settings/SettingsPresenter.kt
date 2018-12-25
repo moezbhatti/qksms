@@ -39,15 +39,15 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
-        private val context: Context,
-        private val billingManager: BillingManager,
-        private val colors: Colors,
-        private val dateFormatter: DateFormatter,
-        private val navigator: Navigator,
-        private val nightModeManager: NightModeManager,
-        private val prefs: Preferences,
-        private val syncMessages: SyncMessages,
-        private val syncRepo: SyncRepository
+    private val context: Context,
+    private val billingManager: BillingManager,
+    private val colors: Colors,
+    private val dateFormatter: DateFormatter,
+    private val navigator: Navigator,
+    private val nightModeManager: NightModeManager,
+    private val prefs: Preferences,
+    private val syncMessages: SyncMessages,
+    private val syncRepo: SyncRepository
 ) : QkPresenter<SettingsView, SettingsState>(SettingsState(theme = colors.theme().theme)) {
 
     init {

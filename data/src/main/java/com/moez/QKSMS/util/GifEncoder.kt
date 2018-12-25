@@ -39,9 +39,9 @@ import java.nio.ByteBuffer
  * Based on Glide's ReEncodingGifResourceEncoder
  */
 class GifEncoder internal constructor(
-        private val context: Context,
-        private val bitmapPool: BitmapPool,
-        private val factory: Factory = Factory()
+    private val context: Context,
+    private val bitmapPool: BitmapPool,
+    private val factory: Factory = Factory()
 ) {
 
     private val provider = GifBitmapProvider(bitmapPool)

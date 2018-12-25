@@ -37,9 +37,9 @@ import me.leolin.shortcutbadger.ShortcutBadger
 import javax.inject.Inject
 
 class ShortcutManagerImpl @Inject constructor(
-        private val context: Context,
-        private val conversationRepo: ConversationRepository,
-        private val messageRepo: MessageRepository
+    private val context: Context,
+    private val conversationRepo: ConversationRepository,
+    private val messageRepo: MessageRepository
 ) : com.moez.QKSMS.manager.ShortcutManager {
 
     override fun updateBadge() {

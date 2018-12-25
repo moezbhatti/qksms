@@ -45,10 +45,10 @@ import javax.inject.Singleton
 
 @Singleton
 class Navigator @Inject constructor(
-        private val context: Context,
-        private val analyticsManager: AnalyticsManager,
-        private val notificationManager: NotificationManager,
-        private val permissions: PermissionManager
+    private val context: Context,
+    private val analyticsManager: AnalyticsManager,
+    private val notificationManager: NotificationManager,
+    private val permissions: PermissionManager
 ) {
 
     private fun startActivity(intent: Intent) {

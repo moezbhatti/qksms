@@ -35,11 +35,11 @@ import com.moez.QKSMS.util.tryOrNull
 import javax.inject.Inject
 
 class CursorToMessageImpl @Inject constructor(
-        private val context: Context,
-        private val cursorToPart: CursorToPart,
-        private val keys: KeyManager,
-        private val permissionManager: PermissionManager,
-        private val preferences: Preferences
+    private val context: Context,
+    private val cursorToPart: CursorToPart,
+    private val keys: KeyManager,
+    private val permissionManager: PermissionManager,
+    private val preferences: Preferences
 ) : CursorToMessage {
 
     private val uri = Uri.parse("content://mms-sms/complete-conversations")

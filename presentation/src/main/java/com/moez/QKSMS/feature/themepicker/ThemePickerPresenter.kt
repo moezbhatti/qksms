@@ -32,12 +32,12 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ThemePickerPresenter @Inject constructor(
-        prefs: Preferences,
-        @Named("threadId") private val threadId: Long,
-        private val billingManager: BillingManager,
-        private val colors: Colors,
-        private val navigator: Navigator,
-        private val widgetManager: WidgetManager
+    prefs: Preferences,
+    @Named("threadId") private val threadId: Long,
+    private val billingManager: BillingManager,
+    private val colors: Colors,
+    private val navigator: Navigator,
+    private val widgetManager: WidgetManager
 ) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(threadId = threadId)) {
 
     private val theme: Preference<Int> = prefs.theme(threadId)

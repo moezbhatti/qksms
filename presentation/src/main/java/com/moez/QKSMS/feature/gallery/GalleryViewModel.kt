@@ -35,11 +35,11 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class GalleryViewModel @Inject constructor(
-        conversationRepo: ConversationRepository,
-        messageRepo: MessageRepository,
-        @Named("partId") private val partId: Long,
-        private val context: Context,
-        private val saveImage: SaveImage
+    conversationRepo: ConversationRepository,
+    messageRepo: MessageRepository,
+    @Named("partId") private val partId: Long,
+    private val context: Context,
+    private val saveImage: SaveImage
 ) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
 
     init {

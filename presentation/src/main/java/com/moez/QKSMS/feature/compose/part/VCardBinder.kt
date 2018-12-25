@@ -40,9 +40,9 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.mms_vcard_list_item.view.*
 
 class VCardBinder(
-        private val context: Context,
-        private val navigator: Navigator,
-        private val theme: Colors.Theme
+    private val context: Context,
+    private val navigator: Navigator,
+    private val theme: Colors.Theme
 ) : PartBinder {
 
     override val partLayout = R.layout.mms_vcard_list_item

@@ -42,10 +42,10 @@ import javax.inject.Inject
 
 
 class ConversationItemTouchCallback @Inject constructor(
-        colors: Colors,
-        disposables: CompositeDisposable,
-        prefs: Preferences,
-        private val context: Context
+    colors: Colors,
+    disposables: CompositeDisposable,
+    prefs: Preferences,
+    private val context: Context
 ) : ItemTouchHelper.SimpleCallback(0, 0) {
 
     val swipes: Subject<Pair<Long, Int>> = PublishSubject.create()

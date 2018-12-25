@@ -34,9 +34,9 @@ import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
-        private val context: Context,
-        private val dateFormatter: DateFormatter,
-        private val navigator: Navigator
+    private val context: Context,
+    private val dateFormatter: DateFormatter,
+    private val navigator: Navigator
 ) : QkRealmAdapter<Conversation>() {
 
     init {

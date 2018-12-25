@@ -29,8 +29,8 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class SwipeActionsPresenter @Inject constructor(
-        context: Context,
-        private val prefs: Preferences
+    context: Context,
+    private val prefs: Preferences
 ) : QkPresenter<SwipeActionsView, SwipeActionsState>(SwipeActionsState()) {
 
     init {

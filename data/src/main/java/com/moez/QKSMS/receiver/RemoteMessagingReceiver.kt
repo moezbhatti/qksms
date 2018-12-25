@@ -49,7 +49,9 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
         markRead.execute(listOf(threadId))
 
         val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
-        val subId = subscriptionManager.activeSubscriptionInfoList.firstOrNull { it.subscriptionId == lastMessage?.subId }?.subscriptionId ?: -1
+        val subId = subscriptionManager.activeSubscriptionInfoList
+                .firstOrNull { it.subscriptionId == lastMessage?.subId }
+                ?.subscriptionId ?: -1
         val addresses = conversationRepo.getConversation(threadId)?.recipients?.map { it.address } ?: return
 
         val pendingRepository = goAsync()

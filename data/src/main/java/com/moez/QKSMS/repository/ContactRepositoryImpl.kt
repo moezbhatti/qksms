@@ -39,8 +39,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ContactRepositoryImpl @Inject constructor(
-        private val context: Context,
-        private val prefs: Preferences
+    private val context: Context,
+    private val prefs: Preferences
 ) : ContactRepository {
 
     override fun findContactUri(address: String): Single<Uri> {

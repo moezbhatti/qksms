@@ -42,8 +42,8 @@ import javax.inject.Singleton
 
 @Singleton
 class BillingManager @Inject constructor(
-        context: Context,
-        private val analyticsManager: AnalyticsManager
+    context: Context,
+    private val analyticsManager: AnalyticsManager
 ) : PurchasesUpdatedListener {
 
     companion object {

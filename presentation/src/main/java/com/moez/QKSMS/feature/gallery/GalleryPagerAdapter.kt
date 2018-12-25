@@ -48,9 +48,9 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class GalleryPagerAdapter @Inject constructor(
-        context: Context,
-        @Named("partId") private val partId: Long,
-        private val dateFormatter: DateFormatter
+    context: Context,
+    @Named("partId") private val partId: Long,
+    private val dateFormatter: DateFormatter
 ) : PagerAdapter() {
 
     var parts: RealmResults<MmsPart>? = null

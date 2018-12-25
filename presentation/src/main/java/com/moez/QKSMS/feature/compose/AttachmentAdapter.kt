@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.attachment_list_item.view.*
 import javax.inject.Inject
 
 class AttachmentAdapter @Inject constructor(
-        private val context: Context
+    private val context: Context
 ) : QkAdapter<Attachment>() {
 
     val attachmentDeleted: Subject<Attachment> = PublishSubject.create()

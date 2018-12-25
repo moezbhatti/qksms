@@ -41,10 +41,10 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ConversationRepositoryImpl @Inject constructor(
-        private val context: Context,
-        private val conversationFilter: ConversationFilter,
-        private val cursorToConversation: CursorToConversation,
-        private val cursorToRecipient: CursorToRecipient
+    private val context: Context,
+    private val conversationFilter: ConversationFilter,
+    private val cursorToConversation: CursorToConversation,
+    private val cursorToRecipient: CursorToRecipient
 ) : ConversationRepository {
 
     override fun getConversations(archived: Boolean): RealmResults<Conversation> {

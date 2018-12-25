@@ -37,13 +37,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
-        private val backupRepo: BackupRepository,
-        private val billingManager: BillingManager,
-        private val context: Context,
-        private val dateFormatter: DateFormatter,
-        private val navigator: Navigator,
-        private val performBackup: PerformBackup,
-        private val permissionManager: PermissionManager
+    private val backupRepo: BackupRepository,
+    private val billingManager: BillingManager,
+    private val context: Context,
+    private val dateFormatter: DateFormatter,
+    private val navigator: Navigator,
+    private val performBackup: PerformBackup,
+    private val permissionManager: PermissionManager
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     private val storagePermissionSubject: Subject<Boolean> = BehaviorSubject.createDefault(permissionManager.hasStorage())

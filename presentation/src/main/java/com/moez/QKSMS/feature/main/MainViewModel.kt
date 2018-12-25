@@ -53,24 +53,24 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-        billingManager: BillingManager,
-        markAllSeen: MarkAllSeen,
-        migratePreferences: MigratePreferences,
-        syncRepository: SyncRepository,
-        private val conversationRepo: ConversationRepository,
-        private val deleteConversations: DeleteConversations,
-        private val markArchived: MarkArchived,
-        private val markBlocked: MarkBlocked,
-        private val markPinned: MarkPinned,
-        private val markRead: MarkRead,
-        private val markUnarchived: MarkUnarchived,
-        private val markUnpinned: MarkUnpinned,
-        private val markUnread: MarkUnread,
-        private val navigator: Navigator,
-        private val permissionManager: PermissionManager,
-        private val prefs: Preferences,
-        private val ratingManager: RatingManager,
-        private val syncMessages: SyncMessages
+    billingManager: BillingManager,
+    markAllSeen: MarkAllSeen,
+    migratePreferences: MigratePreferences,
+    syncRepository: SyncRepository,
+    private val conversationRepo: ConversationRepository,
+    private val deleteConversations: DeleteConversations,
+    private val markArchived: MarkArchived,
+    private val markBlocked: MarkBlocked,
+    private val markPinned: MarkPinned,
+    private val markRead: MarkRead,
+    private val markUnarchived: MarkUnarchived,
+    private val markUnpinned: MarkUnpinned,
+    private val markUnread: MarkUnread,
+    private val navigator: Navigator,
+    private val permissionManager: PermissionManager,
+    private val prefs: Preferences,
+    private val ratingManager: RatingManager,
+    private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
 
     init {

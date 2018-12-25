@@ -37,11 +37,11 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class NotificationPrefsViewModel @Inject constructor(
-        @Named("threadId") private val threadId: Long,
-        private val context: Context,
-        private val conversationRepo: ConversationRepository,
-        private val navigator: Navigator,
-        private val prefs: Preferences
+    @Named("threadId") private val threadId: Long,
+    private val context: Context,
+    private val conversationRepo: ConversationRepository,
+    private val navigator: Navigator,
+    private val prefs: Preferences
 ) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
 
     private val notifications = prefs.notifications(threadId)

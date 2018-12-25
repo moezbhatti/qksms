@@ -35,8 +35,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class ExternalBlockingManagerImpl @Inject constructor(
-        private val context: Context,
-        private val prefs: Preferences
+    private val context: Context,
+    private val prefs: Preferences
 ) : ExternalBlockingManager {
 
     companion object {
@@ -56,9 +56,9 @@ class ExternalBlockingManagerImpl @Inject constructor(
     }
 
     private class Binder(
-            private val context: Context,
-            private val prefs: Preferences,
-            private val address: String
+        private val context: Context,
+        private val prefs: Preferences,
+        private val address: String
     ) : ServiceConnection {
 
         private val subject: SingleSubject<Boolean> = SingleSubject.create()
