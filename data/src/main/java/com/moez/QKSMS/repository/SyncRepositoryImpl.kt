@@ -20,6 +20,7 @@ package com.moez.QKSMS.repository
 
 import android.content.ContentResolver
 import android.content.ContentUris
+import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
@@ -47,6 +48,7 @@ import javax.inject.Singleton
 
 @Singleton
 class SyncRepositoryImpl @Inject constructor(
+    private val context: Context,
     private val contentResolver: ContentResolver,
     private val conversationRepo: ConversationRepository,
     private val cursorToConversation: CursorToConversation,

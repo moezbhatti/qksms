@@ -113,19 +113,20 @@ open class Message : RealmObject() {
     /**
      * Returns the text that should be displayed when a preview of the message
      * needs to be displayed, such as in the conversation view or in a notification
-     *
-     * TODO: Don't return a hardcoded string
      */
-    fun getSummary(): String {
-        return when {
-            isSms() -> body
+    fun getSummary(): String = when {
+        isSms() -> body
 
-            else -> parts
-                    .mapNotNull { it.text }
-                    .joinToString("\n") { text -> text }
-                    .takeIf { it.isNotEmpty() }
-                    ?: getCleansedSubject().takeIf { it.isNotEmpty() }
-                    ?: "An MMS message"
+        else -> {
+            val sb = StringBuilder()
+
+            // Add subject
+            getCleansedSubject().takeIf { it.isNotEmpty() }?.run(sb::appendln)
+
+            // Add parts
+            parts.mapNotNull { it.getSummary() }.forEach { summary -> sb.appendln(summary) }
+
+            sb.toString().trim()
         }
     }
 
