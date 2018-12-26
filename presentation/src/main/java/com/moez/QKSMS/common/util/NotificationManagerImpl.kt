@@ -61,7 +61,6 @@ import javax.inject.Singleton
 class NotificationManagerImpl @Inject constructor(
     private val context: Context,
     private val colors: Colors,
-    private val contactRepo: ContactRepository,
     private val conversationRepo: ConversationRepository,
     private val prefs: Preferences,
     private val messageRepo: MessageRepository,
