@@ -397,7 +397,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="schedule, scheduleLabel, gallery, galleryLabel, camera, cameraLabel, attachingBackground" />
+        app:constraint_referenced_ids="contact, contactLabel, schedule, scheduleLabel, gallery, galleryLabel, camera,
+         cameraLabel, attachingBackground" />
 
     <View
         android:id="@+id/attachingBackground"
@@ -409,6 +410,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/contact"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
+        android:contentDescription="@string/compose_contact_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_person_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/schedule"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach" />
+
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/contactLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_rectangle_4dp"
+        android:backgroundTint="?attr/bubbleColor"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:text="@string/compose_contact_cd"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/contact"
+        app:layout_constraintStart_toEndOf="@id/contact"
+        app:layout_constraintTop_toTopOf="@id/contact" />
 
     <ImageView
         android:id="@+id/schedule"

@@ -48,7 +48,9 @@ interface ComposeView : QkView<ComposeState> {
     val cameraIntent: Observable<*>
     val galleryIntent: Observable<*>
     val scheduleIntent: Observable<*>
+    val attachContactIntent: Observable<*>
     val attachmentSelectedIntent: Observable<Uri>
+    val contactSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
     val scheduleSelectedIntent: Observable<Long>
     val scheduleCancelIntent: Observable<*>
@@ -64,6 +66,7 @@ interface ComposeView : QkView<ComposeState> {
     fun requestCamera()
     fun requestGallery()
     fun requestDatePicker()
+    fun requestContact()
     fun setDraft(draft: String)
     fun scrollToMessage(id: Long)
     fun showQksmsPlusSnackbar(@StringRes message: Int)

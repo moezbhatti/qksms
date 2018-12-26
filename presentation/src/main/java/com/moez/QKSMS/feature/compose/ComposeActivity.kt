@@ -27,6 +27,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.view.Menu
@@ -68,8 +69,9 @@ import javax.inject.Inject
 class ComposeActivity : QkThemedActivity(), ComposeView {
 
     companion object {
-        const val CAMERA_REQUEST_CODE = 0
-        const val GALLERY_REQUEST_CODE = 1
+        private const val CAMERA_REQUEST_CODE = 0
+        private const val GALLERY_REQUEST_CODE = 1
+        private const val CONTACT_REQUEST_CODE = 2
     }
 
     @Inject lateinit var attachmentAdapter: AttachmentAdapter
@@ -97,7 +99,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val cameraIntent by lazy { Observable.merge(camera.clicks(), cameraLabel.clicks()) }
     override val galleryIntent by lazy { Observable.merge(gallery.clicks(), galleryLabel.clicks()) }
     override val scheduleIntent by lazy { Observable.merge(schedule.clicks(), scheduleLabel.clicks()) }
+    override val attachContactIntent by lazy { Observable.merge(contact.clicks(), contactLabel.clicks()) }
     override val attachmentSelectedIntent: Subject<Uri> = PublishSubject.create()
+    override val contactSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { message.inputContentSelected }
     override val scheduleSelectedIntent: Subject<Long> = PublishSubject.create()
     override val changeSimIntent by lazy { sim.clicks() }
@@ -232,9 +236,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         send.imageAlpha = if (state.canSend) 255 else 128
     }
 
-    override fun clearSelection() {
-        messageAdapter.clearSelection()
-    }
+    override fun clearSelection() = messageAdapter.clearSelection()
 
     override fun showDetails(details: String) {
         AlertDialog.Builder(this)
@@ -268,6 +270,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
     }
 
+    override fun requestContact() {
+        val intent = Intent(Intent.ACTION_PICK)
+                .setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE)
+
+        startActivityForResult(Intent.createChooser(intent, null), CONTACT_REQUEST_CODE)
+    }
+
     override fun requestCamera() {
         cameraDestination = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
                 .let { timestamp -> ContentValues().apply { put(MediaStore.Images.Media.TITLE, timestamp) } }
@@ -288,9 +297,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         startActivityForResult(Intent.createChooser(intent, null), GALLERY_REQUEST_CODE)
     }
 
-    override fun setDraft(draft: String) {
-        message.setText(draft)
-    }
+    override fun setDraft(draft: String) = message.setText(draft)
 
     override fun scrollToMessage(id: Long) {
         messageAdapter.data?.second
@@ -323,15 +330,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                CAMERA_REQUEST_CODE -> cameraDestination
-                GALLERY_REQUEST_CODE -> data?.data
-                else -> null
-            }?.let(attachmentSelectedIntent::onNext)
+                CAMERA_REQUEST_CODE -> cameraDestination?.let(attachmentSelectedIntent::onNext)
+                GALLERY_REQUEST_CODE -> data?.data?.let(attachmentSelectedIntent::onNext)
+                CONTACT_REQUEST_CODE -> data?.data?.let(contactSelectedIntent::onNext)
+            }
         }
     }
 
-    override fun onBackPressed() {
-        backPressedIntent.onNext(Unit)
-    }
+    override fun onBackPressed() = backPressedIntent.onNext(Unit)
 
 }
