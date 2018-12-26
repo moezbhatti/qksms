@@ -28,11 +28,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.provider.ContactsContract
 import android.telephony.PhoneNumberUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
+import androidx.core.graphics.drawable.IconCompat
+import androidx.core.graphics.get
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.extensions.isImage
@@ -44,6 +48,7 @@ import com.moez.QKSMS.receiver.DeleteMessagesReceiver
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
+import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.GlideApp
@@ -56,6 +61,7 @@ import javax.inject.Singleton
 class NotificationManagerImpl @Inject constructor(
     private val context: Context,
     private val colors: Colors,
+    private val contactRepo: ContactRepository,
     private val conversationRepo: ConversationRepository,
     private val prefs: Preferences,
     private val messageRepo: MessageRepository,
@@ -142,16 +148,28 @@ class NotificationManagerImpl @Inject constructor(
 
         // Add the messages to the notification
         messages.forEach { message ->
-            val name = when {
-                message.isMe() -> null
-                conversation.recipients.size < 2 -> conversation.getTitle()
-                else -> conversation.recipients
+            val person = Person.Builder()
+
+            if (!message.isMe()) {
+                val recipient = conversation.recipients
                         .firstOrNull { PhoneNumberUtils.compare(it.address, message.address) }
-                        ?.getDisplayName()
-                        ?: message.address
+
+                person.setName(recipient?.getDisplayName() ?: message.address)
+
+                person.setIcon(GlideApp.with(context)
+                        .asBitmap()
+                        .circleCrop()
+                        .load(PhoneNumberUtils.stripSeparators(message.address))
+                        .submit(64.dpToPx(context), 64.dpToPx(context))
+                        .let { futureGet -> tryOrNull { futureGet.get() } }
+                        ?.let(IconCompat::createWithBitmap))
+
+                recipient?.contact
+                        ?.let { contact -> "${ContactsContract.Contacts.CONTENT_LOOKUP_URI}/${contact.lookupKey}" }
+                        ?.let(person::setUri)
             }
 
-            NotificationCompat.MessagingStyle.Message(message.getSummary(), message.date, name).apply {
+            NotificationCompat.MessagingStyle.Message(message.getSummary(), message.date, person.build()).apply {
                 message.parts.firstOrNull { it.isImage() }?.let { part ->
                     setData(part.type, ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id))
                 }
