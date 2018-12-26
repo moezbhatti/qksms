@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
@@ -92,11 +93,6 @@ abstract class QkThemedActivity : QkActivity() {
             window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
         }
 
-        // Set the color for the overflow and navigation icon
-        val textTertiary = resolveThemeColor(android.R.attr.textColorTertiary)
-        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textTertiary) }
-        toolbar?.navigationIcon = toolbar?.navigationIcon?.apply { setTint(textTertiary) }
-
         // Set the color for the recent apps title
         val toolbarColor = resolveThemeColor(R.attr.colorPrimary)
         val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
@@ -107,21 +103,20 @@ abstract class QkThemedActivity : QkActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
+        // Set the color for the overflow and navigation icon
+        val textSecondary = resolveThemeColor(android.R.attr.textColorSecondary)
+        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textSecondary) }
+
         // Update the colours of the menu items
         Observables.combineLatest(menu, theme) { menu, theme ->
-            val text = resolveThemeColor(android.R.attr.textColorSecondary)
-            (0 until menu.size())
-                    .map { position -> menu.getItem(position) }
-                    .forEach { menuItem ->
-                        menuItem?.icon?.run {
-                            setTint(when (menuItem.itemId) {
-                                in getColoredMenuItems() -> theme.theme
-                                else -> text
-                            })
+            menu.iterator().forEach { menuItem ->
+                val tint = when (menuItem.itemId) {
+                    in getColoredMenuItems() -> theme.theme
+                    else -> textSecondary
+                }
 
-                            menuItem.icon = this
-                        }
-                    }
+                menuItem.icon = menuItem.icon?.apply { setTint(tint) }
+            }
         }.autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
     }
 

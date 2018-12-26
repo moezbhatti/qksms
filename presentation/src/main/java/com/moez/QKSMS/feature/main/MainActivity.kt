@@ -177,9 +177,6 @@ class MainActivity : QkThemedActivity(), MainView {
                     compose.setTint(theme.textPrimary)
                 }
 
-        // Set the hamburger icon color
-        toggle.drawerArrowDrawable.color = resolveThemeColor(android.R.attr.textColorSecondary)
-
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(recyclerView)
     }
@@ -315,6 +312,10 @@ class MainActivity : QkThemedActivity(), MainView {
 
     override fun showBackButton(show: Boolean) {
         toggle.onDrawerSlide(drawer, if (show) 1f else 0f)
+        toggle.drawerArrowDrawable.color = when (show) {
+            true -> resolveThemeColor(android.R.attr.textColorSecondary)
+            false -> resolveThemeColor(android.R.attr.textColorPrimary)
+        }
     }
 
     override fun requestPermissions() {

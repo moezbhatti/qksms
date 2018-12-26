@@ -35,19 +35,27 @@
             android:animateLayoutChanges="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            app:contentInsetStartWithNavigation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
-                style="@style/ToolbarText" />
+                style="@style/ToolbarText"
+                android:layout_marginStart="16dp" />
 
             <com.moez.QKSMS.common.widget.QkEditText
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/rounded_rectangle_24dp"
+                android:backgroundTint="?android:attr/queryBackground"
                 android:hint="@string/title_conversations"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:textColorHint="?android:attr/textColorTertiary"
                 app:textSize="primary"
                 tools:textSize="16sp" />
