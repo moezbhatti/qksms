@@ -25,22 +25,39 @@ import com.bumptech.glide.Glide
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
+import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.model.Attachment
+import ezvcard.Ezvcard
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.attachment_list_item.view.*
+import kotlinx.android.synthetic.main.attachment_contact_list_item.view.*
+import kotlinx.android.synthetic.main.attachment_image_list_item.view.*
 import javax.inject.Inject
 
 class AttachmentAdapter @Inject constructor(
     private val context: Context
 ) : QkAdapter<Attachment>() {
 
+    companion object {
+        private const val VIEW_TYPE_IMAGE = 0
+        private const val VIEW_TYPE_CONTACT = 1
+    }
+
     val attachmentDeleted: Subject<Attachment> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.attachment_list_item, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = when (viewType) {
+            VIEW_TYPE_IMAGE -> inflater.inflate(R.layout.attachment_image_list_item, parent, false)
+                    .apply { thumbnailBounds.clipToOutline = true }
 
-        view.thumbnailBounds.clipToOutline = true
+            VIEW_TYPE_CONTACT -> inflater.inflate(R.layout.attachment_contact_list_item, parent, false)
+
+            else -> null!! // Impossible
+        }
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
@@ -54,7 +71,22 @@ class AttachmentAdapter @Inject constructor(
         val attachment = getItem(position)
         val view = holder.itemView
 
-        Glide.with(context).load(attachment.getUri()).into(view.thumbnail)
+        when (attachment) {
+            is Attachment.Image -> Glide.with(context)
+                    .load(attachment.getUri())
+                    .into(view.thumbnail)
+
+            is Attachment.Contact -> Observable.just(attachment.vCard)
+                    .mapNotNull { vCard -> Ezvcard.parse(vCard).first() }
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { vcard -> view.name?.text = vcard.formattedName.value }
+        }
+    }
+
+    override fun getItemViewType(position: Int) = when (getItem(position)) {
+        is Attachment.Image -> VIEW_TYPE_IMAGE
+        is Attachment.Contact -> VIEW_TYPE_CONTACT
     }
 
 }

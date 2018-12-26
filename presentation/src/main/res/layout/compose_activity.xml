@@ -255,7 +255,7 @@
         app:layout_constraintBottom_toTopOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
         app:layout_constraintStart_toStartOf="@id/messageBackground"
-        tools:listitem="@layout/attachment_list_item" />
+        tools:listitem="@layout/attachment_image_list_item" />
 
     <com.moez.QKSMS.common.widget.QkEditText
         android:id="@+id/message"

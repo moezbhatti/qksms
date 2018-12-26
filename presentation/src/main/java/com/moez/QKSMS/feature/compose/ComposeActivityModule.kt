@@ -23,6 +23,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.moez.QKSMS.injection.ViewModelKey
 import com.moez.QKSMS.model.Attachment
+import com.moez.QKSMS.model.Attachments
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
@@ -70,11 +71,11 @@ class ComposeActivityModule {
 
     @Provides
     @Named("attachments")
-    fun provideSharedAttachments(activity: ComposeActivity): List<Attachment> {
+    fun provideSharedAttachments(activity: ComposeActivity): Attachments {
         val sharedImages = mutableListOf<Uri>()
         activity.intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.run(sharedImages::add)
         activity.intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.run(sharedImages::addAll)
-        return sharedImages.map { Attachment(it) }
+        return Attachments(sharedImages.map { Attachment.Image(it) })
     }
 
     @Provides
