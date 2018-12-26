@@ -18,10 +18,7 @@
  */
 package com.moez.QKSMS.mapper
 
-import android.content.Context
 import com.f2prateek.rx.preferences2.RxSharedPreferences
-import com.moez.QKSMS.experiment.Experiment
-import com.moez.QKSMS.experiment.Variant
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.RatingManager
 import io.reactivex.rxkotlin.Observables
@@ -29,9 +26,12 @@ import javax.inject.Inject
 
 class RatingManagerImpl @Inject constructor(
     rxPrefs: RxSharedPreferences,
-    private val analyticsManager: AnalyticsManager,
-    private val ratingThresholdExperiment: RatingThresholdExperiment
+    private val analyticsManager: AnalyticsManager
 ) : RatingManager {
+
+    companion object {
+        private const val RATING_THRESHOLD = 10
+    }
 
     private val sessions = rxPrefs.getInteger("sessions", 0)
     private val rated = rxPrefs.getBoolean("rated", false)
@@ -42,7 +42,7 @@ class RatingManagerImpl @Inject constructor(
             rated.asObservable(),
             dismissed.asObservable()) { sessions, rated, dismissed ->
 
-        sessions > ratingThresholdExperiment.variant && !rated && !dismissed
+        sessions > RATING_THRESHOLD && !rated && !dismissed
     }
 
     override fun addSession() {
@@ -58,22 +58,5 @@ class RatingManagerImpl @Inject constructor(
         analyticsManager.track("Clicked Rate (Dismiss)")
         dismissed.set(true)
     }
-
-}
-
-class RatingThresholdExperiment @Inject constructor(
-    context: Context,
-    analytics: AnalyticsManager
-) : Experiment<Int>(context, analytics) {
-
-    override val key: String = "Rating Threshold"
-
-    override val variants: List<Variant<Int>> = listOf(
-            Variant("variant_a", 100),
-            Variant("variant_b", 10))
-
-    override val default: Int = 100
-
-    override val qualifies: Boolean = true
 
 }
