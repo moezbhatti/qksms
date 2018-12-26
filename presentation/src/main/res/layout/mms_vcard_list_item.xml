@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -17,56 +16,54 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp">
 
-    <View
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vCardBackground"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/name" />
-
-    <ImageView
-        android:id="@+id/vCardAvatar"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="12dp"
-        android:src="@drawable/ic_person_black_24dp"
-        android:tint="?android:attr/textColorSecondary"
-        app:layout_constraintBottom_toBottomOf="@id/vCardBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/vCardBackground" />
-
-    <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingEnd="12dp"
-        android:paddingStart="12dp"
-        android:paddingTop="8dp"
-        android:textColor="?android:attr/textColorPrimary"
-        app:layout_constraintStart_toEndOf="@id/vCardAvatar"
-        app:textSize="primary"
-        tools:text="@tools:sample/full_names" />
+        android:layout_height="wrap_content">
 
-    <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingEnd="12dp"
-        android:paddingStart="12dp"
-        android:text="@string/compose_vcard_label"
-        android:textColor="?android:attr/textColorTertiary"
-        app:layout_constraintStart_toStartOf="@id/name"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        app:textSize="secondary" />
+        <ImageView
+            android:id="@+id/vCardAvatar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/ic_person_black_24dp"
+            android:tint="?android:attr/textColorSecondary"
+            app:layout_constraintBottom_toBottomOf="@id/vCardBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vCardBackground" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.moez.QKSMS.common.widget.QkTextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toEndOf="@id/vCardAvatar"
+            app:textSize="primary"
+            tools:text="@tools:sample/full_names" />
+
+        <com.moez.QKSMS.common.widget.QkTextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
+            android:text="@string/compose_vcard_label"
+            android:textColor="?android:attr/textColorTertiary"
+            app:layout_constraintStart_toStartOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            app:textSize="secondary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
