@@ -19,343 +19,345 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-  <string name="title_archived">Archyvas</string>
-  <string name="title_settings">Nustatymai</string>
-  <string name="title_notification_prefs">Pranešimai</string>
-  <string name="title_theme">Spalva</string>
-  <string name="title_conversations">Ieškoti žinutes&#8230;</string>
-  <string name="title_compose">Rašyti</string>
-  <string name="setup_skip">Praleisti</string>
-  <string name="setup_next">Tęsti</string>
-  <string name="menu_call">Skambinti</string>
-  <string name="menu_info">Dėtalės</string>
-  <string name="menu_save">Save to gallery</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
-  <string name="main_title_selected">%d pasirinkta(s)</string>
-  <string name="main_menu_clear">Ištrinti</string>
-  <string name="main_menu_archive">Archyvuoti</string>
-  <string name="main_menu_unarchive">Išarchyvuoti</string>
-  <string name="main_menu_delete">Ištrinti</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
-  <string name="main_menu_block">Blokuoti</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
-  <string name="main_sender_you">Tu: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
-  <string name="inbox_empty_text">Tavo žinutės buvo matomos čia</string>
-  <string name="inbox_search_empty_text">Nėra rezultatų</string>
-  <string name="archived_empty_text">Tavo archyvuoti pokalbiai bus čia</string>
-  <string name="main_fab_cd">Pradėti naują pokalbį</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
-  <string name="drawer_inbox">Žinutės</string>
-  <string name="drawer_archived">Archyvas</string>
-  <string name="drawer_scheduled">Planuota</string>
-  <string name="drawer_blocking">Blocking</string>
-  <string name="drawer_more">Daugiau</string>
-  <string name="drawer_settings">Nustatymai</string>
-  <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Pagalba ir atsiliepimai</string>
-  <string name="drawer_invite">Invite friends</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
-  <string name="rate_title">Patinka QKSMS?</string>
-  <string name="rate_summary">Įvertink mūsų programėlę Google Play!</string>
-  <string name="rate_okay">OK!</string>
-  <string name="rate_dismiss">ATMESTI</string>
-  <string name="dialog_delete_title">Ištrinti</string>
-  <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="many">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
-  </plurals>
-  <string-array name="message_options">
-    <item>Kopijuoti tekstą</item>
-    <item>Persiųsti</item>
-    <item>Ištrinti</item>
-  </string-array>
-  <string name="compose_title_selected">%d parinktas</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
-  <string name="compose_send_group_title">Send as group message</string>
-  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-  <string name="compose_messages_empty">Čia jūsų pokalbio pradžios. Pasakykite kažką gražaus!</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
-  <string name="compose_hint">Rašyti žinutę...</string>
-  <string name="compose_menu_copy">Kopijuoti tekstą</string>
-  <string name="compose_menu_forward">Persiųsti</string>
-  <string name="compose_menu_delete">Ištrinti</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
-  <string name="compose_attach_cd">Pridėti priedą</string>
-  <string name="compose_gallery_cd">Pridėti nuotrauką</string>
-  <string name="compose_camera_cd">Padaryti nuotrauką</string>
-  <string name="compose_schedule_cd">Schedule message</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
-  <string name="compose_send_cd">Siųsti žinutę</string>
-  <string name="message_status_sending">Siunčiama&#8230;</string>
-  <string name="message_status_delivered">Nusiųsta %s</string>
-  <string name="message_status_failed">Nepavyko nusiųsti. Spausk dar kartą norint persiųsti</string>
-  <string name="info_title">Dėtalės</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
-  <string name="info_notifications">Pranešimai</string>
-  <string name="info_theme">Tema</string>
-  <string name="info_archive">Archyvuoti</string>
-  <string name="info_unarchive">Išarchyvuoti</string>
-  <string name="info_block">Blokuoti</string>
-  <string name="info_unblock">Atblokuoti</string>
-  <string name="info_delete">Ištrinti pokalbį</string>
-  <string name="gallery_error">Couldn\'t load media</string>
-  <string name="gallery_toast_saved">Saved to gallery</string>
-  <string name="backup_title">Backup and restore</string>
-  <string name="backup_backing_up">Backing up messages</string>
-  <string name="backup_restoring">Restoring from backup</string>
-  <string name="backup_last">Last backup</string>
-  <string name="backup_loading">Loading&#8230;</string>
-  <string name="backup_never">Never</string>
-  <string name="backup_restore_title">Restore</string>
-  <string name="backup_restore_summary">Select a backup</string>
-  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-  <string name="backup_restore_dialog_title">Backups</string>
-  <string name="backup_restore_dialog_empty">No backups found</string>
-  <plurals name="backup_message_count">
-    <item quantity="one">%d message</item>
-    <item quantity="few">%d messages</item>
-    <item quantity="many">%d messages</item>
-    <item quantity="other">%d messages</item>
-  </plurals>
-  <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-  <string name="backup_now">Backup now</string>
-  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-  <string name="backup_progress_running">%d/%d messages</string>
-  <string name="backup_progress_saving">Saving backup&#8230;</string>
-  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
-  <string name="backup_notification_channel_name">Backup and restore</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
-  <string name="scheduled_options_title">Scheduled message</string>
-  <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
-  </string-array>
-  <string name="settings_category_appearance">Išvaizda</string>
-  <string name="settings_category_general">Bendra</string>
-  <string name="settings_category_qkreply">Greitas atsakas</string>
-  <string name="settings_theme_title">Tema</string>
-  <string name="settings_night_title">Nakties tema</string>
-  <string name="settings_black_title">Visiškai juoda nakties tema</string>
-  <string name="settings_night_start_title">Pradžios laikas</string>
-  <string name="settings_night_end_title">Pabaigos laikas</string>
-  <string name="settings_text_size_title">Šrifto dydis</string>
-  <string name="settings_system_font_title">Naudoti sistemos šriftą</string>
-  <string name="settings_auto_emoji_title">Automatinis emoji</string>
-  <string name="settings_notifications_title">Pranešimai</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
-  <string name="settings_notification_previews_title">Pranešimų peržiūra</string>
-  <string name="settings_vibration_title">Vibracija</string>
-  <string name="settings_ringtone_title">Garas</string>
-  <string name="settings_ringtone_none">None</string>
-  <string name="settings_qkreply_title">Greitas atsakas</string>
-  <string name="settings_qkreply_summary">Iššokantis langas naujiems pranešimams</string>
-  <string name="settings_qkreply_tap_dismiss_title">Spustelėkite, kad atmestumėte</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Spustelėkite bet kur už iššokamo lango, kad išjungtumėte</string>
-  <string name="settings_blocking_title">Blokavimas</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Ar reikia atsakyti?</string>
-  <string name="settings_should_i_answer_summary">Automatiškai filtruoti žinutes nuo nežinomų numerių su „Ar reikia atsakyti“ programėle</string>
-  <string name="settings_delayed_title">Delayed sending</string>
-  <string name="settings_swipe_actions">Swipe actions</string>
-  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-  <string name="settings_swipe_actions_right">Right swipe</string>
-  <string name="settings_swipe_actions_left">Left swipe</string>
-  <string name="settings_swipe_actions_change">CHANGE</string>
-  <string-array name="settings_swipe_actions">
-    <item>None</item>
-    <item>Archive</item>
-    <item>Delete</item>
-    <item>Call</item>
-    <item>Mark read</item>
-  </string-array>
-  <string name="settings_delivery_title">Žinučių pristatymo patvirtinimai</string>
-  <string name="settings_delivery_summary">Patvirtinti, kad pranešimai buvo sėkmingai išsiųsti</string>
-  <string name="settings_unicode_title">Trinti akcentus</string>
-  <string name="settings_unicode_summary">Ištrinti jūsų SMS žinučių simbolių akcentus</string>
-  <string name="settings_mobile_title">Mobile numbers only</string>
-  <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
-  <string name="settings_sync_title">Sinchronizuoti pranešimus</string>
-  <string name="settings_sync_summary">Iš naujo sinchronizuoti Android pranešimų duomenų bazę</string>
-  <string name="settings_about_title">Apie QKSMS</string>
-  <string name="settings_version">Versija %s</string>
-  <string name="settings_logging_enabled">Debug logging enabled</string>
-  <string name="settings_logging_disabled">Debug logging disabled</string>
-  <string name="settings_delay_duration_hint">Įvesti trukmę (sek.)</string>
-  <string name="blocked_title">Blokavimas</string>
-  <string name="blocked_empty">Užblokuoti pokalbiai bus rodomi čia</string>
-  <string name="blocked_unblock_dialog_title">Atblokuoti</string>
-  <string name="blocked_unblock_dialog_message">Ar norite atblokuoti šį pokalbį?</string>
-  <string name="about_title">Apie</string>
-  <string name="about_version_title">Versija</string>
-  <string name="about_developer_title">Kūrėjas</string>
-  <string name="about_source_title">Šaltinio kodas</string>
-  <string name="about_changelog_title">Pakeitimų sąrašas</string>
-  <string name="about_contact_title">Kontaktai</string>
-  <string name="about_license_title">Licencija</string>
-  <string name="about_copyright_title">Autorinės teisės</string>
-  <string name="qksms_plus_description_title">Remti programos vystymąsi, atrakinti viską</string>
-  <string name="qksms_plus_description_summary">Galite išsaugoti badaujantį programėlės kūrėją tik už %s</string>
-  <string name="qksms_plus_upgrade">Amžininis programėlės funkcijų atrakinimas %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Atrakinti + aukoti %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Ačiū už paramą!</string>
-  <string name="qksms_plus_thanks_summary">Dabar jūs turite prieigą prie visoms QKSMS+ funkcijoms</string>
-  <string name="qksms_plus_free_title">QKSMS+ yra nemokama F-Droid vartotojams! Taip pat galite paremti programos kūrėją aukodami.</string>
-  <string name="qksms_plus_donate">Paaukoti per PayPal</string>
-  <string name="qksms_plus_coming_soon">Jau greitai</string>
-  <string name="qksms_plus_themes_title">Premium temos</string>
-  <string name="qksms_plus_themes_summary">Atrakink kitas spalvas, kurios nėra „Material“ paletėje</string>
-  <string name="qksms_plus_emoji_title">Individualizuoti auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Sukurkite pasirinktinius automatinių emoji sparčiuosius klavišus</string>
-  <string name="qksms_plus_backup_title">Žinučių atsarginis kopijavimas</string>
-  <string name="qksms_plus_backup_summary">Automatinis atsarginių pranešimų kopijavimas. Niekada nerimaukite, kad prarasite žinutes, jei pakeisite telefonus arba pamesite telefoną</string>
-  <string name="qksms_plus_scheduled_title">Planuotos žinutės</string>
-  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
-  <string name="qksms_plus_delayed_title">Atidėtas siuntimas</string>
-  <string name="qksms_plus_delayed_summary">Palaukti kelias sekundes prieš išsiųntant pranešimą</string>
-  <string name="qksms_plus_night_title">Automatinė nakties tema</string>
-  <string name="qksms_plus_night_summary">Įjungti naktinį režimą pagal dienos laiką</string>
-  <string name="qksms_plus_blacklist_title">Sudėtingesnis blokavimas</string>
-  <string name="qksms_plus_blacklist_summary">Blokuoti žinutes pagal raktinius žodžius arba šabloninę struktūrą</string>
-  <string name="qksms_plus_forward_title">Automatiškai persiųsti</string>
-  <string name="qksms_plus_forward_summary">Automatiškai persiųsti žinutes nuo tam tikrų siuntėjų</string>
-  <string name="qksms_plus_respond_title">Automatiškai atsakyti</string>
-  <string name="qksms_plus_respond_summary">Automatiškai atsakyti į žinutes su tam tikru atsaku</string>
-  <string name="qksms_plus_more_title">Daugiau</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
-  <string name="widget_loading">Kraunama&#8230;</string>
-  <string name="widget_more">Žiūrėti daugiau pokalbių</string>
-  <string name="qkreply_menu_read">Žymėti skaitytą</string>
-  <string name="qkreply_menu_call">Skambinti</string>
-  <string name="qkreply_menu_delete">Delete</string>
-  <string name="qkreply_menu_expand">Rodyti daugiau</string>
-  <string name="qkreply_menu_collapse">Rodyti mažiau</string>
-  <string name="qkreply_menu_view">Atidaryti pokalbį</string>
-  <string name="theme_material">„Material“ dizainas</string>
-  <string name="theme_plus">QKSMS+</string>
-  <string name="theme_hex">HEX kodas</string>
-  <string name="theme_apply">Pritaikyti</string>
-  <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
-    <item>Delete</item>
-  </string-array>
-  <string name="button_cancel">Atšaukti</string>
-  <string name="button_delete">Ištrinti</string>
-  <string name="button_save">Save</string>
-  <string name="button_stop">Stop</string>
-  <string name="button_more">Daugiau</string>
-  <string name="button_set">Padaryti</string>
-  <string name="button_unblock">Atblokuoti</string>
-  <string name="button_undo">Anuliuoti</string>
-  <string name="toast_copied">Nukopijuota</string>
-  <string name="toast_archived">Archyvuotas pokalbis</string>
-  <string name="toast_qksms_plus">Reikia turėti QKSMS+ funkcijos naudojomui</string>
-  <plurals name="notification_new_messages">
-    <item quantity="one">Naujas pranešimas</item>
-    <item quantity="few">%s nauji pranešimai</item>
-    <item quantity="many">%s nauji pranešimai</item>
-    <item quantity="other">%s nauji pranešimai</item>
-  </plurals>
-  <string name="notification_message_failed_title">Žinutė neišsiųsta</string>
-  <string name="notification_message_failed_text">Žinutę, skirta %s, išsiųsti nepavyko</string>
-  <string-array name="night_modes">
-    <item>Išjungtas</item>
-    <item>Visadas įjungtas</item>
-    <item>Automatinis</item>
-  </string-array>
-  <string-array name="notification_preview_options">
-    <item>Rodyti vardą ir žinutę</item>
-    <item>Rodyti vardą</item>
-    <item>Slėpti turinį</item>
-  </string-array>
-  <string-array name="text_sizes">
-    <item>Mažas</item>
-    <item>Normalus</item>
-    <item>Didelis</item>
-    <item>Didžiausias</item>
-  </string-array>
-  <string-array name="delayed_sending_labels">
-    <item>Be delsimo</item>
-    <item>Trumpas</item>
-    <item>Vidutinis</item>
-    <item>Ilgas</item>
-  </string-array>
-  <string-array name="mms_sizes">
-    <item>100KB</item>
-    <item>200KB</item>
-    <item>300KB (Recommended)</item>
-    <item>600KB</item>
-    <item>1000KB</item>
-    <item>2000KB</item>
-    <item>No compression</item>
-  </string-array>
-  <string-array name="qk_responses">
-    <item>Gerai</item>
-    <item>Duokite minutę</item>
-    <item>Tuoj būsiu</item>
-    <item>Ačiū</item>
-    <item>Gerai skamba</item>
-    <item>Kas naujo?</item>
-    <item>Sutinku</item>
-    <item>Ne</item>
-    <item>Myliu tave</item>
-    <item>Atsiprašau</item>
-    <item>HAHA</item>
-    <item>Viskas gerai</item>
-  </string-array>
+    <string name="shortcut_compose_long_label">New conversation</string>
+    <string name="shortcut_compose_short_label">Compose</string>
+    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+    <string name="title_archived">Archyvas</string>
+    <string name="title_settings">Nustatymai</string>
+    <string name="title_notification_prefs">Pranešimai</string>
+    <string name="title_theme">Spalva</string>
+    <string name="title_conversations">Ieškoti žinutes&#8230;</string>
+    <string name="title_compose">Rašyti</string>
+    <string name="setup_skip">Praleisti</string>
+    <string name="setup_next">Tęsti</string>
+    <string name="menu_call">Skambinti</string>
+    <string name="menu_info">Dėtalės</string>
+    <string name="menu_save">Save to gallery</string>
+    <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_title_selected">%d pasirinkta(s)</string>
+    <string name="main_menu_clear">Ištrinti</string>
+    <string name="main_menu_archive">Archyvuoti</string>
+    <string name="main_menu_unarchive">Išarchyvuoti</string>
+    <string name="main_menu_delete">Ištrinti</string>
+    <string name="main_menu_pin">Pin to top</string>
+    <string name="main_menu_unpin">Unpin</string>
+    <string name="main_menu_read">Mark read</string>
+    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_block">Blokuoti</string>
+    <string name="main_syncing">Syncing messages&#8230;</string>
+    <string name="main_sender_you">Tu: %s</string>
+    <string name="main_message_results_title">Results in messages</string>
+    <string name="main_message_results">%d messages</string>
+    <string name="inbox_empty_text">Tavo žinutės buvo matomos čia</string>
+    <string name="inbox_search_empty_text">Nėra rezultatų</string>
+    <string name="archived_empty_text">Tavo archyvuoti pokalbiai bus čia</string>
+    <string name="main_fab_cd">Pradėti naują pokalbį</string>
+    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+    <string name="main_default_sms_change">Change</string>
+    <string name="main_permission_required">Permission required</string>
+    <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+    <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+    <string name="main_permission_allow">Allow</string>
+    <string name="drawer_inbox">Žinutės</string>
+    <string name="drawer_archived">Archyvas</string>
+    <string name="drawer_scheduled">Planuota</string>
+    <string name="drawer_blocking">Blocking</string>
+    <string name="drawer_more">Daugiau</string>
+    <string name="drawer_settings">Nustatymai</string>
+    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_help">Pagalba ir atsiliepimai</string>
+    <string name="drawer_invite">Invite friends</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+    <string name="rate_title">Patinka QKSMS?</string>
+    <string name="rate_summary">Įvertink mūsų programėlę Google Play!</string>
+    <string name="rate_okay">OK!</string>
+    <string name="rate_dismiss">ATMESTI</string>
+    <string name="dialog_delete_title">Ištrinti</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">Are you sure you would like to delete this conversation?</item>
+        <item quantity="few">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="many">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>Kopijuoti tekstą</item>
+        <item>Persiųsti</item>
+        <item>Ištrinti</item>
+    </string-array>
+    <string name="compose_title_selected">%d parinktas</string>
+    <string name="compose_subtitle_results">%1$d of %2$d results</string>
+    <string name="compose_send_group_title">Send as group message</string>
+    <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+    <string name="compose_messages_empty">Čia jūsų pokalbio pradžios. Pasakykite kažką gražaus!</string>
+    <string name="compose_vcard_label">Contact card</string>
+    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_future">Selected time must be in the future!</string>
+    <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+    <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_hint">Rašyti žinutę...</string>
+    <string name="compose_menu_copy">Kopijuoti tekstą</string>
+    <string name="compose_menu_forward">Persiųsti</string>
+    <string name="compose_menu_delete">Ištrinti</string>
+    <string name="compose_menu_previous">Previous</string>
+    <string name="compose_menu_next">Next</string>
+    <string name="compose_menu_clear">Clear</string>
+    <string name="compose_details_title">Message details</string>
+    <string name="compose_details_type">Type: %s</string>
+    <string name="compose_details_from">From: %s</string>
+    <string name="compose_details_to">To: %s</string>
+    <string name="compose_details_subject">Subject: %s</string>
+    <string name="compose_details_priority">Priority: %s</string>
+    <string name="compose_details_size">Size: %s</string>
+    <string name="compose_details_sent">Sent: %s</string>
+    <string name="compose_details_received">Received: %s</string>
+    <string name="compose_details_delivered">Delivered: %s</string>
+    <string name="compose_details_error_code">Error code: %d</string>
+    <string name="compose_attach_cd">Pridėti priedą</string>
+    <string name="compose_gallery_cd">Pridėti nuotrauką</string>
+    <string name="compose_camera_cd">Padaryti nuotrauką</string>
+    <string name="compose_schedule_cd">Schedule message</string>
+    <string name="compose_contact_cd">Attach a contact</string>
+    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_sim_cd">%s selected, change SIM card</string>
+    <string name="compose_send_cd">Siųsti žinutę</string>
+    <string name="message_status_sending">Siunčiama&#8230;</string>
+    <string name="message_status_delivered">Nusiųsta %s</string>
+    <string name="message_status_failed">Nepavyko nusiųsti. Spausk dar kartą norint persiųsti</string>
+    <string name="info_title">Dėtalės</string>
+    <string name="info_name">Conversation title</string>
+    <string name="info_name_hint">Enter title</string>
+    <string name="info_notifications">Pranešimai</string>
+    <string name="info_theme">Tema</string>
+    <string name="info_archive">Archyvuoti</string>
+    <string name="info_unarchive">Išarchyvuoti</string>
+    <string name="info_block">Blokuoti</string>
+    <string name="info_unblock">Atblokuoti</string>
+    <string name="info_delete">Ištrinti pokalbį</string>
+    <string name="gallery_error">Couldn\'t load media</string>
+    <string name="gallery_toast_saved">Saved to gallery</string>
+    <string name="backup_title">Backup and restore</string>
+    <string name="backup_backing_up">Backing up messages</string>
+    <string name="backup_restoring">Restoring from backup</string>
+    <string name="backup_last">Last backup</string>
+    <string name="backup_loading">Loading&#8230;</string>
+    <string name="backup_never">Never</string>
+    <string name="backup_restore_title">Restore</string>
+    <string name="backup_restore_summary">Select a backup</string>
+    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+    <string name="backup_restore_confirm_title">Restore from backup</string>
+    <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+    <string name="backup_restore_stop_title">Stop restore</string>
+    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+    <string name="backup_restore_dialog_title">Backups</string>
+    <string name="backup_restore_dialog_empty">No backups found</string>
+    <plurals name="backup_message_count">
+        <item quantity="one">%d message</item>
+        <item quantity="few">%d messages</item>
+        <item quantity="many">%d messages</item>
+        <item quantity="other">%d messages</item>
+    </plurals>
+    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_now">Backup now</string>
+    <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+    <string name="backup_progress_running">%d/%d messages</string>
+    <string name="backup_progress_saving">Saving backup&#8230;</string>
+    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+    <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="scheduled_title">Scheduled</string>
+    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+    <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_options_title">Scheduled message</string>
+    <string-array name="scheduled_options">
+        <item>Send now</item>
+        <item>Delete</item>
+    </string-array>
+    <string name="settings_category_appearance">Išvaizda</string>
+    <string name="settings_category_general">Bendra</string>
+    <string name="settings_category_qkreply">Greitas atsakas</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_night_title">Nakties tema</string>
+    <string name="settings_black_title">Visiškai juoda nakties tema</string>
+    <string name="settings_night_start_title">Pradžios laikas</string>
+    <string name="settings_night_end_title">Pabaigos laikas</string>
+    <string name="settings_text_size_title">Šrifto dydis</string>
+    <string name="settings_system_font_title">Naudoti sistemos šriftą</string>
+    <string name="settings_auto_emoji_title">Automatinis emoji</string>
+    <string name="settings_notifications_title">Pranešimai</string>
+    <string name="settings_notifications_o_summary">Tap to customize</string>
+    <string name="settings_notification_actions_title">Actions</string>
+    <string name="settings_notification_action_1">Button 1</string>
+    <string name="settings_notification_action_2">Button 2</string>
+    <string name="settings_notification_action_3">Button 3</string>
+    <string name="settings_notification_previews_title">Pranešimų peržiūra</string>
+    <string name="settings_vibration_title">Vibracija</string>
+    <string name="settings_ringtone_title">Garas</string>
+    <string name="settings_ringtone_none">None</string>
+    <string name="settings_qkreply_title">Greitas atsakas</string>
+    <string name="settings_qkreply_summary">Iššokantis langas naujiems pranešimams</string>
+    <string name="settings_qkreply_tap_dismiss_title">Spustelėkite, kad atmestumėte</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Spustelėkite bet kur už iššokamo lango, kad išjungtumėte</string>
+    <string name="settings_blocking_title">Blokavimas</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">Ar reikia atsakyti?</string>
+    <string name="settings_should_i_answer_summary">Automatiškai filtruoti žinutes nuo nežinomų numerių su „Ar reikia atsakyti“ programėle</string>
+    <string name="settings_delayed_title">Delayed sending</string>
+    <string name="settings_swipe_actions">Swipe actions</string>
+    <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
+    <string name="settings_swipe_actions_right">Right swipe</string>
+    <string name="settings_swipe_actions_left">Left swipe</string>
+    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string-array name="settings_swipe_actions">
+        <item>None</item>
+        <item>Archive</item>
+        <item>Delete</item>
+        <item>Call</item>
+        <item>Mark read</item>
+    </string-array>
+    <string name="settings_delivery_title">Žinučių pristatymo patvirtinimai</string>
+    <string name="settings_delivery_summary">Patvirtinti, kad pranešimai buvo sėkmingai išsiųsti</string>
+    <string name="settings_unicode_title">Trinti akcentus</string>
+    <string name="settings_unicode_summary">Ištrinti jūsų SMS žinučių simbolių akcentus</string>
+    <string name="settings_mobile_title">Mobile numbers only</string>
+    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+    <string name="settings_sync_title">Sinchronizuoti pranešimus</string>
+    <string name="settings_sync_summary">Iš naujo sinchronizuoti Android pranešimų duomenų bazę</string>
+    <string name="settings_about_title">Apie QKSMS</string>
+    <string name="settings_version">Versija %s</string>
+    <string name="settings_logging_enabled">Debug logging enabled</string>
+    <string name="settings_logging_disabled">Debug logging disabled</string>
+    <string name="settings_delay_duration_hint">Įvesti trukmę (sek.)</string>
+    <string name="blocked_title">Blokavimas</string>
+    <string name="blocked_empty">Užblokuoti pokalbiai bus rodomi čia</string>
+    <string name="blocked_unblock_dialog_title">Atblokuoti</string>
+    <string name="blocked_unblock_dialog_message">Ar norite atblokuoti šį pokalbį?</string>
+    <string name="about_title">Apie</string>
+    <string name="about_version_title">Versija</string>
+    <string name="about_developer_title">Kūrėjas</string>
+    <string name="about_source_title">Šaltinio kodas</string>
+    <string name="about_changelog_title">Pakeitimų sąrašas</string>
+    <string name="about_contact_title">Kontaktai</string>
+    <string name="about_license_title">Licencija</string>
+    <string name="about_copyright_title">Autorinės teisės</string>
+    <string name="qksms_plus_description_title">Remti programos vystymąsi, atrakinti viską</string>
+    <string name="qksms_plus_description_summary">Galite išsaugoti badaujantį programėlės kūrėją tik už %s</string>
+    <string name="qksms_plus_upgrade">Amžininis programėlės funkcijų atrakinimas %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_donate">Atrakinti + aukoti %1$s %2$s</string>
+    <string name="qksms_plus_thanks_title">Ačiū už paramą!</string>
+    <string name="qksms_plus_thanks_summary">Dabar jūs turite prieigą prie visoms QKSMS+ funkcijoms</string>
+    <string name="qksms_plus_free_title">QKSMS+ yra nemokama F-Droid vartotojams! Taip pat galite paremti programos kūrėją aukodami.</string>
+    <string name="qksms_plus_donate">Paaukoti per PayPal</string>
+    <string name="qksms_plus_coming_soon">Jau greitai</string>
+    <string name="qksms_plus_themes_title">Premium temos</string>
+    <string name="qksms_plus_themes_summary">Atrakink kitas spalvas, kurios nėra „Material“ paletėje</string>
+    <string name="qksms_plus_emoji_title">Individualizuoti auto-emoji</string>
+    <string name="qksms_plus_emoji_summary">Sukurkite pasirinktinius automatinių emoji sparčiuosius klavišus</string>
+    <string name="qksms_plus_backup_title">Žinučių atsarginis kopijavimas</string>
+    <string name="qksms_plus_backup_summary">Automatinis atsarginių pranešimų kopijavimas. Niekada nerimaukite, kad prarasite žinutes, jei pakeisite telefonus arba pamesite telefoną</string>
+    <string name="qksms_plus_scheduled_title">Planuotos žinutės</string>
+    <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
+    <string name="qksms_plus_delayed_title">Atidėtas siuntimas</string>
+    <string name="qksms_plus_delayed_summary">Palaukti kelias sekundes prieš išsiųntant pranešimą</string>
+    <string name="qksms_plus_night_title">Automatinė nakties tema</string>
+    <string name="qksms_plus_night_summary">Įjungti naktinį režimą pagal dienos laiką</string>
+    <string name="qksms_plus_blacklist_title">Sudėtingesnis blokavimas</string>
+    <string name="qksms_plus_blacklist_summary">Blokuoti žinutes pagal raktinius žodžius arba šabloninę struktūrą</string>
+    <string name="qksms_plus_forward_title">Automatiškai persiųsti</string>
+    <string name="qksms_plus_forward_summary">Automatiškai persiųsti žinutes nuo tam tikrų siuntėjų</string>
+    <string name="qksms_plus_respond_title">Automatiškai atsakyti</string>
+    <string name="qksms_plus_respond_summary">Automatiškai atsakyti į žinutes su tam tikru atsaku</string>
+    <string name="qksms_plus_more_title">Daugiau</string>
+    <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+    <string name="widget_loading">Kraunama&#8230;</string>
+    <string name="widget_more">Žiūrėti daugiau pokalbių</string>
+    <string name="qkreply_menu_read">Žymėti skaitytą</string>
+    <string name="qkreply_menu_call">Skambinti</string>
+    <string name="qkreply_menu_delete">Delete</string>
+    <string name="qkreply_menu_expand">Rodyti daugiau</string>
+    <string name="qkreply_menu_collapse">Rodyti mažiau</string>
+    <string name="qkreply_menu_view">Atidaryti pokalbį</string>
+    <string name="theme_material">„Material“ dizainas</string>
+    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_hex">HEX kodas</string>
+    <string name="theme_apply">Pritaikyti</string>
+    <string-array name="notification_actions">
+        <item>None</item>
+        <item>Mark read</item>
+        <item>Reply</item>
+        <item>Call</item>
+        <item>Delete</item>
+    </string-array>
+    <string name="button_cancel">Atšaukti</string>
+    <string name="button_delete">Ištrinti</string>
+    <string name="button_save">Save</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_more">Daugiau</string>
+    <string name="button_set">Padaryti</string>
+    <string name="button_unblock">Atblokuoti</string>
+    <string name="button_undo">Anuliuoti</string>
+    <string name="toast_copied">Nukopijuota</string>
+    <string name="toast_archived">Archyvuotas pokalbis</string>
+    <string name="toast_qksms_plus">Reikia turėti QKSMS+ funkcijos naudojomui</string>
+    <plurals name="notification_new_messages">
+        <item quantity="one">Naujas pranešimas</item>
+        <item quantity="few">%s nauji pranešimai</item>
+        <item quantity="many">%s nauji pranešimai</item>
+        <item quantity="other">%s nauji pranešimai</item>
+    </plurals>
+    <string name="notification_message_failed_title">Žinutė neišsiųsta</string>
+    <string name="notification_message_failed_text">Žinutę, skirta %s, išsiųsti nepavyko</string>
+    <string-array name="night_modes">
+        <item>Išjungtas</item>
+        <item>Visadas įjungtas</item>
+        <item>Automatinis</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>Rodyti vardą ir žinutę</item>
+        <item>Rodyti vardą</item>
+        <item>Slėpti turinį</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>Mažas</item>
+        <item>Normalus</item>
+        <item>Didelis</item>
+        <item>Didžiausias</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>Be delsimo</item>
+        <item>Trumpas</item>
+        <item>Vidutinis</item>
+        <item>Ilgas</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB (Recommended)</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>Gerai</item>
+        <item>Duokite minutę</item>
+        <item>Tuoj būsiu</item>
+        <item>Ačiū</item>
+        <item>Gerai skamba</item>
+        <item>Kas naujo?</item>
+        <item>Sutinku</item>
+        <item>Ne</item>
+        <item>Myliu tave</item>
+        <item>Atsiprašau</item>
+        <item>HAHA</item>
+        <item>Viskas gerai</item>
+    </string-array>
 </resources>

@@ -19,337 +19,339 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">Ny samtale</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Genvej deaktiveret</string>
-  <string name="title_archived">Arkiveret</string>
-  <string name="title_settings">Indstillinger</string>
-  <string name="title_notification_prefs">Notifikationer</string>
-  <string name="title_theme">Tema</string>
-  <string name="title_conversations">Søg i Indbakke&#8230;</string>
-  <string name="title_compose">Angiv et navn eller nummer</string>
-  <string name="setup_skip">Overspring</string>
-  <string name="setup_next">Fortsæt</string>
-  <string name="menu_call">Opkald</string>
-  <string name="menu_info">Oplysninger</string>
-  <string name="menu_save">Gem i Galleri</string>
-  <string name="main_drawer_open_cd">Åbn navigeringsskuffe</string>
-  <string name="main_title_selected">%d valgt</string>
-  <string name="main_menu_clear">Ryd</string>
-  <string name="main_menu_archive">Arkivér</string>
-  <string name="main_menu_unarchive">Fjern fra arkiv</string>
-  <string name="main_menu_delete">Slet</string>
-  <string name="main_menu_pin">Fastgør til toppen</string>
-  <string name="main_menu_unpin">Frigør</string>
-  <string name="main_menu_read">Markér som læst</string>
-  <string name="main_menu_unread">Markér som ulæst</string>
-  <string name="main_menu_block">Blokér</string>
-  <string name="main_syncing">Synkroniserer beskeder&#8230;</string>
-  <string name="main_sender_you">Dig: %s</string>
-  <string name="main_message_results_title">Resultater i beskeder</string>
-  <string name="main_message_results">%d beskeder</string>
-  <string name="inbox_empty_text">Dine samtaler vil fremgå her</string>
-  <string name="inbox_search_empty_text">Ingen resultater</string>
-  <string name="archived_empty_text">Dine arkiverede samtaler vil fremgå her</string>
-  <string name="main_fab_cd">Start ny samtale</string>
-  <string name="main_default_sms_title">Elsk at SMS\'e igen</string>
-  <string name="main_default_sms_message">Gør QKSMS til din standard SMS-app</string>
-  <string name="main_default_sms_change">Skift</string>
-  <string name="main_permission_required">Tilladelse nødvendig</string>
-  <string name="main_permission_sms">QKSMS behøver tilladelse til at sende og vise SMS\'er</string>
-  <string name="main_permission_contacts">QKSMS behøver tilladelse til at se dine kontakter</string>
-  <string name="main_permission_allow">Tillad</string>
-  <string name="drawer_inbox">Indbakke</string>
-  <string name="drawer_archived">Arkiveret</string>
-  <string name="drawer_scheduled">Planlagte</string>
-  <string name="drawer_blocking">Blokering</string>
-  <string name="drawer_more">Flere</string>
-  <string name="drawer_settings">Indstillinger</string>
-  <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Hjælp og feedback</string>
-  <string name="drawer_invite">Invitér venner</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Oplås fantastiske nye funktioner og støt udvikling</string>
-  <string name="rate_title">Synes om QKSMS?</string>
-  <string name="rate_summary">Del og bedøm os på Google Play!</string>
-  <string name="rate_okay">OKAY!</string>
-  <string name="rate_dismiss">AFVIS</string>
-  <string name="dialog_delete_title">Slet</string>
-  <plurals name="dialog_delete_message">
-    <item quantity="one">Sikker på, at du vil slette denne samtale?</item>
-    <item quantity="other">Sikker på, at du vil slette disse %d samtaler?</item>
-  </plurals>
-  <string-array name="message_options">
-    <item>Kopiér tekst</item>
-    <item>Videresend</item>
-    <item>Slet</item>
-  </string-array>
-  <string name="compose_title_selected">%d valgt</string>
-  <string name="compose_subtitle_results">%1$d af %2$d resultater</string>
-  <string name="compose_send_group_title">Send som gruppe besked</string>
-  <string name="compose_send_group_summary">Modtagere og besvarelser vil være synlige for alle</string>
-  <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
-  <string name="compose_vcard_label">Kontaktkort</string>
-  <string name="compose_scheduled_for">Planlagt til</string>
-  <string name="compose_scheduled_future">Valgte tidspunkt skal være i fremtiden!</string>
-  <string name="compose_scheduled_plus">Du skal oplåse QKSMS+ for at benytte planlagt beskedfunktion</string>
-  <string name="compose_scheduled_toast">Føjet til planlagte beskeder</string>
-  <string name="compose_hint">Skriv en besked&#8230;</string>
-  <string name="compose_menu_copy">Kopier tekst</string>
-  <string name="compose_menu_forward">Videresend</string>
-  <string name="compose_menu_delete">Slet</string>
-  <string name="compose_menu_previous">Foregående</string>
-  <string name="compose_menu_next">Næste</string>
-  <string name="compose_menu_clear">Ryd</string>
-  <string name="compose_details_title">Beskeddetaljer</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">Fra: %s</string>
-  <string name="compose_details_to">Til: %s</string>
-  <string name="compose_details_subject">Emne: %s</string>
-  <string name="compose_details_priority">Prioritet: %s</string>
-  <string name="compose_details_size">Størrelse: %s</string>
-  <string name="compose_details_sent">Afsendt: %s</string>
-  <string name="compose_details_received">Modtaget: %s</string>
-  <string name="compose_details_delivered">Leveret: %s</string>
-  <string name="compose_details_error_code">Fejlkode: %d</string>
-  <string name="compose_attach_cd">Tilføj en vedhæftning</string>
-  <string name="compose_gallery_cd">Vedhæft et foto</string>
-  <string name="compose_camera_cd">Tag et foto</string>
-  <string name="compose_schedule_cd">Planlæg besked</string>
-  <string name="compose_sim_cd">%s valgt, skift SIM-kortet</string>
-  <string name="compose_send_cd">Send besked</string>
-  <string name="message_status_sending">Afsender&#8230;</string>
-  <string name="message_status_delivered">Leveret %s</string>
-  <string name="message_status_failed">Mislykkedes at afsende. Tryk for at forsøge igen</string>
-  <string name="info_title">Oplysninger</string>
-  <string name="info_name">Samtaletitel</string>
-  <string name="info_name_hint">Angiv titel</string>
-  <string name="info_notifications">Notifikationer</string>
-  <string name="info_theme">Tema</string>
-  <string name="info_archive">Arkiv</string>
-  <string name="info_unarchive">Fjern fra arkiv</string>
-  <string name="info_block">Blokér</string>
-  <string name="info_unblock">Afblokér</string>
-  <string name="info_delete">Slet samtale</string>
-  <string name="gallery_error">Couldn\'t load media</string>
-  <string name="gallery_toast_saved">Gemt til galleri</string>
-  <string name="backup_title">Sikkerhedskopiering og gendannelse</string>
-  <string name="backup_backing_up">Sikkerhedskopierer beskeder</string>
-  <string name="backup_restoring">Gendanner fra sikkerhedskopi</string>
-  <string name="backup_last">Seneste sikkerhedskopi</string>
-  <string name="backup_loading">Indlæser&#8230;</string>
-  <string name="backup_never">Aldrig</string>
-  <string name="backup_restore_title">Gendanne</string>
-  <string name="backup_restore_summary">Vælg en sikkerhedskopi</string>
-  <string name="backup_restore_error_plus">Oplås QKSMS+ for at benytte sikkerhedskopiering og gendannelse</string>
-  <string name="backup_restore_error_backup">Sikkerhedskopiering i gang&#8230;</string>
-  <string name="backup_restore_error_restore">Gendannelse i gang&#8230;</string>
-  <string name="backup_restore_confirm_title">Genskab fra sikkerhedskopi</string>
-  <string name="backup_restore_confirm_message">Er du sikker på at du vil gendanne dine beskeder fra denne sikkerhedskopi?</string>
-  <string name="backup_restore_stop_title">Stop gendannelsen</string>
-  <string name="backup_restore_stop_message">Beskeder som allerede er genskabt vil forblive på din enhed</string>
-  <string name="backup_restore_dialog_title">Sikkerhedskopier</string>
-  <string name="backup_restore_dialog_empty">Ingen sikkerhedskopier fundet</string>
-  <plurals name="backup_message_count">
-    <item quantity="one">%d besked</item>
-    <item quantity="other">%d beskeder</item>
-  </plurals>
-  <string name="backup_disclaimer">I øjeblikket understøtter Sikkerhedskopiering og Gendannelse kun SMS. MMS-understøttelse og planlagte sikkerhedskopieringer kommer snart!</string>
-  <string name="backup_now">Sikkerhedskopiér nu</string>
-  <string name="backup_progress_parsing">Analyserer sikkerhedskopi&#8230;</string>
-  <string name="backup_progress_running">%d/%d beskeder</string>
-  <string name="backup_progress_saving">Gemme sikkerhedskopi&#8230;</string>
-  <string name="backup_progress_syncing">Synkroniserer beskeder&#8230;</string>
-  <string name="backup_progress_finished">Færdig!</string>
-  <string name="backup_notification_channel_name">Sikkerhedskopiering og gendannelse</string>
-  <string name="scheduled_title">Planlagt</string>
-  <string name="scheduled_empty_description">Send automatisk en meddelelse på præcist det tidspunkt, du vil</string>
-  <string name="scheduled_empty_message_1">Hej! Hvornår var det, at du har fødselsdag?</string>
-  <string name="scheduled_empty_message_2">Det er d. 23. december</string>
-  <string name="scheduled_empty_message_3">Tillykke med fødselsdagen! Se hvor god en ven jeg er, at huske din fødselsdag</string>
-  <string name="scheduled_empty_message_3_timestamp">Sender d. 23. december </string>
-  <string name="scheduled_compose_cd">Planlæg en besked</string>
-  <string name="scheduled_options_title">Planlagt besked</string>
-  <string-array name="scheduled_options">
-    <item>Send nu</item>
-    <item>Slet</item>
-  </string-array>
-  <string name="settings_category_appearance">Udseende</string>
-  <string name="settings_category_general">Generelt</string>
-  <string name="settings_category_qkreply">QK-svar</string>
-  <string name="settings_theme_title">Tema</string>
-  <string name="settings_night_title">Nattilstand</string>
-  <string name="settings_black_title">Ren sort nattilstand</string>
-  <string name="settings_night_start_title">Starttidspunkt</string>
-  <string name="settings_night_end_title">Sluttidspunkt</string>
-  <string name="settings_text_size_title">Skriftstørrelse</string>
-  <string name="settings_system_font_title">Brug systemets skrifttype</string>
-  <string name="settings_auto_emoji_title">Automatisk emoji</string>
-  <string name="settings_notifications_title">Notifikationer</string>
-  <string name="settings_notifications_o_summary">Tryk for at tilpasse</string>
-  <string name="settings_notification_actions_title">Handlinger</string>
-  <string name="settings_notification_action_1">Knap 1</string>
-  <string name="settings_notification_action_2">Knap 2</string>
-  <string name="settings_notification_action_3">Knap 3</string>
-  <string name="settings_notification_previews_title">Notifikationseksempler</string>
-  <string name="settings_vibration_title">Vibration</string>
-  <string name="settings_ringtone_title">Lyd</string>
-  <string name="settings_ringtone_none">Ingen</string>
-  <string name="settings_qkreply_title">QK-besvarelse</string>
-  <string name="settings_qkreply_summary">Popup ved nye SMS\'er</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tryk for at afvise</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tryk udenfor popup-vinduet for at lukke det</string>
-  <string name="settings_blocking_title">Blokering</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Bør jeg besvare?</string>
-  <string name="settings_should_i_answer_summary">Filtrér automatisk beskeder fra uopfordrede numre vha. \"Bør jeg besvare\"-app\'en</string>
-  <string name="settings_delayed_title">Forsinket afsendelse</string>
-  <string name="settings_swipe_actions">Strygehandlinger</string>
-  <string name="settings_swipe_actions_summary">Opsæt strygehandlinger for samtaler</string>
-  <string name="settings_swipe_actions_right">Højrestryg</string>
-  <string name="settings_swipe_actions_left">Venstrestryg</string>
-  <string name="settings_swipe_actions_change">SKIFT</string>
-  <string-array name="settings_swipe_actions">
-    <item>Ingen</item>
-    <item>Arkivér</item>
-    <item>Slet</item>
-    <item>Ring op</item>
-    <item>Markér som læst</item>
-  </string-array>
-  <string name="settings_delivery_title">Leveringskvitteringer</string>
-  <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>
-  <string name="settings_unicode_title">Fjern betoninger</string>
-  <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS\'er</string>
-  <string name="settings_mobile_title">Kun mobilnumre</string>
-  <string name="settings_mobile_summary">Vis kun mobilnumre ved SMS-skrivning,</string>
-  <string name="settings_mms_size_title">Auto-komprimér MMS-vedhæftninger</string>
-  <string name="settings_sync_title">Beskedsynkronisering</string>
-  <string name="settings_sync_summary">Gen-synkroniéer beskeder med den indbyggede Android SMS-database</string>
-  <string name="settings_about_title">Om QKSMS</string>
-  <string name="settings_version">Version %s</string>
-  <string name="settings_logging_enabled">Fejlfindingslogning aktiveret</string>
-  <string name="settings_logging_disabled">Fejlfindingslogning deaktiveret</string>
-  <string name="settings_delay_duration_hint">Angiv varighed (sekunder)</string>
-  <string name="blocked_title">Blokering</string>
-  <string name="blocked_empty">Dine blokerede samtaler vil fremgå her</string>
-  <string name="blocked_unblock_dialog_title">Afblokér</string>
-  <string name="blocked_unblock_dialog_message">Fjern blokeringen af denne samtale?</string>
-  <string name="about_title">Om</string>
-  <string name="about_version_title">Version</string>
-  <string name="about_developer_title">Udvikler</string>
-  <string name="about_source_title">Kildekode</string>
-  <string name="about_changelog_title">Ændringslog</string>
-  <string name="about_contact_title">Kontakt</string>
-  <string name="about_license_title">Licens</string>
-  <string name="about_copyright_title">Copyright</string>
-  <string name="qksms_plus_description_title">Støt udviklingen, oplås alt</string>
-  <string name="qksms_plus_description_summary">Du kan redde en sultende udvikler for kun %s</string>
-  <string name="qksms_plus_upgrade">Livstidsopgradering for %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Oplås + donér for %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Tak for din støtte til QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">Du har nu adgang til alle QKSMS+-funktioner</string>
-  <string name="qksms_plus_free_title">QKSMS+ er gratis for F-Droid-brugere! Ønsker du at støtte udviklingen, er du velkommen til at donere.</string>
-  <string name="qksms_plus_donate">Donér via PayPal</string>
-  <string name="qksms_plus_coming_soon">Kommer snart</string>
-  <string name="qksms_plus_themes_title">Premium-temaer</string>
-  <string name="qksms_plus_themes_summary">Oplås smukke temafarver, som ikke er tilgængelig på Material Design-paletten</string>
-  <string name="qksms_plus_emoji_title">Tilpasset auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Opret tilpassede auto-emoji-genveje</string>
-  <string name="qksms_plus_backup_title">Beskedsikkerhedskopiering</string>
-  <string name="qksms_plus_backup_summary">Sikkerhedskopiér automatisk dine beskeder. Ikke flere bekymringer over tab af din historik, hvis du udskifter eller mister din mobil</string>
-  <string name="qksms_plus_scheduled_title">Planlagte beskeder</string>
-  <string name="qksms_plus_scheduled_summary">Planlæg beskeder til automatisk at blive sendt på et specifikt tidspunkt og dato</string>
-  <string name="qksms_plus_delayed_title">Forsinket afsendelse</string>
-  <string name="qksms_plus_delayed_summary">Vent et par sekunder før du afsender beskeden</string>
-  <string name="qksms_plus_night_title">Automatisk nattilstand</string>
-  <string name="qksms_plus_night_summary">Aktivér nattilstanden baseret på klokkeslæt</string>
-  <string name="qksms_plus_blacklist_title">Avanceret blokering</string>
-  <string name="qksms_plus_blacklist_summary">Blokér beskeder indeholdende nøgleord eller mønstermatch</string>
-  <string name="qksms_plus_forward_title">Auto-videresendelse</string>
-  <string name="qksms_plus_forward_summary">Videresend automatisk beskeder fra bestemte afsendere</string>
-  <string name="qksms_plus_respond_title">Autosvar</string>
-  <string name="qksms_plus_respond_summary">Besvarer automatisk indgående beskeder med et foruddefineret svar</string>
-  <string name="qksms_plus_more_title">Mere</string>
-  <string name="qksms_plus_more_summary">QKSMS er under aktiv udvikling, og dit køb vil omfatte alle fremtidige QKSMS+ funktioner!</string>
-  <string name="widget_loading">Indlæser&#8230;</string>
-  <string name="widget_more">Se flere samtaler</string>
-  <string name="qkreply_menu_read">Markér som læst</string>
-  <string name="qkreply_menu_call">Ring op</string>
-  <string name="qkreply_menu_delete">Delete</string>
-  <string name="qkreply_menu_expand">Vis flere</string>
-  <string name="qkreply_menu_collapse">Vis mindre</string>
-  <string name="qkreply_menu_view">Åbn samtale</string>
-  <string name="theme_material">Material</string>
-  <string name="theme_plus">QKSMS+</string>
-  <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Anvend</string>
-  <string-array name="notification_actions">
-    <item>Ingen</item>
-    <item>Markér som læst</item>
-    <item>Besvar</item>
-    <item>Ring op</item>
-    <item>Slet</item>
-  </string-array>
-  <string name="button_cancel">Annullér</string>
-  <string name="button_delete">Slet</string>
-  <string name="button_save">Gem</string>
-  <string name="button_stop">Stop</string>
-  <string name="button_more">Flere</string>
-  <string name="button_set">Indstil</string>
-  <string name="button_unblock">Afblokér</string>
-  <string name="button_undo">Fortryd</string>
-  <string name="toast_copied">Kopieret</string>
-  <string name="toast_archived">Arkiveret samtale</string>
-  <string name="toast_qksms_plus">Dette kræver oplåsning af QKSMS+</string>
-  <plurals name="notification_new_messages">
-    <item quantity="one">Ny besked</item>
-    <item quantity="other">%s nye beskeder</item>
-  </plurals>
-  <string name="notification_message_failed_title">Besked ikke afsendt</string>
-  <string name="notification_message_failed_text">Mislykkedes at afsende beskeden til %s</string>
-  <string-array name="night_modes">
-    <item>Deakitiveret</item>
-    <item>Altid aktiv</item>
-    <item>Automatisk</item>
-  </string-array>
-  <string-array name="notification_preview_options">
-    <item>Vis navn og besked</item>
-    <item>Vis navn</item>
-    <item>Skjul indhold</item>
-  </string-array>
-  <string-array name="text_sizes">
-    <item>Lille</item>
-    <item>Normal</item>
-    <item>Stor</item>
-    <item>Større</item>
-  </string-array>
-  <string-array name="delayed_sending_labels">
-    <item>Ingen forsinkelse</item>
-    <item>Kort</item>
-    <item>Mellem</item>
-    <item>Lang</item>
-  </string-array>
-  <string-array name="mms_sizes">
-    <item>100 KB</item>
-    <item>200 KB</item>
-    <item>300 KB (anbefales)</item>
-    <item>600 KB</item>
-    <item>1.000 KB</item>
-    <item>2.000 KB</item>
-    <item>Ingen komprimering</item>
-  </string-array>
-  <string-array name="qk_responses">
-    <item>OK</item>
-    <item>Lige et øjeblik</item>
-    <item>Er på vej</item>
-    <item>Tak</item>
-    <item>Lyder godt</item>
-    <item>Hvad så?</item>
-    <item>Acceptér</item>
-    <item>Nej</item>
-    <item>Elsker dig</item>
-    <item>Beklager</item>
-    <item>LOL</item>
-    <item>Det er OK</item>
-  </string-array>
+    <string name="shortcut_compose_long_label">Ny samtale</string>
+    <string name="shortcut_compose_short_label">Skriv</string>
+    <string name="shortcut_compose_disabled_message">Genvej deaktiveret</string>
+    <string name="title_archived">Arkiveret</string>
+    <string name="title_settings">Indstillinger</string>
+    <string name="title_notification_prefs">Notifikationer</string>
+    <string name="title_theme">Tema</string>
+    <string name="title_conversations">Søg i Indbakke&#8230;</string>
+    <string name="title_compose">Angiv et navn eller nummer</string>
+    <string name="setup_skip">Overspring</string>
+    <string name="setup_next">Fortsæt</string>
+    <string name="menu_call">Opkald</string>
+    <string name="menu_info">Oplysninger</string>
+    <string name="menu_save">Gem i Galleri</string>
+    <string name="main_drawer_open_cd">Åbn navigeringsskuffe</string>
+    <string name="main_title_selected">%d valgt</string>
+    <string name="main_menu_clear">Ryd</string>
+    <string name="main_menu_archive">Arkivér</string>
+    <string name="main_menu_unarchive">Fjern fra arkiv</string>
+    <string name="main_menu_delete">Slet</string>
+    <string name="main_menu_pin">Fastgør til toppen</string>
+    <string name="main_menu_unpin">Frigør</string>
+    <string name="main_menu_read">Markér som læst</string>
+    <string name="main_menu_unread">Markér som ulæst</string>
+    <string name="main_menu_block">Blokér</string>
+    <string name="main_syncing">Synkroniserer beskeder&#8230;</string>
+    <string name="main_sender_you">Dig: %s</string>
+    <string name="main_message_results_title">Resultater i beskeder</string>
+    <string name="main_message_results">%d beskeder</string>
+    <string name="inbox_empty_text">Dine samtaler vil fremgå her</string>
+    <string name="inbox_search_empty_text">Ingen resultater</string>
+    <string name="archived_empty_text">Dine arkiverede samtaler vil fremgå her</string>
+    <string name="main_fab_cd">Start ny samtale</string>
+    <string name="main_default_sms_title">Elsk at SMS\'e igen</string>
+    <string name="main_default_sms_message">Gør QKSMS til din standard SMS-app</string>
+    <string name="main_default_sms_change">Skift</string>
+    <string name="main_permission_required">Tilladelse nødvendig</string>
+    <string name="main_permission_sms">QKSMS behøver tilladelse til at sende og vise SMS\'er</string>
+    <string name="main_permission_contacts">QKSMS behøver tilladelse til at se dine kontakter</string>
+    <string name="main_permission_allow">Tillad</string>
+    <string name="drawer_inbox">Indbakke</string>
+    <string name="drawer_archived">Arkiveret</string>
+    <string name="drawer_scheduled">Planlagte</string>
+    <string name="drawer_blocking">Blokering</string>
+    <string name="drawer_more">Flere</string>
+    <string name="drawer_settings">Indstillinger</string>
+    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_help">Hjælp og feedback</string>
+    <string name="drawer_invite">Invitér venner</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">Oplås fantastiske nye funktioner og støt udvikling</string>
+    <string name="rate_title">Synes om QKSMS?</string>
+    <string name="rate_summary">Del og bedøm os på Google Play!</string>
+    <string name="rate_okay">OKAY!</string>
+    <string name="rate_dismiss">AFVIS</string>
+    <string name="dialog_delete_title">Slet</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">Sikker på, at du vil slette denne samtale?</item>
+        <item quantity="other">Sikker på, at du vil slette disse %d samtaler?</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>Kopiér tekst</item>
+        <item>Videresend</item>
+        <item>Slet</item>
+    </string-array>
+    <string name="compose_title_selected">%d valgt</string>
+    <string name="compose_subtitle_results">%1$d af %2$d resultater</string>
+    <string name="compose_send_group_title">Send som gruppe besked</string>
+    <string name="compose_send_group_summary">Modtagere og besvarelser vil være synlige for alle</string>
+    <string name="compose_messages_empty">Detter er starten på den samtale. Sig noget pænt!</string>
+    <string name="compose_vcard_label">Kontaktkort</string>
+    <string name="compose_scheduled_for">Planlagt til</string>
+    <string name="compose_scheduled_future">Valgte tidspunkt skal være i fremtiden!</string>
+    <string name="compose_scheduled_plus">Du skal oplåse QKSMS+ for at benytte planlagt beskedfunktion</string>
+    <string name="compose_scheduled_toast">Føjet til planlagte beskeder</string>
+    <string name="compose_hint">Skriv en besked&#8230;</string>
+    <string name="compose_menu_copy">Kopier tekst</string>
+    <string name="compose_menu_forward">Videresend</string>
+    <string name="compose_menu_delete">Slet</string>
+    <string name="compose_menu_previous">Foregående</string>
+    <string name="compose_menu_next">Næste</string>
+    <string name="compose_menu_clear">Ryd</string>
+    <string name="compose_details_title">Beskeddetaljer</string>
+    <string name="compose_details_type">Type: %s</string>
+    <string name="compose_details_from">Fra: %s</string>
+    <string name="compose_details_to">Til: %s</string>
+    <string name="compose_details_subject">Emne: %s</string>
+    <string name="compose_details_priority">Prioritet: %s</string>
+    <string name="compose_details_size">Størrelse: %s</string>
+    <string name="compose_details_sent">Afsendt: %s</string>
+    <string name="compose_details_received">Modtaget: %s</string>
+    <string name="compose_details_delivered">Leveret: %s</string>
+    <string name="compose_details_error_code">Fejlkode: %d</string>
+    <string name="compose_attach_cd">Tilføj en vedhæftning</string>
+    <string name="compose_gallery_cd">Vedhæft et foto</string>
+    <string name="compose_camera_cd">Tag et foto</string>
+    <string name="compose_schedule_cd">Planlæg besked</string>
+    <string name="compose_contact_cd">Attach a contact</string>
+    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_sim_cd">%s valgt, skift SIM-kortet</string>
+    <string name="compose_send_cd">Send besked</string>
+    <string name="message_status_sending">Afsender&#8230;</string>
+    <string name="message_status_delivered">Leveret %s</string>
+    <string name="message_status_failed">Mislykkedes at afsende. Tryk for at forsøge igen</string>
+    <string name="info_title">Oplysninger</string>
+    <string name="info_name">Samtaletitel</string>
+    <string name="info_name_hint">Angiv titel</string>
+    <string name="info_notifications">Notifikationer</string>
+    <string name="info_theme">Tema</string>
+    <string name="info_archive">Arkiv</string>
+    <string name="info_unarchive">Fjern fra arkiv</string>
+    <string name="info_block">Blokér</string>
+    <string name="info_unblock">Afblokér</string>
+    <string name="info_delete">Slet samtale</string>
+    <string name="gallery_error">Kunne ikke indlæse medier</string>
+    <string name="gallery_toast_saved">Gemt til galleri</string>
+    <string name="backup_title">Sikkerhedskopiering og gendannelse</string>
+    <string name="backup_backing_up">Sikkerhedskopierer beskeder</string>
+    <string name="backup_restoring">Gendanner fra sikkerhedskopi</string>
+    <string name="backup_last">Seneste sikkerhedskopi</string>
+    <string name="backup_loading">Indlæser&#8230;</string>
+    <string name="backup_never">Aldrig</string>
+    <string name="backup_restore_title">Gendanne</string>
+    <string name="backup_restore_summary">Vælg en sikkerhedskopi</string>
+    <string name="backup_restore_error_plus">Oplås QKSMS+ for at benytte sikkerhedskopiering og gendannelse</string>
+    <string name="backup_restore_error_backup">Sikkerhedskopiering i gang&#8230;</string>
+    <string name="backup_restore_error_restore">Gendannelse i gang&#8230;</string>
+    <string name="backup_restore_confirm_title">Genskab fra sikkerhedskopi</string>
+    <string name="backup_restore_confirm_message">Er du sikker på at du vil gendanne dine beskeder fra denne sikkerhedskopi?</string>
+    <string name="backup_restore_stop_title">Stop gendannelsen</string>
+    <string name="backup_restore_stop_message">Beskeder som allerede er genskabt vil forblive på din enhed</string>
+    <string name="backup_restore_dialog_title">Sikkerhedskopier</string>
+    <string name="backup_restore_dialog_empty">Ingen sikkerhedskopier fundet</string>
+    <plurals name="backup_message_count">
+        <item quantity="one">%d besked</item>
+        <item quantity="other">%d beskeder</item>
+    </plurals>
+    <string name="backup_disclaimer">I øjeblikket understøtter Sikkerhedskopiering og Gendannelse kun SMS. MMS-understøttelse og planlagte sikkerhedskopieringer kommer snart!</string>
+    <string name="backup_now">Sikkerhedskopiér nu</string>
+    <string name="backup_progress_parsing">Analyserer sikkerhedskopi&#8230;</string>
+    <string name="backup_progress_running">%d/%d beskeder</string>
+    <string name="backup_progress_saving">Gemme sikkerhedskopi&#8230;</string>
+    <string name="backup_progress_syncing">Synkroniserer beskeder&#8230;</string>
+    <string name="backup_progress_finished">Færdig!</string>
+    <string name="backup_notification_channel_name">Sikkerhedskopiering og gendannelse</string>
+    <string name="scheduled_title">Planlagt</string>
+    <string name="scheduled_empty_description">Send automatisk en meddelelse på præcist det tidspunkt, du vil</string>
+    <string name="scheduled_empty_message_1">Hej! Hvornår var det, at du har fødselsdag?</string>
+    <string name="scheduled_empty_message_2">Det er d. 23. december</string>
+    <string name="scheduled_empty_message_3">Tillykke med fødselsdagen! Se hvor god en ven jeg er, at huske din fødselsdag</string>
+    <string name="scheduled_empty_message_3_timestamp">Sender d. 23. december </string>
+    <string name="scheduled_compose_cd">Planlæg en besked</string>
+    <string name="scheduled_options_title">Planlagt besked</string>
+    <string-array name="scheduled_options">
+        <item>Send nu</item>
+        <item>Slet</item>
+    </string-array>
+    <string name="settings_category_appearance">Udseende</string>
+    <string name="settings_category_general">Generelt</string>
+    <string name="settings_category_qkreply">QK-svar</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_night_title">Nattilstand</string>
+    <string name="settings_black_title">Ren sort nattilstand</string>
+    <string name="settings_night_start_title">Starttidspunkt</string>
+    <string name="settings_night_end_title">Sluttidspunkt</string>
+    <string name="settings_text_size_title">Skriftstørrelse</string>
+    <string name="settings_system_font_title">Brug systemets skrifttype</string>
+    <string name="settings_auto_emoji_title">Automatisk emoji</string>
+    <string name="settings_notifications_title">Notifikationer</string>
+    <string name="settings_notifications_o_summary">Tryk for at tilpasse</string>
+    <string name="settings_notification_actions_title">Handlinger</string>
+    <string name="settings_notification_action_1">Knap 1</string>
+    <string name="settings_notification_action_2">Knap 2</string>
+    <string name="settings_notification_action_3">Knap 3</string>
+    <string name="settings_notification_previews_title">Notifikationseksempler</string>
+    <string name="settings_vibration_title">Vibration</string>
+    <string name="settings_ringtone_title">Lyd</string>
+    <string name="settings_ringtone_none">Ingen</string>
+    <string name="settings_qkreply_title">QK-besvarelse</string>
+    <string name="settings_qkreply_summary">Popup ved nye SMS\'er</string>
+    <string name="settings_qkreply_tap_dismiss_title">Tryk for at afvise</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Tryk udenfor popup-vinduet for at lukke det</string>
+    <string name="settings_blocking_title">Blokering</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">Bør jeg besvare?</string>
+    <string name="settings_should_i_answer_summary">Filtrér automatisk beskeder fra uopfordrede numre vha. \"Bør jeg besvare\"-app\'en</string>
+    <string name="settings_delayed_title">Forsinket afsendelse</string>
+    <string name="settings_swipe_actions">Strygehandlinger</string>
+    <string name="settings_swipe_actions_summary">Opsæt strygehandlinger for samtaler</string>
+    <string name="settings_swipe_actions_right">Højrestryg</string>
+    <string name="settings_swipe_actions_left">Venstrestryg</string>
+    <string name="settings_swipe_actions_change">SKIFT</string>
+    <string-array name="settings_swipe_actions">
+        <item>Ingen</item>
+        <item>Arkivér</item>
+        <item>Slet</item>
+        <item>Ring op</item>
+        <item>Markér som læst</item>
+    </string-array>
+    <string name="settings_delivery_title">Leveringskvitteringer</string>
+    <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>
+    <string name="settings_unicode_title">Fjern betoninger</string>
+    <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS\'er</string>
+    <string name="settings_mobile_title">Kun mobilnumre</string>
+    <string name="settings_mobile_summary">Vis kun mobilnumre ved SMS-skrivning,</string>
+    <string name="settings_mms_size_title">Auto-komprimér MMS-vedhæftninger</string>
+    <string name="settings_sync_title">Beskedsynkronisering</string>
+    <string name="settings_sync_summary">Gen-synkroniéer beskeder med den indbyggede Android SMS-database</string>
+    <string name="settings_about_title">Om QKSMS</string>
+    <string name="settings_version">Version %s</string>
+    <string name="settings_logging_enabled">Fejlfindingslogning aktiveret</string>
+    <string name="settings_logging_disabled">Fejlfindingslogning deaktiveret</string>
+    <string name="settings_delay_duration_hint">Angiv varighed (sekunder)</string>
+    <string name="blocked_title">Blokering</string>
+    <string name="blocked_empty">Dine blokerede samtaler vil fremgå her</string>
+    <string name="blocked_unblock_dialog_title">Afblokér</string>
+    <string name="blocked_unblock_dialog_message">Fjern blokeringen af denne samtale?</string>
+    <string name="about_title">Om</string>
+    <string name="about_version_title">Version</string>
+    <string name="about_developer_title">Udvikler</string>
+    <string name="about_source_title">Kildekode</string>
+    <string name="about_changelog_title">Ændringslog</string>
+    <string name="about_contact_title">Kontakt</string>
+    <string name="about_license_title">Licens</string>
+    <string name="about_copyright_title">Copyright</string>
+    <string name="qksms_plus_description_title">Støt udviklingen, oplås alt</string>
+    <string name="qksms_plus_description_summary">Du kan redde en sultende udvikler for kun %s</string>
+    <string name="qksms_plus_upgrade">Livstidsopgradering for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_donate">Oplås + donér for %1$s %2$s</string>
+    <string name="qksms_plus_thanks_title">Tak for din støtte til QKSMS!</string>
+    <string name="qksms_plus_thanks_summary">Du har nu adgang til alle QKSMS+-funktioner</string>
+    <string name="qksms_plus_free_title">QKSMS+ er gratis for F-Droid-brugere! Ønsker du at støtte udviklingen, er du velkommen til at donere.</string>
+    <string name="qksms_plus_donate">Donér via PayPal</string>
+    <string name="qksms_plus_coming_soon">Kommer snart</string>
+    <string name="qksms_plus_themes_title">Premium-temaer</string>
+    <string name="qksms_plus_themes_summary">Oplås smukke temafarver, som ikke er tilgængelig på Material Design-paletten</string>
+    <string name="qksms_plus_emoji_title">Tilpasset auto-emoji</string>
+    <string name="qksms_plus_emoji_summary">Opret tilpassede auto-emoji-genveje</string>
+    <string name="qksms_plus_backup_title">Beskedsikkerhedskopiering</string>
+    <string name="qksms_plus_backup_summary">Sikkerhedskopiér automatisk dine beskeder. Ikke flere bekymringer over tab af din historik, hvis du udskifter eller mister din mobil</string>
+    <string name="qksms_plus_scheduled_title">Planlagte beskeder</string>
+    <string name="qksms_plus_scheduled_summary">Planlæg beskeder til automatisk at blive sendt på et specifikt tidspunkt og dato</string>
+    <string name="qksms_plus_delayed_title">Forsinket afsendelse</string>
+    <string name="qksms_plus_delayed_summary">Vent et par sekunder før du afsender beskeden</string>
+    <string name="qksms_plus_night_title">Automatisk nattilstand</string>
+    <string name="qksms_plus_night_summary">Aktivér nattilstanden baseret på klokkeslæt</string>
+    <string name="qksms_plus_blacklist_title">Avanceret blokering</string>
+    <string name="qksms_plus_blacklist_summary">Blokér beskeder indeholdende nøgleord eller mønstermatch</string>
+    <string name="qksms_plus_forward_title">Auto-videresendelse</string>
+    <string name="qksms_plus_forward_summary">Videresend automatisk beskeder fra bestemte afsendere</string>
+    <string name="qksms_plus_respond_title">Autosvar</string>
+    <string name="qksms_plus_respond_summary">Besvarer automatisk indgående beskeder med et foruddefineret svar</string>
+    <string name="qksms_plus_more_title">Mere</string>
+    <string name="qksms_plus_more_summary">QKSMS er under aktiv udvikling, og dit køb vil omfatte alle fremtidige QKSMS+ funktioner!</string>
+    <string name="widget_loading">Indlæser&#8230;</string>
+    <string name="widget_more">Se flere samtaler</string>
+    <string name="qkreply_menu_read">Markér som læst</string>
+    <string name="qkreply_menu_call">Ring op</string>
+    <string name="qkreply_menu_delete">Slet</string>
+    <string name="qkreply_menu_expand">Vis flere</string>
+    <string name="qkreply_menu_collapse">Vis mindre</string>
+    <string name="qkreply_menu_view">Åbn samtale</string>
+    <string name="theme_material">Material</string>
+    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_hex">HEX</string>
+    <string name="theme_apply">Anvend</string>
+    <string-array name="notification_actions">
+        <item>Ingen</item>
+        <item>Markér som læst</item>
+        <item>Besvar</item>
+        <item>Ring op</item>
+        <item>Slet</item>
+    </string-array>
+    <string name="button_cancel">Annullér</string>
+    <string name="button_delete">Slet</string>
+    <string name="button_save">Gem</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_more">Flere</string>
+    <string name="button_set">Indstil</string>
+    <string name="button_unblock">Afblokér</string>
+    <string name="button_undo">Fortryd</string>
+    <string name="toast_copied">Kopieret</string>
+    <string name="toast_archived">Arkiveret samtale</string>
+    <string name="toast_qksms_plus">Dette kræver oplåsning af QKSMS+</string>
+    <plurals name="notification_new_messages">
+        <item quantity="one">Ny besked</item>
+        <item quantity="other">%s nye beskeder</item>
+    </plurals>
+    <string name="notification_message_failed_title">Besked ikke afsendt</string>
+    <string name="notification_message_failed_text">Mislykkedes at afsende beskeden til %s</string>
+    <string-array name="night_modes">
+        <item>Deakitiveret</item>
+        <item>Altid aktiv</item>
+        <item>Automatisk</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>Vis navn og besked</item>
+        <item>Vis navn</item>
+        <item>Skjul indhold</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>Lille</item>
+        <item>Normal</item>
+        <item>Stor</item>
+        <item>Større</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>Ingen forsinkelse</item>
+        <item>Kort</item>
+        <item>Mellem</item>
+        <item>Lang</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>100 KB</item>
+        <item>200 KB</item>
+        <item>300 KB (anbefales)</item>
+        <item>600 KB</item>
+        <item>1.000 KB</item>
+        <item>2.000 KB</item>
+        <item>Ingen komprimering</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>OK</item>
+        <item>Lige et øjeblik</item>
+        <item>Er på vej</item>
+        <item>Tak</item>
+        <item>Lyder godt</item>
+        <item>Hvad så?</item>
+        <item>Acceptér</item>
+        <item>Nej</item>
+        <item>Elsker dig</item>
+        <item>Beklager</item>
+        <item>LOL</item>
+        <item>Det er OK</item>
+    </string-array>
 </resources>

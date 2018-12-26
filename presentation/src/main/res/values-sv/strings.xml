@@ -19,337 +19,339 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">Ny konversation</string>
-  <string name="shortcut_compose_short_label">Skriv</string>
-  <string name="shortcut_compose_disabled_message">Genvägen inaktiverades</string>
-  <string name="title_archived">Arkiverat</string>
-  <string name="title_settings">Inställningar</string>
-  <string name="title_notification_prefs">Aviseringar</string>
-  <string name="title_theme">Tema</string>
-  <string name="title_conversations">Sök i inkorg&#8230;</string>
-  <string name="title_compose">Ange ett namn eller nummer</string>
-  <string name="setup_skip">Hoppa över</string>
-  <string name="setup_next">Fortsätt</string>
-  <string name="menu_call">Ring</string>
-  <string name="menu_info">Detaljer</string>
-  <string name="menu_save">Spara till galleri</string>
-  <string name="main_drawer_open_cd">Öppna navigeringspanelen</string>
-  <string name="main_title_selected">%d vald</string>
-  <string name="main_menu_clear">Rensa</string>
-  <string name="main_menu_archive">Arkiv</string>
-  <string name="main_menu_unarchive">Avarkivera</string>
-  <string name="main_menu_delete">Radera</string>
-  <string name="main_menu_pin">Fäst på toppen</string>
-  <string name="main_menu_unpin">Frigör</string>
-  <string name="main_menu_read">Markera som läst</string>
-  <string name="main_menu_unread">Markera som ej läst</string>
-  <string name="main_menu_block">Blockera</string>
-  <string name="main_syncing">Synkroniserar meddelanden&#8230;</string>
-  <string name="main_sender_you">Du: %s</string>
-  <string name="main_message_results_title">Resultat i meddelanden</string>
-  <string name="main_message_results">%d meddelanden</string>
-  <string name="inbox_empty_text">Dina konversationer kommer att dyka upp här</string>
-  <string name="inbox_search_empty_text">Inga resultat</string>
-  <string name="archived_empty_text">Dina arkiverade konversationer kommer att dyka upp här</string>
-  <string name="main_fab_cd">Starta en ny konversation</string>
-  <string name="main_default_sms_title">Älska att skicka SMS igen</string>
-  <string name="main_default_sms_message">Gör QKSMS till din standard-app för SMS</string>
-  <string name="main_default_sms_change">Ändra</string>
-  <string name="main_permission_required">Tillstånd krävs</string>
-  <string name="main_permission_sms">QKSMS behöver tillåtelse att skicka och visa SMS-meddelanden</string>
-  <string name="main_permission_contacts">QKSMS behöver tillåtelse för att kunna se dina kontakter</string>
-  <string name="main_permission_allow">Tillåt</string>
-  <string name="drawer_inbox">Inkorg</string>
-  <string name="drawer_archived">Arkiverat</string>
-  <string name="drawer_scheduled">Schemalagt</string>
-  <string name="drawer_blocking">Blockerar</string>
-  <string name="drawer_more">Mer</string>
-  <string name="drawer_settings">Inställningar</string>
-  <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Hjälp &amp; återgivning</string>
-  <string name="drawer_invite">Bjud in vänner</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Lås upp nya spännande funktioner och stötta utvecklingen</string>
-  <string name="rate_title">Tycker du om QKSMS?</string>
-  <string name="rate_summary">Dela lite kärlek och betygsätt oss på Google Play!</string>
-  <string name="rate_okay">OKEJ!</string>
-  <string name="rate_dismiss">AVFÄRDA</string>
-  <string name="dialog_delete_title">Radera</string>
-  <plurals name="dialog_delete_message">
-    <item quantity="one">Är du säker på att du vill ta bort den här konversationen?</item>
-    <item quantity="other">Är du säker på att du vill ta bort %d konversationer?</item>
-  </plurals>
-  <string-array name="message_options">
-    <item>Kopiera text</item>
-    <item>Vidarebefordra</item>
-    <item>Radera</item>
-  </string-array>
-  <string name="compose_title_selected">%d vald</string>
-  <string name="compose_subtitle_results">%1$d av %2$d resultat</string>
-  <string name="compose_send_group_title">Skicka som ett grupp-meddelande</string>
-  <string name="compose_send_group_summary">Mottagare och svar kommer att vara synligt för alla</string>
-  <string name="compose_messages_empty">Det här är början på din konversation. Säg något snällt!</string>
-  <string name="compose_vcard_label">Kontaktkort</string>
-  <string name="compose_scheduled_for">Schemalagd för</string>
-  <string name="compose_scheduled_future">Den valda tiden måste vara i framtiden!</string>
-  <string name="compose_scheduled_plus">Du måste låsa upp QKSMS+ om du vill använda schemalagda meddelanden</string>
-  <string name="compose_scheduled_toast">Lades till i schemalagda meddelanden</string>
-  <string name="compose_hint">Skriv ett meddelande&#8230;</string>
-  <string name="compose_menu_copy">Kopiera text</string>
-  <string name="compose_menu_forward">Vidarebefordra</string>
-  <string name="compose_menu_delete">Radera</string>
-  <string name="compose_menu_previous">Föregående</string>
-  <string name="compose_menu_next">Nästa</string>
-  <string name="compose_menu_clear">Rensa</string>
-  <string name="compose_details_title">Meddelandedetaljer</string>
-  <string name="compose_details_type">Typ: %s</string>
-  <string name="compose_details_from">Från: %s</string>
-  <string name="compose_details_to">Till: %s</string>
-  <string name="compose_details_subject">Ämne: %s</string>
-  <string name="compose_details_priority">Prioritet: %s</string>
-  <string name="compose_details_size">Storlek: %s</string>
-  <string name="compose_details_sent">Skickades: %s</string>
-  <string name="compose_details_received">Togs emot: %s</string>
-  <string name="compose_details_delivered">Levererades: %s</string>
-  <string name="compose_details_error_code">Felkod: %d</string>
-  <string name="compose_attach_cd">Lägg till en bilaga</string>
-  <string name="compose_gallery_cd">Bifoga en bild</string>
-  <string name="compose_camera_cd">Ta en bild</string>
-  <string name="compose_schedule_cd">Schemalägg meddelande</string>
-  <string name="compose_sim_cd">%s valt, byt SIM-kort</string>
-  <string name="compose_send_cd">Skicka meddelandet</string>
-  <string name="message_status_sending">Skickar&#8230;</string>
-  <string name="message_status_delivered">Levererade %s</string>
-  <string name="message_status_failed">Misslyckades med att skicka. Knacka för att försöka igen</string>
-  <string name="info_title">Detaljer</string>
-  <string name="info_name">Titel för konversation</string>
-  <string name="info_name_hint">Fyll i titel</string>
-  <string name="info_notifications">Aviseringar</string>
-  <string name="info_theme">Tema</string>
-  <string name="info_archive">Arkivera</string>
-  <string name="info_unarchive">Avarkivera</string>
-  <string name="info_block">Blockera</string>
-  <string name="info_unblock">Avblockera</string>
-  <string name="info_delete">Radera konversation</string>
-  <string name="gallery_error">Couldn\'t load media</string>
-  <string name="gallery_toast_saved">Spara till galleri</string>
-  <string name="backup_title">Säkerhetskopiera och återställ</string>
-  <string name="backup_backing_up">Säkerhetskopierar meddelandena</string>
-  <string name="backup_restoring">Återställer från säkerhetskopia</string>
-  <string name="backup_last">Senaste säkerhetskopiering</string>
-  <string name="backup_loading">Laddar&#8230;</string>
-  <string name="backup_never">Aldrig</string>
-  <string name="backup_restore_title">Återställ</string>
-  <string name="backup_restore_summary">Välj en säkerhetskopia</string>
-  <string name="backup_restore_error_plus">Vänligen lås upp QKSMS+ för att använda säkerhetskopiera och återställ</string>
-  <string name="backup_restore_error_backup">Säkerhetskopiering pågår&#8230;</string>
-  <string name="backup_restore_error_restore">Återställning pågår&#8230;</string>
-  <string name="backup_restore_confirm_title">Återställ från säkerhetskopia</string>
-  <string name="backup_restore_confirm_message">Är du säker på att du vill återställa dina meddelanden från den här säkerhetskopian?</string>
-  <string name="backup_restore_stop_title">Stoppa återställningen</string>
-  <string name="backup_restore_stop_message">Meddelanden som redan har blivit återställda kommer att stanna kvar i din enhet</string>
-  <string name="backup_restore_dialog_title">Säkerhetskopior</string>
-  <string name="backup_restore_dialog_empty">Inga säkerhetskopior kunde hittas</string>
-  <plurals name="backup_message_count">
-    <item quantity="one">%d meddelande</item>
-    <item quantity="other">%d meddelanden</item>
-  </plurals>
-  <string name="backup_disclaimer">För närvarande så stöds endast SMS av Säkerhetskopiera och Återställ. MMS-stöd och schemalagda säkerhetskopieringar kommer att dyka upp inom kort!</string>
-  <string name="backup_now">Säkerhetskopiera nu</string>
-  <string name="backup_progress_parsing">Tolkar säkerhetskopieringen&#8230;</string>
-  <string name="backup_progress_running">%d/%d meddelanden</string>
-  <string name="backup_progress_saving">Sparar säkerhetskopian&#8230;</string>
-  <string name="backup_progress_syncing">Synkroniserar meddelandena&#8230;</string>
-  <string name="backup_progress_finished">Avslutad!</string>
-  <string name="backup_notification_channel_name">Säkerhetskopiera och återställ</string>
-  <string name="scheduled_title">Schemalagda</string>
-  <string name="scheduled_empty_description">Skicka ett meddelande automatiskt i det exakta ögonblicket som du önskar</string>
-  <string name="scheduled_empty_message_1">Hi! När var din födelsedag igen?</string>
-  <string name="scheduled_empty_message_2">Den är den 23:e December</string>
-  <string name="scheduled_empty_message_3">Grattis på födelsedagen! Se vilken fin vän jag är som kommer ihåg din födelsedag</string>
-  <string name="scheduled_empty_message_3_timestamp">Skickar den 23:e December </string>
-  <string name="scheduled_compose_cd">Schemalägg ett meddelande</string>
-  <string name="scheduled_options_title">Schemalagt meddelande</string>
-  <string-array name="scheduled_options">
-    <item>Skicka nu</item>
-    <item>Ta bort</item>
-  </string-array>
-  <string name="settings_category_appearance">Utseende</string>
-  <string name="settings_category_general">Generellt</string>
-  <string name="settings_category_qkreply">QK svar</string>
-  <string name="settings_theme_title">Tema</string>
-  <string name="settings_night_title">Nattläge</string>
-  <string name="settings_black_title">Svart nattläge</string>
-  <string name="settings_night_start_title">Starttid</string>
-  <string name="settings_night_end_title">Sluttid</string>
-  <string name="settings_text_size_title">Storlek på typsnitt</string>
-  <string name="settings_system_font_title">Använd systemteckensnitt</string>
-  <string name="settings_auto_emoji_title">Automatisk uttryckssymbol</string>
-  <string name="settings_notifications_title">Aviseringar</string>
-  <string name="settings_notifications_o_summary">Tryck för att anpassa</string>
-  <string name="settings_notification_actions_title">Åtgärder</string>
-  <string name="settings_notification_action_1">Knapp 1</string>
-  <string name="settings_notification_action_2">Knapp 2</string>
-  <string name="settings_notification_action_3">Knapp 3</string>
-  <string name="settings_notification_previews_title">Notifikations förhandsvisningar</string>
-  <string name="settings_vibration_title">Vibration</string>
-  <string name="settings_ringtone_title">Ljud</string>
-  <string name="settings_ringtone_none">Ingen</string>
-  <string name="settings_qkreply_title">QK-svar</string>
-  <string name="settings_qkreply_summary">Popup för nya meddelanden</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tryck för att avfärda</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tryck var som helst utanför popupen för att stänga den</string>
-  <string name="settings_blocking_title">Blockerar</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Borde jag svara?</string>
-  <string name="settings_should_i_answer_summary">Filtrera automatiskt meddelanden från oönskade nummer genom att använda appen \"Borde jag svara\"</string>
-  <string name="settings_delayed_title">Fördröj skickande av meddelanden</string>
-  <string name="settings_swipe_actions">Svepåtgärder</string>
-  <string name="settings_swipe_actions_summary">Ställ in svep-åtgärder för konversationer</string>
-  <string name="settings_swipe_actions_right">Svepning till höger</string>
-  <string name="settings_swipe_actions_left">Svepning till vänster</string>
-  <string name="settings_swipe_actions_change">BYT</string>
-  <string-array name="settings_swipe_actions">
-    <item>Inget</item>
-    <item>Arkivera</item>
-    <item>Ta bort</item>
-    <item>Ring</item>
-    <item>Markera som läst</item>
-  </string-array>
-  <string name="settings_delivery_title">Leveransrapporter</string>
-  <string name="settings_delivery_summary">Bekräfta att meddelanden har skickats</string>
-  <string name="settings_unicode_title">Ta bort accenter</string>
-  <string name="settings_unicode_summary">Ta bort accenter från tecken i utåtgående SMS-meddelanden</string>
-  <string name="settings_mobile_title">Endast mobilnummer</string>
-  <string name="settings_mobile_summary">Visa endast mobilnummer när ett meddelanden skrivs</string>
-  <string name="settings_mms_size_title">Komprimera MMS-bilagor automatiskt</string>
-  <string name="settings_sync_title">Synkronisera meddelanden</string>
-  <string name="settings_sync_summary">Synkronisera dina meddelanden med telefonens SMS-databas</string>
-  <string name="settings_about_title">Om QKSMS</string>
-  <string name="settings_version">Version %s</string>
-  <string name="settings_logging_enabled">Felsökningsloggning aktiverades</string>
-  <string name="settings_logging_disabled">Felsökningsloggning inaktiverad</string>
-  <string name="settings_delay_duration_hint">Fyll i varaktighet (sekunder)</string>
-  <string name="blocked_title">Blockering</string>
-  <string name="blocked_empty">Dina blockerade konversationer kommer att dyka upp här</string>
-  <string name="blocked_unblock_dialog_title">Avblockera</string>
-  <string name="blocked_unblock_dialog_message">Vill du avblockera den här konversationen?</string>
-  <string name="about_title">Om</string>
-  <string name="about_version_title">Version</string>
-  <string name="about_developer_title">Utvecklare</string>
-  <string name="about_source_title">Källkod</string>
-  <string name="about_changelog_title">Ändringslogg</string>
-  <string name="about_contact_title">Kontakt</string>
-  <string name="about_license_title">Licens</string>
-  <string name="about_copyright_title">Kopieringsskydd</string>
-  <string name="qksms_plus_description_title">Ge stöd till utveckling, lås upp allting</string>
-  <string name="qksms_plus_description_summary">Du kan hjälpa en svältande utvecklare för bara %s</string>
-  <string name="qksms_plus_upgrade">Livstidsuppgradering för %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Lås upp + donera för %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Tack för att du stöttar QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">Du har nu tillgång till alla funktioner i QKSMS+</string>
-  <string name="qksms_plus_free_title">QKSMS + är gratis för F-Droid användare! Om du vill stödja utvecklingen, Så får du gärna donationera.</string>
-  <string name="qksms_plus_donate">Donera via PayPal</string>
-  <string name="qksms_plus_coming_soon">Kommer snart</string>
-  <string name="qksms_plus_themes_title">Högkvalitativa teman</string>
-  <string name="qksms_plus_themes_summary">Lås upp vackra färger som inte finns tillgängliga på Material Design paletten</string>
-  <string name="qksms_plus_emoji_title">Anpassad auto-emoji</string>
-  <string name="qksms_plus_emoji_summary">Skapa anpassade auto-emoji genvägar</string>
-  <string name="qksms_plus_backup_title">Säkerhetskopiering av meddelande</string>
-  <string name="qksms_plus_backup_summary">Säkerhetskopiera automatiskt dina meddelanden. Du behöver aldrig mer oroa dig för att förlora dina konversationer om du byter telefon eller telefonen försvinner</string>
-  <string name="qksms_plus_scheduled_title">Schemalagda meddelanden</string>
-  <string name="qksms_plus_scheduled_summary">Schemalägg meddelanden att automatiskt skickas vid en specifik tid och datum</string>
-  <string name="qksms_plus_delayed_title">Fördröj skickande av meddelanden</string>
-  <string name="qksms_plus_delayed_summary">Vänta några sekunder innan du skickar ditt meddelande</string>
-  <string name="qksms_plus_night_title">Automatiskt nattläge</string>
-  <string name="qksms_plus_night_summary">Aktivera nattläge baserat på tiden på dygnet</string>
-  <string name="qksms_plus_blacklist_title">Avancerade blockering</string>
-  <string name="qksms_plus_blacklist_summary">Blockera meddelanden som innehåller specifika ord eller matchar mönster</string>
-  <string name="qksms_plus_forward_title">Auto-forward</string>
-  <string name="qksms_plus_forward_summary">Automatiskt vidarebefordra meddelanden från vissa avsändare</string>
-  <string name="qksms_plus_respond_title">Auto-svara</string>
-  <string name="qksms_plus_respond_summary">Svara automatiskt på inkommande meddelanden med ett förinställt svar</string>
-  <string name="qksms_plus_more_title">Mer</string>
-  <string name="qksms_plus_more_summary">QKSMS är under aktiv utveckling, och dina köp kommer att inkludera alla kommande QKSMS+-funktioner!</string>
-  <string name="widget_loading">Laddar&#8230;</string>
-  <string name="widget_more">Visa fler konversationer</string>
-  <string name="qkreply_menu_read">Markera som läst</string>
-  <string name="qkreply_menu_call">Ring</string>
-  <string name="qkreply_menu_delete">Delete</string>
-  <string name="qkreply_menu_expand">Visa mer</string>
-  <string name="qkreply_menu_collapse">Visa färre</string>
-  <string name="qkreply_menu_view">Öppna konversation</string>
-  <string name="theme_material">Material</string>
-  <string name="theme_plus">QKSMS+</string>
-  <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Verkställ</string>
-  <string-array name="notification_actions">
-    <item>Inget</item>
-    <item>Markera som läst</item>
-    <item>Svara</item>
-    <item>Ring</item>
-    <item>Ta bort</item>
-  </string-array>
-  <string name="button_cancel">Avbryt</string>
-  <string name="button_delete">Radera</string>
-  <string name="button_save">Spara</string>
-  <string name="button_stop">Stoppa</string>
-  <string name="button_more">Mer</string>
-  <string name="button_set">Ställ in</string>
-  <string name="button_unblock">Avblockera</string>
-  <string name="button_undo">Ångra</string>
-  <string name="toast_copied">Kopierad</string>
-  <string name="toast_archived">Arkiverade konversationer</string>
-  <string name="toast_qksms_plus">Du måste låsa upp QKSMS+ för att använda det här</string>
-  <plurals name="notification_new_messages">
-    <item quantity="one">Nytt meddelande</item>
-    <item quantity="other">%s nya meddelanden</item>
-  </plurals>
-  <string name="notification_message_failed_title">Meddelandet skickades inte</string>
-  <string name="notification_message_failed_text">Meddelandet till %s misslyckades att skicka</string>
-  <string-array name="night_modes">
-    <item>Inaktivera</item>
-    <item>Alltid på</item>
-    <item>Automatisk</item>
-  </string-array>
-  <string-array name="notification_preview_options">
-    <item>Visa namn och meddelande</item>
-    <item>Visa namn</item>
-    <item>Göm innehåll</item>
-  </string-array>
-  <string-array name="text_sizes">
-    <item>Liten</item>
-    <item>Normal</item>
-    <item>Stort</item>
-    <item>Större</item>
-  </string-array>
-  <string-array name="delayed_sending_labels">
-    <item>Ingen fördröjning</item>
-    <item>Kort</item>
-    <item>Mellan</item>
-    <item>Lång</item>
-  </string-array>
-  <string-array name="mms_sizes">
-    <item>100KB</item>
-    <item>200KB</item>
-    <item>300KB (Rekommenderas)</item>
-    <item>600KB</item>
-    <item>1000KB</item>
-    <item>2000KB</item>
-    <item>Ingen kompression</item>
-  </string-array>
-  <string-array name="qk_responses">
-    <item>Okej</item>
-    <item>Ett ögonblick</item>
-    <item>På väg</item>
-    <item>Tack</item>
-    <item>Låter bra</item>
-    <item>Vad händer?</item>
-    <item>Håller med</item>
-    <item>Nej</item>
-    <item>Älskar dig</item>
-    <item>Förlåt</item>
-    <item>LOL</item>
-    <item>Det är okej</item>
-  </string-array>
+    <string name="shortcut_compose_long_label">Ny konversation</string>
+    <string name="shortcut_compose_short_label">Skriv</string>
+    <string name="shortcut_compose_disabled_message">Genvägen inaktiverades</string>
+    <string name="title_archived">Arkiverat</string>
+    <string name="title_settings">Inställningar</string>
+    <string name="title_notification_prefs">Aviseringar</string>
+    <string name="title_theme">Tema</string>
+    <string name="title_conversations">Sök i inkorg&#8230;</string>
+    <string name="title_compose">Ange ett namn eller nummer</string>
+    <string name="setup_skip">Hoppa över</string>
+    <string name="setup_next">Fortsätt</string>
+    <string name="menu_call">Ring</string>
+    <string name="menu_info">Detaljer</string>
+    <string name="menu_save">Spara till galleri</string>
+    <string name="main_drawer_open_cd">Öppna navigeringspanelen</string>
+    <string name="main_title_selected">%d vald</string>
+    <string name="main_menu_clear">Rensa</string>
+    <string name="main_menu_archive">Arkiv</string>
+    <string name="main_menu_unarchive">Avarkivera</string>
+    <string name="main_menu_delete">Radera</string>
+    <string name="main_menu_pin">Fäst på toppen</string>
+    <string name="main_menu_unpin">Frigör</string>
+    <string name="main_menu_read">Markera som läst</string>
+    <string name="main_menu_unread">Markera som ej läst</string>
+    <string name="main_menu_block">Blockera</string>
+    <string name="main_syncing">Synkroniserar meddelanden&#8230;</string>
+    <string name="main_sender_you">Du: %s</string>
+    <string name="main_message_results_title">Resultat i meddelanden</string>
+    <string name="main_message_results">%d meddelanden</string>
+    <string name="inbox_empty_text">Dina konversationer kommer att dyka upp här</string>
+    <string name="inbox_search_empty_text">Inga resultat</string>
+    <string name="archived_empty_text">Dina arkiverade konversationer kommer att dyka upp här</string>
+    <string name="main_fab_cd">Starta en ny konversation</string>
+    <string name="main_default_sms_title">Älska att skicka SMS igen</string>
+    <string name="main_default_sms_message">Gör QKSMS till din standard-app för SMS</string>
+    <string name="main_default_sms_change">Ändra</string>
+    <string name="main_permission_required">Tillstånd krävs</string>
+    <string name="main_permission_sms">QKSMS behöver tillåtelse att skicka och visa SMS-meddelanden</string>
+    <string name="main_permission_contacts">QKSMS behöver tillåtelse för att kunna se dina kontakter</string>
+    <string name="main_permission_allow">Tillåt</string>
+    <string name="drawer_inbox">Inkorg</string>
+    <string name="drawer_archived">Arkiverat</string>
+    <string name="drawer_scheduled">Schemalagt</string>
+    <string name="drawer_blocking">Blockerar</string>
+    <string name="drawer_more">Mer</string>
+    <string name="drawer_settings">Inställningar</string>
+    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_help">Hjälp &amp; återgivning</string>
+    <string name="drawer_invite">Bjud in vänner</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">Lås upp nya spännande funktioner och stötta utvecklingen</string>
+    <string name="rate_title">Tycker du om QKSMS?</string>
+    <string name="rate_summary">Dela lite kärlek och betygsätt oss på Google Play!</string>
+    <string name="rate_okay">OKEJ!</string>
+    <string name="rate_dismiss">AVFÄRDA</string>
+    <string name="dialog_delete_title">Radera</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">Är du säker på att du vill ta bort den här konversationen?</item>
+        <item quantity="other">Är du säker på att du vill ta bort %d konversationer?</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>Kopiera text</item>
+        <item>Vidarebefordra</item>
+        <item>Radera</item>
+    </string-array>
+    <string name="compose_title_selected">%d vald</string>
+    <string name="compose_subtitle_results">%1$d av %2$d resultat</string>
+    <string name="compose_send_group_title">Skicka som ett grupp-meddelande</string>
+    <string name="compose_send_group_summary">Mottagare och svar kommer att vara synligt för alla</string>
+    <string name="compose_messages_empty">Det här är början på din konversation. Säg något snällt!</string>
+    <string name="compose_vcard_label">Kontaktkort</string>
+    <string name="compose_scheduled_for">Schemalagd för</string>
+    <string name="compose_scheduled_future">Den valda tiden måste vara i framtiden!</string>
+    <string name="compose_scheduled_plus">Du måste låsa upp QKSMS+ om du vill använda schemalagda meddelanden</string>
+    <string name="compose_scheduled_toast">Lades till i schemalagda meddelanden</string>
+    <string name="compose_hint">Skriv ett meddelande&#8230;</string>
+    <string name="compose_menu_copy">Kopiera text</string>
+    <string name="compose_menu_forward">Vidarebefordra</string>
+    <string name="compose_menu_delete">Radera</string>
+    <string name="compose_menu_previous">Föregående</string>
+    <string name="compose_menu_next">Nästa</string>
+    <string name="compose_menu_clear">Rensa</string>
+    <string name="compose_details_title">Meddelandedetaljer</string>
+    <string name="compose_details_type">Typ: %s</string>
+    <string name="compose_details_from">Från: %s</string>
+    <string name="compose_details_to">Till: %s</string>
+    <string name="compose_details_subject">Ämne: %s</string>
+    <string name="compose_details_priority">Prioritet: %s</string>
+    <string name="compose_details_size">Storlek: %s</string>
+    <string name="compose_details_sent">Skickades: %s</string>
+    <string name="compose_details_received">Togs emot: %s</string>
+    <string name="compose_details_delivered">Levererades: %s</string>
+    <string name="compose_details_error_code">Felkod: %d</string>
+    <string name="compose_attach_cd">Lägg till en bilaga</string>
+    <string name="compose_gallery_cd">Bifoga en bild</string>
+    <string name="compose_camera_cd">Ta en bild</string>
+    <string name="compose_schedule_cd">Schemalägg meddelande</string>
+    <string name="compose_contact_cd">Attach a contact</string>
+    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_sim_cd">%s valt, byt SIM-kort</string>
+    <string name="compose_send_cd">Skicka meddelandet</string>
+    <string name="message_status_sending">Skickar&#8230;</string>
+    <string name="message_status_delivered">Levererade %s</string>
+    <string name="message_status_failed">Misslyckades med att skicka. Knacka för att försöka igen</string>
+    <string name="info_title">Detaljer</string>
+    <string name="info_name">Titel för konversation</string>
+    <string name="info_name_hint">Fyll i titel</string>
+    <string name="info_notifications">Aviseringar</string>
+    <string name="info_theme">Tema</string>
+    <string name="info_archive">Arkivera</string>
+    <string name="info_unarchive">Avarkivera</string>
+    <string name="info_block">Blockera</string>
+    <string name="info_unblock">Avblockera</string>
+    <string name="info_delete">Radera konversation</string>
+    <string name="gallery_error">Kunde inte ladda mediet</string>
+    <string name="gallery_toast_saved">Spara till galleri</string>
+    <string name="backup_title">Säkerhetskopiera och återställ</string>
+    <string name="backup_backing_up">Säkerhetskopierar meddelandena</string>
+    <string name="backup_restoring">Återställer från säkerhetskopia</string>
+    <string name="backup_last">Senaste säkerhetskopiering</string>
+    <string name="backup_loading">Laddar&#8230;</string>
+    <string name="backup_never">Aldrig</string>
+    <string name="backup_restore_title">Återställ</string>
+    <string name="backup_restore_summary">Välj en säkerhetskopia</string>
+    <string name="backup_restore_error_plus">Vänligen lås upp QKSMS+ för att använda säkerhetskopiera och återställ</string>
+    <string name="backup_restore_error_backup">Säkerhetskopiering pågår&#8230;</string>
+    <string name="backup_restore_error_restore">Återställning pågår&#8230;</string>
+    <string name="backup_restore_confirm_title">Återställ från säkerhetskopia</string>
+    <string name="backup_restore_confirm_message">Är du säker på att du vill återställa dina meddelanden från den här säkerhetskopian?</string>
+    <string name="backup_restore_stop_title">Stoppa återställningen</string>
+    <string name="backup_restore_stop_message">Meddelanden som redan har blivit återställda kommer att stanna kvar i din enhet</string>
+    <string name="backup_restore_dialog_title">Säkerhetskopior</string>
+    <string name="backup_restore_dialog_empty">Inga säkerhetskopior kunde hittas</string>
+    <plurals name="backup_message_count">
+        <item quantity="one">%d meddelande</item>
+        <item quantity="other">%d meddelanden</item>
+    </plurals>
+    <string name="backup_disclaimer">För närvarande så stöds endast SMS av Säkerhetskopiera och Återställ. MMS-stöd och schemalagda säkerhetskopieringar kommer att dyka upp inom kort!</string>
+    <string name="backup_now">Säkerhetskopiera nu</string>
+    <string name="backup_progress_parsing">Tolkar säkerhetskopieringen&#8230;</string>
+    <string name="backup_progress_running">%d/%d meddelanden</string>
+    <string name="backup_progress_saving">Sparar säkerhetskopian&#8230;</string>
+    <string name="backup_progress_syncing">Synkroniserar meddelandena&#8230;</string>
+    <string name="backup_progress_finished">Avslutad!</string>
+    <string name="backup_notification_channel_name">Säkerhetskopiera och återställ</string>
+    <string name="scheduled_title">Schemalagda</string>
+    <string name="scheduled_empty_description">Skicka ett meddelande automatiskt i det exakta ögonblicket som du önskar</string>
+    <string name="scheduled_empty_message_1">Hi! När var din födelsedag igen?</string>
+    <string name="scheduled_empty_message_2">Den är den 23:e December</string>
+    <string name="scheduled_empty_message_3">Grattis på födelsedagen! Se vilken fin vän jag är som kommer ihåg din födelsedag</string>
+    <string name="scheduled_empty_message_3_timestamp">Skickar den 23:e December </string>
+    <string name="scheduled_compose_cd">Schemalägg ett meddelande</string>
+    <string name="scheduled_options_title">Schemalagt meddelande</string>
+    <string-array name="scheduled_options">
+        <item>Skicka nu</item>
+        <item>Ta bort</item>
+    </string-array>
+    <string name="settings_category_appearance">Utseende</string>
+    <string name="settings_category_general">Generellt</string>
+    <string name="settings_category_qkreply">QK svar</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_night_title">Nattläge</string>
+    <string name="settings_black_title">Svart nattläge</string>
+    <string name="settings_night_start_title">Starttid</string>
+    <string name="settings_night_end_title">Sluttid</string>
+    <string name="settings_text_size_title">Storlek på typsnitt</string>
+    <string name="settings_system_font_title">Använd systemteckensnitt</string>
+    <string name="settings_auto_emoji_title">Automatisk uttryckssymbol</string>
+    <string name="settings_notifications_title">Aviseringar</string>
+    <string name="settings_notifications_o_summary">Tryck för att anpassa</string>
+    <string name="settings_notification_actions_title">Åtgärder</string>
+    <string name="settings_notification_action_1">Knapp 1</string>
+    <string name="settings_notification_action_2">Knapp 2</string>
+    <string name="settings_notification_action_3">Knapp 3</string>
+    <string name="settings_notification_previews_title">Notifikations förhandsvisningar</string>
+    <string name="settings_vibration_title">Vibration</string>
+    <string name="settings_ringtone_title">Ljud</string>
+    <string name="settings_ringtone_none">Ingen</string>
+    <string name="settings_qkreply_title">QK-svar</string>
+    <string name="settings_qkreply_summary">Popup för nya meddelanden</string>
+    <string name="settings_qkreply_tap_dismiss_title">Tryck för att avfärda</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Tryck var som helst utanför popupen för att stänga den</string>
+    <string name="settings_blocking_title">Blockerar</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">Borde jag svara?</string>
+    <string name="settings_should_i_answer_summary">Filtrera automatiskt meddelanden från oönskade nummer genom att använda appen \"Borde jag svara\"</string>
+    <string name="settings_delayed_title">Fördröj skickande av meddelanden</string>
+    <string name="settings_swipe_actions">Svepåtgärder</string>
+    <string name="settings_swipe_actions_summary">Ställ in svep-åtgärder för konversationer</string>
+    <string name="settings_swipe_actions_right">Svepning till höger</string>
+    <string name="settings_swipe_actions_left">Svepning till vänster</string>
+    <string name="settings_swipe_actions_change">BYT</string>
+    <string-array name="settings_swipe_actions">
+        <item>Inget</item>
+        <item>Arkivera</item>
+        <item>Ta bort</item>
+        <item>Ring</item>
+        <item>Markera som läst</item>
+    </string-array>
+    <string name="settings_delivery_title">Leveransrapporter</string>
+    <string name="settings_delivery_summary">Bekräfta att meddelanden har skickats</string>
+    <string name="settings_unicode_title">Ta bort accenter</string>
+    <string name="settings_unicode_summary">Ta bort accenter från tecken i utåtgående SMS-meddelanden</string>
+    <string name="settings_mobile_title">Endast mobilnummer</string>
+    <string name="settings_mobile_summary">Visa endast mobilnummer när ett meddelanden skrivs</string>
+    <string name="settings_mms_size_title">Komprimera MMS-bilagor automatiskt</string>
+    <string name="settings_sync_title">Synkronisera meddelanden</string>
+    <string name="settings_sync_summary">Synkronisera dina meddelanden med telefonens SMS-databas</string>
+    <string name="settings_about_title">Om QKSMS</string>
+    <string name="settings_version">Version %s</string>
+    <string name="settings_logging_enabled">Felsökningsloggning aktiverades</string>
+    <string name="settings_logging_disabled">Felsökningsloggning inaktiverad</string>
+    <string name="settings_delay_duration_hint">Fyll i varaktighet (sekunder)</string>
+    <string name="blocked_title">Blockering</string>
+    <string name="blocked_empty">Dina blockerade konversationer kommer att dyka upp här</string>
+    <string name="blocked_unblock_dialog_title">Avblockera</string>
+    <string name="blocked_unblock_dialog_message">Vill du avblockera den här konversationen?</string>
+    <string name="about_title">Om</string>
+    <string name="about_version_title">Version</string>
+    <string name="about_developer_title">Utvecklare</string>
+    <string name="about_source_title">Källkod</string>
+    <string name="about_changelog_title">Ändringslogg</string>
+    <string name="about_contact_title">Kontakt</string>
+    <string name="about_license_title">Licens</string>
+    <string name="about_copyright_title">Kopieringsskydd</string>
+    <string name="qksms_plus_description_title">Ge stöd till utveckling, lås upp allting</string>
+    <string name="qksms_plus_description_summary">Du kan hjälpa en svältande utvecklare för bara %s</string>
+    <string name="qksms_plus_upgrade">Livstidsuppgradering för %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_donate">Lås upp + donera för %1$s %2$s</string>
+    <string name="qksms_plus_thanks_title">Tack för att du stöttar QKSMS!</string>
+    <string name="qksms_plus_thanks_summary">Du har nu tillgång till alla funktioner i QKSMS+</string>
+    <string name="qksms_plus_free_title">QKSMS + är gratis för F-Droid användare! Om du vill stödja utvecklingen, Så får du gärna donationera.</string>
+    <string name="qksms_plus_donate">Donera via PayPal</string>
+    <string name="qksms_plus_coming_soon">Kommer snart</string>
+    <string name="qksms_plus_themes_title">Högkvalitativa teman</string>
+    <string name="qksms_plus_themes_summary">Lås upp vackra färger som inte finns tillgängliga på Material Design paletten</string>
+    <string name="qksms_plus_emoji_title">Anpassad auto-emoji</string>
+    <string name="qksms_plus_emoji_summary">Skapa anpassade auto-emoji genvägar</string>
+    <string name="qksms_plus_backup_title">Säkerhetskopiering av meddelande</string>
+    <string name="qksms_plus_backup_summary">Säkerhetskopiera automatiskt dina meddelanden. Du behöver aldrig mer oroa dig för att förlora dina konversationer om du byter telefon eller telefonen försvinner</string>
+    <string name="qksms_plus_scheduled_title">Schemalagda meddelanden</string>
+    <string name="qksms_plus_scheduled_summary">Schemalägg meddelanden att automatiskt skickas vid en specifik tid och datum</string>
+    <string name="qksms_plus_delayed_title">Fördröj skickande av meddelanden</string>
+    <string name="qksms_plus_delayed_summary">Vänta några sekunder innan du skickar ditt meddelande</string>
+    <string name="qksms_plus_night_title">Automatiskt nattläge</string>
+    <string name="qksms_plus_night_summary">Aktivera nattläge baserat på tiden på dygnet</string>
+    <string name="qksms_plus_blacklist_title">Avancerade blockering</string>
+    <string name="qksms_plus_blacklist_summary">Blockera meddelanden som innehåller specifika ord eller matchar mönster</string>
+    <string name="qksms_plus_forward_title">Auto-forward</string>
+    <string name="qksms_plus_forward_summary">Automatiskt vidarebefordra meddelanden från vissa avsändare</string>
+    <string name="qksms_plus_respond_title">Auto-svara</string>
+    <string name="qksms_plus_respond_summary">Svara automatiskt på inkommande meddelanden med ett förinställt svar</string>
+    <string name="qksms_plus_more_title">Mer</string>
+    <string name="qksms_plus_more_summary">QKSMS är under aktiv utveckling, och dina köp kommer att inkludera alla kommande QKSMS+-funktioner!</string>
+    <string name="widget_loading">Laddar&#8230;</string>
+    <string name="widget_more">Visa fler konversationer</string>
+    <string name="qkreply_menu_read">Markera som läst</string>
+    <string name="qkreply_menu_call">Ring</string>
+    <string name="qkreply_menu_delete">Ta bort</string>
+    <string name="qkreply_menu_expand">Visa mer</string>
+    <string name="qkreply_menu_collapse">Visa färre</string>
+    <string name="qkreply_menu_view">Öppna konversation</string>
+    <string name="theme_material">Material</string>
+    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_hex">HEX</string>
+    <string name="theme_apply">Verkställ</string>
+    <string-array name="notification_actions">
+        <item>Inget</item>
+        <item>Markera som läst</item>
+        <item>Svara</item>
+        <item>Ring</item>
+        <item>Ta bort</item>
+    </string-array>
+    <string name="button_cancel">Avbryt</string>
+    <string name="button_delete">Radera</string>
+    <string name="button_save">Spara</string>
+    <string name="button_stop">Stoppa</string>
+    <string name="button_more">Mer</string>
+    <string name="button_set">Ställ in</string>
+    <string name="button_unblock">Avblockera</string>
+    <string name="button_undo">Ångra</string>
+    <string name="toast_copied">Kopierad</string>
+    <string name="toast_archived">Arkiverade konversationer</string>
+    <string name="toast_qksms_plus">Du måste låsa upp QKSMS+ för att använda det här</string>
+    <plurals name="notification_new_messages">
+        <item quantity="one">Nytt meddelande</item>
+        <item quantity="other">%s nya meddelanden</item>
+    </plurals>
+    <string name="notification_message_failed_title">Meddelandet skickades inte</string>
+    <string name="notification_message_failed_text">Meddelandet till %s misslyckades att skicka</string>
+    <string-array name="night_modes">
+        <item>Inaktivera</item>
+        <item>Alltid på</item>
+        <item>Automatisk</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>Visa namn och meddelande</item>
+        <item>Visa namn</item>
+        <item>Göm innehåll</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>Liten</item>
+        <item>Normal</item>
+        <item>Stort</item>
+        <item>Större</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>Ingen fördröjning</item>
+        <item>Kort</item>
+        <item>Mellan</item>
+        <item>Lång</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB (Rekommenderas)</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>Ingen kompression</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>Okej</item>
+        <item>Ett ögonblick</item>
+        <item>På väg</item>
+        <item>Tack</item>
+        <item>Låter bra</item>
+        <item>Vad händer?</item>
+        <item>Håller med</item>
+        <item>Nej</item>
+        <item>Älskar dig</item>
+        <item>Förlåt</item>
+        <item>LOL</item>
+        <item>Det är okej</item>
+    </string-array>
 </resources>

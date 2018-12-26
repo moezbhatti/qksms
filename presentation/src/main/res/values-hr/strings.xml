@@ -19,340 +19,342 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-  <string name="title_archived">Arhivirano</string>
-  <string name="title_settings">Postavke</string>
-  <string name="title_notification_prefs">Obavijesti</string>
-  <string name="title_theme">Tema</string>
-  <string name="title_conversations">Pretraži poruke&#8230;</string>
-  <string name="title_compose">Unesite ime ili broj</string>
-  <string name="setup_skip">Preskoči</string>
-  <string name="setup_next">Nastavi</string>
-  <string name="menu_call">Nazovi</string>
-  <string name="menu_info">Detalji</string>
-  <string name="menu_save">Save to gallery</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
-  <string name="main_title_selected">%d odabrano</string>
-  <string name="main_menu_clear">Očisti</string>
-  <string name="main_menu_archive">Arhiviraj</string>
-  <string name="main_menu_unarchive">Dearhiviraj</string>
-  <string name="main_menu_delete">Izbriši</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
-  <string name="main_menu_block">Blokiraj</string>
-  <string name="main_syncing">Syncing messages&#8230;</string>
-  <string name="main_sender_you">Vi: %s</string>
-  <string name="main_message_results_title">Results in messages</string>
-  <string name="main_message_results">%d messages</string>
-  <string name="inbox_empty_text">Vaši razgovori će se pojaviti ovdje</string>
-  <string name="inbox_search_empty_text">Nema rezultata</string>
-  <string name="archived_empty_text">Vaši arhivirani razgovori će se pojaviti ovdje</string>
-  <string name="main_fab_cd">Započni novi razgovor</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
-  <string name="drawer_inbox">Poruke</string>
-  <string name="drawer_archived">Arhivirano</string>
-  <string name="drawer_scheduled">Zakazano</string>
-  <string name="drawer_blocking">Blocking</string>
-  <string name="drawer_more"> Više</string>
-  <string name="drawer_settings">Postavke</string>
-  <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Pomoć i povratne informacije</string>
-  <string name="drawer_invite">Invite friends</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
-  <string name="rate_title">Uživate u QKSMS?</string>
-  <string name="rate_summary">Podijelite malo ljubavi i ocijenite nas na Google Playu!</string>
-  <string name="rate_okay">U REDU!</string>
-  <string name="rate_dismiss">ODBACI</string>
-  <string name="dialog_delete_title">Izbriši</string>
-  <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="few">Are you sure you would like to delete %d conversations?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
-  </plurals>
-  <string-array name="message_options">
-    <item>Kopiraj tekst</item>
-    <item>Proslijedi</item>
-    <item>Izbriši</item>
-  </string-array>
-  <string name="compose_title_selected">%d odabrano</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
-  <string name="compose_send_group_title">Send as group message</string>
-  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-  <string name="compose_messages_empty">Ovo je početak vašeg razgovora. Recite nešto lijepo!</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
-  <string name="compose_hint">Napiši poruku&#8230;</string>
-  <string name="compose_menu_copy">Kopiraj tekst</string>
-  <string name="compose_menu_forward">Proslijedi</string>
-  <string name="compose_menu_delete">Izbriši</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">Clear</string>
-  <string name="compose_details_title">Message details</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">From: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">Sent: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">Error code: %d</string>
-  <string name="compose_attach_cd">Dodaj privitak</string>
-  <string name="compose_gallery_cd">Priloži fotografiju</string>
-  <string name="compose_camera_cd">Uslikaj fotografiju</string>
-  <string name="compose_schedule_cd">Schedule message</string>
-  <string name="compose_sim_cd">%s selected, change SIM card</string>
-  <string name="compose_send_cd">Pošalji poruku</string>
-  <string name="message_status_sending">Slanje&#8230;</string>
-  <string name="message_status_delivered">Isporučeno %s</string>
-  <string name="message_status_failed">Slanje nije uspjelo. Dodirnite da biste pokušali ponovno</string>
-  <string name="info_title">Detalji</string>
-  <string name="info_name">Conversation title</string>
-  <string name="info_name_hint">Enter title</string>
-  <string name="info_notifications">Obavijesti</string>
-  <string name="info_theme">Tema</string>
-  <string name="info_archive">Arhiva</string>
-  <string name="info_unarchive">Dearhiviraj</string>
-  <string name="info_block">Blokiraj</string>
-  <string name="info_unblock">Deblokiraj</string>
-  <string name="info_delete">Izbriši razgovor</string>
-  <string name="gallery_error">Couldn\'t load media</string>
-  <string name="gallery_toast_saved">Saved to gallery</string>
-  <string name="backup_title">Backup and restore</string>
-  <string name="backup_backing_up">Backing up messages</string>
-  <string name="backup_restoring">Restoring from backup</string>
-  <string name="backup_last">Last backup</string>
-  <string name="backup_loading">Loading&#8230;</string>
-  <string name="backup_never">Never</string>
-  <string name="backup_restore_title">Restore</string>
-  <string name="backup_restore_summary">Select a backup</string>
-  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-  <string name="backup_restore_dialog_title">Backups</string>
-  <string name="backup_restore_dialog_empty">No backups found</string>
-  <plurals name="backup_message_count">
-    <item quantity="one">%d message</item>
-    <item quantity="few">%d messages</item>
-    <item quantity="other">%d messages</item>
-  </plurals>
-  <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-  <string name="backup_now">Backup now</string>
-  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-  <string name="backup_progress_running">%d/%d messages</string>
-  <string name="backup_progress_saving">Saving backup&#8230;</string>
-  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
-  <string name="backup_notification_channel_name">Backup and restore</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
-  <string name="scheduled_options_title">Scheduled message</string>
-  <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
-  </string-array>
-  <string name="settings_category_appearance">Izgled</string>
-  <string name="settings_category_general">Općenito</string>
-  <string name="settings_category_qkreply">QK odgovor</string>
-  <string name="settings_theme_title">Tema</string>
-  <string name="settings_night_title">Noćni način</string>
-  <string name="settings_black_title">Potpuno crni noćni način</string>
-  <string name="settings_night_start_title">Vrijeme početka</string>
-  <string name="settings_night_end_title">Vrijeme završetka</string>
-  <string name="settings_text_size_title">Veličina fonta</string>
-  <string name="settings_system_font_title">Koristi sustavski font</string>
-  <string name="settings_auto_emoji_title">Automatsk emoji</string>
-  <string name="settings_notifications_title">Obavijesti</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
-  <string name="settings_notification_previews_title">Pregledi obavijesti</string>
-  <string name="settings_vibration_title">Vibracija</string>
-  <string name="settings_ringtone_title">Zvuk</string>
-  <string name="settings_ringtone_none">None</string>
-  <string name="settings_qkreply_title">QK odgovor</string>
-  <string name="settings_qkreply_summary">Skočni prozor za nove poruke</string>
-  <string name="settings_qkreply_tap_dismiss_title">Dodirnite za odbacivanje</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Dodirnite izvan skočnog prozora za zatvaranje</string>
-  <string name="settings_blocking_title">Blokiranje</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-  <string name="settings_delayed_title">Delayed sending</string>
-  <string name="settings_swipe_actions">Swipe actions</string>
-  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-  <string name="settings_swipe_actions_right">Right swipe</string>
-  <string name="settings_swipe_actions_left">Left swipe</string>
-  <string name="settings_swipe_actions_change">CHANGE</string>
-  <string-array name="settings_swipe_actions">
-    <item>None</item>
-    <item>Archive</item>
-    <item>Delete</item>
-    <item>Call</item>
-    <item>Mark read</item>
-  </string-array>
-  <string name="settings_delivery_title">Potvrde o dostavi</string>
-  <string name="settings_delivery_summary">Budite sigurni da su se poruke uspješno poslale</string>
-  <string name="settings_unicode_title">Strip naglasci</string>
-  <string name="settings_unicode_summary">Uklonite naglaske sa znakova u odlaznim SMS porukama</string>
-  <string name="settings_mobile_title">Mobile numbers only</string>
-  <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
-  <string name="settings_sync_title">Uskladi poruke</string>
-  <string name="settings_sync_summary">Ponovno uskladite svoje poruke sa nativnom Android SMS bazom podataka</string>
-  <string name="settings_about_title">O aplikaciji</string>
-  <string name="settings_version">Verzija %s</string>
-  <string name="settings_logging_enabled">Debug logging enabled</string>
-  <string name="settings_logging_disabled">Debug logging disabled</string>
-  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-  <string name="blocked_title">Blokiranje</string>
-  <string name="blocked_empty">Vaši blokirani razgovori će se pojaviti ovdje</string>
-  <string name="blocked_unblock_dialog_title">Deblokiraj</string>
-  <string name="blocked_unblock_dialog_message">Želite li deblokirati ovaj razgovor?</string>
-  <string name="about_title">O aplikaciji</string>
-  <string name="about_version_title">Verzija</string>
-  <string name="about_developer_title">Autor</string>
-  <string name="about_source_title">Izvorni kod</string>
-  <string name="about_changelog_title">Popis promjena</string>
-  <string name="about_contact_title">Kontakt</string>
-  <string name="about_license_title">Licenca</string>
-  <string name="about_copyright_title">Autorska prava</string>
-  <string name="qksms_plus_description_title">Podržite razvoj, otključajte sve</string>
-  <string name="qksms_plus_description_summary">Možete spasiti izgladnjelog programera za samo %s</string>
-  <string name="qksms_plus_upgrade">Doživotna nadogradnja za %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Otključajte + za %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Hvala vam za podržavanje QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">Sada imate pristup svim QKSMS+ značajkama</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donirajte putem PayPala</string>
-  <string name="qksms_plus_coming_soon">Uskoro dolazi</string>
-  <string name="qksms_plus_themes_title">Premium teme</string>
-  <string name="qksms_plus_themes_summary">Otključajte lijepe boje tema koje nisu dostupne na paleti materijalnog dizajna</string>
-  <string name="qksms_plus_emoji_title">Prilagođeni automatski emoji</string>
-  <string name="qksms_plus_emoji_summary">Stvorite prilagođene prečace za automatski emoji</string>
-  <string name="qksms_plus_backup_title">Sigurnosno kopiranje poruka</string>
-  <string name="qksms_plus_backup_summary">Automatski sigurnosno kopirajte svoje poruke. Nikad više nemojte brinuti zbog gubitka povijesti ako promijenite telefon ili ga izgubite</string>
-  <string name="qksms_plus_scheduled_title">Zakazane poruke</string>
-  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
-  <string name="qksms_plus_delayed_title">Odgođeno slanje</string>
-  <string name="qksms_plus_delayed_summary">Pričekajte nekoliko sekundi prije slanja poruke</string>
-  <string name="qksms_plus_night_title">Automatski noćni način</string>
-  <string name="qksms_plus_night_summary">Omogućite noćni način prema dobi dana</string>
-  <string name="qksms_plus_blacklist_title">Napredno blokiranje</string>
-  <string name="qksms_plus_blacklist_summary">Blokirajte poruke koje sadrže ključne riječi ili obrasce</string>
-  <string name="qksms_plus_forward_title">Automatsko prosljeđivanje</string>
-  <string name="qksms_plus_forward_summary">Automatski proslijedite poruke određenih pošiljatelja</string>
-  <string name="qksms_plus_respond_title">Automatsko odgovaranje</string>
-  <string name="qksms_plus_respond_summary">Automatski odgovorite na poruke sa prilagođenim odgovorima</string>
-  <string name="qksms_plus_more_title"> Više</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
-  <string name="widget_loading">Učitavanje&#8230;</string>
-  <string name="widget_more">View more conversations</string>
-  <string name="qkreply_menu_read">Mark read</string>
-  <string name="qkreply_menu_call">Call</string>
-  <string name="qkreply_menu_delete">Delete</string>
-  <string name="qkreply_menu_expand">Show more</string>
-  <string name="qkreply_menu_collapse">Show less</string>
-  <string name="qkreply_menu_view">Open conversation</string>
-  <string name="theme_material">Materijalna</string>
-  <string name="theme_plus">QKSMS+</string>
-  <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Apply</string>
-  <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
-    <item>Delete</item>
-  </string-array>
-  <string name="button_cancel">Odustani</string>
-  <string name="button_delete">Izbriši</string>
-  <string name="button_save">Save</string>
-  <string name="button_stop">Stop</string>
-  <string name="button_more"> Više</string>
-  <string name="button_set">Set</string>
-  <string name="button_unblock">Unblock</string>
-  <string name="button_undo">Poništi</string>
-  <string name="toast_copied">Kopirano</string>
-  <string name="toast_archived">Razgovor je arhiviran</string>
-  <string name="toast_qksms_plus">Morate otključati QKSMS+ za korištenje ovog</string>
-  <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="few">%s new messages</item>
-    <item quantity="other">%s new messages</item>
-  </plurals>
-  <string name="notification_message_failed_title">Poruka nije poslana</string>
-  <string name="notification_message_failed_text">Poruku %s se nije uspjela poslati</string>
-  <string-array name="night_modes">
-    <item>Onemogućeno</item>
-    <item>Uvijek uključen</item>
-    <item>Automatski</item>
-  </string-array>
-  <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
-  </string-array>
-  <string-array name="text_sizes">
-    <item>Small</item>
-    <item>Normal</item>
-    <item>Large</item>
-    <item>Larger</item>
-  </string-array>
-  <string-array name="delayed_sending_labels">
-    <item>No delay</item>
-    <item>Short</item>
-    <item>Medium</item>
-    <item>Long</item>
-  </string-array>
-  <string-array name="mms_sizes">
-    <item>100KB</item>
-    <item>200KB</item>
-    <item>300KB (Recommended)</item>
-    <item>600KB</item>
-    <item>1000KB</item>
-    <item>2000KB</item>
-    <item>No compression</item>
-  </string-array>
-  <string-array name="qk_responses">
-    <item>Okay</item>
-    <item>Give me a moment</item>
-    <item>On my way</item>
-    <item>Thanks</item>
-    <item>Sounds good</item>
-    <item>What\'s up?</item>
-    <item>Agreed</item>
-    <item>No</item>
-    <item>Love you</item>
-    <item>Sorry</item>
-    <item>LOL</item>
-    <item>That\'s okay</item>
-  </string-array>
+    <string name="shortcut_compose_long_label">New conversation</string>
+    <string name="shortcut_compose_short_label">Compose</string>
+    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+    <string name="title_archived">Arhivirano</string>
+    <string name="title_settings">Postavke</string>
+    <string name="title_notification_prefs">Obavijesti</string>
+    <string name="title_theme">Tema</string>
+    <string name="title_conversations">Pretraži poruke&#8230;</string>
+    <string name="title_compose">Unesite ime ili broj</string>
+    <string name="setup_skip">Preskoči</string>
+    <string name="setup_next">Nastavi</string>
+    <string name="menu_call">Nazovi</string>
+    <string name="menu_info">Detalji</string>
+    <string name="menu_save">Save to gallery</string>
+    <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_title_selected">%d odabrano</string>
+    <string name="main_menu_clear">Očisti</string>
+    <string name="main_menu_archive">Arhiviraj</string>
+    <string name="main_menu_unarchive">Dearhiviraj</string>
+    <string name="main_menu_delete">Izbriši</string>
+    <string name="main_menu_pin">Pin to top</string>
+    <string name="main_menu_unpin">Unpin</string>
+    <string name="main_menu_read">Mark read</string>
+    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_block">Blokiraj</string>
+    <string name="main_syncing">Syncing messages&#8230;</string>
+    <string name="main_sender_you">Vi: %s</string>
+    <string name="main_message_results_title">Results in messages</string>
+    <string name="main_message_results">%d messages</string>
+    <string name="inbox_empty_text">Vaši razgovori će se pojaviti ovdje</string>
+    <string name="inbox_search_empty_text">Nema rezultata</string>
+    <string name="archived_empty_text">Vaši arhivirani razgovori će se pojaviti ovdje</string>
+    <string name="main_fab_cd">Započni novi razgovor</string>
+    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
+    <string name="main_default_sms_change">Change</string>
+    <string name="main_permission_required">Permission required</string>
+    <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
+    <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+    <string name="main_permission_allow">Allow</string>
+    <string name="drawer_inbox">Poruke</string>
+    <string name="drawer_archived">Arhivirano</string>
+    <string name="drawer_scheduled">Zakazano</string>
+    <string name="drawer_blocking">Blocking</string>
+    <string name="drawer_more"> Više</string>
+    <string name="drawer_settings">Postavke</string>
+    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_help">Pomoć i povratne informacije</string>
+    <string name="drawer_invite">Invite friends</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+    <string name="rate_title">Uživate u QKSMS?</string>
+    <string name="rate_summary">Podijelite malo ljubavi i ocijenite nas na Google Playu!</string>
+    <string name="rate_okay">U REDU!</string>
+    <string name="rate_dismiss">ODBACI</string>
+    <string name="dialog_delete_title">Izbriši</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">Are you sure you would like to delete this conversation?</item>
+        <item quantity="few">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>Kopiraj tekst</item>
+        <item>Proslijedi</item>
+        <item>Izbriši</item>
+    </string-array>
+    <string name="compose_title_selected">%d odabrano</string>
+    <string name="compose_subtitle_results">%1$d of %2$d results</string>
+    <string name="compose_send_group_title">Send as group message</string>
+    <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+    <string name="compose_messages_empty">Ovo je početak vašeg razgovora. Recite nešto lijepo!</string>
+    <string name="compose_vcard_label">Contact card</string>
+    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_future">Selected time must be in the future!</string>
+    <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+    <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_hint">Napiši poruku&#8230;</string>
+    <string name="compose_menu_copy">Kopiraj tekst</string>
+    <string name="compose_menu_forward">Proslijedi</string>
+    <string name="compose_menu_delete">Izbriši</string>
+    <string name="compose_menu_previous">Previous</string>
+    <string name="compose_menu_next">Next</string>
+    <string name="compose_menu_clear">Clear</string>
+    <string name="compose_details_title">Message details</string>
+    <string name="compose_details_type">Type: %s</string>
+    <string name="compose_details_from">From: %s</string>
+    <string name="compose_details_to">To: %s</string>
+    <string name="compose_details_subject">Subject: %s</string>
+    <string name="compose_details_priority">Priority: %s</string>
+    <string name="compose_details_size">Size: %s</string>
+    <string name="compose_details_sent">Sent: %s</string>
+    <string name="compose_details_received">Received: %s</string>
+    <string name="compose_details_delivered">Delivered: %s</string>
+    <string name="compose_details_error_code">Error code: %d</string>
+    <string name="compose_attach_cd">Dodaj privitak</string>
+    <string name="compose_gallery_cd">Priloži fotografiju</string>
+    <string name="compose_camera_cd">Uslikaj fotografiju</string>
+    <string name="compose_schedule_cd">Schedule message</string>
+    <string name="compose_contact_cd">Attach a contact</string>
+    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_sim_cd">%s selected, change SIM card</string>
+    <string name="compose_send_cd">Pošalji poruku</string>
+    <string name="message_status_sending">Slanje&#8230;</string>
+    <string name="message_status_delivered">Isporučeno %s</string>
+    <string name="message_status_failed">Slanje nije uspjelo. Dodirnite da biste pokušali ponovno</string>
+    <string name="info_title">Detalji</string>
+    <string name="info_name">Conversation title</string>
+    <string name="info_name_hint">Enter title</string>
+    <string name="info_notifications">Obavijesti</string>
+    <string name="info_theme">Tema</string>
+    <string name="info_archive">Arhiva</string>
+    <string name="info_unarchive">Dearhiviraj</string>
+    <string name="info_block">Blokiraj</string>
+    <string name="info_unblock">Deblokiraj</string>
+    <string name="info_delete">Izbriši razgovor</string>
+    <string name="gallery_error">Couldn\'t load media</string>
+    <string name="gallery_toast_saved">Saved to gallery</string>
+    <string name="backup_title">Backup and restore</string>
+    <string name="backup_backing_up">Backing up messages</string>
+    <string name="backup_restoring">Restoring from backup</string>
+    <string name="backup_last">Last backup</string>
+    <string name="backup_loading">Loading&#8230;</string>
+    <string name="backup_never">Never</string>
+    <string name="backup_restore_title">Restore</string>
+    <string name="backup_restore_summary">Select a backup</string>
+    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+    <string name="backup_restore_confirm_title">Restore from backup</string>
+    <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
+    <string name="backup_restore_stop_title">Stop restore</string>
+    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+    <string name="backup_restore_dialog_title">Backups</string>
+    <string name="backup_restore_dialog_empty">No backups found</string>
+    <plurals name="backup_message_count">
+        <item quantity="one">%d message</item>
+        <item quantity="few">%d messages</item>
+        <item quantity="other">%d messages</item>
+    </plurals>
+    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_now">Backup now</string>
+    <string name="backup_progress_parsing">Parsing backup&#8230;</string>
+    <string name="backup_progress_running">%d/%d messages</string>
+    <string name="backup_progress_saving">Saving backup&#8230;</string>
+    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+    <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="scheduled_title">Scheduled</string>
+    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+    <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_options_title">Scheduled message</string>
+    <string-array name="scheduled_options">
+        <item>Send now</item>
+        <item>Delete</item>
+    </string-array>
+    <string name="settings_category_appearance">Izgled</string>
+    <string name="settings_category_general">Općenito</string>
+    <string name="settings_category_qkreply">QK odgovor</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_night_title">Noćni način</string>
+    <string name="settings_black_title">Potpuno crni noćni način</string>
+    <string name="settings_night_start_title">Vrijeme početka</string>
+    <string name="settings_night_end_title">Vrijeme završetka</string>
+    <string name="settings_text_size_title">Veličina fonta</string>
+    <string name="settings_system_font_title">Koristi sustavski font</string>
+    <string name="settings_auto_emoji_title">Automatsk emoji</string>
+    <string name="settings_notifications_title">Obavijesti</string>
+    <string name="settings_notifications_o_summary">Tap to customize</string>
+    <string name="settings_notification_actions_title">Actions</string>
+    <string name="settings_notification_action_1">Button 1</string>
+    <string name="settings_notification_action_2">Button 2</string>
+    <string name="settings_notification_action_3">Button 3</string>
+    <string name="settings_notification_previews_title">Pregledi obavijesti</string>
+    <string name="settings_vibration_title">Vibracija</string>
+    <string name="settings_ringtone_title">Zvuk</string>
+    <string name="settings_ringtone_none">None</string>
+    <string name="settings_qkreply_title">QK odgovor</string>
+    <string name="settings_qkreply_summary">Skočni prozor za nove poruke</string>
+    <string name="settings_qkreply_tap_dismiss_title">Dodirnite za odbacivanje</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Dodirnite izvan skočnog prozora za zatvaranje</string>
+    <string name="settings_blocking_title">Blokiranje</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">Should I Answer?</string>
+    <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+    <string name="settings_delayed_title">Delayed sending</string>
+    <string name="settings_swipe_actions">Swipe actions</string>
+    <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
+    <string name="settings_swipe_actions_right">Right swipe</string>
+    <string name="settings_swipe_actions_left">Left swipe</string>
+    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string-array name="settings_swipe_actions">
+        <item>None</item>
+        <item>Archive</item>
+        <item>Delete</item>
+        <item>Call</item>
+        <item>Mark read</item>
+    </string-array>
+    <string name="settings_delivery_title">Potvrde o dostavi</string>
+    <string name="settings_delivery_summary">Budite sigurni da su se poruke uspješno poslale</string>
+    <string name="settings_unicode_title">Strip naglasci</string>
+    <string name="settings_unicode_summary">Uklonite naglaske sa znakova u odlaznim SMS porukama</string>
+    <string name="settings_mobile_title">Mobile numbers only</string>
+    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+    <string name="settings_sync_title">Uskladi poruke</string>
+    <string name="settings_sync_summary">Ponovno uskladite svoje poruke sa nativnom Android SMS bazom podataka</string>
+    <string name="settings_about_title">O aplikaciji</string>
+    <string name="settings_version">Verzija %s</string>
+    <string name="settings_logging_enabled">Debug logging enabled</string>
+    <string name="settings_logging_disabled">Debug logging disabled</string>
+    <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
+    <string name="blocked_title">Blokiranje</string>
+    <string name="blocked_empty">Vaši blokirani razgovori će se pojaviti ovdje</string>
+    <string name="blocked_unblock_dialog_title">Deblokiraj</string>
+    <string name="blocked_unblock_dialog_message">Želite li deblokirati ovaj razgovor?</string>
+    <string name="about_title">O aplikaciji</string>
+    <string name="about_version_title">Verzija</string>
+    <string name="about_developer_title">Autor</string>
+    <string name="about_source_title">Izvorni kod</string>
+    <string name="about_changelog_title">Popis promjena</string>
+    <string name="about_contact_title">Kontakt</string>
+    <string name="about_license_title">Licenca</string>
+    <string name="about_copyright_title">Autorska prava</string>
+    <string name="qksms_plus_description_title">Podržite razvoj, otključajte sve</string>
+    <string name="qksms_plus_description_summary">Možete spasiti izgladnjelog programera za samo %s</string>
+    <string name="qksms_plus_upgrade">Doživotna nadogradnja za %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_donate">Otključajte + za %1$s %2$s</string>
+    <string name="qksms_plus_thanks_title">Hvala vam za podržavanje QKSMS!</string>
+    <string name="qksms_plus_thanks_summary">Sada imate pristup svim QKSMS+ značajkama</string>
+    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+    <string name="qksms_plus_donate">Donirajte putem PayPala</string>
+    <string name="qksms_plus_coming_soon">Uskoro dolazi</string>
+    <string name="qksms_plus_themes_title">Premium teme</string>
+    <string name="qksms_plus_themes_summary">Otključajte lijepe boje tema koje nisu dostupne na paleti materijalnog dizajna</string>
+    <string name="qksms_plus_emoji_title">Prilagođeni automatski emoji</string>
+    <string name="qksms_plus_emoji_summary">Stvorite prilagođene prečace za automatski emoji</string>
+    <string name="qksms_plus_backup_title">Sigurnosno kopiranje poruka</string>
+    <string name="qksms_plus_backup_summary">Automatski sigurnosno kopirajte svoje poruke. Nikad više nemojte brinuti zbog gubitka povijesti ako promijenite telefon ili ga izgubite</string>
+    <string name="qksms_plus_scheduled_title">Zakazane poruke</string>
+    <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
+    <string name="qksms_plus_delayed_title">Odgođeno slanje</string>
+    <string name="qksms_plus_delayed_summary">Pričekajte nekoliko sekundi prije slanja poruke</string>
+    <string name="qksms_plus_night_title">Automatski noćni način</string>
+    <string name="qksms_plus_night_summary">Omogućite noćni način prema dobi dana</string>
+    <string name="qksms_plus_blacklist_title">Napredno blokiranje</string>
+    <string name="qksms_plus_blacklist_summary">Blokirajte poruke koje sadrže ključne riječi ili obrasce</string>
+    <string name="qksms_plus_forward_title">Automatsko prosljeđivanje</string>
+    <string name="qksms_plus_forward_summary">Automatski proslijedite poruke određenih pošiljatelja</string>
+    <string name="qksms_plus_respond_title">Automatsko odgovaranje</string>
+    <string name="qksms_plus_respond_summary">Automatski odgovorite na poruke sa prilagođenim odgovorima</string>
+    <string name="qksms_plus_more_title"> Više</string>
+    <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+    <string name="widget_loading">Učitavanje&#8230;</string>
+    <string name="widget_more">View more conversations</string>
+    <string name="qkreply_menu_read">Mark read</string>
+    <string name="qkreply_menu_call">Call</string>
+    <string name="qkreply_menu_delete">Delete</string>
+    <string name="qkreply_menu_expand">Show more</string>
+    <string name="qkreply_menu_collapse">Show less</string>
+    <string name="qkreply_menu_view">Open conversation</string>
+    <string name="theme_material">Materijalna</string>
+    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_hex">HEX</string>
+    <string name="theme_apply">Apply</string>
+    <string-array name="notification_actions">
+        <item>None</item>
+        <item>Mark read</item>
+        <item>Reply</item>
+        <item>Call</item>
+        <item>Delete</item>
+    </string-array>
+    <string name="button_cancel">Odustani</string>
+    <string name="button_delete">Izbriši</string>
+    <string name="button_save">Save</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_more"> Više</string>
+    <string name="button_set">Set</string>
+    <string name="button_unblock">Unblock</string>
+    <string name="button_undo">Poništi</string>
+    <string name="toast_copied">Kopirano</string>
+    <string name="toast_archived">Razgovor je arhiviran</string>
+    <string name="toast_qksms_plus">Morate otključati QKSMS+ za korištenje ovog</string>
+    <plurals name="notification_new_messages">
+        <item quantity="one">New message</item>
+        <item quantity="few">%s new messages</item>
+        <item quantity="other">%s new messages</item>
+    </plurals>
+    <string name="notification_message_failed_title">Poruka nije poslana</string>
+    <string name="notification_message_failed_text">Poruku %s se nije uspjela poslati</string>
+    <string-array name="night_modes">
+        <item>Onemogućeno</item>
+        <item>Uvijek uključen</item>
+        <item>Automatski</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>Show name and message</item>
+        <item>Show name</item>
+        <item>Hide contents</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>Small</item>
+        <item>Normal</item>
+        <item>Large</item>
+        <item>Larger</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>No delay</item>
+        <item>Short</item>
+        <item>Medium</item>
+        <item>Long</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB (Recommended)</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>Okay</item>
+        <item>Give me a moment</item>
+        <item>On my way</item>
+        <item>Thanks</item>
+        <item>Sounds good</item>
+        <item>What\'s up?</item>
+        <item>Agreed</item>
+        <item>No</item>
+        <item>Love you</item>
+        <item>Sorry</item>
+        <item>LOL</item>
+        <item>That\'s okay</item>
+    </string-array>
 </resources>

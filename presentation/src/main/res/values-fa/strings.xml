@@ -19,337 +19,339 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-  <string name="title_archived">بایگانی</string>
-  <string name="title_settings">تنظیمات</string>
-  <string name="title_notification_prefs">اعلان ها</string>
-  <string name="title_theme">پوسته</string>
-  <string name="title_conversations">یافتن پیامک&#8230;</string>
-  <string name="title_compose">Compose</string>
-  <string name="setup_skip">بیخیال</string>
-  <string name="setup_next">ادامه</string>
-  <string name="menu_call">تماس</string>
-  <string name="menu_info">جزئیات</string>
-  <string name="menu_save">Save to gallery</string>
-  <string name="main_drawer_open_cd">Open navigation drawer</string>
-  <string name="main_title_selected">%d selected</string>
-  <string name="main_menu_clear">پاکسازی</string>
-  <string name="main_menu_archive">بایگانی</string>
-  <string name="main_menu_unarchive">بیرون آوردن از بایگانی</string>
-  <string name="main_menu_delete">حذف</string>
-  <string name="main_menu_pin">Pin to top</string>
-  <string name="main_menu_unpin">Unpin</string>
-  <string name="main_menu_read">Mark read</string>
-  <string name="main_menu_unread">Mark unread</string>
-  <string name="main_menu_block">بلاک</string>
-  <string name="main_syncing">همگام سازی پیام ها&#8230;</string>
-  <string name="main_sender_you">شما: %s</string>
-  <string name="main_message_results_title">نتایج در پیام ها</string>
-  <string name="main_message_results">%d messages</string>
-  <string name="inbox_empty_text">مکالمات اینجا نمایش داده میشود</string>
-  <string name="inbox_search_empty_text">No results</string>
-  <string name="archived_empty_text">بایگانی اینجا نمایش داده میشود</string>
-  <string name="main_fab_cd">Start new conversation</string>
-  <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-  <string name="main_default_sms_change">Change</string>
-  <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
-  <string name="main_permission_allow">Allow</string>
-  <string name="drawer_inbox">صندوق ورودی</string>
-  <string name="drawer_archived">بایگانی</string>
-  <string name="drawer_scheduled">زمان بندی</string>
-  <string name="drawer_blocking">Blocking</string>
-  <string name="drawer_more">ادامه</string>
-  <string name="drawer_settings">تنظیمات</string>
-  <string name="drawer_plus">نسخه پیشرفته</string>
-  <string name="drawer_help">راهنما &amp; نظرات</string>
-  <string name="drawer_invite">Invite friends</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
-  <string name="rate_title">Enjoying QKSMS?</string>
-  <string name="rate_summary">Share some love and rate us on Google Play!</string>
-  <string name="rate_okay">OKAY!</string>
-  <string name="rate_dismiss">DISMISS</string>
-  <string name="dialog_delete_title">حذف</string>
-  <plurals name="dialog_delete_message">
-    <item quantity="one">Are you sure you would like to delete this conversation?</item>
-    <item quantity="other">Are you sure you would like to delete %d conversations?</item>
-  </plurals>
-  <string-array name="message_options">
-    <item>کپی متن</item>
-    <item>فوروارد</item>
-    <item>حذف</item>
-  </string-array>
-  <string name="compose_title_selected">%d selected</string>
-  <string name="compose_subtitle_results">%1$d of %2$d results</string>
-  <string name="compose_send_group_title">Send as group message</string>
-  <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-  <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-  <string name="compose_vcard_label">Contact card</string>
-  <string name="compose_scheduled_for">Scheduled for</string>
-  <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-  <string name="compose_scheduled_toast">Added to scheduled messages</string>
-  <string name="compose_hint">نوشتن پیام&#8230;</string>
-  <string name="compose_menu_copy">کپی کردن متن</string>
-  <string name="compose_menu_forward">Forward</string>
-  <string name="compose_menu_delete">Delete</string>
-  <string name="compose_menu_previous">Previous</string>
-  <string name="compose_menu_next">Next</string>
-  <string name="compose_menu_clear">پاکسازی</string>
-  <string name="compose_details_title">جزئیات پیام</string>
-  <string name="compose_details_type">Type: %s</string>
-  <string name="compose_details_from">از: %s</string>
-  <string name="compose_details_to">To: %s</string>
-  <string name="compose_details_subject">Subject: %s</string>
-  <string name="compose_details_priority">Priority: %s</string>
-  <string name="compose_details_size">Size: %s</string>
-  <string name="compose_details_sent">فرستاده: %s</string>
-  <string name="compose_details_received">Received: %s</string>
-  <string name="compose_details_delivered">Delivered: %s</string>
-  <string name="compose_details_error_code">کد خطا: %d</string>
-  <string name="compose_attach_cd">افزودن پیوست</string>
-  <string name="compose_gallery_cd">پیوست یک عکس</string>
-  <string name="compose_camera_cd">Take a photo</string>
-  <string name="compose_schedule_cd">زمان بندی پیام</string>
-  <string name="compose_sim_cd">%s برگزیده شده، تغییر سیم کارت</string>
-  <string name="compose_send_cd">فرستادن پیام</string>
-  <string name="message_status_sending">فرستادن&#8230;</string>
-  <string name="message_status_delivered">رسیده %s</string>
-  <string name="message_status_failed">اوپس، دوباره ارسال کن</string>
-  <string name="info_title">جزئیات</string>
-  <string name="info_name">عنوان گفتگو</string>
-  <string name="info_name_hint">نوشتن عنوان</string>
-  <string name="info_notifications">اعلانها</string>
-  <string name="info_theme">پوسته</string>
-  <string name="info_archive">بایگانی</string>
-  <string name="info_unarchive">بدون موضوع</string>
-  <string name="info_block">بلاک</string>
-  <string name="info_unblock">آنبلاک</string>
-  <string name="info_delete">حذف مکالمه</string>
-  <string name="gallery_error">Couldn\'t load media</string>
-  <string name="gallery_toast_saved">ذخیره در گالری</string>
-  <string name="backup_title">پشتیبان گیری و بازیابی</string>
-  <string name="backup_backing_up">پشتیبان گیری از پیام‌ها</string>
-  <string name="backup_restoring">بازگرداندن پشتیبان</string>
-  <string name="backup_last">واپسین پشتیبان</string>
-  <string name="backup_loading">بارگذاری&#8230;</string>
-  <string name="backup_never">هرگز</string>
-  <string name="backup_restore_title">بازگرداندن</string>
-  <string name="backup_restore_summary">یک پشتیبان را برگزینید</string>
-  <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-  <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-  <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-  <string name="backup_restore_dialog_title">Backups</string>
-  <string name="backup_restore_dialog_empty">No backups found</string>
-  <plurals name="backup_message_count">
-    <item quantity="one">%d message</item>
-    <item quantity="other">%d messages</item>
-  </plurals>
-  <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-  <string name="backup_now">Backup now</string>
-  <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-  <string name="backup_progress_running">%d/%d messages</string>
-  <string name="backup_progress_saving">Saving backup&#8230;</string>
-  <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
-  <string name="backup_notification_channel_name">Backup and restore</string>
-  <string name="scheduled_title">Scheduled</string>
-  <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-  <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-  <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-  <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-  <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-  <string name="scheduled_compose_cd">Schedule a message</string>
-  <string name="scheduled_options_title">Scheduled message</string>
-  <string-array name="scheduled_options">
-    <item>Send now</item>
-    <item>Delete</item>
-  </string-array>
-  <string name="settings_category_appearance">ظاهر</string>
-  <string name="settings_category_general">عمومی</string>
-  <string name="settings_category_qkreply">QK Reply</string>
-  <string name="settings_theme_title">پوسته</string>
-  <string name="settings_night_title">حالت شب</string>
-  <string name="settings_black_title">حالت شب کامل</string>
-  <string name="settings_night_start_title">زمان شروع</string>
-  <string name="settings_night_end_title">زمان پایان</string>
-  <string name="settings_text_size_title">اندازه متن</string>
-  <string name="settings_system_font_title">Use system font</string>
-  <string name="settings_auto_emoji_title">Emoji اتوماتیک</string>
-  <string name="settings_notifications_title">اعلان‌ها</string>
-  <string name="settings_notifications_o_summary">Tap to customize</string>
-  <string name="settings_notification_actions_title">Actions</string>
-  <string name="settings_notification_action_1">Button 1</string>
-  <string name="settings_notification_action_2">Button 2</string>
-  <string name="settings_notification_action_3">Button 3</string>
-  <string name="settings_notification_previews_title">Notification previews</string>
-  <string name="settings_vibration_title">لرزش</string>
-  <string name="settings_ringtone_title">حالت صدا</string>
-  <string name="settings_ringtone_none">None</string>
-  <string name="settings_qkreply_title">پاسخ برنامه</string>
-  <string name="settings_qkreply_summary">پنجره پیام های جدید</string>
-  <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-  <string name="settings_blocking_title">مسدود کردن</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">پاسخ بدهم?</string>
-  <string name="settings_should_i_answer_summary">فیلتر خودکار پیام از شماره های ناخواسته با استفاده از برنامه</string>
-  <string name="settings_delayed_title">Delayed sending</string>
-  <string name="settings_swipe_actions">Swipe actions</string>
-  <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-  <string name="settings_swipe_actions_right">Right swipe</string>
-  <string name="settings_swipe_actions_left">Left swipe</string>
-  <string name="settings_swipe_actions_change">CHANGE</string>
-  <string-array name="settings_swipe_actions">
-    <item>None</item>
-    <item>Archive</item>
-    <item>Delete</item>
-    <item>Call</item>
-    <item>Mark read</item>
-  </string-array>
-  <string name="settings_delivery_title">تحويل تاييديه</string>
-  <string name="settings_delivery_summary">تأیید ارسال موفق پیام</string>
-  <string name="settings_unicode_title">لهجه ها</string>
-  <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
-  <string name="settings_mobile_title">Mobile numbers only</string>
-  <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
-  <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
-  <string name="settings_sync_title">همگام سازی پیام ها</string>
-  <string name="settings_sync_summary">همگام سازی پیام ها با پایگاه داده</string>
-  <string name="settings_about_title">About QKSMS</string>
-  <string name="settings_version">Version %s</string>
-  <string name="settings_logging_enabled">Debug logging enabled</string>
-  <string name="settings_logging_disabled">Debug logging disabled</string>
-  <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-  <string name="blocked_title">مسدود کردن</string>
-  <string name="blocked_empty">مکالمات مسدود شده شما در اینجا نشان داده می شود</string>
-  <string name="blocked_unblock_dialog_title">آنبلاک</string>
-  <string name="blocked_unblock_dialog_message">این مکالمه آنبلاک شود?</string>
-  <string name="about_title">About</string>
-  <string name="about_version_title">Version</string>
-  <string name="about_developer_title">Developer</string>
-  <string name="about_source_title">Source code</string>
-  <string name="about_changelog_title">Changelog</string>
-  <string name="about_contact_title">Contact</string>
-  <string name="about_license_title">License</string>
-  <string name="about_copyright_title">Copyright</string>
-  <string name="qksms_plus_description_title">حمایت از تولید کننده،بازشدن همه چیز</string>
-  <string name="qksms_plus_description_summary">شما میتوانید با %s از ما حمایت کنید</string>
-  <string name="qksms_plus_upgrade">زمان توسعه %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">نسخه پیشرفته و حمایت %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">ممنون از حمایت شما!</string>
-  <string name="qksms_plus_thanks_summary">حال شما به همه امکانات دسترسی دارید</string>
-  <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-  <string name="qksms_plus_donate">Donate via PayPal</string>
-  <string name="qksms_plus_coming_soon">درحال بروزرسانی</string>
-  <string name="qksms_plus_themes_title">پوسته پیشرفته</string>
-  <string name="qksms_plus_themes_summary">در حالت متریال دیزاین رنگبندی پوسته امکانپذیر نیست</string>
-  <string name="qksms_plus_emoji_title">شکلک خودکار سفارشی</string>
-  <string name="qksms_plus_emoji_summary">ساخت شورتکات شکلک اتوماتیک</string>
-  <string name="qksms_plus_backup_title">بکاپ پیامها</string>
-  <string name="qksms_plus_backup_summary">بکاپ خودکار.دیگر نگران از دست دادن پیام ها نباشید.حتی با عوض کردن تلفن همراه</string>
-  <string name="qksms_plus_scheduled_title">پیام های برنامه ریزی شده</string>
-  <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
-  <string name="qksms_plus_delayed_title">تاخیر در ارسال</string>
-  <string name="qksms_plus_delayed_summary">لطفا چند ثانیه صبر کنید</string>
-  <string name="qksms_plus_night_title">حالت شب اتوماتیک</string>
-  <string name="qksms_plus_night_summary">فعال کردن حالت شب براساس زمان روز</string>
-  <string name="qksms_plus_blacklist_title">مسدود کردن پیشرفته</string>
-  <string name="qksms_plus_blacklist_summary">هرزنامه ها وپیام های بد را بلاک کن</string>
-  <string name="qksms_plus_forward_title">هدایت خودکار</string>
-  <string name="qksms_plus_forward_summary">هدایت کردن پیام از فرستندگان خاص</string>
-  <string name="qksms_plus_respond_title">پاسخ خودکار</string>
-  <string name="qksms_plus_respond_summary">ارسال جواب خودکار به پیامک ها</string>
-  <string name="qksms_plus_more_title">بیشتر</string>
-  <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
-  <string name="widget_loading">باگذاری&#8230;</string>
-  <string name="widget_more">مشاهده مکالمات بیشتر</string>
-  <string name="qkreply_menu_read">خوانده شده</string>
-  <string name="qkreply_menu_call">تماس</string>
-  <string name="qkreply_menu_delete">Delete</string>
-  <string name="qkreply_menu_expand">ادامه</string>
-  <string name="qkreply_menu_collapse">کمتر</string>
-  <string name="qkreply_menu_view">بازکردن پیام</string>
-  <string name="theme_material">متریال</string>
-  <string name="theme_plus">پریمیوم</string>
-  <string name="theme_hex">هکس</string>
-  <string name="theme_apply">قطعی</string>
-  <string-array name="notification_actions">
-    <item>None</item>
-    <item>Mark read</item>
-    <item>Reply</item>
-    <item>Call</item>
-    <item>Delete</item>
-  </string-array>
-  <string name="button_cancel">کنسل</string>
-  <string name="button_delete">حذف</string>
-  <string name="button_save">Save</string>
-  <string name="button_stop">Stop</string>
-  <string name="button_more">بيشتر</string>
-  <string name="button_set">Set</string>
-  <string name="button_unblock">آنبلاک</string>
-  <string name="button_undo">برگرده</string>
-  <string name="toast_copied">کپی شد</string>
-  <string name="toast_archived">آرشیو مکالمه</string>
-  <string name="toast_qksms_plus">باید نسخه پیشرفته را فعال کنید</string>
-  <plurals name="notification_new_messages">
-    <item quantity="one">New message</item>
-    <item quantity="other">%s new messages</item>
-  </plurals>
-  <string name="notification_message_failed_title">ارسال نشد</string>
-  <string name="notification_message_failed_text">پیام به %s ارسال نشد</string>
-  <string-array name="night_modes">
-    <item>غیرفعال</item>
-    <item>همیشه روشن</item>
-    <item>اتوماتیک</item>
-  </string-array>
-  <string-array name="notification_preview_options">
-    <item>Show name and message</item>
-    <item>Show name</item>
-    <item>Hide contents</item>
-  </string-array>
-  <string-array name="text_sizes">
-    <item>کوچک</item>
-    <item>نرمال</item>
-    <item>بزرگ</item>
-    <item>بزرگتر</item>
-  </string-array>
-  <string-array name="delayed_sending_labels">
-    <item>No delay</item>
-    <item>Short</item>
-    <item>Medium</item>
-    <item>Long</item>
-  </string-array>
-  <string-array name="mms_sizes">
-    <item>۱۰۰kb</item>
-    <item>۲۰۰kb</item>
-    <item>300KB (Recommended)</item>
-    <item>۶۰۰kb</item>
-    <item>۱۰۰۰kb</item>
-    <item>۲۰۰۰kb</item>
-    <item>No compression</item>
-  </string-array>
-  <string-array name="qk_responses">
-    <item>باشه</item>
-    <item>یک لحظه لطفاً</item>
-    <item>به روش من</item>
-    <item>ممنون</item>
-    <item>خوبه</item>
-    <item>چه خبره?</item>
-    <item>موافقت کرد</item>
-    <item>خیر</item>
-    <item>دوستت دارم</item>
-    <item>متاسفم</item>
-    <item>lol</item>
-    <item>ردیفه</item>
-  </string-array>
+    <string name="shortcut_compose_long_label">گفتگوی جدید</string>
+    <string name="shortcut_compose_short_label">نوشتن</string>
+    <string name="shortcut_compose_disabled_message">میانبر غیر فعال است</string>
+    <string name="title_archived">بایگانی</string>
+    <string name="title_settings">تنظیمات</string>
+    <string name="title_notification_prefs">اعلان‌ها</string>
+    <string name="title_theme">پوسته</string>
+    <string name="title_conversations">یافتن پیامک&#8230;</string>
+    <string name="title_compose">یک نام یا شماره را وارد کنید</string>
+    <string name="setup_skip">بیخیال</string>
+    <string name="setup_next">ادامه</string>
+    <string name="menu_call">تماس</string>
+    <string name="menu_info">جزئیات</string>
+    <string name="menu_save">ذخیره در گالری</string>
+    <string name="main_drawer_open_cd">بازکردن کشو ناوبری</string>
+    <string name="main_title_selected">%d انتخاب شده</string>
+    <string name="main_menu_clear">پاکسازی</string>
+    <string name="main_menu_archive">بایگانی</string>
+    <string name="main_menu_unarchive">بیرون آوردن از بایگانی</string>
+    <string name="main_menu_delete">حذف</string>
+    <string name="main_menu_pin">اتصال به بالای صفحه</string>
+    <string name="main_menu_unpin">Unpin</string>
+    <string name="main_menu_read">علامت گذاری به عنوان خوانده شده</string>
+    <string name="main_menu_unread">علامت گذاری بعنوان خوانده نشده</string>
+    <string name="main_menu_block">مسدود کردن</string>
+    <string name="main_syncing">همگام سازی پیام ها&#8230;</string>
+    <string name="main_sender_you">شما: %s</string>
+    <string name="main_message_results_title">نتایج در پیام ها</string>
+    <string name="main_message_results">%d پیام</string>
+    <string name="inbox_empty_text">مکالمات اینجا نمایش داده می‌شود</string>
+    <string name="inbox_search_empty_text">بدون نتیجه</string>
+    <string name="archived_empty_text">بایگانی اینجا نمایش داده می‌شود</string>
+    <string name="main_fab_cd">شروع گفتگوی جدید</string>
+    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_message">QKSMS را به عنوان نرم‌افزار پیش‌فرض پیامک انتخاب کنید</string>
+    <string name="main_default_sms_change">تغییر</string>
+    <string name="main_permission_required">نیاز به اجازه</string>
+    <string name="main_permission_sms">qksms برای ارسال و دیدن پیام ها نیاز به اجازه دارد</string>
+    <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+    <string name="main_permission_allow">اجازه</string>
+    <string name="drawer_inbox">صندوق ورودی</string>
+    <string name="drawer_archived">بایگانی</string>
+    <string name="drawer_scheduled">زمان بندی</string>
+    <string name="drawer_blocking">مسدود</string>
+    <string name="drawer_more">بيشتر</string>
+    <string name="drawer_settings">تنظیمات</string>
+    <string name="drawer_plus">نسخه پیشرفته</string>
+    <string name="drawer_help">راهنما &amp; بازخورد</string>
+    <string name="drawer_invite">دعوت دوستان</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+    <string name="rate_title">از QKsms لذت می برید؟</string>
+    <string name="rate_summary">علاقه ی خود رابا امتیاز دادن به ما در گوگل پلی به اشتراک بگذارید</string>
+    <string name="rate_okay">باشه!</string>
+    <string name="rate_dismiss">رد</string>
+    <string name="dialog_delete_title">حذف</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">آیا مطمئن هستید که می خواهید این گفتگو را حذف کنید؟</item>
+        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>کپی متن</item>
+        <item>فوروارد</item>
+        <item>حذف</item>
+    </string-array>
+    <string name="compose_title_selected">%d انتخاب شده</string>
+    <string name="compose_subtitle_results">%1$d of %2$d results</string>
+    <string name="compose_send_group_title">ارسال پیام به گروه</string>
+    <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+    <string name="compose_vcard_label">کارت تماس</string>
+    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_future">Selected time must be in the future!</string>
+    <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+    <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_hint">نوشتن پیام&#8230;</string>
+    <string name="compose_menu_copy">کپی کردن متن</string>
+    <string name="compose_menu_forward">Forward</string>
+    <string name="compose_menu_delete">حذف</string>
+    <string name="compose_menu_previous">قبلی</string>
+    <string name="compose_menu_next">بعدی</string>
+    <string name="compose_menu_clear">پاکسازی</string>
+    <string name="compose_details_title">جزئیات پیام</string>
+    <string name="compose_details_type">Type: %s</string>
+    <string name="compose_details_from">از: %s</string>
+    <string name="compose_details_to">به: %s</string>
+    <string name="compose_details_subject">موضوع: %s</string>
+    <string name="compose_details_priority">اولویت: %s</string>
+    <string name="compose_details_size">اندازه: %s</string>
+    <string name="compose_details_sent">فرستاده‌شده: %s</string>
+    <string name="compose_details_received">دریافت شده: %s</string>
+    <string name="compose_details_delivered">تحویل داده شده: %s</string>
+    <string name="compose_details_error_code">کد خطا: %d</string>
+    <string name="compose_attach_cd">افزودن پیوست</string>
+    <string name="compose_gallery_cd">پیوست یک عکس</string>
+    <string name="compose_camera_cd">Take a photo</string>
+    <string name="compose_schedule_cd">زمان بندی پیام</string>
+    <string name="compose_contact_cd">Attach a contact</string>
+    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_sim_cd">%s برگزیده شده، تغییر سیم کارت</string>
+    <string name="compose_send_cd">فرستادن پیام</string>
+    <string name="message_status_sending">فرستادن&#8230;</string>
+    <string name="message_status_delivered">رسیده %s</string>
+    <string name="message_status_failed">در ارسال خطایی رخ داد. برای ارسال دوباره، ضربه بزنید</string>
+    <string name="info_title">جزئیات</string>
+    <string name="info_name">عنوان گفتگو</string>
+    <string name="info_name_hint">نوشتن عنوان</string>
+    <string name="info_notifications">اعلانها</string>
+    <string name="info_theme">پوسته</string>
+    <string name="info_archive">بایگانی</string>
+    <string name="info_unarchive">بدون موضوع</string>
+    <string name="info_block">مسدود کردن</string>
+    <string name="info_unblock">رفع مسدودیت</string>
+    <string name="info_delete">حذف مکالمه</string>
+    <string name="gallery_error">Couldn\'t load media</string>
+    <string name="gallery_toast_saved">ذخیره در گالری</string>
+    <string name="backup_title">پشتیبان گیری و بازیابی</string>
+    <string name="backup_backing_up">پشتیبان گیری از پیام‌ها</string>
+    <string name="backup_restoring">بازگرداندن پشتیبان</string>
+    <string name="backup_last">اخرین پشیبان گیری</string>
+    <string name="backup_loading">بارگذاری&#8230;</string>
+    <string name="backup_never">هرگز</string>
+    <string name="backup_restore_title">بازگردانشانی</string>
+    <string name="backup_restore_summary">یک پشتیبان را انتخاب کنید</string>
+    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
+    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
+    <string name="backup_restore_confirm_title">Restore from backup</string>
+    <string name="backup_restore_confirm_message">آیا مطمئن هسیتد که می‌خواهید پیغام‌هایتان را از پشتيباني بازیابی کنید?</string>
+    <string name="backup_restore_stop_title">بازیابی را متوقف کن</string>
+    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+    <string name="backup_restore_dialog_title">پشتیبان‌ها</string>
+    <string name="backup_restore_dialog_empty">نسخه ی پشتیبان پیدا نشد</string>
+    <plurals name="backup_message_count">
+        <item quantity="one">%d message</item>
+        <item quantity="other">%d messages</item>
+    </plurals>
+    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_now">همین حالا نسخه پشتیبان تهیه کن</string>
+    <string name="backup_progress_parsing">برگردانی بک اپ</string>
+    <string name="backup_progress_running">%d/%d پیام</string>
+    <string name="backup_progress_saving">Saving backup&#8230;</string>
+    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+    <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="scheduled_title">Scheduled</string>
+    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
+    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
+    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+    <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_options_title">Scheduled message</string>
+    <string-array name="scheduled_options">
+        <item>Send now</item>
+        <item>Delete</item>
+    </string-array>
+    <string name="settings_category_appearance">ظاهر</string>
+    <string name="settings_category_general">عمومی</string>
+    <string name="settings_category_qkreply">QK Reply</string>
+    <string name="settings_theme_title">پوسته</string>
+    <string name="settings_night_title">حالت شب</string>
+    <string name="settings_black_title">حالت شب کامل</string>
+    <string name="settings_night_start_title">زمان شروع</string>
+    <string name="settings_night_end_title">زمان پایان</string>
+    <string name="settings_text_size_title">اندازه قلم</string>
+    <string name="settings_system_font_title">از فونت سیستم استفاده کن</string>
+    <string name="settings_auto_emoji_title">ایموجی خودکار</string>
+    <string name="settings_notifications_title">اعلان‌ها</string>
+    <string name="settings_notifications_o_summary">از فونت سیستم استفاده کن</string>
+    <string name="settings_notification_actions_title">Actions</string>
+    <string name="settings_notification_action_1">Button 1</string>
+    <string name="settings_notification_action_2">Button 2</string>
+    <string name="settings_notification_action_3">Button 3</string>
+    <string name="settings_notification_previews_title">بازبینی اعلان</string>
+    <string name="settings_vibration_title">لرزش</string>
+    <string name="settings_ringtone_title">صدای</string>
+    <string name="settings_ringtone_none">هیچی</string>
+    <string name="settings_qkreply_title">پاسخ QK</string>
+    <string name="settings_qkreply_summary">پنجره پیام های جدید</string>
+    <string name="settings_qkreply_tap_dismiss_title">برای رد کردن ضربه بزنید</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
+    <string name="settings_blocking_title">مسدود کردن</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">باید پاسخ بدهم؟</string>
+    <string name="settings_should_i_answer_summary">با استفاده از برنامه «باید جواب بده»، پیامها را از شماره های ناخواسته به طور خودکار فیلتر کنید</string>
+    <string name="settings_delayed_title">ارسال با تاخیر</string>
+    <string name="settings_swipe_actions">Swipe actions</string>
+    <string name="settings_swipe_actions_summary">تنظیم کشیدن برای گفتگو</string>
+    <string name="settings_swipe_actions_right">به راست بکشید</string>
+    <string name="settings_swipe_actions_left">به چپ بکشید</string>
+    <string name="settings_swipe_actions_change">تغییر</string>
+    <string-array name="settings_swipe_actions">
+        <item>هیچی</item>
+        <item>آرشیو</item>
+        <item>پاک کردن</item>
+        <item>تماس</item>
+        <item>خوانده شده </item>
+    </string-array>
+    <string name="settings_delivery_title">تأیید تحویل</string>
+    <string name="settings_delivery_summary">تأیید ارسال موفق پیام</string>
+    <string name="settings_unicode_title">حذف لهجه‌ها</string>
+    <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
+    <string name="settings_mobile_title">فقط شماره های تلفن</string>
+    <string name="settings_mobile_summary">وقتی در حال ارسال پیام هستید فقط می توانید شماره تلفن را ببنید</string>
+    <string name="settings_mms_size_title">فشرده سازی خودکار پیوست ها</string>
+    <string name="settings_sync_title">همگام سازی پیام ها</string>
+    <string name="settings_sync_summary">همگام سازی پیام ها با پایگاه داده</string>
+    <string name="settings_about_title">در مورد QKSMS</string>
+    <string name="settings_version">نسخه ی %s</string>
+    <string name="settings_logging_enabled">ورود به سیستم دیباگ فعال است</string>
+    <string name="settings_logging_disabled">ورد به سیستم دیباگ غیرفعال است</string>
+    <string name="settings_delay_duration_hint"> زمان (ثانیه) را وارد کنید</string>
+    <string name="blocked_title">مسدود کردن</string>
+    <string name="blocked_empty">مکالمات مسدود شده شما در اینجا نشان داده می شود</string>
+    <string name="blocked_unblock_dialog_title">رفع مسدودیت</string>
+    <string name="blocked_unblock_dialog_message">می‌خواهید مسدودیت این گفتگو را رفع کنید؟</string>
+    <string name="about_title">درباره</string>
+    <string name="about_version_title">نسخه</string>
+    <string name="about_developer_title">توسعه  دهنده</string>
+    <string name="about_source_title">کد منبع</string>
+    <string name="about_changelog_title">Changelog</string>
+    <string name="about_contact_title">مخاطب</string>
+    <string name="about_license_title">مجوز</string>
+    <string name="about_copyright_title">حق نشر</string>
+    <string name="qksms_plus_description_title">حمایت از تولید کننده،بازشدن همه چیز</string>
+    <string name="qksms_plus_description_summary">شما میتوانید با %s از ما حمایت کنید</string>
+    <string name="qksms_plus_upgrade">زمان توسعه %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_donate">نسخه پیشرفته و حمایت %1$s %2$s</string>
+    <string name="qksms_plus_thanks_title">ممنون از حمایت شما!</string>
+    <string name="qksms_plus_thanks_summary">حال شما به همه امکانات دسترسی دارید</string>
+    <string name="qksms_plus_free_title">QKSMS + برای کاربران F-Droid رایگان است! اگر میخواهید از توسعه حمایت کنید، احساس رایگان کنید تا کمک مالی شود.</string>
+    <string name="qksms_plus_donate">از طریق PayPal کمک مالی کنید</string>
+    <string name="qksms_plus_coming_soon">به زودی</string>
+    <string name="qksms_plus_themes_title">پوسته پیشرفته</string>
+    <string name="qksms_plus_themes_summary">در حالت متریال دیزاین رنگبندی پوسته امکانپذیر نیست</string>
+    <string name="qksms_plus_emoji_title">شکلک خودکار سفارشی</string>
+    <string name="qksms_plus_emoji_summary">ساخت میانبرهای شخصی برای شکلک اتوماتیک</string>
+    <string name="qksms_plus_backup_title">پشتیبان‌گیری پیامها</string>
+    <string name="qksms_plus_backup_summary">از پیام‌هایتان به‌طور خودکار پشتیبان بگیرید. دیگر نگران از دست دادن پیام ها نباشید وقتی تلفن همراهتان را عوض می‌کنید یا از دست می‌دهید</string>
+    <string name="qksms_plus_scheduled_title">پیام های برنامه ریزی شده</string>
+    <string name="qksms_plus_scheduled_summary">پیام های برنامه ریزی شده به طور خودکار در یک زمان و تاریخ خاص ارسال می شود</string>
+    <string name="qksms_plus_delayed_title">تاخیر در ارسال</string>
+    <string name="qksms_plus_delayed_summary">لطفا چند ثانیه صبر کنید</string>
+    <string name="qksms_plus_night_title">حالت شب اتوماتیک</string>
+    <string name="qksms_plus_night_summary">فعال کردن حالت شب براساس زمان روز</string>
+    <string name="qksms_plus_blacklist_title">مسدود کردن پیشرفته</string>
+    <string name="qksms_plus_blacklist_summary">هرزنامه ها وپیام های بد را مسدود کن</string>
+    <string name="qksms_plus_forward_title">هدایت خودکار</string>
+    <string name="qksms_plus_forward_summary">هدایت کردن پیام از فرستندگان خاص</string>
+    <string name="qksms_plus_respond_title">پاسخ خودکار</string>
+    <string name="qksms_plus_respond_summary">ارسال جواب خودکار به پیامک ها</string>
+    <string name="qksms_plus_more_title">بیشتر</string>
+    <string name="qksms_plus_more_summary">QKSMS در حال توسعه فعال است، و خرید شما شامل تمام ویژگی های آینده QKSMS + نیز هست !</string>
+    <string name="widget_loading">بارگذاری&#8230;</string>
+    <string name="widget_more">مشاهده مکالمات بیشتر</string>
+    <string name="qkreply_menu_read">خوانده شده</string>
+    <string name="qkreply_menu_call">تماس</string>
+    <string name="qkreply_menu_delete">پاک کردن</string>
+    <string name="qkreply_menu_expand">بیشتر نمایش بده</string>
+    <string name="qkreply_menu_collapse">کمتر نمایش بده</string>
+    <string name="qkreply_menu_view">بازکردن پیام</string>
+    <string name="theme_material">متریال</string>
+    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_hex">هگز</string>
+    <string name="theme_apply">اعمال کردن</string>
+    <string-array name="notification_actions">
+        <item>هیچ</item>
+        <item>علامت گذاری به عنوان خوانده شده</item>
+        <item>پاسخ</item>
+        <item>تماس</item>
+        <item>پاک کردن</item>
+    </string-array>
+    <string name="button_cancel">لغو</string>
+    <string name="button_delete">حذف</string>
+    <string name="button_save">ذخیره</string>
+    <string name="button_stop">توقف</string>
+    <string name="button_more">بيشتر</string>
+    <string name="button_set">تنظیم</string>
+    <string name="button_unblock">رفع مسدودیت</string>
+    <string name="button_undo">برگرده</string>
+    <string name="toast_copied">کپی شد</string>
+    <string name="toast_archived">گفتگوی بایگانی شده</string>
+    <string name="toast_qksms_plus">باید نسخه پیشرفته را فعال کنید</string>
+    <plurals name="notification_new_messages">
+        <item quantity="one">پیام جدید</item>
+        <item quantity="other">پیام جدید</item>
+    </plurals>
+    <string name="notification_message_failed_title">ارسال نشد</string>
+    <string name="notification_message_failed_text">پیام به٪ s فرستاده نشد</string>
+    <string-array name="night_modes">
+        <item>غیرفعال</item>
+        <item>همیشه روشن</item>
+        <item>خودکار</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>نمایش نام و پیام</item>
+        <item>نمایش نام</item>
+        <item>مخفی کردن محتویات</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>کوچک</item>
+        <item>عادی</item>
+        <item>بزرگ</item>
+        <item>بزرگتر</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>بدون تاخیر</item>
+        <item>کوتاه</item>
+        <item>Medium</item>
+        <item>Long</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>۱۰۰KB</item>
+        <item>۲۰۰KB</item>
+        <item>300KB (Recommended)</item>
+        <item>۶۰۰KB</item>
+        <item>۱۰۰۰KB</item>
+        <item>۲۰۰۰KB</item>
+        <item>No compression</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>باشه</item>
+        <item>یک لحظه لطفاً</item>
+        <item>تو راهم</item>
+        <item>سپاس</item>
+        <item>به نظر خوبه</item>
+        <item>چه خبر؟</item>
+        <item>موافقم</item>
+        <item>خیر</item>
+        <item>دوستت دارم</item>
+        <item>متاسفم</item>
+        <item>خخخخ</item>
+        <item>درست است</item>
+    </string-array>
 </resources>

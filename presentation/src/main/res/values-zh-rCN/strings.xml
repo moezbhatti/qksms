@@ -19,334 +19,336 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">New conversation</string>
-  <string name="shortcut_compose_short_label">Compose</string>
-  <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-  <string name="title_archived">已存档</string>
-  <string name="title_settings">设置</string>
-  <string name="title_notification_prefs">通知</string>
-  <string name="title_theme">主题</string>
-  <string name="title_conversations">搜索收件箱&#8230;</string>
-  <string name="title_compose">撰写</string>
-  <string name="setup_skip">跳过</string>
-  <string name="setup_next">继续</string>
-  <string name="menu_call">致电</string>
-  <string name="menu_info">详情</string>
-  <string name="menu_save">保存到图库</string>
-  <string name="main_drawer_open_cd">打开导航栏</string>
-  <string name="main_title_selected">已选择 %d 项</string>
-  <string name="main_menu_clear">清除</string>
-  <string name="main_menu_archive">存档</string>
-  <string name="main_menu_unarchive">取消存档</string>
-  <string name="main_menu_delete">删除</string>
-  <string name="main_menu_pin">固定到顶部</string>
-  <string name="main_menu_unpin">取消固定</string>
-  <string name="main_menu_read">标记为已读</string>
-  <string name="main_menu_unread">标记为未读</string>
-  <string name="main_menu_block">拦截</string>
-  <string name="main_syncing">正在同步信息&#8230;</string>
-  <string name="main_sender_you">你：%s</string>
-  <string name="main_message_results_title">信息中的结果</string>
-  <string name="main_message_results">%d 条信息</string>
-  <string name="inbox_empty_text">对话会在这里显示</string>
-  <string name="inbox_search_empty_text">无结果</string>
-  <string name="archived_empty_text">存档的对话会出现在这里</string>
-  <string name="main_fab_cd">开始新对话</string>
-  <string name="main_default_sms_title">再次爱上发短信</string>
-  <string name="main_default_sms_message">将QKSMS设为默认短信应用</string>
-  <string name="main_default_sms_change">更改</string>
-  <string name="main_permission_required">需要权限</string>
-  <string name="main_permission_sms">QKSMS需要权限来发送和查看短信</string>
-  <string name="main_permission_contacts">QKSMS需要权限来查看联系人</string>
-  <string name="main_permission_allow">允许</string>
-  <string name="drawer_inbox">收件箱</string>
-  <string name="drawer_archived">已存档</string>
-  <string name="drawer_scheduled">已计划</string>
-  <string name="drawer_blocking">拦截</string>
-  <string name="drawer_more">更多</string>
-  <string name="drawer_settings">设置</string>
-  <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">帮助及反馈</string>
-  <string name="drawer_invite">邀请朋友</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">解锁炫酷特性并支持开发者</string>
-  <string name="rate_title">喜欢QKSMS？</string>
-  <string name="rate_summary">在Google Play分享你的感受，并给我们评分！</string>
-  <string name="rate_okay">好的！</string>
-  <string name="rate_dismiss">放弃</string>
-  <string name="dialog_delete_title">删除</string>
-  <plurals name="dialog_delete_message">
-    <item quantity="other">你确定要删除%d段对话么？</item>
-  </plurals>
-  <string-array name="message_options">
-    <item>复制</item>
-    <item>转发</item>
-    <item>删除</item>
-  </string-array>
-  <string name="compose_title_selected">已选择%d个项目</string>
-  <string name="compose_subtitle_results">已显示%2$d中的%1$d条结果</string>
-  <string name="compose_send_group_title">群发消息</string>
-  <string name="compose_send_group_summary">收件人和回复将对所有人可见</string>
-  <string name="compose_messages_empty">对话从这里开始，说些什么吧！</string>
-  <string name="compose_vcard_label">联系人卡片</string>
-  <string name="compose_scheduled_for">计划于</string>
-  <string name="compose_scheduled_future">所选时间必须是未来</string>
-  <string name="compose_scheduled_plus">你需要购买QKSMS+才可以使用预约短信</string>
-  <string name="compose_scheduled_toast">已添加到预约短信队列</string>
-  <string name="compose_hint">写一条消息...</string>
-  <string name="compose_menu_copy">复制</string>
-  <string name="compose_menu_forward">转发</string>
-  <string name="compose_menu_delete">删除</string>
-  <string name="compose_menu_previous">上一个</string>
-  <string name="compose_menu_next">下一个</string>
-  <string name="compose_menu_clear">清除</string>
-  <string name="compose_details_title">信息详情</string>
-  <string name="compose_details_type">类型：%s</string>
-  <string name="compose_details_from">来自：%s</string>
-  <string name="compose_details_to">发送给：%s</string>
-  <string name="compose_details_subject">主题：%s</string>
-  <string name="compose_details_priority">优先级：%s</string>
-  <string name="compose_details_size">大小：%s</string>
-  <string name="compose_details_sent">发送时间：%s</string>
-  <string name="compose_details_received">接收时间：%s</string>
-  <string name="compose_details_delivered">送达时间：%s</string>
-  <string name="compose_details_error_code">错误码：%d</string>
-  <string name="compose_attach_cd">添加附件</string>
-  <string name="compose_gallery_cd">添加照片</string>
-  <string name="compose_camera_cd">拍照</string>
-  <string name="compose_schedule_cd">定时消息</string>
-  <string name="compose_sim_cd">%s已选择， 更改SIM卡</string>
-  <string name="compose_send_cd">发送消息</string>
-  <string name="message_status_sending">正在发送...</string>
-  <string name="message_status_delivered">已送达 %s</string>
-  <string name="message_status_failed">发送失败。点击再试一次</string>
-  <string name="info_title">详情</string>
-  <string name="info_name">对话标题</string>
-  <string name="info_name_hint">输入标题</string>
-  <string name="info_notifications">通知</string>
-  <string name="info_theme">主题</string>
-  <string name="info_archive">存档</string>
-  <string name="info_unarchive">取消存档</string>
-  <string name="info_block">拦截</string>
-  <string name="info_unblock">取消拦截</string>
-  <string name="info_delete">删除对话</string>
-  <string name="gallery_error">Couldn\'t load media</string>
-  <string name="gallery_toast_saved">保存到图库</string>
-  <string name="backup_title">备份和还原</string>
-  <string name="backup_backing_up">正在备份消息</string>
-  <string name="backup_restoring">正在从备份还原</string>
-  <string name="backup_last">上次备份</string>
-  <string name="backup_loading">正在加载&#8230;</string>
-  <string name="backup_never">永不</string>
-  <string name="backup_restore_title">还原</string>
-  <string name="backup_restore_summary">选择备份</string>
-  <string name="backup_restore_error_plus">请解锁 QKSMS+ 以使用备份和还原</string>
-  <string name="backup_restore_error_backup">正在进行备份&#8230;</string>
-  <string name="backup_restore_error_restore">正在还原&#8230;</string>
-  <string name="backup_restore_confirm_title">Restore from backup</string>
-  <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-  <string name="backup_restore_stop_title">Stop restore</string>
-  <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-  <string name="backup_restore_dialog_title">备份</string>
-  <string name="backup_restore_dialog_empty">找不到备份</string>
-  <plurals name="backup_message_count">
-    <item quantity="other">%d 条消息</item>
-  </plurals>
-  <string name="backup_disclaimer">目前, 只有 SMS 支持备份和恢复。彩信支持和定时备份将很快到来!</string>
-  <string name="backup_now">立即备份</string>
-  <string name="backup_progress_parsing">正在分析备份&#8230;</string>
-  <string name="backup_progress_running">%d/%d 消息</string>
-  <string name="backup_progress_saving">正在保存备份&#8230;</string>
-  <string name="backup_progress_syncing">正在同步消息&#8230;</string>
-  <string name="backup_progress_finished">Finished!</string>
-  <string name="backup_notification_channel_name">备份和还原</string>
-  <string name="scheduled_title">预约</string>
-  <string name="scheduled_empty_description">在指定时间自动发送消息</string>
-  <string name="scheduled_empty_message_1">嘿！你的生日是什么时候？</string>
-  <string name="scheduled_empty_message_2">是12月23日</string>
-  <string name="scheduled_empty_message_3">生日快乐！我够朋友吧，还记得你的生日</string>
-  <string name="scheduled_empty_message_3_timestamp">在12月23日发送 </string>
-  <string name="scheduled_compose_cd">创建预约短信</string>
-  <string name="scheduled_options_title">预约短信</string>
-  <string-array name="scheduled_options">
-    <item>现在发送</item>
-    <item>删除</item>
-  </string-array>
-  <string name="settings_category_appearance">外观</string>
-  <string name="settings_category_general">通用</string>
-  <string name="settings_category_qkreply">快速回复</string>
-  <string name="settings_theme_title">主题</string>
-  <string name="settings_night_title">夜间模式</string>
-  <string name="settings_black_title">纯黑夜间模式</string>
-  <string name="settings_night_start_title">开始时间</string>
-  <string name="settings_night_end_title">结束时间</string>
-  <string name="settings_text_size_title">字体大小</string>
-  <string name="settings_system_font_title">使用系统字体</string>
-  <string name="settings_auto_emoji_title">自动颜文字</string>
-  <string name="settings_notifications_title">通知</string>
-  <string name="settings_notifications_o_summary">点击跳转到系统设置</string>
-  <string name="settings_notification_actions_title">操作</string>
-  <string name="settings_notification_action_1">按钮1</string>
-  <string name="settings_notification_action_2">按钮2</string>
-  <string name="settings_notification_action_3">按钮3</string>
-  <string name="settings_notification_previews_title">通知预览</string>
-  <string name="settings_vibration_title">振动</string>
-  <string name="settings_ringtone_title">铃声</string>
-  <string name="settings_ringtone_none">无</string>
-  <string name="settings_qkreply_title">快速回复</string>
-  <string name="settings_qkreply_summary">弹出新消息</string>
-  <string name="settings_qkreply_tap_dismiss_title">点击忽略</string>
-  <string name="settings_qkreply_tap_dismiss_summary">点击弹窗外部以关闭</string>
-  <string name="settings_blocking_title">拦截</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">使用\"Should I Answer\"应用过滤未知号码的消息</string>
-  <string name="settings_delayed_title">延迟发送</string>
-  <string name="settings_swipe_actions">滑动操作</string>
-  <string name="settings_swipe_actions_summary">配置对话的滑动操作</string>
-  <string name="settings_swipe_actions_right">右划</string>
-  <string name="settings_swipe_actions_left">左划</string>
-  <string name="settings_swipe_actions_change">更改</string>
-  <string-array name="settings_swipe_actions">
-    <item>无</item>
-    <item>归档</item>
-    <item>删除</item>
-    <item>呼叫</item>
-    <item>标记为已读</item>
-  </string-array>
-  <string name="settings_delivery_title">送达确认</string>
-  <string name="settings_delivery_summary">确认短信已成功送达</string>
-  <string name="settings_unicode_title">删除读音符号</string>
-  <string name="settings_unicode_summary">删除短信中字母上的读音符号</string>
-  <string name="settings_mobile_title">仅限手机号码</string>
-  <string name="settings_mobile_summary">撰写邮件时, 只显示手机号码</string>
-  <string name="settings_mms_size_title">自动压缩彩信附件</string>
-  <string name="settings_sync_title">同步消息</string>
-  <string name="settings_sync_summary">重新与安卓原生短信数据库进行同步</string>
-  <string name="settings_about_title">关于 QKSMS</string>
-  <string name="settings_version">版本 %s</string>
-  <string name="settings_logging_enabled">启用了调试日志记录</string>
-  <string name="settings_logging_disabled">调试日志记录已禁用</string>
-  <string name="settings_delay_duration_hint">输入时长 (秒)</string>
-  <string name="blocked_title">拦截</string>
-  <string name="blocked_empty">被拦截的对话将出现在这里</string>
-  <string name="blocked_unblock_dialog_title">取消拦截</string>
-  <string name="blocked_unblock_dialog_message">确定不再拦截这个对话吗？</string>
-  <string name="about_title">关于</string>
-  <string name="about_version_title">版本</string>
-  <string name="about_developer_title">开发人员</string>
-  <string name="about_source_title">源代码</string>
-  <string name="about_changelog_title">更新日志</string>
-  <string name="about_contact_title">联系人</string>
-  <string name="about_license_title">许可证</string>
-  <string name="about_copyright_title">版权</string>
-  <string name="qksms_plus_description_title">支持开发，解锁全部功能</string>
-  <string name="qksms_plus_description_summary">你可以支付%s来拯救一个饥渴的程序猿</string>
-  <string name="qksms_plus_upgrade">终身升级只需 %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">解锁并捐赠只需 %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">感谢你对QKSMS的支持！</string>
-  <string name="qksms_plus_thanks_summary">现在你可以使用QKSMS+的全部功能！</string>
-  <string name="qksms_plus_free_title">QKSMS+对F-Droid用户免费！如果您想支持开发，可以随意捐款。</string>
-  <string name="qksms_plus_donate">使用PayPal捐赠</string>
-  <string name="qksms_plus_coming_soon">即将推出</string>
-  <string name="qksms_plus_themes_title">高级主题</string>
-  <string name="qksms_plus_themes_summary">解锁 \"Material Design\" 调色板中不可用的美丽彩色主题</string>
-  <string name="qksms_plus_emoji_title">自定义自动颜文字</string>
-  <string name="qksms_plus_emoji_summary">创建自定义自动颜文字的快捷方式</string>
-  <string name="qksms_plus_backup_title">消息备份</string>
-  <string name="qksms_plus_backup_summary">自动备份短信，再也不用担心更换或丢失手机后会丢掉短信记录。</string>
-  <string name="qksms_plus_scheduled_title">定时消息</string>
-  <string name="qksms_plus_scheduled_summary">安排一个时间来自动发送短信</string>
-  <string name="qksms_plus_delayed_title">延迟发送</string>
-  <string name="qksms_plus_delayed_summary">发送短信前，稍等几秒</string>
-  <string name="qksms_plus_night_title">自动夜间模式</string>
-  <string name="qksms_plus_night_summary">根据时间自动启用夜间模式</string>
-  <string name="qksms_plus_blacklist_title">高级拦截选项</string>
-  <string name="qksms_plus_blacklist_summary">根据关键字或匹配模式拦截消息</string>
-  <string name="qksms_plus_forward_title">自动转发</string>
-  <string name="qksms_plus_forward_summary">自动转发特定发件人的短信</string>
-  <string name="qksms_plus_respond_title">自动回复</string>
-  <string name="qksms_plus_respond_summary">使用预设文本自动回复短信</string>
-  <string name="qksms_plus_more_title">更多</string>
-  <string name="qksms_plus_more_summary">QKSMS积极更新中，您的购买将包含以后QKSMS+的所有功能</string>
-  <string name="widget_loading">载入中...</string>
-  <string name="widget_more">查看更多对话</string>
-  <string name="qkreply_menu_read">标记为已读</string>
-  <string name="qkreply_menu_call">致电</string>
-  <string name="qkreply_menu_delete">Delete</string>
-  <string name="qkreply_menu_expand">显示更多</string>
-  <string name="qkreply_menu_collapse">收起</string>
-  <string name="qkreply_menu_view">打开会话</string>
-  <string name="theme_material">Material</string>
-  <string name="theme_plus">QKSMS+</string>
-  <string name="theme_hex">HEX</string>
-  <string name="theme_apply">应用</string>
-  <string-array name="notification_actions">
-    <item>无</item>
-    <item>标记为已读</item>
-    <item>回复</item>
-    <item>呼叫</item>
-    <item>删除</item>
-  </string-array>
-  <string name="button_cancel">取消</string>
-  <string name="button_delete">删除</string>
-  <string name="button_save">保存</string>
-  <string name="button_stop">Stop</string>
-  <string name="button_more">更多</string>
-  <string name="button_set">设置</string>
-  <string name="button_unblock">取消拦截</string>
-  <string name="button_undo">撤销</string>
-  <string name="toast_copied">已复制</string>
-  <string name="toast_archived">已存档的对话</string>
-  <string name="toast_qksms_plus">您必须解锁QKSMS+才能使用此功能</string>
-  <plurals name="notification_new_messages">
-    <item quantity="other">%s条新信息</item>
-  </plurals>
-  <string name="notification_message_failed_title">消息未发送</string>
-  <string name="notification_message_failed_text">给%s的短信发送失败</string>
-  <string-array name="night_modes">
-    <item>禁用</item>
-    <item>保持打开</item>
-    <item>自动</item>
-  </string-array>
-  <string-array name="notification_preview_options">
-    <item>显示姓名和消息</item>
-    <item>只显示姓名</item>
-    <item>隐藏内容</item>
-  </string-array>
-  <string-array name="text_sizes">
-    <item>小</item>
-    <item>正常</item>
-    <item>大</item>
-    <item>更大</item>
-  </string-array>
-  <string-array name="delayed_sending_labels">
-    <item>无延迟</item>
-    <item>短</item>
-    <item>中</item>
-    <item>长</item>
-  </string-array>
-  <string-array name="mms_sizes">
-    <item>100KB</item>
-    <item>200KB</item>
-    <item>300KB (推荐)</item>
-    <item>600KB</item>
-    <item>1000KB</item>
-    <item>2000KB</item>
-    <item>不压缩</item>
-  </string-array>
-  <string-array name="qk_responses">
-    <item>好的</item>
-    <item>请稍等一会儿</item>
-    <item>在路上了</item>
-    <item>谢谢</item>
-    <item>听上去不错</item>
-    <item>怎么了？</item>
-    <item>同意</item>
-    <item>不</item>
-    <item>爱你</item>
-    <item>抱歉</item>
-    <item>啊哈哈哈哈</item>
-    <item>好的</item>
-  </string-array>
+    <string name="shortcut_compose_long_label">新对话</string>
+    <string name="shortcut_compose_short_label">编写</string>
+    <string name="shortcut_compose_disabled_message">快捷方式已禁用</string>
+    <string name="title_archived">已存档</string>
+    <string name="title_settings">设置</string>
+    <string name="title_notification_prefs">通知</string>
+    <string name="title_theme">主题</string>
+    <string name="title_conversations">搜索收件箱&#8230;</string>
+    <string name="title_compose">撰写</string>
+    <string name="setup_skip">跳过</string>
+    <string name="setup_next">继续</string>
+    <string name="menu_call">致电</string>
+    <string name="menu_info">详情</string>
+    <string name="menu_save">保存到图库</string>
+    <string name="main_drawer_open_cd">打开导航栏</string>
+    <string name="main_title_selected">已选择 %d 项</string>
+    <string name="main_menu_clear">清除</string>
+    <string name="main_menu_archive">存档</string>
+    <string name="main_menu_unarchive">取消存档</string>
+    <string name="main_menu_delete">删除</string>
+    <string name="main_menu_pin">固定到顶部</string>
+    <string name="main_menu_unpin">取消固定</string>
+    <string name="main_menu_read">标记为已读</string>
+    <string name="main_menu_unread">标记为未读</string>
+    <string name="main_menu_block">拦截</string>
+    <string name="main_syncing">正在同步信息&#8230;</string>
+    <string name="main_sender_you">你：%s</string>
+    <string name="main_message_results_title">信息中的结果</string>
+    <string name="main_message_results">%d 条信息</string>
+    <string name="inbox_empty_text">对话会在这里显示</string>
+    <string name="inbox_search_empty_text">无结果</string>
+    <string name="archived_empty_text">存档的对话会出现在这里</string>
+    <string name="main_fab_cd">开始新对话</string>
+    <string name="main_default_sms_title">再次爱上发短信</string>
+    <string name="main_default_sms_message">将QKSMS设为默认短信应用</string>
+    <string name="main_default_sms_change">更改</string>
+    <string name="main_permission_required">需要权限</string>
+    <string name="main_permission_sms">QKSMS需要权限来发送和查看短信</string>
+    <string name="main_permission_contacts">QKSMS需要权限来查看联系人</string>
+    <string name="main_permission_allow">允许</string>
+    <string name="drawer_inbox">收件箱</string>
+    <string name="drawer_archived">已存档</string>
+    <string name="drawer_scheduled">已计划</string>
+    <string name="drawer_blocking">拦截</string>
+    <string name="drawer_more">更多</string>
+    <string name="drawer_settings">设置</string>
+    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_help">帮助及反馈</string>
+    <string name="drawer_invite">邀请朋友</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">解锁炫酷特性并支持开发者</string>
+    <string name="rate_title">喜欢QKSMS？</string>
+    <string name="rate_summary">在Google Play分享你的感受，并给我们评分！</string>
+    <string name="rate_okay">好的！</string>
+    <string name="rate_dismiss">放弃</string>
+    <string name="dialog_delete_title">删除</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="other">你确定要删除%d段对话么？</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>复制</item>
+        <item>转发</item>
+        <item>删除</item>
+    </string-array>
+    <string name="compose_title_selected">已选择%d个项目</string>
+    <string name="compose_subtitle_results">已显示%2$d中的%1$d条结果</string>
+    <string name="compose_send_group_title">群发消息</string>
+    <string name="compose_send_group_summary">收件人和回复将对所有人可见</string>
+    <string name="compose_messages_empty">对话从这里开始，说些什么吧！</string>
+    <string name="compose_vcard_label">联系人卡片</string>
+    <string name="compose_scheduled_for">计划于</string>
+    <string name="compose_scheduled_future">所选时间必须是未来</string>
+    <string name="compose_scheduled_plus">你需要购买QKSMS+才可以使用预约短信</string>
+    <string name="compose_scheduled_toast">已添加到预约短信队列</string>
+    <string name="compose_hint">写一条消息...</string>
+    <string name="compose_menu_copy">复制</string>
+    <string name="compose_menu_forward">转发</string>
+    <string name="compose_menu_delete">删除</string>
+    <string name="compose_menu_previous">上一个</string>
+    <string name="compose_menu_next">下一个</string>
+    <string name="compose_menu_clear">清除</string>
+    <string name="compose_details_title">信息详情</string>
+    <string name="compose_details_type">类型：%s</string>
+    <string name="compose_details_from">来自：%s</string>
+    <string name="compose_details_to">发送给：%s</string>
+    <string name="compose_details_subject">主题：%s</string>
+    <string name="compose_details_priority">优先级：%s</string>
+    <string name="compose_details_size">大小：%s</string>
+    <string name="compose_details_sent">发送时间：%s</string>
+    <string name="compose_details_received">接收时间：%s</string>
+    <string name="compose_details_delivered">送达时间：%s</string>
+    <string name="compose_details_error_code">错误码：%d</string>
+    <string name="compose_attach_cd">添加附件</string>
+    <string name="compose_gallery_cd">添加照片</string>
+    <string name="compose_camera_cd">拍照</string>
+    <string name="compose_schedule_cd">定时消息</string>
+    <string name="compose_contact_cd">Attach a contact</string>
+    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_sim_cd">%s已选择， 更改SIM卡</string>
+    <string name="compose_send_cd">发送消息</string>
+    <string name="message_status_sending">正在发送...</string>
+    <string name="message_status_delivered">已送达 %s</string>
+    <string name="message_status_failed">发送失败。点击再试一次</string>
+    <string name="info_title">详情</string>
+    <string name="info_name">对话标题</string>
+    <string name="info_name_hint">输入标题</string>
+    <string name="info_notifications">通知</string>
+    <string name="info_theme">主题</string>
+    <string name="info_archive">存档</string>
+    <string name="info_unarchive">取消存档</string>
+    <string name="info_block">拦截</string>
+    <string name="info_unblock">取消拦截</string>
+    <string name="info_delete">删除对话</string>
+    <string name="gallery_error">无法加载媒体</string>
+    <string name="gallery_toast_saved">保存到图库</string>
+    <string name="backup_title">备份和还原</string>
+    <string name="backup_backing_up">正在备份消息</string>
+    <string name="backup_restoring">正在从备份还原</string>
+    <string name="backup_last">上次备份</string>
+    <string name="backup_loading">正在加载&#8230;</string>
+    <string name="backup_never">永不</string>
+    <string name="backup_restore_title">还原</string>
+    <string name="backup_restore_summary">选择备份</string>
+    <string name="backup_restore_error_plus">请解锁 QKSMS+ 以使用备份和还原</string>
+    <string name="backup_restore_error_backup">正在进行备份&#8230;</string>
+    <string name="backup_restore_error_restore">正在还原&#8230;</string>
+    <string name="backup_restore_confirm_title">从备份还原</string>
+    <string name="backup_restore_confirm_message">是否确实要从该备份还原消息？</string>
+    <string name="backup_restore_stop_title">停止还原</string>
+    <string name="backup_restore_stop_message">已还原的消息将保留在您的设备上</string>
+    <string name="backup_restore_dialog_title">备份</string>
+    <string name="backup_restore_dialog_empty">找不到备份</string>
+    <plurals name="backup_message_count">
+        <item quantity="other">%d 条消息</item>
+    </plurals>
+    <string name="backup_disclaimer">目前, 只有 SMS 支持备份和恢复。彩信支持和定时备份将很快到来!</string>
+    <string name="backup_now">立即备份</string>
+    <string name="backup_progress_parsing">正在分析备份&#8230;</string>
+    <string name="backup_progress_running">%d/%d 消息</string>
+    <string name="backup_progress_saving">正在保存备份&#8230;</string>
+    <string name="backup_progress_syncing">正在同步消息&#8230;</string>
+    <string name="backup_progress_finished">完成！</string>
+    <string name="backup_notification_channel_name">备份和还原</string>
+    <string name="scheduled_title">预约</string>
+    <string name="scheduled_empty_description">在指定时间自动发送消息</string>
+    <string name="scheduled_empty_message_1">嘿！你的生日是什么时候？</string>
+    <string name="scheduled_empty_message_2">是12月23日</string>
+    <string name="scheduled_empty_message_3">生日快乐！我够朋友吧，还记得你的生日</string>
+    <string name="scheduled_empty_message_3_timestamp">在12月23日发送 </string>
+    <string name="scheduled_compose_cd">创建预约短信</string>
+    <string name="scheduled_options_title">预约短信</string>
+    <string-array name="scheduled_options">
+        <item>现在发送</item>
+        <item>删除</item>
+    </string-array>
+    <string name="settings_category_appearance">外观</string>
+    <string name="settings_category_general">通用</string>
+    <string name="settings_category_qkreply">快速回复</string>
+    <string name="settings_theme_title">主题</string>
+    <string name="settings_night_title">夜间模式</string>
+    <string name="settings_black_title">纯黑夜间模式</string>
+    <string name="settings_night_start_title">开始时间</string>
+    <string name="settings_night_end_title">结束时间</string>
+    <string name="settings_text_size_title">字体大小</string>
+    <string name="settings_system_font_title">使用系统字体</string>
+    <string name="settings_auto_emoji_title">自动颜文字</string>
+    <string name="settings_notifications_title">通知</string>
+    <string name="settings_notifications_o_summary">点击跳转到系统设置</string>
+    <string name="settings_notification_actions_title">操作</string>
+    <string name="settings_notification_action_1">按钮1</string>
+    <string name="settings_notification_action_2">按钮2</string>
+    <string name="settings_notification_action_3">按钮3</string>
+    <string name="settings_notification_previews_title">通知预览</string>
+    <string name="settings_vibration_title">振动</string>
+    <string name="settings_ringtone_title">铃声</string>
+    <string name="settings_ringtone_none">无</string>
+    <string name="settings_qkreply_title">快速回复</string>
+    <string name="settings_qkreply_summary">弹出新消息</string>
+    <string name="settings_qkreply_tap_dismiss_title">点击忽略</string>
+    <string name="settings_qkreply_tap_dismiss_summary">点击弹窗外部以关闭</string>
+    <string name="settings_blocking_title">拦截</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">Should I Answer?</string>
+    <string name="settings_should_i_answer_summary">使用\"Should I Answer\"应用过滤未知号码的消息</string>
+    <string name="settings_delayed_title">延迟发送</string>
+    <string name="settings_swipe_actions">滑动操作</string>
+    <string name="settings_swipe_actions_summary">配置对话的滑动操作</string>
+    <string name="settings_swipe_actions_right">右划</string>
+    <string name="settings_swipe_actions_left">左划</string>
+    <string name="settings_swipe_actions_change">更改</string>
+    <string-array name="settings_swipe_actions">
+        <item>无</item>
+        <item>归档</item>
+        <item>删除</item>
+        <item>呼叫</item>
+        <item>标记为已读</item>
+    </string-array>
+    <string name="settings_delivery_title">送达确认</string>
+    <string name="settings_delivery_summary">确认短信已成功送达</string>
+    <string name="settings_unicode_title">删除读音符号</string>
+    <string name="settings_unicode_summary">删除短信中字母上的读音符号</string>
+    <string name="settings_mobile_title">仅限手机号码</string>
+    <string name="settings_mobile_summary">撰写邮件时, 只显示手机号码</string>
+    <string name="settings_mms_size_title">自动压缩彩信附件</string>
+    <string name="settings_sync_title">同步消息</string>
+    <string name="settings_sync_summary">重新与安卓原生短信数据库进行同步</string>
+    <string name="settings_about_title">关于 QKSMS</string>
+    <string name="settings_version">版本 %s</string>
+    <string name="settings_logging_enabled">启用了调试日志记录</string>
+    <string name="settings_logging_disabled">调试日志记录已禁用</string>
+    <string name="settings_delay_duration_hint">输入时长 (秒)</string>
+    <string name="blocked_title">拦截</string>
+    <string name="blocked_empty">被拦截的对话将出现在这里</string>
+    <string name="blocked_unblock_dialog_title">取消拦截</string>
+    <string name="blocked_unblock_dialog_message">确定不再拦截这个对话吗？</string>
+    <string name="about_title">关于</string>
+    <string name="about_version_title">版本</string>
+    <string name="about_developer_title">开发人员</string>
+    <string name="about_source_title">源代码</string>
+    <string name="about_changelog_title">更新日志</string>
+    <string name="about_contact_title">联系人</string>
+    <string name="about_license_title">许可证</string>
+    <string name="about_copyright_title">版权</string>
+    <string name="qksms_plus_description_title">支持开发，解锁全部功能</string>
+    <string name="qksms_plus_description_summary">你可以支付%s来拯救一个饥渴的程序猿</string>
+    <string name="qksms_plus_upgrade">终身升级只需 %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_donate">解锁并捐赠只需 %1$s %2$s</string>
+    <string name="qksms_plus_thanks_title">感谢你对QKSMS的支持！</string>
+    <string name="qksms_plus_thanks_summary">现在你可以使用QKSMS+的全部功能！</string>
+    <string name="qksms_plus_free_title">QKSMS+对F-Droid用户免费！如果您想支持开发，可以随意捐款。</string>
+    <string name="qksms_plus_donate">使用PayPal捐赠</string>
+    <string name="qksms_plus_coming_soon">即将推出</string>
+    <string name="qksms_plus_themes_title">高级主题</string>
+    <string name="qksms_plus_themes_summary">解锁 \"Material Design\" 调色板中不可用的美丽彩色主题</string>
+    <string name="qksms_plus_emoji_title">自定义自动颜文字</string>
+    <string name="qksms_plus_emoji_summary">创建自定义自动颜文字的快捷方式</string>
+    <string name="qksms_plus_backup_title">消息备份</string>
+    <string name="qksms_plus_backup_summary">自动备份短信，再也不用担心更换或丢失手机后会丢掉短信记录。</string>
+    <string name="qksms_plus_scheduled_title">定时消息</string>
+    <string name="qksms_plus_scheduled_summary">安排一个时间来自动发送短信</string>
+    <string name="qksms_plus_delayed_title">延迟发送</string>
+    <string name="qksms_plus_delayed_summary">发送短信前，稍等几秒</string>
+    <string name="qksms_plus_night_title">自动夜间模式</string>
+    <string name="qksms_plus_night_summary">根据时间自动启用夜间模式</string>
+    <string name="qksms_plus_blacklist_title">高级拦截选项</string>
+    <string name="qksms_plus_blacklist_summary">根据关键字或匹配模式拦截消息</string>
+    <string name="qksms_plus_forward_title">自动转发</string>
+    <string name="qksms_plus_forward_summary">自动转发特定发件人的短信</string>
+    <string name="qksms_plus_respond_title">自动回复</string>
+    <string name="qksms_plus_respond_summary">使用预设文本自动回复短信</string>
+    <string name="qksms_plus_more_title">更多</string>
+    <string name="qksms_plus_more_summary">QKSMS积极更新中，您的购买将包含以后QKSMS+的所有功能</string>
+    <string name="widget_loading">载入中...</string>
+    <string name="widget_more">查看更多对话</string>
+    <string name="qkreply_menu_read">标记为已读</string>
+    <string name="qkreply_menu_call">致电</string>
+    <string name="qkreply_menu_delete">删除</string>
+    <string name="qkreply_menu_expand">显示更多</string>
+    <string name="qkreply_menu_collapse">收起</string>
+    <string name="qkreply_menu_view">打开会话</string>
+    <string name="theme_material">Material</string>
+    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_hex">HEX</string>
+    <string name="theme_apply">应用</string>
+    <string-array name="notification_actions">
+        <item>无</item>
+        <item>标记为已读</item>
+        <item>回复</item>
+        <item>呼叫</item>
+        <item>删除</item>
+    </string-array>
+    <string name="button_cancel">取消</string>
+    <string name="button_delete">删除</string>
+    <string name="button_save">保存</string>
+    <string name="button_stop">停止</string>
+    <string name="button_more">更多</string>
+    <string name="button_set">设置</string>
+    <string name="button_unblock">取消拦截</string>
+    <string name="button_undo">撤销</string>
+    <string name="toast_copied">已复制</string>
+    <string name="toast_archived">已存档的对话</string>
+    <string name="toast_qksms_plus">您必须解锁QKSMS+才能使用此功能</string>
+    <plurals name="notification_new_messages">
+        <item quantity="other">%s条新信息</item>
+    </plurals>
+    <string name="notification_message_failed_title">消息未发送</string>
+    <string name="notification_message_failed_text">给%s的短信发送失败</string>
+    <string-array name="night_modes">
+        <item>禁用</item>
+        <item>保持打开</item>
+        <item>自动</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>显示姓名和消息</item>
+        <item>只显示姓名</item>
+        <item>隐藏内容</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>小</item>
+        <item>正常</item>
+        <item>大</item>
+        <item>更大</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>无延迟</item>
+        <item>短</item>
+        <item>中</item>
+        <item>长</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB (推荐)</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>不压缩</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>好的</item>
+        <item>请稍等一会儿</item>
+        <item>在路上了</item>
+        <item>谢谢</item>
+        <item>听上去不错</item>
+        <item>怎么了？</item>
+        <item>同意</item>
+        <item>不</item>
+        <item>爱你</item>
+        <item>抱歉</item>
+        <item>啊哈哈哈哈</item>
+        <item>好的</item>
+    </string-array>
 </resources>
