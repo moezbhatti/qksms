@@ -27,6 +27,7 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
 import com.moez.QKSMS.BuildConfig
+import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.feature.backup.BackupActivity
 import com.moez.QKSMS.feature.blocked.BlockedActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
@@ -47,6 +48,7 @@ import javax.inject.Singleton
 class Navigator @Inject constructor(
     private val context: Context,
     private val analyticsManager: AnalyticsManager,
+    private val billingManager: BillingManager,
     private val notificationManager: NotificationManager,
     private val permissions: PermissionManager
 ) {
@@ -193,10 +195,12 @@ class Navigator @Inject constructor(
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("moez@qklabs.com"))
         intent.putExtra(Intent.EXTRA_SUBJECT, "QKSMS Support")
         intent.putExtra(Intent.EXTRA_TEXT, StringBuilder("\n\n")
-                .append("--- Please write your message above this line ---\n\n")
+                .append("\n\n--- Please write your message above this line ---\n\n")
+                .append("Package: ${context.packageName}\n")
                 .append("Version: ${BuildConfig.VERSION_NAME}\n")
                 .append("Device: ${Build.BRAND} ${Build.MODEL}\n")
-                .append("SDK: ${Build.VERSION.SDK_INT}")
+                .append("SDK: ${Build.VERSION.SDK_INT}\n")
+                .append("Upgraded".takeIf { billingManager.upgradeStatus.blockingFirst() } ?: "")
                 .toString())
         startActivityExternal(intent)
     }
