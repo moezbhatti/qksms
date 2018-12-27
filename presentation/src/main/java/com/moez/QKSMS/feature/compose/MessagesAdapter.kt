@@ -21,7 +21,9 @@ package com.moez.QKSMS.feature.compose
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
 import android.telephony.PhoneNumberUtils
+import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -137,6 +139,10 @@ class MessagesAdapter @Inject constructor(
             view.avatar.threadId = conversation?.id ?: 0
             view.body.setTextColor(theme.textPrimary)
             view.body.setBackgroundTint(theme.theme)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
         }
 
         view.attachments.adapter = PartsAdapter(context, navigator, theme)
