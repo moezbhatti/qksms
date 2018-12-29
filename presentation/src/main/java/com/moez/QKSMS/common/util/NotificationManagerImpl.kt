@@ -160,7 +160,7 @@ class NotificationManagerImpl @Inject constructor(
                         .circleCrop()
                         .load(PhoneNumberUtils.stripSeparators(message.address))
                         .submit(64.dpToPx(context), 64.dpToPx(context))
-                        .let { futureGet -> tryOrNull { futureGet.get() } }
+                        .let { futureGet -> tryOrNull(false) { futureGet.get() } }
                         ?.let(IconCompat::createWithBitmap))
 
                 recipient?.contact
