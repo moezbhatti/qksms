@@ -200,7 +200,9 @@ class Navigator @Inject constructor(
                 .append("Version: ${BuildConfig.VERSION_NAME}\n")
                 .append("Device: ${Build.BRAND} ${Build.MODEL}\n")
                 .append("SDK: ${Build.VERSION.SDK_INT}\n")
-                .append("Upgraded".takeIf { billingManager.upgradeStatus.blockingFirst() } ?: "")
+                .append("Upgraded"
+                        .takeIf { BuildConfig.FLAVOR != "noAnalytics" }
+                        .takeIf { billingManager.upgradeStatus.blockingFirst() } ?: "")
                 .toString())
         startActivityExternal(intent)
     }
