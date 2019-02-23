@@ -83,7 +83,7 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val menuItem = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         view.title.text = menuItem.title
         view.check.isActivated = (menuItem.actionId == selectedItem)

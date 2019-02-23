@@ -58,7 +58,7 @@ class SearchAdapter @Inject constructor(
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val previous = data.getOrNull(position - 1)
         val result = getItem(position)
-        val view = viewHolder.itemView
+        val view = viewHolder.containerView
 
         view.resultsHeader.setVisible(result.messages > 0 && previous?.messages == 0)
 

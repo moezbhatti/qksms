@@ -50,7 +50,7 @@ class ConversationMediaAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val part = getItem(position)!!
-        val view = holder.itemView
+        val view = holder.containerView
 
         GlideApp.with(context)
                 .load(part.getUri())

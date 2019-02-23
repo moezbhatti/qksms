@@ -174,7 +174,7 @@ class MessagesAdapter @Inject constructor(
         val message = getItem(position)!!
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
-        val view = viewHolder.itemView
+        val view = viewHolder.containerView
 
 
         // Update the selected state
@@ -267,7 +267,7 @@ class MessagesAdapter @Inject constructor(
     }
 
     private fun bindStatus(viewHolder: QkViewHolder, message: Message, next: Message?) {
-        val view = viewHolder.itemView
+        val view = viewHolder.containerView
 
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
 

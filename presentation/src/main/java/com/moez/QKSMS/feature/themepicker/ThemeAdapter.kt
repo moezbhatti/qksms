@@ -70,7 +70,7 @@ class ThemeAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val palette = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val minPadding = (16 * 6).dpToPx(context)

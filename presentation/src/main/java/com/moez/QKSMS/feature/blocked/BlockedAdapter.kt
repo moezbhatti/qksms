@@ -44,7 +44,7 @@ class BlockedAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val conversation = getItem(position)!!
-        val view = holder.itemView
+        val view = holder.containerView
 
         view.avatars.contacts = conversation.recipients
         view.title.text = conversation.getTitle()

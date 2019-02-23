@@ -56,7 +56,7 @@ class ConversationRecipientAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val recipient = getItem(position)!!
-        val view = holder.itemView
+        val view = holder.containerView
 
         view.avatar.threadId = threadId
         view.avatar.setContact(recipient)

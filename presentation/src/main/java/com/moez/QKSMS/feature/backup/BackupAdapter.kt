@@ -50,7 +50,7 @@ class BackupAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val backup = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         val count = backup.messages
 

@@ -79,7 +79,7 @@ class ConversationsAdapter @Inject constructor(
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val conversation = getItem(position)!!
-        val view = viewHolder.itemView
+        val view = viewHolder.containerView
 
         view.isActivated = isSelected(conversation.id)
 

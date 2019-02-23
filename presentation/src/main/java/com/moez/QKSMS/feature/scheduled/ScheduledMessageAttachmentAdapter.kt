@@ -39,7 +39,7 @@ class ScheduledMessageAttachmentAdapter @Inject constructor() : QkAdapter<Uri>()
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val attachment = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         GlideApp.with(view).load(attachment).into(view.thumbnail)
     }
