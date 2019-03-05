@@ -34,7 +34,7 @@ class GalleryActivityModule {
 
     @Provides
     @Named("partId")
-    fun providePartId(activity: GalleryActivity): Long = activity.intent.getLongExtra("partId", 0L)
+    fun providePartId(activity: GalleryActivity): Long = activity.partId
 
     @Provides
     @IntoMap

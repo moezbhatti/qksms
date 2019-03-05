@@ -7,6 +7,7 @@ buildscript {
     ext.androidx_emoji_version = '1.0.0'
     ext.androidx_exifinterface_version = '1.0.0'
     ext.androidx_testrunner_version = '1.1.0-alpha3'
+    ext.androidx_viewpager_version = '1.0.0-alpha01'
     ext.autodispose_version = '0.7.0'
     ext.conductor_version = '2.1.5'
     ext.dagger_version = "2.16"
