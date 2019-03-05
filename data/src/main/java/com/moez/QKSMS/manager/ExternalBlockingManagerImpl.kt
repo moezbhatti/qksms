@@ -73,6 +73,9 @@ class ExternalBlockingManagerImpl @Inject constructor(
             // intent to request a rating
             if (prefs.sia.get()) {
                 intent = tryOrNull(false) {
+                    context.packageManager.getApplicationInfo("org.mistergroup.shouldianswer", 0).enabled
+                    Intent("org.mistergroup.shouldianswer.PublicService").setPackage("org.mistergroup.shouldianswer")
+                } ?: tryOrNull(false) {
                     context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled
                     Intent("org.mistergroup.shouldianswerpersonal.PublicService")
                             .setPackage("org.mistergroup.shouldianswerpersonal")
@@ -96,20 +99,21 @@ class ExternalBlockingManagerImpl @Inject constructor(
             serviceMessenger = Messenger(service)
             isBound = true
 
-            val msg = Message()
-            msg.what = GET_NUMBER_RATING
-            msg.data = bundleOf(Pair("number", address))
-            msg.replyTo = Messenger(IncomingHandler { rating ->
-                subject.onSuccess(rating == RATING_NEGATIVE)
-                Timber.v("Should block: ${rating == RATING_NEGATIVE}")
+            val message = Message().apply {
+                what = GET_NUMBER_RATING
+                data = bundleOf("number" to address)
+                replyTo = Messenger(IncomingHandler { rating ->
+                    subject.onSuccess(rating == RATING_NEGATIVE)
+                    Timber.v("Should block: ${rating == RATING_NEGATIVE}")
 
-                // We're done, so unbind the service
-                if (isBound && serviceMessenger != null) {
-                    context.unbindService(this)
-                }
-            })
+                    // We're done, so unbind the service
+                    if (isBound && serviceMessenger != null) {
+                        context.unbindService(this@Binder)
+                    }
+                })
+            }
 
-            serviceMessenger?.send(msg)
+            serviceMessenger?.send(message)
         }
 
         override fun onServiceDisconnected(className: ComponentName) {
@@ -119,7 +123,6 @@ class ExternalBlockingManagerImpl @Inject constructor(
     }
 
     private class IncomingHandler(private val callback: (rating: Int) -> Unit) : Handler() {
-
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 GET_NUMBER_RATING -> callback(msg.data.getInt("rating"))

@@ -53,7 +53,8 @@ class BlockedViewModel @Inject constructor(
 
         view.siaClickedIntent
                 .map {
-                    tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled }
+                    tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.shouldianswer", 0).enabled }
+                            ?: tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled }
                             ?: tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled }
                             ?: false
                 }

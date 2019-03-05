@@ -184,7 +184,7 @@ class Navigator @Inject constructor(
      * Launch the Play Store and display the Should I Answer? listing
      */
     fun showSia() {
-        val url = "https://play.google.com/store/apps/details?id=org.mistergroup.shouldianswerpersonal"
+        val url = "https://play.google.com/store/apps/details?id=org.mistergroup.shouldianswer"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
     }
