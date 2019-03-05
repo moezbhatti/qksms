@@ -116,8 +116,8 @@
     <string name="compose_gallery_cd">Anexar fotografia</string>
     <string name="compose_camera_cd">Tirar fotografia</string>
     <string name="compose_schedule_cd">Agendar mensagem</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Anexar um contacto</string>
+    <string name="compose_contact_error">Erro ao ler o contacto</string>
     <string name="compose_sim_cd">%s selecionado, alterar cartão SIM</string>
     <string name="compose_send_cd">Enviar mensagem</string>
     <string name="message_status_sending">A enviar&#8230;</string>

@@ -19,10 +19,10 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
+    <string name="shortcut_compose_long_label">Nová konverzácia</string>
+    <string name="shortcut_compose_short_label">Písať</string>
     <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-    <string name="title_archived">Archived</string>
+    <string name="title_archived">Archivované</string>
     <string name="title_settings">Nastavenia</string>
     <string name="title_notification_prefs">Upozornenia</string>
     <string name="title_theme">Téma</string>
@@ -33,48 +33,48 @@
     <string name="menu_call">Volať</string>
     <string name="menu_info">Podrobnosti</string>
     <string name="menu_save">Uložiť do galérie</string>
-    <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_drawer_open_cd">Otvoriť navigačné menu</string>
     <string name="main_title_selected">%d vybraných</string>
     <string name="main_menu_clear">Vymazať</string>
     <string name="main_menu_archive">Archivovať</string>
-    <string name="main_menu_unarchive">Unarchive</string>
+    <string name="main_menu_unarchive">Zrušiť archiváciu</string>
     <string name="main_menu_delete">Odstrániť</string>
-    <string name="main_menu_pin">Pin to top</string>
-    <string name="main_menu_unpin">Unpin</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
-    <string name="main_menu_block">Block</string>
+    <string name="main_menu_pin">Pripnúť na začiatok</string>
+    <string name="main_menu_unpin">Odopnúť</string>
+    <string name="main_menu_read">Označiť ako prečítané</string>
+    <string name="main_menu_unread">Označiť ako neprečítané</string>
+    <string name="main_menu_block">Zablokovať</string>
     <string name="main_syncing">Synchronizácia správ&#8230;</string>
-    <string name="main_sender_you">You: %s</string>
-    <string name="main_message_results_title">Results in messages</string>
-    <string name="main_message_results">%d messages</string>
-    <string name="inbox_empty_text">Your conversations will appear here</string>
+    <string name="main_sender_you">Vy: %s</string>
+    <string name="main_message_results_title">Výsledky v správach</string>
+    <string name="main_message_results">%d správ</string>
+    <string name="inbox_empty_text">Tu sa zobrazia vaše konverzácie</string>
     <string name="inbox_search_empty_text">Žiadne výsledky</string>
-    <string name="archived_empty_text">Your archived conversations will appear here</string>
+    <string name="archived_empty_text">Tu sa zobrazia vaše archivované konverzácie</string>
     <string name="main_fab_cd">Začať novú konverzáciu</string>
-    <string name="main_default_sms_title">Love texting again</string>
-    <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
-    <string name="main_default_sms_change">Change</string>
-    <string name="main_permission_required">Permission required</string>
-    <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
-    <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+    <string name="main_default_sms_title">Opäť si zamilujte písanie</string>
+    <string name="main_default_sms_message">Nastavte QKSMS ako predvolenú SMS aplikáciu</string>
+    <string name="main_default_sms_change">Zmeniť</string>
+    <string name="main_permission_required">Vyžadované povolenie</string>
+    <string name="main_permission_sms">QKSMS potrebuje povolenie posielať a zobrazovať správy SMS</string>
+    <string name="main_permission_contacts">QKSMS potrebuje povolenie na zobrazenie kontaktov</string>
     <string name="main_permission_allow">Povoliť</string>
-    <string name="drawer_inbox">Inbox</string>
-    <string name="drawer_archived">Archived</string>
-    <string name="drawer_scheduled">Scheduled</string>
-    <string name="drawer_blocking">Blocking</string>
+    <string name="drawer_inbox">Doručené</string>
+    <string name="drawer_archived">Archivované</string>
+    <string name="drawer_scheduled">Naplánované</string>
+    <string name="drawer_blocking">Blokovanie</string>
     <string name="drawer_more">Viac</string>
-    <string name="drawer_settings">Settings</string>
+    <string name="drawer_settings">Nastavenia</string>
     <string name="drawer_plus">QKSMS+</string>
-    <string name="drawer_help">Help &amp; feedback</string>
-    <string name="drawer_invite">Invite friends</string>
+    <string name="drawer_help">Nápoveda &amp; spätná väzba</string>
+    <string name="drawer_invite">Pozvať priateľov</string>
     <string name="drawer_plus_banner_title">QKSMS+</string>
-    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
-    <string name="rate_title">Enjoying QKSMS?</string>
-    <string name="rate_summary">Share some love and rate us on Google Play!</string>
-    <string name="rate_okay">OKAY!</string>
-    <string name="rate_dismiss">DISMISS</string>
-    <string name="dialog_delete_title">Delete</string>
+    <string name="drawer_plus_banner_summary">Odomknutie úžasné nové funkcie a podporte vývoj</string>
+    <string name="rate_title">Máte radi QKSMS?</string>
+    <string name="rate_summary">Podeľte sa o trochu lásky a ohodnoťte nás na Google Play!</string>
+    <string name="rate_okay">OUKEJ!</string>
+    <string name="rate_dismiss">ODMIETNUŤ</string>
+    <string name="dialog_delete_title">Zmazať</string>
     <plurals name="dialog_delete_message">
         <item quantity="one">Are you sure you would like to delete this conversation?</item>
         <item quantity="few">Are you sure you would like to delete %d conversations?</item>
@@ -82,92 +82,92 @@
         <item quantity="other">Are you sure you would like to delete %d conversations?</item>
     </plurals>
     <string-array name="message_options">
-        <item>Copy text</item>
-        <item>Forward</item>
-        <item>Delete</item>
+        <item>Kopírovať text</item>
+        <item>Preposlať</item>
+        <item>Odstrániť</item>
     </string-array>
     <string name="compose_title_selected">%d selected</string>
     <string name="compose_subtitle_results">%1$d of %2$d results</string>
-    <string name="compose_send_group_title">Send as group message</string>
+    <string name="compose_send_group_title">Poslať ako skupinovú správu</string>
     <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+    <string name="compose_messages_empty">Toto je začiatok vašej konverzácie. Napíšte niečo pekného!</string>
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Scheduled for</string>
     <string name="compose_scheduled_future">Selected time must be in the future!</string>
     <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
-    <string name="compose_hint">Write a message&#8230;</string>
-    <string name="compose_menu_copy">Copy text</string>
-    <string name="compose_menu_forward">Forward</string>
-    <string name="compose_menu_delete">Delete</string>
+    <string name="compose_hint">Napíšte správu&#8230;</string>
+    <string name="compose_menu_copy">Kopírovať text</string>
+    <string name="compose_menu_forward">Preposlať</string>
+    <string name="compose_menu_delete">Odstrániť</string>
     <string name="compose_menu_previous">Previous</string>
     <string name="compose_menu_next">Next</string>
     <string name="compose_menu_clear">Clear</string>
-    <string name="compose_details_title">Message details</string>
-    <string name="compose_details_type">Type: %s</string>
-    <string name="compose_details_from">From: %s</string>
-    <string name="compose_details_to">To: %s</string>
-    <string name="compose_details_subject">Subject: %s</string>
-    <string name="compose_details_priority">Priority: %s</string>
-    <string name="compose_details_size">Size: %s</string>
-    <string name="compose_details_sent">Sent: %s</string>
-    <string name="compose_details_received">Received: %s</string>
-    <string name="compose_details_delivered">Delivered: %s</string>
-    <string name="compose_details_error_code">Error code: %d</string>
-    <string name="compose_attach_cd">Add an attachment</string>
+    <string name="compose_details_title">Detaily správy</string>
+    <string name="compose_details_type">Typ: %s</string>
+    <string name="compose_details_from">Od: %s</string>
+    <string name="compose_details_to">Pre: %s</string>
+    <string name="compose_details_subject">Predmet: %s</string>
+    <string name="compose_details_priority">Priorita: %s</string>
+    <string name="compose_details_size">Veľkosť: %s</string>
+    <string name="compose_details_sent">Odoslané: %s</string>
+    <string name="compose_details_received">Prijaté: %s</string>
+    <string name="compose_details_delivered">Doručené: %s</string>
+    <string name="compose_details_error_code">Kód chyby: %d</string>
+    <string name="compose_attach_cd">Pridať prílohu</string>
     <string name="compose_gallery_cd">Attach a photo</string>
     <string name="compose_camera_cd">Take a photo</string>
     <string name="compose_schedule_cd">Schedule message</string>
-    <string name="compose_contact_cd">Attach a contact</string>
+    <string name="compose_contact_cd">Pripojiť kontakt</string>
     <string name="compose_contact_error">Error reading contact</string>
     <string name="compose_sim_cd">%s selected, change SIM card</string>
-    <string name="compose_send_cd">Send message</string>
-    <string name="message_status_sending">Sending&#8230;</string>
-    <string name="message_status_delivered">Delivered %s</string>
+    <string name="compose_send_cd">Odoslať správu</string>
+    <string name="message_status_sending">Odosiela sa&#8230;</string>
+    <string name="message_status_delivered">Doručené %s</string>
     <string name="message_status_failed">Failed to send. Tap to try again</string>
-    <string name="info_title">Details</string>
+    <string name="info_title">Detaily</string>
     <string name="info_name">Conversation title</string>
     <string name="info_name_hint">Enter title</string>
-    <string name="info_notifications">Notifications</string>
-    <string name="info_theme">Theme</string>
-    <string name="info_archive">Archive</string>
-    <string name="info_unarchive">Unarchive</string>
-    <string name="info_block">Block</string>
-    <string name="info_unblock">Unblock</string>
-    <string name="info_delete">Delete conversation</string>
+    <string name="info_notifications">Upozornenia</string>
+    <string name="info_theme">Motív</string>
+    <string name="info_archive">Archivovať</string>
+    <string name="info_unarchive">Zrušiť archiváciu</string>
+    <string name="info_block">Blokovať</string>
+    <string name="info_unblock">Odblokovať</string>
+    <string name="info_delete">Odstrániť konverzáciu</string>
     <string name="gallery_error">Couldn\'t load media</string>
     <string name="gallery_toast_saved">Saved to gallery</string>
     <string name="backup_title">Backup and restore</string>
     <string name="backup_backing_up">Backing up messages</string>
     <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_last">Last backup</string>
-    <string name="backup_loading">Loading&#8230;</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
+    <string name="backup_last">Posledná záloha</string>
+    <string name="backup_loading">Načítavanie&#8230;</string>
+    <string name="backup_never">Nikdy</string>
+    <string name="backup_restore_title">Obnoviť</string>
+    <string name="backup_restore_summary">Zvoľte zálohu</string>
     <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
+    <string name="backup_restore_error_backup">Prebieha zálohovanie&#8230;</string>
+    <string name="backup_restore_error_restore">Prebieha obnova&#8230;</string>
+    <string name="backup_restore_confirm_title">Obnoviť zo zálohy</string>
     <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
+    <string name="backup_restore_stop_title">Zastaviť obnovu</string>
     <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="backup_restore_dialog_title">Zálohy</string>
+    <string name="backup_restore_dialog_empty">Nenašli sa žiadne zálohy</string>
     <plurals name="backup_message_count">
         <item quantity="one">%d message</item>
         <item quantity="few">%d messages</item>
         <item quantity="many">%d messages</item>
-        <item quantity="other">%d messages</item>
+        <item quantity="other">%d správ</item>
     </plurals>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
-    <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup&#8230;</string>
-    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
+    <string name="backup_now">Zálohovať</string>
+    <string name="backup_progress_parsing">Analýza zálohy&#8230;</string>
+    <string name="backup_progress_running">%d/%d správ</string>
+    <string name="backup_progress_saving">Ukladá sa záloha&#8230;</string>
+    <string name="backup_progress_syncing">Synchronizácia správ&#8230;</string>
     <string name="backup_progress_finished">Finished!</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="backup_notification_channel_name">Zálohovanie a obnovenie</string>
     <string name="scheduled_title">Scheduled</string>
     <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
@@ -177,27 +177,27 @@
     <string name="scheduled_compose_cd">Schedule a message</string>
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Delete</item>
+        <item>Odoslať teraz</item>
+        <item>Odstrániť</item>
     </string-array>
-    <string name="settings_category_appearance">Appearance</string>
-    <string name="settings_category_general">General</string>
+    <string name="settings_category_appearance">Vzhľad</string>
+    <string name="settings_category_general">Všeobecné</string>
     <string name="settings_category_qkreply">QK Reply</string>
-    <string name="settings_theme_title">Theme</string>
-    <string name="settings_night_title">Night mode</string>
+    <string name="settings_theme_title">Motív</string>
+    <string name="settings_night_title">Nočný režim</string>
     <string name="settings_black_title">Pure black night mode</string>
-    <string name="settings_night_start_title">Start time</string>
-    <string name="settings_night_end_title">End time</string>
-    <string name="settings_text_size_title">Font size</string>
-    <string name="settings_system_font_title">Use system font</string>
-    <string name="settings_auto_emoji_title">Automatic emoji</string>
-    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_night_start_title">Čas spustenia</string>
+    <string name="settings_night_end_title">Čas ukončenia</string>
+    <string name="settings_text_size_title">Veľkosť písma</string>
+    <string name="settings_system_font_title">Použiť systémové písmo</string>
+    <string name="settings_auto_emoji_title">Automatické emoji</string>
+    <string name="settings_notifications_title">Upozornenia</string>
     <string name="settings_notifications_o_summary">Tap to customize</string>
-    <string name="settings_notification_actions_title">Actions</string>
-    <string name="settings_notification_action_1">Button 1</string>
-    <string name="settings_notification_action_2">Button 2</string>
-    <string name="settings_notification_action_3">Button 3</string>
-    <string name="settings_notification_previews_title">Notification previews</string>
+    <string name="settings_notification_actions_title">Akcie</string>
+    <string name="settings_notification_action_1">Tlačidlo 1</string>
+    <string name="settings_notification_action_2">Tlačidlo 2</string>
+    <string name="settings_notification_action_3">Tlačidlo 3</string>
+    <string name="settings_notification_previews_title">Obsah upozornení</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
     <string name="settings_ringtone_none">None</string>
@@ -205,7 +205,7 @@
     <string name="settings_qkreply_summary">Popup for new messages</string>
     <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-    <string name="settings_blocking_title">Blocking</string>
+    <string name="settings_blocking_title">Blokované</string>
     <!-- Do not translate -->
     <string name="settings_should_i_answer_title">Should I Answer?</string>
     <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
@@ -217,9 +217,9 @@
     <string name="settings_swipe_actions_change">CHANGE</string>
     <string-array name="settings_swipe_actions">
         <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Call</item>
+        <item>Archivovať</item>
+        <item>Odstrániť</item>
+        <item>Zavolať</item>
         <item>Mark read</item>
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
@@ -231,23 +231,23 @@
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-    <string name="settings_about_title">About QKSMS</string>
-    <string name="settings_version">Version %s</string>
+    <string name="settings_about_title">O aplikácii QKSMS</string>
+    <string name="settings_version">Verzia %s</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-    <string name="blocked_title">Blocking</string>
-    <string name="blocked_empty">Your blocked conversations will appear here</string>
-    <string name="blocked_unblock_dialog_title">Unblock</string>
-    <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
-    <string name="about_title">About</string>
-    <string name="about_version_title">Version</string>
-    <string name="about_developer_title">Developer</string>
-    <string name="about_source_title">Source code</string>
-    <string name="about_changelog_title">Changelog</string>
-    <string name="about_contact_title">Contact</string>
-    <string name="about_license_title">License</string>
-    <string name="about_copyright_title">Copyright</string>
+    <string name="blocked_title">Blokované</string>
+    <string name="blocked_empty">Blokované konverzácie sa zobrazia tu</string>
+    <string name="blocked_unblock_dialog_title">Odblokovať</string>
+    <string name="blocked_unblock_dialog_message">Chcete odblokovať túto konverzáciu?</string>
+    <string name="about_title">O aplikácii</string>
+    <string name="about_version_title">Verzia</string>
+    <string name="about_developer_title">Vývojár</string>
+    <string name="about_source_title">Zdrojový kód</string>
+    <string name="about_changelog_title">Zoznam zmien</string>
+    <string name="about_contact_title">Konktakt</string>
+    <string name="about_license_title">Licencia</string>
+    <string name="about_copyright_title">Autorské práva</string>
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
@@ -256,7 +256,7 @@
     <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
     <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
     <string name="qksms_plus_donate">Donate via PayPal</string>
-    <string name="qksms_plus_coming_soon">Coming soon</string>
+    <string name="qksms_plus_coming_soon">Už čoskoro</string>
     <string name="qksms_plus_themes_title">Premium themes</string>
     <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
     <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
@@ -267,31 +267,31 @@
     <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
     <string name="qksms_plus_delayed_title">Delayed sending</string>
     <string name="qksms_plus_delayed_summary">Wait a few seconds before sending your message</string>
-    <string name="qksms_plus_night_title">Automatic night mode</string>
+    <string name="qksms_plus_night_title">Automatický nočný režim</string>
     <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
-    <string name="qksms_plus_blacklist_title">Advanced blocking</string>
-    <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
+    <string name="qksms_plus_blacklist_title">Rozšírené blokovanie</string>
+    <string name="qksms_plus_blacklist_summary">Blokujte správy, ktoré obsahujú kľúčové slová, alebo odpovedajú vzoru</string>
     <string name="qksms_plus_forward_title">Auto-forward</string>
     <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
     <string name="qksms_plus_respond_title">Auto-respond</string>
     <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
-    <string name="qksms_plus_more_title">More</string>
+    <string name="qksms_plus_more_title">Viac</string>
     <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
-    <string name="widget_loading">Loading&#8230;</string>
+    <string name="widget_loading">Načítavanie&#8230;</string>
     <string name="widget_more">View more conversations</string>
-    <string name="qkreply_menu_read">Mark read</string>
-    <string name="qkreply_menu_call">Call</string>
-    <string name="qkreply_menu_delete">Delete</string>
-    <string name="qkreply_menu_expand">Show more</string>
-    <string name="qkreply_menu_collapse">Show less</string>
-    <string name="qkreply_menu_view">Open conversation</string>
-    <string name="theme_material">Material</string>
+    <string name="qkreply_menu_read">Označiť ako prečítané</string>
+    <string name="qkreply_menu_call">Volať</string>
+    <string name="qkreply_menu_delete">Odstrániť</string>
+    <string name="qkreply_menu_expand">Zobraziť viac</string>
+    <string name="qkreply_menu_collapse">Zobraziť menej</string>
+    <string name="qkreply_menu_view">Otvoriť konverzáciu</string>
+    <string name="theme_material">Materiál</string>
     <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEX</string>
-    <string name="theme_apply">Apply</string>
+    <string name="theme_apply">Použiť</string>
     <string-array name="notification_actions">
         <item>None</item>
-        <item>Mark read</item>
+        <item>Označiť ako prečítané</item>
         <item>Reply</item>
         <item>Call</item>
         <item>Delete</item>
@@ -302,7 +302,7 @@
     <string name="button_stop">Stop</string>
     <string name="button_more">More</string>
     <string name="button_set">Set</string>
-    <string name="button_unblock">Unblock</string>
+    <string name="button_unblock">Odblokovať</string>
     <string name="button_undo">Undo</string>
     <string name="toast_copied">Copied</string>
     <string name="toast_archived">Archived conversation</string>
@@ -321,18 +321,18 @@
         <item>Automatic</item>
     </string-array>
     <string-array name="notification_preview_options">
-        <item>Show name and message</item>
-        <item>Show name</item>
-        <item>Hide contents</item>
+        <item>Zobraziť meno a správu</item>
+        <item>Zobraziť meno</item>
+        <item>Skryť obsah</item>
     </string-array>
     <string-array name="text_sizes">
-        <item>Small</item>
-        <item>Normal</item>
-        <item>Large</item>
-        <item>Larger</item>
+        <item>Malý</item>
+        <item>Stredný</item>
+        <item>Veľký</item>
+        <item>Najväčší</item>
     </string-array>
     <string-array name="delayed_sending_labels">
-        <item>No delay</item>
+        <item>Bez oneskorenia</item>
         <item>Short</item>
         <item>Medium</item>
         <item>Long</item>
@@ -340,11 +340,11 @@
     <string-array name="mms_sizes">
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Recommended)</item>
+        <item>300KB (odporúča sa)</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Bez kompresie</item>
     </string-array>
     <string-array name="qk_responses">
         <item>V poriadku</item>

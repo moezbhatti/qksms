@@ -116,8 +116,8 @@
     <string name="compose_gallery_cd">Voeg een foto toe</string>
     <string name="compose_camera_cd">Neem een foto</string>
     <string name="compose_schedule_cd">Gepland bericht</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Een contactpersoon toevoegen</string>
+    <string name="compose_contact_error">Fout bij het lezen van contact</string>
     <string name="compose_sim_cd">%s geselecteerd, wijzig SIM-kaart</string>
     <string name="compose_send_cd">Verstuur bericht</string>
     <string name="message_status_sending">Verzenden&#8230;</string>

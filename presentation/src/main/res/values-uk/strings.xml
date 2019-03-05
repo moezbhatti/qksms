@@ -32,7 +32,7 @@
     <string name="setup_next">Продовжити</string>
     <string name="menu_call">Зателефонувати</string>
     <string name="menu_info">Деталі</string>
-    <string name="menu_save">Зберегти в галерії</string>
+    <string name="menu_save">Зберегти в галереї</string>
     <string name="main_drawer_open_cd">Відкрити панель навігації</string>
     <string name="main_title_selected">Обрано: %d</string>
     <string name="main_menu_clear">Очистити</string>
@@ -118,8 +118,8 @@
     <string name="compose_gallery_cd">Прикріпити фотографію</string>
     <string name="compose_camera_cd">Сфотографувати</string>
     <string name="compose_schedule_cd">Запланувати повідомлення</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Прикріпити контакт</string>
+    <string name="compose_contact_error">Помилка читання контакту</string>
     <string name="compose_sim_cd">%s обрано, змініть SIM-картку</string>
     <string name="compose_send_cd">Надіслати повідомлення</string>
     <string name="message_status_sending">Надсилання&#8230;</string>
@@ -136,7 +136,7 @@
     <string name="info_unblock">Розблокувати</string>
     <string name="info_delete">Видалити бесіду</string>
     <string name="gallery_error">Не вдалося завантажити медіа</string>
-    <string name="gallery_toast_saved">Зберегти до галереї</string>
+    <string name="gallery_toast_saved">Збережено в галереї</string>
     <string name="backup_title">Резервне копіювання та відновлення</string>
     <string name="backup_backing_up">Резервне копіювання повідомлень</string>
     <string name="backup_restoring">Відновити з резервної копії</string>
@@ -305,7 +305,7 @@
     <string name="button_unblock">Розблокувати</string>
     <string name="button_undo">Скасувати</string>
     <string name="toast_copied">Скопійовано</string>
-    <string name="toast_archived">Архівована бесіда</string>
+    <string name="toast_archived">Бесіду заархівовано</string>
     <string name="toast_qksms_plus">Для використання Ви повинні розблокувати QKSMS+</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Нове повідомлення</item>

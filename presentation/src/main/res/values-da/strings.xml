@@ -116,8 +116,8 @@
     <string name="compose_gallery_cd">Vedhæft et foto</string>
     <string name="compose_camera_cd">Tag et foto</string>
     <string name="compose_schedule_cd">Planlæg besked</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Vedhæft en kontakt</string>
+    <string name="compose_contact_error">Fejl ved læsning af kontakt</string>
     <string name="compose_sim_cd">%s valgt, skift SIM-kortet</string>
     <string name="compose_send_cd">Send besked</string>
     <string name="message_status_sending">Afsender&#8230;</string>

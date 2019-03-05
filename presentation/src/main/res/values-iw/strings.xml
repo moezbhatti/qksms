@@ -118,8 +118,8 @@
     <string name="compose_gallery_cd">צירוף תמונה</string>
     <string name="compose_camera_cd">צילום תמונה</string>
     <string name="compose_schedule_cd">תזמון הודעה</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">צירוף איש קשר</string>
+    <string name="compose_contact_error">שגיאה בקריאת איש קשר</string>
     <string name="compose_sim_cd">%s נבחרו, החלפת כרטיס SIM</string>
     <string name="compose_send_cd">שליחת הודעה</string>
     <string name="message_status_sending">מתבצעת שליחה&#8230;</string>

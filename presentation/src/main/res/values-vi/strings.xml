@@ -19,64 +19,64 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
-    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-    <string name="title_archived">Đã được lưu trữ</string>
+    <string name="shortcut_compose_long_label">Cuộc trò chuyện mới</string>
+    <string name="shortcut_compose_short_label">Soạn tin</string>
+    <string name="shortcut_compose_disabled_message">Đã tắt lối tắt</string>
+    <string name="title_archived">Lưu trữ</string>
     <string name="title_settings">Cài đặt</string>
     <string name="title_notification_prefs">Thông báo</string>
     <string name="title_theme">Chủ đề</string>
-    <string name="title_conversations">Tìm kiếm các tin đã nhận&#8230;</string>
+    <string name="title_conversations">Tìm kiếm tin nhắn&#8230;</string>
     <string name="title_compose">Nhập tên hoặc số điện thoại</string>
     <string name="setup_skip">Bỏ qua</string>
     <string name="setup_next">Tiếp tục</string>
     <string name="menu_call">Cuộc gọi</string>
     <string name="menu_info">Chi tiết</string>
     <string name="menu_save">Lưu vào bộ sưu tập</string>
-    <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_drawer_open_cd">Mở menu điều hướng</string>
     <string name="main_title_selected">%d đã chọn</string>
     <string name="main_menu_clear">Dọn sạch</string>
     <string name="main_menu_archive">Lưu trữ</string>
     <string name="main_menu_unarchive">Hủy lưu trữ</string>
     <string name="main_menu_delete">Xóa</string>
-    <string name="main_menu_pin">Pin to top</string>
-    <string name="main_menu_unpin">Unpin</string>
+    <string name="main_menu_pin">Ghim lên đầu</string>
+    <string name="main_menu_unpin">Bỏ ghim</string>
     <string name="main_menu_read">Đánh dấu đã đọc</string>
-    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_unread">Đánh dấu là chưa đọc</string>
     <string name="main_menu_block">Block</string>
     <string name="main_syncing">Đang đồng bộ tin nhắn&#8230;</string>
     <string name="main_sender_you">Bạn: %s</string>
     <string name="main_message_results_title">Kết quả trong tin nhắn</string>
     <string name="main_message_results">%d tin nhắn</string>
-    <string name="inbox_empty_text">Các cuộc hội thoại của bạn sẽ xuất hiện ở đây</string>
+    <string name="inbox_empty_text">Các cuộc trò chuyện của bạn sẽ xuất hiện ở đây</string>
     <string name="inbox_search_empty_text">Không có kết quả</string>
-    <string name="archived_empty_text">Các cuộc hội thoại đã lưu trữ của bạn sẽ xuất hiện ở đây</string>
-    <string name="main_fab_cd">Bắt đầu cuộc hội thoại</string>
-    <string name="main_default_sms_title">Love texting again</string>
+    <string name="archived_empty_text">Các cuộc trò chuyện đã lưu trữ của bạn sẽ xuất hiện ở đây</string>
+    <string name="main_fab_cd">Bắt đầu cuộc trò chuyện</string>
+    <string name="main_default_sms_title">Yêu thích nhắn tin ở đây</string>
     <string name="main_default_sms_message">Đặt QKSMS là ứng dụng SMS mặc định</string>
     <string name="main_default_sms_change">Thay đổi</string>
     <string name="main_permission_required">Yêu cầu quyền truy cập</string>
     <string name="main_permission_sms">QKSMS cần cấp quyền để gửi và xem tin nhắn SMS</string>
     <string name="main_permission_contacts">QKSMS cần cấp quyền để xem danh bạ</string>
     <string name="main_permission_allow">Cho phép</string>
-    <string name="drawer_inbox">Hộp thư đến</string>
+    <string name="drawer_inbox">Trò chuyện</string>
     <string name="drawer_archived">Lưu trữ</string>
-    <string name="drawer_scheduled">Lịch gửi</string>
-    <string name="drawer_blocking">Blocking</string>
+    <string name="drawer_scheduled">Hẹn giờ tin nhắn</string>
+    <string name="drawer_blocking">Chặn liên hệ</string>
     <string name="drawer_more">Xem thêm</string>
     <string name="drawer_settings">Cài đặt</string>
     <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Giúp đỡ và phản hồi</string>
-    <string name="drawer_invite">Invite friends</string>
+    <string name="drawer_invite">Giới thiệu đến bạn bè</string>
     <string name="drawer_plus_banner_title">QKSMS+</string>
-    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+    <string name="drawer_plus_banner_summary">Mở khoá những tính năng đặc sắc và hỗ trợ cho nhà phát triển</string>
     <string name="rate_title">Bạn có thích QKSMS không?</string>
     <string name="rate_summary">Chia sẻ và vote chúng tôi trên Google Play!</string>
     <string name="rate_okay">Đồng ý!</string>
     <string name="rate_dismiss">Bỏ qua</string>
     <string name="dialog_delete_title">Xóa</string>
     <plurals name="dialog_delete_message">
-        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="other">Bạn chắc chắn muốn xoá %d cuộc trò chuyện này chứ ?</item>
     </plurals>
     <string-array name="message_options">
         <item>Sao chép văn bản</item>
@@ -85,94 +85,94 @@
     </string-array>
     <string name="compose_title_selected">%d đã chọn</string>
     <string name="compose_subtitle_results">%1$d trên %2$d results</string>
-    <string name="compose_send_group_title">Send as group message</string>
-    <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-    <string name="compose_messages_empty">Bắt đầu cuộc hội thoại nào. Hãy nói điều gì đó tốt đẹp!</string>
-    <string name="compose_vcard_label">Contact card</string>
-    <string name="compose_scheduled_for">Scheduled for</string>
-    <string name="compose_scheduled_future">Selected time must be in the future!</string>
-    <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
-    <string name="compose_hint">Viết một tin nhắn&#8230;</string>
+    <string name="compose_send_group_title">Gửi theo nhóm tin nhắn</string>
+    <string name="compose_send_group_summary">Người nhận và các câu trả lời sẽ được hiển thị với mọi người</string>
+    <string name="compose_messages_empty">Đây là sự khởi đầu của một cuộc trò chuyện. Hãy nói điều gì đó tốt đẹp nhé!</string>
+    <string name="compose_vcard_label">Thẻ danh thiếp</string>
+    <string name="compose_scheduled_for">Hẹn giờ cho</string>
+    <string name="compose_scheduled_future">Thời gian chọn phải trong tương lai!</string>
+    <string name="compose_scheduled_plus">Bạn phải mở khoá QKSMS+ để dùng tính năng hẹn giờ</string>
+    <string name="compose_scheduled_toast">Đã hẹn giờ cho tin nhắn</string>
+    <string name="compose_hint">Viết tin nhắn&#8230;</string>
     <string name="compose_menu_copy">Sao chép văn bản</string>
     <string name="compose_menu_forward">Chuyển tiếp</string>
     <string name="compose_menu_delete">Xóa</string>
     <string name="compose_menu_previous">Trước đó</string>
     <string name="compose_menu_next">Tiếp theo</string>
     <string name="compose_menu_clear">Xóa</string>
-    <string name="compose_details_title">Message details</string>
-    <string name="compose_details_type">Type: %s</string>
-    <string name="compose_details_from">From: %s</string>
-    <string name="compose_details_to">To: %s</string>
-    <string name="compose_details_subject">Subject: %s</string>
-    <string name="compose_details_priority">Priority: %s</string>
-    <string name="compose_details_size">Size: %s</string>
-    <string name="compose_details_sent">Sent: %s</string>
-    <string name="compose_details_received">Received: %s</string>
-    <string name="compose_details_delivered">Delivered: %s</string>
-    <string name="compose_details_error_code">Error code: %d</string>
+    <string name="compose_details_title">Chi tiết tin nhắn</string>
+    <string name="compose_details_type">Loại: %s</string>
+    <string name="compose_details_from">Từ: %s</string>
+    <string name="compose_details_to">Tới: %s</string>
+    <string name="compose_details_subject">Chủ đề: %s</string>
+    <string name="compose_details_priority">Độ ưu tiên: %s</string>
+    <string name="compose_details_size">Kích cỡ: %s</string>
+    <string name="compose_details_sent">Đã gửi: %s</string>
+    <string name="compose_details_received">Đã nhận: %s</string>
+    <string name="compose_details_delivered">Đã chuyển: %s</string>
+    <string name="compose_details_error_code">Mã lỗi: %d</string>
     <string name="compose_attach_cd">Thêm tập tin đính kèm</string>
     <string name="compose_gallery_cd">Đính kèm ảnh</string>
     <string name="compose_camera_cd">Chụp ảnh</string>
-    <string name="compose_schedule_cd">Schedule message</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
-    <string name="compose_sim_cd">%s selected, change SIM card</string>
+    <string name="compose_schedule_cd">Hẹn giờ tin nhắn</string>
+    <string name="compose_contact_cd">Đính kèm liên hệ</string>
+    <string name="compose_contact_error">Lỗi đọc liên hệ</string>
+    <string name="compose_sim_cd">%s đã được chọn, hãy đổi thẻ SIM</string>
     <string name="compose_send_cd">Gửi tin nhắn</string>
     <string name="message_status_sending">Đang gửi&#8230;</string>
     <string name="message_status_delivered">Đã chuyển %s</string>
     <string name="message_status_failed">Gửi thất bại. Bấm để thử lại lần nữa</string>
     <string name="info_title">Chi tiết</string>
-    <string name="info_name">Conversation title</string>
-    <string name="info_name_hint">Enter title</string>
+    <string name="info_name">Tiêu đề cuộc trò chuyện</string>
+    <string name="info_name_hint">Nhập tiêu đề</string>
     <string name="info_notifications">Thông báo</string>
     <string name="info_theme">Chủ đề</string>
     <string name="info_archive">Lưu trữ</string>
     <string name="info_unarchive">Hủy lưu trữ</string>
     <string name="info_block">Chặn</string>
     <string name="info_unblock">Bỏ chặn</string>
-    <string name="info_delete">Xóa hội thoại</string>
-    <string name="gallery_error">Couldn\'t load media</string>
-    <string name="gallery_toast_saved">Saved to gallery</string>
-    <string name="backup_title">Backup and restore</string>
-    <string name="backup_backing_up">Backing up messages</string>
-    <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_last">Last backup</string>
-    <string name="backup_loading">Loading&#8230;</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
-    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
-    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="info_delete">Xóa cuộc trò chuyện</string>
+    <string name="gallery_error">Không thể tải thư viện</string>
+    <string name="gallery_toast_saved">Đã lưu vào thư viện</string>
+    <string name="backup_title">Sao lưu và khôi phục</string>
+    <string name="backup_backing_up">Đang sao lưu tin nhắn</string>
+    <string name="backup_restoring">Đang khôi phục từ bản sao lưu</string>
+    <string name="backup_last">Sao lưu lần cuối</string>
+    <string name="backup_loading">Đang tải&#8230;</string>
+    <string name="backup_never">Chưa bao giờ</string>
+    <string name="backup_restore_title">Khôi phục</string>
+    <string name="backup_restore_summary">Chọn một bản sao lưu</string>
+    <string name="backup_restore_error_plus">Vui lòng mở khoá QKSMS+ để dùng tính năng sao lưu và khôi phục</string>
+    <string name="backup_restore_error_backup">Đang sao lưu&#8230;</string>
+    <string name="backup_restore_error_restore">Đang khôi phục&#8230;</string>
+    <string name="backup_restore_confirm_title">Khôi phục từ bản sao lưu này</string>
+    <string name="backup_restore_confirm_message">Bạn chắc chắn muốn khôi phục tin nhắn từ bản sao lưu này chứ ?</string>
+    <string name="backup_restore_stop_title">Dừng khôi phục</string>
+    <string name="backup_restore_stop_message">Tin nhắn đã được khôi phục sẽ vẫn còn trên thiết bị của bạn</string>
+    <string name="backup_restore_dialog_title">Các bản sao lưu</string>
+    <string name="backup_restore_dialog_empty">Không tìm thấy bản sao lưu nào</string>
     <plurals name="backup_message_count">
-        <item quantity="other">%d messages</item>
+        <item quantity="other">%d tin nhắn</item>
     </plurals>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
-    <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup&#8230;</string>
-    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-    <string name="backup_progress_finished">Finished!</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
-    <string name="scheduled_title">Scheduled</string>
-    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
-    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
-    <string name="scheduled_options_title">Scheduled message</string>
+    <string name="backup_disclaimer">Hiện tại, tính năng sao lưu và khôi phục chỉ hỗ trợ SMS. Việc hỗ trợ MMS và tính năng sao lưu định kì sẽ có sớm!</string>
+    <string name="backup_now">Sao lưu ngay</string>
+    <string name="backup_progress_parsing">Đang phân tích bản sao lưu&#8230;</string>
+    <string name="backup_progress_running">%d/%d tin nhắn</string>
+    <string name="backup_progress_saving">Đang lưu bản sao lưu&#8230;</string>
+    <string name="backup_progress_syncing">Đang đồng bộ tin nhắn&#8230;</string>
+    <string name="backup_progress_finished">Hoàn tất!</string>
+    <string name="backup_notification_channel_name">Sao lưu và khôi phục</string>
+    <string name="scheduled_title">Hẹn giờ tin nhắn</string>
+    <string name="scheduled_empty_description">Tự động gửi tin nhắn vào lúc mà bạn muốn</string>
+    <string name="scheduled_empty_message_1">Này, khi nào sinh nhật bạn quay lại ?</string>
+    <string name="scheduled_empty_message_2">Vào ngày 23 tháng 12 đó</string>
+    <string name="scheduled_empty_message_3">Chúc mừng sinh nhật! Nhìn xem tôi đúng là một người bạn tuyệt vời, nhớ ngày sinh nhật của bạn đấy</string>
+    <string name="scheduled_empty_message_3_timestamp">Sẽ gửi vào ngày 23 tháng 12</string>
+    <string name="scheduled_compose_cd">Hẹn giờ tin nhắn</string>
+    <string name="scheduled_options_title">Tin nhắn đã hẹn giờ</string>
     <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Delete</item>
+        <item>Gửi ngay</item>
+        <item>Xoá</item>
     </string-array>
     <string name="settings_category_appearance">Giao diện</string>
     <string name="settings_category_general">Chung</string>
@@ -186,54 +186,54 @@
     <string name="settings_system_font_title">Sử dụng font chữ hệ thống</string>
     <string name="settings_auto_emoji_title">Emoji tự động</string>
     <string name="settings_notifications_title">Thông báo</string>
-    <string name="settings_notifications_o_summary">Tap to customize</string>
-    <string name="settings_notification_actions_title">Actions</string>
-    <string name="settings_notification_action_1">Button 1</string>
-    <string name="settings_notification_action_2">Button 2</string>
-    <string name="settings_notification_action_3">Button 3</string>
+    <string name="settings_notifications_o_summary">Chạm để tuỳ chỉnh</string>
+    <string name="settings_notification_actions_title">Các hành động</string>
+    <string name="settings_notification_action_1">Nút 1</string>
+    <string name="settings_notification_action_2">Nút 2</string>
+    <string name="settings_notification_action_3">Nút 3</string>
     <string name="settings_notification_previews_title">Xem trước các thông báo</string>
     <string name="settings_vibration_title">Rung</string>
     <string name="settings_ringtone_title">Âm thanh</string>
-    <string name="settings_ringtone_none">None</string>
+    <string name="settings_ringtone_none">Không dùng</string>
     <string name="settings_qkreply_title">Trả lời nhanh</string>
     <string name="settings_qkreply_summary">Hiển thị popup khi có tin nhắn mới</string>
     <string name="settings_qkreply_tap_dismiss_title">Chạm để bỏ qua</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Chạm vào bên ngoài popup để đóng</string>
-    <string name="settings_blocking_title">Đang chặn</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Chạm vào phía ngoài của hộp thoại để đóng</string>
+    <string name="settings_blocking_title">Chặn liên hệ</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Tôi trả lời nhé?</string>
+    <string name="settings_should_i_answer_title">Bộ lọc liên hệ giả mạo</string>
     <string name="settings_should_i_answer_summary">Tự động lọc tin nhắn từ số điện thoại không mong muốn bằng cách sử dụng ứng dụng \"Should I Answer\"</string>
-    <string name="settings_delayed_title">Delayed sending</string>
-    <string name="settings_swipe_actions">Swipe actions</string>
-    <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-    <string name="settings_swipe_actions_right">Right swipe</string>
-    <string name="settings_swipe_actions_left">Left swipe</string>
-    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string name="settings_delayed_title">Trì hoãn gửi tin</string>
+    <string name="settings_swipe_actions">Các hành động vuốt</string>
+    <string name="settings_swipe_actions_summary">Tuỳ chỉnh hành động vuốt cho cuộc trò chuyện</string>
+    <string name="settings_swipe_actions_right">Vuốt phải</string>
+    <string name="settings_swipe_actions_left">Vuốt trái</string>
+    <string name="settings_swipe_actions_change">THAY ĐỔI</string>
     <string-array name="settings_swipe_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Call</item>
-        <item>Mark read</item>
+        <item>Không dùng</item>
+        <item>Lưu trữ</item>
+        <item>Xoá</item>
+        <item>Gọi điện</item>
+        <item>Đánh dấu là đã đọc</item>
     </string-array>
     <string name="settings_delivery_title">Xác nhận đã nhận tin</string>
     <string name="settings_delivery_summary">Xác nhận rằng các tin nhắn được gửi thành công</string>
     <string name="settings_unicode_title">Bỏ dấu</string>
     <string name="settings_unicode_summary">Bỏ dấu ký tự khi gửi SMS</string>
-    <string name="settings_mobile_title">Mobile numbers only</string>
-    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
-    <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+    <string name="settings_mobile_title">Lọc số di động</string>
+    <string name="settings_mobile_summary">Khi soạn tin mới, chỉ hiển thị liên hệ có số di động</string>
+    <string name="settings_mms_size_title">Tự động nén các tệp đính kèm MMS</string>
     <string name="settings_sync_title">Đồng bộ tin nhắn</string>
     <string name="settings_sync_summary">Đồng bộ lại tin nhắn với thiết bị</string>
     <string name="settings_about_title">Thông tin QKSMS</string>
     <string name="settings_version">Phiên bản: %s</string>
-    <string name="settings_logging_enabled">Debug logging enabled</string>
-    <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-    <string name="blocked_title">Đang chặn</string>
+    <string name="settings_logging_enabled">Đã bật bản ghi gỡ lỗi</string>
+    <string name="settings_logging_disabled">Đã tắt bản ghi gỡ lỗi</string>
+    <string name="settings_delay_duration_hint">Nhập khoảng thời gian (giây)</string>
+    <string name="blocked_title">Chặn liên hệ</string>
     <string name="blocked_empty">Tin nhắn bị chặn sẽ hiện ở đây</string>
     <string name="blocked_unblock_dialog_title">Bỏ chặn</string>
-    <string name="blocked_unblock_dialog_message">Bạn có muốn bỏ chặn hội thoại này?</string>
+    <string name="blocked_unblock_dialog_message">Bạn có muốn bỏ chặn cuộc trò chuyện này ?</string>
     <string name="about_title">Giới thiệu</string>
     <string name="about_version_title">Phiên bản</string>
     <string name="about_developer_title">Nhà phát triển</string>
@@ -242,8 +242,8 @@
     <string name="about_contact_title">Liên hệ</string>
     <string name="about_license_title">Giấy phép</string>
     <string name="about_copyright_title">Bản quyền</string>
-    <string name="qksms_plus_description_title">Hỗ trợ phát triển, mở khóa tất cả mọi thứ</string>
-    <string name="qksms_plus_description_summary">Bạn có thể cứu chúng tôi khỏi sự đói khát chỉ với %s</string>
+    <string name="qksms_plus_description_title">Hỗ trợ phát triển, mở khóa mọi thứ</string>
+    <string name="qksms_plus_description_summary">Bạn có thể ủng hộ chúng tôi chỉ với %s</string>
     <string name="qksms_plus_upgrade">Nâng cấp trọn đời với %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Mở khoá và tài trợ với %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Cảm ơn bạn đã ủng hộ QKSMS!</string>
@@ -253,15 +253,15 @@
     <string name="qksms_plus_coming_soon">Sắp có</string>
     <string name="qksms_plus_themes_title">Chủ đề đặc biệt</string>
     <string name="qksms_plus_themes_summary">Mở khóa các màu sắc đẹp không có sẵn trong bản thiết kế Material</string>
-    <string name="qksms_plus_emoji_title">Tuỳ biến auto-emoji</string>
-    <string name="qksms_plus_emoji_summary">Tạo phím tắt auto-emoji</string>
+    <string name="qksms_plus_emoji_title">Tuỳ biến Emoji tự động</string>
+    <string name="qksms_plus_emoji_summary">Tạo phím tắt Emoji tự động</string>
     <string name="qksms_plus_backup_title">Sao lưu tin nhắn</string>
     <string name="qksms_plus_backup_summary">Tự động sao lưu tin nhắn của bạn. Không bao giờ lo lắng về việc mất đi lịch sử của bạn nếu bạn thay đổi điện thoại hoặc điện thoại của bạn bị mất</string>
-    <string name="qksms_plus_scheduled_title">Tin nhắn theo lịch</string>
-    <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
-    <string name="qksms_plus_delayed_title">Gửi đã bị chậm chễ</string>
-    <string name="qksms_plus_delayed_summary">Chờ một vài giây trước khi gửi tin nhắn</string>
-    <string name="qksms_plus_night_title">Chế độ tự động ban đêm</string>
+    <string name="qksms_plus_scheduled_title">Hẹn giờ tin nhắn</string>
+    <string name="qksms_plus_scheduled_summary">Tin nhắn hẹn giờ sẽ được tự động gửi vào thời gian cụ thể</string>
+    <string name="qksms_plus_delayed_title">Trì hoãn gửi tin nhắn</string>
+    <string name="qksms_plus_delayed_summary">Chờ một vài giây trước khi gửi tin nhắn để bạn có thể hoàn tác nó</string>
+    <string name="qksms_plus_night_title">Chế độ ban đêm tự động</string>
     <string name="qksms_plus_night_summary">Kích hoạt chế độ ban đêm dựa trên thời gian trong ngày</string>
     <string name="qksms_plus_blacklist_title">Chặn nâng cao</string>
     <string name="qksms_plus_blacklist_summary">Chặn tin nhắn có chứa các từ khóa hoặc phù hợp với các mẫu</string>
@@ -269,37 +269,37 @@
     <string name="qksms_plus_forward_summary">Tự động chuyển tiếp tin nhắn từ người gửi</string>
     <string name="qksms_plus_respond_title">Tự động trả lời</string>
     <string name="qksms_plus_respond_summary">Tự động trả lời các tin nhắn với nội dung cài sẵn</string>
-    <string name="qksms_plus_more_title">Xem thêm</string>
-    <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+    <string name="qksms_plus_more_title">Nhiều tính năng khác</string>
+    <string name="qksms_plus_more_summary">QKSMS đang trong giai đoạn phát triển, và việc thanh toán của bạn sẽ bao gồm tất cả tính năng QKSMS+ tương lai!</string>
     <string name="widget_loading">Đang tải&#8230;</string>
-    <string name="widget_more">Xem thêm các cuộc hội thoại</string>
+    <string name="widget_more">Xem thêm các cuộc trò chuyện</string>
     <string name="qkreply_menu_read">Đánh dấu đã đọc</string>
     <string name="qkreply_menu_call">Đàm thoại</string>
-    <string name="qkreply_menu_delete">Delete</string>
+    <string name="qkreply_menu_delete">Xoá</string>
     <string name="qkreply_menu_expand">Hiển thị nhiều hơn</string>
     <string name="qkreply_menu_collapse">Hiển thị ít hơn</string>
-    <string name="qkreply_menu_view">Mở hội thoại</string>
+    <string name="qkreply_menu_view">Mở cuộc trò chuyện</string>
     <string name="theme_material">Material</string>
     <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">Hệ 16</string>
     <string name="theme_apply">Áp dụng</string>
     <string-array name="notification_actions">
-        <item>None</item>
-        <item>Mark read</item>
-        <item>Reply</item>
-        <item>Call</item>
-        <item>Delete</item>
+        <item>Không dùng</item>
+        <item>Đánh dấu là đã đọc</item>
+        <item>Trả lời</item>
+        <item>Gọi</item>
+        <item>Xoá</item>
     </string-array>
     <string name="button_cancel">Hủy</string>
     <string name="button_delete">Xóa</string>
-    <string name="button_save">Save</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_save">Lưu</string>
+    <string name="button_stop">Dừng</string>
     <string name="button_more">Xem thêm</string>
-    <string name="button_set">Set</string>
+    <string name="button_set">Chọn</string>
     <string name="button_unblock">Bỏ chặn</string>
     <string name="button_undo">Undo</string>
     <string name="toast_copied">Đã sao chép</string>
-    <string name="toast_archived">Hội thoại đã được lưu trữ</string>
+    <string name="toast_archived">Cuộc trò chuyện đã được lưu trữ</string>
     <string name="toast_qksms_plus">Bạn phải mở khóa QKSMS+ để sử dụng chức năng này</string>
     <plurals name="notification_new_messages">
         <item quantity="other">%s tin nhắn mới</item>
@@ -323,19 +323,19 @@
         <item>Lớn hơn</item>
     </string-array>
     <string-array name="delayed_sending_labels">
-        <item>No delay</item>
-        <item>Short</item>
-        <item>Medium</item>
-        <item>Long</item>
+        <item>Không trì hoãn</item>
+        <item>Ngắn</item>
+        <item>Vừa</item>
+        <item>Dài</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Recommended)</item>
+        <item>300KB (khuyến nghị)</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2M</item>
-        <item>No compression</item>
+        <item>Không nén</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Ok</item>

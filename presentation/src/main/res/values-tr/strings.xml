@@ -116,8 +116,8 @@
     <string name="compose_gallery_cd">Bir fotoğraf eklemek</string>
     <string name="compose_camera_cd">Fotoğraf Çek</string>
     <string name="compose_schedule_cd">Mesajı zamanlama</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Bir kişi ekle</string>
+    <string name="compose_contact_error">Kişi okunurken hata oluştu</string>
     <string name="compose_sim_cd">Seçili, %s SIM kartı değiştirin</string>
     <string name="compose_send_cd">Mesaj gönder</string>
     <string name="message_status_sending">Gönderiliyor...</string>

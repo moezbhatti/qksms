@@ -118,8 +118,8 @@
     <string name="compose_gallery_cd">Załącz zdjęcie</string>
     <string name="compose_camera_cd">Zrób zdjęcie</string>
     <string name="compose_schedule_cd">Zaplanuj wiadomość</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Załącz kontakt</string>
+    <string name="compose_contact_error">Nie można odczytać kontaktu</string>
     <string name="compose_sim_cd">Wybrano %s, zmień kartę SIM</string>
     <string name="compose_send_cd">Wyślij wiadomość</string>
     <string name="message_status_sending">Wysyłanie&#8230;</string>

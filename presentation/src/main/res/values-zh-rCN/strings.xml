@@ -115,8 +115,8 @@
     <string name="compose_gallery_cd">添加照片</string>
     <string name="compose_camera_cd">拍照</string>
     <string name="compose_schedule_cd">定时消息</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">附加联系人</string>
+    <string name="compose_contact_error">读取联系人时出错</string>
     <string name="compose_sim_cd">%s已选择， 更改SIM卡</string>
     <string name="compose_send_cd">发送消息</string>
     <string name="message_status_sending">正在发送...</string>

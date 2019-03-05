@@ -120,8 +120,8 @@
     <string name="compose_gallery_cd">إرفاق صورة</string>
     <string name="compose_camera_cd">التقاط صورة</string>
     <string name="compose_schedule_cd">جدوِل الرسالة</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">إرفاق جهة اتصال</string>
+    <string name="compose_contact_error">خطأ في قراءة جهة الاتصال</string>
     <string name="compose_sim_cd">%s محددة، غيّر شريحة SIM</string>
     <string name="compose_send_cd">إرسال الرسالة</string>
     <string name="message_status_sending">الإرسال جارٍ&#8230;</string>
@@ -147,7 +147,7 @@
     <string name="backup_never">أبداً</string>
     <string name="backup_restore_title">استعادة</string>
     <string name="backup_restore_summary">اختر نسخة احتياطية</string>
-    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+    <string name="backup_restore_error_plus">يرجى إلغاء تأمين QKSMS+ للتمكن من استخدام النسخ الاحتياطي والاستعادة</string>
     <string name="backup_restore_error_backup">النسخ الاحتياطي قيد التقدم&#8230;</string>
     <string name="backup_restore_error_restore">الاستعادة قيد التقدُّم&#8230;</string>
     <string name="backup_restore_confirm_title">الاستعادة من النسخ الاحتياطي</string>

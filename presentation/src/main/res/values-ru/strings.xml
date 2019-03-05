@@ -118,8 +118,8 @@
     <string name="compose_gallery_cd">Прикрепить фото</string>
     <string name="compose_camera_cd">Сделать снимок</string>
     <string name="compose_schedule_cd">Запланировать сообщение</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Прикрепите контакт</string>
+    <string name="compose_contact_error">Ошибка чтения контакта</string>
     <string name="compose_sim_cd">Выбрано %s, сменить SIM-карту</string>
     <string name="compose_send_cd">Отправить сообщение</string>
     <string name="message_status_sending">Отправка&#8230;</string>
