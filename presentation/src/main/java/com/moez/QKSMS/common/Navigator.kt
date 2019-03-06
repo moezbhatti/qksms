@@ -217,9 +217,15 @@ class Navigator @Inject constructor(
     }
 
     fun addContact(address: String) {
-        val intent = Intent(Intent.ACTION_INSERT)
-                .setType(ContactsContract.Contacts.CONTENT_TYPE)
-                .putExtra(ContactsContract.Intents.Insert.PHONE, address)
+        val uri = Uri.parse("tel: $address")
+        var intent = Intent(ContactsContract.Intents.SHOW_OR_CREATE_CONTACT, uri)
+
+        if (intent.resolveActivity(context.packageManager) == null) {
+            intent = Intent(Intent.ACTION_INSERT)
+                    .setType(ContactsContract.Contacts.CONTENT_TYPE)
+                    .putExtra(ContactsContract.Intents.Insert.PHONE, address)
+        }
+
         startActivityExternal(intent)
     }
 
