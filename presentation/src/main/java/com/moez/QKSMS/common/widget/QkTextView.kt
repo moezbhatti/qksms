@@ -25,6 +25,7 @@ import com.moez.QKSMS.common.util.TextViewStyler
 import com.moez.QKSMS.injection.appComponent
 import javax.inject.Inject
 
+
 open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
     : EmojiAppCompatTextView(context, attrs) {
 
@@ -43,5 +44,4 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
         super.setTextColor(color)
         setLinkTextColor(color)
     }
-
 }

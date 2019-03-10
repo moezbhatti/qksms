@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId "com.moez.QKSMS"
-        minSdkVersion 21
+        minSdkVersion 25
         targetSdkVersion 28
         versionCode 193
         versionName "3.6.3"
@@ -105,6 +105,7 @@ configurations {
 }
 
 dependencies {
+
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
@@ -146,7 +147,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-    compileOnly "javax.annotation:jsr250-api:1.0"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
 
     // ezvcard
     implementation('com.googlecode.ez-vcard:ez-vcard:0.10.4', {
@@ -174,18 +175,17 @@ dependencies {
     testImplementation "androidx.test:runner:$androidx_testrunner_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
-
-    implementation "com.android.billingclient:billing:1.0"
-    implementation "com.bugsnag:bugsnag-android:4.1.1"
-    implementation "com.github.chrisbanes:PhotoView:2.0.0"
+    implementation 'com.android.billingclient:billing:1.0'
+    implementation 'com.bugsnag:bugsnag-android:4.1.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
-    implementation "com.google.android:flexbox:0.3.1"
+    implementation 'com.google.android:flexbox:0.3.1'
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "me.leolin:ShortcutBadger:1.1.21"
+    implementation 'me.leolin:ShortcutBadger:1.1.21'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation project(":android-smsmms")
-    implementation project(":common")
+    implementation project(':android-smsmms')
+    implementation project(':common')
     implementation project(':data')
     implementation project(':domain')
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
