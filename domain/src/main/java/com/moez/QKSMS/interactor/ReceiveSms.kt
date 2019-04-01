@@ -62,7 +62,7 @@ class ReceiveSms @Inject constructor(
                 .filter {
                     conversation ->
                     !conversation.blocked
-                    !conversation.snippet.contains(Regex("退订|退定"))
+                    !conversation.snippet.contains(Regex("退订|退定|退TD"))
                 } // Don't notify for blocked conversations
                 .doOnNext { conversation -> if (conversation.archived) conversationRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
                 .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
