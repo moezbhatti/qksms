@@ -89,7 +89,7 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val part = getItem(position)!!
+        val part = getItem(position) ?: return
         val view = holder.containerView
         when (getItemViewType(position)) {
             VIEW_TYPE_IMAGE -> {

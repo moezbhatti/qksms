@@ -56,14 +56,14 @@ class ScheduledMessageAdapter @Inject constructor(
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val message = getItem(adapterPosition)!!
+                val message = getItem(adapterPosition) ?: return@setOnClickListener
                 clicks.onNext(message.id)
             }
         }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val message = getItem(position)!!
+        val message = getItem(position) ?: return
         val view = holder.containerView
 
         // GroupAvatarView only accepts recipients, so map the phone numbers to recipients

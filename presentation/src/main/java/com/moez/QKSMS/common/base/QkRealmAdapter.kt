@@ -28,6 +28,7 @@ import io.realm.RealmList
 import io.realm.RealmModel
 import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
+import timber.log.Timber
 
 abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkViewHolder>(null, true) {
 
@@ -77,6 +78,15 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
         selection.clear()
         selectionChanges.onNext(selection)
         notifyDataSetChanged()
+    }
+
+    override fun getItem(index: Int): T? {
+        if (index < 0) {
+            Timber.w("Only indexes >= 0 are allowed. Input was: $index")
+            return null
+        }
+
+        return super.getItem(index)
     }
 
     override fun updateData(data: OrderedRealmCollection<T>?) {

@@ -62,14 +62,14 @@ class ConversationsAdapter @Inject constructor(
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val conversation = getItem(adapterPosition)!!
+                val conversation = getItem(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
                     true -> view.isActivated = isSelected(conversation.id)
                     false -> navigator.showConversation(conversation.id)
                 }
             }
             view.setOnLongClickListener {
-                val conversation = getItem(adapterPosition)!!
+                val conversation = getItem(adapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(conversation.id)
                 view.isActivated = isSelected(conversation.id)
                 true
@@ -78,7 +78,7 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val conversation = getItem(position)!!
+        val conversation = getItem(position) ?: return
         val view = viewHolder.containerView
 
         view.isActivated = isSelected(conversation.id)
@@ -98,6 +98,6 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position)!!.read) 0 else 1
+        return if (getItem(position)?.read == true) 0 else 1
     }
 }

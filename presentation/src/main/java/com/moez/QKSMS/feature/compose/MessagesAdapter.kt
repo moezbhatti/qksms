@@ -151,7 +151,7 @@ class MessagesAdapter @Inject constructor(
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val message = getItem(adapterPosition)!!
+                val message = getItem(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(message.id, false)) {
                     true -> view.isActivated = isSelected(message.id)
                     false -> {
@@ -162,7 +162,7 @@ class MessagesAdapter @Inject constructor(
                 }
             }
             view.setOnLongClickListener {
-                val message = getItem(adapterPosition)!!
+                val message = getItem(adapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(message.id)
                 view.isActivated = isSelected(message.id)
                 true
@@ -171,7 +171,7 @@ class MessagesAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val message = getItem(position)!!
+        val message = getItem(position) ?: return
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
         val view = viewHolder.containerView
@@ -296,7 +296,7 @@ class MessagesAdapter @Inject constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val message = getItem(position)!!
+        val message = getItem(position) ?: return -1
         return when (message.isMe()) {
             true -> VIEW_TYPE_MESSAGE_OUT
             false -> VIEW_TYPE_MESSAGE_IN
