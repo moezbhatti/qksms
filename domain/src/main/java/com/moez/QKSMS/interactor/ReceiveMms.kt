@@ -30,13 +30,13 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class ReceiveMms @Inject constructor(
-        private val activeConversationManager: ActiveConversationManager,
-        private val conversationRepo: ConversationRepository,
-        private val externalBlockingManager: ExternalBlockingManager,
-        private val syncManager: SyncRepository,
-        private val messageRepo: MessageRepository,
-        private val notificationManager: NotificationManager,
-        private val updateBadge: UpdateBadge
+    private val activeConversationManager: ActiveConversationManager,
+    private val conversationRepo: ConversationRepository,
+    private val externalBlockingManager: ExternalBlockingManager,
+    private val syncManager: SyncRepository,
+    private val messageRepo: MessageRepository,
+    private val notificationManager: NotificationManager,
+    private val updateBadge: UpdateBadge
 ) : Interactor<Uri>() {
 
     override fun buildObservable(params: Uri): Flowable<*> {

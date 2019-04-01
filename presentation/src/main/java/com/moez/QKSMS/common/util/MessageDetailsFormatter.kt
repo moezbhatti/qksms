@@ -28,8 +28,8 @@ import com.moez.QKSMS.util.tryOrNull
 import javax.inject.Inject
 
 class MessageDetailsFormatter @Inject constructor(
-        private val context: Context,
-        private val dateFormatter: DateFormatter
+    private val context: Context,
+    private val dateFormatter: DateFormatter
 ) {
 
     fun format(message: Message): String {

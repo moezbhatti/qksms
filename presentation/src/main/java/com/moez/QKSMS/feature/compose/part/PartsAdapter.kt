@@ -66,7 +66,7 @@ class PartsAdapter(context: Context, navigator: Navigator, theme: Colors.Theme) 
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val part = data[position]
-        val view = holder.itemView
+        val view = holder.containerView
 
         val canGroupWithPrevious = canGroup(message, previous) || position > 0
         val canGroupWithNext = canGroup(message, next) || position < itemCount - 1 || bodyVisible

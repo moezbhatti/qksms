@@ -19,343 +19,345 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="shortcut_compose_long_label">Нова бесіда</string>
-  <string name="shortcut_compose_short_label">Написати</string>
-  <string name="shortcut_compose_disabled_message">Ярлик вимкнуто</string>
-  <string name="title_archived">Архівні</string>
-  <string name="title_settings">Налаштування</string>
-  <string name="title_notification_prefs">Сповіщення</string>
-  <string name="title_theme">Тема</string>
-  <string name="title_conversations">Пошук у вхідних&#8230;</string>
-  <string name="title_compose">Кому: ім\'я або номер</string>
-  <string name="setup_skip">Пропустити</string>
-  <string name="setup_next">Продовжити</string>
-  <string name="menu_call">Зателефонувати</string>
-  <string name="menu_info">Деталі</string>
-  <string name="menu_save">Зберегти в галерії</string>
-  <string name="main_drawer_open_cd">Відкрити панель навігації</string>
-  <string name="main_title_selected">Обрано: %d</string>
-  <string name="main_menu_clear">Очистити</string>
-  <string name="main_menu_archive">Архівувати</string>
-  <string name="main_menu_unarchive">Розархівувати</string>
-  <string name="main_menu_delete">Видалити</string>
-  <string name="main_menu_pin">Закріпити</string>
-  <string name="main_menu_unpin">Відкріпити</string>
-  <string name="main_menu_read">Позначити як прочитане</string>
-  <string name="main_menu_unread">Позначити як непрочитане</string>
-  <string name="main_menu_block">Блокувати</string>
-  <string name="main_syncing">Синхронізація повідомлень&#8230;</string>
-  <string name="main_sender_you">Ви: %s</string>
-  <string name="main_message_results_title">Результати в повідомленнях</string>
-  <string name="main_message_results">Повідомлень: %d</string>
-  <string name="inbox_empty_text">Ваші бесіди з\'являтимуться тут</string>
-  <string name="inbox_search_empty_text">Результатів немає</string>
-  <string name="archived_empty_text">Ваші архівовані бесіди з\'являтимуться тут</string>
-  <string name="main_fab_cd">Почати нову бесіду</string>
-  <string name="main_default_sms_title">Ви знову полюбите писати</string>
-  <string name="main_default_sms_message">Зробити QKSMS початковою програмою для SMS</string>
-  <string name="main_default_sms_change">Встановити</string>
-  <string name="main_permission_required">Вимагається дозвіл</string>
-  <string name="main_permission_sms">Для надсилання та перегляду SMS-повідомлень QKSMS потрібен дозвіл</string>
-  <string name="main_permission_contacts">Для перегляду ваших контактів QKSMS потрібен дозвіл</string>
-  <string name="main_permission_allow">Дозволити</string>
-  <string name="drawer_inbox">Вхідні</string>
-  <string name="drawer_archived">Архівні</string>
-  <string name="drawer_scheduled">Заплановані</string>
-  <string name="drawer_blocking">Блокування</string>
-  <string name="drawer_more">Більше</string>
-  <string name="drawer_settings">Налаштування</string>
-  <string name="drawer_plus">QKSMS+</string>
-  <string name="drawer_help">Допомога та зворотній зв\'язок</string>
-  <string name="drawer_invite">Запросити друзів</string>
-  <string name="drawer_plus_banner_title">QKSMS+</string>
-  <string name="drawer_plus_banner_summary">Розблокувати нові дивовижні можливості та підтримати розробку</string>
-  <string name="rate_title">Подобається QKSMS?</string>
-  <string name="rate_summary">Поділись любов\'ю та оціни нас на Google Play!</string>
-  <string name="rate_okay">Добре!</string>
-  <string name="rate_dismiss">ВІДХИЛИТИ</string>
-  <string name="dialog_delete_title">Видалити</string>
-  <plurals name="dialog_delete_message">
-    <item quantity="one">Ви впевнені, що хочете видалити цю бесіду?</item>
-    <item quantity="few">Ви впевнені, що хочете видалити %d бесіди?</item>
-    <item quantity="many">Ви впевнені, що хочете видалити %d бесід?</item>
-    <item quantity="other">Ви впевнені, що хочете видалити %d бесіди?</item>
-  </plurals>
-  <string-array name="message_options">
-    <item>Скопіювати текст</item>
-    <item>Переслати</item>
-    <item>Видалити</item>
-  </string-array>
-  <string name="compose_title_selected">Обрано: %d</string>
-  <string name="compose_subtitle_results">%1$d із %2$d результатів</string>
-  <string name="compose_send_group_title">Надіслати як групове повідомлення</string>
-  <string name="compose_send_group_summary">Отримувачі та відповіді будуть видимі для всіх</string>
-  <string name="compose_messages_empty">Це початок вашої бесіди. Скажіть, що-небудь приємне!</string>
-  <string name="compose_vcard_label">Картка контакту</string>
-  <string name="compose_scheduled_for">Заплановано на</string>
-  <string name="compose_scheduled_future">Обраний час повинен бути в майбутньому!</string>
-  <string name="compose_scheduled_plus">Для використання запланованих повідомлень ви повинні розблокувати QKSMS+</string>
-  <string name="compose_scheduled_toast">Додано до запланованих повідомлень</string>
-  <string name="compose_hint">Написати повідомлення&#8230;</string>
-  <string name="compose_menu_copy">Скопіювати текст</string>
-  <string name="compose_menu_forward">Переслати</string>
-  <string name="compose_menu_delete">Видалити</string>
-  <string name="compose_menu_previous">Назад</string>
-  <string name="compose_menu_next">Далі</string>
-  <string name="compose_menu_clear">Очистити</string>
-  <string name="compose_details_title">Деталі повідомлення</string>
-  <string name="compose_details_type">Тип: %s</string>
-  <string name="compose_details_from">Від: %s</string>
-  <string name="compose_details_to">Кому: %s</string>
-  <string name="compose_details_subject">Тема: %s</string>
-  <string name="compose_details_priority">Пріоритет: %s</string>
-  <string name="compose_details_size">Розмір: %s</string>
-  <string name="compose_details_sent">Надіслано: %s</string>
-  <string name="compose_details_received">Отримано: %s</string>
-  <string name="compose_details_delivered">Доставлено: %s</string>
-  <string name="compose_details_error_code">Код помилки: %d</string>
-  <string name="compose_attach_cd">Додати вкладення</string>
-  <string name="compose_gallery_cd">Прикріпити фотографію</string>
-  <string name="compose_camera_cd">Сфотографувати</string>
-  <string name="compose_schedule_cd">Запланувати повідомлення</string>
-  <string name="compose_sim_cd">%s обрано, змініть SIM-картку</string>
-  <string name="compose_send_cd">Надіслати повідомлення</string>
-  <string name="message_status_sending">Надсилання&#8230;</string>
-  <string name="message_status_delivered">Доставлено %s</string>
-  <string name="message_status_failed">Не вдалося надіслати. Торкніться, щоб повторити спробу</string>
-  <string name="info_title">Деталі</string>
-  <string name="info_name">Заголовок бесіди</string>
-  <string name="info_name_hint">Введіть заголовок</string>
-  <string name="info_notifications">Сповіщення</string>
-  <string name="info_theme">Тема</string>
-  <string name="info_archive">Архівувати</string>
-  <string name="info_unarchive">Розархівувати</string>
-  <string name="info_block">Заблокувати</string>
-  <string name="info_unblock">Розблокувати</string>
-  <string name="info_delete">Видалити бесіду</string>
-  <string name="gallery_error">Couldn\'t load media</string>
-  <string name="gallery_toast_saved">Зберегти до галереї</string>
-  <string name="backup_title">Резервне копіювання та відновлення</string>
-  <string name="backup_backing_up">Резервне копіювання повідомлень</string>
-  <string name="backup_restoring">Відновити з резервної копії</string>
-  <string name="backup_last">Остання резервна копія</string>
-  <string name="backup_loading">Завантаження&#8230;</string>
-  <string name="backup_never">Ніколи</string>
-  <string name="backup_restore_title">Відновити</string>
-  <string name="backup_restore_summary">Оберіть резервну копію</string>
-  <string name="backup_restore_error_plus">Для використання резервного копіювання та відновлення - розблокуйте QKSMS+</string>
-  <string name="backup_restore_error_backup">Триває створення резервної копії&#8230;</string>
-  <string name="backup_restore_error_restore">Триває відновлення&#8230;</string>
-  <string name="backup_restore_confirm_title">Відновити з резервної копії</string>
-  <string name="backup_restore_confirm_message">Відновити повідомлення з цієї резервної копії?</string>
-  <string name="backup_restore_stop_title">Зупинити відновлення</string>
-  <string name="backup_restore_stop_message">Повідомлення, які були відновлені залишатимуться на пристрої</string>
-  <string name="backup_restore_dialog_title">Резервні копії</string>
-  <string name="backup_restore_dialog_empty">Резервних копій не знайдено</string>
-  <plurals name="backup_message_count">
-    <item quantity="one">%d повідомлення</item>
-    <item quantity="few">%d повідомлення</item>
-    <item quantity="many">%d повідомлень</item>
-    <item quantity="other">%d повідомлення</item>
-  </plurals>
-  <string name="backup_disclaimer">На даний момент підтримуються лише SMS-повідомлення. Підтримка MMS-повідомлень та створення резервних копій за розкладом буде реалізована незабаром!</string>
-  <string name="backup_now">Створити резервну копію</string>
-  <string name="backup_progress_parsing">Аналіз резервної копії&#8230;</string>
-  <string name="backup_progress_running">%d/%d повідомлень</string>
-  <string name="backup_progress_saving">Збереження резервної копії&#8230;</string>
-  <string name="backup_progress_syncing">Синхронізація повідомлень&#8230;</string>
-  <string name="backup_progress_finished">Готово!</string>
-  <string name="backup_notification_channel_name">Резервне копіювання та відновлення</string>
-  <string name="scheduled_title">Заплановані</string>
-  <string name="scheduled_empty_description">Автоматично надсилайте повідомлення саме в той час, який ви захочете</string>
-  <string name="scheduled_empty_message_1">Агов! Коли в тебе день народження?</string>
-  <string name="scheduled_empty_message_2">23-го грудня</string>
-  <string name="scheduled_empty_message_3">З Днем народження! Дивись, який я чудовий друг, згадав про твій день народження</string>
-  <string name="scheduled_empty_message_3_timestamp">Надіслано: 23 грудня </string>
-  <string name="scheduled_compose_cd">Запланувати повідомлення</string>
-  <string name="scheduled_options_title">Заплановане повідомлення</string>
-  <string-array name="scheduled_options">
-    <item>Надіслати зараз</item>
-    <item>Видалити</item>
-  </string-array>
-  <string name="settings_category_appearance">Зовнішній вигляд</string>
-  <string name="settings_category_general">Загальні</string>
-  <string name="settings_category_qkreply">QK Відповідь</string>
-  <string name="settings_theme_title">Тема</string>
-  <string name="settings_night_title">Нічний режим</string>
-  <string name="settings_black_title">Повністю чорний нічний режим</string>
-  <string name="settings_night_start_title">Час початку</string>
-  <string name="settings_night_end_title">Час завершення</string>
-  <string name="settings_text_size_title">Розмір шрифта</string>
-  <string name="settings_system_font_title">Використовувати системний шрифт</string>
-  <string name="settings_auto_emoji_title">Автоматичні emoji</string>
-  <string name="settings_notifications_title">Сповіщення</string>
-  <string name="settings_notifications_o_summary">Торкніться, щоб налаштувати</string>
-  <string name="settings_notification_actions_title">Дії</string>
-  <string name="settings_notification_action_1">Кнопка 1</string>
-  <string name="settings_notification_action_2">Кнопка 2</string>
-  <string name="settings_notification_action_3">Кнопка 3</string>
-  <string name="settings_notification_previews_title">Попередній перегляд сповіщень</string>
-  <string name="settings_vibration_title">Вібро</string>
-  <string name="settings_ringtone_title">Звук</string>
-  <string name="settings_ringtone_none">Ні</string>
-  <string name="settings_qkreply_title">QK Відповідь</string>
-  <string name="settings_qkreply_summary">Виринаюче вікно для нових повідомлень</string>
-  <string name="settings_qkreply_tap_dismiss_title">Торкніться, щоб вимкнути</string>
-  <string name="settings_qkreply_tap_dismiss_summary">Торкніться за межами виринаючого вікна, щоб закрити його</string>
-  <string name="settings_blocking_title">Блокування</string>
-  <!-- Do not translate -->
-  <string name="settings_should_i_answer_title">Should I Answer?</string>
-  <string name="settings_should_i_answer_summary">Автоматично фільтрувати повідомлення від небажаних номерів, використовуючи додаток «Should I Answer»</string>
-  <string name="settings_delayed_title">Затримка відправлення</string>
-  <string name="settings_swipe_actions">Дії жестів</string>
-  <string name="settings_swipe_actions_summary">Налаштуйте використання жестів для розмови</string>
-  <string name="settings_swipe_actions_right">Провести праворуч</string>
-  <string name="settings_swipe_actions_left">Провести ліворуч</string>
-  <string name="settings_swipe_actions_change">ЗМІНИТИ</string>
-  <string-array name="settings_swipe_actions">
-    <item>Немає</item>
-    <item>Перенести в архів</item>
-    <item>Видалити</item>
-    <item>Виклик</item>
-    <item>Позначити як прочитане</item>
-  </string-array>
-  <string name="settings_delivery_title">Звіти про доставку</string>
-  <string name="settings_delivery_summary">Підтвердження успішного надсилання повідомлень</string>
-  <string name="settings_unicode_title">Видалити акценти</string>
-  <string name="settings_unicode_summary">Видалення акцентів з символів у вихідних SMS-повідомленнях</string>
-  <string name="settings_mobile_title">Лише номери мобільних</string>
-  <string name="settings_mobile_summary">При написанні повідомлення показувати лише мобільні номери</string>
-  <string name="settings_mms_size_title">Автоматичне стиснення MMS-вкладень</string>
-  <string name="settings_sync_title">Синхронізація повідомлень</string>
-  <string name="settings_sync_summary">Повторна синхронізація ваших повідомлень з власною базою даних SMS Android</string>
-  <string name="settings_about_title">Про QKSMS</string>
-  <string name="settings_version">Версія %s</string>
-  <string name="settings_logging_enabled">Ведення журналу зневаження увімкнуте</string>
-  <string name="settings_logging_disabled">Ведення журналу зневаження вимкнуте</string>
-  <string name="settings_delay_duration_hint">Введіть тривалість (у секундах)</string>
-  <string name="blocked_title">Блокування</string>
-  <string name="blocked_empty">Ваші заблоковані розмови з\'являтимуться тут</string>
-  <string name="blocked_unblock_dialog_title">Розблокувати</string>
-  <string name="blocked_unblock_dialog_message">Бажаєте розблокувати цю бесіду?</string>
-  <string name="about_title">Про додаток</string>
-  <string name="about_version_title">Версія</string>
-  <string name="about_developer_title">Розробник</string>
-  <string name="about_source_title">Вихідний код</string>
-  <string name="about_changelog_title">Журнал змін</string>
-  <string name="about_contact_title">Контакт</string>
-  <string name="about_license_title">Ліцензія</string>
-  <string name="about_copyright_title">Авторське право</string>
-  <string name="qksms_plus_description_title">Підтримати подальший розвиток, розблокувати все</string>
-  <string name="qksms_plus_description_summary">Ви можете врятувати голодуючого розробника всього за %s</string>
-  <string name="qksms_plus_upgrade">Довічне оновлення %1$s %2$s</string>
-  <string name="qksms_plus_upgrade_donate">Розблокувати + пожертвувати %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Дякуємо вам за підтримку QKSMS!</string>
-  <string name="qksms_plus_thanks_summary">Тепер у вас є доступ до всіх функцій QKSMS+</string>
-  <string name="qksms_plus_free_title">QKSMS+ є безкоштовним для користувачів F-Droid! Якщо ви хочете підтримати подальший розвиток програми, зробіть пожертву.</string>
-  <string name="qksms_plus_donate">Пожертвування через PayPal</string>
-  <string name="qksms_plus_coming_soon">Незабаром</string>
-  <string name="qksms_plus_themes_title">Преміум теми</string>
-  <string name="qksms_plus_themes_summary">Розблокуйте гарні кольори теми, недоступні в палітрі Material Design</string>
-  <string name="qksms_plus_emoji_title">Власні авто-emoji</string>
-  <string name="qksms_plus_emoji_summary">Створюйте ярлик власних авто-emoji</string>
-  <string name="qksms_plus_backup_title">Резерв. копіювання</string>
-  <string name="qksms_plus_backup_summary">Автоматично створюйте резервні копії ваших повідомлень. Не переймайтеся, що втратите історію, якщо ви зміните або загубите телефон</string>
-  <string name="qksms_plus_scheduled_title">Заплановані повідомлення</string>
-  <string name="qksms_plus_scheduled_summary">Заплановані повідомлення для надсилання у визначений час та дату</string>
-  <string name="qksms_plus_delayed_title">Відкладене надсилання</string>
-  <string name="qksms_plus_delayed_summary">Зачекайте кілька секунд, перш ніж надсилати повідомлення</string>
-  <string name="qksms_plus_night_title">Автоматичний нічний режим</string>
-  <string name="qksms_plus_night_summary">Увімкнення нічного режиму на основі часу доби</string>
-  <string name="qksms_plus_blacklist_title">Розширене блокування</string>
-  <string name="qksms_plus_blacklist_summary">Блокувати повідомлення, які містять ключові слова або відповідають шаблонам</string>
-  <string name="qksms_plus_forward_title">Автоматичне пересилання</string>
-  <string name="qksms_plus_forward_summary">Автоматичне пересилання повідомлень від певних відправників</string>
-  <string name="qksms_plus_respond_title">Автоматична відповідь</string>
-  <string name="qksms_plus_respond_summary">Автоматично відповідати на вхідні повідомлення за допомогою попередньо налаштованих шаблонів</string>
-  <string name="qksms_plus_more_title">Ще</string>
-  <string name="qksms_plus_more_summary">QKSMS перебуває у активній розробці, і Ваша покупка буде включати в себе всі майбутні можливості QKSMS +!</string>
-  <string name="widget_loading">Завантаження&#8230;</string>
-  <string name="widget_more">Переглянути більше бесід</string>
-  <string name="qkreply_menu_read">Позначити як прочитане</string>
-  <string name="qkreply_menu_call">Зателефонувати</string>
-  <string name="qkreply_menu_delete">Delete</string>
-  <string name="qkreply_menu_expand">Показати більше</string>
-  <string name="qkreply_menu_collapse">Показати меньше</string>
-  <string name="qkreply_menu_view">Відкрити бесіду</string>
-  <string name="theme_material">Material</string>
-  <string name="theme_plus">QKSMS +</string>
-  <string name="theme_hex">HEX</string>
-  <string name="theme_apply">Застосувати</string>
-  <string-array name="notification_actions">
-    <item>Немає</item>
-    <item>Позначити як прочитане</item>
-    <item>Відповісти</item>
-    <item>Зателефонувати</item>
-    <item>Видалити</item>
-  </string-array>
-  <string name="button_cancel">Скасувати</string>
-  <string name="button_delete">Видалити</string>
-  <string name="button_save">Зберегти</string>
-  <string name="button_stop">Зупинити</string>
-  <string name="button_more">Більше</string>
-  <string name="button_set">Задати</string>
-  <string name="button_unblock">Розблокувати</string>
-  <string name="button_undo">Скасувати</string>
-  <string name="toast_copied">Скопійовано</string>
-  <string name="toast_archived">Архівована бесіда</string>
-  <string name="toast_qksms_plus">Для використання Ви повинні розблокувати QKSMS+</string>
-  <plurals name="notification_new_messages">
-    <item quantity="one">Нове повідомлення</item>
-    <item quantity="few">%s нових повідомлень</item>
-    <item quantity="many">%s нових повідомлень</item>
-    <item quantity="other">%s нових повідомлень</item>
-  </plurals>
-  <string name="notification_message_failed_title">Повідомлення не надіслано</string>
-  <string name="notification_message_failed_text">Не вдалося надіслати повідомлення для %s</string>
-  <string-array name="night_modes">
-    <item>Вимкнений</item>
-    <item>Завжди увімкнений</item>
-    <item>Автоматично</item>
-  </string-array>
-  <string-array name="notification_preview_options">
-    <item>Показати ім\'я та повідомлення</item>
-    <item>Показати ім\'я</item>
-    <item>Приховати вміст</item>
-  </string-array>
-  <string-array name="text_sizes">
-    <item>Малий</item>
-    <item>Нормальний</item>
-    <item>Великий</item>
-    <item>Більший</item>
-  </string-array>
-  <string-array name="delayed_sending_labels">
-    <item>Без затримок</item>
-    <item>Коротка</item>
-    <item>Середня</item>
-    <item>Довга</item>
-  </string-array>
-  <string-array name="mms_sizes">
-    <item>100 Кб</item>
-    <item>200 Кб</item>
-    <item>300 Кб (рекомендовано)</item>
-    <item>600 Кб</item>
-    <item>1000 Кб</item>
-    <item>2000 Кб</item>
-    <item>Без стиснення</item>
-  </string-array>
-  <string-array name="qk_responses">
-    <item>Добре</item>
-    <item>Одну хвилинку</item>
-    <item>Мені по дорозі</item>
-    <item>Дякую</item>
-    <item>Звучить цікаво</item>
-    <item>Що сталося?</item>
-    <item>Згода</item>
-    <item>Ні</item>
-    <item>Кохаю тебе</item>
-    <item>Вибач</item>
-    <item>LOL</item>
-    <item>Це нормально</item>
-  </string-array>
+    <string name="shortcut_compose_long_label">Нова бесіда</string>
+    <string name="shortcut_compose_short_label">Написати</string>
+    <string name="shortcut_compose_disabled_message">Ярлик вимкнуто</string>
+    <string name="title_archived">Архівні</string>
+    <string name="title_settings">Налаштування</string>
+    <string name="title_notification_prefs">Сповіщення</string>
+    <string name="title_theme">Тема</string>
+    <string name="title_conversations">Пошук у вхідних&#8230;</string>
+    <string name="title_compose">Кому: ім\'я або номер</string>
+    <string name="setup_skip">Пропустити</string>
+    <string name="setup_next">Продовжити</string>
+    <string name="menu_call">Зателефонувати</string>
+    <string name="menu_info">Деталі</string>
+    <string name="menu_save">Зберегти в галереї</string>
+    <string name="main_drawer_open_cd">Відкрити панель навігації</string>
+    <string name="main_title_selected">Обрано: %d</string>
+    <string name="main_menu_clear">Очистити</string>
+    <string name="main_menu_archive">Архівувати</string>
+    <string name="main_menu_unarchive">Розархівувати</string>
+    <string name="main_menu_delete">Видалити</string>
+    <string name="main_menu_pin">Закріпити</string>
+    <string name="main_menu_unpin">Відкріпити</string>
+    <string name="main_menu_read">Позначити як прочитане</string>
+    <string name="main_menu_unread">Позначити як непрочитане</string>
+    <string name="main_menu_block">Блокувати</string>
+    <string name="main_syncing">Синхронізація повідомлень&#8230;</string>
+    <string name="main_sender_you">Ви: %s</string>
+    <string name="main_message_results_title">Результати в повідомленнях</string>
+    <string name="main_message_results">Повідомлень: %d</string>
+    <string name="inbox_empty_text">Ваші бесіди з\'являтимуться тут</string>
+    <string name="inbox_search_empty_text">Результатів немає</string>
+    <string name="archived_empty_text">Ваші архівовані бесіди з\'являтимуться тут</string>
+    <string name="main_fab_cd">Почати нову бесіду</string>
+    <string name="main_default_sms_title">Ви знову полюбите писати</string>
+    <string name="main_default_sms_message">Зробити QKSMS початковою програмою для SMS</string>
+    <string name="main_default_sms_change">Встановити</string>
+    <string name="main_permission_required">Вимагається дозвіл</string>
+    <string name="main_permission_sms">Для надсилання та перегляду SMS-повідомлень QKSMS потрібен дозвіл</string>
+    <string name="main_permission_contacts">Для перегляду ваших контактів QKSMS потрібен дозвіл</string>
+    <string name="main_permission_allow">Дозволити</string>
+    <string name="drawer_inbox">Вхідні</string>
+    <string name="drawer_archived">Архівні</string>
+    <string name="drawer_scheduled">Заплановані</string>
+    <string name="drawer_blocking">Блокування</string>
+    <string name="drawer_more">Більше</string>
+    <string name="drawer_settings">Налаштування</string>
+    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_help">Допомога та зворотній зв\'язок</string>
+    <string name="drawer_invite">Запросити друзів</string>
+    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_summary">Розблокувати нові дивовижні можливості та підтримати розробку</string>
+    <string name="rate_title">Подобається QKSMS?</string>
+    <string name="rate_summary">Поділись любов\'ю та оціни нас на Google Play!</string>
+    <string name="rate_okay">Добре!</string>
+    <string name="rate_dismiss">ВІДХИЛИТИ</string>
+    <string name="dialog_delete_title">Видалити</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">Ви впевнені, що хочете видалити цю бесіду?</item>
+        <item quantity="few">Ви впевнені, що хочете видалити %d бесіди?</item>
+        <item quantity="many">Ви впевнені, що хочете видалити %d бесід?</item>
+        <item quantity="other">Ви впевнені, що хочете видалити %d бесіди?</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>Скопіювати текст</item>
+        <item>Переслати</item>
+        <item>Видалити</item>
+    </string-array>
+    <string name="compose_title_selected">Обрано: %d</string>
+    <string name="compose_subtitle_results">%1$d із %2$d результатів</string>
+    <string name="compose_send_group_title">Надіслати як групове повідомлення</string>
+    <string name="compose_send_group_summary">Отримувачі та відповіді будуть видимі для всіх</string>
+    <string name="compose_messages_empty">Це початок вашої бесіди. Скажіть, що-небудь приємне!</string>
+    <string name="compose_vcard_label">Картка контакту</string>
+    <string name="compose_scheduled_for">Заплановано на</string>
+    <string name="compose_scheduled_future">Обраний час повинен бути в майбутньому!</string>
+    <string name="compose_scheduled_plus">Для використання запланованих повідомлень ви повинні розблокувати QKSMS+</string>
+    <string name="compose_scheduled_toast">Додано до запланованих повідомлень</string>
+    <string name="compose_hint">Написати повідомлення&#8230;</string>
+    <string name="compose_menu_copy">Скопіювати текст</string>
+    <string name="compose_menu_forward">Переслати</string>
+    <string name="compose_menu_delete">Видалити</string>
+    <string name="compose_menu_previous">Назад</string>
+    <string name="compose_menu_next">Далі</string>
+    <string name="compose_menu_clear">Очистити</string>
+    <string name="compose_details_title">Деталі повідомлення</string>
+    <string name="compose_details_type">Тип: %s</string>
+    <string name="compose_details_from">Від: %s</string>
+    <string name="compose_details_to">Кому: %s</string>
+    <string name="compose_details_subject">Тема: %s</string>
+    <string name="compose_details_priority">Пріоритет: %s</string>
+    <string name="compose_details_size">Розмір: %s</string>
+    <string name="compose_details_sent">Надіслано: %s</string>
+    <string name="compose_details_received">Отримано: %s</string>
+    <string name="compose_details_delivered">Доставлено: %s</string>
+    <string name="compose_details_error_code">Код помилки: %d</string>
+    <string name="compose_attach_cd">Додати вкладення</string>
+    <string name="compose_gallery_cd">Прикріпити фотографію</string>
+    <string name="compose_camera_cd">Сфотографувати</string>
+    <string name="compose_schedule_cd">Запланувати повідомлення</string>
+    <string name="compose_contact_cd">Прикріпити контакт</string>
+    <string name="compose_contact_error">Помилка читання контакту</string>
+    <string name="compose_sim_cd">%s обрано, змініть SIM-картку</string>
+    <string name="compose_send_cd">Надіслати повідомлення</string>
+    <string name="message_status_sending">Надсилання&#8230;</string>
+    <string name="message_status_delivered">Доставлено %s</string>
+    <string name="message_status_failed">Не вдалося надіслати. Торкніться, щоб повторити спробу</string>
+    <string name="info_title">Деталі</string>
+    <string name="info_name">Заголовок бесіди</string>
+    <string name="info_name_hint">Введіть заголовок</string>
+    <string name="info_notifications">Сповіщення</string>
+    <string name="info_theme">Тема</string>
+    <string name="info_archive">Архівувати</string>
+    <string name="info_unarchive">Розархівувати</string>
+    <string name="info_block">Заблокувати</string>
+    <string name="info_unblock">Розблокувати</string>
+    <string name="info_delete">Видалити бесіду</string>
+    <string name="gallery_error">Не вдалося завантажити медіа</string>
+    <string name="gallery_toast_saved">Збережено в галереї</string>
+    <string name="backup_title">Резервне копіювання та відновлення</string>
+    <string name="backup_backing_up">Резервне копіювання повідомлень</string>
+    <string name="backup_restoring">Відновити з резервної копії</string>
+    <string name="backup_last">Остання резервна копія</string>
+    <string name="backup_loading">Завантаження&#8230;</string>
+    <string name="backup_never">Ніколи</string>
+    <string name="backup_restore_title">Відновити</string>
+    <string name="backup_restore_summary">Оберіть резервну копію</string>
+    <string name="backup_restore_error_plus">Для використання резервного копіювання та відновлення - розблокуйте QKSMS+</string>
+    <string name="backup_restore_error_backup">Триває створення резервної копії&#8230;</string>
+    <string name="backup_restore_error_restore">Триває відновлення&#8230;</string>
+    <string name="backup_restore_confirm_title">Відновити з резервної копії</string>
+    <string name="backup_restore_confirm_message">Відновити повідомлення з цієї резервної копії?</string>
+    <string name="backup_restore_stop_title">Зупинити відновлення</string>
+    <string name="backup_restore_stop_message">Повідомлення, які були відновлені залишатимуться на пристрої</string>
+    <string name="backup_restore_dialog_title">Резервні копії</string>
+    <string name="backup_restore_dialog_empty">Резервних копій не знайдено</string>
+    <plurals name="backup_message_count">
+        <item quantity="one">%d повідомлення</item>
+        <item quantity="few">%d повідомлення</item>
+        <item quantity="many">%d повідомлень</item>
+        <item quantity="other">%d повідомлення</item>
+    </plurals>
+    <string name="backup_disclaimer">На даний момент підтримуються лише SMS-повідомлення. Підтримка MMS-повідомлень та створення резервних копій за розкладом буде реалізована незабаром!</string>
+    <string name="backup_now">Створити резервну копію</string>
+    <string name="backup_progress_parsing">Аналіз резервної копії&#8230;</string>
+    <string name="backup_progress_running">%d/%d повідомлень</string>
+    <string name="backup_progress_saving">Збереження резервної копії&#8230;</string>
+    <string name="backup_progress_syncing">Синхронізація повідомлень&#8230;</string>
+    <string name="backup_progress_finished">Готово!</string>
+    <string name="backup_notification_channel_name">Резервне копіювання та відновлення</string>
+    <string name="scheduled_title">Заплановані</string>
+    <string name="scheduled_empty_description">Автоматично надсилайте повідомлення саме в той час, який ви захочете</string>
+    <string name="scheduled_empty_message_1">Агов! Коли в тебе день народження?</string>
+    <string name="scheduled_empty_message_2">23-го грудня</string>
+    <string name="scheduled_empty_message_3">З Днем народження! Дивись, який я чудовий друг, згадав про твій день народження</string>
+    <string name="scheduled_empty_message_3_timestamp">Надіслано: 23 грудня </string>
+    <string name="scheduled_compose_cd">Запланувати повідомлення</string>
+    <string name="scheduled_options_title">Заплановане повідомлення</string>
+    <string-array name="scheduled_options">
+        <item>Надіслати зараз</item>
+        <item>Видалити</item>
+    </string-array>
+    <string name="settings_category_appearance">Зовнішній вигляд</string>
+    <string name="settings_category_general">Загальні</string>
+    <string name="settings_category_qkreply">QK Відповідь</string>
+    <string name="settings_theme_title">Тема</string>
+    <string name="settings_night_title">Нічний режим</string>
+    <string name="settings_black_title">Повністю чорний нічний режим</string>
+    <string name="settings_night_start_title">Час початку</string>
+    <string name="settings_night_end_title">Час завершення</string>
+    <string name="settings_text_size_title">Розмір шрифта</string>
+    <string name="settings_system_font_title">Використовувати системний шрифт</string>
+    <string name="settings_auto_emoji_title">Автоматичні emoji</string>
+    <string name="settings_notifications_title">Сповіщення</string>
+    <string name="settings_notifications_o_summary">Торкніться, щоб налаштувати</string>
+    <string name="settings_notification_actions_title">Дії</string>
+    <string name="settings_notification_action_1">Кнопка 1</string>
+    <string name="settings_notification_action_2">Кнопка 2</string>
+    <string name="settings_notification_action_3">Кнопка 3</string>
+    <string name="settings_notification_previews_title">Попередній перегляд сповіщень</string>
+    <string name="settings_vibration_title">Вібро</string>
+    <string name="settings_ringtone_title">Звук</string>
+    <string name="settings_ringtone_none">Ні</string>
+    <string name="settings_qkreply_title">QK Відповідь</string>
+    <string name="settings_qkreply_summary">Виринаюче вікно для нових повідомлень</string>
+    <string name="settings_qkreply_tap_dismiss_title">Торкніться, щоб вимкнути</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Торкніться за межами виринаючого вікна, щоб закрити його</string>
+    <string name="settings_blocking_title">Блокування</string>
+    <!-- Do not translate -->
+    <string name="settings_should_i_answer_title">Should I Answer?</string>
+    <string name="settings_should_i_answer_summary">Автоматично фільтрувати повідомлення від небажаних номерів, використовуючи додаток «Should I Answer»</string>
+    <string name="settings_delayed_title">Затримка відправлення</string>
+    <string name="settings_swipe_actions">Дії жестів</string>
+    <string name="settings_swipe_actions_summary">Налаштуйте використання жестів для розмови</string>
+    <string name="settings_swipe_actions_right">Провести праворуч</string>
+    <string name="settings_swipe_actions_left">Провести ліворуч</string>
+    <string name="settings_swipe_actions_change">ЗМІНИТИ</string>
+    <string-array name="settings_swipe_actions">
+        <item>Немає</item>
+        <item>Перенести в архів</item>
+        <item>Видалити</item>
+        <item>Виклик</item>
+        <item>Позначити як прочитане</item>
+    </string-array>
+    <string name="settings_delivery_title">Звіти про доставку</string>
+    <string name="settings_delivery_summary">Підтвердження успішного надсилання повідомлень</string>
+    <string name="settings_unicode_title">Видалити акценти</string>
+    <string name="settings_unicode_summary">Видалення акцентів з символів у вихідних SMS-повідомленнях</string>
+    <string name="settings_mobile_title">Лише номери мобільних</string>
+    <string name="settings_mobile_summary">При написанні повідомлення показувати лише мобільні номери</string>
+    <string name="settings_mms_size_title">Автоматичне стиснення MMS-вкладень</string>
+    <string name="settings_sync_title">Синхронізація повідомлень</string>
+    <string name="settings_sync_summary">Повторна синхронізація ваших повідомлень з власною базою даних SMS Android</string>
+    <string name="settings_about_title">Про QKSMS</string>
+    <string name="settings_version">Версія %s</string>
+    <string name="settings_logging_enabled">Ведення журналу зневаження увімкнуте</string>
+    <string name="settings_logging_disabled">Ведення журналу зневаження вимкнуте</string>
+    <string name="settings_delay_duration_hint">Введіть тривалість (у секундах)</string>
+    <string name="blocked_title">Блокування</string>
+    <string name="blocked_empty">Ваші заблоковані розмови з\'являтимуться тут</string>
+    <string name="blocked_unblock_dialog_title">Розблокувати</string>
+    <string name="blocked_unblock_dialog_message">Бажаєте розблокувати цю бесіду?</string>
+    <string name="about_title">Про додаток</string>
+    <string name="about_version_title">Версія</string>
+    <string name="about_developer_title">Розробник</string>
+    <string name="about_source_title">Вихідний код</string>
+    <string name="about_changelog_title">Журнал змін</string>
+    <string name="about_contact_title">Контакт</string>
+    <string name="about_license_title">Ліцензія</string>
+    <string name="about_copyright_title">Авторське право</string>
+    <string name="qksms_plus_description_title">Підтримати подальший розвиток, розблокувати все</string>
+    <string name="qksms_plus_description_summary">Ви можете врятувати голодуючого розробника всього за %s</string>
+    <string name="qksms_plus_upgrade">Довічне оновлення %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_donate">Розблокувати + пожертвувати %1$s %2$s</string>
+    <string name="qksms_plus_thanks_title">Дякуємо вам за підтримку QKSMS!</string>
+    <string name="qksms_plus_thanks_summary">Тепер у вас є доступ до всіх функцій QKSMS+</string>
+    <string name="qksms_plus_free_title">QKSMS+ є безкоштовним для користувачів F-Droid! Якщо ви хочете підтримати подальший розвиток програми, зробіть пожертву.</string>
+    <string name="qksms_plus_donate">Пожертвування через PayPal</string>
+    <string name="qksms_plus_coming_soon">Незабаром</string>
+    <string name="qksms_plus_themes_title">Преміум теми</string>
+    <string name="qksms_plus_themes_summary">Розблокуйте гарні кольори теми, недоступні в палітрі Material Design</string>
+    <string name="qksms_plus_emoji_title">Власні авто-emoji</string>
+    <string name="qksms_plus_emoji_summary">Створюйте ярлик власних авто-emoji</string>
+    <string name="qksms_plus_backup_title">Резерв. копіювання</string>
+    <string name="qksms_plus_backup_summary">Автоматично створюйте резервні копії ваших повідомлень. Не переймайтеся, що втратите історію, якщо ви зміните або загубите телефон</string>
+    <string name="qksms_plus_scheduled_title">Заплановані повідомлення</string>
+    <string name="qksms_plus_scheduled_summary">Заплановані повідомлення для надсилання у визначений час та дату</string>
+    <string name="qksms_plus_delayed_title">Відкладене надсилання</string>
+    <string name="qksms_plus_delayed_summary">Зачекайте кілька секунд, перш ніж надсилати повідомлення</string>
+    <string name="qksms_plus_night_title">Автоматичний нічний режим</string>
+    <string name="qksms_plus_night_summary">Увімкнення нічного режиму на основі часу доби</string>
+    <string name="qksms_plus_blacklist_title">Розширене блокування</string>
+    <string name="qksms_plus_blacklist_summary">Блокувати повідомлення, які містять ключові слова або відповідають шаблонам</string>
+    <string name="qksms_plus_forward_title">Автоматичне пересилання</string>
+    <string name="qksms_plus_forward_summary">Автоматичне пересилання повідомлень від певних відправників</string>
+    <string name="qksms_plus_respond_title">Автоматична відповідь</string>
+    <string name="qksms_plus_respond_summary">Автоматично відповідати на вхідні повідомлення за допомогою попередньо налаштованих шаблонів</string>
+    <string name="qksms_plus_more_title">Ще</string>
+    <string name="qksms_plus_more_summary">QKSMS перебуває у активній розробці, і Ваша покупка буде включати в себе всі майбутні можливості QKSMS +!</string>
+    <string name="widget_loading">Завантаження&#8230;</string>
+    <string name="widget_more">Переглянути більше бесід</string>
+    <string name="qkreply_menu_read">Позначити як прочитане</string>
+    <string name="qkreply_menu_call">Зателефонувати</string>
+    <string name="qkreply_menu_delete">Видалити</string>
+    <string name="qkreply_menu_expand">Показати більше</string>
+    <string name="qkreply_menu_collapse">Показати меньше</string>
+    <string name="qkreply_menu_view">Відкрити бесіду</string>
+    <string name="theme_material">Material</string>
+    <string name="theme_plus">QKSMS +</string>
+    <string name="theme_hex">HEX</string>
+    <string name="theme_apply">Застосувати</string>
+    <string-array name="notification_actions">
+        <item>Немає</item>
+        <item>Позначити як прочитане</item>
+        <item>Відповісти</item>
+        <item>Зателефонувати</item>
+        <item>Видалити</item>
+    </string-array>
+    <string name="button_cancel">Скасувати</string>
+    <string name="button_delete">Видалити</string>
+    <string name="button_save">Зберегти</string>
+    <string name="button_stop">Зупинити</string>
+    <string name="button_more">Більше</string>
+    <string name="button_set">Задати</string>
+    <string name="button_unblock">Розблокувати</string>
+    <string name="button_undo">Скасувати</string>
+    <string name="toast_copied">Скопійовано</string>
+    <string name="toast_archived">Бесіду заархівовано</string>
+    <string name="toast_qksms_plus">Для використання Ви повинні розблокувати QKSMS+</string>
+    <plurals name="notification_new_messages">
+        <item quantity="one">Нове повідомлення</item>
+        <item quantity="few">%s нових повідомлень</item>
+        <item quantity="many">%s нових повідомлень</item>
+        <item quantity="other">%s нових повідомлень</item>
+    </plurals>
+    <string name="notification_message_failed_title">Повідомлення не надіслано</string>
+    <string name="notification_message_failed_text">Не вдалося надіслати повідомлення для %s</string>
+    <string-array name="night_modes">
+        <item>Вимкнений</item>
+        <item>Завжди увімкнений</item>
+        <item>Автоматично</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>Показати ім\'я та повідомлення</item>
+        <item>Показати ім\'я</item>
+        <item>Приховати вміст</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>Малий</item>
+        <item>Нормальний</item>
+        <item>Великий</item>
+        <item>Більший</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>Без затримок</item>
+        <item>Коротка</item>
+        <item>Середня</item>
+        <item>Довга</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>100 Кб</item>
+        <item>200 Кб</item>
+        <item>300 Кб (рекомендовано)</item>
+        <item>600 Кб</item>
+        <item>1000 Кб</item>
+        <item>2000 Кб</item>
+        <item>Без стиснення</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>Добре</item>
+        <item>Одну хвилинку</item>
+        <item>Мені по дорозі</item>
+        <item>Дякую</item>
+        <item>Звучить цікаво</item>
+        <item>Що сталося?</item>
+        <item>Згода</item>
+        <item>Ні</item>
+        <item>Кохаю тебе</item>
+        <item>Вибач</item>
+        <item>LOL</item>
+        <item>Це нормально</item>
+    </string-array>
 </resources>

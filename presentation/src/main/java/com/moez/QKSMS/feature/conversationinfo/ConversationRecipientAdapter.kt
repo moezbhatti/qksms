@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.conversation_recipient_list_item.view.*
 import javax.inject.Inject
 
 class ConversationRecipientAdapter @Inject constructor(
-        private val navigator: Navigator
+    private val navigator: Navigator
 ) : QkRealmAdapter<Recipient>() {
 
     var threadId: Long = 0L
@@ -44,7 +44,7 @@ class ConversationRecipientAdapter @Inject constructor(
         val view = layoutInflater.inflate(R.layout.conversation_recipient_list_item, parent, false)
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val recipient = getItem(adapterPosition)!!
+                val recipient = getItem(adapterPosition) ?: return@setOnClickListener
                 if (recipient.contact == null) {
                     navigator.addContact(recipient.address)
                 } else {
@@ -55,8 +55,8 @@ class ConversationRecipientAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val recipient = getItem(position)!!
-        val view = holder.itemView
+        val recipient = getItem(position) ?: return
+        val view = holder.containerView
 
         view.avatar.threadId = threadId
         view.avatar.setContact(recipient)

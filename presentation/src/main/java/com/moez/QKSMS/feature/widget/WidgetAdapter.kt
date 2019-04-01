@@ -62,21 +62,18 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
     private var conversations: List<Conversation> = listOf()
     private val appWidgetManager by lazy { AppWidgetManager.getInstance(context) }
 
-    // Cache colors, load lazily. This entire class is recreated when the widget is recreated,
-    // so if the theme changes then these values will be correct in the new instance
-    private val night by lazy { prefs.night.get() }
-    private val black by lazy { prefs.black.get() }
-    private val theme by lazy { colors.theme() }
-    private val background by lazy {
-        context.getColorCompat(when {
+    private val night get() = prefs.night.get()
+    private val black get() = prefs.black.get()
+    private val theme get() = colors.theme()
+    private val background
+        get() = context.getColorCompat(when {
             night && black -> R.color.black
             night && !black -> R.color.backgroundDark
             else -> R.color.white
         })
-    }
-    private val textPrimary by lazy { context.getColorCompat(if (night) R.color.textPrimaryDark else R.color.textPrimary) }
-    private val textSecondary by lazy { context.getColorCompat(if (night) R.color.textSecondaryDark else R.color.textSecondary) }
-    private val textTertiary by lazy { context.getColorCompat(if (night) R.color.textTertiaryDark else R.color.textTertiary) }
+    private val textPrimary get() = context.getColorCompat(if (night) R.color.textPrimaryDark else R.color.textPrimary)
+    private val textSecondary get() = context.getColorCompat(if (night) R.color.textSecondaryDark else R.color.textSecondary)
+    private val textTertiary get() = context.getColorCompat(if (night) R.color.textTertiaryDark else R.color.textTertiary)
 
     override fun onCreate() {
         appComponent.inject(this)

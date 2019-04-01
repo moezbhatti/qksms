@@ -25,7 +25,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.util.GlideApp
-import kotlinx.android.synthetic.main.attachment_list_item.view.*
+import kotlinx.android.synthetic.main.attachment_image_list_item.view.*
 import javax.inject.Inject
 
 class ScheduledMessageAttachmentAdapter @Inject constructor() : QkAdapter<Uri>() {
@@ -39,7 +39,7 @@ class ScheduledMessageAttachmentAdapter @Inject constructor() : QkAdapter<Uri>()
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val attachment = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         GlideApp.with(view).load(attachment).into(view.thumbnail)
     }

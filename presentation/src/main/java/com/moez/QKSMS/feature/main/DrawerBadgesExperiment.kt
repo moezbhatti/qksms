@@ -25,8 +25,8 @@ import com.moez.QKSMS.manager.AnalyticsManager
 import javax.inject.Inject
 
 class DrawerBadgesExperiment @Inject constructor(
-        context: Context,
-        analyticsManager: AnalyticsManager
+    context: Context,
+    analyticsManager: AnalyticsManager
 ) : Experiment<Boolean>(context, analyticsManager) {
 
     override val key: String = "Drawer Badges"

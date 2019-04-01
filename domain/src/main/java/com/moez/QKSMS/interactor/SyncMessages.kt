@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SyncMessages @Inject constructor(
-        private val syncManager: SyncRepository,
-        private val updateBadge: UpdateBadge
+    private val syncManager: SyncRepository,
+    private val updateBadge: UpdateBadge
 ) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<*> {

@@ -46,14 +46,14 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class QkReplyViewModel @Inject constructor(
-        @Named("threadId") private val threadId: Long,
-        private val conversationRepo: ConversationRepository,
-        private val deleteMessages: DeleteMessages,
-        private val markRead: MarkRead,
-        private val messageRepo: MessageRepository,
-        private val navigator: Navigator,
-        private val sendMessage: SendMessage,
-        private val subscriptionManager: SubscriptionManagerCompat
+    @Named("threadId") private val threadId: Long,
+    private val conversationRepo: ConversationRepository,
+    private val deleteMessages: DeleteMessages,
+    private val markRead: MarkRead,
+    private val messageRepo: MessageRepository,
+    private val navigator: Navigator,
+    private val sendMessage: SendMessage,
+    private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState(selectedConversation = threadId)) {
 
     private val conversation by lazy {

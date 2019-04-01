@@ -20,6 +20,7 @@ package com.moez.QKSMS.repository
 
 import android.content.ContentResolver
 import android.content.ContentUris
+import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
@@ -47,25 +48,26 @@ import javax.inject.Singleton
 
 @Singleton
 class SyncRepositoryImpl @Inject constructor(
-        private val contentResolver: ContentResolver,
-        private val conversationRepo: ConversationRepository,
-        private val cursorToConversation: CursorToConversation,
-        private val cursorToMessage: CursorToMessage,
-        private val cursorToRecipient: CursorToRecipient,
-        private val cursorToContact: CursorToContact,
-        private val keys: KeyManager,
-        private val rxPrefs: RxSharedPreferences
+    private val context: Context,
+    private val contentResolver: ContentResolver,
+    private val conversationRepo: ConversationRepository,
+    private val cursorToConversation: CursorToConversation,
+    private val cursorToMessage: CursorToMessage,
+    private val cursorToRecipient: CursorToRecipient,
+    private val cursorToContact: CursorToContact,
+    private val keys: KeyManager,
+    private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
     /**
      * Holds data that should be persisted across full syncs
      */
     private data class PersistedData(
-            val id: Long,
-            val archived: Boolean,
-            val blocked: Boolean,
-            val pinned: Boolean,
-            val name: String)
+        val id: Long,
+        val archived: Boolean,
+        val blocked: Boolean,
+        val pinned: Boolean,
+        val name: String)
 
     override val syncProgress: Subject<SyncRepository.SyncProgress> = BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
 
@@ -147,7 +149,7 @@ class SyncRepositoryImpl @Inject constructor(
 
             realm.where(Message::class.java)
                     .sort("date", Sort.DESCENDING)
-                    .distinctValues("threadId")
+                    .distinct("threadId")
                     .findAll()
                     .forEach { message ->
                         val conversation = conversations.firstOrNull { conversation -> conversation.id == message.threadId }

@@ -22,6 +22,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.receiver.NightModeReceiver
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,8 +32,10 @@ import javax.inject.Singleton
 
 @Singleton
 class NightModeManager @Inject constructor(
-        private val context: Context,
-        private val prefs: Preferences) {
+    private val context: Context,
+    private val prefs: Preferences,
+    private val widgetManager: WidgetManager
+) {
 
     fun updateCurrentTheme() {
         // If night mode is not on auto, then there's nothing to do here
@@ -45,6 +48,7 @@ class NightModeManager @Inject constructor(
 
         // If the last nightStart was more recent than the last nightEnd, then it's night time
         prefs.night.set(nightStartTime > nightEndTime)
+        widgetManager.updateTheme()
     }
 
     fun updateNightMode(mode: Int) {
@@ -53,6 +57,7 @@ class NightModeManager @Inject constructor(
         // If it's not on auto mode, set the appropriate night mode
         if (mode != Preferences.NIGHT_MODE_AUTO) {
             prefs.night.set(mode == Preferences.NIGHT_MODE_ON)
+            widgetManager.updateTheme()
         }
 
         updateAlarms()

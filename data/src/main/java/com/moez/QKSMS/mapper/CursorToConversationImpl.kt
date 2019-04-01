@@ -28,8 +28,8 @@ import com.moez.QKSMS.model.Recipient
 import javax.inject.Inject
 
 class CursorToConversationImpl @Inject constructor(
-        private val context: Context,
-        private val permissionManager: PermissionManager
+    private val context: Context,
+    private val permissionManager: PermissionManager
 ) : CursorToConversation {
 
     companion object {

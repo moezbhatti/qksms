@@ -27,8 +27,8 @@ import com.moez.QKSMS.model.PhoneNumber
 import javax.inject.Inject
 
 class CursorToContactImpl @Inject constructor(
-        private val context: Context,
-        private val permissionManager: PermissionManager
+    private val context: Context,
+    private val permissionManager: PermissionManager
 ) : CursorToContact {
 
     companion object {

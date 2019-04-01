@@ -22,6 +22,6 @@ import com.moez.QKSMS.model.Conversation
 import io.realm.RealmResults
 
 data class BlockedState(
-        val siaEnabled: Boolean = false,
-        val data: RealmResults<Conversation>? = null
+    val siaEnabled: Boolean = false,
+    val data: RealmResults<Conversation>? = null
 )

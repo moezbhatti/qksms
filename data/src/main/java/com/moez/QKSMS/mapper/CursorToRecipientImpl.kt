@@ -26,8 +26,8 @@ import com.moez.QKSMS.model.Recipient
 import javax.inject.Inject
 
 class CursorToRecipientImpl @Inject constructor(
-        private val context: Context,
-        private val permissionManager: PermissionManager
+    private val context: Context,
+    private val permissionManager: PermissionManager
 ) : CursorToRecipient {
 
     companion object {

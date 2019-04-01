@@ -27,9 +27,11 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewStub
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -56,14 +58,18 @@ import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.main_permission_hint.*
+import kotlinx.android.synthetic.main.main_syncing.*
 import javax.inject.Inject
 
 class MainActivity : QkThemedActivity(), MainView {
 
+    @Inject lateinit var disposables: CompositeDisposable
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
     @Inject lateinit var drawerBadgesExperiment: DrawerBadgesExperiment
@@ -100,7 +106,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
-    override val snackbarButtonIntent by lazy { snackbarButton.clicks() }
+    override val snackbarButtonIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java] }
@@ -112,12 +118,23 @@ class MainActivity : QkThemedActivity(), MainView {
             setAction(R.string.button_undo) { undoArchiveIntent.onNext(Unit) }
         }
     }
+    private val snackbar by lazy { findViewById<View>(R.id.snackbar) }
+    private val syncing by lazy { findViewById<View>(R.id.syncing) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         viewModel.bindView(this)
+
+        (snackbar as? ViewStub)?.setOnInflateListener { _, _ ->
+            snackbarButton.clicks().subscribe(snackbarButtonIntent)
+        }
+
+        (syncing as? ViewStub)?.setOnInflateListener { _, _ ->
+            syncingProgress?.progressTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
+            syncingProgress?.indeterminateTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
+        }
 
         toggle.syncState()
         toolbar.setNavigationOnClickListener {
@@ -132,7 +149,7 @@ class MainActivity : QkThemedActivity(), MainView {
         drawer.clicks().subscribe()
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
-        colors.themeObservable()
+        theme
                 .doOnNext { recyclerView.scrapViews() }
                 .autoDisposable(scope())
                 .subscribe { theme ->
@@ -150,7 +167,8 @@ class MainActivity : QkThemedActivity(), MainView {
                         badge.setBackgroundTint(theme.theme)
                         badge.setTextColor(theme.textPrimary)
                     }
-                    syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
+                    syncingProgress?.progressTintList = ColorStateList.valueOf(theme.theme)
+                    syncingProgress?.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
                     compose.setBackgroundTint(theme.theme)
@@ -158,9 +176,6 @@ class MainActivity : QkThemedActivity(), MainView {
                     // Set the FAB compose icon color
                     compose.setTint(theme.textPrimary)
                 }
-
-        // Set the hamburger icon color
-        toggle.drawerArrowDrawable.color = resolveThemeColor(android.R.attr.textColorSecondary)
 
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(recyclerView)
@@ -265,22 +280,22 @@ class MainActivity : QkThemedActivity(), MainView {
         }
 
         when {
-            !state.smsPermission -> {
-                snackbarTitle.setText(R.string.main_permission_required)
-                snackbarMessage.setText(R.string.main_permission_sms)
-                snackbarButton.setText(R.string.main_permission_allow)
+            !state.defaultSms -> {
+                snackbarTitle?.setText(R.string.main_default_sms_title)
+                snackbarMessage?.setText(R.string.main_default_sms_message)
+                snackbarButton?.setText(R.string.main_default_sms_change)
             }
 
-            !state.defaultSms -> {
-                snackbarTitle.setText(R.string.main_default_sms_title)
-                snackbarMessage.setText(R.string.main_default_sms_message)
-                snackbarButton.setText(R.string.main_default_sms_change)
+            !state.smsPermission -> {
+                snackbarTitle?.setText(R.string.main_permission_required)
+                snackbarMessage?.setText(R.string.main_permission_sms)
+                snackbarButton?.setText(R.string.main_permission_allow)
             }
 
             !state.contactPermission -> {
-                snackbarTitle.setText(R.string.main_permission_required)
-                snackbarMessage.setText(R.string.main_permission_contacts)
-                snackbarButton.setText(R.string.main_permission_allow)
+                snackbarTitle?.setText(R.string.main_permission_required)
+                snackbarMessage?.setText(R.string.main_permission_contacts)
+                snackbarButton?.setText(R.string.main_permission_allow)
             }
         }
     }
@@ -290,15 +305,24 @@ class MainActivity : QkThemedActivity(), MainView {
         activityResumedIntent.onNext(Unit)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.dispose()
+    }
+
     override fun showBackButton(show: Boolean) {
         toggle.onDrawerSlide(drawer, if (show) 1f else 0f)
+        toggle.drawerArrowDrawable.color = when (show) {
+            true -> resolveThemeColor(android.R.attr.textColorSecondary)
+            false -> resolveThemeColor(android.R.attr.textColorPrimary)
+        }
     }
 
     override fun requestPermissions() {
         ActivityCompat.requestPermissions(this, arrayOf(
-                Manifest.permission.READ_CONTACTS,
                 Manifest.permission.READ_SMS,
-                Manifest.permission.SEND_SMS), 0)
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_CONTACTS), 0)
     }
 
     override fun clearSearch() {

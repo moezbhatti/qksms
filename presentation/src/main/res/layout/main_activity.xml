@@ -35,19 +35,27 @@
             android:animateLayoutChanges="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            app:contentInsetStartWithNavigation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
-                style="@style/ToolbarText" />
+                style="@style/ToolbarText"
+                android:layout_marginStart="16dp" />
 
             <com.moez.QKSMS.common.widget.QkEditText
                 android:id="@+id/toolbarSearch"
                 style="@style/ToolbarText"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/rounded_rectangle_24dp"
+                android:backgroundTint="?android:attr/queryBackground"
                 android:hint="@string/title_conversations"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:textColorHint="?android:attr/textColorTertiary"
                 app:textSize="primary"
                 tools:textSize="16sp" />
@@ -79,16 +87,17 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:listitem="@layout/conversation_list_item" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageView
             android:id="@+id/compose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_margin="16dp"
+            android:background="@drawable/circle_ripple"
             android:contentDescription="@string/main_fab_cd"
+            android:elevation="8dp"
+            android:padding="16dp"
             android:src="@drawable/ic_add_black_24dp"
             android:tint="@color/white"
-            app:layout_anchor="@+id/recyclerView"
-            app:layout_anchorGravity="bottom|right|end"
             app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintEnd_toEndOf="parent"
             tools:backgroundTint="@color/tools_theme" />
@@ -106,99 +115,22 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/divider"
-            app:layout_constraintBottom_toTopOf="@id/bottomDivider" />
+            app:layout_constraintBottom_toTopOf="@id/snackbar" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/bottomDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="snackbarTitle, snackbarMessage, syncingLabel, syncingProgress" />
-
-        <androidx.constraintlayout.widget.Group
+        <ViewStub
             android:id="@+id/snackbar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="snackbarTitle, snackbarMessage, snackbarButton"
-            tools:visibility="visible" />
+            android:inflatedId="@id/snackbar"
+            android:layout="@layout/main_permission_hint"
+            app:layout_constraintBottom_toTopOf="@id/syncing" />
 
-        <androidx.constraintlayout.widget.Group
+        <ViewStub
             android:id="@+id/syncing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="syncingProgress,syncingLabel"
-            tools:visibility="gone" />
-
-        <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/snackbarTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:paddingTop="16dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/snackbarMessage"
-            app:layout_constraintEnd_toStartOf="@id/snackbarButton"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:textColor="primary"
-            app:textSize="primary"
-            tools:text="Love texting again" />
-
-        <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/snackbarMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
-            android:paddingBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/snackbarButton"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:textColor="secondary"
-            app:textSize="secondary"
-            tools:text="Make QKSMS your default SMS app" />
-
-        <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/snackbarButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="16dp"
-            android:textAllCaps="true"
-            android:textColor="@color/tools_theme"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/snackbarMessage"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/snackbarTitle"
-            app:textColor="theme"
-            app:textSize="secondary"
-            tools:text="Change" />
-
-        <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/syncingLabel"
-            style="@style/TextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:paddingTop="16dp"
-            android:text="@string/main_syncing"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/syncingProgress" />
-
-        <ProgressBar
-            android:id="@+id/syncingProgress"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:indeterminate="true"
+            android:inflatedId="@id/syncing"
+            android:layout="@layout/main_syncing"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

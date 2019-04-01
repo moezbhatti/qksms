@@ -24,9 +24,9 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class DeleteConversations @Inject constructor(
-        private val conversationRepo: ConversationRepository,
-        private val notificationManager: NotificationManager,
-        private val updateBadge: UpdateBadge
+    private val conversationRepo: ConversationRepository,
+    private val notificationManager: NotificationManager,
+    private val updateBadge: UpdateBadge
 ) : Interactor<List<Long>>() {
 
     override fun buildObservable(params: List<Long>): Flowable<*> {

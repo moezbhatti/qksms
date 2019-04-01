@@ -19,13 +19,13 @@
 package com.moez.QKSMS.feature.settings
 
 import android.content.Context
-import androidx.core.widget.toast
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.util.NightModeManager
@@ -39,15 +39,15 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
-        private val context: Context,
-        private val billingManager: BillingManager,
-        private val colors: Colors,
-        private val dateFormatter: DateFormatter,
-        private val navigator: Navigator,
-        private val nightModeManager: NightModeManager,
-        private val prefs: Preferences,
-        private val syncMessages: SyncMessages,
-        private val syncRepo: SyncRepository
+    private val context: Context,
+    private val billingManager: BillingManager,
+    private val colors: Colors,
+    private val dateFormatter: DateFormatter,
+    private val navigator: Navigator,
+    private val nightModeManager: NightModeManager,
+    private val prefs: Preferences,
+    private val syncMessages: SyncMessages,
+    private val syncRepo: SyncRepository
 ) : QkPresenter<SettingsView, SettingsState>(SettingsState(theme = colors.theme().theme)) {
 
     init {
@@ -174,7 +174,7 @@ class SettingsPresenter @Inject constructor(
                 .doOnNext { enabled -> prefs.logging.set(enabled) }
                 .autoDisposable(view.scope())
                 .subscribe { enabled ->
-                    context.toast(when (enabled) {
+                    context.makeToast(when (enabled) {
                         true -> R.string.settings_logging_enabled
                         false -> R.string.settings_logging_disabled
                     })

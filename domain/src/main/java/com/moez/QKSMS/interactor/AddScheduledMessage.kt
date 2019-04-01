@@ -23,8 +23,8 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class AddScheduledMessage @Inject constructor(
-        private val scheduledMessageRepo: ScheduledMessageRepository,
-        private val updateScheduledMessageAlarms: UpdateScheduledMessageAlarms
+    private val scheduledMessageRepo: ScheduledMessageRepository,
+    private val updateScheduledMessageAlarms: UpdateScheduledMessageAlarms
 ) : Interactor<AddScheduledMessage.Params>() {
 
     data class Params(val date: Long,

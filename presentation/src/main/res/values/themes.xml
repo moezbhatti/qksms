@@ -27,6 +27,7 @@
     <!-- Light theme -->
     <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">item>
         <item name="android:divider">@color/separatorLight</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundLight</item>
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:textColorPrimary">@color/textPrimary</item>
         <item name="android:textColorSecondary">@color/textSecondary</item>
@@ -65,6 +66,7 @@
     <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:divider">@color/separatorDark</item>
         <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
         <item name="android:statusBarColor">@color/statusBarDark</item>
         <item name="android:textColorPrimary">@color/textPrimaryDark</item>
         <item name="android:textColorSecondary">@color/textSecondaryDark</item>

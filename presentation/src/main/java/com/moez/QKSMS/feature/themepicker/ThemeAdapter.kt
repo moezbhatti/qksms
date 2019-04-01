@@ -40,8 +40,8 @@ import kotlinx.android.synthetic.main.theme_palette_list_item.view.*
 import javax.inject.Inject
 
 class ThemeAdapter @Inject constructor(
-        private val context: Context,
-        private val colors: Colors
+    private val context: Context,
+    private val colors: Colors
 ) : QkAdapter<List<Int>>() {
 
     val colorSelected: Subject<Int> = PublishSubject.create()
@@ -70,7 +70,7 @@ class ThemeAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val palette = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val minPadding = (16 * 6).dpToPx(context)

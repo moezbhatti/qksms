@@ -98,7 +98,7 @@ class ChipsAdapter @Inject constructor(private val context: Context) : QkAdapter
         when (getItemViewType(position)) {
             TYPE_ITEM -> {
                 val contact = getItem(position)
-                val view = holder.itemView
+                val view = holder.containerView
 
                 view.avatar.setContact(contact)
 

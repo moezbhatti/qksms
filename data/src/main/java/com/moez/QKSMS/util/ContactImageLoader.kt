@@ -38,8 +38,8 @@ import java.security.MessageDigest
 
 
 class ContactImageLoader(
-        private val context: Context,
-        private val contactRepo: ContactRepository
+    private val context: Context,
+    private val contactRepo: ContactRepository
 ) : ModelLoader<String, InputStream> {
 
     override fun handles(model: String): Boolean {
@@ -60,9 +60,9 @@ class ContactImageLoader(
     }
 
     class ContactImageFetcher(
-            private val context: Context,
-            private val contactRepo: ContactRepository,
-            private val address: String
+        private val context: Context,
+        private val contactRepo: ContactRepository,
+        private val address: String
     ) : DataFetcher<InputStream> {
 
         private var loadPhotoDisposable: Disposable? = null

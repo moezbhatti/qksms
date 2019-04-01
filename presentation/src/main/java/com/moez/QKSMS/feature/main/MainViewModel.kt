@@ -45,7 +45,6 @@ import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
@@ -54,24 +53,24 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-        billingManager: BillingManager,
-        markAllSeen: MarkAllSeen,
-        migratePreferences: MigratePreferences,
-        syncRepository: SyncRepository,
-        private val conversationRepo: ConversationRepository,
-        private val deleteConversations: DeleteConversations,
-        private val markArchived: MarkArchived,
-        private val markBlocked: MarkBlocked,
-        private val markPinned: MarkPinned,
-        private val markRead: MarkRead,
-        private val markUnarchived: MarkUnarchived,
-        private val markUnpinned: MarkUnpinned,
-        private val markUnread: MarkUnread,
-        private val navigator: Navigator,
-        private val permissionManager: PermissionManager,
-        private val prefs: Preferences,
-        private val ratingManager: RatingManager,
-        private val syncMessages: SyncMessages
+    billingManager: BillingManager,
+    markAllSeen: MarkAllSeen,
+    migratePreferences: MigratePreferences,
+    syncRepository: SyncRepository,
+    private val conversationRepo: ConversationRepository,
+    private val deleteConversations: DeleteConversations,
+    private val markArchived: MarkArchived,
+    private val markBlocked: MarkBlocked,
+    private val markPinned: MarkPinned,
+    private val markRead: MarkRead,
+    private val markUnarchived: MarkUnarchived,
+    private val markUnpinned: MarkUnpinned,
+    private val markUnread: MarkUnread,
+    private val navigator: Navigator,
+    private val permissionManager: PermissionManager,
+    private val prefs: Preferences,
+    private val ratingManager: RatingManager,
+    private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
 
     init {
@@ -115,35 +114,32 @@ class MainViewModel @Inject constructor(
     override fun bindView(view: MainView) {
         super.bindView(view)
 
-        if (!permissionManager.hasReadSms() || !permissionManager.hasContacts()) {
-            view.requestPermissions()
+        when {
+            !permissionManager.isDefaultSms() -> navigator.showDefaultSmsDialog()
+            !permissionManager.hasReadSms() || !permissionManager.hasContacts() -> view.requestPermissions()
         }
 
+        val permissions = view.activityResumedIntent
+                .observeOn(Schedulers.io())
+                .map { Triple(permissionManager.isDefaultSms(), permissionManager.hasReadSms(), permissionManager.hasContacts()) }
+                .distinctUntilChanged()
+                .share()
+
         // If the default SMS state or permission states change, update the ViewState
-        Observables.combineLatest(
-                view.activityResumedIntent.map { permissionManager.isDefaultSms() }.distinctUntilChanged(),
-                view.activityResumedIntent.map { permissionManager.hasReadSms() }.distinctUntilChanged(),
-                view.activityResumedIntent.map { permissionManager.hasContacts() }.distinctUntilChanged())
-        { defaultSms, smsPermission, contactPermission ->
-            newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
-        }
+        permissions
+                .doOnNext { (defaultSms, smsPermission, contactPermission) ->
+                    newState { copy(defaultSms = defaultSms, smsPermission = smsPermission, contactPermission = contactPermission) }
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        // If the SMS permission state changes from false to true, sync messages
-        view.activityResumedIntent
-                .map { permissionManager.hasReadSms() }
-                .distinctUntilChanged()
+        // If we go from not having all permissions to having them, sync messages
+        permissions
                 .skip(1)
-                .filter { hasSms -> hasSms }
+                .filter { it.first && it.second && it.third }
                 .take(1)
                 .autoDisposable(view.scope())
-                .subscribe {
-                    syncMessages.execute(Unit)
-                    if (!permissionManager.isDefaultSms()) {
-                        navigator.showDefaultSmsDialog()
-                    }
-                }
+                .subscribe { syncMessages.execute(Unit) }
 
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)
@@ -324,8 +320,8 @@ class MainViewModel @Inject constructor(
         view.snackbarButtonIntent
                 .withLatestFrom(state) { _, state ->
                     when {
-                        !state.smsPermission -> view.requestPermissions()
                         !state.defaultSms -> navigator.showDefaultSmsDialog()
+                        !state.smsPermission -> view.requestPermissions()
                         !state.contactPermission -> view.requestPermissions()
                     }
                 }

@@ -27,8 +27,8 @@ import com.moez.QKSMS.manager.AnalyticsManager
 import javax.inject.Inject
 
 class UpgradeButtonExperiment @Inject constructor(
-        context: Context,
-        analytics: AnalyticsManager
+    context: Context,
+    analytics: AnalyticsManager
 ) : Experiment<@StringRes Int>(context, analytics) {
 
     override val key: String = "Upgrade Button"

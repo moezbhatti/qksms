@@ -30,9 +30,9 @@ import io.realm.RealmList
 import javax.inject.Inject
 
 class SendScheduledMessage @Inject constructor(
-        private val context: Context,
-        private val scheduledMessageRepo: ScheduledMessageRepository,
-        private val sendMessage: SendMessage
+    private val context: Context,
+    private val scheduledMessageRepo: ScheduledMessageRepository,
+    private val sendMessage: SendMessage
 ) : Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<*> {
@@ -47,7 +47,7 @@ class SendScheduledMessage @Inject constructor(
                 }
                 .map { message ->
                     val threadId = TelephonyCompat.getOrCreateThreadId(context, message.recipients)
-                    val attachments = message.attachments.mapNotNull(Uri::parse).map { Attachment(it) }
+                    val attachments = message.attachments.mapNotNull(Uri::parse).map { Attachment.Image(it) }
                     SendMessage.Params(message.subId, threadId, message.recipients, message.body, attachments)
                 }
                 .flatMap(sendMessage::buildObservable)

@@ -25,10 +25,10 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class DeleteMessages @Inject constructor(
-        private val conversationRepo: ConversationRepository,
-        private val messageRepo: MessageRepository,
-        private val notificationManager: NotificationManager,
-        private val updateBadge: UpdateBadge
+    private val conversationRepo: ConversationRepository,
+    private val messageRepo: MessageRepository,
+    private val notificationManager: NotificationManager,
+    private val updateBadge: UpdateBadge
 ) : Interactor<DeleteMessages.Params>() {
 
     data class Params(val messageIds: List<Long>, val threadId: Long? = null)

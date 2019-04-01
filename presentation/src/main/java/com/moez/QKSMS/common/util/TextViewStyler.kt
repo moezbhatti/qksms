@@ -34,9 +34,9 @@ import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
 
 class TextViewStyler @Inject constructor(
-        private val prefs: Preferences,
-        private val colors: Colors,
-        private val fontProvider: FontProvider
+    private val prefs: Preferences,
+    private val colors: Colors,
+    private val fontProvider: FontProvider
 ) {
 
     companion object {

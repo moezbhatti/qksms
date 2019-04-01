@@ -24,9 +24,9 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class UpdateScheduledMessageAlarms @Inject constructor(
-        private val alarmManager: AlarmManager,
-        private val scheduledMessageRepo: ScheduledMessageRepository,
-        private val sendScheduledMessage: SendScheduledMessage
+    private val alarmManager: AlarmManager,
+    private val scheduledMessageRepo: ScheduledMessageRepository,
+    private val sendScheduledMessage: SendScheduledMessage
 ) : Interactor<Unit>() {
 
     override fun buildObservable(params: Unit): Flowable<*> {

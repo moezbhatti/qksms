@@ -21,7 +21,9 @@ package com.moez.QKSMS.feature.compose
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
 import android.telephony.PhoneNumberUtils
+import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -64,12 +66,12 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MessagesAdapter @Inject constructor(
-        private val context: Context,
-        private val colors: Colors,
-        private val dateFormatter: DateFormatter,
-        private val navigator: Navigator,
-        private val prefs: Preferences,
-        private val subscriptionManager: SubscriptionManagerCompat
+    private val context: Context,
+    private val colors: Colors,
+    private val dateFormatter: DateFormatter,
+    private val navigator: Navigator,
+    private val prefs: Preferences,
+    private val subscriptionManager: SubscriptionManagerCompat
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -139,13 +141,17 @@ class MessagesAdapter @Inject constructor(
             view.body.setBackgroundTint(theme.theme)
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            view.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
+        }
+
         view.attachments.adapter = PartsAdapter(context, navigator, theme)
         view.attachments.setRecycledViewPool(partsViewPool)
         view.body.forwardTouches(view)
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val message = getItem(adapterPosition)!!
+                val message = getItem(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(message.id, false)) {
                     true -> view.isActivated = isSelected(message.id)
                     false -> {
@@ -156,7 +162,7 @@ class MessagesAdapter @Inject constructor(
                 }
             }
             view.setOnLongClickListener {
-                val message = getItem(adapterPosition)!!
+                val message = getItem(adapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(message.id)
                 view.isActivated = isSelected(message.id)
                 true
@@ -165,10 +171,10 @@ class MessagesAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val message = getItem(position)!!
+        val message = getItem(position) ?: return
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
-        val view = viewHolder.itemView
+        val view = viewHolder.containerView
 
 
         // Update the selected state
@@ -261,17 +267,21 @@ class MessagesAdapter @Inject constructor(
     }
 
     private fun bindStatus(viewHolder: QkViewHolder, message: Message, next: Message?) {
-        val view = viewHolder.itemView
+        val view = viewHolder.containerView
 
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
-        val timestamp = dateFormatter.getTimestamp(message.date)
 
         view.status.text = when {
             message.isSending() -> context.getString(R.string.message_status_sending)
-            message.isDelivered() -> context.getString(R.string.message_status_delivered, timestamp)
+            message.isDelivered() -> context.getString(R.string.message_status_delivered, dateFormatter.getTimestamp(message.dateSent))
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
-            !message.isMe() && conversation?.recipients?.size ?: 0 > 1 -> "${contactCache[message.address]?.getDisplayName()} • $timestamp"
-            else -> timestamp
+
+            // Incoming group message
+            !message.isMe() && conversation?.recipients?.size ?: 0 > 1 -> {
+                "${contactCache[message.address]?.getDisplayName()} • ${dateFormatter.getTimestamp(message.date)}"
+            }
+
+            else -> dateFormatter.getTimestamp(message.date)
         }
 
         view.status.setVisible(when {
@@ -286,7 +296,7 @@ class MessagesAdapter @Inject constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val message = getItem(position)!!
+        val message = getItem(position) ?: return -1
         return when (message.isMe()) {
             true -> VIEW_TYPE_MESSAGE_OUT
             false -> VIEW_TYPE_MESSAGE_IN

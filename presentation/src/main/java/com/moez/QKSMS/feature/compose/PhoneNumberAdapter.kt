@@ -28,7 +28,7 @@ import com.moez.QKSMS.model.PhoneNumber
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
 class PhoneNumberAdapter(
-        private val numberClicked: (Contact, Int) -> Unit
+    private val numberClicked: (Contact, Int) -> Unit
 ) : QkAdapter<PhoneNumber>() {
 
     lateinit var contact: Contact
@@ -41,7 +41,7 @@ class PhoneNumberAdapter(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val number = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         // Setting this in onCreateViewHolder causes a crash sometimes. [contact] returns the
         // contact from a different row, I'm not sure why

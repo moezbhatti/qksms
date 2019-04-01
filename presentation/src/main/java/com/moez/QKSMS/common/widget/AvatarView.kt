@@ -89,10 +89,14 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
     }
 
+    /**
+     * If the [recipient] has a contact: use the contact's avatar, but keep the address.
+     * Use the recipient address otherwise.
+     */
     fun setContact(recipient: Recipient?) {
         // If the recipient has a contact, just use that and return
         recipient?.contact?.let { contact ->
-            setContact(contact)
+            setContact(contact, recipient.address)
             return
         }
 
@@ -102,10 +106,15 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         updateView()
     }
 
-    fun setContact(contact: Contact?) {
+    /**
+     * Use the [contact] information to display the avatar.
+     * A specific [contactAddress] can be specified (useful when the contact has several addresses).
+     */
+    fun setContact(contact: Contact?, contactAddress: String? = null) {
         lookupKey = contact?.lookupKey
         name = contact?.name
-        address = contact?.numbers?.firstOrNull()?.address
+        // If a contactAddress has been given, we use it. Use the contact address otherwise.
+        address = contactAddress ?: contact?.numbers?.firstOrNull()?.address
         updateView()
     }
 

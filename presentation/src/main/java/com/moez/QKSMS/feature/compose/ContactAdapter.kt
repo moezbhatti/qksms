@@ -57,7 +57,7 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val contact = getItem(position)
-        val view = holder.itemView
+        val view = holder.containerView
 
         view.avatar.setContact(contact)
         view.name.text = contact.name

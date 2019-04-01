@@ -36,15 +36,15 @@ class BlockedAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.blocked_list_item, parent, false)
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val conversation = getItem(adapterPosition)!!
+                val conversation = getItem(adapterPosition) ?: return@setOnClickListener
                 unblock.onNext(conversation.id)
             }
         }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val conversation = getItem(position)!!
-        val view = holder.itemView
+        val conversation = getItem(position) ?: return
+        val view = holder.containerView
 
         view.avatars.contacts = conversation.recipients
         view.title.text = conversation.getTitle()

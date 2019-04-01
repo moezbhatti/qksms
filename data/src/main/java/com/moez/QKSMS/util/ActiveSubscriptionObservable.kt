@@ -25,7 +25,7 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
 class ActiveSubscriptionObservable(
-        private val subscriptionManager: SubscriptionManagerCompat
+    private val subscriptionManager: SubscriptionManagerCompat
 ) : Observable<List<SubscriptionInfoCompat>>() {
 
     override fun subscribeActual(observer: Observer<in List<SubscriptionInfoCompat>>) {
@@ -37,8 +37,8 @@ class ActiveSubscriptionObservable(
     }
 
     internal class Listener(
-            private val subscriptionManager: SubscriptionManagerCompat,
-            private val observer: Observer<in List<SubscriptionInfoCompat>>
+        private val subscriptionManager: SubscriptionManagerCompat,
+        private val observer: Observer<in List<SubscriptionInfoCompat>>
     ) : Disposable, SubscriptionManagerCompat.OnSubscriptionsChangedListener() {
 
         private var disposed: Boolean = false

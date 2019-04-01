@@ -34,8 +34,8 @@ import javax.inject.Inject
  * TODO: Stop listening automatically. Currently, this will only happen if the contact is added
  */
 class ContactAddedListenerImpl @Inject constructor(
-        private val context: Context,
-        private val syncRepo: SyncRepository
+    private val context: Context,
+    private val syncRepo: SyncRepository
 ) : ContactAddedListener {
 
     companion object {

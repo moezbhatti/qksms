@@ -25,6 +25,7 @@ import androidx.core.content.contentValuesOf
 import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.util.QkFileObserver
+import com.moez.QKSMS.util.tryOrNull
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -44,9 +45,9 @@ import kotlin.concurrent.schedule
 
 @Singleton
 class BackupRepositoryImpl @Inject constructor(
-        private val context: Context,
-        private val moshi: Moshi,
-        private val syncRepo: SyncRepository
+    private val context: Context,
+    private val moshi: Moshi,
+    private val syncRepo: SyncRepository
 ) : BackupRepository {
 
     companion object {
@@ -54,8 +55,8 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     data class Backup(
-            val messageCount: Int = 0,
-            val messages: List<BackupMessage> = listOf()
+        val messageCount: Int = 0,
+        val messages: List<BackupMessage> = listOf()
     )
 
     /**
@@ -63,21 +64,21 @@ class BackupRepositoryImpl @Inject constructor(
      * needing to parse the entire file
      */
     data class BackupMetadata(
-            val messageCount: Int = 0
+        val messageCount: Int = 0
     )
 
     data class BackupMessage(
-            val type: Int,
-            val address: String,
-            val date: Long,
-            val dateSent: Long,
-            val read: Boolean,
-            val status: Int,
-            val body: String,
-            val protocol: Int,
-            val serviceCenter: String?,
-            val locked: Boolean,
-            val subId: Int)
+        val type: Int,
+        val address: String,
+        val date: Long,
+        val dateSent: Long,
+        val read: Boolean,
+        val status: Int,
+        val body: String,
+        val protocol: Int,
+        val serviceCenter: String?,
+        val locked: Boolean,
+        val subId: Int)
 
     // Subjects to emit our progress events to
     private val backupProgress: Subject<BackupRepository.Progress> = BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
@@ -148,15 +149,15 @@ class BackupRepositoryImpl @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())
             .map { files ->
-                files.map { file ->
-                    val backup = Okio.buffer(Okio.source(file)).use { source ->
-                        moshi.adapter(BackupMetadata::class.java).fromJson(source)
-                    }
-
+                files.mapNotNull { file ->
+                    val adapter = moshi.adapter(BackupMetadata::class.java)
+                    val backup = tryOrNull(false) {
+                        Okio.buffer(Okio.source(file)).use(adapter::fromJson)
+                    } ?: return@mapNotNull null
 
                     val path = file.path
                     val date = file.lastModified()
-                    val messages = backup?.messageCount ?: 0
+                    val messages = backup.messageCount
                     val size = file.length()
                     BackupFile(path, date, messages, size)
                 }
@@ -175,6 +176,7 @@ class BackupRepositoryImpl @Inject constructor(
         }
 
         val messageCount = backup?.messages?.size ?: 0
+        var errorCount = 0
 
         backup?.messages?.forEachIndexed { index, message ->
             if (stopFlag) {
@@ -186,7 +188,8 @@ class BackupRepositoryImpl @Inject constructor(
             // Update the progress
             restoreProgress.onNext(BackupRepository.Progress.Running(messageCount, index))
 
-            context.contentResolver.insert(Telephony.Sms.CONTENT_URI, contentValuesOf(
+            try {
+                context.contentResolver.insert(Telephony.Sms.CONTENT_URI, contentValuesOf(
                     Telephony.Sms.TYPE to message.type,
                     Telephony.Sms.ADDRESS to message.address,
                     Telephony.Sms.DATE to message.date,
@@ -199,6 +202,14 @@ class BackupRepositoryImpl @Inject constructor(
                     Telephony.Sms.SERVICE_CENTER to message.serviceCenter,
                     Telephony.Sms.LOCKED to message.locked,
                     Telephony.Sms.SUBSCRIPTION_ID to message.subId))
+            } catch (e: Exception) {
+                Timber.w(e)
+                errorCount++
+            }
+        }
+
+        if (errorCount > 0) {
+            Timber.w(Exception("Failed to backup $errorCount/$messageCount messages"))
         }
 
         // Sync the messages

@@ -18,18 +18,20 @@
  */
 package com.moez.QKSMS.feature.main
 
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import com.moez.QKSMS.injection.ViewModelKey
+import com.moez.QKSMS.injection.scope.ActivityScope
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
+import io.reactivex.disposables.CompositeDisposable
 
 @Module
 class MainActivityModule {
 
     @Provides
-    fun provideLifecycle(activity: MainActivity): Lifecycle = activity.lifecycle
+    @ActivityScope
+    fun provideCompositeDiposableLifecycle(): CompositeDisposable = CompositeDisposable()
 
     @Provides
     @IntoMap

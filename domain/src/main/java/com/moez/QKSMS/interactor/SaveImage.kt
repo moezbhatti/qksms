@@ -24,8 +24,8 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class SaveImage @Inject constructor(
-        private val imageRepository: ImageRepository,
-        private val messageRepo: MessageRepository
+    private val imageRepository: ImageRepository,
+    private val messageRepo: MessageRepository
 ) : Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<*> {

@@ -19,12 +19,12 @@
 package com.moez.QKSMS.feature.backup
 
 import android.content.Context
-import androidx.core.widget.toast
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.interactor.PerformBackup
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.repository.BackupRepository
@@ -37,13 +37,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
-        private val backupRepo: BackupRepository,
-        private val billingManager: BillingManager,
-        private val context: Context,
-        private val dateFormatter: DateFormatter,
-        private val navigator: Navigator,
-        private val performBackup: PerformBackup,
-        private val permissionManager: PermissionManager
+    private val backupRepo: BackupRepository,
+    private val billingManager: BillingManager,
+    private val context: Context,
+    private val dateFormatter: DateFormatter,
+    private val navigator: Navigator,
+    private val performBackup: PerformBackup,
+    private val permissionManager: PermissionManager
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     private val storagePermissionSubject: Subject<Boolean> = BehaviorSubject.createDefault(permissionManager.hasStorage())
@@ -92,9 +92,9 @@ class BackupPresenter @Inject constructor(
                         billingManager.upgradeStatus)
                 { _, backupProgress, restoreProgress, upgraded ->
                     when {
-                        !upgraded -> context.toast(R.string.backup_restore_error_plus)
-                        backupProgress.running -> context.toast(R.string.backup_restore_error_backup)
-                        restoreProgress.running -> context.toast(R.string.backup_restore_error_restore)
+                        !upgraded -> context.makeToast(R.string.backup_restore_error_plus)
+                        backupProgress.running -> context.makeToast(R.string.backup_restore_error_backup)
+                        restoreProgress.running -> context.makeToast(R.string.backup_restore_error_restore)
                         !permissionManager.hasStorage() -> view.requestStoragePermission()
                         else -> view.selectFile()
                     }

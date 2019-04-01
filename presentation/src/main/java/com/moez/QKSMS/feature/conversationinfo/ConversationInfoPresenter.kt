@@ -38,15 +38,15 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ConversationInfoPresenter @Inject constructor(
-        @Named("threadId") threadId: Long,
-        messageRepo: MessageRepository,
-        private val conversationRepo: ConversationRepository,
-        private val deleteConversations: DeleteConversations,
-        private val markArchived: MarkArchived,
-        private val markUnarchived: MarkUnarchived,
-        private val markBlocked: MarkBlocked,
-        private val markUnblocked: MarkUnblocked,
-        private val navigator: Navigator
+    @Named("threadId") threadId: Long,
+    messageRepo: MessageRepository,
+    private val conversationRepo: ConversationRepository,
+    private val deleteConversations: DeleteConversations,
+    private val markArchived: MarkArchived,
+    private val markUnarchived: MarkUnarchived,
+    private val markBlocked: MarkBlocked,
+    private val markUnblocked: MarkUnblocked,
+    private val navigator: Navigator
 ) : QkPresenter<ConversationInfoView, ConversationInfoState>(
         ConversationInfoState(threadId = threadId, media = messageRepo.getPartsForConversation(threadId))
 ) {

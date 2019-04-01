@@ -58,11 +58,13 @@ import javax.inject.Singleton
 
 @Singleton
 class MessageRepositoryImpl @Inject constructor(
-        private val activeConversationManager: ActiveConversationManager,
-        private val context: Context,
-        private val messageIds: KeyManager,
-        private val imageRepository: ImageRepository,
-        private val prefs: Preferences) : MessageRepository {
+    private val activeConversationManager: ActiveConversationManager,
+    private val context: Context,
+    private val messageIds: KeyManager,
+    private val imageRepository: ImageRepository,
+    private val prefs: Preferences,
+    private val syncRepository: SyncRepository
+) : MessageRepository {
 
     override fun getMessages(threadId: Long, query: String): RealmResults<Message> {
         return Realm.getDefaultInstance()
@@ -233,10 +235,9 @@ class MessageRepositoryImpl @Inject constructor(
                 parts += MMSPart("text", ContentType.TEXT_PLAIN, body.toByteArray())
             }
 
-            // Add the GIFs as attachments. The app currently can't compress them, which may result
-            // in a lot of these messages failing to send
-            // TODO Add support for GIF compression
+            // Add the GIFs as attachments
             parts += attachments
+                    .mapNotNull { attachment -> attachment as? Attachment.Image }
                     .filter { attachment -> attachment.isGif(context) }
                     .mapNotNull { attachment -> attachment.getUri() }
                     .map { uri -> ImageUtils.compressGif(context, uri, prefs.mmsSize.get() * 1024) }
@@ -245,6 +246,7 @@ class MessageRepositoryImpl @Inject constructor(
             // Compress the images and add them as attachments
             var totalImageBytes = 0
             parts += attachments
+                    .mapNotNull { attachment -> attachment as? Attachment.Image }
                     .filter { attachment -> !attachment.isGif(context) }
                     .mapNotNull { attachment -> attachment.getUri() }
                     .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri) } }
@@ -255,6 +257,11 @@ class MessageRepositoryImpl @Inject constructor(
                     }
                     .map { bitmap -> MMSPart("image", ContentType.IMAGE_JPEG, bitmap) }
 
+            // Send contacts
+            parts += attachments
+                    .mapNotNull { attachment -> attachment as? Attachment.Contact }
+                    .map { attachment -> attachment.vCard.toByteArray() }
+                    .map { vCard -> MMSPart("contact", ContentType.TEXT_VCARD, vCard) }
 
             val transaction = Transaction(context)
             transaction.sendNewMessage(subId, threadId, addresses.map(PhoneNumberUtils::stripSeparators), parts, null)
@@ -335,6 +342,13 @@ class MessageRepositoryImpl @Inject constructor(
         // to be inserted into Realm immediately. We don't need to do this after receiving one
         realm.executeTransaction { managedMessage?.takeIf { it.isValid }?.contentId = uri.lastPathSegment.toLong() }
         realm.close()
+
+        // On some devices, we can't obtain a threadId until after the first message is sent in a
+        // conversation. In this case, we need to update the message's threadId after it gets added
+        // to the native ContentProvider
+        if (threadId == 0L) {
+            uri?.let(syncRepository::syncMessage)
+        }
 
         return message
     }
