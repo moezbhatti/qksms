@@ -32,13 +32,17 @@ import javax.inject.Singleton
 class DateFormatter @Inject constructor(val context: Context) {
 
     /**
-     * Replace 12 hour format with 24 hour format if necessary
+     * Formats the [pattern] correctly for the current locale, and replaces 12 hour format with
+     * 24 hour format if necessary
      */
     private fun getFormatter(pattern: String): SimpleDateFormat {
-        val isUsing24HourTime = DateFormat.is24HourFormat(context)
+        var formattedPattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), pattern)
 
-        return if (isUsing24HourTime) SimpleDateFormat(pattern.replace("h", "HH").replace(" a".toRegex(), ""), Locale.getDefault())
-        else SimpleDateFormat(pattern, Locale.getDefault())
+        if (DateFormat.is24HourFormat(context)) {
+            formattedPattern = formattedPattern.replace("h", "HH").replace(" a".toRegex(), "")
+        }
+
+        return SimpleDateFormat(formattedPattern, Locale.getDefault())
     }
 
     fun getDetailedTimestamp(date: Long): String {
@@ -71,7 +75,7 @@ class DateFormatter @Inject constructor(val context: Context) {
             now.isSameDay(then) -> getFormatter("h:mm a")
             now.isSameWeek(then) -> getFormatter("E")
             now.isSameYear(then) -> getFormatter("MMM d")
-            else -> getFormatter("d/MM/yy")
+            else -> getFormatter("MM/d/yy")
         }.format(date)
     }
 
