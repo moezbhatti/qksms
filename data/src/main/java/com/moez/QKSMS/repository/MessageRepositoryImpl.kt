@@ -210,7 +210,14 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun sendMessage(subId: Int, threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>, delay: Int) {
+    override fun sendMessage(
+        subId: Int,
+        threadId: Long,
+        addresses: List<String>,
+        body: String,
+        attachments: List<Attachment>,
+        delay: Int
+    ) {
         if (addresses.size == 1 && attachments.isEmpty()) { // SMS
             if (delay > 0) { // With delay
                 val sendTime = System.currentTimeMillis() + delay
@@ -273,7 +280,8 @@ class MessageRepositoryImpl @Inject constructor(
                 ?.let(SmsManagerFactory::createSmsManager)
                 ?: SmsManager.getDefault()
 
-        val parts = smsManager.divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
+        val parts = smsManager
+                .divideMessage(if (prefs.unicode.get()) StripAccents.stripAccents(message.body) else message.body)
                 ?: arrayListOf()
 
         val sentIntents = parts.map {
@@ -285,11 +293,18 @@ class MessageRepositoryImpl @Inject constructor(
         val deliveredIntents = parts.map {
             context.registerReceiver(SmsDeliveredReceiver(), IntentFilter(SmsDeliveredReceiver.ACTION))
             val intent = Intent(SmsDeliveredReceiver.ACTION).putExtra("id", message.id)
-            val pendingIntent = PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent
+                    .getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
             if (prefs.delivery.get()) pendingIntent else null
         }
 
-        smsManager.sendMultipartTextMessage(message.address, null, parts, ArrayList(sentIntents), ArrayList(deliveredIntents))
+        smsManager.sendMultipartTextMessage(
+                message.address,
+                null,
+                parts,
+                ArrayList(sentIntents),
+                ArrayList(deliveredIntents)
+        )
     }
 
     override fun cancelDelayedSms(id: Long) {

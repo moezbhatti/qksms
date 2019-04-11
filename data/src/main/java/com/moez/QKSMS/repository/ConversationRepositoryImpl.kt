@@ -61,27 +61,31 @@ class ConversationRepositoryImpl @Inject constructor(
 
     override fun getConversationsSnapshot(): List<Conversation> {
         val realm = Realm.getDefaultInstance()
-        return realm.copyFromRealm(realm.where(Conversation::class.java)
-                .notEqualTo("id", 0L)
-                .greaterThan("count", 0)
-                .equalTo("archived", false)
-                .equalTo("blocked", false)
-                .isNotEmpty("recipients")
-                .sort("pinned", Sort.DESCENDING, "date", Sort.DESCENDING)
-                .findAll())
+        return realm.copyFromRealm(
+                realm.where(Conversation::class.java)
+                        .notEqualTo("id", 0L)
+                        .greaterThan("count", 0)
+                        .equalTo("archived", false)
+                        .equalTo("blocked", false)
+                        .isNotEmpty("recipients")
+                        .sort("pinned", Sort.DESCENDING, "date", Sort.DESCENDING)
+                        .findAll()
+        )
     }
 
     override fun getTopConversations(): List<Conversation> {
         val realm = Realm.getDefaultInstance()
-        return realm.copyFromRealm(realm.where(Conversation::class.java)
-                .notEqualTo("id", 0L)
-                .greaterThan("count", 0)
-                .greaterThan("date", System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7))
-                .equalTo("archived", false)
-                .equalTo("blocked", false)
-                .isNotEmpty("recipients")
-                .sort("pinned", Sort.DESCENDING, "count", Sort.DESCENDING)
-                .findAll())
+        return realm.copyFromRealm(
+                realm.where(Conversation::class.java)
+                        .notEqualTo("id", 0L)
+                        .greaterThan("count", 0)
+                        .greaterThan("date", System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7))
+                        .equalTo("archived", false)
+                        .equalTo("blocked", false)
+                        .isNotEmpty("recipients")
+                        .sort("pinned", Sort.DESCENDING, "count", Sort.DESCENDING)
+                        .findAll()
+        )
     }
 
     override fun setConversationName(id: Long, name: String) {

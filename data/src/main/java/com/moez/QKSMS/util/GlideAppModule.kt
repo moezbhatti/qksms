@@ -38,7 +38,8 @@ class GlideAppModule : AppGlideModule() {
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         // TODO use DI to create the ContactImageLoader.Factory
-        registry.append(String::class.java, InputStream::class.java, ContactImageLoader.Factory(context, Preferences(RxSharedPreferences.create(PreferenceManager.getDefaultSharedPreferences(context)))))
+        registry.append(String::class.java, InputStream::class.java, ContactImageLoader.Factory(context,
+                Preferences(RxSharedPreferences.create(PreferenceManager.getDefaultSharedPreferences(context)))))
     }
 
 }

@@ -31,16 +31,29 @@ class PermissionManagerImpl @Inject constructor(private val context: Context) : 
         return Telephony.Sms.getDefaultSmsPackage(context) == context.packageName
     }
 
-    override fun hasReadSms(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PERMISSION_GRANTED
+    override fun hasReadSms(): Boolean {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PERMISSION_GRANTED
+    }
 
-    override fun hasSendSms(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PERMISSION_GRANTED
+    override fun hasSendSms(): Boolean {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PERMISSION_GRANTED
+    }
 
-    override fun hasContacts(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PERMISSION_GRANTED
+    override fun hasContacts(): Boolean {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PERMISSION_GRANTED
+    }
 
-    override fun hasPhone(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PERMISSION_GRANTED
+    override fun hasPhone(): Boolean {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PERMISSION_GRANTED
+    }
 
-    override fun hasCalling(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PERMISSION_GRANTED
+    override fun hasCalling(): Boolean {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PERMISSION_GRANTED
+    }
 
-    override fun hasStorage(): Boolean = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED
+    override fun hasStorage(): Boolean {
+        return ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED
+    }
 
 }

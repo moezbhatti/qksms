@@ -20,7 +20,6 @@ package com.moez.QKSMS.repository
 
 import android.content.ContentResolver
 import android.content.ContentUris
-import android.content.Context
 import android.net.Uri
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
@@ -48,7 +47,6 @@ import javax.inject.Singleton
 
 @Singleton
 class SyncRepositoryImpl @Inject constructor(
-    private val context: Context,
     private val contentResolver: ContentResolver,
     private val conversationRepo: ConversationRepository,
     private val cursorToConversation: CursorToConversation,
@@ -67,9 +65,11 @@ class SyncRepositoryImpl @Inject constructor(
         val archived: Boolean,
         val blocked: Boolean,
         val pinned: Boolean,
-        val name: String)
+        val name: String
+    )
 
-    override val syncProgress: Subject<SyncRepository.SyncProgress> = BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
+    override val syncProgress: Subject<SyncRepository.SyncProgress> =
+            BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
 
     override fun syncMessages() {
 
@@ -111,7 +111,6 @@ class SyncRepositoryImpl @Inject constructor(
 
         var progress = 0
 
-
         // Sync messages
         messageCursor?.use {
             val messageColumns = CursorToMessage.MessageColumns(messageCursor)
@@ -152,7 +151,8 @@ class SyncRepositoryImpl @Inject constructor(
                     .distinct("threadId")
                     .findAll()
                     .forEach { message ->
-                        val conversation = conversations.firstOrNull { conversation -> conversation.id == message.threadId }
+                        val conversation = conversations
+                                .firstOrNull { conversation -> conversation.id == message.threadId }
                         conversation?.date = message.date
                         conversation?.snippet = message.getSummary()
                         conversation?.me = message.isMe()
@@ -160,7 +160,6 @@ class SyncRepositoryImpl @Inject constructor(
 
             realm.insertOrUpdate(conversations)
         }
-
 
         // Sync recipients
         recipientCursor?.use {
@@ -276,7 +275,11 @@ class SyncRepositoryImpl @Inject constructor(
 
                 // Update all the matching recipients with the new contact
                 val updatedRecipients = recipients
-                        .filter { recipient -> contact.numbers.any { number -> PhoneNumberUtils.compare(recipient.address, number.address) } }
+                        .filter { recipient ->
+                            contact.numbers.any { number ->
+                                PhoneNumberUtils.compare(recipient.address, number.address)
+                            }
+                        }
                         .map { recipient -> recipient.apply { this.contact = contact } }
 
                 realm.insertOrUpdate(updatedRecipients)

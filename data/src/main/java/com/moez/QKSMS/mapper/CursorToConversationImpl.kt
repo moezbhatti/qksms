@@ -40,7 +40,8 @@ class CursorToConversationImpl @Inject constructor(
                 Threads.RECIPIENT_IDS,
                 Threads.MESSAGE_COUNT,
                 Threads.READ,
-                Threads.SNIPPET)
+                Threads.SNIPPET
+        )
 
         const val ID = 0
         const val DATE = 1
@@ -67,10 +68,7 @@ class CursorToConversationImpl @Inject constructor(
 
     override fun getConversationsCursor(lastSync: Long): Cursor? {
         return when (permissionManager.hasReadSms()) {
-            true -> context.contentResolver.query(URI, PROJECTION,
-                    "date > $lastSync", null,
-                    "date desc")
-
+            true -> context.contentResolver.query(URI, PROJECTION, "date > $lastSync", null, "date desc")
             false -> null
         }
     }

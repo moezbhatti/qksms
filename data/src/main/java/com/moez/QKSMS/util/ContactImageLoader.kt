@@ -36,7 +36,6 @@ import io.reactivex.schedulers.Schedulers
 import java.io.InputStream
 import java.security.MessageDigest
 
-
 class ContactImageLoader(
     private val context: Context,
     private val contactRepo: ContactRepository
@@ -46,12 +45,20 @@ class ContactImageLoader(
         return PhoneNumberUtils.isGlobalPhoneNumber(model)
     }
 
-    override fun buildLoadData(model: String, width: Int, height: Int, options: Options): ModelLoader.LoadData<InputStream>? {
+    override fun buildLoadData(
+        model: String,
+        width: Int,
+        height: Int,
+        options: Options
+    ): ModelLoader.LoadData<InputStream>? {
         return ModelLoader.LoadData(ContactImageKey(model), ContactImageFetcher(context, contactRepo, model))
     }
 
     class Factory(val context: Context, val prefs: Preferences) : ModelLoaderFactory<String, InputStream> {
-        override fun build(multiFactory: MultiModelLoaderFactory) = ContactImageLoader(context, ContactRepositoryImpl(context, prefs))
+        override fun build(multiFactory: MultiModelLoaderFactory): ContactImageLoader {
+            return ContactImageLoader(context, ContactRepositoryImpl(context, prefs))
+        }
+
         override fun teardown() {} // nothing to do here
     }
 

@@ -47,8 +47,13 @@ class ContactRepositoryImpl @Inject constructor(
         return Flowable.just(address)
                 .map {
                     when {
-                        address.contains('@') -> Uri.withAppendedPath(Email.CONTENT_FILTER_URI, Uri.encode(address))
-                        else -> Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
+                        address.contains('@') -> {
+                            Uri.withAppendedPath(Email.CONTENT_FILTER_URI, Uri.encode(address))
+                        }
+
+                        else -> {
+                            Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(address))
+                        }
                     }
                 }
                 .mapNotNull { uri -> context.contentResolver.query(uri, arrayOf(BaseColumns._ID), null, null, null) }

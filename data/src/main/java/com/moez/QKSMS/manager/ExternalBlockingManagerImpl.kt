@@ -74,7 +74,8 @@ class ExternalBlockingManagerImpl @Inject constructor(
             if (prefs.sia.get()) {
                 intent = tryOrNull(false) {
                     context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled
-                    Intent("org.mistergroup.shouldianswerpersonal.PublicService").setPackage("org.mistergroup.shouldianswerpersonal")
+                    Intent("org.mistergroup.shouldianswerpersonal.PublicService")
+                            .setPackage("org.mistergroup.shouldianswerpersonal")
                 } ?: tryOrNull(false) {
                     context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled
                     Intent("org.mistergroup.muzutozvednout.PublicService").setPackage("org.mistergroup.muzutozvednout")

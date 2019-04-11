@@ -22,7 +22,6 @@ import io.realm.DynamicRealm
 import io.realm.FieldAttribute
 import io.realm.RealmMigration
 
-
 class QkRealmMigration : RealmMigration {
 
     companion object {

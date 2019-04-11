@@ -24,7 +24,6 @@ import android.net.Uri
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import java.io.ByteArrayOutputStream
 
-
 object ImageUtils {
 
     fun compressGif(context: Context, uri: Uri, maxBytes: Int): ByteArray {
