@@ -58,10 +58,17 @@ class ReceiveMms @Inject constructor(
                         if (blocked) messageRepo.deleteMessages(message.id)
                     }
                 }
-                .doOnNext { message -> conversationRepo.updateConversations(message.threadId) } // Update the conversation
-                .mapNotNull { message -> conversationRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
+                .doOnNext { message ->
+                    conversationRepo.updateConversations(message.threadId) // Update the conversation
+                }
+                .mapNotNull { message ->
+                    conversationRepo.getOrCreateConversation(message.threadId) // Map message to conversation
+                }
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
-                .doOnNext { conversation -> if (conversation.archived) conversationRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
+                .doOnNext { conversation ->
+                    // Unarchive conversation if necessary
+                    if (conversation.archived) conversationRepo.markUnarchived(conversation.id)
+                }
                 .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
                 .doOnNext(notificationManager::update) // Update the notification
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge

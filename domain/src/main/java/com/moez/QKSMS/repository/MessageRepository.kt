@@ -57,7 +57,14 @@ interface MessageRepository {
 
     fun markUnread(vararg threadIds: Long)
 
-    fun sendMessage(subId: Int, threadId: Long, addresses: List<String>, body: String, attachments: List<Attachment>, delay: Int = 0)
+    fun sendMessage(
+        subId: Int,
+        threadId: Long,
+        addresses: List<String>,
+        body: String,
+        attachments: List<Attachment>,
+        delay: Int = 0
+    )
 
     /**
      * Attempts to send the SMS message. This can be called if the message has already been persisted

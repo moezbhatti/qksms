@@ -21,14 +21,12 @@ package com.moez.QKSMS.interactor
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
-import com.moez.QKSMS.repository.SyncRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class SendMessage @Inject constructor(
     private val conversationRepo: ConversationRepository,
-    private val messageRepo: MessageRepository,
-    private val syncRepo: SyncRepository
+    private val messageRepo: MessageRepository
 ) : Interactor<SendMessage.Params>() {
 
     data class Params(
@@ -37,11 +35,15 @@ class SendMessage @Inject constructor(
         val addresses: List<String>,
         val body: String,
         val attachments: List<Attachment> = listOf(),
-        val delay: Int = 0)
+        val delay: Int = 0
+    )
 
     override fun buildObservable(params: Params): Flowable<*> = Flowable.just(Unit)
             .filter { params.addresses.isNotEmpty() }
-            .doOnNext { messageRepo.sendMessage(params.subId, params.threadId, params.addresses, params.body, params.attachments, params.delay) }
+            .doOnNext {
+                messageRepo.sendMessage(params.subId, params.threadId, params.addresses, params.body,
+                        params.attachments, params.delay)
+            }
             .map {
                 // On some manufacturers, we can't obtain a threadId for a new conversation. In
                 // this case, find the threadId manually now that it contains a message

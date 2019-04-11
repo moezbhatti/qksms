@@ -53,14 +53,21 @@ class ReceiveSms @Inject constructor(
                     val time = messages[0].timestampMillis
                     val body: String = messages
                             .mapNotNull { message -> message.displayMessageBody }
-                            .reduce { body, new -> body + new } ?: ""
+                            .reduce { body, new -> body + new }
 
                     messageRepo.insertReceivedSms(it.subId, address, body, time) // Add the message to the db
                 }
-                .doOnNext { message -> conversationRepo.updateConversations(message.threadId) } // Update the conversation
-                .mapNotNull { message -> conversationRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
+                .doOnNext { message ->
+                    conversationRepo.updateConversations(message.threadId) // Update the conversation
+                }
+                .mapNotNull { message ->
+                    conversationRepo.getOrCreateConversation(message.threadId) // Map message to conversation
+                }
                 .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
-                .doOnNext { conversation -> if (conversation.archived) conversationRepo.markUnarchived(conversation.id) } // Unarchive conversation if necessary
+                .doOnNext { conversation ->
+                    // Unarchive conversation if necessary
+                    if (conversation.archived) conversationRepo.markUnarchived(conversation.id)
+                }
                 .map { conversation -> conversation.id } // Map to the id because [delay] will put us on the wrong thread
                 .doOnNext { threadId -> notificationManager.update(threadId) } // Update the notification
                 .doOnNext { shortcutManager.updateShortcuts() } // Update shortcuts

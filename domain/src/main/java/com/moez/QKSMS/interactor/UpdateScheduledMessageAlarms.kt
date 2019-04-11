@@ -34,7 +34,9 @@ class UpdateScheduledMessageAlarms @Inject constructor(
                 .map { scheduledMessageRepo.getScheduledMessages() } // Get all the scheduled messages
                 .map { it.map { message -> Pair(message.id, message.date) } } // Map the data we need out of Realm
                 .flatMap { messages -> Flowable.fromIterable(messages) } // Turn the list into a stream
-                .doOnNext { (id, date) -> alarmManager.setAlarm(date, alarmManager.getScheduledMessageIntent(id)) } // Create alarm
+                .doOnNext { (id, date) ->
+                    alarmManager.setAlarm(date, alarmManager.getScheduledMessageIntent(id)) // Create alarm
+                }
                 .filter { (_, date) -> date < System.currentTimeMillis() } // Filter messages that should have already been sent
                 .flatMap { (id, _) -> sendScheduledMessage.buildObservable(id) } // Send them
     }

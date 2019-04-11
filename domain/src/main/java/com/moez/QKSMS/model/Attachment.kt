@@ -51,4 +51,4 @@ sealed class Attachment {
 
 }
 
-class Attachments(attachments: List<Attachment>): List<Attachment> by attachments
+class Attachments(attachments: List<Attachment>) : List<Attachment> by attachments
