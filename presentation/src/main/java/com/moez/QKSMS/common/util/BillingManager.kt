@@ -77,10 +77,13 @@ class BillingManager @Inject constructor(
 
     private fun queryPurchases() {
         executeServiceRequest {
-            val purchasesResult = billingClient.queryPurchases(SkuType.INAPP)
+            // Load the cached data
+            purchaseListObservable.onNext(billingClient.queryPurchases(SkuType.INAPP).purchasesList.orEmpty())
 
-            // Handle purchase result
-            purchaseListObservable.onNext(purchasesResult.purchasesList.orEmpty())
+            // On a fresh device, the purchase might not be cached, and so we'll need to force a refresh
+            billingClient.queryPurchaseHistoryAsync(SkuType.INAPP) { _, _ ->
+                purchaseListObservable.onNext(billingClient.queryPurchases(SkuType.INAPP).purchasesList.orEmpty())
+            }
         }
     }
 
