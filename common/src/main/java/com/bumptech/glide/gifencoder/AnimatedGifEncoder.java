@@ -70,8 +70,7 @@ public class AnimatedGifEncoder {
      * Sets the delay time between each frame, or changes it for subsequent frames
      * (applies to last frame added).
      *
-     * @param ms
-     *          int delay time in milliseconds
+     * @param ms int delay time in milliseconds
      */
     public void setDelay(int ms) {
         delay = Math.round(ms / 10.0f);
@@ -82,8 +81,7 @@ public class AnimatedGifEncoder {
      * subsequent frames. Default is 0 if no transparent color has been set,
      * otherwise 2.
      *
-     * @param code
-     *          int disposal code.
+     * @param code int disposal code.
      */
     public void setDispose(int code) {
         if (code >= 0) {
@@ -96,8 +94,7 @@ public class AnimatedGifEncoder {
      * 1; 0 means play indefinitely. Must be invoked before the first image is
      * added.
      *
-     * @param iter
-     *          int number of iterations.
+     * @param iter int number of iterations.
      */
     public void setRepeat(int iter) {
         if (iter >= 0) {
@@ -112,8 +109,7 @@ public class AnimatedGifEncoder {
      * color becomes the transparent color for that frame. May be set to null to
      * indicate no transparent color.
      *
-     * @param color
-     *          Color to be treated as transparent on display.
+     * @param color Color to be treated as transparent on display.
      */
     public void setTransparent(int color) {
         transparent = color;
@@ -126,8 +122,7 @@ public class AnimatedGifEncoder {
      * <code>setSize</code> was invoked, the size is used for all subsequent frames.
      * Otherwise, the actual size of the image is used for each frames.
      *
-     * @param im
-     *          BufferedImage containing frame to write.
+     * @param im BufferedImage containing frame to write.
      * @return true if successful.
      */
     public boolean addFrame(@Nullable Bitmap im) {
@@ -140,17 +135,14 @@ public class AnimatedGifEncoder {
      * Invoking <code>finish()</code> flushes all frames. If <code>setSize</code> was invoked, the
      * size is used for all subsequent frames. Otherwise, the actual size of the image is used for
      * each frame.
-     *
+     * <p>
      * See page 11 of http://giflib.sourceforge.net/gif89.txt for the position of the frame
      *
-     * @param im
-     *          BufferedImage containing frame to write.
-     * @param x
-     *          Column number, in pixels, of the left edge of the image, with respect to the left
-     *          edge of the Logical Screen.
-     * @param y
-     *          Row number, in pixels, of the top edge of the image with respect to the top edge of
-     *          the Logical Screen.
+     * @param im BufferedImage containing frame to write.
+     * @param x  Column number, in pixels, of the left edge of the image, with respect to the left
+     *           edge of the Logical Screen.
+     * @param y  Row number, in pixels, of the top edge of the image with respect to the top edge of
+     *           the Logical Screen.
      * @return true if successful.
      */
     public boolean addFrame(@Nullable Bitmap im, int x, int y) {
@@ -225,8 +217,7 @@ public class AnimatedGifEncoder {
      * Sets frame rate in frames per second. Equivalent to
      * <code>setDelay(1000/fps)</code>.
      *
-     * @param fps
-     *          float frame rate (frames per second)
+     * @param fps float frame rate (frames per second)
      */
     public void setFrameRate(float fps) {
         if (fps != 0f) {
@@ -253,10 +244,8 @@ public class AnimatedGifEncoder {
      * Sets the fixed GIF frame size for all the frames.
      * This should be called before start.
      *
-     * @param w
-     *          int frame width.
-     * @param h
-     *          int frame width.
+     * @param w int frame width.
+     * @param h int frame width.
      */
     public void setSize(int w, int h) {
         if (started) {
@@ -278,10 +267,8 @@ public class AnimatedGifEncoder {
     /**
      * Sets current GIF frame size.
      *
-     * @param w
-     *          int frame width.
-     * @param h
-     *          int frame width.
+     * @param w int frame width.
+     * @param h int frame width.
      */
     private void setFrameSize(int w, int h) {
         width = w;
@@ -292,8 +279,7 @@ public class AnimatedGifEncoder {
      * Initiates GIF file creation on the given stream. The stream is not closed
      * automatically.
      *
-     * @param os
-     *          OutputStream on which GIF images are written.
+     * @param os OutputStream on which GIF images are written.
      * @return false if initial write failed.
      */
     public boolean start(@Nullable OutputStream os) {
@@ -313,8 +299,7 @@ public class AnimatedGifEncoder {
     /**
      * Initiates writing of a GIF file with the specified name.
      *
-     * @param file
-     *          String containing output file name.
+     * @param file String containing output file name.
      * @return false if open or initial write failed.
      */
     public boolean start(@NonNull String file) {
@@ -366,7 +351,6 @@ public class AnimatedGifEncoder {
 
     /**
      * Returns index of palette color closest to c
-     *
      */
     private int findClosest(int color) {
         if (colorTab == null)
@@ -377,7 +361,7 @@ public class AnimatedGifEncoder {
         int minpos = 0;
         int dmin = 256 * 256 * 256;
         int len = colorTab.length;
-        for (int i = 0; i < len;) {
+        for (int i = 0; i < len; ) {
             int dr = r - (colorTab[i++] & 0xff);
             int dg = g - (colorTab[i++] & 0xff);
             int db = b - (colorTab[i] & 0xff);
@@ -430,7 +414,7 @@ public class AnimatedGifEncoder {
         hasTransparentPixels = transparentPercentage > MIN_TRANSPARENT_PERCENTAGE;
         if (Log.isLoggable(TAG, Log.DEBUG)) {
             Log.d(TAG, "got pixels for frame with " + transparentPercentage
-                + "% transparent pixels");
+                    + "% transparent pixels");
         }
     }
 
