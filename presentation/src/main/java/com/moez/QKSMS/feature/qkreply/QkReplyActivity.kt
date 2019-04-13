@@ -79,8 +79,8 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             toolbar.setBackgroundTint(resolveThemeColor(R.attr.colorPrimary))
             background.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
             messageBackground.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
-            composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
-            composeBackground2.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+            composeBackgroundGradient.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+            composeBackgroundSolid.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
     }
 
