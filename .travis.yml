@@ -75,7 +75,7 @@ before_script:
 # Build APK
 script:
   - |
-    ./gradlew assembleWithAnalyticsRelease assembleAndroidTest -PtestCoverageEnabled='true'
+    ./gradlew :presentation:assembleWithAnalyticsRelease assembleAndroidTest -PtestCoverageEnabled='true'
     retval=$?
     if [$retval -ne 0]; then
       echo "error on assembling, exit code: "$retval
