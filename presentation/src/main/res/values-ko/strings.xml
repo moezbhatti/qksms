@@ -19,9 +19,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
-    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+    <string name="shortcut_compose_long_label">새로운 대화</string>
+    <string name="shortcut_compose_short_label">메시지 작성</string>
+    <string name="shortcut_compose_disabled_message">바로가기 해제</string>
     <string name="title_archived">보관됨</string>
     <string name="title_settings">설정</string>
     <string name="title_notification_prefs">알림</string>
@@ -52,7 +52,7 @@
     <string name="inbox_search_empty_text">결과없음</string>
     <string name="archived_empty_text">보관된 메시지가 여기 나타납니다</string>
     <string name="main_fab_cd">새로운 대화 시작하기</string>
-    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_title">다시 문자 보내는게 좋네요</string>
     <string name="main_default_sms_message">QKSMS 앱을 기본 메시지 앱으로 설정하기</string>
     <string name="main_default_sms_change">변경하기</string>
     <string name="main_permission_required">권한을 부여해 주세요</string>
@@ -104,8 +104,8 @@
     <string name="compose_menu_clear">삭제</string>
     <string name="compose_details_title">세부 정보</string>
     <string name="compose_details_type">종류: %s</string>
-    <string name="compose_details_from">From: %s</string>
-    <string name="compose_details_to">To: %s</string>
+    <string name="compose_details_from">%s가</string>
+    <string name="compose_details_to">%s에게</string>
     <string name="compose_details_subject">제목: %s</string>
     <string name="compose_details_priority">우선 순위: %s</string>
     <string name="compose_details_size">크기: %s</string>
@@ -117,8 +117,8 @@
     <string name="compose_gallery_cd">사진 첨부</string>
     <string name="compose_camera_cd">사진 찍기</string>
     <string name="compose_schedule_cd">예약 전송 메시지</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">연락처 첨부</string>
+    <string name="compose_contact_error">연락처를 불러오는 중에 문제가 발생했습니다</string>
     <string name="compose_sim_cd">%s 선택됨, SIM 카드를 변경하세요.</string>
     <string name="compose_send_cd">메시지 보내기</string>
     <string name="message_status_sending">전송 중...</string>
@@ -134,36 +134,36 @@
     <string name="info_block">차단</string>
     <string name="info_unblock">차단 해제</string>
     <string name="info_delete">대화 삭제</string>
-    <string name="gallery_error">Couldn\'t load media</string>
+    <string name="gallery_error">미디어를 불러올 수 없습니다</string>
     <string name="gallery_toast_saved">갤러리에 저장</string>
-    <string name="backup_title">Backup and restore</string>
-    <string name="backup_backing_up">Backing up messages</string>
-    <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_last">Last backup</string>
-    <string name="backup_loading">Loading&#8230;</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
-    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
-    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="backup_title">백업과 복원</string>
+    <string name="backup_backing_up">메시지 백업하기</string>
+    <string name="backup_restoring">복원하기</string>
+    <string name="backup_last">최근 백업</string>
+    <string name="backup_loading">로딩 중...</string>
+    <string name="backup_never">사용 안 함</string>
+    <string name="backup_restore_title">복원</string>
+    <string name="backup_restore_summary">백업 선택하기</string>
+    <string name="backup_restore_error_plus">QKSMS+을 구입하여 백업과 복원기능을 사용하세요</string>
+    <string name="backup_restore_error_backup">백업 중...</string>
+    <string name="backup_restore_error_restore">복원 중...</string>
+    <string name="backup_restore_confirm_title">복원이 되었습니다</string>
+    <string name="backup_restore_confirm_message">이 백업 파일로부터 복원하시겠어요?</string>
+    <string name="backup_restore_stop_title">복원 중지</string>
+    <string name="backup_restore_stop_message">이미 저장된 메시지들은 내 기기에 남아있습니다.</string>
+    <string name="backup_restore_dialog_title">백업</string>
+    <string name="backup_restore_dialog_empty">백업을 찾지 못했어요</string>
     <plurals name="backup_message_count">
-        <item quantity="other">%d messages</item>
+        <item quantity="other">%d 개의 새로운 메시지</item>
     </plurals>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
-    <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup&#8230;</string>
-    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-    <string name="backup_progress_finished">Finished!</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="backup_disclaimer">아직 SMS만 백업과 복원기능이 지원됩니다. MMS지원과 백업 스케줄 기능은 곧 찾아옵니다!</string>
+    <string name="backup_now">지금 백업하기</string>
+    <string name="backup_progress_parsing">분석 중...</string>
+    <string name="backup_progress_running">%d/%d 메시지</string>
+    <string name="backup_progress_saving">저장 중...</string>
+    <string name="backup_progress_syncing">동기화 중...</string>
+    <string name="backup_progress_finished">끝!</string>
+    <string name="backup_notification_channel_name">백업과 복원</string>
     <string name="scheduled_title">예약됨</string>
     <string name="scheduled_empty_description">원하는 그 시간에 자동으로 메시지를 보냅니다.</string>
     <string name="scheduled_empty_message_1">잠깐만요! 생일이 언제였나요..?</string>
@@ -221,16 +221,16 @@
     <string name="settings_delivery_title">전송 확인</string>
     <string name="settings_delivery_summary">전송 성공을 확인합니다</string>
     <string name="settings_unicode_title">스트립 악센트</string>
-    <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-    <string name="settings_mobile_title">Mobile numbers only</string>
-    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_unicode_summary">SMS를 주고받을 때, 대문자 없애기</string>
+    <string name="settings_mobile_title">전화번호만 보이기</string>
+    <string name="settings_mobile_summary">메시지를 쓸 때, 전화번호만 보이게 하기</string>
     <string name="settings_mms_size_title">자동으로 MMS 첨부 파일 압축하기</string>
     <string name="settings_sync_title">메시지 동기화 하기</string>
     <string name="settings_sync_summary">기본 안드로이드 SMS 데이터베이스에 다시 동기화하기</string>
     <string name="settings_about_title">QKSMS에 대해...</string>
     <string name="settings_version">버전 정보 %s</string>
-    <string name="settings_logging_enabled">Debug logging enabled</string>
-    <string name="settings_logging_disabled">Debug logging disabled</string>
+    <string name="settings_logging_enabled">디버그 로깅 설정됨</string>
+    <string name="settings_logging_disabled">디버그 로깅 해제됨</string>
     <string name="settings_delay_duration_hint">기간 (초)을 입력</string>
     <string name="blocked_title">차단</string>
     <string name="blocked_empty">차단된 대화가 여기에 나타납니다.</string>
@@ -262,7 +262,7 @@
     <string name="qksms_plus_scheduled_title">예약 전송 메시지</string>
     <string name="qksms_plus_scheduled_summary">특정한 시간에 메시지가 보내지도록 메시지 전송을 예약하세요</string>
     <string name="qksms_plus_delayed_title">지연 전송</string>
-    <string name="qksms_plus_delayed_summary">메시지를 보내기 전에 몇 초를 기다리세요</string>
+    <string name="qksms_plus_delayed_summary">지연 전송이라는 멋진 기능이 있답니다!</string>
     <string name="qksms_plus_night_title">자동 나이트 모드</string>
     <string name="qksms_plus_night_summary">시간에 따라 나이트 모드 설정하기</string>
     <string name="qksms_plus_blacklist_title">고급 차단 기능</string>
@@ -277,7 +277,7 @@
     <string name="widget_more">더 많은 대화 보기</string>
     <string name="qkreply_menu_read">읽음으로 표시</string>
     <string name="qkreply_menu_call">전화하기</string>
-    <string name="qkreply_menu_delete">Delete</string>
+    <string name="qkreply_menu_delete">삭제하기</string>
     <string name="qkreply_menu_expand">더 보기</string>
     <string name="qkreply_menu_collapse">적게 표시</string>
     <string name="qkreply_menu_view">대화 열기</string>
@@ -290,12 +290,12 @@
         <item>읽음으로 표시</item>
         <item>답장</item>
         <item>전화하기</item>
-        <item>Delete</item>
+        <item>삭제하기</item>
     </string-array>
     <string name="button_cancel">취소</string>
     <string name="button_delete">삭제</string>
     <string name="button_save">저장</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_stop">중지</string>
     <string name="button_more">더보기</string>
     <string name="button_set">설정</string>
     <string name="button_unblock">차단 해제</string>
@@ -308,7 +308,7 @@
 
 %s 개의 새로운 메시지</item>
     </plurals>
-    <string name="notification_message_failed_title">메시지 보내지지 않음</string>
+    <string name="notification_message_failed_title">메시지 전송 실패</string>
     <string name="notification_message_failed_text">%s 에게 보낼 메시지 전송이 실패했습니다</string>
     <string-array name="night_modes">
         <item>비활성화됨</item>

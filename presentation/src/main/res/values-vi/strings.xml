@@ -43,7 +43,7 @@
     <string name="main_menu_unpin">Bỏ ghim</string>
     <string name="main_menu_read">Đánh dấu đã đọc</string>
     <string name="main_menu_unread">Đánh dấu là chưa đọc</string>
-    <string name="main_menu_block">Block</string>
+    <string name="main_menu_block">Chặn liên hệ</string>
     <string name="main_syncing">Đang đồng bộ tin nhắn&#8230;</string>
     <string name="main_sender_you">Bạn: %s</string>
     <string name="main_message_results_title">Kết quả trong tin nhắn</string>
@@ -84,7 +84,7 @@
         <item>Xóa</item>
     </string-array>
     <string name="compose_title_selected">%d đã chọn</string>
-    <string name="compose_subtitle_results">%1$d trên %2$d results</string>
+    <string name="compose_subtitle_results">%1$d trên %2$d kết quả</string>
     <string name="compose_send_group_title">Gửi theo nhóm tin nhắn</string>
     <string name="compose_send_group_summary">Người nhận và các câu trả lời sẽ được hiển thị với mọi người</string>
     <string name="compose_messages_empty">Đây là sự khởi đầu của một cuộc trò chuyện. Hãy nói điều gì đó tốt đẹp nhé!</string>
@@ -129,8 +129,8 @@
     <string name="info_theme">Chủ đề</string>
     <string name="info_archive">Lưu trữ</string>
     <string name="info_unarchive">Hủy lưu trữ</string>
-    <string name="info_block">Chặn</string>
-    <string name="info_unblock">Bỏ chặn</string>
+    <string name="info_block">Chặn liên hệ</string>
+    <string name="info_unblock">Bỏ chặn liên hệ</string>
     <string name="info_delete">Xóa cuộc trò chuyện</string>
     <string name="gallery_error">Không thể tải thư viện</string>
     <string name="gallery_toast_saved">Đã lưu vào thư viện</string>
@@ -164,9 +164,9 @@
     <string name="backup_notification_channel_name">Sao lưu và khôi phục</string>
     <string name="scheduled_title">Hẹn giờ tin nhắn</string>
     <string name="scheduled_empty_description">Tự động gửi tin nhắn vào lúc mà bạn muốn</string>
-    <string name="scheduled_empty_message_1">Này, khi nào sinh nhật bạn quay lại ?</string>
+    <string name="scheduled_empty_message_1">Này, khi nào thì tới sinh nhật bạn ?</string>
     <string name="scheduled_empty_message_2">Vào ngày 23 tháng 12 đó</string>
-    <string name="scheduled_empty_message_3">Chúc mừng sinh nhật! Nhìn xem tôi đúng là một người bạn tuyệt vời, nhớ ngày sinh nhật của bạn đấy</string>
+    <string name="scheduled_empty_message_3">Chúc mừng sinh nhật! Nhìn xem, tôi đúng là một người bạn tuyệt vời, nhớ ngày sinh nhật của bạn đấy</string>
     <string name="scheduled_empty_message_3_timestamp">Sẽ gửi vào ngày 23 tháng 12</string>
     <string name="scheduled_compose_cd">Hẹn giờ tin nhắn</string>
     <string name="scheduled_options_title">Tin nhắn đã hẹn giờ</string>
@@ -216,7 +216,7 @@
         <item>Gọi điện</item>
         <item>Đánh dấu là đã đọc</item>
     </string-array>
-    <string name="settings_delivery_title">Xác nhận đã nhận tin</string>
+    <string name="settings_delivery_title">Xác nhận đã gửi tin</string>
     <string name="settings_delivery_summary">Xác nhận rằng các tin nhắn được gửi thành công</string>
     <string name="settings_unicode_title">Bỏ dấu</string>
     <string name="settings_unicode_summary">Bỏ dấu ký tự khi gửi SMS</string>
@@ -231,9 +231,9 @@
     <string name="settings_logging_disabled">Đã tắt bản ghi gỡ lỗi</string>
     <string name="settings_delay_duration_hint">Nhập khoảng thời gian (giây)</string>
     <string name="blocked_title">Chặn liên hệ</string>
-    <string name="blocked_empty">Tin nhắn bị chặn sẽ hiện ở đây</string>
-    <string name="blocked_unblock_dialog_title">Bỏ chặn</string>
-    <string name="blocked_unblock_dialog_message">Bạn có muốn bỏ chặn cuộc trò chuyện này ?</string>
+    <string name="blocked_empty">Liên hệ bị chặn sẽ hiện ở đây</string>
+    <string name="blocked_unblock_dialog_title">Bỏ chặn liên hệ</string>
+    <string name="blocked_unblock_dialog_message">Bạn có muốn bỏ chặn liên hệ này ?</string>
     <string name="about_title">Giới thiệu</string>
     <string name="about_version_title">Phiên bản</string>
     <string name="about_developer_title">Nhà phát triển</string>

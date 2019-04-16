@@ -19,8 +19,8 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
+    <string name="shortcut_compose_long_label">Új beszélgetés</string>
+    <string name="shortcut_compose_short_label">Írás</string>
     <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
     <string name="title_archived">Archivált</string>
     <string name="title_settings">Beállítások</string>
@@ -39,10 +39,10 @@
     <string name="main_menu_archive">Archiválás</string>
     <string name="main_menu_unarchive">Törlés az archívumból</string>
     <string name="main_menu_delete">Törlés</string>
-    <string name="main_menu_pin">Pin to top</string>
-    <string name="main_menu_unpin">Unpin</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_pin">Rögzítés a tetejére</string>
+    <string name="main_menu_unpin">Rögzítés törlése</string>
+    <string name="main_menu_read">Megjelölés olvasottként</string>
+    <string name="main_menu_unread">Megjelölés olvasatlanként</string>
     <string name="main_menu_block">Blokkolás</string>
     <string name="main_syncing">Üzenetek szinkronizálása&#8230;</string>
     <string name="main_sender_you">Te: %s</string>
@@ -62,22 +62,22 @@
     <string name="drawer_inbox">Bejövő üzenetek</string>
     <string name="drawer_archived">Archivált</string>
     <string name="drawer_scheduled">Ütemezett</string>
-    <string name="drawer_blocking">Blocking</string>
+    <string name="drawer_blocking">Blokkolás</string>
     <string name="drawer_more">Továbbiák</string>
     <string name="drawer_settings">Beállítások</string>
     <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Súgó és visszajelzés</string>
-    <string name="drawer_invite">Invite friends</string>
+    <string name="drawer_invite">Ismerősök meghívása</string>
     <string name="drawer_plus_banner_title">QKSMS+</string>
-    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+    <string name="drawer_plus_banner_summary">Juss érdekes, új lehetőségekhez és támogasd fejlesztést</string>
     <string name="rate_title">Tetszik a QKSMS?</string>
     <string name="rate_summary">Oszd meg a szeretetet és értékelj minket a Google Playen!</string>
     <string name="rate_okay">OKÉ!</string>
     <string name="rate_dismiss">MELLŐZÉS</string>
     <string name="dialog_delete_title">Törlés</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Are you sure you would like to delete this conversation?</item>
-        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="one">Biztos, hogy törölni szeretnéd ezt a beszélgetést?</item>
+        <item quantity="other">Biztos, hogy törölni szeretnél %d beszélgetést?</item>
     </plurals>
     <string-array name="message_options">
         <item>Szöveg másolása</item>
@@ -85,122 +85,122 @@
         <item>Törlés</item>
     </string-array>
     <string name="compose_title_selected">%d kijelölve</string>
-    <string name="compose_subtitle_results">%1$d of %2$d results</string>
-    <string name="compose_send_group_title">Send as group message</string>
-    <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
-    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
+    <string name="compose_subtitle_results">%1$d. a %2$d találatból</string>
+    <string name="compose_send_group_title">Küldés csoportos üzenetként</string>
+    <string name="compose_send_group_summary">A címzettek és a válaszok mindenkinek láthatóak lesznek</string>
+    <string name="compose_messages_empty">Ez a társalgás kezdete. Írj valami kedveset!</string>
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Scheduled for</string>
-    <string name="compose_scheduled_future">Selected time must be in the future!</string>
-    <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
-    <string name="compose_hint">Write a message&#8230;</string>
-    <string name="compose_menu_copy">Copy text</string>
-    <string name="compose_menu_forward">Forward</string>
-    <string name="compose_menu_delete">Delete</string>
-    <string name="compose_menu_previous">Previous</string>
-    <string name="compose_menu_next">Next</string>
-    <string name="compose_menu_clear">Clear</string>
-    <string name="compose_details_title">Message details</string>
-    <string name="compose_details_type">Type: %s</string>
-    <string name="compose_details_from">From: %s</string>
-    <string name="compose_details_to">To: %s</string>
-    <string name="compose_details_subject">Subject: %s</string>
-    <string name="compose_details_priority">Priority: %s</string>
-    <string name="compose_details_size">Size: %s</string>
-    <string name="compose_details_sent">Sent: %s</string>
-    <string name="compose_details_received">Received: %s</string>
-    <string name="compose_details_delivered">Delivered: %s</string>
-    <string name="compose_details_error_code">Error code: %d</string>
-    <string name="compose_attach_cd">Add an attachment</string>
-    <string name="compose_gallery_cd">Attach a photo</string>
-    <string name="compose_camera_cd">Take a photo</string>
-    <string name="compose_schedule_cd">Schedule message</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
-    <string name="compose_sim_cd">%s selected, change SIM card</string>
-    <string name="compose_send_cd">Send message</string>
-    <string name="message_status_sending">Sending&#8230;</string>
+    <string name="compose_scheduled_future">A kiválasztott időpontnak a jövőben kell lennie!</string>
+    <string name="compose_scheduled_plus">Aktiválnod kell a QKSMS+-t hogy időzített üzeneteteket tudj használni</string>
+    <string name="compose_scheduled_toast">Hozzáadva az időzített üzenetekhez</string>
+    <string name="compose_hint">Írj egy üzenetet&#8230;</string>
+    <string name="compose_menu_copy">Szöveg másolás</string>
+    <string name="compose_menu_forward">Továbbítás</string>
+    <string name="compose_menu_delete">Törlés</string>
+    <string name="compose_menu_previous">Előző</string>
+    <string name="compose_menu_next">Következő</string>
+    <string name="compose_menu_clear">Kiürítés</string>
+    <string name="compose_details_title">Üzenet részletei</string>
+    <string name="compose_details_type">Típus: %s</string>
+    <string name="compose_details_from">Feladó: %s</string>
+    <string name="compose_details_to">Cím: %s</string>
+    <string name="compose_details_subject">Tárgy: %s</string>
+    <string name="compose_details_priority">Prioritás: %s</string>
+    <string name="compose_details_size">Méret: %s</string>
+    <string name="compose_details_sent">Elküldve: %s</string>
+    <string name="compose_details_received">Megkapva: %s</string>
+    <string name="compose_details_delivered">Kézbesítve: %s</string>
+    <string name="compose_details_error_code">Hibakód: %d</string>
+    <string name="compose_attach_cd">Csatolás hozzáadása</string>
+    <string name="compose_gallery_cd">Fénykép hozzáadása</string>
+    <string name="compose_camera_cd">Fénykép készítése</string>
+    <string name="compose_schedule_cd">Időzített küldés</string>
+    <string name="compose_contact_cd">Személy hozzáadása</string>
+    <string name="compose_contact_error">Hiba a személy olvasása közben</string>
+    <string name="compose_sim_cd">%s kiválasztva, cserélj SIM kártyát</string>
+    <string name="compose_send_cd">Üzenet küldése</string>
+    <string name="message_status_sending">Küldés&#8230;</string>
     <string name="message_status_delivered">Kézbesítve %s</string>
-    <string name="message_status_failed">Failed to send. Tap to try again</string>
+    <string name="message_status_failed">Sikertelen küldés. Érintsd meg az újraküldéshez</string>
     <string name="info_title">Részletek</string>
-    <string name="info_name">Conversation title</string>
-    <string name="info_name_hint">Enter title</string>
-    <string name="info_notifications">Notifications</string>
-    <string name="info_theme">Theme</string>
-    <string name="info_archive">Archive</string>
-    <string name="info_unarchive">Unarchive</string>
-    <string name="info_block">Block</string>
-    <string name="info_unblock">Unblock</string>
-    <string name="info_delete">Delete conversation</string>
-    <string name="gallery_error">Couldn\'t load media</string>
-    <string name="gallery_toast_saved">Saved to gallery</string>
-    <string name="backup_title">Backup and restore</string>
-    <string name="backup_backing_up">Backing up messages</string>
-    <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_last">Last backup</string>
-    <string name="backup_loading">Loading&#8230;</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
+    <string name="info_name">A beszélgetés témája</string>
+    <string name="info_name_hint">Add meg a témát</string>
+    <string name="info_notifications">Értesítések</string>
+    <string name="info_theme">Téma</string>
+    <string name="info_archive">Archivál</string>
+    <string name="info_unarchive">Archiválás visszavonása</string>
+    <string name="info_block">Blokkolás</string>
+    <string name="info_unblock">Blokkolás visszavonása</string>
+    <string name="info_delete">Beszélgetés törlése</string>
+    <string name="gallery_error">A média nem érhető el</string>
+    <string name="gallery_toast_saved">Mentés galériába</string>
+    <string name="backup_title">Mentés és visszaállítás</string>
+    <string name="backup_backing_up">Üzenetek mentése</string>
+    <string name="backup_restoring">Üzenetek visszaállítása mentésből</string>
+    <string name="backup_last">Utolsó mentés</string>
+    <string name="backup_loading">Betöltés&#8230;</string>
+    <string name="backup_never">Soha</string>
+    <string name="backup_restore_title">Visszaállítás</string>
+    <string name="backup_restore_summary">Válassz egy mentést</string>
     <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
-    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="backup_restore_error_backup">Mentés folyamatban&#8230;</string>
+    <string name="backup_restore_error_restore">Visszaállítás folyamatban&#8230;</string>
+    <string name="backup_restore_confirm_title">Visszaállítás mentésből</string>
+    <string name="backup_restore_confirm_message">Biztos vagy benne hogy vissza akarod állítani a mentésből a üzeneteket?</string>
+    <string name="backup_restore_stop_title">Visszaállítás megállítása</string>
+    <string name="backup_restore_stop_message">A már visszaállított üzenetek a készülékeden maradnak</string>
+    <string name="backup_restore_dialog_title">Mentések</string>
+    <string name="backup_restore_dialog_empty">Nincsenek mentések</string>
     <plurals name="backup_message_count">
-        <item quantity="one">%d message</item>
-        <item quantity="other">%d messages</item>
+        <item quantity="one">%d üzenet</item>
+        <item quantity="other">%d üzenet</item>
     </plurals>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
-    <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup&#8230;</string>
-    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-    <string name="backup_progress_finished">Finished!</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
-    <string name="scheduled_title">Scheduled</string>
+    <string name="backup_disclaimer">Jelenleg a mentés csak az SMS üzeneteket menti. Az MMS támogatás és az időzített mentések hamarosan jönnek!</string>
+    <string name="backup_now">Mentés most</string>
+    <string name="backup_progress_parsing">Mentés elemzése&#8230;</string>
+    <string name="backup_progress_running">%d/%d üzenet</string>
+    <string name="backup_progress_saving">Mentés&#8230;</string>
+    <string name="backup_progress_syncing">Üzenetek szinkronizálása&#8230;</string>
+    <string name="backup_progress_finished">Kész!</string>
+    <string name="backup_notification_channel_name">Mentés és visszaállítás</string>
+    <string name="scheduled_title">Ütemezés</string>
     <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
     <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
     <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
-    <string name="scheduled_options_title">Scheduled message</string>
+    <string name="scheduled_compose_cd">Küldés időzítése</string>
+    <string name="scheduled_options_title">Időzített üzenet</string>
     <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Delete</item>
+        <item>Küldés most</item>
+        <item>Törlés</item>
     </string-array>
-    <string name="settings_category_appearance">Appearance</string>
-    <string name="settings_category_general">General</string>
-    <string name="settings_category_qkreply">QK Reply</string>
-    <string name="settings_theme_title">Theme</string>
-    <string name="settings_night_title">Night mode</string>
-    <string name="settings_black_title">Pure black night mode</string>
-    <string name="settings_night_start_title">Start time</string>
-    <string name="settings_night_end_title">End time</string>
-    <string name="settings_text_size_title">Font size</string>
-    <string name="settings_system_font_title">Use system font</string>
-    <string name="settings_auto_emoji_title">Automatic emoji</string>
-    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_category_appearance">Megjelenés</string>
+    <string name="settings_category_general">Általános</string>
+    <string name="settings_category_qkreply">QK válasz</string>
+    <string name="settings_theme_title">Téma</string>
+    <string name="settings_night_title">Éjszakai mód</string>
+    <string name="settings_black_title">Éjfekete mód</string>
+    <string name="settings_night_start_title">Kezdés ideje</string>
+    <string name="settings_night_end_title">Befejezés ideje</string>
+    <string name="settings_text_size_title">Betűméret</string>
+    <string name="settings_system_font_title">Rendszer betűtípus visszaállítása</string>
+    <string name="settings_auto_emoji_title">Automatikus emoji</string>
+    <string name="settings_notifications_title">Értesítések</string>
     <string name="settings_notifications_o_summary">Tap to customize</string>
-    <string name="settings_notification_actions_title">Actions</string>
-    <string name="settings_notification_action_1">Button 1</string>
-    <string name="settings_notification_action_2">Button 2</string>
-    <string name="settings_notification_action_3">Button 3</string>
-    <string name="settings_notification_previews_title">Notification previews</string>
-    <string name="settings_vibration_title">Vibration</string>
-    <string name="settings_ringtone_title">Sound</string>
-    <string name="settings_ringtone_none">None</string>
-    <string name="settings_qkreply_title">QK Reply</string>
-    <string name="settings_qkreply_summary">Popup for new messages</string>
-    <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
+    <string name="settings_notification_actions_title">Műveletek</string>
+    <string name="settings_notification_action_1">Gomb 1</string>
+    <string name="settings_notification_action_2">Gomb 2</string>
+    <string name="settings_notification_action_3">Gomb 3</string>
+    <string name="settings_notification_previews_title">Értesítés előnézet</string>
+    <string name="settings_vibration_title">Rezgés</string>
+    <string name="settings_ringtone_title">Hang</string>
+    <string name="settings_ringtone_none">Nincs</string>
+    <string name="settings_qkreply_title">QK válasz</string>
+    <string name="settings_qkreply_summary">Felugró új üzenetek</string>
+    <string name="settings_qkreply_tap_dismiss_title">Érintsd meg az eltüntetéshez</string>
+    <string name="settings_qkreply_tap_dismiss_summary">Érintsd meg a felugró ablakon kívül a lezáráshoz</string>
     <string name="settings_blocking_title">Blokkolás</string>
     <!-- Do not translate -->
     <string name="settings_should_i_answer_title">Should I Answer?</string>
@@ -210,20 +210,20 @@
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
     <string name="settings_swipe_actions_right">Right swipe</string>
     <string name="settings_swipe_actions_left">Left swipe</string>
-    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string name="settings_swipe_actions_change">MEGVÁLTOZTATÁS</string>
     <string-array name="settings_swipe_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Call</item>
-        <item>Mark read</item>
+        <item>Nincs</item>
+        <item>Archiválás</item>
+        <item>Törlés</item>
+        <item>Hívás</item>
+        <item>Megjelölés olvasottként</item>
     </string-array>
     <string name="settings_delivery_title">Elküldés megerősítése</string>
     <string name="settings_delivery_summary">Megerősíti, hogy az üzenetek sikeresen el lettek-e küldve</string>
     <string name="settings_unicode_title">Ékezetek törlése</string>
     <string name="settings_unicode_summary">A kimenő SMS-üzenetek ékezetes karaktereinek átalakítása</string>
-    <string name="settings_mobile_title">Mobile numbers only</string>
-    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_mobile_title">Csak mobilszámok</string>
+    <string name="settings_mobile_summary">Üzenet írásánál csak a mobilszámokat mutassa</string>
     <string name="settings_mms_size_title">MMS-mellékletek automatikus tömörítése</string>
     <string name="settings_sync_title">Üzenetek szinkronizálása</string>
     <string name="settings_sync_summary">Üzenetek szinkronizálása a natív Android SMS-adatbázisban</string>
@@ -245,19 +245,19 @@
     <string name="about_license_title">Licensz</string>
     <string name="about_copyright_title">Copyright</string>
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
-    <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
+    <string name="qksms_plus_description_summary">Csak %s hogy megmenthess egy éhező fejlesztőt</string>
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
-    <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
-    <string name="qksms_plus_donate">Donate via PayPal</string>
-    <string name="qksms_plus_coming_soon">Coming soon</string>
-    <string name="qksms_plus_themes_title">Premium themes</string>
+    <string name="qksms_plus_thanks_title">Köszönjük, hogy támogatot a QKSMS-t!</string>
+    <string name="qksms_plus_thanks_summary">MOst hozzáférsz minden QKSMS+ funkcióhoz</string>
+    <string name="qksms_plus_free_title">A QKSMS+ minden F-Droid felhasználónak ingyenes. Ha támogatni szeretnéd a fejlesztést az alábbi módon megteheted.</string>
+    <string name="qksms_plus_donate">Támogatás PayPalon keresztül</string>
+    <string name="qksms_plus_coming_soon">Hamarosan</string>
+    <string name="qksms_plus_themes_title">Prémium témák</string>
     <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
     <string name="qksms_plus_emoji_title">Custom auto-emoji</string>
     <string name="qksms_plus_emoji_summary">Create custom auto-emoji shortcuts</string>
-    <string name="qksms_plus_backup_title">Message backup</string>
+    <string name="qksms_plus_backup_title">Üzenet biztonsági mentés</string>
     <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
     <string name="qksms_plus_scheduled_title">Scheduled messages</string>
     <string name="qksms_plus_scheduled_summary">Schedule messages to automatically be sent at a specific time and date</string>
@@ -286,59 +286,59 @@
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Apply</string>
     <string-array name="notification_actions">
-        <item>None</item>
-        <item>Mark read</item>
-        <item>Reply</item>
-        <item>Call</item>
-        <item>Delete</item>
+        <item>Nincs</item>
+        <item>Megjelölés olvasottként</item>
+        <item>Válasz</item>
+        <item>Hívás</item>
+        <item>Törlés</item>
     </string-array>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_more">More</string>
-    <string name="button_set">Set</string>
-    <string name="button_unblock">Unblock</string>
-    <string name="button_undo">Undo</string>
-    <string name="toast_copied">Copied</string>
-    <string name="toast_archived">Archived conversation</string>
+    <string name="button_set">Beállítás</string>
+    <string name="button_unblock">Blokk feloldás</string>
+    <string name="button_undo">Visszavonás</string>
+    <string name="toast_copied">Átmásolva</string>
+    <string name="toast_archived">Archivált beszélgetés</string>
     <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
     <plurals name="notification_new_messages">
-        <item quantity="one">New message</item>
-        <item quantity="other">%s new messages</item>
+        <item quantity="one">Új üzenet</item>
+        <item quantity="other">%s új üzenet</item>
     </plurals>
-    <string name="notification_message_failed_title">Message not sent</string>
-    <string name="notification_message_failed_text">The message to %s failed to send</string>
+    <string name="notification_message_failed_title">Az üzenet küldése sikertelen</string>
+    <string name="notification_message_failed_text">Nem sikerült az üzenetetet %s címzettnek elküldeni</string>
     <string-array name="night_modes">
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>Letiltva</item>
+        <item>Mindig bekapcsolva</item>
+        <item>Automatikus</item>
     </string-array>
     <string-array name="notification_preview_options">
-        <item>Show name and message</item>
-        <item>Show name</item>
-        <item>Hide contents</item>
+        <item>Név és üzenet látható</item>
+        <item>Név látható</item>
+        <item>A tartalom rejtett</item>
     </string-array>
     <string-array name="text_sizes">
-        <item>Small</item>
-        <item>Normal</item>
-        <item>Large</item>
-        <item>Larger</item>
+        <item>Kicsi</item>
+        <item>Normál</item>
+        <item>Nagy</item>
+        <item>Nagyobb</item>
     </string-array>
     <string-array name="delayed_sending_labels">
-        <item>No delay</item>
-        <item>Short</item>
-        <item>Medium</item>
-        <item>Long</item>
+        <item>Nincs késleltetés</item>
+        <item>Rövid</item>
+        <item>Közepes</item>
+        <item>Hosszú</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Recommended)</item>
+        <item>300KB (Javsolt)</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Nincs tömörítés</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Oké</item>
