@@ -21,11 +21,11 @@ package com.moez.QKSMS.feature.blocked
 import android.content.Context
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.util.extensions.isInstalled
 import com.moez.QKSMS.interactor.MarkUnblocked
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
-import com.moez.QKSMS.util.tryOrNull
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -54,7 +54,7 @@ class BlockedViewModel @Inject constructor(
         super.bindView(view)
 
         view.ccClickedIntent
-                .map { tryOrNull(false) { context.packageManager.getApplicationInfo("com.flexaspect.android.everycallcontrol", 0).enabled } ?: false }
+                .map { context.isInstalled("com.flexaspect.android.everycallcontrol") }
                 .map { installed ->
                     if (!installed) {
                         navigator.showCallControl()
@@ -69,10 +69,11 @@ class BlockedViewModel @Inject constructor(
 
         view.siaClickedIntent
                 .map {
-                    tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.shouldianswer", 0).enabled }
-                            ?: tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled }
-                            ?: tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled }
-                            ?: false
+                    listOf("org.mistergroup.shouldianswer",
+                            "org.mistergroup.shouldianswerpersonal",
+                            "org.mistergroup.muzutozvednout")
+                            .any(context::isInstalled)
+
                 }
                 .map { installed ->
                     if (!installed) {

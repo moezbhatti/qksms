@@ -73,3 +73,7 @@ fun Activity.dismissKeyboard() {
         focus.clearFocus()
     }
 }
+
+fun Context.isInstalled(packageName: String): Boolean {
+    return tryOrNull(false) { packageManager.getApplicationInfo(packageName, 0).enabled } ?: false
+}
