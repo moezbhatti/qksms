@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.manager
+package com.moez.QKSMS.blocking
 
 import android.content.ComponentName
 import android.content.Context
@@ -35,10 +35,10 @@ import io.reactivex.subjects.SingleSubject
 import timber.log.Timber
 import javax.inject.Inject
 
-class ExternalBlockingManagerImpl @Inject constructor(
+class ShouldIAnswerBlockingClient @Inject constructor(
     private val context: Context,
     private val prefs: Preferences
-) : ExternalBlockingManager {
+) : BlockingClient {
 
     companion object {
         const val RATING_UNKNOWN = 0

@@ -73,7 +73,6 @@ class BlockedViewModel @Inject constructor(
                             "org.mistergroup.shouldianswerpersonal",
                             "org.mistergroup.muzutozvednout")
                             .any(context::isInstalled)
-
                 }
                 .map { installed ->
                     if (!installed) {

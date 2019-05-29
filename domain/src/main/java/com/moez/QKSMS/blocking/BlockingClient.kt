@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.manager
+package com.moez.QKSMS.blocking
 
 import io.reactivex.Single
 
-interface ExternalBlockingManager {
+interface BlockingClient {
 
     /**
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked

@@ -19,9 +19,9 @@
 package com.moez.QKSMS.interactor
 
 import android.net.Uri
+import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.manager.ActiveConversationManager
-import com.moez.QKSMS.manager.ExternalBlockingManager
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
@@ -32,7 +32,7 @@ import javax.inject.Inject
 class ReceiveMms @Inject constructor(
     private val activeConversationManager: ActiveConversationManager,
     private val conversationRepo: ConversationRepository,
-    private val externalBlockingManager: ExternalBlockingManager,
+    private val blockingClient: BlockingClient,
     private val syncManager: SyncRepository,
     private val messageRepo: MessageRepository,
     private val notificationManager: NotificationManager,
@@ -54,7 +54,7 @@ class ReceiveMms @Inject constructor(
                     // to check if it should be blocked after we've pulled it into realm. If it
                     // turns out that it should be blocked, then delete it
                     // TODO Don't store blocked messages in the first place
-                    !externalBlockingManager.shouldBlock(message.address).blockingGet().also { blocked ->
+                    !blockingClient.shouldBlock(message.address).blockingGet().also { blocked ->
                         if (blocked) messageRepo.deleteMessages(message.id)
                     }
                 }

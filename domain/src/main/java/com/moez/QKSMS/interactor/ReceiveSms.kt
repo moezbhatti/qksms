@@ -19,8 +19,8 @@
 package com.moez.QKSMS.interactor
 
 import android.telephony.SmsMessage
+import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.extensions.mapNotNull
-import com.moez.QKSMS.manager.ExternalBlockingManager
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.manager.ShortcutManager
 import com.moez.QKSMS.repository.ConversationRepository
@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 class ReceiveSms @Inject constructor(
     private val conversationRepo: ConversationRepository,
-    private val externalBlockingManager: ExternalBlockingManager,
+    private val blockingClient: BlockingClient,
     private val messageRepo: MessageRepository,
     private val notificationManager: NotificationManager,
     private val updateBadge: UpdateBadge,
@@ -45,7 +45,7 @@ class ReceiveSms @Inject constructor(
                 .filter {
                     // Don't continue if the sender is blocked
                     val address = it.messages[0].displayOriginatingAddress
-                    !externalBlockingManager.shouldBlock(address).blockingGet()
+                    !blockingClient.shouldBlock(address).blockingGet()
                 }
                 .map {
                     val messages = it.messages
