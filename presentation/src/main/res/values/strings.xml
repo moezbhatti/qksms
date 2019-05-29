@@ -222,6 +222,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
     <string name="settings_blocking_title">Blocking</string>
     <!-- Do not translate -->
+    <string name="settings_call_control_title">Call Control</string>
+    <string name="settings_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="settings_should_i_answer_title">Should I Answer?</string>
     <string name="settings_should_i_answer_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
     <string name="settings_delayed_title">Delayed sending</string>

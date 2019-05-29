@@ -29,7 +29,6 @@ import com.moez.QKSMS.util.tryOrNull
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class BlockedViewModel @Inject constructor(
@@ -44,12 +43,29 @@ class BlockedViewModel @Inject constructor(
     init {
         newState { copy(data = conversationRepo.getBlockedConversations()) }
 
+        disposables += prefs.callControl.asObservable()
+                .subscribe { enabled -> newState { copy(ccEnabled = enabled) } }
+
         disposables += prefs.sia.asObservable()
                 .subscribe { enabled -> newState { copy(siaEnabled = enabled) } }
     }
 
     override fun bindView(view: BlockedView) {
         super.bindView(view)
+
+        view.ccClickedIntent
+                .map { tryOrNull(false) { context.packageManager.getApplicationInfo("com.flexaspect.android.everycallcontrol", 0).enabled } ?: false }
+                .map { installed ->
+                    if (!installed) {
+                        navigator.showCallControl()
+                    }
+
+                    val enabled = prefs.callControl.get()
+                    analytics.track("Clicked Call Control", Pair("enable", !enabled), Pair("installed", installed))
+                    installed && !enabled
+                }
+                .autoDisposable(view.scope())
+                .subscribe(prefs.callControl::set)
 
         view.siaClickedIntent
                 .map {
@@ -58,13 +74,17 @@ class BlockedViewModel @Inject constructor(
                             ?: tryOrNull(false) { context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled }
                             ?: false
                 }
-                .doOnNext { installed -> if (!installed) navigator.showSia() }
-                .withLatestFrom(prefs.sia.asObservable()) { installed, enabled ->
+                .map { installed ->
+                    if (!installed) {
+                        navigator.showSia()
+                    }
+
+                    val enabled = prefs.sia.get()
                     analytics.track("Clicked SIA", Pair("enable", !enabled), Pair("installed", installed))
                     installed && !enabled
                 }
                 .autoDisposable(view.scope())
-                .subscribe { shouldEnable -> prefs.sia.set(shouldEnable) }
+                .subscribe(prefs.sia::set)
 
         // Show confirm unblock conversation dialog
         view.unblockIntent
