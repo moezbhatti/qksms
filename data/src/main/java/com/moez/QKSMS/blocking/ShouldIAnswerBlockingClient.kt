@@ -32,7 +32,6 @@ import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
-import timber.log.Timber
 import javax.inject.Inject
 
 class ShouldIAnswerBlockingClient @Inject constructor(
@@ -104,9 +103,7 @@ class ShouldIAnswerBlockingClient @Inject constructor(
                 what = GET_NUMBER_RATING
                 data = bundleOf("number" to address)
                 replyTo = Messenger(IncomingHandler { response ->
-                    val shouldBlock = response.rating == RATING_NEGATIVE || response.wantBlock
-                    subject.onSuccess(shouldBlock)
-                    Timber.v("Should block: $shouldBlock")
+                    subject.onSuccess(response.rating == RATING_NEGATIVE || response.wantBlock)
 
                     // We're done, so unbind the service
                     if (isBound && serviceMessenger != null) {

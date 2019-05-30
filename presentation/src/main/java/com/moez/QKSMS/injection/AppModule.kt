@@ -26,6 +26,8 @@ import android.preference.PreferenceManager
 import androidx.lifecycle.ViewModelProvider
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.blocking.BlockingClient
+import com.moez.QKSMS.blocking.CallControlBlockingClient
+import com.moez.QKSMS.blocking.QkBlockingClient
 import com.moez.QKSMS.blocking.ShouldIAnswerBlockingClient
 import com.moez.QKSMS.common.ViewModelFactory
 import com.moez.QKSMS.common.util.NotificationManagerImpl
@@ -76,6 +78,7 @@ import com.moez.QKSMS.repository.ScheduledMessageRepository
 import com.moez.QKSMS.repository.ScheduledMessageRepositoryImpl
 import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.repository.SyncRepositoryImpl
+import com.moez.QKSMS.util.Preferences
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -129,7 +132,16 @@ class AppModule(private var application: Application) {
     fun provideAnalyticsManager(manager: AnalyticsManagerImpl): AnalyticsManager = manager
 
     @Provides
-    fun externalBlockingManager(manager: ShouldIAnswerBlockingClient): BlockingClient = manager
+    fun externalBlockingManager(
+        callControl: CallControlBlockingClient,
+        sia: ShouldIAnswerBlockingClient,
+        qksms: QkBlockingClient,
+        prefs: Preferences
+    ): BlockingClient = when {
+        prefs.callControl.get() -> callControl
+        prefs.sia.get() -> sia
+        else -> qksms
+    }
 
     @Provides
     fun changelogManager(manager: ChangelogManagerImpl): ChangelogManager = manager
@@ -152,7 +164,6 @@ class AppModule(private var application: Application) {
     @Provides
     fun provideWidgetManager(manager: WidgetManagerImpl): WidgetManager = manager
 
-
     // Mapper
 
     @Provides
@@ -169,7 +180,6 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideCursorToRecipient(mapper: CursorToRecipientImpl): CursorToRecipient = mapper
-
 
     // Repository
 

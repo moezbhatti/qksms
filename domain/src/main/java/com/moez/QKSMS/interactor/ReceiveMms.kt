@@ -27,6 +27,7 @@ import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.SyncRepository
 import io.reactivex.Flowable
+import timber.log.Timber
 import javax.inject.Inject
 
 class ReceiveMms @Inject constructor(
@@ -55,6 +56,7 @@ class ReceiveMms @Inject constructor(
                     // turns out that it should be blocked, then delete it
                     // TODO Don't store blocked messages in the first place
                     !blockingClient.shouldBlock(message.address).blockingGet().also { blocked ->
+                        Timber.v("Should block: $blocked")
                         if (blocked) messageRepo.deleteMessages(message.id)
                     }
                 }

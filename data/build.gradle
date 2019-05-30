@@ -81,6 +81,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation files('libs/callcontrol-datashare-release.aar')
     implementation project(":android-smsmms")
     implementation project(':common')
     implementation project(':domain')

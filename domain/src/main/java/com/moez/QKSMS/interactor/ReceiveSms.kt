@@ -26,6 +26,7 @@ import com.moez.QKSMS.manager.ShortcutManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import io.reactivex.Flowable
+import timber.log.Timber
 import javax.inject.Inject
 
 class ReceiveSms @Inject constructor(
@@ -45,7 +46,9 @@ class ReceiveSms @Inject constructor(
                 .filter {
                     // Don't continue if the sender is blocked
                     val address = it.messages[0].displayOriginatingAddress
-                    !blockingClient.shouldBlock(address).blockingGet()
+                    val shouldBlock = blockingClient.shouldBlock(address).blockingGet()
+                    Timber.v("Should block: $shouldBlock")
+                    !shouldBlock
                 }
                 .map {
                     val messages = it.messages
