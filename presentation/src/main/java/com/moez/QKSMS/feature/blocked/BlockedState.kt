@@ -24,5 +24,6 @@ import io.realm.RealmResults
 data class BlockedState(
     val ccEnabled: Boolean = false,
     val siaEnabled: Boolean = false,
+    val dropEnabled: Boolean = false,
     val data: RealmResults<Conversation>? = null
 )

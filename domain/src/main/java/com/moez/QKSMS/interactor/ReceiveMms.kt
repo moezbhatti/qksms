@@ -26,6 +26,7 @@ import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.SyncRepository
+import com.moez.QKSMS.util.Preferences
 import io.reactivex.Flowable
 import timber.log.Timber
 import javax.inject.Inject
@@ -34,6 +35,7 @@ class ReceiveMms @Inject constructor(
     private val activeConversationManager: ActiveConversationManager,
     private val conversationRepo: ConversationRepository,
     private val blockingClient: BlockingClient,
+    private val prefs: Preferences,
     private val syncManager: SyncRepository,
     private val messageRepo: MessageRepository,
     private val notificationManager: NotificationManager,
@@ -50,15 +52,25 @@ class ReceiveMms @Inject constructor(
                         messageRepo.markRead(message.threadId)
                     }
                 }
-                .filter { message ->
+                .mapNotNull { message ->
                     // Because we use the smsmms library for receiving and storing MMS, we'll need
                     // to check if it should be blocked after we've pulled it into realm. If it
-                    // turns out that it should be blocked, then delete it
+                    // turns out that it should be dropped, then delete it
                     // TODO Don't store blocked messages in the first place
-                    !blockingClient.shouldBlock(message.address).blockingGet().also { blocked ->
-                        Timber.v("Should block: $blocked")
-                        if (blocked) messageRepo.deleteMessages(message.id)
+                    val shouldBlock = blockingClient.shouldBlock(message.address).blockingGet()
+                    val shouldDrop = prefs.drop.get()
+                    Timber.v("block=$shouldBlock, drop=$shouldDrop")
+
+                    if (shouldBlock && shouldDrop) {
+                        messageRepo.deleteMessages(message.id)
+                        return@mapNotNull null
                     }
+
+                    if (shouldBlock) {
+                        conversationRepo.markBlocked(message.threadId)
+                    }
+
+                    message
                 }
                 .doOnNext { message ->
                     conversationRepo.updateConversations(message.threadId) // Update the conversation

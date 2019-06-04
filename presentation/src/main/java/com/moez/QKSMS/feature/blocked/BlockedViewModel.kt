@@ -48,6 +48,9 @@ class BlockedViewModel @Inject constructor(
 
         disposables += prefs.sia.asObservable()
                 .subscribe { enabled -> newState { copy(siaEnabled = enabled) } }
+
+        disposables += prefs.drop.asObservable()
+                .subscribe { enabled -> newState { copy(dropEnabled = enabled) } }
     }
 
     override fun bindView(view: BlockedView) {
@@ -85,6 +88,10 @@ class BlockedViewModel @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe(prefs.sia::set)
+
+        view.dropClickedIntent
+                .autoDisposable(view.scope())
+                .subscribe { prefs.drop.set(!prefs.drop.get()) }
 
         // Show confirm unblock conversation dialog
         view.unblockIntent

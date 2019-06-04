@@ -39,6 +39,7 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
 
     override val ccClickedIntent by lazy { callControl.clicks() }
     override val siaClickedIntent by lazy { shouldIAnswer.clicks() }
+    override val dropClickedIntent by lazy { drop.clicks() }
     override val unblockIntent by lazy { blockedAdapter.unblock }
     override val confirmUnblockIntent: Subject<Long> = PublishSubject.create()
 
@@ -59,6 +60,7 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
     override fun render(state: BlockedState) {
         callControl.checkbox.isChecked = state.ccEnabled
         shouldIAnswer.checkbox.isChecked = state.siaEnabled
+        drop.checkbox.isChecked = state.dropEnabled
 
         blockedAdapter.updateData(state.data)
     }
