@@ -32,16 +32,20 @@ class CallControlBlockingClient @Inject constructor(
     private val context: Context
 ) : BlockingClient {
 
+    private val projection: Array<String> = arrayOf(
+            //CallControl.Lookup.DISPLAY_NAME, // This has a performance impact on the lookup, and we don't need it
+            CallControl.Lookup.BLOCK_REASON
+    )
+
     class LookupResult(cursor: Cursor) {
-        val displayName: String? = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(CallControl.Lookup.DISPLAY_NAME))
-        val blockReason: String? = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(CallControl.Lookup.BLOCK_REASON))
+        val blockReason: String? = cursor.getStringOrNull(0)
     }
 
     override fun shouldBlock(address: String): Single<Boolean> {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
         return Single.fromCallable {
             tryOrNull {
-                context.contentResolver.query(uri, null, null, null, null) // Query URI
+                context.contentResolver.query(uri, projection, null, null, null) // Query URI
                         ?.use { cursor -> cursor.map(::LookupResult) } // Map to Result object
                         ?.any { result -> result.blockReason != null } // Check if any are blocked
             } == true // If none are blocked or we errored at some point, return false
