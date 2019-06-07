@@ -26,6 +26,7 @@ import com.moez.QKSMS.interactor.MarkArchived
 import com.moez.QKSMS.interactor.MarkBlocked
 import com.moez.QKSMS.interactor.MarkUnarchived
 import com.moez.QKSMS.interactor.MarkUnblocked
+import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
@@ -46,7 +47,8 @@ class ConversationInfoPresenter @Inject constructor(
     private val markUnarchived: MarkUnarchived,
     private val markBlocked: MarkBlocked,
     private val markUnblocked: MarkUnblocked,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val permissionManager: PermissionManager
 ) : QkPresenter<ConversationInfoView, ConversationInfoState>(
         ConversationInfoState(threadId = threadId, media = messageRepo.getPartsForConversation(threadId))
 ) {
@@ -151,6 +153,7 @@ class ConversationInfoPresenter @Inject constructor(
 
         // Show the delete confirmation dialog
         view.deleteClicks()
+                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
                 .autoDisposable(view.scope())
                 .subscribe { view.showDeleteDialog() }
 

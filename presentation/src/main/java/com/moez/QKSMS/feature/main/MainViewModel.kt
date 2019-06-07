@@ -206,45 +206,75 @@ class MainViewModel @Inject constructor(
                 .subscribe()
 
         view.optionsItemIntent
-                .withLatestFrom(view.conversationsSelectedIntent) { itemId, conversations ->
-                    when (itemId) {
-                        R.id.archive -> {
-                            markArchived.execute(conversations)
-                            view.clearSelection()
-                        }
+                .filter { itemId -> itemId == R.id.archive }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    markArchived.execute(conversations)
+                    view.clearSelection()
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
-                        R.id.unarchive -> {
-                            markUnarchived.execute(conversations)
-                            view.clearSelection()
-                        }
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.unarchive }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    markUnarchived.execute(conversations)
+                    view.clearSelection()
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
-                        R.id.delete -> view.showDeleteDialog(conversations)
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.delete }
+                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    view.showDeleteDialog(conversations)
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
-                        R.id.pin -> {
-                            markPinned.execute(conversations)
-                            view.clearSelection()
-                        }
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.pin }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    markPinned.execute(conversations)
+                    view.clearSelection()
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
-                        R.id.unpin -> {
-                            markUnpinned.execute(conversations)
-                            view.clearSelection()
-                        }
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.unpin }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    markUnpinned.execute(conversations)
+                    view.clearSelection()
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
-                        R.id.read -> {
-                            markRead.execute(conversations)
-                            view.clearSelection()
-                        }
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.read }
+                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    markRead.execute(conversations)
+                    view.clearSelection()
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
-                        R.id.unread -> {
-                            markUnread.execute(conversations)
-                            view.clearSelection()
-                        }
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.unread }
+                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    markUnread.execute(conversations)
+                    view.clearSelection()
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
-                        R.id.block -> {
-                            markBlocked.execute(conversations)
-                            view.clearSelection()
-                        }
-                    }
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.block }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
+                    markBlocked.execute(conversations)
+                    view.clearSelection()
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
