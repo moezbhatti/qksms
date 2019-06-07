@@ -16,27 +16,31 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.service
+package com.moez.QKSMS.receiver
 
-import android.app.IntentService
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import com.moez.QKSMS.interactor.RetrySending
 import com.moez.QKSMS.repository.MessageRepository
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
-class SendSmsService : IntentService(null) {
+class SendSmsReceiver : BroadcastReceiver() {
 
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var retrySending: RetrySending
 
-    override fun onHandleIntent(intent: Intent) {
-        AndroidInjection.inject(this)
+    override fun onReceive(context: Context, intent: Intent) {
+        AndroidInjection.inject(this, context)
 
-        val id = intent.getLongExtra("id", 0L)
-        messageRepo.getMessage(id)?.let { message ->
-            retrySending.buildObservable(message).blockingSubscribe()
-        }
+        intent.getLongExtra("id", -1L)
+                .takeIf { it >= 0 }
+                ?.let(messageRepo::getMessage)
+                ?.let { message ->
+                    val result = goAsync()
+                    retrySending.execute(message) { result.finish() }
+                }
     }
 
 }

@@ -42,9 +42,9 @@ import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.receiver.SendSmsReceiver
 import com.moez.QKSMS.receiver.SmsDeliveredReceiver
 import com.moez.QKSMS.receiver.SmsSentReceiver
-import com.moez.QKSMS.service.SendSmsService
 import com.moez.QKSMS.util.ImageUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
@@ -313,8 +313,8 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     private fun getIntentForDelayedSms(id: Long): PendingIntent {
-        val intent = Intent(context, SendSmsService::class.java).putExtra("id", id)
-        return PendingIntent.getService(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val intent = Intent(context, SendSmsReceiver::class.java).putExtra("id", id)
+        return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     override fun insertSentSms(subId: Int, threadId: Long, address: String, body: String, date: Long): Message {

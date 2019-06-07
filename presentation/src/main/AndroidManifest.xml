@@ -166,6 +166,7 @@
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service android:name=".feature.backup.RestoreBackupService" />
+        <receiver android:name=".receiver.SendSmsReceiver" />
         <service
             android:name=".feature.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
@@ -191,7 +192,6 @@
                 <action android:name="android.service.chooser.ChooserTargetService" />
             </intent-filter>
         </service>
-        <service android:name=".service.SendSmsService" />
 
         <meta-data
             android:name="preloaded_fonts"
