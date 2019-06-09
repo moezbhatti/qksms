@@ -58,6 +58,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val SWIPE_ACTION_DELETE = 2
         const val SWIPE_ACTION_CALL = 3
         const val SWIPE_ACTION_READ = 4
+        const val SWIPE_ACTION_UNREAD = 5
     }
 
     // Internal

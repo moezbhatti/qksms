@@ -339,6 +339,7 @@ class MainViewModel @Inject constructor(
                         Preferences.SWIPE_ACTION_DELETE -> view.showDeleteDialog(listOf(threadId))
                         Preferences.SWIPE_ACTION_CALL -> conversationRepo.getConversation(threadId)?.recipients?.firstOrNull()?.address?.let(navigator::makePhoneCall)
                         Preferences.SWIPE_ACTION_READ -> markRead.execute(listOf(threadId))
+                        Preferences.SWIPE_ACTION_UNREAD -> markUnread.execute(listOf(threadId))
                     }
                 }
 
