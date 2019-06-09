@@ -24,6 +24,7 @@ import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.view.enabled
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkThemedActivity
@@ -36,6 +37,7 @@ import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.feature.plus.experiment.UpgradeButtonExperiment
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import kotlinx.android.synthetic.main.preference_view.view.*
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
@@ -52,6 +54,11 @@ class PlusActivity : QkThemedActivity(), PlusView {
     override val upgradeIntent by lazy { upgrade.clicks() }
     override val upgradeDonateIntent by lazy { upgradeDonate.clicks() }
     override val donateIntent by lazy { donate.clicks() }
+    override val themeClicks by lazy { themes.clicks() }
+    override val scheduleClicks by lazy { schedule.clicks() }
+    override val backupClicks by lazy { backup.clicks() }
+    override val delayedClicks by lazy { delayed.clicks() }
+    override val nightClicks by lazy { night.clicks() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -97,6 +104,12 @@ class PlusActivity : QkThemedActivity(), PlusView {
         free.setVisible(fdroid)
         toUpgrade.setVisible(!fdroid && !state.upgraded)
         upgraded.setVisible(!fdroid && state.upgraded)
+
+        themes.isEnabled = state.upgraded
+        schedule.isEnabled = state.upgraded
+        backup.isEnabled = state.upgraded
+        delayed.isEnabled = state.upgraded
+        night.isEnabled = state.upgraded
     }
 
     override fun initiatePurchaseFlow(billingManager: BillingManager, sku: String) {

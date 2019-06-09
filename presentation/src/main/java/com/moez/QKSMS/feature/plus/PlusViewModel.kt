@@ -62,6 +62,26 @@ class PlusViewModel @Inject constructor(
         view.donateIntent
                 .autoDisposable(view.scope())
                 .subscribe { navigator.showDonation() }
+
+        view.themeClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showSettings() }
+
+        view.scheduleClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showScheduled() }
+
+        view.backupClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showBackup() }
+
+        view.delayedClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showSettings() }
+
+        view.nightClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showSettings() }
     }
 
 }

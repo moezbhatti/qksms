@@ -162,6 +162,7 @@
                 android:background="?android:attr/divider" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/themes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_palette_black_24dp"
@@ -169,6 +170,7 @@
                 app:title="@string/qksms_plus_themes_title" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/schedule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_event_black_24dp"
@@ -176,6 +178,7 @@
                 app:title="@string/qksms_plus_scheduled_title" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/backup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_backup_black_24dp"
@@ -183,6 +186,7 @@
                 app:title="@string/qksms_plus_backup_title" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/delayed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_av_timer_black_24dp"
@@ -190,6 +194,7 @@
                 app:title="@string/qksms_plus_delayed_title" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/night"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_invert_colors_black_24dp"
