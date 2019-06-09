@@ -71,14 +71,29 @@
 
     <ImageView
         android:id="@+id/pinned"
-        android:layout_width="16dp"
+        android:layout_width="20dp"
         android:layout_height="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
+        android:paddingStart="4dp"
         android:src="@drawable/ic_pin_black_24dp"
-        android:tint="?android:attr/textColorSecondary"
+        android:tint="?android:attr/textColorTertiary"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/unread"
+        app:layout_constraintTop_toTopOf="@id/snippet"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/unread"
+        android:layout_width="20dp"
+        android:layout_height="16sp"
+        android:paddingStart="8dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:src="@drawable/circle"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/snippet"
+        tools:tint="@color/tools_theme"
         tools:visibility="visible" />
 
     <com.moez.QKSMS.common.widget.QkTextView

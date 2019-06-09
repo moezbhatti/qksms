@@ -27,13 +27,16 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.model.Conversation
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
+    private val colors: Colors,
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator
@@ -55,6 +58,9 @@ class ConversationsAdapter @Inject constructor(
             view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
             view.snippet.setTextColor(textColorPrimary)
             view.snippet.maxLines = 5
+
+            view.unread.isVisible = true
+            view.unread.setTint(colors.theme().theme)
 
             view.date.setTypeface(view.date.typeface, Typeface.BOLD)
             view.date.setTextColor(textColorPrimary)
