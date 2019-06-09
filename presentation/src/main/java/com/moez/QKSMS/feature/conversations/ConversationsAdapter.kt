@@ -85,20 +85,6 @@ class ConversationsAdapter @Inject constructor(
 
         view.avatars.contacts = conversation.recipients
         view.title.collapseEnabled = conversation.recipients.size > 1
-
-        val conversationTitle = conversation.getTitle()
-        view.title.text = conversationTitle
-        if (conversation.recipients.size > 1) {
-            view.title.layout
-                    ?.takeIf { layout -> layout.lineCount > 0 }
-                    ?.let { layout -> layout.getEllipsisCount(layout.lineCount - 1) }
-                    ?.takeIf { ellipsisCount -> ellipsisCount > 0 }
-                    ?.let { ellipsisCount ->
-                        val lastComma = conversationTitle.dropLast(ellipsisCount).lastIndexOf(',')
-                        val remainingNames = conversationTitle.drop(lastComma).count { c -> c == ',' }
-                        view.title.text = "${conversationTitle.take(lastComma)}, +$remainingNames"
-                    }
-        }
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
         view.snippet.text = when (conversation.me) {
