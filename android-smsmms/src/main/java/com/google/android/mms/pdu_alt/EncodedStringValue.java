@@ -16,7 +16,7 @@
 
 package com.google.android.mms.pdu_alt;
 
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,8 +27,6 @@ import java.util.ArrayList;
  * Encoded-string-value = Text-string | Value-length Char-set Text-string
  */
 public class EncodedStringValue implements Cloneable {
-    private static final String TAG = "EncodedStringValue";
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
     /**
@@ -74,7 +72,7 @@ public class EncodedStringValue implements Cloneable {
             mData = data.getBytes(CharacterSets.DEFAULT_CHARSET_NAME);
             mCharacterSet = CharacterSets.DEFAULT_CHARSET;
         } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, "Default encoding must be supported.", e);
+            Timber.e(e, "Default encoding must be supported.");
         }
     }
 
@@ -140,7 +138,7 @@ public class EncodedStringValue implements Cloneable {
                 return new String(mData, name);
             } catch (UnsupportedEncodingException e) {
             	if (LOCAL_LOGV) {
-            		Log.v(TAG, e.getMessage(), e);
+            		Timber.v(e, e.getMessage());
             	}
             	try {
                     return new String(mData, CharacterSets.MIMENAME_ISO_8859_1);
@@ -172,7 +170,7 @@ public class EncodedStringValue implements Cloneable {
                 newTextString.write(mData);
                 newTextString.write(textString);
             } catch (IOException e) {
-                Log.e(TAG, "logging error", e);
+                Timber.e(e, "logging error");
                 e.printStackTrace();
                 throw new NullPointerException(
                         "appendTextString: failed when write a new Text-string");
@@ -196,7 +194,7 @@ public class EncodedStringValue implements Cloneable {
         try {
             return new EncodedStringValue(mCharacterSet, dstBytes);
         } catch (Exception e) {
-            Log.e(TAG, "logging error", e);
+            Timber.e(e, "logging error");
             e.printStackTrace();
             throw new CloneNotSupportedException(e.getMessage());
         }

@@ -25,7 +25,6 @@ import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
 import android.text.TextUtils;
 import com.android.mms.MmsConfig;
-import com.android.mms.logs.LogTag;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.AcknowledgeInd;
@@ -35,8 +34,8 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
+import timber.log.Timber;
 
 import java.io.IOException;
 
@@ -54,8 +53,6 @@ import java.io.IOException;
  * </ul>
  */
 public class RetrieveTransaction extends Transaction implements Runnable {
-    private static final String TAG = LogTag.TAG;
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
     private final Uri mUri;
@@ -80,7 +77,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
             mUri = Uri.parse(uri); // The Uri of the M-Notification.ind
             mId = mContentLocation = getContentLocation(context, mUri);
             if (LOCAL_LOGV) {
-                Log.v(TAG, "X-Mms-Content-Location: " + mContentLocation);
+                Timber.v("X-Mms-Content-Location: " + mContentLocation);
             }
         } else {
             throw new IllegalArgumentException(
@@ -183,7 +180,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 // Don't mark the transaction as failed if we failed to send it.
                 sendAcknowledgeInd(retrieveConf);
             } catch (Throwable t) {
-                Log.e(TAG, "error", t);
+                Timber.e(t, "error");
                 if ("HTTP error: Not Found".equals(t.getMessage())) {
                     // Delete the expired M-Notification.ind.
                     SqliteWrapper.delete(mContext, mContext.getContentResolver(),
@@ -193,7 +190,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 if (mTransactionState.getState() != TransactionState.SUCCESS) {
                     mTransactionState.setState(TransactionState.FAILED);
                     mTransactionState.setContentUri(mUri);
-                    Log.e(TAG, "Retrieval failed.");
+                    Timber.e("Retrieval failed.");
                 }
                 notifyObservers();
             }

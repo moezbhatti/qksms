@@ -25,7 +25,7 @@ import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.google.android.mms.util_alt.SqliteWrapper;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,14 +33,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_RETRIEVED;
-import static com.klinker.android.send_message.MmsReceivedReceiver.EXTRA_FILE_PATH;
-import static com.klinker.android.send_message.MmsReceivedReceiver.EXTRA_LOCATION_URL;
-import static com.klinker.android.send_message.MmsReceivedReceiver.EXTRA_TRIGGER_PUSH;
-import static com.klinker.android.send_message.MmsReceivedReceiver.EXTRA_URI;
+import static com.klinker.android.send_message.MmsReceivedReceiver.*;
 
 public class MmsReceivedService extends IntentService {
-    private static final String TAG = "MmsReceivedService";
-
     private static final String LOCATION_SELECTION =
             Telephony.Mms.MESSAGE_TYPE + "=? AND " + Telephony.Mms.CONTENT_LOCATION + " =?";
 
@@ -54,10 +49,10 @@ public class MmsReceivedService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.v(TAG, "MMS has finished downloading, persisting it to the database");
+        Timber.v("MMS has finished downloading, persisting it to the database");
 
         String path = intent.getStringExtra(EXTRA_FILE_PATH);
-        Log.v(TAG, path);
+        Timber.v(path);
 
         FileInputStream reader = null;
         try {
@@ -75,19 +70,19 @@ public class MmsReceivedService extends IntentService {
                     intent.getStringExtra(EXTRA_LOCATION_URL),
                     Utils.getDefaultSubscriptionId(), null);
 
-            Log.v(TAG, "response saved successfully");
-            Log.v(TAG, "response length: " + response.length);
+            Timber.v("response saved successfully");
+            Timber.v("response length: " + response.length);
             mDownloadFile.delete();
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "MMS received, file not found exception", e);
+            Timber.e(e, "MMS received, file not found exception");
         } catch (IOException e) {
-            Log.e(TAG, "MMS received, io exception", e);
+            Timber.e(e, "MMS received, io exception");
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    Log.e(TAG, "MMS received, io exception", e);
+                    Timber.e(e, "MMS received, io exception");
                 }
             }
 
@@ -228,7 +223,7 @@ public class MmsReceivedService extends IntentService {
                     sendPdu(new PduComposer(mContext, notifyRespInd).make());
                 }
             } catch (MmsException e) {
-                Log.e(TAG, "error", e);
+                Timber.e(e, "error");
             }
         }
     }
@@ -265,9 +260,9 @@ public class MmsReceivedService extends IntentService {
                         sendPdu(new PduComposer(mContext, acknowledgeInd).make());
                     }
                 } catch (InvalidHeaderValueException e) {
-                    Log.e(TAG, "error", e);
+                    Timber.e(e, "error");
                 } catch (MmsException e) {
-                    Log.e(TAG, "error", e);
+                    Timber.e(e, "error");
                 }
             }
         }
@@ -278,15 +273,14 @@ public class MmsReceivedService extends IntentService {
             return null;
         }
 
-        final GenericPdu pdu =
-                (new PduParser(response, new MmsConfig.Overridden(new MmsConfig(context), null).
-                        getSupportMmsContentDisposition())).parse();
-        if (pdu == null || !(pdu instanceof RetrieveConf)) {
-            android.util.Log.e(TAG, "MmsReceivedReceiver.sendNotification failed to parse pdu");
+        final GenericPdu pdu = (new PduParser(response, new MmsConfig.Overridden(new MmsConfig(context), null).
+                getSupportMmsContentDisposition())).parse();
+        if (!(pdu instanceof RetrieveConf)) {
+            Timber.e("MmsReceivedReceiver.sendNotification failed to parse pdu");
             return null;
         }
 
-        try {
+        try {Ω
             NotificationInd ind = getNotificationInd(context, intent);
             TransactionSettings transactionSettings = new TransactionSettings(context, null);
             if (intent.getBooleanExtra(EXTRA_TRIGGER_PUSH, false)) {
@@ -295,7 +289,7 @@ public class MmsReceivedService extends IntentService {
                 return new AcknowledgeIndTask(context, ind, transactionSettings, (RetrieveConf) pdu);
             }
         } catch (MmsException e) {
-            Log.e(TAG, "error", e);
+            Timber.e(e, "error");
             return null;
         }
     }
@@ -309,7 +303,7 @@ public class MmsReceivedService extends IntentService {
             // need retry ?
             task.run();
         } catch (IOException e) {
-            Log.e(TAG, "MMS send received notification, io exception", e);
+            Timber.e(e, "MMS send received notification, io exception");
             throw e;
         }
     }

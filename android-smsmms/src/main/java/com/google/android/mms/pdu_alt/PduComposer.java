@@ -19,7 +19,7 @@ package com.google.android.mms.pdu_alt;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -80,7 +80,6 @@ public class PduComposer {
      * Block size when read data from InputStream.
      */
     static private final int PDU_COMPOSER_BLOCK_SIZE = 1024;
-    private static final String TAG = "PduComposer";
 
     /**
      * The output message.
@@ -886,7 +885,7 @@ public class PduComposer {
             appendTextString(part.getContentType());
         }
         catch (ArrayIndexOutOfBoundsException e){
-            Log.e(TAG, "logging error", e);
+            Timber.e(e, "logging error");
             e.printStackTrace();
         }
 

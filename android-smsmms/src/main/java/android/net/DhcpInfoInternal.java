@@ -17,7 +17,7 @@
 package android.net;
 
 import android.text.TextUtils;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -32,7 +32,6 @@ import java.util.Collections;
  * @hide
  */
 public class DhcpInfoInternal {
-    private final static String TAG = "DhcpInfoInternal";
     public String ipAddress;
     public int prefixLength;
 
@@ -96,7 +95,7 @@ public class DhcpInfoInternal {
 
     public LinkAddress makeLinkAddress() {
         if (TextUtils.isEmpty(ipAddress)) {
-            Log.e(TAG, "makeLinkAddress with empty ipAddress");
+            Timber.e("makeLinkAddress with empty ipAddress");
             return null;
         }
         return new LinkAddress(NetworkUtilsHelper.numericToInetAddress(ipAddress), prefixLength);
@@ -112,12 +111,12 @@ public class DhcpInfoInternal {
         if (TextUtils.isEmpty(dns1) == false) {
             p.addDns(NetworkUtilsHelper.numericToInetAddress(dns1));
         } else {
-            Log.d(TAG, "makeLinkProperties with empty dns1!");
+            Timber.d("makeLinkProperties with empty dns1!");
         }
         if (TextUtils.isEmpty(dns2) == false) {
             p.addDns(NetworkUtilsHelper.numericToInetAddress(dns2));
         } else {
-            Log.d(TAG, "makeLinkProperties with empty dns2!");
+            Timber.d("makeLinkProperties with empty dns2!");
         }
         return p;
     }

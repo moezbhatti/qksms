@@ -18,7 +18,7 @@ package com.google.android.mms.util_alt;
 import android.content.Context;
 import android.drm.DrmConvertedStatus;
 import android.drm.DrmManagerClient;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,7 +28,6 @@ import java.io.RandomAccessFile;
 public class DrmConvertSession {
     private DrmManagerClient mDrmClient;
     private int mConvertSessionId;
-    private static final String TAG = "DrmConvertSession";
 
     private static final int STATUS_UNKNOWN_ERROR = 491;
     private static final int STATUS_NOT_ACCEPTABLE = 406;
@@ -56,16 +55,15 @@ public class DrmConvertSession {
                 try {
                     convertSessionId = drmClient.openConvertSession(mimeType);
                 } catch (IllegalArgumentException e) {
-                    Log.w(TAG, "Conversion of Mimetype: " + mimeType
+                    Timber.w("Conversion of Mimetype: " + mimeType
                             + " is not supported.", e);
                 } catch (IllegalStateException e) {
-                    Log.w(TAG, "Could not access Open DrmFramework.", e);
+                    Timber.w(e, "Could not access Open DrmFramework.");
                 }
             } catch (IllegalArgumentException e) {
-                Log.w(TAG,
-                        "DrmManagerClient instance could not be created, context is Illegal.");
+                Timber.w("DrmManagerClient instance could not be created, context is Illegal.");
             } catch (IllegalStateException e) {
-                Log.w(TAG, "DrmManagerClient didn't initialize properly.");
+                Timber.w("DrmManagerClient didn't initialize properly.");
             }
         }
 
@@ -102,10 +100,10 @@ public class DrmConvertSession {
                     result = convertedStatus.convertedData;
                 }
             } catch (IllegalArgumentException e) {
-                Log.w(TAG, "Buffer with data to convert is illegal. Convertsession: "
+                Timber.w("Buffer with data to convert is illegal. Convertsession: "
                         + mConvertSessionId, e);
             } catch (IllegalStateException e) {
-                Log.w(TAG, "Could not convert data. Convertsession: " +
+                Timber.w("Could not convert data. Convertsession: " +
                         mConvertSessionId, e);
             }
         } else {
@@ -143,15 +141,15 @@ public class DrmConvertSession {
                         result = STATUS_SUCCESS;
                     } catch (FileNotFoundException e) {
                         result = STATUS_FILE_ERROR;
-                        Log.w(TAG, "File: " + filename + " could not be found.", e);
+                        Timber.w(e, "File: " + filename + " could not be found.");
                     } catch (IOException e) {
                         result = STATUS_FILE_ERROR;
-                        Log.w(TAG, "Could not access File: " + filename + " .", e);
+                        Timber.w(e, "Could not access File: " + filename + " .");
                     } catch (IllegalArgumentException e) {
                         result = STATUS_FILE_ERROR;
-                        Log.w(TAG, "Could not open file in mode: rw", e);
+                        Timber.w(e, "Could not open file in mode: rw");
                     } catch (SecurityException e) {
-                        Log.w(TAG, "Access to File: " + filename +
+                        Timber.w("Access to File: " + filename +
                                 " was denied denied by SecurityManager.", e);
                     } finally {
                         if (rndAccessFile != null) {
@@ -159,14 +157,14 @@ public class DrmConvertSession {
                                 rndAccessFile.close();
                             } catch (IOException e) {
                                 result = STATUS_FILE_ERROR;
-                                Log.w(TAG, "Failed to close File:" + filename
+                                Timber.w("Failed to close File:" + filename
                                         + ".", e);
                             }
                         }
                     }
                 }
             } catch (IllegalStateException e) {
-                Log.w(TAG, "Could not close convertsession. Convertsession: " +
+                Timber.w("Could not close convertsession. Convertsession: " +
                         mConvertSessionId, e);
             }
         }

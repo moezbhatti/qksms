@@ -4,9 +4,9 @@ package com.bumptech.glide.gifencoder;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class AnimatedGifEncoder {
-    private static final String TAG = "AnimatedGifEncoder";
 
     // The minimum % of an images pixels that must be transparent for us to set a transparent index
     // automatically.
@@ -412,10 +411,7 @@ public class AnimatedGifEncoder {
         // Assume images with greater where more than n% of the pixels are transparent actually have
         // transparency. See issue #214.
         hasTransparentPixels = transparentPercentage > MIN_TRANSPARENT_PERCENTAGE;
-        if (Log.isLoggable(TAG, Log.DEBUG)) {
-            Log.d(TAG, "got pixels for frame with " + transparentPercentage
-                    + "% transparent pixels");
-        }
+        Timber.d("got pixels for frame with " + transparentPercentage + "% transparent pixels");
     }
 
     /**

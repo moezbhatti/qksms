@@ -23,9 +23,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.Telephony.Mms;
-import com.android.mms.logs.LogTag;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
+import timber.log.Timber;
 
 /**
  * MmsSystemEventReceiver receives the
@@ -37,7 +36,6 @@ import com.klinker.android.send_message.Utils;
  * </ul>
  */
 public class MmsSystemEventReceiver extends BroadcastReceiver {
-    private static final String TAG = LogTag.TAG;
     private static ConnectivityManager mConnMgr = null;
 
     public static void wakeUpService(Context context) {
@@ -45,12 +43,10 @@ public class MmsSystemEventReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-            Log.v(TAG, "Intent received: " + intent);
-        }
+        Timber.v("Intent received: " + intent);
 
         if (!Utils.isDefaultSmsApp(context)) {
-            Log.v(TAG, "not default sms app, cancelling");
+            Timber.v("not default sms app, cancelling");
             return;
         }
 
@@ -66,28 +62,24 @@ public class MmsSystemEventReceiver extends BroadcastReceiver {
             if (Utils.isMmsOverWifiEnabled(context)) {
                 NetworkInfo niWF = mConnMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
                 if ((niWF != null) && (niWF.isConnected())) {
-                    Log.v(TAG, "TYPE_WIFI connected");
+                    Timber.v("TYPE_WIFI connected");
                     wakeUpService(context);
                 }
             } else {
                 boolean mobileDataEnabled = Utils.isMobileDataEnabled(context);
                 if (!mobileDataEnabled) {
-                    Log.v(TAG, "mobile data turned off, bailing");
+                    Timber.v("mobile data turned off, bailing");
                     //Utils.setMobileDataEnabled(context, true);
                     return;
                 }
-                NetworkInfo mmsNetworkInfo = mConnMgr
-                        .getNetworkInfo(ConnectivityManager.TYPE_MOBILE_MMS);
+                NetworkInfo mmsNetworkInfo = mConnMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE_MMS);
                 if (mmsNetworkInfo == null) {
                     return;
                 }
                 boolean available = mmsNetworkInfo.isAvailable();
                 boolean isConnected = mmsNetworkInfo.isConnected();
 
-                if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                    Log.v(TAG, "TYPE_MOBILE_MMS available = " + available +
-                            ", isConnected = " + isConnected);
-                }
+                Timber.v("TYPE_MOBILE_MMS available = " + available + ", isConnected = " + isConnected);
 
                 // Wake up transact service when MMS data is available and isn't connected.
                 if (available && !isConnected) {

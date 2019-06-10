@@ -19,14 +19,13 @@ package com.android.mms.transaction;
 import android.content.Context;
 import android.net.Uri;
 import android.provider.Telephony.Mms.Sent;
-import com.android.mms.logs.LogTag;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
 import com.google.android.mms.pdu_alt.PduComposer;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.ReadRecInd;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
+import timber.log.Timber;
 
 import java.io.IOException;
 
@@ -42,8 +41,6 @@ import java.io.IOException;
  * </ul>
  */
 public class ReadRecTransaction extends Transaction implements Runnable{
-    private static final String TAG = LogTag.TAG;
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
     private Thread mThread;
@@ -91,15 +88,15 @@ public class ReadRecTransaction extends Transaction implements Runnable{
             mTransactionState.setContentUri(uri);
         } catch (IOException e) {
             if (LOCAL_LOGV) {
-                Log.v(TAG, "Failed to send M-Read-Rec.Ind.", e);
+                Timber.v(e, "Failed to send M-Read-Rec.Ind.");
             }
         } catch (MmsException e) {
             if (LOCAL_LOGV) {
-                Log.v(TAG, "Failed to load message from Outbox.", e);
+                Timber.v(e, "Failed to load message from Outbox.");
             }
         } catch (RuntimeException e) {
             if (LOCAL_LOGV) {
-                Log.e(TAG, "Unexpected RuntimeException.", e);
+                Timber.e(e, "Unexpected RuntimeException.");
             }
         } finally {
             if (mTransactionState.getState() != TransactionState.SUCCESS) {
