@@ -280,7 +280,7 @@ public class MmsReceivedService extends IntentService {
             return null;
         }
 
-        try {Ω
+        try {
             NotificationInd ind = getNotificationInd(context, intent);
             TransactionSettings transactionSettings = new TransactionSettings(context, null);
             if (intent.getBooleanExtra(EXTRA_TRIGGER_PUSH, false)) {
