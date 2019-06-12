@@ -36,8 +36,9 @@ android:
 
 # Set up Android-sdk and the emulator
 before_install:
-  # Decrypt keystore
-  - openssl aes-256-cbc -K $encrypted_4d1d940e2c65_key -iv $encrypted_4d1d940e2c65_iv -in keystore.enc -out keystore -d
+  # Decrypt keystore and google-services.json
+  - openssl aes-256-cbc -K $encrypted_4d1d940e2c65_key -iv $encrypted_4d1d940e2c65_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf secrets.tar
 
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
   - ls -lar $HOME/**/*
@@ -49,7 +50,7 @@ before_install:
   - yes | sdkmanager "platforms;android-${EMULATOR_API_LEVEL}"    # Android platform required by emulator
   - yes | sdkmanager "platforms;android-${COMPILE_API_LEVEL}"     # Android platform required by compiler
   - yes | sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" # Android build tools
-  - yes | sdkmanager "${EMULATOR}" # Install emulator system image
+  - yes | sdkmanager "${EMULATOR}"                                # Install emulator system image
   - sdkmanager --list || true                                     # Print out package list for debug purposes
 
 # Run the emulator
