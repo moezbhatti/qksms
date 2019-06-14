@@ -31,6 +31,7 @@ import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.BugsnagTree
+import com.moez.QKSMS.common.util.CrashlyticsTree
 import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
@@ -71,8 +72,6 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
             projectPackages = packages
         })
 
-        RxJava2Debug.enableRxJava2AssemblyTracking()
-
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
                 .compactOnLaunch()
@@ -97,7 +96,9 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        Timber.plant(Timber.DebugTree(), BugsnagTree(), fileLoggingTree)
+        Timber.plant(Timber.DebugTree(), BugsnagTree(), CrashlyticsTree(), fileLoggingTree)
+
+        RxJava2Debug.enableRxJava2AssemblyTracking(arrayOf("com.moez.QKSMS"))
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

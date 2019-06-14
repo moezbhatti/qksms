@@ -179,7 +179,6 @@ dependencies {
     implementation "com.bugsnag:bugsnag-android:4.1.1"
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
-    implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation "com.google.android:flexbox:0.3.1"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
@@ -189,10 +188,17 @@ dependencies {
     implementation project(":common")
     implementation project(':data')
     implementation project(':domain')
+
+    withAnalyticsImplementation 'com.google.firebase:firebase-core:16.0.9'
+    withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
     noAnalyticsRelease project(path: ':data', configuration: 'noAnalyticsRelease')
     withAnalyticsDebug project(path: ':data', configuration: 'withAnalyticsDebug')
     withAnalyticsRelease project(path: ':data', configuration: 'withAnalyticsRelease')
 }
 
-apply plugin: 'com.google.gms.google-services'
+if (getGradle().getStartParameter().getTaskRequests().toString().contains("WithAnalytics")) {
+    apply plugin: 'io.fabric'
+    apply plugin: 'com.google.gms.google-services'
+}

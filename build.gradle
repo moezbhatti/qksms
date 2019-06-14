@@ -32,6 +32,7 @@ buildscript {
     ext.abiCodes = ['armeabi-v7a': 1, 'arm64-v8a': 2]
 
     repositories {
+        maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://maven.google.com' }
         jcenter()
         google()
@@ -41,6 +42,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'io.fabric.tools:gradle:1.29.0'
         classpath "io.realm:realm-gradle-plugin:$realm_version"
     }
 }
@@ -50,6 +52,7 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://maven.google.com' }
         maven {
             name 'glide-snapshot'
