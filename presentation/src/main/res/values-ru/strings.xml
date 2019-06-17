@@ -221,6 +221,7 @@
         <item>Удалить</item>
         <item>Позвонить</item>
         <item>Отметить прочитанным</item>
+        <item>Пометить непрочитанным</item>
     </string-array>
     <string name="settings_delivery_title">Отчёты о доставке</string>
     <string name="settings_delivery_summary">Подтверждение успешной отправки сообщений</string>

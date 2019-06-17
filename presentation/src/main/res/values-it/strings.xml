@@ -26,7 +26,7 @@
     <string name="title_settings">Impostazioni</string>
     <string name="title_notification_prefs">Notifiche</string>
     <string name="title_theme">Tema</string>
-    <string name="title_conversations">Cerca nei messaggi&#8230;</string>
+    <string name="title_conversations">Cerca in posta in arrivo&#8230;</string>
     <string name="title_compose">Digita un nome o un numero</string>
     <string name="setup_skip">Salta</string>
     <string name="setup_next">Continua</string>
@@ -217,6 +217,7 @@
         <item>Elimina</item>
         <item>Chiama</item>
         <item>Segna come letto</item>
+        <item>Segna come non letto</item>
     </string-array>
     <string name="settings_delivery_title">Conferme di recapito</string>
     <string name="settings_delivery_summary">Conferma che i messaggi siano stati inviati con successo</string>

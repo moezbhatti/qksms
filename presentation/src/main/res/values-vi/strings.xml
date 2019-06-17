@@ -215,6 +215,7 @@
         <item>Xoá</item>
         <item>Gọi điện</item>
         <item>Đánh dấu là đã đọc</item>
+        <item>Đánh dấu là chưa đọc</item>
     </string-array>
     <string name="settings_delivery_title">Xác nhận đã gửi tin</string>
     <string name="settings_delivery_summary">Xác nhận rằng các tin nhắn được gửi thành công</string>

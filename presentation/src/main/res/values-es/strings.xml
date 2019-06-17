@@ -217,6 +217,7 @@
         <item>Eliminar</item>
         <item>Llamar</item>
         <item>Marcar como leído</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Confirmaciones de envió</string>
     <string name="settings_delivery_summary">Confirmar cuando los mensajes se envien con éxito</string>

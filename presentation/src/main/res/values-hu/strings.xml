@@ -217,6 +217,7 @@
         <item>Törlés</item>
         <item>Hívás</item>
         <item>Megjelölés olvasottként</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Elküldés megerősítése</string>
     <string name="settings_delivery_summary">Megerősíti, hogy az üzenetek sikeresen el lettek-e küldve</string>

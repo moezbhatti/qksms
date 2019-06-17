@@ -217,6 +217,7 @@
         <item>Ta bort</item>
         <item>Ring</item>
         <item>Markera som läst</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Leveransrapporter</string>
     <string name="settings_delivery_summary">Bekräfta att meddelanden har skickats</string>

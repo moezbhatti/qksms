@@ -225,6 +225,7 @@
         <item>حذف</item>
         <item>مكالمة</item>
         <item>تعليمها مقروءة</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">تأكيدات الإستلام</string>
     <string name="settings_delivery_summary">تأكيد أنه تم إرسال الرسائل بنجاح</string>

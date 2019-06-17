@@ -215,6 +215,7 @@
         <item>Hapus</item>
         <item>Panggil</item>
         <item>Tandai dibaca</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Konfirmasi pengiriman</string>
     <string name="settings_delivery_summary">Mengonfirmasi bahwa pesan telah berhasil dikirim</string>

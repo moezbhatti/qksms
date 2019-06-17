@@ -219,6 +219,7 @@
         <item>Delete</item>
         <item>Call</item>
         <item>Mark read</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Potvrde o dostavi</string>
     <string name="settings_delivery_summary">Budite sigurni da su se poruke uspješno poslale</string>

@@ -215,6 +215,7 @@
         <item>删除</item>
         <item>呼叫</item>
         <item>标记为已读</item>
+        <item>标记为未读</item>
     </string-array>
     <string name="settings_delivery_title">送达确认</string>
     <string name="settings_delivery_summary">确认短信已成功送达</string>

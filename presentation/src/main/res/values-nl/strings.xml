@@ -217,6 +217,7 @@
         <item>Verwijderen</item>
         <item>Bellen</item>
         <item>Markeer als gelezen</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Afleverrapporten</string>
     <string name="settings_delivery_summary">Bevestig dat berichten met succes zijn verzonden</string>

@@ -217,6 +217,7 @@
         <item>মুছে ফেলুন</item>
         <item>কল</item>
         <item>পঠিত হিসেবে চিহ্নিত করুন</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">ডেলিভারি নিশ্চিতকরন</string>
     <string name="settings_delivery_summary">নিশ্চিত করুন যে বার্তা সফলভাবে পাঠানো হয়েছে</string>

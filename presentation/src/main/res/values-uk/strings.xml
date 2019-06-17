@@ -221,6 +221,7 @@
         <item>Видалити</item>
         <item>Виклик</item>
         <item>Позначити як прочитане</item>
+        <item>Позначити як непрочитане</item>
     </string-array>
     <string name="settings_delivery_title">Звіти про доставку</string>
     <string name="settings_delivery_summary">Підтвердження успішного надсилання повідомлень</string>

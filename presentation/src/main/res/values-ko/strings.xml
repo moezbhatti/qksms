@@ -217,6 +217,7 @@
         <item>삭제</item>
         <item>전화</item>
         <item>읽음으로 표시</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">전송 확인</string>
     <string name="settings_delivery_summary">전송 성공을 확인합니다</string>

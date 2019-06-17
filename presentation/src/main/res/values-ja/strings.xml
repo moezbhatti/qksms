@@ -42,7 +42,7 @@
     <string name="main_menu_pin">上部に固定します。</string>
     <string name="main_menu_unpin">固定を解除します。</string>
     <string name="main_menu_read">既読にする</string>
-    <string name="main_menu_unread">未読にします。</string>
+    <string name="main_menu_unread">未読にする</string>
     <string name="main_menu_block">ブロック</string>
     <string name="main_syncing">同期メッセージ&#8230;</string>
     <string name="main_sender_you">あなた: %s</string>
@@ -215,6 +215,7 @@
         <item>削除</item>
         <item>電話</item>
         <item>既読にする</item>
+        <item>未読にする</item>
     </string-array>
     <string name="settings_delivery_title">配信確認</string>
     <string name="settings_delivery_summary">メッセージが正常に送信されたことを確認します</string>

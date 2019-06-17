@@ -217,6 +217,7 @@
         <item>Sil</item>
         <item>Ara</item>
         <item>Okundu olarak işaretle</item>
+        <item>Okunmadı olarak işaretle</item>
     </string-array>
     <string name="settings_delivery_title">İletim raporları</string>
     <string name="settings_delivery_summary">Mesajınızın sorunsuz gönderildiğinin onayını alın</string>

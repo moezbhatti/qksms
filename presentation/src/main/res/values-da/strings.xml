@@ -217,6 +217,7 @@
         <item>Slet</item>
         <item>Ring op</item>
         <item>Markér som læst</item>
+        <item>Markér som ulæst</item>
     </string-array>
     <string name="settings_delivery_title">Leveringskvitteringer</string>
     <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>

@@ -221,6 +221,7 @@
         <item>Smazat</item>
         <item>Volat</item>
         <item>Přečteno</item>
+        <item>Označit jako nepřečtené</item>
     </string-array>
     <string name="settings_delivery_title">Potvrzení o doručení</string>
     <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>

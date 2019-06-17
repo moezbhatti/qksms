@@ -217,6 +217,7 @@
         <item>پاک کردن</item>
         <item>تماس</item>
         <item>خوانده شده </item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">تأیید تحویل</string>
     <string name="settings_delivery_summary">تأیید ارسال موفق پیام</string>

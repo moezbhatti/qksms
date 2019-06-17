@@ -221,6 +221,7 @@
         <item>Delete</item>
         <item>Call</item>
         <item>Mark read</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Žinučių pristatymo patvirtinimai</string>
     <string name="settings_delivery_summary">Patvirtinti, kad pranešimai buvo sėkmingai išsiųsti</string>

@@ -217,6 +217,7 @@
         <item>Supprimer</item>
         <item>Appeler</item>
         <item>Marquer comme lu</item>
+        <item>Marquer comme non-lu</item>
     </string-array>
     <string name="settings_delivery_title">Accusés de réception</string>
     <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>

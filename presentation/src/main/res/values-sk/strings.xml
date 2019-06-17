@@ -221,6 +221,7 @@
         <item>Odstrániť</item>
         <item>Zavolať</item>
         <item>Mark read</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>

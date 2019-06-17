@@ -221,6 +221,7 @@
         <item>Usuń</item>
         <item>Zadzwoń</item>
         <item>Oznacz jako przeczytane</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Potwierdzenie dostarczenia</string>
     <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>
