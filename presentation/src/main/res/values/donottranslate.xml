@@ -30,4 +30,34 @@
     <string name="about_license">GNU General Public License v3.0</string>
     <string name="about_copyright">© 2014–2018</string>
 
+    <string name="changelog_title">New in QKSMS</string>
+    <string name="changelog_version">Version %s</string>
+    <string-array name="changelog_keywords">
+        <item>Added</item>
+        <item>Improved</item>
+        <item>Fixed</item>
+    </string-array>
+    <string-array name="changelog">
+        <item>Added</item>
+        <item>- Support for latest version of Should I Answer</item>
+        <item>- New swipe action to mark a conversation unread</item>
+        <item>- Updates will now show a changelog!</item>
+        <item></item>
+        <item>Improved</item>
+        <item>- Added unread indicator to make those conversations easier to spot</item>
+        <item>- Better support for sharing text from other apps</item>
+        <item>- Should I Answer integration will respect numbers that you have manually blocked</item>
+        <item>- Status bar for dark theme will match toolbar</item>
+        <item>- Make sure to ask to be default SMS app before attempting to perform actions that require it</item>
+        <item>- Features on QKSMS+ page will now link to their respective parts of the app</item>
+        <item>- Long list of names for group chat will be shortened</item>
+        <item></item>
+        <item>Fixed</item>
+        <item>- Messages sometimes get stuck "Sending…"</item>
+        <item>- QK Reply window glitches when it\'s too big</item>
+        <item>- Crash in compose screen when a contact has no numbers</item>
+    </string-array>
+    <string name="changelog_more">More</string>
+    <string name="changelog_dismiss">Dismiss</string>
+
 </resources>

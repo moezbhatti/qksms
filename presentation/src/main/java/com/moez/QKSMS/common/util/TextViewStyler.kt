@@ -52,6 +52,7 @@ class TextViewStyler @Inject constructor(
         const val SIZE_SECONDARY = 1
         const val SIZE_TERTIARY = 2
         const val SIZE_TOOLBAR = 3
+        const val SIZE_DIALOG = 4
 
         fun applyEditModeAttributes(textView: TextView, attrs: AttributeSet?) {
             textView.run {
@@ -89,6 +90,7 @@ class TextViewStyler @Inject constructor(
                     SIZE_SECONDARY -> 14f
                     SIZE_TERTIARY -> 12f
                     SIZE_TOOLBAR -> 20f
+                    SIZE_DIALOG -> 18f
                     else -> textSize / paint.density
                 }
             }
@@ -176,6 +178,14 @@ class TextViewStyler @Inject constructor(
                 Preferences.TEXT_SIZE_LARGE -> 22f
                 Preferences.TEXT_SIZE_LARGER -> 26f
                 else -> 20f
+            }
+
+            SIZE_DIALOG -> textView.textSize = when (textSizePref) {
+                Preferences.TEXT_SIZE_SMALL -> 16f
+                Preferences.TEXT_SIZE_NORMAL -> 18f
+                Preferences.TEXT_SIZE_LARGE -> 20f
+                Preferences.TEXT_SIZE_LARGER -> 24f
+                else -> 18f
             }
         }
     }

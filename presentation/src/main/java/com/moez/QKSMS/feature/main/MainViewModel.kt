@@ -36,6 +36,7 @@ import com.moez.QKSMS.interactor.MarkUnpinned
 import com.moez.QKSMS.interactor.MarkUnread
 import com.moez.QKSMS.interactor.MigratePreferences
 import com.moez.QKSMS.interactor.SyncMessages
+import com.moez.QKSMS.manager.ChangelogManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.manager.RatingManager
 import com.moez.QKSMS.model.SyncLog
@@ -57,6 +58,7 @@ class MainViewModel @Inject constructor(
     markAllSeen: MarkAllSeen,
     migratePreferences: MigratePreferences,
     syncRepository: SyncRepository,
+    private val changelogManager: ChangelogManager,
     private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
     private val markArchived: MarkArchived,
@@ -140,6 +142,15 @@ class MainViewModel @Inject constructor(
                 .take(1)
                 .autoDisposable(view.scope())
                 .subscribe { syncMessages.execute(Unit) }
+
+        // Show changelog
+        if (changelogManager.didUpdate()) {
+            view.showChangelog()
+        }
+
+        view.changelogMoreIntent
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showChangelog() }
 
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)

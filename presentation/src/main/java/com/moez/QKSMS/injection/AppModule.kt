@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
@@ -37,6 +38,8 @@ import com.moez.QKSMS.manager.AlarmManager
 import com.moez.QKSMS.manager.AlarmManagerImpl
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.AnalyticsManagerImpl
+import com.moez.QKSMS.manager.ChangelogManager
+import com.moez.QKSMS.manager.ChangelogManagerImpl
 import com.moez.QKSMS.manager.ExternalBlockingManager
 import com.moez.QKSMS.manager.ExternalBlockingManagerImpl
 import com.moez.QKSMS.manager.KeyManager
@@ -124,6 +127,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun externalBlockingManager(manager: ExternalBlockingManagerImpl): ExternalBlockingManager = manager
+
+    @Provides
+    fun changelogManager(manager: ChangelogManagerImpl): ChangelogManager = manager
 
     @Provides
     fun provideKeyManager(manager: KeyManagerImpl): KeyManager = manager

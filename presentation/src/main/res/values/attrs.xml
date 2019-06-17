@@ -34,6 +34,7 @@
         <enum name="secondary" value="1" />
         <enum name="tertiary" value="2" />
         <enum name="toolbar" value="3" />
+        <enum name="dialog" value="4" />
     </attr>
 
     <declare-styleable name="QkTextView">
