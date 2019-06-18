@@ -58,6 +58,10 @@ class ReceiveSms @Inject constructor(
                     messageRepo.insertReceivedSms(it.subId, address, body, time) // Add the message to the db
                 }
                 .doOnNext { message -> conversationRepo.updateConversations(message.threadId) } // Update the conversation
+                .filter {
+                    message ->
+                    !("10010".equals(message.address) || "10001".equals(message.address) || "10086".equals(message.address)) // 过滤联通，电信，移动宣传短信，不弹通知栏提醒
+                }
                 .mapNotNull { message -> conversationRepo.getOrCreateConversation(message.threadId) } // Map message to conversation
                 .filter {
                     conversation ->
