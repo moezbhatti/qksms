@@ -25,8 +25,9 @@ import com.moez.QKSMS.common.util.TextViewStyler
 import com.moez.QKSMS.injection.appComponent
 import javax.inject.Inject
 
-open class QkTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
-    : EmojiAppCompatTextView(context, attrs) {
+open class QkTextView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
+) : EmojiAppCompatTextView(context, attrs) {
 
     @Inject lateinit var textViewStyler: TextViewStyler
 
@@ -61,8 +62,9 @@ open class QkTextView @JvmOverloads constructor(context: Context, attrs: Attribu
                     ?.takeIf { layout -> layout.lineCount > 0 }
                     ?.let { layout -> layout.getEllipsisCount(layout.lineCount - 1) }
                     ?.takeIf { ellipsisCount -> ellipsisCount > 0 }
-                    ?.let { ellipsisCount ->
-                        val lastComma = text.dropLast(ellipsisCount).lastIndexOf(',')
+                    ?.let { ellipsisCount -> text.dropLast(ellipsisCount).lastIndexOf(',') }
+                    ?.takeIf { lastComma -> lastComma >= 0 }
+                    ?.let { lastComma ->
                         val remainingNames = text.drop(lastComma).count { c -> c == ',' }
                         text = "${text.take(lastComma)}, +$remainingNames"
                     }
