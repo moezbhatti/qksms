@@ -19,27 +19,27 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
+    <string name="shortcut_compose_long_label">Bagong usapan</string>
+    <string name="shortcut_compose_short_label">Sumulat</string>
     <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-    <string name="title_archived">Archived</string>
+    <string name="title_archived">Nakatabi</string>
     <string name="title_settings">Mga setting</string>
     <string name="title_notification_prefs">Notifications</string>
     <string name="title_theme">Theme</string>
-    <string name="title_conversations">Search inbox&#8230;</string>
+    <string name="title_conversations">Hanapin sa inbox&#8230;</string>
     <string name="title_compose">Sumulat</string>
-    <string name="setup_skip">Skip</string>
-    <string name="setup_next">Continue</string>
+    <string name="setup_skip">Laktawan</string>
+    <string name="setup_next">Magpatuloy</string>
     <string name="menu_call">Tawagan</string>
-    <string name="menu_info">Details</string>
+    <string name="menu_info">Mga detalye</string>
     <string name="menu_save">Save to gallery</string>
     <string name="main_drawer_open_cd">Open navigation drawer</string>
     <string name="main_title_selected">%d selected</string>
     <string name="main_menu_clear">Clear</string>
-    <string name="main_menu_archive">Archive</string>
-    <string name="main_menu_unarchive">Unarchive</string>
-    <string name="main_menu_delete">Delete</string>
-    <string name="main_menu_pin">Pin to top</string>
+    <string name="main_menu_archive">Itabi</string>
+    <string name="main_menu_unarchive">Ilabas</string>
+    <string name="main_menu_delete">Burahin</string>
+    <string name="main_menu_pin">I-ipit sa itaas</string>
     <string name="main_menu_unpin">Unpin</string>
     <string name="main_menu_read">Mark read</string>
     <string name="main_menu_unread">Mark unread</string>
@@ -48,10 +48,10 @@
     <string name="main_sender_you">You: %s</string>
     <string name="main_message_results_title">Results in messages</string>
     <string name="main_message_results">%d messages</string>
-    <string name="inbox_empty_text">Your conversations will appear here</string>
-    <string name="inbox_search_empty_text">No results</string>
-    <string name="archived_empty_text">Your archived conversations will appear here</string>
-    <string name="main_fab_cd">Start new conversation</string>
+    <string name="inbox_empty_text">Ang iyong mga pakikipag-usap ay makikita rito</string>
+    <string name="inbox_search_empty_text">Walang nakita</string>
+    <string name="archived_empty_text">Ang iyong mga isinantabing pakikipag-usap at makikita rito</string>
+    <string name="main_fab_cd">Magsimula ng bagong usapan</string>
     <string name="main_default_sms_title">Love texting again</string>
     <string name="main_default_sms_message">Make QKSMS your default SMS app</string>
     <string name="main_default_sms_change">Change</string>
@@ -60,7 +60,7 @@
     <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
     <string name="main_permission_allow">Allow</string>
     <string name="drawer_inbox">Inbox</string>
-    <string name="drawer_archived">Archived</string>
+    <string name="drawer_archived">Nakatabi</string>
     <string name="drawer_scheduled">Scheduled</string>
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">More</string>
