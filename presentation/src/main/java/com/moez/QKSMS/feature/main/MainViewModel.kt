@@ -50,6 +50,7 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -144,7 +145,7 @@ class MainViewModel @Inject constructor(
                 .subscribe { syncMessages.execute(Unit) }
 
         // Show changelog
-        if (changelogManager.didUpdate()) {
+        if (changelogManager.didUpdate() && Locale.getDefault().language.startsWith("en")) {
             view.showChangelog()
         }
 
