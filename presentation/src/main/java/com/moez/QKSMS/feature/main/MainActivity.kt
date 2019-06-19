@@ -21,6 +21,7 @@ package com.moez.QKSMS.feature.main
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Gravity
@@ -78,6 +79,7 @@ class MainActivity : QkThemedActivity(), MainView {
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
     override val activityResumedIntent: Subject<Unit> = PublishSubject.create()
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val composeIntent by lazy { compose.clicks() }
@@ -125,6 +127,7 @@ class MainActivity : QkThemedActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         viewModel.bindView(this)
+        onNewIntentIntent.onNext(intent)
 
         (snackbar as? ViewStub)?.setOnInflateListener { _, _ ->
             snackbarButton.clicks().autoDisposable(scope()).subscribe(snackbarButtonIntent)
@@ -178,6 +181,11 @@ class MainActivity : QkThemedActivity(), MainView {
 
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(recyclerView)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.run(onNewIntentIntent::onNext)
     }
 
     override fun render(state: MainState) {
