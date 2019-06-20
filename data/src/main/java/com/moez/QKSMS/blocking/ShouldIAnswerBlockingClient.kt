@@ -30,6 +30,7 @@ import android.os.Messenger
 import androidx.core.os.bundleOf
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.subjects.SingleSubject
 import javax.inject.Inject
@@ -51,8 +52,16 @@ class ShouldIAnswerBlockingClient @Inject constructor(
     /**
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
      */
-    override fun shouldBlock(address: String): Single<Boolean> {
-        return Binder(context, prefs, address).shouldBlock()
+    override fun isBlocked(address: String): Single<Boolean> {
+        return Binder(context, prefs, address).isBlocked()
+    }
+
+    override fun block(address: String): Completable = Completable.fromCallable { showSia() }
+
+    override fun unblock(address: String): Completable = Completable.fromCallable { showSia() }
+
+    private fun showSia() {
+        // TODO
     }
 
     private class Binder(
@@ -65,8 +74,7 @@ class ShouldIAnswerBlockingClient @Inject constructor(
         private var serviceMessenger: Messenger? = null
         private var isBound: Boolean = false
 
-        fun shouldBlock(): Single<Boolean> {
-
+        fun isBlocked(): Single<Boolean> {
             var intent: Intent? = null
 
             // If either version of Should I Answer? is installed and SIA is enabled, build the

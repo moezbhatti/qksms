@@ -223,6 +223,8 @@
     <string name="settings_blocking_title">Blocking</string>
     <string name="settings_blocking_manager_title">Blocking Manager</string>
     <string name="settings_blocking_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="settings_blocking_block_external">Would you also like to block this number in %s?</string>
+    <string name="settings_blocking_unblock_external">Would you also like to block this number in %s?</string>
     <!-- Do not translate -->
     <string name="settings_call_control_title">Call Control</string>
     <string name="settings_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>

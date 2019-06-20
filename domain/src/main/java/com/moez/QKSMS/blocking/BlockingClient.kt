@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.blocking
 
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface BlockingClient {
@@ -25,6 +26,28 @@ interface BlockingClient {
     /**
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
      */
-    fun shouldBlock(address: String): Single<Boolean>
+    fun isBlocked(address: String): Single<Boolean>
+
+    /**
+     * Returns true if the client is capable of blocking the address in the manager without any
+     * further user input
+     */
+    fun canBlock(): Boolean = false
+
+    /**
+     * Blocks the number or opens the manager
+     */
+    fun block(address: String): Completable
+
+    /**
+     * Returns true if the client is capable of unblocking the address in the manager without any
+     * further user input
+     */
+    fun canUnblock(): Boolean = false
+
+    /**
+     * Unblocks the number or opens the manager
+     */
+    fun unblock(address: String): Completable
 
 }

@@ -25,6 +25,7 @@ import androidx.core.database.getStringOrNull
 import com.callcontrol.datashare.CallControl
 import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.util.tryOrNull
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -41,7 +42,7 @@ class CallControlBlockingClient @Inject constructor(
         val blockReason: String? = cursor.getStringOrNull(0)
     }
 
-    override fun shouldBlock(address: String): Single<Boolean> {
+    override fun isBlocked(address: String): Single<Boolean> {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
         return Single.fromCallable {
             tryOrNull {
@@ -50,6 +51,16 @@ class CallControlBlockingClient @Inject constructor(
                         ?.any { result -> result.blockReason != null } // Check if any are blocked
             } == true // If none are blocked or we errored at some point, return false
         }
+    }
+
+    override fun canBlock(): Boolean = true
+
+    override fun block(address: String): Completable = Completable.fromCallable {
+        CallControl.report(context, CallControl.Report(address))
+    }
+
+    override fun unblock(address: String): Completable = Completable.fromCallable {
+        CallControl.openBlockedList(context, address)
     }
 
 }
