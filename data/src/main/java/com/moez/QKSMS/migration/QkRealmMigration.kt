@@ -25,7 +25,7 @@ import io.realm.RealmMigration
 class QkRealmMigration : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 5
+        const val SCHEMA_VERSION: Long = 6
     }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
@@ -68,6 +68,14 @@ class QkRealmMigration : RealmMigration {
         if (version == 4L) {
             realm.schema.get("Conversation")
                     ?.addField("pinned", Boolean::class.java, FieldAttribute.REQUIRED, FieldAttribute.INDEXED)
+
+            version++
+        }
+
+        if (version == 5L) {
+            realm.schema.create("BlockedNumber")
+                    .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
+                    .addField("address", String::class.java, FieldAttribute.REQUIRED)
 
             version++
         }
