@@ -60,6 +60,10 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val SWIPE_ACTION_CALL = 3
         const val SWIPE_ACTION_READ = 4
         const val SWIPE_ACTION_UNREAD = 5
+
+        const val BLOCKING_MANAGER_QKSMS = 0
+        const val BLOCKING_MANAGER_CC = 1
+        const val BLOCKING_MANAGER_SIA = 2
     }
 
     // Internal
@@ -76,6 +80,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val black = rxPrefs.getBoolean("black", false)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
+    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
     val callControl = rxPrefs.getBoolean("callControl", false)
     val sia = rxPrefs.getBoolean("sia", false)
     val drop = rxPrefs.getBoolean("drop", false)

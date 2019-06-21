@@ -27,7 +27,6 @@ import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkAllSeen
 import com.moez.QKSMS.interactor.MarkArchived
-import com.moez.QKSMS.interactor.MarkBlocked
 import com.moez.QKSMS.interactor.MarkPinned
 import com.moez.QKSMS.interactor.MarkRead
 import com.moez.QKSMS.interactor.MarkUnarchived
@@ -64,7 +63,6 @@ class MainViewModel @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
     private val markArchived: MarkArchived,
-    private val markBlocked: MarkBlocked,
     private val markPinned: MarkPinned,
     private val markRead: MarkRead,
     private val markUnarchived: MarkUnarchived,
@@ -319,7 +317,7 @@ class MainViewModel @Inject constructor(
         view.optionsItemIntent
                 .filter { itemId -> itemId == R.id.block }
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
-                    markBlocked.execute(conversations)
+                    view.showBlockingDialog(conversations, true)
                     view.clearSelection()
                 }
                 .autoDisposable(view.scope())

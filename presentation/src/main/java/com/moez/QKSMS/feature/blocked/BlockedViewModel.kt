@@ -22,7 +22,6 @@ import android.content.Context
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.extensions.isInstalled
-import com.moez.QKSMS.interactor.MarkUnblocked
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
@@ -35,7 +34,6 @@ class BlockedViewModel @Inject constructor(
     private val context: Context,
     private val analytics: AnalyticsManager,
     private val conversationRepo: ConversationRepository,
-    private val markUnblocked: MarkUnblocked,
     private val navigator: Navigator,
     private val prefs: Preferences
 ) : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
@@ -93,15 +91,9 @@ class BlockedViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { prefs.drop.set(!prefs.drop.get()) }
 
-        // Show confirm unblock conversation dialog
-        view.unblockIntent
+        view.conversationClicks
                 .autoDisposable(view.scope())
-                .subscribe { threadId -> view.showUnblockDialog(threadId) }
-
-        // Unblock conversation
-        view.confirmUnblockIntent
-                .autoDisposable(view.scope())
-                .subscribe { threadId -> markUnblocked.execute(listOf(threadId)) }
+                .subscribe { threadId -> navigator.showConversation(threadId) }
     }
 
 }

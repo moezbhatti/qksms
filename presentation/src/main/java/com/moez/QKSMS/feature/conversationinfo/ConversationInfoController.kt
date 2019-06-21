@@ -30,6 +30,7 @@ import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.scrapViews
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.FieldDialog
+import com.moez.QKSMS.feature.blocked.BlockingDialog
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoModule
 import com.moez.QKSMS.feature.themepicker.ThemePickerController
 import com.moez.QKSMS.injection.appComponent
@@ -46,6 +47,7 @@ class ConversationInfoController(
 ) : QkController<ConversationInfoView, ConversationInfoState, ConversationInfoPresenter>(), ConversationInfoView {
 
     @Inject override lateinit var presenter: ConversationInfoPresenter
+    @Inject lateinit var blockingDialog: BlockingDialog
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
     @Inject lateinit var mediaAdapter: ConversationMediaAdapter
@@ -140,6 +142,10 @@ class ConversationInfoController(
         router.pushController(RouterTransaction.with(ThemePickerController(threadId))
                 .pushChangeHandler(QkChangeHandler())
                 .popChangeHandler(QkChangeHandler()))
+    }
+
+    override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
+        blockingDialog.show(activity!!, conversations, block)
     }
 
     override fun showDeleteDialog() {

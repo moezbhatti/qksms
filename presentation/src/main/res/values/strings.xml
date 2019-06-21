@@ -223,8 +223,15 @@
     <string name="settings_blocking_title">Blocking</string>
     <string name="settings_blocking_manager_title">Blocking Manager</string>
     <string name="settings_blocking_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="settings_blocking_block_external">Would you also like to block this number in %s?</string>
-    <string name="settings_blocking_unblock_external">Would you also like to block this number in %s?</string>
+    <plurals name="settings_blocking_block_external">
+        <item quantity="one">Would you also like to block this number in %s?</item>
+        <item quantity="other">Would you also like to block these numbers in %s?</item>
+    </plurals>
+    <plurals name="settings_blocking_unblock_external">
+        <item quantity="one">Would you also like to unblock this number in %s?</item>
+        <item quantity="other">Would you also like to unblock these numbers in %s?</item>
+    </plurals>
+    <string name="settings_blocking_manager_android">Android Blocking Manager</string>
     <!-- Do not translate -->
     <string name="settings_call_control_title">Call Control</string>
     <string name="settings_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
@@ -267,8 +274,6 @@
 
     <string name="blocked_title">Blocking</string>
     <string name="blocked_empty">Your blocked conversations will appear here</string>
-    <string name="blocked_unblock_dialog_title">Unblock</string>
-    <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
 
     <string name="about_title">About</string>
     <string name="about_version_title">Version</string>
@@ -332,13 +337,13 @@
         <item>Delete</item>
     </string-array>
 
+    <string name="button_yes">Yes</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_more">More</string>
     <string name="button_set">Set</string>
-    <string name="button_unblock">Unblock</string>
     <string name="button_undo">Undo</string>
 
     <string name="toast_copied">Copied</string>

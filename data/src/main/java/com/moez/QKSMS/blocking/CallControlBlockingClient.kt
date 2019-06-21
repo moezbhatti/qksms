@@ -55,11 +55,14 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun canBlock(): Boolean = true
 
-    override fun block(address: String): Completable = Completable.fromCallable {
-        CallControl.report(context, CallControl.Report(address))
+    override fun block(addresses: List<String>): Completable = Completable.fromCallable {
+        val reports = addresses.map { CallControl.Report(it) }
+        CallControl.report(context, arrayListOf<CallControl.Report>().apply { addAll(reports) })
     }
 
-    override fun unblock(address: String): Completable = Completable.fromCallable {
+    override fun unblock(addresses: List<String>): Completable = Completable.fromCallable {
+        // Only show a particular address if we're only unblocking that one
+        val address = addresses.takeIf { it.size == 1 }?.first()
         CallControl.openBlockedList(context, address)
     }
 

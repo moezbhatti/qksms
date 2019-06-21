@@ -141,6 +141,13 @@ class ConversationRepositoryImpl @Inject constructor(
                 .findFirst()
     }
 
+    override fun getConversations(vararg threadIds: Long): RealmResults<Conversation> {
+        return Realm.getDefaultInstance()
+                .where(Conversation::class.java)
+                .anyOf("id", threadIds)
+                .findAll()
+    }
+
     override fun getThreadId(recipient: String): Long? {
         return getThreadId(listOf(recipient))
     }

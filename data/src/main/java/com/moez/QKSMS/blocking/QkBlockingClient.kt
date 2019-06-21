@@ -19,6 +19,7 @@
 package com.moez.QKSMS.blocking
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.provider.BlockedNumberContract
 import android.telecom.TelecomManager
@@ -45,11 +46,12 @@ class QkBlockingClient @Inject constructor(private val context: Context) : Block
 
     override fun canBlock(): Boolean = Build.VERSION.SDK_INT < 24
 
-    override fun block(address: String): Completable = Completable.fromCallable {
+    override fun block(addresses: List<String>): Completable = Completable.fromCallable {
         when {
             Build.VERSION.SDK_INT >= 24 -> {
                 val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
                 val intent = telecomManager.createManageBlockedNumbersIntent()
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             }
 
@@ -58,7 +60,7 @@ class QkBlockingClient @Inject constructor(private val context: Context) : Block
                         .max("id")?.toLong() ?: -1
 
                 realm.executeTransaction {
-                    realm.insert(BlockedNumber(maxId + 1, address))
+                    realm.insert(addresses.mapIndexed { index, address -> BlockedNumber(maxId + 1 + index, address) })
                 }
             }
         }
@@ -66,15 +68,19 @@ class QkBlockingClient @Inject constructor(private val context: Context) : Block
 
     override fun canUnblock(): Boolean = true
 
-    override fun unblock(address: String): Completable = Completable.fromCallable {
+    override fun unblock(addresses: List<String>): Completable = Completable.fromCallable {
         when {
-            Build.VERSION.SDK_INT >= 24 -> BlockedNumberContract.unblock(context, address)
+            Build.VERSION.SDK_INT >= 24 -> addresses.forEach { address ->
+                BlockedNumberContract.unblock(context, address)
+            }
 
             else -> Realm.getDefaultInstance().use { realm ->
                 val ids = realm
                         .where(BlockedNumber::class.java)
                         .findAll()
-                        .filter { number -> PhoneNumberUtils.compare(number.address, address) }
+                        .filter { number ->
+                            addresses.any { address -> PhoneNumberUtils.compare(number.address, address) }
+                        }
                         .map { number -> number.id }
                         .toLongArray()
 

@@ -46,6 +46,7 @@ interface MainView : QkView<MainState> {
     fun requestPermissions()
     fun clearSearch()
     fun clearSelection()
+    fun showBlockingDialog(conversations: List<Long>, block: Boolean)
     fun showDeleteDialog(conversations: List<Long>)
     fun showChangelog(changelog: ChangelogManager.Changelog)
     fun showArchivedSnackbar()

@@ -34,6 +34,7 @@ interface ConversationInfoView : QkViewContract<ConversationInfoState> {
 
     fun showNameDialog(name: String)
     fun showThemePicker(threadId: Long)
+    fun showBlockingDialog(conversations: List<Long>, block: Boolean)
     fun showDeleteDialog()
 
 }

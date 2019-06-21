@@ -43,6 +43,11 @@ interface ConversationRepository {
 
     fun getConversation(threadId: Long): Conversation?
 
+    /**
+     * Returns all conversations with an id in [threadIds]
+     */
+    fun getConversations(vararg threadIds: Long): RealmResults<Conversation>
+
     fun getThreadId(recipient: String): Long?
 
     fun getThreadId(recipients: Collection<String>): Long?

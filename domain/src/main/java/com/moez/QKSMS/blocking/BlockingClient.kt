@@ -35,9 +35,9 @@ interface BlockingClient {
     fun canBlock(): Boolean = false
 
     /**
-     * Blocks the number or opens the manager
+     * Blocks the numbers or opens the manager
      */
-    fun block(address: String): Completable
+    fun block(addresses: List<String>): Completable
 
     /**
      * Returns true if the client is capable of unblocking the address in the manager without any
@@ -46,8 +46,8 @@ interface BlockingClient {
     fun canUnblock(): Boolean = false
 
     /**
-     * Unblocks the number or opens the manager
+     * Unblocks the numbers or opens the manager
      */
-    fun unblock(address: String): Completable
+    fun unblock(addresses: List<String>): Completable
 
 }

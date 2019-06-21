@@ -18,7 +18,6 @@
  */
 package com.moez.QKSMS.feature.blocked
 
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -26,8 +25,6 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkThemedActivity
 import dagger.android.AndroidInjection
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.blocked_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import javax.inject.Inject
@@ -40,8 +37,7 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
     override val ccClickedIntent by lazy { callControl.clicks() }
     override val siaClickedIntent by lazy { shouldIAnswer.clicks() }
     override val dropClickedIntent by lazy { drop.clicks() }
-    override val unblockIntent by lazy { blockedAdapter.unblock }
-    override val confirmUnblockIntent: Subject<Long> = PublishSubject.create()
+    override val conversationClicks by lazy { blockedAdapter.clicks }
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[BlockedViewModel::class.java] }
 
@@ -63,15 +59,6 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
         drop.checkbox.isChecked = state.dropEnabled
 
         blockedAdapter.updateData(state.data)
-    }
-
-    override fun showUnblockDialog(threadId: Long) {
-        AlertDialog.Builder(this)
-                .setTitle(R.string.blocked_unblock_dialog_title)
-                .setMessage(R.string.blocked_unblock_dialog_message)
-                .setPositiveButton(R.string.button_unblock) { _, _ -> confirmUnblockIntent.onNext(threadId) }
-                .setNegativeButton(R.string.button_cancel, null)
-                .show()
     }
 
 }

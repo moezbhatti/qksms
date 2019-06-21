@@ -23,9 +23,7 @@ import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkArchived
-import com.moez.QKSMS.interactor.MarkBlocked
 import com.moez.QKSMS.interactor.MarkUnarchived
-import com.moez.QKSMS.interactor.MarkUnblocked
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.repository.ConversationRepository
@@ -46,8 +44,6 @@ class ConversationInfoPresenter @Inject constructor(
     private val deleteConversations: DeleteConversations,
     private val markArchived: MarkArchived,
     private val markUnarchived: MarkUnarchived,
-    private val markBlocked: MarkBlocked,
-    private val markUnblocked: MarkUnblocked,
     private val navigator: Navigator,
     private val permissionManager: PermissionManager
 ) : QkPresenter<ConversationInfoView, ConversationInfoState>(
@@ -71,8 +67,6 @@ class ConversationInfoPresenter @Inject constructor(
 
         disposables += markArchived
         disposables += markUnarchived
-        disposables += markBlocked
-        disposables += markUnblocked
         disposables += deleteConversations
 
         // Update the recipients whenever they change
@@ -145,12 +139,7 @@ class ConversationInfoPresenter @Inject constructor(
         view.blockClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
-                .subscribe { conversation ->
-                    when (conversation.blocked) {
-                        true -> markUnblocked.execute(listOf(conversation.id))
-                        false -> markBlocked.execute(listOf(conversation.id))
-                    }
-                }
+                .subscribe { conversation -> view.showBlockingDialog(listOf(conversation.id), !conversation.blocked) }
 
         // Show the delete confirmation dialog
         view.deleteClicks()

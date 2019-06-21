@@ -56,9 +56,9 @@ class ShouldIAnswerBlockingClient @Inject constructor(
         return Binder(context, prefs, address).isBlocked()
     }
 
-    override fun block(address: String): Completable = Completable.fromCallable { showSia() }
+    override fun block(addresses: List<String>): Completable = Completable.fromCallable { showSia() }
 
-    override fun unblock(address: String): Completable = Completable.fromCallable { showSia() }
+    override fun unblock(addresses: List<String>): Completable = Completable.fromCallable { showSia() }
 
     private fun showSia() {
         val pm = context.packageManager

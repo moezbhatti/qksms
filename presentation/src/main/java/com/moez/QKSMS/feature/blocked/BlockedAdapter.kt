@@ -30,14 +30,14 @@ import javax.inject.Inject
 
 class BlockedAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
 
-    val unblock: PublishSubject<Long> = PublishSubject.create()
+    val clicks: PublishSubject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.blocked_list_item, parent, false)
         return QkViewHolder(view).apply {
             view.setOnClickListener {
                 val conversation = getItem(adapterPosition) ?: return@setOnClickListener
-                unblock.onNext(conversation.id)
+                clicks.onNext(conversation.id)
             }
         }
     }
@@ -47,6 +47,7 @@ class BlockedAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
         val view = holder.containerView
 
         view.avatars.contacts = conversation.recipients
+        view.title.collapseEnabled = conversation.recipients.size > 1
         view.title.text = conversation.getTitle()
     }
 
