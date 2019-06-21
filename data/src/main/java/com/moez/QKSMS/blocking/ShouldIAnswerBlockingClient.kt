@@ -61,7 +61,11 @@ class ShouldIAnswerBlockingClient @Inject constructor(
     override fun unblock(address: String): Completable = Completable.fromCallable { showSia() }
 
     private fun showSia() {
-        // TODO
+        val pm = context.packageManager
+        pm.getLaunchIntentForPackage("org.mistergroup.shouldianswer")
+                ?: pm.getLaunchIntentForPackage("org.mistergroup.shouldianswerpersonal")
+                ?: pm.getLaunchIntentForPackage("org.mistergroup.muzutozvednout")
+                        ?.run(context::startActivity)
     }
 
     private class Binder(
