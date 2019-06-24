@@ -28,7 +28,6 @@ import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
 import androidx.core.os.bundleOf
-import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -36,8 +35,7 @@ import io.reactivex.subjects.SingleSubject
 import javax.inject.Inject
 
 class ShouldIAnswerBlockingClient @Inject constructor(
-    private val context: Context,
-    private val prefs: Preferences
+    private val context: Context
 ) : BlockingClient {
 
     companion object {
@@ -53,7 +51,7 @@ class ShouldIAnswerBlockingClient @Inject constructor(
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
      */
     override fun isBlocked(address: String): Single<Boolean> {
-        return Binder(context, prefs, address).isBlocked()
+        return Binder(context, address).isBlocked()
     }
 
     override fun block(addresses: List<String>): Completable = Completable.fromCallable { showSia() }
@@ -70,7 +68,6 @@ class ShouldIAnswerBlockingClient @Inject constructor(
 
     private class Binder(
         private val context: Context,
-        private val prefs: Preferences,
         private val address: String
     ) : ServiceConnection {
 
@@ -79,22 +76,18 @@ class ShouldIAnswerBlockingClient @Inject constructor(
         private var isBound: Boolean = false
 
         fun isBlocked(): Single<Boolean> {
-            var intent: Intent? = null
-
             // If either version of Should I Answer? is installed and SIA is enabled, build the
             // intent to request a rating
-            if (prefs.sia.get()) {
-                intent = tryOrNull(false) {
-                    context.packageManager.getApplicationInfo("org.mistergroup.shouldianswer", 0).enabled
-                    Intent("org.mistergroup.shouldianswer.PublicService").setPackage("org.mistergroup.shouldianswer")
-                } ?: tryOrNull(false) {
-                    context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled
-                    Intent("org.mistergroup.shouldianswerpersonal.PublicService")
-                            .setPackage("org.mistergroup.shouldianswerpersonal")
-                } ?: tryOrNull(false) {
-                    context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled
-                    Intent("org.mistergroup.muzutozvednout.PublicService").setPackage("org.mistergroup.muzutozvednout")
-                }
+            val intent: Intent? = tryOrNull(false) {
+                context.packageManager.getApplicationInfo("org.mistergroup.shouldianswer", 0).enabled
+                Intent("org.mistergroup.shouldianswer.PublicService").setPackage("org.mistergroup.shouldianswer")
+            } ?: tryOrNull(false) {
+                context.packageManager.getApplicationInfo("org.mistergroup.shouldianswerpersonal", 0).enabled
+                Intent("org.mistergroup.shouldianswerpersonal.PublicService")
+                        .setPackage("org.mistergroup.shouldianswerpersonal")
+            } ?: tryOrNull(false) {
+                context.packageManager.getApplicationInfo("org.mistergroup.muzutozvednout", 0).enabled
+                Intent("org.mistergroup.muzutozvednout.PublicService").setPackage("org.mistergroup.muzutozvednout")
             }
 
             // If the intent isn't null, bind the service and wait for a result. Otherwise, don't block

@@ -20,7 +20,6 @@ package com.moez.QKSMS.injection.android
 
 import com.moez.QKSMS.feature.backup.BackupActivity
 import com.moez.QKSMS.feature.blocking.BlockingActivity
-import com.moez.QKSMS.feature.blocking.BlockingActivityModule
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
@@ -85,7 +84,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindSettingsActivity(): SettingsActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [BlockingActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindBlockingActivity(): BlockingActivity
 
 }

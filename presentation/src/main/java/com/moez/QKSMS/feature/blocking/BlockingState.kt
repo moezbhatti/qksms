@@ -22,8 +22,7 @@ import com.moez.QKSMS.model.Conversation
 import io.realm.RealmResults
 
 data class BlockingState(
-    val ccEnabled: Boolean = false,
-    val siaEnabled: Boolean = false,
+    val blockingManager: String = "",
     val dropEnabled: Boolean = false,
     val data: RealmResults<Conversation>? = null
 )

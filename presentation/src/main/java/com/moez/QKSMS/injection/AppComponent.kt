@@ -27,7 +27,10 @@ import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.common.widget.QkEditText
 import com.moez.QKSMS.common.widget.QkSwitch
 import com.moez.QKSMS.common.widget.QkTextView
+import com.moez.QKSMS.common.widget.RadioPreferenceView
 import com.moez.QKSMS.feature.backup.BackupController
+import com.moez.QKSMS.feature.blocking.BlockingController
+import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.compose.DetailedChipView
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.settings.SettingsController
@@ -59,6 +62,8 @@ interface AppComponent {
 
     fun inject(controller: AboutController)
     fun inject(controller: BackupController)
+    fun inject(controller: BlockingController)
+    fun inject(controller: BlockingManagerController)
     fun inject(controller: SettingsController)
     fun inject(controller: SwipeActionsController)
 
@@ -77,6 +82,7 @@ interface AppComponent {
     fun inject(view: DetailedChipView)
     fun inject(view: PagerTitleView)
     fun inject(view: PreferenceView)
+    fun inject(view: RadioPreferenceView)
     fun inject(view: QkEditText)
     fun inject(view: QkSwitch)
     fun inject(view: QkTextView)

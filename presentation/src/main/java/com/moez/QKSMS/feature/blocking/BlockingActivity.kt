@@ -19,46 +19,33 @@
 package com.moez.QKSMS.feature.blocking
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.jakewharton.rxbinding2.view.clicks
+import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkThemedActivity
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.blocking_activity.*
-import kotlinx.android.synthetic.main.settings_switch_widget.view.*
-import javax.inject.Inject
+import kotlinx.android.synthetic.main.container_activity.*
 
-class BlockingActivity : QkThemedActivity(), BlockingView {
+class BlockingActivity : QkThemedActivity() {
 
-    @Inject lateinit var blockingAdapter: BlockingAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    override val ccClickedIntent by lazy { callControl.clicks() }
-    override val siaClickedIntent by lazy { shouldIAnswer.clicks() }
-    override val dropClickedIntent by lazy { drop.clicks() }
-    override val conversationClicks by lazy { blockingAdapter.clicks }
-
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[BlockingViewModel::class.java] }
+    private lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.blocking_activity)
-        setTitle(R.string.blocking_title)
-        showBackButton(true)
-        viewModel.bindView(this)
+        setContentView(R.layout.container_activity)
 
-        blockingAdapter.emptyView = empty
-        conversations.adapter = blockingAdapter
+        router = Conductor.attachRouter(this, container, savedInstanceState)
+        if (!router.hasRootController()) {
+            router.setRoot(RouterTransaction.with(BlockingController()))
+        }
     }
 
-    override fun render(state: BlockingState) {
-        callControl.checkbox.isChecked = state.ccEnabled
-        shouldIAnswer.checkbox.isChecked = state.siaEnabled
-        drop.checkbox.isChecked = state.dropEnabled
-
-        blockingAdapter.updateData(state.data)
+    override fun onBackPressed() {
+        if (!router.handleBack()) {
+            super.onBackPressed()
+        }
     }
 
 }

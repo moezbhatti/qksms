@@ -19,22 +19,25 @@
 package com.moez.QKSMS.common.widget
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.view.Gravity
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeAttribute
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.injection.appComponent
-import kotlinx.android.synthetic.main.preference_view.view.*
+import kotlinx.android.synthetic.main.radio_preference_view.view.*
+import javax.inject.Inject
 
-class PreferenceView @JvmOverloads constructor(
+class RadioPreferenceView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : LinearLayoutCompat(context, attrs) {
+) : ConstraintLayout(context, attrs) {
+
+    @Inject lateinit var colors: Colors
 
     var title: String? = null
         set(value) {
@@ -68,29 +71,23 @@ class PreferenceView @JvmOverloads constructor(
             appComponent.inject(this)
         }
 
-        View.inflate(context, R.layout.preference_view, this)
+        View.inflate(context, R.layout.radio_preference_view, this)
         setBackgroundResource(context.resolveThemeAttribute(R.attr.selectableItemBackground))
-        orientation = HORIZONTAL
-        gravity = Gravity.CENTER_VERTICAL
 
-        val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
-        icon.setTint(textSecondary)
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_checked),
+                intArrayOf(-android.R.attr.state_checked))
 
-        context.obtainStyledAttributes(attrs, R.styleable.PreferenceView)?.run {
-            title = getString(R.styleable.PreferenceView_title)
-            summary = getString(R.styleable.PreferenceView_summary)
+        val themeColor = when (isInEditMode) {
+            true -> context.resources.getColor(R.color.tools_theme)
+            false -> colors.theme().theme
+        }
+        val textSecondary = context.resolveThemeColor(android.R.attr.textColorTertiary)
+        radioButton.buttonTintList = ColorStateList(states, intArrayOf(themeColor, textSecondary))
 
-            // If there's a custom view used for the preference's widget, inflate it
-            getResourceId(R.styleable.PreferenceView_widget, -1).takeIf { it != -1 }?.let { id ->
-                View.inflate(context, id, widgetFrame)
-            }
-
-            // If an icon is being used, set up the icon view
-            getResourceId(R.styleable.PreferenceView_icon, -1).takeIf { it != -1 }?.let { id ->
-                icon.setVisible(true)
-                icon.setImageResource(id)
-            }
-
+        context.obtainStyledAttributes(attrs, R.styleable.RadioPreferenceView)?.run {
+            title = getString(R.styleable.RadioPreferenceView_title)
+            summary = getString(R.styleable.RadioPreferenceView_summary)
             recycle()
         }
     }

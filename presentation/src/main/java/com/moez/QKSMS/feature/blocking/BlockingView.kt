@@ -18,14 +18,14 @@
  */
 package com.moez.QKSMS.feature.blocking
 
-import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.common.base.QkViewContract
 import io.reactivex.Observable
 
-interface BlockingView : QkView<BlockingState> {
+interface BlockingView : QkViewContract<BlockingState> {
 
-    val ccClickedIntent: Observable<*>
-    val siaClickedIntent: Observable<*>
+    val blockingManagerIntent: Observable<*>
     val dropClickedIntent: Observable<*>
     val conversationClicks: Observable<Long>
 
+    fun openBlockingManager()
 }
