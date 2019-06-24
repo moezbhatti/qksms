@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.blocked
+package com.moez.QKSMS.feature.blocking
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,7 +28,7 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.blocked_list_item.view.*
 import javax.inject.Inject
 
-class BlockedAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
+class BlockingAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
 
     val clicks: PublishSubject<Long> = PublishSubject.create()
 

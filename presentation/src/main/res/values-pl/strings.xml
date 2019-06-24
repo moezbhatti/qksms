@@ -206,8 +206,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Dotknij gdziekolwiek poza okienkiem, aby zamknąć</string>
     <string name="settings_blocking_title">Blokowanie</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer?</string>
-    <string name="settings_should_i_answer_summary">Automatycznie filtruj wiadomości od niechcianych numerów za pomocą aplikacji \"Should I Answer?\"</string>
+    <string name="blocking_manager_sia_title">Should I Answer?</string>
+    <string name="blocking_manager_sia_summary">Automatycznie filtruj wiadomości od niechcianych numerów za pomocą aplikacji \"Should I Answer?\"</string>
     <string name="settings_delayed_title">Opóźnione wysyłanie</string>
     <string name="settings_swipe_actions">Akcje po przeciągnięciu</string>
     <string name="settings_swipe_actions_summary">Ustaw akcje po przeciągnięciu dla rozmów</string>
@@ -237,8 +237,8 @@
     <string name="settings_logging_enabled">Logi włączone</string>
     <string name="settings_logging_disabled">Logi wyłączone</string>
     <string name="settings_delay_duration_hint">Wprowadź czas (w sekundach)</string>
-    <string name="blocked_title">Blokowanie</string>
-    <string name="blocked_empty">Twoje zablokowane rozmowy będą wyświetlane tutaj</string>
+    <string name="blocking_title">Blokowanie</string>
+    <string name="blocking_empty">Twoje zablokowane rozmowy będą wyświetlane tutaj</string>
     <string name="blocked_unblock_dialog_title">Odblokuj</string>
     <string name="blocked_unblock_dialog_message">Czy chcesz odblokować tę konwersację?</string>
     <string name="about_title">O aplikacji</string>

@@ -37,7 +37,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:padding="56dp"
-        android:text="@string/blocked_empty"
+        android:text="@string/blocking_empty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,8 +61,8 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:summary="@string/settings_call_control_summary"
-                app:title="@string/settings_call_control_title"
+                app:summary="@string/blocking_manager_call_control_summary"
+                app:title="@string/blocking_manager_call_control_title"
                 app:widget="@layout/settings_switch_widget" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
@@ -72,8 +72,8 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:summary="@string/settings_should_i_answer_summary"
-                app:title="@string/settings_should_i_answer_title"
+                app:summary="@string/blocking_manager_sia_summary"
+                app:title="@string/blocking_manager_sia_title"
                 app:widget="@layout/settings_switch_widget" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
@@ -83,8 +83,8 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:summary="@string/settings_blocking_drop_summary"
-                app:title="@string/settings_blocking_drop_title"
+                app:summary="@string/blocking_drop_summary"
+                app:title="@string/blocking_drop_title"
                 app:widget="@layout/settings_switch_widget" />
 
             <View

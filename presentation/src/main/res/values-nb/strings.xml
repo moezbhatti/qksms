@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Trykk hvor som helst utenfor sprettopp-vinduet for å lukke det</string>
     <string name="settings_blocking_title">Blokkering</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Skal jeg svare?</string>
-    <string name="settings_should_i_answer_summary">Filtrer meldinger fra ukjente numre automatisk med \"Skal jeg svare\"-appen</string>
+    <string name="blocking_manager_sia_title">Skal jeg svare?</string>
+    <string name="blocking_manager_sia_summary">Filtrer meldinger fra ukjente numre automatisk med \"Skal jeg svare\"-appen</string>
     <string name="settings_delayed_title">Forsinket sending</string>
     <string name="settings_swipe_actions">Sveipe-handlinger</string>
     <string name="settings_swipe_actions_summary">Still inn sveipe-handlinger for samtaler</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">Feillogg aktivert</string>
     <string name="settings_logging_disabled">Feillogg deaktivert</string>
     <string name="settings_delay_duration_hint">Legg inn forsinkelse (i sekunder)</string>
-    <string name="blocked_title">Blokkert</string>
-    <string name="blocked_empty">Samtaler du blokkerer vil vises her</string>
+    <string name="blocking_title">Blokkert</string>
+    <string name="blocking_empty">Samtaler du blokkerer vil vises her</string>
     <string name="blocked_unblock_dialog_title">Ta bort blokkering</string>
     <string name="blocked_unblock_dialog_message">Vil du ta bort blokkering av denne samtalen?</string>
     <string name="about_title">Om</string>

@@ -200,8 +200,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">ポップアップの外側をタップすると閉じます</string>
     <string name="settings_blocking_title">ブロッキング</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer?</string>
-    <string name="settings_should_i_answer_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルタします</string>
+    <string name="blocking_manager_sia_title">Should I Answer?</string>
+    <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルタします</string>
     <string name="settings_delayed_title">遅延送信</string>
     <string name="settings_swipe_actions">スワイプアクション</string>
     <string name="settings_swipe_actions_summary">会話のスワイプアクションを設定する</string>
@@ -231,8 +231,8 @@
     <string name="settings_logging_enabled">デバッグログが有効</string>
     <string name="settings_logging_disabled">デバッグログを無効にする</string>
     <string name="settings_delay_duration_hint">期間を入力してください (秒)</string>
-    <string name="blocked_title">ブロック</string>
-    <string name="blocked_empty">ブロックした会話がここに表示されます</string>
+    <string name="blocking_title">ブロック</string>
+    <string name="blocking_empty">ブロックした会話がここに表示されます</string>
     <string name="blocked_unblock_dialog_title">ブロックを解除</string>
     <string name="blocked_unblock_dialog_message">この会話のブロックを解除しますか?</string>
     <string name="about_title">このアプリについて</string>

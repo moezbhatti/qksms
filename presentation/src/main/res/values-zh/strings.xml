@@ -200,8 +200,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">在快顯視窗外點擊以關閉它</string>
     <string name="settings_blocking_title">攔截</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer?</string>
-    <string name="settings_should_i_answer_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
+    <string name="blocking_manager_sia_title">Should I Answer?</string>
+    <string name="blocking_manager_sia_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
     <string name="settings_delayed_title">延遲發送</string>
     <string name="settings_swipe_actions">滑動操作</string>
     <string name="settings_swipe_actions_summary">配置對話的滑動操作</string>
@@ -231,8 +231,8 @@
     <string name="settings_logging_enabled">除錯日誌已啓用</string>
     <string name="settings_logging_disabled">出錯日誌已停用</string>
     <string name="settings_delay_duration_hint">輸入時長 (秒)</string>
-    <string name="blocked_title">攔截</string>
-    <string name="blocked_empty">被攔截的對話將出現在這裡</string>
+    <string name="blocking_title">攔截</string>
+    <string name="blocking_empty">被攔截的對話將出現在這裡</string>
     <string name="blocked_unblock_dialog_title">取消攔截</string>
     <string name="blocked_unblock_dialog_message">確定不再攔截這個對話嗎？</string>
     <string name="about_title">關於</string>

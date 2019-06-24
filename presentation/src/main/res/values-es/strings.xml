@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Toque fuera de la ventana emergente para cerrarla</string>
     <string name="settings_blocking_title">Bloquedo</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">¿Debo responder?</string>
-    <string name="settings_should_i_answer_summary">Filtra automáticamente los mensajes de números no solicitados mediante la aplicación \"¿Debo responder?\"</string>
+    <string name="blocking_manager_sia_title">¿Debo responder?</string>
+    <string name="blocking_manager_sia_summary">Filtra automáticamente los mensajes de números no solicitados mediante la aplicación \"¿Debo responder?\"</string>
     <string name="settings_delayed_title">Retraso en el envío</string>
     <string name="settings_swipe_actions">Acciones al deslizar</string>
     <string name="settings_swipe_actions_summary">Configurar acciones de deslizamiento para conversaciones</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">Registro de depuración activado</string>
     <string name="settings_logging_disabled">Registro de depuración desactivado</string>
     <string name="settings_delay_duration_hint">Introduzca la duración (segundos)</string>
-    <string name="blocked_title">Bloqueado</string>
-    <string name="blocked_empty">Sus conversaciones bloqueadas aparecerán aquí</string>
+    <string name="blocking_title">Bloqueado</string>
+    <string name="blocking_empty">Sus conversaciones bloqueadas aparecerán aquí</string>
     <string name="blocked_unblock_dialog_title">Desbloquear</string>
     <string name="blocked_unblock_dialog_message">¿Quieres desbloquear esta conversación?</string>
     <string name="about_title">Acerca de</string>

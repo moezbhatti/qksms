@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">এটি বন্ধ করার জন্য পপআপের বাইরে ট্যাপ করুন</string>
     <string name="settings_blocking_title">ব্লক করা</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">আমার কি উত্তর দেওয়া উচিত?</string>
-    <string name="settings_should_i_answer_summary">স্বয়ংক্রিয়ভাবে \"Should I Answer\" অ্যাপ্লিকেশন ব্যবহার করে অযাচিত সংখ্যার বার্তাগুলি ফিল্টার করুন</string>
+    <string name="blocking_manager_sia_title">আমার কি উত্তর দেওয়া উচিত?</string>
+    <string name="blocking_manager_sia_summary">স্বয়ংক্রিয়ভাবে \"Should I Answer\" অ্যাপ্লিকেশন ব্যবহার করে অযাচিত সংখ্যার বার্তাগুলি ফিল্টার করুন</string>
     <string name="settings_delayed_title">বিলম্বে পাঠানো</string>
     <string name="settings_swipe_actions">সোয়াইপের জন্য অ্যাকশনগুলি</string>
     <string name="settings_swipe_actions_summary">কথোপকথনের জন্য সোয়াইপ অ্যাকশনগুলি কনফিগার করুন</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">ডিবাগ লগিং চালু করা হয়ছে</string>
     <string name="settings_logging_disabled">ডিবাগ লগিং বন্ধ করা হয়ছে</string>
     <string name="settings_delay_duration_hint">দৈর্ঘ্য (সেকেন্ডে) লিখুন</string>
-    <string name="blocked_title">ব্লক করা</string>
-    <string name="blocked_empty">আপনার ব্লক করা কথোপকথন দেখা যাবে এখানে</string>
+    <string name="blocking_title">ব্লক করা</string>
+    <string name="blocking_empty">আপনার ব্লক করা কথোপকথন দেখা যাবে এখানে</string>
     <string name="blocked_unblock_dialog_title">আনব্লক করুন</string>
     <string name="blocked_unblock_dialog_message">আপনি এই কথোপকথন আনব্লক করতে চান?</string>
     <string name="about_title">সম্পর্কে</string>

@@ -206,8 +206,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">יש לגעת מחוץ לחלונית הקופצת כדי לסגור אותה</string>
     <string name="settings_blocking_title">חסימה</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer?‎ (שאענה?)</string>
-    <string name="settings_should_i_answer_summary">לסנן אוטומטית הודעות ממספרים בלתי רצויים על ידי שימוש ביישומון „Should I Answer” (שאענה)</string>
+    <string name="blocking_manager_sia_title">Should I Answer?‎ (שאענה?)</string>
+    <string name="blocking_manager_sia_summary">לסנן אוטומטית הודעות ממספרים בלתי רצויים על ידי שימוש ביישומון „Should I Answer” (שאענה)</string>
     <string name="settings_delayed_title">שליחה בעיכוב</string>
     <string name="settings_swipe_actions">פעולות גרירה</string>
     <string name="settings_swipe_actions_summary">להגדיר פעולות גרירה לדיונים</string>
@@ -237,8 +237,8 @@
     <string name="settings_logging_enabled">תיעוד ניפוי שגיאות פעיל</string>
     <string name="settings_logging_disabled">תיעוד ניפוי שגיאות כבוי</string>
     <string name="settings_delay_duration_hint">משך הזמן (בשניות)</string>
-    <string name="blocked_title">בחסימה</string>
-    <string name="blocked_empty">ההתכתבויות שחסמת תופענה כאן</string>
+    <string name="blocking_title">בחסימה</string>
+    <string name="blocking_empty">ההתכתבויות שחסמת תופענה כאן</string>
     <string name="blocked_unblock_dialog_title">שחרור חסימה</string>
     <string name="blocked_unblock_dialog_message">לשחרר את החסימה של ההתכתבות הזאת?</string>
     <string name="about_title">על אודות</string>

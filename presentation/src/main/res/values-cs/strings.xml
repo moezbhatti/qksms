@@ -206,8 +206,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Pro ukončení klepněte kamkoli mimo okno zprávy</string>
     <string name="settings_blocking_title">Blokování</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Můžu to zvednout?</string>
-    <string name="settings_should_i_answer_summary">Automaticky filtrovat zprávy od nevyžádaných čísel pomocí aplikace „Můžu to zvednout?“</string>
+    <string name="blocking_manager_sia_title">Můžu to zvednout?</string>
+    <string name="blocking_manager_sia_summary">Automaticky filtrovat zprávy od nevyžádaných čísel pomocí aplikace „Můžu to zvednout?“</string>
     <string name="settings_delayed_title">Zpožděné odeslání</string>
     <string name="settings_swipe_actions">Akce přejetí</string>
     <string name="settings_swipe_actions_summary">Nastavení akcí pro přejetí v konverzacích</string>
@@ -237,8 +237,8 @@
     <string name="settings_logging_enabled">Ladící protokolování zapnuto</string>
     <string name="settings_logging_disabled">Ladící protokolování vypnuto</string>
     <string name="settings_delay_duration_hint">Zadejte prodlevu (v sekundách)</string>
-    <string name="blocked_title">Blokování</string>
-    <string name="blocked_empty">Zde se objeví vaše blokované konverzace</string>
+    <string name="blocking_title">Blokování</string>
+    <string name="blocking_empty">Zde se objeví vaše blokované konverzace</string>
     <string name="blocked_unblock_dialog_title">Odblokovat</string>
     <string name="blocked_unblock_dialog_message">Chcete odblokovat tuto konverzaci?</string>
     <string name="about_title">O aplikaci</string>

@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Tippe außerhalb des Popup um es zu schließen</string>
     <string name="settings_blocking_title">Blockieren</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer?</string>
-    <string name="settings_should_i_answer_summary">Nachrichten von unerwünschten Nummern automatisch mit Hilfe der App \"Should I Answer?\" filtern</string>
+    <string name="blocking_manager_sia_title">Should I Answer?</string>
+    <string name="blocking_manager_sia_summary">Nachrichten von unerwünschten Nummern automatisch mit Hilfe der App \"Should I Answer?\" filtern</string>
     <string name="settings_delayed_title">Verzögertes Senden</string>
     <string name="settings_swipe_actions">Gesten</string>
     <string name="settings_swipe_actions_summary">Konfiguriere Gesten für Unterhaltungen</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">Protokollierung zur Fehlerbehebung aktiviert</string>
     <string name="settings_logging_disabled">Protokollierung zur Fehlerbehebung deaktiviert</string>
     <string name="settings_delay_duration_hint">Dauer eingeben (in Sekunden)</string>
-    <string name="blocked_title">Blockieren</string>
-    <string name="blocked_empty">Blockierte Unterhaltungen werden hier angezeigt</string>
+    <string name="blocking_title">Blockieren</string>
+    <string name="blocking_empty">Blockierte Unterhaltungen werden hier angezeigt</string>
     <string name="blocked_unblock_dialog_title">Entsperren</string>
     <string name="blocked_unblock_dialog_message">Willst Du diese Unterhaltung entsperren?</string>
     <string name="about_title">Über</string>

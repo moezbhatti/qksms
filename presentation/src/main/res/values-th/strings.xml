@@ -200,8 +200,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">แตะนอกป๊อปอัพเพื่อปิด</string>
     <string name="settings_blocking_title">การปิดกั้น</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">ควรตอบกลับหรือไม่</string>
-    <string name="settings_should_i_answer_summary">กรองข้อความจากหมายเลขที่ไม่พึงประสงค์ โดยใช้แอพควรตอบกลับหรือไม่</string>
+    <string name="blocking_manager_sia_title">ควรตอบกลับหรือไม่</string>
+    <string name="blocking_manager_sia_summary">กรองข้อความจากหมายเลขที่ไม่พึงประสงค์ โดยใช้แอพควรตอบกลับหรือไม่</string>
     <string name="settings_delayed_title">การส่งแบบล่าช้า</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -231,8 +231,8 @@
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">ระยะเวลาการป้อน (วินาที)</string>
-    <string name="blocked_title">การปิดกั้น</string>
-    <string name="blocked_empty">สนทนาของคุณที่ถูกปิดกั้นจะปรากฏที่นี่</string>
+    <string name="blocking_title">การปิดกั้น</string>
+    <string name="blocking_empty">สนทนาของคุณที่ถูกปิดกั้นจะปรากฏที่นี่</string>
     <string name="blocked_unblock_dialog_title">ยกเลิกการปิดกั้น</string>
     <string name="blocked_unblock_dialog_message">คุณต้องการปิดกั้นการสนทนานี้หรือไม่</string>
     <string name="about_title">เกี่ยวกับ</string>

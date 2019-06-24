@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Tryk udenfor popup-vinduet for at lukke det</string>
     <string name="settings_blocking_title">Blokering</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Bør jeg besvare?</string>
-    <string name="settings_should_i_answer_summary">Filtrér automatisk beskeder fra uopfordrede numre vha. \"Bør jeg besvare\"-app\'en</string>
+    <string name="blocking_manager_sia_title">Bør jeg besvare?</string>
+    <string name="blocking_manager_sia_summary">Filtrér automatisk beskeder fra uopfordrede numre vha. \"Bør jeg besvare\"-app\'en</string>
     <string name="settings_delayed_title">Forsinket afsendelse</string>
     <string name="settings_swipe_actions">Strygehandlinger</string>
     <string name="settings_swipe_actions_summary">Opsæt strygehandlinger for samtaler</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">Fejlfindingslogning aktiveret</string>
     <string name="settings_logging_disabled">Fejlfindingslogning deaktiveret</string>
     <string name="settings_delay_duration_hint">Angiv varighed (sekunder)</string>
-    <string name="blocked_title">Blokering</string>
-    <string name="blocked_empty">Dine blokerede samtaler vil fremgå her</string>
+    <string name="blocking_title">Blokering</string>
+    <string name="blocking_empty">Dine blokerede samtaler vil fremgå her</string>
     <string name="blocked_unblock_dialog_title">Afblokér</string>
     <string name="blocked_unblock_dialog_message">Fjern blokeringen af denne samtale?</string>
     <string name="about_title">Om</string>

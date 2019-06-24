@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Tocca al di fuori del popup per chiuderlo</string>
     <string name="settings_blocking_title">Blocco</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Dovrei rispondere?</string>
-    <string name="settings_should_i_answer_summary">Filtrare automaticamente i messaggi provenienti da numeri indesiderati utilizzando l\'app \"Dovrei rispondere?\"</string>
+    <string name="blocking_manager_sia_title">Dovrei rispondere?</string>
+    <string name="blocking_manager_sia_summary">Filtrare automaticamente i messaggi provenienti da numeri indesiderati utilizzando l\'app \"Dovrei rispondere?\"</string>
     <string name="settings_delayed_title">Invio posticipato</string>
     <string name="settings_swipe_actions">Azioni di scorrimento</string>
     <string name="settings_swipe_actions_summary">Configura le azioni di scorrimento per le conversazioni</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">Registrazione del debug attivata</string>
     <string name="settings_logging_disabled">Registrazione del debug disattivata</string>
     <string name="settings_delay_duration_hint">Inserisci la durata (in secondi)</string>
-    <string name="blocked_title">Mittenti indesiderati</string>
-    <string name="blocked_empty">Le tue conversazioni bloccate appariranno qui</string>
+    <string name="blocking_title">Mittenti indesiderati</string>
+    <string name="blocking_empty">Le tue conversazioni bloccate appariranno qui</string>
     <string name="blocked_unblock_dialog_title">Ripristina mittente</string>
     <string name="blocked_unblock_dialog_message">Vuoi ripristinare questa conversazione?</string>
     <string name="about_title">Informazioni</string>

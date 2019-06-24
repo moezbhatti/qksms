@@ -1,4 +1,4 @@
-package com.moez.QKSMS.feature.blocked
+package com.moez.QKSMS.feature.blocking
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -44,14 +44,14 @@ class BlockingDialog @Inject constructor(
         }
 
         val res = when (block) {
-            true -> R.plurals.settings_blocking_block_external
-            false -> R.plurals.settings_blocking_unblock_external
+            true -> R.plurals.blocking_block_external
+            false -> R.plurals.blocking_unblock_external
         }
 
         val manager = context.getString(when (prefs.blockingManager.get()) {
-            Preferences.BLOCKING_MANAGER_SIA -> R.string.settings_should_i_answer_title
-            Preferences.BLOCKING_MANAGER_CC -> R.string.settings_call_control_title
-            else -> R.string.settings_blocking_manager_android
+            Preferences.BLOCKING_MANAGER_SIA -> R.string.blocking_manager_sia_title
+            Preferences.BLOCKING_MANAGER_CC -> R.string.blocking_manager_call_control_title
+            else -> R.string.blocking_manager_android
         })
 
         val message = context.resources.getQuantityString(res, addresses.size, manager)

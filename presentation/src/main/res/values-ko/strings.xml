@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">아무곳을 터치하면 팝업이 닫힙니다.</string>
     <string name="settings_blocking_title">차단</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer 앱 </string>
-    <string name="settings_should_i_answer_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
+    <string name="blocking_manager_sia_title">Should I Answer 앱 </string>
+    <string name="blocking_manager_sia_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
     <string name="settings_delayed_title">전송 지연</string>
     <string name="settings_swipe_actions">쓸어넘기기 설정</string>
     <string name="settings_swipe_actions_summary">대화를 쓸어넘겼을 때 할 작업</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">디버그 로깅 설정됨</string>
     <string name="settings_logging_disabled">디버그 로깅 해제됨</string>
     <string name="settings_delay_duration_hint">기간 (초)을 입력</string>
-    <string name="blocked_title">차단</string>
-    <string name="blocked_empty">차단된 대화가 여기에 나타납니다.</string>
+    <string name="blocking_title">차단</string>
+    <string name="blocking_empty">차단된 대화가 여기에 나타납니다.</string>
     <string name="blocked_unblock_dialog_title">차단 해제</string>
     <string name="blocked_unblock_dialog_message">이 대화를 차단할까요?</string>
     <string name="about_title">정보</string>

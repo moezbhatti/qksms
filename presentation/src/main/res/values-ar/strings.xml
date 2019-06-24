@@ -210,8 +210,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">إلمس خارج المنبثقة لإغلاقها</string>
     <string name="settings_blocking_title">الحظر</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer؟</string>
-    <string name="settings_should_i_answer_summary">الترشيح التلقائي للرسائل من الأرقام غير المرغوبة باستخدام تطبيق \"Should I Answer\"</string>
+    <string name="blocking_manager_sia_title">Should I Answer؟</string>
+    <string name="blocking_manager_sia_summary">الترشيح التلقائي للرسائل من الأرقام غير المرغوبة باستخدام تطبيق \"Should I Answer\"</string>
     <string name="settings_delayed_title">الإرسال المؤخَّر</string>
     <string name="settings_swipe_actions">إجراءات السَّحْب</string>
     <string name="settings_swipe_actions_summary">ضبط إجراءات السحب بالنسبة للمحادثات</string>
@@ -241,8 +241,8 @@
     <string name="settings_logging_enabled">تسجيل التصحيح مفعَّل</string>
     <string name="settings_logging_disabled">تسجيل التصحيح معطَّل</string>
     <string name="settings_delay_duration_hint">أدخل المدة (ثوان)</string>
-    <string name="blocked_title">الحظر</string>
-    <string name="blocked_empty">المحادثات المحظورة لديك ستظهر هنا</string>
+    <string name="blocking_title">الحظر</string>
+    <string name="blocking_empty">المحادثات المحظورة لديك ستظهر هنا</string>
     <string name="blocked_unblock_dialog_title">إلغاء الحظر</string>
     <string name="blocked_unblock_dialog_message">هل ترغب إلغاء حظر هذه المحادثة؟</string>
     <string name="about_title">حول</string>

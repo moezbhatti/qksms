@@ -200,8 +200,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Chạm vào phía ngoài của hộp thoại để đóng</string>
     <string name="settings_blocking_title">Chặn liên hệ</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Bộ lọc liên hệ giả mạo</string>
-    <string name="settings_should_i_answer_summary">Tự động lọc tin nhắn từ số điện thoại không mong muốn bằng cách sử dụng ứng dụng \"Should I Answer\"</string>
+    <string name="blocking_manager_sia_title">Bộ lọc liên hệ giả mạo</string>
+    <string name="blocking_manager_sia_summary">Tự động lọc tin nhắn từ số điện thoại không mong muốn bằng cách sử dụng ứng dụng \"Should I Answer\"</string>
     <string name="settings_delayed_title">Trì hoãn gửi tin</string>
     <string name="settings_swipe_actions">Các hành động vuốt</string>
     <string name="settings_swipe_actions_summary">Tuỳ chỉnh hành động vuốt cho cuộc trò chuyện</string>
@@ -231,8 +231,8 @@
     <string name="settings_logging_enabled">Đã bật bản ghi gỡ lỗi</string>
     <string name="settings_logging_disabled">Đã tắt bản ghi gỡ lỗi</string>
     <string name="settings_delay_duration_hint">Nhập khoảng thời gian (giây)</string>
-    <string name="blocked_title">Chặn liên hệ</string>
-    <string name="blocked_empty">Liên hệ bị chặn sẽ hiện ở đây</string>
+    <string name="blocking_title">Chặn liên hệ</string>
+    <string name="blocking_empty">Liên hệ bị chặn sẽ hiện ở đây</string>
     <string name="blocked_unblock_dialog_title">Bỏ chặn liên hệ</string>
     <string name="blocked_unblock_dialog_message">Bạn có muốn bỏ chặn liên hệ này ?</string>
     <string name="about_title">Giới thiệu</string>

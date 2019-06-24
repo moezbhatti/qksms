@@ -16,16 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.blocked
+package com.moez.QKSMS.feature.blocking
 
-import com.moez.QKSMS.common.base.QkView
-import io.reactivex.Observable
+import com.moez.QKSMS.model.Conversation
+import io.realm.RealmResults
 
-interface BlockedView : QkView<BlockedState> {
-
-    val ccClickedIntent: Observable<*>
-    val siaClickedIntent: Observable<*>
-    val dropClickedIntent: Observable<*>
-    val conversationClicks: Observable<Long>
-
-}
+data class BlockingState(
+    val ccEnabled: Boolean = false,
+    val siaEnabled: Boolean = false,
+    val dropEnabled: Boolean = false,
+    val data: RealmResults<Conversation>? = null
+)

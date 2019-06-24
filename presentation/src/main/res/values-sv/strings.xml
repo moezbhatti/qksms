@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Tryck var som helst utanför popupen för att stänga den</string>
     <string name="settings_blocking_title">Blockerar</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Borde jag svara?</string>
-    <string name="settings_should_i_answer_summary">Filtrera automatiskt meddelanden från oönskade nummer genom att använda appen \"Borde jag svara\"</string>
+    <string name="blocking_manager_sia_title">Borde jag svara?</string>
+    <string name="blocking_manager_sia_summary">Filtrera automatiskt meddelanden från oönskade nummer genom att använda appen \"Borde jag svara\"</string>
     <string name="settings_delayed_title">Fördröj skickande av meddelanden</string>
     <string name="settings_swipe_actions">Svepåtgärder</string>
     <string name="settings_swipe_actions_summary">Ställ in svep-åtgärder för konversationer</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">Felsökningsloggning aktiverades</string>
     <string name="settings_logging_disabled">Felsökningsloggning inaktiverad</string>
     <string name="settings_delay_duration_hint">Fyll i varaktighet (sekunder)</string>
-    <string name="blocked_title">Blockering</string>
-    <string name="blocked_empty">Dina blockerade konversationer kommer att dyka upp här</string>
+    <string name="blocking_title">Blockering</string>
+    <string name="blocking_empty">Dina blockerade konversationer kommer att dyka upp här</string>
     <string name="blocked_unblock_dialog_title">Avblockera</string>
     <string name="blocked_unblock_dialog_message">Vill du avblockera den här konversationen?</string>
     <string name="about_title">Om</string>

@@ -206,8 +206,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Торкніться за межами виринаючого вікна, щоб закрити його</string>
     <string name="settings_blocking_title">Блокування</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer?</string>
-    <string name="settings_should_i_answer_summary">Автоматично фільтрувати повідомлення від небажаних номерів, використовуючи додаток «Should I Answer»</string>
+    <string name="blocking_manager_sia_title">Should I Answer?</string>
+    <string name="blocking_manager_sia_summary">Автоматично фільтрувати повідомлення від небажаних номерів, використовуючи додаток «Should I Answer»</string>
     <string name="settings_delayed_title">Затримка відправлення</string>
     <string name="settings_swipe_actions">Дії жестів</string>
     <string name="settings_swipe_actions_summary">Налаштуйте використання жестів для розмови</string>
@@ -237,8 +237,8 @@
     <string name="settings_logging_enabled">Ведення журналу зневаження увімкнуте</string>
     <string name="settings_logging_disabled">Ведення журналу зневаження вимкнуте</string>
     <string name="settings_delay_duration_hint">Введіть тривалість (у секундах)</string>
-    <string name="blocked_title">Блокування</string>
-    <string name="blocked_empty">Ваші заблоковані розмови з\'являтимуться тут</string>
+    <string name="blocking_title">Блокування</string>
+    <string name="blocking_empty">Ваші заблоковані розмови з\'являтимуться тут</string>
     <string name="blocked_unblock_dialog_title">Розблокувати</string>
     <string name="blocked_unblock_dialog_message">Бажаєте розблокувати цю бесіду?</string>
     <string name="about_title">Про додаток</string>

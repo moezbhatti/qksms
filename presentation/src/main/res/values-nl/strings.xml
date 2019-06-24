@@ -202,8 +202,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Tik buiten de popup om deze te sluiten</string>
     <string name="settings_blocking_title">Blokkeren</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Should I Answer?</string>
-    <string name="settings_should_i_answer_summary">Automatisch filteren van berichten van ongevraagde nummers met behulp van de app \"Should I Answer\"</string>
+    <string name="blocking_manager_sia_title">Should I Answer?</string>
+    <string name="blocking_manager_sia_summary">Automatisch filteren van berichten van ongevraagde nummers met behulp van de app \"Should I Answer\"</string>
     <string name="settings_delayed_title">Vertraagd verzenden</string>
     <string name="settings_swipe_actions">Swipe acties</string>
     <string name="settings_swipe_actions_summary">Pas de veeg-acties aan voor conversaties</string>
@@ -233,8 +233,8 @@
     <string name="settings_logging_enabled">Foutenregistratie ingeschakeld</string>
     <string name="settings_logging_disabled">Foutenregistratie uitgeschakeld</string>
     <string name="settings_delay_duration_hint">Voer duur (seconden) in</string>
-    <string name="blocked_title">Blokkeren</string>
-    <string name="blocked_empty">Jouw geblokkeerde conversaties verschijnen hier</string>
+    <string name="blocking_title">Blokkeren</string>
+    <string name="blocking_empty">Jouw geblokkeerde conversaties verschijnen hier</string>
     <string name="blocked_unblock_dialog_title">Blokkering opheffen</string>
     <string name="blocked_unblock_dialog_message">Wil je de blokkering voor deze conversatie opheffen?</string>
     <string name="about_title">Over</string>

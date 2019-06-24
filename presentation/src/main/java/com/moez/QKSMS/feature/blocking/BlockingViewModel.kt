@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.blocked
+package com.moez.QKSMS.feature.blocking
 
 import android.content.Context
 import com.moez.QKSMS.common.Navigator
@@ -30,13 +30,13 @@ import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
-class BlockedViewModel @Inject constructor(
+class BlockingViewModel @Inject constructor(
     private val context: Context,
     private val analytics: AnalyticsManager,
     private val conversationRepo: ConversationRepository,
     private val navigator: Navigator,
     private val prefs: Preferences
-) : QkViewModel<BlockedView, BlockedState>(BlockedState()) {
+) : QkViewModel<BlockingView, BlockingState>(BlockingState()) {
 
     init {
         newState { copy(data = conversationRepo.getBlockedConversations()) }
@@ -51,7 +51,7 @@ class BlockedViewModel @Inject constructor(
                 .subscribe { enabled -> newState { copy(dropEnabled = enabled) } }
     }
 
-    override fun bindView(view: BlockedView) {
+    override fun bindView(view: BlockingView) {
         super.bindView(view)
 
         view.ccClickedIntent

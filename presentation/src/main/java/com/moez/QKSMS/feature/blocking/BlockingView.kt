@@ -16,20 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.blocked
+package com.moez.QKSMS.feature.blocking
 
-import androidx.lifecycle.ViewModel
-import com.moez.QKSMS.injection.ViewModelKey
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoMap
+import com.moez.QKSMS.common.base.QkView
+import io.reactivex.Observable
 
-@Module
-class BlockedActivityModule {
+interface BlockingView : QkView<BlockingState> {
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(BlockedViewModel::class)
-    fun provideBlockedViewModel(viewModel: BlockedViewModel): ViewModel = viewModel
+    val ccClickedIntent: Observable<*>
+    val siaClickedIntent: Observable<*>
+    val dropClickedIntent: Observable<*>
+    val conversationClicks: Observable<Long>
 
 }

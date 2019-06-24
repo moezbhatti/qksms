@@ -206,8 +206,8 @@
     <string name="settings_qkreply_tap_dismiss_summary">Spustelėkite bet kur už iššokamo lango, kad išjungtumėte</string>
     <string name="settings_blocking_title">Blokavimas</string>
     <!-- Do not translate -->
-    <string name="settings_should_i_answer_title">Ar reikia atsakyti?</string>
-    <string name="settings_should_i_answer_summary">Automatiškai filtruoti žinutes nuo nežinomų numerių su „Ar reikia atsakyti“ programėle</string>
+    <string name="blocking_manager_sia_title">Ar reikia atsakyti?</string>
+    <string name="blocking_manager_sia_summary">Automatiškai filtruoti žinutes nuo nežinomų numerių su „Ar reikia atsakyti“ programėle</string>
     <string name="settings_delayed_title">Delayed sending</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -237,8 +237,8 @@
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">Įvesti trukmę (sek.)</string>
-    <string name="blocked_title">Blokavimas</string>
-    <string name="blocked_empty">Užblokuoti pokalbiai bus rodomi čia</string>
+    <string name="blocking_title">Blokavimas</string>
+    <string name="blocking_empty">Užblokuoti pokalbiai bus rodomi čia</string>
     <string name="blocked_unblock_dialog_title">Atblokuoti</string>
     <string name="blocked_unblock_dialog_message">Ar norite atblokuoti šį pokalbį?</string>
     <string name="about_title">Apie</string>

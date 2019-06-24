@@ -29,7 +29,7 @@ import android.provider.Telephony
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.feature.backup.BackupActivity
-import com.moez.QKSMS.feature.blocked.BlockedActivity
+import com.moez.QKSMS.feature.blocking.BlockingActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
@@ -151,7 +151,7 @@ class Navigator @Inject constructor(
     }
 
     fun showBlockedConversations() {
-        val intent = Intent(context, BlockedActivity::class.java)
+        val intent = Intent(context, BlockingActivity::class.java)
         startActivity(intent)
     }
 
