@@ -17,80 +17,105 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="?android:attr/windowBackground">
+    android:background="?android:attr/windowBackground"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
-    <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/empty"
-        style="@style/TextSecondary"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="56dp"
-        android:text="@string/blocking_empty" />
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/blockingManager"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/settingsDivider"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/blocking_manager_title"
+            tools:summary="@string/app_name" />
 
-        <LinearLayout
+        <View
+            android:id="@+id/settingsDivider"
+            android:layout_width="1dp"
+            android:layout_height="38dp"
+            android:background="?android:attr/divider"
+            app:layout_constraintBottom_toBottomOf="@id/blockingManager"
+            app:layout_constraintEnd_toStartOf="@id/settings"
+            app:layout_constraintStart_toEndOf="@id/blockingManager"
+            app:layout_constraintTop_toTopOf="@id/blockingManager" />
+
+        <ImageView
+            android:id="@+id/settings"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="24dp"
+            android:src="@drawable/ic_settings_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/blockingManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/settingsDivider"
+            app:layout_constraintTop_toTopOf="@id/blockingManager"
+            tools:tint="@color/tools_theme" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/drop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            app:layout_constraintTop_toBottomOf="@id/blockingManager"
+            app:summary="@string/blocking_drop_summary"
+            app:title="@string/blocking_drop_title"
+            app:widget="@layout/settings_switch_widget" />
 
-            <com.moez.QKSMS.common.widget.PreferenceView
-                android:id="@+id/blockingManager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:title="@string/blocking_manager_title"
-                tools:summary="@string/app_name" />
+        <View
+            android:id="@+id/conversationsDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/divider"
+            app:layout_constraintTop_toBottomOf="@id/drop" />
 
-            <com.moez.QKSMS.common.widget.PreferenceView
-                android:id="@+id/drop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                app:summary="@string/blocking_drop_summary"
-                app:title="@string/blocking_drop_title"
-                app:widget="@layout/settings_switch_widget" />
+        <com.moez.QKSMS.common.widget.QkTextView
+            android:id="@+id/blockedLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/blocking_conversations"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/conversationsDivider"
+            app:textColor="secondary"
+            app:textSize="secondary" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/divider" />
+        <com.moez.QKSMS.common.widget.QkTextView
+            android:id="@+id/empty"
+            style="@style/TextSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="56dp"
+            android:text="@string/blocking_empty"
+            app:layout_constraintTop_toBottomOf="@id/blockedLabel" />
 
-            <com.moez.QKSMS.common.widget.QkTextView
-                android:id="@+id/blockedLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:text="@string/blocking_conversations"
-                android:textStyle="bold"
-                app:textColor="secondary"
-                app:textSize="secondary" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/conversations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/blockedLabel"
+            tools:listitem="@layout/blocked_list_item" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/conversations"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/blocked_list_item" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>

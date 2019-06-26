@@ -19,8 +19,10 @@
 package com.moez.QKSMS.blocking
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.provider.BlockedNumberContract
+import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
 import androidx.core.content.contentValuesOf
 import com.moez.QKSMS.extensions.anyOf
@@ -87,6 +89,18 @@ class QkBlockingClient @Inject constructor(private val context: Context) : Block
                 }
             }
         }
+    }
+
+    override fun openSettings() = when {
+        Build.VERSION.SDK_INT >= 24 -> {
+            val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+            val intent = telecomManager.createManageBlockedNumbersIntent()
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            context.startActivity(intent)
+        }
+
+        else -> {} // TODO
     }
 
 }

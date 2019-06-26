@@ -50,4 +50,9 @@ interface BlockingClient {
      */
     fun unblock(addresses: List<String>): Completable
 
+    /**
+     * Opens the settings page for the blocking manager
+     */
+    fun openSettings()
+
 }

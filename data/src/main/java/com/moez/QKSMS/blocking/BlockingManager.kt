@@ -34,4 +34,6 @@ class BlockingManager @Inject constructor(
 
     override fun unblock(addresses: List<String>): Completable = client.unblock(addresses)
 
+    override fun openSettings() = client.openSettings()
+
 }

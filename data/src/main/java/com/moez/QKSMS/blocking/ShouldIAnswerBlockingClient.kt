@@ -54,16 +54,17 @@ class ShouldIAnswerBlockingClient @Inject constructor(
         return Binder(context, address).isBlocked()
     }
 
-    override fun block(addresses: List<String>): Completable = Completable.fromCallable { showSia() }
+    override fun block(addresses: List<String>): Completable = Completable.fromCallable { openSettings() }
 
-    override fun unblock(addresses: List<String>): Completable = Completable.fromCallable { showSia() }
+    override fun unblock(addresses: List<String>): Completable = Completable.fromCallable { openSettings() }
 
-    private fun showSia() {
+    override fun openSettings() {
         val pm = context.packageManager
-        pm.getLaunchIntentForPackage("org.mistergroup.shouldianswer")
+        val intent = pm.getLaunchIntentForPackage("org.mistergroup.shouldianswer")
                 ?: pm.getLaunchIntentForPackage("org.mistergroup.shouldianswerpersonal")
                 ?: pm.getLaunchIntentForPackage("org.mistergroup.muzutozvednout")
-                        ?.run(context::startActivity)
+
+        intent?.run(context::startActivity)
     }
 
     private class Binder(

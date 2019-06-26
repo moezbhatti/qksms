@@ -66,4 +66,8 @@ class CallControlBlockingClient @Inject constructor(
         CallControl.openBlockedList(context, address)
     }
 
+    override fun openSettings() {
+        CallControl.openBlockedList(context)
+    }
+
 }
