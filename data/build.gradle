@@ -77,11 +77,11 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
+    implementation 'com.callcontrol:datashare:1.0.0'
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation files('libs/callcontrol-datashare-release.aar')
     implementation project(":android-smsmms")
     implementation project(':common')
     implementation project(':domain')
