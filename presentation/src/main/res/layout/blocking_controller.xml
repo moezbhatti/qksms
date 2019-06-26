@@ -57,6 +57,7 @@
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/blocking_manager_settings_cd"
             android:padding="24dp"
             android:src="@drawable/ic_settings_black_24dp"
             app:layout_constraintBottom_toBottomOf="@id/blockingManager"

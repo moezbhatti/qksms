@@ -1,4 +1,3 @@
-
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
@@ -64,6 +63,8 @@ import com.moez.QKSMS.mapper.CursorToRecipientImpl
 import com.moez.QKSMS.mapper.RatingManagerImpl
 import com.moez.QKSMS.repository.BackupRepository
 import com.moez.QKSMS.repository.BackupRepositoryImpl
+import com.moez.QKSMS.repository.BlockingRepository
+import com.moez.QKSMS.repository.BlockingRepositoryImpl
 import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ContactRepositoryImpl
 import com.moez.QKSMS.repository.ConversationRepository
@@ -173,6 +174,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideBackupRepository(repository: BackupRepositoryImpl): BackupRepository = repository
+
+    @Provides
+    fun provideBlockingRepository(repository: BlockingRepositoryImpl): BlockingRepository = repository
 
     @Provides
     fun provideContactRepository(repository: ContactRepositoryImpl): ContactRepository = repository

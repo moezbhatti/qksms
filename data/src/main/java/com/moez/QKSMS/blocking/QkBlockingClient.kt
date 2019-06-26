@@ -23,25 +23,22 @@ import android.content.Intent
 import android.os.Build
 import android.provider.BlockedNumberContract
 import android.telecom.TelecomManager
-import android.telephony.PhoneNumberUtils
 import androidx.core.content.contentValuesOf
-import com.moez.QKSMS.extensions.anyOf
-import com.moez.QKSMS.model.BlockedNumber
+import com.moez.QKSMS.repository.BlockingRepository
 import io.reactivex.Completable
 import io.reactivex.Single
-import io.realm.Realm
 import javax.inject.Inject
 
-class QkBlockingClient @Inject constructor(private val context: Context) : BlockingClient {
+class QkBlockingClient @Inject constructor(
+    private val context: Context,
+    private val blockingRepo: BlockingRepository
+) : BlockingClient {
 
     override fun isBlocked(address: String): Single<Boolean> = Single.fromCallable {
         when {
             Build.VERSION.SDK_INT >= 24 -> BlockedNumberContract.isBlocked(context, address)
 
-            else -> Realm.getDefaultInstance()
-                    .where(BlockedNumber::class.java)
-                    .findAll()
-                    .any { number -> PhoneNumberUtils.compare(number.address, address) }
+            else -> blockingRepo.isBlocked(address)
         }
     }
 
@@ -54,14 +51,7 @@ class QkBlockingClient @Inject constructor(private val context: Context) : Block
                 context.contentResolver.insert(BlockedNumberContract.BlockedNumbers.CONTENT_URI, cv)
             }
 
-            else -> Realm.getDefaultInstance().use { realm ->
-                val maxId = realm.where(BlockedNumber::class.java)
-                        .max("id")?.toLong() ?: -1
-
-                realm.executeTransaction {
-                    realm.insert(addresses.mapIndexed { index, address -> BlockedNumber(maxId + 1 + index, address) })
-                }
-            }
+            else -> blockingRepo.blockNumber(*addresses.toTypedArray())
         }
     }
 
@@ -73,21 +63,7 @@ class QkBlockingClient @Inject constructor(private val context: Context) : Block
                 BlockedNumberContract.unblock(context, address)
             }
 
-            else -> Realm.getDefaultInstance().use { realm ->
-                val ids = realm
-                        .where(BlockedNumber::class.java)
-                        .findAll()
-                        .filter { number ->
-                            addresses.any { address -> PhoneNumberUtils.compare(number.address, address) }
-                        }
-                        .map { number -> number.id }
-                        .toLongArray()
-
-                realm.executeTransaction {
-                    realm.where(BlockedNumber::class.java)
-                            .anyOf("id", ids)
-                }
-            }
+            else -> blockingRepo.unblockNumbers(*addresses.toTypedArray())
         }
     }
 
@@ -100,7 +76,7 @@ class QkBlockingClient @Inject constructor(private val context: Context) : Block
             context.startActivity(intent)
         }
 
-        else -> {} // TODO
+        else -> {} // TODO: Do this here once we implement AndroidX navigation
     }
 
 }

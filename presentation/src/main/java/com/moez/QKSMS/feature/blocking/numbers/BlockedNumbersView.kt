@@ -16,18 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.blocking
+package com.moez.QKSMS.feature.blocking.numbers
 
 import com.moez.QKSMS.common.base.QkViewContract
 import io.reactivex.Observable
 
-interface BlockingView : QkViewContract<BlockingState> {
+interface BlockedNumbersView : QkViewContract<BlockedNumbersState> {
 
-    val blockingManagerIntent: Observable<*>
-    val settingsClicks: Observable<*>
-    val dropClickedIntent: Observable<*>
-    val conversationClicks: Observable<Long>
+    fun unblockAddress(): Observable<Long>
+    fun addAddress(): Observable<*>
+    fun saveAddress(): Observable<String>
 
-    fun openBlockingManager()
-    fun openBlockedNumbers()
+    fun showAddDialog()
+
 }

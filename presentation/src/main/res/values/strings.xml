@@ -252,6 +252,7 @@
     <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
 
     <string name="blocking_title">Blocking</string>
+    <string name="blocking_manager_settings_cd">Open settings for selected blocking manager</string>
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
     <string name="blocking_conversations">Blocked conversations</string>
@@ -259,13 +260,19 @@
 
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="blocking_manager_android">Android Blocking Manager</string>
     <!-- Do not translate -->
     <string name="blocking_manager_call_control_title">Call Control</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <!-- Do not translate -->
     <string name="blocking_manager_sia_title">Should I Answer?</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
 
     <plurals name="blocking_block_external">
         <item quantity="one">Would you also like to block this number in %s?</item>
