@@ -26,11 +26,11 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.injection.appComponent
-import io.reactivex.Observable
 import kotlinx.android.synthetic.main.blocking_controller.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import javax.inject.Inject
@@ -58,6 +58,8 @@ class BlockingController : QkController<BlockingView, BlockingState, BlockingPre
         settings.setTint(colors.theme().theme)
         blockingAdapter.emptyView = empty
         conversations.adapter = blockingAdapter
+
+        parent.postDelayed({ parent?.animateLayoutChanges = true }, 100)
     }
 
     override fun onAttach(view: View) {

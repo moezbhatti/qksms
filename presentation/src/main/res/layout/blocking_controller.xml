@@ -27,9 +27,9 @@
     android:paddingBottom="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true">
+        android:layout_height="wrap_content">
 
         <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/blockingManager"
