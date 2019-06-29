@@ -75,12 +75,14 @@ class BlockedNumbersController : QkController<BlockedNumbersView, BlockedNumbers
 
     override fun showAddDialog() {
         val layout = LayoutInflater.from(activity).inflate(R.layout.blocked_numbers_add_dialog, null)
+        val textWatcher = BlockedNumberTextWatcher(layout.input)
         val dialog = AlertDialog.Builder(activity!!)
                 .setView(layout)
                 .setPositiveButton(R.string.blocked_numbers_dialog_block) { _, _ ->
                     saveAddressSubject.onNext(layout.input.text.toString())
                 }
                 .setNegativeButton(R.string.button_cancel) { _, _ -> }
+                .setOnDismissListener { textWatcher.dispose() }
         dialog.show()
     }
 
