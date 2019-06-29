@@ -19,6 +19,7 @@
 package com.moez.QKSMS.blocking
 
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import androidx.core.database.getStringOrNull
@@ -63,11 +64,11 @@ class CallControlBlockingClient @Inject constructor(
     override fun unblock(addresses: List<String>): Completable = Completable.fromCallable {
         // Only show a particular address if we're only unblocking that one
         val address = addresses.takeIf { it.size == 1 }?.first()
-        CallControl.openBlockedList(context, address)
+        CallControl.openBlockedList(context, address, Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
     override fun openSettings() {
-        CallControl.openBlockedList(context)
+        CallControl.openBlockedList(context, Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
 }
