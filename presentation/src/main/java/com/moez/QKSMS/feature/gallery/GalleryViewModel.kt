@@ -25,6 +25,7 @@ import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.interactor.SaveImage
+import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.uber.autodispose.kotlin.autoDisposable
@@ -39,7 +40,8 @@ class GalleryViewModel @Inject constructor(
     messageRepo: MessageRepository,
     @Named("partId") private val partId: Long,
     private val context: Context,
-    private val saveImage: SaveImage
+    private val saveImage: SaveImage,
+    private val permissions: PermissionManager
 ) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
 
     init {
@@ -47,7 +49,11 @@ class GalleryViewModel @Inject constructor(
                 .mapNotNull(messageRepo::getMessageForPart)
                 .mapNotNull { message -> message.threadId }
                 .doOnNext { threadId -> newState { copy(parts = messageRepo.getPartsForConversation(threadId)) } }
-                .doOnNext { threadId -> newState { copy(title = conversationRepo.getConversation(threadId)?.getTitle()) } }
+                .doOnNext { threadId ->
+                    newState {
+                        copy(title = conversationRepo.getConversation(threadId)?.getTitle())
+                    }
+                }
                 .subscribe()
     }
 
@@ -64,6 +70,7 @@ class GalleryViewModel @Inject constructor(
         // Save image to device
         view.optionsItemSelected()
                 .filter { itemId -> itemId == R.id.save }
+                .filter { permissions.hasStorage().also { if (!it) view.requestStoragePermission() } }
                 .withLatestFrom(view.pageChanged()) { _, part -> part.id }
                 .autoDisposable(view.scope())
                 .subscribe { partId -> saveImage.execute(partId) { context.makeToast(R.string.gallery_toast_saved) } }

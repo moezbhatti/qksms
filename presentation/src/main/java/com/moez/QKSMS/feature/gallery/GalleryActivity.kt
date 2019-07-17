@@ -18,9 +18,11 @@
  */
 package com.moez.QKSMS.feature.gallery
 
+import android.Manifest
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -98,6 +100,10 @@ class GalleryActivity : QkActivity(), GalleryView {
     override fun screenTouched(): Observable<*> = pagerAdapter.clicks
 
     override fun pageChanged(): Observable<MmsPart> = pageChangedSubject
+
+    override fun requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.gallery, menu)
