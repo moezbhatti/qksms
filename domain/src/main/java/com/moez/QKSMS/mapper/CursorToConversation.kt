@@ -23,6 +23,6 @@ import com.moez.QKSMS.model.Conversation
 
 interface CursorToConversation : Mapper<Cursor, Conversation> {
 
-    fun getConversationsCursor(lastSync: Long = 0): Cursor?
+    fun getConversationsCursor(): Cursor?
 
 }

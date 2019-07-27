@@ -66,9 +66,9 @@ class CursorToConversationImpl @Inject constructor(
         }
     }
 
-    override fun getConversationsCursor(lastSync: Long): Cursor? {
+    override fun getConversationsCursor(): Cursor? {
         return when (permissionManager.hasReadSms()) {
-            true -> context.contentResolver.query(URI, PROJECTION, "date > $lastSync", null, "date desc")
+            true -> context.contentResolver.query(URI, PROJECTION, null, null, "date desc")
             false -> null
         }
     }
