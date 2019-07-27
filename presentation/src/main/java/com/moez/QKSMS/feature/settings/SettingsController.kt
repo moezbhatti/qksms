@@ -37,6 +37,7 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.common.widget.FieldDialog
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.feature.settings.about.AboutController
 import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
@@ -65,9 +66,14 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
     @Inject override lateinit var presenter: SettingsPresenter
 
+    private val signatureDialog: FieldDialog by lazy {
+        FieldDialog(activity!!, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
+    }
+
     private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
     private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
+    private val signatureSubject: Subject<String> = PublishSubject.create()
 
     private val progressAnimator by lazy { ObjectAnimator.ofInt(syncingProgress, "progress", 0, 0) }
 
@@ -119,6 +125,8 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
     override fun sendDelaySelected(): Observable<Int> = sendDelayDialog.adapter.menuItemClicks
 
+    override fun signatureSet(): Observable<String> = signatureSubject
+
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
 
     override fun render(state: SettingsState) {
@@ -139,6 +147,8 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         sendDelayDialog.adapter.selectedItem = state.sendDelayId
 
         delivery.checkbox.isChecked = state.deliveryEnabled
+
+        signature.summary = state.signature
 
         textSize.summary = state.textSizeSummary
         textSizeDialog.adapter.selectedItem = state.textSizeId
@@ -189,6 +199,8 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun showTextSizePicker() = textSizeDialog.show(activity!!)
 
     override fun showDelayDurationDialog() = sendDelayDialog.show(activity!!)
+
+    override fun showSignatureDialog(signature: String) = signatureDialog.setText(signature).show()
 
     override fun showMmsSizePicker() = mmsSizeDialog.show(activity!!)
 

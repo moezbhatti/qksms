@@ -218,10 +218,16 @@ class MessageRepositoryImpl @Inject constructor(
         attachments: List<Attachment>,
         delay: Int
     ) {
+        val signedBody = when {
+            prefs.signature.get().isEmpty() -> body
+            body.isNotEmpty() -> body + '\n' + prefs.signature.get()
+            else -> prefs.signature.get()
+        }
+
         if (addresses.size == 1 && attachments.isEmpty()) { // SMS
             if (delay > 0) { // With delay
                 val sendTime = System.currentTimeMillis() + delay
-                val message = insertSentSms(subId, threadId, addresses.first(), body, sendTime)
+                val message = insertSentSms(subId, threadId, addresses.first(), signedBody, sendTime)
 
                 val intent = getIntentForDelayedSms(message.id)
 
@@ -232,14 +238,14 @@ class MessageRepositoryImpl @Inject constructor(
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
                 }
             } else { // No delay
-                val message = insertSentSms(subId, threadId, addresses.first(), body, System.currentTimeMillis())
+                val message = insertSentSms(subId, threadId, addresses.first(), signedBody, System.currentTimeMillis())
                 sendSms(message)
             }
         } else { // MMS
             val parts = arrayListOf<MMSPart>()
 
-            if (body.isNotBlank()) {
-                parts += MMSPart("text", ContentType.TEXT_PLAIN, body.toByteArray())
+            if (signedBody.isNotBlank()) {
+                parts += MMSPart("text", ContentType.TEXT_PLAIN, signedBody.toByteArray())
             }
 
             // Add the GIFs as attachments

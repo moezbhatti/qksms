@@ -87,6 +87,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
+        disposables += prefs.signature.asObservable()
+                .subscribe { signature -> newState { copy(signature = signature) } }
+
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
         disposables += prefs.textSize.asObservable()
                 .subscribe { textSize ->
@@ -153,6 +156,8 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
+                        R.id.signature -> view.showSignatureDialog(prefs.signature.get())
+
                         R.id.textSize -> view.showTextSizePicker()
 
                         R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
@@ -205,7 +210,7 @@ class SettingsPresenter @Inject constructor(
 
         view.textSizeSelected()
                 .autoDisposable(view.scope())
-                .subscribe { prefs.textSize.set(it) }
+                .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
                 .withLatestFrom(billingManager.upgradeStatus) { duration, upgraded ->
@@ -218,9 +223,14 @@ class SettingsPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
+        view.signatureSet()
+                .doOnNext(prefs.signature::set)
+                .autoDisposable(view.scope())
+                .subscribe()
+
         view.mmsSizeSelected()
                 .autoDisposable(view.scope())
-                .subscribe { prefs.mmsSize.set(it) }
+                .subscribe(prefs.mmsSize::set)
     }
 
 }

@@ -33,6 +33,7 @@ data class SettingsState(
     val sendDelaySummary: String = "",
     val sendDelayId: Int = 0,
     val deliveryEnabled: Boolean = false,
+    val signature: String = "",
     val textSizeSummary: String = "",
     val textSizeId: Int = Preferences.TEXT_SIZE_NORMAL,
     val systemFontEnabled: Boolean = false,

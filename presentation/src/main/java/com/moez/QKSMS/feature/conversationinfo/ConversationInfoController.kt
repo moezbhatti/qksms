@@ -18,7 +18,6 @@
  */
 package com.moez.QKSMS.feature.conversationinfo
 
-import android.text.InputFilter
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.bluelinelabs.conductor.RouterTransaction
@@ -28,11 +27,9 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
-import com.moez.QKSMS.common.util.extensions.dpToPx
-import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.scrapViews
 import com.moez.QKSMS.common.util.extensions.setVisible
-import com.moez.QKSMS.common.widget.QkEditText
+import com.moez.QKSMS.common.widget.FieldDialog
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoModule
 import com.moez.QKSMS.feature.themepicker.ThemePickerController
 import com.moez.QKSMS.injection.appComponent
@@ -43,13 +40,19 @@ import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_info_controller.*
 import javax.inject.Inject
 
-class ConversationInfoController(val threadId: Long = 0) : QkController<ConversationInfoView, ConversationInfoState, ConversationInfoPresenter>(), ConversationInfoView {
+class ConversationInfoController(
+    val threadId: Long = 0
+) : QkController<ConversationInfoView, ConversationInfoState, ConversationInfoPresenter>(), ConversationInfoView {
 
     @Inject override lateinit var presenter: ConversationInfoPresenter
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
     @Inject lateinit var mediaAdapter: ConversationMediaAdapter
     @Inject lateinit var itemDecoration: GridSpacingItemDecoration
+
+    private val nameDialog: FieldDialog by lazy {
+        FieldDialog(activity!!, activity!!.getString(R.string.info_name), nameChangeSubject::onNext)
+    }
 
     private val nameChangeSubject: Subject<String> = PublishSubject.create()
     private val confirmDeleteSubject: Subject<Unit> = PublishSubject.create()
@@ -130,26 +133,7 @@ class ConversationInfoController(val threadId: Long = 0) : QkController<Conversa
         mediaAdapter.updateData(state.media)
     }
 
-    override fun showNameDialog(name: String) {
-        val editText = QkEditText(activity!!).apply {
-            val padding = 8.dpToPx(activity!!)
-            setPadding(padding * 3, padding, padding * 3, padding)
-            setSingleLine(true)
-            setHint(R.string.info_name_hint)
-            setText(name)
-            setHintTextColor(context.resolveThemeColor(android.R.attr.textColorTertiary))
-            setTextColor(context.resolveThemeColor(android.R.attr.textColorPrimary))
-            filters = arrayOf(InputFilter.LengthFilter(30))
-            background = null
-        }
-
-        AlertDialog.Builder(activity!!)
-                .setTitle(R.string.info_name)
-                .setView(editText)
-                .setPositiveButton(R.string.button_save) { _, _ -> nameChangeSubject.onNext(editText.text.toString()) }
-                .setNegativeButton(R.string.button_cancel, null)
-                .show()
-    }
+    override fun showNameDialog(name: String) = nameDialog.setText(name).show()
 
     override fun showThemePicker(threadId: Long) {
         router.pushController(RouterTransaction.with(ThemePickerController(threadId))
