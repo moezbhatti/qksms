@@ -131,10 +131,7 @@ public class PushReceiver extends BroadcastReceiver {
                             // Save the pdu. If we can start downloading the real pdu immediately,
                             // don't allow persist() to create a thread for the notificationInd
                             // because it causes UI jank.
-                            Uri uri = p.persist(pdu, Inbox.CONTENT_URI,
-                                    !NotificationTransaction.allowAutoDownload(mContext),
-                                    true,
-                                    null);
+                            Uri uri = p.persist(pdu, Inbox.CONTENT_URI, true, true, null);
 
                             String location = getContentLocation(mContext, uri);
                             if (downloadedUrls.contains(location)) {
