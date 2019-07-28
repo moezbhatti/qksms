@@ -304,13 +304,18 @@ class MessageRepositoryImpl @Inject constructor(
             if (prefs.delivery.get()) pendingIntent else null
         }
 
-        smsManager.sendMultipartTextMessage(
-                message.address,
-                null,
-                parts,
-                ArrayList(sentIntents),
-                ArrayList(deliveredIntents)
-        )
+        try {
+            smsManager.sendMultipartTextMessage(
+                    message.address,
+                    null,
+                    parts,
+                    ArrayList(sentIntents),
+                    ArrayList(deliveredIntents)
+            )
+        } catch (e: IllegalArgumentException) {
+            Timber.w(e, "Message body lengths: ${parts.map { it.length }}")
+            markFailed(message.id, Telephony.MmsSms.ERR_TYPE_GENERIC)
+        }
     }
 
     override fun cancelDelayedSms(id: Long) {
