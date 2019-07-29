@@ -1,6 +1,7 @@
 package com.moez.QKSMS.feature.blocking.manager
 
 import android.content.Context
+import com.moez.QKSMS.blocking.CallControlBlockingClient
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.extensions.isInstalled
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 class BlockingManagerPresenter @Inject constructor(
     private val analytics: AnalyticsManager,
+    private val callControl: CallControlBlockingClient,
     private val context: Context,
     private val navigator: Navigator,
     private val prefs: Preferences
@@ -27,21 +29,28 @@ class BlockingManagerPresenter @Inject constructor(
 
         view.qksmsClicked()
                 .autoDisposable(view.scope())
-                .subscribe { prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_QKSMS) }
+                .subscribe {
+                    analytics.setUserProperty("Blocking Manager", "QKSMS")
+                    prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_QKSMS)
+                }
 
         view.callControlClicked()
                 .filter {
                     val installed = context.isInstalled("com.flexaspect.android.everycallcontrol")
                     if (!installed) {
+                        analytics.track("Install Call Control")
                         navigator.showCallControl()
                     }
 
                     val enabled = prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_CC
-                    analytics.track("Clicked Call Control", Pair("enable", !enabled), Pair("installed", installed))
-                    installed
+                    installed && !enabled
                 }
                 .autoDisposable(view.scope())
-                .subscribe { prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CC) }
+                .subscribe {
+                    callControl.isBlocked("")
+                    analytics.setUserProperty("Blocking Manager", "Call Control")
+                    prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CC)
+                }
 
         view.siaClicked()
                 .filter {
@@ -51,15 +60,18 @@ class BlockingManagerPresenter @Inject constructor(
                             .any(context::isInstalled)
 
                     if (!installed) {
+                        analytics.track("Install SIA")
                         navigator.showSia()
                     }
 
                     val enabled = prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_SIA
-                    analytics.track("Clicked SIA", Pair("enable", !enabled), Pair("installed", installed))
                     installed && !enabled
                 }
                 .autoDisposable(view.scope())
-                .subscribe { prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA) }
+                .subscribe {
+                    analytics.setUserProperty("Blocking Manager", "SIA")
+                    prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA)
+                }
     }
 
 }
