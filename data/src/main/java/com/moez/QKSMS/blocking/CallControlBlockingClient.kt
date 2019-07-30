@@ -61,7 +61,8 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun block(addresses: List<String>): Completable = Completable.fromCallable {
         val reports = addresses.map { CallControl.Report(it) }
-        CallControl.report(context, arrayListOf<CallControl.Report>().apply { addAll(reports) })
+        CallControl.report(context, arrayListOf<CallControl.Report>().apply { addAll(reports) },
+                Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
     override fun unblock(addresses: List<String>): Completable = Completable.fromCallable {
