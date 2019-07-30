@@ -24,6 +24,7 @@ import android.database.Cursor
 import android.net.Uri
 import androidx.core.database.getStringOrNull
 import com.callcontrol.datashare.CallControl
+import com.moez.QKSMS.common.util.extensions.isInstalled
 import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Completable
@@ -42,6 +43,8 @@ class CallControlBlockingClient @Inject constructor(
     class LookupResult(cursor: Cursor) {
         val blockReason: String? = cursor.getStringOrNull(0)
     }
+
+    override fun isAvailable(): Boolean = context.isInstalled("com.flexaspect.android.everycallcontrol")
 
     override fun isBlocked(address: String): Single<Boolean> {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)

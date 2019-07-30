@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -18,11 +18,9 @@
  */
 package com.moez.QKSMS.common.util.extensions
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.util.TypedValue
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -63,15 +61,6 @@ fun Context.makeToast(@StringRes res: Int, duration: Int = Toast.LENGTH_SHORT) {
 
 fun Context.makeToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, text, duration).show()
-}
-
-fun Activity.dismissKeyboard() {
-    window.currentFocus?.let { focus ->
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(focus.windowToken, 0)
-
-        focus.clearFocus()
-    }
 }
 
 fun Context.isInstalled(packageName: String): Boolean {

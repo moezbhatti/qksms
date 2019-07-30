@@ -24,6 +24,11 @@ import io.reactivex.Single
 interface BlockingClient {
 
     /**
+     * Returns true if the target blocking client is available for use, ie. it is installed
+     */
+    fun isAvailable(): Boolean
+
+    /**
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
      */
     fun isBlocked(address: String): Single<Boolean>

@@ -27,9 +27,7 @@ import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
-import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.injection.appComponent
 import kotlinx.android.synthetic.main.blocking_controller.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
@@ -38,7 +36,6 @@ import javax.inject.Inject
 class BlockingController : QkController<BlockingView, BlockingState, BlockingPresenter>(), BlockingView {
 
     override val blockingManagerIntent by lazy { blockingManager.clicks() }
-    override val settingsClicks by lazy { settings.clicks() }
     override val dropClickedIntent by lazy { drop.clicks() }
     override val conversationClicks by lazy { blockingAdapter.clicks }
 
@@ -55,7 +52,6 @@ class BlockingController : QkController<BlockingView, BlockingState, BlockingPre
     override fun onViewCreated() {
         super.onViewCreated()
 
-        settings.setTint(colors.theme().theme)
         blockingAdapter.emptyView = empty
         conversations.adapter = blockingAdapter
 
@@ -78,12 +74,6 @@ class BlockingController : QkController<BlockingView, BlockingState, BlockingPre
 
     override fun openBlockingManager() {
         router.pushController(RouterTransaction.with(BlockingManagerController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
-    }
-
-    override fun openBlockedNumbers() {
-        router.pushController(RouterTransaction.with(BlockedNumbersController())
                 .pushChangeHandler(QkChangeHandler())
                 .popChangeHandler(QkChangeHandler()))
     }

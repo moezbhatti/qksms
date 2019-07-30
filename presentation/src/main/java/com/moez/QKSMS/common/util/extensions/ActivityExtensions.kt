@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,16 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.blocking
+package com.moez.QKSMS.common.util.extensions
 
-import com.moez.QKSMS.common.base.QkViewContract
-import io.reactivex.Observable
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
-interface BlockingView : QkViewContract<BlockingState> {
+fun Activity.dismissKeyboard() {
+    window.currentFocus?.let { focus ->
+        val imm = getSystemService(
+                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(focus.windowToken, 0)
 
-    val blockingManagerIntent: Observable<*>
-    val dropClickedIntent: Observable<*>
-    val conversationClicks: Observable<Long>
-
-    fun openBlockingManager()
+        focus.clearFocus()
+    }
 }

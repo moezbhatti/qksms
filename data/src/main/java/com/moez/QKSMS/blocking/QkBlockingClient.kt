@@ -34,6 +34,8 @@ class QkBlockingClient @Inject constructor(
     private val blockingRepo: BlockingRepository
 ) : BlockingClient {
 
+    override fun isAvailable(): Boolean = true
+
     override fun isBlocked(address: String): Single<Boolean> = Single.fromCallable {
         when {
             Build.VERSION.SDK_INT >= 24 -> BlockedNumberContract.isBlocked(context, address)

@@ -19,9 +19,7 @@
 package com.moez.QKSMS.feature.blocking
 
 import android.content.Context
-import android.os.Build
 import com.moez.QKSMS.R
-import com.moez.QKSMS.blocking.BlockingManager
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.repository.ConversationRepository
@@ -32,7 +30,6 @@ import javax.inject.Inject
 
 class BlockingPresenter @Inject constructor(
     context: Context,
-    private val blockingManager: BlockingManager,
     private val conversationRepo: ConversationRepository,
     private val navigator: Navigator,
     private val prefs: Preferences
@@ -62,18 +59,6 @@ class BlockingPresenter @Inject constructor(
         view.blockingManagerIntent
                 .autoDisposable(view.scope())
                 .subscribe { view.openBlockingManager() }
-
-        view.settingsClicks
-                .autoDisposable(view.scope())
-                .subscribe {
-                    // TODO: This is a hack, get rid of it once we implement AndroidX navigation
-                    val client = prefs.blockingManager.get()
-                    if (client == Preferences.BLOCKING_MANAGER_QKSMS && Build.VERSION.SDK_INT < 24) {
-                        view.openBlockedNumbers()
-                    } else {
-                        blockingManager.openSettings()
-                    }
-                }
 
         view.dropClickedIntent
                 .autoDisposable(view.scope())

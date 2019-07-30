@@ -21,6 +21,7 @@
 
     <attr name="title" format="string" />
     <attr name="summary" format="string" />
+    <attr name="widget" format="reference" />
 
     <attr name="textColor" format="enum">
         <enum name="theme" value="0" />
@@ -50,13 +51,14 @@
     <declare-styleable name="PreferenceView">
         <attr name="title" />
         <attr name="summary" />
-        <attr name="widget" format="reference" />
+        <attr name="widget" />
         <attr name="icon" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="RadioPreferenceView">
         <attr name="title" />
         <attr name="summary" />
+        <attr name="widget" />
     </declare-styleable>
 
 </resources>

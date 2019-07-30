@@ -34,38 +34,12 @@
 
         <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/blockingManager"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/settingsDivider"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/blocking_manager_title"
             tools:summary="@string/app_name" />
-
-        <View
-            android:id="@+id/settingsDivider"
-            android:layout_width="1dp"
-            android:layout_height="38dp"
-            android:background="?android:attr/divider"
-            app:layout_constraintBottom_toBottomOf="@id/blockingManager"
-            app:layout_constraintEnd_toStartOf="@id/settings"
-            app:layout_constraintStart_toEndOf="@id/blockingManager"
-            app:layout_constraintTop_toTopOf="@id/blockingManager" />
-
-        <ImageView
-            android:id="@+id/settings"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/blocking_manager_settings_cd"
-            android:padding="24dp"
-            android:src="@drawable/ic_settings_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@id/blockingManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/settingsDivider"
-            app:layout_constraintTop_toTopOf="@id/blockingManager"
-            tools:tint="@color/tools_theme" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/drop"

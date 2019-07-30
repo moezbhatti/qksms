@@ -28,6 +28,7 @@ import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
 import androidx.core.os.bundleOf
+import com.moez.QKSMS.common.util.extensions.isInstalled
 import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -46,6 +47,11 @@ class ShouldIAnswerBlockingClient @Inject constructor(
 
         const val GET_NUMBER_RATING = 1
     }
+
+    override fun isAvailable(): Boolean = listOf("org.mistergroup.shouldianswer",
+            "org.mistergroup.shouldianswerpersonal",
+            "org.mistergroup.muzutozvednout")
+            .any(context::isInstalled)
 
     /**
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked

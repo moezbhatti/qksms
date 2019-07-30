@@ -88,6 +88,12 @@ class RadioPreferenceView @JvmOverloads constructor(
         context.obtainStyledAttributes(attrs, R.styleable.RadioPreferenceView)?.run {
             title = getString(R.styleable.RadioPreferenceView_title)
             summary = getString(R.styleable.RadioPreferenceView_summary)
+
+            // If there's a custom view used for the preference's widget, inflate it
+            getResourceId(R.styleable.RadioPreferenceView_widget, -1).takeIf { it != -1 }?.let { id ->
+                View.inflate(context, id, widgetFrame)
+            }
+
             recycle()
         }
     }
