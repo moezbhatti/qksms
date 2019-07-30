@@ -69,7 +69,7 @@ class BlockingDialog @Inject constructor(
         val manager = context.getString(when (prefs.blockingManager.get()) {
             Preferences.BLOCKING_MANAGER_SIA -> R.string.blocking_manager_sia_title
             Preferences.BLOCKING_MANAGER_CC -> R.string.blocking_manager_call_control_title
-            else -> R.string.app_name
+            else -> R.string.blocking_manager_android_title
         })
 
         val message = context.resources.getQuantityString(res, addresses.size, manager)

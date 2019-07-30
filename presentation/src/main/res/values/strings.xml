@@ -258,7 +258,8 @@
     <string name="blocking_empty">Your blocked conversations will appear here</string>
 
     <string name="blocking_manager_title">Blocking Manager</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_android_title">Android</string>
+    <string name="blocking_manager_android_summary">Built-in blocking functionality in Android</string>
     <!-- Do not translate -->
     <string name="blocking_manager_call_control_title">Call Control</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>

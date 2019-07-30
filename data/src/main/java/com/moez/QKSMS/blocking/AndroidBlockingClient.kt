@@ -29,7 +29,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class QkBlockingClient @Inject constructor(
+class AndroidBlockingClient @Inject constructor(
     private val context: Context,
     private val blockingRepo: BlockingRepository
 ) : BlockingClient {

@@ -39,7 +39,7 @@
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/blocking_manager_title"
-            tools:summary="@string/app_name" />
+            tools:summary="@string/blocking_manager_android_title" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/drop"

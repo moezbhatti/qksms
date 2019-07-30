@@ -42,7 +42,7 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
     }
 
     override fun render(state: BlockingManagerState) {
-        qksms.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_QKSMS
+        android.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_ANDROID
 
         callControl.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_CC
         callControl.launch.setImageResource(when (state.callControlInstalled) {
@@ -58,8 +58,8 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
     }
 
     override fun activityResumed(): Observable<*> = activityResumedSubject
-    override fun qksmsClicked(): Observable<*> = qksms.clicks()
-    override fun launchQksmsClicked(): Observable<*> = qksms.launch.clicks()
+    override fun androidClicked(): Observable<*> = android.clicks()
+    override fun launchAndroidClicked(): Observable<*> = android.launch.clicks()
     override fun callControlClicked(): Observable<*> = callControl.clicks()
     override fun launchCallControlClicked(): Observable<*> = callControl.launch.clicks()
     override fun siaClicked(): Observable<*> = shouldIAnswer.clicks()
