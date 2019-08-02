@@ -76,7 +76,7 @@ class BlockingManagerPresenter @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe {
-                    callControl.isBlocked("")
+                    callControl.isBlocked("").blockingGet()
                     analytics.setUserProperty("Blocking Manager", "Call Control")
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CC)
                 }
