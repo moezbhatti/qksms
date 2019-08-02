@@ -57,8 +57,6 @@ class CallControlBlockingClient @Inject constructor(
         }
     }
 
-    override fun canBlock(): Boolean = true
-
     override fun block(addresses: List<String>): Completable = Completable.fromCallable {
         val reports = addresses.map { CallControl.Report(it) }
         CallControl.report(context, arrayListOf<CallControl.Report>().apply { addAll(reports) },
