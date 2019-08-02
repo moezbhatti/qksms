@@ -26,6 +26,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.forwardTouches
 import com.moez.QKSMS.common.util.extensions.resolveThemeAttribute
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setVisible
@@ -84,6 +85,7 @@ class RadioPreferenceView @JvmOverloads constructor(
         }
         val textSecondary = context.resolveThemeColor(android.R.attr.textColorTertiary)
         radioButton.buttonTintList = ColorStateList(states, intArrayOf(themeColor, textSecondary))
+        radioButton.forwardTouches(this)
 
         context.obtainStyledAttributes(attrs, R.styleable.RadioPreferenceView)?.run {
             title = getString(R.styleable.RadioPreferenceView_title)
