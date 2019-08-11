@@ -29,9 +29,10 @@ import javax.inject.Singleton
 class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) {
 
     companion object {
-        const val NIGHT_MODE_OFF = 0
-        const val NIGHT_MODE_ON = 1
-        const val NIGHT_MODE_AUTO = 2
+        const val NIGHT_MODE_SYSTEM = 0
+        const val NIGHT_MODE_OFF = 1
+        const val NIGHT_MODE_ON = 2
+        const val NIGHT_MODE_AUTO = 3
 
         const val TEXT_SIZE_SMALL = 0
         const val TEXT_SIZE_NORMAL = 1
@@ -66,7 +67,10 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
 
     // User configurable
-    val nightMode = rxPrefs.getInteger("nightModeSummary", NIGHT_MODE_OFF)
+    val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
+        true -> NIGHT_MODE_SYSTEM
+        false -> NIGHT_MODE_OFF
+    })
     val nightStart = rxPrefs.getString("nightStart", "18:00")
     val nightEnd = rxPrefs.getString("nightEnd", "6:00")
     val black = rxPrefs.getBoolean("black", false)
@@ -89,6 +93,20 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val mmsSize = rxPrefs.getInteger("mmsSize", 300)
     val logging = rxPrefs.getBoolean("logging", false)
     val version = rxPrefs.getInteger("version", 0)
+
+    init {
+        // Migrate from old night mode preference to new one, now that we support android Q night mode
+        val nightModeSummary = rxPrefs.getInteger("nightModeSummary")
+        if (nightModeSummary.isSet) {
+            nightMode.set(when (nightModeSummary.get()) {
+                0 -> NIGHT_MODE_OFF
+                1 -> NIGHT_MODE_ON
+                2 -> NIGHT_MODE_AUTO
+                else -> NIGHT_MODE_OFF
+            })
+            nightModeSummary.delete()
+        }
+    }
 
     fun theme(threadId: Long = 0): Preference<Int> {
         val default = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())

@@ -41,7 +41,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeDark">
+        android:theme="@style/AppLaunchTheme">
 
         <activity
             android:name=".feature.main.MainActivity"
@@ -96,7 +96,7 @@
         <activity android:name=".feature.plus.PlusActivity" />
         <activity
             android:name=".feature.gallery.GalleryActivity"
-            android:theme="@style/AppThemeBlack" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".feature.conversationinfo.ConversationInfoActivity" />
         <activity android:name=".feature.notificationprefs.NotificationPrefsActivity" />
         <activity android:name=".feature.blocked.BlockedActivity" />
@@ -104,7 +104,7 @@
             android:name=".feature.qkreply.QkReplyActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
-            android:theme="@style/AppThemeLightDialog"
+            android:theme="@style/AppThemeDialog"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".feature.scheduled.ScheduledActivity" />
         <activity android:name=".feature.backup.BackupActivity" />

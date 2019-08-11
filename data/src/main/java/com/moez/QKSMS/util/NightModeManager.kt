@@ -22,6 +22,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatDelegate
 import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.receiver.NightModeReceiver
 import java.text.SimpleDateFormat
@@ -38,17 +39,33 @@ class NightModeManager @Inject constructor(
 ) {
 
     fun updateCurrentTheme() {
-        // If night mode is not on auto, then there's nothing to do here
-        if (prefs.nightMode.get() != Preferences.NIGHT_MODE_AUTO) {
-            return
+        when (prefs.nightMode.get()) {
+            Preferences.NIGHT_MODE_SYSTEM -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+
+            Preferences.NIGHT_MODE_OFF -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+
+            Preferences.NIGHT_MODE_ON -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+
+            Preferences.NIGHT_MODE_AUTO -> {
+                val nightStartTime = getPreviousInstanceOfTime(prefs.nightStart.get())
+                val nightEndTime = getPreviousInstanceOfTime(prefs.nightEnd.get())
+
+                // If the last nightStart was more recent than the last nightEnd, then it's night time
+                val night = nightStartTime > nightEndTime
+                prefs.night.set(night)
+                AppCompatDelegate.setDefaultNightMode(when (night) {
+                    true -> AppCompatDelegate.MODE_NIGHT_YES
+                    false -> AppCompatDelegate.MODE_NIGHT_NO
+                })
+                widgetManager.updateTheme()
+            }
         }
-
-        val nightStartTime = getPreviousInstanceOfTime(prefs.nightStart.get())
-        val nightEndTime = getPreviousInstanceOfTime(prefs.nightEnd.get())
-
-        // If the last nightStart was more recent than the last nightEnd, then it's night time
-        prefs.night.set(nightStartTime > nightEndTime)
-        widgetManager.updateTheme()
     }
 
     fun updateNightMode(mode: Int) {
@@ -57,6 +74,12 @@ class NightModeManager @Inject constructor(
         // If it's not on auto mode, set the appropriate night mode
         if (mode != Preferences.NIGHT_MODE_AUTO) {
             prefs.night.set(mode == Preferences.NIGHT_MODE_ON)
+            AppCompatDelegate.setDefaultNightMode(when (mode) {
+                Preferences.NIGHT_MODE_OFF -> AppCompatDelegate.MODE_NIGHT_NO
+                Preferences.NIGHT_MODE_ON -> AppCompatDelegate.MODE_NIGHT_YES
+                Preferences.NIGHT_MODE_SYSTEM -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                else -> AppCompatDelegate.MODE_NIGHT_NO
+            })
             widgetManager.updateTheme()
         }
 

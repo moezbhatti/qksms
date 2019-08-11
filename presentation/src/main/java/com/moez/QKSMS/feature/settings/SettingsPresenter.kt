@@ -49,7 +49,9 @@ class SettingsPresenter @Inject constructor(
     private val nightModeManager: NightModeManager,
     private val prefs: Preferences,
     private val syncMessages: SyncMessages
-) : QkPresenter<SettingsView, SettingsState>(SettingsState()) {
+) : QkPresenter<SettingsView, SettingsState>(SettingsState(
+        nightModeId = prefs.nightMode.get()
+)) {
 
     init {
         disposables += colors.themeObservable()

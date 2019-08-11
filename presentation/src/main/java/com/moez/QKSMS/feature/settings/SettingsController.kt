@@ -21,6 +21,7 @@ package com.moez.QKSMS.feature.settings
 import android.animation.ObjectAnimator
 import android.app.TimePickerDialog
 import android.content.Context
+import android.os.Build
 import android.text.format.DateFormat
 import android.view.View
 import androidx.core.view.isVisible
@@ -30,6 +31,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.MenuItem
 import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.QkDialog
 import com.moez.QKSMS.common.base.QkController
@@ -91,7 +93,12 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun onViewCreated() {
         preferences.postDelayed({ preferences?.animateLayoutChanges = true }, 100)
 
-        nightModeDialog.adapter.setData(R.array.night_modes)
+        when (Build.VERSION.SDK_INT >= 29) {
+            true -> nightModeDialog.adapter.setData(R.array.night_modes)
+            false -> nightModeDialog.adapter.data = context.resources.getStringArray(R.array.night_modes)
+                    .mapIndexed { index, title -> MenuItem(title, index) }
+                    .drop(1)
+        }
         textSizeDialog.adapter.setData(R.array.text_sizes)
         sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)

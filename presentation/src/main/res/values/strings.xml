@@ -343,6 +343,7 @@
     <string name="notification_message_failed_text">The message to %s failed to send</string>
 
     <string-array name="night_modes">
+        <item>System</item>
         <item>Disabled</item>
         <item>Always on</item>
         <item>Automatic</item>

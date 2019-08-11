@@ -123,10 +123,9 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         return true
     }
 
-    override fun getActivityThemeRes(night: Boolean, black: Boolean) = when {
-        night && black -> R.style.AppThemeBlackDialog
-        night && !black -> R.style.AppThemeDarkDialog
-        else -> R.style.AppThemeLightDialog
+    override fun getActivityThemeRes(black: Boolean) = when {
+        black -> R.style.AppThemeDialog_Black
+        else -> R.style.AppThemeDialog
     }
 
 }
