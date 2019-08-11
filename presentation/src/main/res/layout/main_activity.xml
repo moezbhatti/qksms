@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,10 +16,10 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<androidx.drawerlayout.widget.DrawerLayout android:id="@+id/drawerLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -81,8 +80,8 @@
             android:layout_height="0dp"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:listitem="@layout/conversation_list_item" />

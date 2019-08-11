@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -19,8 +19,8 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportHeight="24"
-    android:viewportWidth="24">
+    android:viewportWidth="24"
+    android:viewportHeight="24">
     <path
         android:fillColor="#FF000000"
         android:pathData="M19.083,1c0,1.018 -1.424,1.907 -3.541,2.382V11c2.926,0.652 4.958,2.086 4.958,3.751h-7.792V23h-1.416v-8.25H3.5c0,-1.665 2.032,-3.1 4.958,-3.751V3.382C6.341,2.907 4.917,2.018 4.917,1h14.166z" />

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,11 +16,10 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<ScrollView
-    android:id="@+id/scrollView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground">
@@ -41,9 +39,9 @@
                 android:id="@+id/rightTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/settings_swipe_actions_right"
                 android:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintEnd_toStartOf="@id/rightChange"
@@ -80,10 +78,10 @@
                 android:id="@+id/rightBackground"
                 android:layout_width="match_parent"
                 android:layout_height="84dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:alpha="0.1"
                 android:background="@drawable/rounded_rectangle_outline_4dp"
                 android:backgroundTint="?android:attr/textColorPrimary"
@@ -97,10 +95,10 @@
                 android:layout_width="96dp"
                 android:layout_height="84dp"
                 android:background="@drawable/rounded_rectangle_left_4dp"
-                android:paddingBottom="30dp"
-                android:paddingEnd="48dp"
                 android:paddingStart="24dp"
                 android:paddingTop="30dp"
+                android:paddingEnd="48dp"
+                android:paddingBottom="30dp"
                 app:layout_constraintBottom_toBottomOf="@id/rightBackground"
                 app:layout_constraintStart_toStartOf="@id/rightBackground"
                 app:layout_constraintTop_toTopOf="@id/rightBackground"
@@ -162,9 +160,9 @@
                 android:id="@+id/leftTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/settings_swipe_actions_left"
                 android:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintEnd_toStartOf="@id/leftChange"
@@ -201,10 +199,10 @@
                 android:id="@+id/leftBackground"
                 android:layout_width="match_parent"
                 android:layout_height="84dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:alpha="0.1"
                 android:background="@drawable/rounded_rectangle_outline_4dp"
                 android:backgroundTint="?android:attr/textColorPrimary"
@@ -218,10 +216,10 @@
                 android:layout_width="96dp"
                 android:layout_height="84dp"
                 android:background="@drawable/rounded_rectangle_right_4dp"
-                android:paddingBottom="30dp"
-                android:paddingEnd="24dp"
                 android:paddingStart="48dp"
                 android:paddingTop="30dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="30dp"
                 app:layout_constraintBottom_toBottomOf="@id/leftBackground"
                 app:layout_constraintEnd_toEndOf="@id/leftBackground"
                 app:layout_constraintTop_toTopOf="@id/leftBackground"

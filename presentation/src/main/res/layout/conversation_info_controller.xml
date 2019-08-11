@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,8 +16,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -39,8 +37,8 @@
             android:id="@+id/recipients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:layout_height="72dp"
             tools:listitem="@layout/conversation_recipient_list_item" />
@@ -97,8 +95,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:background="?android:attr/divider" />
 
         <androidx.recyclerview.widget.RecyclerView
