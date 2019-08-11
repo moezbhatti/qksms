@@ -24,15 +24,12 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.autodispose.ControllerEvent
-import com.bluelinelabs.conductor.autodispose.ControllerScopeProvider
-import com.uber.autodispose.LifecycleScopeProvider
+import com.bluelinelabs.conductor.archlifecycle.LifecycleController
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 
-abstract class QkController<ViewContract : QkViewContract<State>, State, Presenter : QkPresenter<ViewContract, State>> : Controller(), LayoutContainer {
+abstract class QkController<ViewContract : QkViewContract<State>, State, Presenter : QkPresenter<ViewContract, State>> : LifecycleController(), LayoutContainer {
 
     abstract var presenter: Presenter
 
@@ -78,10 +75,6 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
     override fun onDestroy() {
         super.onDestroy()
         presenter.onCleared()
-    }
-
-    fun scope(): LifecycleScopeProvider<ControllerEvent> {
-        return ControllerScopeProvider.from(this)
     }
 
 }

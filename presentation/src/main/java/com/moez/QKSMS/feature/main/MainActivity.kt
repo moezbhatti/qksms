@@ -31,7 +31,6 @@ import android.view.ViewStub
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -43,7 +42,6 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
 import com.moez.QKSMS.common.util.extensions.dismissKeyboard
@@ -56,7 +54,8 @@ import com.moez.QKSMS.feature.changelog.ChangelogDialog
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
 import com.moez.QKSMS.repository.SyncRepository
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -131,7 +130,7 @@ class MainActivity : QkThemedActivity(), MainView {
         viewModel.bindView(this)
 
         (snackbar as? ViewStub)?.setOnInflateListener { _, _ ->
-            snackbarButton.clicks().subscribe(snackbarButtonIntent)
+            snackbarButton.clicks().autoDisposable(scope()).subscribe(snackbarButtonIntent)
         }
 
         (syncing as? ViewStub)?.setOnInflateListener { _, _ ->
@@ -149,7 +148,7 @@ class MainActivity : QkThemedActivity(), MainView {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Don't allow clicks to pass through the drawer layout
-        drawer.clicks().subscribe()
+        drawer.clicks().autoDisposable(scope()).subscribe()
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
         theme

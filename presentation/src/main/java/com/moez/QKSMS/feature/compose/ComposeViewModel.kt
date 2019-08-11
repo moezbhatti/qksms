@@ -26,7 +26,6 @@ import android.telephony.SmsMessage
 import android.view.inputmethod.EditorInfo
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.ClipboardUtils
@@ -60,7 +59,8 @@ import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.ActiveSubscriptionObservable
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables

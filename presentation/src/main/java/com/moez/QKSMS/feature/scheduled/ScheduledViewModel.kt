@@ -19,12 +19,12 @@
 package com.moez.QKSMS.feature.scheduled
 
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.interactor.SendScheduledMessage
 import com.moez.QKSMS.repository.ScheduledMessageRepository
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject

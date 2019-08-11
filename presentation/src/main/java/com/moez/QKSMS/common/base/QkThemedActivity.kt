@@ -27,11 +27,11 @@ import android.view.View
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject

@@ -56,6 +56,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     lintOptions {
         abortOnError false
     }
@@ -99,7 +103,7 @@ dependencies {
 
     // conductor
     implementation "com.bluelinelabs:conductor:$conductor_version"
-    implementation "com.bluelinelabs:conductor-autodispose:$conductor_version"
+    implementation "com.bluelinelabs:conductor-archlifecycle:$conductor_version"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
@@ -116,10 +120,11 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbinding_version"
 
     // autodispose
-    implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android-archcomponents-test-kotlin:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android-kotlin:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-kotlin:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-test:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-lifecycle:$autodispose_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
@@ -136,12 +141,12 @@ dependencies {
     })
 
     // realm
+    implementation 'com.akaita.java:rxjava2-debug:1.2.2'
     implementation("io.realm:android-adapters:$realm_adapters_version") { transitive = false }
     kapt "io.realm:realm-annotations:$realm_version"
     kapt "io.realm:realm-annotations-processor:$realm_version"
 
     // rxjava
-    implementation 'com.akaita.java:rxjava2-debug:1.2.2'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"

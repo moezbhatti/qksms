@@ -36,7 +36,7 @@ import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.util.GlideApp
 import com.uber.autodispose.android.ViewScopeProvider
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.autoDisposable
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
 
