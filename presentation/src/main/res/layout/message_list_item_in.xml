@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -65,8 +64,8 @@
         android:id="@+id/attachments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:nestedScrollingEnabled="false"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -91,17 +90,17 @@
         style="@style/TextPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="12dp"
         android:autoLink="email|phone|web"
         android:background="@drawable/message_only"
         android:gravity="start|center_vertical"
         android:minHeight="36dp"
-        android:paddingBottom="8dp"
-        android:paddingEnd="12dp"
         android:paddingStart="12dp"
         android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -115,13 +114,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginBottom="4dp"
         android:layout_marginStart="72dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/body"
-        app:textColor="secondary"
         app:textSize="tertiary"
         tools:text="Sending..." />
 

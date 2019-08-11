@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -30,7 +29,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        app:textColor="secondary"
+        android:textColor="?android:attr/textColorSecondary"
         app:textSize="secondary"
         tools:text="(123) 456-7890"
         tools:textColor="@color/textSecondary" />

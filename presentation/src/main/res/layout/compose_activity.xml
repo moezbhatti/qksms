@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -52,9 +51,9 @@
         android:layout_marginEnd="56dp"
         android:gravity="center"
         android:text="@string/compose_messages_empty"
+        android:textColor="?android:attr/textColorTertiary"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:textColor="tertiary"
         app:textSize="secondary" />
 
     <ProgressBar
@@ -315,10 +314,10 @@
         android:layout_marginBottom="4dp"
         android:elevation="4dp"
         android:gravity="center"
+        android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toTopOf="@id/send"
         app:layout_constraintEnd_toEndOf="@id/send"
         app:layout_constraintStart_toStartOf="@id/send"
-        app:textColor="secondary"
         app:textSize="tertiary"
         tools:text="108 / 2" />
 
@@ -362,8 +361,8 @@
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarSubtitle"
                 style="@style/ToolbarText"
+                android:textColor="?android:attr/textColorTertiary"
                 android:visibility="gone"
-                app:textColor="tertiary"
                 app:textSize="secondary"
                 tools:text="3 of 9 results" />
 

@@ -27,7 +27,6 @@ import com.moez.QKSMS.common.util.TextViewStyler.Companion.SIZE_SECONDARY
 import com.moez.QKSMS.common.util.TextViewStyler.Companion.SIZE_TERTIARY
 import com.moez.QKSMS.common.util.TextViewStyler.Companion.SIZE_TOOLBAR
 import com.moez.QKSMS.common.util.extensions.getColorCompat
-import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.widget.QkEditText
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.util.Preferences
@@ -40,13 +39,10 @@ class TextViewStyler @Inject constructor(
 ) {
 
     companion object {
-        const val COLOR_PRIMARY = 0
-        const val COLOR_SECONDARY = 1
-        const val COLOR_TERTIARY = 2
-        const val COLOR_PRIMARY_ON_THEME = 3
-        const val COLOR_SECONDARY_ON_THEME = 4
-        const val COLOR_TERTIARY_ON_THEME = 5
-        const val COLOR_THEME = 6
+        const val COLOR_THEME = 0
+        const val COLOR_PRIMARY_ON_THEME = 1
+        const val COLOR_SECONDARY_ON_THEME = 2
+        const val COLOR_TERTIARY_ON_THEME = 3
 
         const val SIZE_PRIMARY = 0
         const val SIZE_SECONDARY = 1
@@ -75,9 +71,6 @@ class TextViewStyler @Inject constructor(
                     else -> return
                 }
                 setTextColor(when (colorAttr) {
-                    COLOR_PRIMARY -> context.getColorCompat(R.color.textPrimary)
-                    COLOR_SECONDARY -> context.getColorCompat(R.color.textSecondary)
-                    COLOR_TERTIARY -> context.getColorCompat(R.color.textTertiary)
                     COLOR_PRIMARY_ON_THEME -> context.getColorCompat(R.color.textPrimaryDark)
                     COLOR_SECONDARY_ON_THEME -> context.getColorCompat(R.color.textSecondaryDark)
                     COLOR_TERTIARY_ON_THEME -> context.getColorCompat(R.color.textTertiaryDark)
@@ -125,13 +118,10 @@ class TextViewStyler @Inject constructor(
             }
 
             setTextColor(when (colorAttr) {
-                COLOR_PRIMARY -> context.resolveThemeColor(android.R.attr.textColorPrimary)
-                COLOR_SECONDARY -> context.resolveThemeColor(android.R.attr.textColorSecondary)
-                COLOR_TERTIARY -> context.resolveThemeColor(android.R.attr.textColorTertiary)
+                COLOR_THEME -> colors.theme().theme
                 COLOR_PRIMARY_ON_THEME -> colors.theme().textPrimary
                 COLOR_SECONDARY_ON_THEME -> colors.theme().textSecondary
                 COLOR_TERTIARY_ON_THEME -> colors.theme().textTertiary
-                COLOR_THEME -> colors.theme().theme
                 else -> currentTextColor
             })
 

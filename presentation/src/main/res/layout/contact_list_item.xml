@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
@@ -39,8 +38,8 @@
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@id/address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -53,16 +52,16 @@
         android:id="@+id/address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
+        android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintEnd_toStartOf="@id/type"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toBottomOf="@id/name"
-        app:textColor="secondary"
         app:textSize="secondary"
         tools:text="(123) 456-7890"
         tools:textColor="@color/textSecondary" />
