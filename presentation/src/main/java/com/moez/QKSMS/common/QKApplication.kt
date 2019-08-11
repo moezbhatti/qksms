@@ -25,7 +25,6 @@ import android.content.BroadcastReceiver
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.bugsnag.android.Bugsnag
 import com.bugsnag.android.Configuration
 import com.moez.QKSMS.BuildConfig
@@ -38,6 +37,8 @@ import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
+import com.uber.rxdogtag.RxDogTag
+import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -98,7 +99,9 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         Timber.plant(Timber.DebugTree(), BugsnagTree(), CrashlyticsTree(), fileLoggingTree)
 
-        RxJava2Debug.enableRxJava2AssemblyTracking(arrayOf("com.moez.QKSMS"))
+        RxDogTag.builder()
+                .configureWith(AutoDisposeConfigurer::configure)
+                .install()
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

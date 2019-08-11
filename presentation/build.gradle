@@ -141,7 +141,6 @@ dependencies {
     })
 
     // realm
-    implementation 'com.akaita.java:rxjava2-debug:1.2.2'
     implementation("io.realm:android-adapters:$realm_adapters_version") { transitive = false }
     kapt "io.realm:realm-annotations:$realm_version"
     kapt "io.realm:realm-annotations-processor:$realm_version"
@@ -150,6 +149,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+    implementation "com.uber.rxdogtag:rxdogtag:$rxdogtag_version"
+    implementation "com.uber.rxdogtag:rxdogtag-autodispose:$rxdogtag_version"
+
 
     // testing
     androidTestImplementation("androidx.test.espresso:espresso-core:$espresso_version", {
