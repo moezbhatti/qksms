@@ -40,19 +40,20 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
+    colors: Colors,
+    syncRepo: SyncRepository,
     private val context: Context,
     private val billingManager: BillingManager,
-    private val colors: Colors,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val nightModeManager: NightModeManager,
     private val prefs: Preferences,
-    private val syncMessages: SyncMessages,
-    private val syncRepo: SyncRepository
-) : QkPresenter<SettingsView, SettingsState>(SettingsState(theme = colors.theme().theme)) {
+    private val syncMessages: SyncMessages
+) : QkPresenter<SettingsView, SettingsState>(SettingsState()) {
 
     init {
-        newState { copy(theme = colors.theme().theme) }
+        disposables += colors.themeObservable()
+                .subscribe { theme -> newState { copy(theme = theme.theme) } }
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()
