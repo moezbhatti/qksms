@@ -25,6 +25,7 @@ import android.telephony.PhoneNumberUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import com.bumptech.glide.signature.ObjectKey
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.util.Colors
@@ -59,6 +60,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private var lookupKey: String? = null
     private var name: String? = null
     private var address: String? = null
+    private var lastUpdated: Long? = null
 
     init {
         if (!isInEditMode) {
@@ -103,6 +105,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         lookupKey = null
         name = null
         address = recipient?.address
+        lastUpdated = 0
         updateView()
     }
 
@@ -115,6 +118,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         name = contact?.name
         // If a contactAddress has been given, we use it. Use the contact address otherwise.
         address = contactAddress ?: contact?.numbers?.firstOrNull()?.address
+        lastUpdated = contact?.lastUpdate
         updateView()
     }
 
@@ -146,7 +150,10 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
         photo.setImageDrawable(null)
         address?.let { address ->
-            GlideApp.with(photo).load(PhoneNumberUtils.stripSeparators(address)).into(photo)
+            GlideApp.with(photo)
+                    .load(PhoneNumberUtils.stripSeparators(address))
+                    .signature(ObjectKey(lastUpdated ?: 0L))
+                    .into(photo)
         }
     }
 }
