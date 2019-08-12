@@ -80,7 +80,9 @@ class ContactImageLoader(
 
         override fun loadData(priority: Priority, callback: DataFetcher.DataCallback<in InputStream>) {
             loadPhotoDisposable = contactRepo.findContactUri(address)
-                    .map { uri -> ContactsContract.Contacts.openContactPhotoInputStream(context.contentResolver, uri) }
+                    .map { uri ->
+                        ContactsContract.Contacts.openContactPhotoInputStream(context.contentResolver, uri, true)
+                    }
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                             { inputStream -> callback.onDataReady(inputStream) },
