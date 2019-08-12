@@ -33,12 +33,13 @@ class CursorToContactImpl @Inject constructor(
 
     companion object {
         val URI = CONTENT_URI
-        val PROJECTION = arrayOf(LOOKUP_KEY, NUMBER, TYPE, DISPLAY_NAME)
+        val PROJECTION = arrayOf(LOOKUP_KEY, NUMBER, TYPE, DISPLAY_NAME, CONTACT_LAST_UPDATED_TIMESTAMP)
 
         const val COLUMN_LOOKUP_KEY = 0
         const val COLUMN_NUMBER = 1
         const val COLUMN_TYPE = 2
         const val COLUMN_DISPLAY_NAME = 3
+        const val CONTACT_LAST_UPDATED = 4
     }
 
     override fun map(from: Cursor) = Contact().apply {
@@ -48,7 +49,7 @@ class CursorToContactImpl @Inject constructor(
             address = from.getString(COLUMN_NUMBER) ?: ""
             type = context.getString(getTypeLabelResource(from.getInt(COLUMN_TYPE)))
         })
-        lastUpdate = System.currentTimeMillis()
+        lastUpdate = from.getLong(CONTACT_LAST_UPDATED)
     }
 
     override fun getContactsCursor(): Cursor? {
