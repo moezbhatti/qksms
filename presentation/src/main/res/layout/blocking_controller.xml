@@ -67,9 +67,9 @@
             android:paddingTop="16dp"
             android:paddingEnd="16dp"
             android:text="@string/blocking_conversations"
+            android:textColor="?android:attr/textColorSecondary"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/conversationsDivider"
-            app:textColor="secondary"
             app:textSize="secondary" />
 
         <com.moez.QKSMS.common.widget.QkTextView

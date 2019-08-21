@@ -24,7 +24,8 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 

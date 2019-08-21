@@ -30,7 +30,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:text="@string/blocked_numbers_dialog_title"
-        app:textColor="primary"
+        android:textColor="?android:attr/textColorPrimary"
         app:textSize="dialog" />
 
     <com.moez.QKSMS.common.widget.QkEditText
@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:hint="@string/blocked_numbers_dialog_hint"
-        android:paddingStart="24dp"
         android:inputType="phone"
+        android:paddingStart="24dp"
         android:paddingTop="16dp"
         android:paddingEnd="24dp"
         android:paddingBottom="16dp"

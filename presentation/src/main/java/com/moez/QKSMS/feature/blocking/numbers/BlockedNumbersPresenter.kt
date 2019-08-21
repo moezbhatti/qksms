@@ -20,7 +20,8 @@ package com.moez.QKSMS.feature.blocking.numbers
 
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.repository.BlockingRepository
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import javax.inject.Inject
 
 class BlockedNumbersPresenter @Inject constructor(

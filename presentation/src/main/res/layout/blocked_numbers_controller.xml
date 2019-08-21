@@ -40,7 +40,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/blocked_numbers_empty"
-        app:textColor="tertiary" />
+        android:textColor="?android:attr/textColorTertiary" />
 
     <ImageView
         android:id="@+id/add"
