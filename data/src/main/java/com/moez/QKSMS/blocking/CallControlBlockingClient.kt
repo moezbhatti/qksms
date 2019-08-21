@@ -59,14 +59,14 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun block(addresses: List<String>): Completable = Completable.fromCallable {
         val reports = addresses.map { CallControl.Report(it) }
-        CallControl.report(context, arrayListOf<CallControl.Report>().apply { addAll(reports) },
-                Intent.FLAG_ACTIVITY_NEW_TASK)
+        val reportsArrayList = arrayListOf<CallControl.Report>().apply { addAll(reports) }
+        CallControl.addRule(context, reportsArrayList, Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
     override fun unblock(addresses: List<String>): Completable = Completable.fromCallable {
-        // Only show a particular address if we're only unblocking that one
-        val address = addresses.takeIf { it.size == 1 }?.first()
-        CallControl.openBlockedList(context, address, Intent.FLAG_ACTIVITY_NEW_TASK)
+        val reports = addresses.map { CallControl.Report(it, null, false) }
+        val reportsArrayList = arrayListOf<CallControl.Report>().apply { addAll(reports) }
+        CallControl.addRule(context, reportsArrayList, Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
     override fun openSettings() {
