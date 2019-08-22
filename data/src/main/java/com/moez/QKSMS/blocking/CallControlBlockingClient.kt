@@ -46,6 +46,8 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun isAvailable(): Boolean = context.isInstalled("com.flexaspect.android.everycallcontrol")
 
+    override fun getClientCapability() = BlockingClientCapability.BLOCK_WITH_PERMISSION
+
     override fun isBlocked(address: String): Single<Boolean> {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
         return Single.fromCallable {

@@ -53,6 +53,8 @@ class ShouldIAnswerBlockingClient @Inject constructor(
             "org.mistergroup.muzutozvednout")
             .any(context::isInstalled)
 
+    override fun getClientCapability() = BlockingClientCapability.CANT_BLOCK
+
     /**
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
      */

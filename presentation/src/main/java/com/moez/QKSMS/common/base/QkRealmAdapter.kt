@@ -50,7 +50,7 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
 
     val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()
 
-    private val selection = mutableListOf<Long>()
+    private var selection = listOf<Long>()
 
     /**
      * Toggles the selected state for a particular view
@@ -61,9 +61,9 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
     protected fun toggleSelection(id: Long, force: Boolean = true): Boolean {
         if (!force && selection.isEmpty()) return false
 
-        when (selection.contains(id)) {
-            true -> selection.remove(id)
-            false -> selection.add(id)
+        selection = when (selection.contains(id)) {
+            true -> selection - id
+            false -> selection + id
         }
 
         selectionChanges.onNext(selection)
@@ -75,7 +75,7 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
     }
 
     fun clearSelection() {
-        selection.clear()
+        selection = listOf()
         selectionChanges.onNext(selection)
         notifyDataSetChanged()
     }

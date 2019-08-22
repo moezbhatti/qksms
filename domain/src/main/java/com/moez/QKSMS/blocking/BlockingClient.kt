@@ -29,26 +29,19 @@ interface BlockingClient {
     fun isAvailable(): Boolean
 
     /**
+     * Returns the level of access that the given blocking client provides to QKSMS
+     */
+    fun getClientCapability(): BlockingClientCapability
+
+    /**
      * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
      */
     fun isBlocked(address: String): Single<Boolean>
 
     /**
-     * Returns true if the client is capable of blocking the address in the manager without any
-     * further user input
-     */
-    fun canBlock(): Boolean = false
-
-    /**
      * Blocks the numbers or opens the manager
      */
     fun block(addresses: List<String>): Completable
-
-    /**
-     * Returns true if the client is capable of unblocking the address in the manager without any
-     * further user input
-     */
-    fun canUnblock(): Boolean = false
 
     /**
      * Unblocks the numbers or opens the manager
