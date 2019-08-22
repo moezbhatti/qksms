@@ -69,6 +69,9 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     // Internal
     val night = rxPrefs.getBoolean("night", false)
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
+    @Deprecated("This should only be accessed when migrating to @blockingManager")
+    val sia = rxPrefs.getBoolean("sia", false)
+
 
     // User configurable
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
@@ -80,8 +83,6 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val black = rxPrefs.getBoolean("black", false)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
-    @Deprecated("This should only be accessed when migrating to @blockingManager")
-    val sia = rxPrefs.getBoolean("sia", false)
     val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
     val drop = rxPrefs.getBoolean("drop", false)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)

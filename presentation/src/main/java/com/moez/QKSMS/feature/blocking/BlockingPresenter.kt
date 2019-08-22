@@ -22,6 +22,7 @@ import android.content.Context
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
+import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
@@ -31,13 +32,14 @@ import javax.inject.Inject
 
 class BlockingPresenter @Inject constructor(
     context: Context,
-    private val conversationRepo: ConversationRepository,
+    conversationRepo: ConversationRepository,
     private val navigator: Navigator,
     private val prefs: Preferences
 ) : QkPresenter<BlockingView, BlockingState>(BlockingState()) {
 
     init {
-        newState { copy(data = conversationRepo.getBlockedConversations()) }
+        val blockedConversations = conversationRepo.getBlockedConversations()
+        newState { copy(data = blockedConversations) }
 
         disposables += prefs.blockingManager.asObservable()
                 .map { client ->
@@ -52,6 +54,14 @@ class BlockingPresenter @Inject constructor(
 
         disposables += prefs.drop.asObservable()
                 .subscribe { enabled -> newState { copy(dropEnabled = enabled) } }
+
+        // Trigger a refresh if we go between having some/no blocked conversations, otherwise the header won't update
+        disposables += blockedConversations
+                .asObservable()
+                .filter { it.isValid && it.isLoaded }
+                .map { it.isEmpty() }
+                .distinctUntilChanged()
+                .subscribe { newState { copy() } }
     }
 
     override fun bindIntents(view: BlockingView) {

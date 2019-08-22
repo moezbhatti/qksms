@@ -23,9 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground"
-    android:clipToPadding="false"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:clipToPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent"
@@ -36,6 +34,7 @@
             android:id="@+id/blockingManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/blocking_manager_title"
@@ -45,9 +44,7 @@
             android:id="@+id/drop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@id/blockingManager"
+            app:layout_constraintTop_toBottomOf="@+id/blockingManager"
             app:summary="@string/blocking_drop_summary"
             app:title="@string/blocking_drop_title"
             app:widget="@layout/settings_switch_widget" />
@@ -56,8 +53,9 @@
             android:id="@+id/conversationsDivider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="16dp"
             android:background="?android:attr/divider"
-            app:layout_constraintTop_toBottomOf="@id/drop" />
+            app:layout_constraintTop_toBottomOf="@+id/drop" />
 
         <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/blockedLabel"
@@ -69,7 +67,7 @@
             android:text="@string/blocking_conversations"
             android:textColor="?android:attr/textColorSecondary"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/conversationsDivider"
+            app:layout_constraintTop_toBottomOf="@+id/conversationsDivider"
             app:textSize="secondary" />
 
         <com.moez.QKSMS.common.widget.QkTextView
@@ -80,7 +78,7 @@
             android:gravity="center"
             android:padding="56dp"
             android:text="@string/blocking_empty"
-            app:layout_constraintTop_toBottomOf="@id/blockedLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/blockedLabel" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/conversations"
@@ -89,7 +87,7 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/blockedLabel"
+            app:layout_constraintTop_toBottomOf="@+id/blockedLabel"
             tools:listitem="@layout/blocked_list_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

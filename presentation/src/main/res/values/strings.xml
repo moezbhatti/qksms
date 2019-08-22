@@ -275,12 +275,12 @@
     <string name="blocked_numbers_dialog_block">Block</string>
 
     <plurals name="blocking_block_external">
-        <item quantity="one">Would you also like to block this number in %s?</item>
-        <item quantity="other">Would you also like to block these numbers in %s?</item>
+        <item quantity="one">Continue to %s to block this number</item>
+        <item quantity="other">Continue to %s to block these numbers</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Would you also like to unblock this number in %s?</item>
-        <item quantity="other">Would you also like to unblock these numbers in %s?</item>
+        <item quantity="one">Continue to %s to unblock this number</item>
+        <item quantity="other">Continue to %s to unblock these numbers</item>
     </plurals>
 
     <string name="about_title">About</string>
