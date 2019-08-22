@@ -122,6 +122,8 @@ class ConversationInfoController(
 
         notifications.setVisible(!state.blocked)
 
+        themePrefs.setVisible(!state.blocked)
+
         archive.setVisible(!state.blocked)
         archive.title = activity?.getString(when (state.archived) {
             true -> R.string.info_unarchive
