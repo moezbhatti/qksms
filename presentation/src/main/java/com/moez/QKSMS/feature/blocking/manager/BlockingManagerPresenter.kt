@@ -1,8 +1,7 @@
 package com.moez.QKSMS.feature.blocking.manager
 
-import android.os.Build
-import com.moez.QKSMS.blocking.AndroidBlockingClient
 import com.moez.QKSMS.blocking.CallControlBlockingClient
+import com.moez.QKSMS.blocking.QksmsBlockingClient
 import com.moez.QKSMS.blocking.ShouldIAnswerBlockingClient
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
@@ -15,10 +14,10 @@ import javax.inject.Inject
 
 class BlockingManagerPresenter @Inject constructor(
     private val analytics: AnalyticsManager,
-    private val android: AndroidBlockingClient,
     private val callControl: CallControlBlockingClient,
     private val navigator: Navigator,
     private val prefs: Preferences,
+    private val qksms: QksmsBlockingClient,
     private val shouldIAnswer: ShouldIAnswerBlockingClient
 ) : QkPresenter<BlockingManagerView, BlockingManagerState>(BlockingManagerState(
         blockingManager = prefs.blockingManager.get(),
@@ -46,22 +45,18 @@ class BlockingManagerPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { available -> newState { copy(siaInstalled = available) } }
 
-        view.androidClicked()
+        view.qksmsClicked()
                 .autoDisposable(view.scope())
                 .subscribe {
-                    analytics.setUserProperty("Blocking Manager", "Android")
-                    prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_ANDROID)
+                    analytics.setUserProperty("Blocking Manager", "QKSMS")
+                    prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_QKSMS)
                 }
 
-        view.launchAndroidClicked()
+        view.launchQksmsClicked()
                 .autoDisposable(view.scope())
                 .subscribe {
                     // TODO: This is a hack, get rid of it once we implement AndroidX navigation
-                    if (Build.VERSION.SDK_INT < 24) {
-                        view.openBlockedNumbers()
-                    } else {
-                        android.openSettings()
-                    }
+                    view.openBlockedNumbers()
                 }
 
         view.callControlClicked()

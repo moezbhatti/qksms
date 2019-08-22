@@ -31,11 +31,11 @@
         android:paddingBottom="8dp">
 
         <com.moez.QKSMS.common.widget.RadioPreferenceView
-            android:id="@+id/android"
+            android:id="@+id/qksms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:summary="@string/blocking_manager_android_summary"
-            app:title="@string/blocking_manager_android_title"
+            app:summary="@string/blocking_manager_qksms_summary"
+            app:title="@string/blocking_manager_qksms_title"
             app:widget="@layout/blocking_manager_list_option" />
 
         <com.moez.QKSMS.common.widget.RadioPreferenceView

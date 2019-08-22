@@ -61,7 +61,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
         const val SWIPE_ACTION_READ = 4
         const val SWIPE_ACTION_UNREAD = 5
 
-        const val BLOCKING_MANAGER_ANDROID = 0
+        const val BLOCKING_MANAGER_QKSMS = 0
         const val BLOCKING_MANAGER_CC = 1
         const val BLOCKING_MANAGER_SIA = 2
     }
@@ -82,7 +82,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
     @Deprecated("This should only be accessed when migrating to @blockingManager")
     val sia = rxPrefs.getBoolean("sia", false)
-    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_ANDROID)
+    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
     val drop = rxPrefs.getBoolean("drop", false)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)
     val notifAction2 = rxPrefs.getInteger("notifAction2", NOTIFICATION_ACTION_REPLY)
