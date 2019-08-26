@@ -184,6 +184,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         view?.run {
             Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
                 setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
+                setActionTextColor(colors.theme().theme)
                 show()
             }
         }

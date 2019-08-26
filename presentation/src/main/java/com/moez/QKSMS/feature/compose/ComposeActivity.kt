@@ -313,6 +313,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun showQksmsPlusSnackbar(message: Int) {
         Snackbar.make(contentView, message, Snackbar.LENGTH_LONG).run {
             setAction(R.string.button_more) { viewQksmsPlusIntent.onNext(Unit) }
+            setActionTextColor(colors.theme().theme)
             show()
         }
     }
