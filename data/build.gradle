@@ -25,6 +25,11 @@ android {
     publishNonDefault true
     flavorDimensions "analytics"
 
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
