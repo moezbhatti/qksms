@@ -54,6 +54,8 @@
         <item>- Visual glitch on compose bar in night mode</item>
         <item>- Theme doesn\'t update in preview after going back to settings</item>
         <item>- Search hint gets cut off after rotating screen</item>
+        <item>- Messages can\'t be sent or received on certain older devices</item>
+        <item>- Norwegian translations not working</item>
     </string-array>
     <string name="changelog_more">More</string>
     <string name="changelog_dismiss">Dismiss</string>
