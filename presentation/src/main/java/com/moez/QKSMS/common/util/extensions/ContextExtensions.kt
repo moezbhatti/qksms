@@ -43,6 +43,13 @@ fun Context.resolveThemeAttribute(attributeId: Int, default: Int = 0): Int {
     return if (wasResolved) outValue.resourceId else default
 }
 
+fun Context.resolveThemeBoolean(attributeId: Int, default: Boolean = false): Boolean {
+    val outValue = TypedValue()
+    val wasResolved = theme.resolveAttribute(attributeId, outValue, true)
+
+    return if (wasResolved) outValue.data != 0 else default
+}
+
 fun Context.resolveThemeColor(attributeId: Int, default: Int = 0): Int {
     val outValue = TypedValue()
     val wasResolved = theme.resolveAttribute(attributeId, outValue, true)

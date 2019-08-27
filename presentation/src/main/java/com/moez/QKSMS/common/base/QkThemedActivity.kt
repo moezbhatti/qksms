@@ -23,10 +23,12 @@ import android.app.ActivityManager
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.resolveThemeBoolean
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
@@ -76,6 +78,13 @@ abstract class QkThemedActivity : QkActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(scope())
                 .subscribe { recreate() }
+
+        // We can only set light nav bar on API 27 in attrs, but we can do it in API 26 here
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+            val night = !resolveThemeBoolean(R.attr.isLightTheme)
+            window.decorView.systemUiVisibility = if (night) 0 else
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
 
         // Some devices don't let you modify android.R.attr.navigationBarColor
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -34,7 +34,7 @@
 
     <style name="AppTheme" parent="AppBaseTheme" />
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:divider">@color/separatorLight</item>
         <item name="android:queryBackground">@color/toolbarSearchBackgroundLight</item>
         <item name="android:statusBarColor">@color/black</item>
@@ -56,7 +56,7 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="AppThemeDialog" parent="Theme.AppCompat.DayNight.Dialog">
+    <style name="AppThemeDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:textColorPrimary">@color/textPrimary</item>
         <item name="android:textColorSecondary">@color/textSecondary</item>
         <item name="android:textColorTertiary">@color/textTertiary</item>
