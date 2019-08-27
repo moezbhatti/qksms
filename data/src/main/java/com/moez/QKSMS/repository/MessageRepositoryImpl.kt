@@ -29,6 +29,7 @@ import android.os.Build
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
+import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
 import com.google.android.mms.MMSPart
 import com.klinker.android.send_message.SmsManagerFactory
@@ -349,16 +350,20 @@ class MessageRepositoryImpl @Inject constructor(
         realm.executeTransaction { managedMessage = realm.copyToRealmOrUpdate(message) }
 
         // Insert the message to the native content provider
-        val values = ContentValues().apply {
-            put(Telephony.Sms.ADDRESS, address)
-            put(Telephony.Sms.BODY, body)
-            put(Telephony.Sms.DATE, System.currentTimeMillis())
-            put(Telephony.Sms.READ, true)
-            put(Telephony.Sms.SEEN, true)
-            put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
-            put(Telephony.Sms.THREAD_ID, threadId)
-            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
+        val values = contentValuesOf(
+            Telephony.Sms.ADDRESS to address,
+            Telephony.Sms.BODY to body,
+            Telephony.Sms.DATE to System.currentTimeMillis(),
+            Telephony.Sms.READ to true,
+            Telephony.Sms.SEEN to true,
+            Telephony.Sms.TYPE to Telephony.Sms.MESSAGE_TYPE_OUTBOX,
+            Telephony.Sms.THREAD_ID to threadId
+        )
+
+        if (prefs.canUseSubId.get()) {
+            values.put(Telephony.Sms.SUBSCRIPTION_ID, message.subId)
         }
+
         val uri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
 
         // Update the contentId after the message has been inserted to the content provider
@@ -400,11 +405,14 @@ class MessageRepositoryImpl @Inject constructor(
         realm.executeTransaction { managedMessage = realm.copyToRealmOrUpdate(message) }
 
         // Insert the message to the native content provider
-        val values = ContentValues().apply {
-            put(Telephony.Sms.ADDRESS, address)
-            put(Telephony.Sms.BODY, body)
-            put(Telephony.Sms.DATE_SENT, sentTime)
-            put(Telephony.Sms.SUBSCRIPTION_ID, subId)
+        val values = contentValuesOf(
+            Telephony.Sms.ADDRESS to address,
+            Telephony.Sms.BODY to body,
+            Telephony.Sms.DATE_SENT to sentTime
+        )
+
+        if (prefs.canUseSubId.get()) {
+            values.put(Telephony.Sms.SUBSCRIPTION_ID, message.subId)
         }
 
         context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)?.let { uri ->
