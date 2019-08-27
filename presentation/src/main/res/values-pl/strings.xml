@@ -317,10 +317,10 @@
     <string name="notification_message_failed_title">Wiadomość nie została wysłana</string>
     <string name="notification_message_failed_text">Wiadomość %s nie została wysłana</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>Systemowy</item>
+        <item>Wyłączony</item>
+        <item>Zawsze włączony</item>
+        <item>Automatyczny</item>
     </string-array>
     <string-array name="notification_preview_options">
         <item>Pokazuj nadawcę i treść wiadomości</item>

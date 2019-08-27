@@ -317,10 +317,10 @@
     <string name="notification_message_failed_title">Zpráva nebyla odeslána</string>
     <string name="notification_message_failed_text">Odeslání zprávy pro %s se nezdařilo</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>Dle systému</item>
+        <item>Vypnuto</item>
+        <item>Vždy zapnuto</item>
+        <item>Automaticky</item>
     </string-array>
     <string-array name="notification_preview_options">
         <item>Zobrazit jméno a text zprávy</item>

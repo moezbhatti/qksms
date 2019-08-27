@@ -77,7 +77,7 @@
     <string name="dialog_delete_title">حذف</string>
     <plurals name="dialog_delete_message">
         <item quantity="one">آیا مطمئن هستید که می خواهید این گفتگو را حذف کنید؟</item>
-        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="other">آیا مطمئن هستید که می خواهید این %d گفتگو را حذف کنید؟</item>
     </plurals>
     <string-array name="message_options">
         <item>کپی متن</item>
@@ -172,8 +172,8 @@
     <string name="scheduled_compose_cd">Schedule a message</string>
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Delete</item>
+        <item>ارسال هم‌اکنون</item>
+        <item>حذف</item>
     </string-array>
     <string name="settings_category_appearance">ظاهر</string>
     <string name="settings_category_general">عمومی</string>
@@ -216,11 +216,11 @@
         <item>پاک کردن</item>
         <item>تماس</item>
         <item>خوانده شده </item>
-        <item>Mark unread</item>
+        <item>علامت گذاری بعنوان خوانده نشده</item>
     </string-array>
     <string name="settings_delivery_title">تأیید تحویل</string>
     <string name="settings_delivery_summary">تأیید ارسال موفق پیام</string>
-    <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_title">امضا</string>
     <string name="settings_unicode_title">حذف لهجه‌ها</string>
     <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
     <string name="settings_mobile_title">فقط شماره های تلفن</string>
@@ -311,10 +311,10 @@
     <string name="notification_message_failed_title">ارسال نشد</string>
     <string name="notification_message_failed_text">پیام به٪ s فرستاده نشد</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>سامانه</item>
+        <item>غیرفعال</item>
+        <item>همیشه روشن</item>
+        <item>خودکار</item>
     </string-array>
     <string-array name="notification_preview_options">
         <item>نمایش نام و پیام</item>
@@ -330,17 +330,17 @@
     <string-array name="delayed_sending_labels">
         <item>بدون تاخیر</item>
         <item>کوتاه</item>
-        <item>Medium</item>
-        <item>Long</item>
+        <item>متوسط</item>
+        <item>طولانی</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>۱۰۰KB</item>
         <item>۲۰۰KB</item>
-        <item>300KB (Recommended)</item>
+        <item>300 کیلوبایت(توصیه شده)</item>
         <item>۶۰۰KB</item>
         <item>۱۰۰۰KB</item>
         <item>۲۰۰۰KB</item>
-        <item>No compression</item>
+        <item>بدون فشردگی</item>
     </string-array>
     <string-array name="qk_responses">
         <item>باشه</item>
