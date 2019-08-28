@@ -68,6 +68,8 @@ class ReceiveMms @Inject constructor(
 
                     if (shouldBlock) {
                         conversationRepo.markBlocked(message.threadId)
+                    } else {
+                        conversationRepo.markUnblocked(message.threadId)
                     }
 
                     message
