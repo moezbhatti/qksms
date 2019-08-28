@@ -86,17 +86,18 @@ class MainActivity : QkThemedActivity(), MainView {
                 .doOnNext { dismissKeyboard() }
     }
     override val homeIntent: Subject<Unit> = PublishSubject.create()
-    override val drawerItemIntent: Observable<DrawerItem> by lazy {
+    override val navigationIntent: Observable<NavItem> by lazy {
         Observable.merge(listOf(
-                inbox.clicks().map { DrawerItem.INBOX },
-                archived.clicks().map { DrawerItem.ARCHIVED },
-                backup.clicks().map { DrawerItem.BACKUP },
-                scheduled.clicks().map { DrawerItem.SCHEDULED },
-                blocking.clicks().map { DrawerItem.BLOCKING },
-                settings.clicks().map { DrawerItem.SETTINGS },
-                plus.clicks().map { DrawerItem.PLUS },
-                help.clicks().map { DrawerItem.HELP },
-                invite.clicks().map { DrawerItem.INVITE }))
+                backPressedSubject,
+                inbox.clicks().map { NavItem.INBOX },
+                archived.clicks().map { NavItem.ARCHIVED },
+                backup.clicks().map { NavItem.BACKUP },
+                scheduled.clicks().map { NavItem.SCHEDULED },
+                blocking.clicks().map { NavItem.BLOCKING },
+                settings.clicks().map { NavItem.SETTINGS },
+                plus.clicks().map { NavItem.PLUS },
+                help.clicks().map { NavItem.HELP },
+                invite.clicks().map { NavItem.INVITE }))
     }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
     override val plusBannerIntent by lazy { plusBanner.clicks() }
@@ -108,7 +109,6 @@ class MainActivity : QkThemedActivity(), MainView {
     override val changelogMoreIntent by lazy { changelog.moreClicks }
     override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
     override val snackbarButtonIntent: Subject<Unit> = PublishSubject.create()
-    override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java] }
     private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.main_drawer_open_cd, 0) }
@@ -117,6 +117,7 @@ class MainActivity : QkThemedActivity(), MainView {
     private val changelog by lazy { ChangelogDialog(this) }
     private val snackbar by lazy { findViewById<View>(R.id.snackbar) }
     private val syncing by lazy { findViewById<View>(R.id.syncing) }
+    private val backPressedSubject: Subject<NavItem> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -364,7 +365,7 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun onBackPressed() {
-        backPressedIntent.onNext(Unit)
+        backPressedSubject.onNext(NavItem.BACK)
     }
 
 }

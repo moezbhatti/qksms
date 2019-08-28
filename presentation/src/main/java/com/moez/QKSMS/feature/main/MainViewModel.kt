@@ -196,22 +196,37 @@ class MainViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { open -> newState { copy(drawerOpen = open) } }
 
-        view.drawerItemIntent
-                .doOnNext { newState { copy(drawerOpen = false) } }
-                .doOnNext { if (it == DrawerItem.BACKUP) navigator.showBackup() }
-                .doOnNext { if (it == DrawerItem.SCHEDULED) navigator.showScheduled() }
-                .doOnNext { if (it == DrawerItem.BLOCKING) navigator.showBlockedConversations() }
-                .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
-                .doOnNext { if (it == DrawerItem.PLUS) navigator.showQksmsPlusActivity("main_menu") }
-                .doOnNext { if (it == DrawerItem.HELP) navigator.showSupport() }
-                .doOnNext { if (it == DrawerItem.INVITE) navigator.showInvite() }
+        view.navigationIntent
+                .withLatestFrom(state) { drawerItem, state ->
+                    newState { copy(drawerOpen = false) }
+                    when (drawerItem) {
+                        NavItem.BACK -> when {
+                            state.drawerOpen -> Unit
+                            state.page is Searching -> view.clearSearch()
+                            state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
+                            state.page is Archived && state.page.selected > 0 -> view.clearSelection()
+                            state.page !is Inbox -> {
+                                newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
+                            }
+                            else -> newState { copy(hasError = true) }
+                        }
+                        NavItem.BACKUP -> navigator.showBackup()
+                        NavItem.SCHEDULED -> navigator.showScheduled()
+                        NavItem.BLOCKING -> navigator.showBlockedConversations()
+                        NavItem.SETTINGS -> navigator.showSettings()
+                        NavItem.PLUS -> navigator.showQksmsPlusActivity("main_menu")
+                        NavItem.HELP -> navigator.showSupport()
+                        NavItem.INVITE -> navigator.showInvite()
+                        else -> Unit
+                    }
+                    drawerItem
+                }
                 .distinctUntilChanged()
-                .doOnNext {
-                    when (it) {
-                        DrawerItem.INBOX -> newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
-                        DrawerItem.ARCHIVED -> newState { copy(page = Archived(data = conversationRepo.getConversations(true))) }
-                        else -> {
-                        } // Do nothing
+                .doOnNext { drawerItem ->
+                    when (drawerItem) {
+                        NavItem.INBOX -> newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
+                        NavItem.ARCHIVED -> newState { copy(page = Archived(data = conversationRepo.getConversations(true))) }
+                        else -> Unit
                     }
                 }
                 .autoDisposable(view.scope())
@@ -366,25 +381,6 @@ class MainViewModel @Inject constructor(
                         !state.defaultSms -> navigator.showDefaultSmsDialog()
                         !state.smsPermission -> view.requestPermissions()
                         !state.contactPermission -> view.requestPermissions()
-                    }
-                }
-                .autoDisposable(view.scope())
-                .subscribe()
-
-        view.backPressedIntent
-                .withLatestFrom(state) { _, state ->
-                    when {
-                        state.drawerOpen -> newState { copy(drawerOpen = false) }
-
-                        state.page is Searching -> view.clearSearch()
-
-                        state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
-
-                        state.page is Archived && state.page.selected > 0 -> view.clearSelection()
-
-                        state.page !is Inbox -> newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
-
-                        else -> newState { copy(hasError = true) }
                     }
                 }
                 .autoDisposable(view.scope())
