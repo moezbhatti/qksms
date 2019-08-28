@@ -17,7 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,71 +25,35 @@
     android:background="?android:attr/windowBackground"
     android:clipToPadding="false">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
         <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/blockingManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintTop_toTopOf="parent"
             app:title="@string/blocking_manager_title"
             tools:summary="@string/blocking_manager_qksms_title" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/blockedNumbers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/blocked_messages_title" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/drop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/blockingManager"
             app:summary="@string/blocking_drop_summary"
             app:title="@string/blocking_drop_title"
             app:widget="@layout/settings_switch_widget" />
 
-        <View
-            android:id="@+id/conversationsDivider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="?android:attr/divider"
-            app:layout_constraintTop_toBottomOf="@+id/drop" />
+    </LinearLayout>
 
-        <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/blockedLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="16dp"
-            android:text="@string/blocking_conversations"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/conversationsDivider"
-            app:textSize="secondary" />
-
-        <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/empty"
-            style="@style/TextSecondary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="56dp"
-            android:text="@string/blocking_empty"
-            app:layout_constraintTop_toBottomOf="@+id/blockedLabel" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/conversations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/blockedLabel"
-            tools:listitem="@layout/blocked_list_item" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

@@ -255,7 +255,6 @@
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
     <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_empty">Your blocked conversations will appear here</string>
 
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
@@ -273,6 +272,9 @@
     <string name="blocked_numbers_dialog_title">Block texts from</string>
     <string name="blocked_numbers_dialog_hint">Phone number</string>
     <string name="blocked_numbers_dialog_block">Block</string>
+
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
 
     <string name="blocking_block_title">Block</string>
     <string name="blocking_unblock_title">Unblock</string>

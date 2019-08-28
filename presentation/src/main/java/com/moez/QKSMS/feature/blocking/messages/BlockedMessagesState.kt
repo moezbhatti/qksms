@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,17 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.blocking
+package com.moez.QKSMS.feature.blocking.messages
 
-import com.moez.QKSMS.common.base.QkViewContract
-import io.reactivex.Observable
+import com.moez.QKSMS.model.Conversation
+import io.realm.RealmResults
 
-interface BlockingView : QkViewContract<BlockingState> {
-
-    val blockingManagerIntent: Observable<*>
-    val blockedMessagesIntent: Observable<*>
-    val dropClickedIntent: Observable<*>
-
-    fun openBlockingManager()
-    fun openBlockedMessages()
-}
+data class BlockedMessagesState(
+    val data: RealmResults<Conversation>? = null
+)

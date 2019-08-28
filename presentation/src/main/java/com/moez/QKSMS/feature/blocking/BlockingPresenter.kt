@@ -20,10 +20,7 @@ package com.moez.QKSMS.feature.blocking
 
 import android.content.Context
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
-import com.moez.QKSMS.extensions.asObservable
-import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
@@ -32,15 +29,10 @@ import javax.inject.Inject
 
 class BlockingPresenter @Inject constructor(
     context: Context,
-    conversationRepo: ConversationRepository,
-    private val navigator: Navigator,
     private val prefs: Preferences
 ) : QkPresenter<BlockingView, BlockingState>(BlockingState()) {
 
     init {
-        val blockedConversations = conversationRepo.getBlockedConversations()
-        newState { copy(data = blockedConversations) }
-
         disposables += prefs.blockingManager.asObservable()
                 .map { client ->
                     when (client) {
@@ -54,14 +46,6 @@ class BlockingPresenter @Inject constructor(
 
         disposables += prefs.drop.asObservable()
                 .subscribe { enabled -> newState { copy(dropEnabled = enabled) } }
-
-        // Trigger a refresh if we go between having some/no blocked conversations, otherwise the header won't update
-        disposables += blockedConversations
-                .asObservable()
-                .filter { it.isValid && it.isLoaded }
-                .map { it.isEmpty() }
-                .distinctUntilChanged()
-                .subscribe { newState { copy() } }
     }
 
     override fun bindIntents(view: BlockingView) {
@@ -71,13 +55,13 @@ class BlockingPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { view.openBlockingManager() }
 
+        view.blockedMessagesIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.openBlockedMessages() }
+
         view.dropClickedIntent
                 .autoDisposable(view.scope())
                 .subscribe { prefs.drop.set(!prefs.drop.get()) }
-
-        view.conversationClicks
-                .autoDisposable(view.scope())
-                .subscribe { threadId -> navigator.showConversation(threadId) }
     }
 
 }
