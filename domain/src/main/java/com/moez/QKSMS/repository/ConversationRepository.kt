@@ -39,6 +39,8 @@ interface ConversationRepository {
 
     fun getBlockedConversations(): RealmResults<Conversation>
 
+    fun getBlockedConversationsAsync(): RealmResults<Conversation>
+
     fun getConversationAsync(threadId: Long): Conversation
 
     fun getConversation(threadId: Long): Conversation?

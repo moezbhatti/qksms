@@ -35,7 +35,7 @@ class BlockedMessagesPresenter @Inject constructor(
     private val deleteConversations: DeleteConversations,
     private val navigator: Navigator
 ) : QkPresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState(
-        data = conversationRepo.getBlockedConversations()
+        data = conversationRepo.getBlockedConversationsAsync()
 )) {
 
     override fun bindIntents(view: BlockedMessagesView) {

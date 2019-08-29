@@ -1,6 +1,7 @@
 package com.moez.QKSMS.feature.blocking.manager
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.view.View
 import com.bluelinelabs.conductor.RouterTransaction
 import com.jakewharton.rxbinding2.view.clicks
@@ -11,6 +12,7 @@ import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.util.Preferences
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.blocking_manager_controller.*
 import kotlinx.android.synthetic.main.blocking_manager_list_option.view.*
@@ -64,6 +66,16 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
     override fun launchCallControlClicked(): Observable<*> = callControl.launch.clicks()
     override fun siaClicked(): Observable<*> = shouldIAnswer.clicks()
     override fun launchSiaClicked(): Observable<*> = shouldIAnswer.launch.clicks()
+
+    override fun showCopyDialog(manager: String): Single<Boolean> = Single.create { emitter ->
+        AlertDialog.Builder(activity)
+                .setTitle(R.string.blocking_manager_copy_title)
+                .setMessage(resources?.getString(R.string.blocking_manager_copy_summary, manager))
+                .setPositiveButton(R.string.button_continue) { _, _ -> emitter.onSuccess(true) }
+                .setNegativeButton(R.string.button_cancel) { _, _ -> emitter.onSuccess(false) }
+                .setCancelable(false)
+                .show()
+    }
 
     override fun openBlockedNumbers() {
         router.pushController(RouterTransaction.with(BlockedNumbersController())

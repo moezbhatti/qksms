@@ -124,6 +124,13 @@ class ConversationRepositoryImpl @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
                 .equalTo("blocked", true)
+                .findAll()
+    }
+
+    override fun getBlockedConversationsAsync(): RealmResults<Conversation> {
+        return Realm.getDefaultInstance()
+                .where(Conversation::class.java)
+                .equalTo("blocked", true)
                 .findAllAsync()
     }
 
