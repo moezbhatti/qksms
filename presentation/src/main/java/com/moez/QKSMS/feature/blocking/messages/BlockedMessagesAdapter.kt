@@ -37,7 +37,16 @@ class BlockedMessagesAdapter @Inject constructor() : QkRealmAdapter<Conversation
         return QkViewHolder(view).apply {
             view.setOnClickListener {
                 val conversation = getItem(adapterPosition) ?: return@setOnClickListener
-                clicks.onNext(conversation.id)
+                when (toggleSelection(conversation.id, false)) {
+                    true -> view.isActivated = isSelected(conversation.id)
+                    false -> clicks.onNext(conversation.id)
+                }
+            }
+            view.setOnLongClickListener {
+                val conversation = getItem(adapterPosition) ?: return@setOnLongClickListener true
+                toggleSelection(conversation.id)
+                view.isActivated = isSelected(conversation.id)
+                true
             }
         }
     }
@@ -45,6 +54,8 @@ class BlockedMessagesAdapter @Inject constructor() : QkRealmAdapter<Conversation
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val conversation = getItem(position) ?: return
         val view = holder.containerView
+
+        view.isActivated = isSelected(conversation.id)
 
         view.avatars.contacts = conversation.recipients
         view.title.collapseEnabled = conversation.recipients.size > 1
