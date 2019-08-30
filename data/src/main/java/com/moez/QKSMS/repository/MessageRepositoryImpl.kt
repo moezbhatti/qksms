@@ -91,12 +91,14 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun getUnreadCount(): Long {
-        return Realm.getDefaultInstance()
-                .where(Conversation::class.java)
-                .equalTo("archived", false)
-                .equalTo("blocked", false)
-                .equalTo("read", false)
-                .count()
+        return Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+            realm.where(Conversation::class.java)
+                    .equalTo("archived", false)
+                    .equalTo("blocked", false)
+                    .equalTo("read", false)
+                    .count()
+        }
     }
 
     override fun getPart(id: Long): MmsPart? {
@@ -351,13 +353,13 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Insert the message to the native content provider
         val values = contentValuesOf(
-            Telephony.Sms.ADDRESS to address,
-            Telephony.Sms.BODY to body,
-            Telephony.Sms.DATE to System.currentTimeMillis(),
-            Telephony.Sms.READ to true,
-            Telephony.Sms.SEEN to true,
-            Telephony.Sms.TYPE to Telephony.Sms.MESSAGE_TYPE_OUTBOX,
-            Telephony.Sms.THREAD_ID to threadId
+                Telephony.Sms.ADDRESS to address,
+                Telephony.Sms.BODY to body,
+                Telephony.Sms.DATE to System.currentTimeMillis(),
+                Telephony.Sms.READ to true,
+                Telephony.Sms.SEEN to true,
+                Telephony.Sms.TYPE to Telephony.Sms.MESSAGE_TYPE_OUTBOX,
+                Telephony.Sms.THREAD_ID to threadId
         )
 
         if (prefs.canUseSubId.get()) {
@@ -406,9 +408,9 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Insert the message to the native content provider
         val values = contentValuesOf(
-            Telephony.Sms.ADDRESS to address,
-            Telephony.Sms.BODY to body,
-            Telephony.Sms.DATE_SENT to sentTime
+                Telephony.Sms.ADDRESS to address,
+                Telephony.Sms.BODY to body,
+                Telephony.Sms.DATE_SENT to sentTime
         )
 
         if (prefs.canUseSubId.get()) {
