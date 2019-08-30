@@ -53,6 +53,7 @@ import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.feature.changelog.ChangelogDialog
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
+import com.moez.QKSMS.manager.ChangelogManager
 import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
@@ -106,7 +107,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
-    override val changelogMoreIntent by lazy { changelog.moreClicks }
+    override val changelogMoreIntent by lazy { changelogDialog.moreClicks }
     override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
     override val snackbarButtonIntent: Subject<Unit> = PublishSubject.create()
 
@@ -114,7 +115,7 @@ class MainActivity : QkThemedActivity(), MainView {
     private val toggle by lazy { ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.main_drawer_open_cd, 0) }
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val progressAnimator by lazy { ObjectAnimator.ofInt(syncingProgress, "progress", 0, 0) }
-    private val changelog by lazy { ChangelogDialog(this) }
+    private val changelogDialog by lazy { ChangelogDialog(this) }
     private val snackbar by lazy { findViewById<View>(R.id.snackbar) }
     private val syncing by lazy { findViewById<View>(R.id.syncing) }
     private val backPressedSubject: Subject<NavItem> = PublishSubject.create()
@@ -342,8 +343,8 @@ class MainActivity : QkThemedActivity(), MainView {
                 .show()
     }
 
-    override fun showChangelog() {
-        changelog.show()
+    override fun showChangelog(changelog: ChangelogManager.Changelog) {
+        changelogDialog.show(changelog)
     }
 
     override fun showArchivedSnackbar() {

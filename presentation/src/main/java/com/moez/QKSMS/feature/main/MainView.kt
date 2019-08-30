@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.main
 
 import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.manager.ChangelogManager
 import io.reactivex.Observable
 
 interface MainView : QkView<MainState> {
@@ -44,7 +45,7 @@ interface MainView : QkView<MainState> {
     fun clearSearch()
     fun clearSelection()
     fun showDeleteDialog(conversations: List<Long>)
-    fun showChangelog()
+    fun showChangelog(changelog: ChangelogManager.Changelog)
     fun showArchivedSnackbar()
 
 }

@@ -78,6 +78,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
