@@ -77,8 +77,8 @@ class BlockedMessagesPresenter @Inject constructor(
                 .subscribe { selection -> newState { copy(selected = selection.size) } }
 
         view.backClicked
-                .withLatestFrom(view.selectionChanges) { _, selection ->
-                    when (selection.size) {
+                .withLatestFrom(state) { _, state ->
+                    when (state.selected) {
                         0 -> view.goBack()
                         else -> view.clearSelection()
                     }

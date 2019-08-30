@@ -48,7 +48,7 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
         emptyView?.setVisible(data.isLoaded && data.isEmpty())
     }
 
-    val selectionChanges: Subject<List<Long>> = BehaviorSubject.createDefault(listOf())
+    val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()
 
     private var selection = listOf<Long>()
 
