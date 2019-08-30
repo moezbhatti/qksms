@@ -99,7 +99,7 @@ class BlockingManagerPresenter @Inject constructor(
                 .switchMap { numbers -> callControl.block(numbers).andThen(Observable.just(Unit)) } // Hack
                 .autoDisposable(view.scope())
                 .subscribe {
-                    callControl.isBlocked("callcontrol").blockingGet()
+                    callControl.getAction("callcontrol").blockingGet()
                     analytics.setUserProperty("Blocking Manager", "Call Control")
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CC)
                 }
@@ -142,6 +142,6 @@ class BlockingManagerPresenter @Inject constructor(
 
     private fun getAddressesToBlock(client: BlockingClient) = conversationRepo.getBlockedConversations()
             .fold(listOf<String>(), { numbers, conversation -> numbers + conversation.recipients.map { it.address } })
-            .filter { number -> !client.isBlocked(number).blockingGet() }
+            .filter { number -> client.getAction(number).blockingGet() != BlockingClient.Action.BLOCK }
 
 }

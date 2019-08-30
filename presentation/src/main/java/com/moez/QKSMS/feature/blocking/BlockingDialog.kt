@@ -23,7 +23,6 @@ import android.app.AlertDialog
 import android.content.Context
 import com.moez.QKSMS.R
 import com.moez.QKSMS.blocking.BlockingClient
-import com.moez.QKSMS.blocking.BlockingClientCapability
 import com.moez.QKSMS.interactor.MarkBlocked
 import com.moez.QKSMS.interactor.MarkUnblocked
 import com.moez.QKSMS.repository.ConversationRepository
@@ -55,7 +54,7 @@ class BlockingDialog @Inject constructor(
             return@launch
         }
 
-        if (blockingManager.getClientCapability() == BlockingClientCapability.BLOCK_WITHOUT_PERMISSION) {
+        if (blockingManager.getClientCapability() == BlockingClient.Capability.BLOCK_WITHOUT_PERMISSION) {
             // If we can block/unblock in the external manager, then just fire that off and exit
             if (block) {
                 markBlocked.execute(conversationIds)
@@ -64,7 +63,7 @@ class BlockingDialog @Inject constructor(
                 markUnblocked.execute(conversationIds)
                 blockingManager.unblock(addresses).subscribe()
             }
-        } else if (addresses.all { address -> block == blockingManager.isBlocked(address).blockingGet() }) {
+        } else if (block == allBlocked(addresses)) {
             // If all of the addresses are already in their correct state in the blocking manager, just marked the
             // conversations blocked and exit
             when (block) {
@@ -75,6 +74,10 @@ class BlockingDialog @Inject constructor(
             // Otherwise, show the UI that lets the users know they need to mark the number as blocked in the client
             showDialog(activity, conversationIds, addresses, block)
         }
+    }
+
+    private fun allBlocked(addresses: List<String>): Boolean = addresses.all { address ->
+        blockingManager.getAction(address).blockingGet() == BlockingClient.Action.BLOCK
     }
 
     private suspend fun showDialog(

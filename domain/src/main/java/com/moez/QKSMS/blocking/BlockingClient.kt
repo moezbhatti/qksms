@@ -23,6 +23,22 @@ import io.reactivex.Single
 
 interface BlockingClient {
 
+    enum class Capability {
+        BLOCK_WITHOUT_PERMISSION,
+        BLOCK_WITH_PERMISSION ,
+        CANT_BLOCK
+    }
+
+    enum class Action {
+        BLOCK,
+        UNBLOCK,
+
+        // We only need these for Should I Answer, because they don't allow us to block numbers in their app directly.
+        // This means there's a good chance that if a number is blocked in QK, it won't be blocked there, so we
+        // shouldn't unblock the conversation in that case
+        DO_NOTHING
+    }
+
     /**
      * Returns true if the target blocking client is available for use, ie. it is installed
      */
@@ -31,12 +47,12 @@ interface BlockingClient {
     /**
      * Returns the level of access that the given blocking client provides to QKSMS
      */
-    fun getClientCapability(): BlockingClientCapability
+    fun getClientCapability(): Capability
 
     /**
-     * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
+     * Returns the recommendation action to perform given a message from the [address]
      */
-    fun isBlocked(address: String): Single<Boolean>
+    fun getAction(address: String): Single<Action>
 
     /**
      * Blocks the numbers or opens the manager

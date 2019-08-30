@@ -355,7 +355,7 @@ class ConversationRepositoryImpl @Inject constructor(
                             }
 
                     conversation.blocked = recipients.any { recipient ->
-                        blockingClient.isBlocked(recipient.address).blockingGet()
+                        blockingClient.getAction(recipient.address).blockingGet() == BlockingClient.Action.BLOCK
                     }
 
                     conversation.recipients.clear()

@@ -46,16 +46,19 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun isAvailable(): Boolean = context.isInstalled("com.flexaspect.android.everycallcontrol")
 
-    override fun getClientCapability() = BlockingClientCapability.BLOCK_WITH_PERMISSION
+    override fun getClientCapability() = BlockingClient.Capability.BLOCK_WITH_PERMISSION
 
-    override fun isBlocked(address: String): Single<Boolean> {
+    override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
-        return Single.fromCallable {
-            tryOrNull {
-                context.contentResolver.query(uri, projection, null, null, null) // Query URI
-                        ?.use { cursor -> cursor.map(::LookupResult) } // Map to Result object
-                        ?.any { result -> result.blockReason != null } // Check if any are blocked
-            } == true // If none are blocked or we errored at some point, return false
+        val blocked = tryOrNull {
+            context.contentResolver.query(uri, projection, null, null, null) // Query URI
+                    ?.use { cursor -> cursor.map(::LookupResult) } // Map to Result object
+                    ?.any { result -> result.blockReason != null } // Check if any are blocked
+        } == true // If none are blocked or we errored at some point, return false
+
+        when (blocked) {
+            true -> BlockingClient.Action.BLOCK
+            false -> BlockingClient.Action.UNBLOCK
         }
     }
 

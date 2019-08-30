@@ -53,13 +53,16 @@ class ShouldIAnswerBlockingClient @Inject constructor(
             "org.mistergroup.muzutozvednout")
             .any(context::isInstalled)
 
-    override fun getClientCapability() = BlockingClientCapability.CANT_BLOCK
+    override fun getClientCapability() = BlockingClient.Capability.CANT_BLOCK
 
-    /**
-     * Return a Single<Boolean> which emits whether or not the given [address] should be blocked
-     */
-    override fun isBlocked(address: String): Single<Boolean> {
+    override fun getAction(address: String): Single<BlockingClient.Action> {
         return Binder(context, address).isBlocked()
+                .map { blocked ->
+                    when (blocked) {
+                        true -> BlockingClient.Action.BLOCK
+                        false -> BlockingClient.Action.DO_NOTHING
+                    }
+                }
     }
 
     override fun block(addresses: List<String>): Completable = Completable.fromCallable { openSettings() }

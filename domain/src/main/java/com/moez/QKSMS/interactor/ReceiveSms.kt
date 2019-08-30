@@ -49,12 +49,12 @@ class ReceiveSms @Inject constructor(
                     // Don't continue if the sender is blocked
                     val messages = it.messages
                     val address = messages[0].displayOriginatingAddress
-                    val shouldBlock = blockingClient.isBlocked(address).blockingGet()
+                    val action = blockingClient.getAction(address).blockingGet()
                     val shouldDrop = prefs.drop.get()
-                    Timber.v("block=$shouldBlock, drop=$shouldDrop")
+                    Timber.v("block=$action, drop=$shouldDrop")
 
                     // If we should drop the message, don't even save it
-                    if (shouldBlock && shouldDrop) {
+                    if (action == BlockingClient.Action.BLOCK && shouldDrop) {
                         return@mapNotNull null
                     }
 
@@ -66,10 +66,10 @@ class ReceiveSms @Inject constructor(
                     // Add the message to the db
                     val message = messageRepo.insertReceivedSms(it.subId, address, body, time)
 
-                    if (shouldBlock) {
-                        conversationRepo.markBlocked(message.threadId)
-                    } else {
-                        conversationRepo.markUnblocked(message.threadId)
+                    when (action) {
+                        BlockingClient.Action.BLOCK -> conversationRepo.markBlocked(message.threadId)
+                        BlockingClient.Action.UNBLOCK -> conversationRepo.markUnblocked(message.threadId)
+                        else -> Unit
                     }
 
                     message
