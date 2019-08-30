@@ -96,7 +96,7 @@
         <activity android:name=".feature.plus.PlusActivity" />
         <activity
             android:name=".feature.gallery.GalleryActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.Black" />
         <activity android:name=".feature.conversationinfo.ConversationInfoActivity" />
         <activity android:name=".feature.notificationprefs.NotificationPrefsActivity" />
         <activity android:name=".feature.blocked.BlockedActivity" />
