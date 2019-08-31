@@ -29,6 +29,7 @@ import android.os.Message
 import android.os.Messenger
 import androidx.core.os.bundleOf
 import com.moez.QKSMS.common.util.extensions.isInstalled
+import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -36,6 +37,7 @@ import io.reactivex.subjects.SingleSubject
 import javax.inject.Inject
 
 class ShouldIAnswerBlockingClient @Inject constructor(
+    prefs: Preferences,
     private val context: Context
 ) : BlockingClient {
 
@@ -46,6 +48,14 @@ class ShouldIAnswerBlockingClient @Inject constructor(
         const val RATING_NEUTRAL = 3
 
         const val GET_NUMBER_RATING = 1
+    }
+
+    init {
+        // Migrate from old SIA preference to blocking manager preference
+        if (prefs.sia.get()) {
+            prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA)
+            prefs.sia.delete()
+        }
     }
 
     override fun isAvailable(): Boolean = listOf("org.mistergroup.shouldianswer",

@@ -24,14 +24,6 @@ class BlockingManager @Inject constructor(
             else -> qksmsBlockingClient
         }
 
-    init {
-        // Migrate from old SIA preference to blocking manager preference
-        if (prefs.sia.get()) {
-            prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA)
-            prefs.sia.delete()
-        }
-    }
-
     override fun isAvailable(): Boolean = client.isAvailable()
 
     override fun getClientCapability(): BlockingClient.Capability = client.getClientCapability()
