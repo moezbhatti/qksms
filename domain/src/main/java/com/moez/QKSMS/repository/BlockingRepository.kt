@@ -27,6 +27,8 @@ interface BlockingRepository {
 
     fun getBlockedNumbers(): RealmResults<BlockedNumber>
 
+    fun getBlockedNumber(id: Long): BlockedNumber?
+
     fun isBlocked(address: String): Boolean
 
     fun unblockNumber(id: Long)

@@ -46,6 +46,13 @@ class BlockingRepositoryImpl @Inject constructor() : BlockingRepository {
                 .findAllAsync()
     }
 
+    override fun getBlockedNumber(id: Long): BlockedNumber? {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(BlockedNumber::class.java)
+                .equalTo("id", id)
+                .findFirst()
+    }
+
     override fun isBlocked(address: String): Boolean {
         return Realm.getDefaultInstance().use { realm ->
             realm.where(BlockedNumber::class.java)
