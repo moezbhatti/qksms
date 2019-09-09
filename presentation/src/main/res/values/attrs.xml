@@ -36,6 +36,7 @@
         <enum name="tertiary" value="2" />
         <enum name="toolbar" value="3" />
         <enum name="dialog" value="4" />
+        <enum name="emoji" value="5" />
     </attr>
 
     <declare-styleable name="QkTextView">

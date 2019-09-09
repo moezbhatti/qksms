@@ -59,7 +59,7 @@ class VCardBinder(
         canGroupWithNext: Boolean
     ) {
         val uri = ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id)
-        val bubble = BubbleUtils.getBubble(canGroupWithPrevious, canGroupWithNext, message.isMe())
+        val bubble = BubbleUtils.getBubble(false, canGroupWithPrevious, canGroupWithNext, message.isMe())
 
         view.setOnClickListener { navigator.saveVcard(uri) }
         view.vCardBackground.setBackgroundResource(bubble)

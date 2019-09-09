@@ -32,8 +32,9 @@ object BubbleUtils {
         return message.compareSender(other) && diff < TIMESTAMP_THRESHOLD
     }
 
-    fun getBubble(canGroupWithPrevious: Boolean, canGroupWithNext: Boolean, isMe: Boolean): Int {
+    fun getBubble(emojiOnly: Boolean, canGroupWithPrevious: Boolean, canGroupWithNext: Boolean, isMe: Boolean): Int {
         return when {
+            emojiOnly -> R.drawable.message_emoji
             !canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_first else R.drawable.message_in_first
             canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_middle else R.drawable.message_in_middle
             canGroupWithPrevious && !canGroupWithNext -> if (isMe) R.drawable.message_out_last else R.drawable.message_in_last

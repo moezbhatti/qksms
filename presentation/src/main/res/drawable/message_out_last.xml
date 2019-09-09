@@ -26,5 +26,10 @@
         android:topLeftRadius="18dp"
         android:topRightRadius="4dp" />
     <solid android:color="@android:color/white" />
+    <padding
+        android:bottom="8dp"
+        android:left="12dp"
+        android:right="12dp"
+        android:top="8dp" />
 
 </shape>
