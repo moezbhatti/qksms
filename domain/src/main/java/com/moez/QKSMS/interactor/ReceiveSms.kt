@@ -67,7 +67,10 @@ class ReceiveSms @Inject constructor(
                     val message = messageRepo.insertReceivedSms(it.subId, address, body, time)
 
                     when (action) {
-                        BlockingClient.Action.BLOCK -> conversationRepo.markBlocked(message.threadId)
+                        BlockingClient.Action.BLOCK -> {
+                            messageRepo.markRead(message.threadId)
+                            conversationRepo.markBlocked(message.threadId)
+                        }
                         BlockingClient.Action.UNBLOCK -> conversationRepo.markUnblocked(message.threadId)
                         else -> Unit
                     }

@@ -67,7 +67,10 @@ class ReceiveMms @Inject constructor(
                     }
 
                     when (action) {
-                        BlockingClient.Action.BLOCK -> conversationRepo.markBlocked(message.threadId)
+                        BlockingClient.Action.BLOCK -> {
+                            messageRepo.markRead(message.threadId)
+                            conversationRepo.markBlocked(message.threadId)
+                        }
                         BlockingClient.Action.UNBLOCK -> conversationRepo.markUnblocked(message.threadId)
                         else -> Unit
                     }
