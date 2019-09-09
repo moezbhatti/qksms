@@ -72,10 +72,10 @@
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">More</string>
     <string name="drawer_settings">Settings</string>
-    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_plus" translatable="false">QKSMS+</string>
     <string name="drawer_help">Help &amp; feedback</string>
     <string name="drawer_invite">Invite friends</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_title" translatable="false">QKSMS+</string>
     <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
 
     <string name="rate_title">Enjoying QKSMS?</string>
@@ -186,6 +186,7 @@
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
     <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
     <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd&#x200A;</string>
     <string name="scheduled_compose_cd">Schedule a message</string>
     <string name="scheduled_options_title">Scheduled message</string>
@@ -259,11 +260,9 @@
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_call_control_title">Call Control</string>
+    <string name="blocking_manager_call_control_title" translatable="false">Call Control</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer?</string>
+    <string name="blocking_manager_sia_title" translatable="false">Should I Answer?</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
     <string name="blocking_manager_copy_title">Copy blocked numbers</string>
     <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
@@ -301,6 +300,9 @@
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_b" translatable="false">Unlock for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_c" translatable="false">Unlock forever for %1$s %2$s</string>
+    <string name="qksms_plus_upgrade_d" translatable="false">One-time purchase of %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
     <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
@@ -339,9 +341,24 @@
     <string name="qkreply_menu_view">Open conversation</string>
 
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_plus" translatable="false">QKSMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Apply</string>
+
+    <string name="about_developer" translatable="false">Moez Bhatti</string>
+    <string name="about_source" translatable="false">https://github.com/moezbhatti/qksms</string>
+    <string name="about_changelog" translatable="false">https://github.com/moezbhatti/qksms/releases</string>
+    <string name="about_contact" translatable="false">moez@qklabs.com</string>
+    <string name="about_license" translatable="false">GNU General Public License v3.0</string>
+    <string name="about_copyright" translatable="false">© 2014–2019</string>
+
+    <string name="changelog_title" translatable="false">New in QKSMS</string>
+    <string name="changelog_version" translatable="false">Version %s</string>
+    <string name="changelog_added" translatable="false">Added</string>
+    <string name="changelog_improved" translatable="false">Improved</string>
+    <string name="changelog_fixed" translatable="false">Fixed</string>
+    <string name="changelog_more" translatable="false">More</string>
+    <string name="changelog_dismiss" translatable="false">Dismiss</string>
 
     <string-array name="notification_actions">
         <item>None</item>
