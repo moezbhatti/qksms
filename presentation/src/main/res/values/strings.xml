@@ -47,8 +47,8 @@
     <string name="main_menu_delete">Delete</string>
     <string name="main_menu_pin">Pin to top</string>
     <string name="main_menu_unpin">Unpin</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_read">Mark as read</string>
+    <string name="main_menu_unread">Mark as unread</string>
     <string name="main_menu_block">Block</string>
     <string name="main_syncing">Syncing messages…</string>
     <string name="main_sender_you">You: %s</string>
@@ -232,8 +232,8 @@
         <item>Archive</item>
         <item>Delete</item>
         <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Mark as read</item>
+        <item>Mark as unread</item>
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
@@ -299,14 +299,16 @@
 
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
     <string name="qksms_plus_upgrade_b" translatable="false">Unlock for %1$s %2$s</string>
     <string name="qksms_plus_upgrade_c" translatable="false">Unlock forever for %1$s %2$s</string>
     <string name="qksms_plus_upgrade_d" translatable="false">One-time purchase of %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
     <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, a donation would be highly appreciated.</string>
     <string name="qksms_plus_donate">Donate via PayPal</string>
     <string name="qksms_plus_coming_soon">Coming soon</string>
     <string name="qksms_plus_themes_title">Premium themes</string>
@@ -333,7 +335,7 @@
     <string name="widget_loading">Loading…</string>
     <string name="widget_more">View more conversations</string>
 
-    <string name="qkreply_menu_read">Mark read</string>
+    <string name="qkreply_menu_read">Mark as read</string>
     <string name="qkreply_menu_call">Call</string>
     <string name="qkreply_menu_delete">Delete</string>
     <string name="qkreply_menu_expand">Show more</string>
@@ -362,7 +364,7 @@
 
     <string-array name="notification_actions">
         <item>None</item>
-        <item>Mark read</item>
+        <item>Mark as read</item>
         <item>Reply</item>
         <item>Call</item>
         <item>Delete</item>
