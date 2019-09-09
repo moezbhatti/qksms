@@ -34,8 +34,6 @@ android {
         versionCode 2198
         versionName "3.6.8"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
     }
 
     signingConfigs {
@@ -163,7 +161,6 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
     implementation "com.android.billingclient:billing:1.0"
-    implementation "com.bugsnag:bugsnag-android:4.1.1"
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.google.android:flexbox:0.3.1"

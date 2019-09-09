@@ -25,11 +25,7 @@ import android.content.BroadcastReceiver
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.bugsnag.android.Bugsnag
-import com.bugsnag.android.Configuration
-import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.util.BugsnagTree
 import com.moez.QKSMS.common.util.CrashlyticsTree
 import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
@@ -63,15 +59,8 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
 
-    private val packages = arrayOf("com.moez.QKSMS")
-
     override fun onCreate() {
         super.onCreate()
-
-        Bugsnag.init(this, Configuration(BuildConfig.BUGSNAG_API_KEY).apply {
-            appVersion = BuildConfig.VERSION_NAME
-            projectPackages = packages
-        })
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
@@ -97,7 +86,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        Timber.plant(Timber.DebugTree(), BugsnagTree(), CrashlyticsTree(), fileLoggingTree)
+        Timber.plant(Timber.DebugTree(), CrashlyticsTree(), fileLoggingTree)
 
         RxDogTag.builder()
                 .configureWith(AutoDisposeConfigurer::configure)
