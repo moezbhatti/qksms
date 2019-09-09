@@ -66,12 +66,12 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MessagesAdapter @Inject constructor(
+    subscriptionManager: SubscriptionManagerCompat,
     private val context: Context,
     private val colors: Colors,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
-    private val prefs: Preferences,
-    private val subscriptionManager: SubscriptionManagerCompat
+    private val prefs: Preferences
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -79,8 +79,8 @@ class MessagesAdapter @Inject constructor(
         private const val VIEW_TYPE_MESSAGE_OUT = 1
     }
 
-    val clicks: Subject<Message> = PublishSubject.create<Message>()
-    val cancelSending: Subject<Message> = PublishSubject.create<Message>()
+    val clicks: Subject<Message> = PublishSubject.create()
+    val cancelSending: Subject<Message> = PublishSubject.create()
 
     var data: Pair<Conversation, RealmResults<Message>>? = null
         set(value) {
@@ -176,10 +176,8 @@ class MessagesAdapter @Inject constructor(
         val next = if (position == itemCount - 1) null else getItem(position + 1)
         val view = viewHolder.containerView
 
-
         // Update the selected state
         view.isActivated = isSelected(message.id) || highlight == message.id
-
 
         // Bind the cancel view
         view.findViewById<ProgressBar>(R.id.cancel)?.let { cancel ->
@@ -203,10 +201,8 @@ class MessagesAdapter @Inject constructor(
             }
         }
 
-
         // Bind the message status
         bindStatus(viewHolder, message, next)
-
 
         // Bind the timestamp
         val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
@@ -215,15 +211,14 @@ class MessagesAdapter @Inject constructor(
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
         view.simIndex.text = "${simIndex + 1}"
 
-        view.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD || message.subId != previous?.subId && simIndex != -1)
+        view.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
+                || message.subId != previous?.subId && simIndex != -1)
         view.sim.setVisible(message.subId != previous?.subId && simIndex != -1)
         view.simIndex.setVisible(message.subId != previous?.subId && simIndex != -1)
-
 
         // Bind the grouping
         val media = message.parts.filter { it.isImage() || it.isVideo() || it.isVCard() }
         view.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
-
 
         // Bind the avatar
         if (!message.isMe()) {
@@ -231,7 +226,6 @@ class MessagesAdapter @Inject constructor(
             view.avatar.setContact(contactCache[message.address])
             view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
         }
-
 
         // Bind the body text
         view.body.text = when (message.isSms()) {
@@ -247,7 +241,8 @@ class MessagesAdapter @Inject constructor(
                 when {
                     subject.isNotBlank() -> {
                         val spannable = SpannableString(if (body.isNotBlank()) "$subject\n$body" else subject)
-                        spannable.setSpan(StyleSpan(Typeface.BOLD), 0, subject.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+                        spannable.setSpan(StyleSpan(Typeface.BOLD), 0, subject.length,
+                                Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
                         spannable
                     }
                     else -> body
@@ -259,7 +254,6 @@ class MessagesAdapter @Inject constructor(
                 canGroupWithPrevious = canGroup(message, previous) || media.isNotEmpty(),
                 canGroupWithNext = canGroup(message, next),
                 isMe = message.isMe()))
-
 
         // Bind the attachments
         val partsAdapter = view.attachments.adapter as PartsAdapter
@@ -273,7 +267,8 @@ class MessagesAdapter @Inject constructor(
 
         view.status.text = when {
             message.isSending() -> context.getString(R.string.message_status_sending)
-            message.isDelivered() -> context.getString(R.string.message_status_delivered, dateFormatter.getTimestamp(message.dateSent))
+            message.isDelivered() -> context.getString(R.string.message_status_delivered,
+                    dateFormatter.getTimestamp(message.dateSent))
             message.isFailedMessage() -> context.getString(R.string.message_status_failed)
 
             // Incoming group message
