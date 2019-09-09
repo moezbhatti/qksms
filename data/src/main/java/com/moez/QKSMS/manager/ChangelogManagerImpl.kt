@@ -19,9 +19,9 @@
 package com.moez.QKSMS.manager
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.annotations.SerializedName
 import com.moez.QKSMS.util.Preferences
+import com.squareup.moshi.Json
+import com.squareup.moshi.Moshi
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -36,6 +36,7 @@ import javax.inject.Inject
 
 class ChangelogManagerImpl @Inject constructor(
     private val context: Context,
+    private val moshi: Moshi,
     private val prefs: Preferences
 ) : ChangelogManager {
 
@@ -58,6 +59,8 @@ class ChangelogManagerImpl @Inject constructor(
         val httpUrl = HttpUrl.parse(url)
         val request = Request.Builder().url(httpUrl).build()
         val call = OkHttpClient().newCall(request)
+        val adapter = moshi.adapter(ChangelogResponse::class.java)
+
         return Single
                 .create<Response> { emitter ->
                     emitter.setCancellable { call.cancel() }
@@ -66,7 +69,7 @@ class ChangelogManagerImpl @Inject constructor(
                         override fun onFailure(call: Call, e: IOException) = emitter.onError(e)
                     })
                 }
-                .map { response -> Gson().fromJson(response.body()?.string(), ChangelogResponse::class.java) }
+                .map { response -> response.body()?.string()?.let(adapter::fromJson) }
                 .map { response ->
                     response.documents
                             .sortedBy { document -> document.fields.versionCode.value }
@@ -93,35 +96,35 @@ class ChangelogManagerImpl @Inject constructor(
     }
 
     private data class ChangelogResponse(
-        @SerializedName("documents") val documents: List<Document>
+        @Json(name = "documents") val documents: List<Document>
     )
 
     private data class Document(
-        @SerializedName("fields") val fields: Changelog
+        @Json(name = "fields") val fields: Changelog
     )
 
     private data class Changelog(
-        @SerializedName("added") val added: ArrayField?,
-        @SerializedName("improved") val improved: ArrayField?,
-        @SerializedName("fixed") val fixed: ArrayField?,
-        @SerializedName("versionName") val versionName: StringField,
-        @SerializedName("versionCode") val versionCode: IntegerField
+        @Json(name = "added") val added: ArrayField?,
+        @Json(name = "improved") val improved: ArrayField?,
+        @Json(name = "fixed") val fixed: ArrayField?,
+        @Json(name = "versionName") val versionName: StringField,
+        @Json(name = "versionCode") val versionCode: IntegerField
     )
 
     private data class ArrayField(
-        @SerializedName("arrayValue") val value: ArrayValues
+        @Json(name = "arrayValue") val value: ArrayValues
     )
 
     private data class ArrayValues(
-        @SerializedName("values") val values: List<StringField>
+        @Json(name = "values") val values: List<StringField>
     )
 
     private data class StringField(
-        @SerializedName("stringValue") val value: String
+        @Json(name = "stringValue") val value: String
     )
 
     private data class IntegerField(
-        @SerializedName("integerValue") val value: String
+        @Json(name = "integerValue") val value: String
     )
 
 }
