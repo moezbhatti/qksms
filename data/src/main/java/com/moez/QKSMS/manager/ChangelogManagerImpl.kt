@@ -40,12 +40,12 @@ class ChangelogManagerImpl @Inject constructor(
     private val prefs: Preferences
 ) : ChangelogManager {
 
-    private val oldVersion: Int get() = prefs.version.get()
+    private val oldVersion: Int get() = prefs.changelogVersion.get()
     private val versionCode: Int get() = context.packageManager.getPackageInfo(context.packageName, 0).versionCode
 
     override fun didUpdate(): Boolean {
         if (oldVersion == 0) {
-            prefs.version.set(versionCode)
+            prefs.changelogVersion.set(versionCode)
         }
 
         return when {
@@ -92,7 +92,7 @@ class ChangelogManagerImpl @Inject constructor(
     }
 
     override fun markChangelogSeen() {
-        prefs.version.set(versionCode)
+        prefs.changelogVersion.set(versionCode)
     }
 
     private data class ChangelogResponse(

@@ -69,6 +69,8 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     // Internal
     val night = rxPrefs.getBoolean("night", false)
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
+    val version = rxPrefs.getInteger("version", 0)
+    val changelogVersion = rxPrefs.getInteger("changelogVersion", 0)
     @Deprecated("This should only be accessed when migrating to @blockingManager")
     val sia = rxPrefs.getBoolean("sia", false)
 
@@ -100,7 +102,6 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val mobileOnly = rxPrefs.getBoolean("mobileOnly", false)
     val mmsSize = rxPrefs.getInteger("mmsSize", 300)
     val logging = rxPrefs.getBoolean("logging", false)
-    val version = rxPrefs.getInteger("version", 0)
 
     init {
         // Migrate from old night mode preference to new one, now that we support android Q night mode

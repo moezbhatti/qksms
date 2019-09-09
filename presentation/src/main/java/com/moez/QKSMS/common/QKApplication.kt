@@ -31,6 +31,7 @@ import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.migration.QkMigration
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
 import com.uber.rxdogtag.RxDogTag
@@ -48,10 +49,12 @@ import javax.inject.Inject
 class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
 
     /**
-     * Inject this so that it is forced to initialize
+     * Inject these so that they are forced to initialize
      */
     @Suppress("unused")
     @Inject lateinit var analyticsManager: AnalyticsManager
+    @Suppress("unused")
+    @Inject lateinit var qkMigration: QkMigration
 
     @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
     @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>

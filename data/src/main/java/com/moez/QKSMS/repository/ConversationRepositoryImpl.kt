@@ -22,7 +22,6 @@ import android.content.ContentUris
 import android.content.Context
 import android.provider.Telephony
 import android.telephony.PhoneNumberUtils
-import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
 import com.moez.QKSMS.extensions.map
@@ -42,7 +41,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ConversationRepositoryImpl @Inject constructor(
-    private val blockingClient: BlockingClient,
     private val context: Context,
     private val conversationFilter: ConversationFilter,
     private val cursorToConversation: CursorToConversation,
@@ -353,10 +351,6 @@ class ConversationRepositoryImpl @Inject constructor(
                                     }
                                 }
                             }
-
-                    conversation.blocked = recipients.any { recipient ->
-                        blockingClient.getAction(recipient.address).blockingGet() == BlockingClient.Action.BLOCK
-                    }
 
                     conversation.recipients.clear()
                     conversation.recipients.addAll(recipients)
