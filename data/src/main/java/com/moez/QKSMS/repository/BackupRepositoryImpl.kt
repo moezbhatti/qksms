@@ -33,7 +33,8 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
-import okio.Okio
+import okio.buffer
+import okio.source
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -158,7 +159,7 @@ class BackupRepositoryImpl @Inject constructor(
                 files.mapNotNull { file ->
                     val adapter = moshi.adapter(BackupMetadata::class.java)
                     val backup = tryOrNull(false) {
-                        Okio.buffer(Okio.source(file)).use(adapter::fromJson)
+                        file.source().buffer().use(adapter::fromJson)
                     } ?: return@mapNotNull null
 
                     val path = file.path
@@ -177,7 +178,7 @@ class BackupRepositoryImpl @Inject constructor(
         restoreProgress.onNext(BackupRepository.Progress.Parsing())
 
         val file = File(filePath)
-        val backup = Okio.buffer(Okio.source(file)).use { source ->
+        val backup = file.source().buffer().use { source ->
             moshi.adapter(Backup::class.java).fromJson(source)
         }
 

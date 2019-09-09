@@ -27,7 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -56,20 +56,22 @@ class ChangelogManagerImpl @Inject constructor(
 
     override fun getChangelog(): Single<ChangelogManager.Changelog> {
         val url = "https://firestore.googleapis.com/v1/projects/qksms-app/databases/(default)/documents/changelog"
-        val httpUrl = HttpUrl.parse(url)
-        val request = Request.Builder().url(httpUrl).build()
-        val call = OkHttpClient().newCall(request)
+        val httpUrl = url.toHttpUrlOrNull()
+        val request = httpUrl?.let { Request.Builder().url(it).build() }
+        val call = request?.let { OkHttpClient().newCall(it) }
         val adapter = moshi.adapter(ChangelogResponse::class.java)
 
         return Single
                 .create<Response> { emitter ->
-                    emitter.setCancellable { call.cancel() }
-                    call.enqueue(object : Callback {
+                    emitter.setCancellable {
+                        call?.cancel()
+                    }
+                    call?.enqueue(object : Callback {
                         override fun onResponse(call: Call, response: Response) = emitter.onSuccess(response)
                         override fun onFailure(call: Call, e: IOException) = emitter.onError(e)
                     })
                 }
-                .map { response -> response.body()?.string()?.let(adapter::fromJson) }
+                .map { response -> response.body?.string()?.let(adapter::fromJson) }
                 .map { response ->
                     response.documents
                             .sortedBy { document -> document.fields.versionCode.value }
