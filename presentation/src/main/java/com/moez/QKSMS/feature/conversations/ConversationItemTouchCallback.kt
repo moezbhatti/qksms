@@ -22,6 +22,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import kotlin.math.min
 
 class ConversationItemTouchCallback @Inject constructor(
     colors: Colors,
@@ -51,7 +53,7 @@ class ConversationItemTouchCallback @Inject constructor(
      */
     var adapter: RecyclerView.Adapter<*>? = null
 
-    private val paint = Paint()
+    private val backgroundPaint = Paint()
     private var rightAction = 0
     private var rightIcon: Bitmap? = null
     private var leftAction = 0
@@ -61,12 +63,13 @@ class ConversationItemTouchCallback @Inject constructor(
 
     init {
         disposables += colors.themeObservable()
-                .doOnNext { theme -> paint.color = theme.theme }
+                .doOnNext { theme -> backgroundPaint.color = theme.theme }
                 .subscribeOn(Schedulers.io())
                 .subscribe()
 
         disposables += Observables
-                .combineLatest(prefs.swipeRight.asObservable(), prefs.swipeLeft.asObservable(), colors.themeObservable()) { right, left, theme ->
+                .combineLatest(prefs.swipeRight.asObservable(), prefs.swipeLeft.asObservable(), colors.themeObservable()
+                ) { right, left, theme ->
                     rightAction = right
                     rightIcon = iconForAction(right, theme.textPrimary)
                     leftAction = left
@@ -78,24 +81,53 @@ class ConversationItemTouchCallback @Inject constructor(
                 .subscribe()
     }
 
-    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+    override fun onMove(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
+    ): Boolean {
         return false
     }
 
-    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+    override fun onChildDraw(
+        c: Canvas,
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             val itemView = viewHolder.itemView
 
             if (dX > 0) {
-                c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(), dX, itemView.bottom.toFloat(), paint)
-                c.drawBitmap(rightIcon, itemView.left.toFloat() + iconLength,
-                        itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - (rightIcon?.height
-                                ?: 0)) / 2, paint)
+                c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
+                        dX, itemView.bottom.toFloat(), backgroundPaint)
+
+                rightIcon?.let { icon ->
+                    val availablePx = dX.toInt() - iconLength
+                    if (availablePx > 0) {
+                        val src = Rect(0, 0, min(availablePx, icon.width), icon.height)
+                        val dstTop = itemView.top + (itemView.bottom - itemView.top - (rightIcon?.height ?: 0)) / 2
+                        val dst = Rect(iconLength, dstTop, iconLength + src.width(), dstTop + src.height())
+                        c.drawBitmap(icon, src, dst, null)
+                    }
+                }
             } else if (dX < 0) {
-                c.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat(), paint)
-                c.drawBitmap(leftIcon, itemView.right.toFloat() - iconLength - (leftIcon?.width ?: 0),
-                        itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - (leftIcon?.height
-                                ?: 0)) / 2, paint)
+                c.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(),
+                        itemView.right.toFloat(), itemView.bottom.toFloat(), backgroundPaint)
+
+                leftIcon?.let { icon ->
+                    val availablePx = -dX.toInt() - iconLength
+                    if (availablePx > 0) {
+                        val src = Rect(icon.width - availablePx, 0, icon.width, icon.height)
+                        val dstTop = itemView.top + (itemView.bottom - itemView.top - (leftIcon?.height ?: 0)) / 2
+                        val dst = Rect(itemView.right - iconLength - src.width(),
+                                dstTop, itemView.right - iconLength, dstTop + src.height())
+                        c.drawBitmap(icon, src, dst, null)
+                    }
+                }
             }
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
