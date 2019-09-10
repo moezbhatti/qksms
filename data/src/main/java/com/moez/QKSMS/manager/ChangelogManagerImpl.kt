@@ -56,8 +56,7 @@ class ChangelogManagerImpl @Inject constructor(
 
     override fun getChangelog(): Single<ChangelogManager.Changelog> {
         val url = "https://firestore.googleapis.com/v1/projects/qksms-app/databases/(default)/documents/changelog"
-        val httpUrl = url.toHttpUrlOrNull()
-        val request = httpUrl?.let { Request.Builder().url(it).build() }
+        val request = url.toHttpUrlOrNull()?.let { Request.Builder().url(it).build() }
         val call = request?.let { OkHttpClient().newCall(it) }
         val adapter = moshi.adapter(ChangelogResponse::class.java)
 
