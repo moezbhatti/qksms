@@ -160,12 +160,16 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
+    // moshi
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    debugImplementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    kaptRelease "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
     implementation "com.android.billingclient:billing:1.0"
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.google.android:flexbox:0.3.1"
     implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     implementation "me.leolin:ShortcutBadger:1.1.21"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

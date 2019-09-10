@@ -20,7 +20,7 @@ buildscript {
     ext.lifecycle_version = '2.0.0'
     ext.material_version = '1.0.0'
     ext.mockito_version = '2.18.3'
-    ext.moshi_version = '1.6.0'
+    ext.moshi_version = '1.8.0'
     ext.okhttp3_version = '4.1.0'
     ext.realm_version = '5.8.0'
     ext.realm_adapters_version = '3.1.0'

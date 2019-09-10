@@ -22,6 +22,7 @@ import android.content.Context
 import com.moez.QKSMS.common.util.extensions.versionCode
 import com.moez.QKSMS.util.Preferences
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -88,15 +89,18 @@ class ChangelogManagerImpl @Inject constructor(
         prefs.changelogVersion.set(context.versionCode)
     }
 
-    private data class ChangelogResponse(
+    @JsonClass(generateAdapter = true)
+    data class ChangelogResponse(
         @Json(name = "documents") val documents: List<Document>
     )
 
-    private data class Document(
+    @JsonClass(generateAdapter = true)
+    data class Document(
         @Json(name = "fields") val fields: Changelog
     )
 
-    private data class Changelog(
+    @JsonClass(generateAdapter = true)
+    data class Changelog(
         @Json(name = "added") val added: ArrayField?,
         @Json(name = "improved") val improved: ArrayField?,
         @Json(name = "fixed") val fixed: ArrayField?,
@@ -104,19 +108,23 @@ class ChangelogManagerImpl @Inject constructor(
         @Json(name = "versionCode") val versionCode: IntegerField
     )
 
-    private data class ArrayField(
+    @JsonClass(generateAdapter = true)
+    data class ArrayField(
         @Json(name = "arrayValue") val value: ArrayValues
     )
 
-    private data class ArrayValues(
+    @JsonClass(generateAdapter = true)
+    data class ArrayValues(
         @Json(name = "values") val values: List<StringField>
     )
 
-    private data class StringField(
+    @JsonClass(generateAdapter = true)
+    data class StringField(
         @Json(name = "stringValue") val value: String
     )
 
-    private data class IntegerField(
+    @JsonClass(generateAdapter = true)
+    data class IntegerField(
         @Json(name = "integerValue") val value: String
     )
 
