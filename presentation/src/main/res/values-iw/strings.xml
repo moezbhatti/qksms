@@ -65,10 +65,8 @@
     <string name="drawer_blocking">חסימה</string>
     <string name="drawer_more">עוד</string>
     <string name="drawer_settings">הגדרות</string>
-    <string name="drawer_plus">QKSMS+‎</string>
     <string name="drawer_help">עזרה ומשוב</string>
     <string name="drawer_invite">הזמנת חברים</string>
-    <string name="drawer_plus_banner_title">QKSMS+‎</string>
     <string name="drawer_plus_banner_summary">לחשוף תכונות מדהימות ולתמוך בפיתוח</string>
     <string name="rate_title">QKSMS נושא חן בעיניך?</string>
     <string name="rate_summary">נשמח לקבל ממך דירוג ב־Google Play!</string>
@@ -172,6 +170,7 @@
     <string name="scheduled_empty_message_1">היי! מתי יום ההולדת שלך שוב?</string>
     <string name="scheduled_empty_message_2">ב־23 בדצמבר</string>
     <string name="scheduled_empty_message_3">מזל טוב! תראה איך החברות בינינו פורחת, זכרתי את יום ההולדת שלך</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">לשליחה ב־23 בדצמבר</string>
     <string name="scheduled_compose_cd">תזמון הודעה</string>
     <string name="scheduled_options_title">הודעה מתוזמנת</string>
@@ -204,10 +203,6 @@
     <string name="settings_qkreply_summary">חלונית קופצת להודעות חדשות</string>
     <string name="settings_qkreply_tap_dismiss_title">יש לגעת כדי להתעלם</string>
     <string name="settings_qkreply_tap_dismiss_summary">יש לגעת מחוץ לחלונית הקופצת כדי לסגור אותה</string>
-    <string name="settings_blocking_title">חסימה</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer?‎ (שאענה?)</string>
-    <string name="blocking_manager_sia_summary">לסנן אוטומטית הודעות ממספרים בלתי רצויים על ידי שימוש ביישומון „Should I Answer” (שאענה)</string>
     <string name="settings_delayed_title">שליחה בעיכוב</string>
     <string name="settings_swipe_actions">פעולות גרירה</string>
     <string name="settings_swipe_actions_summary">להגדיר פעולות גרירה לדיונים</string>
@@ -237,10 +232,39 @@
     <string name="settings_logging_enabled">תיעוד ניפוי שגיאות פעיל</string>
     <string name="settings_logging_disabled">תיעוד ניפוי שגיאות כבוי</string>
     <string name="settings_delay_duration_hint">משך הזמן (בשניות)</string>
-    <string name="blocking_title">בחסימה</string>
-    <string name="blocking_empty">ההתכתבויות שחסמת תופענה כאן</string>
-    <string name="blocked_unblock_dialog_title">שחרור חסימה</string>
-    <string name="blocked_unblock_dialog_message">לשחרר את החסימה של ההתכתבות הזאת?</string>
+    <string name="blocking_title">חסימה</string>
+    <string name="blocking_drop_title">השמטת הודעות</string>
+    <string name="blocking_drop_summary">להשמיט הודעות נכנסות משולחים חסומים במקום להסתיר אותן</string>
+    <string name="blocking_conversations">דיונים חסומים</string>
+    <string name="blocking_manager_title">מנהל חסימות</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">תכונת חסימה מובנית בתוך QKSMS</string>
+    <string name="blocking_manager_call_control_summary">לסנן אוטומטית את השיחות וההודעות שלך במקום אחיד ונוח! Community IQ™‎ מאפשר לך להימנע מהודעות בלתי רצויות בזכות דיווחים על מפיצי ספאם מצד הקהילה</string>
+    <string name="blocking_manager_sia_summary">לסנן אוטומטית הודעות ממספרים בלתי רצויים על ידי שימוש ביישומון „Should I Answer” (שאענה)</string>
+    <string name="blocking_manager_copy_title">העתקת מספרים חסומים</string>
+    <string name="blocking_manager_copy_summary">להמשיך אל %s כדי להעתיק לכאן את המספרים שחסומים אצלך כרגע</string>
+    <string name="blocked_numbers_title">מספרים חסומים</string>
+    <string name="blocked_numbers_empty">המספרים שחסמת יופיעו כאן</string>
+    <string name="blocked_numbers_add_cd">חסימת מספר חדש</string>
+    <string name="blocked_numbers_dialog_title">חסימת הודעות מאת</string>
+    <string name="blocked_numbers_dialog_hint">מספר טלפון</string>
+    <string name="blocked_numbers_dialog_block">חסימה</string>
+    <string name="blocked_messages_title">הודעות חסומות</string>
+    <string name="blocked_messages_empty">ההודעות שנחסמו תופענה להלן</string>
+    <string name="blocking_block_title">חסימה</string>
+    <string name="blocking_unblock_title">שחרור</string>
+    <plurals name="blocking_block_external">
+        <item quantity="one">להמשיך אל %s ולחסום את המספר הזה</item>
+        <item quantity="two">להמשיך אל %s ולחסום את המספרים האלו</item>
+        <item quantity="many">להמשיך אל %s ולחסום את המספרים האלו</item>
+        <item quantity="other">להמשיך אל %s ולחסום את המספרים האלו</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="one">להמשיך אל %s ולאפשר את המספר הזה</item>
+        <item quantity="two">להמשיך אל %s ולאפשר את המספרים האלו</item>
+        <item quantity="many">להמשיך אל %s ולאפשר את המספרים האלו</item>
+        <item quantity="other">להמשיך אל %s ולאפשר את המספרים האלו</item>
+    </plurals>
     <string name="about_title">על אודות</string>
     <string name="about_version_title">גרסה</string>
     <string name="about_developer_title">מפתח</string>
@@ -251,7 +275,9 @@
     <string name="about_copyright_title">זכויות יוצרים</string>
     <string name="qksms_plus_description_title">לתמיכה בפיתוח, ניתן לשחרר את הכול</string>
     <string name="qksms_plus_description_summary">באפשרותך להציל מפתח גווע ברעב עבור %s בלבד</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">שדרוג לכל החיים תמורת %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">שחרור ותרומה תמורת %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">תודה לך על תמיכתך ב־QKSMS!</string>
     <string name="qksms_plus_thanks_summary">כעת יש לך גישה לכל התכונות של QKSMS+‎</string>
@@ -287,7 +313,6 @@
     <string name="qkreply_menu_collapse">להציג פחות</string>
     <string name="qkreply_menu_view">פתיחת דיון</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+‎</string>
     <string name="theme_hex">הקסה</string>
     <string name="theme_apply">החלה</string>
     <string-array name="notification_actions">
@@ -297,13 +322,14 @@
         <item>התקשרות</item>
         <item>מחיקה</item>
     </string-array>
+    <string name="button_yes">כן</string>
+    <string name="button_continue">המשך</string>
     <string name="button_cancel">ביטול</string>
     <string name="button_delete">מחיקה</string>
     <string name="button_save">שמירה</string>
     <string name="button_stop">עצירה</string>
     <string name="button_more">עוד</string>
     <string name="button_set">הגדרה</string>
-    <string name="button_unblock">שחרור חסימה</string>
     <string name="button_undo">ביטול</string>
     <string name="toast_copied">הועתק</string>
     <string name="toast_archived">דיון בארכיון</string>

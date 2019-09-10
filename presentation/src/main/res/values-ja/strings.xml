@@ -65,10 +65,8 @@
     <string name="drawer_blocking">ブロック</string>
     <string name="drawer_more">もっと</string>
     <string name="drawer_settings">設定</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">ヘルプとフィードバック</string>
     <string name="drawer_invite">友達を招待する</string>
-    <string name="drawer_plus_banner_title">QKSMSプラス</string>
     <string name="drawer_plus_banner_summary">驚くべき新機能のロックを解除し、開発をサポート</string>
     <string name="rate_title">QKSMS をお楽みいただいていますか?</string>
     <string name="rate_summary">Google Play で愛を共有して私たちを評価してください!</string>
@@ -166,6 +164,7 @@
     <string name="scheduled_empty_message_1">ちょっと！あなたの誕生日はいつでしたか？</string>
     <string name="scheduled_empty_message_2">12月23日です</string>
     <string name="scheduled_empty_message_3">お誕生日おめでとうございます！ 私はあなたの誕生日を思い出して、何という素晴らしい友達なのか見て</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">12月23日に発送</string>
     <string name="scheduled_compose_cd">メッセージをスケジュールする</string>
     <string name="scheduled_options_title">スケジュールされたメッセージ</string>
@@ -198,10 +197,6 @@
     <string name="settings_qkreply_summary">新しいメッセージのポップアップ</string>
     <string name="settings_qkreply_tap_dismiss_title">タップして閉じる</string>
     <string name="settings_qkreply_tap_dismiss_summary">ポップアップの外側をタップすると閉じます</string>
-    <string name="settings_blocking_title">ブロッキング</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer?</string>
-    <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルタします</string>
     <string name="settings_delayed_title">遅延送信</string>
     <string name="settings_swipe_actions">スワイプアクション</string>
     <string name="settings_swipe_actions_summary">会話のスワイプアクションを設定する</string>
@@ -232,9 +227,32 @@
     <string name="settings_logging_disabled">デバッグログを無効にする</string>
     <string name="settings_delay_duration_hint">期間を入力してください (秒)</string>
     <string name="blocking_title">ブロック</string>
-    <string name="blocking_empty">ブロックした会話がここに表示されます</string>
-    <string name="blocked_unblock_dialog_title">ブロックを解除</string>
-    <string name="blocked_unblock_dialog_message">この会話のブロックを解除しますか?</string>
+    <string name="blocking_drop_title">メッセージをドロップ</string>
+    <string name="blocking_drop_summary">ブロックした送信者からの受信メッセージを非表示にする代わりにドロップします</string>
+    <string name="blocking_conversations">ブロックした会話</string>
+    <string name="blocking_manager_title">ブロッキングマネージャー</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">QKSMS の内蔵ブロック機能</string>
+    <string name="blocking_manager_call_control_summary">一か所で便利に通話とメッセージを自動的にフィルタリングします! Community IQ™を使用すると、コミュニティで知られているスパマーからの不要なメッセージを防ぐことができます</string>
+    <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルタします</string>
+    <string name="blocking_manager_copy_title">ブロックした番号をコピー</string>
+    <string name="blocking_manager_copy_summary">既存のブロックした番号のコピーを %s まで続けます</string>
+    <string name="blocked_numbers_title">ブロックした番号</string>
+    <string name="blocked_numbers_empty">ブロックした番号がここに表示されます</string>
+    <string name="blocked_numbers_add_cd">新しい番号をブロック</string>
+    <string name="blocked_numbers_dialog_title">次からのテキストをブロック</string>
+    <string name="blocked_numbers_dialog_hint">電話番号</string>
+    <string name="blocked_numbers_dialog_block">ブロック</string>
+    <string name="blocked_messages_title">ブロックしたメッセージ</string>
+    <string name="blocked_messages_empty">ブロックしたメッセージがここに表示されます</string>
+    <string name="blocking_block_title">ブロック</string>
+    <string name="blocking_unblock_title">ブロック解除</string>
+    <plurals name="blocking_block_external">
+        <item quantity="other">%s まで続けてこの番号をブロック</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="other">%s まで続けてこの番号を許可</item>
+    </plurals>
     <string name="about_title">このアプリについて</string>
     <string name="about_version_title">バージョン</string>
     <string name="about_developer_title">開発者</string>
@@ -245,7 +263,9 @@
     <string name="about_copyright_title">著作権</string>
     <string name="qksms_plus_description_title">開発をサポートして、すべてのロックを解除します</string>
     <string name="qksms_plus_description_summary">ちょうど %s 人の飢えている開発者を助けることができます</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">%1$s %2$s のライフタイムのアップグレード</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">%1$s %2$s のロック解除と寄付</string>
     <string name="qksms_plus_thanks_title">QKSMS を支援いただきありがとうございます!</string>
     <string name="qksms_plus_thanks_summary">QKSMS+ のすべての機能にアクセスできます</string>
@@ -281,7 +301,6 @@
     <string name="qkreply_menu_collapse">少なく表示</string>
     <string name="qkreply_menu_view">会話を開く</string>
     <string name="theme_material">マテリアル</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">16 進数</string>
     <string name="theme_apply">適用</string>
     <string-array name="notification_actions">
@@ -291,13 +310,14 @@
         <item>電話</item>
         <item>削除</item>
     </string-array>
+    <string name="button_yes">はい</string>
+    <string name="button_continue">続行</string>
     <string name="button_cancel">キャンセル</string>
     <string name="button_delete">削除</string>
     <string name="button_save">保存する</string>
     <string name="button_stop">やめる</string>
     <string name="button_more">さらに</string>
     <string name="button_set">据える</string>
-    <string name="button_unblock">ブロックを解除</string>
     <string name="button_undo">元に戻す</string>
     <string name="toast_copied">コピーしました</string>
     <string name="toast_archived">会話をアーカイブしました</string>

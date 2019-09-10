@@ -65,10 +65,8 @@
     <string name="drawer_blocking">Estäminen</string>
     <string name="drawer_more">Lisää</string>
     <string name="drawer_settings">Asetukset</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Apu ja palaute</string>
     <string name="drawer_invite">Invite friends</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
     <string name="rate_title">Nautitko QKSMS:tä?</string>
     <string name="rate_summary">Jaa rakkautta ja arvostele meidät Google Playssä!</string>
@@ -168,6 +166,7 @@
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
     <string name="scheduled_empty_message_2">Se on joulukuun 23. päivänä</string>
     <string name="scheduled_empty_message_3">Hyvää syntymäpäivää! Katso miten hyvä ystävä olen, muistan syntymäpäiväsi</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Lähetetään joulukuun 23. päivänä</string>
     <string name="scheduled_compose_cd">Ajoita viesti</string>
     <string name="scheduled_options_title">Ajoitettu viesti</string>
@@ -200,10 +199,6 @@
     <string name="settings_qkreply_summary">Popup for new messages</string>
     <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-    <string name="settings_blocking_title">Blocking</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer?</string>
-    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
     <string name="settings_delayed_title">Lykätty lähetys</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -215,8 +210,8 @@
         <item>Archive</item>
         <item>Delete</item>
         <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Mark as read</item>
+        <item>Mark as unread</item>
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
@@ -234,9 +229,34 @@
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">Syötä kesto (sekuntia)</string>
     <string name="blocking_title">Blocking</string>
-    <string name="blocking_empty">Your blocked conversations will appear here</string>
-    <string name="blocked_unblock_dialog_title">Unblock</string>
-    <string name="blocked_unblock_dialog_message">Would you like to unblock this conversation?</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="one">Continue to %s and block this number</item>
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="one">Continue to %s and allow this number</item>
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">Tietoja</string>
     <string name="about_version_title">Versio</string>
     <string name="about_developer_title">Kehittäjä</string>
@@ -247,11 +267,13 @@
     <string name="about_copyright_title">Tekijänoikeus</string>
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Kiitos kun tuit QKSMS:ää!</string>
     <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, a donation would be highly appreciated.</string>
     <string name="qksms_plus_donate">Lahjoita PayPalilla</string>
     <string name="qksms_plus_coming_soon">Tulossa pian</string>
     <string name="qksms_plus_themes_title">Premium-teemat</string>
@@ -283,7 +305,6 @@
     <string name="qkreply_menu_collapse">Näytä vähemmän</string>
     <string name="qkreply_menu_view">Avaa keskustelu</string>
     <string name="theme_material">Materiaali</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Käytä</string>
     <string-array name="notification_actions">
@@ -293,13 +314,14 @@
         <item>Soita</item>
         <item>Delete</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">Peruuta</string>
     <string name="button_delete">Poista</string>
     <string name="button_save">Tallenna</string>
     <string name="button_stop">Stop</string>
     <string name="button_more">Lisää</string>
     <string name="button_set">Aseta</string>
-    <string name="button_unblock">Poista esto</string>
     <string name="button_undo">Peru</string>
     <string name="toast_copied">Kopioitu</string>
     <string name="toast_archived">Arkistoidut keskustelut</string>

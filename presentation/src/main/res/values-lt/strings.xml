@@ -41,8 +41,8 @@
     <string name="main_menu_delete">Ištrinti</string>
     <string name="main_menu_pin">Pin to top</string>
     <string name="main_menu_unpin">Unpin</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_read">Mark as read</string>
+    <string name="main_menu_unread">Mark as unread</string>
     <string name="main_menu_block">Blokuoti</string>
     <string name="main_syncing">Syncing messages&#8230;</string>
     <string name="main_sender_you">Tu: %s</string>
@@ -65,10 +65,8 @@
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">Daugiau</string>
     <string name="drawer_settings">Nustatymai</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Pagalba ir atsiliepimai</string>
     <string name="drawer_invite">Invite friends</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
     <string name="rate_title">Patinka QKSMS?</string>
     <string name="rate_summary">Įvertink mūsų programėlę Google Play!</string>
@@ -172,6 +170,7 @@
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
     <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
     <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
     <string name="scheduled_compose_cd">Schedule a message</string>
     <string name="scheduled_options_title">Scheduled message</string>
@@ -204,10 +203,6 @@
     <string name="settings_qkreply_summary">Iššokantis langas naujiems pranešimams</string>
     <string name="settings_qkreply_tap_dismiss_title">Spustelėkite, kad atmestumėte</string>
     <string name="settings_qkreply_tap_dismiss_summary">Spustelėkite bet kur už iššokamo lango, kad išjungtumėte</string>
-    <string name="settings_blocking_title">Blokavimas</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Ar reikia atsakyti?</string>
-    <string name="blocking_manager_sia_summary">Automatiškai filtruoti žinutes nuo nežinomų numerių su „Ar reikia atsakyti“ programėle</string>
     <string name="settings_delayed_title">Delayed sending</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -219,8 +214,8 @@
         <item>Archive</item>
         <item>Delete</item>
         <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Mark as read</item>
+        <item>Mark as unread</item>
     </string-array>
     <string name="settings_delivery_title">Žinučių pristatymo patvirtinimai</string>
     <string name="settings_delivery_summary">Patvirtinti, kad pranešimai buvo sėkmingai išsiųsti</string>
@@ -237,10 +232,39 @@
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">Įvesti trukmę (sek.)</string>
-    <string name="blocking_title">Blokavimas</string>
-    <string name="blocking_empty">Užblokuoti pokalbiai bus rodomi čia</string>
-    <string name="blocked_unblock_dialog_title">Atblokuoti</string>
-    <string name="blocked_unblock_dialog_message">Ar norite atblokuoti šį pokalbį?</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">Automatiškai filtruoti žinutes nuo nežinomų numerių su „Ar reikia atsakyti“ programėle</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="one">Continue to %s and block this number</item>
+        <item quantity="few">Continue to %s and block these numbers</item>
+        <item quantity="many">Continue to %s and block these numbers</item>
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="one">Continue to %s and allow this number</item>
+        <item quantity="few">Continue to %s and allow these numbers</item>
+        <item quantity="many">Continue to %s and allow these numbers</item>
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">Apie</string>
     <string name="about_version_title">Versija</string>
     <string name="about_developer_title">Kūrėjas</string>
@@ -251,7 +275,9 @@
     <string name="about_copyright_title">Autorinės teisės</string>
     <string name="qksms_plus_description_title">Remti programos vystymąsi, atrakinti viską</string>
     <string name="qksms_plus_description_summary">Galite išsaugoti badaujantį programėlės kūrėją tik už %s</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Amžininis programėlės funkcijų atrakinimas %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Atrakinti + aukoti %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Ačiū už paramą!</string>
     <string name="qksms_plus_thanks_summary">Dabar jūs turite prieigą prie visoms QKSMS+ funkcijoms</string>
@@ -287,23 +313,23 @@
     <string name="qkreply_menu_collapse">Rodyti mažiau</string>
     <string name="qkreply_menu_view">Atidaryti pokalbį</string>
     <string name="theme_material">„Material“ dizainas</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEX kodas</string>
     <string name="theme_apply">Pritaikyti</string>
     <string-array name="notification_actions">
         <item>None</item>
-        <item>Mark read</item>
+        <item>Mark as read</item>
         <item>Reply</item>
         <item>Call</item>
         <item>Delete</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">Atšaukti</string>
     <string name="button_delete">Ištrinti</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_more">Daugiau</string>
     <string name="button_set">Padaryti</string>
-    <string name="button_unblock">Atblokuoti</string>
     <string name="button_undo">Anuliuoti</string>
     <string name="toast_copied">Nukopijuota</string>
     <string name="toast_archived">Archyvuotas pokalbis</string>

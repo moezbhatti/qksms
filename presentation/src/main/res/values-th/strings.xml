@@ -65,10 +65,8 @@
     <string name="drawer_blocking">บล็อก</string>
     <string name="drawer_more">เพิ่มเติม</string>
     <string name="drawer_settings">การตั้งค่า</string>
-    <string name="drawer_plus">QKSMS +</string>
     <string name="drawer_help">ช่วยเหลือ &amp; ข้อคิดเห็น</string>
     <string name="drawer_invite">เชิญเพื่อน</string>
-    <string name="drawer_plus_banner_title">QKSMS +</string>
     <string name="drawer_plus_banner_summary">ปลดล็อคฟีเจอร์ใหม่ ๆ และสนับสนุนการพัฒนา</string>
     <string name="rate_title">ชอบ QKSMS ไหม?</string>
     <string name="rate_summary">แชร์และให้คะแนนเราบน Google Play!</string>
@@ -166,6 +164,7 @@
     <string name="scheduled_empty_message_1">วันเกิดของคุณอีกครั้งเมื่อไหร่</string>
     <string name="scheduled_empty_message_2">วันที่ 23 นี้ธันวาคม</string>
     <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
     <string name="scheduled_compose_cd">Schedule a message</string>
     <string name="scheduled_options_title">Scheduled message</string>
@@ -198,10 +197,6 @@
     <string name="settings_qkreply_summary">ป๊อปอัพข้อความใหม่</string>
     <string name="settings_qkreply_tap_dismiss_title">แตะเพื่อยกเลิก</string>
     <string name="settings_qkreply_tap_dismiss_summary">แตะนอกป๊อปอัพเพื่อปิด</string>
-    <string name="settings_blocking_title">การปิดกั้น</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">ควรตอบกลับหรือไม่</string>
-    <string name="blocking_manager_sia_summary">กรองข้อความจากหมายเลขที่ไม่พึงประสงค์ โดยใช้แอพควรตอบกลับหรือไม่</string>
     <string name="settings_delayed_title">การส่งแบบล่าช้า</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -213,8 +208,8 @@
         <item>Archive</item>
         <item>Delete</item>
         <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Mark as read</item>
+        <item>Mark as unread</item>
     </string-array>
     <string name="settings_delivery_title">ยืนยันการส่ง</string>
     <string name="settings_delivery_summary">ยืนยันว่า ส่งข้อความเรียบร้อยแล้ว</string>
@@ -231,10 +226,33 @@
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">ระยะเวลาการป้อน (วินาที)</string>
-    <string name="blocking_title">การปิดกั้น</string>
-    <string name="blocking_empty">สนทนาของคุณที่ถูกปิดกั้นจะปรากฏที่นี่</string>
-    <string name="blocked_unblock_dialog_title">ยกเลิกการปิดกั้น</string>
-    <string name="blocked_unblock_dialog_message">คุณต้องการปิดกั้นการสนทนานี้หรือไม่</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">กรองข้อความจากหมายเลขที่ไม่พึงประสงค์ โดยใช้แอพควรตอบกลับหรือไม่</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">เกี่ยวกับ</string>
     <string name="about_version_title">เวอร์ชัน</string>
     <string name="about_developer_title">นักพัฒนา</string>
@@ -245,7 +263,9 @@
     <string name="about_copyright_title">ลิขสิทธิ์</string>
     <string name="qksms_plus_description_title">สนับสนุนการพัฒนา หรือปลดล็อคทุกอย่าง</string>
     <string name="qksms_plus_description_summary">คุณสามารถช่วยเหลือนักพัฒนาเหล่าได้เพียง %s</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">อัพเกรดตลอดอายุการใช้งานสำหรับ %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">ปลดล็อค + บริจาค %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">ขอบคุณสำหรับการสนับสนุน QKSMS</string>
     <string name="qksms_plus_thanks_summary">ตอนนี้คุณสามารถเข้าถึงคุณสมบัติทั้งหมดของ QKSMS+ ได้แล้ว</string>
@@ -281,23 +301,23 @@
     <string name="qkreply_menu_collapse">แสดงน้อยลง</string>
     <string name="qkreply_menu_view">เริ่มการสนทนา</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS +</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">ตกลง</string>
     <string-array name="notification_actions">
         <item>None</item>
-        <item>Mark read</item>
+        <item>Mark as read</item>
         <item>Reply</item>
         <item>Call</item>
         <item>Delete</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">ยกเลิก</string>
     <string name="button_delete">ลบ</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_more">เพิ่มเติม</string>
     <string name="button_set">ตั้งค่า</string>
-    <string name="button_unblock">ยกเลิกการปิดกั้น</string>
     <string name="button_undo">ย้อนกลับ</string>
     <string name="toast_copied">คัดลอกแล้ว</string>
     <string name="toast_archived">จัดเก็บการสนทนาแล้ว</string>

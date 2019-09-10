@@ -65,10 +65,8 @@
     <string name="drawer_blocking">Blokovanie</string>
     <string name="drawer_more">Viac</string>
     <string name="drawer_settings">Nastavenia</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Nápoveda &amp; spätná väzba</string>
     <string name="drawer_invite">Pozvať priateľov</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">Odomknutie úžasné nové funkcie a podporte vývoj</string>
     <string name="rate_title">Máte radi QKSMS?</string>
     <string name="rate_summary">Podeľte sa o trochu lásky a ohodnoťte nás na Google Play!</string>
@@ -172,6 +170,7 @@
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
     <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
     <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
     <string name="scheduled_compose_cd">Schedule a message</string>
     <string name="scheduled_options_title">Scheduled message</string>
@@ -204,10 +203,6 @@
     <string name="settings_qkreply_summary">Popup for new messages</string>
     <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-    <string name="settings_blocking_title">Blokované</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer?</string>
-    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
     <string name="settings_delayed_title">Delayed sending</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -219,8 +214,8 @@
         <item>Archivovať</item>
         <item>Odstrániť</item>
         <item>Zavolať</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Mark as read</item>
+        <item>Mark as unread</item>
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
@@ -237,10 +232,39 @@
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-    <string name="blocking_title">Blokované</string>
-    <string name="blocking_empty">Blokované konverzácie sa zobrazia tu</string>
-    <string name="blocked_unblock_dialog_title">Odblokovať</string>
-    <string name="blocked_unblock_dialog_message">Chcete odblokovať túto konverzáciu?</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="one">Continue to %s and block this number</item>
+        <item quantity="few">Continue to %s and block these numbers</item>
+        <item quantity="many">Continue to %s and block these numbers</item>
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="one">Continue to %s and allow this number</item>
+        <item quantity="few">Continue to %s and allow these numbers</item>
+        <item quantity="many">Continue to %s and allow these numbers</item>
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">O aplikácii</string>
     <string name="about_version_title">Verzia</string>
     <string name="about_developer_title">Vývojár</string>
@@ -251,11 +275,13 @@
     <string name="about_copyright_title">Autorské práva</string>
     <string name="qksms_plus_description_title">Support development, unlock everything</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
     <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
-    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, a donation would be highly appreciated.</string>
     <string name="qksms_plus_donate">Donate via PayPal</string>
     <string name="qksms_plus_coming_soon">Už čoskoro</string>
     <string name="qksms_plus_themes_title">Premium themes</string>
@@ -287,7 +313,6 @@
     <string name="qkreply_menu_collapse">Zobraziť menej</string>
     <string name="qkreply_menu_view">Otvoriť konverzáciu</string>
     <string name="theme_material">Materiál</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Použiť</string>
     <string-array name="notification_actions">
@@ -297,13 +322,14 @@
         <item>Call</item>
         <item>Delete</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_more">More</string>
     <string name="button_set">Set</string>
-    <string name="button_unblock">Odblokovať</string>
     <string name="button_undo">Undo</string>
     <string name="toast_copied">Copied</string>
     <string name="toast_archived">Archived conversation</string>

@@ -65,10 +65,8 @@
     <string name="drawer_blocking">Bloqueando</string>
     <string name="drawer_more">Más</string>
     <string name="drawer_settings">Ajustes</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Ayuda &amp; comentarios</string>
     <string name="drawer_invite">Invitar amigos</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">Desbloquea nuevas e impresionantes características y apoya el desarrollo</string>
     <string name="rate_title">¿Te diviertes con QKSMS?</string>
     <string name="rate_summary">Comparte un poco de amor y puntúanos en Google Play!</string>
@@ -168,6 +166,7 @@
     <string name="scheduled_empty_message_1">¡Hola! ¿Cuándo será tu cumpleaños de nuevo?</string>
     <string name="scheduled_empty_message_2">Es el 23 de Diciembre</string>
     <string name="scheduled_empty_message_3">¡Feliz cumpleaños! Mira qué gran amigo soy, recordando tu cumpleaños</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Enviando el 23 de Diciembre</string>
     <string name="scheduled_compose_cd">Programar un mensaje</string>
     <string name="scheduled_options_title">Mensaje programado</string>
@@ -200,10 +199,6 @@
     <string name="settings_qkreply_summary">Ventana emergente para los nuevos mensajes</string>
     <string name="settings_qkreply_tap_dismiss_title">Tocar para descartar</string>
     <string name="settings_qkreply_tap_dismiss_summary">Toque fuera de la ventana emergente para cerrarla</string>
-    <string name="settings_blocking_title">Bloquedo</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">¿Debo responder?</string>
-    <string name="blocking_manager_sia_summary">Filtra automáticamente los mensajes de números no solicitados mediante la aplicación \"¿Debo responder?\"</string>
     <string name="settings_delayed_title">Retraso en el envío</string>
     <string name="settings_swipe_actions">Acciones al deslizar</string>
     <string name="settings_swipe_actions_summary">Configurar acciones de deslizamiento para conversaciones</string>
@@ -233,10 +228,35 @@
     <string name="settings_logging_enabled">Registro de depuración activado</string>
     <string name="settings_logging_disabled">Registro de depuración desactivado</string>
     <string name="settings_delay_duration_hint">Introduzca la duración (segundos)</string>
-    <string name="blocking_title">Bloqueado</string>
-    <string name="blocking_empty">Sus conversaciones bloqueadas aparecerán aquí</string>
-    <string name="blocked_unblock_dialog_title">Desbloquear</string>
-    <string name="blocked_unblock_dialog_message">¿Quieres desbloquear esta conversación?</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">Filtra automáticamente los mensajes de números no solicitados mediante la aplicación \"¿Debo responder?\"</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="one">Continue to %s and block this number</item>
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="one">Continue to %s and allow this number</item>
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">Acerca de</string>
     <string name="about_version_title">Versión</string>
     <string name="about_developer_title">Desarrollador</string>
@@ -247,7 +267,9 @@
     <string name="about_copyright_title">Derechos de autor</string>
     <string name="qksms_plus_description_title">Apoye el desarrollo, desbloquee todo</string>
     <string name="qksms_plus_description_summary">Puedes salvar a un desarrollador hambriento por sólo %s</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Actualización de por vida por %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Desbloquear + donación %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Gracias por apoyar a QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Ahora tienes acceso a todas las funciones de QKSMS +</string>
@@ -283,7 +305,6 @@
     <string name="qkreply_menu_collapse">Mostrar menos</string>
     <string name="qkreply_menu_view">Abrir conversación</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEXAGONAL</string>
     <string name="theme_apply">Aplicar</string>
     <string-array name="notification_actions">
@@ -293,13 +314,14 @@
         <item>Llamar</item>
         <item>Eliminar</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_delete">Eliminar</string>
     <string name="button_save">Guardar</string>
     <string name="button_stop">Detener</string>
     <string name="button_more">Más</string>
     <string name="button_set">Establecer</string>
-    <string name="button_unblock">Desbloquear</string>
     <string name="button_undo">Deshacer</string>
     <string name="toast_copied">Copiado</string>
     <string name="toast_archived">Conversación archivada</string>

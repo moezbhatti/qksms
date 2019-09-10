@@ -65,10 +65,8 @@
     <string name="drawer_blocking">Chặn liên hệ</string>
     <string name="drawer_more">Xem thêm</string>
     <string name="drawer_settings">Cài đặt</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">Giúp đỡ và phản hồi</string>
     <string name="drawer_invite">Giới thiệu đến bạn bè</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">Mở khoá những tính năng đặc sắc và hỗ trợ cho nhà phát triển</string>
     <string name="rate_title">Bạn có thích QKSMS không?</string>
     <string name="rate_summary">Chia sẻ và vote chúng tôi trên Google Play!</string>
@@ -166,6 +164,7 @@
     <string name="scheduled_empty_message_1">Này, khi nào thì tới sinh nhật bạn ?</string>
     <string name="scheduled_empty_message_2">Vào ngày 23 tháng 12 đó</string>
     <string name="scheduled_empty_message_3">Chúc mừng sinh nhật! Nhìn xem, tôi đúng là một người bạn tuyệt vời, nhớ ngày sinh nhật của bạn đấy</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sẽ gửi vào ngày 23 tháng 12</string>
     <string name="scheduled_compose_cd">Hẹn giờ tin nhắn</string>
     <string name="scheduled_options_title">Tin nhắn đã hẹn giờ</string>
@@ -198,10 +197,6 @@
     <string name="settings_qkreply_summary">Hiển thị popup khi có tin nhắn mới</string>
     <string name="settings_qkreply_tap_dismiss_title">Chạm để bỏ qua</string>
     <string name="settings_qkreply_tap_dismiss_summary">Chạm vào phía ngoài của hộp thoại để đóng</string>
-    <string name="settings_blocking_title">Chặn liên hệ</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Bộ lọc liên hệ giả mạo</string>
-    <string name="blocking_manager_sia_summary">Tự động lọc tin nhắn từ số điện thoại không mong muốn bằng cách sử dụng ứng dụng \"Should I Answer\"</string>
     <string name="settings_delayed_title">Trì hoãn gửi tin</string>
     <string name="settings_swipe_actions">Các hành động vuốt</string>
     <string name="settings_swipe_actions_summary">Tuỳ chỉnh hành động vuốt cho cuộc trò chuyện</string>
@@ -231,10 +226,33 @@
     <string name="settings_logging_enabled">Đã bật bản ghi gỡ lỗi</string>
     <string name="settings_logging_disabled">Đã tắt bản ghi gỡ lỗi</string>
     <string name="settings_delay_duration_hint">Nhập khoảng thời gian (giây)</string>
-    <string name="blocking_title">Chặn liên hệ</string>
-    <string name="blocking_empty">Liên hệ bị chặn sẽ hiện ở đây</string>
-    <string name="blocked_unblock_dialog_title">Bỏ chặn liên hệ</string>
-    <string name="blocked_unblock_dialog_message">Bạn có muốn bỏ chặn liên hệ này ?</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Loại bỏ tin nhắn</string>
+    <string name="blocking_drop_summary">Loại bỏ các tin nhắn được gửi tới từ người gửi đã chặn thay vì ẩn chúng</string>
+    <string name="blocking_conversations">Các cuộc trò chuyện đã chặn</string>
+    <string name="blocking_manager_title">Quản lý danh sách chặn</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Chức năng chặn tích hợp sẵn trong QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Tự động lọc các cuộc gọi và tin nhắn của bạn ở một nơi thuận tiện! Cộng đồng IQ™ cho phép bạn ngăn chặn các tin nhắn từ những kẻ gửi tin rác được đóng góp bởi cộng đồng</string>
+    <string name="blocking_manager_sia_summary">Tự động lọc tin nhắn từ số điện thoại không mong muốn bằng cách sử dụng ứng dụng \"Should I Answer\"</string>
+    <string name="blocking_manager_copy_title">Sao chép số đã chặn</string>
+    <string name="blocking_manager_copy_summary">Tiếp tục %s sao chép vào các số đã chặn hiện có của bạn</string>
+    <string name="blocked_numbers_title">Các số đã chặn</string>
+    <string name="blocked_numbers_empty">Các số bạn đã chặn sẽ xuất hiện ở đây</string>
+    <string name="blocked_numbers_add_cd">Chặn một số mới</string>
+    <string name="blocked_numbers_dialog_title">Chặn văn bản từ</string>
+    <string name="blocked_numbers_dialog_hint">Số điện thoại</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Các tin nhắn đã chặn</string>
+    <string name="blocked_messages_empty">Các tin nhắn bạn đã chặn sẽ xuất hiện ở đây</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="other">Tiếp tục %s và chặn các số này</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="other">Tiếp tục %s và cho phép các số này</item>
+    </plurals>
     <string name="about_title">Giới thiệu</string>
     <string name="about_version_title">Phiên bản</string>
     <string name="about_developer_title">Nhà phát triển</string>
@@ -245,7 +263,9 @@
     <string name="about_copyright_title">Bản quyền</string>
     <string name="qksms_plus_description_title">Hỗ trợ phát triển, mở khóa mọi thứ</string>
     <string name="qksms_plus_description_summary">Bạn có thể ủng hộ chúng tôi chỉ với %s</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Nâng cấp trọn đời với %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Mở khoá và tài trợ với %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Cảm ơn bạn đã ủng hộ QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Bây giờ bạn có thể sử dụng tất cả các chức năng của QKSMS+</string>
@@ -281,7 +301,6 @@
     <string name="qkreply_menu_collapse">Hiển thị ít hơn</string>
     <string name="qkreply_menu_view">Mở cuộc trò chuyện</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">Hệ 16</string>
     <string name="theme_apply">Áp dụng</string>
     <string-array name="notification_actions">
@@ -291,13 +310,14 @@
         <item>Gọi</item>
         <item>Xoá</item>
     </string-array>
+    <string name="button_yes">Đồng ý</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">Hủy</string>
     <string name="button_delete">Xóa</string>
     <string name="button_save">Lưu</string>
     <string name="button_stop">Dừng</string>
     <string name="button_more">Xem thêm</string>
     <string name="button_set">Chọn</string>
-    <string name="button_unblock">Bỏ chặn</string>
     <string name="button_undo">Undo</string>
     <string name="toast_copied">Đã sao chép</string>
     <string name="toast_archived">Cuộc trò chuyện đã được lưu trữ</string>

@@ -27,7 +27,7 @@
     <string name="title_notification_prefs">알림</string>
     <string name="title_theme">테마</string>
     <string name="title_conversations">수신함에서 찾기...</string>
-    <string name="title_compose">문자작성</string>
+    <string name="title_compose">이름 또는 전화번호 입력</string>
     <string name="setup_skip">건너뛰기</string>
     <string name="setup_next">계속</string>
     <string name="menu_call">전화</string>
@@ -65,10 +65,8 @@
     <string name="drawer_blocking">차단</string>
     <string name="drawer_more">더 보기</string>
     <string name="drawer_settings">설정</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">도움말 &amp; 피드백</string>
     <string name="drawer_invite">친구 초대하기</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">놀랍고 새로운 기능을 사용하고 개발 지원을 할 수 있습니다!</string>
     <string name="rate_title">QKSMS 앱을 즐기고 있으세요?</string>
     <string name="rate_summary">Google Play 스토어에 리뷰를 남겨주세요!</string>
@@ -168,6 +166,7 @@
     <string name="scheduled_empty_message_1">잠깐만요! 생일이 언제였나요..?</string>
     <string name="scheduled_empty_message_2">12 월 23 일 입니다</string>
     <string name="scheduled_empty_message_3">생일 축하해요! 당신의 생일을 기억하는 멋진 친구죠..?</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">12 월 23 일에 보냅니다.</string>
     <string name="scheduled_compose_cd">메시지 예약 전송하기</string>
     <string name="scheduled_options_title">예약된 메시지</string>
@@ -200,10 +199,6 @@
     <string name="settings_qkreply_summary">새로운 메시지에 대한 팝업</string>
     <string name="settings_qkreply_tap_dismiss_title">탭해서 닫기</string>
     <string name="settings_qkreply_tap_dismiss_summary">아무곳을 터치하면 팝업이 닫힙니다.</string>
-    <string name="settings_blocking_title">차단</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer 앱 </string>
-    <string name="blocking_manager_sia_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
     <string name="settings_delayed_title">전송 지연</string>
     <string name="settings_swipe_actions">쓸어넘기기 설정</string>
     <string name="settings_swipe_actions_summary">대화를 쓸어넘겼을 때 할 작업</string>
@@ -216,7 +211,7 @@
         <item>삭제</item>
         <item>전화</item>
         <item>읽음으로 표시</item>
-        <item>Mark unread</item>
+        <item>읽음으로 표시</item>
     </string-array>
     <string name="settings_delivery_title">전송 확인</string>
     <string name="settings_delivery_summary">전송 성공을 확인합니다</string>
@@ -233,10 +228,33 @@
     <string name="settings_logging_enabled">디버그 로깅 설정됨</string>
     <string name="settings_logging_disabled">디버그 로깅 해제됨</string>
     <string name="settings_delay_duration_hint">기간 (초)을 입력</string>
-    <string name="blocking_title">차단</string>
-    <string name="blocking_empty">차단된 대화가 여기에 나타납니다.</string>
-    <string name="blocked_unblock_dialog_title">차단 해제</string>
-    <string name="blocked_unblock_dialog_message">이 대화를 차단할까요?</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">정보</string>
     <string name="about_version_title">버전</string>
     <string name="about_developer_title">개발자</string>
@@ -247,7 +265,9 @@
     <string name="about_copyright_title">저작권</string>
     <string name="qksms_plus_description_title">개발을 지원하고 모든 기능을 해제하세요.</string>
     <string name="qksms_plus_description_summary">배고픈 개발자를 위해 %s 만큼만으로도 구할 수 있습니다.</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">%1$s %2$s 으로 평생 업그레이드</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">%1$s %2$s 으로 프리미엄 기능 잠금 해제 및 기부</string>
     <string name="qksms_plus_thanks_title">QKSMS를 지원해 주셔서 감사합니다!</string>
     <string name="qksms_plus_thanks_summary">이제 모든 QKSMS+ 기능에 액세스할 수 있습니다</string>
@@ -283,7 +303,6 @@
     <string name="qkreply_menu_collapse">적게 표시</string>
     <string name="qkreply_menu_view">대화 열기</string>
     <string name="theme_material">Meterial</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">적용하기</string>
     <string-array name="notification_actions">
@@ -293,13 +312,14 @@
         <item>전화하기</item>
         <item>삭제하기</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">취소</string>
     <string name="button_delete">삭제</string>
     <string name="button_save">저장</string>
     <string name="button_stop">중지</string>
     <string name="button_more">더보기</string>
     <string name="button_set">설정</string>
-    <string name="button_unblock">차단 해제</string>
     <string name="button_undo">되돌리기</string>
     <string name="toast_copied">복사됨</string>
     <string name="toast_archived">보관된 대화</string>

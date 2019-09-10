@@ -65,10 +65,8 @@
     <string name="drawer_blocking">الحظر</string>
     <string name="drawer_more">المزيد</string>
     <string name="drawer_settings">الإعدادات</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">المساعدة والتواصل مع المبرمج</string>
     <string name="drawer_invite">دعوة الأصدقاء</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">فتح ميزات رائعة جديدة ، و دعم التطوير</string>
     <string name="rate_title">هل QKSMS ممتع ؟</string>
     <string name="rate_summary">أظهر محبتك وقيّمنا على متجر Google Play!</string>
@@ -176,6 +174,7 @@
     <string name="scheduled_empty_message_1">مهلاً..متى عيد ميلادك؟</string>
     <string name="scheduled_empty_message_2">إنه في 23 ديسمبر</string>
     <string name="scheduled_empty_message_3">عيد ميلاد سعيد! أنظر ما أجمل صديقك QKSMS ، يتذكر عيد ميلادك</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">الإرسال في 23 ديسمبر</string>
     <string name="scheduled_compose_cd">جدولة رسالة</string>
     <string name="scheduled_options_title">الرسالة المجدولة</string>
@@ -208,10 +207,6 @@
     <string name="settings_qkreply_summary">نافذة منبثقة للرسائل الجديدة</string>
     <string name="settings_qkreply_tap_dismiss_title">إلمس للاستبعاد</string>
     <string name="settings_qkreply_tap_dismiss_summary">إلمس خارج المنبثقة لإغلاقها</string>
-    <string name="settings_blocking_title">الحظر</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer؟</string>
-    <string name="blocking_manager_sia_summary">الترشيح التلقائي للرسائل من الأرقام غير المرغوبة باستخدام تطبيق \"Should I Answer\"</string>
     <string name="settings_delayed_title">الإرسال المؤخَّر</string>
     <string name="settings_swipe_actions">إجراءات السَّحْب</string>
     <string name="settings_swipe_actions_summary">ضبط إجراءات السحب بالنسبة للمحادثات</string>
@@ -224,7 +219,7 @@
         <item>حذف</item>
         <item>مكالمة</item>
         <item>تعليمها مقروءة</item>
-        <item>Mark unread</item>
+        <item>Mark as unread</item>
     </string-array>
     <string name="settings_delivery_title">تأكيدات الإستلام</string>
     <string name="settings_delivery_summary">تأكيد أنه تم إرسال الرسائل بنجاح</string>
@@ -241,10 +236,43 @@
     <string name="settings_logging_enabled">تسجيل التصحيح مفعَّل</string>
     <string name="settings_logging_disabled">تسجيل التصحيح معطَّل</string>
     <string name="settings_delay_duration_hint">أدخل المدة (ثوان)</string>
-    <string name="blocking_title">الحظر</string>
-    <string name="blocking_empty">المحادثات المحظورة لديك ستظهر هنا</string>
-    <string name="blocked_unblock_dialog_title">إلغاء الحظر</string>
-    <string name="blocked_unblock_dialog_message">هل ترغب إلغاء حظر هذه المحادثة؟</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">الترشيح التلقائي للرسائل من الأرقام غير المرغوبة باستخدام تطبيق \"Should I Answer\"</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="zero">Continue to %s and block these numbers</item>
+        <item quantity="one">Continue to %s and block this number</item>
+        <item quantity="two">Continue to %s and block these numbers</item>
+        <item quantity="few">Continue to %s and block these numbers</item>
+        <item quantity="many">Continue to %s and block these numbers</item>
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="zero">Continue to %s and allow these numbers</item>
+        <item quantity="one">Continue to %s and allow this number</item>
+        <item quantity="two">Continue to %s and allow these numbers</item>
+        <item quantity="few">Continue to %s and allow these numbers</item>
+        <item quantity="many">Continue to %s and allow these numbers</item>
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">حول</string>
     <string name="about_version_title">النسخة</string>
     <string name="about_developer_title">المطوّر</string>
@@ -255,7 +283,9 @@
     <string name="about_copyright_title">حقوق النسخ</string>
     <string name="qksms_plus_description_title">دعم التطوير و فتح جميع المزايا</string>
     <string name="qksms_plus_description_summary">يمكنك إنقاذ المطوّر الجائع ب %s فقط</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">ترقية مدى الحياة ل %1$s%2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">افتح + التبرع ل %1$s%2$s</string>
     <string name="qksms_plus_thanks_title">شكراً لكم على دعم QKSMS!</string>
     <string name="qksms_plus_thanks_summary">جميع ميزات QKSMS+ متاحة لك الآن</string>
@@ -292,7 +322,6 @@
     <string name="qkreply_menu_collapse">إظهار أقل</string>
     <string name="qkreply_menu_view">فتح المحادثة</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">تطبيق</string>
     <string-array name="notification_actions">
@@ -302,13 +331,14 @@
         <item>اتصال</item>
         <item>حذف</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">إلغاء</string>
     <string name="button_delete">حذف</string>
     <string name="button_save">حفظ</string>
     <string name="button_stop">إيقاف</string>
     <string name="button_more">المزيد</string>
     <string name="button_set">تعيين</string>
-    <string name="button_unblock">إلغاء الحظر</string>
     <string name="button_undo">تراجع</string>
     <string name="toast_copied">تم النسخ</string>
     <string name="toast_archived">تم حفظ المحادثة</string>

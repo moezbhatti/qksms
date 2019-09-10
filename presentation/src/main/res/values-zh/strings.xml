@@ -65,10 +65,8 @@
     <string name="drawer_blocking">封鎖</string>
     <string name="drawer_more">更多</string>
     <string name="drawer_settings">設定</string>
-    <string name="drawer_plus">QKSMS+</string>
     <string name="drawer_help">幫助與反饋</string>
     <string name="drawer_invite">邀請朋友</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
     <string name="drawer_plus_banner_summary">解鎖驚人的新特性並支持開發</string>
     <string name="rate_title">喜歡 QKSMS？</string>
     <string name="rate_summary">在 Google Play 分享您的感受，並給我們評分！</string>
@@ -166,6 +164,7 @@
     <string name="scheduled_empty_message_1">嘿，您的生日是什麼時候？</string>
     <string name="scheduled_empty_message_2">是 12 月 23 日</string>
     <string name="scheduled_empty_message_3">生日快樂！看看我是一個多麼棒的朋友，我還記着你的生日！</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">在 12 月 23 日傳送</string>
     <string name="scheduled_compose_cd">新增排程訊息</string>
     <string name="scheduled_options_title">排程訊息</string>
@@ -198,10 +197,6 @@
     <string name="settings_qkreply_summary">彈出新訊息</string>
     <string name="settings_qkreply_tap_dismiss_title">點擊忽略</string>
     <string name="settings_qkreply_tap_dismiss_summary">在快顯視窗外點擊以關閉它</string>
-    <string name="settings_blocking_title">攔截</string>
-    <!-- Do not translate -->
-    <string name="blocking_manager_sia_title">Should I Answer?</string>
-    <string name="blocking_manager_sia_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
     <string name="settings_delayed_title">延遲發送</string>
     <string name="settings_swipe_actions">滑動操作</string>
     <string name="settings_swipe_actions_summary">配置對話的滑動操作</string>
@@ -231,10 +226,33 @@
     <string name="settings_logging_enabled">除錯日誌已啓用</string>
     <string name="settings_logging_disabled">出錯日誌已停用</string>
     <string name="settings_delay_duration_hint">輸入時長 (秒)</string>
-    <string name="blocking_title">攔截</string>
-    <string name="blocking_empty">被攔截的對話將出現在這裡</string>
-    <string name="blocked_unblock_dialog_title">取消攔截</string>
-    <string name="blocked_unblock_dialog_message">確定不再攔截這個對話嗎？</string>
+    <string name="blocking_title">Blocking</string>
+    <string name="blocking_drop_title">Drop messages</string>
+    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
+    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
+    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">Phone number</string>
+    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
+    <string name="blocking_block_title">Block</string>
+    <string name="blocking_unblock_title">Unblock</string>
+    <plurals name="blocking_block_external">
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
     <string name="about_title">關於</string>
     <string name="about_version_title">版本</string>
     <string name="about_developer_title">開發者</string>
@@ -245,7 +263,9 @@
     <string name="about_copyright_title">版權</string>
     <string name="qksms_plus_description_title">支持開發，解鎖全部功能</string>
     <string name="qksms_plus_description_summary">您可以支付 %s 來拯救一個飢餓的開發者</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">終身升級只需 %1$s %2$s</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">解鎖並捐贈只需 %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">感謝您對 QKSMS 的支持！</string>
     <string name="qksms_plus_thanks_summary">現在您可以使用 QKSMS+ 的全部功能！</string>
@@ -281,7 +301,6 @@
     <string name="qkreply_menu_collapse">顯示較少</string>
     <string name="qkreply_menu_view">打開對話</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">應用</string>
     <string-array name="notification_actions">
@@ -291,13 +310,14 @@
         <item>呼叫</item>
         <item>刪除</item>
     </string-array>
+    <string name="button_yes">Yes</string>
+    <string name="button_continue">Continue</string>
     <string name="button_cancel">取消</string>
     <string name="button_delete">刪除</string>
     <string name="button_save">儲存</string>
     <string name="button_stop">停止</string>
     <string name="button_more">更多</string>
     <string name="button_set">設置</string>
-    <string name="button_unblock">取消攔截</string>
     <string name="button_undo">復原</string>
     <string name="toast_copied">已複製</string>
     <string name="toast_archived">存檔的會話</string>
