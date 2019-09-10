@@ -30,10 +30,18 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.changehandler.AnimatorChangeHandler
 import com.moez.QKSMS.common.util.extensions.dpToPx
 
-class QkChangeHandler(removesFromViewOnPush: Boolean = true) : AnimatorChangeHandler(250, removesFromViewOnPush) {
+class QkChangeHandler @JvmOverloads constructor(
+    removesFromViewOnPush: Boolean = true
+) : AnimatorChangeHandler(250, removesFromViewOnPush) {
 
     @NonNull
-    override fun getAnimator(@NonNull container: ViewGroup, @Nullable from: View?, @Nullable to: View?, isPush: Boolean, toAddedToContainer: Boolean): Animator {
+    override fun getAnimator(
+        @NonNull container: ViewGroup,
+        @Nullable from: View?,
+        @Nullable to: View?,
+        isPush: Boolean,
+        toAddedToContainer: Boolean
+    ): Animator {
         val animatorSet = AnimatorSet()
         animatorSet.interpolator = DecelerateInterpolator()
 
