@@ -212,9 +212,9 @@ class NotificationManagerImpl @Inject constructor(
 
         // Add all of the people from this conversation to the notification, so that the system can
         // appropriately bypass DND mode
-        conversation.recipients
-                .mapNotNull { recipient -> recipient.contact?.lookupKey }
-                .forEach { uri -> notification.addPerson(uri) }
+        conversation.recipients.forEach { recipient ->
+            notification.addPerson("tel:${recipient.address}")
+        }
 
         // Add the action buttons
         val actionLabels = context.resources.getStringArray(R.array.notification_actions)
