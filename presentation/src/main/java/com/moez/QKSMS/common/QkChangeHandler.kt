@@ -30,9 +30,7 @@ import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.changehandler.AnimatorChangeHandler
 import com.moez.QKSMS.common.util.extensions.dpToPx
 
-class QkChangeHandler @JvmOverloads constructor(
-    removesFromViewOnPush: Boolean = true
-) : AnimatorChangeHandler(250, removesFromViewOnPush) {
+class QkChangeHandler : AnimatorChangeHandler(250, true) {
 
     @NonNull
     override fun getAnimator(
@@ -75,7 +73,7 @@ class QkChangeHandler @JvmOverloads constructor(
 
     @NonNull
     override fun copy(): ControllerChangeHandler {
-        return QkChangeHandler(removesFromViewOnPush())
+        return QkChangeHandler()
     }
 
 }
