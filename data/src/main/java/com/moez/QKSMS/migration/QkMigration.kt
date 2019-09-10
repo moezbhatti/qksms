@@ -20,6 +20,7 @@ package com.moez.QKSMS.migration
 
 import android.content.Context
 import com.moez.QKSMS.blocking.QksmsBlockingClient
+import com.moez.QKSMS.common.util.extensions.versionCode
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
 import kotlinx.coroutines.GlobalScope
@@ -34,17 +35,18 @@ class QkMigration @Inject constructor(
 ) {
 
     init {
-        val oldVersion = prefs.version.get()
-        val newVersion = context.packageManager.getPackageInfo(context.packageName, 0).versionCode
+        GlobalScope.launch {
+            val oldVersion = prefs.version.get()
 
-        if (oldVersion < 2199) {
-            upgradeTo370()
+            if (oldVersion < 2199) {
+                upgradeTo370()
+            }
+
+            prefs.version.set(context.versionCode)
         }
-
-        prefs.changelogVersion.set(newVersion)
     }
 
-    private fun upgradeTo370() = GlobalScope.launch {
+    private fun upgradeTo370() {
         // Migrate changelog version
         prefs.changelogVersion.set(prefs.version.get())
 

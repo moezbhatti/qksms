@@ -18,15 +18,17 @@
  */
 package com.moez.QKSMS.util
 
+import android.content.Context
 import android.os.Build
 import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
+import com.moez.QKSMS.common.util.extensions.versionCode
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) {
+class Preferences @Inject constructor(context: Context, private val rxPrefs: RxSharedPreferences) {
 
     companion object {
         const val NIGHT_MODE_SYSTEM = 0
@@ -69,11 +71,10 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     // Internal
     val night = rxPrefs.getBoolean("night", false)
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
-    val version = rxPrefs.getInteger("version", 0)
-    val changelogVersion = rxPrefs.getInteger("changelogVersion", 0)
+    val version = rxPrefs.getInteger("version", context.versionCode)
+    val changelogVersion = rxPrefs.getInteger("changelogVersion", context.versionCode)
     @Deprecated("This should only be accessed when migrating to @blockingManager")
     val sia = rxPrefs.getBoolean("sia", false)
-
 
     // User configurable
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {

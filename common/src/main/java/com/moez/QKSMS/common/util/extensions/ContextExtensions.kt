@@ -66,3 +66,6 @@ fun Context.makeToast(text: String, duration: Int = Toast.LENGTH_SHORT) {
 fun Context.isInstalled(packageName: String): Boolean {
     return tryOrNull(false) { packageManager.getApplicationInfo(packageName, 0).enabled } ?: false
 }
+
+val Context.versionCode: Int
+    get() = packageManager.getPackageInfo(packageName, 0).versionCode

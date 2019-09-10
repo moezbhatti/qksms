@@ -19,6 +19,7 @@
 package com.moez.QKSMS.manager
 
 import android.content.Context
+import com.moez.QKSMS.common.util.extensions.versionCode
 import com.moez.QKSMS.util.Preferences
 import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
@@ -40,19 +41,7 @@ class ChangelogManagerImpl @Inject constructor(
     private val prefs: Preferences
 ) : ChangelogManager {
 
-    private val oldVersion: Int get() = prefs.changelogVersion.get()
-    private val versionCode: Int get() = context.packageManager.getPackageInfo(context.packageName, 0).versionCode
-
-    override fun didUpdate(): Boolean {
-        if (oldVersion == 0) {
-            prefs.changelogVersion.set(versionCode)
-        }
-
-        return when {
-            oldVersion != versionCode -> true
-            else -> false
-        }
-    }
+    override fun didUpdate(): Boolean = prefs.changelogVersion.get() != context.versionCode
 
     override fun getChangelog(): Single<ChangelogManager.Changelog> {
         val url = "https://firestore.googleapis.com/v1/projects/qksms-app/databases/(default)/documents/changelog"
@@ -74,7 +63,10 @@ class ChangelogManagerImpl @Inject constructor(
                 .map { response ->
                     response.documents
                             .sortedBy { document -> document.fields.versionCode.value }
-                            .filter { document -> document.fields.versionCode.value.toInt() in (oldVersion + 1)..versionCode }
+                            .filter { document ->
+                                val range = (prefs.changelogVersion.get() + 1)..context.versionCode
+                                document.fields.versionCode.value.toInt() in range
+                            }
                 }
                 .map { documents ->
                     val added = documents.fold(listOf<String>()) { acc, document ->
@@ -93,7 +85,7 @@ class ChangelogManagerImpl @Inject constructor(
     }
 
     override fun markChangelogSeen() {
-        prefs.changelogVersion.set(versionCode)
+        prefs.changelogVersion.set(context.versionCode)
     }
 
     private data class ChangelogResponse(
