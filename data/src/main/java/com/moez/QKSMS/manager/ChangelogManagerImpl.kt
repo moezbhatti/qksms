@@ -52,13 +52,22 @@ class ChangelogManagerImpl @Inject constructor(
 
         return Single
                 .create<Response> { emitter ->
+                    call?.enqueue(object : Callback {
+                        override fun onResponse(call: Call, response: Response) {
+                            if (!emitter.isDisposed) {
+                                emitter.onSuccess(response)
+                            }
+                        }
+
+                        override fun onFailure(call: Call, e: IOException) {
+                            if (!emitter.isDisposed) {
+                                emitter.onError(e)
+                            }
+                        }
+                    })
                     emitter.setCancellable {
                         call?.cancel()
                     }
-                    call?.enqueue(object : Callback {
-                        override fun onResponse(call: Call, response: Response) = emitter.onSuccess(response)
-                        override fun onFailure(call: Call, e: IOException) = emitter.onError(e)
-                    })
                 }
                 .map { response -> response.body?.string()?.let(adapter::fromJson) }
                 .map { response ->

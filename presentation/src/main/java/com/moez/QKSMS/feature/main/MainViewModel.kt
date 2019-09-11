@@ -49,7 +49,6 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -160,7 +159,7 @@ class MainViewModel @Inject constructor(
                         .subscribe({ changelog ->
                             changelogManager.markChangelogSeen()
                             view.showChangelog(changelog)
-                        }, Timber::w)
+                        }, {}) // Ignore error
             } else {
                 changelogManager.markChangelogSeen()
             }
