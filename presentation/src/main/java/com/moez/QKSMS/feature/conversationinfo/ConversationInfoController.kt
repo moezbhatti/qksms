@@ -120,11 +120,11 @@ class ConversationInfoController(
         name.setVisible(state.recipients?.size ?: 0 >= 2)
         name.summary = state.name
 
-        notifications.setVisible(!state.blocked)
+        notifications.isEnabled = !state.blocked
 
-        themePrefs.setVisible(!state.blocked)
+        themePrefs.isEnabled = !state.blocked
 
-        archive.setVisible(!state.blocked)
+        archive.isEnabled = !state.blocked
         archive.title = activity?.getString(when (state.archived) {
             true -> R.string.info_unarchive
             false -> R.string.info_archive

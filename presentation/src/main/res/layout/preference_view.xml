@@ -31,12 +31,15 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
+        android:duplicateParentState="true"
+        android:tint="?android:attr/textColorSecondary"
         android:visibility="invisible" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:duplicateParentState="true"
         android:orientation="vertical"
         android:paddingLeft="24dp"
         android:paddingTop="16dp"
@@ -48,6 +51,7 @@
             style="@style/TextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:duplicateParentState="true"
             tools:text="Default SMS App" />
 
         <com.moez.QKSMS.common.widget.QkTextView
@@ -56,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:duplicateParentState="true"
             tools:text="QKSMS is your default SMS app" />
 
     </LinearLayout>
@@ -64,6 +69,7 @@
         android:id="@+id/widgetFrame"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:duplicateParentState="true" />
 
 </merge>

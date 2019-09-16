@@ -26,8 +26,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.resolveThemeAttribute
-import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.injection.appComponent
 import kotlinx.android.synthetic.main.preference_view.view.*
@@ -72,9 +70,6 @@ class PreferenceView @JvmOverloads constructor(
         setBackgroundResource(context.resolveThemeAttribute(R.attr.selectableItemBackground))
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
-
-        val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
-        icon.setTint(textSecondary)
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView)?.run {
             title = getString(R.styleable.PreferenceView_title)

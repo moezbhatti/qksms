@@ -37,11 +37,15 @@
     <color name="backgroundDark">#192025</color>
 
     <color name="textPrimary">#49555F</color>
+    <color name="textPrimaryDisabled">#4C49555F</color>
     <color name="textSecondary">#70808D</color>
+    <color name="textSecondaryDisabled">#4C70808D</color>
     <color name="textTertiary">#B7B9C0</color>
 
     <color name="textPrimaryDark">#FFFFFFFF</color>
+    <color name="textPrimaryDisabledDark">#7FFFFFFF</color>
     <color name="textSecondaryDark">#ccffffff</color>
+    <color name="textSecondaryDisabledDark">#67ffffff</color>
     <color name="textTertiaryDark">#80ffffff</color>
 
     <color name="bubbleLight">#FFFFFF</color>

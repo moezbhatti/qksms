@@ -55,7 +55,9 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
     override val actionsSelectedIntent by lazy { actionsDialog.adapter.menuItemClicks }
 
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[NotificationPrefsViewModel::class.java] }
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory)[NotificationPrefsViewModel::class.java]
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -112,7 +114,8 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         qkreplyTitle.isVisible = state.threadId == 0L
         qkreply.checkbox.isChecked = state.qkReplyEnabled
         qkreply.isVisible = state.threadId == 0L
-        qkreplyTapDismiss.setVisible(state.threadId == 0L && state.qkReplyEnabled)
+        qkreplyTapDismiss.isVisible = state.threadId == 0L
+        qkreplyTapDismiss.isEnabled = state.qkReplyEnabled
         qkreplyTapDismiss.checkbox.isChecked = state.qkReplyTapDismiss
     }
 

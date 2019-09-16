@@ -119,13 +119,12 @@ class TextViewStyler @Inject constructor(
                 else -> return
             }
 
-            setTextColor(when (colorAttr) {
-                COLOR_THEME -> colors.theme().theme
-                COLOR_PRIMARY_ON_THEME -> colors.theme().textPrimary
-                COLOR_SECONDARY_ON_THEME -> colors.theme().textSecondary
-                COLOR_TERTIARY_ON_THEME -> colors.theme().textTertiary
-                else -> currentTextColor
-            })
+            when (colorAttr) {
+                COLOR_THEME -> setTextColor(colors.theme().theme)
+                COLOR_PRIMARY_ON_THEME -> setTextColor(colors.theme().textPrimary)
+                COLOR_SECONDARY_ON_THEME -> setTextColor(colors.theme().textSecondary)
+                COLOR_TERTIARY_ON_THEME -> setTextColor(colors.theme().textTertiary)
+            }
 
             setTextSize(textView, textSizeAttr)
         }
