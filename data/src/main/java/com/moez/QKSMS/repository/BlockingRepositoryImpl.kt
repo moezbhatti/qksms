@@ -28,9 +28,12 @@ import javax.inject.Inject
 class BlockingRepositoryImpl @Inject constructor() : BlockingRepository {
 
     override fun blockNumber(vararg addresses: String) {
-        val newAddresses = addresses.filter { address -> !isBlocked(address) }
-
         Realm.getDefaultInstance().use { realm ->
+            val blockedNumbers = realm.where(BlockedNumber::class.java).findAll()
+            val newAddresses = addresses.filter { address ->
+                blockedNumbers.none { number -> PhoneNumberUtils.compare(number.address, address) }
+            }
+
             val maxId = realm.where(BlockedNumber::class.java)
                     .max("id")?.toLong() ?: -1
 
@@ -41,14 +44,14 @@ class BlockingRepositoryImpl @Inject constructor() : BlockingRepository {
     }
 
     override fun getBlockedNumbers(): RealmResults<BlockedNumber> {
-        val realm = Realm.getDefaultInstance()
-        return realm.where(BlockedNumber::class.java)
+        return Realm.getDefaultInstance()
+                .where(BlockedNumber::class.java)
                 .findAllAsync()
     }
 
     override fun getBlockedNumber(id: Long): BlockedNumber? {
-        val realm = Realm.getDefaultInstance()
-        return realm.where(BlockedNumber::class.java)
+        return Realm.getDefaultInstance()
+                .where(BlockedNumber::class.java)
                 .equalTo("id", id)
                 .findFirst()
     }
