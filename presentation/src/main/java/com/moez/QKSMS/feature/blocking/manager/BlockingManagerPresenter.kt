@@ -64,13 +64,6 @@ class BlockingManagerPresenter @Inject constructor(
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_QKSMS)
                 }
 
-        view.launchQksmsClicked()
-                .autoDisposable(view.scope())
-                .subscribe {
-                    // TODO: This is a hack, get rid of it once we implement AndroidX navigation
-                    view.openBlockedNumbers()
-                }
-
         view.callControlClicked()
                 .filter {
                     val installed = callControl.isAvailable()
@@ -104,15 +97,6 @@ class BlockingManagerPresenter @Inject constructor(
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CC)
                 }
 
-        view.launchCallControlClicked()
-                .autoDisposable(view.scope())
-                .subscribe {
-                    when (callControl.isAvailable()) {
-                        true -> callControl.openSettings()
-                        false -> navigator.installCallControl()
-                    }
-                }
-
         view.siaClicked()
                 .filter {
                     val installed = shouldIAnswer.isAvailable()
@@ -128,15 +112,6 @@ class BlockingManagerPresenter @Inject constructor(
                 .subscribe {
                     analytics.setUserProperty("Blocking Manager", "SIA")
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA)
-                }
-
-        view.launchSiaClicked()
-                .autoDisposable(view.scope())
-                .subscribe {
-                    when (shouldIAnswer.isAvailable()) {
-                        true -> shouldIAnswer.openSettings()
-                        false -> navigator.installSia()
-                    }
                 }
     }
 

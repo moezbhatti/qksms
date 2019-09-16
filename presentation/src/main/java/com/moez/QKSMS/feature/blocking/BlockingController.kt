@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.blocking
 
 import android.view.View
+import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
@@ -28,6 +29,7 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.blocking.messages.BlockedMessagesController
+import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.injection.appComponent
 import kotlinx.android.synthetic.main.blocking_controller.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
@@ -36,7 +38,8 @@ import javax.inject.Inject
 class BlockingController : QkController<BlockingView, BlockingState, BlockingPresenter>(), BlockingView {
 
     override val blockingManagerIntent by lazy { blockingManager.clicks() }
-    override val blockedMessagesIntent by lazy { blockedNumbers.clicks() }
+    override val blockedNumbersIntent by lazy { blockedNumbers.clicks() }
+    override val blockedMessagesIntent by lazy { blockedMessages.clicks() }
     override val dropClickedIntent by lazy { drop.clicks() }
 
     @Inject lateinit var colors: Colors
@@ -63,6 +66,13 @@ class BlockingController : QkController<BlockingView, BlockingState, BlockingPre
     override fun render(state: BlockingState) {
         blockingManager.summary = state.blockingManager
         drop.checkbox.isChecked = state.dropEnabled
+        blockedMessages.isVisible = !state.dropEnabled
+    }
+
+    override fun openBlockedNumbers() {
+        router.pushController(RouterTransaction.with(BlockedNumbersController())
+                .pushChangeHandler(QkChangeHandler())
+                .popChangeHandler(QkChangeHandler()))
     }
 
     override fun openBlockedMessages() {

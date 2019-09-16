@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.blocking
 
 import android.content.Context
 import com.moez.QKSMS.R
+import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
@@ -29,6 +30,7 @@ import javax.inject.Inject
 
 class BlockingPresenter @Inject constructor(
     context: Context,
+    private val blockingClient: BlockingClient,
     private val prefs: Preferences
 ) : QkPresenter<BlockingView, BlockingState>(BlockingState()) {
 
@@ -54,6 +56,17 @@ class BlockingPresenter @Inject constructor(
         view.blockingManagerIntent
                 .autoDisposable(view.scope())
                 .subscribe { view.openBlockingManager() }
+
+        view.blockedNumbersIntent
+                .autoDisposable(view.scope())
+                .subscribe {
+                    if (prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_QKSMS) {
+                        // TODO: This is a hack, get rid of it once we implement AndroidX navigation
+                        view.openBlockedNumbers()
+                    } else {
+                        blockingClient.openSettings()
+                    }
+                }
 
         view.blockedMessagesIntent
                 .autoDisposable(view.scope())

@@ -3,12 +3,10 @@ package com.moez.QKSMS.feature.blocking.manager
 import android.app.Activity
 import android.app.AlertDialog
 import android.view.View
-import com.bluelinelabs.conductor.RouterTransaction
+import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
-import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.util.Preferences
 import io.reactivex.Observable
@@ -47,25 +45,16 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
         qksms.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_QKSMS
 
         callControl.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_CC
-        callControl.launch.setImageResource(when (state.callControlInstalled) {
-            true -> R.drawable.ic_chevron_right_black_24dp
-            false -> R.drawable.ic_info_black_24dp
-        })
+        callControl.install.isVisible = !state.callControlInstalled
 
         shouldIAnswer.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_SIA
-        shouldIAnswer.launch.setImageResource(when (state.siaInstalled) {
-            true -> R.drawable.ic_chevron_right_black_24dp
-            false -> R.drawable.ic_info_black_24dp
-        })
+        shouldIAnswer.install.isVisible = !state.siaInstalled
     }
 
     override fun activityResumed(): Observable<*> = activityResumedSubject
     override fun qksmsClicked(): Observable<*> = qksms.clicks()
-    override fun launchQksmsClicked(): Observable<*> = qksms.launch.clicks()
     override fun callControlClicked(): Observable<*> = callControl.clicks()
-    override fun launchCallControlClicked(): Observable<*> = callControl.launch.clicks()
     override fun siaClicked(): Observable<*> = shouldIAnswer.clicks()
-    override fun launchSiaClicked(): Observable<*> = shouldIAnswer.launch.clicks()
 
     override fun showCopyDialog(manager: String): Single<Boolean> = Single.create { emitter ->
         AlertDialog.Builder(activity)
@@ -75,12 +64,6 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
                 .setNegativeButton(R.string.button_cancel) { _, _ -> emitter.onSuccess(false) }
                 .setCancelable(false)
                 .show()
-    }
-
-    override fun openBlockedNumbers() {
-        router.pushController(RouterTransaction.with(BlockedNumbersController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
     }
 
 }
