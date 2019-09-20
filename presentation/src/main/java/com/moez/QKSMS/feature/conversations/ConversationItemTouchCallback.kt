@@ -37,6 +37,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+import kotlin.math.max
 import kotlin.math.min
 
 class ConversationItemTouchCallback @Inject constructor(
@@ -55,9 +56,9 @@ class ConversationItemTouchCallback @Inject constructor(
 
     private val backgroundPaint = Paint()
     private var rightAction = 0
-    private var rightIcon: Bitmap? = null
+    private var swipeRightIcon: Bitmap? = null
     private var leftAction = 0
-    private var leftIcon: Bitmap? = null
+    private var swipeLeftIcon: Bitmap? = null
 
     private val iconLength = 24.dpToPx(context)
 
@@ -71,9 +72,9 @@ class ConversationItemTouchCallback @Inject constructor(
                 .combineLatest(prefs.swipeRight.asObservable(), prefs.swipeLeft.asObservable(), colors.themeObservable()
                 ) { right, left, theme ->
                     rightAction = right
-                    rightIcon = iconForAction(right, theme.textPrimary)
+                    swipeRightIcon = iconForAction(right, theme.textPrimary)
                     leftAction = left
-                    leftIcon = iconForAction(left, theme.textPrimary)
+                    swipeLeftIcon = iconForAction(left, theme.textPrimary)
                     setDefaultSwipeDirs((if (right == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.RIGHT)
                             or (if (left == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.LEFT))
                 }
@@ -105,11 +106,11 @@ class ConversationItemTouchCallback @Inject constructor(
                 c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
                         dX, itemView.bottom.toFloat(), backgroundPaint)
 
-                rightIcon?.let { icon ->
+                swipeRightIcon?.let { icon ->
                     val availablePx = dX.toInt() - iconLength
                     if (availablePx > 0) {
                         val src = Rect(0, 0, min(availablePx, icon.width), icon.height)
-                        val dstTop = itemView.top + (itemView.bottom - itemView.top - (rightIcon?.height ?: 0)) / 2
+                        val dstTop = itemView.top + (itemView.bottom - itemView.top - icon.height) / 2
                         val dst = Rect(iconLength, dstTop, iconLength + src.width(), dstTop + src.height())
                         c.drawBitmap(icon, src, dst, null)
                     }
@@ -118,13 +119,13 @@ class ConversationItemTouchCallback @Inject constructor(
                 c.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(),
                         itemView.right.toFloat(), itemView.bottom.toFloat(), backgroundPaint)
 
-                leftIcon?.let { icon ->
+                swipeLeftIcon?.let { icon ->
                     val availablePx = -dX.toInt() - iconLength
                     if (availablePx > 0) {
-                        val src = Rect(icon.width - availablePx, 0, icon.width, icon.height)
-                        val dstTop = itemView.top + (itemView.bottom - itemView.top - (leftIcon?.height ?: 0)) / 2
-                        val dst = Rect(itemView.right - iconLength - src.width(),
-                                dstTop, itemView.right - iconLength, dstTop + src.height())
+                        val src = Rect(max(0, icon.width - availablePx), 0, icon.width, icon.height)
+                        val dstTop = itemView.top + (itemView.bottom - itemView.top - icon.height) / 2
+                        val dst = Rect(itemView.right - iconLength - src.width(), dstTop,
+                                itemView.right - iconLength, dstTop + src.height())
                         c.drawBitmap(icon, src, dst, null)
                     }
                 }
