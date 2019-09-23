@@ -93,7 +93,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun onViewCreated() {
         preferences.postDelayed({ preferences?.animateLayoutChanges = true }, 100)
 
-        when (Build.VERSION.SDK_INT >= 29) {
+        when (Build.VERSION.SDK_INT >= 29 || Preferences.lineageSDKVersion > 8) {
             true -> nightModeDialog.adapter.setData(R.array.night_modes)
             false -> nightModeDialog.adapter.data = context.resources.getStringArray(R.array.night_modes)
                     .mapIndexed { index, title -> MenuItem(title, index) }

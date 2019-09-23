@@ -24,6 +24,9 @@ import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.util.extensions.versionCode
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -66,6 +69,27 @@ class Preferences @Inject constructor(context: Context, private val rxPrefs: RxS
         const val BLOCKING_MANAGER_QKSMS = 0
         const val BLOCKING_MANAGER_CC = 1
         const val BLOCKING_MANAGER_SIA = 2
+
+        val lineageSDKVersion : Int by lazy {
+            try {
+                val process = Runtime.getRuntime().exec("getprop ro.lineage.build.version.plat.sdk")
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
+                val output = StringBuilder()
+                var line = reader.readLine()
+                while (line != null) {
+                    output.append(line)
+                    line = reader.readLine()
+                }
+
+                val result = output.toString()
+                if (result.isEmpty()) 0 else result.toInt()
+            } catch (e: IOException) {
+                0.also { e.printStackTrace() }
+            } catch (ignored: NumberFormatException) {
+                // This is not what we're looking for, fallback to default
+                0
+            }
+        }
     }
 
     // Internal
@@ -77,7 +101,7 @@ class Preferences @Inject constructor(context: Context, private val rxPrefs: RxS
     val sia = rxPrefs.getBoolean("sia", false)
 
     // User configurable
-    val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
+    val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29 || lineageSDKVersion > 8) {
         true -> NIGHT_MODE_SYSTEM
         false -> NIGHT_MODE_OFF
     })
