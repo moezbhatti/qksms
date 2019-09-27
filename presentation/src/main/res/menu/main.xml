@@ -42,6 +42,13 @@
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/add"
+        android:icon="@drawable/ic_person_add_black_24dp"
+        android:title="@string/main_menu_add_contact"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/pin"
         android:icon="@drawable/ic_pin_black_24dp"
         android:title="@string/main_menu_pin"

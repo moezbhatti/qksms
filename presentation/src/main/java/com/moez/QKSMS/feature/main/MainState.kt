@@ -38,6 +38,7 @@ data class MainState(
 sealed class MainPage
 
 data class Inbox(
+    val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
     val data: RealmResults<Conversation>? = null,
@@ -50,6 +51,7 @@ data class Searching(
 ) : MainPage()
 
 data class Archived(
+    val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
     val data: RealmResults<Conversation>? = null,

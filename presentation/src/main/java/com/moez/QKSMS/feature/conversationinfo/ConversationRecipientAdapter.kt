@@ -35,7 +35,6 @@ import javax.inject.Inject
 class ConversationRecipientAdapter @Inject constructor() : QkRealmAdapter<Recipient>() {
 
     var threadId: Long = 0L
-
     val clicks: Subject<Long> = PublishSubject.create()
 
     private val disposables = CompositeDisposable()

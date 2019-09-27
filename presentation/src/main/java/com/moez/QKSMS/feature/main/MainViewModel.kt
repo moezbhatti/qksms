@@ -23,6 +23,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
+import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkAllSeen
@@ -34,6 +35,7 @@ import com.moez.QKSMS.interactor.MarkUnpinned
 import com.moez.QKSMS.interactor.MarkUnread
 import com.moez.QKSMS.interactor.MigratePreferences
 import com.moez.QKSMS.interactor.SyncMessages
+import com.moez.QKSMS.listener.ContactAddedListener
 import com.moez.QKSMS.manager.ChangelogManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.manager.RatingManager
@@ -58,6 +60,7 @@ class MainViewModel @Inject constructor(
     markAllSeen: MarkAllSeen,
     migratePreferences: MigratePreferences,
     syncRepository: SyncRepository,
+    private val contactAddedListener: ContactAddedListener,
     private val changelogManager: ChangelogManager,
     private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
@@ -276,6 +279,20 @@ class MainViewModel @Inject constructor(
                 .subscribe()
 
         view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.add }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations -> conversations }
+                .doOnNext { view.clearSelection() }
+                .filter { conversations -> conversations.size == 1 }
+                .map { conversations -> conversations.first() }
+                .mapNotNull(conversationRepo::getConversation)
+                .map { conversation -> conversation.recipients }
+                .mapNotNull { recipients -> recipients[0]?.address?.takeIf { recipients.size == 1 } }
+                .doOnNext(navigator::addContact)
+                .flatMap(contactAddedListener::listen)
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        view.optionsItemIntent
                 .filter { itemId -> itemId == R.id.pin }
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markPinned.execute(conversations)
@@ -342,22 +359,24 @@ class MainViewModel @Inject constructor(
 
         view.conversationsSelectedIntent
                 .withLatestFrom(state) { selection, state ->
-                    val pin = selection
-                            .mapNotNull(conversationRepo::getConversation)
-                            .sumBy { if (it.pinned) -1 else 1 } >= 0
-                    val read = selection
-                            .mapNotNull(conversationRepo::getConversation)
-                            .sumBy { if (it.read) -1 else 1 } >= 0
+                    val conversations = selection.mapNotNull(conversationRepo::getConversation)
+                    val add = conversations.firstOrNull()
+                            ?.takeIf { conversations.size == 1 }
+                            ?.takeIf { conversation -> conversation.recipients.size == 1 }
+                            ?.recipients?.first()
+                            ?.takeIf { recipient -> recipient.contact == null } != null
+                    val pin = conversations.sumBy { if (it.pinned) -1 else 1 } >= 0
+                    val read = conversations.sumBy { if (it.read) -1 else 1 } >= 0
                     val selected = selection.size
 
                     when (state.page) {
                         is Inbox -> {
-                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected)
-                            newState { copy(page = page.copy(markRead = read, selected = selected)) }
+                            val page = state.page.copy(addContact = add, markPinned = pin, markRead = read, selected = selected)
+                            newState { copy(page = page) }
                         }
 
                         is Archived -> {
-                            val page = state.page.copy(markPinned = pin, markRead = read, selected = selected)
+                            val page = state.page.copy(addContact = add, markPinned = pin, markRead = read, selected = selected)
                             newState { copy(page = page) }
                         }
                     }
