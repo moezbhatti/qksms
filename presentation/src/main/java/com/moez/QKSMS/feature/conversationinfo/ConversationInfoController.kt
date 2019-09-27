@@ -91,6 +91,8 @@ class ConversationInfoController(
         showBackButton(true)
     }
 
+    override fun recipientClicks(): Observable<Long> = recipientAdapter.clicks
+
     override fun nameClicks(): Observable<*> = name.clicks()
 
     override fun nameChanges(): Observable<String> = nameChangeSubject

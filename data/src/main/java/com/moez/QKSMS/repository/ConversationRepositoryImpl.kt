@@ -31,6 +31,7 @@ import com.moez.QKSMS.mapper.CursorToRecipient
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SearchResult
 import com.moez.QKSMS.util.tryOrNull
 import io.realm.Case
@@ -151,6 +152,13 @@ class ConversationRepositoryImpl @Inject constructor(
                 .where(Conversation::class.java)
                 .anyOf("id", threadIds)
                 .findAll()
+    }
+
+    override fun getRecipient(recipientId: Long): Recipient? {
+        return Realm.getDefaultInstance()
+                .where(Recipient::class.java)
+                .equalTo("id", recipientId)
+                .findFirst()
     }
 
     override fun getThreadId(recipient: String): Long? {

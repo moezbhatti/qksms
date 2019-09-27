@@ -23,6 +23,7 @@ import io.reactivex.Observable
 
 interface ConversationInfoView : QkViewContract<ConversationInfoState> {
 
+    fun recipientClicks(): Observable<Long>
     fun nameClicks(): Observable<*>
     fun nameChanges(): Observable<String>
     fun notificationClicks(): Observable<*>

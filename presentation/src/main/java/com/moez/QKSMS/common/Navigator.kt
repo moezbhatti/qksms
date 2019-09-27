@@ -238,6 +238,13 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
+    fun showContact(lookupKey: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+                .setData(Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey))
+
+        startActivityExternal(intent)
+    }
+
     fun saveVcard(uri: Uri) {
         val intent = Intent(Intent.ACTION_VIEW)
                 .setDataAndType(uri, "text/x-vcard")

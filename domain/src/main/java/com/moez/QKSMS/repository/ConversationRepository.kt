@@ -19,6 +19,7 @@
 package com.moez.QKSMS.repository
 
 import com.moez.QKSMS.model.Conversation
+import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SearchResult
 import io.realm.RealmResults
 
@@ -49,6 +50,8 @@ interface ConversationRepository {
      * Returns all conversations with an id in [threadIds]
      */
     fun getConversations(vararg threadIds: Long): RealmResults<Conversation>
+
+    fun getRecipient(recipientId: Long): Recipient?
 
     fun getThreadId(recipient: String): Long?
 
