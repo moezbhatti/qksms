@@ -369,7 +369,7 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(view.messagesSelectedIntent) { _, messages ->
                     messages?.firstOrNull()?.let { messageRepo.getMessage(it) }?.let { message ->
                         val images = message.parts.filter { it.isImage() }.mapNotNull { it.getUri() }
-                        navigator.showCompose(message.body, images)
+                        navigator.showCompose(message.getText(), images)
                     }
                 }
                 .autoDisposable(view.scope())
