@@ -71,7 +71,17 @@ class MessageRepositoryImpl @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
-                .let { if (query.isEmpty()) it else it.contains("body", query, Case.INSENSITIVE) }
+                .let {
+                    when (query.isEmpty()) {
+                        true -> it
+                        false -> it
+                                .beginGroup()
+                                .contains("body", query, Case.INSENSITIVE)
+                                .or()
+                                .contains("parts.text", query, Case.INSENSITIVE)
+                                .endGroup()
+                    }
+                }
                 .sort("date")
                 .findAllAsync()
     }
