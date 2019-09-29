@@ -93,9 +93,10 @@ class ConversationsAdapter @Inject constructor(
         view.title.collapseEnabled = conversation.recipients.size > 1
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
-        view.snippet.text = when (conversation.me) {
-            true -> context.getString(R.string.main_sender_you, conversation.snippet)
-            false -> conversation.snippet
+        view.snippet.text = when {
+            conversation.draft.isNotEmpty() -> context.getString(R.string.main_draft, conversation.draft)
+            conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
+            else -> conversation.snippet
         }
         view.pinned.isVisible = conversation.pinned
     }
