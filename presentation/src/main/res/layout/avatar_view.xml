@@ -18,6 +18,7 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/avatar"
     android:layout_width="match_parent"
@@ -30,9 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:padding="6dp"
         android:textAllCaps="true"
-        android:textSize="20sp"
-        tools:text="M" />
+        app:autoSizeMaxTextSize="22sp"
+        app:autoSizeTextType="uniform" />
 
     <ImageView
         android:id="@+id/icon"
