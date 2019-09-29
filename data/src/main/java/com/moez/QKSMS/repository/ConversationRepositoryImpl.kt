@@ -25,6 +25,7 @@ import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
 import com.moez.QKSMS.extensions.map
+import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.filter.ConversationFilter
 import com.moez.QKSMS.mapper.CursorToConversation
 import com.moez.QKSMS.mapper.CursorToRecipient
@@ -100,22 +101,23 @@ class ConversationRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun searchConversations(query: String): List<SearchResult> {
+    override fun searchConversations(query: CharSequence): List<SearchResult> {
+        val normalizedQuery = query.removeAccents()
         val conversations = getConversationsSnapshot()
 
         val messagesByConversation = Realm.getDefaultInstance()
                 .where(Message::class.java)
-                .contains("body", query, Case.INSENSITIVE)
+                .contains("body", normalizedQuery, Case.INSENSITIVE)
                 .findAll()
                 .groupBy { message -> message.threadId }
                 .filter { (threadId, _) -> conversations.firstOrNull { it.id == threadId } != null }
                 .map { (threadId, messages) -> Pair(conversations.first { it.id == threadId }, messages.size) }
-                .map { (conversation, messages) -> SearchResult(query, conversation, messages) }
+                .map { (conversation, messages) -> SearchResult(normalizedQuery, conversation, messages) }
                 .sortedByDescending { result -> result.messages }
 
         return conversations
-                .filter { conversation -> conversationFilter.filter(conversation, query) }
-                .map { conversation -> SearchResult(query, conversation, 0) }
+                .filter { conversation -> conversationFilter.filter(conversation, normalizedQuery) }
+                .map { conversation -> SearchResult(normalizedQuery, conversation, 0) }
                 .plus(messagesByConversation)
     }
 

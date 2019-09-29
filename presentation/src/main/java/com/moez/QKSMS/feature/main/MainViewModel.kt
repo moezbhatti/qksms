@@ -24,7 +24,6 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.extensions.mapNotNull
-import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkAllSeen
 import com.moez.QKSMS.interactor.MarkArchived
@@ -45,7 +44,6 @@ import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -175,7 +173,6 @@ class MainViewModel @Inject constructor(
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { query -> query.removeAccents() }
                 .withLatestFrom(state) { query, state ->
                     if (query.isEmpty() && state.page is Searching) {
                         newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
@@ -190,7 +187,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
                 .observeOn(Schedulers.io())
-                .switchMap { query -> Observable.just(query).map { conversationRepo.searchConversations(it) } }
+                .map(conversationRepo::searchConversations)
                 .autoDisposable(view.scope())
                 .subscribe { data -> newState { copy(page = Searching(loading = false, data = data)) } }
 
