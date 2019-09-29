@@ -22,26 +22,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground">
+    android:paddingTop="2dp">
+
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textStyle="bold"
+        app:textSize="secondary"
+        tools:text="Mobile" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/address"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="?android:attr/textColorTertiary"
         app:textSize="secondary"
-        tools:text="(123) 456-7890"
-        tools:textColor="@color/textSecondary" />
-
-    <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/type"
-        style="@style/TextSecondary"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        tools:text="Mobile"
-        tools:textColor="@color/textTertiary" />
+        tools:text="(123) 456-7890" />
 
 </LinearLayout>
