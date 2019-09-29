@@ -51,4 +51,12 @@ class PhoneNumberAdapter(
         view.type.text = number.type
     }
 
+    override fun areItemsTheSame(old: PhoneNumber, new: PhoneNumber): Boolean {
+        return old.type == new.type && old.address == new.address
+    }
+
+    override fun areContentsTheSame(old: PhoneNumber, new: PhoneNumber): Boolean {
+        return old.type == new.type && old.address == new.address
+    }
+
 }
