@@ -194,6 +194,7 @@
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>Send now</item>
+        <item>Copy text</item>
         <item>Delete</item>
     </string-array>
 
