@@ -27,7 +27,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.provider.Telephony
-import android.telephony.PhoneNumberUtils
 import android.telephony.SmsManager
 import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
@@ -47,6 +46,7 @@ import com.moez.QKSMS.receiver.SendSmsReceiver
 import com.moez.QKSMS.receiver.SmsDeliveredReceiver
 import com.moez.QKSMS.receiver.SmsSentReceiver
 import com.moez.QKSMS.util.ImageUtils
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import io.realm.Case
@@ -61,8 +61,9 @@ import javax.inject.Singleton
 class MessageRepositoryImpl @Inject constructor(
     private val activeConversationManager: ActiveConversationManager,
     private val context: Context,
-    private val messageIds: KeyManager,
     private val imageRepository: ImageRepository,
+    private val messageIds: KeyManager,
+    private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val syncRepository: SyncRepository
 ) : MessageRepository {
@@ -290,7 +291,7 @@ class MessageRepositoryImpl @Inject constructor(
                     .map { vCard -> MMSPart("contact", ContentType.TEXT_VCARD, vCard) }
 
             val transaction = Transaction(context)
-            transaction.sendNewMessage(subId, threadId, addresses.map(PhoneNumberUtils::stripSeparators), parts, null)
+            transaction.sendNewMessage(subId, threadId, addresses.map(phoneNumberUtils::normalizeNumber), parts, null)
         }
     }
 

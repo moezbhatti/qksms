@@ -19,7 +19,6 @@
 package com.moez.QKSMS.common.widget
 
 import android.content.Context
-import android.telephony.PhoneNumberUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -127,7 +126,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         photo.setImageDrawable(null)
         address?.let { address ->
             GlideApp.with(photo)
-                    .load(PhoneNumberUtils.stripSeparators(address))
+                    .load(address)
                     .signature(ObjectKey(lastUpdated ?: 0L))
                     .into(photo)
         }

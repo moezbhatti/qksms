@@ -18,16 +18,17 @@
  */
 package com.moez.QKSMS.filter
 
-import android.telephony.PhoneNumberUtils
+import com.moez.QKSMS.util.PhoneNumberUtils
 import javax.inject.Inject
 
-class PhoneNumberFilter @Inject constructor() : Filter<String>() {
+class PhoneNumberFilter @Inject constructor(
+    private val phoneNumberUtils: PhoneNumberUtils
+) : Filter<String>() {
 
     override fun filter(item: String, query: CharSequence): Boolean {
-        val allCharactersDialable = query.all { PhoneNumberUtils.isReallyDialable(it) }
-
-        return allCharactersDialable && (PhoneNumberUtils.compare(item, query.toString()) ||
-                PhoneNumberUtils.stripSeparators(item).contains(PhoneNumberUtils.stripSeparators(query.toString())))
+        val allCharactersDialable = query.all { phoneNumberUtils.isReallyDialable(it) }
+        return allCharactersDialable && (phoneNumberUtils.compare(item, query.toString()) ||
+                phoneNumberUtils.normalizeNumber(item).contains(phoneNumberUtils.normalizeNumber(query.toString())))
     }
 
 }

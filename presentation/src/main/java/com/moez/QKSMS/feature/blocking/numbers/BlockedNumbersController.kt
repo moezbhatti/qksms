@@ -28,6 +28,7 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
+import com.moez.QKSMS.util.PhoneNumberUtils
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -40,6 +41,7 @@ class BlockedNumbersController : QkController<BlockedNumbersView, BlockedNumbers
 
     @Inject override lateinit var presenter: BlockedNumbersPresenter
     @Inject lateinit var colors: Colors
+    @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
 
     private val adapter = BlockedNumbersAdapter()
     private val saveAddressSubject: Subject<String> = PublishSubject.create()
@@ -75,7 +77,7 @@ class BlockedNumbersController : QkController<BlockedNumbersView, BlockedNumbers
 
     override fun showAddDialog() {
         val layout = LayoutInflater.from(activity).inflate(R.layout.blocked_numbers_add_dialog, null)
-        val textWatcher = BlockedNumberTextWatcher(layout.input)
+        val textWatcher = BlockedNumberTextWatcher(layout.input, phoneNumberUtils)
         val dialog = AlertDialog.Builder(activity!!)
                 .setView(layout)
                 .setPositiveButton(R.string.blocked_numbers_dialog_block) { _, _ ->

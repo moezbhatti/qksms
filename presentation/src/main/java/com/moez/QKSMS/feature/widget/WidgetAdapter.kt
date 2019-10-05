@@ -23,7 +23,6 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.telephony.PhoneNumberUtils
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -133,7 +132,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         contact?.numbers?.firstOrNull()?.address?.let { address ->
             val futureGet = GlideApp.with(context)
                     .asBitmap()
-                    .load(PhoneNumberUtils.stripSeparators(address))
+                    .load(address)
                     .submit(48.dpToPx(context), 48.dpToPx(context))
 
             try {

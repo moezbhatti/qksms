@@ -22,7 +22,6 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
-import android.telephony.PhoneNumberUtils
 import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
@@ -57,6 +56,7 @@ import com.moez.QKSMS.feature.compose.part.PartsAdapter
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.Recipient
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -72,6 +72,7 @@ class MessagesAdapter @Inject constructor(
     private val colors: Colors,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
+    private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val textViewStyler: TextViewStyler
 ) : QkRealmAdapter<Message>() {
@@ -322,7 +323,7 @@ class MessagesAdapter @Inject constructor(
 
         override fun get(key: String): Recipient? {
             if (super.get(key)?.isValid != true) {
-                set(key, conversation?.recipients?.firstOrNull { PhoneNumberUtils.compare(it.address, key) })
+                set(key, conversation?.recipients?.firstOrNull { phoneNumberUtils.compare(it.address, key) })
             }
 
             return super.get(key)?.takeIf { it.isValid }

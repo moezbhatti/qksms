@@ -21,7 +21,6 @@ package com.moez.QKSMS.repository
 import android.content.ContentUris
 import android.content.Context
 import android.provider.Telephony
-import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
 import com.moez.QKSMS.extensions.map
@@ -34,6 +33,7 @@ import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SearchResult
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.tryOrNull
 import io.realm.Case
 import io.realm.Realm
@@ -46,7 +46,8 @@ class ConversationRepositoryImpl @Inject constructor(
     private val context: Context,
     private val conversationFilter: ConversationFilter,
     private val cursorToConversation: CursorToConversation,
-    private val cursorToRecipient: CursorToRecipient
+    private val cursorToRecipient: CursorToRecipient,
+    private val phoneNumberUtils: PhoneNumberUtils
 ) : ConversationRepository {
 
     override fun getConversations(archived: Boolean): RealmResults<Conversation> {
@@ -179,7 +180,7 @@ class ConversationRepositoryImpl @Inject constructor(
                     .findAll()
                     .firstOrNull { conversation ->
                         conversation.recipients.size == recipients.size && conversation.recipients.map { it.address }.all { address ->
-                            recipients.any { recipient -> PhoneNumberUtils.compare(recipient, address) }
+                            recipients.any { recipient -> phoneNumberUtils.compare(recipient, address) }
                         }
                     }
                     ?.id
@@ -363,7 +364,7 @@ class ConversationRepositoryImpl @Inject constructor(
                             .map { recipient ->
                                 recipient.apply {
                                     contact = contacts.firstOrNull {
-                                        it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                                        it.numbers.any { phoneNumberUtils.compare(recipient.address, it.address) }
                                     }
                                 }
                             }

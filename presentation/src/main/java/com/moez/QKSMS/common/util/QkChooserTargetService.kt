@@ -24,7 +24,6 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.chooser.ChooserTarget
 import android.service.chooser.ChooserTargetService
-import android.telephony.PhoneNumberUtils
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import com.moez.QKSMS.R
@@ -59,7 +58,7 @@ class QkChooserTargetService : ChooserTargetService() {
                 val request = GlideApp.with(this)
                         .asBitmap()
                         .circleCrop()
-                        .load(PhoneNumberUtils.stripSeparators(address))
+                        .load(address)
                         .submit()
                 val bitmap = tryOrNull(false) { request.get() }
 

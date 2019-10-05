@@ -18,14 +18,15 @@
  */
 package com.moez.QKSMS.feature.blocking.numbers
 
-import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import timber.log.Timber
-import java.util.*
+import com.moez.QKSMS.util.PhoneNumberUtils
 
-class BlockedNumberTextWatcher(private val editText: EditText) : TextWatcher {
+class BlockedNumberTextWatcher(
+    private val editText: EditText,
+    private val phoneNumberUtils: PhoneNumberUtils
+) : TextWatcher {
 
     init {
         editText.addTextChangedListener(this)
@@ -36,8 +37,7 @@ class BlockedNumberTextWatcher(private val editText: EditText) : TextWatcher {
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        val formatted = PhoneNumberUtils.formatNumber(s?.toString(), Locale.getDefault().country)
-        Timber.v("onTextChanged=$s, formatted=$formatted")
+        val formatted = s?.let(phoneNumberUtils::formatNumber)
         if (s?.toString() != formatted && formatted != null) {
             editText.setText(formatted)
             editText.setSelection(formatted.length)

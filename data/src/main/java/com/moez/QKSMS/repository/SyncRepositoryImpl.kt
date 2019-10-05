@@ -22,7 +22,6 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.Telephony
-import android.telephony.PhoneNumberUtils
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.extensions.insertOrUpdate
 import com.moez.QKSMS.extensions.map
@@ -37,6 +36,7 @@ import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SyncLog
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -54,6 +54,7 @@ class SyncRepositoryImpl @Inject constructor(
     private val cursorToRecipient: CursorToRecipient,
     private val cursorToContact: CursorToContact,
     private val keys: KeyManager,
+    private val phoneNumberUtils: PhoneNumberUtils,
     private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
@@ -170,7 +171,7 @@ class SyncRepositoryImpl @Inject constructor(
                         syncProgress.onNext(SyncRepository.SyncProgress.Running(max, progress, false))
                         cursorToRecipient.map(cursor).apply {
                             contact = contacts.firstOrNull { contact ->
-                                contact.numbers.any { PhoneNumberUtils.compare(address, it.address) }
+                                contact.numbers.any { phoneNumberUtils.compare(address, it.address) }
                             }
                         }
                     }
@@ -250,7 +251,7 @@ class SyncRepositoryImpl @Inject constructor(
                 val updatedRecipients = recipients.map { recipient ->
                     recipient.apply {
                         contact = contacts.firstOrNull {
-                            it.numbers.any { PhoneNumberUtils.compare(recipient.address, it.address) }
+                            it.numbers.any { phoneNumberUtils.compare(recipient.address, it.address) }
                         }
                     }
                 }
@@ -264,7 +265,7 @@ class SyncRepositoryImpl @Inject constructor(
     override fun syncContact(address: String): Boolean {
         // See if there's a contact that matches this phone number
         var contact = getContacts().firstOrNull {
-            it.numbers.any { number -> PhoneNumberUtils.compare(number.address, address) }
+            it.numbers.any { number -> phoneNumberUtils.compare(number.address, address) }
         } ?: return false
 
         Realm.getDefaultInstance().use { realm ->
@@ -277,7 +278,7 @@ class SyncRepositoryImpl @Inject constructor(
                 val updatedRecipients = recipients
                         .filter { recipient ->
                             contact.numbers.any { number ->
-                                PhoneNumberUtils.compare(recipient.address, number.address)
+                                phoneNumberUtils.compare(recipient.address, number.address)
                             }
                         }
                         .map { recipient -> recipient.apply { this.contact = contact } }

@@ -29,14 +29,12 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
-import android.telephony.PhoneNumberUtils
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.graphics.get
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.extensions.isImage
@@ -48,10 +46,10 @@ import com.moez.QKSMS.receiver.DeleteMessagesReceiver
 import com.moez.QKSMS.receiver.MarkReadReceiver
 import com.moez.QKSMS.receiver.MarkSeenReceiver
 import com.moez.QKSMS.receiver.RemoteMessagingReceiver
-import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.GlideApp
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import javax.inject.Inject
@@ -64,7 +62,8 @@ class NotificationManagerImpl @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val prefs: Preferences,
     private val messageRepo: MessageRepository,
-    private val permissions: PermissionManager
+    private val permissions: PermissionManager,
+    private val phoneNumberUtils: PhoneNumberUtils
 ) : com.moez.QKSMS.manager.NotificationManager {
 
     companion object {
@@ -151,14 +150,14 @@ class NotificationManagerImpl @Inject constructor(
 
             if (!message.isMe()) {
                 val recipient = conversation.recipients
-                        .firstOrNull { PhoneNumberUtils.compare(it.address, message.address) }
+                        .firstOrNull { phoneNumberUtils.compare(it.address, message.address) }
 
                 person.setName(recipient?.getDisplayName() ?: message.address)
 
                 person.setIcon(GlideApp.with(context)
                         .asBitmap()
                         .circleCrop()
-                        .load(PhoneNumberUtils.stripSeparators(message.address))
+                        .load(message.address)
                         .submit(64.dpToPx(context), 64.dpToPx(context))
                         .let { futureGet -> tryOrNull(false) { futureGet.get() } }
                         ?.let(IconCompat::createWithBitmap))
@@ -183,7 +182,7 @@ class NotificationManagerImpl @Inject constructor(
                     GlideApp.with(context)
                             .asBitmap()
                             .circleCrop()
-                            .load(PhoneNumberUtils.stripSeparators(address))
+                            .load(address)
                             .submit(64.dpToPx(context), 64.dpToPx(context))
                 }
                 ?.let { futureGet -> tryOrNull(false) { futureGet.get() } }

@@ -20,7 +20,6 @@ package com.moez.QKSMS.util
 
 import android.content.Context
 import android.provider.ContactsContract
-import android.telephony.PhoneNumberUtils
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.Key
@@ -38,11 +37,12 @@ import java.security.MessageDigest
 
 class ContactImageLoader(
     private val context: Context,
-    private val contactRepo: ContactRepository
+    private val contactRepo: ContactRepository,
+    private val phoneNumberUtils: PhoneNumberUtils
 ) : ModelLoader<String, InputStream> {
 
     override fun handles(model: String): Boolean {
-        return PhoneNumberUtils.isGlobalPhoneNumber(model)
+        return phoneNumberUtils.isPossibleNumber(model)
     }
 
     override fun buildLoadData(
@@ -51,12 +51,18 @@ class ContactImageLoader(
         height: Int,
         options: Options
     ): ModelLoader.LoadData<InputStream>? {
-        return ModelLoader.LoadData(ContactImageKey(model), ContactImageFetcher(context, contactRepo, model))
+        return ModelLoader.LoadData(
+                ContactImageKey(phoneNumberUtils.normalizeNumber(model)),
+                ContactImageFetcher(context, contactRepo, model))
     }
 
-    class Factory(val context: Context, val prefs: Preferences) : ModelLoaderFactory<String, InputStream> {
+    class Factory(
+        private val context: Context,
+        private val prefs: Preferences
+    ) : ModelLoaderFactory<String, InputStream> {
+
         override fun build(multiFactory: MultiModelLoaderFactory): ContactImageLoader {
-            return ContactImageLoader(context, ContactRepositoryImpl(context, prefs))
+            return ContactImageLoader(context, ContactRepositoryImpl(context, prefs), PhoneNumberUtils(context))
         }
 
         override fun teardown() {} // nothing to do here

@@ -21,7 +21,6 @@ package com.moez.QKSMS.feature.compose
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
-import android.telephony.PhoneNumberUtils
 import android.telephony.SmsMessage
 import android.view.inputmethod.EditorInfo
 import com.moez.QKSMS.R
@@ -57,6 +56,7 @@ import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.ActiveSubscriptionObservable
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import com.uber.autodispose.android.lifecycle.scope
@@ -96,6 +96,7 @@ class ComposeViewModel @Inject constructor(
     private val messageRepo: MessageRepository,
     private val navigator: Navigator,
     private val permissionManager: PermissionManager,
+    private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val retrySending: RetrySending,
     private val sendMessage: SendMessage,
@@ -260,10 +261,9 @@ class ComposeViewModel @Inject constructor(
                             .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
 
                     // If the entry is a valid destination, allow it as a recipient
-                    if (PhoneNumberUtils.isWellFormedSmsAddress(query.toString())) {
-                        val newAddress = PhoneNumberUtils.formatNumber(query.toString(), Locale.getDefault().country)
-                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = newAddress
-                                ?: query.toString())))
+                    if (phoneNumberUtils.isPossibleNumber(query.toString())) {
+                        val newAddress = phoneNumberUtils.formatNumber(query)
+                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = newAddress)))
                         filteredContacts = listOf(newContact) + filteredContacts
                     }
 
