@@ -59,8 +59,8 @@ class ShouldIAnswerBlockingClient @Inject constructor(
         return Binder(context, address).isBlocked()
                 .map { blocked ->
                     when (blocked) {
-                        true -> BlockingClient.Action.BLOCK
-                        false -> BlockingClient.Action.DO_NOTHING
+                        true -> BlockingClient.Action.Block()
+                        false -> BlockingClient.Action.DoNothing
                     }
                 }
     }

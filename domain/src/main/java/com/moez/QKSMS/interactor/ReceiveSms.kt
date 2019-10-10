@@ -54,7 +54,7 @@ class ReceiveSms @Inject constructor(
                     Timber.v("block=$action, drop=$shouldDrop")
 
                     // If we should drop the message, don't even save it
-                    if (action == BlockingClient.Action.BLOCK && shouldDrop) {
+                    if (action is BlockingClient.Action.Block && shouldDrop) {
                         return@mapNotNull null
                     }
 
@@ -67,11 +67,11 @@ class ReceiveSms @Inject constructor(
                     val message = messageRepo.insertReceivedSms(it.subId, address, body, time)
 
                     when (action) {
-                        BlockingClient.Action.BLOCK -> {
+                        is BlockingClient.Action.Block -> {
                             messageRepo.markRead(message.threadId)
-                            conversationRepo.markBlocked(message.threadId)
+                            conversationRepo.markBlocked(listOf(message.threadId), prefs.blockingManager.get(), action.reason)
                         }
-                        BlockingClient.Action.UNBLOCK -> conversationRepo.markUnblocked(message.threadId)
+                        is BlockingClient.Action.Unblock -> conversationRepo.markUnblocked(message.threadId)
                         else -> Unit
                     }
 

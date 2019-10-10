@@ -78,7 +78,7 @@ interface ConversationRepository {
 
     fun markUnpinned(vararg threadIds: Long)
 
-    fun markBlocked(vararg threadIds: Long)
+    fun markBlocked(threadIds: List<Long>, blockingClient: Int, blockReason: String?)
 
     fun markUnblocked(vararg threadIds: Long)
 

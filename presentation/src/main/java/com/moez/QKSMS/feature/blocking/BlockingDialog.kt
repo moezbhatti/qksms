@@ -57,7 +57,7 @@ class BlockingDialog @Inject constructor(
         if (blockingManager.getClientCapability() == BlockingClient.Capability.BLOCK_WITHOUT_PERMISSION) {
             // If we can block/unblock in the external manager, then just fire that off and exit
             if (block) {
-                markBlocked.execute(conversationIds)
+                markBlocked.execute(MarkBlocked.Params(conversationIds, prefs.blockingManager.get(), null))
                 blockingManager.block(addresses).subscribe()
             } else {
                 markUnblocked.execute(conversationIds)
@@ -67,7 +67,7 @@ class BlockingDialog @Inject constructor(
             // If all of the addresses are already in their correct state in the blocking manager, just marked the
             // conversations blocked and exit
             when (block) {
-                true -> markBlocked.execute(conversationIds)
+                true -> markBlocked.execute(MarkBlocked.Params(conversationIds, prefs.blockingManager.get(), null))
                 false -> markUnblocked.execute(conversationIds)
             }
         } else {
@@ -77,7 +77,7 @@ class BlockingDialog @Inject constructor(
     }
 
     private fun allBlocked(addresses: List<String>): Boolean = addresses.all { address ->
-        blockingManager.getAction(address).blockingGet() == BlockingClient.Action.BLOCK
+        blockingManager.getAction(address).blockingGet() is BlockingClient.Action.Block
     }
 
     private suspend fun showDialog(
@@ -109,7 +109,7 @@ class BlockingDialog @Inject constructor(
                 .setMessage(message)
                 .setPositiveButton(R.string.button_continue) { _, _ ->
                     if (block) {
-                        markBlocked.execute(conversationIds)
+                        markBlocked.execute(MarkBlocked.Params(conversationIds, prefs.blockingManager.get(), null))
                         blockingManager.block(addresses).subscribe()
                     } else {
                         markUnblocked.execute(conversationIds)

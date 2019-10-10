@@ -297,14 +297,19 @@ class ConversationRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun markBlocked(vararg threadIds: Long) {
+    override fun markBlocked(threadIds: List<Long>, blockingClient: Int, blockReason: String?) {
         Realm.getDefaultInstance().use { realm ->
             val conversations = realm.where(Conversation::class.java)
-                    .anyOf("id", threadIds)
+                    .anyOf("id", threadIds.toLongArray())
+                    .equalTo("blocked", false)
                     .findAll()
 
             realm.executeTransaction {
-                conversations.forEach { it.blocked = true }
+                conversations.forEach { conversation ->
+                    conversation.blocked = true
+                    conversation.blockingClient = blockingClient
+                    conversation.blockReason = blockReason
+                }
             }
         }
     }
@@ -316,7 +321,11 @@ class ConversationRepositoryImpl @Inject constructor(
                     .findAll()
 
             realm.executeTransaction {
-                conversations.forEach { it.blocked = false }
+                conversations.forEach { conversation ->
+                    conversation.blocked = false
+                    conversation.blockingClient = null
+                    conversation.blockReason = null
+                }
             }
         }
     }

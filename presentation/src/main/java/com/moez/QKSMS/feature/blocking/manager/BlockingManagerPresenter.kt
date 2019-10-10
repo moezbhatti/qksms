@@ -117,6 +117,6 @@ class BlockingManagerPresenter @Inject constructor(
 
     private fun getAddressesToBlock(client: BlockingClient) = conversationRepo.getBlockedConversations()
             .fold(listOf<String>(), { numbers, conversation -> numbers + conversation.recipients.map { it.address } })
-            .filter { number -> client.getAction(number).blockingGet() != BlockingClient.Action.BLOCK }
+            .filter { number -> client.getAction(number).blockingGet() !is BlockingClient.Action.Block }
 
 }

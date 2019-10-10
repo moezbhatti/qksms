@@ -50,15 +50,15 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
-        val blocked = tryOrNull {
+        val blockReason = tryOrNull {
             context.contentResolver.query(uri, projection, null, null, null) // Query URI
                     ?.use { cursor -> cursor.map(::LookupResult) } // Map to Result object
-                    ?.any { result -> result.blockReason != null } // Check if any are blocked
-        } == true // If none are blocked or we errored at some point, return false
+                    ?.find { result -> result.blockReason != null } // Check if any are blocked
+        }?.blockReason // If none are blocked or we errored at some point, return false
 
-        when (blocked) {
-            true -> BlockingClient.Action.BLOCK
-            false -> BlockingClient.Action.UNBLOCK
+        when (blockReason) {
+            null -> BlockingClient.Action.Unblock
+            else -> BlockingClient.Action.Block(blockReason)
         }
     }
 

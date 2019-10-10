@@ -25,12 +25,16 @@ import javax.inject.Inject
 class MarkBlocked @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val markRead: MarkRead
-) : Interactor<List<Long>>() {
+) : Interactor<MarkBlocked.Params>() {
 
-    override fun buildObservable(params: List<Long>): Flowable<*> {
-        return Flowable.just(params.toLongArray())
-                .doOnNext { threadIds -> conversationRepo.markBlocked(*threadIds) }
-                .flatMap { markRead.buildObservable(params) }
+    data class Params(val threadIds: List<Long>, val blockingClient: Int, val blockReason: String?)
+
+    override fun buildObservable(params: Params): Flowable<*> {
+        return Flowable.just(params)
+                .doOnNext { (threadIds, blockingClient, blockReason) ->
+                    conversationRepo.markBlocked(threadIds, blockingClient, blockReason)
+                }
+                .flatMap { (threadIds) -> markRead.buildObservable(threadIds) }
     }
 
 }

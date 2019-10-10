@@ -61,17 +61,17 @@ class ReceiveMms @Inject constructor(
                     val shouldDrop = prefs.drop.get()
                     Timber.v("block=$action, drop=$shouldDrop")
 
-                    if (action == BlockingClient.Action.BLOCK && shouldDrop) {
+                    if (action is BlockingClient.Action.Block && shouldDrop) {
                         messageRepo.deleteMessages(message.id)
                         return@mapNotNull null
                     }
 
                     when (action) {
-                        BlockingClient.Action.BLOCK -> {
+                        is BlockingClient.Action.Block -> {
                             messageRepo.markRead(message.threadId)
-                            conversationRepo.markBlocked(message.threadId)
+                            conversationRepo.markBlocked(listOf(message.threadId), prefs.blockingManager.get(), action.reason)
                         }
-                        BlockingClient.Action.UNBLOCK -> conversationRepo.markUnblocked(message.threadId)
+                        is BlockingClient.Action.Unblock -> conversationRepo.markUnblocked(message.threadId)
                         else -> Unit
                     }
 

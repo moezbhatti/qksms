@@ -36,6 +36,9 @@ open class Conversation(
     var me: Boolean = false,
     var draft: String = "",
 
+    var blockingClient: Int? = null,
+    var blockReason: String? = null,
+
     var name: String = "" // For group chats, the user is allowed to set a custom title for the conversation
 ) : RealmObject() {
 

@@ -33,8 +33,8 @@ class QksmsBlockingClient @Inject constructor(
 
     override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         when (blockingRepo.isBlocked(address)) {
-            true -> BlockingClient.Action.BLOCK
-            false -> BlockingClient.Action.UNBLOCK
+            true -> BlockingClient.Action.Block()
+            false -> BlockingClient.Action.Unblock
         }
     }
 

@@ -25,7 +25,7 @@ import io.realm.RealmMigration
 class QkRealmMigration : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 6
+        const val SCHEMA_VERSION: Long = 7
     }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
@@ -76,6 +76,14 @@ class QkRealmMigration : RealmMigration {
             realm.schema.create("BlockedNumber")
                     .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
                     .addField("address", String::class.java, FieldAttribute.REQUIRED)
+
+            version++
+        }
+
+        if (version == 6L) {
+            realm.schema.get("Conversation")
+                    ?.addField("blockingClient", Integer::class.java)
+                    ?.addField("blockReason", String::class.java)
 
             version++
         }

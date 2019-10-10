@@ -18,22 +18,38 @@
  */
 package com.moez.QKSMS.feature.blocking.messages
 
+import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
+import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.model.Conversation
+import com.moez.QKSMS.util.Preferences
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.blocked_list_item.view.*
 import javax.inject.Inject
 
-class BlockedMessagesAdapter @Inject constructor() : QkRealmAdapter<Conversation>() {
+class BlockedMessagesAdapter @Inject constructor(
+    private val context: Context,
+    private val dateFormatter: DateFormatter
+) : QkRealmAdapter<Conversation>() {
 
     val clicks: PublishSubject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.blocked_list_item, parent, false)
+
+        if (viewType == 0) {
+            view.title.setTypeface(view.title.typeface, Typeface.BOLD)
+            view.date.setTypeface(view.date.typeface, Typeface.BOLD)
+            view.date.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorPrimary))
+        }
+
         return QkViewHolder(view).apply {
             view.setOnClickListener {
                 val conversation = getItem(adapterPosition) ?: return@setOnClickListener
@@ -60,6 +76,22 @@ class BlockedMessagesAdapter @Inject constructor() : QkRealmAdapter<Conversation
         view.avatars.contacts = conversation.recipients
         view.title.collapseEnabled = conversation.recipients.size > 1
         view.title.text = conversation.getTitle()
+        view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
+
+        view.blocker.text = when (conversation.blockingClient) {
+            Preferences.BLOCKING_MANAGER_CC -> context.getString(R.string.blocking_manager_call_control_title)
+            Preferences.BLOCKING_MANAGER_SIA -> context.getString(R.string.blocking_manager_sia_title)
+            else -> null
+        }
+
+        view.reason.text = conversation.blockReason
+        view.blocker.isVisible = view.blocker.text.isNotEmpty()
+        view.reason.isVisible = view.blocker.text.isNotEmpty()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        val conversation = getItem(position)
+        return if (conversation?.read == true) 1 else 0
     }
 
 }
