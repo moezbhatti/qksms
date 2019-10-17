@@ -25,45 +25,45 @@
     android:layout_marginTop="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/vCardBackground"
+        android:id="@+id/fileBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/vCardAvatar"
+            android:id="@+id/icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="12dp"
-            android:src="@drawable/ic_person_black_24dp"
+            android:src="@drawable/ic_attachment_black_24dp"
             android:tint="?android:attr/textColorSecondary"
-            app:layout_constraintBottom_toBottomOf="@id/vCardBackground"
+            app:layout_constraintBottom_toBottomOf="@id/fileBackground"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/vCardBackground" />
+            app:layout_constraintTop_toTopOf="@id/fileBackground" />
 
         <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/name"
+            android:id="@+id/filename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
             android:paddingTop="8dp"
             android:paddingEnd="12dp"
-            android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintStart_toEndOf="@id/vCardAvatar"
             app:layout_constraintTop_toTopOf="parent"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toEndOf="@id/icon"
             app:textSize="primary"
-            tools:text="@tools:sample/full_names" />
+            tools:text="Resume.pdf" />
 
         <com.moez.QKSMS.common.widget.QkTextView
-            android:id="@+id/label"
+            android:id="@+id/size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            tools:text="35 KB"
             android:paddingBottom="8dp"
-            android:text="@string/compose_vcard_label"
             android:textColor="?android:attr/textColorTertiary"
-            app:layout_constraintStart_toStartOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintStart_toStartOf="@id/filename"
+            app:layout_constraintTop_toBottomOf="@id/filename"
             app:textSize="secondary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

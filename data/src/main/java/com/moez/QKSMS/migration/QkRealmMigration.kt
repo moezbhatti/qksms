@@ -85,6 +85,10 @@ class QkRealmMigration : RealmMigration {
                     ?.addField("blockingClient", Integer::class.java)
                     ?.addField("blockReason", String::class.java)
 
+            realm.schema.get("MmsPart")
+                    ?.addField("seq", Integer::class.java, FieldAttribute.REQUIRED)
+                    ?.addField("name", String::class.java)
+
             version++
         }
 

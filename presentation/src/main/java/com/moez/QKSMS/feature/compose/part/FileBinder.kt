@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.compose.part
 
+import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.view.Gravity
@@ -29,28 +30,27 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
-import com.moez.QKSMS.extensions.isVCard
-import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.feature.compose.BubbleUtils
 import com.moez.QKSMS.mapper.CursorToPartImpl
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
-import ezvcard.Ezvcard
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.mms_vcard_list_item.view.*
+import kotlinx.android.synthetic.main.mms_file_list_item.view.*
 
-class VCardBinder(
+class FileBinder(
     private val context: Context,
     private val navigator: Navigator,
     private val theme: Colors.Theme
 ) : PartBinder {
 
-    override val partLayout = R.layout.mms_vcard_list_item
+    override val partLayout = R.layout.mms_file_list_item
 
-    override fun canBindPart(part: MmsPart) = part.isVCard()
+    // This is the last binder we check. If we're here, we can bind the part
+    override fun canBindPart(part: MmsPart) = true
 
+    @SuppressLint("CheckResult")
     override fun bindPart(
         view: View,
         part: MmsPart,
@@ -62,28 +62,38 @@ class VCardBinder(
         val bubble = BubbleUtils.getBubble(false, canGroupWithPrevious, canGroupWithNext, message.isMe())
 
         view.setOnClickListener { navigator.openFile(uri, part.type) }
-        view.vCardBackground.setBackgroundResource(bubble)
+        view.fileBackground.setBackgroundResource(bubble)
 
-        Observable.just(uri)
+        Observable.just(part.getUri())
                 .map(context.contentResolver::openInputStream)
-                .mapNotNull { inputStream -> inputStream.use { Ezvcard.parse(it).first() } }
-                .subscribeOn(Schedulers.computation())
+                .map { inputStream -> inputStream.use { it.available() } }
+                .map { bytes ->
+                    when (bytes) {
+                        in 0..999 -> "$bytes B"
+                        in 1000..999999 -> "${"%.1f".format(bytes / 1000f)} KB"
+                        in 1000000..9999999 -> "${"%.1f".format(bytes / 1000000f)} MB"
+                        else -> "${"%.1f".format(bytes / 1000000000f)} GB"
+                    }
+                }
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { vcard -> view.name?.text = vcard.formattedName.value }
+                .subscribe { size -> view.size.text = size }
 
-        val params = view.vCardBackground.layoutParams as FrameLayout.LayoutParams
+        view.filename.text = part.name
+
+        val params = view.fileBackground.layoutParams as FrameLayout.LayoutParams
         if (!message.isMe()) {
-            view.vCardBackground.layoutParams = params.apply { gravity = Gravity.START }
-            view.vCardBackground.setBackgroundTint(theme.theme)
-            view.vCardAvatar.setTint(theme.textPrimary)
-            view.name.setTextColor(theme.textPrimary)
-            view.label.setTextColor(theme.textTertiary)
+            view.fileBackground.layoutParams = params.apply { gravity = Gravity.START }
+            view.fileBackground.setBackgroundTint(theme.theme)
+            view.icon.setTint(theme.textPrimary)
+            view.filename.setTextColor(theme.textPrimary)
+            view.size.setTextColor(theme.textTertiary)
         } else {
-            view.vCardBackground.layoutParams = params.apply { gravity = Gravity.END }
-            view.vCardBackground.setBackgroundTint(view.context.resolveThemeColor(R.attr.bubbleColor))
-            view.vCardAvatar.setTint(view.context.resolveThemeColor(android.R.attr.textColorSecondary))
-            view.name.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorPrimary))
-            view.label.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorTertiary))
+            view.fileBackground.layoutParams = params.apply { gravity = Gravity.END }
+            view.fileBackground.setBackgroundTint(view.context.resolveThemeColor(R.attr.bubbleColor))
+            view.icon.setTint(view.context.resolveThemeColor(android.R.attr.textColorSecondary))
+            view.filename.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorPrimary))
+            view.size.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorTertiary))
         }
     }
 

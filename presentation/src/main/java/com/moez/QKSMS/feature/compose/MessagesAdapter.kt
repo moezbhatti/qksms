@@ -47,9 +47,8 @@ import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
-import com.moez.QKSMS.extensions.isImage
-import com.moez.QKSMS.extensions.isVCard
-import com.moez.QKSMS.extensions.isVideo
+import com.moez.QKSMS.extensions.isSmil
+import com.moez.QKSMS.extensions.isText
 import com.moez.QKSMS.feature.compose.BubbleUtils.canGroup
 import com.moez.QKSMS.feature.compose.BubbleUtils.getBubble
 import com.moez.QKSMS.feature.compose.part.PartsAdapter
@@ -226,7 +225,7 @@ class MessagesAdapter @Inject constructor(
         view.simIndex.setVisible(message.subId != previous?.subId && simIndex != -1)
 
         // Bind the grouping
-        val media = message.parts.filter { it.isImage() || it.isVideo() || it.isVCard() }
+        val media = message.parts.filter { !it.isSmil() && !it.isText() }
         view.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
 
         // Bind the avatar
@@ -242,9 +241,9 @@ class MessagesAdapter @Inject constructor(
             false -> {
                 val subject = message.getCleansedSubject()
                 val body = message.parts
-                        .filter { part -> !part.isVCard() }
+                        .filter { part -> part.isText() }
                         .mapNotNull { part -> part.text }
-                        .filter { part -> part.isNotBlank() }
+                        .filter { text -> text.isNotBlank() }
                         .joinToString("\n")
 
                 when {

@@ -27,9 +27,8 @@ import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.forwardTouches
-import com.moez.QKSMS.extensions.isImage
-import com.moez.QKSMS.extensions.isVCard
-import com.moez.QKSMS.extensions.isVideo
+import com.moez.QKSMS.extensions.isSmil
+import com.moez.QKSMS.extensions.isText
 import com.moez.QKSMS.feature.compose.BubbleUtils.canGroup
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
@@ -39,7 +38,8 @@ class PartsAdapter(context: Context, navigator: Navigator, theme: Colors.Theme) 
 
     private val partBinders = listOf(
             MediaBinder(context, navigator),
-            VCardBinder(context, navigator, theme)
+            VCardBinder(context, navigator, theme),
+            FileBinder(context, navigator, theme)
     )
 
     private lateinit var message: Message
@@ -54,7 +54,7 @@ class PartsAdapter(context: Context, navigator: Navigator, theme: Colors.Theme) 
         this.next = next
         this.messageView = messageView
         this.bodyVisible = messageView.body.visibility == View.VISIBLE
-        this.data = message.parts.filter { it.isImage() || it.isVideo() || it.isVCard() }
+        this.data = message.parts.filter { !it.isSmil() && !it.isText() }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {

@@ -28,6 +28,8 @@ open class MmsPart : RealmObject() {
 
     @PrimaryKey var id: Long = 0
     var type: String = ""
+    var seq: Int = -1
+    var name: String? = null
     var text: String? = null
 
     @LinkingObjects("parts")

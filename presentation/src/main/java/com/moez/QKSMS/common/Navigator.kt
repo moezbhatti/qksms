@@ -245,9 +245,9 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
-    fun saveVcard(uri: Uri) {
+    fun openFile(uri: Uri, contentType: String) {
         val intent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(uri, "text/x-vcard")
+                .setDataAndType(uri, contentType)
 
         startActivityExternal(intent)
     }
