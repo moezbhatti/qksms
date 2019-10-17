@@ -35,6 +35,7 @@ class BackupActivity : QkThemedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.container_activity)
 
         router = Conductor.attachRouter(this, container, savedInstanceState)
