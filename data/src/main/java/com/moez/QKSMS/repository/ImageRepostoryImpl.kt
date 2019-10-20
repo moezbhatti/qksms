@@ -60,17 +60,15 @@ class ImageRepostoryImpl @Inject constructor(private val context: Context) : Ima
 
     override fun saveImage(uri: Uri) {
         val type = context.contentResolver.getType(uri)?.split("/") ?: return
-        val dir = File(Environment.getExternalStorageDirectory(), "QKSMS").apply { mkdirs() }
+        val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Media").apply { mkdirs() }
         val file = File(dir, "${type.first()}${System.currentTimeMillis()}.${type.last()}")
 
         try {
-            val outputStream = FileOutputStream(file)
-            val inputStream = context.contentResolver.openInputStream(uri)
-
-            inputStream.copyTo(outputStream, 1024)
-
-            inputStream.close()
-            outputStream.close()
+            FileOutputStream(file).use { outputStream ->
+                context.contentResolver.openInputStream(uri)?.use { inputStream ->
+                    inputStream.copyTo(outputStream, 1024)
+                }
+            }
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
         } catch (e: IOException) {
