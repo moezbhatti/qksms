@@ -34,7 +34,6 @@ import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
@@ -54,6 +53,7 @@ import com.moez.QKSMS.feature.compose.BubbleUtils.getBubble
 import com.moez.QKSMS.feature.compose.part.PartsAdapter
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
@@ -64,13 +64,14 @@ import kotlinx.android.synthetic.main.message_list_item_in.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Provider
 
 class MessagesAdapter @Inject constructor(
     subscriptionManager: SubscriptionManagerCompat,
     private val context: Context,
     private val colors: Colors,
     private val dateFormatter: DateFormatter,
-    private val navigator: Navigator,
+    private val partsAdapterProvider: Provider<PartsAdapter>,
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val textViewStyler: TextViewStyler
@@ -88,6 +89,7 @@ class MessagesAdapter @Inject constructor(
     }
 
     val clicks: Subject<Message> = PublishSubject.create()
+    val partClicks: Subject<MmsPart> = PublishSubject.create()
     val cancelSending: Subject<Message> = PublishSubject.create()
 
     var data: Pair<Conversation, RealmResults<Message>>? = null
@@ -153,7 +155,9 @@ class MessagesAdapter @Inject constructor(
             view.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
         }
 
-        view.attachments.adapter = PartsAdapter(context, navigator, theme)
+        val partsAdapter = partsAdapterProvider.get()
+        partsAdapter.clicks.subscribe(partClicks)
+        view.attachments.adapter = partsAdapter
         view.attachments.setRecycledViewPool(partsViewPool)
         view.body.forwardTouches(view)
 
@@ -273,6 +277,7 @@ class MessagesAdapter @Inject constructor(
 
         // Bind the attachments
         val partsAdapter = view.attachments.adapter as PartsAdapter
+        partsAdapter.theme = theme
         partsAdapter.setData(message, previous, next, view)
     }
 

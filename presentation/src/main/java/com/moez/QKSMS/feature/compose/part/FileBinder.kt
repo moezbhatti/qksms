@@ -19,33 +19,28 @@
 package com.moez.QKSMS.feature.compose.part
 
 import android.annotation.SuppressLint
-import android.content.ContentUris
 import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.feature.compose.BubbleUtils
-import com.moez.QKSMS.mapper.CursorToPartImpl
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.mms_file_list_item.view.*
+import javax.inject.Inject
 
-class FileBinder(
-    private val context: Context,
-    private val navigator: Navigator,
-    private val theme: Colors.Theme
-) : PartBinder {
+class FileBinder @Inject constructor(colors: Colors, private val context: Context) : PartBinder() {
 
     override val partLayout = R.layout.mms_file_list_item
+    override var theme = colors.theme()
 
     // This is the last binder we check. If we're here, we can bind the part
     override fun canBindPart(part: MmsPart) = true
@@ -58,11 +53,10 @@ class FileBinder(
         canGroupWithPrevious: Boolean,
         canGroupWithNext: Boolean
     ) {
-        val uri = ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id)
-        val bubble = BubbleUtils.getBubble(false, canGroupWithPrevious, canGroupWithNext, message.isMe())
+        BubbleUtils.getBubble(false, canGroupWithPrevious, canGroupWithNext, message.isMe())
+                .let(view.fileBackground::setBackgroundResource)
 
-        view.setOnClickListener { navigator.openFile(uri, part.type) }
-        view.fileBackground.setBackgroundResource(bubble)
+        view.setOnClickListener { clicks.onNext(part) }
 
         Observable.just(part.getUri())
                 .map(context.contentResolver::openInputStream)

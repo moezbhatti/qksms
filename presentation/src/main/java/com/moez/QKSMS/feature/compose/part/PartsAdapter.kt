@@ -18,11 +18,9 @@
  */
 package com.moez.QKSMS.feature.compose.part
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
@@ -32,15 +30,26 @@ import com.moez.QKSMS.extensions.isText
 import com.moez.QKSMS.feature.compose.BubbleUtils.canGroup
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
+import javax.inject.Inject
 
-class PartsAdapter(context: Context, navigator: Navigator, theme: Colors.Theme) : QkAdapter<MmsPart>() {
+class PartsAdapter @Inject constructor(
+    colors: Colors,
+    fileBinder: FileBinder,
+    mediaBinder: MediaBinder,
+    vCardBinder: VCardBinder
+) : QkAdapter<MmsPart>() {
 
-    private val partBinders = listOf(
-            MediaBinder(context, navigator),
-            VCardBinder(context, navigator, theme),
-            FileBinder(context, navigator, theme)
-    )
+    private val partBinders = listOf(mediaBinder, vCardBinder, fileBinder)
+
+    var theme: Colors.Theme = colors.theme()
+        set(value) {
+            field = value
+            partBinders.forEach { binder -> binder.theme = value }
+        }
+
+    val clicks = Observable.merge(partBinders.map { it.clicks })
 
     private lateinit var message: Message
     private var previous: Message? = null

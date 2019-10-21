@@ -26,6 +26,8 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
+import android.webkit.MimeTypeMap
+import androidx.core.content.FileProvider
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.feature.backup.BackupActivity
@@ -40,9 +42,9 @@ import com.moez.QKSMS.feature.settings.SettingsActivity
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.manager.PermissionManager
+import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
-
 
 @Singleton
 class Navigator @Inject constructor(
@@ -166,7 +168,6 @@ class Navigator @Inject constructor(
         startActivity(intent)
     }
 
-
     fun showRating() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.moez.QKSMS"))
                 .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
@@ -176,7 +177,8 @@ class Navigator @Inject constructor(
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.moez.QKSMS")))
+            val url = "http://play.google.com/store/apps/details?id=com.moez.QKSMS"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }
 
@@ -245,9 +247,12 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
-    fun openFile(uri: Uri, contentType: String) {
+    fun viewFile(file: File) {
+        val data = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+        val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.name.split(".").last())
         val intent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(uri, contentType)
+                .setDataAndType(data, type)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         startActivityExternal(intent)
     }

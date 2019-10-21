@@ -34,6 +34,7 @@ import com.moez.QKSMS.compat.SubscriptionManagerCompat
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.isImage
+import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.filter.ContactFilter
@@ -423,6 +424,24 @@ class ComposeViewModel @Inject constructor(
                 .doOnNext { message -> retrySending.execute(message) }
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        // Media attachment clicks
+        view.messagePartClickIntent
+                .filter { part -> part.isImage() || part.isVideo() }
+                .autoDisposable(view.scope())
+                .subscribe { part -> navigator.showMedia(part.id) }
+
+        // Non-media attachment clicks
+        view.messagePartClickIntent
+                .filter { part -> !part.isImage() && !part.isVideo() }
+                .autoDisposable(view.scope())
+                .subscribe { part ->
+                    if (permissionManager.hasStorage()) {
+                        messageRepo.savePart(part.id)?.let(navigator::viewFile)
+                    } else {
+                        view.requestStoragePermission()
+                    }
+                }
 
         // Update the State when the message selected count changes
         view.messagesSelectedIntent

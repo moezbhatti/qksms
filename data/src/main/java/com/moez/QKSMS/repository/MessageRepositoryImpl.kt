@@ -25,9 +25,12 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.media.MediaScannerConnection
 import android.os.Build
+import android.os.Environment
 import android.provider.Telephony
 import android.telephony.SmsManager
+import android.webkit.MimeTypeMap
 import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
 import com.google.android.mms.MMSPart
@@ -54,6 +57,10 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import timber.log.Timber
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -130,6 +137,33 @@ class MessageRepositoryImpl @Inject constructor(
                 .endGroup()
                 .sort("id", Sort.DESCENDING)
                 .findAllAsync()
+    }
+
+    override fun savePart(id: Long): File? {
+        val part = getPart(id) ?: return null
+
+        val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(part.type) ?: return null
+        val date = part.messages?.first()?.date
+        val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Media").apply { mkdirs() }
+        val fileName = part.name?.takeIf { name -> name.endsWith(extension) }
+                ?: "${part.type.split("/").last()}_$date.$extension"
+        val file = File(dir, fileName)
+
+        try {
+            FileOutputStream(file).use { outputStream ->
+                context.contentResolver.openInputStream(part.getUri())?.use { inputStream ->
+                    inputStream.copyTo(outputStream, 1024)
+                }
+            }
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        MediaScannerConnection.scanFile(context, arrayOf(file.path), null, null)
+
+        return file.takeIf { it.exists() }
     }
 
     /**

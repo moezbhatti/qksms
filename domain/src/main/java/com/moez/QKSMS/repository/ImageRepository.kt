@@ -25,6 +25,4 @@ interface ImageRepository {
 
     fun loadImage(uri: Uri): Bitmap?
 
-    fun saveImage(uri: Uri)
-
 }

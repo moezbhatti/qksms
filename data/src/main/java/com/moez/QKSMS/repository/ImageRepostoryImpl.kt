@@ -22,14 +22,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Environment
 import androidx.exifinterface.media.ExifInterface
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 class ImageRepostoryImpl @Inject constructor(private val context: Context) : ImageRepository {
@@ -56,26 +50,6 @@ class ImageRepostoryImpl @Inject constructor(private val context: Context) : Ima
         mtx.postRotate(degree)
 
         return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true)
-    }
-
-    override fun saveImage(uri: Uri) {
-        val type = context.contentResolver.getType(uri)?.split("/") ?: return
-        val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Media").apply { mkdirs() }
-        val file = File(dir, "${type.first()}${System.currentTimeMillis()}.${type.last()}")
-
-        try {
-            FileOutputStream(file).use { outputStream ->
-                context.contentResolver.openInputStream(uri)?.use { inputStream ->
-                    inputStream.copyTo(outputStream, 1024)
-                }
-            }
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        MediaScannerConnection.scanFile(context, arrayOf(file.path), null, null)
     }
 
 }

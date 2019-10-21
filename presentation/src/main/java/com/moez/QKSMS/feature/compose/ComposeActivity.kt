@@ -55,6 +55,7 @@ import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.model.MmsPart
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
@@ -91,6 +92,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
     override val sendAsGroupIntent by lazy { sendAsGroupBackground.clicks() }
     override val messageClickIntent: Subject<Message> by lazy { messageAdapter.clicks }
+    override val messagePartClickIntent: Subject<MmsPart> by lazy { messageAdapter.partClicks }
     override val messagesSelectedIntent by lazy { messageAdapter.selectionChanges }
     override val cancelSendingIntent: Subject<Message> by lazy { messageAdapter.cancelSending }
     override val attachmentDeletedIntent: Subject<Attachment> by lazy { attachmentAdapter.attachmentDeleted }

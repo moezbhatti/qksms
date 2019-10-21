@@ -17,8 +17,8 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<manifest package="com.moez.QKSMS"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.moez.QKSMS">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -165,10 +165,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
+        <receiver android:name=".receiver.SendSmsReceiver" />
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service android:name=".feature.backup.RestoreBackupService" />
-        <receiver android:name=".receiver.SendSmsReceiver" />
         <service
             android:name=".feature.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
@@ -201,6 +201,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
     </application>
 
