@@ -164,6 +164,8 @@ class MainViewModel @Inject constructor(
             } else {
                 changelogManager.markChangelogSeen()
             }
+        } else {
+            changelogManager.markChangelogSeen()
         }
 
         view.changelogMoreIntent
